@@ -13,6 +13,9 @@
 #ifndef DXFREADER_H
 #define DXFREADER_H
 
+#include <cstdint>
+#include <unordered_set>
+
 #include "drw_textcodec.h"
 
 class dxfReader {
@@ -36,17 +39,35 @@ public:
     bool readRec(int *code);
 
     std::string getString() {return strData;}
-    int getHandleString();//Convert hex string to int
+    const std::string& getRawValue() const { return rawData; }
+    // Convert a validated hexadecimal handle string representable by the
+    // legacy 32-bit object model. Typed records must use this form.
+    std::uint32_t getHandleString();
+    bool isValidHandleString() const;
+    // Raw DXF carriers may retain a syntactically valid DWG-width handle
+    // lexeme (one to sixteen hexadecimal digits) without narrowing it.
+    bool isValidHandleLexeme() const;
+    // Admit one code-5 self handle for this read session. References use
+    // other group codes and are intentionally not registered here.
+    bool registerSelfHandle();
+    void setAllowWideHandleLexemes(bool allow) {
+        m_allowWideHandleLexemes = allow;
+    }
+    bool allowsWideHandleLexemes() const {
+        return m_allowWideHandleLexemes;
+    }
     std::string toUtf8String(std::string t) {return decoder.toUtf8(t);}
     std::string getUtf8String() {return decoder.toUtf8(strData);}
     double getDouble() {return doubleData;}
     int getInt32() {return intData;}
-    unsigned long long int getInt64() {return int64;}
+    std::int64_t getInt64() {return int64;}
     bool getBool() { return (intData==0) ? false : true;}
     int getVersion(){return decoder.getVersion();}
     void setVersion(const std::string &v, bool dxfFormat){decoder.setVersion(v, dxfFormat);}
     void setCodePage(const std::string &c){decoder.setCodePage(c, true);}
     std::string getCodePage(){ return decoder.getCodePage();}
+    DRW::Version getSourceVersion() const { return decoder.getSourceVersion(); }
+    bool hasSourceVersion() const { return decoder.hasSourceVersion(); }
     void setIgnoreComments(const bool bValue) {m_bIgnoreComments = bValue;}
 
 protected:
@@ -63,13 +84,20 @@ protected:
 protected:
     std::istream *filestr;
     std::string strData;
-    double doubleData;
-    signed int intData; //32 bits integer
-    unsigned long long int int64; //64 bits integer
-    bool skip; //set to true for ascii dxf, false for binary
+    // Source value spelling for ASCII records; binary readers leave this as
+    // the decoded representation and callers must use typed values instead.
+    std::string rawData;
+    double doubleData = 0.0;
+    signed int intData = 0; //32 bits integer
+    std::int64_t int64 = 0; // signed 64-bit integer (DXF codes 160-169)
+    bool skip = false; //set to true for ascii dxf, false for binary
 private:
     DRW_TextCodec decoder;
     bool m_bIgnoreComments {false};
+    bool m_allowWideHandleLexemes {false};
+    std::unordered_set<std::uint64_t> m_selfHandles;
+    std::uint64_t m_currentSelfHandle {0};
+    bool m_currentSelfHandleRegistered {false};
 };
 
 class dxfReaderBinary : public dxfReader {

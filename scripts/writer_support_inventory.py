@@ -34,7 +34,16 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 
-from dwg_inventory_common import family_for, markdown_cell, normalize_name, parse_versions, read_text, repo_root_from_script, write_or_check
+from dwg_inventory_common import (
+    dwg_writer_dispatch,
+    family_for,
+    markdown_cell,
+    normalize_name,
+    parse_versions,
+    read_text,
+    repo_root_from_script,
+    write_or_check,
+)
 
 
 DEFAULT_OUTPUT = Path("libraries/libdxfrw/DWG_DXF_WRITER_SUPPORT_STATUS.md")
@@ -56,14 +65,6 @@ class WriterRow:
     blockers: str
     advertised: str
 
-
-DWG_WRITERS = {
-    "AC1015": "dwgWriter15",
-    "AC1018": "dwgWriter18",
-    "AC1024": "dwgWriter24",
-    "AC1027": "dwgWriter27",
-    "AC1032": "dwgWriter32",
-}
 
 DXF_WRITE_VERSIONS = {"AC1009", "AC1014", "AC1015", "AC1018", "AC1021", "AC1024", "AC1027", "AC1032"}
 
@@ -129,7 +130,13 @@ def parse_reference_features(path: Path) -> list[tuple[str, str]]:
     return sorted(set(rows), key=lambda item: (item[0], item[1]))
 
 
-def feature_writer_mode(format_name: str, version_code: str, feature: str, libdxfrw_text: str) -> tuple[str, str, str, str]:
+def feature_writer_mode(
+    format_name: str,
+    version_code: str,
+    feature: str,
+    libdxfrw_text: str,
+    dwg_writers: dict[str, str],
+) -> tuple[str, str, str, str]:
     normalized = normalize_name(feature)
     if format_name == "DXF":
         func = DXF_TYPED_WRITERS.get(normalized)
@@ -139,19 +146,21 @@ def feature_writer_mode(format_name: str, version_code: str, feature: str, libdx
             return ("dxf-raw-shell", "preserve shell or block unsupported downgrade", "same-format raw groups", "libdxfrw reread + ezdxf audit")
         return ("blocked", "fail with diagnostic", "none", "unit test diagnostic")
 
-    if version_code in DWG_WRITERS and "writeRawDwgObject" in libdxfrw_text:
+    if version_code in dwg_writers and "writeRawDwgObject" in libdxfrw_text:
         return ("raw-replay", "same-version only; cross-version blocked", "same-version raw object", "libdxfrw reread + optional dwgread/ODA")
     return ("blocked", "fail with diagnostic", "none", "unit test diagnostic")
 
 
-def add_core_rows(repo: Path, text: str, rows: list[WriterRow]) -> None:
+def add_core_rows(
+    repo: Path, text: str, rows: list[WriterRow], dwg_writers: dict[str, str]
+) -> None:
     for version in parse_versions(repo):
-        if version.code in DWG_WRITERS:
+        if version.code in dwg_writers:
             rows.append(
                 WriterRow(
                     format="DWG",
                     target_version=version.code,
-                    output_mode=DWG_WRITERS[version.code],
+                    output_mode=dwg_writers[version.code],
                     feature_name="file-container",
                     family="container/version",
                     writer_mode="native-typed",
@@ -169,7 +178,7 @@ def add_core_rows(repo: Path, text: str, rows: list[WriterRow]) -> None:
                     WriterRow(
                         format="DWG",
                         target_version=version.code,
-                        output_mode=DWG_WRITERS[version.code],
+                        output_mode=dwg_writers[version.code],
                         feature_name="raw-dwg-object-replay",
                         family="raw/preservation",
                         writer_mode="raw-replay",
@@ -228,18 +237,31 @@ def build_rows(repo: Path) -> list[WriterRow]:
     libdxfrw = read_text(repo / "libraries/libdxfrw/src/libdxfrw.cpp")
     libdwgr = read_text(repo / "libraries/libdxfrw/src/libdwgr.cpp")
     text = libdxfrw + "\n" + libdwgr
+    dwg_writers = dwg_writer_dispatch(repo)
     rows: list[WriterRow] = []
-    add_core_rows(repo, text, rows)
+    add_core_rows(repo, text, rows, dwg_writers)
 
     features = parse_reference_features(repo / "libraries/libdxfrw/DWG_REFERENCE_COVERAGE_STATUS.md")
+    writer_versions = [
+        version.code
+        for version in parse_versions(repo)
+        if version.code in dwg_writers
+    ]
+    dxf_versions = [
+        version.code
+        for version in parse_versions(repo)
+        if version.code in DXF_WRITE_VERSIONS
+    ]
     for family, feature in features:
-        for version in ("AC1015", "AC1018", "AC1024", "AC1027", "AC1032"):
-            mode, downgrade, raw, oracle = feature_writer_mode("DWG", version, feature, text)
+        for version in writer_versions:
+            mode, downgrade, raw, oracle = feature_writer_mode(
+                "DWG", version, feature, text, dwg_writers
+            )
             rows.append(
                 WriterRow(
                     format="DWG",
                     target_version=version,
-                    output_mode=DWG_WRITERS[version],
+                    output_mode=dwg_writers[version],
                     feature_name=feature,
                     family=family,
                     writer_mode=mode,
@@ -252,9 +274,11 @@ def build_rows(repo: Path) -> list[WriterRow]:
                     advertised="no",
                 )
             )
-        for version in ("AC1009", "AC1015", "AC1024", "AC1032"):
+        for version in dxf_versions:
             for output_mode in ("DXF-ASCII", "DXF-Binary"):
-                mode, downgrade, raw, oracle = feature_writer_mode("DXF", version, feature, text)
+                mode, downgrade, raw, oracle = feature_writer_mode(
+                    "DXF", version, feature, text, dwg_writers
+                )
                 rows.append(
                     WriterRow(
                         format="DXF",

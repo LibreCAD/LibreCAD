@@ -72,9 +72,12 @@ struct RS_Entity::Impl {
     quint32 m_materialHandle = 0;   // DXF 347
     quint32 m_plotStyleHandle = 0;  // DXF 390
     int m_shadowMode = 0;           // DXF 284, DRW::CastAndReceieveShadows
+    quint32 m_shadowHandle = 0;     // DWG R2007+ AcDbShadow object
     quint32 m_fullVisualStyleH = 0; // DWG R2010+
     quint32 m_faceVisualStyleH = 0;
     quint32 m_edgeVisualStyleH = 0;
+    std::vector<quint32> m_reactorHandles;
+    quint32 m_xDictHandle = 0;
     // Source DXF/DWG entity handle (group code 5) captured on import. 0 = not
     // set / minted by LibreCAD. Lets the writer build an old->new handle map
     // for refs that point at model entities (e.g. GROUP code-340 members).
@@ -105,9 +108,12 @@ struct RS_Entity::Impl {
             m_materialHandle = other->m_materialHandle;
             m_plotStyleHandle = other->m_plotStyleHandle;
             m_shadowMode = other->m_shadowMode;
+            m_shadowHandle = other->m_shadowHandle;
             m_fullVisualStyleH = other->m_fullVisualStyleH;
             m_faceVisualStyleH = other->m_faceVisualStyleH;
             m_edgeVisualStyleH = other->m_edgeVisualStyleH;
+            m_reactorHandles = other->m_reactorHandles;
+            m_xDictHandle = other->m_xDictHandle;
             m_sourceHandle = other->m_sourceHandle;
         }
     }
@@ -1141,6 +1147,8 @@ void RS_Entity::setPlotStyleHandle(quint32 h) {
 }
 int RS_Entity::shadowMode() const { return m_pImpl->m_shadowMode; }
 void RS_Entity::setShadowMode(int mode) { m_pImpl->m_shadowMode = mode; }
+quint32 RS_Entity::shadowHandle() const { return m_pImpl->m_shadowHandle; }
+void RS_Entity::setShadowHandle(quint32 h) { m_pImpl->m_shadowHandle = h; }
 quint32 RS_Entity::fullVisualStyleHandle() const {
   return m_pImpl->m_fullVisualStyleH;
 }
@@ -1156,6 +1164,14 @@ void RS_Entity::setVisualStyleHandles(quint32 full, quint32 face,
   m_pImpl->m_faceVisualStyleH = face;
   m_pImpl->m_edgeVisualStyleH = edge;
 }
+const std::vector<quint32>& RS_Entity::reactorHandles() const {
+  return m_pImpl->m_reactorHandles;
+}
+void RS_Entity::setReactorHandles(std::vector<quint32> handles) {
+  m_pImpl->m_reactorHandles = std::move(handles);
+}
+quint32 RS_Entity::xDictHandle() const { return m_pImpl->m_xDictHandle; }
+void RS_Entity::setXDictHandle(quint32 h) { m_pImpl->m_xDictHandle = h; }
 quint32 RS_Entity::sourceHandle() const { return m_pImpl->m_sourceHandle; }
 void RS_Entity::setSourceHandle(quint32 h) { m_pImpl->m_sourceHandle = h; }
 

@@ -15,7 +15,10 @@
 #include "../libdwgr.h"
 #include "drw_textcodec.h"
 #include "drw_dbg.h"
+#include "drw_reserve.h"
+#include "dwgsafety.h"
 #include <cstring>
+#include <limits>
 #include <vector>
 //#include <bitset>
 /*#include <fstream>
@@ -113,16 +116,45 @@ union typeCast  {
 };
 
 bool dwgFileStream::setPos(std::uint64_t p){
-    if (p >= sz)
+    if (stream == nullptr || p > sz) {
+        isOk = false;
         return false;
+    }
 
+    stream->clear();
     stream->seekg(p);
-    return stream->good();
+    if (!stream->good()) {
+        isOk = false;
+        return false;
+    }
+    pos = p;
+    return true;
 }
 
 bool dwgFileStream::read(std::uint8_t* s, std::uint64_t n){
-    stream->read (reinterpret_cast<char*>(s),n);
-    return stream->good();
+    if (n == 0)
+        return true;
+    if (stream == nullptr || s == nullptr
+        || n > sz - (pos <= sz ? pos : sz)
+        || n > static_cast<std::uint64_t>(std::numeric_limits<std::streamsize>::max())) {
+        isOk = false;
+        return false;
+    }
+
+    stream->clear();
+    stream->seekg(static_cast<std::streamoff>(pos), std::ios::beg);
+    if (!stream->good()) {
+        isOk = false;
+        return false;
+    }
+    const auto count = static_cast<std::streamsize>(n);
+    stream->read(reinterpret_cast<char*>(s), count);
+    if (stream->gcount() != count || !stream->good()) {
+        isOk = false;
+        return false;
+    }
+    pos += n;
+    return true;
 }
 
 bool dwgCharStream::setPos(std::uint64_t p){
@@ -136,7 +168,9 @@ bool dwgCharStream::setPos(std::uint64_t p){
 }
 
 bool dwgCharStream::read(std::uint8_t* s, std::uint64_t n){
-    if ( n > (sz - pos) ) {
+    if (n == 0)
+        return true;
+    if (stream == nullptr || s == nullptr || pos > sz || n > (sz - pos)) {
         isOk = false;
         return false;
     }
@@ -165,7 +199,14 @@ dwgBuffer::dwgBuffer( const dwgBuffer& org )
     ,currByte{org.currByte}
     ,bitPos{org.bitPos}
     ,variableTextByteLength{org.variableTextByteLength}
+    ,invalidState{org.invalidState}
 {}
+
+dwgBuffer dwgBuffer::forkIndependent() const {
+    dwgBuffer copy(*this);
+    copy.invalidState = std::make_shared<bool>(*invalidState);
+    return copy;
+}
 
 dwgBuffer& dwgBuffer::operator=( const dwgBuffer& org ){
     filestr.reset( org.filestr->clone());
@@ -174,23 +215,25 @@ dwgBuffer& dwgBuffer::operator=( const dwgBuffer& org ){
     currByte = org.currByte;
     bitPos = org.bitPos;
     variableTextByteLength = org.variableTextByteLength;
+    invalidState = org.invalidState;
     return *this;
 }
 
 /**Gets the current byte position in buffer **/
 std::uint64_t dwgBuffer::getPosition() const{
-     if (bitPos != 0)
-         return filestr->getPos() -1;
+     if (bitPos != 0) {
+         const std::uint64_t pos = filestr->getPos();
+         return pos == 0 ? 0 : pos - 1;
+     }
      return filestr->getPos();
  }
 
 /**Sets the buffer position in pos byte, reset the bit position **/
 bool dwgBuffer::setPosition(std::uint64_t pos){
+    if (!filestr->setPos(pos))
+        return false;
     bitPos = 0;
-/*    if (pos>=maxSize)
-        return false;*/
-    return filestr->setPos(pos);
-//    return true;
+    return true;
 }
 
 //RLZ: Fails if ... ???
@@ -199,11 +242,14 @@ void dwgBuffer::setBitPos(std::uint8_t pos){
         return;
     if (pos != 0 && bitPos == 0){
         std::uint8_t buffer;
-        filestr->read (&buffer,1);
+        if (!filestr->read (&buffer,1))
+            return;
         currByte = buffer;
     }
     if (pos == 0 && bitPos != 0){//reset current byte
-        filestr->setPos(filestr->getPos()-1);
+        const std::uint64_t streamPos = filestr->getPos();
+        if (streamPos == 0 || !filestr->setPos(streamPos - 1))
+            return;
     }
     bitPos = pos;
 }
@@ -214,10 +260,24 @@ bool dwgBuffer::moveBitPos(std::int32_t size){
     const std::uint64_t oldStreamPos = filestr->getPos();
     const std::uint8_t oldBitPos = bitPos;
     const std::uint8_t oldCurrByte = currByte;
+    if (oldStreamPos > maxSize
+        || maxSize > static_cast<std::uint64_t>(std::numeric_limits<std::int64_t>::max() / 8))
+        return false;
+    const std::uint64_t bytePosition = getPosition();
+    std::uint64_t currentBitUnsigned = 0;
+    if (!dwgSafety::multiply(bytePosition, 8, currentBitUnsigned)
+        || currentBitUnsigned > static_cast<std::uint64_t>(std::numeric_limits<std::int64_t>::max() - bitPos))
+        return false;
     const std::int64_t currentBit =
-        static_cast<std::int64_t>(getPosition()) * 8 + static_cast<std::int64_t>(bitPos);
-    const std::int64_t newBit = currentBit + static_cast<std::int64_t>(size);
-    if (newBit < 0 || static_cast<std::uint64_t>(newBit) > maxSize * 8)
+        static_cast<std::int64_t>(currentBitUnsigned) + static_cast<std::int64_t>(bitPos);
+    const std::int64_t signedSize = static_cast<std::int64_t>(size);
+    if ((signedSize > 0 && currentBit > std::numeric_limits<std::int64_t>::max() - signedSize)
+        || (signedSize < 0 && currentBit < std::numeric_limits<std::int64_t>::min() - signedSize))
+        return false;
+    const std::int64_t newBit = currentBit + signedSize;
+    std::uint64_t maxBits = 0;
+    if (!dwgSafety::multiply(maxSize, 8, maxBits)
+        || newBit < 0 || static_cast<std::uint64_t>(newBit) > maxBits)
         return false;
 
     const std::uint64_t newBytePos = static_cast<std::uint64_t>(newBit / 8);
@@ -237,13 +297,97 @@ bool dwgBuffer::moveBitPos(std::int32_t size){
     return true;
 }
 
+bool dwgBuffer::getR2007StringStreamBounds(
+    std::uint64_t objectEndBit, std::uint64_t& startBit,
+    std::uint64_t& endBit) const {
+    dwgBuffer probe = forkIndependent();
+    std::uint64_t totalBits = 0;
+    if (!dwgSafety::multiply(size(), 8, totalBits)
+        || objectEndBit == 0 || objectEndBit > totalBits)
+        return false;
+
+    auto seekBits = [&](std::uint64_t bitPosition) {
+        if (bitPosition > totalBits
+            || !probe.setPosition(bitPosition >> 3))
+            return false;
+        const auto bitPos = static_cast<std::uint8_t>(bitPosition & 7);
+        probe.setBitPos(bitPos);
+        return probe.isGood() && probe.getPosition() == (bitPosition >> 3)
+            && probe.getBitPos() == bitPos;
+    };
+
+    // The presence flag is the final bit. The low size word is immediately
+    // before it; when its high bit is set, the high size word precedes it.
+    if (objectEndBit < 17 || !seekBits(objectEndBit - 1)) {
+        return false;
+    }
+    const bool hasStrings = probe.getBit() != 0;
+    if (!probe.isGood())
+        return false;
+    if (!hasStrings) {
+        startBit = objectEndBit;
+        endBit = objectEndBit;
+        return true;
+    }
+
+    if (!seekBits(objectEndBit - 17)) {
+        return false;
+    }
+    std::uint64_t encodedSize = probe.getRawShort16();
+    if (!probe.isGood())
+        return false;
+
+    std::uint64_t sizeEndBit = objectEndBit - 1;
+    if ((encodedSize & 0x8000U) != 0) {
+        if (objectEndBit < 33 || !seekBits(objectEndBit - 33)) {
+            return false;
+        }
+        const std::uint64_t highSize = probe.getRawShort16();
+        if (!probe.isGood())
+            return false;
+        encodedSize = (encodedSize & 0x7FFFU) | (highSize << 15);
+        sizeEndBit = objectEndBit - 17;
+    }
+
+    if (sizeEndBit < 16 || encodedSize > sizeEndBit - 16
+        || !seekBits(sizeEndBit - 16 - encodedSize))
+        return false;
+    startBit = sizeEndBit - 16 - encodedSize;
+    endBit = sizeEndBit - 16;
+    return true;
+}
+
+bool dwgBuffer::seekR2007StringStream(std::uint64_t objectEndBit){
+    const std::uint64_t savedPosition = getPosition();
+    const std::uint8_t savedBitPos = getBitPos();
+    std::uint64_t startBit = 0;
+    std::uint64_t endBit = 0;
+    if (!getR2007StringStreamBounds(objectEndBit, startBit, endBit))
+        return false;
+    (void)endBit;
+    if (!setPosition(startBit >> 3)) {
+        setPosition(savedPosition);
+        setBitPos(savedBitPos);
+        return false;
+    }
+    setBitPos(static_cast<std::uint8_t>(startBit & 7));
+    if (!isGood() || getPosition() != (startBit >> 3)
+        || getBitPos() != (startBit & 7)) {
+        setPosition(savedPosition);
+        setBitPos(savedBitPos);
+        return false;
+    }
+    return true;
+}
+
 /**Reads one Bit returns a char with value 0/1 (B) **/
 std::uint8_t dwgBuffer::getBit(){
     if (!isGood()) return 0;
-    std::uint8_t buffer;
+    std::uint8_t buffer = 0;
     std::uint8_t ret = 0;
     if (bitPos == 0){
-        filestr->read (&buffer,1);
+        if (!filestr->read (&buffer,1))
+            return 0;
         currByte = buffer;
     }
 
@@ -266,7 +410,8 @@ std::uint8_t dwgBuffer::get2Bits(){
     std::uint8_t buffer = 0;
     std::uint8_t ret = 0;
     if (bitPos == 0){
-        filestr->read (&buffer,1);
+        if (!filestr->read (&buffer,1))
+            return 0;
         currByte = buffer;
     }
 
@@ -275,7 +420,8 @@ std::uint8_t dwgBuffer::get2Bits(){
         ret = currByte >>(8 - bitPos);
     else {//read one bit per byte
         ret = currByte << 1;
-        filestr->read (&buffer,1);
+        if (!filestr->read (&buffer,1))
+            return 0;
         currByte = buffer;
         bitPos = 1;
         ret = ret | currByte >> 7;
@@ -355,8 +501,11 @@ double dwgBuffer::getBitDouble(){
             for (int i = 0; i < 8; i++)
                 buffer[i] = getRawChar8();
         } else {
-            filestr->read (buffer,8);
+            if (!filestr->read(buffer, sizeof(buffer)))
+                return 0.0;
         }
+        if (!isGood())
+            return 0.0;
         double ret = 0.0;
         std::memcpy(&ret, buffer, 8);
         return ret;
@@ -379,7 +528,8 @@ std::uint8_t dwgBuffer::getRawChar8(){
     if (!isGood()) return 0;   // stop cascading reads once the stream is exhausted
     std::uint8_t ret=0;
     std::uint8_t buffer=0;
-    filestr->read (&buffer,1);
+    if (!filestr->read(&buffer, 1))
+        return 0;
     if (bitPos == 0)
         return buffer;
     else {
@@ -396,7 +546,8 @@ std::uint16_t dwgBuffer::getRawShort16(){
     std::uint8_t buffer[2]={0,0};
     std::uint16_t ret=0;
 
-    filestr->read (buffer,2);
+    if (!filestr->read(buffer, sizeof(buffer)))
+        return 0;
     if (bitPos == 0) {
         /* no offset directly swap bytes for little-endian */
         ret = static_cast<std::uint16_t>((static_cast<std::uint32_t>(buffer[1]) << 8) | buffer[0]);
@@ -416,12 +567,16 @@ std::uint16_t dwgBuffer::getRawShort16(){
 double dwgBuffer::getRawDouble(){
     if (!isGood()) return 0.0;   // stop cascading reads once the stream is exhausted
     std::uint8_t buffer[8] = {0};
-    if (bitPos == 0)
-        filestr->read (buffer,8);
+    if (bitPos == 0) {
+        if (!filestr->read(buffer, sizeof(buffer)))
+            return 0.0;
+    }
     else {
         for (int i = 0; i < 8; i++)
             buffer[i] = getRawChar8();
     }
+    if (!isGood())
+        return 0.0;
     double ret = 0.0;
     std::memcpy(&ret, buffer, 8);
     return ret;
@@ -440,7 +595,8 @@ DRW_Coord dwgBuffer::get2RawDouble(){
 std::uint32_t dwgBuffer::getRawLong32(){
     std::uint16_t tmp1 = getRawShort16();
     std::uint16_t tmp2 = getRawShort16();
-    std::uint32_t ret = (tmp2 << 16) | (tmp1 & 0x0000FFFF);
+    const std::uint32_t ret = (static_cast<std::uint32_t>(tmp2) << 16)
+        | static_cast<std::uint32_t>(tmp1);
 
     return ret;
 }
@@ -454,110 +610,137 @@ std::uint64_t dwgBuffer::getRawLong64(){
     return ret;
 }
 
-/**Reads modular unsigner int, char based, compressed form, little-endian order, returns a unsigned int (U-MC) **/
-std::uint32_t dwgBuffer::getUModularChar(){
-    std::vector<std::uint8_t> buffer;
-    std::uint32_t result =0;
-    for (int i=0; i<4;i++){
-        std::uint8_t b= getRawChar8();
-        buffer.push_back(b & 0x7F);
-        if (! (b & 0x80))
-            break;
+/**Reads modular unsigned int, char based, compressed form. **/
+std::uint64_t dwgBuffer::getUModularChar(){
+    std::uint64_t result = 0;
+    std::uint64_t multiplier = 1;
+    for (int i = 0; i < 5; ++i) {
+        const std::uint8_t b = getRawChar8();
+        if (!isGood())
+            return result;
+        result += static_cast<std::uint64_t>(b & 0x7F) * multiplier;
+        if ((b & 0x80) == 0)
+            return result;
+        multiplier *= 128;
     }
-    int offset = 0;
-    for (unsigned int i=0; i<buffer.size();i++){
-        result += buffer[i] << offset;
-        offset +=7;
-    }
-//RLZ: WARNING!!! needed to verify on read handles
-    //result = result & 0x7F;
+    invalidate();
     return result;
 }
 
-/**Reads modular int, char based, compressed form, little-endian order, returns a signed int (MC) **/
-std::int32_t dwgBuffer::getModularChar(){
+/**Reads modular signed int, char based, compressed form. **/
+std::int64_t dwgBuffer::getModularChar(){
+    std::uint64_t result = 0;
+    std::uint64_t multiplier = 1;
     bool negative = false;
-    std::vector<std::int8_t> buffer;
-    std::int32_t result =0;
-    for (int i=0; i<4;i++){
-        std::uint8_t b= getRawChar8();
-        buffer.push_back(b & 0x7F);
-        if (! (b & 0x80))
-            break;
+    for (int i = 0; i < 5; ++i) {
+        std::uint8_t b = getRawChar8();
+        if (!isGood())
+            return static_cast<std::int64_t>(result);
+        const bool continuation = (b & 0x80) != 0;
+        if (!continuation && (b & 0x40) != 0) {
+            negative = true;
+            b = static_cast<std::uint8_t>(b & 0x3F);
+        }
+        result += static_cast<std::uint64_t>(b & 0x7F) * multiplier;
+        if (!continuation)
+            return negative ? -static_cast<std::int64_t>(result)
+                            : static_cast<std::int64_t>(result);
+        multiplier *= 128;
     }
-    std::int8_t b= buffer.back();
-    if (b & 0x40) {
-        negative = true;
-        buffer.pop_back();
-        buffer.push_back(b & 0x3F);
-    }
-
-    int offset = 0;
-    for (unsigned int i=0; i<buffer.size();i++){
-        result += buffer[i] << offset;
-        offset +=7;
-    }
-    if (negative)
-        result = -result;
-    return result;
+    invalidate();
+    return static_cast<std::int64_t>(result);
 }
 
 /**Reads modular int, short based, compressed form, little-endian order, returns a unsigned int (MC) **/
 std::int32_t dwgBuffer::getModularShort(){
-//    bool negative = false;
-    std::vector<std::int16_t> buffer;
-    std::int32_t result =0;
-    for (int i=0; i<2;i++){
-        std::uint16_t b= getRawShort16();
-        buffer.push_back(b & 0x7FFF);
-        if (! (b & 0x8000))
-            break;
+    std::uint32_t result = 0;
+    for (unsigned int word = 0; word < 2; ++word) {
+        const std::uint16_t raw = getRawShort16();
+        if (!isGood())
+            return 0;
+
+        result |= static_cast<std::uint32_t>(raw & 0x7FFFu)
+                  << (word * 15u);
+        if ((raw & 0x8000u) == 0)
+            return static_cast<std::int32_t>(result);
     }
 
-    //only positive ?
-/*    std::int8_t b= buffer.back();
-    if (! (b & 0x40)) {
-        negative = true;
-        buffer.pop_back();
-        buffer.push_back(b & 0x3F);
-    }*/
-
-    int offset = 0;
-    for (unsigned int i=0; i<buffer.size();i++){
-        result += buffer[i] << offset;
-        offset +=15;
-    }
-/*    if (negative)
-        result = -result;*/
-    return result;
+    // MS is exactly one or two 15-bit words. A continuation on the second
+    // word would make the following bytes belong to this field and must not
+    // be silently left for the caller.
+    invalidate();
+    return 0;
 }
 
 dwgHandle dwgBuffer::getHandle(){ //H
     dwgHandle hl;
+    if (!isGood())
+        return hl;
     std::uint8_t data = getRawChar8();
+    if (!isGood())
+        return hl;
     hl.code = (data >> 4) & 0x0F;
     hl.size = data & 0x0F;
-    hl.ref=0;
-    for (int i=0; i< hl.size;i++){
-        hl.ref = (hl.ref << 8) | getRawChar8();
+    // The object-map API remains uint32_t, but custom/common fields can carry
+    // wider handles. Keep the complete low-64-bit payload while preserving
+    // the historical low-32-bit reference for existing callers.
+    if (hl.size > sizeof(hl.ref64)) {
+        invalidate();
+        return hl;
     }
+    for (int i=0; i< hl.size; i++) {
+        const std::uint8_t byte = getRawChar8();
+        if (!isGood())
+            return hl;
+        hl.ref64 = (hl.ref64 << 8) | byte;
+    }
+    hl.ref = static_cast<std::uint32_t>(hl.ref64);
     return hl;
 }
 
-dwgHandle dwgBuffer::getOffsetHandle(std::uint32_t href){ //H
+dwgHandle dwgBuffer::getOffsetHandle(std::uint64_t href){ //H
     dwgHandle hl = getHandle();
-    if (hl.code > 5){
-        if (hl.code == 0x0C)
-            hl.ref = href - hl.ref;
-        else if (hl.code == 0x0A)
-            hl.ref = href + hl.ref;
-        else if (hl.code == 0x08)
-            hl.ref = href - 1;
-        else if (hl.code == 0x06)
-            hl.ref = href + 1;
-//all are soft pointer reference change to 7 (without offset)
+    if (!isGood())
+        return hl;
+    if (hl.code == 0x0C) {
+        if (hl.ref64 > href) {
+            invalidate();
+            return hl;
+        }
+        hl.ref64 = href - hl.ref64;
+        hl.code = 7;
+    } else if (hl.code == 0x0A) {
+        if (hl.ref64 > std::numeric_limits<std::uint64_t>::max() - href) {
+            invalidate();
+            return hl;
+        }
+        hl.ref64 = href + hl.ref64;
+        hl.code = 7;
+    } else if (hl.code == 0x08) {
+        if (href == 0) {
+            invalidate();
+            return hl;
+        }
+        hl.ref64 = href - 1;
+        hl.code = 7;
+    } else if (hl.code == 0x06) {
+        if (href == std::numeric_limits<std::uint64_t>::max()) {
+            invalidate();
+            return hl;
+        }
+        hl.ref64 = href + 1;
+        hl.code = 7;
+    } else if (hl.code == 0x0E) {
+        // Modern REGION history references use code E to refer back to the
+        // containing object, independent of the encoded payload.
+        hl.ref64 = href;
+        hl.code = 7;
+    } else if (hl.code > 7) {
+        // Preserve the historical tolerant handling for custom fields whose
+        // code is not one of the four documented relative forms.
         hl.code = 7;
     }
+    hl.ref = static_cast<std::uint32_t>(hl.ref64);
     return hl;
 }
 
@@ -566,7 +749,9 @@ std::string dwgBuffer::get8bitStr(){
     std::uint16_t textSize = getBitShort();
     if (textSize == 0)
         return std::string();
-    std::vector<std::uint8_t> tmpBuffer(textSize);
+    std::vector<std::uint8_t> tmpBuffer;
+    if (!DRW::resize(tmpBuffer, static_cast<int>(textSize)))
+        return std::string();
     bool good = getBytes(tmpBuffer.data(), textSize);
     if (!good)
         return std::string();
@@ -596,19 +781,19 @@ std::string dwgBuffer::get8bitStr(){
 std::string dwgBuffer::get16bitStr(std::uint16_t textSize, bool nullTerm){
     if (textSize == 0)
         return std::string();
-    textSize *=2;
-    std::uint16_t ts = textSize;
-    if (nullTerm)
-        ts += 2;
-    std::vector<std::uint8_t> tmpBuffer(static_cast<std::size_t>(textSize) + 2);
-    bool good = getBytes(tmpBuffer.data(), ts);
+    const std::uint32_t byteCount = static_cast<std::uint32_t>(textSize) * 2;
+    const std::uint32_t readCount = byteCount + (nullTerm ? 2U : 0U);
+    std::vector<std::uint8_t> tmpBuffer;
+    if (!DRW::resize(tmpBuffer, static_cast<int>(byteCount + 2)))
+        return std::string();
+    bool good = getBytes(tmpBuffer.data(), readCount);
     if (!good)
         return std::string();
     if (!nullTerm) {
-        tmpBuffer[textSize] = '\0';
-        tmpBuffer[textSize + 1] = '\0';
+        tmpBuffer[byteCount] = '\0';
+        tmpBuffer[byteCount + 1] = '\0';
     }
-    std::string str(reinterpret_cast<char*>(tmpBuffer.data()), ts);
+    std::string str(reinterpret_cast<char*>(tmpBuffer.data()), readCount);
 
     return str;
 }
@@ -621,6 +806,13 @@ std::string dwgBuffer::getCP8Text(){
         return strData;
 
     return decoder->toUtf8(strData);
+}
+
+std::string dwgBuffer::getENCText(){
+    std::string strData = get8bitStr();
+    if (!decoder)
+        return strData;
+    return decoder->toUtf8CP8(strData);
 }
 
 //TU unicode 16 bit (UCS) text converted to utf8
@@ -641,19 +833,27 @@ std::string dwgBuffer::getUCSStr(std::uint16_t ts){
 //TU unicode 16 bit (UCS) text converted to utf8
 //nullTerm = true if string are 2 bytes null terminated from the stream
 std::string dwgBuffer::getUCSText(bool nullTerm){
+    const auto stripTrailingNulls = [](std::string value) {
+        while (!value.empty() && value.back() == '\0')
+            value.pop_back();
+        return value;
+    };
     std::string strData;
     std::uint16_t ts = getBitShort();
     if (ts == 0)
         return std::string();
 
     if (variableTextByteLength) {
-        std::vector<std::uint8_t> raw(static_cast<size_t>(ts) + 2, 0);
+        std::vector<std::uint8_t> raw;
+        if (!DRW::resize(raw, static_cast<int>(ts) + 2))
+            return std::string();
+        std::fill(raw.begin(), raw.end(), 0);
         if (!getBytes(raw.data(), ts))
             return std::string();
         strData.assign(reinterpret_cast<const char*>(raw.data()), ts);
         if (!decoder)
             return strData;
-        return decoder->toUtf8(strData);
+        return stripTrailingNulls(decoder->toUtf8(strData));
     }
 
     // getUCSText is only reached for R2007+ (v > AC1018), where on-disk text is
@@ -662,7 +862,7 @@ std::string dwgBuffer::getUCSText(bool nullTerm){
     if (!decoder)
         return strData;
 
-    return decoder->toUtf8(strData);
+    return stripTrailingNulls(decoder->toUtf8(strData));
 }
 
 //RLZ: read a T or TU if version is 2007+
@@ -707,38 +907,47 @@ DRW_Coord dwgBuffer::getExtrusion(bool b_R2000_style) {
 
 /**Reads compressed Double with default (max. 64 + 2 bits) returns a floating point double of 64 bits (DD) **/
 double dwgBuffer::getDefaultDouble(double d){
-    std::int8_t b = get2Bits();
+    const std::int8_t b = get2Bits();
+    if (!isGood())
+        return 0.0;
     if (b == 0)
         return d;
     else if (b == 1){
-        std::uint8_t buffer[4];
-        char *tmp=nullptr;
+        std::uint8_t buffer[4] = {};
         if (bitPos != 0) {
             for (int i = 0; i < 4; i++)
                 buffer[i] = getRawChar8();
         } else {
-        filestr->read (buffer,4);
+            if (!filestr->read(buffer, sizeof(buffer)))
+                return 0.0;
         }
-        tmp = reinterpret_cast<char*>(&d);
-        for (int i = 0; i < 4; i++)
-            tmp[i] = buffer[i];
-        double ret = *reinterpret_cast<double*>( tmp );
+        if (!isGood())
+            return 0.0;
+        std::uint8_t raw[sizeof(double)] = {};
+        std::memcpy(raw, &d, sizeof(raw));
+        std::memcpy(raw, buffer, sizeof(buffer));
+        double ret = 0.0;
+        std::memcpy(&ret, raw, sizeof(ret));
         return ret;
     } else if (b == 2){
-        std::uint8_t buffer[6];
-        char *tmp=nullptr;
+        std::uint8_t buffer[6] = {};
         if (bitPos != 0) {
             for (int i = 0; i < 6; i++)
                 buffer[i] = getRawChar8();
         } else {
-        filestr->read (buffer,6);
+            if (!filestr->read(buffer, sizeof(buffer)))
+                return 0.0;
         }
-        tmp = reinterpret_cast<char*>(&d);
+        if (!isGood())
+            return 0.0;
+        std::uint8_t raw[sizeof(double)] = {};
+        std::memcpy(raw, &d, sizeof(raw));
         for (int i = 2; i < 6; i++)
-            tmp[i-2] = buffer[i];
-        tmp[4] = buffer[0];
-        tmp[5] = buffer[1];
-        double ret = *reinterpret_cast<double*>( tmp );
+            raw[i - 2] = buffer[i];
+        raw[4] = buffer[0];
+        raw[5] = buffer[1];
+        double ret = 0.0;
+        std::memcpy(&ret, raw, sizeof(ret));
         return ret;
     }
     //    if (b == 3) return a full raw double
@@ -768,7 +977,10 @@ double dwgBuffer::getThickness(bool b_R2000_style) {
 std::uint32_t dwgBuffer::getCmColor(DRW::Version v, std::int32_t* rgb24,
                               dwgBuffer* strBuf,
                               UTF8STRING* outName,
-                              UTF8STRING* outBookName) {
+                              UTF8STRING* outBookName,
+                              bool* hasRgbColor) {
+    if (hasRgbColor != nullptr)
+        *hasRgbColor = false;
     if (v < DRW::AC1018) //2000-
         return getSBitShort();
     std::uint16_t idx = getBitShort();
@@ -800,6 +1012,8 @@ std::uint32_t dwgBuffer::getCmColor(DRW::Version v, std::int32_t* rgb24,
     case dwgColor::BYBLOCK:
         return 0;
     case dwgColor::RGB:
+        if (hasRgbColor)
+            *hasRgbColor = true;
         if (rgb24)
             *rgb24 = static_cast<std::int32_t>(rgb & 0xFFFFFF);
         return 256;
@@ -818,6 +1032,11 @@ std::uint32_t dwgBuffer::getCmColor(DRW::Version v, std::int32_t* rgb24,
 * RGB value, first 4bits 0xC0 => ByLayer, 0xC1 => ByBlock, 0xC2 => RGB,  0xC3 => last 4 are ACIS
 */
 std::uint32_t dwgBuffer::getEnColor(DRW::Version v) {
+    lastEnColorAlphaRaw = 0;
+    lastEnColorHadDbColorRef = false;
+    lastEnColorName.clear();
+    lastEnColorBookName.clear();
+    lastEnColorRgb = -1;
     if (v < DRW::AC1018) //2000-
         return getSBitShort();
     std::uint32_t rgb = 0;
@@ -830,14 +1049,17 @@ std::uint32_t dwgBuffer::getEnColor(DRW::Version v) {
     idx = idx & 0x1FF;
     DRW_DBG("\nflag COLOR: "); DRW_DBGH(flags);
     DRW_DBG(", index COLOR: "); DRW_DBGH(idx);
-//    if (flags & 0x80) {
-//        rgb = getBitLong();
-//        DRW_DBG("\nRGB COLOR: "); DRW_DBGH(rgb);
-//    }
+    // ODA, ACadSharp, and dwg-parser all read inline RGB before alpha.
+    // Both fields are BL; reversing them produces a plausible but invalid
+    // alpha type whenever an ENC carries both values.
+    if ((flags & 0x40) == 0 && (flags & 0x80)) {
+        rgb = getBitLong();
+        lastEnColorRgb = static_cast<std::int32_t>(rgb & 0x00FFFFFFu);
+        DRW_DBG("\nRGB COLOR: "); DRW_DBGH(rgb);
+    }
     // libreDWG common_entity_data.spec:432-453 — when flag 0x20 set, BL
     // alpha_raw follows. High byte is alpha_type (0/1/3), low byte is
     // alpha 0..255. Stored in side-channel for DRW_Entity::parseDwg.
-    lastEnColorAlphaRaw = 0;
     if (flags & 0x20) {
         lastEnColorAlphaRaw = static_cast<std::uint32_t>(getBitLong());
         DRW_DBG("\nTransparency COLOR (alpha_raw): "); DRW_DBGH(lastEnColorAlphaRaw);
@@ -846,28 +1068,22 @@ std::uint32_t dwgBuffer::getEnColor(DRW::Version v) {
     // handle reference follows in hdl_dat — set side-channel flag for
     // DRW_Entity::parseDwg / parseDwgEntHandle to consume it from the handle
     // stream. When 0x40 NOT set but 0x80 IS set, an inline RGB BL follows.
-    lastEnColorHadDbColorRef = false;
     if (flags & 0x40) {
         DRW_DBG("\nacdbColor COLOR ref (handle in hdl_dat)");
         lastEnColorHadDbColorRef = true;
-    } else if (flags & 0x80) {
-        rgb = getBitLong();
-        DRW_DBG("\nRGB COLOR: "); DRW_DBGH(rgb);
     }
     // libreDWG common_entity_data.spec:468-475 — when 0x41/0x42 set
     // (i.e., 0x40 + bit 0/1), inline 8-bit TV strings follow. libreDWG
     // explicitly uses FIELD_TV (8-bit from dat), not FIELD_T (which would
     // dispatch to TU/str_dat for R2007+) — deliberate spec quirk verified
-    // against real files. We use getCP8Text which reads 8-bit length-
-    // prefixed and codepage-decodes to UTF-8.
-    lastEnColorName.clear();
-    lastEnColorBookName.clear();
+    // against real files. Decode through the secondary file-codepage codec:
+    // the normal AC1021 codec is UTF-16, while ENC remains byte-oriented.
     if ((flags & 0x41) == 0x41) {
-        lastEnColorName = getCP8Text();
+        lastEnColorName = getENCText();
         DRW_DBG("\nENC color name: "); DRW_DBG(lastEnColorName);
     }
     if ((flags & 0x42) == 0x42) {
-        lastEnColorBookName = getCP8Text();
+        lastEnColorBookName = getENCText();
         DRW_DBG("\nENC book name: "); DRW_DBG(lastEnColorBookName);
     }
 
@@ -891,6 +1107,10 @@ std::uint16_t dwgBuffer::getBERawShort16(){
 
 /* reads "size" bytes and stores in "buf" return false if fail */
 bool dwgBuffer::getBytes(unsigned char *buf, std::uint64_t size){
+    if (size == 0)
+        return true;
+    if (buf == nullptr)
+        return false;
     std::uint8_t tmp;
     filestr->read (buf,size);
     if (!filestr->good())
@@ -932,9 +1152,13 @@ std::uint16_t dwgBuffer::crc8(std::uint16_t dx,std::int32_t start,std::int32_t e
     // Guard against a negative/empty byte range from a corrupt section size:
     // `new std::uint8_t[end-start]` would compute a negative size (huge size_t).
     // An empty fold leaves the seed unchanged, so return dx.
-    if (end <= start)
+    if (start < 0 || end < 0 || end <= start)
         return dx;
-    int n = end-start;
+    const std::int64_t range = static_cast<std::int64_t>(end)
+        - static_cast<std::int64_t>(start);
+    if (range > std::numeric_limits<int>::max())
+        return dx;
+    const int n = static_cast<int>(range);
     // Fast path: fold directly over the already-in-memory buffer (the common
     // case -- pages/records are read into a dwgCharStream) instead of
     // seeking + copying into a scratch buffer. Byte-identical to the
@@ -946,11 +1170,14 @@ std::uint16_t dwgBuffer::crc8(std::uint16_t dx,std::int32_t start,std::int32_t e
         return crc8Fold(dp, n, dx);
 
     std::uint64_t pos = filestr->getPos();
-    filestr->setPos(start);
-    std::vector<std::uint8_t> tmpBuf(n);
+    if (!filestr->setPos(static_cast<std::uint64_t>(start)))
+        return dx;
+    std::vector<std::uint8_t> tmpBuf;
+    if (!DRW::resize(tmpBuf, n))
+        return dx;
     filestr->read (tmpBuf.data(),n);
-    filestr->setPos(pos);
-    if (!filestr->good())
+    const bool restored = filestr->setPos(pos);
+    if (!restored || !filestr->good())
         return 0;
     return crc8Fold(tmpBuf.data(), n, dx);
 }
@@ -958,20 +1185,27 @@ std::uint16_t dwgBuffer::crc8(std::uint16_t dx,std::int32_t start,std::int32_t e
 std::uint32_t dwgBuffer::crc32(std::uint32_t seed,std::int32_t start,std::int32_t end){
     // Guard against a negative/empty byte range (see crc8). The empty-range
     // identity of this fold is the seed: ~(~seed) == seed.
-    if (end <= start)
+    if (start < 0 || end < 0 || end <= start)
         return seed;
-    int n = end-start;
+    const std::int64_t range = static_cast<std::int64_t>(end)
+        - static_cast<std::int64_t>(start);
+    if (range > std::numeric_limits<int>::max())
+        return seed;
+    const int n = static_cast<int>(range);
     // Fast path -- see crc8 above.
     if (const std::uint8_t *dp = filestr->directPointer(
             static_cast<std::uint64_t>(start), static_cast<std::uint64_t>(n)))
         return crc32Fold(dp, n, seed);
 
     std::uint64_t pos = filestr->getPos();
-    filestr->setPos(start);
-    std::vector<std::uint8_t> tmpBuf(n);
+    if (!filestr->setPos(static_cast<std::uint64_t>(start)))
+        return seed;
+    std::vector<std::uint8_t> tmpBuf;
+    if (!DRW::resize(tmpBuf, n))
+        return seed;
     filestr->read (tmpBuf.data(),n);
-    filestr->setPos(pos);
-    if (!filestr->good())
+    const bool restored = filestr->setPos(pos);
+    if (!restored || !filestr->good())
         return 0;
     return crc32Fold(tmpBuf.data(), n, seed);
 }

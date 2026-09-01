@@ -41,6 +41,15 @@ from dwg_inventory_common import repo_root_from_script
 DEFAULT_MANIFEST = Path("tests/fixtures/fixture_manifest.json")
 DEFAULT_ORACLES = Path("tests/fixtures/oracles.json")
 VALID_ORACLE_MODES = {"optional", "required", "local-only"}
+DEFAULT_DWG_VERSIONS = {
+    "AC1015",
+    "AC1018",
+    "AC1021",
+    "AC1024",
+    "AC1027",
+    "AC1032",
+}
+VALID_EVIDENCE_ROLES = {"reader", "writer-readback", "both"}
 
 REQUIRED_FIELDS = {
     "id",
@@ -69,6 +78,19 @@ def load_json(path: Path) -> object:
         raise SystemExit(f"error: invalid JSON in {path}: {exc}") from exc
 
 
+def dxf_header_version(path: Path) -> str | None:
+    try:
+        lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
+    except OSError:
+        return None
+    pairs = [(lines[index].strip(), lines[index + 1].strip())
+             for index in range(0, len(lines) - 1, 2)]
+    for index, (code, value) in enumerate(pairs[:-1]):
+        if code == "9" and value == "$ACADVER" and pairs[index + 1][0] == "1":
+            return pairs[index + 1][1]
+    return None
+
+
 def validate_fixture(repo: Path, fixture: object, index: int) -> list[str]:
     errors: list[str] = []
     if not isinstance(fixture, dict):
@@ -79,6 +101,7 @@ def validate_fixture(repo: Path, fixture: object, index: int) -> list[str]:
 
     fixture_id = str(fixture.get("id", f"fixtures[{index}]"))
     rel_path = fixture.get("path")
+    file_path: Path | None = None
     if not isinstance(rel_path, str) or not rel_path:
         errors.append(f"{fixture_id}: path must be a non-empty string")
     elif Path(rel_path).is_absolute() or rel_path.startswith("${"):
@@ -102,6 +125,39 @@ def validate_fixture(repo: Path, fixture: object, index: int) -> list[str]:
             errors.append(f"{fixture_id}: default fixture requires a clear license")
         if fixture.get("redistribution") not in {"allowed", "repo", "public"}:
             errors.append(f"{fixture_id}: default fixture redistribution must allow CI use")
+        role = fixture.get("evidenceRole")
+        if role not in VALID_EVIDENCE_ROLES:
+            errors.append(f"{fixture_id}: default fixture requires a valid evidenceRole")
+        provenance = fixture.get("provenance")
+        has_source_and_license = (isinstance(provenance, dict)
+                                  and all(isinstance(provenance.get(field), str)
+                                          and provenance[field]
+                                          for field in ("source", "licenseBasis")))
+        has_origin = (isinstance(provenance, dict)
+                      and any(isinstance(provenance.get(field), str)
+                              and provenance[field]
+                              for field in ("importCommit", "createdBy")))
+        if not has_source_and_license or not has_origin:
+            errors.append(f"{fixture_id}: default fixture requires source, licenseBasis, and importCommit or createdBy provenance")
+        expected_outcomes = fixture.get("expectedOutcomes")
+        if expected_outcomes is not None and not isinstance(expected_outcomes, dict):
+            errors.append(f"{fixture_id}: expectedOutcomes must be an object when present")
+        if fixture.get("format") == "DWG":
+            version = fixture.get("version")
+            if not isinstance(version, str) or len(version) != 6:
+                errors.append(f"{fixture_id}: default DWG version must be a six-byte magic")
+            elif file_path is not None and file_path.is_file():
+                magic = file_path.read_bytes()[:6]
+                if magic != version.encode("ascii"):
+                    errors.append(f"{fixture_id}: DWG magic {magic!r} does not match {version}")
+        elif fixture.get("format") == "DXF":
+            version = fixture.get("version")
+            if not isinstance(version, str) or not version:
+                errors.append(f"{fixture_id}: default DXF requires a declared version")
+            elif file_path is not None and file_path.is_file():
+                declared_version = dxf_header_version(file_path)
+                if declared_version != version:
+                    errors.append(f"{fixture_id}: DXF $ACADVER {declared_version!r} does not match {version}")
 
     for field in ("featureFamilies", "versionRows", "dwgTsRows", "writerRows", "expectedDiagnostics", "requiredOracles"):
         if field in fixture and not isinstance(fixture[field], list):
@@ -125,6 +181,7 @@ def validate_manifest(repo: Path, manifest_path: Path) -> list[str]:
         return errors
 
     seen: set[str] = set()
+    default_reader_versions: set[str] = set()
     for index, fixture in enumerate(fixtures):
         if isinstance(fixture, dict):
             fixture_id = fixture.get("id")
@@ -132,7 +189,16 @@ def validate_manifest(repo: Path, manifest_path: Path) -> list[str]:
                 if fixture_id in seen:
                     errors.append(f"{fixture_id}: duplicate fixture id")
                 seen.add(fixture_id)
+            if (fixture.get("defaultEnabled") is True
+                    and fixture.get("format") == "DWG"
+                    and fixture.get("evidenceRole") in {"reader", "both"}
+                    and isinstance(fixture.get("version"), str)):
+                default_reader_versions.add(fixture["version"])
         errors.extend(validate_fixture(repo, fixture, index))
+    missing_default_versions = DEFAULT_DWG_VERSIONS - default_reader_versions
+    if missing_default_versions:
+        errors.append("default DWG reader fixtures missing versions: "
+                      + ", ".join(sorted(missing_default_versions)))
     return errors
 
 

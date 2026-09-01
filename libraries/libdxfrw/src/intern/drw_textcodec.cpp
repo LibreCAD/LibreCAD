@@ -19,6 +19,8 @@ DRW_TextCodec::DRW_TextCodec()
 DRW_TextCodec::~DRW_TextCodec() = default;
 
 void DRW_TextCodec::setVersion(DRW::Version v, bool dxfFormat){
+    sourceVersion = v;
+    m_sourceVersionSet = v != DRW::UNKNOWNV;
     switch (v)
     {
         case DRW::UNKNOWNV:
@@ -77,6 +79,8 @@ void DRW_TextCodec::setVersion(DRW::Version v, bool dxfFormat){
 
 void DRW_TextCodec::setVersion(const std::string &v, bool dxfFormat){
     version = DRW::UNKNOWNV;
+    sourceVersion = DRW::UNKNOWNV;
+    m_sourceVersionSet = false;
     for (const auto& [verName, verId] : DRW::dwgVersionStrings)
     {
         if ( v == verName ) {
@@ -137,6 +141,20 @@ std::string DRW_TextCodec::toUtf8(std::string_view s) {
 
 std::string DRW_TextCodec::fromUtf8(std::string_view s) {
     return conv->fromUtf8(s);
+}
+
+std::string DRW_TextCodec::fromUtf8CP8(std::string_view s) {
+    return cp8Conv ? cp8Conv->fromUtf8(s) : std::string{s};
+}
+
+std::string DRW_TextCodec::toUtf8CP8(std::string_view s) {
+    return cp8Conv ? cp8Conv->toUtf8(s) : std::string{s};
+}
+
+void DRW_TextCodec::setByteCodePage(const std::string &c) {
+    DRW_TextCodec byteCodec;
+    byteCodec.setCodePage(c, false);
+    cp8Conv = std::move(byteCodec.conv);
 }
 
 std::string DRW_Converter::toUtf8(std::string_view s) {

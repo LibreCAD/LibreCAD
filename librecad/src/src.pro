@@ -124,6 +124,7 @@ LIBS += -L../../generated/lib  \
 INCLUDEPATH += \
     ../../libraries/lciconengine \
     ../../libraries/libdxfrw/src \
+    ../../libraries/libdxfrw/src/intern \
     ../../libraries/jwwlib/src \
     ../../libraries/shapelib/src \
     cmd \
@@ -2327,6 +2328,7 @@ SOURCES += \
     plugins/intern/qc_actiongetselect.cpp \
     plugins/intern/qc_actiongetent.cpp \
     main/main.cpp \
+    main/lc_release_label.cpp \
     main/console_dxf2dwg.cpp \
     main/console_dxf2pdf/console_dxf2pdf.cpp \
     main/console_dxf2pdf/pdf_print_loop.cpp

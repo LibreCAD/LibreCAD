@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """ezdxf_audit.py — external DXF read/audit validator for the DXF-completeness work.
 
-Given a directory of DXF files, ezdxf.readfile() + audit() each one and report:
+Given a DXF file or directory of DXF files, ezdxf.readfile() + audit() each one and report:
   - read failures (exception while parsing)
   - non-unique-handle audit errors (and any other audit ERROR-level entries)
   - audit fixes (count, by class)
@@ -12,12 +12,12 @@ for files that exist in both directories (matched by basename), so a round-trip
 through RS_FilterDXFRW can be checked for dropped/added types.
 
 Usage:
-  ezdxf_audit.py OUTDIR [--input INDIR] [--quiet]
+  ezdxf_audit.py SOURCE [--input INDIR] [--quiet]
 
 Exit status:
   0  every file read OK and no audit ERROR entries (fixes are allowed/reported)
   1  at least one read failure or audit ERROR
-  2  setup error (ezdxf missing, bad dir)
+  2  setup error (ezdxf missing, bad path)
 
 This intentionally reuses the audit logic proven during the DXF-completeness
 session: a.errors must be empty; a.fixes are tolerated and counted.
@@ -97,19 +97,31 @@ def audit_file(path):
 
 
 def main(argv):
-    ap = argparse.ArgumentParser(description="ezdxf read/audit a directory of DXFs.")
-    ap.add_argument("outdir", help="directory of DXF files to audit")
+    ap = argparse.ArgumentParser(description="ezdxf read/audit DXF files.")
+    ap.add_argument("source", nargs="?", help="DXF file or directory of DXF files to audit")
     ap.add_argument("--input", help="paired input directory for in->out type diff")
     ap.add_argument("--quiet", action="store_true", help="suppress per-file OK lines")
+    ap.add_argument("--version", action="store_true", help="print the ezdxf version")
     args = ap.parse_args(argv)
 
-    if not os.path.isdir(args.outdir):
-        sys.stderr.write(f"error: not a directory: {args.outdir}\n")
+    if args.version:
+        print(ezdxf.__version__)
+        return 0
+    if not args.source:
+        sys.stderr.write("error: a DXF file or directory is required\n")
         return 2
-
-    files = list_dxf(args.outdir)
+    if os.path.isdir(args.source):
+        files = list_dxf(args.source)
+    elif os.path.isfile(args.source) and args.source.lower().endswith(".dxf"):
+        files = [args.source]
+    else:
+        sys.stderr.write(f"error: not a DXF file or directory: {args.source}\n")
+        return 2
     if not files:
-        sys.stderr.write(f"error: no .dxf files in {args.outdir}\n")
+        sys.stderr.write(f"error: no .dxf files in {args.source}\n")
+        return 2
+    if args.input and not os.path.isdir(args.input):
+        sys.stderr.write(f"error: paired input is not a directory: {args.input}\n")
         return 2
 
     total = len(files)
@@ -119,7 +131,7 @@ def main(argv):
     total_fixes = 0
     fix_totals = collections.Counter()
 
-    print(f"== ezdxf {ezdxf.__version__} auditing {total} DXF file(s) in {args.outdir}")
+    print(f"== ezdxf {ezdxf.__version__} auditing {total} DXF file(s) in {args.source}")
     for path in files:
         base = os.path.basename(path)
         ok, n_err, err_lines, n_fix, fix_classes = audit_file(path)

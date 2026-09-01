@@ -3,12 +3,14 @@
 #include <cmath>
 #include <cstdint>
 #include <cstring>
+#include <limits>
 #include <string>
 #include <vector>
 
 #include "../drw_entities.h"
 #include "../drw_interface.h"
 #include "drw_dbg.h"
+#include "drw_reserve.h"
 #include "drw_textcodec.h"
 #include "dwgbuffer.h"
 
@@ -168,6 +170,49 @@ struct DrawState {
     std::string lineType;          // empty == inherit parent
 };
 
+class DecodeContext {
+public:
+    DecodeContext(DRW_ProxyGraphicSink& sink,
+                  const DRW_ProxyGraphicLimits& limits,
+                  DRW_ProxyGraphicDecodeResult& result) noexcept
+        : m_sink(sink), m_limits(limits), m_result(result) {}
+
+    template<typename T>
+    bool emit(const T& value,
+              bool (DRW_ProxyGraphicSink::*callback)(const T&)) {
+        if (!m_result.completed())
+            return false;
+        if (m_result.emittedPrimitiveCount >= m_limits.maxPrimitiveCount) {
+            fail(DRW_ProxyGraphicStopReason::PrimitiveLimit);
+            return false;
+        }
+        if (!(m_sink.*callback)(value)) {
+            fail(DRW_ProxyGraphicStopReason::SinkRefused);
+            return false;
+        }
+        ++m_result.emittedPrimitiveCount;
+        return true;
+    }
+
+    void fail(DRW_ProxyGraphicStopReason reason) noexcept {
+        if (m_result.completed())
+            m_result.stopReason = reason;
+    }
+
+    [[nodiscard]] bool stopped() const noexcept {
+        return !m_result.completed();
+    }
+
+    [[nodiscard]] const DRW_ProxyGraphicLimits& limits() const noexcept {
+        return m_limits;
+    }
+
+private:
+    DRW_ProxyGraphicSink& m_sink;
+    const DRW_ProxyGraphicLimits& m_limits;
+    DRW_ProxyGraphicDecodeResult& m_result;
+};
+
 // Apply the owning entity's identity plus the accumulated colour state onto a
 // freshly decoded primitive so it lands in the right container and renders with
 // the proxy's colour.  Coordinates are emitted verbatim (WCS) with a Z
@@ -205,9 +250,8 @@ bool circumcenter2d(const DRW_Coord &a, const DRW_Coord &b, const DRW_Coord &c,
 // (arc.py:319) → start angle from p1, end angle from p3 (CCW), p2 only
 // constrains the circle.  The trailing arc_type long is NOT read (commented out
 // in ezdxf).
-void doArc3p(const std::uint8_t *p, std::size_t n, DRW_Interface &iface,
-             const DRW_Entity &parent, const DrawState &st, const Matrix *xf,
-             int &count) {
+void doArc3p(const std::uint8_t *p, std::size_t n, DecodeContext& context,
+             const DRW_Entity &parent, const DrawState &st, const Matrix *xf) {
     ByteStream bs(p, n);
     DRW_Coord p1 = bs.readVertex();  // start
     DRW_Coord p2 = bs.readVertex();  // definition point (only constrains the circle)
@@ -227,14 +271,12 @@ void doArc3p(const std::uint8_t *p, std::size_t n, DRW_Interface &iface,
     e.endangle = std::atan2(p3.y - cy, p3.x - cx); // end = p3 (CCW, no swap)
     e.extPoint = DRW_Coord(0, 0, 1);
     applyAttribs(e, parent, st);
-    iface.addArc(e);
-    ++count;
+    (void)context.emit(e, &DRW_ProxyGraphicSink::addArc);
 }
 
 // --- opcode 3: CIRCLE_3P (proxygraphic.py:425) ---
-void doCircle3p(const std::uint8_t *p, std::size_t n, DRW_Interface &iface,
-                const DRW_Entity &parent, const DrawState &st, const Matrix *xf,
-                int &count) {
+void doCircle3p(const std::uint8_t *p, std::size_t n, DecodeContext& context,
+                const DRW_Entity &parent, const DrawState &st, const Matrix *xf) {
     ByteStream bs(p, n);
     DRW_Coord p1 = bs.readVertex();
     DRW_Coord p2 = bs.readVertex();
@@ -250,14 +292,12 @@ void doCircle3p(const std::uint8_t *p, std::size_t n, DRW_Interface &iface,
     e.radious = std::hypot(p1.x - cx, p1.y - cy);
     e.extPoint = DRW_Coord(0, 0, 1);
     applyAttribs(e, parent, st);
-    iface.addCircle(e);
-    ++count;
+    (void)context.emit(e, &DRW_ProxyGraphicSink::addCircle);
 }
 
 // --- opcode 2: CIRCLE (proxygraphic.py:408) ---
-void doCircle(const std::uint8_t *p, std::size_t n, DRW_Interface &iface,
-              const DRW_Entity &parent, const DrawState &st, const Matrix *xf,
-              int &count) {
+void doCircle(const std::uint8_t *p, std::size_t n, DecodeContext& context,
+              const DRW_Entity &parent, const DrawState &st, const Matrix *xf) {
     ByteStream bs(p, n);
     DRW_Circle e;
     const DRW_Coord centre = bs.readVertex();
@@ -269,14 +309,12 @@ void doCircle(const std::uint8_t *p, std::size_t n, DRW_Interface &iface,
     e.radious = radius * xfScale(xf);
     e.extPoint = DRW_Coord(0, 0, 1);
     applyAttribs(e, parent, st);
-    iface.addCircle(e);
-    ++count;
+    (void)context.emit(e, &DRW_ProxyGraphicSink::addCircle);
 }
 
 // --- opcode 4: CIRCULAR_ARC (proxygraphic.py:436) ---
-void doArc(const std::uint8_t *p, std::size_t n, DRW_Interface &iface,
-           const DRW_Entity &parent, const DrawState &st, const Matrix *xf,
-           int &count) {
+void doArc(const std::uint8_t *p, std::size_t n, DecodeContext& context,
+           const DRW_Entity &parent, const DrawState &st, const Matrix *xf) {
     ByteStream bs(p, n);
     DRW_Arc e;
     const DRW_Coord centre = bs.readVertex();  // center (WCS)
@@ -295,14 +333,12 @@ void doArc(const std::uint8_t *p, std::size_t n, DRW_Interface &iface,
     e.endangle = e.staangle + sweep;
     e.extPoint = DRW_Coord(0, 0, 1);
     applyAttribs(e, parent, st);
-    iface.addArc(e);
-    ++count;
+    (void)context.emit(e, &DRW_ProxyGraphicSink::addArc);
 }
 
 // --- opcode 44: ELLIPTIC_ARC (proxygraphic.py:484) ---
-void doEllipse(const std::uint8_t *p, std::size_t n, DRW_Interface &iface,
-               const DRW_Entity &parent, const DrawState &st, const Matrix *xf,
-               int &count) {
+void doEllipse(const std::uint8_t *p, std::size_t n, DecodeContext& context,
+               const DRW_Entity &parent, const DrawState &st, const Matrix *xf) {
     ByteStream bs(p, n);
     DRW_Ellipse e;
     const DRW_Coord centre = bs.readVertex();   // center
@@ -323,22 +359,32 @@ void doEllipse(const std::uint8_t *p, std::size_t n, DRW_Interface &iface,
     e.endparam = endParam;
     e.extPoint = DRW_Coord(0, 0, 1);
     applyAttribs(e, parent, st);
-    iface.addEllipse(e);
-    ++count;
+    (void)context.emit(e, &DRW_ProxyGraphicSink::addEllipse);
 }
 
 // --- opcodes 6 / 7 / 32: POLYLINE / POLYGON (proxygraphic.py:536) ---
 // _load_vertices (proxygraphic.py:849): L count [+1 if load_normal] then
 // count×3d.  A POLYGON (7) is a closed POLYLINE.
 void doPolyline(const std::uint8_t *p, std::size_t n, bool closed, bool loadNormal,
-                DRW_Interface &iface, const DRW_Entity &parent, const DrawState &st,
-                const Matrix *xf, int &count) {
+                DecodeContext& context, const DRW_Entity &parent,
+                const DrawState &st, const Matrix *xf) {
     ByteStream bs(p, n);
     std::uint32_t vcount = bs.readLong();
-    if (loadNormal) vcount += 1; // last vertex is the normal
-    if (vcount == 0 || vcount > 1000000u) return;
+    if (loadNormal) {
+        if (vcount == std::numeric_limits<std::uint32_t>::max())
+            return;
+        vcount += 1; // last vertex is the normal
+    }
+    if (vcount == 0) return;
+    if (vcount > context.limits().maxPolylineVertices) {
+        context.fail(DRW_ProxyGraphicStopReason::ResourceLimit);
+        return;
+    }
     std::vector<DRW_Coord> verts;
-    verts.reserve(vcount);
+    if (!DRW::reserve(verts, static_cast<int>(vcount))) {
+        context.fail(DRW_ProxyGraphicStopReason::AllocationFailure);
+        return;
+    }
     for (std::uint32_t i = 0; i < vcount && !bs.bad; ++i)
         verts.push_back(bs.readVertex());
     if (bs.bad) return;
@@ -357,8 +403,7 @@ void doPolyline(const std::uint8_t *p, std::size_t n, bool closed, bool loadNorm
     for (const DRW_Coord &v : verts)
         e.addVertex(DRW_Vertex(v.x, v.y, v.z, 0.0));
     applyAttribs(e, parent, st);
-    iface.addPolyline(e);
-    ++count;
+    (void)context.emit(e, &DRW_ProxyGraphicSink::addPolyline);
 }
 
 // --- opcode 9: SHELL (proxygraphic.py shell) → polyface mesh ---
@@ -369,28 +414,44 @@ void doPolyline(const std::uint8_t *p, std::size_t n, bool closed, bool loadNorm
 // POLYLINE_POLYFACE; we deliver a DRW_Mesh (base-cage vertices + face index
 // lists) which LibreCAD renders by decomposing faces to polylines.  Trailing
 // mesh traits (per-face colours/normals) are ignored.
-void doShell(const std::uint8_t *p, std::size_t n, DRW_Interface &iface,
-             const DRW_Entity &parent, const DrawState &st, const Matrix *xf,
-             int &count) {
+void doShell(const std::uint8_t *p, std::size_t n, DecodeContext& context,
+             const DRW_Entity &parent, const DrawState &st, const Matrix *xf) {
     ByteStream bs(p, n);
     std::uint32_t vcount = bs.readLong();
-    if (vcount == 0 || vcount > 1000000u) return;
+    if (vcount == 0) return;
+    if (vcount > context.limits().maxMeshVertices) {
+        context.fail(DRW_ProxyGraphicStopReason::ResourceLimit);
+        return;
+    }
     DRW_Mesh e;
-    e.vertices.reserve(vcount);
+    if (!DRW::reserve(e.vertices, static_cast<int>(vcount))) {
+        context.fail(DRW_ProxyGraphicStopReason::AllocationFailure);
+        return;
+    }
     for (std::uint32_t i = 0; i < vcount && !bs.bad; ++i)
         e.vertices.push_back(xfPoint(xf, bs.readVertex()));
     if (bs.bad) return;
 
     std::uint32_t faceEntries = bs.readLong();   // total longs in the face stream
-    if (faceEntries > 4000000u) return;
+    if (faceEntries > context.limits().maxMeshFaceEntries) {
+        context.fail(DRW_ProxyGraphicStopReason::ResourceLimit);
+        return;
+    }
     std::uint32_t read = 0;
     while (read < faceEntries && !bs.bad) {
-        std::int32_t edgeCount = static_cast<std::int32_t>(bs.readLong());
-        if (edgeCount < 0) edgeCount = -edgeCount;   // <0 = wrap/hole; use magnitude
-        read += 1u + static_cast<std::uint32_t>(edgeCount);
+        const std::uint32_t rawEdgeCount = bs.readLong();
+        const bool isHole = (rawEdgeCount & 0x80000000u) != 0;
+        const std::uint32_t edgeCount = isHole
+            ? 0u - rawEdgeCount : rawEdgeCount;
+        if (edgeCount > faceEntries - read - 1u)
+            return;
+        read += 1u + edgeCount;
         std::vector<std::int32_t> face;
-        face.reserve(static_cast<std::size_t>(edgeCount));
-        for (std::int32_t j = 0; j < edgeCount && !bs.bad; ++j) {
+        if (!DRW::reserve(face, static_cast<int>(edgeCount))) {
+            context.fail(DRW_ProxyGraphicStopReason::AllocationFailure);
+            return;
+        }
+        for (std::uint32_t j = 0; j < edgeCount && !bs.bad; ++j) {
             std::uint32_t idx = bs.readLong();
             if (idx < e.vertices.size())
                 face.push_back(static_cast<std::int32_t>(idx));
@@ -399,14 +460,12 @@ void doShell(const std::uint8_t *p, std::size_t n, DRW_Interface &iface,
     }
     if (e.vertices.empty() || e.faces.empty()) return;
     applyAttribs(e, parent, st);
-    iface.addMesh(e);
-    ++count;
+    (void)context.emit(e, &DRW_ProxyGraphicSink::addMesh);
 }
 
 // --- opcode 10: TEXT (proxygraphic.py:694, non-unicode) ---
-void doText(const std::uint8_t *p, std::size_t n, DRW_Interface &iface,
-            const DRW_Entity &parent, const DrawState &st, const Matrix *xf,
-            int &count) {
+void doText(const std::uint8_t *p, std::size_t n, DecodeContext& context,
+            const DRW_Entity &parent, const DrawState &st, const Matrix *xf) {
     ByteStream bs(p, n);
     DRW_Text e;
     const DRW_Coord start = bs.readVertex();  // start point
@@ -424,8 +483,7 @@ void doText(const std::uint8_t *p, std::size_t n, DRW_Interface &iface,
     e.angle = std::atan2(dir.y, dir.x) * DEG_PER_RAD;
     e.extPoint = DRW_Coord(0, 0, 1);
     applyAttribs(e, parent, st);
-    iface.addText(e);
-    ++count;
+    (void)context.emit(e, &DRW_ProxyGraphicSink::addText);
 }
 
 // Shared tail of op11/op38: after the (already-read) string the layout is
@@ -451,9 +509,8 @@ void readText2Metadata(ByteStream &bs, DRW_Text &e, const DRW_Coord &dir,
 }
 
 // --- opcode 11: TEXT2 (proxygraphic.py:723) — string FIRST, then metadata ---
-void doText2(const std::uint8_t *p, std::size_t n, DRW_Interface &iface,
-             const DRW_Entity &parent, const DrawState &st, const Matrix *xf,
-             int &count) {
+void doText2(const std::uint8_t *p, std::size_t n, DecodeContext& context,
+             const DRW_Entity &parent, const DrawState &st, const Matrix *xf) {
     ByteStream bs(p, n);
     DRW_Text e;
     const DRW_Coord start = bs.readVertex();  // start_point
@@ -465,14 +522,13 @@ void doText2(const std::uint8_t *p, std::size_t n, DRW_Interface &iface,
     e.basePoint = xfPoint(xf, start);
     e.text = text;
     applyAttribs(e, parent, st);
-    iface.addText(e);
-    ++count;
+    (void)context.emit(e, &DRW_ProxyGraphicSink::addText);
 }
 
 // --- opcode 38: UNICODE_TEXT2 (proxygraphic.py:778) — UTF-16LE text ---
-void doUnicodeText2(const std::uint8_t *p, std::size_t n, DRW_Interface &iface,
-                    const DRW_Entity &parent, const DrawState &st,
-                    const Matrix *xf, int &count) {
+void doUnicodeText2(const std::uint8_t *p, std::size_t n,
+                    DecodeContext& context, const DRW_Entity &parent,
+                    const DrawState &st, const Matrix *xf) {
     ByteStream bs(p, n);
     DRW_Text e;
     const DRW_Coord start = bs.readVertex();
@@ -486,185 +542,341 @@ void doUnicodeText2(const std::uint8_t *p, std::size_t n, DRW_Interface &iface,
     e.basePoint = xfPoint(xf, start);
     e.text = text;
     applyAttribs(e, parent, st);
-    iface.addText(e);
-    ++count;
+    (void)context.emit(e, &DRW_ProxyGraphicSink::addText);
 }
 
 // --- opcode 33: LWPOLYLINE (proxygraphic.py:549) — an ODA *bit* stream ---
 void doLwpolyline(const std::uint8_t *p, std::size_t n, DRW::Version version,
-                  DRW_Interface &iface, const DRW_Entity &parent,
-                  const DrawState &st, const Matrix *xf, int &count) {
-    std::vector<std::uint8_t> buf(p, p + n);
-    dwgBuffer bs(buf.data(), buf.size(), nullptr); // no text → no decoder needed
-    bs.getRawLong32();                              // num_data_bytes (RL)
-    std::int32_t flag = bs.getBitShort();           // BS
+                  DecodeContext& context, const DRW_Entity &parent,
+                  const DrawState &st, const Matrix *xf) {
     DRW_LWPolyline e;
-    if (flag & 4) e.width = bs.getBitDouble();          // const width
-    if (flag & 8) e.elevation = bs.getBitDouble();
-    if (flag & 2) e.thickness = bs.getBitDouble();
-    if (flag & 1) { bs.getBitDouble(); bs.getBitDouble(); bs.getBitDouble(); } // extrusion 3BD
-    bool isClosed = (flag & 512) != 0;
-    std::int32_t numPoints = bs.getBitLong();
-    if (numPoints <= 0 || numPoints > 1000000) return;
-    std::int32_t numBulges = 0, numVertexIds = 0, numWidth = 0;
-    if (flag & 16) numBulges = bs.getBitLong();
-    if (version >= DRW::AC1024) {
-        if (flag & 1024) numVertexIds = bs.getBitLong();
-        if (flag & 32)   numWidth     = bs.getBitLong();
-    }
-    (void)numBulges; (void)numVertexIds; (void)numWidth;
+    try {
+        std::vector<std::uint8_t> buf(p, p + n);
+        dwgBuffer bs(buf.data(), buf.size(), nullptr); // no text -> no decoder needed
+        bs.getRawLong32();                              // num_data_bytes (RL)
+        std::int32_t flag = bs.getBitShort();           // BS
+        if (flag & 4) e.width = bs.getBitDouble();          // const width
+        if (flag & 8) e.elevation = bs.getBitDouble();
+        if (flag & 2) e.thickness = bs.getBitDouble();
+        if (flag & 1) { bs.getBitDouble(); bs.getBitDouble(); bs.getBitDouble(); } // extrusion 3BD
+        bool isClosed = (flag & 512) != 0;
+        std::int32_t numPoints = bs.getBitLong();
+        if (numPoints <= 0) return;
+        if (static_cast<std::size_t>(numPoints)
+            > context.limits().maxPolylineVertices) {
+            context.fail(DRW_ProxyGraphicStopReason::ResourceLimit);
+            return;
+        }
+        std::int32_t numBulges = 0, numVertexIds = 0, numWidth = 0;
+        if (flag & 16) numBulges = bs.getBitLong();
+        if (version >= DRW::AC1024) {
+            if (flag & 1024) numVertexIds = bs.getBitLong();
+            if (flag & 32)   numWidth     = bs.getBitLong();
+        }
+        (void)numBulges; (void)numVertexIds; (void)numWidth;
 
-    // Vertices are decoded as deltas off the previous raw pair, so transform a
-    // COPY when emitting and keep px/py in the stream's own frame.
-    auto emit2d = [&](double x, double y) {
-        const DRW_Coord t = xfPoint(xf, DRW_Coord(x, y, 0.0));
-        e.addVertex(DRW_Vertex2D(t.x, t.y, 0.0));
-    };
-    double px = bs.getRawDouble();
-    double py = bs.getRawDouble();
-    emit2d(px, py);
-    for (std::int32_t i = 1; i < numPoints; ++i) {
-        px = bs.getDefaultDouble(px);
-        py = bs.getDefaultDouble(py);
+        // Vertices are decoded as deltas off the previous raw pair, so transform a
+        // copy when emitting and keep px/py in the stream's own frame.
+        auto emit2d = [&](double x, double y) {
+            const DRW_Coord t = xfPoint(xf, DRW_Coord(x, y, 0.0));
+            e.addVertex(DRW_Vertex2D(t.x, t.y, 0.0));
+        };
+        double px = bs.getRawDouble();
+        double py = bs.getRawDouble();
         emit2d(px, py);
+        for (std::int32_t i = 1; i < numPoints; ++i) {
+            px = bs.getDefaultDouble(px);
+            py = bs.getDefaultDouble(py);
+            emit2d(px, py);
+        }
+        if (!bs.isGood()) return; // bit stream overran - drop
+        e.vertexnum = numPoints;
+        e.flags = isClosed ? 1 : 0;
+        applyAttribs(e, parent, st);
+    } catch (...) {
+        context.fail(DRW_ProxyGraphicStopReason::AllocationFailure);
+        return;
     }
-    if (!bs.isGood()) return; // bit stream overran — drop
-    e.vertexnum = numPoints;
-    e.flags = isClosed ? 1 : 0;
-    applyAttribs(e, parent, st);
-    iface.addLWPolyline(e);
-    ++count;
+    (void)context.emit(e, &DRW_ProxyGraphicSink::addLWPolyline);
 }
+
+bool isPrimitiveOpcode(std::uint32_t type) noexcept {
+    switch (type) {
+    case OP_CIRCLE:
+    case OP_CIRCLE_3P:
+    case OP_CIRCULAR_ARC:
+    case OP_CIRCULAR_ARC_3P:
+    case OP_POLYLINE:
+    case OP_POLYGON:
+    case OP_SHELL:
+    case OP_TEXT:
+    case OP_TEXT2:
+    case OP_POLYLINE_NORMALS:
+    case OP_LWPOLYLINE:
+    case OP_UNICODE_TEXT2:
+    case OP_ELLIPTIC_ARC:
+        return true;
+    default:
+        return false;
+    }
+}
+
+class InterfaceSink final : public DRW_ProxyGraphicSink {
+public:
+    explicit InterfaceSink(DRW_Interface& target) noexcept : m_target(target) {}
+
+    bool addArc(const DRW_Arc& value) override { m_target.addArc(value); return true; }
+    bool addCircle(const DRW_Circle& value) override { m_target.addCircle(value); return true; }
+    bool addEllipse(const DRW_Ellipse& value) override { m_target.addEllipse(value); return true; }
+    bool addLWPolyline(const DRW_LWPolyline& value) override { m_target.addLWPolyline(value); return true; }
+    bool addMesh(const DRW_Mesh& value) override { m_target.addMesh(value); return true; }
+    bool addPolyline(const DRW_Polyline& value) override { m_target.addPolyline(value); return true; }
+    bool addText(const DRW_Text& value) override { m_target.addText(value); return true; }
+
+private:
+    DRW_Interface& m_target;
+};
 
 } // namespace
 
-int DRW_ProxyGraphicDecoder::decode(const std::string &bytes, DRW::Version version,
-                                  DRW_Interface &iface, const DRW_Entity &parent,
-                                  const std::vector<std::string> &layerNames,
-                                  const std::vector<std::string> &ltypeNames) {
-    const std::size_t len = bytes.size();
-    if (len < 16) return 0; // 8-byte header + at least one 8-byte chunk header
-    const std::uint8_t *data = reinterpret_cast<const std::uint8_t *>(bytes.data());
+DRW_ProxyGraphicDecodeResult DRW_ProxyGraphicDecoder::inspect(
+    const std::string& bytes, const DRW_ProxyGraphicLimits& limits) {
+    DRW_ProxyGraphicDecodeResult result;
+    const std::size_t length = bytes.size();
+    if (length == 0)
+        return result;
+    if (length < 8) {
+        result.stopReason = DRW_ProxyGraphicStopReason::ShortHeader;
+        return result;
+    }
 
-    // Framing (proxygraphic.py:315): the first 8 bytes are a header; chunks are
-    // [<u32 size><u32 type><payload>] with payload = data[index+8 : index+size].
+    const auto* data = reinterpret_cast<const std::uint8_t*>(bytes.data());
     std::size_t index = 8;
-    int count = 0;
-    DrawState st;
-    // Transform stack: PUSH_MATRIX (29/30) … POP_MATRIX (31).  ezdxf applies the
-    // TOP matrix only, not the composed product (proxygraphic.py:309-313).
-    std::vector<Matrix> xfStack;
-    int guard = 0;
-    while (index + 8 <= len && guard++ < 1000000) {
-        const Matrix *xf = xfStack.empty() ? nullptr : &xfStack.back();
-        std::uint32_t size, type;
-        std::memcpy(&size, data + index, 4);
-        std::memcpy(&type, data + index + 4, 4);
-        if (size < 8) break;                       // cannot advance
-        std::size_t payEnd = index + size;
-        if (payEnd > len) payEnd = len;            // clamp a ragged tail
-        const std::uint8_t *pay = data + index + 8;
-        std::size_t payLen = (payEnd > index + 8) ? payEnd - (index + 8) : 0;
+    std::size_t chunkCount = 0;
+    result.consumedByteCount = index;
+    while (index < length) {
+        if (length - index < 8) {
+            result.stopReason = DRW_ProxyGraphicStopReason::ShortHeader;
+            break;
+        }
+        if (chunkCount >= limits.maxChunkCount) {
+            result.stopReason = DRW_ProxyGraphicStopReason::ChunkLimit;
+            break;
+        }
+
+        std::uint32_t size = 0;
+        std::uint32_t type = 0;
+        std::memcpy(&size, data + index, sizeof(size));
+        std::memcpy(&type, data + index + sizeof(size), sizeof(type));
+        if (size < 8) {
+            result.stopReason = DRW_ProxyGraphicStopReason::InvalidChunkSize;
+            break;
+        }
+        if (size > length - index) {
+            result.stopReason = DRW_ProxyGraphicStopReason::TruncatedChunk;
+            break;
+        }
+
+        ++chunkCount;
+        if (isPrimitiveOpcode(type)) {
+            if (result.recognizedPrimitiveChunkCount
+                >= limits.maxPrimitiveCount) {
+                result.stopReason = DRW_ProxyGraphicStopReason::PrimitiveLimit;
+                break;
+            }
+            ++result.recognizedPrimitiveChunkCount;
+        } else {
+            ++result.skippedUnsupportedChunkCount;
+        }
+        index += size;
+        result.consumedByteCount = index;
+    }
+    return result;
+}
+
+DRW_ProxyGraphicDecodeResult DRW_ProxyGraphicDecoder::decode(
+    const std::string& bytes, DRW::Version version, DRW_ProxyGraphicSink& sink,
+    const DRW_Entity& parent, const std::vector<std::string>& layerNames,
+    const std::vector<std::string>& ltypeNames,
+    const DRW_ProxyGraphicLimits& limits) {
+    DRW_ProxyGraphicDecodeResult result;
+    const std::size_t length = bytes.size();
+    if (length == 0)
+        return result;
+    if (length < 8) {
+        result.stopReason = DRW_ProxyGraphicStopReason::ShortHeader;
+        return result;
+    }
+
+    const auto* data = reinterpret_cast<const std::uint8_t*>(bytes.data());
+    std::size_t index = 8;
+    std::size_t chunkCount = 0;
+    result.consumedByteCount = index;
+    DrawState state;
+    DecodeContext context(sink, limits, result);
+    std::vector<Matrix> matrixStack;
+    try {
+        matrixStack.reserve(limits.maxMatrixDepth);
+    } catch (...) {
+        result.stopReason = DRW_ProxyGraphicStopReason::AllocationFailure;
+        return result;
+    }
+
+    while (index < length) {
+        if (length - index < 8) {
+            result.stopReason = DRW_ProxyGraphicStopReason::ShortHeader;
+            break;
+        }
+        if (chunkCount >= limits.maxChunkCount) {
+            result.stopReason = DRW_ProxyGraphicStopReason::ChunkLimit;
+            break;
+        }
+
+        std::uint32_t size = 0;
+        std::uint32_t type = 0;
+        std::memcpy(&size, data + index, sizeof(size));
+        std::memcpy(&type, data + index + sizeof(size), sizeof(type));
+        if (size < 8) {
+            result.stopReason = DRW_ProxyGraphicStopReason::InvalidChunkSize;
+            break;
+        }
+        if (size > length - index) {
+            result.stopReason = DRW_ProxyGraphicStopReason::TruncatedChunk;
+            break;
+        }
+
+        ++chunkCount;
+        const std::uint8_t* const payload = data + index + 8;
+        const std::size_t payloadLength = size - 8;
+        const Matrix* const matrix = matrixStack.empty()
+            ? nullptr : &matrixStack.back();
+        if (isPrimitiveOpcode(type)) {
+            if (result.recognizedPrimitiveChunkCount
+                >= limits.maxPrimitiveCount) {
+                result.stopReason = DRW_ProxyGraphicStopReason::PrimitiveLimit;
+                break;
+            }
+            ++result.recognizedPrimitiveChunkCount;
+        } else {
+            ++result.skippedUnsupportedChunkCount;
+        }
 
         switch (type) {
         case OP_ATTRIBUTE_COLOR:
-            if (payLen >= 4) {
-                std::uint32_t c;
-                std::memcpy(&c, pay, 4);
-                st.trueColor = -1;
-                st.color = (c <= 256u) ? static_cast<int>(c) : DRW::ColorByLayer;
+            if (payloadLength >= 4) {
+                std::uint32_t color = 0;
+                std::memcpy(&color, payload, sizeof(color));
+                state.trueColor = -1;
+                state.color = color <= 256u ? static_cast<int>(color)
+                                             : DRW::ColorByLayer;
             }
             break;
         case OP_ATTRIBUTE_TRUE_COLOR:
-            if (payLen >= 4) {
-                std::uint32_t raw;
-                std::memcpy(&raw, pay, 4);
-                // ODA raw colour: the high byte selects the encoding (ezdxf
-                // colors.decode_raw_color, colors.py:138-175).  The previous
-                // unconditional `raw & 0xFFFFFF` was wrong for every non-RGB
-                // case — empirically 100% of corpus op22 chunks (10,085 BYLAYER
-                // + 306 ACI, 0 RGB) were mis-rendered (BYLAYER→black,
-                // ACI→garbage RGB).  Reset both colour fields first so a prior
-                // op14/op22 cannot leak into this primitive (ezdxf reset_colors).
-                st.color = DRW::ColorByLayer;
-                st.trueColor = -1;
+            if (payloadLength >= 4) {
+                std::uint32_t raw = 0;
+                std::memcpy(&raw, payload, sizeof(raw));
+                state.color = DRW::ColorByLayer;
+                state.trueColor = -1;
                 switch ((raw >> 24) & 0xFFu) {
-                case dwgColor::RGB: st.trueColor = static_cast<int>(raw & 0x00FFFFFFu); break;
-                case dwgColor::ACIS: st.color = static_cast<int>(raw & 0xFFu); break;
-                case dwgColor::BYLAYER: st.color = DRW::ColorByLayer; break;
-                case dwgColor::BYBLOCK: st.color = DRW::ColorByBlock; break;
-                default:   break;
+                case dwgColor::RGB: state.trueColor = static_cast<int>(raw & 0x00FFFFFFu); break;
+                case dwgColor::ACIS: state.color = static_cast<int>(raw & 0xFFu); break;
+                case dwgColor::BYLAYER: state.color = DRW::ColorByLayer; break;
+                case dwgColor::BYBLOCK: state.color = DRW::ColorByBlock; break;
+                default: break;
                 }
             }
             break;
         case OP_ATTRIBUTE_LINEWEIGHT:
-            if (payLen >= 4) {
-                std::uint32_t lw;
-                std::memcpy(&lw, pay, 4);
-                // >MAX_VALID_LINEWEIGHT → two's-complement negative, floored at
-                // -3 (LINEWEIGHT_DEFAULT); ezdxf proxygraphic.py:395-400.
-                long v = (lw > 211u)
-                    ? (static_cast<long>(lw) - 0x100000000L < -3L ? -3L : static_cast<long>(lw) - 0x100000000L)
-                    : static_cast<long>(lw);
-                st.lWeight = static_cast<int>(v);
+            if (payloadLength >= 4) {
+                std::uint32_t lineweight = 0;
+                std::memcpy(&lineweight, payload, sizeof(lineweight));
+                const long value = lineweight > 211u
+                    ? std::max(-3L, static_cast<long>(lineweight) - 0x100000000L)
+                    : static_cast<long>(lineweight);
+                state.lWeight = static_cast<int>(value);
             }
             break;
-        case OP_ATTRIBUTE_LAYER: // op16 — index into the file's layer order
-            if (payLen >= 4) {
-                std::uint32_t idx;
-                std::memcpy(&idx, pay, 4);
-                if (idx < layerNames.size() && !layerNames[idx].empty())
-                    st.layer = layerNames[idx]; // out-of-range → inherit parent
+        case OP_ATTRIBUTE_LAYER:
+            if (payloadLength >= 4) {
+                std::uint32_t layer = 0;
+                std::memcpy(&layer, payload, sizeof(layer));
+                if (layer < layerNames.size() && !layerNames[layer].empty())
+                    state.layer = layerNames[layer];
             }
             break;
-        case OP_ATTRIBUTE_LINETYPE: // op18 — offset 0 for libdxfrw (NOT ezdxf's +2)
-            if (payLen >= 4) {
-                std::uint32_t idx;
-                std::memcpy(&idx, pay, 4);
-                if (idx == 32766u)      st.lineType = "BYBLOCK";
-                else if (idx == 32767u) st.lineType = "BYLAYER";
-                else if (idx < ltypeNames.size() && !ltypeNames[idx].empty())
-                    st.lineType = ltypeNames[idx];
-                else                    st.lineType = "BYLAYER"; // out-of-range fallback
+        case OP_ATTRIBUTE_LINETYPE:
+            if (payloadLength >= 4) {
+                std::uint32_t lineType = 0;
+                std::memcpy(&lineType, payload, sizeof(lineType));
+                if (lineType == 32766u) state.lineType = "BYBLOCK";
+                else if (lineType == 32767u) state.lineType = "BYLAYER";
+                else if (lineType < ltypeNames.size() && !ltypeNames[lineType].empty())
+                    state.lineType = ltypeNames[lineType];
+                else state.lineType = "BYLAYER";
             }
             break;
         case OP_PUSH_MATRIX:
         case OP_PUSH_MATRIX2:
-            // 16 doubles; translation sits in the 4th column of each row.
-            // Bounded so a malformed stream cannot grow the stack without end.
-            if (payLen >= 16 * sizeof(double) && xfStack.size() < 64) {
-                double a[16];
-                std::memcpy(a, pay, sizeof(a));
-                Matrix mx;
-                for (int r = 0; r < 3; ++r)
-                    for (int c = 0; c < 4; ++c)
-                        mx.m[r * 4 + c] = a[r * 4 + c];
-                xfStack.push_back(mx);
+            if (payloadLength >= 16 * sizeof(double)) {
+                if (matrixStack.size() >= limits.maxMatrixDepth) {
+                    result.stopReason = DRW_ProxyGraphicStopReason::MatrixDepthLimit;
+                    break;
+                }
+                double values[16];
+                std::memcpy(values, payload, sizeof(values));
+                Matrix next;
+                for (int row = 0; row < 3; ++row)
+                    for (int column = 0; column < 4; ++column)
+                        next.m[row * 4 + column] = values[row * 4 + column];
+                try {
+                    matrixStack.push_back(next);
+                } catch (...) {
+                    result.stopReason = DRW_ProxyGraphicStopReason::AllocationFailure;
+                }
             }
             break;
         case OP_POP_MATRIX:
-            if (!xfStack.empty()) xfStack.pop_back();
+            if (!matrixStack.empty()) matrixStack.pop_back();
             break;
-        case OP_CIRCLE:        doCircle(pay, payLen, iface, parent, st, xf, count); break;
-        case OP_CIRCLE_3P:     doCircle3p(pay, payLen, iface, parent, st, xf, count); break;
-        case OP_CIRCULAR_ARC:  doArc(pay, payLen, iface, parent, st, xf, count); break;
-        case OP_CIRCULAR_ARC_3P: doArc3p(pay, payLen, iface, parent, st, xf, count); break;
-        case OP_ELLIPTIC_ARC:  doEllipse(pay, payLen, iface, parent, st, xf, count); break;
-        case OP_POLYLINE:      doPolyline(pay, payLen, /*closed=*/false, /*normal=*/false, iface, parent, st, xf, count); break;
-        case OP_POLYLINE_NORMALS: doPolyline(pay, payLen, /*closed=*/false, /*normal=*/true, iface, parent, st, xf, count); break;
-        case OP_POLYGON:       doPolyline(pay, payLen, /*closed=*/true, /*normal=*/false, iface, parent, st, xf, count); break;
-        case OP_SHELL:         doShell(pay, payLen, iface, parent, st, xf, count); break;
-        case OP_TEXT:          doText(pay, payLen, iface, parent, st, xf, count); break;
-        case OP_TEXT2:         doText2(pay, payLen, iface, parent, st, xf, count); break;
-        case OP_UNICODE_TEXT2: doUnicodeText2(pay, payLen, iface, parent, st, xf, count); break;
-        case OP_LWPOLYLINE:    doLwpolyline(pay, payLen, version, iface, parent, st, xf, count); break;
-        default:
-            break; // unsupported opcode — skip by size
+        case OP_CIRCLE: doCircle(payload, payloadLength, context, parent, state, matrix); break;
+        case OP_CIRCLE_3P: doCircle3p(payload, payloadLength, context, parent, state, matrix); break;
+        case OP_CIRCULAR_ARC: doArc(payload, payloadLength, context, parent, state, matrix); break;
+        case OP_CIRCULAR_ARC_3P: doArc3p(payload, payloadLength, context, parent, state, matrix); break;
+        case OP_ELLIPTIC_ARC: doEllipse(payload, payloadLength, context, parent, state, matrix); break;
+        case OP_POLYLINE: doPolyline(payload, payloadLength, false, false, context, parent, state, matrix); break;
+        case OP_POLYLINE_NORMALS: doPolyline(payload, payloadLength, false, true, context, parent, state, matrix); break;
+        case OP_POLYGON: doPolyline(payload, payloadLength, true, false, context, parent, state, matrix); break;
+        case OP_SHELL: doShell(payload, payloadLength, context, parent, state, matrix); break;
+        case OP_TEXT: doText(payload, payloadLength, context, parent, state, matrix); break;
+        case OP_TEXT2: doText2(payload, payloadLength, context, parent, state, matrix); break;
+        case OP_UNICODE_TEXT2: doUnicodeText2(payload, payloadLength, context, parent, state, matrix); break;
+        case OP_LWPOLYLINE: doLwpolyline(payload, payloadLength, version, context, parent, state, matrix); break;
+        default: break;
         }
+        if (context.stopped())
+            break;
         index += size;
+        result.consumedByteCount = index;
     }
-    if (count > 0) {
-        DRW_DBG("proxy graphics: decoded "); DRW_DBG(count); DRW_DBG(" primitive(s)\n");
+    if (result.emittedPrimitiveCount > 0) {
+        DRW_DBG("proxy graphics: decoded ");
+        DRW_DBG(result.emittedPrimitiveCount);
+        DRW_DBG(" primitive(s)\n");
     }
-    return count;
+    return result;
+}
+
+int DRW_ProxyGraphicDecoder::decode(const std::string& bytes,
+                                    DRW::Version version,
+                                    DRW_Interface& iface,
+                                    const DRW_Entity& parent,
+                                    const std::vector<std::string>& layerNames,
+                                    const std::vector<std::string>& ltypeNames) {
+    InterfaceSink sink(iface);
+    const DRW_ProxyGraphicDecodeResult result = decode(
+        bytes, version, sink, parent, layerNames, ltypeNames);
+    return result.emittedPrimitiveCount
+        > static_cast<std::size_t>(std::numeric_limits<int>::max())
+        ? std::numeric_limits<int>::max()
+        : static_cast<int>(result.emittedPrimitiveCount);
 }

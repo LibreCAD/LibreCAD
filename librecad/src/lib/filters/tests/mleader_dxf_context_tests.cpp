@@ -137,6 +137,19 @@ void readDxf(const std::string &dxf, DRW_Interface &cap, const char *name) {
   std::filesystem::remove(path);
 }
 
+bool readDxfResult(const std::string &dxf, DRW_Interface &cap, const char *name) {
+  const auto path = std::filesystem::temp_directory_path() / name;
+  std::filesystem::remove(path);
+  {
+    std::ofstream out(path);
+    out << dxf;
+  }
+  dxfRW r(path.string().c_str());
+  const bool result = r.read(&cap, /*ext=*/true);
+  std::filesystem::remove(path);
+  return result;
+}
+
 void seedMLeaderContext(DRW_MLeader &mleader) {
   mleader.overrideFlags = 279552;
   mleader.leaderType = 1;
@@ -308,4 +321,30 @@ TEST_CASE("DXF MULTILEADER CONTEXT_DATA writes text content + leader geometry",
   REQUIRE(line.points.size() == 1);
   CHECK(approx(line.points.at(0).x, -2577.7));
   CHECK(line.leaderLineIndex == 0);
+}
+
+TEST_CASE("DXF MULTILEADER rejects unbalanced context markers", "[mleader][dxf][safety]") {
+  const std::string dxf =
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nMULTILEADER\n5\n640\n100\nAcDbEntity\n8\n0\n100\nAcDbMLeader\n"
+      "300\nCONTEXT_DATA{\n304\nLEADER_LINE{\n"
+      "0\nENDSEC\n0\nEOF\n";
+  MLeaderCapture cap;
+  CHECK_FALSE(readDxfResult(dxf, cap, "lc_mleader_unbalanced.dxf"));
+  CHECK(cap.m_callCount == 0);
+}
+
+TEST_CASE("DXF MULTILEADER bounds nested context collections",
+          "[mleader][dxf][safety]") {
+  std::string dxf =
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nMULTILEADER\n5\n640\n100\nAcDbEntity\n8\n0\n100\nAcDbMLeader\n"
+      "300\nCONTEXT_DATA{\n";
+  for (int i = 0; i < 5001; ++i)
+    dxf += "302\nLEADER{\n303\n}\n";
+  dxf += "301\n}\n0\nENDSEC\n0\nEOF\n";
+
+  MLeaderCapture cap;
+  CHECK_FALSE(readDxfResult(dxf, cap, "lc_mleader_limits.dxf"));
+  CHECK(cap.m_callCount == 0);
 }

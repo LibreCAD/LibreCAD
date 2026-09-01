@@ -33,11 +33,11 @@
  *     -fsanitize=fuzzer,address,undefined \
  *     -I libraries/libdxfrw/src \
  *     libraries/libdxfrw/tests/fuzz/fuzz_dwg_read.cpp \
- *     libraries/libdxfrw/src/*.cpp libraries/libdxfrw/src/intern/*.cpp \
+ *     libraries/libdxfrw/src/[!.]*.cpp libraries/libdxfrw/src/intern/[!.]*.cpp \
  *     -o /tmp/fuzz_dwg_read
  *   # seed from the corpora:
  *   mkdir -p /tmp/dwg_seeds
- *   cp ~/doc/dwg/*.dwg ~/doc/dwg2/*.dwg ~/dev/dwg_samples/*.dwg /tmp/dwg_seeds/ 2>/dev/null
+ *   cp ~/doc/dwg/[!.]*.dwg ~/doc/dwg2/[!.]*.dwg ~/dev/dwg_samples/[!.]*.dwg /tmp/dwg_seeds/ 2>/dev/null
  *   /tmp/fuzz_dwg_read -max_total_time=120 /tmp/dwg_seeds
  *
  * --- Standalone replay driver (verifiable on toolchains WITHOUT libFuzzer,
@@ -46,9 +46,9 @@
  *     -fsanitize=address,undefined \
  *     -I libraries/libdxfrw/src \
  *     libraries/libdxfrw/tests/fuzz/fuzz_dwg_read.cpp \
- *     libraries/libdxfrw/src/*.cpp libraries/libdxfrw/src/intern/*.cpp \
+ *     libraries/libdxfrw/src/[!.]*.cpp libraries/libdxfrw/src/intern/[!.]*.cpp \
  *     -o /tmp/replay_dwg_read
- *   /tmp/replay_dwg_read ~/doc/dwg2/*.dwg     # replays each file through read()
+ *   /tmp/replay_dwg_read ~/doc/dwg2/[!.]*.dwg     # replays each file through read()
  *
  * The standalone driver runs the exact same LLVMFuzzerTestOneInput body over
  * each file's bytes, so a clean ASan/UBSan run over the corpus there is strong
@@ -63,69 +63,10 @@
 
 #include <unistd.h>  // mkstemp/write/close
 
-#include "drw_interface.h"
+#include "fuzz_null_interface.h"
 #include "libdwgr.h"
 
 namespace {
-
-// No-op DRW_Interface: every read callback discards its data. Mirrors the
-// EmptyIface used by the in-repo write smoke tests.
-class NullIface : public DRW_Interface {
-public:
-    void addHeader(const DRW_Header*) override {}
-    void addLType(const DRW_LType&) override {}
-    void addLayer(const DRW_Layer&) override {}
-    void addDimStyle(const DRW_Dimstyle&) override {}
-    void addVport(const DRW_Vport&) override {}
-    void addTextStyle(const DRW_Textstyle&) override {}
-    void addAppId(const DRW_AppId&) override {}
-    void addBlock(const DRW_Block&) override {}
-    void setBlock(const int) override {}
-    void endBlock() override {}
-    void addPoint(const DRW_Point&) override {}
-    void addLine(const DRW_Line&) override {}
-    void addRay(const DRW_Ray&) override {}
-    void addXline(const DRW_Xline&) override {}
-    void addCircle(const DRW_Circle&) override {}
-    void addArc(const DRW_Arc&) override {}
-    void addEllipse(const DRW_Ellipse&) override {}
-    void addLWPolyline(const DRW_LWPolyline&) override {}
-    void addPolyline(const DRW_Polyline&) override {}
-    void addSpline(const DRW_Spline*) override {}
-    void addKnot(const DRW_Entity&) override {}
-    void addInsert(const DRW_Insert&) override {}
-    void addTrace(const DRW_Trace&) override {}
-    void add3dFace(const DRW_3Dface&) override {}
-    void addSolid(const DRW_Solid&) override {}
-    void addMText(const DRW_MText&) override {}
-    void addText(const DRW_Text&) override {}
-    void addDimAlign(const DRW_DimAligned*) override {}
-    void addDimLinear(const DRW_DimLinear*) override {}
-    void addDimRadial(const DRW_DimRadial*) override {}
-    void addDimDiametric(const DRW_DimDiametric*) override {}
-    void addDimAngular(const DRW_DimAngular*) override {}
-    void addDimAngular3P(const DRW_DimAngular3p*) override {}
-    void addDimArc(const DRW_DimArc*) override {}
-    void addDimOrdinate(const DRW_DimOrdinate*) override {}
-    void addLeader(const DRW_Leader*) override {}
-    void addHatch(const DRW_Hatch*) override {}
-    void addViewport(const DRW_Viewport&) override {}
-    void addImage(const DRW_Image*) override {}
-    void linkImage(const DRW_ImageDef*) override {}
-    void addComment(const char*) override {}
-    void addPlotSettings(const DRW_PlotSettings*) override {}
-    void writeHeader(DRW_Header&) override {}
-    void writeBlocks() override {}
-    void writeBlockRecords() override {}
-    void writeEntities() override {}
-    void writeLTypes() override {}
-    void writeLayers() override {}
-    void writeTextstyles() override {}
-    void writeVports() override {}
-    void writeDimstyles() override {}
-    void writeObjects() override {}
-    void writeAppId() override {}
-};
 
 // Write `data` to a fresh temp file, read it through dwgRW, unlink it.
 void readOnce(const uint8_t* data, size_t size) {
@@ -142,7 +83,7 @@ void readOnce(const uint8_t* data, size_t size) {
 
     {
         dwgRW rw(tmpl);
-        NullIface iface;
+        FuzzNullInterface iface;
         (void)rw.read(&iface, /*ext=*/false);  // ignore result; crashes/UB matter
     }
     ::remove(tmpl);

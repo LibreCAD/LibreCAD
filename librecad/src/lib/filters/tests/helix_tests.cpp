@@ -207,7 +207,7 @@ std::vector<DRW_Class> helixDxfClasses() {
   return {cls};
 }
 
-void readDxf(const std::string &dxf, DRW_Interface &cap, const char *name) {
+bool tryReadDxf(const std::string &dxf, DRW_Interface &cap, const char *name) {
   const auto path = std::filesystem::temp_directory_path() / name;
   std::filesystem::remove(path);
   {
@@ -215,8 +215,13 @@ void readDxf(const std::string &dxf, DRW_Interface &cap, const char *name) {
     out << dxf;
   }
   dxfRW r(path.string().c_str());
-  REQUIRE(r.read(&cap, /*ext=*/true));
+  const bool result = r.read(&cap, /*ext=*/true);
   std::filesystem::remove(path);
+  return result;
+}
+
+void readDxf(const std::string &dxf, DRW_Interface &cap, const char *name) {
+  REQUIRE(tryReadDxf(dxf, cap, name));
 }
 
 std::string writeHelixDxf(const char *name) {
@@ -263,6 +268,18 @@ TEST_CASE("DXF HELIX is read as typed AcDbHelix", "[dxf][helix]") {
   HelixCapture cap;
   readDxf(kMinimalHelixDxf, cap, "lc_helix_minimal_read.dxf");
   checkHelix(cap);
+}
+
+TEST_CASE("DXF HELIX rejects an out-of-range constraint byte",
+          "[dxf][helix][malformed]") {
+  std::string malformed = kMinimalHelixDxf;
+  const std::size_t field = malformed.find("280\n1\n");
+  REQUIRE(field != std::string::npos);
+  malformed.replace(field, std::string("280\n1\n").size(), "280\n256\n");
+
+  HelixCapture cap;
+  CHECK_FALSE(tryReadDxf(malformed, cap, "lc_helix_invalid_constraint.dxf"));
+  CHECK(cap.m_helixCount == 0);
 }
 
 TEST_CASE("dxfRW writes HELIX with AcDbSpline and AcDbHelix subclasses",

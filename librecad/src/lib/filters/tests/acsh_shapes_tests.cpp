@@ -172,7 +172,7 @@ const std::string kMakeall = std::string(LIBRECAD_TEST_DIR) + "/dynblock_r2018.d
 
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("DWG ACSH BOOLEAN/CHAMFER/FILLET/TORUS/EXTRUSION decode (ATMOS AC1021)",
-          "[dwg][acsh][parity]") {
+          "[dwg][acsh][parity][fixture]") {
   if (!std::filesystem::is_regular_file(kAtmos)) {
     SUCCEED("acsh_r2007.dwg fixture not found; skipping");
     return;
@@ -265,7 +265,7 @@ TEST_CASE("DWG ACSH BOOLEAN/CHAMFER/FILLET/TORUS/EXTRUSION decode (ATMOS AC1021)
 
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("DWG ACSH REVOLVE/LOFT/BOOLEAN decode (makeall AC1032 / R2018)",
-          "[dwg][acsh][parity]") {
+          "[dwg][acsh][parity][fixture]") {
   if (!std::filesystem::is_regular_file(kMakeall)) {
     SUCCEED("dynblock_r2018.dwg fixture not found; skipping");
     return;

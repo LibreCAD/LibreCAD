@@ -29,11 +29,10 @@
  * FIELD-rich DWG emits (blocks_and_tables_-_imperial.dwg -> DXF, ODA File
  * Converter 27.1.0): a field carries evaluatorId (1), field code (2), the
  * evaluation flag longs (91/92/94/95/96), child-field handles (360), a run of
- * per-child value sub-records (each opened by a 6/7 key, closed by 304
- * "ACVALUE_END"), then the cached value string (301) + its length (98).  The
- * fixture adds a non-empty value string and a typed child value (absent in the
- * real file's fields, which were all empty) so the value path is asserted, not
- * just present.
+ * per-child value sub-records (each opened by a 6 key and closed by 304
+ * "ACVALUE_END"), then the cached value string (301) + its length (98).  A
+ * primary typed value is introduced by a 7 "ACFD_FIELD_VALUE" marker; the
+ * writer test covers that canonical form separately.
  */
 
 #include <catch2/catch_test_macros.hpp>
@@ -234,7 +233,11 @@ TEST_CASE("DXF FIELD is read into a DRW_Field via processField",
   CHECK(f.m_childValues.at(0).m_key == "ACFD_FIELDTEXT_ATTDEF");
   CHECK(f.m_childValues.at(1).m_key == "ACFD_FIELD_VALUE");
   CHECK(f.m_childValues.at(1).m_value.m_dataType == 4);
-  CHECK(f.m_childValues.at(1).m_value.m_valueString == "drawing.dwg");
+  // The ODA fixture has a payload-suppressed string value (format flag bit 0)
+  // and puts its format text in code 300.  It has no primary FIELD value.
+  CHECK(f.m_childValues.at(1).m_value.m_formatString == "drawing.dwg");
+  CHECK(f.m_childValues.at(1).m_value.m_valueString.empty());
+  CHECK(f.m_value.m_value.type() == DRW_Variant::INVALID);
 }
 
 TEST_CASE("DXF FIELDLIST is read into a DRW_FieldList via processFieldList",
@@ -253,6 +256,105 @@ TEST_CASE("DXF FIELDLIST is read into a DRW_FieldList via processFieldList",
   CHECK(l.m_fieldHandles.at(0) == 0x2Au);
 }
 
+TEST_CASE("DXF FIELDLIST preserves null slots without an owner",
+          "[dxf][field]") {
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nFIELDLIST\n5\n2B\n100\nAcDbIdSet\n90\n3\n290\n0\n"
+      "330\n0\n330\n2A\n330\n2A\n100\nAcDbFieldList\n"
+      "0\nENDSEC\n0\nEOF\n";
+  FieldCapture cap;
+  readDxf(dxf, cap, "lc_fieldlist_null_no_owner.dxf");
+
+  REQUIRE(cap.m_fieldListCount == 1);
+  CHECK(cap.m_list.parentHandle == 0u);
+  CHECK(cap.m_list.m_unknown == 0);
+  CHECK((cap.m_list.m_fieldHandles
+         == std::vector<std::uint32_t>{0u, 0x2Au, 0x2Au}));
+}
+
+TEST_CASE("DXF FIELD parsers reject malformed self handles",
+          "[dxf][field][malformed][handle]") {
+  const std::vector<const char *> records = {
+      "0\nFIELD\n5\nGZ\n100\nAcDbField\n",
+      "0\nFIELDLIST\n5\nGZ\n100\nAcDbIdSet\n"};
+  for (std::size_t i = 0; i < records.size(); ++i) {
+    const auto path = std::filesystem::temp_directory_path() /
+                      ("lc_field_bad_self_handle_" + std::to_string(i) +
+                       ".dxf");
+    std::filesystem::remove(path);
+    {
+      std::ofstream out(path);
+      out << "0\nSECTION\n2\nOBJECTS\n" << records[i]
+          << "0\nENDSEC\n0\nEOF\n";
+    }
+
+    FieldCapture cap;
+    dxfRW reader(path.string().c_str());
+    CHECK_FALSE(reader.read(&cap, /*ext=*/true));
+    CHECK(cap.m_fieldCount == 0);
+    CHECK(cap.m_fieldListCount == 0);
+    std::filesystem::remove(path);
+  }
+}
+
+TEST_CASE("DXF FIELD parsers reject incomplete counted records",
+          "[dxf][field][malformed][counts]") {
+  const std::vector<const char *> records = {
+      "0\nFIELD\n5\n2A\n100\nAcDbField\n"
+      "90\n1\n97\n0\n93\n0\n",
+      "0\nFIELD\n5\n2A\n100\nAcDbField\n"
+      "90\n0\n97\n0\n93\n1\n6\nACFD_FIELD_VALUE\n",
+      "0\nFIELD\n5\n2A\n100\nAcDbField\n"
+      "90\n0\n97\n0\n93\n0\n7\nACFD_FIELD_VALUE\n"
+      "93\n0\n90\n2\n140\n42.5\n",
+      "0\nFIELDLIST\n5\n2B\n100\nAcDbIdSet\n"
+      "90\n1\n290\n0\n100\nAcDbFieldList\n"};
+  for (std::size_t i = 0; i < records.size(); ++i) {
+    const auto path = std::filesystem::temp_directory_path() /
+                      ("lc_field_bad_count_" + std::to_string(i) + ".dxf");
+    std::filesystem::remove(path);
+    {
+      std::ofstream out(path);
+      out << "0\nSECTION\n2\nOBJECTS\n" << records[i]
+          << "0\nENDSEC\n0\nEOF\n";
+    }
+
+    FieldCapture cap;
+    dxfRW reader(path.string().c_str());
+    CHECK_FALSE(reader.read(&cap, /*ext=*/true));
+    CHECK(cap.m_fieldCount == 0);
+    CHECK(cap.m_fieldListCount == 0);
+    std::filesystem::remove(path);
+  }
+}
+
+TEST_CASE("DXF FIELDLIST rejects duplicate owners and post-terminal fields",
+          "[dxf][field][malformed]") {
+  const std::vector<const char *> records = {
+      "0\nFIELDLIST\n5\n2B\n330\nC\n330\nD\n100\nAcDbIdSet\n"
+      "90\n0\n290\n0\n100\nAcDbFieldList\n",
+      "0\nFIELDLIST\n5\n2B\n100\nAcDbIdSet\n90\n0\n290\n0\n"
+      "100\nAcDbFieldList\n90\n0\n"};
+  for (std::size_t i = 0; i < records.size(); ++i) {
+    const auto path = std::filesystem::temp_directory_path() /
+                      ("lc_fieldlist_bad_order_" + std::to_string(i)
+                       + ".dxf");
+    std::filesystem::remove(path);
+    {
+      std::ofstream out(path);
+      out << "0\nSECTION\n2\nOBJECTS\n" << records[i]
+          << "0\nENDSEC\n0\nEOF\n";
+    }
+
+    FieldCapture cap;
+    dxfRW reader(path.string().c_str());
+    CHECK_FALSE(reader.read(&cap, /*ext=*/true));
+    CHECK(cap.m_fieldListCount == 0);
+    std::filesystem::remove(path);
+  }
+}
+
 TEST_CASE("DXF FIELD and FIELDLIST objects write class and cached value data",
           "[dxf][field][objects]") {
   const auto path = std::filesystem::temp_directory_path() / "lc_field_write.dxf";
@@ -263,10 +365,12 @@ TEST_CASE("DXF FIELD and FIELDLIST objects write class and cached value data",
     dxfRW *m_rw = nullptr;
     DRW_Field m_field;
     DRW_FieldList m_list;
+    bool m_fieldWritten = true;
+    bool m_listWritten = true;
 
     void writeObjects() override {
-      m_rw->writeField(&m_field);
-      m_rw->writeFieldList(&m_list);
+      m_fieldWritten = m_rw->writeField(&m_field);
+      m_listWritten = m_rw->writeFieldList(&m_list);
     }
   };
 
@@ -286,21 +390,58 @@ TEST_CASE("DXF FIELD and FIELDLIST objects write class and cached value data",
 
   DRW_Field::ChildValue attdef;
   attdef.m_key = "ACFD_FIELDTEXT_ATTDEF";
+  attdef.m_value.m_formatFlags = 5;
   attdef.m_value.m_dataType = 1;
   attdef.m_value.m_value.addInt(91, 7);
+  attdef.m_value.m_unitType = 2;
+  attdef.m_value.m_formatString = "%lu";
   em.m_field.m_childValues.push_back(attdef);
 
   DRW_Field::ChildValue cached;
   cached.m_key = "ACFD_FIELD_VALUE";
+  cached.m_value.m_formatFlags = 0;
   cached.m_value.m_dataType = 4;
   cached.m_value.m_valueString = "drawing.dwg";
   cached.m_value.m_value.addString(1, "drawing.dwg");
+  cached.m_value.m_unitType = 3;
+  cached.m_value.m_formatString = "%tc1";
   em.m_field.m_childValues.push_back(cached);
+
+  DRW_Field::ChildValue handleValue;
+  handleValue.m_key = "ACFD_FIELD_HANDLE";
+  handleValue.m_value.m_formatFlags = 0;
+  handleValue.m_value.m_dataType = 64;
+  handleValue.m_value.m_handle = 0x2Du;
+  handleValue.m_value.m_unitType = 4;
+  handleValue.m_value.m_formatString = "%<\\_ObjId 45>%";
+  em.m_field.m_childValues.push_back(handleValue);
+
+  DRW_Field::ChildValue binaryValue;
+  binaryValue.m_key = "ACFD_FIELD_DATE";
+  binaryValue.m_value.m_dataType = 8;
+  binaryValue.m_value.m_dataSize = 2;
+  binaryValue.m_value.m_rawData = {0x01u, 0xABu};
+  binaryValue.m_value.m_unitType = 12;
+  em.m_field.m_childValues.push_back(binaryValue);
+
+  DRW_Field::ChildValue pointValue;
+  pointValue.m_key = "ACFD_FIELD_POINT";
+  pointValue.m_value.m_dataType = 32;
+  pointValue.m_value.m_dataSize = 24;
+  pointValue.m_value.m_value.addCoord(11, DRW_Coord(1.0, 2.0, 3.0));
+  em.m_field.m_childValues.push_back(pointValue);
+
+  em.m_field.m_value.m_formatFlags = 0;
+  em.m_field.m_value.m_dataType = 4;
+  em.m_field.m_value.m_value.addString(1, "primary value");
+  em.m_field.m_value.m_unitType = 3;
+  em.m_field.m_value.m_formatString = "%tc1";
+  em.m_field.m_value.m_valueString = "primary display";
 
   em.m_list.handle = 0x2Bu;
   em.m_list.parentHandle = 0;
   em.m_list.m_unknown = 0;
-  em.m_list.m_fieldHandles = {0x2Au};
+  em.m_list.m_fieldHandles = {0u, 0x2Au};
 
   {
     dxfRW w(path.string().c_str());
@@ -312,7 +453,9 @@ TEST_CASE("DXF FIELD and FIELDLIST objects write class and cached value data",
     REQUIRE(dxfRW::dxfClassForRecordName("FIELDLIST", fieldListCls));
     fieldListCls.instanceCount = 1;
     w.setDxfClasses({fieldCls, fieldListCls});
-    REQUIRE(w.write(&em, DRW::AC1024, false));
+    REQUIRE(w.write(&em, DRW::AC1021, false));
+    REQUIRE(em.m_fieldWritten);
+    REQUIRE(em.m_listWritten);
   }
 
   const auto groups = readGroups(path);
@@ -328,12 +471,28 @@ TEST_CASE("DXF FIELD and FIELDLIST objects write class and cached value data",
   CHECK(hasConsecutive(groups, {{"90", "1"}, {"360", "2C"}, {"97", "0"}}));
   CHECK(hasConsecutive(groups,
                        {{"6", "ACFD_FIELD_VALUE"}, {"93", "0"}, {"90", "4"},
-                        {"300", "drawing.dwg"}}));
+                        {"1", "drawing.dwg"}, {"94", "3"},
+                        {"300", "%tc1"}, {"302", "drawing.dwg"}}));
+  CHECK(hasConsecutive(groups,
+                       {{"6", "ACFD_FIELD_HANDLE"}, {"93", "0"}, {"90", "64"},
+                        {"330", "2D"}, {"94", "4"}}));
+  CHECK(hasConsecutive(groups,
+                       {{"6", "ACFD_FIELD_DATE"}, {"93", "0"}, {"90", "8"},
+                        {"92", "2"}, {"310", "01AB"}, {"94", "12"}}));
+  CHECK(hasConsecutive(groups,
+                       {{"6", "ACFD_FIELD_POINT"}, {"93", "0"}, {"90", "32"},
+                        {"92", "24"}, {"11", "1"}, {"21", "2"}, {"31", "3"}}));
+  CHECK(hasConsecutive(groups,
+                       {{"7", "ACFD_FIELD_VALUE"}, {"93", "0"}, {"90", "4"},
+                        {"1", "primary value"}, {"94", "3"},
+                        {"300", "%tc1"}, {"302", "primary display"},
+                        {"304", "ACVALUE_END"}}));
   CHECK(hasConsecutive(groups, {{"301", "drawing.dwg"}, {"98", "11"}}));
   CHECK(hasConsecutive(groups,
                        {{"0", "FIELDLIST"}, {"5", "2B"}, {"330", "C"},
-                        {"100", "AcDbIdSet"}, {"90", "1"}, {"290", "0"},
-                        {"330", "2A"}, {"100", "AcDbFieldList"}}));
+                        {"100", "AcDbIdSet"}, {"90", "2"}, {"290", "0"},
+                        {"330", "0"}, {"330", "2A"},
+                        {"100", "AcDbFieldList"}}));
 
   FieldCapture cap;
   {
@@ -348,12 +507,111 @@ TEST_CASE("DXF FIELD and FIELDLIST objects write class and cached value data",
   CHECK(cap.m_field.m_valueString == "drawing.dwg");
   REQUIRE(cap.m_field.m_childHandles.size() == 1u);
   CHECK(cap.m_field.m_childHandles.at(0) == 0x2Cu);
-  REQUIRE(cap.m_field.m_childValues.size() == 2u);
+  REQUIRE(cap.m_field.m_childValues.size() == 5u);
+  CHECK(cap.m_field.m_childValues.at(0).m_value.m_formatFlags == 5);
+  CHECK(cap.m_field.m_childValues.at(0).m_value.m_unitType == 2);
+  CHECK(cap.m_field.m_childValues.at(0).m_value.m_formatString == "%lu");
   CHECK(cap.m_field.m_childValues.at(1).m_key == "ACFD_FIELD_VALUE");
   CHECK(cap.m_field.m_childValues.at(1).m_value.m_dataType == 4);
   CHECK(cap.m_field.m_childValues.at(1).m_value.m_valueString == "drawing.dwg");
+  CHECK(cap.m_field.m_childValues.at(1).m_value.m_formatFlags == 0);
+  CHECK(cap.m_field.m_childValues.at(1).m_value.m_unitType == 3);
+  CHECK(cap.m_field.m_childValues.at(1).m_value.m_formatString == "%tc1");
+  CHECK(cap.m_field.m_childValues.at(2).m_key == "ACFD_FIELD_HANDLE");
+  CHECK(cap.m_field.m_childValues.at(2).m_value.m_dataType == 64);
+  CHECK(cap.m_field.m_childValues.at(2).m_value.m_handle == 0x2Du);
+  CHECK(cap.m_field.m_childValues.at(2).m_value.m_formatFlags == 0);
+  CHECK(cap.m_field.m_childValues.at(2).m_value.m_unitType == 4);
+  CHECK(cap.m_field.m_childValues.at(3).m_value.m_dataType == 8);
+  CHECK(cap.m_field.m_childValues.at(3).m_value.m_rawData
+        == std::vector<std::uint8_t>{0x01u, 0xABu});
+  CHECK(cap.m_field.m_childValues.at(4).m_value.m_dataType == 32);
+  REQUIRE(cap.m_field.m_childValues.at(4).m_value.m_value.coord() != nullptr);
+  CHECK(cap.m_field.m_childValues.at(4).m_value.m_value.coord()->x == 1.0);
+  CHECK(cap.m_field.m_childValues.at(4).m_value.m_value.coord()->y == 2.0);
+  CHECK(cap.m_field.m_childValues.at(4).m_value.m_value.coord()->z == 3.0);
+  CHECK(cap.m_field.m_value.m_dataType == 4);
+  CHECK(cap.m_field.m_value.m_value.c_str() == std::string("primary value"));
+  CHECK(cap.m_field.m_value.m_formatString == "%tc1");
+  CHECK(cap.m_field.m_value.m_valueString == "primary display");
 
   REQUIRE(cap.m_fieldListCount == 1);
-  REQUIRE(cap.m_list.m_fieldHandles.size() == 1u);
-  CHECK(cap.m_list.m_fieldHandles.at(0) == 0x2Au);
+  REQUIRE(cap.m_list.m_fieldHandles.size() == 2u);
+  CHECK(cap.m_list.m_fieldHandles.at(0) == 0u);
+  CHECK(cap.m_list.m_fieldHandles.at(1) == 0x2Au);
+}
+
+TEST_CASE("DXF FIELD writers reject unsupported and oversized payloads",
+          "[dxf][field][writer][safety]") {
+  const auto path = std::filesystem::temp_directory_path()
+                    / "lc_field_writer_rejected.dxf";
+  std::filesystem::remove(path);
+
+  class FieldEmitter : public StubInterface {
+  public:
+    dxfRW *m_rw = nullptr;
+    DRW_Field m_field;
+    DRW_FieldList m_list;
+    bool m_writeField = false;
+    bool m_fieldResult = true;
+    bool m_listResult = true;
+
+    void writeObjects() override {
+      if (m_writeField)
+        m_fieldResult = m_rw->writeField(&m_field);
+      else
+        m_listResult = m_rw->writeFieldList(&m_list);
+    }
+  } emitter;
+
+  const auto verifyRejected = [&](bool writeField,
+                                  DRW::Version outputVersion = DRW::AC1024) {
+    std::filesystem::remove(path);
+    emitter.m_writeField = writeField;
+    dxfRW writer(path.string().c_str());
+    emitter.m_rw = &writer;
+    CHECK_FALSE(writer.write(&emitter, outputVersion, false));
+    const bool objectWriteResult =
+        writeField ? emitter.m_fieldResult : emitter.m_listResult;
+    CHECK_FALSE(objectWriteResult);
+  };
+
+  SECTION("unsupported child value type") {
+    emitter.m_field = DRW_Field();
+    DRW_Field::ChildValue child;
+    child.m_value.m_dataType = 8;
+    emitter.m_field.m_childValues = {child};
+    verifyRejected(true);
+  }
+
+  SECTION("unsupported primary value type") {
+    emitter.m_field = DRW_Field();
+    emitter.m_field.m_value.m_dataType = 512;
+    emitter.m_field.m_value.m_value.addString(1, "unsupported");
+    verifyRejected(true);
+  }
+
+  SECTION("primary values require an R2007-or-newer target") {
+    emitter.m_field = DRW_Field();
+    emitter.m_field.m_value.m_dataType = 1;
+    emitter.m_field.m_value.m_value.addInt(91, 7);
+    verifyRejected(true, DRW::AC1018);
+  }
+
+  SECTION("field list count exceeds the native bound") {
+    emitter.m_list = DRW_FieldList();
+    emitter.m_list.m_fieldHandles.resize(DRW_Field::kMaxItems + 1);
+    verifyRejected(false);
+  }
+
+  SECTION("FIELD child zero and pre-R2000 output are rejected") {
+    emitter.m_field = DRW_Field();
+    emitter.m_field.m_childHandles = {0};
+    verifyRejected(true);
+
+    emitter.m_field = DRW_Field();
+    verifyRejected(true, DRW::AC1014);
+  }
+
+  std::filesystem::remove(path);
 }

@@ -13,7 +13,9 @@
 
 #include "dwgbufferw.h"
 
+#include <algorithm>
 #include <cstring>
+#include <limits>
 
 #include "../drw_base.h"
 #include "drw_textcodec.h"
@@ -148,7 +150,12 @@ void dwgBufferW::putBitLong(std::int32_t v) {
 
 void dwgBufferW::putBitLongLong(std::uint64_t v) {
     // Inverse of getBitLongLong: 3 bits = byte count, then that many
-    // bytes least-significant first.
+    // bytes least-significant first. The three-bit count can represent at
+    // most seven payload bytes; do not silently discard the high byte(s).
+    if ((v >> 56) != 0) {
+        m_good = false;
+        return;
+    }
     std::uint8_t n = 0;
     std::uint64_t t = v;
     while (t != 0 && n < 7) {
@@ -235,49 +242,59 @@ void dwgBufferW::put2RawDouble(const DRW_Coord& c) {
 
 // ---- modular / variable-length encodings ---------------------------------
 
-void dwgBufferW::putUModularChar(std::uint32_t v) {
-    // Emit 7-bit chunks LSB-first; all but the last have 0x80 set.
-    // Reader caps at 4 chunks (the `for (int i=0; i<4; i++)` in
-    // dwgBuffer::getUModularChar), so the writer caps at 4 too — a
-    // 5-chunk emit would leave one stale byte the reader never reads.
-    // Max representable: 2^28 - 1.  Values >= 2^28 silently truncate
-    // to 28 bits, matching what the reader could represent anyway.
-    std::uint8_t chunks[4];
+bool dwgBufferW::putUModularChar(std::uint64_t v) {
+    // Emit 7-bit chunks LSB-first. The DWG form permits five chunks, so the
+    // representable unsigned range is 35 bits. Never truncate a value: a
+    // wrapped handle delta would make the following HANDLES entry decode at
+    // the wrong offset.
+    constexpr std::uint64_t maxValue = (std::uint64_t{1} << 35) - 1;
+    if (v > maxValue) {
+        m_good = false;
+        return false;
+    }
+    std::uint8_t chunks[5];
     int n = 0;
     do {
         chunks[n++] = static_cast<std::uint8_t>(v & 0x7F);
         v >>= 7;
-    } while (v != 0 && n < 4);
+    } while (v != 0 && n < 5);
     // Set continuation bit on all but the last chunk.
     for (int i = 0; i < n - 1; ++i)
         chunks[i] = static_cast<std::uint8_t>(chunks[i] | 0x80);
     for (int i = 0; i < n; ++i)
         putRawChar8(chunks[i]);
+    return true;
 }
 
-void dwgBufferW::putModularChar(std::int32_t v) {
-    // Reader caps at 4 chunks (dwgBuffer::getModularChar `for (int i=0;
-    // i<4; i++)`).  Writer matches the cap so a stale 5th chunk never
-    // gets emitted.  Max representable magnitude with 1 sign bit:
-    // 3 × 7-bit chunks + 1 × 6-bit chunk = 2^27 - 1.
-    bool negative = v < 0;
-    std::uint32_t absv = negative ? static_cast<std::uint32_t>(-static_cast<std::int64_t>(v))
-                            : static_cast<std::uint32_t>(v);
-    std::uint8_t chunks[4];
+bool dwgBufferW::putModularChar(std::int64_t v) {
+    // The terminal chunk has six magnitude bits and one sign bit, giving a
+    // 34-bit magnitude range across the five-byte form. Never truncate a
+    // larger delta because the next object-map entry would be mislocated.
+    const bool negative = v < 0;
+    const std::uint64_t magnitude = negative
+        ? static_cast<std::uint64_t>(-(v + 1)) + 1
+        : static_cast<std::uint64_t>(v);
+    constexpr std::uint64_t maxMagnitude = (std::uint64_t{1} << 34) - 1;
+    if (magnitude > maxMagnitude) {
+        m_good = false;
+        return false;
+    }
+    std::uint64_t remaining = magnitude;
+    std::uint8_t chunks[5];
     int n = 0;
     do {
-        chunks[n++] = static_cast<std::uint8_t>(absv & 0x7F);
-        absv >>= 7;
-    } while (absv != 0 && n < 4);
-    // The last chunk reserves 0x40 for the sign bit.  If magnitude
-    // already occupies that bit, spill into an extra chunk — but only
-    // if we have room (n < 4).  When n == 4 and 0x40 is taken, the
-    // magnitude is out of MC spec; the value is truncated on the
-    // reader side anyway, so we just drop the sign bit silently.
+        chunks[n++] = static_cast<std::uint8_t>(remaining & 0x7F);
+        remaining >>= 7;
+    } while (remaining != 0 && n < 5);
+    // If the magnitude needs the terminal sign bit, spill into a final zero
+    // chunk where possible. The range check above guarantees that the
+    // terminal chunk always fits without truncation.
     if (chunks[n - 1] & 0x40) {
-        if (n < 4) {
+        if (n < 5) {
             chunks[n - 1] = static_cast<std::uint8_t>(chunks[n - 1] | 0x80);
             chunks[n++] = 0;
+        } else {
+            chunks[n - 1] = static_cast<std::uint8_t>(chunks[n - 1] & 0x3F);
         }
     }
     if (negative && !(chunks[n - 1] & 0x40))
@@ -286,10 +303,18 @@ void dwgBufferW::putModularChar(std::int32_t v) {
         chunks[i] = static_cast<std::uint8_t>(chunks[i] | 0x80);
     for (int i = 0; i < n; ++i)
         putRawChar8(chunks[i]);
+    return true;
 }
 
 void dwgBufferW::putModularShort(std::int32_t v) {
-    // Reader handles at most 2 RS chunks; positive only.
+    // Reader handles at most two 15-bit RS chunks; lengths are positive.
+    // Reject values that would lose their high bits or change sign when
+    // encoded in this bounded form.
+    constexpr std::int32_t maxValue = (std::int32_t{1} << 30) - 1;
+    if (v < 0 || v > maxValue) {
+        m_good = false;
+        return;
+    }
     std::uint32_t absv = static_cast<std::uint32_t>(v);
     std::uint16_t lo = static_cast<std::uint16_t>(absv & 0x7FFF);
     std::uint16_t hi = static_cast<std::uint16_t>((absv >> 15) & 0x7FFF);
@@ -305,20 +330,59 @@ void dwgBufferW::putModularShort(std::int32_t v) {
 // ---- handles --------------------------------------------------------------
 
 void dwgBufferW::putHandle(const dwgHandle& h) {
+    if (h.size > sizeof(h.ref64)) {
+        m_good = false;
+        return;
+    }
+    std::uint64_t ref = h.ref;
     std::uint8_t size = 0;
-    std::uint32_t ref = h.ref;
-    if (ref != 0) {
-        std::uint32_t t = ref;
-        while (t != 0) {
-            t >>= 8;
+    const bool hasWideReference = h.ref64 > std::numeric_limits<std::uint32_t>::max()
+        || h.size > sizeof(h.ref);
+    if (hasWideReference && h.ref64 != 0) {
+        ref = h.ref64;
+        while (size < sizeof(h.ref64) && (ref >> (size * 8)) != 0)
+            ++size;
+        if (h.size >= 5 && h.size <= sizeof(h.ref64) && h.size > size)
+            size = h.size;
+    } else if (ref != 0) {
+        std::uint32_t narrowRef = static_cast<std::uint32_t>(ref);
+        while (narrowRef != 0) {
+            narrowRef >>= 8;
             ++size;
         }
     }
-    std::uint8_t header = static_cast<std::uint8_t>(((h.code & 0x0F) << 4) | (size & 0x0F));
+    const std::uint64_t startBit = currentBitOffset();
+    const std::uint8_t code = static_cast<std::uint8_t>(h.code & 0x0F);
+    const std::uint8_t header =
+        static_cast<std::uint8_t>((code << 4) | (size & 0x0F));
     putRawChar8(header);
     // Emit MSB byte first.
     for (int i = size - 1; i >= 0; --i)
         putRawChar8(static_cast<std::uint8_t>((ref >> (i * 8)) & 0xFF));
+    recordHandleOccurrence(code, ref, startBit);
+}
+
+void dwgBufferW::putFixedHandle(std::uint8_t code, std::uint8_t size,
+                                std::uint64_t ref) {
+    if (size > sizeof(ref)) {
+        m_good = false;
+        return;
+    }
+    const std::uint64_t startBit = currentBitOffset();
+    const std::uint8_t wireCode = static_cast<std::uint8_t>(code & 0x0F);
+    putRawChar8(static_cast<std::uint8_t>((wireCode << 4) | size));
+    for (int i = size - 1; i >= 0; --i)
+        putRawChar8(static_cast<std::uint8_t>((ref >> (i * 8)) & 0xFF));
+    recordHandleOccurrence(wireCode, ref, startBit);
+}
+
+void dwgBufferW::recordHandleOccurrence(std::uint8_t code,
+                                         std::uint64_t reference,
+                                         std::uint64_t startBit) {
+    m_handleOccurrences.push_back(
+        {code, reference,
+         startBit,
+         currentBitOffset()});
 }
 
 // ---- object type (OT) ----------------------------------------------------
@@ -352,7 +416,31 @@ void dwgBufferW::putVariableText(DRW::Version v, const std::string& utf8) {
 
 void dwgBufferW::putCP8Text(const std::string& utf8) {
     std::string encoded = m_decoder ? m_decoder->fromUtf8(utf8) : utf8;
+    // R2004+ writers include the terminating zero in a non-empty TV field.
+    // The reader strips it, preserving the public string value.
+    if (!encoded.empty()) {
+        if (encoded.size() > 0xFFFEu) {
+            m_good = false;
+            return;
+        }
+        encoded.push_back('\0');
+    }
     std::uint16_t byteLen = static_cast<std::uint16_t>(encoded.size());
+    putBitShort(byteLen);
+    if (byteLen != 0)
+        putBytes(reinterpret_cast<const std::uint8_t*>(encoded.data()), byteLen);
+}
+
+void dwgBufferW::putENCText(const std::string& utf8) {
+    std::string encoded = m_decoder ? m_decoder->fromUtf8CP8(utf8) : utf8;
+    if (!encoded.empty()) {
+        if (encoded.size() > 0xFFFEu) {
+            m_good = false;
+            return;
+        }
+        encoded.push_back('\0');
+    }
+    const std::uint16_t byteLen = static_cast<std::uint16_t>(encoded.size());
     putBitShort(byteLen);
     if (byteLen != 0)
         putBytes(reinterpret_cast<const std::uint8_t*>(encoded.data()), byteLen);
@@ -394,15 +482,78 @@ void dwgBufferW::putUCSText(const std::string& utf8) {
             units.push_back(static_cast<std::uint16_t>(0xDC00 | (cp & 0x3FF)));
         }
     }
-    // The TU length is a 16-bit BS count; clamp so the emitted count always
-    // matches the emitted payload (a >0xFFFF-unit string would otherwise write
-    // a truncated count but the full payload, desyncing the stream).
-    size_t n = units.size() > 0xFFFFu ? 0xFFFFu : units.size();
+    // The TU length is a 16-bit BS count and includes the terminating zero
+    // code unit for non-empty strings.
+    if (!units.empty()) {
+        if (units.size() > 0xFFFEu) {
+            m_good = false;
+            return;
+        }
+        units.push_back(0);
+    }
+    const size_t n = units.size();
     putBitShort(static_cast<std::uint16_t>(n));
     for (size_t i = 0; i < n; ++i) {
         putRawChar8(static_cast<std::uint8_t>(units[i] & 0xFF));
         putRawChar8(static_cast<std::uint8_t>(units[i] >> 8));
     }
+}
+
+std::string dwgBufferW::encodeTextAreaString(const std::string& utf8,
+                                             bool unicode) const {
+    if (!unicode)
+        return m_decoder ? m_decoder->fromUtf8(utf8) : utf8;
+
+    std::string encoded;
+    for (size_t i = 0; i < utf8.size();) {
+        const unsigned char c = static_cast<unsigned char>(utf8[i]);
+        std::uint32_t cp = 0;
+        if (c < 0x80) {
+            cp = c;
+            ++i;
+        } else if ((c & 0xE0) == 0xC0 && i + 1 < utf8.size()) {
+            cp = c & 0x1F;
+            cp = (cp << 6) |
+                 (static_cast<unsigned char>(utf8[i + 1]) & 0x3F);
+            i += 2;
+        } else if ((c & 0xF0) == 0xE0 && i + 2 < utf8.size()) {
+            cp = c & 0x0F;
+            cp = (cp << 6) |
+                 (static_cast<unsigned char>(utf8[i + 1]) & 0x3F);
+            cp = (cp << 6) |
+                 (static_cast<unsigned char>(utf8[i + 2]) & 0x3F);
+            i += 3;
+        } else if ((c & 0xF8) == 0xF0 && i + 3 < utf8.size()) {
+            cp = c & 0x07;
+            cp = (cp << 6) |
+                 (static_cast<unsigned char>(utf8[i + 1]) & 0x3F);
+            cp = (cp << 6) |
+                 (static_cast<unsigned char>(utf8[i + 2]) & 0x3F);
+            cp = (cp << 6) |
+                 (static_cast<unsigned char>(utf8[i + 3]) & 0x3F);
+            i += 4;
+        } else {
+            cp = '?';
+            ++i;
+        }
+
+        if (cp < 0x10000) {
+            const auto unit = static_cast<std::uint16_t>(cp);
+            encoded.push_back(static_cast<char>(unit & 0xFF));
+            encoded.push_back(static_cast<char>(unit >> 8));
+        } else if (cp <= 0x10FFFF) {
+            cp -= 0x10000;
+            const std::uint16_t high =
+                static_cast<std::uint16_t>(0xD800 | (cp >> 10));
+            const std::uint16_t low =
+                static_cast<std::uint16_t>(0xDC00 | (cp & 0x3FF));
+            encoded.push_back(static_cast<char>(high & 0xFF));
+            encoded.push_back(static_cast<char>(high >> 8));
+            encoded.push_back(static_cast<char>(low & 0xFF));
+            encoded.push_back(static_cast<char>(low >> 8));
+        }
+    }
+    return encoded;
 }
 
 std::uint32_t dwgBufferW::bitCount() const {
@@ -510,6 +661,45 @@ void dwgBufferW::putEnColor(DRW::Version v, std::uint16_t colorIndex) {
         putBitShort(colorIndex);  // R2004+: unsigned BS; reader uses getBitShort()
 }
 
+void dwgBufferW::putEnColor(DRW::Version v, std::uint16_t colorIndex,
+                            std::int32_t rgb24, const UTF8STRING& colorName,
+                            const UTF8STRING& bookName,
+                            std::uint32_t alphaRaw,
+                            bool hasDbColorHandle) {
+    if (v < DRW::AC1018) {
+        putEnColor(v, colorIndex);
+        return;
+    }
+
+    const bool hasRgb = !hasDbColorHandle && rgb24 >= 0;
+    // A DBCOLOR/book-color reference is a complex ENC variant too.  The
+    // 0x40 and 0x80 flags are emitted together; 0x40 suppresses the inline
+    // RGB value while 0x80 identifies the extended color representation.
+    const bool hasComplexColor = hasDbColorHandle || hasRgb;
+    const std::uint8_t flags = static_cast<std::uint8_t>(
+        (alphaRaw != 0 ? 0x20u : 0u)
+        | (hasDbColorHandle ? 0x40u : 0u)
+        | (hasComplexColor ? 0x80u : 0u)
+        | (hasDbColorHandle && !colorName.empty() ? 0x01u : 0u)
+        | (hasDbColorHandle && !bookName.empty() ? 0x02u : 0u));
+    // With no name bits, ACI 256 would alias ENC flag bit 0 in the shared
+    // 16-bit field.  ACadSharp writes the DBCOLOR form with no index payload.
+    const std::uint16_t wireColorIndex =
+        (hasDbColorHandle && colorName.empty() && bookName.empty())
+            ? 0u : static_cast<std::uint16_t>(colorIndex & 0x1FFu);
+    const std::uint16_t raw = static_cast<std::uint16_t>(
+        (static_cast<std::uint16_t>(flags) << 8u) | wireColorIndex);
+    putBitShort(raw);
+    if (hasRgb)
+        putBitLong(rgb24 & 0x00FFFFFF);
+    if (alphaRaw != 0)
+        putBitLong(static_cast<std::int32_t>(alphaRaw));
+    if (flags & 0x01u)
+        putENCText(colorName);
+    if (flags & 0x02u)
+        putENCText(bookName);
+}
+
 // ---- CRC ------------------------------------------------------------------
 
 std::uint16_t dwgBufferW::crc16(std::uint16_t seed, size_t start, size_t end) const {
@@ -560,4 +750,25 @@ void dwgBufferW::patchRawLong32AtBit(size_t bitOffset, std::uint32_t val) {
     m_buf[byteIdx + 2] = static_cast<std::uint8_t>(b1 << 6) | static_cast<std::uint8_t>(b2 >> 2);
     m_buf[byteIdx + 3] = static_cast<std::uint8_t>(b2 << 6) | static_cast<std::uint8_t>(b3 >> 2);
     m_buf[byteIdx + 4] = (m_buf[byteIdx + 4] & 0x3F) | static_cast<std::uint8_t>(b3 << 6);
+}
+
+bool dwgBufferW::patchRawBytesAtBit(size_t bitOffset,
+                                    const std::uint8_t *bytes, size_t count) {
+    if (bytes == nullptr || count == 0 || bitOffset > bitCount()
+        || count > (bitCount() - bitOffset) / 8)
+        return false;
+
+    for (size_t byte = 0; byte < count; ++byte) {
+        for (unsigned bit = 0; bit < 8; ++bit) {
+            const size_t targetBit = bitOffset + byte * 8 + bit;
+            const size_t targetByte = targetBit / 8;
+            const std::uint8_t mask = static_cast<std::uint8_t>(
+                1u << (7u - static_cast<unsigned>(targetBit % 8)));
+            if ((bytes[byte] & (1u << (7u - bit))) != 0)
+                m_buf[targetByte] |= mask;
+            else
+                m_buf[targetByte] &= static_cast<std::uint8_t>(~mask);
+        }
+    }
+    return true;
 }

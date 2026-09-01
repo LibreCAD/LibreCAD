@@ -20,15 +20,15 @@
  * Modern MESH (AcDbSubDMesh) write tests.
  *
  * This is distinct from legacy POLYLINE_MESH (fixed DWG type 30).  The mesh
- * below is level 0 and has no subdiv-vertex vector; that keeps the tests on the
- * field subset currently parsed unambiguously while still pinning base vertices,
- * face streams, edge pairs, and crease values.
+ * below pins the DWG subdivision-level field together with base vertices, face
+ * streams, edge pairs, creases, and the trailing unknown value.
  */
 
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/catch_approx.hpp>
 
 #include <algorithm>
+#include <cstdint>
 #include <cstdio>
 #include <filesystem>
 #include <fstream>
@@ -108,6 +108,7 @@ DRW_Mesh makeMesh() {
   mesh.version = 2;
   mesh.blendCrease = true;
   mesh.subdivisionLevel = 0;
+  mesh.unknown = 7;
   mesh.vertices = {
       DRW_Coord(0.0, 0.0, 0.0),
       DRW_Coord(4.0, 0.0, 0.0),
@@ -147,7 +148,8 @@ public:
   }
 };
 
-void checkMesh(const MeshCapture &cap) {
+void checkMesh(const MeshCapture &cap, std::int32_t expectedSubdivisionLevel = 0,
+               std::int32_t expectedUnknown = 0) {
   REQUIRE(cap.m_count == 1);
   CHECK(cap.m_polylineCount == 0);
 
@@ -155,7 +157,8 @@ void checkMesh(const MeshCapture &cap) {
   CHECK(mesh.eType == DRW::MESH);
   CHECK(mesh.version == 2);
   CHECK(mesh.blendCrease);
-  CHECK(mesh.subdivisionLevel == 0);
+  CHECK(mesh.subdivisionLevel == expectedSubdivisionLevel);
+  CHECK(mesh.unknown == expectedUnknown);
   REQUIRE(mesh.vertices.size() == 5u);
   CHECK(mesh.vertices[2].x == Catch::Approx(4.0));
   CHECK(mesh.vertices[2].y == Catch::Approx(3.0));
@@ -175,6 +178,10 @@ void checkMesh(const MeshCapture &cap) {
 
 class MeshDxfEmitter : public StubInterface {
 public:
+  MeshDxfEmitter() {
+    m_mesh.propertyOverrides.push_back({7, {0, 2, 3}});
+  }
+
   DRW_Mesh m_mesh = makeMesh();
   dxfRW *m_rw = nullptr;
 
@@ -207,6 +214,19 @@ void readDxf(const std::string &dxf, DRW_Interface &cap, const char *name) {
   std::filesystem::remove(path);
 }
 
+bool tryReadDxf(const std::string &dxf, DRW_Interface &cap, const char *name) {
+  const auto path = std::filesystem::temp_directory_path() / name;
+  std::filesystem::remove(path);
+  {
+    std::ofstream out(path);
+    out << dxf;
+  }
+  dxfRW r(path.string().c_str());
+  const bool result = r.read(&cap, /*ext=*/true);
+  std::filesystem::remove(path);
+  return result;
+}
+
 std::string writeMeshDxf(const char *name) {
   const auto path = std::filesystem::temp_directory_path() / name;
   std::filesystem::remove(path);
@@ -234,6 +254,53 @@ std::string tempPath(const char *suffix) {
 
 } // namespace
 
+TEST_CASE("DXF MESH rejects invalid or oversized structural counts",
+          "[dxf][mesh][malformed]") {
+  const std::string prefix =
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nMESH\n5\n10\n8\n0\n"
+      "100\nAcDbEntity\n100\nAcDbSubDMesh\n"
+      "71\n2\n72\n0\n91\n0\n";
+  const std::string suffix = "0\nENDSEC\n0\nEOF\n";
+
+  SECTION("negative vertex count") {
+    MeshCapture cap;
+    CHECK_FALSE(tryReadDxf(prefix + "92\n-1\n" + suffix, cap,
+                           "lc_mesh_negative_vertex_count.dxf"));
+    CHECK(cap.m_count == 0);
+  }
+
+  SECTION("oversized vertex count") {
+    MeshCapture cap;
+    CHECK_FALSE(tryReadDxf(prefix + "92\n2147483647\n" + suffix, cap,
+                           "lc_mesh_oversized_vertex_count.dxf"));
+    CHECK(cap.m_count == 0);
+  }
+
+  SECTION("oversized crease count") {
+    MeshCapture cap;
+    const std::string body =
+        "92\n0\n93\n0\n94\n0\n95\n2147483647\n";
+    CHECK_FALSE(tryReadDxf(prefix + body + suffix, cap,
+                           "lc_mesh_oversized_crease_count.dxf"));
+    CHECK(cap.m_count == 0);
+  }
+}
+
+TEST_CASE("DXF reader skips long ignored comment runs iteratively",
+          "[dxf][reader][malformed]") {
+  std::string dxf = "0\nSECTION\n2\nENTITIES\n";
+  constexpr std::size_t kCommentCount = 100000;
+  dxf.reserve(dxf.size() + kCommentCount * 20u + 24u);
+  for (std::size_t i = 0; i < kCommentCount; ++i)
+    dxf += "999\nignored comment\n";
+  dxf += "0\nENDSEC\n0\nEOF\n";
+
+  MeshCapture cap;
+  CHECK(tryReadDxf(dxf, cap, "lc_dxf_long_comment_run.dxf"));
+  CHECK(cap.m_count == 0);
+}
+
 TEST_CASE("dxfRW writes MESH as AcDbSubDMesh",
           "[dxf][mesh][write]") {
   const std::string dxf = writeMeshDxf("lc_mesh_write.dxf");
@@ -247,7 +314,83 @@ TEST_CASE("dxfRW writes MESH as AcDbSubDMesh",
 
   MeshCapture cap;
   readDxf(dxf, cap, "lc_mesh_write_read.dxf");
-  checkMesh(cap);
+  checkMesh(cap, 0, 0);
+  REQUIRE(cap.m_captured.propertyOverrides.size() == 1u);
+  CHECK(cap.m_captured.propertyOverrides[0].subEntityMarker == 7);
+  CHECK(cap.m_captured.propertyOverrides[0].propertyTypes
+        == std::vector<std::int32_t>{0, 2, 3});
+}
+
+TEST_CASE("DXF MESH preserves property override metadata",
+          "[dxf][mesh][metadata]") {
+  const std::string dxf =
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nMESH\n5\n10\n8\n0\n"
+      "100\nAcDbEntity\n100\nAcDbSubDMesh\n"
+      "71\n2\n72\n1\n91\n3\n"
+      "92\n3\n10\n0\n20\n0\n30\n0\n"
+      "10\n1\n20\n0\n30\n0\n"
+      "10\n0\n20\n1\n30\n0\n"
+      "93\n4\n90\n3\n90\n0\n90\n1\n90\n2\n"
+      "94\n3\n90\n0\n90\n1\n90\n1\n90\n2\n90\n2\n90\n0\n"
+      "95\n3\n140\n0.0\n140\n0.5\n140\n1.0\n"
+      "90\n1\n91\n7\n92\n3\n90\n0\n90\n2\n90\n3\n"
+      "0\nENDSEC\n0\nEOF\n";
+
+  MeshCapture cap;
+  readDxf(dxf, cap, "lc_mesh_overrides.dxf");
+  REQUIRE(cap.m_count == 1);
+  CHECK(cap.m_polylineCount == 0);
+  CHECK(cap.m_captured.version == 2);
+  CHECK(cap.m_captured.blendCrease);
+  CHECK(cap.m_captured.subdivisionLevel == 3);
+  CHECK(cap.m_captured.unknown == 0);
+  CHECK(cap.m_captured.vertices.size() == 3u);
+  REQUIRE(cap.m_captured.propertyOverrides.size() == 1u);
+  CHECK(cap.m_captured.propertyOverrides[0].subEntityMarker == 7);
+  CHECK(cap.m_captured.propertyOverrides[0].propertyTypes
+        == std::vector<std::int32_t>{0, 2, 3});
+}
+
+TEST_CASE("DXF MESH rejects invalid metadata and override framing",
+          "[dxf][mesh][malformed]") {
+  const std::string prefix =
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nMESH\n5\n10\n8\n0\n"
+      "100\nAcDbEntity\n100\nAcDbSubDMesh\n"
+      "71\n2\n72\n0\n91\n0\n"
+      "92\n0\n93\n0\n94\n0\n95\n0\n";
+  const std::string suffix = "0\nENDSEC\n0\nEOF\n";
+
+  SECTION("version outside DXF short range") {
+    MeshCapture cap;
+    CHECK_FALSE(tryReadDxf(prefix + "71\n65536\n" + suffix, cap,
+                           "lc_mesh_bad_version.dxf"));
+    CHECK(cap.m_count == 0);
+  }
+
+  SECTION("blend crease is not a boolean") {
+    MeshCapture cap;
+    CHECK_FALSE(tryReadDxf(prefix + "72\n2\n" + suffix, cap,
+                           "lc_mesh_bad_blend.dxf"));
+    CHECK(cap.m_count == 0);
+  }
+
+  SECTION("override property type is outside the specification") {
+    MeshCapture cap;
+    const std::string body = "90\n1\n91\n4\n92\n1\n90\n4\n";
+    CHECK_FALSE(tryReadDxf(prefix + body + suffix, cap,
+                           "lc_mesh_bad_override_type.dxf"));
+    CHECK(cap.m_count == 0);
+  }
+
+  SECTION("override property list is truncated") {
+    MeshCapture cap;
+    const std::string body = "90\n1\n91\n4\n92\n2\n90\n0\n";
+    CHECK_FALSE(tryReadDxf(prefix + body + suffix, cap,
+                           "lc_mesh_truncated_override.dxf"));
+    CHECK(cap.m_count == 0);
+  }
 }
 
 TEST_CASE("dwgRW writes MESH as AcDbSubDMesh without AC1024 gating",
@@ -265,6 +408,8 @@ TEST_CASE("dwgRW writes MESH as AcDbSubDMesh without AC1024 gating",
       dwgRW writer(path.c_str());
       MeshDwgEmitter emitter;
       emitter.m_writer = &writer;
+      emitter.m_mesh.subdivisionLevel = 2;
+      emitter.m_mesh.unknown = 7;
       REQUIRE(writer.write(&emitter, version, /*bin=*/false));
     }
 
@@ -276,7 +421,7 @@ TEST_CASE("dwgRW writes MESH as AcDbSubDMesh without AC1024 gating",
       REQUIRE(reader.getError() == DRW::BAD_NONE);
     }
 
-    checkMesh(cap);
+    checkMesh(cap, 2, 7);
     std::remove(path.c_str());
   }
 }

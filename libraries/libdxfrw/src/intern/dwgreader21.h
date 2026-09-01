@@ -15,6 +15,7 @@
 #define DWGREADER21_H
 
 #include <vector>
+#include <unordered_map>
 #include "drw_textcodec.h"
 #include "dwgbuffer.h"
 #include "dwgreader.h"
@@ -32,27 +33,59 @@ public:
     bool readDwgTables(DRW_Header& hdr) override;
     bool readDwgBlocks(DRW_Interface& intfa) override;
     bool readDwgEntities(DRW_Interface& intfa) override {
-        bool ret = true;
+        if (objData == nullptr || dataSize == 0)
+            return false;
         dwgBuffer dataBuf( objData.get(), dataSize, &decoder);
-        ret = dwgReader::readDwgEntities(intfa, &dataBuf);
-        return ret;
+        return dwgReader::readDwgEntities(
+            intfa, &dataBuf, DwgIntegrityAddressSpace::DecodedBuffer);
     }
     bool readDwgObjects(DRW_Interface& intfa) override {
-        bool ret = true;
+        if (objData == nullptr || dataSize == 0)
+            return false;
         dwgBuffer dataBuf( objData.get(), dataSize, &decoder);
-        ret = dwgReader::readDwgObjects(intfa, &dataBuf);
-        return ret;
+        return dwgReader::readDwgObjects(
+            intfa, &dataBuf, DwgIntegrityAddressSpace::DecodedBuffer);
     }
 //bool readDwgEntity(objHandle& obj, DRW_Interface& intfa){
 //    return false;
 //}
 
-private:
-    bool parseSysPage(std::uint64_t sizeCompressed, std::uint64_t sizeUncompressed, std::uint64_t correctionFactor, std::uint64_t offset, std::uint8_t *decompData);
-    bool parseDataPage(const dwgSectionInfo &si, std::uint8_t *dData);
+protected:
+    enum class PageMapFailure : std::uint8_t {
+        None,
+        InvalidInput,
+        ResourceLimit,
+        Truncated,
+        NonZeroTail,
+        InvalidPageId,
+        DuplicatePageId,
+        PageRange,
+        CountMismatch
+    };
 
+    bool parseSysPage(std::uint64_t sizeCompressed, std::uint64_t sizeUncompressed,
+                      std::uint64_t correctionFactor, std::uint64_t offset,
+                      std::uint64_t crcSeed, std::uint64_t expectedCompressedCrc,
+                      std::uint64_t expectedUncompressedCrc,
+                      std::uint8_t *decompData,
+                      DwgIntegrityPhase phase = DwgIntegrityPhase::PageMap,
+                      std::int32_t logicalSectionId = -1,
+                      std::int32_t sectionDescriptorId = -1);
+    bool parseDataPage(const dwgSectionInfo &si, std::uint8_t *dData);
+    bool captureRawDwgDataSections();
+    /// Decode the R2007 global page map. Signed negative IDs denote physical
+    /// gaps and advance the address without becoming resolvable page entries.
+    static bool parseSectionPageMap(
+        std::uint8_t* data, std::uint64_t size,
+        std::uint64_t expectedRecordCount, std::uint64_t maxPageId,
+        std::uint64_t fileSize,
+        std::unordered_map<std::uint64_t, dwgPageInfo>& pages,
+        PageMapFailure* failure = nullptr);
+
+private:
     std::unique_ptr<std::uint8_t []> objData;
     std::uint64_t dataSize {0};
+    std::uint64_t r2007CrcSeed {0};
 
 };
 

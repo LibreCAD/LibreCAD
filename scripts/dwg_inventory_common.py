@@ -104,14 +104,82 @@ def extract_function(text: str, signature: str) -> str:
     return text[start:]
 
 
+def extract_function_exact(text: str, signature: str) -> str:
+    """Extract a function whose name is not merely a prefix of another.
+
+    Inventory scanners pass C++ signatures that sometimes omit the argument
+    list. Require the opening parenthesis immediately after such a signature
+    so ``foo`` cannot accidentally select ``foobar``.
+    """
+    match = re.search(
+        rf"(?<![A-Za-z0-9_]){re.escape(signature)}\s*\(", text
+    )
+    if match is None:
+        return ""
+    body_start = text.find("{", match.end())
+    if body_start < 0:
+        return ""
+    depth = 0
+    for index in range(body_start, len(text)):
+        ch = text[index]
+        if ch == "{":
+            depth += 1
+        elif ch == "}":
+            depth -= 1
+            if depth == 0:
+                return text[match.start() : index + 1]
+    return text[match.start() :]
+
+
 def extract_cpp_cases(block: str) -> set[int]:
     return {int(number) for number in re.findall(r"\bcase\s+(\d+)\s*:", block)}
+
+
+def extract_cpp_enum_values(text: str, enum_name: str) -> dict[str, int]:
+    """Return explicitly assigned integer values from a named C++ enum."""
+    match = re.search(rf"\benum\s+{re.escape(enum_name)}\s*\{{(.*?)\}}", text, re.S)
+    if not match:
+        return {}
+    return {
+        name: int(value)
+        for name, value in re.findall(
+            r"\b([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(\d+)", match.group(1)
+        )
+    }
+
+
+def extract_cpp_enum_cases(
+    block: str, enum_qualifier: str, enum_values: dict[str, int]
+) -> set[int]:
+    """Resolve ``case Enum::NAME`` labels using the source enum definition."""
+    return {
+        enum_values[name]
+        for name in re.findall(
+            rf"\bcase\s+{re.escape(enum_qualifier)}::([A-Za-z_][A-Za-z0-9_]*)\s*:",
+            block,
+        )
+        if name in enum_values
+    }
 
 
 def extract_cpp_string_names(block: str) -> set[str]:
     names = set(
         re.findall(
-            r"\b(?:nextentity|nextobject|rn|recName|className)\s*==\s*\"([^\"]+)\"",
+            r"\b(?:nextentity|nextobject|normalizedEntity|normalizedObject|"
+            r"rn|recName|className)\s*==\s*\"([^\"]+)\"",
+            block,
+        )
+    )
+    names.update(
+        re.findall(
+            r"\"([^\"]+)\"\s*==\s*\b(?:nextentity|nextobject|"
+            r"normalizedEntity|normalizedObject|rn|recName|className)\b",
+            block,
+        )
+    )
+    names.update(
+        re.findall(
+            r"\bdxfKeywordEquals\(\s*nextentity\s*,\s*\"([^\"]+)\"",
             block,
         )
     )
@@ -130,7 +198,7 @@ def extract_dwg_typed_names(block: str) -> set[str]:
     """
     lines = block.splitlines()
     typed: set[str] = set()
-    name_pattern = re.compile(r"\b(?:recName|className)\s*==\s*\"([^\"]+)\"")
+    name_pattern = re.compile(r"\b(?:rn|recName|className)\s*==\s*\"([^\"]+)\"")
     for index, line in enumerate(lines):
         names = name_pattern.findall(line)
         if not names:
@@ -178,6 +246,15 @@ def normalize_name(name: str) -> str:
 def candidate_names(name: str) -> set[str]:
     normalized = normalize_name(name)
     out = {normalized}
+    compact = re.sub(r"[^A-Z0-9]", "", normalized)
+    if compact:
+        out.add(compact)
+        if compact.startswith("ACDB"):
+            out.add(compact[4:])
+        if compact.endswith("CLASS"):
+            out.add(compact[:-5])
+        if compact.startswith("ACDB") and compact.endswith("CLASS"):
+            out.add(compact[4:-5])
     if normalized.startswith("ACDB"):
         out.add(normalized[4:])
     else:
@@ -192,6 +269,12 @@ def candidate_names(name: str) -> set[str]:
         "PDFUNDERLAY": {"PDFREFERENCE"},
         "DGNUNDERLAY": {"DGNREFERENCE"},
         "DWFUNDERLAY": {"DWFREFERENCE"},
+        "LWPLINE": {"LWPOLYLINE"},
+        "BINRECORD": {"AECDBBINRECORD", "AECBDBINRECORD"},
+        "AEC_CLEANUP_GROUP_DEF": {"AEC_CLEANUP_GROUP"},
+        # The DWG fixed-type name is expanded, while the custom-class route
+        # in dwgReader uses AutoCAD's abbreviated runtime class spelling.
+        "PERSISTENTSUBENTITYMANAGER": {"ACDBPERSSUBENTMANAGER"},
     }
     out.update(extra.get(normalized, set()))
     return out
@@ -237,12 +320,81 @@ def parse_versions(repo: Path) -> list[VersionInfo]:
     return sorted(versions, key=lambda item: item.order)
 
 
+def parse_reader_dispatch(libdwgr: str) -> dict[str, str]:
+    """Return the source-declared reader class for each DRW version."""
+    block = extract_function_exact(
+        libdwgr, "std::unique_ptr<dwgReader> dwgRW::createReaderForVersion"
+    )
+    if not block:
+        raise SystemExit("error: cannot find dwgRW::createReaderForVersion")
+
+    dispatch: dict[str, str] = {}
+    pending: list[str] = []
+    for line in block.splitlines():
+        pending.extend(re.findall(r"\bcase\s+DRW::([A-Z0-9_]+)\s*:", line))
+        reader = re.search(r"\bnew\s+(dwgReader[A-Za-z0-9_]*)\s*\(", line)
+        if reader:
+            for enum_name in pending:
+                dispatch[enum_name] = reader.group(1)
+            pending = []
+        elif "break;" in line and pending:
+            for enum_name in pending:
+                dispatch[enum_name] = "unsupported"
+            pending = []
+    return dispatch
+
+
+def parse_writer_dispatch(libdwgr: str) -> dict[str, str]:
+    """Return the source-declared DWG writer class for each DRW version."""
+    block = extract_function_exact(libdwgr, "bool dwgRW::write")
+    if not block:
+        raise SystemExit("error: cannot find dwgRW::write")
+
+    allowed = set(re.findall(r"\bver\s*!=\s*DRW::([A-Z0-9_]+)", block))
+    dispatch: dict[str, str] = {}
+    for enum_name, writer in re.findall(
+        r"\bver\s*==\s*DRW::([A-Z0-9_]+)\)\s*\n\s*writer\s*=\s*std::make_unique<\s*(dwgWriter[0-9]+)\s*>",
+        block,
+    ):
+        dispatch[enum_name] = writer
+    fallback_writers = re.findall(
+        r"\belse\s*\n\s*writer\s*=\s*std::make_unique<\s*(dwgWriter[0-9]+)\s*>",
+        block,
+    )
+    if fallback_writers:
+        fallback = fallback_writers[-1]
+        for enum_name in sorted(allowed - set(dispatch)):
+            dispatch[enum_name] = fallback
+    return dispatch
+
+
+def dwg_writer_dispatch(repo: Path) -> dict[str, str]:
+    """Map version codes to the writer classes selected by live source."""
+    code_by_enum = {
+        version.enum_name: version.code for version in parse_versions(repo)
+    }
+    dispatch = parse_writer_dispatch(
+        read_text(repo / "libraries/libdxfrw/src/libdwgr.cpp")
+    )
+    return {
+        code_by_enum[enum_name]: writer
+        for enum_name, writer in dispatch.items()
+        if enum_name in code_by_enum
+    }
+
+
 def local_reader_surfaces(repo: Path) -> dict[str, set[str] | set[int] | bool]:
     libdxfrw = read_text(repo / "libraries/libdxfrw/src/libdxfrw.cpp")
     dwg_reader = read_text(repo / "libraries/libdxfrw/src/intern/dwgreader.cpp")
+    dwg_writer = read_text(repo / "libraries/libdxfrw/src/intern/dwgwriter15.cpp")
+    dwg_util = read_text(repo / "libraries/libdxfrw/src/intern/dwgutil.h")
+    objects_header = read_text(repo / "libraries/libdxfrw/src/drw_objects.h")
 
-    entity_fn = extract_function(dwg_reader, "bool dwgReader::readDwgEntity")
-    object_fn = extract_function(dwg_reader, "bool dwgReader::readDwgObject")
+    entity_fn = extract_function(dwg_reader, "bool dwgReader::readDwgEntity(")
+    object_fn = extract_function(dwg_reader, "bool dwgReader::readDwgObject(")
+    context_kind_fn = extract_function(
+        dwg_reader, "bool objectContextKindFromClassNames("
+    )
     dxf_entities_fn = extract_function(libdxfrw, "bool dxfRW::processEntities")
     dxf_objects_fn = extract_function(libdxfrw, "bool dxfRW::processObjects")
 
@@ -289,16 +441,128 @@ def local_reader_surfaces(repo: Path) -> dict[str, set[str] | set[int] | bool]:
     class_names = normalized_set(
         set(re.findall(r"\{\s*\"([A-Za-z0-9_:]+)\"\s*,\s*\"AcDb", libdxfrw))
     )
+    context_names: set[str] = set()
+    if "intfa.addObjectContextData" in object_fn:
+        context_names.update(re.findall(
+            r"\bmatches\(\"([^\"]+)\"", context_kind_fn
+        ))
+        context_names.update(re.findall(
+            r"\bmatches\(\"[^\"]+\"\s*,\s*\"([^\"]+)\"",
+            context_kind_fn,
+        ))
+
+    fixed_shell_types: set[int] = set()
+    shell_bounds = re.search(
+        r"kFixedEntityShellFirstType\s*=\s*(\d+).*?"
+        r"kFixedEntityShellLastType\s*=\s*(\d+)",
+        objects_header,
+        re.S,
+    )
+    if (shell_bounds
+            and "struct RawEntityShell" in dwg_reader
+            and "isFixedEntityShellType(oType)" in entity_fn
+            and "isReplayableFixedEntityShellRawEntity" in dwg_writer):
+        first, last = (int(value) for value in shell_bounds.groups())
+        fixed_shell_types = set(range(first, last + 1))
+        aec_shell_type = re.search(
+            r"kFixedAecEntityShellType\s*=\s*(\d+)", objects_header
+        )
+        if aec_shell_type:
+            fixed_shell_types.add(int(aec_shell_type.group(1)))
+
+    fixed_object_shell_types: set[int] = set()
+    object_shell_bounds = re.search(
+        r"kFixedObjectShellFirstType\s*=\s*(\d+).*?"
+        r"kFixedObjectShellLastType\s*=\s*(\d+)",
+        objects_header,
+        re.S,
+    )
+    if (object_shell_bounds
+            and "struct RawObjectShell" in dwg_reader
+            and "isFixedObjectShellType(oType)" in entity_fn
+            and "isFixedObjectShellType(oType)" in object_fn):
+        first, last = (int(value) for value in object_shell_bounds.groups())
+        fixed_object_shell_types = set(range(first, last + 1))
+        aec_object_bounds = re.search(
+            r"kFixedAecObjectShellFirstType\s*=\s*(\d+).*?"
+            r"kFixedAecObjectShellLastType\s*=\s*(\d+)",
+            objects_header,
+            re.S,
+        )
+        if aec_object_bounds:
+            first, last = (int(value) for value in aec_object_bounds.groups())
+            fixed_object_shell_types.update(range(first, last + 1))
+
+    validated_raw_custom_object_names: set[str] = set()
+    raw_custom_shell_fn = extract_function(
+        dwg_reader, "bool isValidatedRawCustomObjectShell"
+    )
+    if (raw_custom_shell_fn
+            and "RawObjectShell shell" in object_fn
+            and "isValidatedRawCustomObjectShell(resolvedClass)" in object_fn):
+        validated_raw_custom_object_names = normalized_set(
+            set(re.findall(r'==\s*"([^"]+)"', raw_custom_shell_fn))
+        )
+
+    entity_enum_values = extract_cpp_enum_values(dwg_util, "Entity")
+    object_enum_values = extract_cpp_enum_values(dwg_util, "Object")
+
+    fixed_shell_name_functions = "\n".join(
+        extract_function(objects_header, signature)
+        for signature in (
+            "static const char* fixedEntityShellName",
+            "static const char* fixedObjectShellName",
+        )
+    )
+    fixed_shell_names = normalized_set(
+        set(re.findall(r"\breturn\s+\"([A-Za-z0-9_:]+)\"", fixed_shell_name_functions))
+    )
 
     return {
-        "dwg_entity_cases": extract_cpp_cases(entity_fn) | dwg_child_entity_ids,
-        "dwg_object_cases": extract_cpp_cases(object_fn) | dwg_table_object_ids,
+        "dwg_entity_cases": (
+            extract_cpp_cases(entity_fn)
+            | extract_cpp_enum_cases(entity_fn, "dwgType", entity_enum_values)
+            | dwg_child_entity_ids
+            | fixed_shell_types
+        ),
+        "dwg_object_cases": (
+            extract_cpp_cases(object_fn)
+            | extract_cpp_enum_cases(object_fn, "dwgObjType", object_enum_values)
+            | dwg_table_object_ids
+            | fixed_object_shell_types
+        ),
         "dwg_typed_names": normalized_set(extract_dwg_typed_names(entity_fn)
-                                            | extract_dwg_typed_names(object_fn)),
-        "dwg_names": normalized_set(extract_cpp_string_names(entity_fn) | extract_cpp_string_names(object_fn)),
+                                            | extract_dwg_typed_names(object_fn)
+                                            | context_names),
+        "dwg_names": normalized_set(
+            extract_cpp_string_names(entity_fn)
+            | extract_cpp_string_names(object_fn)
+        ),
+        "dwg_fixed_shell_names": fixed_shell_names,
+        "dwg_fixed_entity_shell_types": fixed_shell_types,
+        "dwg_fixed_object_shell_types": fixed_object_shell_types,
+        "dwg_validated_raw_custom_object_names":
+            validated_raw_custom_object_names,
         "dxf_entities": normalized_set(extract_cpp_string_names(dxf_entities_fn) | table_records),
         "dxf_objects": normalized_set(extract_cpp_string_names(dxf_objects_fn)),
         "class_names": class_names,
+        "has_dwg_dynamic_block_callback": (
+            "DRW_DynamicBlockObject::isDynamicBlockRecName(rn)" in object_fn
+            and "intfa.addDynamicBlockObject" in object_fn
+        ),
+        "has_dwg_associative_callback": (
+            "rn.rfind(\"ACDBASSOC\", 0)" in object_fn
+            and "ACDBPERSSUBENTMANAGER" in object_fn
+            and "intfa.addAssociativeObject" in object_fn
+        ),
+        "has_dwg_centerline_associative_callback": (
+            "centerLineActionBody" in object_fn
+            and "intfa.addAssociativeObject" in object_fn
+        ),
+        "has_dwg_acsh_history_callback": (
+            "rn.rfind(\"ACSH_\", 0)" in object_fn
+            and "intfa.addAcShHistoryObject" in object_fn
+        ),
         "has_dxf_raw_entity": "addRawDxfEntity" in libdxfrw,
         "has_dxf_raw_object": "addRawDxfObject" in libdxfrw,
         "has_dxf_classes": "bool dxfRW::processClasses" in libdxfrw,

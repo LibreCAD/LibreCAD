@@ -28,12 +28,14 @@
 #include <QCoreApplication>
 #include <QDir>
 #include <QFileInfo>
+#include <QTemporaryDir>
 
 #include "console_command_utils.h"
 #include "console_dxf2dwg.h"
 #include "main.h"
 #include "rs.h"
 #include "rs_debug.h"
+#include "rs_filterdxfrw.h"
 #include "rs_fileio.h"
 #include "rs_fontlist.h"
 #include "rs_graphic.h"
@@ -53,18 +55,6 @@ RS2::FormatType parseDxfVersion(const QString& ver) {
     if (v == "2018") return RS2::FormatDXFRW2018;
     return RS2::FormatUnknown;
 }
-
-#ifdef DWGSUPPORT
-RS2::FormatType parseDwgVersion(const QString& ver) {
-    QString v = ver.toLower().remove('r');
-    if (v == "2000") return RS2::FormatDWG;
-    if (v == "2004") return RS2::FormatDWG2004;
-    if (v == "2010") return RS2::FormatDWG2010;
-    if (v == "2013") return RS2::FormatDWG2013;
-    if (v == "2018") return RS2::FormatDWG2018;
-    return RS2::FormatUnknown;
-}
-#endif
 
 bool convertFile(const QString& inputFile, const QString& outputFile, RS2::FormatType outFmt) {
     // Fix 7: check existence before hitting the parser with a cryptic error
@@ -106,6 +96,8 @@ bool convertFile(const QString& inputFile, const QString& outputFile, RS2::Forma
         qInfo("%s -> %s OK (DWG R2000 / AC1015)", qPrintable(inputFile), qPrintable(outputFile));
     else if (outFmt == RS2::FormatDWG2004)
         qInfo("%s -> %s OK (DWG R2004 / AC1018)", qPrintable(inputFile), qPrintable(outputFile));
+    else if (outFmt == RS2::FormatDWG2007)
+        qInfo("%s -> %s OK (DWG R2007 / AC1021)", qPrintable(inputFile), qPrintable(outputFile));
     else if (outFmt == RS2::FormatDWG2010)
         qInfo("%s -> %s OK (DWG R2010 / AC1024)", qPrintable(inputFile), qPrintable(outputFile));
     else if (outFmt == RS2::FormatDWG2013)
@@ -118,6 +110,90 @@ bool convertFile(const QString& inputFile, const QString& outputFile, RS2::Forma
 
     return true;
 }
+
+#ifdef DWGSUPPORT
+RS2::FormatType formatForDwgVersion(DRW::Version version) {
+    switch (version) {
+    case DRW::AC1015: return RS2::FormatDWG;
+    case DRW::AC1018: return RS2::FormatDWG2004;
+    case DRW::AC1021: return RS2::FormatDWG2007;
+    case DRW::AC1024: return RS2::FormatDWG2010;
+    case DRW::AC1027: return RS2::FormatDWG2013;
+    case DRW::AC1032: return RS2::FormatDWG2018;
+    default: return RS2::FormatUnknown;
+    }
+}
+
+int runDwgAdmissionReport(int argc, char** argv) {
+    RS_DEBUG->setLevel(RS_Debug::D_NOTHING);
+    const LC_Console::CommandContext context =
+        LC_Console::contextForCommand(argc, argv, "dwg-admission-report");
+    LC_Console::NormalizedArgv normalizedArgs(argc, argv, context);
+    int normalizedArgc = normalizedArgs.argc();
+    char** normalizedArgv = normalizedArgs.argv();
+    QCoreApplication app(normalizedArgc, normalizedArgv);
+    QCoreApplication::setOrganizationName("LibreCAD");
+    QCoreApplication::setApplicationName("LibreCAD");
+    QCoreApplication::setApplicationVersion(XSTR(LC_VERSION));
+    RS_Settings::init(app.organizationName(), app.applicationName());
+    RS_SYSTEM->init(app.applicationName(), app.applicationVersion(),
+                    XSTR(QC_APPDIR), normalizedArgv[0]);
+
+    QCommandLineParser parser;
+    parser.setApplicationDescription(
+        "Inspect the DWG export-admission decision for one explicit DWG path.");
+    parser.addHelpOption();
+    parser.addPositionalArgument("dwg_file", "Input DWG file.");
+    parser.process(app);
+    const QStringList inputs = parser.positionalArguments();
+    if (inputs.size() != 1) {
+        qCritical("ERROR: dwg-admission-report requires exactly one DWG file.");
+        return EXIT_FAILURE;
+    }
+    const QString input = inputs.front();
+    if (QFileInfo(input).suffix().compare("dwg", Qt::CaseInsensitive) != 0
+        || !QFileInfo(input).isFile()) {
+        qCritical("ERROR: input must name an existing .dwg file.");
+        return EXIT_FAILURE;
+    }
+
+    RS_FONTLIST->init();
+    RS_PATTERNLIST->init();
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    if (!RS_FileIO::instance()->fileImport(
+            graphic, input, RS2::FormatDWG,
+            [](bool partial, const QString& error) {
+                if (partial) {
+                    qWarning("WARNING: partial import: %s", qPrintable(error));
+                    return true;
+                }
+                qCritical("ERROR: import failed: %s", qPrintable(error));
+                return false;
+            })) {
+        return EXIT_FAILURE;
+    }
+    graphic.onLoadingCompleted();
+    const RS2::FormatType target = formatForDwgVersion(
+        graphic.dwgAdvancedMetadata().sourceDwgVersion());
+    if (target == RS2::FormatUnknown) {
+        qCritical("ERROR: imported DWG version has no LibreCAD DWG export target.");
+        return EXIT_FAILURE;
+    }
+
+    QTemporaryDir temporaryDirectory;
+    if (!temporaryDirectory.isValid()) {
+        qCritical("ERROR: unable to create temporary DWG report directory.");
+        return EXIT_FAILURE;
+    }
+    RS_FilterDXFRW filter;
+    const bool published = filter.fileExport(
+        graphic, temporaryDirectory.filePath("admission-check.dwg"), target);
+    qInfo().noquote() << filter.dwgExportAdmissionReport();
+    qInfo("publish=%s", published ? "success" : "refused");
+    return published ? EXIT_SUCCESS : EXIT_FAILURE;
+}
+#endif
 
 int runConversion(int argc, char** argv,
                   const QString& commandName,
@@ -180,7 +256,7 @@ int runConversion(int argc, char** argv,
 
 #ifdef DWGSUPPORT
     QCommandLineOption dwgVersionOpt(QStringList() << "V" << "dwg-version",
-        QObject::tr("DWG output version: r2000 (default), r2004, r2010, r2013, r2018."), "version");
+        QObject::tr("DWG output version: r2000 (default), r2004, r2007, r2010, r2013, r2018."), "version");
     if (outputExt == "dwg")
         parser.addOption(dwgVersionOpt);
 #endif
@@ -204,9 +280,9 @@ int runConversion(int argc, char** argv,
     }
 #ifdef DWGSUPPORT
     if (outputExt == "dwg" && parser.isSet(dwgVersionOpt)) {
-        outFmt = parseDwgVersion(parser.value(dwgVersionOpt));
+        outFmt = LC_Console::dwgFormatForVersion(parser.value(dwgVersionOpt));
         if (outFmt == RS2::FormatUnknown) {
-            qCritical("ERROR: unknown DWG version '%s'; use r2000, r2004, r2010, r2013, or r2018.",
+            qCritical("ERROR: unknown DWG version '%s'; use r2000, r2004, r2007, r2010, r2013, or r2018.",
                       qPrintable(parser.value(dwgVersionOpt)));
             return EXIT_FAILURE;
         }
@@ -299,5 +375,16 @@ int consoleDwg2dxf(int argc, char** argv) {
                          "dwg2dxf", "dwg", "dxf",
                          RS2::FormatDXFRW,
                          true);
+#endif
+}
+
+int consoleDwgAdmissionReport(int argc, char** argv) {
+#ifdef DWGSUPPORT
+    return runDwgAdmissionReport(argc, argv);
+#else
+    (void)argc;
+    (void)argv;
+    qCritical("ERROR: DWG input requires a build with DWGSUPPORT enabled.");
+    return EXIT_FAILURE;
 #endif
 }

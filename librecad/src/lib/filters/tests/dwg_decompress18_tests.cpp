@@ -28,6 +28,7 @@
 #include <cstdint>
 #include <vector>
 
+#include "intern/rscodec.h"
 #include "intern/dwgutil.h"
 
 namespace {
@@ -99,4 +100,16 @@ TEST_CASE("decompress18: hard-fails a back reference before the window start",
     dwgCompressor comp;
     std::vector<std::uint8_t> out(64, 0);
     CHECK_FALSE(comp.decompress18(in.data(), out.data(), in.size(), out.size()));
+}
+
+TEST_CASE("RScodec: invalid configuration fails closed", "[dwg][rscodec][safety]") {
+    RScodec invalidField(0x96, 0, 8);
+    CHECK_FALSE(invalidField.isOkey());
+    CHECK_FALSE(invalidField.encode(nullptr, nullptr));
+    CHECK(invalidField.decode(nullptr) == -1);
+
+    RScodec invalidCorrection(0x96, 8, 128);
+    CHECK_FALSE(invalidCorrection.isOkey());
+    CHECK_FALSE(invalidCorrection.encode(nullptr, nullptr));
+    CHECK(invalidCorrection.decode(nullptr) == -1);
 }

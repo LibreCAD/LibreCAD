@@ -33,6 +33,7 @@ public:
         : dwgWriter15(stream, header)
     {
         m_version = DRW::AC1018;
+        configureTextCodec();
     }
 
     /// No-op: R2004 has no R2000-style linear file-header stub.
@@ -43,16 +44,17 @@ public:
     bool writeSecondHeader() override { return true; }
 
     /// R2004 CLASSES section format differs from R2000:
-    ///   RL size, BS maxClassNum(499), RC, RC, Bit, padding, CRC, END sentinel.
+    ///   RL size, BS maxClassNum(499), RC, RC, Bit, padding, CRC, eight
+    ///   unknown zero bytes, END sentinel.
     bool writeDwgClasses() override;
 
     /// R2004+ AcDbObjects starts with RL 0x0dca before the first object frame.
     bool writeDwgObjects() override;
 
     /// For R2004, HANDLES offsets are section-relative (into the OBJECTS
-    /// data page).  Return the byte offset where OBJECTS content starts in
+    /// data page). Resolve the byte offset where OBJECTS content starts in
     /// m_buf so writeDwgHandles can subtract it before encoding deltas.
-    std::uint32_t objectBaseOffset() const override;
+    bool objectBaseOffset(std::uint32_t& offset) const override;
 
     bool addRawDwgSection(const DRW_RawDwgSection& section) override;
 
@@ -61,6 +63,10 @@ public:
     bool finalize() override;
 
 protected:
+    /// Build the version-specific AcDb:AppInfo payload shared by the R2004
+    /// container and the R2007 RS-backed writer.
+    static std::vector<std::uint8_t> buildAppInfoContent(DRW::Version version);
+
     /// Version string embedded in the 0x100-byte file header (bytes 0-5).
     /// Override in subclasses to produce a different version (e.g. "AC1024").
     virtual const char* fileHeaderVersion() const { return "AC1018"; }

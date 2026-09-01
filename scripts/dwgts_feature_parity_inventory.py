@@ -112,6 +112,7 @@ def libdxfrw_levels(
     dwg_entity_cases = surfaces["dwg_entity_cases"]
     dwg_object_cases = surfaces["dwg_object_cases"]
     dwg_typed_names = surfaces["dwg_typed_names"]
+    dwg_fixed_shell_names = surfaces["dwg_fixed_shell_names"]
     dxf_names = surfaces["dxf_entities"] | surfaces["dxf_objects"]  # type: ignore[operator]
     dwg_names = surfaces["dwg_names"]
     class_names = surfaces["class_names"]
@@ -126,7 +127,22 @@ def libdxfrw_levels(
     if extra_key.isdigit():
         type_id = int(extra_key)
 
-    if type_id is not None and (type_id in dwg_entity_cases or type_id in dwg_object_cases):  # type: ignore[operator]
+    if type_id is not None and (
+        type_id in surfaces["dwg_fixed_entity_shell_types"]
+        or type_id in surfaces["dwg_fixed_object_shell_types"]
+    ):
+        read_level = "fixed-raw-shell"
+        preserve_level = "raw-shell"
+        callback_level = "callback-or-audit-static"
+        decision = "preserve-shell"
+        blockers = "raw replay fixture required"
+    elif candidates & dwg_fixed_shell_names:
+        read_level = "fixed-raw-shell"
+        preserve_level = "raw-shell"
+        callback_level = "callback-or-audit-static"
+        decision = "preserve-shell"
+        blockers = "raw replay fixture required"
+    elif type_id is not None and (type_id in dwg_entity_cases or type_id in dwg_object_cases):  # type: ignore[operator]
         read_level = "typed-fixed-dispatch"
         preserve_level = "typed"
         callback_level = "callback-or-audit-static"

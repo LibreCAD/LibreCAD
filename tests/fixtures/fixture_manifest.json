@@ -1,7 +1,7 @@
 {
   "$schema": "schemas/fixture_manifest.schema.json",
   "schema": 1,
-  "description": "libdxfrw fixture manifest: covers DWG versions AC1.40, AC2.10, AC1003, AC1004, AC1006, AC1009, AC1012, AC1014, AC1015, AC1018, AC1021, AC1024, AC1027, AC1032 and DXF versions AC1003-AC1032. All entries are local-only (defaultEnabled:false) since the corpora live outside this repo; SHA256s pin the exact bytes when the fixture is present, so any drift is caught by validate_fixture_manifest. Paths use ${HOME} prefixes for portability; license tags identify the upstream project (libredwg=GPLv3, ezdxf=MIT, test-corpus-local=user's local corpus, not redistributable).",
+  "description": "libdxfrw fixture manifest: covers DWG versions AC1.40, AC2.10, AC1003, AC1004, AC1006, AC1009, AC1012, AC1014, AC1015, AC1018, AC1021, AC1024, AC1027, AC1032 and DXF versions AC1003-AC1032. Default entries are source-controlled, hash-pinned CI fixtures; optional local-only entries describe external corpora without making them CI dependencies. Paths using ${HOME} are portable local references. License tags identify the upstream project or LibreCAD-authored test data.",
   "fixtures": [
     {
       "id": "ac1.40-entities",
@@ -943,6 +943,353 @@
       "dwgTsRows": [],
       "writerRows": [],
       "expectedDiagnostics": [],
+      "requiredOracles": []
+    },
+    {
+      "id": "dxf-ac1021-block-record-preview",
+      "path": "librecad/src/lib/filters/tests/testdata/dxf/block_record_preview_r2007.dxf",
+      "format": "DXF",
+      "version": "AC1021",
+      "releaseFamily": "DXF R2007",
+      "sha256": "ac47c4691a04be79f65f9a0f94f029556df4b2afb072abb42828619e6c66d75e",
+      "license": "GPL-2.0-or-later (LibreCAD project-authored fixture)",
+      "redistribution": "repo",
+      "defaultEnabled": true,
+      "evidenceRole": "both",
+      "provenance": {
+        "source": "LibreCAD project-authored DXF regression fixture",
+        "createdBy": "DWG roadmap rev 1169 P5a.1",
+        "licenseBasis": "GPL-2.0-or-later project source"
+      },
+      "featureFamilies": ["dxf", "block-record", "binary-310"],
+      "versionRows": ["AC1021"],
+      "dwgTsRows": [],
+      "writerRows": ["dxf:AC1021:block-record-preview"],
+      "expectedDiagnostics": ["read:BAD_NONE", "block-record-preview:typed"],
+      "requiredOracles": ["ezdxf:audit"],
+      "expectedOutcomes": {
+        "owner": "BLOCK_RECORD:PREVIEW_BLOCK",
+        "sourceChunks": ["414243", "DE"],
+        "decodedBytes": "414243DE",
+        "writeTargetVersion": "AC1021"
+      }
+    },
+    {
+      "id": "dxf-ac1021-eed-binary",
+      "path": "librecad/src/lib/filters/tests/testdata/dxf/eed_binary_r2007.dxf",
+      "format": "DXF",
+      "version": "AC1021",
+      "releaseFamily": "DXF R2007",
+      "sha256": "ff32b882f51e8fd46ca040a86ed2755f7eeab40553e43205c3e1765f5d71f434",
+      "license": "GPL-2.0-or-later (LibreCAD project-authored fixture)",
+      "redistribution": "repo",
+      "defaultEnabled": true,
+      "evidenceRole": "both",
+      "provenance": {
+        "source": "LibreCAD project-authored DXF regression fixture",
+        "createdBy": "DWG roadmap rev 1171 P5b.1",
+        "licenseBasis": "GPL-2.0-or-later project source"
+      },
+      "featureFamilies": ["dxf", "eed", "xdata", "binary-1004"],
+      "versionRows": ["AC1021"],
+      "dwgTsRows": [],
+      "writerRows": ["dxf:AC1021:eed-binary"],
+      "expectedDiagnostics": ["read:BAD_NONE", "eed-binary:two-items"],
+      "requiredOracles": ["ezdxf:audit"],
+      "expectedOutcomes": {
+        "owner": "POINT:10",
+        "application": "LIBRECAD_EED",
+        "sourceChunks": ["0102", "A0B1C2"],
+        "writeTargetVersion": "AC1021"
+      }
+    },
+    {
+      "id": "dxf-ac1021-classes-raw-entity",
+      "path": "librecad/src/lib/filters/tests/testdata/dxf/classes_raw_entity_r2007.dxf",
+      "format": "DXF",
+      "version": "AC1021",
+      "releaseFamily": "DXF R2007",
+      "sha256": "5f510094f3427d4ebf1aeffee930c24aa9fd56caed3f4582846fedb4d5f0783f",
+      "license": "GPL-2.0-or-later (LibreCAD project-authored fixture)",
+      "redistribution": "repo",
+      "defaultEnabled": true,
+      "evidenceRole": "both",
+      "provenance": {
+        "source": "LibreCAD project-authored DXF regression fixture",
+        "createdBy": "DWG roadmap rev 1171 P5c.0",
+        "licenseBasis": "GPL-2.0-or-later project source"
+      },
+      "featureFamilies": ["dxf", "classes", "raw-entity"],
+      "versionRows": ["AC1021"],
+      "dwgTsRows": [],
+      "writerRows": ["dxf:AC1021:classes-raw-entity"],
+      "expectedDiagnostics": ["read:BAD_NONE", "classes:instance-count-recomputed"],
+      "requiredOracles": ["ezdxf:audit"],
+      "expectedOutcomes": {
+        "classRecord": "WEIRDENT",
+        "rawEntity": "WEIRDENT:7A",
+        "sourceInstanceCount": 7,
+        "emittedInstanceCount": 1,
+        "writeTargetVersion": "AC1021"
+      }
+    },
+    {
+      "id": "dxf-ac1021-raw-control-groups",
+      "path": "librecad/src/lib/filters/tests/testdata/dxf/raw_control_groups_r2007.dxf",
+      "format": "DXF",
+      "version": "AC1021",
+      "releaseFamily": "DXF R2007",
+      "sha256": "228f3748e568f137aebe76307b969e365339510bd4e3520abbeab0f3c8b1a682",
+      "license": "GPL-2.0-or-later (LibreCAD project-authored fixture)",
+      "redistribution": "repo",
+      "defaultEnabled": true,
+      "evidenceRole": "both",
+      "provenance": {
+        "source": "LibreCAD project-authored DXF regression fixture",
+        "createdBy": "DWG roadmap rev 1171 P5d.0",
+        "licenseBasis": "GPL-2.0-or-later project source"
+      },
+      "featureFamilies": ["dxf", "raw-object", "application-groups", "handle-remap"],
+      "versionRows": ["AC1021"],
+      "dwgTsRows": [],
+      "writerRows": ["dxf:AC1021:raw-control-groups"],
+      "expectedDiagnostics": ["read:BAD_NONE", "raw-control-groups:481-remapped"],
+      "requiredOracles": ["ezdxf:audit"],
+      "expectedOutcomes": {
+        "source": "MATERIAL:SOURCE",
+        "target": "MATERIAL:TARGET",
+        "sourceHandle": "90",
+        "sourceTargetHandle": "14",
+        "writeTargetVersion": "AC1021"
+      }
+    },
+    {
+      "id": "dwg-ac1015-constructionline",
+      "path": "librecad/src/lib/filters/tests/testdata/xline/constructionline_2000.dwg",
+      "format": "DWG",
+      "version": "AC1015",
+      "releaseFamily": "DWG R2000",
+      "sha256": "b11181b2449e9201c704b5597a98e65c9b2fb43c0d281f6949d87b91047a98a5",
+      "license": "GPL-3.0-or-later (LibreDWG test corpus)",
+      "redistribution": "repo",
+      "defaultEnabled": true,
+      "evidenceRole": "reader",
+      "provenance": {
+        "source": "LibreDWG ConstructionLine.dwg test fixture",
+        "importCommit": "aa7848c0a7113806c9932736c77f2b105a6fcec8",
+        "licenseBasis": "GPL-3.0-or-later"
+      },
+      "featureFamilies": ["dwg", "reader", "xline"],
+      "versionRows": ["AC1015"],
+      "dwgTsRows": [],
+      "writerRows": [],
+      "expectedDiagnostics": ["read:BAD_NONE", "xline:typed"],
+      "requiredOracles": []
+    },
+    {
+      "id": "dwg-ac1018-constructionline",
+      "path": "librecad/src/lib/filters/tests/testdata/xline/constructionline_2004.dwg",
+      "format": "DWG",
+      "version": "AC1018",
+      "releaseFamily": "DWG R2004",
+      "sha256": "dbe48b30a4f7c6739788904832a4b54cd0a4073013aa16875364ddc7fc672ea7",
+      "license": "GPL-3.0-or-later (LibreDWG test corpus)",
+      "redistribution": "repo",
+      "defaultEnabled": true,
+      "evidenceRole": "reader",
+      "provenance": {
+        "source": "LibreDWG ConstructionLine.dwg test fixture",
+        "importCommit": "aa7848c0a7113806c9932736c77f2b105a6fcec8",
+        "licenseBasis": "GPL-3.0-or-later"
+      },
+      "featureFamilies": ["dwg", "reader", "xline"],
+      "versionRows": ["AC1018"],
+      "dwgTsRows": [],
+      "writerRows": [],
+      "expectedDiagnostics": ["read:BAD_NONE", "xline:typed"],
+      "requiredOracles": []
+    },
+    {
+      "id": "dwg-ac1021-acsh",
+      "path": "librecad/src/lib/filters/tests/testdata/acsh_r2007.dwg",
+      "format": "DWG",
+      "version": "AC1021",
+      "releaseFamily": "DWG R2007",
+      "sha256": "0e3eccc70ea6b82120c77449bb1d1d27ee280a1ed1c0f2e88e31b1db503ca66f",
+      "license": "GPL-3.0-or-later (LibreDWG test corpus)",
+      "redistribution": "repo",
+      "defaultEnabled": true,
+      "evidenceRole": "reader",
+      "provenance": {
+        "source": "LibreDWG test-data/2007/ATMOS-DC22S.dwg",
+        "importCommit": "08fe3d3600f3c07f3d1e9003f22a562283357574",
+        "licenseBasis": "GPL-3.0-or-later"
+      },
+      "featureFamilies": ["dwg", "reader", "acsh"],
+      "versionRows": ["AC1021"],
+      "dwgTsRows": [],
+      "writerRows": [],
+      "expectedDiagnostics": ["read:BAD_NONE", "acsh:typed"],
+      "requiredOracles": []
+    },
+    {
+      "id": "dwg-ac1024-constructionline",
+      "path": "librecad/src/lib/filters/tests/testdata/xline/constructionline_2010.dwg",
+      "format": "DWG",
+      "version": "AC1024",
+      "releaseFamily": "DWG R2010",
+      "sha256": "307e4b4752b444004951a5c076feecd00c316d373facfbd89c3d0f32765e6831",
+      "license": "GPL-3.0-or-later (LibreDWG test corpus)",
+      "redistribution": "repo",
+      "defaultEnabled": true,
+      "evidenceRole": "reader",
+      "provenance": {
+        "source": "LibreDWG ConstructionLine.dwg test fixture",
+        "importCommit": "aa7848c0a7113806c9932736c77f2b105a6fcec8",
+        "licenseBasis": "GPL-3.0-or-later"
+      },
+      "featureFamilies": ["dwg", "reader", "xline"],
+      "versionRows": ["AC1024"],
+      "dwgTsRows": [],
+      "writerRows": [],
+      "expectedDiagnostics": ["read:BAD_NONE", "xline:typed"],
+      "requiredOracles": []
+    },
+    {
+      "id": "dwg-ac1027-constructionline",
+      "path": "librecad/src/lib/filters/tests/testdata/xline/constructionline_2013.dwg",
+      "format": "DWG",
+      "version": "AC1027",
+      "releaseFamily": "DWG R2013",
+      "sha256": "7f0349aa01202098e9db748a38224b5bc710f0c88b53c549f4a73c4435a12f12",
+      "license": "GPL-3.0-or-later (LibreDWG test corpus)",
+      "redistribution": "repo",
+      "defaultEnabled": true,
+      "evidenceRole": "reader",
+      "provenance": {
+        "source": "LibreDWG ConstructionLine.dwg test fixture",
+        "importCommit": "aa7848c0a7113806c9932736c77f2b105a6fcec8",
+        "licenseBasis": "GPL-3.0-or-later"
+      },
+      "featureFamilies": ["dwg", "reader", "xline"],
+      "versionRows": ["AC1027"],
+      "dwgTsRows": [],
+      "writerRows": [],
+      "expectedDiagnostics": ["read:BAD_NONE", "xline:typed"],
+      "requiredOracles": []
+    },
+    {
+      "id": "dwg-ac1027-datastorage-modeler",
+      "path": "librecad/src/lib/filters/tests/testdata/datastorage_modeler_r2013.dwg",
+      "format": "DWG",
+      "version": "AC1027",
+      "releaseFamily": "DWG R2013",
+      "sha256": "ce80953e4881899cde8c42b97919feb2697259554ca54dc4005b19068a12c18f",
+      "license": "GPL-3.0-or-later (LibreDWG test corpus)",
+      "redistribution": "repo",
+      "defaultEnabled": true,
+      "evidenceRole": "both",
+      "provenance": {
+        "source": "LibreDWG test-data/example_2013.dwg",
+        "importCommit": "ebbefbf870006db9d4bc116276ab5466170bc74d",
+        "licenseBasis": "GPL-3.0-or-later"
+      },
+      "featureFamilies": [
+        "dwg",
+        "r2013",
+        "datastorage",
+        "acis",
+        "modeler",
+        "3dsolid",
+        "region"
+      ],
+      "versionRows": ["AC1027"],
+      "dwgTsRows": [],
+      "writerRows": ["dwg:AC1027:datastorage-modeler-replay"],
+      "expectedDiagnostics": [
+        "read:BAD_NONE",
+        "datastorage:section=AcDb:AcDsPrototype_1b",
+        "datastorage:records=4",
+        "datastorage:linked-modelers=3",
+        "datastorage:orphans=1",
+        "object-parse-warnings=3"
+      ],
+      "expectedOutcomes": {
+        "rawSectionBytes": 20352,
+        "rawSectionSha256": "6447fe7ae583c89ef0ef4cd28446848968363b600fce7012df8f1f391d078ee8",
+        "linkedOwnerHandles": ["176", "2E1", "37D"],
+        "orphanOwnerHandle": "22",
+        "sameVersionReplay": "section and record payloads preserved",
+        "crossVersionReplay": "rejected"
+      },
+      "requiredOracles": ["libredwg:open"]
+    },
+    {
+      "id": "dwg-ac1032-datastorage-modeler",
+      "path": "librecad/src/lib/filters/tests/testdata/datastorage_modeler_r2018.dwg",
+      "format": "DWG",
+      "version": "AC1032",
+      "releaseFamily": "DWG R2018",
+      "sha256": "7bc7721224003062b237845842b7a976e46771c37eba6833b9ed3712e7a5a65a",
+      "license": "GPL-3.0-or-later (LibreDWG test corpus)",
+      "redistribution": "repo",
+      "defaultEnabled": true,
+      "evidenceRole": "both",
+      "provenance": {
+        "source": "LibreDWG test-data/example_2018.dwg",
+        "importCommit": "8069f2cb60f98e8ebad718fa71120f93cf93e121",
+        "licenseBasis": "GPL-3.0-or-later"
+      },
+      "featureFamilies": [
+        "dwg",
+        "r2018",
+        "datastorage",
+        "acis",
+        "modeler",
+        "3dsolid",
+        "region"
+      ],
+      "versionRows": ["AC1032"],
+      "dwgTsRows": [],
+      "writerRows": ["dwg:AC1032:datastorage-modeler-replay"],
+      "expectedDiagnostics": [
+        "read:BAD_NONE",
+        "datastorage:section=AcDb:AcDsPrototype_1b",
+        "datastorage:records=4",
+        "datastorage:linked-modelers=3",
+        "datastorage:orphans=1"
+      ],
+      "expectedOutcomes": {
+        "rawSectionBytes": 16768,
+        "rawSectionSha256": "66b0bd6784b8c6ac13747c05253ac671e3b5c1e5bfd6cffefdb9063ed9b485ce",
+        "linkedOwnerHandles": ["176", "2E1", "37D"],
+        "orphanOwnerHandle": "22",
+        "sameVersionReplay": "section and record payloads preserved",
+        "crossVersionReplay": "rejected"
+      },
+      "requiredOracles": ["libredwg:open"]
+    },
+    {
+      "id": "dwg-ac1032-constructionline",
+      "path": "librecad/src/lib/filters/tests/testdata/xline/constructionline_2018.dwg",
+      "format": "DWG",
+      "version": "AC1032",
+      "releaseFamily": "DWG R2018",
+      "sha256": "c3de564562f336f7112c40ae9d1b03eff8a124bbd2a7a636ebfdc58988027ee7",
+      "license": "GPL-3.0-or-later (LibreDWG test corpus)",
+      "redistribution": "repo",
+      "defaultEnabled": true,
+      "evidenceRole": "reader",
+      "provenance": {
+        "source": "LibreDWG ConstructionLine.dwg test fixture",
+        "importCommit": "aa7848c0a7113806c9932736c77f2b105a6fcec8",
+        "licenseBasis": "GPL-3.0-or-later"
+      },
+      "featureFamilies": ["dwg", "reader", "xline"],
+      "versionRows": ["AC1032"],
+      "dwgTsRows": [],
+      "writerRows": [],
+      "expectedDiagnostics": ["read:BAD_NONE", "xline:typed"],
       "requiredOracles": []
     }
   ]

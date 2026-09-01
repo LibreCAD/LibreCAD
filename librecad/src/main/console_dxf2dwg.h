@@ -26,5 +26,6 @@
 
 int consoleDxf2dwg(int argc, char** argv);
 int consoleDwg2dxf(int argc, char** argv);
+int consoleDwgAdmissionReport(int argc, char** argv);
 
 #endif // CONSOLE_DXF2DWG_H

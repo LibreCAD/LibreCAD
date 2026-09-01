@@ -81,6 +81,22 @@
           "requiredOracles": {
             "type": "array",
             "items": {"type": "string"}
+          },
+          "evidenceRole": {
+            "enum": ["reader", "writer-readback", "both"]
+          },
+          "provenance": {
+            "type": "object",
+            "properties": {
+              "source": {"type": "string", "minLength": 1},
+              "importCommit": {"type": "string", "minLength": 1},
+              "createdBy": {"type": "string", "minLength": 1},
+              "licenseBasis": {"type": "string", "minLength": 1}
+            },
+            "additionalProperties": true
+          },
+          "expectedOutcomes": {
+            "type": "object"
           }
         },
         "additionalProperties": true

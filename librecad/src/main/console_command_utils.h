@@ -32,6 +32,8 @@
 #include <QStringList>
 #include <QVector>
 
+#include "rs.h"
+
 namespace LC_Console {
 
 struct CommandContext {
@@ -65,6 +67,7 @@ QStringList collectInputFiles(const QStringList& positionalArgs,
                               const QStringList& extensions);
 bool containsDwgInput(const QStringList& files);
 bool dwgSupportAvailable();
+RS2::FormatType dwgFormatForVersion(const QString& version);
 
 QString defaultOutputPath(const QString& inputFile, const QString& outputExt,
                           const QString& outputDir = {});

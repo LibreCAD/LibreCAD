@@ -50,7 +50,11 @@ public:
     bool readDwgTables(DRW_Header& hdr) override;
     bool readDwgBlocks(DRW_Interface& intfa) override;
     bool readDwgEntities(DRW_Interface& intfa) override;
-    bool readDwgObjects(DRW_Interface& /*intfa*/) override { return true; } // no OBJECTS section
+    bool readDwgObjects(DRW_Interface& intfa) override {
+        // Legacy files have no OBJECTS section, but readDwgTables may queue
+        // the VPORT_ENTITY_HEADER control for raw same-version replay.
+        return publishDeferredRawObjects(intfa, m_deferredRawObjects);
+    }
 
 private:
     // Section pointers from the file header (absolute file offsets).
@@ -65,11 +69,15 @@ private:
     bool readEntitySection(std::uint32_t start, std::uint32_t end, DRW_Interface& intfa);
     // Decode one entity at the current buffer position; always leaves the
     // buffer at recStart+size. Returns false only on an unrecoverable desync.
-    bool readEntityR11(DRW_Interface& intfa);
+    bool readEntityR11(DRW_Interface& intfa, std::uint32_t sectionEnd);
 
     // POLYLINE..VERTEX..SEQEND accumulate across consecutive records; the
     // POLYLINE opens this, each VERTEX appends, SEQEND delivers + clears it.
     std::unique_ptr<DRW_Polyline> m_curPoly;
+    // R10/R11 BLOCK and ENDBLK records delimit one flat callback scope. Keep
+    // the state explicit so malformed or stray terminators cannot corrupt the
+    // next section's destination container.
+    bool m_blockOpen = false;
 
     // Table-record names by record index (filled in readDwgTables). An entity's
     // layer / an INSERT's block are stored as 0-based RS indices into these.
@@ -79,6 +87,7 @@ private:
     std::vector<std::string> m_ltypeNames;
     std::vector<std::string> m_styleNames;
     bool readNameTable(std::uint32_t hdrPos, std::vector<std::string>& out);
+    bool readPreR13String(std::string& out);
     std::string layerName(std::uint16_t idx) const;
     std::string ltypeName(std::int16_t idx) const;  // signed: -1/sentinels -> ""
 
@@ -92,7 +101,7 @@ private:
     // Name-only reader for the EMBEDDED extended tables (APPID/DIMSTYLE). The
     // 10-byte descriptor @hdrPos matches the @0x2C layout; records carry
     // flag(RC)+name(32). isDimstyle selects dimstylemap (else appIdmap).
-    void readExtendedNameTable(std::uint32_t hdrPos, bool isDimstyle);
+    bool readExtendedNameTable(std::uint32_t hdrPos, bool isDimstyle);
 };
 
 #endif // DWGREADERR11_H

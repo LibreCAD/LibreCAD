@@ -30,6 +30,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import subprocess
@@ -87,6 +88,27 @@ def audit_binary(explicit: str | None, env_name: str) -> str:
     return os.environ.get(env_name, "")
 
 
+def sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def dxf_header_version(path: Path) -> str | None:
+    try:
+        lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
+    except OSError:
+        return None
+    pairs = [(lines[index].strip(), lines[index + 1].strip())
+             for index in range(0, len(lines) - 1, 2)]
+    for index, (code, value) in enumerate(pairs[:-1]):
+        if code == "9" and value == "$ACADVER" and pairs[index + 1][0] == "1":
+            return pairs[index + 1][1]
+    return None
+
+
 def run_audit(tool: str, files: list[Path], allow_missing_tool: bool) -> tuple[dict[str, Any], int]:
     if not files:
         return {"status": "skipped", "diagnostics": ["no files for this format"]}, 0
@@ -126,6 +148,69 @@ def run_audit(tool: str, files: list[Path], allow_missing_tool: bool) -> tuple[d
     return result, 0 if status == "passed" else 1
 
 
+def fixture_result(fixture: dict[str, Any], tool: str,
+                   allow_missing_tool: bool) -> tuple[dict[str, Any], int]:
+    path = Path(str(fixture["_fullPath"]))
+    result: dict[str, Any] = {
+        "id": fixture.get("id"),
+        "format": fixture.get("format"),
+        "version": fixture.get("version"),
+        "operation": "read",
+        "status": "failed",
+        "diagnostics": [],
+    }
+    try:
+        actual_hash = sha256_file(path)
+    except OSError as exc:
+        result["diagnostics"].append(str(exc))
+        return result, 1
+    result["sha256"] = actual_hash
+    if actual_hash != fixture.get("sha256"):
+        result["diagnostics"].append("fixture SHA-256 does not match manifest")
+        return result, 1
+    if fixture.get("format") == "DWG":
+        version = fixture.get("version")
+        try:
+            magic = path.read_bytes()[:6]
+        except OSError as exc:
+            result["diagnostics"].append(str(exc))
+            return result, 1
+        if not isinstance(version, str) or magic != version.encode("ascii"):
+            result["diagnostics"].append("DWG magic does not match manifest version")
+            return result, 1
+    elif fixture.get("format") == "DXF":
+        version = fixture.get("version")
+        if not isinstance(version, str) or dxf_header_version(path) != version:
+            result["diagnostics"].append("DXF $ACADVER does not match manifest version")
+            return result, 1
+
+    audit, status = run_audit(tool, [path], allow_missing_tool)
+    result["status"] = audit["status"]
+    result["diagnostics"].extend(audit.get("diagnostics", []))
+    result["audit"] = audit
+    return result, status
+
+
+def summarize_format(results: list[dict[str, Any]]) -> dict[str, Any]:
+    statuses = [str(result.get("status", "failed")) for result in results]
+    if not statuses:
+        status = "skipped"
+    elif any(status in {"failed", "error", "missing-required"} for status in statuses):
+        status = "failed"
+    elif all(status == "skipped" for status in statuses):
+        status = "skipped"
+    else:
+        status = "passed"
+    return {
+        "status": status,
+        "files": len(results),
+        "passed": sum(status == "passed" for status in statuses),
+        "skipped": sum(status == "skipped" for status in statuses),
+        "failed": sum(status in {"failed", "error", "missing-required"}
+                      for status in statuses),
+    }
+
+
 def print_text(results: dict[str, Any]) -> None:
     print(f"fixture smoke: {results['status']} ({results['selectedFixtures']} selected)")
     for name, result in results["audits"].items():
@@ -134,6 +219,10 @@ def print_text(results: dict[str, Any]) -> None:
             print(f"  {diagnostic}")
         for fixture in result.get("failedFixtures", []):
             print(f"  failed: {fixture}")
+    for fixture in results["fixtures"]:
+        print(f"{fixture['id']}: {fixture['status']}")
+        for diagnostic in fixture.get("diagnostics", []):
+            print(f"  {diagnostic}")
 
 
 def main(argv: list[str]) -> int:
@@ -155,19 +244,33 @@ def main(argv: list[str]) -> int:
     repo = args.repo_root.resolve()
     manifest_path = args.manifest if args.manifest.is_absolute() else repo / args.manifest
     fixtures = selected_fixtures(repo, load_manifest(manifest_path), args.default_only)
-    dwg_files = [Path(item["_fullPath"]) for item in fixtures if item.get("format") == "DWG"]
-    dxf_files = [Path(item["_fullPath"]) for item in fixtures if item.get("format") == "DXF"]
-    dwg_result, dwg_status = run_audit(
-        audit_binary(args.dwg_audit, "DWG_AUDIT"),
-        dwg_files,
-        args.allow_missing_audit_tools,
-    )
-    dxf_result, dxf_status = run_audit(
-        audit_binary(args.dxf_audit, "DXF_AUDIT"),
-        dxf_files,
-        args.allow_missing_audit_tools,
-    )
-    exit_code = 1 if dwg_status == 1 or dxf_status == 1 else 2 if dwg_status == 2 or dxf_status == 2 else 0
+    fixture_results: list[dict[str, Any]] = []
+    exit_codes: list[int] = []
+    for fixture in fixtures:
+        if fixture.get("format") == "DWG":
+            tool = audit_binary(args.dwg_audit, "DWG_AUDIT")
+        elif fixture.get("format") == "DXF":
+            tool = audit_binary(args.dxf_audit, "DXF_AUDIT")
+        else:
+            fixture_results.append({
+                "id": fixture.get("id"),
+                "format": fixture.get("format"),
+                "version": fixture.get("version"),
+                "operation": "read",
+                "status": "skipped",
+                "diagnostics": ["no audit is defined for this format"],
+            })
+            continue
+        result, status = fixture_result(fixture, tool,
+                                        args.allow_missing_audit_tools)
+        fixture_results.append(result)
+        exit_codes.append(status)
+
+    dwg_result = summarize_format(
+        [result for result in fixture_results if result["format"] == "DWG"])
+    dxf_result = summarize_format(
+        [result for result in fixture_results if result["format"] == "DXF"])
+    exit_code = 1 if 1 in exit_codes else 2 if 2 in exit_codes else 0
     status = "passed" if exit_code == 0 else "failed"
     payload = {
         "schema": 1,
@@ -178,6 +281,7 @@ def main(argv: list[str]) -> int:
             "DWG": dwg_result,
             "DXF": dxf_result,
         },
+        "fixtures": fixture_results,
     }
     if args.json:
         print(json.dumps(payload, indent=2, sort_keys=True))

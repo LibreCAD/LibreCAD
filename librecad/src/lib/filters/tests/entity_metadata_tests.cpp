@@ -42,12 +42,25 @@
 #include <QString>
 
 #include "lc_dwgadvancedmetadata.h"
+#include "lc_dwgsectiondiagnostics.h"
+#include "lc_extentitydata.h"
 #include "rs_line.h"
+#include "rs_filterdxfrw.h"
 #include "rs_vector.h"
 
 #include "drw_entities.h"
 #include "drw_objects.h"
 #include "libdxfrw.h"
+
+namespace {
+
+class ExtDataFilterProbe final : public RS_FilterDXFRW {
+public:
+  using RS_FilterDXFRW::extractEntityExtData;
+  using RS_FilterDXFRW::fillEntityExtData;
+};
+
+}  // namespace
 
 TEST_CASE("RS_Entity: sidecar defaults are zero", "[entity_metadata]") {
   RS_Line line(RS_Vector{0., 0., 0.}, RS_Vector{1., 1., 0.});
@@ -114,11 +127,12 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   LC_DwgAdvancedMetadata metadata;
 
   DRW_UnsupportedObject raw;
+  raw.m_version = DRW::AC1024;
   raw.m_objectType = 501;
   raw.m_handle = 0x77u;
-  raw.m_bodyBitSize = 128u;
+  raw.m_bodyBitSize = 24u;
   raw.m_objectOffset = 4096u;
-  raw.m_objectSize = 32u;
+  raw.m_objectSize = 3u;
   raw.m_isCustomClass = true;
   raw.m_recordName = "ACDBASSOCNETWORK";
   raw.m_className = "AcDbAssocNetwork";
@@ -638,6 +652,12 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   modelerGeometry.m_hasModelerData = true;
   modelerGeometry.m_modelerDataUnknownBit = true;
   modelerGeometry.m_hasWireframe = true;
+  modelerGeometry.hasDataStorageRecord = true;
+  modelerGeometry.dataStorageHandle = 0x1F9u;
+  modelerGeometry.dataStorageHandleKey = "1F9";
+  modelerGeometry.dataStorageData = {0x01u, 0x02u, 0x03u};
+  modelerGeometry.dataStorageSegmentIndex = 4u;
+  modelerGeometry.dataStorageSchemaIndex = 7u;
   modelerGeometry.m_historyHandle = 0xFBu;
   modelerGeometry.m_rawBytes = {'A', 'C', 'I', 'S', ' ', 'B', 'i', 'n',
                                 'a', 'r', 'y', 'F', 'i', 'l', 'e'};
@@ -694,7 +714,7 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
 
   REQUIRE(metadata.rawObjects().size() == 4);
   CHECK(metadata.rawObjects().front().handle == 0x77u);
-  CHECK(metadata.rawObjects().front().bodyBitSize == 128u);
+  CHECK(metadata.rawObjects().front().bodyBitSize == 24u);
   CHECK(metadata.rawObjects().front().family ==
         LC_DwgAdvancedMetadata::RawObjectFamily::Associative);
   CHECK(metadata.rawObjects().front().rawBytes.size() == 3);
@@ -708,6 +728,15 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
             metadata.rawObjects()[2]));
   CHECK(LC_DwgAdvancedMetadata::rawReplayBlocker(metadata.rawObjects()[3]) ==
         LC_DwgAdvancedMetadata::ReplayBlocker::MissingRawBytes);
+
+  auto invalidSize = metadata.rawObjects().front();
+  invalidSize.objectSize = 4u;
+  CHECK(LC_DwgAdvancedMetadata::rawReplayBlocker(invalidSize) ==
+        LC_DwgAdvancedMetadata::ReplayBlocker::WriterRejected);
+  auto invalidHandleBits = metadata.rawObjects().front();
+  invalidHandleBits.bodyBitSize = 25u;
+  CHECK(LC_DwgAdvancedMetadata::rawReplayBlocker(invalidHandleBits) ==
+        LC_DwgAdvancedMetadata::ReplayBlocker::WriterRejected);
   CHECK(metadata.hasBlockedRawReplay());
   CHECK(std::string(LC_DwgAdvancedMetadata::replayBlockerName(
             LC_DwgAdvancedMetadata::ReplayBlocker::EntityReplayUnsupported)) ==
@@ -1192,6 +1221,13 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(capturedModeler.hasModelerData);
   CHECK(capturedModeler.modelerDataUnknownBit);
   CHECK(capturedModeler.hasWireframe);
+  CHECK(capturedModeler.hasDataStorageRecord);
+  CHECK(capturedModeler.dataStorageHandle == 0x1F9u);
+  CHECK(capturedModeler.dataStorageHandleKey == "1F9");
+  CHECK(capturedModeler.dataStorageData ==
+        std::vector<std::uint8_t>({0x01u, 0x02u, 0x03u}));
+  CHECK(capturedModeler.dataStorageSegmentIndex == 4u);
+  CHECK(capturedModeler.dataStorageSchemaIndex == 7u);
   CHECK(capturedModeler.hasRawPayload);
   CHECK(capturedModeler.payloadKind ==
         LC_DwgAdvancedMetadata::ModelerPayloadKind::Sab);
@@ -1333,6 +1369,107 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
         LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
   CHECK(foundView->replayState ==
         LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed);
+}
+
+TEST_CASE("DWG advanced metadata retains embedded marker text",
+          "[entity_metadata][dwg_metadata][geopositionmarker]") {
+  LC_DwgAdvancedMetadata metadata;
+  DRW_GeoPositionMarker marker;
+  marker.handle = 0x21u;
+  marker.m_enableFrameText = true;
+  marker.mtext = std::make_unique<DRW_MText>();
+  marker.mtext->text = "embedded marker text";
+  marker.mtext->height = 2.5;
+
+  metadata.addGeoPositionMarker(marker);
+
+  REQUIRE(metadata.geoPositionMarkers().size() == 1);
+  const auto& record = metadata.geoPositionMarkers().front();
+  REQUIRE(record.embeddedMText != nullptr);
+  CHECK(record.embeddedMText->text == "embedded marker text");
+  CHECK(record.embeddedMText->height == 2.5);
+  CHECK(record.embeddedMText.get() != marker.mtext.get());
+}
+
+TEST_CASE("DWG advanced metadata retains section object geometry",
+          "[entity_metadata][dwg_metadata][section-object]") {
+  LC_DwgAdvancedMetadata metadata;
+  DRW_SectionObject section;
+  section.handle = 0x31u;
+  section.parentHandle = 0x32u;
+  section.m_state = 7u;
+  section.m_flags = 9u;
+  section.m_name = "Cut A";
+  section.m_vertDir = {0.0, 0.0, 1.0};
+  section.m_topHeight = 10.0;
+  section.m_bottomHeight = -2.0;
+  section.m_indicatorAlpha = 128u;
+  section.m_indicatorColor = 3u;
+  section.m_verts = {{1.0, 2.0, 3.0}, {4.0, 5.0, 6.0}};
+  section.m_blVerts = {{7.0, 8.0, 9.0}};
+  section.m_sectionSettingsHandle = 0x33u;
+
+  metadata.addSectionObject(section);
+
+  REQUIRE(metadata.sectionObjects().size() == 1u);
+  const auto& record = metadata.sectionObjects().front();
+  CHECK(record.handle == section.handle);
+  CHECK(record.parentHandle == section.parentHandle);
+  CHECK(record.name == "Cut A");
+  REQUIRE(record.verts.size() == 2u);
+  CHECK(record.verts[0].x == 1.0);
+  CHECK(record.verts[0].y == 2.0);
+  CHECK(record.verts[0].z == 3.0);
+  REQUIRE(record.blVerts.size() == 1u);
+  CHECK(record.blVerts[0].x == 7.0);
+  CHECK(record.blVerts[0].y == 8.0);
+  CHECK(record.blVerts[0].z == 9.0);
+  CHECK(record.sectionSettingsHandle == section.m_sectionSettingsHandle);
+
+  metadata.invalidateByOwner(section.parentHandle);
+  CHECK(record.replayState ==
+        LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
+}
+
+TEST_CASE("DWG section metadata reports unresolved internal references",
+          "[entity_metadata][dwg_metadata][section-object][references]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  DRW_SectionObject resolvedSection;
+  resolvedSection.handle = 0x300u;
+  resolvedSection.m_sectionSettingsHandle = 0x100u;
+  metadata.addSectionObject(resolvedSection);
+
+  DRW_SectionObject missingSettings;
+  missingSettings.handle = 0x301u;
+  missingSettings.m_sectionSettingsHandle = 0x777u;
+  metadata.addSectionObject(missingSettings);
+
+  DRW_Section settings;
+  settings.handle = 0x100u;
+  settings.m_kind = DRW_Section::Settings;
+  settings.m_sourceHandle = 0x300u;
+  metadata.addSection(settings);
+
+  DRW_Section manager;
+  manager.handle = 0x200u;
+  manager.m_kind = DRW_Section::Manager;
+  manager.m_sectionHandles = {0x300u, 0x778u, 0u};
+  metadata.addSection(manager);
+
+  DRW_Section nestedSettings;
+  nestedSettings.handle = 0x101u;
+  nestedSettings.m_kind = DRW_Section::Settings;
+  DRW_SectionTypeSettings type;
+  type.m_sourceHandles = {0x300u, 0x779u, 0u};
+  nestedSettings.m_types.push_back(type);
+  metadata.addSection(nestedSettings);
+
+  const auto counts = lcDwgSectionReferenceCounts(metadata);
+  CHECK(counts.unresolvedSectionSettings == 1u);
+  CHECK(counts.unresolvedManagerSections == 1u);
+  CHECK(counts.unresolvedSettingsSources == 1u);
+  CHECK(counts.totalUnresolvedReferences() == 3u);
 }
 
 TEST_CASE("DWG table native writer eligibility follows ODA layout gates",
@@ -1580,6 +1717,184 @@ TEST_CASE("DWG advanced metadata invalidates VIEW dependencies",
         LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
 }
 
+TEST_CASE("DWG advanced metadata invalidates VPORT entity-header dependencies",
+          "[entity_metadata][dwg_metadata][view][viewport-entity-header]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  DRW_ViewportEntityHeader header;
+  header.handle = 0x490u;
+  header.parentHandle = 0x491;
+  header.xrefBlockHandle = 0x492;
+  header.viewportEntityHandle = 0x493;
+  header.previousViewportEntityHeaderHandle = 0x494;
+  header.reactorHandles = {0x495};
+  header.xDictHandle = 0x496;
+  metadata.addViewportEntityHeader(header);
+
+  DRW_UnsupportedObject raw;
+  raw.m_objectType = DRW_ViewportEntityHeader::kDwgType;
+  raw.m_handle = header.handle;
+  raw.m_rawBytes = {0x01};
+  metadata.addUnsupportedObject(raw);
+
+  metadata.invalidateViewGraphForHandle(header.viewportEntityHandle);
+
+  REQUIRE(metadata.viewportEntityHeaders().size() == 1u);
+  CHECK(metadata.viewportEntityHeaders().front().replayState ==
+        LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
+  REQUIRE(metadata.rawObjects().size() == 1u);
+  CHECK(metadata.rawObjects().front().replayState ==
+        LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
+}
+
+TEST_CASE("DWG advanced metadata invalidates VX reference graphs",
+          "[entity_metadata][dwg_metadata][vx]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  DRW_VxTableRecord tableRecord;
+  tableRecord.handle = 0x4A0u;
+  tableRecord.parentHandle = 0x4A1;
+  tableRecord.reactorHandles = {0x4A2u};
+  tableRecord.xDictHandle = 0x4A3u;
+  REQUIRE(tableRecord.setDwgRawData({0xA5}, 8, DRW::AC1021));
+  metadata.addVxTableRecord(tableRecord);
+
+  DRW_VxControl control;
+  control.handle = 0x4B0u;
+  control.parentHandle = 0x4B1;
+  control.recordHandles = {tableRecord.handle};
+  control.reactorHandles = {0x4B2u};
+  control.xDictHandle = 0x4B3u;
+  REQUIRE(control.setDwgRawData({0x3C}, 8, DRW::AC1021));
+  metadata.addVxControl(control);
+
+  REQUIRE(metadata.vxControls().front().rawDataValid);
+  CHECK(metadata.vxControls().front().rawData
+        == std::vector<std::uint8_t>{0x3C});
+  CHECK(metadata.vxControls().front().rawDataBitSize == 8u);
+  CHECK(metadata.vxControls().front().rawDataVersion == DRW::AC1021);
+  REQUIRE(metadata.vxTableRecords().front().rawDataValid);
+  CHECK(metadata.vxTableRecords().front().rawData
+        == std::vector<std::uint8_t>{0xA5});
+  CHECK(metadata.vxTableRecords().front().rawDataBitSize == 8u);
+  CHECK(metadata.vxTableRecords().front().rawDataVersion == DRW::AC1021);
+
+  DRW_UnsupportedObject rawControl;
+  rawControl.m_objectType = DRW_VxControl::kDwgClassNum;
+  rawControl.m_handle = control.handle;
+  rawControl.m_rawBytes = {0x01};
+  metadata.addUnsupportedObject(rawControl);
+  DRW_UnsupportedObject rawTable;
+  rawTable.m_objectType = DRW_VxTableRecord::kDwgClassNum;
+  rawTable.m_handle = tableRecord.handle;
+  rawTable.m_rawBytes = {0x02};
+  metadata.addUnsupportedObject(rawTable);
+
+  metadata.invalidateVxGraphForHandle(tableRecord.handle);
+
+  CHECK(metadata.vxControls().front().replayState ==
+        LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
+  CHECK(metadata.vxTableRecords().front().replayState ==
+        LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed);
+  REQUIRE(metadata.rawObjects().size() == 2u);
+  CHECK(metadata.rawObjects().front().replayState ==
+        LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
+  CHECK(metadata.rawObjects().back().replayState ==
+        LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed);
+
+  metadata.invalidateVxGraphForHandle(tableRecord.parentHandle);
+  CHECK(metadata.vxTableRecords().front().replayState ==
+        LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
+  REQUIRE(metadata.rawObjects().size() == 2u);
+  CHECK(metadata.rawObjects().back().replayState ==
+        LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
+}
+
+TEST_CASE("DWG advanced metadata preserves MATERIAL body state",
+          "[entity_metadata][dwg_metadata][material]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  DRW_Material material;
+  material.handle = 0x4C0u;
+  material.parentHandle = 0x4C1u;
+  material.m_name = "Material";
+  material.m_description = "Description";
+  material.reactorHandles = {0x4C2u};
+  material.xDictHandle = 0x4C3u;
+  material.setDwgCommonObjectState(1, 0, true);
+  REQUIRE(material.setDwgRawData({0xA5u, 0x3Cu}, 16, DRW::AC1027));
+  metadata.addMaterial(material);
+
+  REQUIRE(metadata.materials().size() == 1u);
+  const auto& record = metadata.materials().front();
+  CHECK(record.handle == material.handle);
+  CHECK(record.parentHandle == material.parentHandle);
+  CHECK(record.reactorHandles == material.reactorHandles);
+  CHECK(record.xDictHandle == material.xDictHandle);
+  CHECK(record.numReactors == 1);
+  CHECK(record.hasDsData);
+  CHECK(record.rawDataValid);
+  CHECK(record.rawData == std::vector<std::uint8_t>{0xA5u, 0x3Cu});
+  CHECK(record.rawDataBitSize == 16u);
+  CHECK(record.rawDataVersion == DRW::AC1027);
+}
+
+TEST_CASE("DWG advanced metadata preserves SECTION body state",
+          "[entity_metadata][dwg_metadata][section]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  DRW_Section section;
+  section.m_kind = DRW_Section::Settings;
+  section.handle = 0x4D0u;
+  section.parentHandle = 0x4D1u;
+  section.reactorHandles = {0x4D2u};
+  section.xDictHandle = 0x4D3u;
+  section.setDwgCommonObjectState(1, 0, true);
+  REQUIRE(section.setDwgRawData({0xA5u}, 8, DRW::AC1027));
+  metadata.addSection(section);
+
+  REQUIRE(metadata.sections().size() == 1u);
+  const auto& record = metadata.sections().front();
+  CHECK(record.handle == section.handle);
+  CHECK(record.parentHandle == section.parentHandle);
+  CHECK(record.reactorHandles == section.reactorHandles);
+  CHECK(record.xDictHandle == section.xDictHandle);
+  CHECK(record.numReactors == 1);
+  CHECK(record.hasDsData);
+  CHECK(record.rawDataValid);
+  CHECK(record.rawData == std::vector<std::uint8_t>{0xA5u});
+  CHECK(record.rawDataBitSize == 8u);
+  CHECK(record.rawDataVersion == DRW::AC1027);
+}
+
+TEST_CASE("DWG advanced metadata preserves render-settings body state",
+          "[entity_metadata][dwg_metadata][render-settings]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  DRW_RenderSettings settings;
+  settings.m_kind = DRW_RenderSettings::Settings;
+  settings.handle = 0x4D8u;
+  settings.parentHandle = 0x4D9u;
+  settings.reactorHandles = {0x4DAu};
+  settings.xDictHandle = 0x4DBu;
+  settings.setDwgCommonObjectState(1, 0, true);
+  REQUIRE(settings.setDwgRawData({0xA5u}, 8, DRW::AC1021));
+  metadata.addRenderSettings(settings);
+
+  REQUIRE(metadata.renderSettings().size() == 1u);
+  const auto& record = metadata.renderSettings().front();
+  CHECK(record.handle == settings.handle);
+  CHECK(record.parentHandle == settings.parentHandle);
+  CHECK(record.reactorHandles == settings.reactorHandles);
+  CHECK(record.xDictHandle == settings.xDictHandle);
+  CHECK(record.numReactors == 1);
+  CHECK(record.hasDsData);
+  CHECK(record.rawDataValid);
+  CHECK(record.rawData == std::vector<std::uint8_t>{0xA5u});
+  CHECK(record.rawDataBitSize == 8u);
+  CHECK(record.rawDataVersion == DRW::AC1021);
+}
+
 TEST_CASE("DWG advanced metadata maps VIEW UCS and VPORT document items",
           "[entity_metadata][dwg_metadata][view]") {
   LC_DwgAdvancedMetadata metadata;
@@ -1806,7 +2121,7 @@ TEST_CASE("DWG visual metadata reports export policy blockers",
       metadata.visualMetadataReplayEligibility(0x750u, DRW::AC1027);
   CHECK(styleEligibility.hasSemanticRecord);
   CHECK_FALSE(styleEligibility.hasRawPayload);
-  CHECK(styleEligibility.unsupportedNativeWriter);
+  CHECK_FALSE(styleEligibility.unsupportedNativeWriter);
 
   auto counts = metadata.visualMetadataWriterBlockerCounts(DRW::AC1027);
   CHECK(counts.recordCount == 2u);
@@ -1819,7 +2134,7 @@ TEST_CASE("DWG visual metadata reports export policy blockers",
   CHECK(counts.unresolvedBackground == 1u);
   CHECK(counts.unresolvedLiveSection == 1u);
   CHECK(counts.missingOwnerOrLayout == 1u);
-  CHECK(counts.unsupportedVisualStyleWriter == 1u);
+  CHECK(counts.unsupportedVisualStyleWriter == 0u);
 
   metadata.invalidateViewGraphForHandle(0x720u);
   eligibility = metadata.visualMetadataReplayEligibility(0x710u, DRW::AC1027);
@@ -2506,6 +2821,29 @@ TEST_CASE("DWG advanced metadata stores typed object-context shells",
   CHECK(textRecord.insertionPoint.x == 1.0);
   CHECK(textRecord.alignmentPoint.y == 4.0);
 
+  DRW_ObjectContextData mtextContext(
+      "MTEXTOBJECTCONTEXTDATA", DRW_ObjectContextData::Kind::MText);
+  mtextContext.handle = 0x930u;
+  mtextContext.m_columnType = 2;
+  mtextContext.m_columnHeightCount = 2;
+  mtextContext.m_columnWidth = 40.0;
+  mtextContext.m_columnGutter = 5.0;
+  mtextContext.m_columnFlowReversed = true;
+  mtextContext.m_columnHeights = {12.5, 25.0};
+  metadata.addObjectContextData(mtextContext);
+
+  REQUIRE(metadata.objectContextData().size() == 3u);
+  const auto &mtextRecord = metadata.objectContextData()[2];
+  CHECK(mtextRecord.kind == DRW_ObjectContextData::Kind::MText);
+  CHECK(mtextRecord.columnType == 2);
+  CHECK(mtextRecord.columnHeightCount == 2);
+  CHECK(mtextRecord.columnWidth == 40.0);
+  CHECK(mtextRecord.columnGutter == 5.0);
+  CHECK(mtextRecord.columnFlowReversed);
+  REQUIRE(mtextRecord.columnHeights.size() == 2u);
+  CHECK(mtextRecord.columnHeights[0] == 12.5);
+  CHECK(mtextRecord.columnHeights[1] == 25.0);
+
   const auto &dimRecord = metadata.objectContextData()[1];
   CHECK(dimRecord.handle == 0x920u);
   CHECK(dimRecord.kind == DRW_ObjectContextData::Kind::AlignedDimension);
@@ -2520,7 +2858,7 @@ TEST_CASE("DWG advanced metadata stores typed object-context shells",
   CHECK(dimRecord.overrideCode == 7);
 
   metadata.invalidateByHandle(0x910u);
-  REQUIRE(metadata.objectContextData().size() == 2u);
+  REQUIRE(metadata.objectContextData().size() == 3u);
   CHECK(metadata.objectContextData()[0].replayState ==
         LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
   CHECK(metadata.objectContextData()[1].replayState ==
@@ -2715,6 +3053,34 @@ TEST_CASE("DWG advanced metadata reports advanced entity writer readiness",
             LC_DwgAdvancedMetadata::AdvancedEntityWriterFamily::MLeader) == 1u);
 }
 
+TEST_CASE("DWG owned custom entities are reported as raw-replayable",
+          "[entity_metadata][dwg_metadata][raw-replay]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  DRW_UnsupportedObject entity;
+  entity.m_version = DRW::AC1027;
+  entity.m_objectType = 702;
+  entity.m_handle = 0x745u;
+  entity.m_parentHandle = 0x746u;
+  entity.m_isEntity = true;
+  entity.m_isCustomClass = true;
+  entity.m_recordName = "RAW_ENTITY";
+  entity.m_className = "AcDbRawEntity";
+  entity.m_rawBytes = {0x01u};
+  metadata.addUnsupportedObject(entity);
+
+  const std::vector<LC_DwgAdvancedMetadata::AdvancedEntityWriterReadiness>
+      ledger = metadata.advancedEntityWriterLedger(DRW::AC1027);
+  REQUIRE(ledger.size() == 1u);
+  CHECK(ledger.front().rawReplayAvailable);
+  CHECK_FALSE(ledger.front().unsupportedAdvancedContent);
+
+  const LC_DwgAdvancedMetadata::AdvancedEntityWriterBlockerCounts counts =
+      metadata.advancedEntityWriterBlockerCounts(DRW::AC1027);
+  CHECK(counts.rawReplayAvailable == 1u);
+  CHECK(counts.unsupportedAdvancedContent == 0u);
+}
+
 TEST_CASE("DWG mesh metadata preserves counts and sidecar lookup",
           "[entity_metadata][dwg_metadata][mesh]") {
   LC_DwgAdvancedMetadata metadata;
@@ -2884,6 +3250,13 @@ TEST_CASE("DWG external reference metadata tracks image and underlay links",
   malformedWipeout.clipPath = {DRW_Coord{0.0, 0.0, 0.0}};
   metadata.addRasterImage(malformedWipeout, true);
 
+  DRW_Image imageWithoutDefinition;
+  imageWithoutDefinition.handle = 0x797u;
+  imageWithoutDefinition.parentHandle = 0x21u;
+  imageWithoutDefinition.ref = 0;
+  imageWithoutDefinition.clip = 0;
+  metadata.addRasterImage(imageWithoutDefinition, false);
+
   DRW_UnderlayDefinition underlayDefinition;
   underlayDefinition.handle = 0x795u;
   underlayDefinition.parentHandle = 0x20u;
@@ -2905,7 +3278,7 @@ TEST_CASE("DWG external reference metadata tracks image and underlay links",
 
   const LC_DwgAdvancedMetadata::ExternalReferenceCounts counts =
       metadata.externalReferenceCounts();
-  CHECK(counts.imageEntities == 1u);
+  CHECK(counts.imageEntities == 2u);
   CHECK(counts.wipeouts == 1u);
   CHECK(counts.imageDefinitions == 1u);
   CHECK(counts.underlays == 1u);
@@ -2918,7 +3291,7 @@ TEST_CASE("DWG external reference metadata tracks image and underlay links",
   CHECK(counts.polygonalClips == 1u);
   CHECK(counts.malformedClips == 1u);
   CHECK(counts.invertedClips == 1u);
-  CHECK(counts.hiddenFrames == 1u);
+  CHECK(counts.hiddenFrames == 2u);
 
   REQUIRE(metadata.findImageDefinitionByHandle(imageDefinition.handle) != nullptr);
   CHECK(metadata.findImageDefinitionsByPath(imageDefinition.name).size() == 1u);
@@ -2995,6 +3368,23 @@ TEST_CASE("DWG shape and OLE metadata reports writer blockers",
         == 1u);
   REQUIRE(metadata.findOle2FrameByHandle(ole2Frame.handle) != nullptr);
 
+  DRW_OleFrame oleFrame;
+  oleFrame.handle = 0x7A4u;
+  oleFrame.parentHandle = 0x20u;
+  oleFrame.m_flags = 2u;
+  oleFrame.m_mode = 1u;
+  oleFrame.m_declaredPayloadLength = 4u;
+  oleFrame.m_payloadByteCount = 4u;
+  oleFrame.m_payloadPresent = true;
+  oleFrame.m_payloadBytes = {0xDEu, 0xADu, 0xBEu, 0xEFu};
+  metadata.addOleFrame(oleFrame);
+
+  REQUIRE(metadata.oleFrames().size() == 1u);
+  CHECK(metadata.oleFrames().front().handle == oleFrame.handle);
+  CHECK(metadata.oleFrames().front().flags == oleFrame.m_flags);
+  CHECK(metadata.oleFrames().front().mode == oleFrame.m_mode);
+  CHECK(metadata.oleFrames().front().payloadBytes == oleFrame.m_payloadBytes);
+
   const std::vector<LC_DwgAdvancedMetadata::AdvancedEntityWriterReadiness>
       ledger = metadata.advancedEntityWriterLedger(DRW::AC1027);
   CHECK(std::count_if(
@@ -3009,6 +3399,12 @@ TEST_CASE("DWG shape and OLE metadata reports writer blockers",
               return r.family
                   == LC_DwgAdvancedMetadata::AdvancedEntityWriterFamily::Ole2Frame;
             }) == 2);
+  CHECK(std::count_if(
+            ledger.begin(), ledger.end(),
+            [](const LC_DwgAdvancedMetadata::AdvancedEntityWriterReadiness& r) {
+              return r.family
+                  == LC_DwgAdvancedMetadata::AdvancedEntityWriterFamily::OleFrame;
+            }) == 1);
 }
 
 TEST_CASE("DWG advanced metadata invalidates associative raw replay",
@@ -3085,6 +3481,40 @@ TEST_CASE("DWG advanced metadata resolves MLEADERSTYLE after MLEADER import",
   CHECK(capturedMLeader.effectiveArrowHeadHandle == 0x322u);
   CHECK(capturedMLeader.effectiveTextStyleHandle == 0x323u);
   CHECK(capturedMLeader.effectiveBlockHandle == 0x324u);
+}
+
+TEST_CASE("DWG advanced metadata resolves MLEADERSTYLE dictionary names",
+          "[entity_metadata][dwg_metadata][dictionary][mleader]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  // The style may arrive before its owning dictionary during OBJECTS
+  // traversal. A later dictionary entry must fill only an empty style name.
+  DRW_MLeaderStyle earlyStyle;
+  earlyStyle.handle = 0x100u;
+  metadata.addMLeaderStyle(earlyStyle);
+
+  DRW_Dictionary dictionary;
+  dictionary.handle = 0x200u;
+  dictionary.m_entries.push_back({"FirstName", 0x100u});
+  dictionary.m_entries.push_back({"DuplicateName", 0x100u});
+  dictionary.m_entries.push_back({"LateStyle", 0x101u});
+  metadata.addDictionary(dictionary);
+
+  DRW_MLeaderStyle lateStyle;
+  lateStyle.handle = 0x101u;
+  metadata.addMLeaderStyle(lateStyle);
+
+  DRW_MLeaderStyle explicitStyle;
+  explicitStyle.handle = 0x102u;
+  explicitStyle.name = "BodyName";
+  metadata.addMLeaderStyle(explicitStyle);
+  dictionary.m_entries.push_back({"DictionaryName", 0x102u});
+  metadata.addDictionary(dictionary);
+
+  REQUIRE(metadata.mleaderStyles().size() == 3u);
+  CHECK(metadata.mleaderStyles()[0].name == "FirstName");
+  CHECK(metadata.mleaderStyles()[1].name == "LateStyle");
+  CHECK(metadata.mleaderStyles()[2].name == "BodyName");
 }
 
 TEST_CASE("DWG advanced metadata invalidates MLEADERSTYLE raw replay",
@@ -3533,6 +3963,7 @@ TEST_CASE("DXF write: app-data doubles preserve fractional values",
   std::list<DRW_Variant> appData;
   appData.emplace_back(102, std::string{"APPDATA"});
   appData.emplace_back(40, 12.75);
+  appData.emplace_back(102, std::string{"}"});
   emitter.m_line.appData.push_back(appData);
 
   {
@@ -3775,6 +4206,40 @@ TEST_CASE("DWG MATERIAL and VISUALSTYLE raw objects are replay-eligible",
         == LC_DwgAdvancedMetadata::ReplayBlocker::None);
 }
 
+TEST_CASE("DWG raw object metadata preserves its source class definition",
+          "[entity_metadata][dwg_metadata][class-metadata]") {
+  DRW_UnsupportedObject raw;
+  raw.m_objectType = 701;
+  raw.m_handle = 0x701u;
+  raw.m_isCustomClass = true;
+  raw.m_recordName = "CUSTOM_OBJECT";
+  raw.m_className = "AcDbCustomObject";
+  raw.m_hasClassDefinition = true;
+  raw.m_classProxyFlag = 0x1234;
+  raw.m_classAppName = "CUSTOM_APP";
+  raw.m_classWasProxy = true;
+  raw.m_classEntityFlagRaw = 0x1F2;
+  raw.m_classDwgVersion = 1027;
+  raw.m_classMaintenanceVersion = 329;
+  raw.m_classUnknown1 = 17;
+  raw.m_classUnknown2 = 23;
+  raw.m_rawBytes = {0x01u, 0x02u};
+
+  LC_DwgAdvancedMetadata metadata;
+  metadata.addUnsupportedObject(raw);
+  REQUIRE(metadata.rawObjects().size() == 1u);
+  const auto& saved = metadata.rawObjects().front();
+  CHECK(saved.hasClassDefinition);
+  CHECK(saved.classProxyFlag == raw.m_classProxyFlag);
+  CHECK(saved.classAppName == raw.m_classAppName);
+  CHECK(saved.classWasProxy == raw.m_classWasProxy);
+  CHECK(saved.classEntityFlagRaw == raw.m_classEntityFlagRaw);
+  CHECK(saved.classDwgVersion == raw.m_classDwgVersion);
+  CHECK(saved.classMaintenanceVersion == raw.m_classMaintenanceVersion);
+  CHECK(saved.classUnknown1 == raw.m_classUnknown1);
+  CHECK(saved.classUnknown2 == raw.m_classUnknown2);
+}
+
 // Phase 2b.2 — TABLESTYLE + CELLSTYLEMAP + TABLECONTENT raw-replay rescue.
 // When not invalidated by the table graph, all three are replay-eligible.
 TEST_CASE("DWG TABLESTYLE/CELLSTYLEMAP/TABLECONTENT raw objects replay-eligible",
@@ -3929,6 +4394,35 @@ TEST_CASE("DWG raw-shelf: VIEWPORT (type 34) is a replayable fixed raw entity",
         LC_DwgAdvancedMetadata::ReplayBlocker::EntityReplayUnsupported);
 }
 
+TEST_CASE("DWG surface raw entities retain a replayable carrier",
+          "[entity_metadata][dwg_metadata][surface]") {
+  static const char *surfaceNames[] = {
+      "PLANESURFACE", "EXTRUDEDSURFACE", "REVOLVEDSURFACE",
+      "SWEPTSURFACE", "LOFTEDSURFACE", "NURBSURFACE"};
+
+  for (const char *name : surfaceNames) {
+    LC_DwgAdvancedMetadata metadata;
+    DRW_UnsupportedObject raw;
+    raw.m_version = DRW::AC1027;
+    raw.m_objectType = 500;
+    raw.m_handle = 0x700u;
+    raw.m_isEntity = true;
+    raw.m_isCustomClass = true;
+    raw.m_recordName = name;
+    raw.m_className = std::string("AcDb") + name;
+    raw.m_hasDataStorage = true;
+    raw.m_rawBytes = {0x01u, 0x02u};
+    metadata.addUnsupportedObject(raw);
+
+    REQUIRE(metadata.rawObjects().size() == 1u);
+    const auto &record = metadata.rawObjects().front();
+    CHECK(record.hasDataStorage);
+    CHECK(LC_DwgAdvancedMetadata::isReplayableSurfaceRawEntity(record));
+    CHECK(LC_DwgAdvancedMetadata::rawReplayBlocker(record)
+          == LC_DwgAdvancedMetadata::ReplayBlocker::None);
+  }
+}
+
 TEST_CASE("DWG DataStorage metadata retains structural index data",
           "[entity_metadata][dwg_metadata][datastorage]") {
   LC_DwgAdvancedMetadata metadata;
@@ -3947,6 +4441,7 @@ TEST_CASE("DWG DataStorage metadata retains structural index data",
   record.dataByteLength = 24;
   record.payload = {0x01u, 0x02u, 0x03u};
   storage.records.push_back(record);
+  storage.orphanRecordCount = 1u;
 
   metadata.addDataStorage(storage);
 
@@ -3959,8 +4454,151 @@ TEST_CASE("DWG DataStorage metadata retains structural index data",
   CHECK(saved.recordCount == 1);
   REQUIRE(saved.recordHandles.size() == 1);
   CHECK(saved.recordHandles.front() == 0x1A2B3C4Du);
+  CHECK(saved.orphanRecordCount == 1u);
   CHECK(saved.full.records.front().payload == record.payload);
 
   metadata.clear();
   CHECK(metadata.dataStorages().empty());
+}
+
+TEST_CASE("DXF extended-data clones retain nested control lists",
+          "[dxf][entity_metadata][extdata]") {
+  LC_ExtEntityData source;
+  auto* group = source.addAppData("APP")->addGroup("GROUP");
+  group->add(1070, 7);
+
+  auto* nested = new LC_ExtDataTag();
+  nested->add(new LC_ExtDataTag(1070, 42));
+  auto* deeper = new LC_ExtDataTag();
+  deeper->add(new LC_ExtDataTag(1040, 3.5));
+  nested->add(deeper);
+  auto* empty = new LC_ExtDataTag();
+  empty->makeList();
+  nested->add(empty);
+  group->add(0, nested);
+
+  auto copy = source.clone();
+  REQUIRE(copy != nullptr);
+  auto* copiedGroup = copy->getGroupByName("APP", "GROUP");
+  REQUIRE(copiedGroup != nullptr);
+  const auto* tags = copiedGroup->getTagsList();
+  REQUIRE(tags != nullptr);
+  REQUIRE(tags->size() == 2);
+  REQUIRE((*tags)[0] != nullptr);
+  CHECK((*tags)[0]->isAtomic());
+  CHECK((*tags)[0]->var()->getCode() == 1070);
+  CHECK((*tags)[0]->var()->getInt() == 7);
+  REQUIRE((*tags)[1] != nullptr);
+  CHECK_FALSE((*tags)[1]->isAtomic());
+  REQUIRE((*tags)[1]->list()->size() == 3);
+  CHECK((*tags)[1]->list()->at(0)->var()->getCode() == 1070);
+  CHECK((*tags)[1]->list()->at(0)->var()->getInt() == 42);
+  REQUIRE((*tags)[1]->list()->at(1) != nullptr);
+  CHECK_FALSE((*tags)[1]->list()->at(1)->isAtomic());
+  REQUIRE((*tags)[1]->list()->at(1)->list()->size() == 1);
+  CHECK((*tags)[1]->list()->at(1)->list()->at(0)->var()->getCode() == 1040);
+  CHECK((*tags)[1]->list()->at(1)->list()->at(0)->var()->getDouble() == 3.5);
+  REQUIRE((*tags)[1]->list()->at(2) != nullptr);
+  CHECK_FALSE((*tags)[1]->list()->at(2)->isAtomic());
+  CHECK((*tags)[1]->list()->at(2)->list()->empty());
+}
+
+TEST_CASE("DXF extended-data filter bridge round-trips nested controls",
+          "[dxf][entity_metadata][extdata]") {
+  std::vector<std::shared_ptr<DRW_Variant>> source;
+  source.push_back(std::make_shared<DRW_Variant>(1001, "APP"));
+  source.push_back(std::make_shared<DRW_Variant>(1000, "GROUP"));
+  source.push_back(std::make_shared<DRW_Variant>(1002, "{"));
+  source.push_back(std::make_shared<DRW_Variant>(1070, 1070));
+  source.push_back(std::make_shared<DRW_Variant>(1070, 7));
+  source.push_back(std::make_shared<DRW_Variant>(1002, "{"));
+  source.push_back(std::make_shared<DRW_Variant>(1070, 1070));
+  source.push_back(std::make_shared<DRW_Variant>(1070, 42));
+  source.push_back(std::make_shared<DRW_Variant>(1002, "}"));
+  source.push_back(std::make_shared<DRW_Variant>(1002, "}"));
+
+  ExtDataFilterProbe filter;
+  auto entityData = filter.extractEntityExtData(source);
+  REQUIRE(entityData != nullptr);
+  std::vector<std::shared_ptr<DRW_Variant>> replay;
+  filter.fillEntityExtData(replay, entityData);
+  delete entityData;
+
+  REQUIRE(replay.size() == source.size());
+  for (std::size_t i = 0; i < source.size(); ++i) {
+    CHECK(replay[i]->code() == source[i]->code());
+    if (source[i]->type() == DRW_Variant::STRING) {
+      CHECK(std::string(replay[i]->c_str()) == source[i]->c_str());
+    } else {
+      CHECK(replay[i]->i_val() == source[i]->i_val());
+    }
+  }
+}
+
+TEST_CASE("DXF extended-data parser rejects malformed variant storage safely",
+          "[dxf][entity_metadata][extdata][malformed]") {
+  std::vector<std::shared_ptr<DRW_Variant>> source;
+  source.push_back(nullptr);
+  source.push_back(std::make_shared<DRW_Variant>(1001, 7));
+  source.push_back(std::make_shared<DRW_Variant>(1000, 7));
+  source.push_back(std::make_shared<DRW_Variant>(1002, 7.0));
+  source.push_back(std::make_shared<DRW_Variant>(1003, 7));
+  source.push_back(std::make_shared<DRW_Variant>(1004, 7));
+  source.push_back(std::make_shared<DRW_Variant>(1004, "0G"));
+  source.push_back(std::make_shared<DRW_Variant>(1005, 7));
+  source.push_back(std::make_shared<DRW_Variant>(1010, 7.0));
+  source.push_back(std::make_shared<DRW_Variant>(1070, 7.0));
+  source.push_back(std::make_shared<DRW_Variant>(1040, 7));
+
+  // A valid group after malformed records proves that an invalid value does
+  // not leave stale application/group state active for later records.
+  source.push_back(std::make_shared<DRW_Variant>(1001, "APP"));
+  source.push_back(std::make_shared<DRW_Variant>(1000, "GROUP"));
+  source.push_back(std::make_shared<DRW_Variant>(1002, "{"));
+  source.push_back(std::make_shared<DRW_Variant>(1070, 1070));
+  source.push_back(std::make_shared<DRW_Variant>(1070, 7));
+  source.push_back(std::make_shared<DRW_Variant>(1002, "}"));
+
+  ExtDataFilterProbe filter;
+  std::unique_ptr<LC_ExtEntityData> entityData(
+      filter.extractEntityExtData(source));
+  REQUIRE(entityData != nullptr);
+  auto* group = entityData->getGroupByName("APP", "GROUP");
+  REQUIRE(group != nullptr);
+  REQUIRE(group->getTagsList() != nullptr);
+  REQUIRE(group->getTagsList()->size() == 1);
+  REQUIRE(group->getTagsList()->front() != nullptr);
+  CHECK(group->getTagsList()->front()->isAtomic());
+  CHECK(group->getTagsList()->front()->var()->getCode() == 1070);
+  CHECK(group->getTagsList()->front()->var()->getInt() == 7);
+}
+
+TEST_CASE("DXF extended-data parser drops only unbalanced groups",
+          "[dxf][entity_metadata][extdata][malformed]") {
+  std::vector<std::shared_ptr<DRW_Variant>> source;
+  source.push_back(std::make_shared<DRW_Variant>(1001, "APP"));
+
+  const auto appendGroup = [&source](const char *name, int value,
+                                     bool close) {
+    source.push_back(std::make_shared<DRW_Variant>(1000, name));
+    source.push_back(std::make_shared<DRW_Variant>(1002, "{"));
+    source.push_back(std::make_shared<DRW_Variant>(1070, 1070));
+    source.push_back(std::make_shared<DRW_Variant>(1070, value));
+    if (close)
+      source.push_back(std::make_shared<DRW_Variant>(1002, "}"));
+  };
+  appendGroup("BEFORE", 1, true);
+  appendGroup("BROKEN", 2, false);
+  appendGroup("AFTER", 3, true);
+
+  ExtDataFilterProbe filter;
+  std::unique_ptr<LC_ExtEntityData> entityData(
+      filter.extractEntityExtData(source));
+  REQUIRE(entityData != nullptr);
+  auto* app = entityData->getAppDataByName("APP");
+  REQUIRE(app != nullptr);
+  REQUIRE(app->getGroups() != nullptr);
+  REQUIRE(app->getGroups()->size() == 2);
+  CHECK(app->getGroups()->at(0)->getName() == "BEFORE");
+  CHECK(app->getGroups()->at(1)->getName() == "AFTER");
 }

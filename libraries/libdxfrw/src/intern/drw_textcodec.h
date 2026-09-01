@@ -15,10 +15,17 @@ public:
     ~DRW_TextCodec();
     std::string fromUtf8(std::string_view s);
     std::string toUtf8(std::string_view s);
+    /// Convert byte-oriented DWG TV fields using the file codepage while the
+    /// primary codec may remain UTF-16 for R2007+ fields.
+    std::string fromUtf8CP8(std::string_view s);
+    std::string toUtf8CP8(std::string_view s);
     int getVersion(){return version;}
+    DRW::Version getSourceVersion() const { return sourceVersion; }
+    bool hasSourceVersion() const { return m_sourceVersionSet; }
     void setVersion(const std::string &v, bool dxfFormat);
     void setVersion(DRW::Version v, bool dxfFormat);
     void setCodePage(const std::string &c, bool dxfFormat);
+    void setByteCodePage(const std::string &c);
     std::string getCodePage(){return cp;}
 
 private:
@@ -26,8 +33,11 @@ private:
 
 private:
     DRW::Version version{DRW::UNKNOWNV};
+    DRW::Version sourceVersion{DRW::AC1021};
+    bool m_sourceVersionSet { false };
     std::string cp;
     std::unique_ptr< DRW_Converter> conv;
+    std::unique_ptr< DRW_Converter> cp8Conv;
 };
 
 class DRW_Converter

@@ -2212,12 +2212,37 @@ target_link_libraries (librecad_lib PRIVATE
 )
 set_property (TARGET librecad_lib PROPERTY AUTOUIC_OPTIONS --connections string)
 
+# Filter work otherwise pulls the complete application library into a compile
+# check. Keep this object-only target opt-in so the normal implementation loop
+# validates RS_FilterDXFRW without rebuilding unrelated GUI translation units.
+add_library(librecad_filter_compile_check OBJECT EXCLUDE_FROM_ALL
+    librecad/src/lib/filters/rs_filterdxfrw.cpp
+)
+set_target_properties(librecad_filter_compile_check PROPERTIES
+    AUTOMOC OFF
+    AUTOUIC OFF
+    AUTORCC OFF
+)
+target_include_directories(librecad_filter_compile_check PRIVATE
+    ${SHARED_INCLUDES}
+)
+target_link_libraries(librecad_filter_compile_check PRIVATE
+    Qt6::Core Qt6::Widgets Qt6::Gui Qt6::PrintSupport Qt6::Svg Qt6::Network
+)
+target_compile_features(librecad_filter_compile_check PRIVATE cxx_std_17)
+target_compile_definitions(librecad_filter_compile_check PRIVATE
+    DWGSUPPORT
+)
+
 if (WIN32)
     target_compile_definitions (librecad_lib PRIVATE _USE_MATH_DEFINES)
+    target_compile_definitions(librecad_filter_compile_check PRIVATE
+        _USE_MATH_DEFINES)
 endif ()
 
 set (MAIN_SOURCES
      librecad/src/main/main.cpp
+    librecad/src/main/lc_release_label.cpp
     librecad/src/main/console_command_utils.cpp
     librecad/src/main/console_command_utils.h
     librecad/src/main/console_dxf2dwg.cpp
@@ -2381,9 +2406,24 @@ add_subdirectory (libraries/lciconengine)
 add_subdirectory (plugins)
 
 option (BUILD_TESTS "Build unit tests for LibreCAD" OFF)
+option (LIBRECAD_REGISTER_FULL_TESTS
+        "Register the complete LibreCAD test executable with CTest" OFF)
+option (LIBRECAD_REGISTER_INTEGRATION_TESTS
+        "Register LibreCAD-linked DWG/DXF fast lanes with CTest" OFF)
+option (LIBRECAD_REGISTER_FORMAT_TESTS
+        "Register separate DWG and DXF parser lanes with CTest" OFF)
+option (LIBRECAD_REGISTER_CROSS_READ_SMOKE
+        "Register the cross-reader DWG fixture smoke test with CTest" OFF)
 
 if (BUILD_TESTS)
     enable_testing()
+
+    # Keep ordinary CTest feedback bounded to deterministic unit checks. The
+    # same exclusions are used by the shell harness and cover every known
+    # process-heavy or developer-local tag.
+    set(LIBRECAD_FAST_TEST_EXCLUDES
+        "~[.]" "~[.slow]" "~[slow]" "~[corpus]" "~[external]"
+        "~[external-reader]" "~[fixture]")
 
     # Catch2 v3 is provided as an installed package (e.g. via vcpkg or a source
     # install); point CMAKE_PREFIX_PATH at it. Falls back to the externals/Catch2
@@ -2402,8 +2442,11 @@ if (BUILD_TESTS)
         endif()
     endif()
 
-    # Define test executable
+    # The complete test executable is a milestone/release target. Keep it out
+    # of the default build so ordinary incremental application and library
+    # builds do not compile every unrelated test translation unit.
     qt_add_executable(librecad_tests
+	EXCLUDE_FROM_ALL
 	# this is needed to allow testing methods used by main()
 	# main() is excluded when BUILD_TEST=ON
 	${MAIN_SOURCES}
@@ -2431,18 +2474,14 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/undo/tests/rs_undo_tests.cpp
         librecad/src/lib/filters/tests/dwg_entity_encode_round_trip_tests.cpp
         librecad/src/lib/filters/tests/dwg_header_encode_round_trip_tests.cpp
+        librecad/src/lib/filters/tests/dwg_handseed_tests.cpp
         librecad/src/lib/filters/tests/dwg_header_app_vars_tests.cpp
         librecad/src/lib/filters/tests/dwg_visibility_read_tests.cpp
         librecad/src/lib/filters/tests/libdxfrw_debug_tests.cpp
         librecad/src/lib/filters/tests/libdxfrw_qt_free_tests.cpp
         librecad/src/lib/filters/tests/dwg_object_encode_round_trip_tests.cpp
         librecad/src/lib/filters/tests/dwg_smoke_tests.cpp
-        # TODO(pre-existing master rot; not caused by SHP plan): references
-        # removed RS_Graphic::newDoc()/setMargins()/getMarginLeft() API — needs
-        # a port to the current LC_PlotSettings-based API in a separate fix
-        # commit.  Excluded here so librecad_tests can still build and the
-        # Phase-0 shapelib safety net can run.
-        # librecad/src/lib/filters/tests/dwg_write_smoke_tests.cpp
+        librecad/src/lib/filters/tests/dwg_write_smoke_tests.cpp
         librecad/src/lib/filters/tests/eed_tests.cpp
         librecad/src/lib/filters/tests/dbcolor_tests.cpp
         librecad/src/lib/filters/tests/family_exposure_tests.cpp
@@ -2488,6 +2527,8 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/i18n_codec_tests.cpp
         librecad/src/lib/filters/tests/i18n_caret_nfc_tests.cpp
         librecad/src/lib/filters/tests/dwg_decompress18_tests.cpp
+        librecad/src/lib/filters/tests/dwg_object_frame_tests.cpp
+        librecad/src/lib/filters/tests/dwg_safety_tests.cpp
         librecad/src/lib/filters/tests/dwg_tarch_tests.cpp
         librecad/src/lib/filters/tests/datastorage_tests.cpp
         librecad/src/lib/engine/settings/tests/rs_settings_migration_tests.cpp
@@ -2523,18 +2564,515 @@ if (BUILD_TESTS)
     # compiling time defines
     target_compile_definitions(librecad_tests PRIVATE BUILD_TESTS=1 DWGSUPPORT _USE_MATH_DEFINES LIBRECAD_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}" LIBRECAD_TEST_DIR="${CMAKE_CURRENT_SOURCE_DIR}/librecad/src/lib/filters/tests/testdata")
 
-    add_test(NAME librecad_tests COMMAND $<TARGET_FILE:librecad_tests>)
-    set_tests_properties(librecad_tests PROPERTIES
-        WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
-        ENVIRONMENT "QT_QPA_PLATFORM=offscreen"
+    # Keep a small structural DWG/DXF lane for the incremental implementation
+    # loop. The complete target remains the milestone and release gate; this
+    # target avoids recompiling unrelated test translation units for focused
+    # parser and writer changes.
+    set(LIBRECAD_FAST_TEST_SOURCES
+        librecad/src/lib/filters/tests/dwg_buffer_round_trip_tests.cpp
+        librecad/src/lib/filters/tests/dwg_decompress18_tests.cpp
+        librecad/src/lib/filters/tests/dwg_entity_encode_round_trip_tests.cpp
+        librecad/src/lib/filters/tests/dwg_header_app_vars_tests.cpp
+        librecad/src/lib/filters/tests/dwg_header_encode_round_trip_tests.cpp
+        librecad/src/lib/filters/tests/dwg_handseed_tests.cpp
+        librecad/src/lib/filters/tests/dwg_object_encode_round_trip_tests.cpp
+        librecad/src/lib/filters/tests/dwg_object_frame_tests.cpp
+        librecad/src/lib/filters/tests/dwg_safety_tests.cpp
+        librecad/src/lib/filters/tests/dxf_attribute_tests.cpp
+        librecad/src/lib/filters/tests/dxf_object_tests.cpp
+        librecad/src/lib/filters/tests/dxf_roundtrip_tests.cpp
+        librecad/src/lib/filters/tests/dxf_string_codec_tests.cpp
+        librecad/src/lib/filters/tests/eed_tests.cpp
+        librecad/src/lib/filters/tests/entity_metadata_tests.cpp
+        librecad/src/lib/filters/tests/mleader_dxf_context_tests.cpp
+        librecad/src/lib/filters/tests/i18n_caret_nfc_tests.cpp
+        librecad/src/lib/filters/tests/i18n_codec_tests.cpp
+        librecad/src/lib/filters/tests/datastorage_tests.cpp
     )
-    add_test(NAME phase_c_required_tags
-        COMMAND ${CMAKE_COMMAND}
-            -DTEST_EXECUTABLE=$<TARGET_FILE:librecad_tests>
-            -P ${CMAKE_CURRENT_SOURCE_DIR}/librecad/src/lib/filters/tests/verify_phase_c_tags.cmake)
-    set_tests_properties(phase_c_required_tags PROPERTIES
-        WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
-        ENVIRONMENT "QT_QPA_PLATFORM=offscreen")
+    qt_add_executable(librecad_fast_tests
+        EXCLUDE_FROM_ALL
+        ${MAIN_SOURCES}
+        ${LIBRECAD_FAST_TEST_SOURCES}
+    )
+    target_include_directories(librecad_fast_tests PRIVATE ${SHARED_INCLUDES})
+    target_link_libraries(librecad_fast_tests PRIVATE
+                           librecad_lib
+                           Catch2::Catch2WithMain
+                           Qt6::Core
+                           Qt6::Gui
+                           Qt6::Network
+                           Qt6::PrintSupport
+                           Qt6::Svg
+                           Qt6::Widgets
+    )
+    target_compile_features(librecad_fast_tests PRIVATE cxx_std_17)
+    target_compile_definitions(librecad_fast_tests PRIVATE
+        BUILD_TESTS=1
+        DWGSUPPORT
+        _USE_MATH_DEFINES
+        LIBRECAD_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}"
+        LIBRECAD_TEST_DIR="${CMAKE_CURRENT_SOURCE_DIR}/librecad/src/lib/filters/tests/testdata"
+    )
+
+    # Keep per-format micro lanes for implementation work. They share the
+    # already-built library and Catch2 runtime, and compile only the test
+    # translation units for the changed format. These tests do not exercise
+    # application startup or console commands, so they must not pull in
+    # MAIN_SOURCES and its UI/resource compilation cost.
+    set(LIBRECAD_DWG_FAST_TEST_SOURCES
+        librecad/src/lib/filters/tests/dwg_buffer_round_trip_tests.cpp
+        librecad/src/lib/filters/tests/dwg_decompress18_tests.cpp
+        librecad/src/lib/filters/tests/dwg_entity_encode_round_trip_tests.cpp
+        librecad/src/lib/filters/tests/dwg_header_app_vars_tests.cpp
+        librecad/src/lib/filters/tests/dwg_header_encode_round_trip_tests.cpp
+        librecad/src/lib/filters/tests/dwg_handseed_tests.cpp
+        librecad/src/lib/filters/tests/dwg_object_encode_round_trip_tests.cpp
+        librecad/src/lib/filters/tests/dwg_object_frame_tests.cpp
+        librecad/src/lib/filters/tests/dwg_safety_tests.cpp
+        librecad/src/lib/filters/tests/eed_tests.cpp
+        librecad/src/lib/filters/tests/datastorage_tests.cpp
+    )
+    add_executable(librecad_dwg_fast_tests
+        EXCLUDE_FROM_ALL
+        librecad/src/main/lc_release_label.cpp
+        ${LIBRECAD_DWG_FAST_TEST_SOURCES}
+    )
+    set_target_properties(librecad_dwg_fast_tests PROPERTIES
+        AUTOMOC OFF
+        AUTOUIC OFF
+        AUTORCC OFF
+    )
+    target_include_directories(librecad_dwg_fast_tests PRIVATE ${SHARED_INCLUDES})
+    target_link_libraries(librecad_dwg_fast_tests PRIVATE
+                           librecad_lib
+                           Catch2::Catch2WithMain
+                           Qt6::Core
+                           Qt6::Gui
+                           Qt6::Network
+                           Qt6::PrintSupport
+                           Qt6::Svg
+                           Qt6::Widgets
+    )
+    target_compile_features(librecad_dwg_fast_tests PRIVATE cxx_std_17)
+    target_compile_definitions(librecad_dwg_fast_tests PRIVATE
+        BUILD_TESTS=1
+        DWGSUPPORT
+        _USE_MATH_DEFINES
+        LIBRECAD_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}"
+        LIBRECAD_TEST_DIR="${CMAKE_CURRENT_SOURCE_DIR}/librecad/src/lib/filters/tests/testdata"
+    )
+
+    # Keep the large writer smoke translation unit isolated. Writer framing
+    # checks remain available without rebuilding the complete test executable.
+    add_executable(librecad_dwg_write_fast_tests
+        EXCLUDE_FROM_ALL
+        librecad/src/main/lc_release_label.cpp
+        librecad/src/lib/filters/tests/dwg_write_smoke_tests.cpp
+    )
+    set_target_properties(librecad_dwg_write_fast_tests PROPERTIES
+        AUTOMOC OFF
+        AUTOUIC OFF
+        AUTORCC OFF
+    )
+    target_include_directories(librecad_dwg_write_fast_tests PRIVATE ${SHARED_INCLUDES})
+    target_link_libraries(librecad_dwg_write_fast_tests PRIVATE
+                           librecad_lib
+                           Catch2::Catch2WithMain
+                           Qt6::Core
+                           Qt6::Gui
+                           Qt6::Network
+                           Qt6::PrintSupport
+                           Qt6::Svg
+                           Qt6::Widgets
+    )
+    target_compile_features(librecad_dwg_write_fast_tests PRIVATE cxx_std_17)
+    target_compile_definitions(librecad_dwg_write_fast_tests PRIVATE
+        BUILD_TESTS=1
+        DWGSUPPORT
+        _USE_MATH_DEFINES
+        LIBRECAD_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}"
+        LIBRECAD_TEST_DIR="${CMAKE_CURRENT_SOURCE_DIR}/librecad/src/lib/filters/tests/testdata"
+    )
+
+    set(LIBRECAD_DXF_FAST_TEST_SOURCES
+        librecad/src/lib/filters/tests/dxf_attribute_tests.cpp
+        librecad/src/lib/filters/tests/dxf_object_tests.cpp
+        librecad/src/lib/filters/tests/dxf_roundtrip_tests.cpp
+        librecad/src/lib/filters/tests/dxf_string_codec_tests.cpp
+        librecad/src/lib/filters/tests/entity_metadata_tests.cpp
+        librecad/src/lib/filters/tests/mleader_dxf_context_tests.cpp
+    )
+    add_executable(librecad_dxf_fast_tests
+        EXCLUDE_FROM_ALL
+        librecad/src/main/lc_release_label.cpp
+        ${LIBRECAD_DXF_FAST_TEST_SOURCES}
+    )
+    set_target_properties(librecad_dxf_fast_tests PROPERTIES
+        AUTOMOC OFF
+        AUTOUIC OFF
+        AUTORCC OFF
+    )
+    target_include_directories(librecad_dxf_fast_tests PRIVATE ${SHARED_INCLUDES})
+    target_link_libraries(librecad_dxf_fast_tests PRIVATE
+                           librecad_lib
+                           Catch2::Catch2WithMain
+                           Qt6::Core
+                           Qt6::Gui
+                           Qt6::Network
+                           Qt6::PrintSupport
+                           Qt6::Svg
+                           Qt6::Widgets
+    )
+    target_compile_features(librecad_dxf_fast_tests PRIVATE cxx_std_17)
+    target_compile_definitions(librecad_dxf_fast_tests PRIVATE
+        BUILD_TESTS=1
+        DWGSUPPORT
+        _USE_MATH_DEFINES
+        LIBRECAD_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}"
+        LIBRECAD_TEST_DIR="${CMAKE_CURRENT_SOURCE_DIR}/librecad/src/lib/filters/tests/testdata"
+    )
+
+    # Build one LibreCAD-linked test translation unit at a time for the
+    # incremental loop. The grouped DWG/DXF targets remain useful for family
+    # checkpoints, but a focused source edit should not recompile its sibling
+    # tests merely to validate one selector.
+    function(add_librecad_filter_micro_test target source)
+        add_executable(${target}
+            EXCLUDE_FROM_ALL
+            librecad/src/main/lc_release_label.cpp
+            "${source}"
+        )
+        set_target_properties(${target} PROPERTIES
+            AUTOMOC OFF
+            AUTOUIC OFF
+            AUTORCC OFF
+        )
+        target_include_directories(${target} PRIVATE ${SHARED_INCLUDES})
+        target_link_libraries(${target} PRIVATE
+                               librecad_lib
+                               Catch2::Catch2WithMain
+                               Qt6::Core
+                               Qt6::Gui
+                               Qt6::Network
+                               Qt6::PrintSupport
+                               Qt6::Svg
+                               Qt6::Widgets
+        )
+        target_compile_features(${target} PRIVATE cxx_std_17)
+        target_compile_definitions(${target} PRIVATE
+            BUILD_TESTS=1
+            DWGSUPPORT
+            _USE_MATH_DEFINES
+            LIBRECAD_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}"
+            LIBRECAD_TEST_DIR="${CMAKE_CURRENT_SOURCE_DIR}/librecad/src/lib/filters/tests/testdata"
+        )
+    endfunction()
+
+    # Keep the large corpus/diagnostic source isolated. It is an explicit
+    # phase gate and should not lengthen the ordinary DWG fast lane.
+    add_librecad_filter_micro_test(
+        librecad_dwg_smoke_tests
+        librecad/src/lib/filters/tests/dwg_smoke_tests.cpp)
+    add_librecad_filter_micro_test(
+        librecad_acis_wireframe_tests
+        librecad/src/lib/filters/tests/acis_wireframe_tests.cpp)
+    add_executable(librecad_console_command_utils_tests
+        EXCLUDE_FROM_ALL
+        librecad/src/main/lc_release_label.cpp
+        librecad/src/main/console_command_utils.cpp
+        librecad/src/main/tests/console_command_utils_tests.cpp
+    )
+    set_target_properties(librecad_console_command_utils_tests PROPERTIES
+        AUTOMOC OFF
+        AUTOUIC OFF
+        AUTORCC OFF
+    )
+    target_include_directories(librecad_console_command_utils_tests PRIVATE
+        ${SHARED_INCLUDES})
+    target_link_libraries(librecad_console_command_utils_tests PRIVATE
+                           librecad_lib
+                           Catch2::Catch2WithMain
+                           Qt6::Core
+                           Qt6::Gui
+                           Qt6::Network
+                           Qt6::PrintSupport
+                           Qt6::Svg
+                           Qt6::Widgets
+    )
+    target_compile_features(librecad_console_command_utils_tests PRIVATE cxx_std_17)
+    target_compile_definitions(librecad_console_command_utils_tests PRIVATE
+        BUILD_TESTS=1
+        DWGSUPPORT
+        _USE_MATH_DEFINES
+        LIBRECAD_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}"
+        LIBRECAD_TEST_DIR="${CMAKE_CURRENT_SOURCE_DIR}/librecad/src/lib/filters/tests/testdata"
+    )
+
+    foreach(test_source IN LISTS LIBRECAD_FAST_TEST_SOURCES)
+        get_filename_component(test_stem "${test_source}" NAME_WE)
+        add_librecad_filter_micro_test("librecad_${test_stem}" "${test_source}")
+    endforeach()
+
+    # A parser-only lane for the tight implementation loop.  The existing
+    # librecad_*_fast_tests targets intentionally exercise the LibreCAD filter,
+    # but that also pulls the 240 MiB application library into every link.
+    # Keep pure libdxfrw tests on a small independent archive so a DWG/DXF
+    # wire-format edit does not rebuild or relink unrelated application code.
+    set(LIBDXFRW_FAST_DWG_TEST_SOURCES
+        librecad/src/lib/filters/tests/dwg_buffer_round_trip_tests.cpp
+        librecad/src/lib/filters/tests/dwg_decompress18_tests.cpp
+        librecad/src/lib/filters/tests/dwg_entity_encode_round_trip_tests.cpp
+        librecad/src/lib/filters/tests/dwg_header_encode_round_trip_tests.cpp
+        librecad/src/lib/filters/tests/dwg_handseed_tests.cpp
+        librecad/src/lib/filters/tests/dynblock_tests.cpp
+        librecad/src/lib/filters/tests/dwg_object_encode_round_trip_tests.cpp
+        librecad/src/lib/filters/tests/dwg_object_frame_tests.cpp
+        librecad/src/lib/filters/tests/dwg_safety_tests.cpp
+        librecad/src/lib/filters/tests/mesh_tests.cpp
+    )
+    # These translation units are intentionally excluded from the default
+    # parser lane: their cases require real DWG fixtures or external data.
+    # Keep them available as an explicit checkpoint without paying their
+    # compile cost for every ordinary DWG edit.
+    set(LIBDXFRW_SLOW_DWG_TEST_SOURCES
+        librecad/src/lib/filters/tests/evalgraph_tests.cpp
+        librecad/src/lib/filters/tests/acsh_tests.cpp
+        librecad/src/lib/filters/tests/acsh_shapes_tests.cpp
+    )
+    set(LIBDXFRW_FAST_DXF_TEST_SOURCES
+        librecad/src/lib/filters/tests/dxf_attribute_tests.cpp
+        librecad/src/lib/filters/tests/dxf_object_tests.cpp
+        librecad/src/lib/filters/tests/field_dxf_tests.cpp
+        librecad/src/lib/filters/tests/mleader_dxf_context_tests.cpp
+        librecad/src/lib/filters/tests/mesh_tests.cpp
+    )
+    set(LIBDXFRW_FAST_TEST_SOURCES
+        ${LIBDXFRW_FAST_DWG_TEST_SOURCES}
+        ${LIBDXFRW_FAST_DXF_TEST_SOURCES}
+    )
+    list(REMOVE_DUPLICATES LIBDXFRW_FAST_TEST_SOURCES)
+
+    add_library(libdxfrw_test_core STATIC EXCLUDE_FROM_ALL ${LIBDXFRW_SOURCES})
+    set_target_properties(libdxfrw_test_core PROPERTIES
+        AUTOMOC OFF
+        AUTOUIC OFF
+        AUTORCC OFF
+    )
+    target_compile_features(libdxfrw_test_core PUBLIC cxx_std_17)
+    target_compile_definitions(libdxfrw_test_core PRIVATE
+        DWGSUPPORT
+        _USE_MATH_DEFINES
+    )
+    target_include_directories(libdxfrw_test_core PRIVATE ${SHARED_INCLUDES})
+
+    # The HANDSEED writer regression needs only the common parser helpers, not
+    # version-specific DWG readers, the public facade, or the application.
+    # Keep that smaller writer-focused archive for its L1 loop.
+    set(LIBDXFRW_DWG_WRITER_TEST_CORE_SOURCES
+        libraries/libdxfrw/src/intern/drw_dbg.cpp
+        libraries/libdxfrw/src/intern/drw_textcodec.cpp
+        libraries/libdxfrw/src/intern/dwgbuffer.cpp
+        libraries/libdxfrw/src/intern/dwgobjectframe.cpp
+        libraries/libdxfrw/src/intern/dwgbufferw.cpp
+        libraries/libdxfrw/src/intern/dwgwriter15.cpp
+        libraries/libdxfrw/src/intern/dwgwriter18.cpp
+        libraries/libdxfrw/src/intern/dwgwriter21.cpp
+        libraries/libdxfrw/src/intern/dwg_dxf_output_transaction.cpp
+        libraries/libdxfrw/src/intern/dwgwriterlayoutvalidation.cpp
+        libraries/libdxfrw/src/intern/dwgwriter24.cpp
+        libraries/libdxfrw/src/intern/dwgwriter27.cpp
+        libraries/libdxfrw/src/intern/dwgwriter32.cpp
+        libraries/libdxfrw/src/intern/dwgreader.cpp
+        libraries/libdxfrw/src/intern/proxygraphicdecoder.cpp
+        libraries/libdxfrw/src/intern/dwgutil.cpp
+        libraries/libdxfrw/src/intern/dxfreader.cpp
+        libraries/libdxfrw/src/intern/dxfwriter.cpp
+        libraries/libdxfrw/src/intern/rscodec.cpp
+        libraries/libdxfrw/src/drw_acis.cpp
+        libraries/libdxfrw/src/drw_base.cpp
+        libraries/libdxfrw/src/drw_classes.cpp
+        libraries/libdxfrw/src/drw_datastorage.cpp
+        libraries/libdxfrw/src/drw_entities.cpp
+        libraries/libdxfrw/src/drw_header.cpp
+        libraries/libdxfrw/src/drw_objects.cpp
+    )
+    add_library(libdxfrw_dwg_writer_test_core STATIC EXCLUDE_FROM_ALL
+                ${LIBDXFRW_DWG_WRITER_TEST_CORE_SOURCES})
+    set_target_properties(libdxfrw_dwg_writer_test_core PROPERTIES
+        AUTOMOC OFF
+        AUTOUIC OFF
+        AUTORCC OFF
+    )
+    target_compile_features(libdxfrw_dwg_writer_test_core PUBLIC cxx_std_17)
+    target_compile_definitions(libdxfrw_dwg_writer_test_core PRIVATE
+        DWGSUPPORT
+        DWG_LAYOUT_VALIDATION_TESTS
+        _USE_MATH_DEFINES
+    )
+    target_include_directories(libdxfrw_dwg_writer_test_core PRIVATE ${SHARED_INCLUDES})
+
+    function(add_libdxfrw_fast_test target)
+        add_executable(${target} EXCLUDE_FROM_ALL ${ARGN})
+        set_target_properties(${target} PROPERTIES
+            AUTOMOC OFF
+            AUTOUIC OFF
+            AUTORCC OFF
+        )
+        target_include_directories(${target} PRIVATE ${SHARED_INCLUDES})
+        target_link_libraries(${target} PRIVATE
+                               libdxfrw_test_core
+                               Catch2::Catch2WithMain)
+        target_compile_features(${target} PRIVATE cxx_std_17)
+        target_compile_definitions(${target} PRIVATE
+            BUILD_TESTS=1
+            DWGSUPPORT
+            _USE_MATH_DEFINES
+            LIBRECAD_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}"
+            LIBRECAD_TEST_DIR="${CMAKE_CURRENT_SOURCE_DIR}/librecad/src/lib/filters/tests/testdata"
+        )
+    endfunction()
+
+    add_libdxfrw_fast_test(libdxfrw_fast_tests
+                           ${LIBDXFRW_FAST_TEST_SOURCES})
+    add_libdxfrw_fast_test(libdxfrw_dwg_fast_tests
+                           ${LIBDXFRW_FAST_DWG_TEST_SOURCES})
+    add_libdxfrw_fast_test(libdxfrw_dxf_fast_tests
+                           ${LIBDXFRW_FAST_DXF_TEST_SOURCES})
+    add_libdxfrw_fast_test(libdxfrw_slow_tests
+                           ${LIBDXFRW_SLOW_DWG_TEST_SOURCES})
+
+    add_executable(libdxfrw_dwg_handseed_tests EXCLUDE_FROM_ALL
+        librecad/src/lib/filters/tests/dwg_handseed_tests.cpp)
+    set_target_properties(libdxfrw_dwg_handseed_tests PROPERTIES
+        AUTOMOC OFF
+        AUTOUIC OFF
+        AUTORCC OFF
+    )
+    target_include_directories(libdxfrw_dwg_handseed_tests PRIVATE ${SHARED_INCLUDES})
+    target_link_libraries(libdxfrw_dwg_handseed_tests PRIVATE
+        libdxfrw_dwg_writer_test_core
+        Catch2::Catch2WithMain)
+    target_compile_features(libdxfrw_dwg_handseed_tests PRIVATE cxx_std_17)
+    target_compile_definitions(libdxfrw_dwg_handseed_tests PRIVATE
+        BUILD_TESTS=1
+        DWGSUPPORT
+        _USE_MATH_DEFINES
+        LIBRECAD_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}"
+        LIBRECAD_TEST_DIR="${CMAKE_CURRENT_SOURCE_DIR}/librecad/src/lib/filters/tests/testdata"
+    )
+
+    add_executable(libdxfrw_dwg_layout_validation_tests EXCLUDE_FROM_ALL
+        librecad/src/lib/filters/tests/dwg_layout_validation_tests.cpp)
+    set_target_properties(libdxfrw_dwg_layout_validation_tests PROPERTIES
+        AUTOMOC OFF
+        AUTOUIC OFF
+        AUTORCC OFF
+    )
+    target_include_directories(libdxfrw_dwg_layout_validation_tests PRIVATE
+        ${SHARED_INCLUDES})
+    target_link_libraries(libdxfrw_dwg_layout_validation_tests PRIVATE
+        libdxfrw_dwg_writer_test_core
+        Catch2::Catch2WithMain)
+    target_compile_features(libdxfrw_dwg_layout_validation_tests PRIVATE cxx_std_17)
+    target_compile_definitions(libdxfrw_dwg_layout_validation_tests PRIVATE
+        BUILD_TESTS=1
+        DWGSUPPORT
+        DWG_LAYOUT_VALIDATION_TESTS
+        _USE_MATH_DEFINES
+        LIBRECAD_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}"
+        LIBRECAD_TEST_DIR="${CMAKE_CURRENT_SOURCE_DIR}/librecad/src/lib/filters/tests/testdata"
+    )
+
+    # Give each parser regression source its own opt-in executable. The
+    # grouped format targets are useful for family checkpoints, but compiling
+    # every test translation unit is unnecessary when one regression is being
+    # edited. These targets share libdxfrw_test_core and are not registered
+    # with CTest.
+    foreach(test_source IN LISTS LIBDXFRW_FAST_TEST_SOURCES)
+        get_filename_component(test_stem "${test_source}" NAME_WE)
+        if(test_stem STREQUAL "dwg_handseed_tests")
+            continue()
+        endif()
+        add_libdxfrw_fast_test("libdxfrw_${test_stem}" "${test_source}")
+    endforeach()
+    foreach(test_source IN LISTS LIBDXFRW_SLOW_DWG_TEST_SOURCES)
+        get_filename_component(test_stem "${test_source}" NAME_WE)
+        add_libdxfrw_fast_test("libdxfrw_${test_stem}" "${test_source}")
+    endforeach()
+
+    # Keep the complete application test executable out of ordinary CTest.
+    # It remains an explicit target and can be registered for a release gate.
+    if (LIBRECAD_REGISTER_FULL_TESTS)
+        add_test(NAME librecad_tests
+            COMMAND $<TARGET_FILE:librecad_tests>
+                ${LIBRECAD_FAST_TEST_EXCLUDES}
+                --reporter compact)
+        set_tests_properties(librecad_tests PROPERTIES
+            WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+            ENVIRONMENT "QT_QPA_PLATFORM=offscreen"
+        )
+    endif()
+    if (LIBRECAD_REGISTER_INTEGRATION_TESTS)
+        add_test(NAME librecad_dwg_fast_tests
+            COMMAND $<TARGET_FILE:librecad_dwg_fast_tests>
+                ${LIBRECAD_FAST_TEST_EXCLUDES}
+                --reporter compact)
+        set_tests_properties(librecad_dwg_fast_tests PROPERTIES
+            WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+            ENVIRONMENT "QT_QPA_PLATFORM=offscreen"
+        )
+        add_test(NAME librecad_dxf_fast_tests
+            COMMAND $<TARGET_FILE:librecad_dxf_fast_tests>
+                ${LIBRECAD_FAST_TEST_EXCLUDES}
+                --reporter compact)
+        set_tests_properties(librecad_dxf_fast_tests PROPERTIES
+            WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+            ENVIRONMENT "QT_QPA_PLATFORM=offscreen"
+        )
+    endif()
+    if (LIBRECAD_REGISTER_FORMAT_TESTS)
+        add_test(NAME libdxfrw_dwg_layout_validation_tests
+            COMMAND $<TARGET_FILE:libdxfrw_dwg_layout_validation_tests>
+                --reporter compact)
+        set_tests_properties(libdxfrw_dwg_layout_validation_tests PROPERTIES
+            WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+            ENVIRONMENT "QT_QPA_PLATFORM=offscreen"
+        )
+        add_test(NAME libdxfrw_dwg_fast_tests
+            COMMAND $<TARGET_FILE:libdxfrw_dwg_fast_tests>
+                ${LIBRECAD_FAST_TEST_EXCLUDES}
+                --reporter compact)
+        set_tests_properties(libdxfrw_dwg_fast_tests PROPERTIES
+            WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+            ENVIRONMENT "QT_QPA_PLATFORM=offscreen"
+        )
+        add_test(NAME libdxfrw_dxf_fast_tests
+            COMMAND $<TARGET_FILE:libdxfrw_dxf_fast_tests>
+                ${LIBRECAD_FAST_TEST_EXCLUDES}
+                --reporter compact)
+        set_tests_properties(libdxfrw_dxf_fast_tests PROPERTIES
+            WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+            ENVIRONMENT "QT_QPA_PLATFORM=offscreen"
+        )
+    else()
+        add_test(NAME libdxfrw_fast_tests
+            COMMAND $<TARGET_FILE:libdxfrw_fast_tests>
+                ${LIBRECAD_FAST_TEST_EXCLUDES}
+                --reporter compact)
+        set_tests_properties(libdxfrw_fast_tests PROPERTIES
+            WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+            ENVIRONMENT "QT_QPA_PLATFORM=offscreen"
+        )
+    endif()
+    if (LIBRECAD_REGISTER_FULL_TESTS)
+        add_test(NAME phase_c_required_tags
+            COMMAND ${CMAKE_COMMAND}
+                -DTEST_EXECUTABLE=$<TARGET_FILE:librecad_tests>
+                -P ${CMAKE_CURRENT_SOURCE_DIR}/librecad/src/lib/filters/tests/verify_phase_c_tags.cmake)
+        set_tests_properties(phase_c_required_tags PROPERTIES
+            WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+            ENVIRONMENT "QT_QPA_PLATFORM=offscreen")
+    endif()
 endif ()
 
 qt_add_executable(dwg_tarch_test
@@ -2580,3 +3118,18 @@ target_link_libraries(libdxfrw_json_dump PRIVATE
 
 target_compile_features(libdxfrw_json_dump PRIVATE cxx_std_17)
 target_compile_definitions(libdxfrw_json_dump PRIVATE DWGSUPPORT)
+
+if(BUILD_TESTS)
+    find_package(Python3 COMPONENTS Interpreter QUIET)
+    if(Python3_Interpreter_FOUND AND LIBRECAD_REGISTER_CROSS_READ_SMOKE)
+        add_test(NAME libdxfrw_cross_read_smoke
+            COMMAND ${Python3_EXECUTABLE}
+                ${CMAKE_CURRENT_SOURCE_DIR}/scripts/libdxfrw_cross_read_smoke.py
+                --repo-root ${CMAKE_CURRENT_SOURCE_DIR}
+                --dump $<TARGET_FILE:libdxfrw_json_dump>)
+        set_tests_properties(libdxfrw_cross_read_smoke PROPERTIES
+            WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
+    elseif(NOT Python3_Interpreter_FOUND)
+        message(STATUS "Python3 interpreter not found; libdxfrw_cross_read_smoke is disabled")
+    endif()
+endif()

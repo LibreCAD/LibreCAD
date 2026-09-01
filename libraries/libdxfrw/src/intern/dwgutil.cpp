@@ -11,6 +11,9 @@
 **  along with this program.  If not, see <http://www.gnu.org/licenses/>.    **
 ******************************************************************************/
 
+#include <algorithm>
+#include <array>
+#include <limits>
 #include <sstream>
 #include "drw_dbg.h"
 #include "dwgutil.h"
@@ -88,6 +91,76 @@ std::string toHexStr(int n){
 }
 }
 
+namespace {
+
+bool encodeInterleaved(const std::uint8_t *in, std::uint8_t *out,
+                       std::uint32_t blockCount, int paritySymbols,
+                       unsigned int primitivePolynomial) {
+    if (in == nullptr || out == nullptr || blockCount == 0
+        || blockCount > std::numeric_limits<std::uint32_t>::max() / 255u)
+        return false;
+
+    const int dataSymbols = 255 - paritySymbols;
+    RScodec codec(primitivePolynomial, 8, paritySymbols / 2);
+    std::array<std::uint8_t, 255> codeword{};
+    std::array<std::uint8_t, 255> data{};
+    std::array<std::uint8_t, 16> parity{};
+    for (std::uint32_t block = 0; block < blockCount; ++block) {
+        std::copy_n(in + static_cast<std::size_t>(block) * dataSymbols,
+                    dataSymbols, data.begin());
+        if (!codec.encode(data.data(), parity.data()))
+            return false;
+        std::copy_n(data.cbegin(), dataSymbols, codeword.begin());
+        std::copy_n(parity.cbegin(), paritySymbols,
+                    codeword.begin() + dataSymbols);
+        for (std::size_t symbol = 0; symbol < codeword.size(); ++symbol)
+            out[symbol * blockCount + block] = codeword[symbol];
+    }
+    return true;
+}
+
+bool encodeNonInterleaved(const std::uint8_t *in, std::uint8_t *out,
+                          std::uint32_t blockCount, int paritySymbols,
+                          unsigned int primitivePolynomial) {
+    if (in == nullptr || out == nullptr || blockCount == 0
+        || blockCount > std::numeric_limits<std::uint32_t>::max() / 255u)
+        return false;
+
+    const int dataSymbols = 255 - paritySymbols;
+    RScodec codec(primitivePolynomial, 8, paritySymbols / 2);
+    std::array<std::uint8_t, 255> data{};
+    std::array<std::uint8_t, 16> parity{};
+    for (std::uint32_t block = 0; block < blockCount; ++block) {
+        std::copy_n(in + static_cast<std::size_t>(block) * dataSymbols,
+                    dataSymbols, data.begin());
+        if (!codec.encode(data.data(), parity.data()))
+            return false;
+        const std::size_t outputOffset =
+            static_cast<std::size_t>(block) * 255u;
+        std::copy_n(data.cbegin(), dataSymbols, out + outputOffset);
+        std::copy_n(parity.cbegin(), paritySymbols,
+                    out + outputOffset + dataSymbols);
+    }
+    return true;
+}
+
+} // namespace
+
+bool dwgRSCodec::encode239I(const std::uint8_t *in, std::uint8_t *out,
+                             std::uint32_t blockCount) {
+    return encodeInterleaved(in, out, blockCount, 16, 0x96);
+}
+
+bool dwgRSCodec::encode251I(const std::uint8_t *in, std::uint8_t *out,
+                             std::uint32_t blockCount) {
+    return encodeInterleaved(in, out, blockCount, 4, 0xB8);
+}
+
+bool dwgRSCodec::encode251(const std::uint8_t *in, std::uint8_t *out,
+                            std::uint32_t blockCount) {
+    return encodeNonInterleaved(in, out, blockCount, 4, 0xB8);
+}
+
 /**
  * @brief dwgRSCodec::decode239I
  * @param in : input data (at least 255*blk bytes)
@@ -148,6 +221,26 @@ bool dwgRSCodec::decode251I(unsigned char *in, unsigned char *out, std::uint32_t
     return allOk;
 }
 
+bool dwgRSCodec::decode251(unsigned char *in, unsigned char *out,
+                            std::uint32_t blk) {
+    if (in == nullptr || out == nullptr || blk == 0)
+        return false;
+    bool allOk = true;
+    std::array<unsigned char, 255> data{};
+    RScodec rsc(0xB8, 8, 2); //(255, 251)
+    for (std::uint32_t block = 0; block < blk; ++block) {
+        std::copy_n(in + static_cast<std::size_t>(block) * 255u,
+                    data.size(), data.begin());
+        if (rsc.decode(data.data()) < 0) {
+            DRW_DBG("\nWARNING: dwgRSCodec::decode251, can't correct all errors");
+            allOk = false;
+        }
+        std::copy_n(data.cbegin(), 251,
+                    out + static_cast<std::size_t>(block) * 251u);
+    }
+    return allOk;
+}
+
 // Decode state is now instance state (declared + initialized in dwgutil.h).
 
 std::uint32_t dwgCompressor::twoByteOffset(std::uint32_t *ll){
@@ -202,7 +295,7 @@ std::uint32_t dwgCompressor::litLength18(){
     return cont + ll + 3;
 }
 
-bool dwgCompressor::decompress18(std::uint8_t *cbuf, std::uint8_t *dbuf, std::uint64_t csize, std::uint64_t dsize){
+bool dwgCompressor::decompress18(const std::uint8_t *cbuf, std::uint8_t *dbuf, std::uint64_t csize, std::uint64_t dsize){
     compressedBuffer = cbuf;
     decompBuffer = dbuf;
     compressedSize = csize;
@@ -425,12 +518,226 @@ std::uint32_t dwgUtil::crc32(std::uint32_t seed, const std::uint8_t* data, std::
     return ~crc;
 }
 
+std::uint64_t dwgUtil::updateSeed1(std::uint64_t seed,
+                                   std::uint64_t dataLength) {
+    seed = (seed + dataLength) * 0x343fdULL + 0x269ec3ULL;
+    seed |= seed * (0x343fdULL << 32) + (0x269ec3ULL << 32);
+    return ~seed;
+}
+
+std::uint64_t dwgUtil::updateSeed2(std::uint64_t seed,
+                                   std::uint64_t dataLength) {
+    seed = (seed + dataLength) * 0x343fdULL + 0x269ec3ULL;
+    seed = seed * ((1ULL << 32) + 0x343fdULL)
+        + (dataLength + 0x269ec3ULL);
+    return ~seed;
+}
+
+std::uint64_t dwgUtil::decodeCrcSeed(std::uint64_t encoded) {
+    const auto hi = static_cast<std::uint32_t>(encoded >> 32);
+    const auto lo = static_cast<std::uint32_t>(encoded);
+    std::uint64_t result = 0;
+    if (hi & 0x08000000U) result |= 0x001U;
+    if (hi & 0x00200000U) result |= 0x002U;
+    if (hi & 0x00008000U) result |= 0x004U;
+    if (hi & 0x00000200U) result |= 0x008U;
+    if (hi & 0x00000008U) result |= 0x010U;
+    if (lo & 0x20000000U) result |= 0x020U;
+    if (lo & 0x00800000U) result |= 0x040U;
+    if (lo & 0x00020000U) result |= 0x080U;
+    if (lo & 0x00000800U) result |= 0x100U;
+    if (lo & 0x00000020U) result |= 0x200U;
+    return result;
+}
+
+namespace {
+
+template <typename TableBuilder>
+std::array<std::uint64_t, 256> makeCrc64Table(TableBuilder builder) {
+    std::array<std::uint64_t, 256> table{};
+    for (std::size_t i = 0; i < table.size(); ++i)
+        table[i] = builder(static_cast<std::uint64_t>(i));
+    return table;
+}
+
+const std::array<std::uint64_t, 256>& crc64NormalTable() {
+    static const auto table = makeCrc64Table([](std::uint64_t value) {
+        value <<= 56;
+        for (int bit = 0; bit < 8; ++bit)
+            value = (value & (1ULL << 63))
+                ? (value << 1) ^ 0x42f0e1eba9ea3693ULL
+                : value << 1;
+        return value;
+    });
+    return table;
+}
+
+const std::array<std::uint64_t, 256>& crc64MirroredTable() {
+    static const auto table = makeCrc64Table([](std::uint64_t value) {
+        for (int bit = 0; bit < 8; ++bit)
+            value = (value & 1U)
+                ? (value >> 1) ^ 0xc96c5795d7870f42ULL
+                : value >> 1;
+        return value;
+    });
+    return table;
+}
+
+template <typename Update>
+std::uint64_t calculateCrc64(std::uint64_t seed, const std::uint8_t* data,
+                             std::uint64_t sz, Update update) {
+    if (sz != 0 && data == nullptr)
+        return seed;
+
+    auto updateByte = [&](std::uint8_t value) { seed = update(seed, value); };
+    while (sz >= 8) {
+        // R2007 processes 16-bit words in reverse order within each
+        // eight-byte block: [6,7,4,5,2,3,0,1].
+        updateByte(data[6]);
+        updateByte(data[7]);
+        updateByte(data[4]);
+        updateByte(data[5]);
+        updateByte(data[2]);
+        updateByte(data[3]);
+        updateByte(data[0]);
+        updateByte(data[1]);
+        data += 8;
+        sz -= 8;
+    }
+
+    switch (sz) {
+    case 7:
+        updateByte(data[0]); updateByte(data[1]);
+        updateByte(data[2]); updateByte(data[3]);
+        updateByte(data[4]); updateByte(data[5]); updateByte(data[6]);
+        break;
+    case 6:
+        updateByte(data[0]); updateByte(data[1]);
+        updateByte(data[2]); updateByte(data[3]);
+        updateByte(data[4]); updateByte(data[5]);
+        break;
+    case 5:
+        updateByte(data[0]); updateByte(data[1]);
+        updateByte(data[2]); updateByte(data[3]); updateByte(data[4]);
+        break;
+    case 4:
+        updateByte(data[2]); updateByte(data[3]);
+        updateByte(data[0]); updateByte(data[1]);
+        break;
+    case 3:
+        updateByte(data[0]); updateByte(data[1]); updateByte(data[2]);
+        break;
+    case 2:
+        updateByte(data[0]); updateByte(data[1]);
+        break;
+    case 1:
+        updateByte(data[0]);
+        break;
+    default:
+        break;
+    }
+    return seed;
+}
+
+} // namespace
+
+std::uint64_t dwgUtil::crc64Normal(std::uint64_t seed,
+                                   const std::uint8_t* data,
+                                   std::uint64_t sz) {
+    const auto& table = crc64NormalTable();
+    const auto crc = calculateCrc64(seed, data, sz,
+        [&table](std::uint64_t value, std::uint8_t byte) {
+            return table[(byte ^ (value >> 56)) & 0xffU] ^ (value << 8);
+        });
+    return ~crc;
+}
+
+std::uint64_t dwgUtil::crc64Mirrored(std::uint64_t seed,
+                                     const std::uint8_t* data,
+                                     std::uint64_t sz) {
+    const auto& table = crc64MirroredTable();
+    return calculateCrc64(seed, data, sz,
+        [&table](std::uint64_t value, std::uint8_t byte) {
+            return table[(value ^ byte) & 0xffU] ^ (value >> 8);
+        });
+}
+
+std::uint32_t dwgUtil::checksum21(std::uint64_t seed,
+                                  const std::uint8_t* data,
+                                  std::uint64_t sz) {
+    if (sz != 0 && data == nullptr)
+        return 0;
+
+    seed = (seed + sz) * 0x343fdULL + 0x269ec3ULL;
+    std::uint32_t sum1 = static_cast<std::uint32_t>(seed & 0xffffU);
+    std::uint32_t sum2 = static_cast<std::uint32_t>((seed >> 16) & 0xffffU);
+    auto updateByte = [&](std::uint8_t value) {
+        sum1 += value;
+        sum2 += sum1;
+    };
+    auto updatePair = [&](std::uint64_t offset) {
+        updateByte(data[offset]);
+        updateByte(data[offset + 1]);
+    };
+
+    while (sz != 0) {
+        const std::uint64_t chunk = std::min<std::uint64_t>(0x15b0, sz);
+        const std::uint64_t pairs = chunk / 8;
+        for (std::uint64_t i = 0; i < pairs; ++i) {
+            updatePair(6); updatePair(4); updatePair(2); updatePair(0);
+            data += 8;
+        }
+        switch (chunk & 7U) {
+        case 7:
+            updatePair(2); updatePair(0); updatePair(4); updateByte(data[6]);
+            break;
+        case 6:
+            updatePair(2); updatePair(0); updatePair(4);
+            break;
+        case 5:
+            updatePair(2); updatePair(0); updateByte(data[4]);
+            break;
+        case 4:
+            updatePair(2); updatePair(0);
+            break;
+        case 3:
+            updatePair(0); updateByte(data[2]);
+            break;
+        case 2:
+            updatePair(0);
+            break;
+        case 1:
+            updateByte(data[0]);
+            break;
+        default:
+            break;
+        }
+        data += chunk & 7U;
+        sz -= chunk;
+        sum1 %= 0xfff1U;
+        sum2 %= 0xfff1U;
+    }
+    return (sum2 << 16) | (sum1 & 0xffffU);
+}
+
 void dwgCompressor::decrypt18Hdr(std::uint8_t *buf, std::uint64_t size, std::uint64_t offset){
-    std::uint8_t max = size / 4;
-    std::uint32_t secMask = 0x4164536b ^ offset;
-    std::uint32_t* pHdr = reinterpret_cast<std::uint32_t*>(buf);
-    for (std::uint8_t j = 0; j < max; j++)
-        *pHdr++ ^= secMask;
+    if (buf == nullptr)
+        return;
+    const std::uint64_t wordCount = size / 4;
+    const std::uint32_t secMask = 0x4164536bU
+        ^ static_cast<std::uint32_t>(offset);
+    for (std::uint64_t word = 0; word < wordCount; ++word) {
+        const std::size_t index = static_cast<std::size_t>(word * 4);
+        std::uint32_t value = static_cast<std::uint32_t>(buf[index])
+            | (static_cast<std::uint32_t>(buf[index + 1]) << 8)
+            | (static_cast<std::uint32_t>(buf[index + 2]) << 16)
+            | (static_cast<std::uint32_t>(buf[index + 3]) << 24);
+        value ^= secMask;
+        buf[index] = static_cast<std::uint8_t>(value);
+        buf[index + 1] = static_cast<std::uint8_t>(value >> 8);
+        buf[index + 2] = static_cast<std::uint8_t>(value >> 16);
+        buf[index + 3] = static_cast<std::uint8_t>(value >> 24);
+    }
 }
 
 /*void dwgCompressor::decrypt18Data(std::uint8_t *buf, std::uint32_t size, std::uint32_t offset){
@@ -460,7 +767,7 @@ std::uint32_t dwgCompressor::litLength21(std::uint8_t opCode)
     return length;
 }
 
-bool dwgCompressor::decompress21(std::uint8_t *cbuf, std::uint8_t *dbuf, std::uint64_t csize, std::uint64_t dsize){
+bool dwgCompressor::decompress21(const std::uint8_t *cbuf, std::uint8_t *dbuf, std::uint64_t csize, std::uint64_t dsize){
     compressedBuffer = cbuf;
     decompBuffer = dbuf;
     compressedSize = csize;
@@ -618,6 +925,12 @@ const std::uint8_t *dwgCompressor::CopyOrder21[dwgCompressor::Block21OrderArray]
         CopyOrder21_25, CopyOrder21_26, CopyOrder21_27, CopyOrder21_28,
         CopyOrder21_29, CopyOrder21_30, CopyOrder21_31, CopyOrder21_32
 };
+
+const std::uint8_t* dwgCompressor::literalOrder21(std::uint32_t size) {
+    if (size == 0 || size >= Block21OrderArray)
+        return nullptr;
+    return CopyOrder21[size];
+}
 
 void dwgCompressor::copyBlock21(const std::uint32_t length)
 {

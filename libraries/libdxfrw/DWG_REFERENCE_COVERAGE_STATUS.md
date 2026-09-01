@@ -27,26 +27,26 @@ feature families, class names, and practical validation gaps.
 
 | Source | Area | libdxfrw status | Count |
 | --- | --- | --- | ---: |
-| ACadSharp | DWG custom class | dxf-classed-raw | 9 |
+| ACadSharp | DWG custom class | dxf-classed-raw | 13 |
 | ACadSharp | DWG custom class | named-dwg-route | 5 |
-| ACadSharp | DWG custom class | not-named | 15 |
+| ACadSharp | DWG custom class | not-named | 11 |
 | ACadSharp | DWG fixed entity | not-named | 40 |
 | ACadSharp | DWG fixed entity | typed-fixed-dispatch | 7 |
-| ACadSharp | DWG fixed object | dxf-classed-raw | 1 |
-| ACadSharp | DWG fixed object | not-named | 12 |
+| ACadSharp | DWG fixed object | dxf-classed-raw | 2 |
+| ACadSharp | DWG fixed object | not-named | 11 |
 | ACadSharp | DWG fixed object | typed-fixed-dispatch | 19 |
-| LibreDWG | DWG custom class | dxf-classed-raw | 24 |
-| LibreDWG | DWG custom class | named-dwg-route | 23 |
-| LibreDWG | DWG custom class | not-named | 198 |
+| LibreDWG | DWG custom class | dxf-classed-raw | 149 |
+| LibreDWG | DWG custom class | named-dwg-route | 26 |
+| LibreDWG | DWG custom class | not-named | 70 |
 | LibreDWG | DWG fixed entity | not-named | 40 |
 | LibreDWG | DWG fixed entity | typed-fixed-dispatch | 7 |
-| LibreDWG | DWG fixed object | dxf-classed-raw | 1 |
-| LibreDWG | DWG fixed object | not-named | 12 |
+| LibreDWG | DWG fixed object | dxf-classed-raw | 2 |
+| LibreDWG | DWG fixed object | not-named | 11 |
 | LibreDWG | DWG fixed object | typed-fixed-dispatch | 19 |
 | ODA spec | DWG data section | raw-preserved | 1 |
-| ezdxf | DXF record | not-dispatched | 21 |
-| ezdxf | DXF record | raw-preserved-classed | 19 |
-| ezdxf | DXF record | typed-dispatch | 53 |
+| ezdxf | DXF record | not-dispatched | 48 |
+| ezdxf | DXF record | raw-preserved-classed | 34 |
+| ezdxf | DXF record | typed-dispatch | 11 |
 | ezdxf | DXF section | typed-dispatch | 1 |
 
 ## Refined Implementation Slices
@@ -54,16 +54,19 @@ feature families, class names, and practical validation gaps.
 | Priority | Family | Count | Primary slice |
 | --- | --- | ---: | --- |
 | P0 | data-storage/classes | 3 | P0: preserve AC1027 data-storage sections before typed conversion |
-| P1 | point-cloud/model-reference | 7 | P1: raw/classed shells plus handle/owner preservation for external refs |
+| P1 | 3D/modeler | 1 | P1: typed DXF/DWG shell and callback/write-path parity |
+| P1 | annotation/context | 3 | P1: typed DXF/DWG shell and callback/write-path parity |
+| P1 | core-geometry | 2 | P1: typed DXF/DWG shell and callback/write-path parity |
+| P1 | point-cloud/model-reference | 6 | P1: raw/classed shells plus handle/owner preservation for external refs |
 | P1 | render/material | 1 | P1: typed DXF/DWG shell and callback/write-path parity |
-| P2 | 3D/modeler | 44 | P2: ACIS/SAB raw shell first, typed geometry later |
-| P2 | annotation/context | 42 | P2: preserve annotation context and object-context data |
-| P2 | geospatial | 4 | P2: preserve geodata/object-context dependencies |
+| P2 | 3D/modeler | 51 | P2: ACIS/SAB raw shell first, typed geometry later |
+| P2 | annotation/context | 45 | P2: preserve annotation context and object-context data |
+| P2 | geospatial | 3 | P2: preserve geodata/object-context dependencies |
 | P2 | parametric/dynamic-block | 79 | P2: preserve assoc/eval/dynamic-block object graphs |
-| P2 | proxy/embedded | 15 | P2: preserve proxy/OLE payloads and owners |
-| P2 | raster-underlay | 25 | P2: unify image/underlay definition-reference-reactor graphs |
+| P2 | proxy/embedded | 16 | P2: preserve proxy/OLE payloads and owners |
+| P2 | raster-underlay | 30 | P2: unify image/underlay definition-reference-reactor graphs |
 | P2 | render/material | 20 | P2: preserve render/material environment objects |
-| P3 | core-geometry | 131 | P3: classify, preserve raw, then decide typed support |
+| P3 | core-geometry | 150 | P3: classify, preserve raw, then decide typed support |
 | P3 | database/table | 22 | P3: classify, preserve raw, then decide typed support |
 
 ## Implementation-Ready Plan
@@ -73,7 +76,7 @@ feature families, class names, and practical validation gaps.
 3. Implement P1 feature shells before deep geometry: MESH, MPOLYGON, ACAD_TABLE/MULTILEADER adjunct data, point-cloud/Navisworks references, LIGHT, and large/arc dimension adjunct records need classed raw preservation, stable owners, and DXF/DWG write hooks.
 4. Fold adjacent P2 families into shared preservation paths: raster/underlay/image graphs, annotation context data, ACIS/SAB surface shells, render/material objects, geodata, proxy/OLE payloads, and assoc/eval/dynamic-block graphs should use common raw-object and owner-graph infrastructure.
 5. Defer P4 vertical/proprietary classes to same-version raw replay unless there is a concrete LibreCAD editing surface; do not widen callbacks for AEC/Mechanical classes without fixtures and ODA/libreDWG validation.
-6. Graduate DWG write gates one version at a time: keep AC1015 hard-gated today, then promote AC1018, AC1024, and AC1027 only after external `dwgread`/ODA smoke validation is green.
+6. Graduate each source-discovered DWG writer version one at a time, including AC1021, only after its independent `dwgread`/ODA smoke and fixture evidence are green.
 7. Add every new typed slice with a paired validation fixture: libdxfrw round trip, ezdxf audit for DXF, libreDWG read for DWG where reliable, and optional/local ODA conversion/audit for interop.
 
 ## Oracle Pitfalls
@@ -90,11 +93,16 @@ feature families, class names, and practical validation gaps.
 | LibreDWG | DWG custom class | data-storage/classes | `500` | `ACDSRECORD` | not-named | P0 | P0: preserve AC1027 data-storage sections before typed conversion | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | data-storage/classes | `501` | `ACDSSCHEMA` | not-named | P0 | P0: preserve AC1027 data-storage sections before typed conversion | ../libredwg/include/dwg.h |
 | ODA spec | DWG data section | data-storage/classes | `AcDb:AcDsPrototype_1b` | `ACDB:ACDSPROTOTYPE_1B` | raw-preserved | P0 | P0: preserve AC1027 data-storage sections before typed conversion | ~/doc/dwg/dwg.pdf and local DWGTS_COVERAGE_STATUS.md |
-| LibreDWG | DWG custom class | point-cloud/model-reference | `672` | `NAVISWORKSMODEL` | not-named | P1 | P1: raw/classed shells plus handle/owner preservation for external refs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | point-cloud/model-reference | `673` | `NAVISWORKSMODELDEF` | not-named | P1 | P1: raw/classed shells plus handle/owner preservation for external refs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | point-cloud/model-reference | `685` | `POINTCLOUDCOLORMAP` | not-named | P1 | P1: raw/classed shells plus handle/owner preservation for external refs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | point-cloud/model-reference | `686` | `POINTCLOUDDEF` | not-named | P1 | P1: raw/classed shells plus handle/owner preservation for external refs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | point-cloud/model-reference | `687` | `POINTCLOUDDEFEX` | not-named | P1 | P1: raw/classed shells plus handle/owner preservation for external refs | ../libredwg/include/dwg.h |
+| ezdxf | DXF record | 3D/modeler | `MESH` | `MESH` | raw-preserved-classed | P1 | P1: typed DXF/DWG shell and callback/write-path parity | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | annotation/context | `ACAD_TABLE` | `ACAD_TABLE` | raw-preserved-classed | P1 | P1: typed DXF/DWG shell and callback/write-path parity | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | annotation/context | `ARC_DIMENSION` | `ARC_DIMENSION` | not-dispatched | P1 | P1: typed DXF/DWG shell and callback/write-path parity | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | annotation/context | `LARGE_RADIAL_DIMENSION` | `LARGE_RADIAL_DIMENSION` | raw-preserved-classed | P1 | P1: typed DXF/DWG shell and callback/write-path parity | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | core-geometry | `MPOLYGON` | `MPOLYGON` | raw-preserved-classed | P1 | P1: typed DXF/DWG shell and callback/write-path parity | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | core-geometry | `MULTILEADER` | `MULTILEADER` | not-dispatched | P1 | P1: typed DXF/DWG shell and callback/write-path parity | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| LibreDWG | DWG custom class | point-cloud/model-reference | `673` | `NAVISWORKSMODELDEF` | dxf-classed-raw | P1 | P1: raw/classed shells plus handle/owner preservation for external refs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | point-cloud/model-reference | `685` | `POINTCLOUDCOLORMAP` | dxf-classed-raw | P1 | P1: raw/classed shells plus handle/owner preservation for external refs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | point-cloud/model-reference | `686` | `POINTCLOUDDEF` | dxf-classed-raw | P1 | P1: raw/classed shells plus handle/owner preservation for external refs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | point-cloud/model-reference | `687` | `POINTCLOUDDEFEX` | dxf-classed-raw | P1 | P1: raw/classed shells plus handle/owner preservation for external refs | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | point-cloud/model-reference | `688` | `POINTCLOUDDEF_REACTOR` | not-named | P1 | P1: raw/classed shells plus handle/owner preservation for external refs | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | point-cloud/model-reference | `689` | `POINTCLOUDDEF_REACTOR_EX` | not-named | P1 | P1: raw/classed shells plus handle/owner preservation for external refs | ../libredwg/include/dwg.h |
 | ezdxf | DXF record | render/material | `LIGHT` | `LIGHT` | not-dispatched | P1 | P1: typed DXF/DWG shell and callback/write-path parity | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
@@ -103,46 +111,53 @@ feature families, class names, and practical validation gaps.
 | ACadSharp | DWG fixed entity | 3D/modeler | `30` | `POLYLINE_MESH` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../ACadSharp/src/ACadSharp/Types/ObjectType.cs |
 | ACadSharp | DWG fixed entity | 3D/modeler | `37` | `REGION` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../ACadSharp/src/ACadSharp/Types/ObjectType.cs |
 | LibreDWG | DWG fixed entity | 3D/modeler | `38` | `3DSOLID` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `505` | `ACSH_BOOLEAN_CLASS` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `506` | `ACSH_BOX_CLASS` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `507` | `ACSH_BREP_CLASS` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `508` | `ACSH_CHAMFER_CLASS` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `509` | `ACSH_CONE_CLASS` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `510` | `ACSH_CYLINDER_CLASS` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `511` | `ACSH_EXTRUSION_CLASS` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `512` | `ACSH_FILLET_CLASS` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `513` | `ACSH_HISTORY_CLASS` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `514` | `ACSH_LOFT_CLASS` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `515` | `ACSH_PYRAMID_CLASS` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `516` | `ACSH_REVOLVE_CLASS` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `517` | `ACSH_SPHERE_CLASS` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `518` | `ACSH_SWEEP_CLASS` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `519` | `ACSH_TORUS_CLASS` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `520` | `ACSH_WEDGE_CLASS` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `532` | `ASSOCARRAYACTIONBODY` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `533` | `ASSOCARRAYMODIFYACTIONBODY` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `538` | `ASSOCASMBODYACTIONPARAM` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `539` | `ASSOCBLENDSURFACEACTIONBODY` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `544` | `ASSOCEDGECHAMFERACTIONBODY` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `545` | `ASSOCEDGEFILLETACTIONBODY` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `546` | `ASSOCEXTENDSURFACEACTIONBODY` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `547` | `ASSOCEXTRUDEDSURFACEACTIONBODY` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `549` | `ASSOCFILLETSURFACEACTIONBODY` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `551` | `ASSOCLOFTEDSURFACEACTIONBODY` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `554` | `ASSOCNETWORKSURFACEACTIONBODY` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `556` | `ASSOCOFFSETSURFACEACTIONBODY` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `559` | `ASSOCPATCHSURFACEACTIONBODY` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `562` | `ASSOCPLANESURFACEACTIONBODY` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `564` | `ASSOCRESTOREENTITYSTATEACTIONBODY` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `565` | `ASSOCREVOLVEDSURFACEACTIONBODY` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `567` | `ASSOCSWEPTSURFACEACTIONBODY` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `568` | `ASSOCTRIMSURFACEACTIONBODY` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `593` | `BLOCKPARAMDEPENDENCYBODY` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `505` | `ACSH_BOOLEAN_CLASS` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `506` | `ACSH_BOX_CLASS` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `507` | `ACSH_BREP_CLASS` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `508` | `ACSH_CHAMFER_CLASS` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `509` | `ACSH_CONE_CLASS` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `510` | `ACSH_CYLINDER_CLASS` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `511` | `ACSH_EXTRUSION_CLASS` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `512` | `ACSH_FILLET_CLASS` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `513` | `ACSH_HISTORY_CLASS` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `514` | `ACSH_LOFT_CLASS` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `515` | `ACSH_PYRAMID_CLASS` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `516` | `ACSH_REVOLVE_CLASS` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `517` | `ACSH_SPHERE_CLASS` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `518` | `ACSH_SWEEP_CLASS` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `519` | `ACSH_TORUS_CLASS` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `520` | `ACSH_WEDGE_CLASS` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `532` | `ASSOCARRAYACTIONBODY` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `533` | `ASSOCARRAYMODIFYACTIONBODY` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `538` | `ASSOCASMBODYACTIONPARAM` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `539` | `ASSOCBLENDSURFACEACTIONBODY` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `544` | `ASSOCEDGECHAMFERACTIONBODY` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `545` | `ASSOCEDGEFILLETACTIONBODY` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `546` | `ASSOCEXTENDSURFACEACTIONBODY` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `547` | `ASSOCEXTRUDEDSURFACEACTIONBODY` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `549` | `ASSOCFILLETSURFACEACTIONBODY` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `551` | `ASSOCLOFTEDSURFACEACTIONBODY` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `554` | `ASSOCNETWORKSURFACEACTIONBODY` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `556` | `ASSOCOFFSETSURFACEACTIONBODY` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `559` | `ASSOCPATCHSURFACEACTIONBODY` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `562` | `ASSOCPLANESURFACEACTIONBODY` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `564` | `ASSOCRESTOREENTITYSTATEACTIONBODY` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `565` | `ASSOCREVOLVEDSURFACEACTIONBODY` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `567` | `ASSOCSWEPTSURFACEACTIONBODY` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `568` | `ASSOCTRIMSURFACEACTIONBODY` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `593` | `BLOCKPARAMDEPENDENCYBODY` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
 | LibreDWG | DWG fixed entity | 3D/modeler | `39` | `BODY` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
 | LibreDWG | DWG fixed entity | 3D/modeler | `30` | `POLYLINE_MESH` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
 | LibreDWG | DWG fixed entity | 3D/modeler | `37` | `REGION` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| ezdxf | DXF record | 3D/modeler | `3DSOLID` | `3DSOLID` | not-dispatched | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | 3D/modeler | `BODY` | `BODY` | not-dispatched | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | 3D/modeler | `EXTRUDEDSURFACE` | `EXTRUDEDSURFACE` | raw-preserved-classed | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | 3D/modeler | `LOFTEDSURFACE` | `LOFTEDSURFACE` | raw-preserved-classed | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | 3D/modeler | `REGION` | `REGION` | not-dispatched | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | 3D/modeler | `REVOLVEDSURFACE` | `REVOLVEDSURFACE` | raw-preserved-classed | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | 3D/modeler | `SURFACE` | `SURFACE` | raw-preserved-classed | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ACadSharp | DWG custom class | annotation/context | `ACDB_MLEADEROBJECTCONTEXTDATA_CLASS` | `ACDB_MLEADEROBJECTCONTEXTDATA_CLASS` | not-named | P2 | P2: preserve annotation context and object-context data | ../ACadSharp/src/** case "..." |
+| ezdxf | DXF record | 3D/modeler | `SWEPTSURFACE` | `SWEPTSURFACE` | raw-preserved-classed | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ACadSharp | DWG custom class | annotation/context | `ACDB_MLEADEROBJECTCONTEXTDATA_CLASS` | `ACDB_MLEADEROBJECTCONTEXTDATA_CLASS` | dxf-classed-raw | P2 | P2: preserve annotation context and object-context data | ../ACadSharp/src/** case "..." |
 | ACadSharp | DWG fixed entity | annotation/context | `22` | `DIMENSION_ALIGNED` | not-named | P2 | P2: preserve annotation context and object-context data | ../ACadSharp/src/ACadSharp/Types/ObjectType.cs |
 | ACadSharp | DWG fixed entity | annotation/context | `24` | `DIMENSION_ANG2LN` | not-named | P2 | P2: preserve annotation context and object-context data | ../ACadSharp/src/ACadSharp/Types/ObjectType.cs |
 | ACadSharp | DWG fixed entity | annotation/context | `23` | `DIMENSION_ANG3PT` | not-named | P2 | P2: preserve annotation context and object-context data | ../ACadSharp/src/ACadSharp/Types/ObjectType.cs |
@@ -155,12 +170,12 @@ feature families, class names, and practical validation gaps.
 | ACadSharp | DWG fixed entity | annotation/context | `1` | `TEXT` | not-named | P2 | P2: preserve annotation context and object-context data | ../ACadSharp/src/ACadSharp/Types/ObjectType.cs |
 | LibreDWG | DWG custom class | annotation/context | `521` | `ALDIMOBJECTCONTEXTDATA` | not-named | P2 | P2: preserve annotation context and object-context data | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | annotation/context | `523` | `ANGDIMOBJECTCONTEXTDATA` | not-named | P2 | P2: preserve annotation context and object-context data | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | annotation/context | `528` | `ASSOC3POINTANGULARDIMACTIONBODY` | not-named | P2 | P2: preserve annotation context and object-context data | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | annotation/context | `531` | `ASSOCALIGNEDDIMACTIONBODY` | not-named | P2 | P2: preserve annotation context and object-context data | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | annotation/context | `542` | `ASSOCDIMDEPENDENCYBODY` | not-named | P2 | P2: preserve annotation context and object-context data | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | annotation/context | `552` | `ASSOCMLEADERACTIONBODY` | not-named | P2 | P2: preserve annotation context and object-context data | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | annotation/context | `557` | `ASSOCORDINATEDIMACTIONBODY` | not-named | P2 | P2: preserve annotation context and object-context data | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | annotation/context | `566` | `ASSOCROTATEDDIMACTIONBODY` | not-named | P2 | P2: preserve annotation context and object-context data | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | annotation/context | `528` | `ASSOC3POINTANGULARDIMACTIONBODY` | dxf-classed-raw | P2 | P2: preserve annotation context and object-context data | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | annotation/context | `531` | `ASSOCALIGNEDDIMACTIONBODY` | dxf-classed-raw | P2 | P2: preserve annotation context and object-context data | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | annotation/context | `542` | `ASSOCDIMDEPENDENCYBODY` | dxf-classed-raw | P2 | P2: preserve annotation context and object-context data | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | annotation/context | `552` | `ASSOCMLEADERACTIONBODY` | dxf-classed-raw | P2 | P2: preserve annotation context and object-context data | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | annotation/context | `557` | `ASSOCORDINATEDIMACTIONBODY` | dxf-classed-raw | P2 | P2: preserve annotation context and object-context data | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | annotation/context | `566` | `ASSOCROTATEDDIMACTIONBODY` | dxf-classed-raw | P2 | P2: preserve annotation context and object-context data | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | annotation/context | `626` | `DIMASSOC` | dxf-classed-raw | P2 | P2: preserve annotation context and object-context data | ../libredwg/include/dwg.h |
 | LibreDWG | DWG fixed entity | annotation/context | `22` | `DIMENSION_ALIGNED` | not-named | P2 | P2: preserve annotation context and object-context data | ../libredwg/include/dwg.h |
 | LibreDWG | DWG fixed entity | annotation/context | `24` | `DIMENSION_ANG2LN` | not-named | P2 | P2: preserve annotation context and object-context data | ../libredwg/include/dwg.h |
@@ -180,75 +195,77 @@ feature families, class names, and practical validation gaps.
 | LibreDWG | DWG custom class | annotation/context | `695` | `RADIMOBJECTCONTEXTDATA` | not-named | P2 | P2: preserve annotation context and object-context data | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | annotation/context | `724` | `TABLESTYLE` | dxf-classed-raw | P2 | P2: preserve annotation context and object-context data | ../libredwg/include/dwg.h |
 | LibreDWG | DWG fixed entity | annotation/context | `1` | `TEXT` | not-named | P2 | P2: preserve annotation context and object-context data | ../libredwg/include/dwg.h |
+| ezdxf | DXF record | annotation/context | `DIMENSION` | `DIMENSION` | not-dispatched | P2 | P2: preserve annotation context and object-context data | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | annotation/context | `FIELD` | `FIELD` | raw-preserved-classed | P2 | P2: preserve annotation context and object-context data | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | annotation/context | `FIELDLIST` | `FIELDLIST` | raw-preserved-classed | P2 | P2: preserve annotation context and object-context data | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | annotation/context | `MLEADERSTYLE` | `MLEADERSTYLE` | raw-preserved-classed | P2 | P2: preserve annotation context and object-context data | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | annotation/context | `MTEXT` | `MTEXT` | not-dispatched | P2 | P2: preserve annotation context and object-context data | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | annotation/context | `TABLESTYLE` | `TABLESTYLE` | raw-preserved-classed | P2 | P2: preserve annotation context and object-context data | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | annotation/context | `TEXT` | `TEXT` | not-dispatched | P2 | P2: preserve annotation context and object-context data | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | LibreDWG | DWG custom class | geospatial | `614` | `CELLSTYLEMAP` | dxf-classed-raw | P2 | P2: preserve geodata/object-context dependencies | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | geospatial | `639` | `GEODATA` | dxf-classed-raw | P2 | P2: preserve geodata/object-context dependencies | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | geospatial | `641` | `GEOPOSITIONMARKER` | not-named | P2 | P2: preserve geodata/object-context dependencies | ../libredwg/include/dwg.h |
 | ezdxf | DXF record | geospatial | `GEODATA` | `GEODATA` | raw-preserved-classed | P2 | P2: preserve geodata/object-context dependencies | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ACadSharp | DWG custom class | parametric/dynamic-block | `BLOCKFLIPPARAMETER` | `BLOCKFLIPPARAMETER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../ACadSharp/src/** case "..." |
+| ACadSharp | DWG custom class | parametric/dynamic-block | `BLOCKFLIPPARAMETER` | `BLOCKFLIPPARAMETER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../ACadSharp/src/** case "..." |
 | ACadSharp | DWG fixed object | parametric/dynamic-block | `76` | `LONG_TRANSACTION` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../ACadSharp/src/ACadSharp/Types/ObjectType.cs |
 | LibreDWG | DWG custom class | parametric/dynamic-block | `522` | `ALIGNMENTPARAMETERENTITY` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | parametric/dynamic-block | `527` | `ASSOC2DCONSTRAINTGROUP` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `529` | `ASSOCACTION` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `530` | `ASSOCACTIONPARAM` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `534` | `ASSOCARRAYMODIFYPARAMETERS` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `535` | `ASSOCARRAYPATHPARAMETERS` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `536` | `ASSOCARRAYPOLARPARAMETERS` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `537` | `ASSOCARRAYRECTANGULARPARAMETERS` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `540` | `ASSOCCOMPOUNDACTIONPARAM` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `541` | `ASSOCDEPENDENCY` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `543` | `ASSOCEDGEACTIONPARAM` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `548` | `ASSOCFACEACTIONPARAM` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `550` | `ASSOCGEOMDEPENDENCY` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `553` | `ASSOCNETWORK` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `555` | `ASSOCOBJECTACTIONPARAM` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `558` | `ASSOCOSNAPPOINTREFACTIONPARAM` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `560` | `ASSOCPATHACTIONPARAM` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `561` | `ASSOCPERSSUBENTMANAGER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `563` | `ASSOCPOINTREFACTIONPARAM` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `529` | `ASSOCACTION` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `530` | `ASSOCACTIONPARAM` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `534` | `ASSOCARRAYMODIFYPARAMETERS` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `535` | `ASSOCARRAYPATHPARAMETERS` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `536` | `ASSOCARRAYPOLARPARAMETERS` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `537` | `ASSOCARRAYRECTANGULARPARAMETERS` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `540` | `ASSOCCOMPOUNDACTIONPARAM` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `541` | `ASSOCDEPENDENCY` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `543` | `ASSOCEDGEACTIONPARAM` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `548` | `ASSOCFACEACTIONPARAM` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `550` | `ASSOCGEOMDEPENDENCY` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `553` | `ASSOCNETWORK` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `555` | `ASSOCOBJECTACTIONPARAM` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `558` | `ASSOCOSNAPPOINTREFACTIONPARAM` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `560` | `ASSOCPATHACTIONPARAM` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `561` | `ASSOCPERSSUBENTMANAGER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `563` | `ASSOCPOINTREFACTIONPARAM` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | parametric/dynamic-block | `569` | `ASSOCVALUEDEPENDENCY` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | parametric/dynamic-block | `570` | `ASSOCVARIABLE` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `571` | `ASSOCVERTEXACTIONPARAM` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `571` | `ASSOCVERTEXACTIONPARAM` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | parametric/dynamic-block | `572` | `BASEPOINTPARAMETERENTITY` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `574` | `BLOCKALIGNEDCONSTRAINTPARAMETER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `575` | `BLOCKALIGNMENTGRIP` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `576` | `BLOCKALIGNMENTPARAMETER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `577` | `BLOCKANGULARCONSTRAINTPARAMETER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `578` | `BLOCKARRAYACTION` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `579` | `BLOCKBASEPOINTPARAMETER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `580` | `BLOCKDIAMETRICCONSTRAINTPARAMETER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `581` | `BLOCKFLIPACTION` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `582` | `BLOCKFLIPGRIP` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `583` | `BLOCKFLIPPARAMETER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `584` | `BLOCKGRIPLOCATIONCOMPONENT` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `585` | `BLOCKHORIZONTALCONSTRAINTPARAMETER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `586` | `BLOCKLINEARCONSTRAINTPARAMETER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `587` | `BLOCKLINEARGRIP` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `588` | `BLOCKLINEARPARAMETER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `589` | `BLOCKLOOKUPACTION` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `590` | `BLOCKLOOKUPGRIP` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `591` | `BLOCKLOOKUPPARAMETER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `592` | `BLOCKMOVEACTION` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `594` | `BLOCKPOINTPARAMETER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `595` | `BLOCKPOLARGRIP` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `596` | `BLOCKPOLARPARAMETER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `597` | `BLOCKPOLARSTRETCHACTION` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `599` | `BLOCKPROPERTIESTABLEGRIP` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `600` | `BLOCKRADIALCONSTRAINTPARAMETER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `602` | `BLOCKROTATEACTION` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `603` | `BLOCKROTATIONGRIP` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `604` | `BLOCKROTATIONPARAMETER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `605` | `BLOCKSCALEACTION` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `606` | `BLOCKSTRETCHACTION` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `607` | `BLOCKUSERPARAMETER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `608` | `BLOCKVERTICALCONSTRAINTPARAMETER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `609` | `BLOCKVISIBILITYGRIP` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `610` | `BLOCKVISIBILITYPARAMETER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `611` | `BLOCKXYGRIP` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `612` | `BLOCKXYPARAMETER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `574` | `BLOCKALIGNEDCONSTRAINTPARAMETER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `575` | `BLOCKALIGNMENTGRIP` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `576` | `BLOCKALIGNMENTPARAMETER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `577` | `BLOCKANGULARCONSTRAINTPARAMETER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `578` | `BLOCKARRAYACTION` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `579` | `BLOCKBASEPOINTPARAMETER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `580` | `BLOCKDIAMETRICCONSTRAINTPARAMETER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `581` | `BLOCKFLIPACTION` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `582` | `BLOCKFLIPGRIP` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `583` | `BLOCKFLIPPARAMETER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `584` | `BLOCKGRIPLOCATIONCOMPONENT` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `585` | `BLOCKHORIZONTALCONSTRAINTPARAMETER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `586` | `BLOCKLINEARCONSTRAINTPARAMETER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `587` | `BLOCKLINEARGRIP` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `588` | `BLOCKLINEARPARAMETER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `589` | `BLOCKLOOKUPACTION` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `590` | `BLOCKLOOKUPGRIP` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `591` | `BLOCKLOOKUPPARAMETER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `592` | `BLOCKMOVEACTION` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `594` | `BLOCKPOINTPARAMETER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `595` | `BLOCKPOLARGRIP` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `596` | `BLOCKPOLARPARAMETER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `597` | `BLOCKPOLARSTRETCHACTION` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `599` | `BLOCKPROPERTIESTABLEGRIP` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `600` | `BLOCKRADIALCONSTRAINTPARAMETER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `602` | `BLOCKROTATEACTION` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `603` | `BLOCKROTATIONGRIP` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `604` | `BLOCKROTATIONPARAMETER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `605` | `BLOCKSCALEACTION` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `606` | `BLOCKSTRETCHACTION` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `607` | `BLOCKUSERPARAMETER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `608` | `BLOCKVERTICALCONSTRAINTPARAMETER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `609` | `BLOCKVISIBILITYGRIP` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `610` | `BLOCKVISIBILITYPARAMETER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `611` | `BLOCKXYGRIP` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `612` | `BLOCKXYPARAMETER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | parametric/dynamic-block | `638` | `FLIPACTIONENTITY` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | parametric/dynamic-block | `736` | `FLIPGRIPENTITY` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | parametric/dynamic-block | `637` | `FLIPPARAMETERENTITY` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
@@ -282,6 +299,7 @@ feature families, class names, and practical validation gaps.
 | LibreDWG | DWG fixed entity | proxy/embedded | `46` | `TOLERANCE` | not-named | P2 | P2: preserve proxy/OLE payloads and owners | ../libredwg/include/dwg.h |
 | ezdxf | DXF record | proxy/embedded | `ACAD_PROXY_ENTITY` | `ACAD_PROXY_ENTITY` | not-dispatched | P2 | P2: preserve proxy/OLE payloads and owners | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | proxy/embedded | `OLE2FRAME` | `OLE2FRAME` | not-dispatched | P2 | P2: preserve proxy/OLE payloads and owners | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | proxy/embedded | `TOLERANCE` | `TOLERANCE` | not-dispatched | P2 | P2: preserve proxy/OLE payloads and owners | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ACadSharp | DWG custom class | raster-underlay | `IMAGE` | `IMAGE` | not-named | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../ACadSharp/src/** case "..." |
 | ACadSharp | DWG custom class | raster-underlay | `IMAGEDEF` | `IMAGEDEF` | not-named | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../ACadSharp/src/** case "..." |
 | ACadSharp | DWG custom class | raster-underlay | `IMAGEDEF_REACTOR` | `IMAGEDEF_REACTOR` | not-named | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../ACadSharp/src/** case "..." |
@@ -293,36 +311,41 @@ feature families, class names, and practical validation gaps.
 | LibreDWG | DWG custom class | raster-underlay | `647` | `IMAGE` | not-named | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | raster-underlay | `648` | `IMAGEDEF` | not-named | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | raster-underlay | `649` | `IMAGEDEF_REACTOR` | not-named | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | raster-underlay | `650` | `IMAGE_BACKGROUND` | not-named | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | raster-underlay | `650` | `IMAGE_BACKGROUND` | dxf-classed-raw | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | raster-underlay | `679` | `PDFDEFINITION` | dxf-classed-raw | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | raster-underlay | `697` | `RASTERVARIABLES` | dxf-classed-raw | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | raster-underlay | `731` | `WIPEOUTVARIABLES` | dxf-classed-raw | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../libredwg/include/dwg.h |
 | ezdxf | DXF record | raster-underlay | `DGNDEFINITION` | `DGNDEFINITION` | raw-preserved-classed | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | raster-underlay | `DGNUNDERLAY` | `DGNUNDERLAY` | raw-preserved-classed | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | raster-underlay | `DWFDEFINITION` | `DWFDEFINITION` | raw-preserved-classed | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | raster-underlay | `DWFUNDERLAY` | `DWFUNDERLAY` | raw-preserved-classed | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | raster-underlay | `IMAGE` | `IMAGE` | not-dispatched | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | raster-underlay | `IMAGEBASE` | `IMAGEBASE` | not-dispatched | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | raster-underlay | `IMAGEDEF` | `IMAGEDEF` | not-dispatched | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | raster-underlay | `IMAGEDEF_REACTOR` | `IMAGEDEF_REACTOR` | not-dispatched | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | raster-underlay | `PDFDEFINITION` | `PDFDEFINITION` | raw-preserved-classed | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | raster-underlay | `PDFUNDERLAY` | `PDFUNDERLAY` | raw-preserved-classed | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | raster-underlay | `RASTERVARIABLES` | `RASTERVARIABLES` | raw-preserved-classed | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | raster-underlay | `UNDERLAY` | `UNDERLAY` | not-dispatched | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | raster-underlay | `UNDERLAYDEFINITION` | `UNDERLAYDEFINITION` | not-dispatched | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | raster-underlay | `WIPEOUT` | `WIPEOUT` | not-dispatched | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | raster-underlay | `WIPEOUTVARIABLES` | `WIPEOUTVARIABLES` | raw-preserved-classed | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ACadSharp | DWG custom class | render/material | `MATERIAL` | `MATERIAL` | dxf-classed-raw | P2 | P2: preserve render/material environment objects | ../ACadSharp/src/** case "..." |
-| LibreDWG | DWG custom class | render/material | `642` | `GRADIENT_BACKGROUND` | not-named | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | render/material | `643` | `GROUND_PLANE_BACKGROUND` | not-named | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | render/material | `645` | `IBL_BACKGROUND` | not-named | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | render/material | `642` | `GRADIENT_BACKGROUND` | dxf-classed-raw | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | render/material | `643` | `GROUND_PLANE_BACKGROUND` | dxf-classed-raw | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | render/material | `645` | `IBL_BACKGROUND` | dxf-classed-raw | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | render/material | `658` | `LIGHTLIST` | not-named | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | render/material | `661` | `MATERIAL` | dxf-classed-raw | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | render/material | `662` | `MENTALRAYRENDERSETTINGS` | not-named | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | render/material | `696` | `RAPIDRTRENDERSETTINGS` | not-named | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | render/material | `698` | `RENDERENTRY` | not-named | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | render/material | `699` | `RENDERENVIRONMENT` | not-named | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | render/material | `700` | `RENDERGLOBAL` | not-named | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | render/material | `701` | `RENDERSETTINGS` | not-named | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | render/material | `712` | `SKYLIGHT_BACKGROUND` | not-named | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | render/material | `713` | `SOLID_BACKGROUND` | not-named | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | render/material | `662` | `MENTALRAYRENDERSETTINGS` | dxf-classed-raw | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | render/material | `696` | `RAPIDRTRENDERSETTINGS` | dxf-classed-raw | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | render/material | `698` | `RENDERENTRY` | dxf-classed-raw | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | render/material | `699` | `RENDERENVIRONMENT` | dxf-classed-raw | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | render/material | `700` | `RENDERGLOBAL` | dxf-classed-raw | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | render/material | `701` | `RENDERSETTINGS` | dxf-classed-raw | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | render/material | `712` | `SKYLIGHT_BACKGROUND` | dxf-classed-raw | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | render/material | `713` | `SOLID_BACKGROUND` | dxf-classed-raw | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | render/material | `718` | `SUN` | dxf-classed-raw | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | render/material | `719` | `SUNSTUDY` | not-named | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | render/material | `719` | `SUNSTUDY` | dxf-classed-raw | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | render/material | `729` | `VISUALSTYLE` | dxf-classed-raw | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
 | ezdxf | DXF record | render/material | `MATERIAL` | `MATERIAL` | raw-preserved-classed | P2 | P2: preserve render/material environment objects | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | render/material | `SUN` | `SUN` | raw-preserved-classed | P2 | P2: preserve render/material environment objects | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
@@ -335,9 +358,9 @@ feature families, class names, and practical validation gaps.
 | ACadSharp | DWG custom class | 3D/modeler | `MESH` | `MESH` | named-dwg-route | P1 | P1: typed DXF/DWG shell and callback/write-path parity | ../ACadSharp/src/** case "..." |
 | ACadSharp | DWG custom class | annotation/context | `ACAD_TABLE` | `ACAD_TABLE` | named-dwg-route | P1 | P1: typed DXF/DWG shell and callback/write-path parity | ../ACadSharp/src/** case "..." |
 | ACadSharp | DWG custom class | core-geometry | `MULTILEADER` | `MULTILEADER` | named-dwg-route | P1 | P1: typed DXF/DWG shell and callback/write-path parity | ../ACadSharp/src/** case "..." |
-| ACadSharp | DWG custom class | annotation/context | `ACDB_MLEADEROBJECTCONTEXTDATA_CLASS` | `ACDB_MLEADEROBJECTCONTEXTDATA_CLASS` | not-named | P2 | P2: preserve annotation context and object-context data | ../ACadSharp/src/** case "..." |
+| ACadSharp | DWG custom class | annotation/context | `ACDB_MLEADEROBJECTCONTEXTDATA_CLASS` | `ACDB_MLEADEROBJECTCONTEXTDATA_CLASS` | dxf-classed-raw | P2 | P2: preserve annotation context and object-context data | ../ACadSharp/src/** case "..." |
 | ACadSharp | DWG custom class | annotation/context | `MLEADERSTYLE` | `MLEADERSTYLE` | dxf-classed-raw | P2 | P2: preserve annotation context and object-context data | ../ACadSharp/src/** case "..." |
-| ACadSharp | DWG custom class | parametric/dynamic-block | `BLOCKFLIPPARAMETER` | `BLOCKFLIPPARAMETER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../ACadSharp/src/** case "..." |
+| ACadSharp | DWG custom class | parametric/dynamic-block | `BLOCKFLIPPARAMETER` | `BLOCKFLIPPARAMETER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../ACadSharp/src/** case "..." |
 | ACadSharp | DWG custom class | proxy/embedded | `ACAD_PROXY_ENTITY` | `ACAD_PROXY_ENTITY` | not-named | P2 | P2: preserve proxy/OLE payloads and owners | ../ACadSharp/src/** case "..." |
 | ACadSharp | DWG custom class | proxy/embedded | `ACAD_PROXY_OBJECT` | `ACAD_PROXY_OBJECT` | not-named | P2 | P2: preserve proxy/OLE payloads and owners | ../ACadSharp/src/** case "..." |
 | ACadSharp | DWG custom class | raster-underlay | `IMAGE` | `IMAGE` | not-named | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../ACadSharp/src/** case "..." |
@@ -348,8 +371,8 @@ feature families, class names, and practical validation gaps.
 | ACadSharp | DWG custom class | raster-underlay | `RASTERVARIABLES` | `RASTERVARIABLES` | dxf-classed-raw | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../ACadSharp/src/** case "..." |
 | ACadSharp | DWG custom class | raster-underlay | `WIPEOUT` | `WIPEOUT` | named-dwg-route | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../ACadSharp/src/** case "..." |
 | ACadSharp | DWG custom class | render/material | `MATERIAL` | `MATERIAL` | dxf-classed-raw | P2 | P2: preserve render/material environment objects | ../ACadSharp/src/** case "..." |
-| ACadSharp | DWG custom class | core-geometry | `ACDBDICTIONARYWDFLT` | `ACDBDICTIONARYWDFLT` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../ACadSharp/src/** case "..." |
-| ACadSharp | DWG custom class | core-geometry | `DBCOLOR` | `DBCOLOR` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../ACadSharp/src/** case "..." |
+| ACadSharp | DWG custom class | core-geometry | `ACDBDICTIONARYWDFLT` | `ACDBDICTIONARYWDFLT` | dxf-classed-raw | P3 | P3: classify, preserve raw, then decide typed support | ../ACadSharp/src/** case "..." |
+| ACadSharp | DWG custom class | core-geometry | `DBCOLOR` | `DBCOLOR` | dxf-classed-raw | P3 | P3: classify, preserve raw, then decide typed support | ../ACadSharp/src/** case "..." |
 | ACadSharp | DWG custom class | core-geometry | `DICTIONARYVAR` | `DICTIONARYVAR` | dxf-classed-raw | P3 | P3: classify, preserve raw, then decide typed support | ../ACadSharp/src/** case "..." |
 | ACadSharp | DWG custom class | core-geometry | `HATCH` | `HATCH` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../ACadSharp/src/** case "..." |
 | ACadSharp | DWG custom class | core-geometry | `LWPLINE` | `LWPLINE` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../ACadSharp/src/** case "..." |
@@ -414,7 +437,7 @@ feature families, class names, and practical validation gaps.
 | ACadSharp | DWG fixed object | proxy/embedded | `43` | `OLEFRAME` | not-named | P2 | P2: preserve proxy/OLE payloads and owners | ../ACadSharp/src/ACadSharp/Types/ObjectType.cs |
 | ACadSharp | DWG fixed object | core-geometry | `75` | `DUMMY` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../ACadSharp/src/ACadSharp/Types/ObjectType.cs |
 | ACadSharp | DWG fixed object | core-geometry | `73` | `MLINESTYLE` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../ACadSharp/src/ACadSharp/Types/ObjectType.cs |
-| ACadSharp | DWG fixed object | core-geometry | `81` | `VBA_PROJECT` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../ACadSharp/src/ACadSharp/Types/ObjectType.cs |
+| ACadSharp | DWG fixed object | core-geometry | `81` | `VBA_PROJECT` | dxf-classed-raw | P3 | P3: classify, preserve raw, then decide typed support | ../ACadSharp/src/ACadSharp/Types/ObjectType.cs |
 | ACadSharp | DWG fixed object | core-geometry | `71` | `VX_TABLE_RECORD` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../ACadSharp/src/ACadSharp/Types/ObjectType.cs |
 | ACadSharp | DWG fixed object | database/table | `80` | `ACDBPLACEHOLDER` | dxf-classed-raw | P3 | P3: classify, preserve raw, then decide typed support | ../ACadSharp/src/ACadSharp/Types/ObjectType.cs |
 | ACadSharp | DWG fixed object | database/table | `42` | `DICTIONARY` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../ACadSharp/src/ACadSharp/Types/ObjectType.cs |
@@ -448,51 +471,51 @@ feature families, class names, and practical validation gaps.
 | LibreDWG | DWG custom class | annotation/context | `652` | `LARGE_RADIAL_DIMENSION` | named-dwg-route | P1 | P1: typed DXF/DWG shell and callback/write-path parity | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `668` | `MPOLYGON` | named-dwg-route | P1 | P1: typed DXF/DWG shell and callback/write-path parity | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `671` | `MULTILEADER` | named-dwg-route | P1 | P1: typed DXF/DWG shell and callback/write-path parity | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | point-cloud/model-reference | `672` | `NAVISWORKSMODEL` | not-named | P1 | P1: raw/classed shells plus handle/owner preservation for external refs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | point-cloud/model-reference | `673` | `NAVISWORKSMODELDEF` | not-named | P1 | P1: raw/classed shells plus handle/owner preservation for external refs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | point-cloud/model-reference | `672` | `NAVISWORKSMODEL` | named-dwg-route | P1 | P1: raw/classed shells plus handle/owner preservation for external refs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | point-cloud/model-reference | `673` | `NAVISWORKSMODELDEF` | dxf-classed-raw | P1 | P1: raw/classed shells plus handle/owner preservation for external refs | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | point-cloud/model-reference | `684` | `POINTCLOUD` | named-dwg-route | P1 | P1: raw/classed shells plus handle/owner preservation for external refs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | point-cloud/model-reference | `685` | `POINTCLOUDCOLORMAP` | not-named | P1 | P1: raw/classed shells plus handle/owner preservation for external refs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | point-cloud/model-reference | `686` | `POINTCLOUDDEF` | not-named | P1 | P1: raw/classed shells plus handle/owner preservation for external refs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | point-cloud/model-reference | `687` | `POINTCLOUDDEFEX` | not-named | P1 | P1: raw/classed shells plus handle/owner preservation for external refs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | point-cloud/model-reference | `685` | `POINTCLOUDCOLORMAP` | dxf-classed-raw | P1 | P1: raw/classed shells plus handle/owner preservation for external refs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | point-cloud/model-reference | `686` | `POINTCLOUDDEF` | dxf-classed-raw | P1 | P1: raw/classed shells plus handle/owner preservation for external refs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | point-cloud/model-reference | `687` | `POINTCLOUDDEFEX` | dxf-classed-raw | P1 | P1: raw/classed shells plus handle/owner preservation for external refs | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | point-cloud/model-reference | `688` | `POINTCLOUDDEF_REACTOR` | not-named | P1 | P1: raw/classed shells plus handle/owner preservation for external refs | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | point-cloud/model-reference | `689` | `POINTCLOUDDEF_REACTOR_EX` | not-named | P1 | P1: raw/classed shells plus handle/owner preservation for external refs | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | point-cloud/model-reference | `690` | `POINTCLOUDEX` | named-dwg-route | P1 | P1: raw/classed shells plus handle/owner preservation for external refs | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | render/material | `657` | `LIGHT` | named-dwg-route | P1 | P1: typed DXF/DWG shell and callback/write-path parity | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `505` | `ACSH_BOOLEAN_CLASS` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `506` | `ACSH_BOX_CLASS` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `507` | `ACSH_BREP_CLASS` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `508` | `ACSH_CHAMFER_CLASS` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `509` | `ACSH_CONE_CLASS` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `510` | `ACSH_CYLINDER_CLASS` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `511` | `ACSH_EXTRUSION_CLASS` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `512` | `ACSH_FILLET_CLASS` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `513` | `ACSH_HISTORY_CLASS` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `514` | `ACSH_LOFT_CLASS` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `515` | `ACSH_PYRAMID_CLASS` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `516` | `ACSH_REVOLVE_CLASS` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `517` | `ACSH_SPHERE_CLASS` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `518` | `ACSH_SWEEP_CLASS` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `519` | `ACSH_TORUS_CLASS` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `520` | `ACSH_WEDGE_CLASS` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `532` | `ASSOCARRAYACTIONBODY` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `533` | `ASSOCARRAYMODIFYACTIONBODY` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `538` | `ASSOCASMBODYACTIONPARAM` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `539` | `ASSOCBLENDSURFACEACTIONBODY` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `544` | `ASSOCEDGECHAMFERACTIONBODY` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `545` | `ASSOCEDGEFILLETACTIONBODY` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `546` | `ASSOCEXTENDSURFACEACTIONBODY` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `547` | `ASSOCEXTRUDEDSURFACEACTIONBODY` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `549` | `ASSOCFILLETSURFACEACTIONBODY` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `551` | `ASSOCLOFTEDSURFACEACTIONBODY` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `554` | `ASSOCNETWORKSURFACEACTIONBODY` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `556` | `ASSOCOFFSETSURFACEACTIONBODY` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `559` | `ASSOCPATCHSURFACEACTIONBODY` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `562` | `ASSOCPLANESURFACEACTIONBODY` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `564` | `ASSOCRESTOREENTITYSTATEACTIONBODY` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `565` | `ASSOCREVOLVEDSURFACEACTIONBODY` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `567` | `ASSOCSWEPTSURFACEACTIONBODY` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `568` | `ASSOCTRIMSURFACEACTIONBODY` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | 3D/modeler | `593` | `BLOCKPARAMDEPENDENCYBODY` | not-named | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `505` | `ACSH_BOOLEAN_CLASS` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `506` | `ACSH_BOX_CLASS` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `507` | `ACSH_BREP_CLASS` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `508` | `ACSH_CHAMFER_CLASS` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `509` | `ACSH_CONE_CLASS` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `510` | `ACSH_CYLINDER_CLASS` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `511` | `ACSH_EXTRUSION_CLASS` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `512` | `ACSH_FILLET_CLASS` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `513` | `ACSH_HISTORY_CLASS` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `514` | `ACSH_LOFT_CLASS` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `515` | `ACSH_PYRAMID_CLASS` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `516` | `ACSH_REVOLVE_CLASS` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `517` | `ACSH_SPHERE_CLASS` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `518` | `ACSH_SWEEP_CLASS` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `519` | `ACSH_TORUS_CLASS` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `520` | `ACSH_WEDGE_CLASS` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `532` | `ASSOCARRAYACTIONBODY` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `533` | `ASSOCARRAYMODIFYACTIONBODY` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `538` | `ASSOCASMBODYACTIONPARAM` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `539` | `ASSOCBLENDSURFACEACTIONBODY` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `544` | `ASSOCEDGECHAMFERACTIONBODY` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `545` | `ASSOCEDGEFILLETACTIONBODY` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `546` | `ASSOCEXTENDSURFACEACTIONBODY` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `547` | `ASSOCEXTRUDEDSURFACEACTIONBODY` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `549` | `ASSOCFILLETSURFACEACTIONBODY` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `551` | `ASSOCLOFTEDSURFACEACTIONBODY` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `554` | `ASSOCNETWORKSURFACEACTIONBODY` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `556` | `ASSOCOFFSETSURFACEACTIONBODY` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `559` | `ASSOCPATCHSURFACEACTIONBODY` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `562` | `ASSOCPLANESURFACEACTIONBODY` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `564` | `ASSOCRESTOREENTITYSTATEACTIONBODY` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `565` | `ASSOCREVOLVEDSURFACEACTIONBODY` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `567` | `ASSOCSWEPTSURFACEACTIONBODY` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `568` | `ASSOCTRIMSURFACEACTIONBODY` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | 3D/modeler | `593` | `BLOCKPARAMDEPENDENCYBODY` | dxf-classed-raw | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | 3D/modeler | `633` | `EXTRUDEDSURFACE` | named-dwg-route | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | 3D/modeler | `660` | `LOFTEDSURFACE` | named-dwg-route | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | 3D/modeler | `675` | `NURBSSURFACE` | named-dwg-route | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
@@ -501,12 +524,12 @@ feature families, class names, and practical validation gaps.
 | LibreDWG | DWG custom class | 3D/modeler | `720` | `SWEPTSURFACE` | named-dwg-route | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | annotation/context | `521` | `ALDIMOBJECTCONTEXTDATA` | not-named | P2 | P2: preserve annotation context and object-context data | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | annotation/context | `523` | `ANGDIMOBJECTCONTEXTDATA` | not-named | P2 | P2: preserve annotation context and object-context data | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | annotation/context | `528` | `ASSOC3POINTANGULARDIMACTIONBODY` | not-named | P2 | P2: preserve annotation context and object-context data | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | annotation/context | `531` | `ASSOCALIGNEDDIMACTIONBODY` | not-named | P2 | P2: preserve annotation context and object-context data | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | annotation/context | `542` | `ASSOCDIMDEPENDENCYBODY` | not-named | P2 | P2: preserve annotation context and object-context data | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | annotation/context | `552` | `ASSOCMLEADERACTIONBODY` | not-named | P2 | P2: preserve annotation context and object-context data | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | annotation/context | `557` | `ASSOCORDINATEDIMACTIONBODY` | not-named | P2 | P2: preserve annotation context and object-context data | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | annotation/context | `566` | `ASSOCROTATEDDIMACTIONBODY` | not-named | P2 | P2: preserve annotation context and object-context data | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | annotation/context | `528` | `ASSOC3POINTANGULARDIMACTIONBODY` | dxf-classed-raw | P2 | P2: preserve annotation context and object-context data | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | annotation/context | `531` | `ASSOCALIGNEDDIMACTIONBODY` | dxf-classed-raw | P2 | P2: preserve annotation context and object-context data | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | annotation/context | `542` | `ASSOCDIMDEPENDENCYBODY` | dxf-classed-raw | P2 | P2: preserve annotation context and object-context data | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | annotation/context | `552` | `ASSOCMLEADERACTIONBODY` | dxf-classed-raw | P2 | P2: preserve annotation context and object-context data | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | annotation/context | `557` | `ASSOCORDINATEDIMACTIONBODY` | dxf-classed-raw | P2 | P2: preserve annotation context and object-context data | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | annotation/context | `566` | `ASSOCROTATEDDIMACTIONBODY` | dxf-classed-raw | P2 | P2: preserve annotation context and object-context data | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | annotation/context | `626` | `DIMASSOC` | dxf-classed-raw | P2 | P2: preserve annotation context and object-context data | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | annotation/context | `627` | `DMDIMOBJECTCONTEXTDATA` | not-named | P2 | P2: preserve annotation context and object-context data | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | annotation/context | `635` | `FIELD` | dxf-classed-raw | P2 | P2: preserve annotation context and object-context data | ../libredwg/include/dwg.h |
@@ -519,66 +542,66 @@ feature families, class names, and practical validation gaps.
 | LibreDWG | DWG custom class | annotation/context | `724` | `TABLESTYLE` | dxf-classed-raw | P2 | P2: preserve annotation context and object-context data | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | geospatial | `614` | `CELLSTYLEMAP` | dxf-classed-raw | P2 | P2: preserve geodata/object-context dependencies | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | geospatial | `639` | `GEODATA` | dxf-classed-raw | P2 | P2: preserve geodata/object-context dependencies | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | geospatial | `641` | `GEOPOSITIONMARKER` | not-named | P2 | P2: preserve geodata/object-context dependencies | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | geospatial | `641` | `GEOPOSITIONMARKER` | named-dwg-route | P2 | P2: preserve geodata/object-context dependencies | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | parametric/dynamic-block | `522` | `ALIGNMENTPARAMETERENTITY` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | parametric/dynamic-block | `527` | `ASSOC2DCONSTRAINTGROUP` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `529` | `ASSOCACTION` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `530` | `ASSOCACTIONPARAM` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `534` | `ASSOCARRAYMODIFYPARAMETERS` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `535` | `ASSOCARRAYPATHPARAMETERS` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `536` | `ASSOCARRAYPOLARPARAMETERS` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `537` | `ASSOCARRAYRECTANGULARPARAMETERS` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `540` | `ASSOCCOMPOUNDACTIONPARAM` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `541` | `ASSOCDEPENDENCY` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `543` | `ASSOCEDGEACTIONPARAM` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `548` | `ASSOCFACEACTIONPARAM` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `550` | `ASSOCGEOMDEPENDENCY` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `553` | `ASSOCNETWORK` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `555` | `ASSOCOBJECTACTIONPARAM` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `558` | `ASSOCOSNAPPOINTREFACTIONPARAM` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `560` | `ASSOCPATHACTIONPARAM` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `561` | `ASSOCPERSSUBENTMANAGER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `563` | `ASSOCPOINTREFACTIONPARAM` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `529` | `ASSOCACTION` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `530` | `ASSOCACTIONPARAM` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `534` | `ASSOCARRAYMODIFYPARAMETERS` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `535` | `ASSOCARRAYPATHPARAMETERS` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `536` | `ASSOCARRAYPOLARPARAMETERS` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `537` | `ASSOCARRAYRECTANGULARPARAMETERS` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `540` | `ASSOCCOMPOUNDACTIONPARAM` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `541` | `ASSOCDEPENDENCY` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `543` | `ASSOCEDGEACTIONPARAM` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `548` | `ASSOCFACEACTIONPARAM` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `550` | `ASSOCGEOMDEPENDENCY` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `553` | `ASSOCNETWORK` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `555` | `ASSOCOBJECTACTIONPARAM` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `558` | `ASSOCOSNAPPOINTREFACTIONPARAM` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `560` | `ASSOCPATHACTIONPARAM` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `561` | `ASSOCPERSSUBENTMANAGER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `563` | `ASSOCPOINTREFACTIONPARAM` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | parametric/dynamic-block | `569` | `ASSOCVALUEDEPENDENCY` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | parametric/dynamic-block | `570` | `ASSOCVARIABLE` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `571` | `ASSOCVERTEXACTIONPARAM` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `571` | `ASSOCVERTEXACTIONPARAM` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | parametric/dynamic-block | `572` | `BASEPOINTPARAMETERENTITY` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `574` | `BLOCKALIGNEDCONSTRAINTPARAMETER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `575` | `BLOCKALIGNMENTGRIP` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `576` | `BLOCKALIGNMENTPARAMETER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `577` | `BLOCKANGULARCONSTRAINTPARAMETER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `578` | `BLOCKARRAYACTION` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `579` | `BLOCKBASEPOINTPARAMETER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `580` | `BLOCKDIAMETRICCONSTRAINTPARAMETER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `581` | `BLOCKFLIPACTION` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `582` | `BLOCKFLIPGRIP` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `583` | `BLOCKFLIPPARAMETER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `584` | `BLOCKGRIPLOCATIONCOMPONENT` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `585` | `BLOCKHORIZONTALCONSTRAINTPARAMETER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `586` | `BLOCKLINEARCONSTRAINTPARAMETER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `587` | `BLOCKLINEARGRIP` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `588` | `BLOCKLINEARPARAMETER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `589` | `BLOCKLOOKUPACTION` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `590` | `BLOCKLOOKUPGRIP` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `591` | `BLOCKLOOKUPPARAMETER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `592` | `BLOCKMOVEACTION` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `594` | `BLOCKPOINTPARAMETER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `595` | `BLOCKPOLARGRIP` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `596` | `BLOCKPOLARPARAMETER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `597` | `BLOCKPOLARSTRETCHACTION` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `599` | `BLOCKPROPERTIESTABLEGRIP` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `600` | `BLOCKRADIALCONSTRAINTPARAMETER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `602` | `BLOCKROTATEACTION` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `603` | `BLOCKROTATIONGRIP` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `604` | `BLOCKROTATIONPARAMETER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `605` | `BLOCKSCALEACTION` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `606` | `BLOCKSTRETCHACTION` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `607` | `BLOCKUSERPARAMETER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `608` | `BLOCKVERTICALCONSTRAINTPARAMETER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `609` | `BLOCKVISIBILITYGRIP` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `610` | `BLOCKVISIBILITYPARAMETER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `611` | `BLOCKXYGRIP` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | parametric/dynamic-block | `612` | `BLOCKXYPARAMETER` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `574` | `BLOCKALIGNEDCONSTRAINTPARAMETER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `575` | `BLOCKALIGNMENTGRIP` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `576` | `BLOCKALIGNMENTPARAMETER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `577` | `BLOCKANGULARCONSTRAINTPARAMETER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `578` | `BLOCKARRAYACTION` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `579` | `BLOCKBASEPOINTPARAMETER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `580` | `BLOCKDIAMETRICCONSTRAINTPARAMETER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `581` | `BLOCKFLIPACTION` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `582` | `BLOCKFLIPGRIP` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `583` | `BLOCKFLIPPARAMETER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `584` | `BLOCKGRIPLOCATIONCOMPONENT` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `585` | `BLOCKHORIZONTALCONSTRAINTPARAMETER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `586` | `BLOCKLINEARCONSTRAINTPARAMETER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `587` | `BLOCKLINEARGRIP` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `588` | `BLOCKLINEARPARAMETER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `589` | `BLOCKLOOKUPACTION` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `590` | `BLOCKLOOKUPGRIP` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `591` | `BLOCKLOOKUPPARAMETER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `592` | `BLOCKMOVEACTION` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `594` | `BLOCKPOINTPARAMETER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `595` | `BLOCKPOLARGRIP` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `596` | `BLOCKPOLARPARAMETER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `597` | `BLOCKPOLARSTRETCHACTION` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `599` | `BLOCKPROPERTIESTABLEGRIP` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `600` | `BLOCKRADIALCONSTRAINTPARAMETER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `602` | `BLOCKROTATEACTION` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `603` | `BLOCKROTATIONGRIP` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `604` | `BLOCKROTATIONPARAMETER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `605` | `BLOCKSCALEACTION` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `606` | `BLOCKSTRETCHACTION` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `607` | `BLOCKUSERPARAMETER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `608` | `BLOCKVERTICALCONSTRAINTPARAMETER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `609` | `BLOCKVISIBILITYGRIP` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `610` | `BLOCKVISIBILITYPARAMETER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `611` | `BLOCKXYGRIP` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | parametric/dynamic-block | `612` | `BLOCKXYPARAMETER` | dxf-classed-raw | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | parametric/dynamic-block | `638` | `FLIPACTIONENTITY` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | parametric/dynamic-block | `736` | `FLIPGRIPENTITY` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | parametric/dynamic-block | `637` | `FLIPPARAMETERENTITY` | not-named | P2 | P2: preserve assoc/eval/dynamic-block object graphs | ../libredwg/include/dwg.h |
@@ -605,78 +628,78 @@ feature families, class names, and practical validation gaps.
 | LibreDWG | DWG custom class | raster-underlay | `647` | `IMAGE` | not-named | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | raster-underlay | `648` | `IMAGEDEF` | not-named | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | raster-underlay | `649` | `IMAGEDEF_REACTOR` | not-named | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | raster-underlay | `650` | `IMAGE_BACKGROUND` | not-named | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | raster-underlay | `650` | `IMAGE_BACKGROUND` | dxf-classed-raw | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | raster-underlay | `679` | `PDFDEFINITION` | dxf-classed-raw | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | raster-underlay | `680` | `PDFUNDERLAY` | named-dwg-route | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | raster-underlay | `697` | `RASTERVARIABLES` | dxf-classed-raw | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | raster-underlay | `730` | `WIPEOUT` | named-dwg-route | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | raster-underlay | `731` | `WIPEOUTVARIABLES` | dxf-classed-raw | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | render/material | `642` | `GRADIENT_BACKGROUND` | not-named | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | render/material | `643` | `GROUND_PLANE_BACKGROUND` | not-named | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | render/material | `645` | `IBL_BACKGROUND` | not-named | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | render/material | `642` | `GRADIENT_BACKGROUND` | dxf-classed-raw | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | render/material | `643` | `GROUND_PLANE_BACKGROUND` | dxf-classed-raw | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | render/material | `645` | `IBL_BACKGROUND` | dxf-classed-raw | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | render/material | `658` | `LIGHTLIST` | not-named | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | render/material | `661` | `MATERIAL` | dxf-classed-raw | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | render/material | `662` | `MENTALRAYRENDERSETTINGS` | not-named | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | render/material | `696` | `RAPIDRTRENDERSETTINGS` | not-named | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | render/material | `698` | `RENDERENTRY` | not-named | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | render/material | `699` | `RENDERENVIRONMENT` | not-named | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | render/material | `700` | `RENDERGLOBAL` | not-named | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | render/material | `701` | `RENDERSETTINGS` | not-named | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | render/material | `712` | `SKYLIGHT_BACKGROUND` | not-named | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | render/material | `713` | `SOLID_BACKGROUND` | not-named | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | render/material | `662` | `MENTALRAYRENDERSETTINGS` | dxf-classed-raw | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | render/material | `696` | `RAPIDRTRENDERSETTINGS` | dxf-classed-raw | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | render/material | `698` | `RENDERENTRY` | dxf-classed-raw | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | render/material | `699` | `RENDERENVIRONMENT` | dxf-classed-raw | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | render/material | `700` | `RENDERGLOBAL` | dxf-classed-raw | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | render/material | `701` | `RENDERSETTINGS` | dxf-classed-raw | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | render/material | `712` | `SKYLIGHT_BACKGROUND` | dxf-classed-raw | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | render/material | `713` | `SOLID_BACKGROUND` | dxf-classed-raw | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | render/material | `718` | `SUN` | dxf-classed-raw | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | render/material | `719` | `SUNSTUDY` | not-named | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | render/material | `719` | `SUNSTUDY` | dxf-classed-raw | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | render/material | `729` | `VISUALSTYLE` | dxf-classed-raw | P2 | P2: preserve render/material environment objects | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `740` | `3DLINE` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | core-geometry | `625` | `ACDBDICTIONARYWDFLT` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | core-geometry | `625` | `ACDBDICTIONARYWDFLT` | dxf-classed-raw | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `502` | `ACMECOMMANDHISTORY` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `503` | `ACMESCOPE` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `504` | `ACMESTATEMGR` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `524` | `ANNOTSCALEOBJECTCONTEXTDATA` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `525` | `ARCALIGNEDTEXT` | named-dwg-route | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `573` | `BLKREFOBJECTCONTEXTDATA` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | core-geometry | `598` | `BLOCKPROPERTIESTABLE` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | core-geometry | `598` | `BLOCKPROPERTIESTABLE` | dxf-classed-raw | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `601` | `BLOCKREPRESENTATION` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `734` | `BREAKDATA` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `735` | `BREAKPOINTREF` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | core-geometry | `613` | `CAMERA` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | core-geometry | `615` | `CONTEXTDATAMANAGER` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | core-geometry | `613` | `CAMERA` | named-dwg-route | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | core-geometry | `615` | `CONTEXTDATAMANAGER` | dxf-classed-raw | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `616` | `CSACDOCUMENTOPTIONS` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | core-geometry | `617` | `CURVEPATH` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | core-geometry | `617` | `CURVEPATH` | dxf-classed-raw | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `618` | `DATALINK` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `619` | `DATATABLE` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | core-geometry | `620` | `DBCOLOR` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | core-geometry | `620` | `DBCOLOR` | dxf-classed-raw | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `621` | `DETAILVIEWSTYLE` | dxf-classed-raw | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `624` | `DICTIONARYVAR` | dxf-classed-raw | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `631` | `DYNAMICBLOCKPURGEPREVENTER` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `742` | `ENDREP` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | core-geometry | `632` | `EVALUATION_GRAPH` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | core-geometry | `632` | `EVALUATION_GRAPH` | dxf-classed-raw | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `634` | `FCFOBJECTCONTEXTDATA` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `644` | `HELIX` | named-dwg-route | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `646` | `IDBUFFER` | dxf-classed-raw | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `651` | `INDEX` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `743` | `JUMP` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | core-geometry | `653` | `LAYER_FILTER` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | core-geometry | `653` | `LAYER_FILTER` | dxf-classed-raw | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `654` | `LAYER_INDEX` | dxf-classed-raw | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `655` | `LAYOUTPRINTCONFIG` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `656` | `LEADEROBJECTCONTEXTDATA` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `744` | `LOAD` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | core-geometry | `667` | `MOTIONPATH` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | core-geometry | `667` | `MOTIONPATH` | dxf-classed-raw | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `669` | `MTEXTATTRIBUTEOBJECTCONTEXTDATA` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `670` | `MTEXTOBJECTCONTEXTDATA` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `674` | `NPOCOLLECTION` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | core-geometry | `676` | `OBJECT_PTR` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | core-geometry | `678` | `PARTIAL_VIEWING_INDEX` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | core-geometry | `676` | `OBJECT_PTR` | dxf-classed-raw | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | core-geometry | `678` | `PARTIAL_VIEWING_INDEX` | dxf-classed-raw | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `681` | `PERSUBENTMGR` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `683` | `PLOTSETTINGS` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | core-geometry | `692` | `POINTPATH` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | core-geometry | `692` | `POINTPATH` | dxf-classed-raw | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `741` | `REPEAT` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `705` | `RTEXT` | named-dwg-route | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `706` | `SCALE` | dxf-classed-raw | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `708` | `SECTIONOBJECT` | named-dwg-route | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `709` | `SECTIONVIEWSTYLE` | dxf-classed-raw | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | core-geometry | `710` | `SECTION_MANAGER` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
-| LibreDWG | DWG custom class | core-geometry | `711` | `SECTION_SETTINGS` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | core-geometry | `710` | `SECTION_MANAGER` | dxf-classed-raw | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
+| LibreDWG | DWG custom class | core-geometry | `711` | `SECTION_SETTINGS` | dxf-classed-raw | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `714` | `SORTENTSTABLE` | dxf-classed-raw | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `715` | `SPATIAL_FILTER` | dxf-classed-raw | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG custom class | core-geometry | `716` | `SPATIAL_INDEX` | dxf-classed-raw | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
@@ -738,7 +761,7 @@ feature families, class names, and practical validation gaps.
 | LibreDWG | DWG fixed object | proxy/embedded | `43` | `OLEFRAME` | not-named | P2 | P2: preserve proxy/OLE payloads and owners | ../libredwg/include/dwg.h |
 | LibreDWG | DWG fixed object | core-geometry | `75` | `DUMMY` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG fixed object | core-geometry | `73` | `MLINESTYLE` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
-| LibreDWG | DWG fixed object | core-geometry | `81` | `VBA_PROJECT` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
+| LibreDWG | DWG fixed object | core-geometry | `81` | `VBA_PROJECT` | dxf-classed-raw | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG fixed object | core-geometry | `71` | `VX_TABLE_RECORD` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG fixed object | database/table | `80` | `ACDBPLACEHOLDER` | dxf-classed-raw | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
 | LibreDWG | DWG fixed object | database/table | `42` | `DICTIONARY` | not-named | P3 | P3: classify, preserve raw, then decide typed support | ../libredwg/include/dwg.h |
@@ -765,83 +788,89 @@ feature families, class names, and practical validation gaps.
 | LibreDWG | DWG fixed object | database/table | `64` | `VPORT_CONTROL` | typed-fixed-dispatch | covered | no immediate plan item | ../libredwg/include/dwg.h |
 | LibreDWG | DWG fixed object | database/table | `70` | `VX_CONTROL` | typed-fixed-dispatch | covered | no immediate plan item | ../libredwg/include/dwg.h |
 | ODA spec | DWG data section | data-storage/classes | `AcDb:AcDsPrototype_1b` | `ACDB:ACDSPROTOTYPE_1B` | raw-preserved | P0 | P0: preserve AC1027 data-storage sections before typed conversion | ~/doc/dwg/dwg.pdf and local DWGTS_COVERAGE_STATUS.md |
+| ezdxf | DXF record | 3D/modeler | `MESH` | `MESH` | raw-preserved-classed | P1 | P1: typed DXF/DWG shell and callback/write-path parity | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | annotation/context | `ACAD_TABLE` | `ACAD_TABLE` | raw-preserved-classed | P1 | P1: typed DXF/DWG shell and callback/write-path parity | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | annotation/context | `ARC_DIMENSION` | `ARC_DIMENSION` | not-dispatched | P1 | P1: typed DXF/DWG shell and callback/write-path parity | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | annotation/context | `LARGE_RADIAL_DIMENSION` | `LARGE_RADIAL_DIMENSION` | raw-preserved-classed | P1 | P1: typed DXF/DWG shell and callback/write-path parity | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | core-geometry | `MPOLYGON` | `MPOLYGON` | raw-preserved-classed | P1 | P1: typed DXF/DWG shell and callback/write-path parity | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | core-geometry | `MULTILEADER` | `MULTILEADER` | not-dispatched | P1 | P1: typed DXF/DWG shell and callback/write-path parity | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | render/material | `LIGHT` | `LIGHT` | not-dispatched | P1 | P1: typed DXF/DWG shell and callback/write-path parity | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | 3D/modeler | `3DSOLID` | `3DSOLID` | not-dispatched | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | 3D/modeler | `BODY` | `BODY` | not-dispatched | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | 3D/modeler | `EXTRUDEDSURFACE` | `EXTRUDEDSURFACE` | raw-preserved-classed | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | 3D/modeler | `LOFTEDSURFACE` | `LOFTEDSURFACE` | raw-preserved-classed | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | 3D/modeler | `REGION` | `REGION` | not-dispatched | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | 3D/modeler | `REVOLVEDSURFACE` | `REVOLVEDSURFACE` | raw-preserved-classed | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | 3D/modeler | `SURFACE` | `SURFACE` | raw-preserved-classed | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | 3D/modeler | `SWEPTSURFACE` | `SWEPTSURFACE` | raw-preserved-classed | P2 | P2: ACIS/SAB raw shell first, typed geometry later | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | annotation/context | `DIMENSION` | `DIMENSION` | not-dispatched | P2 | P2: preserve annotation context and object-context data | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | annotation/context | `FIELD` | `FIELD` | raw-preserved-classed | P2 | P2: preserve annotation context and object-context data | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | annotation/context | `FIELDLIST` | `FIELDLIST` | raw-preserved-classed | P2 | P2: preserve annotation context and object-context data | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | annotation/context | `MLEADERSTYLE` | `MLEADERSTYLE` | raw-preserved-classed | P2 | P2: preserve annotation context and object-context data | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | annotation/context | `MTEXT` | `MTEXT` | not-dispatched | P2 | P2: preserve annotation context and object-context data | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | annotation/context | `TABLESTYLE` | `TABLESTYLE` | raw-preserved-classed | P2 | P2: preserve annotation context and object-context data | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | annotation/context | `TEXT` | `TEXT` | not-dispatched | P2 | P2: preserve annotation context and object-context data | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | geospatial | `GEODATA` | `GEODATA` | raw-preserved-classed | P2 | P2: preserve geodata/object-context dependencies | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | proxy/embedded | `ACAD_PROXY_ENTITY` | `ACAD_PROXY_ENTITY` | not-dispatched | P2 | P2: preserve proxy/OLE payloads and owners | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | proxy/embedded | `OLE2FRAME` | `OLE2FRAME` | not-dispatched | P2 | P2: preserve proxy/OLE payloads and owners | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | proxy/embedded | `TOLERANCE` | `TOLERANCE` | not-dispatched | P2 | P2: preserve proxy/OLE payloads and owners | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | raster-underlay | `DGNDEFINITION` | `DGNDEFINITION` | raw-preserved-classed | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | raster-underlay | `DGNUNDERLAY` | `DGNUNDERLAY` | raw-preserved-classed | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | raster-underlay | `DWFDEFINITION` | `DWFDEFINITION` | raw-preserved-classed | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | raster-underlay | `DWFUNDERLAY` | `DWFUNDERLAY` | raw-preserved-classed | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | raster-underlay | `IMAGE` | `IMAGE` | not-dispatched | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | raster-underlay | `IMAGEBASE` | `IMAGEBASE` | not-dispatched | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | raster-underlay | `IMAGEDEF` | `IMAGEDEF` | not-dispatched | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | raster-underlay | `IMAGEDEF_REACTOR` | `IMAGEDEF_REACTOR` | not-dispatched | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | raster-underlay | `PDFDEFINITION` | `PDFDEFINITION` | raw-preserved-classed | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | raster-underlay | `PDFUNDERLAY` | `PDFUNDERLAY` | raw-preserved-classed | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | raster-underlay | `RASTERVARIABLES` | `RASTERVARIABLES` | raw-preserved-classed | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | raster-underlay | `UNDERLAY` | `UNDERLAY` | not-dispatched | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | raster-underlay | `UNDERLAYDEFINITION` | `UNDERLAYDEFINITION` | not-dispatched | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | raster-underlay | `WIPEOUT` | `WIPEOUT` | not-dispatched | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | raster-underlay | `WIPEOUTVARIABLES` | `WIPEOUTVARIABLES` | raw-preserved-classed | P2 | P2: unify image/underlay definition-reference-reactor graphs | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | render/material | `MATERIAL` | `MATERIAL` | raw-preserved-classed | P2 | P2: preserve render/material environment objects | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | render/material | `SUN` | `SUN` | raw-preserved-classed | P2 | P2: preserve render/material environment objects | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | render/material | `VISUALSTYLE` | `VISUALSTYLE` | raw-preserved-classed | P2 | P2: preserve render/material environment objects | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | core-geometry | `ACDBDICTIONARYWDFLT` | `ACDBDICTIONARYWDFLT` | not-dispatched | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | core-geometry | `3DFACE` | `3DFACE` | not-dispatched | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | core-geometry | `ACDBDICTIONARYWDFLT` | `ACDBDICTIONARYWDFLT` | raw-preserved-classed | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | core-geometry | `ARC` | `ARC` | not-dispatched | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | core-geometry | `ATTDEF` | `ATTDEF` | not-dispatched | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | core-geometry | `ATTRIB` | `ATTRIB` | not-dispatched | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | core-geometry | `CIRCLE` | `CIRCLE` | not-dispatched | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | core-geometry | `DICTIONARYVAR` | `DICTIONARYVAR` | raw-preserved-classed | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | core-geometry | `ELLIPSE` | `ELLIPSE` | not-dispatched | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | core-geometry | `HATCH` | `HATCH` | not-dispatched | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | core-geometry | `HELIX` | `HELIX` | raw-preserved-classed | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | core-geometry | `IDBUFFER` | `IDBUFFER` | raw-preserved-classed | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | core-geometry | `LAYER_FILTER` | `LAYER_FILTER` | not-dispatched | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | core-geometry | `INSERT` | `INSERT` | not-dispatched | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | core-geometry | `LAYER_FILTER` | `LAYER_FILTER` | raw-preserved-classed | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | core-geometry | `LEADER` | `LEADER` | not-dispatched | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | core-geometry | `LINE` | `LINE` | not-dispatched | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | core-geometry | `LWPOLYLINE` | `LWPOLYLINE` | not-dispatched | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | core-geometry | `MLINE` | `MLINE` | not-dispatched | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | core-geometry | `MLINESTYLE` | `MLINESTYLE` | not-dispatched | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | core-geometry | `PLOTSETTINGS` | `PLOTSETTINGS` | not-dispatched | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | core-geometry | `POINT` | `POINT` | not-dispatched | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | core-geometry | `POLYLINE` | `POLYLINE` | not-dispatched | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | core-geometry | `RAY` | `RAY` | not-dispatched | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | core-geometry | `SHAPE` | `SHAPE` | not-dispatched | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | core-geometry | `SOLID` | `SOLID` | not-dispatched | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | core-geometry | `SORTENTSTABLE` | `SORTENTSTABLE` | raw-preserved-classed | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | core-geometry | `SPATIAL_FILTER` | `SPATIAL_FILTER` | raw-preserved-classed | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | core-geometry | `VBA_PROJECT` | `VBA_PROJECT` | not-dispatched | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | core-geometry | `SPLINE` | `SPLINE` | not-dispatched | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | core-geometry | `TRACE` | `TRACE` | not-dispatched | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | core-geometry | `VBA_PROJECT` | `VBA_PROJECT` | raw-preserved-classed | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | core-geometry | `VERTEX` | `VERTEX` | not-dispatched | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | core-geometry | `VIEWPORT` | `VIEWPORT` | not-dispatched | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
+| ezdxf | DXF record | core-geometry | `XLINE` | `XLINE` | not-dispatched | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | database/table | `ACDBPLACEHOLDER` | `ACDBPLACEHOLDER` | raw-preserved-classed | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | database/table | `DICTIONARY` | `DICTIONARY` | not-dispatched | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | database/table | `GROUP` | `GROUP` | not-dispatched | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | database/table | `LAYOUT` | `LAYOUT` | not-dispatched | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | database/table | `SEQEND` | `SEQEND` | not-dispatched | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | database/table | `XRECORD` | `XRECORD` | not-dispatched | P3 | P3: classify, preserve raw, then decide typed support | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | 3D/modeler | `3DSOLID` | `3DSOLID` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | 3D/modeler | `BODY` | `BODY` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | 3D/modeler | `EXTRUDEDSURFACE` | `EXTRUDEDSURFACE` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | 3D/modeler | `LOFTEDSURFACE` | `LOFTEDSURFACE` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | 3D/modeler | `MESH` | `MESH` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | 3D/modeler | `REGION` | `REGION` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | 3D/modeler | `REVOLVEDSURFACE` | `REVOLVEDSURFACE` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | 3D/modeler | `SWEPTSURFACE` | `SWEPTSURFACE` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | annotation/context | `ACAD_TABLE` | `ACAD_TABLE` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | annotation/context | `ARC_DIMENSION` | `ARC_DIMENSION` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | annotation/context | `DIMENSION` | `DIMENSION` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | annotation/context | `DIMSTYLE` | `DIMSTYLE` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | annotation/context | `LARGE_RADIAL_DIMENSION` | `LARGE_RADIAL_DIMENSION` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | annotation/context | `MTEXT` | `MTEXT` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | annotation/context | `TEXT` | `TEXT` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | core-geometry | `3DFACE` | `3DFACE` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | core-geometry | `ARC` | `ARC` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | core-geometry | `ATTDEF` | `ATTDEF` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | core-geometry | `CIRCLE` | `CIRCLE` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | core-geometry | `ELLIPSE` | `ELLIPSE` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | core-geometry | `HATCH` | `HATCH` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | core-geometry | `HELIX` | `HELIX` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | core-geometry | `INSERT` | `INSERT` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | core-geometry | `LEADER` | `LEADER` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | core-geometry | `LINE` | `LINE` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | core-geometry | `LWPOLYLINE` | `LWPOLYLINE` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | core-geometry | `MLINE` | `MLINE` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | core-geometry | `MPOLYGON` | `MPOLYGON` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | core-geometry | `MULTILEADER` | `MULTILEADER` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | core-geometry | `POINT` | `POINT` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | core-geometry | `POLYLINE` | `POLYLINE` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | core-geometry | `RAY` | `RAY` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | core-geometry | `SOLID` | `SOLID` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | core-geometry | `SPLINE` | `SPLINE` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | core-geometry | `TRACE` | `TRACE` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | core-geometry | `VIEWPORT` | `VIEWPORT` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | core-geometry | `XLINE` | `XLINE` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | database/table | `APPID` | `APPID` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | database/table | `BLOCK` | `BLOCK` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | database/table | `BLOCK_RECORD` | `BLOCK_RECORD` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
@@ -852,10 +881,4 @@ feature families, class names, and practical validation gaps.
 | ezdxf | DXF record | database/table | `UCS` | `UCS` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | database/table | `VIEW` | `VIEW` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF record | database/table | `VPORT` | `VPORT` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | proxy/embedded | `TOLERANCE` | `TOLERANCE` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | raster-underlay | `DGNUNDERLAY` | `DGNUNDERLAY` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | raster-underlay | `DWFUNDERLAY` | `DWFUNDERLAY` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | raster-underlay | `IMAGE` | `IMAGE` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | raster-underlay | `PDFUNDERLAY` | `PDFUNDERLAY` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
-| ezdxf | DXF record | raster-underlay | `WIPEOUT` | `WIPEOUT` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/entities/**/*.py DXFTYPE |
 | ezdxf | DXF section | classes/raw-compat | `CLASSES` | `CLASSES` | typed-dispatch | covered | no immediate plan item | ../ezdxf/src/ezdxf/sections/classes.py |

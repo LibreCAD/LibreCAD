@@ -734,7 +734,7 @@ def generate_markdown(
         "3. Implement P1 feature shells before deep geometry: MESH, MPOLYGON, ACAD_TABLE/MULTILEADER adjunct data, point-cloud/Navisworks references, LIGHT, and large/arc dimension adjunct records need classed raw preservation, stable owners, and DXF/DWG write hooks.",
         "4. Fold adjacent P2 families into shared preservation paths: raster/underlay/image graphs, annotation context data, ACIS/SAB surface shells, render/material objects, geodata, proxy/OLE payloads, and assoc/eval/dynamic-block graphs should use common raw-object and owner-graph infrastructure.",
         "5. Defer P4 vertical/proprietary classes to same-version raw replay unless there is a concrete LibreCAD editing surface; do not widen callbacks for AEC/Mechanical classes without fixtures and ODA/libreDWG validation.",
-        "6. Graduate DWG write gates one version at a time: keep AC1015 hard-gated today, then promote AC1018, AC1024, and AC1027 only after external `dwgread`/ODA smoke validation is green.",
+        "6. Graduate each source-discovered DWG writer version one at a time, including AC1021, only after its independent `dwgread`/ODA smoke and fixture evidence are green.",
         "7. Add every new typed slice with a paired validation fixture: libdxfrw round trip, ezdxf audit for DXF, libreDWG read for DWG where reliable, and optional/local ODA conversion/audit for interop.",
         "",
         "## Oracle Pitfalls",

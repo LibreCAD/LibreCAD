@@ -30,7 +30,7 @@ class dwgBuffer;
 class DRW_Class {
 public:
 
-    void write(dxfWriter *writer, DRW::Version ver) const;
+    [[nodiscard]] bool write(dxfWriter *writer, DRW::Version ver) const;
     [[nodiscard]] bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf);
 
 private:
@@ -43,9 +43,17 @@ public:
     int instanceCount = 0;   /*!< number of instances for a custom class, code 91*/
     int wasaProxyFlag = 0;   /*!< proxy flag (app loaded on save), code 280 */
     int entityFlag = 0;      /*!< entity flag, code 281 (0 object, 1 entity)*/
-     //only for read dwg
+    //only for read dwg
     std::uint16_t classNum = 0;
     int dwgType = 0;
+    // DWG-only CLASSES trailer values. Keep these separate from the DXF
+    // instance count so opaque same-version classes can be replayed without
+    // replacing source metadata with writer defaults.
+    std::int32_t dwgVersion = 0;
+    std::int32_t maintenanceVersion = 0;
+    std::int32_t unknown1 = 0;
+    std::int32_t unknown2 = 0;
+    std::uint16_t entityFlagRaw = 0x1F3;
 };
 
 #endif

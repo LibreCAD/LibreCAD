@@ -250,6 +250,20 @@ const DRW_AcisFace* findFace(const DRW_AcisBrep& g, DRW_AcisSurface kind) {
     return nullptr;
 }
 
+std::vector<unsigned char> shiftBits(const std::vector<unsigned char>& input,
+                                     std::uint8_t offset) {
+    const std::size_t bitCount = input.size() * 8u + offset;
+    std::vector<unsigned char> output((bitCount + 7u) / 8u, 0);
+    for (std::size_t bit = 0; bit < input.size() * 8u; ++bit) {
+        if ((input[bit / 8u] & (0x80u >> (bit % 8u))) == 0)
+            continue;
+        const std::size_t shifted = bit + offset;
+        output[shifted / 8u] |= static_cast<unsigned char>(
+            0x80u >> (shifted % 8u));
+    }
+    return output;
+}
+
 } // namespace
 
 TEST_CASE("extractAcisWireframe: vertex set + finite bbox", "[acis]") {
@@ -434,6 +448,15 @@ TEST_CASE("drw_decodeAcisWireframe: prefixed SAB payload is located by signature
     REQUIRE(coordEq(g.vertices[0].point, 1, 2, 3));
 }
 
+TEST_CASE("drw_decodeAcisWireframe: bit-aligned SAB payload is realigned", "[acis]") {
+    const std::vector<unsigned char> shifted = shiftBits(simpleSabBytes(), 4);
+    DRW_AcisBrep g;
+    REQUIRE(drw_decodeAcisWireframe(shifted, g));
+    REQUIRE(g.vertices.size() == 1);
+    REQUIRE(g.vertices[0].valid);
+    REQUIRE(coordEq(g.vertices[0].point, 1, 2, 3));
+}
+
 TEST_CASE("drw_decodeAcisWireframe: null-safety on empty/garbage input", "[acis]") {
     DRW_AcisBrep g1;
     REQUIRE_FALSE(drw_decodeAcisWireframe(std::vector<unsigned char>{}, g1));
@@ -455,6 +478,93 @@ TEST_CASE("drw_decodeAcisWireframe: null-safety on empty/garbage input", "[acis]
 TEST_CASE("drw_parseSab: null-safety on null pointer", "[acis]") {
     DRW_SabData sab;
     REQUIRE_FALSE(drw_parseSab(nullptr, 0, sab));
+}
+
+TEST_CASE("drw_parseSab: negative literal lengths reject transactionally", "[acis]") {
+    std::vector<unsigned char> bytes;
+    pushAscii(bytes, "ACIS BinaryFile");
+    pushInt(bytes, 21200);
+    pushInt(bytes, -1);
+    pushInt(bytes, -1);
+    pushInt(bytes, 0);
+    pushSabString(bytes, "test");
+    pushSabString(bytes, "ASM");
+    pushSabString(bytes, "now");
+    pushSabDouble(bytes, 1);
+    pushSabDouble(bytes, 1e-6);
+    pushSabDouble(bytes, 1e-10);
+
+    pushEntityType(bytes, "point");
+    pushSabVec(bytes, DRW_SabTag::LocationVec, 1, 2, 3);
+    bytes.push_back(DRW_SabTag::RecordEnd);
+    pushEntityType(bytes, "literal");
+    bytes.push_back(DRW_SabTag::LiteralStr);
+    pushInt(bytes, -1);
+    bytes.push_back(DRW_SabTag::RecordEnd);
+
+    DRW_SabData sab;
+    sab.header = testHeader();
+    sab.records.push_back(model().records.front());
+    REQUIRE_FALSE(drw_parseSab(bytes.data(), bytes.size(), sab));
+    CHECK(sab.header.signature.empty());
+    CHECK(sab.records.empty());
+}
+
+TEST_CASE("drw_parseSab: validates record structure and declared count",
+          "[acis][safety]") {
+    auto exact = simpleSabBytes();
+    const std::int32_t declaredCount = 3;
+    std::memcpy(exact.data() + 19, &declaredCount, sizeof(declaredCount));
+
+    DRW_SabData parsed;
+    REQUIRE(drw_parseSab(exact.data(), exact.size(), parsed));
+    REQUIRE(parsed.records.size() == 3u);
+
+    const std::int32_t wrongCount = 4;
+    std::memcpy(exact.data() + 19, &wrongCount, sizeof(wrongCount));
+    DRW_SabData mismatched;
+    REQUIRE_FALSE(drw_parseSab(exact.data(), exact.size(), mismatched));
+    CHECK(mismatched.header.signature.empty());
+    CHECK(mismatched.records.empty());
+
+    std::vector<unsigned char> unbalanced;
+    pushAscii(unbalanced, "ACIS BinaryFile");
+    const std::int32_t unknownCount = -1;
+    pushInt(unbalanced, 21200);
+    pushInt(unbalanced, unknownCount);
+    pushInt(unbalanced, -1);
+    pushInt(unbalanced, 0);
+    pushSabString(unbalanced, "test");
+    pushSabString(unbalanced, "ASM");
+    pushSabString(unbalanced, "now");
+    pushSabDouble(unbalanced, 1);
+    pushSabDouble(unbalanced, 1e-6);
+    pushSabDouble(unbalanced, 1e-10);
+    pushEntityType(unbalanced, "body");
+    unbalanced.push_back(DRW_SabTag::SubtypeEnd);
+    unbalanced.push_back(DRW_SabTag::RecordEnd);
+
+    DRW_SabData invalid;
+    REQUIRE_FALSE(drw_parseSab(unbalanced.data(), unbalanced.size(), invalid));
+    CHECK(invalid.header.signature.empty());
+    CHECK(invalid.records.empty());
+
+    auto unbalancedAtEnd = simpleSabBytes();
+    std::vector<unsigned char> endMarker;
+    pushEntityType(endMarker, "End", true);
+    pushEntityType(endMarker, "of", true);
+    pushEntityType(endMarker, "ACIS", true);
+    pushEntityType(endMarker, "data");
+    REQUIRE(unbalancedAtEnd.size() >= endMarker.size());
+    unbalancedAtEnd.resize(unbalancedAtEnd.size() - endMarker.size());
+    unbalancedAtEnd.push_back(DRW_SabTag::SubtypeStart);
+    unbalancedAtEnd.insert(unbalancedAtEnd.end(), endMarker.begin(),
+                           endMarker.end());
+    DRW_SabData invalidAtEnd;
+    REQUIRE_FALSE(drw_parseSab(unbalancedAtEnd.data(),
+                                unbalancedAtEnd.size(), invalidAtEnd));
+    CHECK(invalidAtEnd.header.signature.empty());
+    CHECK(invalidAtEnd.records.empty());
 }
 
 // ── Render tests: DRW_AcisBrep -> RS_* entities (4.8b) ───────────────────────

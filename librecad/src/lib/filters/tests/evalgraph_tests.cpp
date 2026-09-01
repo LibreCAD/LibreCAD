@@ -140,7 +140,7 @@ bool tryReadGraphs(const std::string &path, EvalGraphCapture &cap) {
 
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("DWG EVALUATION_GRAPH decodes on R2004 / AC1018 (<=AC1018 inline handles)",
-          "[dwg][evalgraph][parity]") {
+          "[dwg][evalgraph][parity][fixture]") {
   const std::string path = std::string(LIBRECAD_TEST_DIR) + "/evalgraph_r2004.dwg";
   if (!std::filesystem::is_regular_file(path)) {
     SUCCEED("evalgraph_r2004.dwg fixture not found; skipping");
@@ -181,7 +181,7 @@ TEST_CASE("DWG EVALUATION_GRAPH decodes on R2004 / AC1018 (<=AC1018 inline handl
 
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("DWG EVALUATION_GRAPH still decodes on R2018 / AC1032 (no >AC1018 regression)",
-          "[dwg][evalgraph][parity]") {
+          "[dwg][evalgraph][parity][fixture]") {
   // Reuses the AC1032 makeall-plus kitchen-sink fixture (shared with the
   // dynamic-block suite) as an R2018 EVALUATION_GRAPH carrier.
   const std::string path = std::string(LIBRECAD_TEST_DIR) + "/dynblock_r2018.dwg";

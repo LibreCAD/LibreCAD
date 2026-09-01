@@ -30,15 +30,16 @@
 from __future__ import annotations
 
 import argparse
-import re
 import sys
 from dataclasses import dataclass
 from pathlib import Path
 
 from dwg_inventory_common import (
-    extract_function,
+    extract_function_exact,
     markdown_cell,
+    parse_reader_dispatch,
     parse_versions,
+    parse_writer_dispatch,
     read_text,
     repo_root_from_script,
     write_or_check,
@@ -91,50 +92,6 @@ def infer_fixture_ids(version_code: str) -> tuple[str, str]:
     positive = f"fixture-blocked:{version_code.lower()}-positive-needed"
     negative = f"fixture-blocked:{version_code.lower()}-negative-needed"
     return positive, negative
-
-
-def parse_reader_dispatch(libdwgr: str) -> dict[str, str]:
-    block = extract_function(libdwgr, "std::unique_ptr<dwgReader> dwgRW::createReaderForVersion")
-    if not block:
-        raise SystemExit("error: cannot find dwgRW::createReaderForVersion")
-
-    dispatch: dict[str, str] = {}
-    pending: list[str] = []
-    for line in block.splitlines():
-        pending.extend(re.findall(r"\bcase\s+DRW::([A-Z0-9_]+)\s*:", line))
-        reader = re.search(r"\bnew\s+(dwgReader[A-Za-z0-9_]*)\s*\(", line)
-        if reader:
-            for enum_name in pending:
-                dispatch[enum_name] = reader.group(1)
-            pending = []
-        elif "break;" in line and pending:
-            for enum_name in pending:
-                dispatch[enum_name] = "unsupported"
-            pending = []
-    return dispatch
-
-
-def parse_writer_dispatch(libdwgr: str) -> dict[str, str]:
-    block = extract_function(libdwgr, "bool dwgRW::write")
-    if not block:
-        raise SystemExit("error: cannot find dwgRW::write")
-
-    allowed = set(re.findall(r"\bver\s*!=\s*DRW::([A-Z0-9_]+)", block))
-    dispatch: dict[str, str] = {}
-    for enum_name, writer in re.findall(
-        r"\bver\s*==\s*DRW::([A-Z0-9_]+)\)\s*\n\s*writer\s*=\s*std::make_unique<\s*(dwgWriter[0-9]+)\s*>",
-        block,
-    ):
-        dispatch[enum_name] = writer
-    fallback_writers = re.findall(
-        r"\belse\s*\n\s*writer\s*=\s*std::make_unique<\s*(dwgWriter[0-9]+)\s*>",
-        block,
-    )
-    if fallback_writers:
-        fallback = fallback_writers[-1]
-        for enum_name in sorted(allowed - set(dispatch)):
-            dispatch[enum_name] = fallback
-    return dispatch
 
 
 def dispatch_by_code(repo: Path) -> tuple[dict[str, str], dict[str, str], bool]:

@@ -33,8 +33,8 @@
  *                                       preserved verbatim by the raw shelf
  * The exact-name branches (NETWORK / GEOMDEPENDENCY / ALIGNEDDIMACTIONBODY /
  * VERTEX & OSNAP action params / PERSSUBENTMANAGER) keep their extended-field
- * decoders. parseDwg never returns false on a short read, so the object is
- * always delivered (typed + raw-shelved).
+ * decoders. Legacy opaque bodies remain raw-shelved on short reads; bounded
+ * R2007+ frames reject a truncated common handle prefix before publication.
  *
  * Fixtures (in testdata):
  *   assoc_surface_r2004.dwg     <- ~/dev/libredwg/.../2004/Surface.dwg (AC1018)
@@ -52,6 +52,7 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+#include <algorithm>
 #include <filesystem>
 #include <set>
 #include <string>
@@ -273,4 +274,33 @@ TEST_CASE("DWG ACDBASSOC2DCONSTRAINTGROUP typed-captured (Constraints / AC1027)"
   REQUIRE(geom != nullptr);
   CHECK(cap.hasPrefixKind(
       *geom, DRW_AssociativePrefixStatus::Kind::AcDbAssocGeomDependency));
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DWG ACDBASSOCPERSSUBENTMANAGER stays an opaque shell (AC1032)",
+          "[dwg][assoc][raw][parity]") {
+  const std::string path =
+      std::string(LIBRECAD_TEST_DIR) + "/dynblock_r2018.dwg";
+  AssocCapture cap;
+  if (!tryReadAssoc(path, cap))
+    return;
+
+  // The TypeScript and standalone C++ readers classify object type 1248 as
+  // an unsupported associativity shell. It must be delivered without the
+  // fixed type-1313 classVersion/itemCount interpretation.
+  const DRW_AssociativeObject *persistent =
+      cap.firstRecord("ACDBASSOCPERSSUBENTMANAGER");
+  REQUIRE(persistent != nullptr);
+  CHECK(persistent->m_classVersion == 0);
+  CHECK(persistent->m_persistentSubentityHandles.empty());
+  CHECK(cap.hasPrefixKind(
+      *persistent, DRW_AssociativePrefixStatus::Kind::AcDbAssocActionBody));
+  const auto missing = std::find_if(
+      persistent->m_prefixStatuses.cbegin(),
+      persistent->m_prefixStatuses.cend(),
+      [](const DRW_AssociativePrefixStatus &status) {
+        return status.m_status ==
+               DRW_AssociativePrefixStatus::ParseStatus::Missing;
+      });
+  CHECK(missing != persistent->m_prefixStatuses.cend());
 }

@@ -35,7 +35,9 @@
 #include <cctype>
 #include <cmath>
 #include <cstdint>
+#include <cstdlib>
 #include <cstring>
+#include <cstdio>
 #include <algorithm>
 #include <filesystem>
 #include <fstream>
@@ -44,6 +46,7 @@
 #include <iterator>
 #include <limits>
 #include <map>
+#include <memory>
 #include <regex>
 #include <set>
 #include <sstream>
@@ -56,6 +59,9 @@
 #include "drw_interface.h"
 #include "intern/proxygraphicdecoder.h"
 #include "intern/drw_dbg.h"
+#include "intern/dwgbufferw.h"
+#include "intern/dwgobjectframe.h"
+#include "intern/dwgreader27.h"
 #include "libdwgr.h"
 #include "libdxfrw.h"
 
@@ -136,6 +142,7 @@ public:
   int entities = 0;
   int blocks = 0;
   int layers = 0;
+  std::vector<DRW_ViewportEntityHeader> viewportEntityHeaders;
   std::map<int, int> entityLWeights;        // lWeight enum -> count
   std::map<std::string, int> layerLWeights; // layer name -> lWeight enum
 
@@ -153,6 +160,10 @@ public:
   }
   void addDimStyle(const DRW_Dimstyle &) override {}
   void addVport(const DRW_Vport &) override {}
+  void addViewportEntityHeader(
+      const DRW_ViewportEntityHeader &value) override {
+    viewportEntityHeaders.push_back(value);
+  }
   void addTextStyle(const DRW_Textstyle &) override {}
   void addAppId(const DRW_AppId &) override {}
 
@@ -249,6 +260,32 @@ public:
   void writeAppId() override {}
 };
 
+class DictionaryFixtureIface : public CountingIface {
+public:
+  std::vector<DRW_Dictionary> dictionaries;
+  std::vector<DRW_DictionaryWithDefault> dictionariesWithDefault;
+
+  void addDictionary(const DRW_Dictionary &value) override {
+    dictionaries.push_back(value);
+  }
+
+  void addDictionaryWithDefault(
+      const DRW_DictionaryWithDefault &value) override {
+    dictionariesWithDefault.push_back(value);
+  }
+};
+
+class DictionaryMutationWriteIface : public CountingIface {
+public:
+  dwgRW *writer = nullptr;
+  DRW_Dictionary dictionary;
+
+  void writeObjects() override {
+    REQUIRE(writer != nullptr);
+    REQUIRE(writer->writeDictionary(&dictionary));
+  }
+};
+
 struct XlineCaptureIface : public CountingIface {
   std::vector<DRW_Xline> xlines;
   int lineCallbacks = 0;
@@ -261,6 +298,399 @@ struct XlineCaptureIface : public CountingIface {
   void addXline(const DRW_Xline &e) override {
     CountingIface::addXline(e);
     xlines.push_back(e);
+  }
+};
+
+class PointCloudWriteIface : public CountingIface {
+public:
+  dwgRW *writer = nullptr;
+  int pointCloudCallbacks = 0;
+  DRW_PointCloud pointCloud;
+  DRW_Coord sourceOrigin{1.0, 2.0, 3.0};
+
+  void writeEntities() override {
+    REQUIRE(writer != nullptr);
+    DRW_PointCloud value;
+    value.classVersion = 3;
+    value.origin = sourceOrigin;
+    value.savedFilename = "cloud.rcp";
+    value.sourceFileCount = 0;
+    value.extentsMin = DRW_Coord{-1.0, -2.0, -3.0};
+    value.extentsMax = DRW_Coord{4.0, 5.0, 6.0};
+    value.pointCount = 1234;
+    value.ucsName = "UCS-A";
+    value.definitionHandle = 0xB0;
+    value.reactorHandle = 0xC0;
+    REQUIRE(writer->writePointCloud(&value));
+  }
+
+  void addPointCloud(const DRW_PointCloud *value) override {
+    if (value != nullptr)
+      pointCloud = *value;
+    ++pointCloudCallbacks;
+  }
+};
+
+class PointCloudExWriteIface : public CountingIface {
+public:
+  dwgRW *writer = nullptr;
+  int pointCloudExCallbacks = 0;
+  DRW_PointCloudEx pointCloudEx;
+  DRW_Coord sourceExtentsMin{-1.0, -2.0, -3.0};
+
+  void writeEntities() override {
+    REQUIRE(writer != nullptr);
+    DRW_PointCloudEx value;
+    value.classVersion = 7;
+    value.extentsMin = sourceExtentsMin;
+    value.extentsMax = DRW_Coord{4.0, 5.0, 6.0};
+    value.ucsOrigin = DRW_Coord{7.0, 8.0, 9.0};
+    value.definitionHandle = 0xB4;
+    value.reactorHandle = 0xC4;
+    value.name = "cloud-ex";
+    value.showIntensity = true;
+    value.showCropping = true;
+    value.unknownInt0 = 41;
+    value.unknownInt1 = 42;
+    value.stylizationType = 3;
+    value.intensityColorScheme = "intensity";
+    value.currentColorScheme = "current";
+    value.classificationColorScheme = "classification";
+    value.elevationMin = 10.5;
+    value.elevationMax = 20.5;
+    value.intensityMin = 100.0;
+    value.intensityMax = 200.0;
+    value.intensityOutOfRangeBehavior = 4;
+    value.elevationOutOfRangeBehavior = 5;
+    REQUIRE(writer->writePointCloudEx(&value));
+  }
+
+  void addPointCloudEx(const DRW_PointCloudEx *value) override {
+    if (value != nullptr)
+      pointCloudEx = *value;
+    ++pointCloudExCallbacks;
+  }
+};
+
+class PointCloudReaderProbe : public dwgReader27 {
+public:
+  using dwgReader27::dwgReader27;
+  using dwgReader::readDwgEntity;
+  using dwgReader::readDwgObject;
+
+  const std::uint8_t *objectData() const { return objData.get(); }
+  std::uint64_t objectDataSize() const { return uncompSize; }
+};
+
+class PointCloudExternalReadWriteIface : public CountingIface {
+public:
+  dwgRW *writer = nullptr;
+
+  void writeEntities() override {
+    REQUIRE(writer != nullptr);
+    DRW_PointCloud value;
+    value.classVersion = 3;
+    value.origin = DRW_Coord{1.25, 2.5, 3.75};
+    value.savedFilename = "external-reader.rcp";
+    value.sourceFileCount = 0;
+    value.extentsMin = DRW_Coord{-10.0, -20.0, -30.0};
+    value.extentsMax = DRW_Coord{40.0, 50.0, 60.0};
+    value.pointCount = 1234;
+    value.ucsName = "External-UCS";
+    value.definitionHandle = 0xB0;
+    value.reactorHandle = 0xC0;
+    REQUIRE(writer->writePointCloud(&value));
+  }
+};
+
+std::string shellQuote(const std::string& value) {
+  std::string result("'");
+  for (const char ch : value) {
+    if (ch == '\'')
+      result += "'\\''";
+    else
+      result += ch;
+  }
+  result += '\'';
+  return result;
+}
+
+bool findFrameEnd(const std::vector<std::uint8_t>& data,
+                  std::uint32_t offset, DRW::Version version,
+                  std::size_t& bodyStart, std::size_t& frameEnd) {
+  if (offset >= data.size())
+    return false;
+
+  dwgBuffer cursor(const_cast<std::uint8_t*>(data.data()), data.size());
+  if (!cursor.setPosition(offset))
+    return false;
+
+  const std::int32_t bodySize = cursor.getModularShort();
+  if (!cursor.isGood() || bodySize < 0)
+    return false;
+  if (version > DRW::AC1021)
+    cursor.getUModularChar();
+  if (!cursor.isGood())
+    return false;
+
+  const std::uint64_t bodyStart64 = cursor.getPosition();
+  const std::uint64_t bodyEnd = bodyStart64
+      + static_cast<std::uint64_t>(bodySize);
+  const std::uint64_t end = bodyEnd + sizeof(std::uint16_t);
+  if (bodyEnd < bodyStart64 || end < bodyEnd || end > data.size())
+    return false;
+
+  bodyStart = static_cast<std::size_t>(bodyStart64);
+  frameEnd = static_cast<std::size_t>(end);
+  return true;
+}
+
+bool findDictionaryCountBit(const std::vector<std::uint8_t>& body,
+                            std::size_t& bitOffset) {
+  if (body.empty())
+    return false;
+  dwgBuffer cursor(const_cast<std::uint8_t*>(body.data()), body.size());
+  cursor.getObjType(DRW::AC1027);
+  cursor.getHandle();
+  cursor.getBitShort(); // empty EED stream
+  cursor.getBitLong();  // reactor count
+  cursor.getBit();      // extension dictionary flag
+  cursor.getBit();      // AC1027 data-storage flag
+  if (!cursor.isGood())
+    return false;
+  bitOffset = cursor.getPosition() * 8 + cursor.getBitPos();
+  return bitOffset + 10 <= body.size() * 8;
+}
+
+bool patchBits(std::vector<std::uint8_t>& data, std::size_t bitOffset,
+               std::uint64_t value, std::size_t bitCount) {
+  if (bitCount > 64 || bitOffset > data.size() * 8
+      || bitCount > data.size() * 8 - bitOffset)
+    return false;
+  for (std::size_t i = 0; i < bitCount; ++i) {
+    const std::size_t absoluteBit = bitOffset + i;
+    const std::uint8_t mask = static_cast<std::uint8_t>(
+        1u << (7u - (absoluteBit % 8)));
+    if (((value >> (bitCount - 1u - i)) & 1u) != 0)
+      data[absoluteBit / 8] |= mask;
+    else
+      data[absoluteBit / 8] &= static_cast<std::uint8_t>(~mask);
+  }
+  return true;
+}
+
+bool findRawBitDouble(const std::vector<std::uint8_t>& body, double expected,
+                      std::size_t& bitOffset) {
+  std::uint64_t expectedBits = 0;
+  std::memcpy(&expectedBits, &expected, sizeof(expectedBits));
+  const std::uint64_t bitCount = static_cast<std::uint64_t>(body.size()) * 8;
+  for (std::uint64_t bit = 0; bit + 66 <= bitCount; ++bit) {
+    dwgBuffer cursor(const_cast<std::uint8_t*>(body.data()), body.size());
+    if (!cursor.setPosition(bit / 8))
+      continue;
+    cursor.setBitPos(static_cast<std::uint8_t>(bit % 8));
+    if (cursor.get2Bits() != 0 || !cursor.isGood())
+      continue;
+    const double candidate = cursor.getRawDouble();
+    if (!cursor.isGood())
+      continue;
+    std::uint64_t candidateBits = 0;
+    std::memcpy(&candidateBits, &candidate, sizeof(candidateBits));
+    if (candidateBits == expectedBits) {
+      bitOffset = static_cast<std::size_t>(bit);
+      return true;
+    }
+  }
+  return false;
+}
+
+void setBit(std::vector<std::uint8_t>& data, std::size_t bitOffset,
+            bool value) {
+  const std::size_t byteOffset = bitOffset / 8;
+  const std::uint8_t mask = static_cast<std::uint8_t>(
+      1u << (7u - static_cast<unsigned>(bitOffset % 8)));
+  if (value)
+    data[byteOffset] = static_cast<std::uint8_t>(data[byteOffset] | mask);
+  else
+    data[byteOffset] = static_cast<std::uint8_t>(data[byteOffset] & ~mask);
+}
+
+void replaceRawDouble(std::vector<std::uint8_t>& body, std::size_t bitOffset,
+                      double value) {
+  std::uint64_t bits = 0;
+  std::memcpy(&bits, &value, sizeof(bits));
+  const auto* bytes = reinterpret_cast<const std::uint8_t*>(&bits);
+  for (std::size_t byte = 0; byte < sizeof(bits); ++byte) {
+    for (unsigned bit = 0; bit < 8; ++bit) {
+      const bool set = (bytes[byte] & (1u << (7u - bit))) != 0;
+      setBit(body, bitOffset + byte * 8 + bit, set);
+    }
+  }
+}
+
+class NavisworksModelWriteIface : public CountingIface {
+public:
+  dwgRW *writer = nullptr;
+  int navisworksCallbacks = 0;
+  DRW_NavisworksModel navisworks;
+
+  void writeEntities() override {
+    REQUIRE(writer != nullptr);
+    DRW_NavisworksModel value;
+    value.flags = 11;
+    value.definitionHandle = 0x2D0;
+    for (std::size_t i = 0; i < value.transform.size(); ++i)
+      value.transform[i] = static_cast<double>(i) + 0.25;
+    value.unitFactor = 0.001;
+    REQUIRE(writer->writeNavisworksModel(&value));
+  }
+
+  void addNavisworksModel(const DRW_NavisworksModel *value) override {
+    if (value != nullptr)
+      navisworks = *value;
+    ++navisworksCallbacks;
+  }
+};
+
+class PointCloudDefWriteIface : public CountingIface {
+public:
+  dwgRW *writer = nullptr;
+  std::vector<DRW_PointCloudDef> definitions;
+  std::vector<DRW_PointCloudDef> captured;
+
+  void writeDwgClasses() override {
+    REQUIRE(writer != nullptr);
+    for (auto &definition : definitions)
+      REQUIRE(writer->registerPointCloudDefObjectClass(&definition));
+  }
+
+  void writeObjects() override {
+    REQUIRE(writer != nullptr);
+    for (auto &definition : definitions)
+      REQUIRE(writer->writePointCloudDef(&definition));
+  }
+
+  void addPointCloudDef(const DRW_PointCloudDef &definition) override {
+    captured.push_back(definition);
+  }
+};
+
+class PointCloudDictionaryWriteIface : public PointCloudDefWriteIface {
+public:
+  DRW_Dictionary dictionary;
+  std::vector<DRW_Dictionary> capturedDictionaries;
+
+  void writeObjects() override {
+    REQUIRE(writer != nullptr);
+    REQUIRE(writer->writeDictionary(&dictionary));
+    PointCloudDefWriteIface::writeObjects();
+  }
+
+  void addDictionary(const DRW_Dictionary &value) override {
+    capturedDictionaries.push_back(value);
+  }
+};
+
+class PointCloudReferenceGraphWriteIface : public CountingIface {
+public:
+  dwgRW *writer = nullptr;
+  std::vector<DRW_Dictionary> dictionaries;
+  DRW_PointCloudDef pointCloudDefinition;
+  DRW_NavisworksModelDef navisworksDefinition;
+  DRW_NavisworksModel navisworksModel;
+  DRW_PointCloudColorMap colorMap;
+  std::vector<DRW_Dictionary> capturedDictionaries;
+  std::vector<DRW_PointCloudDef> capturedPointCloudDefinitions;
+  DRW_NavisworksModelDef capturedNavisworksDefinition;
+  DRW_NavisworksModel capturedNavisworksModel;
+  DRW_PointCloudColorMap capturedColorMap;
+
+  void writeDwgClasses() override {
+    REQUIRE(writer != nullptr);
+    REQUIRE(writer->registerPointCloudDefObjectClass(&pointCloudDefinition));
+    REQUIRE(writer->registerNavisworksModelDefObjectClass(
+        &navisworksDefinition));
+    REQUIRE(writer->registerPointCloudColorMapObjectClass(&colorMap));
+  }
+
+  void writeEntities() override {
+    REQUIRE(writer != nullptr);
+    REQUIRE(writer->writeNavisworksModel(&navisworksModel));
+  }
+
+  void writeObjects() override {
+    REQUIRE(writer != nullptr);
+    for (auto &dictionary : dictionaries)
+      REQUIRE(writer->writeDictionary(&dictionary));
+    REQUIRE(writer->writePointCloudDef(&pointCloudDefinition));
+    REQUIRE(writer->writeNavisworksModelDef(&navisworksDefinition));
+    REQUIRE(writer->writePointCloudColorMap(&colorMap));
+  }
+
+  void addDictionary(const DRW_Dictionary &value) override {
+    capturedDictionaries.push_back(value);
+  }
+
+  void addPointCloudDef(const DRW_PointCloudDef &value) override {
+    capturedPointCloudDefinitions.push_back(value);
+  }
+
+  void addNavisworksModelDef(const DRW_NavisworksModelDef &value) override {
+    capturedNavisworksDefinition = value;
+  }
+
+  void addNavisworksModel(const DRW_NavisworksModel *value) override {
+    if (value != nullptr)
+      capturedNavisworksModel = *value;
+  }
+
+  void addPointCloudColorMap(const DRW_PointCloudColorMap &value) override {
+    capturedColorMap = value;
+  }
+};
+
+class PointCloudMetadataWriteIface : public CountingIface {
+public:
+  dwgRW *writer = nullptr;
+  DRW_NavisworksModelDef navisworks;
+  DRW_NavisworksModel navisworksModel;
+  DRW_PointCloudColorMap colorMap;
+  int navisworksCallbacks = 0;
+  int navisworksModelCallbacks = 0;
+  int colorMapCallbacks = 0;
+
+  void writeEntities() override {
+    REQUIRE(writer != nullptr);
+    if (writer->getVersion() >= DRW::AC1021 && navisworksModel.handle != 0)
+      REQUIRE(writer->writeNavisworksModel(&navisworksModel));
+  }
+
+  void writeDwgClasses() override {
+    REQUIRE(writer != nullptr);
+    REQUIRE(writer->registerNavisworksModelDefObjectClass(&navisworks));
+    REQUIRE(writer->registerPointCloudColorMapObjectClass(&colorMap));
+  }
+
+  void writeObjects() override {
+    REQUIRE(writer != nullptr);
+    REQUIRE(writer->writeNavisworksModelDef(&navisworks));
+    REQUIRE(writer->writePointCloudColorMap(&colorMap));
+  }
+
+  void addNavisworksModelDef(const DRW_NavisworksModelDef &data) override {
+    navisworks = data;
+    ++navisworksCallbacks;
+  }
+
+  void addNavisworksModel(const DRW_NavisworksModel *data) override {
+    if (data != nullptr)
+      navisworksModel = *data;
+    ++navisworksModelCallbacks;
+  }
+
+  void addPointCloudColorMap(const DRW_PointCloudColorMap &data) override {
+    colorMap = data;
+    ++colorMapCallbacks;
   }
 };
 
@@ -1212,8 +1642,13 @@ class TableNameCapture : public CountingIface {
 public:
   std::vector<std::string> appIds;
   std::vector<std::string> dimStyles;
+  int linearDimensions = 0;
   void addAppId(const DRW_AppId &a) override { appIds.push_back(a.name); }
   void addDimStyle(const DRW_Dimstyle &d) override { dimStyles.push_back(d.name); }
+  void addDimLinear(const DRW_DimLinear *d) override {
+    CountingIface::addDimLinear(d);
+    ++linearDimensions;
+  }
 };
 } // namespace
 
@@ -1240,6 +1675,7 @@ TEST_CASE("DWG pre-R13 R11: embedded APPID + DIMSTYLE tables decode name-only",
   CHECK(iface.appIds[0] == "ACAD");
   REQUIRE(iface.dimStyles.size() == 1);
   CHECK(iface.dimStyles[0] == "STANDARD");
+  CHECK(iface.linearDimensions == 15);
 }
 
 namespace {
@@ -1253,6 +1689,46 @@ public:
     if (lines == 0)
       firstStart = RS_Vector(e.basePoint.x, e.basePoint.y, e.basePoint.z);
     ++lines;
+  }
+};
+
+class LegacyDimensionCapture : public CountingIface {
+public:
+  std::vector<DRW_DimLinear> linear;
+  std::vector<DRW_DimAligned> aligned;
+  std::vector<DRW_DimAngular> angular;
+  std::vector<DRW_DimAngular3p> angular3p;
+  std::vector<DRW_DimDiametric> diametric;
+  std::vector<DRW_DimOrdinate> ordinate;
+  std::vector<DRW_DimRadial> radial;
+
+  void addDimLinear(const DRW_DimLinear *e) override {
+    CountingIface::addDimLinear(e);
+    linear.push_back(*e);
+  }
+  void addDimAlign(const DRW_DimAligned *e) override {
+    CountingIface::addDimAlign(e);
+    aligned.push_back(*e);
+  }
+  void addDimAngular(const DRW_DimAngular *e) override {
+    CountingIface::addDimAngular(e);
+    angular.push_back(*e);
+  }
+  void addDimAngular3P(const DRW_DimAngular3p *e) override {
+    CountingIface::addDimAngular3P(e);
+    angular3p.push_back(*e);
+  }
+  void addDimDiametric(const DRW_DimDiametric *e) override {
+    CountingIface::addDimDiametric(e);
+    diametric.push_back(*e);
+  }
+  void addDimRadial(const DRW_DimRadial *e) override {
+    CountingIface::addDimRadial(e);
+    radial.push_back(*e);
+  }
+  void addDimOrdinate(const DRW_DimOrdinate *e) override {
+    CountingIface::addDimOrdinate(e);
+    ordinate.push_back(*e);
   }
 };
 } // namespace
@@ -1292,6 +1768,83 @@ TEST_CASE("DWG pre-R10 tier (R2.6/R9/R2.10) reads entities with 2D bodies",
     CHECK(iface.firstStart.x == Catch::Approx(6.0));
     CHECK(iface.firstStart.y == Catch::Approx(1.0));
     CHECK(iface.firstStart.z == Catch::Approx(0.0));
+  }
+}
+
+TEST_CASE("DWG pre-R13 external R2.6 dimensions use typed callbacks",
+          "[dwg][pre-r13][external]") {
+  const char *home = std::getenv("HOME");
+  if (!home) {
+    SUCCEED("HOME not set; skipping external corpus");
+    return;
+  }
+  const std::string path =
+      (std::filesystem::path(home) / "dev" / "dwg-writer" / "tests" /
+       "fixtures" / "committed" / "libredwg" / "dim_r2_6.dwg")
+          .string();
+  if (!std::filesystem::is_regular_file(path)) {
+    SUCCEED("dwg-writer dim_r2_6.dwg absent; skipping external corpus");
+    return;
+  }
+
+  LegacyDimensionCapture iface;
+  dwgR reader(path.c_str());
+  REQUIRE(reader.read(&iface, /*ext=*/true));
+  REQUIRE(reader.getVersion() == DRW::AC1003);
+  REQUIRE(reader.getError() == DRW::BAD_NONE);
+
+  REQUIRE(iface.linear.size() == 1);
+  REQUIRE(iface.aligned.size() == 1);
+  REQUIRE(iface.angular.size() == 1);
+  REQUIRE(iface.diametric.size() == 1);
+  REQUIRE(iface.radial.size() == 1);
+
+  CHECK(iface.linear[0].getDef1Point().x == Catch::Approx(1.0));
+  CHECK(iface.aligned[0].getDef2Point().y == Catch::Approx(7.0));
+  CHECK(iface.angular[0].getFirstLine1().x == Catch::Approx(7.0));
+  CHECK(iface.angular[0].getDimPoint().y == Catch::Approx(3.0));
+  CHECK(iface.diametric[0].getDiameter1Point().y == Catch::Approx(4.0));
+  CHECK(iface.radial[0].getCenterPoint().x == Catch::Approx(3.0));
+  CHECK(iface.radial[0].getDiameterPoint().y == Catch::Approx(1.0));
+}
+
+TEST_CASE("DWG pre-R13 derived angular and ordinate dimensions use typed callbacks",
+          "[dwg][pre-r13][external]") {
+  const char *root = std::getenv("LIBRECAD_PRE_R13_DIMENSION_FIXTURES");
+  if (!root || root[0] == '\0') {
+    SUCCEED("derived pre-R13 dimension fixtures not configured; skipping");
+    return;
+  }
+  struct Case {
+    const char *file;
+    bool angular3p;
+  };
+  const Case cases[] = {
+      {"entities_r11_angular3p.dwg", true},
+      {"entities_r11_ordinate.dwg", false},
+  };
+  for (const Case &c : cases) {
+    const std::string path = (std::filesystem::path(root) / c.file).string();
+    INFO("fixture: " << c.file);
+    if (!std::filesystem::is_regular_file(path)) {
+      SUCCEED("derived fixture absent; skipping");
+      continue;
+    }
+    LegacyDimensionCapture iface;
+    dwgR reader(path.c_str());
+    REQUIRE(reader.read(&iface, /*ext=*/true));
+    REQUIRE(reader.getVersion() == DRW::AC1009);
+    REQUIRE(reader.getError() == DRW::BAD_NONE);
+    if (c.angular3p) {
+      REQUIRE(iface.angular3p.size() == 1);
+      CHECK(iface.angular3p[0].getFirstLine().x == Catch::Approx(6.0));
+      CHECK(iface.angular3p[0].getSecondLine().y == Catch::Approx(7.0));
+    } else {
+      REQUIRE(iface.ordinate.size() == 1);
+      CHECK(iface.ordinate[0].getOriginPoint().x == Catch::Approx(8.0));
+      CHECK(iface.ordinate[0].getFirstLine().z == Catch::Approx(2.0));
+      CHECK(iface.ordinate[0].getSecondLine().z == Catch::Approx(3.0));
+    }
   }
 }
 
@@ -1409,7 +1962,276 @@ TEST_CASE("DWG XLINE reads as typed construction line across LibreDWG versions",
   }
 }
 
-TEST_CASE("DWG smoke test: read ~/doc/dwg/*.dwg and report entity counts") {
+TEST_CASE("DWG source-controlled fixtures cover AC1015 through AC1032",
+          "[dwg][versions][fixture]") {
+  struct Fixture {
+    const char *file;
+    DRW::Version version;
+  };
+
+  const Fixture fixtures[] = {
+      {"xline/constructionline_2000.dwg", DRW::AC1015},
+      {"xline/constructionline_2004.dwg", DRW::AC1018},
+      {"visualstyle_r2007.dwg", DRW::AC1021},
+      {"xline/constructionline_2010.dwg", DRW::AC1024},
+      {"xline/constructionline_2013.dwg", DRW::AC1027},
+      {"xline/constructionline_2018.dwg", DRW::AC1032},
+  };
+
+  for (const Fixture &fixture : fixtures) {
+    const std::string path =
+        std::string(LIBRECAD_TEST_DIR) + "/" + fixture.file;
+    INFO("fixture: " << fixture.file);
+    REQUIRE(std::filesystem::is_regular_file(path));
+
+    CountingIface iface;
+    dwgR reader(path.c_str());
+    REQUIRE(reader.read(&iface, /*ext=*/true));
+    CHECK(reader.getError() == DRW::BAD_NONE);
+    CHECK(reader.getVersion() == fixture.version);
+    CHECK(iface.entities > 0);
+  }
+}
+
+TEST_CASE("DWG sibling oracle fixtures preserve dictionary ownership",
+          "[dwg][dictionary][fixture]") {
+  const char *configuredRoot = std::getenv("DWG_PARSER_SOURCE_DIR");
+  std::vector<std::filesystem::path> roots;
+  if (configuredRoot != nullptr && *configuredRoot != '\0')
+    roots.emplace_back(configuredRoot);
+#ifdef LIBRECAD_SOURCE_DIR
+  roots.emplace_back(std::filesystem::path(LIBRECAD_SOURCE_DIR).parent_path()
+                     / "dwg-parser");
+#endif
+  roots.emplace_back(std::filesystem::path("../dwg-parser"));
+
+  auto findFixture = [&roots](const char *name) {
+    for (const auto &root : roots) {
+      const auto path = root / "tests/fixtures/committed/libredwg" / name;
+      if (std::filesystem::is_regular_file(path))
+        return path;
+    }
+    return std::filesystem::path{};
+  };
+
+  const auto r14Path = findFixture("example_r14.dwg");
+  const auto r13Path = findFixture("example_r13.dwg");
+  if (r14Path.empty() || r13Path.empty()) {
+    SUCCEED("dwg-parser sibling fixtures absent; skipping");
+    return;
+  }
+
+  DictionaryFixtureIface r14Iface;
+  dwgR r14Reader(r14Path.string().c_str());
+  REQUIRE(r14Reader.read(&r14Iface, /*ext=*/true));
+  REQUIRE(r14Reader.getError() == DRW::BAD_NONE);
+  REQUIRE(r14Reader.getVersion() == DRW::AC1014);
+
+  const auto r14Dictionary = std::find_if(
+      r14Iface.dictionaries.begin(), r14Iface.dictionaries.end(),
+      [](const DRW_Dictionary &value) { return value.handle == 0x26Au; });
+  REQUIRE(r14Dictionary != r14Iface.dictionaries.end());
+  CHECK(r14Dictionary->parentHandle == 0x269u);
+  CHECK(r14Dictionary->hardOwner != 0);
+  REQUIRE(r14Dictionary->m_entries.size() == 7u);
+  CHECK(r14Dictionary->m_entries.front().m_name == "ACAD_XREC_ROUNDTRIP");
+  CHECK(r14Dictionary->m_entries.front().m_handle == 0xD0Du);
+
+  const auto r14WithDefault = std::find_if(
+      r14Iface.dictionariesWithDefault.begin(),
+      r14Iface.dictionariesWithDefault.end(),
+      [](const DRW_DictionaryWithDefault &value) { return value.handle == 0xEu; });
+  REQUIRE(r14WithDefault != r14Iface.dictionariesWithDefault.end());
+  CHECK(r14WithDefault->cloning == 1);
+  CHECK(r14WithDefault->hardOwner == 0);
+  CHECK(r14WithDefault->m_defaultEntryHandle == 0xFu);
+  REQUIRE(r14WithDefault->m_entries.size() == 1u);
+  CHECK(r14WithDefault->m_entries.front().m_name == "Normal");
+  CHECK(r14WithDefault->m_entries.front().m_handle == 0xFu);
+
+  DictionaryFixtureIface r13Iface;
+  dwgR r13Reader(r13Path.string().c_str());
+  REQUIRE(r13Reader.read(&r13Iface, /*ext=*/true));
+  REQUIRE(r13Reader.getError() == DRW::BAD_NONE);
+  REQUIRE(r13Reader.getVersion() == DRW::AC1012);
+
+  const auto r13WithDefault = std::find_if(
+      r13Iface.dictionariesWithDefault.begin(),
+      r13Iface.dictionariesWithDefault.end(),
+      [](const DRW_DictionaryWithDefault &value) { return value.handle == 0xEu; });
+  REQUIRE(r13WithDefault != r13Iface.dictionariesWithDefault.end());
+  CHECK(r13WithDefault->cloning == 1);
+  CHECK(r13WithDefault->hardOwner == 0);
+  CHECK(r13WithDefault->m_defaultEntryHandle == 0xFu);
+  REQUIRE(r13WithDefault->m_entries.size() == 1u);
+  CHECK(r13WithDefault->m_entries.front().m_name == "NORMAL");
+  CHECK(r13WithDefault->m_entries.front().m_handle == 0xFu);
+}
+
+TEST_CASE("DWG sibling oracle fixtures deliver R13/R14 viewport headers",
+          "[dwg][vport][fixture]") {
+  const char *configuredRoot = std::getenv("DWG_PARSER_SOURCE_DIR");
+  std::vector<std::filesystem::path> roots;
+  if (configuredRoot != nullptr && *configuredRoot != '\0')
+    roots.emplace_back(configuredRoot);
+#ifdef LIBRECAD_SOURCE_DIR
+  roots.emplace_back(std::filesystem::path(LIBRECAD_SOURCE_DIR).parent_path()
+                     / "dwg-parser");
+#endif
+  roots.emplace_back(std::filesystem::path("../dwg-parser"));
+
+  auto findFixture = [&roots](const char *name) {
+    for (const auto &root : roots) {
+      const auto path = root / "tests/fixtures/committed/libredwg" / name;
+      if (std::filesystem::is_regular_file(path))
+        return path;
+    }
+    return std::filesystem::path{};
+  };
+
+  const auto r14Path = findFixture("example_r14.dwg");
+  const auto r13Path = findFixture("example_r13.dwg");
+  if (r14Path.empty() || r13Path.empty()) {
+    SUCCEED("dwg-parser sibling fixtures absent; skipping");
+    return;
+  }
+
+  struct Expected {
+    std::uint32_t handle;
+    std::uint32_t parentHandle;
+    bool isOn;
+    std::uint32_t viewportEntityHandle;
+  };
+
+  const auto checkFixture = [](const std::filesystem::path &path,
+                               DRW::Version expectedVersion,
+                               const Expected (&expected)[2]) {
+    CountingIface iface;
+    dwgR reader(path.string().c_str());
+    REQUIRE(reader.read(&iface, /*ext=*/true));
+    REQUIRE(reader.getError() == DRW::BAD_NONE);
+    REQUIRE(reader.getVersion() == expectedVersion);
+    REQUIRE(iface.viewportEntityHeaders.size() == 2u);
+
+    for (const Expected &item : expected) {
+      const auto header = std::find_if(
+          iface.viewportEntityHeaders.begin(),
+          iface.viewportEntityHeaders.end(),
+          [&item](const DRW_ViewportEntityHeader &value) {
+            return value.handle == item.handle;
+          });
+      REQUIRE(header != iface.viewportEntityHeaders.end());
+      CHECK(header->parentHandle == item.parentHandle);
+      CHECK(header->isOn == item.isOn);
+      CHECK(header->xrefBlockHandle == 0u);
+      CHECK(header->viewportEntityHandle == item.viewportEntityHandle);
+      CHECK(header->previousViewportEntityHeaderHandle == 0u);
+    }
+  };
+
+  const Expected r13Expected[] = {
+      {0x2D2u, 0x2D1u, false, 0u},
+      {0x2D3u, 0x2D1u, true, 136u},
+  };
+  const Expected r14Expected[] = {
+      {0x2D2u, 0x2D1u, true, 0u},
+      {0x2D3u, 0x2D1u, true, 136u},
+  };
+
+  checkFixture(r13Path, DRW::AC1012, r13Expected);
+  checkFixture(r14Path, DRW::AC1014, r14Expected);
+}
+
+TEST_CASE("DWG R2013 rejects dictionary names beyond the object frame",
+          "[dwg][r2013][safety][dictionary][mutation]") {
+  const auto path = std::filesystem::temp_directory_path()
+      / "libdxfrw-ac1027-dictionary-count-mutated.dwg";
+  std::filesystem::remove(path);
+
+  DictionaryMutationWriteIface writeIface;
+  writeIface.dictionary.handle = 0x9F0u;
+  writeIface.dictionary.parentHandle = DRW::DwgNamedObjectsDictionaryHandle;
+  writeIface.dictionary.m_entries.push_back({"VALID", 0x9F1u});
+  dwgRW writer(path.string().c_str());
+  writeIface.writer = &writer;
+  REQUIRE(writer.write(&writeIface, DRW::AC1027, false));
+
+  std::ifstream input(path, std::ios::binary);
+  REQUIRE(input);
+  const std::vector<std::uint8_t> fileBytes(
+      (std::istreambuf_iterator<char>(input)), std::istreambuf_iterator<char>());
+  REQUIRE(!fileBytes.empty());
+
+  PointCloudReaderProbe probe(
+      std::make_unique<dwgBuffer>(
+          const_cast<std::uint8_t *>(fileBytes.data()), fileBytes.size()),
+      &writer);
+  REQUIRE(probe.readMetaData());
+  REQUIRE(probe.readFileHeader());
+  DRW_Header header;
+  REQUIRE(probe.readDwgHeader(header));
+  REQUIRE(probe.readDwgClasses());
+  REQUIRE(probe.readDwgHandles());
+  REQUIRE(probe.readDwgTables(header));
+  REQUIRE(probe.objectData() != nullptr);
+  REQUIRE(probe.objectDataSize() > 0);
+
+  objHandle dictionaryObject;
+  bool foundDictionary = false;
+  for (const auto &entry : probe.ObjectMap) {
+    DwgObjectFrame frame;
+    dwgBuffer objectData(
+        const_cast<std::uint8_t *>(probe.objectData()),
+        probe.objectDataSize());
+    if (!frame.readAt(objectData, DRW::AC1027, entry.second.loc))
+      continue;
+    dwgBuffer body(frame.body().data(), frame.body().size());
+    if (body.getObjType(DRW::AC1027) == 42
+        && entry.second.handle == writeIface.dictionary.handle) {
+      dictionaryObject = entry.second;
+      dictionaryObject.type = 42;
+      foundDictionary = true;
+      break;
+    }
+  }
+  REQUIRE(foundDictionary);
+
+  std::vector<std::uint8_t> mutated(
+      probe.objectData(), probe.objectData() + probe.objectDataSize());
+  std::size_t bodyStart = 0;
+  std::size_t frameEnd = 0;
+  REQUIRE(findFrameEnd(mutated, dictionaryObject.loc, DRW::AC1027,
+                       bodyStart, frameEnd));
+  REQUIRE(bodyStart < frameEnd);
+  const std::size_t bodyEnd = frameEnd - sizeof(std::uint16_t);
+  std::vector<std::uint8_t> body(
+      mutated.begin() + static_cast<std::ptrdiff_t>(bodyStart),
+      mutated.begin() + static_cast<std::ptrdiff_t>(bodyEnd));
+  std::size_t countBit = 0;
+  REQUIRE(findDictionaryCountBit(body, countBit));
+  // Keep the writer's 8-bit BL form and change only the declared count.
+  REQUIRE(patchBits(body, countBit + 2u, 0xFFu, 8));
+  std::copy(body.begin(), body.end(),
+            mutated.begin() + static_cast<std::ptrdiff_t>(bodyStart));
+
+  dwgBuffer crcBuffer(mutated.data(), mutated.size());
+  const std::uint16_t crc = crcBuffer.crc8(
+      0xC0C1, static_cast<std::int32_t>(dictionaryObject.loc),
+      static_cast<std::int32_t>(bodyEnd));
+  mutated[bodyEnd] = static_cast<std::uint8_t>(crc & 0xFFu);
+  mutated[bodyEnd + 1] = static_cast<std::uint8_t>(crc >> 8);
+
+  dwgBuffer corrupted(mutated.data(), mutated.size());
+  DictionaryFixtureIface readIface;
+  objHandle mutableObject = dictionaryObject;
+  CHECK_FALSE(probe.readDwgObject(&corrupted, mutableObject, readIface));
+  CHECK(readIface.dictionaries.empty());
+
+  std::filesystem::remove(path);
+}
+
+TEST_CASE("DWG smoke test: read ~/doc/dwg/*.dwg and report entity counts",
+          "[.slow][dwg][corpus]") {
   // The test corpus lives in a developer-local directory (~/doc/dwg/) and
   // is not shipped with the repo. If it isn't present, skip cleanly so the
   // test passes for everyone else.
@@ -1511,7 +2333,7 @@ TEST_CASE("DWG lineweights: distribution in lineweights.dwg",
             << "\n";
 }
 
-// Verbose re-run of the two AC1021 files that fail in the main sweep.
+// Verbose re-run of selected corpus files that need a full reader trace.
 // Run this test case individually to see the full libdxfrw debug trace:
 //   ./librecad_tests "*DWG verbose*"
 TEST_CASE("DWG verbose debug: failing AC1021 files", "[.dwg_verbose]") {
@@ -1562,6 +2384,7 @@ TEST_CASE("DWG deep diagnostic: entity type breakdown for target files",
   }
 
   const char *targets[] = {
+      "Extruder2.dwg",
       "blocks_and_tables_-_metric.dwg",
       "blocks_and_tables_-_imperial.dwg",
       "architectural_example-imperial.dwg",
@@ -1696,7 +2519,8 @@ TEST_CASE("DWG Cover.dwg: deep entity/type breakdown", "[.dwg_cover]") {
 // parses without error and contains at least one entity.
 // Skips cleanly when the directory is absent.
 // ---------------------------------------------------------------------------
-TEST_CASE("DWG samples: load all files in ~/dev/dwg_samples/") {
+TEST_CASE("DWG samples: load all files in ~/dev/dwg_samples/",
+          "[.slow][dwg][corpus]") {
   const char *home = getenv("HOME");
   if (!home) {
     SUCCEED("HOME not set; skipping");
@@ -2002,7 +2826,8 @@ TEST_CASE("DWG makeall-plus.dwg: deep coverage diagnostic", "[.dwg_makeall]") {
     std::cout << "  '" << name << "'" << (invis ? " INVISIBLE" : "") << "\n";
 }
 
-TEST_CASE("DWG corpus: load all files in ~/doc/dwg2/") {
+TEST_CASE("DWG corpus: load all files in ~/doc/dwg2/",
+          "[.slow][dwg][corpus]") {
   const char *home = getenv("HOME");
   if (!home) {
     SUCCEED("HOME not set; skipping");
@@ -7294,7 +8119,8 @@ TEST_CASE("DWG corpus: MULTILEADER entity inventory", "[.dwg_mleader]") {
 // witness) actually have any of the three has{Full,Face,Edge}VisualStyle
 // flags set, by grepping the DRW_DBG capture for the marker emitted in
 // DRW_Entity::parseDwg. Soft-asserts that visualization_-_aerial.dwg loads
-// with at least as many entities as the pre-fix baseline (0).
+// with a successful reader status and at least as many entities as the
+// pre-fix baseline (0).
 //
 // Reference: ground-truth from libreDWG common_entity_data.spec lines
 // 523-528 + ODA spec v5.4.1 §19.4.1; libdxfrw fix landed in commit
@@ -7375,8 +8201,7 @@ TEST_CASE("DWG visualstyle probe: count R2010+ visual-style flag triggers",
     if (fname == "visualization_-_aerial.dwg") {
       aerialEntities =
           (dr.iface.modelSpaceEntities + dr.iface.blockSpaceEntities);
-      // Soft assertion: must not REGRESS below baseline. A jump
-      // upward (e.g., 0 → N) is the strongest positive signal.
+      REQUIRE(dr.error == DRW::BAD_NONE);
       CHECK((dr.iface.modelSpaceEntities + dr.iface.blockSpaceEntities) >=
             w.baselineEntities);
     }
@@ -8347,7 +9172,8 @@ TEST_CASE("DWG arch_multileaders: deep fidelity probe",
 // (parseMLeaderRoot rewritten to libreDWG dwg2.spec parity, 2026-05-10).
 // Asserts on real per-entity content, not just counts — without the fix
 // most fields read as denormalized garbage even though the file loads OK.
-TEST_CASE("DWG arch_multileaders: MLEADER body parser fidelity") {
+TEST_CASE("DWG arch_multileaders: MLEADER body parser fidelity",
+          "[.slow][dwg][corpus][mleader]") {
   const char *home = getenv("HOME");
   if (!home) {
     SUCCEED("HOME not set");
@@ -8503,7 +9329,8 @@ TEST_CASE("DWG arch_multileaders: MLEADER body parser fidelity") {
 // "Mleader @ 4", "@ 24", "@ 48" — the file's ACAD_SCALELIST should
 // contain matching scale entries. Pre-fix, SCALE objects fell into
 // the "[entity-pass-defer 706]" bucket and were never parsed.
-TEST_CASE("DWG arch_multileaders: SCALE table delivery") {
+TEST_CASE("DWG arch_multileaders: SCALE table delivery",
+          "[.slow][dwg][corpus][scale]") {
   const char *home = getenv("HOME");
   if (!home) {
     SUCCEED("HOME not set");
@@ -8645,7 +9472,8 @@ TEST_CASE("DWG Mechanical and Annotative: object-context data delivery",
   }
 }
 
-TEST_CASE("DWG arch_multileaders: OBJECTS metadata delivery") {
+TEST_CASE("DWG arch_multileaders: OBJECTS metadata delivery",
+          "[.slow][dwg][corpus][objects]") {
   const char *home = getenv("HOME");
   if (!home) {
     SUCCEED("HOME not set");
@@ -8757,7 +9585,8 @@ TEST_CASE("DWG arch_multileaders: OBJECTS metadata delivery") {
   CHECK(skippedUnsupported.find("CELLSTYLEMAP") == skippedUnsupported.end());
 }
 
-TEST_CASE("DWG ACAD_TABLE entities render through anonymous table blocks") {
+TEST_CASE("DWG ACAD_TABLE entities render through anonymous table blocks",
+          "[.slow][dwg][corpus][acad_table]") {
   const char *home = getenv("HOME");
   if (!home) {
     SUCCEED("HOME not set; skipping ACAD_TABLE corpus test");
@@ -8878,6 +9707,1233 @@ TEST_CASE("DWG R2013 reads (dwgReader27 inherits the buffer-model fixes)",
   CHECK(r.entities >= 1);
 }
 
+TEST_CASE("DWG R2007 writer round-trips an empty drawing",
+          "[dwg][r2007][write]") {
+  const auto path = std::filesystem::temp_directory_path()
+      / "libdxfrw-ac1021-empty.dwg";
+  std::filesystem::remove(path);
+
+  CountingIface writeIface;
+  dwgRW writer(path.c_str());
+  REQUIRE(writer.write(&writeIface, DRW::AC1021, false));
+  REQUIRE(std::filesystem::exists(path));
+  CHECK(std::filesystem::file_size(path) > 0);
+
+  CountingIface readIface;
+  dwgRW reader(path.c_str());
+  const bool readOk = reader.read(&readIface, false);
+  REQUIRE(readOk);
+  CHECK(reader.getError() == DRW::BAD_NONE);
+  CHECK(reader.getVersion() == DRW::AC1021);
+  CHECK(readIface.entities == 0);
+
+  std::filesystem::remove(path);
+}
+
+class R2007EntityWriteIface : public CountingIface {
+public:
+  dwgRW *writer = nullptr;
+  std::size_t linesToWrite = 1;
+  int lineCallbacks = 0;
+  DRW_Line line;
+
+  void writeEntities() override {
+    REQUIRE(writer != nullptr);
+    for (std::size_t i = 0; i < linesToWrite; ++i) {
+      line.basePoint = DRW_Coord{1.5 + static_cast<double>(i), 2.5, 0.0};
+      line.secPoint = DRW_Coord{10.0 + static_cast<double>(i), 5.0, 0.0};
+      line.color = 3;
+      line.handle = DRW::NoHandle;
+      line.parentHandle = DRW::NoHandle;
+      REQUIRE(writer->writeLine(&line));
+    }
+  }
+
+  void addLine(const DRW_Line &value) override {
+    CountingIface::addLine(value);
+    line = value;
+    ++lineCallbacks;
+  }
+};
+
+class R2007ControlWriteIface : public R2007EntityWriteIface {
+public:
+  std::set<std::string> layerNames;
+
+  void writeLayers() override {
+    REQUIRE(writer != nullptr);
+    DRW_Layer layer;
+    layer.name = "AC1021_LAYER";
+    layer.color = 5;
+    REQUIRE(writer->addLayer(&layer));
+  }
+
+  void addLayer(const DRW_Layer &layer) override {
+    R2007EntityWriteIface::addLayer(layer);
+    layerNames.insert(layer.name);
+  }
+};
+
+TEST_CASE("DWG R2007 control handles remain inline through table records",
+          "[dwg][r2007][write][control]") {
+  const auto path = std::filesystem::temp_directory_path()
+      / "libdxfrw-ac1021-control.dwg";
+  std::filesystem::remove(path);
+
+  R2007ControlWriteIface writeIface;
+  {
+    dwgRW writer(path.c_str());
+    writeIface.writer = &writer;
+    REQUIRE(writer.write(&writeIface, DRW::AC1021, false));
+  }
+
+  R2007ControlWriteIface readIface;
+  {
+    dwgRW reader(path.c_str());
+    REQUIRE(reader.read(&readIface, false));
+    CHECK(reader.getError() == DRW::BAD_NONE);
+    CHECK(reader.getVersion() == DRW::AC1021);
+  }
+
+  CHECK(readIface.lineCallbacks == 1);
+  CHECK(readIface.layerNames.count("AC1021_LAYER") == 1u);
+  CHECK(readIface.layerNames.count("0") == 1u);
+
+  std::filesystem::remove(path);
+}
+
+TEST_CASE("DWG R2007 writer round-trips a LINE entity",
+          "[dwg][r2007][write]") {
+  const auto path = std::filesystem::temp_directory_path()
+      / "libdxfrw-ac1021-line.dwg";
+  std::filesystem::remove(path);
+
+  R2007EntityWriteIface writeIface;
+  {
+    dwgRW writer(path.c_str());
+    writeIface.writer = &writer;
+    REQUIRE(writer.write(&writeIface, DRW::AC1021, false));
+  }
+
+  R2007EntityWriteIface readIface;
+  {
+    dwgRW reader(path.c_str());
+    REQUIRE(reader.read(&readIface, false));
+    CHECK(reader.getError() == DRW::BAD_NONE);
+    CHECK(reader.getVersion() == DRW::AC1021);
+    CHECK(reader.getR2007CrcMismatch() == 0u);
+  }
+
+  REQUIRE(readIface.lineCallbacks == 1);
+  CHECK(readIface.line.basePoint.x == Catch::Approx(1.5));
+  CHECK(readIface.line.basePoint.y == Catch::Approx(2.5));
+  CHECK(readIface.line.secPoint.x == Catch::Approx(10.0));
+  CHECK(readIface.line.secPoint.y == Catch::Approx(5.0));
+  CHECK(readIface.line.color == 3);
+
+  std::filesystem::remove(path);
+}
+
+TEST_CASE("DWG R2013 writer round-trips a zero-source POINTCLOUD",
+          "[dwg][r2013][write][pointcloud]") {
+  const auto path = std::filesystem::temp_directory_path()
+      / "libdxfrw-ac1027-pointcloud.dwg";
+  std::filesystem::remove(path);
+
+  PointCloudWriteIface writeIface;
+  {
+    dwgRW writer(path.c_str());
+    writeIface.writer = &writer;
+    REQUIRE(writer.write(&writeIface, DRW::AC1027, false));
+  }
+
+  PointCloudWriteIface readIface;
+  {
+    dwgRW reader(path.c_str());
+    REQUIRE(reader.read(&readIface, false));
+    CHECK(reader.getError() == DRW::BAD_NONE);
+    CHECK(reader.getVersion() == DRW::AC1027);
+  }
+
+  REQUIRE(readIface.pointCloudCallbacks == 1);
+  CHECK(readIface.pointCloud.classVersion == 3u);
+  CHECK(readIface.pointCloud.origin.x == Catch::Approx(1.0));
+  CHECK(readIface.pointCloud.extentsMax.z == Catch::Approx(6.0));
+  CHECK(readIface.pointCloud.pointCount == 1234u);
+  CHECK(readIface.pointCloud.ucsName == "UCS-A");
+  CHECK(readIface.pointCloud.definitionHandle == 0xB0u);
+  CHECK(readIface.pointCloud.reactorHandle == 0xC0u);
+
+  std::filesystem::remove(path);
+}
+
+TEST_CASE("LibreDWG reads a valid AC1027 POINTCLOUD container",
+          "[.slow][dwg][r2013][pointcloud][external]") {
+  if (std::system("command -v dwgread >/dev/null 2>&1") != 0) {
+    SUCCEED("dwgread is unavailable; external-reader gate skipped");
+    return;
+  }
+
+  const auto path = std::filesystem::temp_directory_path()
+      / "libdxfrw-ac1027-pointcloud-external-reader.dwg";
+  const auto output = std::filesystem::temp_directory_path()
+      / "libdxfrw-ac1027-pointcloud-external-reader.json";
+  const auto log = std::filesystem::temp_directory_path()
+      / "libdxfrw-ac1027-pointcloud-external-reader.log";
+  std::filesystem::remove(path);
+  std::filesystem::remove(output);
+  std::filesystem::remove(log);
+
+  PointCloudExternalReadWriteIface writeIface;
+  {
+    dwgRW writer(path.c_str());
+    writeIface.writer = &writer;
+    REQUIRE(writer.write(&writeIface, DRW::AC1027, false));
+  }
+
+  const std::string command = "dwgread -O minJSON "
+      + shellQuote(path.string()) + " > " + shellQuote(output.string())
+      + " 2> " + shellQuote(log.string());
+  REQUIRE(std::system(command.c_str()) == 0);
+
+  std::ifstream json(output, std::ios::binary);
+  REQUIRE(json);
+  const std::string contents((std::istreambuf_iterator<char>(json)),
+                             std::istreambuf_iterator<char>());
+  CHECK(!contents.empty());
+
+  std::filesystem::remove(path);
+  std::filesystem::remove(output);
+  std::filesystem::remove(log);
+}
+
+TEST_CASE("LibreDWG reads a valid AC1027 POINTCLOUDEX container",
+          "[.slow][dwg][r2013][pointcloud][external]") {
+  if (std::system("command -v dwgread >/dev/null 2>&1") != 0) {
+    SUCCEED("dwgread is unavailable; external-reader gate skipped");
+    return;
+  }
+
+  const auto path = std::filesystem::temp_directory_path()
+      / "libdxfrw-ac1027-pointcloudex-external-reader.dwg";
+  const auto output = std::filesystem::temp_directory_path()
+      / "libdxfrw-ac1027-pointcloudex-external-reader.json";
+  const auto log = std::filesystem::temp_directory_path()
+      / "libdxfrw-ac1027-pointcloudex-external-reader.log";
+  std::filesystem::remove(path);
+  std::filesystem::remove(output);
+  std::filesystem::remove(log);
+
+  PointCloudExWriteIface writeIface;
+  {
+    dwgRW writer(path.c_str());
+    writeIface.writer = &writer;
+    REQUIRE(writer.write(&writeIface, DRW::AC1027, false));
+  }
+
+  const std::string command = "dwgread -O minJSON "
+      + shellQuote(path.string()) + " > " + shellQuote(output.string())
+      + " 2> " + shellQuote(log.string());
+  REQUIRE(std::system(command.c_str()) == 0);
+
+  std::ifstream json(output, std::ios::binary);
+  REQUIRE(json);
+  const std::string contents((std::istreambuf_iterator<char>(json)),
+                             std::istreambuf_iterator<char>());
+  CHECK(!contents.empty());
+
+  std::filesystem::remove(path);
+  std::filesystem::remove(output);
+  std::filesystem::remove(log);
+}
+
+TEST_CASE("DWG R2013 complete-container frame corruption suppresses POINTCLOUD",
+          "[dwg][r2013][safety][pointcloud]") {
+  const auto path = std::filesystem::temp_directory_path()
+      / "libdxfrw-ac1027-pointcloud-frame-corrupt.dwg";
+  std::filesystem::remove(path);
+
+  PointCloudWriteIface writeIface;
+  dwgRW writer(path.c_str());
+  writeIface.writer = &writer;
+  REQUIRE(writer.write(&writeIface, DRW::AC1027, false));
+
+  std::ifstream input(path, std::ios::binary);
+  REQUIRE(input);
+  const std::vector<std::uint8_t> fileBytes(
+      (std::istreambuf_iterator<char>(input)), std::istreambuf_iterator<char>());
+  REQUIRE(!fileBytes.empty());
+
+  PointCloudReaderProbe probe(
+      std::make_unique<dwgBuffer>(
+          const_cast<std::uint8_t*>(fileBytes.data()), fileBytes.size()),
+      &writer);
+  REQUIRE(probe.readMetaData());
+  REQUIRE(probe.readFileHeader());
+  DRW_Header header;
+  REQUIRE(probe.readDwgHeader(header));
+  REQUIRE(probe.readDwgClasses());
+  REQUIRE(probe.readDwgHandles());
+  REQUIRE(probe.readDwgTables(header));
+  REQUIRE(probe.objectData() != nullptr);
+  REQUIRE(probe.objectDataSize() > 0);
+
+  objHandle pointCloudObject;
+  bool foundPointCloud = false;
+  for (const auto& entry : probe.ObjectMap) {
+    DwgObjectFrame frame;
+    dwgBuffer objectData(
+        const_cast<std::uint8_t*>(probe.objectData()), probe.objectDataSize());
+    if (!frame.readAt(objectData, DRW::AC1027, entry.second.loc))
+      continue;
+    dwgBuffer body(frame.body().data(), frame.body().size());
+    if (body.getObjType(DRW::AC1027) == DRW_PointCloud::kDwgClassNum) {
+      pointCloudObject = entry.second;
+      foundPointCloud = true;
+      break;
+    }
+  }
+  REQUIRE(foundPointCloud);
+
+  std::vector<std::uint8_t> mutated(
+      probe.objectData(), probe.objectData() + probe.objectDataSize());
+  std::size_t bodyStart = 0;
+  std::size_t frameEnd = 0;
+  REQUIRE(findFrameEnd(mutated, pointCloudObject.loc, DRW::AC1027,
+                       bodyStart, frameEnd));
+  REQUIRE(bodyStart < frameEnd);
+  REQUIRE(frameEnd >= sizeof(std::uint16_t));
+  mutated[frameEnd - 1] ^= 0xFF;
+
+  dwgBuffer corrupted(mutated.data(), mutated.size());
+  PointCloudWriteIface readIface;
+  objHandle mutableObject = pointCloudObject;
+  CHECK_FALSE(probe.readDwgEntity(&corrupted, mutableObject, readIface));
+  CHECK(readIface.pointCloudCallbacks == 0);
+
+  std::filesystem::remove(path);
+}
+
+TEST_CASE("DWG R2013 repaired POINTCLOUD frame reaches finite-value validation",
+          "[dwg][r2013][safety][pointcloud]") {
+  const auto path = std::filesystem::temp_directory_path()
+      / "libdxfrw-ac1027-pointcloud-finite-frame-corrupt.dwg";
+  std::filesystem::remove(path);
+
+  PointCloudWriteIface writeIface;
+  writeIface.sourceOrigin = DRW_Coord{123.45678901234567,
+                                      234.56789101234567,
+                                      345.67891201234567};
+  dwgRW writer(path.c_str());
+  writeIface.writer = &writer;
+  REQUIRE(writer.write(&writeIface, DRW::AC1027, false));
+
+  std::ifstream input(path, std::ios::binary);
+  REQUIRE(input);
+  const std::vector<std::uint8_t> fileBytes(
+      (std::istreambuf_iterator<char>(input)), std::istreambuf_iterator<char>());
+  REQUIRE(!fileBytes.empty());
+
+  PointCloudReaderProbe probe(
+      std::make_unique<dwgBuffer>(
+          const_cast<std::uint8_t*>(fileBytes.data()), fileBytes.size()),
+      &writer);
+  REQUIRE(probe.readMetaData());
+  REQUIRE(probe.readFileHeader());
+  DRW_Header header;
+  REQUIRE(probe.readDwgHeader(header));
+  REQUIRE(probe.readDwgClasses());
+  REQUIRE(probe.readDwgHandles());
+  REQUIRE(probe.readDwgTables(header));
+
+  objHandle pointCloudObject;
+  DwgObjectFrame originalFrame;
+  bool foundPointCloud = false;
+  for (const auto& entry : probe.ObjectMap) {
+    DwgObjectFrame frame;
+    dwgBuffer objectData(
+        const_cast<std::uint8_t*>(probe.objectData()), probe.objectDataSize());
+    if (!frame.readAt(objectData, DRW::AC1027, entry.second.loc))
+      continue;
+    dwgBuffer body(frame.body().data(), frame.body().size());
+    if (body.getObjType(DRW::AC1027) == DRW_PointCloud::kDwgClassNum) {
+      pointCloudObject = entry.second;
+      originalFrame = std::move(frame);
+      foundPointCloud = true;
+      break;
+    }
+  }
+  REQUIRE(foundPointCloud);
+
+  std::size_t rawBitOffset = 0;
+  REQUIRE(findRawBitDouble(originalFrame.body(), writeIface.sourceOrigin.x,
+                           rawBitOffset));
+  auto mutatedBody = originalFrame.body();
+  replaceRawDouble(mutatedBody, rawBitOffset + 2,
+                   std::numeric_limits<double>::quiet_NaN());
+
+  std::vector<std::uint8_t> mutated(
+      probe.objectData(), probe.objectData() + probe.objectDataSize());
+  std::size_t bodyStart = 0;
+  std::size_t frameEnd = 0;
+  REQUIRE(findFrameEnd(mutated, pointCloudObject.loc, DRW::AC1027,
+                       bodyStart, frameEnd));
+  REQUIRE(mutatedBody.size() + bodyStart + sizeof(std::uint16_t) == frameEnd);
+  std::copy(mutatedBody.begin(), mutatedBody.end(),
+            mutated.begin() + static_cast<std::ptrdiff_t>(bodyStart));
+
+  const std::size_t bodyEnd = bodyStart + mutatedBody.size();
+  dwgBuffer crcBuffer(mutated.data(), mutated.size());
+  const std::uint16_t crc = crcBuffer.crc8(
+      0xC0C1, static_cast<std::int32_t>(pointCloudObject.loc),
+      static_cast<std::int32_t>(bodyEnd));
+  mutated[bodyEnd] = static_cast<std::uint8_t>(crc & 0xFF);
+  mutated[bodyEnd + 1] = static_cast<std::uint8_t>(crc >> 8);
+
+  dwgBuffer repairedFrame(mutated.data(), mutated.size());
+  PointCloudWriteIface readIface;
+  objHandle mutableObject = pointCloudObject;
+  CHECK_FALSE(probe.readDwgEntity(&repairedFrame, mutableObject, readIface));
+  CHECK(readIface.pointCloudCallbacks == 0);
+
+  std::filesystem::remove(path);
+}
+
+TEST_CASE("DWG R2013 writer round-trips a zero-crop POINTCLOUDEX",
+          "[dwg][r2013][write][pointcloud]") {
+  const auto path = std::filesystem::temp_directory_path()
+      / "libdxfrw-ac1027-pointcloudex.dwg";
+  std::filesystem::remove(path);
+
+  PointCloudExWriteIface writeIface;
+  {
+    dwgRW writer(path.c_str());
+    writeIface.writer = &writer;
+    REQUIRE(writer.write(&writeIface, DRW::AC1027, false));
+  }
+
+  PointCloudExWriteIface readIface;
+  {
+    dwgRW reader(path.c_str());
+    REQUIRE(reader.read(&readIface, false));
+    CHECK(reader.getError() == DRW::BAD_NONE);
+    CHECK(reader.getVersion() == DRW::AC1027);
+  }
+
+  REQUIRE(readIface.pointCloudExCallbacks == 1);
+  CHECK(readIface.pointCloudEx.classVersion == 7u);
+  CHECK(readIface.pointCloudEx.extentsMin.x == Catch::Approx(-1.0));
+  CHECK(readIface.pointCloudEx.extentsMax.z == Catch::Approx(6.0));
+  CHECK(readIface.pointCloudEx.ucsOrigin.y == Catch::Approx(8.0));
+  CHECK(readIface.pointCloudEx.definitionHandle == 0xB4u);
+  CHECK(readIface.pointCloudEx.reactorHandle == 0xC4u);
+  CHECK(readIface.pointCloudEx.croppingCount == 0);
+  CHECK(readIface.pointCloudEx.unknownInt0 == 41);
+  CHECK(readIface.pointCloudEx.unknownInt1 == 42);
+  CHECK(readIface.pointCloudEx.intensityMax == Catch::Approx(200.0));
+
+  std::filesystem::remove(path);
+}
+
+TEST_CASE("DWG R2013 repaired POINTCLOUDEX frame reaches finite-value validation",
+          "[dwg][r2013][safety][pointcloud]") {
+  const auto path = std::filesystem::temp_directory_path()
+      / "libdxfrw-ac1027-pointcloudex-finite-frame-corrupt.dwg";
+  std::filesystem::remove(path);
+
+  PointCloudExWriteIface writeIface;
+  writeIface.sourceExtentsMin = DRW_Coord{123.45678901234567,
+                                          234.56789101234567,
+                                          345.67891201234567};
+  dwgRW writer(path.c_str());
+  writeIface.writer = &writer;
+  REQUIRE(writer.write(&writeIface, DRW::AC1027, false));
+
+  std::ifstream input(path, std::ios::binary);
+  REQUIRE(input);
+  const std::vector<std::uint8_t> fileBytes(
+      (std::istreambuf_iterator<char>(input)), std::istreambuf_iterator<char>());
+  REQUIRE(!fileBytes.empty());
+
+  PointCloudReaderProbe probe(
+      std::make_unique<dwgBuffer>(
+          const_cast<std::uint8_t*>(fileBytes.data()), fileBytes.size()),
+      &writer);
+  REQUIRE(probe.readMetaData());
+  REQUIRE(probe.readFileHeader());
+  DRW_Header header;
+  REQUIRE(probe.readDwgHeader(header));
+  REQUIRE(probe.readDwgClasses());
+  REQUIRE(probe.readDwgHandles());
+  REQUIRE(probe.readDwgTables(header));
+
+  objHandle pointCloudObject;
+  DwgObjectFrame originalFrame;
+  bool foundPointCloud = false;
+  for (const auto& entry : probe.ObjectMap) {
+    DwgObjectFrame frame;
+    dwgBuffer objectData(
+        const_cast<std::uint8_t*>(probe.objectData()), probe.objectDataSize());
+    if (!frame.readAt(objectData, DRW::AC1027, entry.second.loc))
+      continue;
+    dwgBuffer body(frame.body().data(), frame.body().size());
+    if (body.getObjType(DRW::AC1027) == DRW_PointCloudEx::kDwgClassNum) {
+      pointCloudObject = entry.second;
+      originalFrame = std::move(frame);
+      foundPointCloud = true;
+      break;
+    }
+  }
+  REQUIRE(foundPointCloud);
+
+  std::size_t rawBitOffset = 0;
+  REQUIRE(findRawBitDouble(originalFrame.body(), writeIface.sourceExtentsMin.x,
+                           rawBitOffset));
+  auto mutatedBody = originalFrame.body();
+  replaceRawDouble(mutatedBody, rawBitOffset + 2,
+                   std::numeric_limits<double>::quiet_NaN());
+
+  std::vector<std::uint8_t> mutated(
+      probe.objectData(), probe.objectData() + probe.objectDataSize());
+  std::size_t bodyStart = 0;
+  std::size_t frameEnd = 0;
+  REQUIRE(findFrameEnd(mutated, pointCloudObject.loc, DRW::AC1027,
+                       bodyStart, frameEnd));
+  REQUIRE(mutatedBody.size() + bodyStart + sizeof(std::uint16_t) == frameEnd);
+  std::copy(mutatedBody.begin(), mutatedBody.end(),
+            mutated.begin() + static_cast<std::ptrdiff_t>(bodyStart));
+
+  const std::size_t bodyEnd = bodyStart + mutatedBody.size();
+  dwgBuffer crcBuffer(mutated.data(), mutated.size());
+  const std::uint16_t crc = crcBuffer.crc8(
+      0xC0C1, static_cast<std::int32_t>(pointCloudObject.loc),
+      static_cast<std::int32_t>(bodyEnd));
+  mutated[bodyEnd] = static_cast<std::uint8_t>(crc & 0xFF);
+  mutated[bodyEnd + 1] = static_cast<std::uint8_t>(crc >> 8);
+
+  dwgBuffer repairedFrame(mutated.data(), mutated.size());
+  PointCloudExWriteIface readIface;
+  objHandle mutableObject = pointCloudObject;
+  CHECK_FALSE(probe.readDwgEntity(&repairedFrame, mutableObject, readIface));
+  CHECK(readIface.pointCloudExCallbacks == 0);
+
+  std::filesystem::remove(path);
+}
+
+TEST_CASE("DWG writer round-trips NAVISWORKSMODEL across handle layouts",
+          "[dwg][navisworks][write]") {
+  for (const DRW::Version version : {DRW::AC1018, DRW::AC1027}) {
+    const auto path = std::filesystem::temp_directory_path()
+        / (version == DRW::AC1018 ? "libdxfrw-ac1018-navisworks.dwg"
+                                   : "libdxfrw-ac1027-navisworks.dwg");
+    std::filesystem::remove(path);
+
+    NavisworksModelWriteIface writeIface;
+    {
+      dwgRW writer(path.c_str());
+      writeIface.writer = &writer;
+      REQUIRE(writer.write(&writeIface, version, false));
+    }
+
+    NavisworksModelWriteIface readIface;
+    {
+      dwgRW reader(path.c_str());
+      REQUIRE(reader.read(&readIface, false));
+      CHECK(reader.getError() == DRW::BAD_NONE);
+      CHECK(reader.getVersion() == version);
+    }
+
+    REQUIRE(readIface.navisworksCallbacks == 1);
+    CHECK(readIface.navisworks.flags == 11u);
+    CHECK(readIface.navisworks.definitionHandle == 0x2D0u);
+    CHECK(readIface.navisworks.transform[0] == Catch::Approx(0.25));
+    CHECK(readIface.navisworks.transform[15] == Catch::Approx(15.25));
+    CHECK(readIface.navisworks.unitFactor == Catch::Approx(0.001));
+
+    std::filesystem::remove(path);
+  }
+}
+
+TEST_CASE("DWG writer round-trips Point Cloud definitions across versions",
+          "[dwg][write][pointcloud][objects]") {
+  for (const DRW::Version version : {DRW::AC1015, DRW::AC1018,
+                                     DRW::AC1021, DRW::AC1024,
+                                     DRW::AC1027, DRW::AC1032}) {
+    CAPTURE(static_cast<int>(version));
+    const auto path = std::filesystem::temp_directory_path()
+                      / ("libdxfrw-pointcloud-definitions-"
+                         + std::to_string(static_cast<int>(version)) + ".dwg");
+    std::filesystem::remove(path);
+
+    PointCloudDefWriteIface writeIface;
+    DRW_PointCloudDef definition;
+    definition.m_kind = DRW_PointCloudDef::Definition;
+    definition.handle = 0xD10;
+    definition.m_classVersion = 7;
+    definition.m_sourceFilename = "scan.rcp";
+    definition.m_isLoaded = true;
+    definition.m_pointCount = 1234567890123ULL;
+    definition.m_extentsMin = DRW_Coord{-1.0, -2.0, -3.0};
+    definition.m_extentsMax = DRW_Coord{4.0, 5.0, 6.0};
+    definition.setDwgCommonObjectState(1, 0, false);
+    definition.reactorHandles = {0xD20};
+    definition.xDictHandle = 0xD21;
+    writeIface.definitions.push_back(definition);
+
+    DRW_PointCloudDef definitionEx = definition;
+    definitionEx.m_kind = DRW_PointCloudDef::DefinitionEx;
+    definitionEx.handle = 0xD11;
+    definitionEx.m_sourceFilename = "scan-ex.rcp";
+    definitionEx.reactorHandles = {0xD22};
+    definitionEx.xDictHandle = 0xD23;
+    writeIface.definitions.push_back(definitionEx);
+
+    DRW_PointCloudDef reactor;
+    reactor.m_kind = DRW_PointCloudDef::Reactor;
+    reactor.handle = 0xD12;
+    reactor.m_classVersion = 9;
+    reactor.setDwgCommonObjectState(1, 0, false);
+    reactor.reactorHandles = {0xD24};
+    reactor.xDictHandle = 0xD25;
+    writeIface.definitions.push_back(reactor);
+
+    DRW_PointCloudDef reactorEx = reactor;
+    reactorEx.m_kind = DRW_PointCloudDef::ReactorEx;
+    reactorEx.handle = 0xD13;
+    writeIface.definitions.push_back(reactorEx);
+
+    {
+      dwgRW writer(path.c_str());
+      writeIface.writer = &writer;
+      REQUIRE(writer.write(&writeIface, version, false));
+    }
+
+    PointCloudDefWriteIface readIface;
+    {
+      dwgRW reader(path.c_str());
+      REQUIRE(reader.read(&readIface, false));
+      CHECK(reader.getError() == DRW::BAD_NONE);
+      CHECK(reader.getVersion() == version);
+      CHECK(reader.getSkippedCustomClasses().empty());
+      CHECK(reader.getObjectParseFailures() == 0);
+    }
+
+    REQUIRE(readIface.captured.size() == 4);
+    std::map<DRW_PointCloudDef::Kind, DRW_PointCloudDef> byKind;
+    for (const auto &value : readIface.captured)
+      byKind[value.m_kind] = value;
+    REQUIRE(byKind.size() == 4);
+    CHECK(byKind.at(DRW_PointCloudDef::Definition).m_pointCount
+          == 1234567890123ULL);
+    CHECK(byKind.at(DRW_PointCloudDef::Definition).m_sourceFilename == "scan.rcp");
+    CHECK(byKind.at(DRW_PointCloudDef::DefinitionEx).m_sourceFilename
+          == "scan-ex.rcp");
+    CHECK(byKind.at(DRW_PointCloudDef::Reactor).m_classVersion == 9);
+    CHECK(byKind.at(DRW_PointCloudDef::ReactorEx).m_classVersion == 9);
+    CHECK(byKind.at(DRW_PointCloudDef::Reactor).m_sourceFilename.empty());
+    CHECK(byKind.at(DRW_PointCloudDef::Definition).reactorHandles
+          == std::vector<std::uint32_t>{0xD20});
+    CHECK(byKind.at(DRW_PointCloudDef::Definition).xDictHandle == 0xD21u);
+    CHECK(byKind.at(DRW_PointCloudDef::DefinitionEx).reactorHandles
+          == std::vector<std::uint32_t>{0xD22});
+    CHECK(byKind.at(DRW_PointCloudDef::DefinitionEx).xDictHandle == 0xD23u);
+    CHECK(byKind.at(DRW_PointCloudDef::Reactor).reactorHandles
+          == std::vector<std::uint32_t>{0xD24});
+    CHECK(byKind.at(DRW_PointCloudDef::Reactor).xDictHandle == 0xD25u);
+
+    std::filesystem::remove(path);
+  }
+}
+
+TEST_CASE("RS_FilterDXFRW preserves point-cloud definition dictionary linkage",
+          "[dwg][r2013][roundtrip][pointcloud][dictionary]") {
+  chicun::ensureTestApp();
+  const auto sourcePath = std::filesystem::temp_directory_path()
+      / "librecad-pointcloud-dictionary-source.dwg";
+  const auto outputPath = std::filesystem::temp_directory_path()
+      / "librecad-pointcloud-dictionary-output.dwg";
+  std::filesystem::remove(sourcePath);
+  std::filesystem::remove(outputPath);
+
+  PointCloudDictionaryWriteIface writeIface;
+  writeIface.dictionary.handle = 0xD40;
+  writeIface.dictionary.parentHandle = 0xC;
+  writeIface.dictionary.name = "ACAD_POINTCLOUD_TEST";
+  writeIface.dictionary.cloning = 1;
+  writeIface.dictionary.m_entries.push_back({"Definition", 0xD41});
+
+  DRW_PointCloudDef definition;
+  definition.m_kind = DRW_PointCloudDef::Definition;
+  definition.handle = 0xD41;
+  definition.parentHandle = 0xD40;
+  definition.m_classVersion = 7;
+  definition.m_sourceFilename = "linked.rcp";
+  definition.m_isLoaded = true;
+  definition.m_pointCount = 4321;
+  definition.m_extentsMin = DRW_Coord{-1.0, -2.0, -3.0};
+  definition.m_extentsMax = DRW_Coord{4.0, 5.0, 6.0};
+  writeIface.definitions.push_back(definition);
+
+  {
+    dwgRW writer(sourcePath.c_str());
+    writeIface.writer = &writer;
+    REQUIRE(writer.write(&writeIface, DRW::AC1027, false));
+  }
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic,
+                              QString::fromStdString(sourcePath.string()),
+                              RS2::FormatDWG));
+  }
+
+  const auto &metadata = graphic.dwgAdvancedMetadata();
+  REQUIRE(metadata.dictionaries().size() == 1);
+  REQUIRE(metadata.pointCloudDefinitions().size() == 1);
+  const auto &sourceDictionary = metadata.dictionaries().front();
+  const auto &sourceDefinition = metadata.pointCloudDefinitions().front();
+  CHECK(sourceDictionary.handle == 0xD40u);
+  CHECK(sourceDictionary.parentHandle == 0xCu);
+  REQUIRE(sourceDictionary.entries.size() == 1);
+  CHECK(sourceDictionary.entries.front().name == "Definition");
+  CHECK(sourceDictionary.entries.front().handle == 0xD41u);
+  CHECK(sourceDefinition.parentHandle == sourceDictionary.handle);
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic,
+                              QString::fromStdString(outputPath.string()),
+                              RS2::FormatDWG2013));
+  }
+
+  PointCloudDictionaryWriteIface readIface;
+  {
+    dwgRW reader(outputPath.c_str());
+    REQUIRE(reader.read(&readIface, false));
+    CHECK(reader.getError() == DRW::BAD_NONE);
+    CHECK(reader.getVersion() == DRW::AC1027);
+  }
+
+  REQUIRE(readIface.capturedDictionaries.size() == 1);
+  REQUIRE(readIface.captured.size() == 1);
+  const auto &outputDictionary = readIface.capturedDictionaries.front();
+  const auto &outputDefinition = readIface.captured.front();
+  CHECK(outputDictionary.handle == sourceDictionary.handle);
+  CHECK(outputDictionary.parentHandle == sourceDictionary.parentHandle);
+  REQUIRE(outputDictionary.m_entries.size() == 1);
+  CHECK(outputDictionary.m_entries.front().m_name == "Definition");
+  CHECK(outputDictionary.m_entries.front().m_handle == outputDefinition.handle);
+  CHECK(outputDefinition.parentHandle == outputDictionary.handle);
+  CHECK(outputDefinition.m_sourceFilename == "linked.rcp");
+  CHECK(outputDefinition.m_pointCount == 4321u);
+
+  std::filesystem::remove(sourcePath);
+  std::filesystem::remove(outputPath);
+}
+
+TEST_CASE("RS_FilterDXFRW preserves nested point-cloud and Navisworks references",
+          "[dwg][r2013][roundtrip][pointcloud][navisworks][dictionary]") {
+  chicun::ensureTestApp();
+  const auto sourcePath = std::filesystem::temp_directory_path()
+      / "librecad-pointcloud-reference-graph-source.dwg";
+  const auto outputPath = std::filesystem::temp_directory_path()
+      / "librecad-pointcloud-reference-graph-output.dwg";
+  std::filesystem::remove(sourcePath);
+  std::filesystem::remove(outputPath);
+
+  PointCloudReferenceGraphWriteIface writeIface;
+  DRW_Dictionary root;
+  root.handle = 0xD50;
+  root.parentHandle = 0xC;
+  root.name = "ACAD_POINTCLOUD_GRAPH";
+  root.m_entries = {{"Nested", 0xD51}, {"References", 0xD53}};
+  writeIface.dictionaries.push_back(root);
+
+  DRW_Dictionary nested;
+  nested.handle = 0xD51;
+  nested.parentHandle = 0xD50;
+  nested.name = "NESTED_POINTCLOUD";
+  nested.m_entries = {{"Definition", 0xD52}};
+  writeIface.dictionaries.push_back(nested);
+
+  DRW_Dictionary references;
+  references.handle = 0xD53;
+  references.parentHandle = 0xD50;
+  references.name = "POINTCLOUD_REFERENCES";
+  references.m_entries = {{"Navisworks", 0xD54}, {"ColorMap", 0xD55}};
+  writeIface.dictionaries.push_back(references);
+
+  writeIface.pointCloudDefinition.handle = 0xD52;
+  writeIface.pointCloudDefinition.parentHandle = 0xD51;
+  writeIface.pointCloudDefinition.m_kind = DRW_PointCloudDef::Definition;
+  writeIface.pointCloudDefinition.m_classVersion = 7;
+  writeIface.pointCloudDefinition.m_sourceFilename = "graph.rcp";
+  writeIface.pointCloudDefinition.m_pointCount = 9876;
+  writeIface.pointCloudDefinition.m_extentsMin = DRW_Coord{-1.0, -2.0, -3.0};
+  writeIface.pointCloudDefinition.m_extentsMax = DRW_Coord{4.0, 5.0, 6.0};
+
+  writeIface.navisworksDefinition.handle = 0xD54;
+  writeIface.navisworksDefinition.parentHandle = 0xD53;
+  writeIface.navisworksDefinition.m_flags = 5;
+  writeIface.navisworksDefinition.m_path = "coordination/graph.nwd";
+  writeIface.navisworksDefinition.m_status = true;
+  writeIface.navisworksDefinition.m_minExtent = DRW_Coord{-4.0, -5.0, -6.0};
+  writeIface.navisworksDefinition.m_maxExtent = DRW_Coord{7.0, 8.0, 9.0};
+
+  writeIface.navisworksModel.handle = 0xD56;
+  writeIface.navisworksModel.parentHandle = DRW::NoHandle;
+  writeIface.navisworksModel.definitionHandle = 0xD54;
+  writeIface.navisworksModel.flags = 0x8001;
+  writeIface.navisworksModel.unitFactor = 0.001;
+  for (std::size_t i = 0; i < writeIface.navisworksModel.transform.size(); ++i)
+    writeIface.navisworksModel.transform[i] = static_cast<double>(i + 1);
+
+  writeIface.colorMap.handle = 0xD55;
+  writeIface.colorMap.parentHandle = 0xD53;
+  writeIface.colorMap.m_classVersion = 1;
+  writeIface.colorMap.m_defaultIntensityColorScheme = "Intensity";
+  writeIface.colorMap.m_defaultElevationColorScheme = "Elevation";
+  writeIface.colorMap.m_defaultClassificationColorScheme = "Classification";
+
+  {
+    dwgRW writer(sourcePath.c_str());
+    writeIface.writer = &writer;
+    REQUIRE(writer.write(&writeIface, DRW::AC1027, false));
+  }
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic,
+                              QString::fromStdString(sourcePath.string()),
+                              RS2::FormatDWG));
+  }
+
+  const auto &metadata = graphic.dwgAdvancedMetadata();
+  REQUIRE(metadata.dictionaries().size() == 3);
+  REQUIRE(metadata.pointCloudDefinitions().size() == 1);
+  REQUIRE(metadata.navisworksModelDefinitions().size() == 1);
+  REQUIRE(metadata.navisworksModels().size() == 1);
+  REQUIRE(metadata.pointCloudColorMaps().size() == 1);
+  CHECK(metadata.pointCloudDefinitions().front().parentHandle == 0xD51u);
+  CHECK(metadata.navisworksModelDefinitions().front().parentHandle == 0xD53u);
+  CHECK(metadata.navisworksModels().front().definitionHandle == 0xD54u);
+  CHECK(metadata.pointCloudColorMaps().front().parentHandle == 0xD53u);
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic,
+                              QString::fromStdString(outputPath.string()),
+                              RS2::FormatDWG2013));
+  }
+
+  PointCloudReferenceGraphWriteIface readIface;
+  {
+    dwgRW reader(outputPath.c_str());
+    REQUIRE(reader.read(&readIface, false));
+    CHECK(reader.getError() == DRW::BAD_NONE);
+    CHECK(reader.getVersion() == DRW::AC1027);
+  }
+
+  REQUIRE(readIface.capturedDictionaries.size() == 3);
+  REQUIRE(readIface.capturedPointCloudDefinitions.size() == 1);
+  const auto findDictionary = [&](std::uint32_t handle) {
+    return std::find_if(readIface.capturedDictionaries.begin(),
+                        readIface.capturedDictionaries.end(),
+                        [handle](const DRW_Dictionary &dictionary) {
+                          return dictionary.handle == handle;
+                        });
+  };
+  const auto rootIt = findDictionary(0xD50);
+  const auto nestedIt = findDictionary(0xD51);
+  const auto referencesIt = findDictionary(0xD53);
+  REQUIRE(rootIt != readIface.capturedDictionaries.end());
+  REQUIRE(nestedIt != readIface.capturedDictionaries.end());
+  REQUIRE(referencesIt != readIface.capturedDictionaries.end());
+  CHECK(rootIt->parentHandle == 0xCu);
+  REQUIRE(rootIt->m_entries.size() == 2);
+  CHECK(rootIt->m_entries[0].m_name == "Nested");
+  CHECK(rootIt->m_entries[0].m_handle == 0xD51u);
+  CHECK(rootIt->m_entries[1].m_name == "References");
+  CHECK(rootIt->m_entries[1].m_handle == 0xD53u);
+  CHECK(nestedIt->parentHandle == 0xD50u);
+  REQUIRE(nestedIt->m_entries.size() == 1);
+  CHECK(nestedIt->m_entries.front().m_handle == 0xD52u);
+  CHECK(referencesIt->parentHandle == 0xD50u);
+  REQUIRE(referencesIt->m_entries.size() == 2);
+  CHECK(referencesIt->m_entries[0].m_handle == 0xD54u);
+  CHECK(referencesIt->m_entries[1].m_handle == 0xD55u);
+
+  CHECK(readIface.capturedPointCloudDefinitions.front().parentHandle == 0xD51u);
+  CHECK(readIface.capturedNavisworksDefinition.parentHandle == 0xD53u);
+  CHECK(readIface.capturedNavisworksModel.definitionHandle == 0xD54u);
+  CHECK(readIface.capturedColorMap.parentHandle == 0xD53u);
+
+  std::filesystem::remove(sourcePath);
+  std::filesystem::remove(outputPath);
+}
+
+TEST_CASE("RS_FilterDXFRW remaps colliding point-cloud dictionary handles",
+          "[dwg][r2013][write][pointcloud][dictionary][remap]") {
+  chicun::ensureTestApp();
+  const auto path = std::filesystem::temp_directory_path()
+      / "librecad-pointcloud-dictionary-remap.dwg";
+  std::filesystem::remove(path);
+
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+
+  DRW_Dictionary dictionary;
+  dictionary.handle = DRW::DwgModelSpaceBlockRecordHandle;
+  dictionary.parentHandle = 0xC;
+  dictionary.name = "COLLIDING_POINTCLOUD_DICTIONARY";
+  dictionary.m_entries.push_back({"Definition", 0xD61});
+  graphic.dwgAdvancedMetadata().addDictionary(dictionary);
+
+  DRW_PointCloudDef definition;
+  definition.handle = 0xD61;
+  definition.parentHandle = dictionary.handle;
+  definition.m_kind = DRW_PointCloudDef::Definition;
+  definition.m_classVersion = 7;
+  definition.m_sourceFilename = "remapped.rcp";
+  definition.m_pointCount = 2468;
+  definition.m_extentsMin = DRW_Coord{-1.0, -2.0, -3.0};
+  definition.m_extentsMax = DRW_Coord{4.0, 5.0, 6.0};
+  graphic.dwgAdvancedMetadata().addPointCloudDef(definition);
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(path.string()),
+                              RS2::FormatDWG2013));
+  }
+
+  PointCloudDictionaryWriteIface readIface;
+  {
+    dwgRW reader(path.c_str());
+    REQUIRE(reader.read(&readIface, false));
+    CHECK(reader.getError() == DRW::BAD_NONE);
+    CHECK(reader.getVersion() == DRW::AC1027);
+  }
+
+  REQUIRE(readIface.capturedDictionaries.size() == 1);
+  REQUIRE(readIface.captured.size() == 1);
+  const auto &outputDictionary = readIface.capturedDictionaries.front();
+  const auto &outputDefinition = readIface.captured.front();
+  CHECK(outputDictionary.handle != dictionary.handle);
+  CHECK(outputDictionary.parentHandle == dictionary.parentHandle);
+  REQUIRE(outputDictionary.m_entries.size() == 1);
+  CHECK(outputDictionary.m_entries.front().m_name == "Definition");
+  CHECK(outputDictionary.m_entries.front().m_handle == outputDefinition.handle);
+  CHECK(outputDefinition.parentHandle == outputDictionary.handle);
+  CHECK(outputDefinition.m_sourceFilename == "remapped.rcp");
+  CHECK(outputDefinition.m_pointCount == 2468u);
+
+  std::filesystem::remove(path);
+}
+
+TEST_CASE("RS_FilterDXFRW drops dangling point-cloud dictionary entries",
+          "[dwg][r2013][write][pointcloud][dictionary][safety]") {
+  chicun::ensureTestApp();
+  const auto path = std::filesystem::temp_directory_path()
+                    / "librecad-pointcloud-dictionary-dangling.dwg";
+  std::filesystem::remove(path);
+
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+
+  DRW_Dictionary dictionary;
+  dictionary.handle = 0xD70;
+  dictionary.parentHandle = DRW::DwgNamedObjectsDictionaryHandle;
+  dictionary.name = "DANGLING_POINTCLOUD_DICTIONARY";
+  dictionary.m_entries.push_back({"Missing", 0xDEAD});
+  graphic.dwgAdvancedMetadata().addDictionary(dictionary);
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(path.string()),
+                              RS2::FormatDWG2013));
+  }
+
+  PointCloudDictionaryWriteIface readIface;
+  {
+    dwgRW reader(path.c_str());
+    REQUIRE(reader.read(&readIface, false));
+    CHECK(reader.getError() == DRW::BAD_NONE);
+    CHECK(reader.getVersion() == DRW::AC1027);
+  }
+
+  REQUIRE(readIface.capturedDictionaries.size() == 1);
+  const auto &outputDictionary = readIface.capturedDictionaries.front();
+  CHECK(outputDictionary.handle == dictionary.handle);
+  CHECK(outputDictionary.parentHandle == dictionary.parentHandle);
+  CHECK(outputDictionary.m_entries.empty());
+
+  std::filesystem::remove(path);
+}
+
+TEST_CASE("DWG writer round-trips Navisworks and Point Cloud ColorMap objects across versions",
+          "[dwg][write][pointcloud][navisworks][objects]") {
+  for (const DRW::Version version : {DRW::AC1015, DRW::AC1018,
+                                     DRW::AC1021, DRW::AC1024,
+                                     DRW::AC1027, DRW::AC1032}) {
+    CAPTURE(static_cast<int>(version));
+    const auto path = std::filesystem::temp_directory_path()
+                      / ("libdxfrw-pointcloud-metadata-"
+                         + std::to_string(static_cast<int>(version)) + ".dwg");
+    std::filesystem::remove(path);
+
+    PointCloudMetadataWriteIface writeIface;
+    writeIface.navisworks.handle = 0xD20;
+    writeIface.navisworks.m_flags = 5;
+    writeIface.navisworks.m_path = "coordination/model.nwd";
+    writeIface.navisworks.m_status = true;
+    writeIface.navisworks.m_minExtent = DRW_Coord{-1.0, -2.0, -3.0};
+    writeIface.navisworks.m_maxExtent = DRW_Coord{4.0, 5.0, 6.0};
+    writeIface.navisworks.setDwgCommonObjectState(1, 0, false);
+    writeIface.navisworks.reactorHandles = {0xD23};
+    writeIface.navisworks.xDictHandle = 0xD24;
+    writeIface.navisworksModel.handle = 0xD22;
+    writeIface.navisworksModel.parentHandle = DRW::NoHandle;
+    writeIface.navisworksModel.flags = 0x8001;
+    writeIface.navisworksModel.definitionHandle = 0xD20;
+    for (std::size_t i = 0; i < writeIface.navisworksModel.transform.size(); ++i)
+      writeIface.navisworksModel.transform[i] = static_cast<double>(i + 1);
+    writeIface.navisworksModel.unitFactor = 0.001;
+
+    writeIface.colorMap.handle = 0xD21;
+    writeIface.colorMap.m_classVersion = 1;
+    writeIface.colorMap.m_defaultIntensityColorScheme = "Intensity";
+    writeIface.colorMap.m_defaultElevationColorScheme = "Elevation";
+    writeIface.colorMap.m_defaultClassificationColorScheme = "Classification";
+    writeIface.colorMap.setDwgCommonObjectState(1, 0, false);
+    writeIface.colorMap.reactorHandles = {0xD25};
+    writeIface.colorMap.xDictHandle = 0xD26;
+    writeIface.colorMap.m_colorRamps.push_back({2, 2, {"Ramp A", "Ramp B"}});
+    writeIface.colorMap.m_colorRampCount = 1;
+    writeIface.colorMap.m_classificationColorRamps.push_back({3, 1, {"Class Ramp"}});
+    writeIface.colorMap.m_classificationColorRampCount = 1;
+
+    {
+      dwgRW writer(path.c_str());
+      writeIface.writer = &writer;
+      REQUIRE(writer.write(&writeIface, version, false));
+    }
+
+    PointCloudMetadataWriteIface readIface;
+    {
+      dwgRW reader(path.c_str());
+      REQUIRE(reader.read(&readIface, false));
+      CHECK(reader.getError() == DRW::BAD_NONE);
+      CHECK(reader.getVersion() == version);
+      CHECK(reader.getSkippedCustomClasses().empty());
+      CHECK(reader.getObjectParseFailures() == 0);
+    }
+
+    REQUIRE(readIface.navisworksCallbacks == 1);
+    CHECK(readIface.navisworks.m_flags == 5);
+    CHECK(readIface.navisworks.m_path == "coordination/model.nwd");
+    CHECK(readIface.navisworks.m_status);
+    CHECK_FALSE(readIface.navisworks.m_hostDrawingVisibility);
+    CHECK(readIface.navisworks.m_minExtent.z == Catch::Approx(-3.0));
+    CHECK(readIface.navisworks.m_maxExtent.x == Catch::Approx(4.0));
+    CHECK(readIface.navisworks.reactorHandles
+          == std::vector<std::uint32_t>{0xD23});
+    CHECK(readIface.navisworks.xDictHandle == 0xD24u);
+    const bool hasNavisworksEntity = version >= DRW::AC1021;
+    CHECK(readIface.navisworksModelCallbacks == (hasNavisworksEntity ? 1 : 0));
+    if (hasNavisworksEntity) {
+      CHECK(readIface.navisworksModel.flags == 0x8001u);
+      CHECK(readIface.navisworksModel.parentHandle == DRW::NoHandle);
+      CHECK(readIface.navisworksModel.definitionHandle == 0xD20u);
+      CHECK(readIface.navisworksModel.transform[15] == Catch::Approx(16.0));
+      CHECK(readIface.navisworksModel.unitFactor == Catch::Approx(0.001));
+    }
+
+    REQUIRE(readIface.colorMapCallbacks == 1);
+    CHECK(readIface.colorMap.m_classVersion == 1);
+    REQUIRE(readIface.colorMap.m_colorRamps.size() == 1);
+    CHECK(readIface.colorMap.m_colorRamps[0].m_classVersion == 2);
+    CHECK(readIface.colorMap.m_colorRamps[0].m_colorSchemes[1] == "Ramp B");
+    REQUIRE(readIface.colorMap.m_classificationColorRamps.size() == 1);
+    CHECK(readIface.colorMap.m_classificationColorRamps[0].m_colorSchemes[0]
+          == "Class Ramp");
+    CHECK(readIface.colorMap.reactorHandles
+          == std::vector<std::uint32_t>{0xD25});
+    CHECK(readIface.colorMap.xDictHandle == 0xD26u);
+
+    std::filesystem::remove(path);
+  }
+}
+
+TEST_CASE("RS_FilterDXFRW re-emits typed Navisworks and Point Cloud metadata",
+          "[dwg][dxf][roundtrip][pointcloud][navisworks][filter]") {
+  static int qargc = 1;
+  static char qarg0[] = "librecad_tests";
+  static char *qargv[] = {qarg0, nullptr};
+  static QCoreApplication *qapp =
+      QCoreApplication::instance() != nullptr
+          ? QCoreApplication::instance()
+          : new QCoreApplication(qargc, qargv);
+  (void)qapp;
+  QCoreApplication::setOrganizationName("LibreCAD");
+  QCoreApplication::setApplicationName("LibreCAD-tests");
+  RS_Settings::init("LibreCAD", "LibreCAD-tests");
+
+  const auto dwgPath = std::filesystem::temp_directory_path()
+                       / "librecad-pointcloud-filter-source.dwg";
+  const auto dxfPath = std::filesystem::temp_directory_path()
+                       / "librecad-pointcloud-filter-output.dxf";
+  std::filesystem::remove(dwgPath);
+  std::filesystem::remove(dxfPath);
+
+  PointCloudMetadataWriteIface writeIface;
+  writeIface.navisworks.handle = 0xD30;
+  writeIface.navisworks.m_flags = 5;
+  writeIface.navisworks.m_path = "coordination/model.nwd";
+  writeIface.navisworks.m_status = true;
+  writeIface.navisworks.m_minExtent = DRW_Coord{-1.0, -2.0, -3.0};
+  writeIface.navisworks.m_maxExtent = DRW_Coord{4.0, 5.0, 6.0};
+  writeIface.navisworksModel.handle = 0xD32;
+  writeIface.navisworksModel.parentHandle = DRW::NoHandle;
+  writeIface.navisworksModel.flags = 0x8001;
+  writeIface.navisworksModel.definitionHandle = 0xD30;
+  for (std::size_t i = 0; i < writeIface.navisworksModel.transform.size(); ++i)
+    writeIface.navisworksModel.transform[i] = static_cast<double>(i + 1);
+  writeIface.navisworksModel.unitFactor = 0.001;
+  writeIface.colorMap.handle = 0xD31;
+  writeIface.colorMap.m_classVersion = 1;
+  writeIface.colorMap.m_defaultIntensityColorScheme = "Intensity";
+  writeIface.colorMap.m_defaultElevationColorScheme = "Elevation";
+  writeIface.colorMap.m_defaultClassificationColorScheme = "Classification";
+  writeIface.colorMap.m_colorRampCount = 1;
+  writeIface.colorMap.m_colorRamps.push_back({2, 2, {"Ramp A", "Ramp B"}});
+  writeIface.colorMap.m_classificationColorRampCount = 1;
+  writeIface.colorMap.m_classificationColorRamps.push_back(
+      {3, 1, {"Class Ramp"}});
+
+  {
+    dwgRW writer(dwgPath.c_str());
+    writeIface.writer = &writer;
+    REQUIRE(writer.write(&writeIface, DRW::AC1027, false));
+  }
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(dwgPath.string()),
+                              RS2::FormatDWG));
+  }
+  REQUIRE(graphic.dwgAdvancedMetadata().navisworksModelDefinitions().size()
+          == 1);
+  REQUIRE(graphic.dwgAdvancedMetadata().navisworksModels().size() == 1);
+  REQUIRE(graphic.dwgAdvancedMetadata().pointCloudColorMaps().size() == 1);
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(dxfPath.string()),
+                              RS2::FormatDXFRW));
+  }
+
+  PointCloudMetadataWriteIface readIface;
+  dxfRW reader(dxfPath.c_str());
+  REQUIRE(reader.read(&readIface, false));
+  REQUIRE(readIface.navisworksCallbacks == 1);
+  REQUIRE(readIface.navisworksModelCallbacks == 1);
+  REQUIRE(readIface.colorMapCallbacks == 1);
+  CHECK(readIface.navisworks.m_path == "coordination/model.nwd");
+  CHECK(readIface.navisworksModel.flags == 0x8001u);
+  CHECK(readIface.navisworksModel.definitionHandle == 0xD30u);
+  CHECK(readIface.navisworksModel.transform[0] == Catch::Approx(1.0));
+  CHECK(readIface.navisworksModel.unitFactor == Catch::Approx(0.001));
+  CHECK(readIface.colorMap.m_colorRamps[0].m_colorSchemes[1] == "Ramp B");
+
+  std::filesystem::remove(dwgPath);
+  std::filesystem::remove(dxfPath);
+}
+
+TEST_CASE("DWG R2007 writer splits oversized object sections",
+          "[dwg][r2007][write][multipage]") {
+  const auto path = std::filesystem::temp_directory_path()
+      / "libdxfrw-ac1021-multipage.dwg";
+  std::filesystem::remove(path);
+
+  R2007EntityWriteIface writeIface;
+  writeIface.linesToWrite = 1024;
+  {
+    dwgRW writer(path.c_str());
+    writeIface.writer = &writer;
+    REQUIRE(writer.write(&writeIface, DRW::AC1021, false));
+  }
+
+  R2007EntityWriteIface readIface;
+  {
+    dwgRW reader(path.c_str());
+    REQUIRE(reader.read(&readIface, false));
+    CHECK(reader.getError() == DRW::BAD_NONE);
+    CHECK(reader.getVersion() == DRW::AC1021);
+    CHECK(reader.getR2007CrcMismatch() == 0u);
+  }
+
+  CHECK(readIface.lineCallbacks == 1024);
+  std::filesystem::remove(path);
+}
+
+TEST_CASE("DWG R2007 writer is readable by libreDWG",
+          "[.dwg_readback][dwg][r2007][write]") {
+  const char *home = std::getenv("HOME");
+  const char *configured = std::getenv("DWGREAD");
+  std::vector<std::filesystem::path> candidates;
+  if (configured != nullptr)
+    candidates.emplace_back(configured);
+  if (home != nullptr) {
+    candidates.emplace_back(std::filesystem::path(home)
+                            / "dev/libredwg/programs/dwgread");
+    candidates.emplace_back(std::filesystem::path(home)
+                            / "dev/libreDWG/programs/dwgread");
+  }
+
+  std::filesystem::path executable;
+  for (const auto &candidate : candidates) {
+    if (std::filesystem::exists(candidate)) {
+      executable = candidate;
+      break;
+    }
+  }
+  if (executable.empty()) {
+    SUCCEED("libreDWG dwgread not available; skipping cross-tool gate");
+    return;
+  }
+
+  const auto path = std::filesystem::temp_directory_path()
+      / "libdxfrw-ac1021-libreDWG.dwg";
+  const auto report = std::filesystem::temp_directory_path()
+      / "libdxfrw-ac1021-libreDWG.txt";
+  std::filesystem::remove(path);
+  std::filesystem::remove(report);
+
+  R2007EntityWriteIface writeIface;
+  {
+    dwgRW writer(path.c_str());
+    writeIface.writer = &writer;
+    REQUIRE(writer.write(&writeIface, DRW::AC1021, false));
+  }
+
+  const std::string command = "\"" + executable.string() + "\" \""
+      + path.string() + "\" > \"" + report.string() + "\" 2>&1";
+  const int result = std::system(command.c_str());
+  std::ifstream input(report);
+  const std::string output((std::istreambuf_iterator<char>(input)),
+                           std::istreambuf_iterator<char>());
+  INFO(output);
+  CHECK(result == 0);
+  CHECK(output.find("ERROR 0x") == std::string::npos);
+  CHECK(output.find("Failed to read") == std::string::npos);
+
+  std::filesystem::remove(path);
+  std::filesystem::remove(report);
+}
+
 // Regression pin for the pre-2004 (R13/R14/R2000) BLOCKS-walk fix: a broken
 // nextEntLink at the *Model_Space chain end used to set ret=false and report
 // BAD_READ_BLOCKS even though every drawable entity was delivered (recovered
@@ -8885,7 +10941,7 @@ TEST_CASE("DWG R2013 reads (dwgReader27 inherits the buffer-model fixes)",
 // example_r13/r14/2000.dwg + TS1.dwg all tripped it; libreDWG reads them fine.
 // Fixtures live in ~/doc/dwg{,2,3} (not committed) -> skip gracefully if absent.
 TEST_CASE("DWG R13/R14/R2000 sample files read OK (BLOCKS-walk regression)",
-          "[dwg][r2000][blockswalk]") {
+          "[.slow][dwg][r2000][blockswalk][corpus]") {
   const char* home = std::getenv("HOME");
   if (!home) { SUCCEED("no HOME"); return; }
   struct Want { const char* file; DRW::Version ver; };
@@ -9278,7 +11334,7 @@ TEST_CASE("proxy graphics decoded from DXF", "[proxy]") {
 
   std::string dxf =
       "0\nSECTION\n2\nENTITIES\n"
-      "0\nACAD_PROXY_ENTITY\n8\nproxylayer\n"
+      "0\nACAD_PROXY_ENTITY\n5\n1\n8\nproxylayer\n"
       "92\n" + std::to_string(blob.size()) + "\n"
       "310\n" + hex + "\n"
       "0\nENDSEC\n0\nEOF\n";
@@ -9315,7 +11371,168 @@ struct PgColorCap : public TypeTrackingIface {
   DRW_Circle last; int n = 0;
   void addCircle(const DRW_Circle& e) override { last = e; ++n; }
 };
+
+struct PgSink final : public DRW_ProxyGraphicSink {
+  bool accept = true;
+  std::size_t acceptedBeforeRefusal = std::numeric_limits<std::size_t>::max();
+  std::size_t attempts = 0;
+  std::size_t circles = 0;
+
+  bool addArc(const DRW_Arc&) override { return acceptEvent(); }
+  bool addCircle(const DRW_Circle&) override { ++circles; return acceptEvent(); }
+  bool addEllipse(const DRW_Ellipse&) override { return acceptEvent(); }
+  bool addLWPolyline(const DRW_LWPolyline&) override { return acceptEvent(); }
+  bool addMesh(const DRW_Mesh&) override { return acceptEvent(); }
+  bool addPolyline(const DRW_Polyline&) override { return acceptEvent(); }
+  bool addText(const DRW_Text&) override { return acceptEvent(); }
+
+private:
+  bool acceptEvent() {
+    ++attempts;
+    return accept && attempts <= acceptedBeforeRefusal;
+  }
+};
 } // namespace
+
+TEST_CASE("proxy decoder reports bounded staged output", "[proxy]") {
+  std::string blob(8, '\0');
+  pgChunk(blob, 2, pgCirclePayload());
+  pgChunk(blob, 0x7fffffffu, {});
+  pgChunk(blob, 2, pgCirclePayload());
+
+  const auto inspected = DRW_ProxyGraphicDecoder::inspect(blob);
+  CHECK(inspected.completed());
+  CHECK(inspected.recognizedPrimitiveChunkCount == 2u);
+  CHECK(inspected.skippedUnsupportedChunkCount == 1u);
+  CHECK(inspected.consumedByteCount == blob.size());
+
+  DRW_Point parent;
+  PgSink accepted;
+  const auto decoded = DRW_ProxyGraphicDecoder::decode(
+      blob, DRW::AC1024, accepted, parent);
+  CHECK(decoded.completed());
+  CHECK(decoded.emittedPrimitiveCount == 2u);
+  CHECK(accepted.circles == 2u);
+
+  DRW_ProxyGraphicLimits limits;
+  limits.maxPrimitiveCount = 1u;
+  CHECK(DRW_ProxyGraphicDecoder::inspect(blob, limits).stopReason
+        == DRW_ProxyGraphicStopReason::PrimitiveLimit);
+  PgSink limited;
+  CHECK(DRW_ProxyGraphicDecoder::decode(
+            blob, DRW::AC1024, limited, parent, {}, {}, limits).stopReason
+        == DRW_ProxyGraphicStopReason::PrimitiveLimit);
+  CHECK(limited.circles == 1u);
+
+  PgSink refusing;
+  refusing.accept = false;
+  const auto refused = DRW_ProxyGraphicDecoder::decode(
+      blob, DRW::AC1024, refusing, parent);
+  CHECK(refused.stopReason == DRW_ProxyGraphicStopReason::SinkRefused);
+  CHECK(refused.emittedPrimitiveCount == 0u);
+  CHECK(refusing.attempts == 1u);
+
+  PgSink partiallyRefusing;
+  partiallyRefusing.acceptedBeforeRefusal = 1u;
+  const auto partlyRefused = DRW_ProxyGraphicDecoder::decode(
+      blob, DRW::AC1024, partiallyRefusing, parent);
+  CHECK(partlyRefused.stopReason == DRW_ProxyGraphicStopReason::SinkRefused);
+  CHECK(partlyRefused.emittedPrimitiveCount == 1u);
+  CHECK(partiallyRefusing.attempts == 2u);
+
+  CHECK(DRW_ProxyGraphicDecoder::inspect(std::string(7, '\0')).stopReason
+        == DRW_ProxyGraphicStopReason::ShortHeader);
+  std::string invalid(8, '\0');
+  pgU32(invalid, 7u);
+  pgU32(invalid, 2u);
+  CHECK(DRW_ProxyGraphicDecoder::inspect(invalid).stopReason
+        == DRW_ProxyGraphicStopReason::InvalidChunkSize);
+  std::string truncated(8, '\0');
+  pgU32(truncated, 9u);
+  pgU32(truncated, 2u);
+  CHECK(DRW_ProxyGraphicDecoder::inspect(truncated).stopReason
+        == DRW_ProxyGraphicStopReason::TruncatedChunk);
+
+  DRW_ProxyGraphicLimits chunkLimits;
+  chunkLimits.maxChunkCount = 1u;
+  CHECK(DRW_ProxyGraphicDecoder::inspect(blob, chunkLimits).stopReason
+        == DRW_ProxyGraphicStopReason::ChunkLimit);
+  PgSink chunkLimited;
+  const auto chunkLimitedResult = DRW_ProxyGraphicDecoder::decode(
+      blob, DRW::AC1024, chunkLimited, parent, {}, {}, chunkLimits);
+  CHECK(chunkLimitedResult.stopReason == DRW_ProxyGraphicStopReason::ChunkLimit);
+  CHECK(chunkLimitedResult.emittedPrimitiveCount == 1u);
+
+  std::string matrixPayload;
+  for (int row = 0; row < 4; ++row)
+    for (int column = 0; column < 4; ++column)
+      pgD(matrixPayload, row == column ? 1.0 : 0.0);
+  std::string nestedMatrices(8, '\0');
+  pgChunk(nestedMatrices, 29, matrixPayload);
+  pgChunk(nestedMatrices, 29, matrixPayload);
+  DRW_ProxyGraphicLimits matrixLimits;
+  matrixLimits.maxMatrixDepth = 1u;
+  PgSink matrixLimited;
+  CHECK(DRW_ProxyGraphicDecoder::decode(
+            nestedMatrices, DRW::AC1024, matrixLimited, parent, {}, {},
+            matrixLimits).stopReason
+        == DRW_ProxyGraphicStopReason::MatrixDepthLimit);
+  CHECK(matrixLimited.attempts == 0u);
+
+  std::string oversizedCount;
+  pgU32(oversizedCount, 2u);
+  std::string polyline(8, '\0');
+  pgChunk(polyline, 6, oversizedCount);
+  DRW_ProxyGraphicLimits polylineLimits;
+  polylineLimits.maxPolylineVertices = 1u;
+  PgSink polylineLimited;
+  CHECK(DRW_ProxyGraphicDecoder::decode(
+            polyline, DRW::AC1024, polylineLimited, parent, {}, {},
+            polylineLimits).stopReason
+        == DRW_ProxyGraphicStopReason::ResourceLimit);
+  CHECK(polylineLimited.attempts == 0u);
+
+  dwgBufferW lwPayload;
+  lwPayload.putRawLong32(0); // num_data_bytes
+  lwPayload.putBitShort(0);  // flags
+  lwPayload.putBitLong(2);  // vertex count
+  std::string lwPolyline(8, '\0');
+  pgChunk(lwPolyline, 33, std::string(
+      reinterpret_cast<const char*>(lwPayload.data().data()),
+      lwPayload.data().size()));
+  PgSink lwPolylineLimited;
+  CHECK(DRW_ProxyGraphicDecoder::decode(
+            lwPolyline, DRW::AC1024, lwPolylineLimited, parent, {}, {},
+            polylineLimits).stopReason
+        == DRW_ProxyGraphicStopReason::ResourceLimit);
+  CHECK(lwPolylineLimited.attempts == 0u);
+
+  std::string mesh(8, '\0');
+  pgChunk(mesh, 9, oversizedCount);
+  DRW_ProxyGraphicLimits meshLimits;
+  meshLimits.maxMeshVertices = 1u;
+  PgSink meshLimited;
+  CHECK(DRW_ProxyGraphicDecoder::decode(
+            mesh, DRW::AC1024, meshLimited, parent, {}, {}, meshLimits)
+            .stopReason
+        == DRW_ProxyGraphicStopReason::ResourceLimit);
+  CHECK(meshLimited.attempts == 0u);
+
+  std::string oversizedFaces;
+  pgU32(oversizedFaces, 1u);
+  pgD(oversizedFaces, 0.0); pgD(oversizedFaces, 0.0); pgD(oversizedFaces, 0.0);
+  pgU32(oversizedFaces, 2u);
+  std::string faceMesh(8, '\0');
+  pgChunk(faceMesh, 9, oversizedFaces);
+  DRW_ProxyGraphicLimits faceLimits;
+  faceLimits.maxMeshFaceEntries = 1u;
+  PgSink faceLimited;
+  CHECK(DRW_ProxyGraphicDecoder::decode(
+            faceMesh, DRW::AC1024, faceLimited, parent, {}, {}, faceLimits)
+            .stopReason
+        == DRW_ProxyGraphicStopReason::ResourceLimit);
+  CHECK(faceLimited.attempts == 0u);
+}
 
 // op22 ATTRIBUTE_TRUE_COLOR: the high flag byte selects RGB/ACI/BYLAYER/BYBLOCK
 // (was unconditionally masked as RGB — 100% of corpus chunks mis-rendered).
@@ -9983,6 +12200,9 @@ TEST_CASE("DWG pre-R13: R11 LAYER/LTYPE/STYLE table records") {
     REQUIRE(h2->path.size() == 2);
     CHECK(h2->path[0] == 0.5);
     CHECK(h2->path[1] == -0.25);
+    REQUIRE(h2->segments.size() == 2);
+    CHECK(h2->segments[0].length == 0.5);
+    CHECK(h2->segments[1].length == -0.25);
     // ADESK1 style: font=romans, lastHeight=0.095.
     auto a1 = std::find_if(iface.styles.begin(), iface.styles.end(),
                            [](const DRW_Textstyle &s) { return s.name == "ADESK1"; });

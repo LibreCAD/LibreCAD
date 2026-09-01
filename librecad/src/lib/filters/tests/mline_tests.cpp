@@ -184,6 +184,20 @@ public:
   }
 };
 
+bool tryReadDxf(const std::string &dxf, MLineCapture &capture,
+                const char *name) {
+  const auto path = std::filesystem::temp_directory_path() / name;
+  std::filesystem::remove(path);
+  {
+    std::ofstream out(path);
+    out << dxf;
+  }
+  dxfRW reader(path.string().c_str());
+  const bool result = reader.read(&capture, /*ext=*/true);
+  std::filesystem::remove(path);
+  return result;
+}
+
 } // namespace
 
 TEST_CASE("DRW_MLine: default field values", "[mline]") {
@@ -313,6 +327,65 @@ TEST_CASE("DXF MLINE write emits expected codes", "[mline][dxf_roundtrip]") {
 
   in.close();
   std::filesystem::remove(path);
+}
+
+TEST_CASE("DXF MLINE rejects invalid structural counts",
+          "[dxf][mline][malformed]") {
+  const std::string prefix =
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nMLINE\n5\n10\n8\n0\n"
+      "100\nAcDbEntity\n100\nAcDbMline\n"
+      "2\nSTANDARD\n40\n1\n70\n0\n71\n1\n";
+  const std::string suffix = "0\nENDSEC\n0\nEOF\n";
+
+  SECTION("negative vertex count") {
+    MLineCapture capture;
+    CHECK_FALSE(tryReadDxf(prefix + "72\n-1\n73\n0\n" + suffix,
+                           capture, "lc_mline_negative_vertex_count.dxf"));
+    CHECK(capture.m_callCount == 0);
+  }
+
+  SECTION("oversized line count") {
+    MLineCapture capture;
+    CHECK_FALSE(tryReadDxf(prefix + "72\n0\n73\n257\n" + suffix,
+                           capture, "lc_mline_oversized_line_count.dxf"));
+    CHECK(capture.m_callCount == 0);
+  }
+
+  SECTION("oversized parameter count") {
+    MLineCapture capture;
+    const std::string body =
+        "72\n1\n73\n1\n"
+        "10\n0\n20\n0\n30\n0\n"
+        "11\n0\n21\n0\n31\n0\n"
+        "12\n1\n22\n0\n32\n0\n"
+        "13\n0\n23\n1\n33\n0\n"
+        "74\n5001\n";
+    CHECK_FALSE(tryReadDxf(prefix + body + suffix, capture,
+                           "lc_mline_oversized_parameter_count.dxf"));
+    CHECK(capture.m_callCount == 0);
+  }
+
+  SECTION("extra parameter without a declared section") {
+    MLineCapture capture;
+    const std::string body =
+        "72\n1\n73\n1\n"
+        "11\n0\n21\n0\n31\n0\n41\n1\n";
+    CHECK_FALSE(tryReadDxf(prefix + body + suffix, capture,
+                           "lc_mline_unframed_parameter.dxf"));
+    CHECK(capture.m_callCount == 0);
+  }
+
+  SECTION("justification outside the RC domain") {
+    MLineCapture capture;
+    std::string malformed = prefix;
+    const std::size_t field = malformed.find("70\n0\n");
+    REQUIRE(field != std::string::npos);
+    malformed.replace(field, std::string("70\n0\n").size(), "70\n3\n");
+    CHECK_FALSE(tryReadDxf(malformed + "72\n0\n73\n0\n" + suffix,
+                           capture, "lc_mline_invalid_justification.dxf"));
+    CHECK(capture.m_callCount == 0);
+  }
 }
 
 TEST_CASE("DWG MLINESTYLE object resolves MLINE style handle",

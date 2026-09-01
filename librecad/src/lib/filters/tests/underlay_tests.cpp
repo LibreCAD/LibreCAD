@@ -120,7 +120,8 @@ class UnderlayEmitter : public StubInterface {
 public:
   DRW_Underlay m_u;
   dxfRW *m_rw = nullptr;
-  void writeEntities() override { m_rw->writeUnderlay(&m_u); }
+  bool m_writeResult = true;
+  void writeEntities() override { m_writeResult = m_rw->writeUnderlay(&m_u); }
 };
 
 class DwgUnderlayEmitter : public StubInterface {
@@ -136,6 +137,20 @@ public:
   void writeEntities() override { m_rw->writeUnderlay(&m_u); }
   void writeObjects() override { m_rw->writeUnderlayDefinition(&m_definition); }
 };
+
+bool tryReadDxf(const std::string &dxf, UnderlayCapture &capture,
+                const char *name) {
+  const auto path = std::filesystem::temp_directory_path() / name;
+  std::filesystem::remove(path);
+  {
+    std::ofstream out(path);
+    out << dxf;
+  }
+  dxfRW reader(path.string().c_str());
+  const bool result = reader.read(&capture, /*ext=*/true);
+  std::filesystem::remove(path);
+  return result;
+}
 
 } // namespace
 
@@ -186,6 +201,7 @@ TEST_CASE("DXF round-trip: UNDERLAY entity preserves fields",
   emitter.m_u.clipBoundary.push_back(DRW_Coord(100.0, 0.0, 0.0));
   emitter.m_u.clipBoundary.push_back(DRW_Coord(100.0, 50.0, 0.0));
   emitter.m_u.clipBoundary.push_back(DRW_Coord(0.0, 50.0, 0.0));
+  emitter.m_u.inverseClipBoundary.push_back(DRW_Coord(5.0, 5.0, 0.0));
 
   {
     dxfRW w(path.string().c_str());
@@ -207,9 +223,12 @@ TEST_CASE("DXF round-trip: UNDERLAY entity preserves fields",
   CHECK(capture.m_captured.rotation == 45.0);
   CHECK(capture.m_captured.contrast == 75);
   CHECK(capture.m_captured.fade == 25);
-  CHECK(capture.m_captured.flags == 0x0F);
+  CHECK(capture.m_captured.flags == 0x1F);
   CHECK(capture.m_captured.clipBoundary.size() == 4);
   CHECK(capture.m_captured.definitionHandle == 0xABCDu);
+  REQUIRE(capture.m_captured.inverseClipBoundary.size() == 1);
+  CHECK(capture.m_captured.inverseClipBoundary[0].x == 5.0);
+  CHECK(capture.m_captured.inverseClipBoundary[0].y == 5.0);
 
   std::filesystem::remove(path);
 }
@@ -240,6 +259,48 @@ TEST_CASE("DXF write: PDFUNDERLAY tag emitted in output",
   std::filesystem::remove(path);
 }
 
+TEST_CASE("DXF read: PDFREFERENCE aliases PDFUNDERLAY",
+          "[underlay][dxf_roundtrip]") {
+  const auto path =
+      std::filesystem::temp_directory_path() / "librecad_pdfreference_alias.dxf";
+  std::filesystem::remove(path);
+
+  UnderlayEmitter emitter;
+  emitter.m_u.layer = "0";
+  emitter.m_u.definitionHandle = 0xABCDu;
+  {
+    dxfRW writer(path.string().c_str());
+    emitter.m_rw = &writer;
+    REQUIRE(writer.write(&emitter, DRW::AC1021, false));
+  }
+
+  std::ifstream in(path);
+  std::stringstream content;
+  content << in.rdbuf();
+  in.close();
+  const std::string source = content.str();
+  const std::string marker = "\nPDFUNDERLAY\n";
+  const std::size_t markerPos = source.find(marker);
+  REQUIRE(markerPos != std::string::npos);
+  std::string aliased = source;
+  aliased.replace(markerPos + 1, std::string("PDFUNDERLAY").size(),
+                  "PDFREFERENCE");
+  {
+    std::ofstream out(path);
+    REQUIRE(out.good());
+    out << aliased;
+  }
+
+  UnderlayCapture capture;
+  dxfRW reader(path.string().c_str());
+  REQUIRE(reader.read(&capture, /*ext=*/true));
+  REQUIRE(capture.m_callCount == 1);
+  CHECK(capture.m_captured.kind == DRW_Underlay::PDF);
+  CHECK(capture.m_captured.definitionHandle == 0xABCDu);
+
+  std::filesystem::remove(path);
+}
+
 TEST_CASE("DWG round-trip: UNDERLAY reference and definition preserve fields",
           "[underlay][dwg_write]") {
   const auto path =
@@ -263,6 +324,8 @@ TEST_CASE("DWG round-trip: UNDERLAY reference and definition preserve fields",
   emitter.m_u.flags = 0x1E;
   emitter.m_u.contrast = 67;
   emitter.m_u.fade = 12;
+  emitter.m_u.inverseClipBoundary.push_back(DRW_Coord(1.0, 1.0, 0.0));
+  emitter.m_u.inverseClipBoundary.push_back(DRW_Coord(6.0, 1.0, 0.0));
   emitter.m_u.clipBoundary.push_back(DRW_Coord(0.0, 0.0, 0.0));
   emitter.m_u.clipBoundary.push_back(DRW_Coord(7.0, 0.0, 0.0));
   emitter.m_u.clipBoundary.push_back(DRW_Coord(7.0, 3.0, 0.0));
@@ -271,7 +334,7 @@ TEST_CASE("DWG round-trip: UNDERLAY reference and definition preserve fields",
   {
     dwgRW w(path.string().c_str());
     emitter.m_rw = &w;
-    const bool ok = w.write(&emitter, DRW::AC1018, true);
+    const bool ok = w.write(&emitter, DRW::AC1024, true);
     if (!ok) {
       UNSCOPED_INFO("write error code=" << static_cast<int>(w.getError()));
       FAIL("dwg write failed with error=" << static_cast<int>(w.getError()));
@@ -305,8 +368,93 @@ TEST_CASE("DWG round-trip: UNDERLAY reference and definition preserve fields",
   REQUIRE(capture.m_captured.clipBoundary.size() == 4);
   CHECK(capture.m_captured.clipBoundary[2].x == 7.0);
   CHECK(capture.m_captured.clipBoundary[2].y == 3.0);
+  REQUIRE(capture.m_captured.inverseClipBoundary.size() == 2);
+  CHECK(capture.m_captured.inverseClipBoundary[1].x == 6.0);
+  CHECK(capture.m_captured.inverseClipBoundary[1].y == 1.0);
 
   std::filesystem::remove(path);
+}
+
+TEST_CASE("UNDERLAY rejects oversized clip storage before writing",
+          "[underlay][safety]") {
+  UnderlayEmitter emitter;
+  emitter.m_u.clipBoundary.resize(DRW_Underlay::kMaxClipVertices + 1);
+
+  const auto path =
+      std::filesystem::temp_directory_path() / "librecad_underlay_oversized.dxf";
+  std::filesystem::remove(path);
+  dxfRW writer(path.string().c_str());
+  emitter.m_rw = &writer;
+  REQUIRE(writer.write(&emitter, DRW::AC1021, false));
+  CHECK_FALSE(emitter.m_writeResult);
+  std::filesystem::remove(path);
+}
+
+TEST_CASE("DXF UNDERLAY rejects an oversized inverse clip count",
+          "[underlay][safety]") {
+  const auto path =
+      std::filesystem::temp_directory_path() / "librecad_underlay_bad_count.dxf";
+  std::filesystem::remove(path);
+
+  UnderlayEmitter emitter;
+  emitter.m_u.inverseClipBoundary.push_back(DRW_Coord(1.0, 1.0, 0.0));
+  {
+    dxfRW writer(path.string().c_str());
+    emitter.m_rw = &writer;
+    REQUIRE(writer.write(&emitter, DRW::AC1021, false));
+  }
+
+  std::ifstream in(path);
+  std::stringstream content;
+  content << in.rdbuf();
+  in.close();
+  const std::string validCount = "170\n    1\n";
+  const std::size_t pos = content.str().find(validCount);
+  REQUIRE(pos != std::string::npos);
+  std::string malformed = content.str();
+  malformed.replace(pos, validCount.size(), "170\n 5001\n");
+  {
+    std::ofstream out(path);
+    out << malformed;
+  }
+
+  UnderlayCapture capture;
+  dxfRW reader(path.string().c_str());
+  CHECK_FALSE(reader.read(&capture, /*ext=*/true));
+  CHECK(capture.m_callCount == 0);
+  std::filesystem::remove(path);
+}
+
+TEST_CASE("DXF UNDERLAY rejects invalid byte fields",
+          "[underlay][safety]") {
+  const std::string prefix =
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nPDFUNDERLAY\n5\nA1\n330\n0\n"
+      "100\nAcDbEntity\n8\n0\n"
+      "100\nAcDbUnderlayReference\n340\n1A\n"
+      "10\n0\n20\n0\n30\n0\n50\n0\n";
+  const std::string suffix = "0\nENDSEC\n0\nEOF\n";
+
+  SECTION("flags outside an unsigned byte") {
+    UnderlayCapture capture;
+    CHECK_FALSE(tryReadDxf(prefix + "280\n256\n281\n100\n282\n0\n" + suffix,
+                           capture, "lc_underlay_invalid_flags.dxf"));
+    CHECK(capture.m_callCount == 0);
+  }
+
+  SECTION("contrast outside the documented 0..100 range") {
+    UnderlayCapture capture;
+    CHECK_FALSE(tryReadDxf(prefix + "280\n2\n281\n101\n282\n0\n" + suffix,
+                           capture, "lc_underlay_invalid_contrast.dxf"));
+    CHECK(capture.m_callCount == 0);
+  }
+
+  SECTION("fade outside the documented 0..100 range") {
+    UnderlayCapture capture;
+    CHECK_FALSE(tryReadDxf(prefix + "280\n2\n281\n100\n282\n-1\n" + suffix,
+                           capture, "lc_underlay_invalid_fade.dxf"));
+    CHECK(capture.m_callCount == 0);
+  }
 }
 
 namespace {

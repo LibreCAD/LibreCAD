@@ -413,8 +413,9 @@ void RS_Hatch::activateContour(const bool visible) const {
         if (sub) {
             for (RS_Entity* entity : *sub) {
                 if (!entity->isDeleted() && !entity->getFlag(RS2::FlagTemp)) {
-                    RS_DEBUG->print("RS_Hatch::activateContour: Setting visibility for entity %d",
-                                    entity->getId());
+                    RS_DEBUG->Log()
+                        << "RS_Hatch::activateContour: Setting visibility for entity "
+                        << entity->getId();
                     entity->setVisible(visible);
                 }
             }

@@ -43,6 +43,11 @@ jobs:
 
       - name: Verify DWG/DXF readiness metadata
         run: |
+          python3 scripts/test_dwg_version_inventory.py
+          python3 scripts/test_dwg_cross_read_parity_inventory.py
+          python3 scripts/test_libdxfrw_cross_read_smoke.py
+          python3 scripts/test_fixture_manifest.py
+          python3 scripts/test_external_oracle_receipts.py
           python3 scripts/validate_fixture_manifest.py
           python3 scripts/hash_fixtures.py --check
           python3 scripts/dwg_version_inventory.py --check

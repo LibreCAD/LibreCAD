@@ -133,3 +133,16 @@ TEST_CASE("console helper validates command output option rules",
     CHECK(LC_Console::validateOutputOptions(2, {}, "/tmp/out", false, false,
                                             &error));
 }
+
+#ifdef DWGSUPPORT
+TEST_CASE("console helper maps every supported DWG output version",
+          "[console][commands][dwg]") {
+    CHECK(LC_Console::dwgFormatForVersion("r2000") == RS2::FormatDWG);
+    CHECK(LC_Console::dwgFormatForVersion("2004") == RS2::FormatDWG2004);
+    CHECK(LC_Console::dwgFormatForVersion("R2007") == RS2::FormatDWG2007);
+    CHECK(LC_Console::dwgFormatForVersion("2010") == RS2::FormatDWG2010);
+    CHECK(LC_Console::dwgFormatForVersion("r2013") == RS2::FormatDWG2013);
+    CHECK(LC_Console::dwgFormatForVersion("2018") == RS2::FormatDWG2018);
+    CHECK(LC_Console::dwgFormatForVersion("2011") == RS2::FormatUnknown);
+}
+#endif

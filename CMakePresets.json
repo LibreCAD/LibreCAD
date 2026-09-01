@@ -3,6 +3,20 @@
     "cmakeMinimumRequired": { "major": 3, "minor": 21 },
     "configurePresets": [
         {
+            "name": "dwg-fast",
+            "displayName": "DWG/DXF fast incremental checks",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "BUILD_TESTS": "ON",
+                "LIBRECAD_REGISTER_FULL_TESTS": "OFF",
+                "LIBRECAD_REGISTER_INTEGRATION_TESTS": "OFF",
+                "LIBRECAD_REGISTER_FORMAT_TESTS": "OFF",
+                "LIBRECAD_REGISTER_CROSS_READ_SMOKE": "OFF"
+            }
+        },
+        {
             "name": "x64-debug",
             "displayName": "Debug-x64",
             "generator": "Ninja",
@@ -23,6 +37,11 @@
         }
     ],
     "buildPresets": [
+        {
+            "name": "dwg-fast",
+            "configurePreset": "dwg-fast",
+            "jobs": 8
+        },
         {
             "name": "x64-debug",
             "configurePreset": "x64-debug",

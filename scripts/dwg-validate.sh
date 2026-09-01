@@ -2,7 +2,7 @@
 # dwg-validate.sh — external write->reread framing validator (Phase 1, 1.7).
 #
 # Emits 5 trivial DWG fixtures (AC1015/18/24/27/32) via the libdxfrw writer
-# (the hidden Catch2 test [.dwg_emit_framing]) and re-reads each with
+# (the hidden Catch2 test [dwg_emit_framing]) and re-reads each with
 # libreDWG's external `dwgread`, capturing its error mask. This is the
 # write-path EXIT GATE for every write phase (2a/2b/3/4/5/6/9): a write change
 # must not regress the external-read status of every emitted fixture.
@@ -26,9 +26,9 @@
 # OBSERVED BASELINE (libreDWG dwgread 0.13.3, 2026-07-17):
 #   AC1015  PASS (with bit_read buffer-overflow warnings; dwgread ends SUCCESS)
 #   AC1018  PASS (with bit_read buffer-overflow warnings; dwgread ends SUCCESS)
-#   AC1024  PASS (with warnings for the omitted optional Template section)
-#   AC1027  PASS (with warnings for the omitted optional Template section)
-#   AC1032  PASS (with warnings for the omitted optional Template section)
+#   AC1024  PASS (with buffer-overflow warnings from unsupported fixture detail)
+#   AC1027  PASS (with buffer-overflow warnings from unsupported fixture detail)
+#   AC1032  PASS (with buffer-overflow warnings from unsupported fixture detail)
 # The R2004-container repair uses canonical capacity-sized, 0x20-aligned data
 # pages and fixed the former external 0x840 rejection. This is a structural
 # framing gate only; feature-specific writer promotion still needs its own
@@ -54,9 +54,9 @@ echo "== dwgread: $("$DWGREAD" --version 2>&1 | head -1)"
 
 # Emit the 5 fixtures via the hidden test. Run from ROOT so the test's relative
 # tmp/dwg-validate path lands where this script looks.
-echo "== emitting framing fixtures via [.dwg_emit_framing]"
-( cd "$ROOT" && "$TEST_BIN" "[.dwg_emit_framing]" >/dev/null 2>&1 ) \
-    || die "hidden emit test [.dwg_emit_framing] failed"
+echo "== emitting framing fixtures via [dwg_emit_framing]"
+( cd "$ROOT" && "$TEST_BIN" "[dwg_emit_framing]" >/dev/null 2>&1 ) \
+    || die "hidden emit test [dwg_emit_framing] failed"
 
 # A libreDWG fatal mask: a "Failed to decode" line, an "ERROR 0x" mask line,
 # or an assertion abort. Buffer-overflow warnings that still end in SUCCESS are
@@ -79,15 +79,29 @@ run_one() {
         echo "MISSING  $ver  (fixture not emitted: $f)"
         return 2
     fi
-    local out; out="$("$DWGREAD" "$f" 2>&1)"
-    local verline; verline="$(grep -oE 'AC10[0-9][0-9]' <<<"$out" | head -1)"
+    # minJSON exposes FILEHEADER.version without depending on localized or
+    # verbosity-dependent diagnostic text from the external reader.
+    local out; out="$("$DWGREAD" -O minJSON "$f" 2>&1)"
+    local verline; verline="$(sed -n 's/^[[:space:]]*"version": "\(AC10[0-9][0-9]\)".*/\1/p' <<<"$out" | head -1)"
     if is_fatal "$out"; then
         echo "FAIL     $ver  ($(grep -m1 -E 'Failed to decode|^ERROR 0x|Assertion failed' <<<"$out" | sed 's/^[[:space:]]*//'))"
         return 1
     fi
+    if [[ "$verline" != "$ver" ]]; then
+        echo "FAIL     $ver  (external reader reported ${verline:-no version})"
+        return 1
+    fi
+    # These fixtures deliberately contain two LINE entities and one named
+    # FRAME layer. Keep the receipts small and stable across DWG versions.
+    local line_count; line_count="$(awk '/"entity": "LINE"/{count++} END{print count + 0}' <<<"$out")"
+    local frame_count; frame_count="$(awk '/"name": "FRAME"/{count++} END{print count + 0}' <<<"$out")"
+    if [[ "$line_count" != "2" || "$frame_count" != "1" ]]; then
+        echo "FAIL     $ver  (external receipt: LINE=${line_count}, FRAME=${frame_count})"
+        return 1
+    fi
     local warn=""
     grep -q 'buffer overflow' <<<"$out" && warn=" [overflow warnings]"
-    echo "PASS     $ver${warn}"
+    echo "PASS     $ver${warn} (LINE=${line_count}, FRAME=${frame_count})"
     return 0
 }
 
