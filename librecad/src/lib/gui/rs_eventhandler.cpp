@@ -24,6 +24,7 @@
 **
 **********************************************************************/
 
+#include <algorithm>
 #include <QRegExp>
 #include <QAction>
 #include <QMouseEvent>
@@ -113,8 +114,6 @@ RS_EventHandler::~RS_EventHandler() {
     defaultAction.reset();
 
     RS_DEBUG->print("RS_EventHandler::~RS_EventHandler: Deleting all actions..");
-    for(const auto& [actionName, qAction]: m_toQAction)
-        qAction->setChecked(false);
     RS_DEBUG->print("RS_EventHandler::~RS_EventHandler: Deleting all actions..: OK");
     RS_DEBUG->print("RS_EventHandler::~RS_EventHandler: OK");
 }
@@ -170,15 +169,6 @@ void RS_EventHandler::mouseReleaseEvent(QMouseEvent* e) {
 
         current->mouseReleaseEvent(e);
 
-        // action may be completed by click. Check this and if it so, uncheck the action
-        if (current->getStatus() < 0){
-            if (m_toQAction.count(current->getName()) == 1) {
-                m_toQAction[current->getName()]->setChecked(false);
-                m_toQAction.erase(current->getName());
-	    }
-	}
-
-
         // Clean up actions - one might be finished now
         cleanUp();
         e->accept();
@@ -230,9 +220,6 @@ void RS_EventHandler::mouseEnterEvent() {
         debugActions();
         LC_LOG<<__func__<<"(): resume: "<<currentActions.last()->getName();
         currentActions.last()->resume();
-        if (m_toQAction.count(currentActions.last()->getName()) == 1) {
-            m_toQAction[currentActions.last()->getName()]->setChecked(true);
-        }
     } else {
         if (defaultAction) {
             defaultAction->resume();
@@ -478,6 +465,22 @@ void RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
     }
 
     RS_DEBUG->print("RS_EventHandler::setCurrentAction %s", action->getName().toLatin1().data());
+
+    // RS_ActionSelect finishes and starts the modify action once the selection is
+    // done, with its finished helper RS_ActionSelectSingle still on top of the
+    // stack: the modify action inherits the QAction, so the button stays checked
+    // until the whole job is done.
+    if (m_pendingQAction == nullptr) {
+        for (auto it = currentActions.rbegin(); it != currentActions.rend() && (*it)->isFinished(); ++it) {
+            auto found = m_toQAction.find(it->get());
+            if (found != m_toQAction.end() && (*it)->rtti() == RS2::ActionSelect) {
+                m_pendingQAction = found->second;
+                m_toQAction.erase(found);
+                break;
+            }
+        }
+    }
+
     // Predecessor of the new action or NULL:
     auto& predecessor = hasAction() ? currentActions.last() : defaultAction;
     // Suspend current action:
@@ -502,6 +505,10 @@ void RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
 
     // Set current action:
     currentActions.push_back(std::shared_ptr<RS_ActionInterface>(action));
+    if (m_pendingQAction != nullptr) {
+        m_toQAction[action] = m_pendingQAction;
+        m_pendingQAction = nullptr;
+    }
     //    RS_DEBUG->print("RS_EventHandler::setCurrentAction: current action is: %s -> %s",
     //                    predecessor->getName().toLatin1().data(),
     //                    currentActions.last()->getName().toLatin1().data());
@@ -524,8 +531,8 @@ void RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
     debugActions();
     RS_DEBUG->print("RS_GraphicView::setCurrentAction: OK");
     // For some actions: action->init() may call finish() within init()
-    // If so, the q_action shouldn't be checked
-
+    // If so, the QAction is released by cleanUp(), which also checks the
+    // QAction of the action which is current now.
 }
 
 
@@ -545,11 +552,13 @@ void RS_EventHandler::killSelectActions() {
             if (isActive(*it)) {
                 (*it)->finish();
             }
+            unlinkQAction(it->get());
             it= currentActions.erase(it);
         }else{
             it++;
         }
     }
+    updateQActions();
 }
 
 
@@ -569,10 +578,11 @@ void RS_EventHandler::killAllActions()
 		}
 	}
     currentActions.clear();
-    for (const auto& [actionName, qAction] : m_toQAction)
+    for (const auto& [action, qAction] : m_toQAction)
         qAction->setChecked(false);
 
     m_toQAction.clear();
+    setQAction(nullptr);
 
     if (!defaultAction->isFinished())
     {
@@ -599,15 +609,14 @@ bool RS_EventHandler::isValid(RS_ActionInterface* action) const{
  */
 bool RS_EventHandler::hasAction()
 {
-    auto it = std::remove_if(currentActions.begin(), currentActions.end(), isInactive);
-    for (auto it1 = it; it1 != currentActions.end(); ++it1) {
-	QString actionName = (*it1)->getName();
-        if (m_toQAction.count(actionName) == 1) {
-            m_toQAction[actionName]->setChecked(false);
-            m_toQAction.erase(actionName);
+    for (const auto& action : currentActions) {
+        if (isInactive(action)) {
+            unlinkQAction(action.get());
         }
     }
+    auto it = std::remove_if(currentActions.begin(), currentActions.end(), isInactive);
     currentActions.erase(it, currentActions.end());
+    updateQActions();
     return !currentActions.empty();
 }
 
@@ -621,9 +630,6 @@ void RS_EventHandler::cleanUp() {
     if(hasAction()){
         currentActions.last()->resume();
         currentActions.last()->showOptions();
-        if (m_toQAction.count(currentActions.last()->getName()) == 1) {
-            m_toQAction[currentActions.last()->getName()]->setChecked(true);
-        }
     } else {
 		if (defaultAction) {
             defaultAction->resume();
@@ -683,16 +689,55 @@ void RS_EventHandler::debugActions() const{
 
 void RS_EventHandler::setQAction(QAction* action)
 {
-    if (action==nullptr)
-        return;
+    // The QAction is triggered before the action handler creates the action,
+    // so the link is established by setCurrentAction()
+    QAction* dropped = m_pendingQAction;
+    m_pendingQAction = action;
+    if (dropped != nullptr && dropped != action) {
+        // no action was started for it: Qt toggled it when it was triggered,
+        // give it and the QAction of the current action the state of the invariant back
+        dropped->setChecked(dropped == currentQAction());
+        updateQActions();
+    }
+}
 
-    LC_ERR<<__func__<<"()"<<action->text() <<" : "<<action->icon().name();
+QAction* RS_EventHandler::currentQAction() const
+{
+    if (m_pendingQAction != nullptr) {
+        // about to be linked to the action started next
+        return m_pendingQAction;
+    }
     for (auto it = currentActions.rbegin(); it != currentActions.rend(); ++it) {
-        if (*it != nullptr && isActive(*it)) {
-    LC_ERR<<__func__<<"(): linked "<< (*it)->getName()<<" to "<<action->text() <<" : "<<action->icon().name();
-            m_toQAction.emplace((*it)->getName(), action);
-            break;
+        auto found = m_toQAction.find(it->get());
+        if (found != m_toQAction.end()) {
+            return found->second;
         }
+    }
+    return nullptr;
+}
+
+void RS_EventHandler::updateQActions()
+{
+    QAction* current = currentQAction();
+    for (const auto& [action, qAction] : m_toQAction) {
+        qAction->setChecked(qAction == current);
+    }
+}
+
+void RS_EventHandler::unlinkQAction(const RS_ActionInterface* action)
+{
+    auto it = m_toQAction.find(action);
+    if (it == m_toQAction.end()) {
+        return;
+    }
+    QAction* qAction = it->second;
+    m_toQAction.erase(it);
+    // the QAction stays checked if it is linked to another action, or if the user
+    // triggered it again and it is about to be linked to the action started next
+    const bool stillLinked = std::any_of(m_toQAction.begin(), m_toQAction.end(),
+                                         [qAction](const auto& link) { return link.second == qAction; });
+    if (!stillLinked && qAction != m_pendingQAction) {
+        qAction->setChecked(false);
     }
 }
 

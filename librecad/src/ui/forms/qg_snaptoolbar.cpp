@@ -130,12 +130,16 @@ QG_SnapToolBar::QG_SnapToolBar(QWidget* parent, QG_ActionHandler* ah, LC_ActionG
     bRelZero = new QAction(QIcon(":/icons/set_rel_zero.svg"), tr("Set relative zero position"), agm->other);
     bRelZero->setObjectName("SetRelativeZero");
     bRelZero->setCheckable(false);
+    // used in the middle of other actions: keep the action in progress as the current one
+    bRelZero->setProperty("_SetAsCurrentActionInView", false);
     connect(bRelZero, SIGNAL(triggered()), actionHandler, SLOT(slotSetRelativeZero()));
     //connect(bRelZero, SIGNAL(triggered()), this, SLOT(slotSetRelativeZero()));
     this->addAction(bRelZero);
     bLockRelZero = new QAction(QIcon(":/icons/lock_rel_zero.svg"), tr("Lock relative zero position"), agm->other);
     bLockRelZero->setObjectName("LockRelativeZero");
     bLockRelZero->setCheckable(true);
+    // a toggle, not an action: its checked state must not depend on the current action (issue #2012)
+    bLockRelZero->setProperty("_SetAsCurrentActionInView", false);
     connect(bLockRelZero, SIGNAL(triggered(bool)),actionHandler, SLOT(slotLockRelativeZero(bool)));
     this->addAction(bLockRelZero);
     //restore snapMode from saved preferences

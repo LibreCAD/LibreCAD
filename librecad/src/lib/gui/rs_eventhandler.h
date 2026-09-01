@@ -39,7 +39,6 @@ class RS_ActionInterface;
 class QAction;
 class QMouseEvent;
 class QKeyEvent;
-class QString;
 
 class RS_CommandEvent;
 class RS_Vector;
@@ -59,6 +58,19 @@ public:
     RS_EventHandler(QObject* parent = nullptr);
     ~RS_EventHandler();
 
+    /**
+     * Remember the QAction (toolbar button or menu entry) triggered by the user.
+     * The QAction is linked to the action started next by setCurrentAction().
+     *
+     * Only one QAction is checked (per graphic view, the QActions are shared by
+     * all drawing windows): the one of the topmost action on the stack which
+     * was started from a QAction. Helper actions started by an action (e.g.
+     * RS_ActionSelectSingle) and actions started from the command line run on
+     * top of it without changing it. RS_ActionSelect, which finishes and starts
+     * the modify action once the selection is done, passes its QAction on.
+     * The QAction is released when its action is removed from the stack, and
+     * a QAction for which no action is started gets its state back.
+     */
     void setQAction(QAction* action);
 
     void back();
@@ -97,11 +109,19 @@ public:
     bool inSelectionMode();
 
 private:
+    //! the pending QAction if one is set, else the QAction of the topmost action on the stack which has one, or nullptr
+    QAction* currentQAction() const;
+    //! check the current QAction, uncheck all others
+    void updateQActions();
+    //! unlink the QAction of an action which is removed from the stack; uncheck it unless another action or the pending link still holds it
+    void unlinkQAction(const RS_ActionInterface* action);
 
-	QAction* q_action{nullptr};
+    //! QAction triggered by the user, waiting for its action to be started by setCurrentAction()
+    QAction* m_pendingQAction{nullptr};
     std::shared_ptr<RS_ActionInterface> defaultAction{nullptr};
     QList<std::shared_ptr<RS_ActionInterface>> currentActions;
-    std::map<QString, QAction*> m_toQAction;
+    //! actions started by the user from a QAction, and their QAction
+    std::map<const RS_ActionInterface*, QAction*> m_toQAction;
 	bool coordinateInputEnabled{true};
     RS_Vector relative_zero;
 

@@ -3265,7 +3265,14 @@ void QC_ApplicationWindow::relayAction(QAction* q_action)
         return;
     }
 
-    view->setCurrentQAction(q_action);
+    // QActions which are used in the middle of other actions (e.g. "Set relative zero")
+    // or don't start an action at all ("Lock relative zero") must not be handled as
+    // the current action of the view, otherwise the action in progress would lose
+    // its button, or the toggle would be released with the action, see issue #2012
+    const QVariant setAsCurrentAction = q_action->property("_SetAsCurrentActionInView");
+    if (!setAsCurrentAction.isValid() || setAsCurrentAction.toBool()) {
+        view->setCurrentQAction(q_action);
+    }
 
     const QString commands(q_action->data().toString());
     if (!commands.isEmpty())

@@ -176,6 +176,7 @@
 #include "qg_snaptoolbar.h"
 #include "rs_debug.h"
 #include "rs_graphicview.h"
+#include "rs_eventhandler.h"
 #include "rs_layer.h"
 #include "rs_settings.h"
 #include "lc_actionpenpick.h"
@@ -1074,6 +1075,10 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 
 	if (a) {
         view->setCurrentAction(a);
+    } else {
+        // no action started (e.g. the tool is the current one already): the QAction
+        // the user triggered must not be linked to another action
+        view->getEventHandler()->setQAction(nullptr);
     }
 
     RS_DEBUG->print("QG_ActionHandler::setCurrentAction(): OK");
