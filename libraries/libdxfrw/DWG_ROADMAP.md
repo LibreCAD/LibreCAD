@@ -25978,3 +25978,11 @@ not executed because the current implementation is uncommitted and the
 remote branch still points at the previous base. This is a delivery/CI
 execution step, not an unverified local code claim; it must be run after the
 changes are committed and pushed.
+
+## Current Active Plan (rev 1308): implementation checkpoint committed
+
+The local DWG/DXF implementation slice described through rev 1307 is now
+committed as `92c95a2a9` on `codex/dwg-dxf-origin-master`. The commit contains
+the 17 intended source, test, workflow, script, and roadmap changes and no
+co-author trailer. The next acceptance step is remote execution of the
+native Windows matrix after this branch is pushed.
