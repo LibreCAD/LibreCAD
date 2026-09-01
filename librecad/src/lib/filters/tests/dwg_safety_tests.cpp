@@ -2641,14 +2641,14 @@ TEST_CASE("DWG modern compound ownership lists publish parent before children",
 
     DwgCompoundWriteProbe writeInterface;
     {
-        dwgRW writer(path.c_str());
+        dwgRW writer(path.string().c_str());
         writeInterface.writer = &writer;
         REQUIRE(writer.write(&writeInterface, DRW::AC1021, /*bin=*/false));
     }
 
     DwgCompoundWriteProbe readInterface;
     {
-        dwgRW reader(path.c_str());
+        dwgRW reader(path.string().c_str());
         REQUIRE(reader.read(&readInterface, /*ext=*/false));
         CHECK(reader.getError() == DRW::BAD_NONE);
         CHECK(reader.getEntityParseFailures() == 0);
@@ -2666,7 +2666,7 @@ TEST_CASE("DWG writer rejects incompatible POLYLINE VERTEX subtypes",
 
     DwgIncompatiblePolylineWriteProbe interface;
     {
-        dwgRW writer(path.c_str());
+        dwgRW writer(path.string().c_str());
         interface.writer = &writer;
         REQUIRE(writer.write(&interface, DRW::AC1027, /*bin=*/false));
     }
@@ -2689,7 +2689,7 @@ TEST_CASE("DWG writer rejects standalone attribute entities",
 
         DwgInvalidAttributeWriteProbe interface(kind);
         {
-            dwgRW writer(path.c_str());
+            dwgRW writer(path.string().c_str());
             interface.writer = &writer;
             CHECK_FALSE(writer.write(&interface, DRW::AC1027, /*bin=*/false));
         }
@@ -2709,7 +2709,7 @@ TEST_CASE("DWG writer preserves unchanged wide EED layer references",
 
     DwgWideEedWriteProbe writeInterface;
     {
-        dwgRW writer(path.c_str());
+        dwgRW writer(path.string().c_str());
         writeInterface.writer = &writer;
         REQUIRE(writer.write(&writeInterface, DRW::AC1032, /*bin=*/false));
     }
@@ -2717,7 +2717,7 @@ TEST_CASE("DWG writer preserves unchanged wide EED layer references",
 
     DwgWideEedWriteProbe readInterface;
     {
-        dwgRW reader(path.c_str());
+        dwgRW reader(path.string().c_str());
         REQUIRE(reader.read(&readInterface, /*ext=*/false));
         CHECK(reader.getError() == DRW::BAD_NONE);
     }
@@ -2740,7 +2740,7 @@ TEST_CASE("DWG writer preserves unchanged wide EED layer references",
         std::filesystem::remove(rejectedPath);
         DwgWideEedWriteProbe rejectedInterface(mode);
         {
-            dwgRW writer(rejectedPath.c_str());
+        dwgRW writer(rejectedPath.string().c_str());
             rejectedInterface.writer = &writer;
             const DRW::Version target = mode == DwgWideEedWriteProbe::Mode::Unchanged
                 ? DRW::AC1027 : DRW::AC1032;
@@ -2759,14 +2759,14 @@ TEST_CASE("DWG modern INSERT ownership lists publish parent before ATTRIB",
 
     DwgInsertCompoundWriteProbe writeInterface;
     {
-        dwgRW writer(path.c_str());
+        dwgRW writer(path.string().c_str());
         writeInterface.writer = &writer;
         REQUIRE(writer.write(&writeInterface, DRW::AC1021, /*bin=*/false));
     }
 
     DwgInsertCompoundWriteProbe readInterface;
     {
-        dwgRW reader(path.c_str());
+        dwgRW reader(path.string().c_str());
         REQUIRE(reader.read(&readInterface, /*ext=*/false));
         CHECK(reader.getError() == DRW::BAD_NONE);
         CHECK(reader.getEntityParseFailures() == 0);
@@ -2792,7 +2792,7 @@ TEST_CASE("DWG modern INSERT and MINSERT round trips preserve ownership",
             DwgInsertCompoundWriteProbe writeInterface;
             writeInterface.writeMInsert = minsert;
             {
-                dwgRW writer(path.c_str());
+                dwgRW writer(path.string().c_str());
                 writeInterface.writer = &writer;
                 REQUIRE(writer.write(&writeInterface, version,
                                      /*bin=*/false));
@@ -2801,7 +2801,7 @@ TEST_CASE("DWG modern INSERT and MINSERT round trips preserve ownership",
 
             DwgInsertCompoundWriteProbe readInterface;
             {
-                dwgRW reader(path.c_str());
+                dwgRW reader(path.string().c_str());
                 REQUIRE(reader.read(&readInterface, /*ext=*/false));
                 CHECK(reader.getError() == DRW::BAD_NONE);
                 CHECK(reader.getEntityParseFailures() == 0);
@@ -2843,14 +2843,14 @@ TEST_CASE("DWG AC1015 attributed INSERT and MINSERT round trip",
         DwgInsertCompoundWriteProbe writeInterface;
         writeInterface.writeMInsert = minsert;
         {
-            dwgRW writer(path.c_str());
+            dwgRW writer(path.string().c_str());
             writeInterface.writer = &writer;
             REQUIRE(writer.write(&writeInterface, DRW::AC1015, /*bin=*/false));
         }
 
         DwgInsertCompoundWriteProbe readInterface;
         {
-            dwgRW reader(path.c_str());
+            dwgRW reader(path.string().c_str());
             REQUIRE(reader.read(&readInterface, /*ext=*/false));
             CHECK(reader.getError() == DRW::BAD_NONE);
             CHECK(reader.getEntityParseFailures() == 0);
@@ -2873,7 +2873,7 @@ TEST_CASE("DWG writer preserves an explicit empty legacy INSERT sequence",
     DwgInsertCompoundWriteProbe writeInterface;
     writeInterface.writeEmptyLegacySequence = true;
     {
-        dwgRW writer(path.c_str());
+        dwgRW writer(path.string().c_str());
         writeInterface.writer = &writer;
         REQUIRE(writer.write(&writeInterface, DRW::AC1015, /*bin=*/false));
     }
@@ -2881,7 +2881,7 @@ TEST_CASE("DWG writer preserves an explicit empty legacy INSERT sequence",
 
     DwgInsertCompoundWriteProbe readInterface;
     {
-        dwgRW reader(path.c_str());
+        dwgRW reader(path.string().c_str());
         REQUIRE(reader.read(&readInterface, /*ext=*/false));
         CHECK(reader.getError() == DRW::BAD_NONE);
         CHECK(reader.getEntityParseFailures() == 0);
@@ -2906,7 +2906,7 @@ TEST_CASE("DWG writer rejects a legacy empty INSERT sequence in modern output",
     DwgInsertCompoundWriteProbe writeInterface;
     writeInterface.writeEmptyLegacySequence = true;
     {
-        dwgRW writer(path.c_str());
+        dwgRW writer(path.string().c_str());
         writeInterface.writer = &writer;
         REQUIRE(writer.write(&writeInterface, DRW::AC1018, /*bin=*/false));
     }
@@ -6234,7 +6234,7 @@ TEST_CASE("DWG R2007 integrity diagnostics are exposed", "[dwg][safety]") {
     const auto source = std::filesystem::path(LIBRECAD_TEST_DIR) /
                         "visualstyle_r2007.dwg";
     DwgReadProbe interface;
-    dwgRW reader(source.c_str());
+    dwgRW reader(source.string().c_str());
     REQUIRE(reader.read(&interface, true));
     CHECK(reader.getR2007CrcMismatch() > 0u);
     const auto diagnostics = reader.getIntegrityDiagnostics();
@@ -6449,7 +6449,7 @@ TEST_CASE("DWG R2004 file-header CRC mismatch is surfaced",
     bytes[0x80 + 36] ^= 0x01;
 
     DwgReadProbe interface;
-    dwgRW reader(source.c_str());
+    dwgRW reader(source.string().c_str());
     REQUIRE(reader.readBuffer(bytes.data(), bytes.size(), &interface, true));
     CHECK(reader.getR2004CrcMismatch() == 1u);
     const auto diagnostics = reader.getIntegrityDiagnostics();
@@ -6476,7 +6476,7 @@ TEST_CASE("DWG R2004 file-header tail magic is required",
     bytes[0xEC] ^= 0x01;
 
     DwgReadProbe interface;
-    dwgRW reader(source.c_str());
+    dwgRW reader(source.string().c_str());
     CHECK_FALSE(reader.readBuffer(bytes.data(), bytes.size(), &interface, true));
 }
 
@@ -6492,7 +6492,7 @@ TEST_CASE("DWG R2004 file-header constants are required",
     bytes[0x80 + 16] ^= 0x01;
 
     DwgReadProbe interface;
-    dwgRW reader(source.c_str());
+    dwgRW reader(source.string().c_str());
     CHECK_FALSE(reader.readBuffer(bytes.data(), bytes.size(), &interface, true));
 }
 
@@ -6523,7 +6523,7 @@ TEST_CASE("DWG source-controlled versions reject truncated containers",
         bytes.resize(bytes.size() / 2);
 
         DwgReadProbe interface;
-        dwgRW reader(source.c_str());
+        dwgRW reader(source.string().c_str());
         CHECK_FALSE(reader.readBuffer(bytes.data(), bytes.size(), &interface,
                                       /*ext=*/true));
         CHECK(reader.getVersion() == fixture.version);
@@ -6729,7 +6729,7 @@ TEST_CASE("DWG CLASSES report finalization is independent of DXF classes",
     const auto source = std::filesystem::path(LIBRECAD_TEST_DIR) /
                         "visualstyle_r2007.dwg";
     DwgReadProbe interface;
-    dwgRW reader(source.c_str());
+    dwgRW reader(source.string().c_str());
     REQUIRE(reader.read(&interface, true));
     REQUIRE(interface.classCoverageReports.size() == 1);
     const auto& report = interface.classCoverageReports.front();
@@ -6777,7 +6777,7 @@ TEST_CASE("DWG process keeps a class-report callback failure best effort",
     const auto source = std::filesystem::path(LIBRECAD_TEST_DIR) /
                         "visualstyle_r2007.dwg";
     DwgThrowingClassCoverageProbe interface;
-    dwgRW reader(source.c_str());
+    dwgRW reader(source.string().c_str());
     REQUIRE(reader.read(&interface, true));
     CHECK(reader.getError() == DRW::BAD_NONE);
     CHECK(interface.attempts == 1);
@@ -7083,7 +7083,7 @@ TEST_CASE("DWG AC1018 CLASSES CRC mismatch is reported after parsing",
     const auto crcPosition = static_cast<std::size_t>(end - original.cbegin()) - 2;
 
     DwgReadProbe pristineInterface;
-    dwgRW pristine(source.c_str());
+    dwgRW pristine(source.string().c_str());
     REQUIRE(pristine.read(&pristineInterface, true));
     const auto baseline = pristine.getClassesCrcMismatch();
 
@@ -7101,7 +7101,7 @@ TEST_CASE("DWG AC1018 CLASSES CRC mismatch is reported after parsing",
     }
 
     DwgReadProbe corruptedInterface;
-    dwgRW reader(temporary.c_str());
+    dwgRW reader(temporary.string().c_str());
     REQUIRE(reader.read(&corruptedInterface, true));
     CHECK(reader.getClassesCrcMismatch() == baseline + 1);
     REQUIRE(corruptedInterface.classCoverageReports.size() == 1);
@@ -7133,7 +7133,7 @@ TEST_CASE("DWG INSERT callbacks contain complete ATTRIB sequences",
     }
 
     DwgReadProbe interface;
-    dwgRW reader(source.c_str());
+    dwgRW reader(source.string().c_str());
     REQUIRE(reader.read(&interface, true));
     CHECK(reader.getEntityParseFailures() == 0);
 
@@ -7229,7 +7229,7 @@ TEST_CASE("DWG R2018 common handles preserve block owners and DBCOLOR references
     // owner/reactors/xdictionary/DBCOLOR. These two entities carry both
     // references and catch accidental reordering of the optional color H.
     DwgReadProbe interface;
-    dwgRW reader(source.c_str());
+    dwgRW reader(source.string().c_str());
     REQUIRE(reader.read(&interface, true));
     CHECK(reader.getEntityParseFailures() == 0);
 
@@ -16897,7 +16897,7 @@ TEST_CASE("DWG R2007 page-map header bounds are enforced before allocation",
     REQUIRE(!original.empty());
 
     DwgReadProbe pristineInterface;
-    dwgRW pristine(source.c_str());
+    dwgRW pristine(source.string().c_str());
     REQUIRE(pristine.read(&pristineInterface, true));
 
     const std::array<std::uint64_t, 2> invalidPageLimits{
@@ -16917,7 +16917,7 @@ TEST_CASE("DWG R2007 page-map header bounds are enforced before allocation",
         }
 
         DwgReadProbe interface;
-        dwgRW reader(temporary.c_str());
+        dwgRW reader(temporary.string().c_str());
         CHECK_FALSE(reader.read(&interface, true));
 
         std::error_code error;
@@ -16944,7 +16944,7 @@ TEST_CASE("DWG R2007 page-map count must match the decoded map",
         REQUIRE(reencodeR2007PagesAmount(corrupted, invalidAmount));
 
         DwgReadProbe interface;
-        dwgRW reader(source.c_str());
+        dwgRW reader(source.string().c_str());
         CHECK_FALSE(reader.readBuffer(corrupted.data(), corrupted.size(),
                                       &interface, true));
         CHECK(interface.inserts.empty());
@@ -16980,7 +16980,7 @@ TEST_CASE("DWG R2007 section-map count must match decoded descriptors",
               == invalidAmount);
 
         DwgReadProbe interface;
-        dwgRW reader(source.c_str());
+        dwgRW reader(source.string().c_str());
         CHECK_FALSE(reader.readBuffer(corrupted.data(), corrupted.size(),
                                       &interface, true));
         CHECK(interface.inserts.empty());
@@ -17008,7 +17008,7 @@ TEST_CASE("DWG R2007 page-map rejects an out-of-range page ID",
     }
 
     DwgReadProbe interface;
-    dwgRW reader(temporary.c_str());
+    dwgRW reader(temporary.string().c_str());
     CHECK_FALSE(reader.read(&interface, true));
     const auto diagnostics = reader.getIntegrityDiagnostics();
     REQUIRE_FALSE(diagnostics.empty());
@@ -17036,7 +17036,7 @@ TEST_CASE("DWG R2007 writer output rejects a generated page-map ID mutation",
 
     DwgReadProbe writeInterface;
     {
-        dwgRW writer(source.c_str());
+        dwgRW writer(source.string().c_str());
         REQUIRE(writer.write(&writeInterface, DRW::AC1021, false));
     }
 
@@ -17052,7 +17052,7 @@ TEST_CASE("DWG R2007 writer output rejects a generated page-map ID mutation",
     }
 
     DwgReadProbe readInterface;
-    dwgRW reader(corrupted.c_str());
+    dwgRW reader(corrupted.string().c_str());
     CHECK_FALSE(reader.read(&readInterface, true));
     CHECK(readInterface.inserts.empty());
     CHECK(readInterface.polylineCount == 0);
@@ -17073,13 +17073,13 @@ TEST_CASE("DWG R2007 generated page-map CRC mismatch is advisory",
 
     DwgReadProbe writeInterface;
     {
-        dwgRW writer(source.c_str());
+        dwgRW writer(source.string().c_str());
         REQUIRE(writer.write(&writeInterface, DRW::AC1021, false));
     }
 
     DwgReadProbe pristineInterface;
     {
-        dwgRW pristine(source.c_str());
+        dwgRW pristine(source.string().c_str());
         REQUIRE(pristine.read(&pristineInterface, true));
         CHECK(pristine.getR2007CrcMismatch() == 0u);
     }
@@ -17096,7 +17096,7 @@ TEST_CASE("DWG R2007 generated page-map CRC mismatch is advisory",
     }
 
     DwgReadProbe readInterface;
-    dwgRW reader(corrupted.c_str());
+    dwgRW reader(corrupted.string().c_str());
     REQUIRE(reader.read(&readInterface, true));
     CHECK(reader.getError() == DRW::BAD_NONE);
     CHECK(reader.getR2007CrcMismatch() == 1u);
@@ -17187,7 +17187,7 @@ TEST_CASE("DWG R2007 writer emits extended object string footers",
 
     DwgLongTextProbe source;
     {
-        dwgRW writer(path.c_str());
+        dwgRW writer(path.string().c_str());
         source.writer = &writer;
         REQUIRE(writer.write(&source, DRW::AC1021, false));
     }
@@ -17195,7 +17195,7 @@ TEST_CASE("DWG R2007 writer emits extended object string footers",
 
     DwgLongTextProbe result;
     {
-        dwgRW reader(path.c_str());
+        dwgRW reader(path.string().c_str());
         REQUIRE(reader.read(&result, true));
     }
     REQUIRE(result.texts.size() == 1);
@@ -17228,7 +17228,7 @@ TEST_CASE("DWG R2010 writer emits extended object string footers",
 
     DwgLongTextProbe source;
     {
-        dwgRW writer(path.c_str());
+        dwgRW writer(path.string().c_str());
         source.writer = &writer;
         REQUIRE(writer.write(&source, DRW::AC1024, false));
     }
@@ -17236,7 +17236,7 @@ TEST_CASE("DWG R2010 writer emits extended object string footers",
 
     DwgLongTextProbe result;
     {
-        dwgRW reader(path.c_str());
+        dwgRW reader(path.string().c_str());
         const bool readOk = reader.read(&result, true);
         for (const auto& diagnostic : reader.getIntegrityDiagnostics()) {
             INFO("diagnostic kind=" << static_cast<int>(diagnostic.kind)
@@ -17276,7 +17276,7 @@ TEST_CASE("DWG writers keep independent modern version markers",
 
         DwgLongTextProbe source;
         {
-            dwgRW writer(path.c_str());
+        dwgRW writer(path.string().c_str());
             source.writer = &writer;
             REQUIRE(writer.write(&source, version.version, false));
         }
@@ -17288,7 +17288,7 @@ TEST_CASE("DWG writers keep independent modern version markers",
 
         DwgLongTextProbe result;
         {
-            dwgRW reader(path.c_str());
+        dwgRW reader(path.string().c_str());
             REQUIRE(reader.read(&result, true));
         }
         REQUIRE(result.texts.size() == 1);
@@ -20871,7 +20871,7 @@ TEST_CASE("DWG table callback failures retain the table phase error",
     const auto source = std::filesystem::path(LIBRECAD_TEST_DIR)
         / "ordinary_enc_AC1015.dwg";
     DwgThrowingLayerProbe receiver;
-    dwgRW reader(source.c_str());
+    dwgRW reader(source.string().c_str());
 
     CHECK_FALSE(reader.read(&receiver, /*ext=*/true));
     CHECK(reader.getError() == DRW::BAD_READ_TABLES);
@@ -20887,7 +20887,7 @@ TEST_CASE("DWG table receipts follow accepted table callbacks",
     const auto source = std::filesystem::path(LIBRECAD_TEST_DIR)
         / "ordinary_enc_AC1015.dwg";
     DwgTableReceiptProbe receiver;
-    dwgRW reader(source.c_str());
+    dwgRW reader(source.string().c_str());
 
     REQUIRE(reader.read(&receiver, /*ext=*/true));
     const auto layerReceipt = std::find_if(

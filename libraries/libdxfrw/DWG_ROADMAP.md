@@ -26017,6 +26017,23 @@ filter translation unit and is independent of the codec logic.
    current run is expected to stop at C1128 in the ordinary Windows build
    and is not yet evidence against the corrected configuration.
 
+## Current Active Plan (rev 1312): make DWG safety fixtures portable
+
+The first matrix after `/bigobj` moved past the production filter, then the
+DWG fast target failed while compiling `dwg_safety_tests.cpp`. The test used
+`std::filesystem::path::c_str()` as a `const char*`; on Windows this is a
+wide-character pointer and cannot bind to the `dwgRW` filename constructor.
+
+### Implemented
+
+1. Convert every filesystem path passed to `dwgRW` in the safety fixture to
+   `path.string().c_str()`. This preserves the existing ASCII fixture names
+   and gives Windows and POSIX builds the same narrow-path API input.
+2. Keep string-valued test paths unchanged; no library API or filename
+   ownership behavior is changed.
+3. The native x64 and ARM64 matrix must be rerun after this focused test
+   portability fix. The prior Linux fast lane remains green.
+
 ## Current Active Plan (rev 1308): implementation checkpoint committed
 
 The local DWG/DXF implementation slice described through rev 1307 is now
