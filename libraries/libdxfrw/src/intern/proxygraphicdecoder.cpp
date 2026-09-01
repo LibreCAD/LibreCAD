@@ -790,9 +790,9 @@ DRW_ProxyGraphicDecodeResult DRW_ProxyGraphicDecoder::decode(
             if (payloadLength >= 4) {
                 std::uint32_t lineweight = 0;
                 std::memcpy(&lineweight, payload, sizeof(lineweight));
-                const long value = lineweight > 211u
-                    ? std::max(-3L, static_cast<long>(lineweight) - 0x100000000L)
-                    : static_cast<long>(lineweight);
+                const std::int64_t value = lineweight > 211u
+                    ? static_cast<std::int64_t>(lineweight) - 0x100000000LL
+                    : static_cast<std::int64_t>(lineweight);
                 state.lWeight = static_cast<int>(value);
             }
             break;

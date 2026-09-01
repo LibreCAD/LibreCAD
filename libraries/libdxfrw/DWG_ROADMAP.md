@@ -25979,6 +25979,26 @@ remote branch still points at the previous base. This is a delivery/CI
 execution step, not an unverified local code claim; it must be run after the
 changes are committed and pushed.
 
+## Current Active Plan (rev 1310): fix the first native Windows portability finding
+
+The first PR workflow run exposed a source-level portability error in
+`proxygraphicdecoder.cpp` that Linux and macOS do not diagnose: the proxy
+lineweight decoder mixed `long` with a 32-bit-platform-dependent literal. MSVC
+therefore saw incompatible `long` and `__int64` operands in `std::max` and
+failed the normal Windows build before the DWG/DXF test target could run.
+
+### Implemented
+
+1. Decode the signed 32-bit proxy lineweight value with fixed-width
+   `std::int64_t` arithmetic and the `LL` literal suffix. The conversion is
+   now identical on LP64 and LLP64 hosts and does not depend on the width of
+   `long`.
+2. Confirm the corrected translation unit compiles as C++17 with both local
+   GCC and Clang syntax checks, and that the patch has no whitespace errors.
+3. The same workflow run completed `VerifyDwgDxfFast` successfully. The
+   Windows x64 and ARM64 jobs must be rerun from this focused fix and their
+   native test conclusions recorded before this plan is closed.
+
 ## Current Active Plan (rev 1308): implementation checkpoint committed
 
 The local DWG/DXF implementation slice described through rev 1307 is now
