@@ -24,6 +24,13 @@
 #include <utility>
 #include <vector>
 
+// Solaris/Illumos may predefine `sun` as a numeric platform macro.  It
+// collides with valid libdxfrw identifiers such as DRW_Sun parameters and
+// locals, so remove the non-standard macro before exposing the C++ API.
+#ifdef sun
+# undef sun
+#endif
+
 #ifdef DRW_ASSERTS
 # define drw_assert(a) assert(a)
 #else
