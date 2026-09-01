@@ -25999,6 +25999,24 @@ failed the normal Windows build before the DWG/DXF test target could run.
    Windows x64 and ARM64 jobs must be rerun from this focused fix and their
    native test conclusions recorded before this plan is closed.
 
+## Current Active Plan (rev 1311): enable large MSVC objects for the filter
+
+The next native Windows build reached the application filter and exposed
+MSVC error C1128 in `rs_filterdxfrw.cpp`: the generated object exceeded the
+default 65,536-section COFF limit. This is expected for the large DWG/DXF
+filter translation unit and is independent of the codec logic.
+
+### Implemented
+
+1. Add `/bigobj` only to the CMake `librecad_lib` and
+   `librecad_filter_compile_check` targets, keeping unrelated targets
+   unchanged.
+2. Make the qmake Windows configuration select `/bigobj` for MSVC and retain
+   `-Wa,-mbig-obj` for non-MSVC Windows toolchains.
+3. The replacement native matrix must be rerun after this commit; the
+   current run is expected to stop at C1128 in the ordinary Windows build
+   and is not yet evidence against the corrected configuration.
+
 ## Current Active Plan (rev 1308): implementation checkpoint committed
 
 The local DWG/DXF implementation slice described through rev 1307 is now

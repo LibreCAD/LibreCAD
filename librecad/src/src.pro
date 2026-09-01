@@ -107,7 +107,11 @@ win32 {
         QMAKE_POST_LINK = "$$_PRO_FILE_PWD_/../../scripts/postprocess-win.bat" $$LC_VERSION
     }
 
-    QMAKE_CXXFLAGS += -Wa,-mbig-obj
+    msvc {
+        QMAKE_CXXFLAGS += /bigobj
+    } else {
+        QMAKE_CXXFLAGS += -Wa,-mbig-obj
+    }
 
     LIBS += -ldbghelp
 }

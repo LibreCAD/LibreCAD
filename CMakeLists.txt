@@ -2240,6 +2240,11 @@ if (WIN32)
         _USE_MATH_DEFINES)
 endif ()
 
+if (MSVC)
+    target_compile_options(librecad_lib PRIVATE /bigobj)
+    target_compile_options(librecad_filter_compile_check PRIVATE /bigobj)
+endif ()
+
 set (MAIN_SOURCES
      librecad/src/main/main.cpp
     librecad/src/main/lc_release_label.cpp
