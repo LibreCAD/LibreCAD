@@ -1657,6 +1657,47 @@ protected:
       return DwgWriteReferenceStatus::Committed;
     }
 
+    // Preserved raw OBJECTS are committed under RawCarrier, not Object.
+    // Prefer that exact identity when no typed Object/Entity identity exists;
+    // otherwise reference receipts name a target kind that can never commit.
+    std::uint32_t rawOutputHandle = 0;
+    const DwgWriteIdentityLookup rawIdentityStatus =
+        lookupDwgWriteIdentity(DwgWriteSourceKind::RawCarrier, sourceHandle,
+                               &rawOutputHandle);
+    if (rawIdentityStatus == DwgWriteIdentityLookup::Ambiguous)
+      return DwgWriteReferenceStatus::Ambiguous;
+    if (rawIdentityStatus == DwgWriteIdentityLookup::Reserved ||
+        rawIdentityStatus == DwgWriteIdentityLookup::Selected ||
+        rawIdentityStatus == DwgWriteIdentityLookup::Committed) {
+      const DwgWriteIdentityLookup entityIdentityStatus =
+          lookupDwgWriteIdentity(DwgWriteSourceKind::Entity, sourceHandle);
+      const DwgWriteIdentityLookup objectIdentityStatus =
+          lookupDwgWriteIdentity(DwgWriteSourceKind::Object, sourceHandle);
+      const bool typedIdentityExists =
+          entityIdentityStatus == DwgWriteIdentityLookup::Reserved ||
+          entityIdentityStatus == DwgWriteIdentityLookup::Selected ||
+          entityIdentityStatus == DwgWriteIdentityLookup::Committed ||
+          objectIdentityStatus == DwgWriteIdentityLookup::Reserved ||
+          objectIdentityStatus == DwgWriteIdentityLookup::Selected ||
+          objectIdentityStatus == DwgWriteIdentityLookup::Committed;
+      if (!typedIdentityExists) {
+        if (outputHandle != nullptr)
+          *outputHandle = rawOutputHandle;
+        if (targetKind != nullptr)
+          *targetKind = DwgWriteSourceKind::RawCarrier;
+        switch (rawIdentityStatus) {
+        case DwgWriteIdentityLookup::Reserved:
+          return DwgWriteReferenceStatus::Reserved;
+        case DwgWriteIdentityLookup::Selected:
+          return DwgWriteReferenceStatus::Selected;
+        case DwgWriteIdentityLookup::Committed:
+          return DwgWriteReferenceStatus::Committed;
+        default:
+          break;
+        }
+      }
+    }
+
     const DwgWriteReferenceStatus entityStatus =
         resolveDwgWriteEntityHandle(sourceHandle, outputHandle);
     std::uint32_t objectOutputHandle = 0;
@@ -1725,6 +1766,12 @@ protected:
     std::uint32_t blockOutputHandle = 0;
     const DwgWriteReferenceStatus blockStatus =
         resolveDwgWriteBlockOwner(sourceHandle, &blockOutputHandle);
+    std::uint32_t rawOutputHandle = 0;
+    const DwgWriteIdentityLookup rawIdentityStatus =
+        lookupDwgWriteIdentity(DwgWriteSourceKind::RawCarrier, sourceHandle,
+                               &rawOutputHandle);
+    const DwgWriteIdentityLookup objectIdentityStatus =
+        lookupDwgWriteIdentity(DwgWriteSourceKind::Object, sourceHandle);
     std::uint32_t objectOutputHandle = 0;
     const DwgWriteReferenceStatus objectStatus =
         resolveDwgWriteObjectHandle(sourceHandle, &objectOutputHandle);
@@ -1737,6 +1784,26 @@ protected:
     if (blockStatus == DwgWriteReferenceStatus::Ambiguous ||
         objectStatus == DwgWriteReferenceStatus::Ambiguous)
       return DwgWriteReferenceStatus::Ambiguous;
+    if ((rawIdentityStatus == DwgWriteIdentityLookup::Reserved ||
+         rawIdentityStatus == DwgWriteIdentityLookup::Selected ||
+         rawIdentityStatus == DwgWriteIdentityLookup::Committed) &&
+        !isLive(blockStatus) &&
+        objectIdentityStatus != DwgWriteIdentityLookup::Reserved &&
+        objectIdentityStatus != DwgWriteIdentityLookup::Selected &&
+        objectIdentityStatus != DwgWriteIdentityLookup::Committed) {
+      if (outputHandle != nullptr)
+        *outputHandle = rawOutputHandle;
+      switch (rawIdentityStatus) {
+      case DwgWriteIdentityLookup::Reserved:
+        return DwgWriteReferenceStatus::Reserved;
+      case DwgWriteIdentityLookup::Selected:
+        return DwgWriteReferenceStatus::Selected;
+      case DwgWriteIdentityLookup::Committed:
+        return DwgWriteReferenceStatus::Committed;
+      default:
+        break;
+      }
+    }
     if (isLive(blockStatus) && isLive(objectStatus))
       return DwgWriteReferenceStatus::Ambiguous;
     if (isLive(blockStatus)) {

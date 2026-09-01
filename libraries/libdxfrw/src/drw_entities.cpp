@@ -201,6 +201,7 @@ bool leaderHasEndpointProjection(DRW::Version version) {
 }
 
 bool leaderHasTextBox(DRW::Version version) {
+    // R2010+ files use the compact LEADER layout without these legacy fields.
     return version <= DRW::AC1021;
 }
 

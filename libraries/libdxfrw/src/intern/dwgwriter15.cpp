@@ -5382,20 +5382,6 @@ bool patchRawEntityOwner(const std::vector<std::uint8_t>& raw,
 } // namespace
 
 bool dwgWriter15::replayRawObject(const DRW_UnsupportedObject& object) {
-    const char* failureStage = "precondition";
-    const auto traceFailure = [&]() {
-        m_currentDwgObjectFrameProvenance = {};
-        if (object.m_recordName == "PLANESURFACE") {
-            std::fprintf(stderr,
-                         "raw replay failure stage=%s handle=0x%X type=%u "
-                         "class=%s owner=0x%X parent=0x%X bytes=%zu bits=%u\n",
-                         failureStage, object.m_handle, object.m_objectType,
-                         object.m_className.c_str(), object.m_blockOwnerHandle,
-                         object.m_parentHandle, object.m_rawBytes.size(),
-                         object.m_bodyBitSize);
-        }
-        return false;
-    };
     m_lastDwgObjectFrame = {};
     m_lastDwgObjectFrameValid = false;
     m_currentDwgObjectFrameProvenance =
@@ -5408,26 +5394,26 @@ bool dwgWriter15::replayRawObject(const DRW_UnsupportedObject& object) {
             && !isReplayableSurfaceRawEntity(object)
             && !isReplayableCustomRawEntity(object))
         || object.m_handle == 0 || object.m_rawBytes.empty()) {
-        return traceFailure();
+        return false;
     }
     if (m_version > DRW::AC1021) {
         if (object.m_rawBytes.size()
             > std::numeric_limits<std::uint64_t>::max() / 8u
             || static_cast<std::uint64_t>(object.m_bodyBitSize)
                 > static_cast<std::uint64_t>(object.m_rawBytes.size()) * 8u) {
-            return traceFailure();
+            return false;
         }
     }
     if (object.m_objectSize != 0
         && static_cast<std::uint64_t>(object.m_objectSize)
             != static_cast<std::uint64_t>(object.m_rawBytes.size())) {
-        return traceFailure();
+        return false;
     }
     if (std::any_of(m_objectMap.cbegin(), m_objectMap.cend(),
                     [&object](const auto& entry) {
                         return entry.first == object.m_handle;
                     })) {
-        return traceFailure();
+        return false;
     }
 
     const bool replayableCustomEntity = isReplayableCustomRawEntity(object);
@@ -5436,9 +5422,9 @@ bool dwgWriter15::replayRawObject(const DRW_UnsupportedObject& object) {
         && object.m_parentHandle == DRW::NoHandle
         && object.m_blockOwnerHandle != reservedHandle::BLOCK_MODEL_SPACE
         && object.m_blockOwnerHandle != reservedHandle::BLOCK_PAPER_SPACE)
-        return traceFailure();
+        return false;
     if (replayableCustomEntity && !canRecordRawBlockOwnedEntity(object))
-        return traceFailure();
+        return false;
 
     m_handles.reserve(object.m_handle);
     const std::vector<DwgClassDefinition> classDefinitionsBefore =
@@ -5473,13 +5459,12 @@ bool dwgWriter15::replayRawObject(const DRW_UnsupportedObject& object) {
             m_objectMap.resize(objectMapStart);
     };
     const auto fail = [&]() {
-        traceFailure();
+        m_currentDwgObjectFrameProvenance = {};
         rollback();
         m_lastDwgObjectFrame = {};
         m_lastDwgObjectFrameValid = false;
         return false;
     };
-    failureStage = "register class";
     if (!registerRawObjectClass(object))
         return fail();
 
@@ -5496,7 +5481,6 @@ bool dwgWriter15::replayRawObject(const DRW_UnsupportedObject& object) {
     std::vector<std::uint8_t> patchedOwner;
     std::uint32_t bodyBitSize = object.m_bodyBitSize;
     std::int64_t objectDataBitDelta = 0;
-    failureStage = "patch object type";
     if (object.m_isCustomClass && sourceType >= 500 && writerType != sourceType) {
         std::int64_t bitDelta = 0;
         if (!patchRawObjectType(object.m_rawBytes, m_version, writerType,
@@ -5505,12 +5489,10 @@ bool dwgWriter15::replayRawObject(const DRW_UnsupportedObject& object) {
         bodyBytes = &patched;
         objectDataBitDelta += bitDelta;
     }
-    failureStage = "read object handle";
     dwgHandle encodedHandle;
     if (!readRawObjectHandle(*bodyBytes, m_version, encodedHandle))
         return fail();
     if (encodedHandle.ref64 != object.m_handle) {
-        failureStage = "patch object handle";
         std::int64_t bitDelta = 0;
         if (!patchRawObjectHandle(*bodyBytes, m_version, object.m_handle,
                                   patchedHandle, &bitDelta))
@@ -5519,7 +5501,6 @@ bool dwgWriter15::replayRawObject(const DRW_UnsupportedObject& object) {
         objectDataBitDelta += bitDelta;
     }
     if (m_version < DRW::AC1024 && objectDataBitDelta != 0) {
-        failureStage = "adjust data size";
         if (!adjustRawObjectDataBitSize(*bodyBytes, m_version,
                                         objectDataBitDelta, patchedDataSize))
             return fail();
@@ -5529,14 +5510,12 @@ bool dwgWriter15::replayRawObject(const DRW_UnsupportedObject& object) {
     const std::uint32_t targetOwner = rawBlockOwnerHandle(object);
     if (replayableCustomEntity && sourceOwner != DRW::NoHandle
         && targetOwner != sourceOwner) {
-        failureStage = "patch owner";
         if (!patchRawEntityOwner(*bodyBytes, m_version, sourceOwner,
                                  targetOwner, bodyBitSize, patchedOwner,
                                  bodyBitSize))
             return fail();
         bodyBytes = &patchedOwner;
     }
-    failureStage = "verify object type";
     if (bodyBytes->empty())
         return fail();
     dwgBuffer typeReader(
@@ -5547,25 +5526,20 @@ bool dwgWriter15::replayRawObject(const DRW_UnsupportedObject& object) {
     if (bodyBytes->size() > DwgObjectFrame::MaxBodySize
         || bodyBytes->size() > static_cast<std::size_t>(
             std::numeric_limits<std::int32_t>::max())) {
-        failureStage = "body size";
         return fail();
     }
     if (m_buf.size() > std::numeric_limits<std::uint32_t>::max()) {
-        failureStage = "output size";
         return fail();
     }
 
-    failureStage = "write frame";
     const std::uint32_t frameStart = static_cast<std::uint32_t>(m_buf.size());
     m_buf.putModularShort(static_cast<std::int32_t>(bodyBytes->size()));
     if (!m_buf.isGood()) {
-        failureStage = "frame size";
         return fail();
     }
     if (m_version > DRW::AC1021)
         m_buf.putUModularChar(bodyBitSize);
     if (!m_buf.isGood()) {
-        failureStage = "frame bits";
         return fail();
     }
     const size_t bodyStart = m_buf.size();
@@ -5576,11 +5550,9 @@ bool dwgWriter15::replayRawObject(const DRW_UnsupportedObject& object) {
     m_buf.putRawShort16(crc);
     if (!m_buf.isGood()
         || m_buf.size() > std::numeric_limits<std::uint32_t>::max()) {
-        failureStage = "frame crc";
         return fail();
     }
     m_objectMap.emplace_back(object.m_handle, frameStart);
-    failureStage = "record owner";
     if (replayableCustomEntity && !recordRawBlockOwnedEntity(object)) {
         return fail();
     }
@@ -5588,7 +5560,6 @@ bool dwgWriter15::replayRawObject(const DRW_UnsupportedObject& object) {
     if (m_nextDwgObjectFrameGeneration == 0
         || m_nextDwgObjectFrameGeneration
                == std::numeric_limits<std::uint64_t>::max()) {
-        failureStage = "frame generation";
         return fail();
     }
     m_lastDwgObjectFrame.valid = true;

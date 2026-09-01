@@ -2722,21 +2722,22 @@ TEST_CASE("DRW_Leader::encodeDwg round-trips vertices, arrow, leadertype, extrus
         REQUIRE(dst.offsettext.y     == Approx(-0.09));
     }
 
-    EncodedEntityFrame frame;
-    REQUIRE(encodeThreeStreams(src, DRW::AC1024, frame));
-    DRW_TextCodec codec;
-    codec.setVersion(DRW::AC1024, false);
-    dwgBuffer input(frame.bytes.data(), frame.bytes.size(), &codec);
-    DRW_Leader modern;
-    REQUIRE(DrwEntityEncodeTestAccess::parse(
-        modern, DRW::AC1024, &input, frame.handleBitSize));
-    CHECK(modern.textheight == Approx(src.textheight));
-    CHECK(modern.textwidth == Approx(src.textwidth));
-    CHECK(modern.origin.x == Approx(src.origin.x));
-    CHECK(modern.offsettext.x == Approx(0.0));
-    CHECK(modern.leadertype == src.leadertype);
-    CHECK(modern.vertexlist.size() == src.vertexlist.size());
-    CHECK(input.isGood());
+    for (DRW::Version modernVersion : {DRW::AC1024, DRW::AC1027,
+                                       DRW::AC1032}) {
+        EncodedEntityFrame frame;
+        REQUIRE(encodeThreeStreams(src, modernVersion, frame));
+        DRW_TextCodec codec;
+        codec.setVersion(modernVersion, false);
+        dwgBuffer input(frame.bytes.data(), frame.bytes.size(), &codec);
+        DRW_Leader modern;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(
+            modern, modernVersion, &input, frame.handleBitSize));
+        CHECK(modern.origin.x == Approx(src.origin.x));
+        CHECK(modern.offsettext.x == Approx(src.offsettext.x));
+        CHECK(modern.leadertype == src.leadertype);
+        CHECK(modern.vertexlist.size() == src.vertexlist.size());
+        CHECK(input.isGood());
+    }
 }
 
 TEST_CASE("DRW_Leader rejects invalid vertex declarations",

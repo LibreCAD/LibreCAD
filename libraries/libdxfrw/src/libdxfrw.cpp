@@ -1147,8 +1147,6 @@ private:
 dxfRW::dxfRW(const char* name){
     DRW_DBGSL(DRW_dbg::Level::None);
     fileName = name;
-    applyExt = false;
-    elParts = 128; //parts number when convert ellipse to polyline
 }
 
 
@@ -5640,124 +5638,144 @@ DRW_ImageDef* dxfRW::writeImage(DRW_Image *ent, std::string name){
     }
     if (!preflightEntity(ent))
         return nullptr;
-        if (ent == nullptr || writer == nullptr || !ent->validatePayloadFields()) {
-            m_writeError = true;
-            return nullptr;
-        }
-        EntityRecordScope scope(*this, ent);
-        //search if exist imagedef with this mane (image inserted more than 1 time)
-        //RLZ: imagedef_reactor seem needed to read in acad
-        DRW_ImageDef *id = NULL;
-        std::unique_ptr<DRW_ImageDef> newId;
-        for (unsigned int i=0; i<imageDef.size(); i++) {
-            if (imageDef.at(i)->name == name ) {
-                id = imageDef.at(i);
-                continue;
-            }
-        }
-        if (id == NULL) {
-            newId = std::make_unique<DRW_ImageDef>();
-            id = newId.get();
-            if (!allocateDxfHandle(id->handle))
-                return nullptr;
-        }
-        id->name = name;
-        std::uint32_t reactorHandle = 0;
-        if (!allocateDxfHandle(reactorHandle))
-            return nullptr;
-        const std::string idReactor = toHexStr(reactorHandle);
-
-        writer->writeString(0, "IMAGE");
-        if (!writeEntity(ent)) {
-            m_writeError = true;
-            return nullptr;
-        }
-        writer->writeString(100, "AcDbRasterImage");
-        writer->writeInt32(90, ent->m_classVersion);
-        writer->writeDouble(10, ent->basePoint.x);
-        writer->writeDouble(20, ent->basePoint.y);
-        writer->writeDouble(30, ent->basePoint.z);
-        writer->writeDouble(11, ent->secPoint.x);
-        writer->writeDouble(21, ent->secPoint.y);
-        writer->writeDouble(31, ent->secPoint.z);
-        writer->writeDouble(12, ent->vVector.x);
-        writer->writeDouble(22, ent->vVector.y);
-        writer->writeDouble(32, ent->vVector.z);
-        writer->writeDouble(13, ent->sizeu);
-        writer->writeDouble(23, ent->sizev);
-        writer->writeString(340, toHexStr(id->handle));
-        writer->writeInt16(70, ent->m_displayProps);
-        writer->writeInt16(280, ent->clip);
-        writer->writeInt16(281, ent->brightness);
-        writer->writeInt16(282, ent->contrast);
-        writer->writeInt16(283, ent->fade);
-        writer->writeString(360, idReactor);
-        // Clip boundary (ezdxf acdb_raster_image order): type 71, count 91,
-        // then 14/24 vertices. A polygonal path (>=3 pts) is type 2; otherwise
-        // emit the rectangular default (type 1, two opposite corners in
-        // image-pixel coords) so consumers never see count=0.
-        if (ent->clipPath.size() == 2) {
-            writer->writeInt16(71, 1);
-            writer->writeInt32(91, 2);
-            for (const DRW_Coord& v : ent->clipPath) {
-                writer->writeDouble(14, v.x);
-                writer->writeDouble(24, v.y);
-            }
-        } else if (ent->clipPath.size() >= 3) {
-            writer->writeInt16(71, 2);
-            writer->writeInt32(91, static_cast<std::int32_t>(ent->clipPath.size()));
-            for (const DRW_Coord& v : ent->clipPath) {
-                writer->writeDouble(14, v.x);
-                writer->writeDouble(24, v.y);
-            }
+    if (ent == nullptr || writer == nullptr || !ent->validatePayloadFields()) {
+        m_writeError = true;
+        return nullptr;
+    }
+    EntityRecordScope scope(*this, ent);
+    // A DXF image definition is a named dictionary entry. Normalize an
+    // unnamed source before lookup so repeated direct calls cannot create
+    // duplicate empty or fallback names.
+    if (name.empty()) {
+        if (ent->handle != 0) {
+            name = std::string("librecad_image_") + toHexStr(ent->handle);
         } else {
-            writer->writeInt16(71, 1);
-            writer->writeInt32(91, 2);
-            writer->writeDouble(14, -0.5);
-            writer->writeDouble(24, -0.5);
-            writer->writeDouble(14, ent->sizeu - 0.5);
-            writer->writeDouble(24, ent->sizev - 0.5);
+            name = "librecad_image";
+            const auto hasImageDefinition = [this](const std::string &candidate) {
+                return std::any_of(
+                    imageDef.cbegin(), imageDef.cend(),
+                    [&candidate](const DRW_ImageDef *definition) {
+                        return definition != nullptr
+                               && definition->name == candidate;
+                    });
+            };
+            for (std::size_t suffix = 1; hasImageDefinition(name); ++suffix)
+                name = "librecad_image_" + std::to_string(suffix);
         }
-        if (version >= DRW::AC1024) {
-            writer->writeBool(290, ent->clipMode);  // R2010+ clip mode
+    }
+    //search if exist imagedef with this mane (image inserted more than 1 time)
+    //RLZ: imagedef_reactor seem needed to read in acad
+    DRW_ImageDef *id = NULL;
+    std::unique_ptr<DRW_ImageDef> newId;
+    for (unsigned int i=0; i<imageDef.size(); i++) {
+        if (imageDef.at(i)->name == name ) {
+            id = imageDef.at(i);
+            continue;
         }
-        if (!ent->extData.empty() && !writeExtData(ent->extData)) {
+    }
+    if (id == NULL) {
+        newId = std::make_unique<DRW_ImageDef>();
+        id = newId.get();
+        if (!allocateDxfHandle(id->handle))
             return nullptr;
+    }
+    id->name = name;
+    std::uint32_t reactorHandle = 0;
+    if (!allocateDxfHandle(reactorHandle))
+        return nullptr;
+    const std::string idReactor = toHexStr(reactorHandle);
+
+    writer->writeString(0, "IMAGE");
+    if (!writeEntity(ent)) {
+        m_writeError = true;
+        return nullptr;
+    }
+    writer->writeString(100, "AcDbRasterImage");
+    writer->writeInt32(90, ent->m_classVersion);
+    writer->writeDouble(10, ent->basePoint.x);
+    writer->writeDouble(20, ent->basePoint.y);
+    writer->writeDouble(30, ent->basePoint.z);
+    writer->writeDouble(11, ent->secPoint.x);
+    writer->writeDouble(21, ent->secPoint.y);
+    writer->writeDouble(31, ent->secPoint.z);
+    writer->writeDouble(12, ent->vVector.x);
+    writer->writeDouble(22, ent->vVector.y);
+    writer->writeDouble(32, ent->vVector.z);
+    writer->writeDouble(13, ent->sizeu);
+    writer->writeDouble(23, ent->sizev);
+    writer->writeString(340, toHexStr(id->handle));
+    writer->writeInt16(70, ent->m_displayProps);
+    writer->writeInt16(280, ent->clip);
+    writer->writeInt16(281, ent->brightness);
+    writer->writeInt16(282, ent->contrast);
+    writer->writeInt16(283, ent->fade);
+    writer->writeString(360, idReactor);
+    // Clip boundary (ezdxf acdb_raster_image order): type 71, count 91,
+    // then 14/24 vertices. A polygonal path (>=3 pts) is type 2; otherwise
+    // emit the rectangular default (type 1, two opposite corners in
+    // image-pixel coords) so consumers never see count=0.
+    if (ent->clipPath.size() == 2) {
+        writer->writeInt16(71, 1);
+        writer->writeInt32(91, 2);
+        for (const DRW_Coord& v : ent->clipPath) {
+            writer->writeDouble(14, v.x);
+            writer->writeDouble(24, v.y);
         }
-        if (writer->hasWriteError()) {
+    } else if (ent->clipPath.size() >= 3) {
+        writer->writeInt16(71, 2);
+        writer->writeInt32(91, static_cast<std::int32_t>(ent->clipPath.size()));
+        for (const DRW_Coord& v : ent->clipPath) {
+            writer->writeDouble(14, v.x);
+            writer->writeDouble(24, v.y);
+        }
+    } else {
+        writer->writeInt16(71, 1);
+        writer->writeInt32(91, 2);
+        writer->writeDouble(14, -0.5);
+        writer->writeDouble(24, -0.5);
+        writer->writeDouble(14, ent->sizeu - 0.5);
+        writer->writeDouble(24, ent->sizev - 0.5);
+    }
+    if (version >= DRW::AC1024) {
+        writer->writeBool(290, ent->clipMode);  // R2010+ clip mode
+    }
+    if (!ent->extData.empty() && !writeExtData(ent->extData)) {
+        return nullptr;
+    }
+    if (writer->hasWriteError()) {
+        m_writeError = true;
+        return nullptr;
+    }
+    try {
+        if (newId) {
+            // Transfer ownership only after vector insertion succeeds;
+            // otherwise a bad_alloc would leak the definition.
+            imageDef.push_back(newId.get());
+            newId.release();
+        }
+        if (id->reactors.find(idReactor) != id->reactors.end()) {
             m_writeError = true;
             return nullptr;
         }
-        try {
-            if (newId) {
-                // Transfer ownership only after vector insertion succeeds;
-                // otherwise a bad_alloc would leak the definition.
-                imageDef.push_back(newId.get());
-                newId.release();
-            }
-            if (id->reactors.find(idReactor) != id->reactors.end()) {
-                m_writeError = true;
-                return nullptr;
-            }
-            if (m_recordStateScopeDepth != 0) {
-                DxfWriteMutation mutation;
-                mutation.kind = DxfWriteMutationKind::ImageReactorInsert;
-                mutation.key = idReactor;
-                mutation.imageDef = id;
-                m_dxfWriteMutations.push_back(std::move(mutation));
-            }
-            const auto inserted = id->reactors.emplace(
-                idReactor, toHexStr(ent->handle));
-            if (!inserted.second) {
-                m_writeError = true;
-                return nullptr;
-            }
-        } catch (...) {
+        if (m_recordStateScopeDepth != 0) {
+            DxfWriteMutation mutation;
+            mutation.kind = DxfWriteMutationKind::ImageReactorInsert;
+            mutation.key = idReactor;
+            mutation.imageDef = id;
+            m_dxfWriteMutations.push_back(std::move(mutation));
+        }
+        const auto inserted = id->reactors.emplace(
+            idReactor, toHexStr(ent->handle));
+        if (!inserted.second) {
             m_writeError = true;
             return nullptr;
         }
-        if (!scope.commit())
-            return nullptr;
+    } catch (...) {
+        m_writeError = true;
+        return nullptr;
+    }
+    if (!scope.commit())
+        return nullptr;
     return id;
 }
 

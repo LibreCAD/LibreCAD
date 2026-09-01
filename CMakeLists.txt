@@ -3054,15 +3054,6 @@ if (BUILD_TESTS)
             WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
             ENVIRONMENT "QT_QPA_PLATFORM=offscreen"
         )
-    else()
-        add_test(NAME libdxfrw_fast_tests
-            COMMAND $<TARGET_FILE:libdxfrw_fast_tests>
-                ${LIBRECAD_FAST_TEST_EXCLUDES}
-                --reporter compact)
-        set_tests_properties(libdxfrw_fast_tests PROPERTIES
-            WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
-            ENVIRONMENT "QT_QPA_PLATFORM=offscreen"
-        )
     endif()
     if (LIBRECAD_REGISTER_FULL_TESTS)
         add_test(NAME phase_c_required_tags

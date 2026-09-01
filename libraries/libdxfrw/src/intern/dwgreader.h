@@ -21,6 +21,7 @@
 #include "dwgbuffer.h"
 #include "dwgsafety.h"
 #include "dwgutil.h"
+#include <algorithm>
 #include <limits>
 #include <list>
 #include <memory>

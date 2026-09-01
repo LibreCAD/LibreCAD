@@ -592,10 +592,10 @@ private:
     bool m_writeError {false};
     std::string fileName;
     std::string codePage;
-    bool binFile;
+    bool binFile {false};
     std::unique_ptr<dxfReader> reader;
     std::unique_ptr<dxfWriter> writer;
-    DRW_Interface *iface;
+    DRW_Interface *iface {nullptr};
     DRW_Header header;
 //    int section;
     std::string nextentity;
@@ -631,12 +631,12 @@ private:
     /// few raw objects whose original handle collides with a fixed structural
     /// literal. Empty by default (raw handles emitted verbatim).
     std::map<std::uint32_t, std::uint32_t> m_handleRemap;
-    bool wlayer0;
-    bool dimstyleStd;
-    bool applyExt;
-    bool writingBlock;
+    bool wlayer0 {false};
+    bool dimstyleStd {false};
+    bool applyExt {false};
+    bool writingBlock {false};
     bool m_collectingBlockRecords {false};
-    int elParts;  /*!< parts number when convert ellipse to polyline */
+    int elParts {128};  /*!< parts number when convert ellipse to polyline */
     std::unordered_map<std::string,std::uint32_t> blockMap;
     std::vector<PendingDxfBlockRecord> m_pendingBlockRecords;
     std::unordered_map<std::string,std::uint32_t> textStyleMap;

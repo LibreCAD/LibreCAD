@@ -744,7 +744,7 @@ TEST_CASE("DXF filter normalizes reflected legacy POLYLINE extrusion once",
   std::filesystem::remove(out2);
 }
 
-TEST_CASE("DXF filter normalizes reflected planar curves once",
+TEST_CASE("DXF filter preserves reflected planar curve conventions once",
           "[dxf][roundtrip][filter][extrusion]") {
   ensureSettings();
   const std::string src = tmpFile("planar_curves_reflected_src.dxf");
@@ -777,12 +777,22 @@ TEST_CASE("DXF filter normalizes reflected planar curves once",
   REQUIRE(countRecords(out, "CIRCLE") == 1);
   REQUIRE(countRecords(out, "ARC") == 1);
   REQUIRE(countRecords(out, "ELLIPSE") == 1);
-  CHECK(firstGroupValueAsDouble(out, "CIRCLE", "10") == -10.0);
-  CHECK(firstGroupValueAsDouble(out, "ARC", "10") == -20.0);
+  // CIRCLE and ARC retain their source OCS plane metadata so editable
+  // geometry can be exported back to the original source fields. ELLIPSE
+  // remains on the normalized WCS path used by its existing implementation.
+  CHECK(firstGroupValueAsDouble(out, "CIRCLE", "10") == 10.0);
+  CHECK(firstGroupValueAsDouble(out, "ARC", "10") == 20.0);
   CHECK(firstGroupValueAsDouble(out, "ELLIPSE", "10") == -30.0);
   CHECK(firstGroupValueAsDouble(out, "ELLIPSE", "11") == -5.0);
-  for (const char *record : {"CIRCLE", "ARC", "ELLIPSE"})
-    CHECK(recordGroupValues(out, record, "210").empty());
+  for (const char *record : {"CIRCLE", "ARC"}) {
+    CHECK(recordGroupValues(out, record, "210") ==
+          std::vector<std::string>{"0"});
+    CHECK(recordGroupValues(out, record, "220") ==
+          std::vector<std::string>{"0"});
+    CHECK(recordGroupValues(out, record, "230") ==
+          std::vector<std::string>{"-1"});
+  }
+  CHECK(recordGroupValues(out, "ELLIPSE", "210").empty());
 
   RS_Graphic graphic2;
   {
@@ -793,8 +803,8 @@ TEST_CASE("DXF filter normalizes reflected planar curves once",
                               RS2::FormatDXFRW));
   }
 
-  // The first export is normalized WCS, so reading it again must not reflect
-  // centers, axes, or curve parameters a second time.
+  // Reading the first export again must not transform any curve a second
+  // time, regardless of whether its export convention is OCS or WCS.
   for (const auto &[record, codes] : std::vector<
            std::pair<const char *, std::vector<const char *>>>{
            {"CIRCLE", {"10", "20", "40"}},
@@ -803,7 +813,9 @@ TEST_CASE("DXF filter normalizes reflected planar curves once",
     for (const char *code : codes)
       CHECK(recordGroupValues(out2, record, code)
             == recordGroupValues(out, record, code));
-    CHECK(recordGroupValues(out2, record, "210").empty());
+    for (const char *code : {"210", "220", "230"})
+      CHECK(recordGroupValues(out2, record, code) ==
+            recordGroupValues(out, record, code));
   }
 
   std::filesystem::remove(src);
@@ -1401,9 +1413,9 @@ TEST_CASE("DXF filter preserves reflected MINSERT source fields with a block def
             "0\nBLOCK\n5\n20\n8\n0\n2\nGRID_SYMBOL\n70\n0\n"
             "10\n1.0\n20\n2.0\n30\n0.0\n3\nGRID_SYMBOL\n1\n\n"
             "0\nLINE\n8\n0\n10\n1.0\n20\n2.0\n11\n3.0\n21\n2.0\n"
-            "0\nENDBLK\n8\n0\n0\nENDSEC\n"
+            "0\nENDBLK\n5\n21\n8\n0\n0\nENDSEC\n"
             "0\nSECTION\n2\nENTITIES\n"
-            "0\nINSERT\n8\n0\n2\nGRID_SYMBOL\n"
+            "0\nINSERT\n5\n22\n8\n0\n2\nGRID_SYMBOL\n"
             "10\n10.0\n20\n20.0\n30\n30.0\n"
             "41\n2.0\n42\n-3.0\n43\n4.0\n50\n30.0\n"
             "70\n3\n71\n2\n44\n5.0\n45\n6.0\n"
@@ -2387,7 +2399,7 @@ TEST_CASE("DWG export re-emits metadata VX objects",
   control.recordHandles = {0x662u, 0x663u};
   control.reactorHandles = {0x664u};
   control.xDictHandle = 0x665u;
-  control.setDwgCommonObjectState(1, 0, true);
+  control.setDwgCommonObjectState(1, 0, false);
   REQUIRE(control.setDwgRawData({0xA5u, 0x3Cu}, 16, DRW::AC1027));
   graphic.dwgAdvancedMetadata().addVxControl(control);
 
@@ -2399,7 +2411,7 @@ TEST_CASE("DWG export re-emits metadata VX objects",
   record.flags = 5u;
   record.reactorHandles = {0x668u};
   record.xDictHandle = 0x669u;
-  record.setDwgCommonObjectState(1, 0, true);
+  record.setDwgCommonObjectState(1, 0, false);
   REQUIRE(record.setDwgRawData({0xF0u, 0x0Du}, 16, DRW::AC1027));
   graphic.dwgAdvancedMetadata().addVxTableRecord(record);
 

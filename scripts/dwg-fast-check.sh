@@ -308,7 +308,7 @@ if ((CHANGED)); then
       acsh_tests|acsh_shapes_tests|\
       dwg_object_encode_round_trip_tests|\
       dwg_object_frame_tests|dwg_safety_tests|dxf_attribute_tests|\
-      dxf_object_tests|field_dxf_tests|mesh_tests)
+      dxf_object_tests|field_dxf_tests)
         ;;
       *)
         changed_test_linked=1

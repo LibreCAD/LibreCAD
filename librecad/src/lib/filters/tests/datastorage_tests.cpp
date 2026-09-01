@@ -1359,6 +1359,61 @@ TEST_CASE("DataStorage presence flags require same-version replay data",
   CHECK_FALSE(noRawMetadata.hasReplayableDataStorage(DRW::AC1027));
 }
 
+TEST_CASE("Empty DataStorage sections replay at the same version",
+          "[dwg-write][datastorage][replay-safety]") {
+  ensureQtContext();
+
+  struct Target {
+    RS2::FormatType format;
+    DRW::Version version;
+    const char *suffix;
+  };
+  // AcDb:AcDsPrototype_1b is introduced in AC1027; earlier writers must
+  // reject the section rather than emit an invalid R2004 container.
+  const Target targets[] = {{RS2::FormatDWG2013, DRW::AC1027, "r2013"},
+                            {RS2::FormatDWG2018, DRW::AC1032, "r2018"}};
+
+  for (const Target &target : targets) {
+    RS_Graphic source;
+    source.initForNewDocument();
+    auto &metadata = source.dwgAdvancedMetadata();
+
+    DRW_RawDwgSection raw;
+    raw.m_name = "AcDb:AcDsPrototype_1b";
+    raw.m_version = target.version;
+    metadata.addRawDwgSection(raw);
+
+    DRW_DataStorageSection storage;
+    storage.m_name = raw.m_name;
+    storage.m_version = raw.m_version;
+    storage.sectionByteLength = 0;
+    metadata.addDataStorage(storage);
+
+    const std::filesystem::path path = std::filesystem::temp_directory_path()
+        / (std::string("librecad_empty_datastorage_") + target.suffix +
+           ".dwg");
+    std::error_code error;
+    std::filesystem::remove(path, error);
+
+    {
+      RS_FilterDXFRW filter;
+      REQUIRE(filter.fileExport(source, QString::fromStdString(path.string()),
+                                target.format));
+    }
+
+    StubInterface readIface;
+    dwgRW reader(path.string().c_str());
+    REQUIRE(reader.read(&readIface, /*ext=*/true));
+    REQUIRE(readIface.m_rawSections.size() == 1u);
+    CHECK(readIface.m_rawSections.front().m_name == raw.m_name);
+    CHECK(readIface.m_rawSections.front().m_data.empty());
+    REQUIRE(readIface.m_storages.size() == 1u);
+    CHECK(readIface.m_storages.front().records.empty());
+
+    std::filesystem::remove(path, error);
+  }
+}
+
 TEST_CASE("DataStorage presence flags require the object's payload record",
           "[cross-read][datastorage][replay-safety][handle-link]") {
   const DRW_RawDwgSection raw = makeDataStorageReplaySection(0x1234u);
@@ -1638,6 +1693,15 @@ TEST_CASE("DWG surface entities retain typed and raw carriers",
   CHECK(rawSurfaceCount == cap.m_surfaces.size());
   CHECK(cap.m_surfacesWithRawPayload == cap.m_surfaces.size());
 
+  const auto meshRaw = std::find_if(
+      cap.m_rawObjects.cbegin(), cap.m_rawObjects.cend(),
+      [](const DRW_UnsupportedObject &raw) {
+        return raw.m_isEntity && raw.m_isCustomClass &&
+               raw.m_recordName == "MESH";
+      });
+  REQUIRE(meshRaw != cap.m_rawObjects.cend());
+  CHECK_FALSE(meshRaw->m_rawBytes.empty());
+
   const auto findSurface = [&cap](DRW::ETYPE type) -> const DRW_Surface * {
     for (const DRW_Surface &surface : cap.m_surfaceValues) {
       if (surface.eType == type)
@@ -1698,7 +1762,6 @@ TEST_CASE("DWG surface raw carriers replay through the filter",
   REQUIRE(input.fileImport(graphic, QString::fromStdString(sourcePath),
                            RS2::FormatDWG));
   REQUIRE(graphic.dwgAdvancedMetadata().surfaceGeometry().size() >= 5u);
-
   RS_FilterDXFRW output;
   REQUIRE(output.fileExport(graphic, QString::fromStdString(outputPath.string()),
                             RS2::FormatDWG2004));
@@ -2566,9 +2629,14 @@ TEST_CASE("AC1027 modeler and DataStorage replay link end to end",
   CHECK(modeler.dataStorageSegmentIndex == 2u);
   CHECK(modeler.dataStorageSchemaIndex == 7u);
 
-  REQUIRE(readIface.m_rawObjects.size() == 1u);
-  CHECK(readIface.m_rawObjects.front().m_handle == modeler.handle);
-  CHECK(readIface.m_rawObjects.front().m_hasDataStorage);
+  const auto modelerRaw = std::find_if(
+      readIface.m_rawObjects.cbegin(), readIface.m_rawObjects.cend(),
+      [&modeler](const auto &raw) {
+        return raw.m_handle == modeler.handle && raw.m_objectType == 38 &&
+               raw.m_isEntity;
+      });
+  REQUIRE(modelerRaw != readIface.m_rawObjects.cend());
+  CHECK(modelerRaw->m_hasDataStorage);
 
   REQUIRE(readIface.m_storages.size() == 1u);
   const DRW_DataStorageSection &storage = readIface.m_storages.front();

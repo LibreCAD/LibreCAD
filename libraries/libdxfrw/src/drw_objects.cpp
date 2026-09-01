@@ -13,7 +13,9 @@
 
 #include <algorithm>
 #include <cmath>
+#include <cstring>
 #include <limits>
+#include <type_traits>
 #include <vector>
 #include "drw_objects.h"
 #include "intern/dxfreader.h"
@@ -29,6 +31,15 @@
 #include "intern/dwgsafety.h"
 
 namespace {
+
+template <typename Enum>
+std::underlying_type_t<Enum> rawEnumValue(const Enum& value) noexcept {
+    using Underlying = std::underlying_type_t<Enum>;
+    static_assert(sizeof(Underlying) == sizeof(Enum));
+    Underlying result{};
+    std::memcpy(&result, &value, sizeof(result));
+    return result;
+}
 
 bool readDxfIntInRange(const std::unique_ptr<dxfReader>& reader,
                        int minimum, int maximum, int& value) {
@@ -10919,7 +10930,10 @@ bool DRW_RenderSettings::parseDwg(DRW::Version version, dwgBuffer *buf,
 bool DRW_RenderSettings::encodeDwg(DRW::Version version, dwgBufferW *buf,
                                    dwgBufferW *strBuf,
                                    dwgBufferW *handleBuf) const {
+    const auto kind = rawEnumValue(m_kind);
     if (buf == nullptr || version < DRW::AC1015
+        || kind < static_cast<decltype(kind)>(Settings)
+        || kind > static_cast<decltype(kind)>(MentalRay)
         || reactorHandles.size() > dwgSafety::MaxReactorCount
         || xDictFlag > 1)
         return false;
@@ -10957,11 +10971,6 @@ bool DRW_RenderSettings::encodeDwg(DRW::Version version, dwgBufferW *buf,
     const auto validByte = [](std::int32_t value) {
         return value >= 0 && value <= std::numeric_limits<std::uint8_t>::max();
     };
-    const auto validKind = [&]() {
-        return m_kind == Settings || m_kind == Global
-            || m_kind == Environment || m_kind == Entry
-            || m_kind == RapidRT || m_kind == MentalRay;
-    };
     const auto validFiniteDouble = [&](std::size_t index) {
         return std::isfinite(doubleAt(index));
     };
@@ -10975,7 +10984,7 @@ bool DRW_RenderSettings::encodeDwg(DRW::Version version, dwgBufferW *buf,
             ? maxBitSize : m_rawData.size() * 8u;
         return m_rawDataBitSize <= bitCapacity;
     };
-    if (!validKind() || !validRawData())
+    if (!validRawData())
         return false;
     if ((m_kind == Settings || m_kind == RapidRT || m_kind == MentalRay)
         && version >= DRW::AC1027) {
@@ -11408,22 +11417,24 @@ bool DRW_PointCloudDef::parseDwg(DRW::Version version, dwgBuffer *buf,
 bool DRW_PointCloudDef::encodeDwg(DRW::Version version, dwgBufferW *buf,
                                   dwgBufferW *strBuf,
                                   dwgBufferW *handleBuf) const {
-    const int kind = static_cast<int>(m_kind);
-    const bool hasDefinitionFields = m_kind == Definition
-        || m_kind == DefinitionEx;
+    const auto kind = rawEnumValue(m_kind);
     const auto finiteCoord = [](const DRW_Coord& point) {
         return std::isfinite(point.x) && std::isfinite(point.y)
             && std::isfinite(point.z);
     };
     if (buf == nullptr || version < DRW::AC1015
-        || kind < static_cast<int>(Definition)
-        || kind > static_cast<int>(ReactorEx)
-        || m_classVersion < 0 || m_classVersion > kMaxClassVersion
-        || (hasDefinitionFields && m_pointCount > kMaxPointCount)
-        || (hasDefinitionFields
-            && (!finiteCoord(m_extentsMin) || !finiteCoord(m_extentsMax)))
+        || kind < static_cast<decltype(kind)>(Definition)
+        || kind > static_cast<decltype(kind)>(ReactorEx)
         || reactorHandles.size() > dwgSafety::MaxReactorCount
         || extensionDictionaryFlag() > 1)
+        return false;
+
+    const bool hasDefinitionFields = m_kind == Definition
+        || m_kind == DefinitionEx;
+    if (m_classVersion < 0 || m_classVersion > kMaxClassVersion
+        || (hasDefinitionFields && m_pointCount > kMaxPointCount)
+        || (hasDefinitionFields
+            && (!finiteCoord(m_extentsMin) || !finiteCoord(m_extentsMax))))
         return false;
 
     dwgBufferW *stringBuf = version > DRW::AC1018 && strBuf != nullptr
@@ -13247,10 +13258,10 @@ bool DRW_Background::encodeDwg(DRW::Version version, dwgBufferW *buf,
     const auto finite2D = [](const DRW_Coord& point) {
         return std::isfinite(point.x) && std::isfinite(point.y);
     };
-    const int kind = static_cast<int>(m_kind);
+    const auto kind = rawEnumValue(m_kind);
     if (buf == nullptr || version < DRW::AC1015
-        || kind < static_cast<int>(Solid)
-        || kind > static_cast<int>(Skylight)
+        || kind < static_cast<decltype(kind)>(Solid)
+        || kind > static_cast<decltype(kind)>(Skylight)
         || reactorHandles.size() > dwgSafety::MaxReactorCount
         || extensionDictionaryFlag() > 1)
         return false;

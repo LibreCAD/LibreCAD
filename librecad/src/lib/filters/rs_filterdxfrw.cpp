@@ -1837,6 +1837,26 @@ bool isSortEntsTableRawObject(
          record.className == "AcDbSortentsTable";
 }
 
+bool isFixedStructuralDwgHandle(std::uint32_t handle);
+
+bool hasReplayableRawSortEntsTable(
+    const LC_DwgAdvancedMetadata &metadata, std::uint32_t handle,
+    DRW::Version targetVersion) {
+  return std::any_of(
+      metadata.rawObjects().cbegin(), metadata.rawObjects().cend(),
+      [handle, targetVersion](const auto &record) {
+        return record.handle == handle && !record.isEntity &&
+               record.isCustomClass && isSortEntsTableRawObject(record) &&
+               record.version == targetVersion &&
+               record.replayState ==
+                   LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed &&
+               !record.rawBytes.empty() &&
+               !isFixedStructuralDwgHandle(record.handle) &&
+               LC_DwgAdvancedMetadata::rawReplayBlocker(record) ==
+                   LC_DwgAdvancedMetadata::ReplayBlocker::None;
+      });
+}
+
 bool isFieldListRawObject(
     const LC_DwgAdvancedMetadata::RawObjectRecord &record) {
   return record.recordName == "FIELDLIST" &&
@@ -12885,8 +12905,7 @@ bool RS_FilterDXFRW::prepareDwgDataStorageReplayPlan(DRW::Version version) {
           if (normalizeDwgTableName(raw.name) != normalizeDwgTableName(name) ||
               raw.version != rawVersion ||
               raw.replayState !=
-                  LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed ||
-              raw.data.empty()) {
+                  LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed) {
             continue;
           }
           if (match != invalidIndex)
@@ -14684,8 +14703,9 @@ void RS_FilterDXFRW::prepareDwgEntityHandleMap() {
       const bool inserted =
           m_dwgWriteEntityHandleRemap.emplace(sourceHandle, emittedHandle)
               .second;
-      if (!inserted)
+      if (!inserted) {
         m_dwgWriteDuplicateEntityHandles.insert(sourceHandle);
+      }
     }
   };
 
@@ -17093,6 +17113,27 @@ void RS_FilterDXFRW::writeDwgClasses() {
           m_writeFailed = true;
         }
       };
+  const auto hasUnresolvedSortEntsReference = [this](
+      const DRW_SortEntsTable &table) {
+    const auto isLive = [](DwgWriteReferenceStatus status) {
+      return status == DwgWriteReferenceStatus::Resolved ||
+             status == DwgWriteReferenceStatus::LegacySpaceAlias ||
+             status == DwgWriteReferenceStatus::Reserved ||
+             status == DwgWriteReferenceStatus::Selected ||
+             status == DwgWriteReferenceStatus::Committed;
+    };
+    return std::any_of(
+        table.m_sortHandles.cbegin(), table.m_sortHandles.cend(),
+        [this, &isLive](std::uint32_t handle) {
+          if (handle == DRW::NoHandle)
+            return false;
+          std::uint32_t outputHandle = 0;
+          DwgWriteSourceKind targetKind = DwgWriteSourceKind::Object;
+          const DwgWriteReferenceStatus status =
+              resolveDwgWriteCommonHandle(handle, &outputHandle, &targetKind);
+          return !isLive(status) || outputHandle == 0;
+        });
+  };
   // The frozen admission plan is the sole carrier decision for this custom
   // object. Raw records stay authoritative only when the plan selected their
   // exact same-version frame; all other sidecars use the typed path.
@@ -17845,6 +17886,13 @@ void RS_FilterDXFRW::writeDwgClasses() {
       DRW_SortEntsTable se = sortEntsTableFromMetadata(record);
       if (hasDxfTableAppDataUnsupportedByDwg(se)) {
         m_writeFailed = true;
+        continue;
+      }
+      if (hasReplayableRawSortEntsTable(metadata, record.handle,
+                                        m_dwgW->getVersion()) &&
+          hasUnresolvedSortEntsReference(se)) {
+        // Preserve a valid source frame when the typed view contains a
+        // dangling sort key that cannot be remapped safely.
         continue;
       }
       remapClassInstanceHandle(se);
@@ -19814,6 +19862,7 @@ void RS_FilterDXFRW::writeObjects() {
       return;
     }
     const auto &metadata = m_graphic->dwgAdvancedMetadata();
+    const auto &rawObjects = metadata.rawObjects();
     // P3 #2: structural-collision remap built by fileExport — rewrite the
     // handle (and typed references to it) of preserved objects that
     // collide with the writer's fixed structural handles.
@@ -19992,6 +20041,49 @@ void RS_FilterDXFRW::writeObjects() {
         return std::uint32_t{0};
       }
       return outputHandle;
+    };
+    // Raw custom entities are written through the opaque-carrier identity
+    // path, but they remain valid SORTENTSTABLE entity targets. Resolve that
+    // identity only after the raw frame has committed; a missing or
+    // uncommitted entity still fails the required-reference contract.
+    const auto resolveRequiredEntityReference = [this, &rawObjects](
+        std::uint32_t sourceHandle, const char *referenceKind)
+        -> std::optional<std::pair<std::uint32_t, DwgWriteSourceKind>> {
+      if (sourceHandle == 0) {
+        m_writeFailed = true;
+        RS_DEBUG->print(
+            RS_Debug::D_WARNING, "RS_FilterDXFRW: zero required DWG %s target",
+            referenceKind == nullptr ? "entity" : referenceKind);
+        return std::nullopt;
+      }
+
+      std::uint32_t outputHandle = 0;
+      if (resolveDwgWriteEntityHandle(sourceHandle, &outputHandle) ==
+              DwgWriteReferenceStatus::Committed &&
+          outputHandle != 0) {
+        return std::make_pair(outputHandle, DwgWriteSourceKind::Entity);
+      }
+
+      const auto rawIt = std::find_if(
+          rawObjects.cbegin(), rawObjects.cend(),
+          [sourceHandle](const auto &raw) {
+            return raw.isEntity && raw.handle == sourceHandle;
+          });
+      const DwgWriteIdentityLookup rawIdentityStatus =
+          lookupDwgWriteIdentity(DwgWriteSourceKind::RawCarrier, sourceHandle,
+                                 &outputHandle);
+      if (rawIt != rawObjects.cend() &&
+          rawIdentityStatus == DwgWriteIdentityLookup::Committed &&
+          outputHandle != 0) {
+        return std::make_pair(outputHandle, DwgWriteSourceKind::RawCarrier);
+      }
+
+      m_writeFailed = true;
+      RS_DEBUG->print(
+          RS_Debug::D_WARNING,
+          "RS_FilterDXFRW: unresolved required DWG %s target 0x%X",
+          referenceKind, sourceHandle);
+      return std::nullopt;
     };
     const auto remapRequiredEntityHandle =
         [&resolveRequiredEntityHandle, &recordRetainedReference](
@@ -20213,6 +20305,9 @@ void RS_FilterDXFRW::writeObjects() {
             std::uint32_t blockOutputHandle = 0;
             const DwgWriteReferenceStatus blockStatus =
                 resolveDwgWriteBlockOwner(sourceHandle, &blockOutputHandle);
+            const DwgWriteIdentityLookup rawIdentityStatus =
+                lookupDwgWriteIdentity(DwgWriteSourceKind::RawCarrier,
+                                       sourceHandle);
             if (status == DwgWriteReferenceStatus::LegacySpaceAlias) {
               targetKind = DwgWriteSourceKind::FixedStructural;
               sourceHandle = 0;
@@ -20220,6 +20315,10 @@ void RS_FilterDXFRW::writeObjects() {
                        blockStatus == DwgWriteReferenceStatus::Selected ||
                        blockStatus == DwgWriteReferenceStatus::Committed) {
               targetKind = DwgWriteSourceKind::Block;
+            } else if (rawIdentityStatus == DwgWriteIdentityLookup::Reserved ||
+                       rawIdentityStatus == DwgWriteIdentityLookup::Selected ||
+                       rawIdentityStatus == DwgWriteIdentityLookup::Committed) {
+              targetKind = DwgWriteSourceKind::RawCarrier;
             }
             if (referenceContext.producerOutputHandle != 0 &&
                 !recordRetainedReference(sourceHandle, outputHandle, targetKind,
@@ -21420,6 +21519,26 @@ void RS_FilterDXFRW::writeObjects() {
           DRW_SortEntsTable sortEntsTable = sortEntsTableFromMetadata(record);
           if (hasDxfTableAppDataUnsupportedByDwg(sortEntsTable)) {
             m_writeFailed = true;
+            continue;
+          }
+          const bool hasUnresolvedSortKey = std::any_of(
+              sortEntsTable.m_sortHandles.cbegin(),
+              sortEntsTable.m_sortHandles.cend(),
+              [this, &isLiveDwgWriteReference](std::uint32_t handle) {
+                if (handle == DRW::NoHandle)
+                  return false;
+                std::uint32_t outputHandle = 0;
+                DwgWriteSourceKind targetKind = DwgWriteSourceKind::Object;
+                const DwgWriteReferenceStatus status =
+                    resolveDwgWriteCommonHandle(handle, &outputHandle,
+                                                &targetKind);
+                return !isLiveDwgWriteReference(status) || outputHandle == 0;
+              });
+          if (hasReplayableRawSortEntsTable(metadata, record.handle,
+                                            m_dwgW->getVersion()) &&
+              hasUnresolvedSortKey) {
+            // Keep the validated source frame authoritative when the typed
+            // view contains a dangling sort key.
             continue;
           }
           nativeSortEntsTableHandles.insert(record.handle);
@@ -24071,17 +24190,20 @@ void RS_FilterDXFRW::writeObjects() {
         pendingReferences.reserve(se.m_entityHandles.size() * 2u);
         for (std::size_t i = 0; i < se.m_entityHandles.size(); ++i) {
           const std::uint32_t sourceEntityHandle = se.m_entityHandles[i];
-          const std::uint32_t entityHandle = resolveRequiredEntityHandle(
+          const auto entityReference = resolveRequiredEntityReference(
               sourceEntityHandle, "SORTENTSTABLE entity");
-          if (entityHandle == 0)
+          if (!entityReference.has_value())
             break;
+          const std::uint32_t entityHandle = entityReference->first;
+          const DwgWriteSourceKind entityTargetKind =
+              entityReference->second;
           const std::uint32_t sourceSortHandle = se.m_sortHandles[i];
           if (sourceSortHandle == DRW::NoHandle) {
             entityHandles.push_back(entityHandle);
             sortHandles.push_back(DRW::NoHandle);
             pendingReferences.push_back(
                 {true, sourceEntityHandle, entityHandle,
-                 DwgWriteSourceKind::Entity, DwgWriteReferenceStatus::Committed,
+                 entityTargetKind, DwgWriteReferenceStatus::Committed,
                  "SORTENTSTABLE entity", static_cast<std::uint32_t>(i),
                  DRW::DwgSoftPointer, true});
             continue;
@@ -24091,17 +24213,44 @@ void RS_FilterDXFRW::writeObjects() {
           const DwgWriteReferenceStatus sortStatus =
               resolveDwgWriteCommonHandle(sourceSortHandle, &sortHandle,
                                           &sortTargetKind);
+          DwgWriteReferenceStatus effectiveSortStatus = sortStatus;
           if (!isLiveDwgWriteReference(sortStatus) || sortHandle == 0) {
+            // A SORTENTSTABLE sort handle may repeat its entity handle. If
+            // that entity is retained only as an opaque carrier, the common
+            // resolver cannot select it because the rendered entity map is
+            // intentionally ambiguous. Use the committed raw identity in
+            // that case; the receipt still verifies the exact carrier.
+            const auto rawSortIt = std::find_if(
+                rawObjects.cbegin(), rawObjects.cend(),
+                [sourceSortHandle](const auto &raw) {
+                  return raw.isEntity && raw.handle == sourceSortHandle;
+                });
+            std::uint32_t rawSortOutputHandle = 0;
+            const DwgWriteIdentityLookup rawSortIdentityStatus =
+                lookupDwgWriteIdentity(DwgWriteSourceKind::RawCarrier,
+                                       sourceSortHandle,
+                                       &rawSortOutputHandle);
+            if (rawSortIt != rawObjects.cend() &&
+                rawSortIdentityStatus == DwgWriteIdentityLookup::Committed &&
+                rawSortOutputHandle != 0) {
+              sortHandle = rawSortOutputHandle;
+              sortTargetKind = DwgWriteSourceKind::RawCarrier;
+              effectiveSortStatus = DwgWriteReferenceStatus::Committed;
+            }
+          }
+          if (!isLiveDwgWriteReference(effectiveSortStatus) ||
+              sortHandle == 0) {
             const DwgWriteReferenceStatus dropStatus =
-                sortStatus == DwgWriteReferenceStatus::Ambiguous
+                effectiveSortStatus == DwgWriteReferenceStatus::Ambiguous
                     ? DwgWriteReferenceStatus::Ambiguous
-                : sortStatus == DwgWriteReferenceStatus::Suppressed
+                : effectiveSortStatus == DwgWriteReferenceStatus::Suppressed
                     ? DwgWriteReferenceStatus::Suppressed
                     : DwgWriteReferenceStatus::Missing;
-            pendingReferences.push_back(
-                {false, sourceSortHandle, 0, sortTargetKind, dropStatus,
-                 "SORTENTSTABLE sort", static_cast<std::uint32_t>(i), 0,
-                 false});
+            pendingReferences.push_back({false, sourceSortHandle, 0,
+                                         sortTargetKind, dropStatus,
+                                         "SORTENTSTABLE sort",
+                                         static_cast<std::uint32_t>(i), 0,
+                                         false});
             m_writeFailed = true;
             break;
           }
@@ -24109,7 +24258,7 @@ void RS_FilterDXFRW::writeObjects() {
           sortHandles.push_back(sortHandle);
           pendingReferences.push_back(
               {true, sourceEntityHandle, entityHandle,
-               DwgWriteSourceKind::Entity, DwgWriteReferenceStatus::Committed,
+               entityTargetKind, DwgWriteReferenceStatus::Committed,
                "SORTENTSTABLE entity", static_cast<std::uint32_t>(i),
                DRW::DwgSoftPointer, true});
           pendingReferences.push_back(
@@ -24126,6 +24275,10 @@ void RS_FilterDXFRW::writeObjects() {
         se.m_sortHandles = std::move(sortHandles);
         if (!sanitizeCommonObjectReferences(se,
                                             "SORTENTSTABLE common reference")) {
+          RS_DEBUG->print(RS_Debug::D_WARNING,
+                          "RS_FilterDXFRW: SORTENTSTABLE 0x%X common "
+                          "reference sanitization failed",
+                          record.handle);
           hasBlockedReplay = true;
           ++blockedWriterRejected;
           continue;
@@ -24167,6 +24320,10 @@ void RS_FilterDXFRW::writeObjects() {
               return true;
             });
         if (!wroteSortEntsTable) {
+          RS_DEBUG->print(RS_Debug::D_WARNING,
+                          "RS_FilterDXFRW: SORTENTSTABLE 0x%X writer call "
+                          "failed",
+                          record.handle);
           hasBlockedReplay = true;
           ++blockedWriterRejected;
         } else {
@@ -30250,6 +30407,13 @@ void RS_FilterDXFRW::writeImage(const RS_Image *i) {
     }
   }
 
+  std::string fileName = i->getFile().toUtf8().constData();
+  if (fileName.empty()) {
+    // IMAGE requires a reachable IMAGEDEF.  A valid fallback name also keeps
+    // multiple unnamed images distinct in the image dictionary.
+    fileName = "librecad_image_" + std::to_string(i->getId());
+  }
+
 #ifdef DWGSUPPORT
   if (m_dwgW != nullptr) {
     if ((definitionRecord != nullptr &&
@@ -30262,7 +30426,6 @@ void RS_FilterDXFRW::writeImage(const RS_Image *i) {
                       "custom application groups");
       return;
     }
-    const std::string fileName = i->getFile().toUtf8().constData();
     if (!m_dwgW->writeImage(
             &image, &fileName,
             definitionRecord != nullptr ? &definitionTemplate : nullptr,
@@ -30278,7 +30441,7 @@ void RS_FilterDXFRW::writeImage(const RS_Image *i) {
     return;
 
   DRW_ImageDef *imgDef =
-      m_dxfW->writeImage(&image, i->getFile().toUtf8().data());
+      m_dxfW->writeImage(&image, fileName);
   if (imgDef == nullptr)
     m_writeFailed = true;
   if (imgDef) {

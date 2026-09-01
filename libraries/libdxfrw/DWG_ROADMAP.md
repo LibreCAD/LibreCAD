@@ -25619,3 +25619,362 @@ The local host is not Solaris/Illumos, so native compiler and system-header
 coverage remains a CI or maintainer-host check. A simulated `sun` macro is a
 valid compile regression for the source-level collision, but it does not
 substitute for one native Solaris/Illumos build report.
+
+## Current Active Plan (rev 1300): close PR #2790 review blockers
+
+This section supersedes rev 1299 for the current implementation slice. The
+reviewed PR is not complete until the source compiles on Windows, its own
+focused DWG/DXF suites are green, and the tests that prove the new behavior
+are actually discoverable by a normal CI/test invocation. The implementation
+must remain incremental: compile the smallest affected target first, run the
+exact selector, then widen only after that selector is green.
+
+### R8.1: make public headers self-contained
+
+Add `<algorithm>` to `dwgreader.h`, because its header-defined template calls
+`std::any_of`. Keep standard-library dependencies local to the header that
+uses them. Verify with the existing Windows job or a compiler invocation that
+does not provide the accidental transitive include.
+
+### R8.2: close the DWG LEADER version-gate review
+
+The first interpretation of ODA §20.4.47 treated the word “Common” as proof
+that AC1024+ must carry the two text-box fields and treated endpoint
+projection as AC1014–AC1021 only. That interpretation is rejected by the
+wire evidence: ACadSharp’s reader/writer, the checked-in AC1032 fixture as
+decoded by LibreDWG, and the existing libdxfrw layout all agree that AC1024+
+retains endpoint projection and uses the compact layout without the legacy
+text-box pair. The ODA table is therefore not sufficient on its own to
+override the versioned implementation behavior; the ambiguous fields require
+versioned fixture evidence before a layout change.
+
+1. Keep endpoint projection enabled from AC1014 onward and keep the legacy
+   text-box pair enabled through AC1021 only. Keep the R13/R14-only DIMGAP and
+   arrowhead fields in their existing positions.
+2. Retain the AC1015/AC1018 and AC1032 fixture regressions, plus the direct
+   AC1024/AC1027/AC1032 encode/decode checks for the compact body and endpoint
+   alignment. Do not assert modern text-box preservation until a real
+   AC1024+ fixture proves that alternate layout.
+3. If a future fixture demonstrates a second valid AC1024+ layout, add an
+   explicit layout discriminator based on the object frame/handle boundary;
+   never select it from a guessed version gate or consume fields until the
+   candidate handle stream validates.
+
+### R8.3: make empty AC1027 DataStorage replay consistent
+
+The reader deliberately publishes a present zero-length
+`AcDb:AcDsPrototype_1b` section as a valid empty DataStorage section, but the
+filter planner drops empty raw carriers and then rejects the missing match.
+The invariant is: a present empty section is either preserved as an exact
+same-version raw section or rejected before any output is committed; it must
+not be accepted on read and rejected only during planning.
+
+1. Match raw sections by normalized identity, version, and source order even
+   when the payload is empty. Retain the duplicate-identity rejection rules.
+2. Preserve the section in the canonical section plan and allow a zero-byte
+   physical payload where the low-level writer supports it. Do not fabricate
+   DataStorage records or object frames for an empty section.
+3. Add an end-to-end read/capture/replay test for empty AC1027 and AC1032
+   sections, plus a malformed non-empty negative case. AC1018 is intentionally
+   excluded: `AcDb:AcDsPrototype_1b` is introduced in AC1027 and the R2004
+   writer must reject it rather than emit an invalid container. Assert that the
+   writer either produces the exact section or fails before an output file is
+   finalized.
+
+### R8.4: resolve the red functional lanes before widening claims
+
+The current isolated PR head reports 21 failed DWG-writer cases, 3 failed DWG
+reader cases, and 4 failed DXF cases. Treat every failure as an implementation
+or test-contract defect, not as an allowed baseline. Triage in this order:
+
+1. Fix failures caused by the R8.2 and R8.3 contracts.
+2. Repair the DXF reflected-planar-curve and MINSERT/image WCS cases by
+   deciding the intended source-field versus normalized-WCS contract and
+   asserting it consistently in both directions. Parse failures must retain
+   their real error status instead of being reported as missing files.
+3. Isolate the remaining DWG writer failures by selector and repair the first
+   broken invariant in class admission, raw fallback, object ownership, or
+   plot-settings emission. Do not weaken assertions or skip cases merely to
+   make the aggregate count green.
+4. Re-run the complete fast executables and record counts in this roadmap.
+
+### R8.5: make test registration and incremental CI trustworthy
+
+1. Ensure a normal `BUILD_TESTS=ON` build followed by `ctest` registers only
+   executables that are built, or add explicit target dependencies for
+   `EXCLUDE_FROM_ALL` format lanes.
+2. Add a bounded CI job/step that builds and runs the focused DWG/DXF fast
+   lanes. Keep the existing slow/full tests out of the default Linux build if
+   desired, but do not leave the new correctness suites completely
+   unenforced.
+3. Fix `mesh_tests` classification in `dwg-fast-check.sh` so a changed mesh
+   test selects both the DWG and DXF lanes.
+4. Make external-reference inventory checks fail or report a visible skipped
+   status when ACadSharp, dwgTs, LibreDWG, or ezdxf inputs are unavailable;
+   checked-in matrices must not be presented as current parity proof when
+   they were generated without those inputs.
+
+### R8.6: acceptance and progress recording
+
+The gate closes only after the Windows compile path, exact LEADER and
+DataStorage selectors, all three fast format executables, `ctest`, and the
+changed-file incremental harness pass. External ODA/LibreDWG receipts remain
+additional evidence, not a substitute for local tests. Update this section
+after each implementation commit with the exact command, selector, assertion
+count, and any remaining blocker; do not mark a sub-item complete from a
+self-read alone.
+
+### R8 progress after the first implementation pass
+
+1. R8.1 is implemented: `dwgreader.h` directly includes `<algorithm>`.
+2. R8.2’s speculative gate change was rejected after the AC1032 direct probe
+   failed at the modern LEADER tail. Restoring the established gates makes
+   the probe pass again. AC1015/AC1018 legacy checks and direct
+   AC1024/AC1027/AC1032 compact-body round trips are green; modern text-box
+   preservation remains unproven and is not claimed.
+3. R8.3 is implemented for empty raw-section matching. The new AC1027
+   read/export/reopen regression passes; the existing malformed and populated
+   DataStorage cases remain separate evidence.
+4. The complete DWG lane still needs to be rerun after restoring the proven
+   LEADER gates. The earlier 5-failure result included the speculative
+   modern-layout fixture misalignment and must not be used as the baseline.
+
+## Current Active Plan (rev 1301): post-review implementation status
+
+This status supersedes the incomplete progress list above for the current
+working-tree implementation pass. The review blockers have been exercised
+through warm and clean CMake paths; no claim is made for a native Windows
+compiler until the Windows CI job reports it.
+
+### Completed in this pass
+
+1. **Header and LEADER contracts.** `dwgreader.h` owns its `<algorithm>`
+   dependency. The proven endpoint-projection gate remains enabled from
+   AC1014 onward, the legacy LEADER text-box fields stop at AC1021, and the
+   direct AC1024/AC1027/AC1032 compact-body checks pass. The speculative
+   modern text-box layout was not introduced without fixture evidence.
+2. **DataStorage preservation.** Empty raw sections now match by identity,
+   source version, and replay state even when their payload is zero bytes. The
+   end-to-end regression passes for AC1027 and AC1032 with 14 assertions. AC1018
+   is deliberately outside this test because `AcDb:AcDsPrototype_1b` is a
+   post-R2004 section and the writer correctly rejects it before output is
+   finalized. Existing malformed, populated, duplicate, and cross-version
+   rejection tests remain active.
+3. **Opaque entity/reference invariants.** MESH keeps a validated raw peer
+   beside its typed 2D fallback, allowing SORTENTSTABLE references to resolve
+   without inventing a second typed entity. Raw SORTENTSTABLE identity is used
+   only when the validated typed view contains an unresolvable sort key; the
+   raw frame remains subject to version, class, handle, and replay checks.
+4. **DXF regressions.** The reflected planar-curve test now states the actual
+   source-OCS versus normalized-WCS contract and verifies stable second export
+   behavior. The MINSERT fixture supplies valid modern self handles, VX tests
+   no longer advertise absent DataStorage, and unnamed IMAGE records receive
+   deterministic reachable IMAGEDEF names at both writer boundaries.
+
+### Verification record
+
+1. Warm DWG lane:
+   `./build/dwg-fast/librecad_dwg_fast_tests "~[.] ~[.slow] ~[slow] ~[corpus] ~[external] ~[external-reader]" --reporter compact`
+   passed **943 cases / 15,847 assertions**.
+2. Warm DXF lane:
+   `./build/dwg-fast/librecad_dxf_fast_tests "~[.] ~[.slow] ~[slow] ~[corpus] ~[external] ~[external-reader]" --reporter compact`
+   passed **513 cases / 6,496 assertions**.
+3. Exact opt-in CMake integration registration built both targets and CTest
+   reported exactly two tests; both passed in **4.13 seconds**. The default
+   `BUILD_TESTS=ON` configuration with all registration options off reports
+   zero tests, so CTest cannot name an `EXCLUDE_FROM_ALL` executable that was
+   never built.
+4. The changed-file incremental harness rebuilt `libdxfrw_test_core` and
+   `librecad_filter_compile_check` successfully. `git diff --check` and
+   `bash -n scripts/dwg-fast-check.sh` pass.
+5. Missing adjacent reference repositories produce visible `skip:` lines in
+   the inventory checks. The checked-in parity matrices are therefore not
+   treated as fresh local parity evidence in this environment.
+
+### CI and remaining evidence
+
+1. `.github/workflows/build-all.yml` now has a separate `VerifyDwgDxfFast`
+   Ubuntu job. It enables only LibreCAD-linked integration registration,
+   explicitly builds `librecad_dwg_fast_tests` and `librecad_dxf_fast_tests`,
+   and runs CTest. The normal Linux packaging jobs still build with tests off.
+2. `mesh_tests` remains classified into both DWG and DXF lanes when changed.
+3. The native Windows gate is now wired as `VerifyDwgDxfWindows`, with
+   independent x64 (`windows-2022`) and ARM64 (`windows-11-arm`) matrix legs.
+   Each leg checks out submodules, installs the matching Qt/MSVC toolchain and
+   Boost, configures the Visual Studio generator with DWG support, builds only
+   `librecad_dwg_fast_tests` and `librecad_dxf_fast_tests`, and runs CTest in
+   Release mode. The x64 leg requests Qt 3D as well as the existing image and
+   shader modules; the ARM64 leg follows the repository's packaging matrix.
+4. The remaining acceptance evidence is the first remote execution result of
+   both Windows matrix legs. Local macOS compilation plus simulated
+   portability checks are useful evidence but do not replace that CI result.
+
+## Current Active Plan (rev 1302): native portability gate wired
+
+This supersedes the CI status in rev 1301. The implementation slice is now
+complete in the working tree; the only item that cannot be established on the
+local macOS host is execution on the two native Windows runners.
+
+### Completed
+
+1. The bounded Ubuntu gate is present and uses explicit integration test
+   registration, so ordinary packaging builds do not acquire slow format
+   suites accidentally.
+2. The Windows matrix is present for both supported packaging architectures.
+   It uses the same CMake test options as the Ubuntu gate, builds the two
+   focused targets explicitly, and invokes CTest with the selected
+   multi-configuration (`Release`) output.
+3. The source and test changes recorded in rev 1301 remain green on the warm
+   and clean local CMake paths. No new test is marked complete from workflow
+   inspection alone.
+
+### Final verification step
+
+After the next push, inspect the `VerifyDwgDxfWindows` job and record the
+result for each matrix leg here. If either runner exposes a genuine MSVC or
+ARM64 portability defect, fix the smallest affected target, rerun the bounded
+lane, and append a new revision rather than weakening the test registration.
+
+## Current Active Plan (rev 1303): local implementation gate verified
+
+The implementation and local verification requirements for the current slice
+are complete. This revision supersedes the local-evidence wording in rev 1302;
+the Windows job remains intentionally unclaimed until GitHub executes it.
+
+### Verification completed
+
+1. Warm LibreCAD-linked DWG lane:
+   `./build/dwg-fast/librecad_dwg_fast_tests "~[.] ~[.slow] ~[slow] ~[corpus] ~[external] ~[external-reader]" --reporter compact`
+   passed **943 cases / 15,854 assertions**.
+2. Warm LibreCAD-linked DXF lane:
+   `./build/dwg-fast/librecad_dxf_fast_tests "~[.] ~[.slow] ~[slow] ~[corpus] ~[external] ~[external-reader]" --reporter compact`
+   passed **513 cases / 6,496 assertions**.
+3. The current CMake test tree discovers and passes all three pure format
+   lanes: `libdxfrw_dwg_layout_validation_tests`,
+   `libdxfrw_dwg_fast_tests`, and `libdxfrw_dxf_fast_tests`.
+4. `scripts/dwg-fast-check.sh --changed --compile-only --jobs 8` completed
+   incrementally with no stale rebuild required. `bash -n` and `git diff
+   --check` also pass.
+5. `actionlint` parses the workflow successfully. Its reported shellcheck
+   warnings are in pre-existing jobs and do not point at the new matrix.
+
+### Remaining evidence
+
+The next remote workflow run must show both `VerifyDwgDxfWindows` matrix legs
+passing. Until then, native MSVC and ARM64 compilation/execution is a CI
+verification item, not a local implementation defect or a reason to weaken
+the bounded test gate.
+
+## Current Active Plan (rev 1304): close the direct DXF image-name edge case
+
+The post-gate audit found one adjacent codec invariant that was not covered by
+the original filter-level test. `dxfRW::writeImage` must normalize an empty
+image name before searching the in-memory IMAGEDEF dictionary; otherwise two
+direct calls with handle-less `DRW_Image` values can emit duplicate fallback
+names even though each record is individually non-empty.
+
+### Implemented
+
+1. `dxfRW::writeImage` now derives the fallback name before dictionary lookup.
+   Handle-bearing images retain a deterministic source-handle name so repeated
+   writes can reuse the definition. Handle-less images use the base fallback
+   and increment a suffix until it is unique in the current dictionary.
+2. Added `DXF unnamed images receive distinct definition names` to the codec
+   test source. It writes two handle-less unnamed images and verifies both
+   IMAGEDEF group-1 names are non-empty and distinct.
+3. The focused codec test passes with **6 assertions / 1 case**. The complete
+   pure DXF lane now passes **386 cases / 4,071 assertions**, and the full pure
+   CMake DWG/DXF CTest set remains **3/3 passed**. The warm linked DWG and DXF
+   counts from rev 1303 remain unchanged.
+
+This edge case is now covered without changing the existing named-image reuse
+contract or fabricating a path for an image that already has a source name.
+
+## Current Active Plan (rev 1305): qmake6 and source-quality closure
+
+The second build-system check is now complete for the current implementation
+slice. The qmake6 verification used a temporary out-of-tree build directory,
+so it did not alter tracked project files or depend on the CMake cache.
+
+### Implemented and verified
+
+1. `libraries/libdxfrw/libdxfrw.pro` configures and builds its static archive
+   with qmake6/Qt 6.11 on the local arm64 macOS host. The changed
+   `libdxfrw.cpp` compiles successfully; only the repository's unrelated
+   existing warnings remain in the full archive build.
+2. The `dxfRW::writeImage` body now has consistent indentation after the
+   fallback-name audit. The focused unnamed-image regression still passes
+   with **6 assertions / 1 case**.
+3. The complete pure DXF lane passes **386 cases / 4,071 assertions**; the
+   pure CMake DWG/DXF CTest set remains **3/3 passed**. The linked lane results
+   remain **943 DWG cases / 15,854 assertions** and **513 DXF cases / 6,496
+   assertions**.
+
+The implementation is therefore verified through both CMake and qmake6 on the
+available host. The remaining evidence item is unchanged: the remote
+`VerifyDwgDxfWindows` x64 and ARM64 matrix legs must execute successfully.
+
+## Current Active Plan (rev 1306): sanitizer closure and latent-state fixes
+
+The bounded local sanitizer pass found and fixed three library-level undefined
+behavior paths plus one invalid test input. These findings were adjacent to
+the requested DWG/DXF safety work and were not visible in ordinary optimized
+test runs.
+
+### Implemented
+
+1. Added a byte-preserving enum-discriminant helper for malformed-input
+   validation. `DRW_Background`, `DRW_PointCloudDef`, and
+   `DRW_RenderSettings` now inspect an enum's underlying representation before
+   comparing or switching on it. Invalid stored variants return `false`
+   transactionally instead of causing an undefined enum load.
+2. Reordered point-cloud and render-settings validation so no enum comparison
+   occurs before the raw discriminant has passed its range check.
+3. Initialized `dxfRW` session flags, binary mode, interface pointer, and
+   ellipse-part count at declaration. `RecordStateScope` can now snapshot a
+   newly constructed writer without reading indeterminate state.
+4. Removed the DXF test's arbitrary `DRW::Version(255)` value. The API accepts
+   the named enum contract; the test still covers all named unsupported
+   versions needed by the preflight behavior without manufacturing an invalid
+   enum object.
+
+### Verification completed
+
+1. A Debug CMake build with AddressSanitizer and UndefinedBehaviorSanitizer
+   completed all **950** build steps.
+2. The sanitizer DWG lane passed **943 cases / 15,854 assertions**.
+3. The sanitizer DXF lane passed **514 cases / 6,499 assertions**.
+4. Sanitizer CTest passed **2/2** registered integration tests. Leak
+   detection was disabled for this run because Qt application teardown is not
+   owned by these codec tests; ASan and UBSan remained enabled with UBSan
+   configured to halt on the first error.
+5. The remaining acceptance evidence is still native Windows x64 and ARM64
+   execution of `VerifyDwgDxfWindows`; local CMake, qmake6, optimized, and
+   sanitizer evidence is complete.
+
+## Current Active Plan (rev 1307): final local static-analysis audit
+
+The implementation was re-audited after the sanitizer fixes and final
+incremental rebuilds. No additional source or test changes were required.
+
+### Verification completed
+
+1. `cppcheck` with warning, performance, and portability checks under C++17
+   reports no diagnostics for the changed DWG/DXF implementation files:
+   `drw_objects.cpp`, `libdxfrw.cpp`, `dwgreader.cpp`, `dwgwriter15.cpp`, and
+   `rs_filterdxfrw.cpp`.
+2. The optimized linked DWG lane passes **943 cases / 15,854 assertions**;
+   the optimized linked DXF lane passes **514 cases / 6,499 assertions**.
+3. The final CMake CTest run passes **3/3** pure DWG/DXF tests. The qmake6
+   DWG-enabled archive rebuild also passes.
+4. `git diff --check` and `bash -n scripts/dwg-fast-check.sh` pass. The
+   working tree contains only the 17 intended tracked implementation,
+   workflow, test, script, and roadmap files.
+
+### Remaining acceptance evidence
+
+The native `VerifyDwgDxfWindows` x64 and ARM64 matrix is implemented but has
+not executed because the current implementation is uncommitted and the
+remote branch still points at the previous base. This is a delivery/CI
+execution step, not an unverified local code claim; it must be run after the
+changes are committed and pushed.

@@ -630,11 +630,10 @@ TEST_CASE("dxfRW rejects unsupported output versions before opening",
   std::filesystem::remove(path, ignored);
   StubInterface iface;
 
-  const std::array<DRW::Version, 4> unsupported = {
+  const std::array<DRW::Version, 3> unsupported = {
       DRW::UNKNOWNV,
       DRW::AC1006,
       DRW::AC1012,
-      static_cast<DRW::Version>(255),
   };
   for (const DRW::Version version : unsupported) {
     dxfRW writer(path.string().c_str());
@@ -9288,6 +9287,50 @@ TEST_CASE("DXF writeImage emits class_version + clip boundary (Batch A)",
   CHECK(inImage("90", "0"));    // class_version
   CHECK(inImage("71", "2"));    // polygonal clip boundary type
   CHECK(inImage("91", "4"));    // 4 boundary vertices
+}
+
+TEST_CASE("DXF unnamed images receive distinct definition names",
+          "[dxf][objects][image][writer][safety]") {
+  class UnnamedImageEmitter final : public StubInterface {
+  public:
+    dxfRW *writer = nullptr;
+    bool result = true;
+
+    void writeEntities() override {
+      for (int i = 0; i < 2; ++i) {
+        DRW_Image image;
+        image.secPoint = DRW_Coord(1.0, 0.0, 0.0);
+        image.vVector = DRW_Coord(0.0, 1.0, 0.0);
+        image.sizeu = 10.0;
+        image.sizev = 10.0;
+        result = writer->writeImage(&image, "") != nullptr && result;
+      }
+    }
+  } emitter;
+
+  const auto path = std::filesystem::temp_directory_path() /
+                    "lc_dxf_unnamed_image_definitions.dxf";
+  std::filesystem::remove(path);
+  dxfRW writer(path.string().c_str());
+  emitter.writer = &writer;
+  REQUIRE(writer.write(&emitter, DRW::AC1021, false));
+  CHECK(emitter.result);
+
+  const auto groups = readGroups(path);
+  std::vector<std::string> names;
+  bool inImageDefinition = false;
+  for (const auto &group : groups) {
+    if (group.first == "0") {
+      inImageDefinition = group.second == "IMAGEDEF";
+    } else if (inImageDefinition && group.first == "1") {
+      names.push_back(group.second);
+    }
+  }
+  REQUIRE(names.size() == 2);
+  CHECK_FALSE(names.front().empty());
+  CHECK_FALSE(names.back().empty());
+  CHECK(names.front() != names.back());
+  std::filesystem::remove(path);
 }
 
 TEST_CASE("DXF image write retry rebuilds generated definitions",

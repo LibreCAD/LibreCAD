@@ -10086,6 +10086,13 @@ bool dwgReader::readDwgEntityWithOutput(dwgBuffer *dbuf, objHandle &obj,
               DRW_Mesh e;
               if (entryParse(e, buff, bs, ret)) {
                 output.appendValue(e, &DRW_Interface::addMesh);
+                // LibreCAD renders MESH as a 2D fallback and therefore does
+                // not retain the typed payload. Keep the validated source
+                // frame as a raw peer so OBJECTS references such as
+                // SORTENTSTABLE can still target the entity on replay.
+                output.appendValue(
+                    makeRawEntity(oType, cit->second, false, DRW::NoHandle, &e),
+                    &DRW_Interface::addUnsupportedObject);
               }
               break;
             }
