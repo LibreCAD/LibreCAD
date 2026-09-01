@@ -25986,3 +25986,32 @@ committed as `92c95a2a9` on `codex/dwg-dxf-origin-master`. The commit contains
 the 17 intended source, test, workflow, script, and roadmap changes and no
 co-author trailer. The next acceptance step is remote execution of the
 native Windows matrix after this branch is pushed.
+
+## Current Active Plan (rev 1309): make the native gate executable
+
+The trigger audit showed that `build-all.yml` runs only for pushes to
+`master`, so a PR-branch push could not produce evidence for its newly added
+Windows matrix. The bounded DWG/DXF jobs are now isolated in
+`.github/workflows/dwg-dxf-verify.yml` with `pull_request`, `master` push, and
+manual-dispatch triggers. This preserves bounded validation without causing
+the unrelated packaging jobs to run for a format-only change.
+
+### Implemented
+
+1. Moved `VerifyDwgDxfFast` and `VerifyDwgDxfWindows` out of the full
+   packaging workflow.
+2. Added the dedicated workflow with the same Ubuntu, Windows x64, and
+   Windows ARM64 build/test definitions, restricted to relevant DWG/DXF
+   paths for pull requests and master pushes.
+3. Added the standard LibreCAD GPL header and current copyright holders to the
+   new workflow file.
+4. `actionlint` parses the new workflow successfully; the remaining reported
+   warnings are unchanged, pre-existing shellcheck warnings in
+   `build-all.yml`.
+
+### Remaining acceptance evidence
+
+Commit and dispatch the dedicated workflow on the PR branch, then record the
+Ubuntu, Windows x64, and Windows ARM64 conclusions here. A failed matrix leg
+must be fixed at the source/toolchain boundary and rerun without weakening
+the test selector.
