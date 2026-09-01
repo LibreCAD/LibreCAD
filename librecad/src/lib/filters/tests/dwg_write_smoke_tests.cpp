@@ -2315,8 +2315,8 @@ public:
             REQUIRE(m_writer->writeSun(&m_sun));
     }
 
-    void addSun(const DRW_Sun& sun) override {
-        m_suns.push_back(sun);
+    void addSun(const DRW_Sun& sunData) override {
+        m_suns.push_back(sunData);
     }
 };
 
@@ -4225,18 +4225,18 @@ TEST_CASE("dwgRW writes and reads SUN metadata",
         }
 
         REQUIRE(readIface.m_suns.size() == 1);
-        const DRW_Sun& sun = readIface.m_suns.front();
-        CHECK(sun.m_classVersion == 1u);
-        CHECK(sun.m_isOn);
-        CHECK(sun.m_color == 4u);
-        CHECK(sun.m_intensity == 2.75);
-        CHECK(sun.m_hasShadow);
-        CHECK(sun.m_julianDay == 2460001);
-        CHECK(sun.m_milliseconds == 43210000);
-        CHECK(sun.m_isDaylightSavings);
-        CHECK(sun.m_shadowType == 1u);
-        CHECK(sun.m_shadowMapSize == 512u);
-        CHECK(sun.m_shadowSoftness == 6u);
+        const DRW_Sun& sunData = readIface.m_suns.front();
+        CHECK(sunData.m_classVersion == 1u);
+        CHECK(sunData.m_isOn);
+        CHECK(sunData.m_color == 4u);
+        CHECK(sunData.m_intensity == 2.75);
+        CHECK(sunData.m_hasShadow);
+        CHECK(sunData.m_julianDay == 2460001);
+        CHECK(sunData.m_milliseconds == 43210000);
+        CHECK(sunData.m_isDaylightSavings);
+        CHECK(sunData.m_shadowType == 1u);
+        CHECK(sunData.m_shadowMapSize == 512u);
+        CHECK(sunData.m_shadowSoftness == 6u);
 
         std::remove(path.c_str());
     }

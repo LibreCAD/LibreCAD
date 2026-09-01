@@ -912,22 +912,22 @@ bool dwgWriter15::writeAcDbPlaceholder(
     return true;
 }
 
-void dwgWriter15::emitSunObject(std::uint32_t handle, const DRW_Sun& sun) {
+void dwgWriter15::emitSunObject(std::uint32_t handle, const DRW_Sun& sunData) {
     dwgBufferW& body = beginObject(handle);
     dwgBufferW *sb, *hb;
     emitRecordPreamble(body, m_version, DRW_Sun::kDwgClassNum, handle,
                        m_objectStrings, m_objectHandles, sb, hb);
     DRW_UNUSED(sb);
-    (void)sun.encodeDwg(m_version, &body, hb);  // (void): void emitter; object serializes into in-memory buffer (no failure path)
+    (void)sunData.encodeDwg(m_version, &body, hb);  // (void): void emitter; object serializes into in-memory buffer (no failure path)
 
     finishObject();
 }
 
-bool dwgWriter15::writeSun(const DRW_Sun& sun) {
+bool dwgWriter15::writeSun(const DRW_Sun& sunData) {
     if (m_version < DRW::AC1021)
         return false;
 
-    DRW_Sun object = sun;
+    DRW_Sun object = sunData;
     if (object.handle == 0) {
         object.handle = m_handles.next();
     } else {

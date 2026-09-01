@@ -1432,9 +1432,9 @@ TEST_CASE("DXF data-only OBJECTS round-trip their body values via the raw net "
   // correctly-valued body groups (validates capture fix + routing together).
   {
     const auto &meta = graphic.dwgAdvancedMetadata();
-    const DRW_RawDxfObject *sun = findRaw(meta, "SUN");
-    REQUIRE(sun != nullptr);
-    const DRW_Variant *intensity = group(*sun, 40);
+    const DRW_RawDxfObject *sunObject = findRaw(meta, "SUN");
+    REQUIRE(sunObject != nullptr);
+    const DRW_Variant *intensity = group(*sunObject, 40);
     REQUIRE(intensity != nullptr);
     CHECK(intensity->type() == DRW_Variant::DOUBLE);
     CHECK(intensity->d_val() == 0.75);
@@ -1480,9 +1480,9 @@ TEST_CASE("DXF data-only OBJECTS round-trip their body values via the raw net "
   }
   {
     const auto &meta = graphic2.dwgAdvancedMetadata();
-    const DRW_RawDxfObject *sun = findRaw(meta, "SUN");
-    REQUIRE(sun != nullptr);
-    const DRW_Variant *intensity = group(*sun, 40);
+    const DRW_RawDxfObject *sunObject = findRaw(meta, "SUN");
+    REQUIRE(sunObject != nullptr);
+    const DRW_Variant *intensity = group(*sunObject, 40);
     REQUIRE(intensity != nullptr);
     CHECK(intensity->d_val() == 0.75);  // double value survives DXF->DXF
     const DRW_RawDxfObject *dvar = findRaw(meta, "DICTIONARYVAR");

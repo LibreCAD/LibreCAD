@@ -95,7 +95,7 @@ public:
     void addAppId(const DRW_AppId& ai);
     bool replayRawObject(const DRW_UnsupportedObject& object);
     bool writeAcDbPlaceholder(const DRW_AcDbPlaceholder& placeholder);
-    bool writeSun(const DRW_Sun& sun);
+    bool writeSun(const DRW_Sun& sunData);
     bool writeMLeaderStyle(const DRW_MLeaderStyle& style);
     bool writeDictionary(const DRW_Dictionary& dictionary);
     bool writeXRecord(const DRW_XRecord& xrecord);
@@ -194,7 +194,7 @@ protected:
     void emitDimstyleRecord(std::uint32_t handle, const DRW_Dimstyle& ds);
     void emitAcDbPlaceholderObject(std::uint32_t handle,
                                    const DRW_AcDbPlaceholder& placeholder);
-    void emitSunObject(std::uint32_t handle, const DRW_Sun& sun);
+    void emitSunObject(std::uint32_t handle, const DRW_Sun& sunData);
     void emitMLeaderStyleObject(std::uint32_t handle, const DRW_MLeaderStyle& style);
     void emitDictionaryObject(std::uint32_t handle, const DRW_Dictionary& dictionary);
     void emitXRecordObject(std::uint32_t handle, const DRW_XRecord& xrecord);

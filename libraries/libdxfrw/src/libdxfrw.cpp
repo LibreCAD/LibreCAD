@@ -6821,7 +6821,7 @@ bool dxfRW::processFieldList() {
 bool dxfRW::processSun() {
     DRW_DBG("dxfRW::processSun");
     int code;
-    DRW_Sun sun;
+    DRW_Sun sunObject;
     DRW_RawDxfObject raw;
     raw.name = nextentity;
     while (reader->readRec(&code)) {
@@ -6829,13 +6829,13 @@ bool dxfRW::processSun() {
         if (0 == code) {
             nextentity = reader->getString();
             DRW_DBG(nextentity); DRW_DBG("\n");
-            iface->addSun(sun);
+            iface->addSun(sunObject);
             iface->addRawDxfObject(raw);
             return true;  //found new entity or ENDSEC, terminate
         }
 
         captureRawGroup(raw, code);
-        if (!sun.parseCode(code, reader)) {
+        if (!sunObject.parseCode(code, reader)) {
             return setError( DRW::BAD_CODE_PARSED);
         }
     }

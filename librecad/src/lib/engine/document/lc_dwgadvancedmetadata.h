@@ -796,7 +796,7 @@ public:
         size_t vport = 0;
         size_t visualStyle = 0;
         size_t light = 0;
-        size_t sun = 0;
+        size_t sunCount = 0;
         size_t odaCovered = 0;
         size_t crossReferenceSourced = 0;
         size_t rawOnly = 0;
@@ -2312,21 +2312,21 @@ public:
         m_lights.push_back(record);
     }
 
-    void addSun(const DRW_Sun& sun) {
+    void addSun(const DRW_Sun& sunData) {
         SunRecord record;
-        record.handle = sun.handle;
-        record.parentHandle = sun.parentHandle;
-        record.classVersion = sun.m_classVersion;
-        record.isOn = sun.m_isOn;
-        record.color = sun.m_color;
-        record.intensity = sun.m_intensity;
-        record.hasShadow = sun.m_hasShadow;
-        record.julianDay = sun.m_julianDay;
-        record.milliseconds = sun.m_milliseconds;
-        record.isDaylightSavings = sun.m_isDaylightSavings;
-        record.shadowType = sun.m_shadowType;
-        record.shadowMapSize = sun.m_shadowMapSize;
-        record.shadowSoftness = sun.m_shadowSoftness;
+        record.handle = sunData.handle;
+        record.parentHandle = sunData.parentHandle;
+        record.classVersion = sunData.m_classVersion;
+        record.isOn = sunData.m_isOn;
+        record.color = sunData.m_color;
+        record.intensity = sunData.m_intensity;
+        record.hasShadow = sunData.m_hasShadow;
+        record.julianDay = sunData.m_julianDay;
+        record.milliseconds = sunData.m_milliseconds;
+        record.isDaylightSavings = sunData.m_isDaylightSavings;
+        record.shadowType = sunData.m_shadowType;
+        record.shadowMapSize = sunData.m_shadowMapSize;
+        record.shadowSoftness = sunData.m_shadowSoftness;
         m_suns.push_back(record);
         for (ViewRecord& view : m_views) {
             if (view.sunHandle == record.handle)
@@ -6458,7 +6458,7 @@ private:
                 ++counts.light;
                 break;
             case VisualMetadataSource::Sun:
-                ++counts.sun;
+                ++counts.sunCount;
                 break;
         }
     }

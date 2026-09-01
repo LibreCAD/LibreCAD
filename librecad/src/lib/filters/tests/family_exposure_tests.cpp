@@ -96,9 +96,9 @@ TEST_CASE("RS_FilterDXFRW point-cloud and PR-4c overrides store metadata-only",
   rs.handle = 0x106;
   filter.addRenderSettings(rs);
 
-  DRW_SunStudy sun;
-  sun.handle = 0x107;
-  filter.addSunStudy(sun);
+  DRW_SunStudy sunStudy;
+  sunStudy.handle = 0x107;
+  filter.addSunStudy(sunStudy);
 
   DRW_DbColor color;
   color.handle = 0x108;

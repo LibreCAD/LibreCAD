@@ -219,21 +219,21 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   light.m_extendedLightRadius = 13.0;
   metadata.addLight(light);
 
-  DRW_Sun sun;
-  sun.handle = 0x9Au;
-  sun.parentHandle = 0x9Bu;
-  sun.m_classVersion = 2u;
-  sun.m_isOn = true;
-  sun.m_color = 0x445566u;
-  sun.m_intensity = 1.25;
-  sun.m_hasShadow = true;
-  sun.m_julianDay = 2460000;
-  sun.m_milliseconds = 43200000;
-  sun.m_isDaylightSavings = true;
-  sun.m_shadowType = 1u;
-  sun.m_shadowMapSize = 512u;
-  sun.m_shadowSoftness = 6u;
-  metadata.addSun(sun);
+  DRW_Sun sunObject;
+  sunObject.handle = 0x9Au;
+  sunObject.parentHandle = 0x9Bu;
+  sunObject.m_classVersion = 2u;
+  sunObject.m_isOn = true;
+  sunObject.m_color = 0x445566u;
+  sunObject.m_intensity = 1.25;
+  sunObject.m_hasShadow = true;
+  sunObject.m_julianDay = 2460000;
+  sunObject.m_milliseconds = 43200000;
+  sunObject.m_isDaylightSavings = true;
+  sunObject.m_shadowType = 1u;
+  sunObject.m_shadowMapSize = 512u;
+  sunObject.m_shadowSoftness = 6u;
+  metadata.addSun(sunObject);
 
   DRW_MLeaderStyle style;
   style.handle = 0xA0u;
@@ -1606,10 +1606,10 @@ TEST_CASE("DWG advanced metadata maps VIEW UCS and VPORT document items",
   ucs.yAxisDirection = DRW_Coord{0.0, 1.0, 0.0};
   metadata.addUcs(ucs);
 
-  DRW_Sun sun;
-  sun.handle = 0x540u;
-  sun.parentHandle = 0x503u;
-  metadata.addSun(sun);
+  DRW_Sun sunObject;
+  sunObject.handle = 0x540u;
+  sunObject.parentHandle = 0x503u;
+  metadata.addSun(sunObject);
 
   DRW_Vport vport;
   vport.name = "*ACTIVE";
@@ -1705,15 +1705,15 @@ TEST_CASE("DWG advanced metadata summarizes visual and light records",
   light.m_color = 0x0A0B0Cu;
   metadata.addLight(light);
 
-  DRW_Sun sun;
-  sun.handle = 0x640u;
-  sun.parentHandle = 0x605u;
-  sun.m_isOn = true;
-  sun.m_intensity = 1.5;
-  sun.m_color = 0x00FFFFu;
-  sun.m_julianDay = 2451545;
-  sun.m_milliseconds = 43200000;
-  metadata.addSun(sun);
+  DRW_Sun sunObject;
+  sunObject.handle = 0x640u;
+  sunObject.parentHandle = 0x605u;
+  sunObject.m_isOn = true;
+  sunObject.m_intensity = 1.5;
+  sunObject.m_color = 0x00FFFFu;
+  sunObject.m_julianDay = 2451545;
+  sunObject.m_milliseconds = 43200000;
+  metadata.addSun(sunObject);
 
   const auto summaries = metadata.visualMetadataSummaries();
   REQUIRE(summaries.size() == 5u);
@@ -1753,7 +1753,7 @@ TEST_CASE("DWG advanced metadata summarizes visual and light records",
   CHECK(counts.vport == 1u);
   CHECK(counts.visualStyle == 1u);
   CHECK(counts.light == 1u);
-  CHECK(counts.sun == 1u);
+  CHECK(counts.sunCount == 1u);
   CHECK(counts.odaCovered == 2u);
   CHECK(counts.crossReferenceSourced == 2u);
   CHECK(counts.rawOnly == 1u);

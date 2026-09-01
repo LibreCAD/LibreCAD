@@ -922,21 +922,21 @@ DRW_Field fieldFromMetadata(
 }
 
 DRW_Sun sunFromMetadata(const LC_DwgAdvancedMetadata::SunRecord& record) {
-    DRW_Sun sun;
-    sun.handle = record.handle;
-    sun.parentHandle = static_cast<int>(record.parentHandle);
-    sun.m_classVersion = record.classVersion;
-    sun.m_isOn = record.isOn;
-    sun.m_color = record.color;
-    sun.m_intensity = record.intensity;
-    sun.m_hasShadow = record.hasShadow;
-    sun.m_julianDay = record.julianDay;
-    sun.m_milliseconds = record.milliseconds;
-    sun.m_isDaylightSavings = record.isDaylightSavings;
-    sun.m_shadowType = record.shadowType;
-    sun.m_shadowMapSize = record.shadowMapSize;
-    sun.m_shadowSoftness = record.shadowSoftness;
-    return sun;
+    DRW_Sun sunObject;
+    sunObject.handle = record.handle;
+    sunObject.parentHandle = static_cast<int>(record.parentHandle);
+    sunObject.m_classVersion = record.classVersion;
+    sunObject.m_isOn = record.isOn;
+    sunObject.m_color = record.color;
+    sunObject.m_intensity = record.intensity;
+    sunObject.m_hasShadow = record.hasShadow;
+    sunObject.m_julianDay = record.julianDay;
+    sunObject.m_milliseconds = record.milliseconds;
+    sunObject.m_isDaylightSavings = record.isDaylightSavings;
+    sunObject.m_shadowType = record.shadowType;
+    sunObject.m_shadowMapSize = record.shadowMapSize;
+    sunObject.m_shadowSoftness = record.shadowSoftness;
+    return sunObject;
 }
 
 DRW_MLeaderStyle mleaderStyleFromMetadata(
@@ -7126,8 +7126,8 @@ void RS_FilterDXFRW::writeDwgClasses() {
                 || record.handle == 0) {
                 continue;
             }
-            DRW_Sun sun = sunFromMetadata(record);
-            if (m_dwgW->registerSunObjectClass(&sun))
+            DRW_Sun sunObject = sunFromMetadata(record);
+            if (m_dwgW->registerSunObjectClass(&sunObject))
                 nativeSunHandles.insert(record.handle);
         }
         for (const auto& record : metadata.mleaderStyles()) {
@@ -8641,9 +8641,9 @@ void RS_FilterDXFRW::writeObjects() {
                     || record.handle == 0) {
                     continue;
                 }
-                DRW_Sun sun = sunFromMetadata(record);
-                remapEntry(sun);
-                if (m_dwgW->writeSun(&sun)) {
+                DRW_Sun sunObject = sunFromMetadata(record);
+                remapEntry(sunObject);
+                if (m_dwgW->writeSun(&sunObject)) {
                     ++nativeSunObjects;
                 } else {
                     hasBlockedReplay = true;
@@ -9521,9 +9521,9 @@ void RS_FilterDXFRW::writeObjects() {
         for (const auto &record : metadata.suns()) {
             if (!emitTyped(record.handle, record.replayState))
                 continue;
-            DRW_Sun sun = sunFromMetadata(record);
-            sun.parentHandle = resolveOwner(record.parentHandle);
-            m_dxfW->writeSun(&sun);
+            DRW_Sun sunObject = sunFromMetadata(record);
+            sunObject.parentHandle = resolveOwner(record.parentHandle);
+            m_dxfW->writeSun(&sunObject);
         }
         for (const auto &record : metadata.scales()) {
             if (!emitTyped(record.handle, record.replayState))
