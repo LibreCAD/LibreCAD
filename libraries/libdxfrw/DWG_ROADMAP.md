@@ -26081,9 +26081,10 @@ DWG format failures.
 
 ### Implemented
 
-1. Use the macro-safe `(std::numeric_limits<T>::max)()` spelling in every
-   libdxfrw header occurrence, including entity/object headers, DWG reader and
-   writer helpers, safety arithmetic, and handle allocation.
+1. Use macro-safe parenthesized spellings for every libdxfrw header call that
+   uses `max`, including `(std::numeric_limits<T>::max)()` and
+   `(std::max)(...)` in entity/object headers, DWG reader and writer helpers,
+   safety arithmetic, and handle allocation.
 2. Keep the change local to the standard-library member call; no global
    `NOMINMAX` dependency is introduced, so consumers that already include
    Windows headers receive the same protection.

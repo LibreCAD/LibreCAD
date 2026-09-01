@@ -492,8 +492,8 @@ public:
             || maxHandle == (std::numeric_limits<std::uint32_t>::max)())
             return false;
         const std::uint32_t requiredSeed = maxHandle + 1u;
-        const std::uint32_t seed = std::max(
-            std::max(m_header->getHandSeed(), highWaterHandle()), requiredSeed);
+        const std::uint32_t seed = (std::max)(
+            (std::max)(m_header->getHandSeed(), highWaterHandle()), requiredSeed);
         if (seed <= maxHandle)
             return false;
         const std::uint8_t bytes[] = {
