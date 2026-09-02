@@ -26177,3 +26177,24 @@ failures split into two independent portability defects:
    `std::filesystem::remove()`.
 3. Rerun the native x64 and ARM64 matrix and use the resulting test counts as
    the next roadmap evidence. Do not weaken the bounded selector.
+
+## Current Active Plan (rev 1318): close the Qt staging object correctly
+
+The x64 rerun of commit `6060b560e` confirmed that all DWG writes reached the
+new release step, but `QFile::remove(stagedOutputPath)` itself failed for the
+Qt-owned temporary on Windows. The same run reduced the unrelated cleanup
+failures to two missed input streams: the DXF linetype-reuse test and the raw
+binary-object malformed-input test. This distinguishes the remaining failures
+from the original `MoveFileExW` replacement problem while preserving the
+native evidence from the corrected `/bigobj` build.
+
+### Implemented
+
+1. Use the `QTemporaryFile` instance's `remove()` operation after capturing its
+   path. Qt can close and release the underlying Windows handle as part of the
+   object-aware removal; the low-level transaction then receives the same
+   unique, non-existing staging path.
+2. Close the two remaining `ifstream` instances before deletion, including the
+   malformed-input case where the reader was already scoped correctly.
+3. Cancel the superseded native matrix, push the correction, and rerun x64 and
+   ARM64. Record the final counts and durations in the next revision.

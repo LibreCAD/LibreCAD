@@ -10951,7 +10951,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     // that still-associated temporary path with MoveFileExW. The unique name
     // remains reserved for this process, and the outer staged commit still
     // protects the caller's destination from partial output.
-    if (!QFile::remove(stagedOutputPath)) {
+    if (!stagedOutput.remove()) {
       RS_DEBUG->print(RS_Debug::D_WARNING,
                       "RS_FilterDXFRW: cannot release staged DWG path");
       return false;

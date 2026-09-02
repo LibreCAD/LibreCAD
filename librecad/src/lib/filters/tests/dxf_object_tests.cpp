@@ -8075,6 +8075,7 @@ TEST_CASE("DXF binary raw OBJECT rejects malformed chunks",
     CHECK(captured.m_objects.empty());
   }
 
+  input.close();
   std::filesystem::remove(path);
 }
 

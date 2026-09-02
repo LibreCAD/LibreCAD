@@ -1106,6 +1106,7 @@ TEST_CASE("DXF writing context resets derived linetype state on reuse",
   CHECK(output.find("2\nDIMLINE_REUSED\n") != std::string::npos);
   CHECK(output.find("2\nDIMLINE\n") == std::string::npos);
 
+  input.close();
   std::filesystem::remove(path);
 }
 
