@@ -130,7 +130,7 @@ jobs:
 
       - name: Configure bounded DWG/DXF test lanes
         run: |
-          cmake.exe -S . -B generated-tests -G "Visual Studio 17 2022" -A "${{ matrix.cmake_arch }}" -DBOOST_ROOT="%CD%\boost" -DBUILD_TESTS=ON -DLIBRECAD_REGISTER_INTEGRATION_TESTS=ON -DLIBRECAD_REGISTER_FULL_TESTS=OFF -DLIBRECAD_REGISTER_FORMAT_TESTS=OFF -DLIBRECAD_REGISTER_CROSS_READ_SMOKE=OFF
+          cmake.exe -S . -B generated-tests -G "Visual Studio 17 2022" -A "${{ matrix.cmake_arch }}" -DBOOST_ROOT="%CD%\boost" -DCMAKE_CXX_FLAGS="/MP8" -DBUILD_TESTS=ON -DLIBRECAD_REGISTER_INTEGRATION_TESTS=ON -DLIBRECAD_REGISTER_FULL_TESTS=OFF -DLIBRECAD_REGISTER_FORMAT_TESTS=OFF -DLIBRECAD_REGISTER_CROSS_READ_SMOKE=OFF
         shell: cmd
 
       - name: Build bounded DWG/DXF test lanes

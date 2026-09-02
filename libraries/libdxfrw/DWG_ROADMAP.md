@@ -26198,3 +26198,24 @@ native evidence from the corrected `/bigobj` build.
    malformed-input case where the reader was already scoped correctly.
 3. Cancel the superseded native matrix, push the correction, and rerun x64 and
    ARM64. Record the final counts and durations in the next revision.
+
+## Current Active Plan (rev 1319): restore MSVC translation-unit parallelism
+
+The bounded Windows workflow uses the Visual Studio generator and CMake project
+parallelism, but it did not pass the repository's established MSVC `/MP8`
+compiler option. The full Windows workflow already uses `/MP8`; omitting it in
+the focused DWG/DXF lane leaves each large C++ project to compile its source
+files serially inside the project. The native evidence shows the impact: the
+x64 build took **1h21m10s** after the `/bigobj` correction, while the Ubuntu
+lane took **21m21s** for the same bounded targets. This is a build configuration
+throughput issue, not a reason to weaken the format test set.
+
+### Implemented
+
+1. Pass `-DCMAKE_CXX_FLAGS="/MP8"` to the dedicated Windows configure step for
+   both x64 and ARM64, matching the existing Windows package workflow.
+2. Keep the bounded target list, Release configuration, and test registration
+   filters unchanged so the timing comparison remains meaningful.
+3. Cancel the superseded native matrix, push the configuration-only change, and
+   compare the next x64 build duration, compiler diagnostics, and test result
+   against the recorded baseline.
