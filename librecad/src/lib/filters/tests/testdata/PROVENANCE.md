@@ -57,3 +57,26 @@ The larger LibreDWG `TS1.dwg` and modeler examples remain external-only. Set
 `LIBRECAD_EXTERNAL_DWG_FIXTURE_DIR` to a LibreDWG test-data root to run the
 opt-in tests that consume them; they are intentionally absent from this
 repository.
+
+## Baseline corpus cleanup
+
+The baseline `origin/master` testdata inventory contained 27 DWGs. This change
+removes 24 files that were byte-identical to LibreDWG or ACadSharp samples, or
+whose provenance could only be established from developer-local documents.
+The tests that exercise those files remain in the suite and skip explicitly
+when the optional files are absent. No external baseline DWG is redistributed
+by this repository after the cleanup.
+
+The three retained baseline DWGs are generated ODA File Converter outputs from
+small, project-authored DXF inputs documented by the original test commits.
+They are kept as local regression artifacts rather than external corpus copies:
+
+| File | SHA-256 |
+| --- | --- |
+| `large_radial.dwg` | `d3f7c22db4b6c3953e2d716da719d7e7e5b285cf73bd4e317f0a171d3859f98a` |
+| `mpolygon_solid.dwg` | `66a171c55bc90fdd0764ad3556ec786503666a30a4473a637d168a01979ffc29` |
+| `rtext_arctext.dwg` | `db5663cdc5c1759fdc1f68f9122e596307de06317e766cd5e0aab55912e5d511` |
+
+The bundled support-library and hatch-pattern DXFs predate this audit and have
+no per-file provenance record. They are not claimed as cleared by this file;
+their rights review is a separate follow-up.

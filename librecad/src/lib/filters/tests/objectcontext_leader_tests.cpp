@@ -28,11 +28,11 @@
  * The typed record is delivered via addObjectContextData while the raw DWG
  * bytes are still emitted (addUnsupportedObject) for lossless replay.
  *
- * Fixtures (in testdata):
- *   ocd_leader_r2000.dwg   <- ~/dev/libredwg/test/test-data/2000/Leader.dwg (AC1015)
+ * Optional local fixtures (not bundled):
+ *   ~/dev/libredwg/test/test-data/2000/Leader.dwg (AC1015)
  *       one LEADEROBJECTCONTEXTDATA: classVersion 3, default flag set, 3 points,
  *       xDirection (1,0,0), endpointProjection (0,-0.09,0).
- *   dynblock_r2018.dwg     <- ~/doc/dwg6/makeall-plus.dwg
+ *   ~/doc/dwg6/makeall-plus.dwg
  *       (shared AC1032 kitchen-sink fixture; also used by the dynamic-block and
  *        EVALUATION_GRAPH suites)
  *       two BLKREFOBJECTCONTEXTDATA: classVersion 4, rotation 0, insertion

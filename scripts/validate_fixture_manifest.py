@@ -195,8 +195,12 @@ def validate_manifest(repo: Path, manifest_path: Path) -> list[str]:
                     and isinstance(fixture.get("version"), str)):
                 default_reader_versions.add(fixture["version"])
         errors.extend(validate_fixture(repo, fixture, index))
+    # A repository may intentionally carry no default DWG corpus when the
+    # available samples are external-only. In that case the test suites use
+    # explicit absent-fixture skips or opt-in local paths. If a bundled default
+    # corpus is present, retain the complete-version coverage invariant.
     missing_default_versions = DEFAULT_DWG_VERSIONS - default_reader_versions
-    if missing_default_versions:
+    if default_reader_versions and missing_default_versions:
         errors.append("default DWG reader fixtures missing versions: "
                       + ", ".join(sorted(missing_default_versions)))
     return errors

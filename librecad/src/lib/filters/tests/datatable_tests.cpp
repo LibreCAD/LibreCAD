@@ -26,8 +26,8 @@
  * now structurally decoded into a DRW_DataTable and delivered via addDataTable
  * while the raw shelf is retained for a lossless round-trip.
  *
- * Fixture (copied to testdata):
- *   datatable_r2010.dwg  <- libredwg/test/test-data/2010/gh209_1.dwg (AC1024)
+ * Optional local fixture (not bundled):
+ *   libredwg/test/test-data/2010/gh209_1.dwg (AC1024)
  *
  * Oracle: dwgread -O JSON (LibreDWG). The single DATATABLE (dwg type 520,
  * handle [0,1,145]) reports flags=2, an empty table_name and a 4-column x

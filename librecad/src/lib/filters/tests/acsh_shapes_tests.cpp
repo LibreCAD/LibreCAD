@@ -38,10 +38,10 @@
  * (addUnsupportedObject) — the lossless round-trip floor — which this test
  * verifies stays intact for all shapes, including BREP.
  *
- * Fixtures (already in testdata, byte-identical to ~/doc/dwg6 corpus):
- *   acsh_r2007.dwg   <- ATMOS-DC22S.dwg  (AC1021 / R2007):
+ * Optional local fixtures (not bundled):
+ *   ATMOS-DC22S.dwg  (AC1021 / R2007):
  *                       BOOLEAN, BREP, CHAMFER, EXTRUSION, FILLET, TORUS
- *   dynblock_r2018.dwg <- makeall-plus.dwg (AC1032 / R2018 — R2007+ no-regress):
+ *   makeall-plus.dwg (AC1032 / R2018 — R2007+ no-regress):
  *                       BOOLEAN, REVOLVE, LOFT, EXTRUSION, TORUS
  *
  * Oracle: dwgread -O JSON (LibreDWG). Values are baked in by object handle.

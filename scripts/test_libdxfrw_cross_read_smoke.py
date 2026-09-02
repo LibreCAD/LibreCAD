@@ -124,6 +124,23 @@ class CrossReadSmokeTests(unittest.TestCase):
             self.assertEqual(result["status"], "failed")
             self.assertTrue(any("entityParseFailures" in error for error in result["errors"]))
 
+    def test_run_fixture_skips_missing_file(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            result = MODULE.run_fixture(
+                root / "missing-dump",
+                root,
+                {
+                    "id": "missing",
+                    "path": "missing.dwg",
+                    "version": "AC1027",
+                    "entityCounts": {},
+                    "uniqueNonzeroHandles": False,
+                },
+            )
+            self.assertEqual(result["status"], "skipped")
+            self.assertIn("absent", result["skipReason"])
+
     def test_handle_digest_is_order_independent(self) -> None:
         self.assertEqual(
             MODULE.digest_handles(["B", "A"]),

@@ -29,10 +29,10 @@
  * inline for <=AC1018 (the same way DRW_Dictionary does) and from the separate
  * handle stream for R2007+, so the typed body decodes at every version.
  *
- * Fixtures:
- *   evalgraph_r2004.dwg    <- ~/doc/dwg6/example_2004.dwg (AC1018, R2004) — the
+ * Optional local fixtures (not bundled):
+ *   ~/doc/dwg6/example_2004.dwg (AC1018, R2004) — the
  *                             <=AC1018 fixture proving inline-handle decode.
- *   dynblock_r2018.dwg        (AC1032, R2018, already committed) — the R2007+
+ *   ~/doc/dwg6/makeall-plus.dwg (AC1032, R2018) — the R2007+
  *                             regression fixture (27 EVALUATION_GRAPH objects);
  *                             shared AC1032 kitchen-sink (~/doc/dwg6/makeall-plus.dwg).
  *

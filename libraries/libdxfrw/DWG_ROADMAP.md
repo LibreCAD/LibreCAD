@@ -26243,3 +26243,31 @@ small ASCII DXFs are hand-authored witnesses, and the retained
    separately obtained LibreDWG corpus when that variable is set.
 4. Validate the manifest, JSON syntax, focused DWG safety tests, and the
    absence of newly added external DWG/DXF blobs before committing the cleanup.
+
+## Current Active Plan (rev 1321): remove external DWGs already present on origin/master
+
+The follow-up audit covered the baseline `origin/master` corpus rather than
+only the files added by this PR. It found 27 tracked DWGs and 1337 tracked
+DXFs. Twenty baseline DWGs are byte-identical to the GPLv3 LibreDWG test
+corpus, two are byte-identical to MIT ACadSharp samples, and two have only
+developer-local provenance. The remaining three are documented synthetic ODA
+outputs from project-authored DXF input. The bundled DXF library and pattern
+files match developer-local document copies but have no reliable per-file
+rights record, so they remain outside this focused cleanup.
+
+### Implementation status
+
+1. Remove the 24 external or provenance-unresolved baseline DWGs and remove
+   the six manifest records that asserted repository redistribution for the
+   affected LibreDWG construction-line and ACSH fixtures.
+2. Keep `large_radial.dwg`, `mpolygon_solid.dwg`, and `rtext_arctext.dwg`, and
+   record their hashes and synthetic origin in `testdata/PROVENANCE.md`.
+3. Keep every affected test case. Tests use explicit absent-fixture skips;
+   the cross-reader smoke helper reports missing corpus entries as skipped and
+   still fails on actual parser or oracle errors.
+4. Rebuild the DWG safety, smoke, and writer targets incrementally, run their
+   relevant suites, validate the manifest, and push the cleanup for CI review.
+
+The manifest validator was also updated so an intentionally external-only DWG
+corpus is valid when no bundled default DWG entries remain; it still enforces
+complete AC1015–AC1032 coverage whenever a bundled default corpus is declared.

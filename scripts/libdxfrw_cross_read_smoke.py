@@ -21,7 +21,8 @@
 """Run the local libdxfrw side of the DWG/DXF cross-read smoke contract.
 
 The fixture list is deliberately small and source-relative so this check is
-reproducible in CI and in developer build directories.  It validates the
+reproducible when an optional local corpus is available in a developer or CI
+build directory. It validates the
 headless JSON dump contract before a sibling dwg-parser receipt is compared:
 the file opens, the version is identified, typed entity counts are stable, and
 post-R13 entity handles are present and unique.  RAW object totals are
@@ -142,7 +143,8 @@ def run_fixture(dump: Path, repo: Path, fixture: dict[str, Any]) -> dict[str, An
         "errors": [],
     }
     if not path.is_file():
-        result["errors"].append(f"fixture is missing: {rel_path}")
+        result["status"] = "skipped"
+        result["skipReason"] = f"fixture is absent: {rel_path}"
         return result
 
     try:
@@ -248,13 +250,15 @@ def main(argv: list[str]) -> int:
         return 2
 
     receipts = [run_fixture(dump, repo, fixture) for fixture in FIXTURES]
-    failures = [receipt for receipt in receipts if receipt["status"] != "passed"]
+    failures = [receipt for receipt in receipts if receipt["status"] == "failed"]
+    skipped = [receipt for receipt in receipts if receipt["status"] == "skipped"]
     payload = {
         "schema": 1,
         "tool": "libdxfrw_cross_read_smoke",
         "status": "passed" if not failures else "failed",
         "fixtureCount": len(receipts),
         "failureCount": len(failures),
+        "skippedCount": len(skipped),
         "fixtures": receipts,
     }
     encoded = json.dumps(payload, indent=2, sort_keys=True) + "\n"
@@ -268,6 +272,8 @@ def main(argv: list[str]) -> int:
         print(f"libdxfrw cross-read smoke: {payload['status']} ({len(receipts)} fixtures)")
         for receipt in receipts:
             print(f"  {receipt['status'].upper():7} {receipt['id']}")
+            if receipt.get("skipReason"):
+                print(f"           {receipt['skipReason']}")
             for error in receipt["errors"]:
                 print(f"           {error}")
     return 1 if failures else 0

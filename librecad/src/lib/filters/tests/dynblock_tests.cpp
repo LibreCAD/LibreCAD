@@ -28,8 +28,8 @@
  * decoded into a DRW_DynamicBlockObject and delivered via addDynamicBlockObject
  * while the raw shelf is retained for a lossless round-trip.
  *
- * Fixture (copied to testdata):
- *   dynblock_r2018.dwg  <- doc/dwg6/makeall-plus.dwg (AC1032) — carries the full
+ * Optional local fixture (not bundled):
+ *   doc/dwg6/makeall-plus.dwg (AC1032) — carries the full
  *   30-type dynamic-block menagerie including fully-decoded validation
  *   classes (BLOCKMOVEACTION, BLOCKVISIBILITYPARAMETER, BLOCKFLIPPARAMETER,
  *   BLOCKROTATIONPARAMETER, BLOCKLINEARPARAMETER, BLOCKPOLARPARAMETER,

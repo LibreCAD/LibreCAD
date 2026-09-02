@@ -24,9 +24,9 @@
  * parseDwg was a no-op stub delivering an empty struct; this test proves the
  * full legacy / r2010b / r2013b body transcription.
  *
- * Fixtures (in-corpus, copied to testdata):
- *   visualstyle_r2013.dwg  <- ~/doc/dwg6/Point.dwg   (AC1027, r2010b + r2013b)
- *   visualstyle_r2007.dwg  <- ~/doc/dwg6/Point_1.dwg (AC1021, legacy body)
+ * Optional local fixtures (not bundled):
+ *   ~/doc/dwg6/Point.dwg   (AC1027, r2010b + r2013b)
+ *   ~/doc/dwg6/Point_1.dwg (AC1021, legacy body)
  *
  * Oracle: dwgread -O JSON (LibreDWG). The "Flat" visual style (index 49,
  * dwg type 506, handle [0,1,154]) field values are baked in below. Note the

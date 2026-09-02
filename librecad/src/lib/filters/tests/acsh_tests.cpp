@@ -27,9 +27,9 @@
  * parseAcshSphereClass / parseAcshCylinderOrConeBody). Every other ACSH_* class
  * still routes to the shell parser and is preserved by the raw shelf.
  *
- * Fixture (in testdata):
- *   acsh_r2007.dwg  <- ~/dev/libredwg/test/test-data/2007/ATMOS-DC22S.dwg
- *                      (AC1021 / R2007; contains BOX, WEDGE, CYLINDER, ... ACSH)
+ * Optional local fixture (not bundled):
+ *   ~/dev/libredwg/test/test-data/2007/ATMOS-DC22S.dwg
+ *   (AC1021 / R2007; contains BOX, WEDGE, CYLINDER, ... ACSH)
  *
  * Oracle: dwgread -O JSON (LibreDWG). Baked-in dims by handle:
  *   BOX      [0,2,1101]: length 38.0, width 38.0, height 9.39007478740232

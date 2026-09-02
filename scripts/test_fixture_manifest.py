@@ -56,25 +56,31 @@ class FixtureManifestTests(unittest.TestCase):
 
     def test_default_dwg_magic_must_match_declared_version(self) -> None:
         data = copy.deepcopy(self.data)
-        for fixture in data["fixtures"]:
-            if fixture.get("id") == "dwg-ac1021-acsh":
-                fixture["version"] = "AC1022"
-                break
+        default_dwg = next(
+            (
+                fixture
+                for fixture in data["fixtures"]
+                if fixture.get("defaultEnabled") is True
+                and fixture.get("format") == "DWG"
+            ),
+            None,
+        )
+        if default_dwg is None:
+            self.skipTest("repository has no bundled default DWG fixture")
+        default_dwg["version"] = "AC1022"
         errors = self.validate(data)
         self.assertTrue(any("DWG magic" in error for error in errors), errors)
 
-    def test_every_public_dwg_version_requires_a_default_reader_fixture(self) -> None:
+    def test_empty_default_dwg_corpus_is_allowed(self) -> None:
         data = copy.deepcopy(self.data)
         data["fixtures"] = [
             fixture
             for fixture in data["fixtures"]
-            if not (fixture.get("defaultEnabled") is True
-                    and fixture.get("format") == "DWG"
-                    and fixture.get("version") == "AC1032"
-                    and fixture.get("evidenceRole") in {"reader", "both"})
+            if fixture.get("format") != "DWG"
+            or fixture.get("defaultEnabled") is not True
         ]
         errors = self.validate(data)
-        self.assertTrue(any("AC1032" in error for error in errors), errors)
+        self.assertEqual([], errors)
 
     def test_default_dxf_acadver_must_match_declared_version(self) -> None:
         data = copy.deepcopy(self.data)

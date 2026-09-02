@@ -36,12 +36,12 @@
  * decoders. Legacy opaque bodies remain raw-shelved on short reads; bounded
  * R2007+ frames reject a truncated common handle prefix before publication.
  *
- * Fixtures (in testdata):
- *   assoc_surface_r2004.dwg     <- ~/dev/libredwg/.../2004/Surface.dwg (AC1018)
+ * Optional local fixtures (not bundled):
+ *   ~/dev/libredwg/.../2004/Surface.dwg (AC1018)
  *       ACDBASSOCEDGEACTIONPARAM, ACDBASSOCPATHACTIONPARAM (generic action
  *       params), ACDBASSOC{EXTRUDED,LOFTED,PLANE,REVOLVED,SWEPT}SURFACEACTIONBODY
  *       (raw-shelf fallback), ACDBASSOCACTION/DEPENDENCY/NETWORK/PERSSUBENTMANAGER.
- *   assoc_constraints_r2013.dwg <- ~/dev/libredwg/.../2013/Constraints.dwg (AC1027)
+ *   ~/dev/libredwg/.../2013/Constraints.dwg (AC1027)
  *       ACDBASSOC2DCONSTRAINTGROUP (generic action body), ACDBASSOCNETWORK,
  *       ACDBASSOCGEOMDEPENDENCY.
  *
