@@ -15,9 +15,14 @@ mkdir -p "$RESOURCEDIR/fonts"
 mkdir -p "$RESOURCEDIR/patterns"
 mkdir -p "$RESOURCEDIR/library"
 mkdir -p "$CONTENTSDIR/PlugIns"
-cp "$SCRIPTDIR/../librecad/support/patterns/"*.dxf "$RESOURCEDIR/patterns/"
+if [ -d "$SCRIPTDIR/../librecad/support/patterns" ]; then
+	find "$SCRIPTDIR/../librecad/support/patterns" -maxdepth 1 -type f -name '*.dxf' \
+		-exec cp {} "$RESOURCEDIR/patterns/" \;
+fi
 cp "$SCRIPTDIR/../librecad/support/fonts/"*.lff "$RESOURCEDIR/fonts/"
-cp -r "$SCRIPTDIR/../librecad/support/library/" "$RESOURCEDIR/library/"
+if [ -d "$SCRIPTDIR/../librecad/support/library" ]; then
+	cp -r "$SCRIPTDIR/../librecad/support/library/" "$RESOURCEDIR/library/"
+fi
 
 if [ -x $LRELEASE ]
 then

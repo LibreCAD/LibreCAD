@@ -93,8 +93,12 @@ cp desktop/org.librecad.librecad.appdata.xml appdir/usr/share/metainfo/
 
 cp -r librecad/support/doc/* appdir/usr/share/doc/librecad/
 cp -r librecad/support/fonts appdir/usr/share/librecad/
-cp -r librecad/support/library appdir/usr/share/librecad/
-cp -r librecad/support/patterns appdir/usr/share/librecad/
+if [ -d librecad/support/library ]; then
+    cp -r librecad/support/library appdir/usr/share/librecad/
+fi
+if [ -d librecad/support/patterns ]; then
+    cp -r librecad/support/patterns appdir/usr/share/librecad/
+fi
 
 cp CI/librecad.svg appdir/usr/share/icons/hicolor/scalable/apps/
 convert -resize 256x256 CI/librecad.svg appdir/usr/share/icons/hicolor/256x256/apps/librecad.png
@@ -116,4 +120,3 @@ chmod +x *.AppImage
 VERSION=`git describe --always` ARCH=aarch64 ./appimagetool-*.AppImage -s deploy appdir/usr/share/applications/*.desktop
 VERSION=`git describe --always` ./appimagetool-*.AppImage ./appdir
 chmod +x *.AppImage
-

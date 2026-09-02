@@ -167,10 +167,10 @@ Section "Main Section" SecMain
   File /r "..\..\librecad\support\fonts\*.lff"
   ; === Package hatch patterns ===
   SetOutPath "$INSTDIR\resources\patterns"
-  File /r "..\..\librecad\support\patterns\*.dxf"
+  File /nonfatal /r "..\..\librecad\support\patterns\*.dxf"
   ; === Package library parts (DXF) - preserves subfolder structure ===
   SetOutPath "$INSTDIR\resources\library"
-  File /r "..\..\librecad\support\library\*.dxf"
+  File /nonfatal /r "..\..\librecad\support\library\*.dxf"
   ; Registry, shortcuts, uninstaller
   WriteRegStr HKLM "${APPREG}" "" "$INSTDIR"
   WriteUninstaller "$INSTDIR\Uninstall.exe"

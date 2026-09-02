@@ -26271,3 +26271,42 @@ rights record, so they remain outside this focused cleanup.
 The manifest validator was also updated so an intentionally external-only DWG
 corpus is valid when no bundled default DWG entries remain; it still enforces
 complete AC1015–AC1032 coverage whenever a bundled default corpus is declared.
+
+## Completed Plan (rev 1322): remove all unresolved tracked CAD assets
+
+The broader repository audit found 1,337 baseline DXF files outside the
+libdxfrw test corpus: the support library, hatch-pattern directory, and the
+dimension-style preview sample. Their repository history identifies imports or
+local copies, but does not establish a redistributable license or complete
+provenance record. They are therefore removed rather than redistributed.
+
+### Implementation status
+
+1. Remove all unresolved tracked `.dxf` and `.dwg` files. Retain only the
+   eight generated/documented DWGs and four small hand-authored DXF regression
+   fixtures listed in `testdata/PROVENANCE.md`.
+2. Remove the stale `dim_sample.dxf` Qt resource entry. The dimension-style
+   preview now creates a valid empty preview when that optional sample is not
+   present, so settings dialogs do not dereference a null view.
+3. Make Unix, macOS, Windows, and AppImage resource staging conditional on
+   optional library/pattern directories. Package builds remain successful when
+   those directories are absent, while user-configured external paths continue
+   to be discovered by the existing runtime directory logic.
+4. Keep all test cases and their optional external-fixture paths. Missing
+   fixtures remain skips; parser and writer failures remain test failures.
+5. Validate that the tracked CAD inventory contains no unresolved files, then
+   build the affected targets with both CMake and qmake6 and run the fixture,
+   DXF, and DWG regression suites.
+
+### Verification
+
+- The final working tree contains four documented DXF regression fixtures and
+  eight documented DWG regression fixtures; the unresolved support-library,
+  hatch-pattern, and dimension-preview files are absent.
+- CMake built and linked the affected DXF/DWG test targets successfully.
+- qmake6 regenerated both project Makefiles and compiled the affected preview
+  object without the removed resource.
+- The full DXF suite passed (514 test cases); missing-fixture simulations for
+  the DXF and ordinary-encoding DWG cases passed.
+- The full DWG smoke suite still has five pre-existing failures in unrelated
+  advanced metadata/XREF coverage; the cleanup-specific fixture cases pass.

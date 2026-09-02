@@ -20,10 +20,10 @@ if not exist "%LC_RESOURCEDIR%\library\" (mkdir "%LC_RESOURCEDIR%\library")
 if not exist "%LC_RESOURCEDIR%\library\misc\" (mkdir "%LC_RESOURCEDIR%\library\misc")
 if not exist "%LC_RESOURCEDIR%\library\templates\" (mkdir "%LC_RESOURCEDIR%\library\templates")
 
-copy "librecad\support\patterns\*.dxf" "%LC_RESOURCEDIR%\patterns"
+if exist "librecad\support\patterns\*.dxf" copy "librecad\support\patterns\*.dxf" "%LC_RESOURCEDIR%\patterns"
 copy "librecad\support\fonts\*.lff" "%LC_RESOURCEDIR%\fonts"
-copy "librecad\support\library\misc\*.dxf" "%LC_RESOURCEDIR%\library\misc"
-copy "librecad\support\library\templates\*.dxf" "%LC_RESOURCEDIR%\library\templates"
+if exist "librecad\support\library\misc\*.dxf" copy "librecad\support\library\misc\*.dxf" "%LC_RESOURCEDIR%\library\misc"
+if exist "librecad\support\library\templates\*.dxf" copy "librecad\support\library\templates\*.dxf" "%LC_RESOURCEDIR%\library\templates"
 
 
 REM Generate translations
