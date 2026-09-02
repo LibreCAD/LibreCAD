@@ -77,7 +77,7 @@ void RS_ActionDrawImage::init(int status) {
 
         setStatus(SetTargetPoint);
     } else {
-        setFinished();
+        finish();
         //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
     }
 }

@@ -176,6 +176,7 @@
 #include "qg_snaptoolbar.h"
 #include "rs_debug.h"
 #include "rs_graphicview.h"
+#include "rs_eventhandler.h"
 #include "rs_layer.h"
 #include "rs_settings.h"
 #include "lc_actionpenpick.h"
@@ -253,6 +254,10 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                 "QG_ActionHandler::setCurrentAction: graphic view or "
                 "document is nullptr");
+        if (view != nullptr) {
+            // no action is started: release the QAction the user triggered
+            view->getEventHandler()->setQAction(nullptr);
+        }
         return nullptr;
     }
 
@@ -1074,6 +1079,10 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 
 	if (a) {
         view->setCurrentAction(a);
+    } else {
+        // no action started (e.g. the tool is the current one already): the QAction
+        // the user triggered must not be linked to another action
+        view->getEventHandler()->setQAction(nullptr);
     }
 
     RS_DEBUG->print("QG_ActionHandler::setCurrentAction(): OK");
@@ -2224,4 +2233,3 @@ void QG_ActionHandler::slotDrawLinePoints(){
     setCurrentAction(RS2::ActionDrawLinePoints);
 }
 // EOF
-

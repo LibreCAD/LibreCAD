@@ -53,6 +53,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
 
     action = new QAction(tr("Zoom &Panning"), agm->other);
     action->setIcon(QIcon(":/icons/zoom_pan.svg"));
+    action->setProperty("_EnabledInPrintPreview", true);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotZoomPan()));
     action->setObjectName("ZoomPan");
@@ -1527,6 +1528,7 @@ void LC_ActionFactory::commonActions(QMap<QString, QAction*>& a_map, LC_ActionGr
 
     action = new QAction(tr("&Window Zoom"), agm->other);
     action->setCheckable(true);
+    action->setProperty("_EnabledInPrintPreview", true);
     if (using_theme)
         action->setIcon(QIcon::fromTheme("zoom-select", QIcon(":/icons/zoom_window.svg")));
     else

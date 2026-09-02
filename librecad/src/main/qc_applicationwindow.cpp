@@ -66,6 +66,7 @@
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_document.h"
+#include "rs_eventhandler.h"
 #include "rs_painterqt.h"
 #include "rs_pen.h"
 #include "rs_settings.h"
@@ -1054,6 +1055,11 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w, bool forced)
     RS_DEBUG->print("QC_ApplicationWindow::slotWindowActivated begin");
 
     if(w==nullptr) {
+        foreach (QMdiSubWindow* subWindow, mdiAreaCAD->subWindowList()) {
+            if (auto* mdiWindow = qobject_cast<QC_MDIWindow*>(subWindow)) {
+                mdiWindow->getEventHandler()->setQActionStateActive(false);
+            }
+        }
         emit windowsChanged(false);
         activedMdiSubWindow=w;
         return;
@@ -1129,6 +1135,7 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w, bool forced)
         }
 
         if(snapToolBar){
+            snapToolBar->setLockedRelativeZero(view && view->isRelativeZeroLocked());
             actionHandler->slotSetSnaps(snapToolBar->getSnaps());
         }else {
             RS_DEBUG->print(RS_Debug::D_ERROR,"snapToolBar is nullptr\n");
@@ -1138,17 +1145,26 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w, bool forced)
     // show action options for active window only
     foreach (QMdiSubWindow* sw, mdiAreaCAD->subWindowList()) {
         QC_MDIWindow* sm = qobject_cast<QC_MDIWindow*>(sw);
+        sm->getEventHandler()->setQActionStateActive(false);
         RS_ActionInterface* ai = sm->getGraphicView()->getCurrentAction();
         if (ai) {
             ai->hideOptions();
         }
     }
-    if (m && m->getGraphicView()->getCurrentAction()) {
-        m->getGraphicView()->getCurrentAction()->showOptions();
+    if (m && m->getGraphicView()) {
+        QG_GraphicView* view = m->getGraphicView();
+        // The active window owns the shared QActions, a print preview included:
+        // its handler releases the zoom buttons it links like any other window.
+        view->getEventHandler()->setQActionStateActive(true);
+        if (view->getCurrentAction()) {
+            view->getCurrentAction()->showOptions();
+        }
     }
 
     // Disable/Enable menu and toolbar items
     emit windowsChanged(m && m->getDocument());
+    ag_manager->toggleTools(m && m->getGraphicView()
+                            && m->getGraphicView()->isPrintPreview());
 
     RS_DEBUG->print("RVT_PORT emit windowsChanged(true);");
 
@@ -3257,15 +3273,27 @@ void QC_ApplicationWindow::relayAction(QAction* q_action)
 {
     // author: ravas
 
-    auto view = getMDIWindow()->getGraphicView();
-    if (!view)
+    auto window = getMDIWindow();
+    auto view = window ? window->getGraphicView() : nullptr;
+    if (!view || !q_action)
     {   // when switching back to LibreCAD from another program
         // occasionally no drawings are activated
-        qWarning("relayAction: graphicView is nullptr");
+        if (q_action != nullptr) {
+            q_action->setChecked(false);
+        }
+        qWarning("relayAction: graphicView or QAction is nullptr");
         return;
     }
 
-    view->setCurrentQAction(q_action);
+    // QActions which are used in the middle of other actions (e.g. "Set relative zero")
+    // or don't start an action at all ("Lock relative zero") must not be handled as
+    // the current action of the view, otherwise the action in progress would lose
+    // its button, or the toggle would be released with the action, see issue #2012
+    view->addRecentAction(q_action);
+    const QVariant setAsCurrentAction = q_action->property("_SetAsCurrentActionInView");
+    if (!setAsCurrentAction.isValid() || setAsCurrentAction.toBool()) {
+        view->getEventHandler()->setQAction(q_action);
+    }
 
     const QString commands(q_action->data().toString());
     if (!commands.isEmpty())

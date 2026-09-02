@@ -92,6 +92,13 @@ LC_ActionGroupManager::LC_ActionGroupManager(QC_ApplicationWindow *parent)
     }
 
 
+    // relayAction() hands the triggered QAction to the graphic view's event handler,
+    // which links it to the action started next by the QAction's own slot in
+    // QG_ActionHandler. This requires the group's triggered() to be delivered
+    // first: it is, because every tool QAction is created with its group as parent
+    // (QActionGroup connects to the QAction in its constructor, before
+    // LC_ActionFactory connects the slot). Do not add QActions to these groups
+    // with QActionGroup::addAction() after their slot has been connected.
     foreach (auto const& ag, toolGroups()) {
         connect( ag, &QActionGroup::triggered, parent, &QC_ApplicationWindow::relayAction);
     }
@@ -171,7 +178,9 @@ void LC_ActionGroupManager::toggleTools(bool state)
     {
         foreach(auto action, group->actions())
         {
-            action->setDisabled(state);
+            const bool enabledInPrintPreview =
+                    action->property("_EnabledInPrintPreview").toBool();
+            action->setDisabled(state && !enabledInPrintPreview);
         }
     }
 }

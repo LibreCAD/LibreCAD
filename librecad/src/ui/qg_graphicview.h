@@ -96,7 +96,7 @@ public:
     void addScrollbars();
     bool hasScrollbars();
 
-    void setCurrentQAction(QAction* q_action);
+    void addRecentAction(QAction* q_action);
 
     QString device;
 
