@@ -117,6 +117,8 @@ private:
     void updateQActions();
     //! unlink the QAction of an action which is removed from the stack; uncheck it unless another action or the pending link still holds it
     void unlinkQAction(const RS_ActionInterface* action);
+    //! uncheck every linked QAction and the pending one, if this is the active handler
+    void uncheckLinkedQActions();
 
     //! QAction triggered by the user, waiting for its action to be started by setCurrentAction()
     QAction* m_pendingQAction{nullptr};

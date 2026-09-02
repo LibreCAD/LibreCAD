@@ -1153,7 +1153,9 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w, bool forced)
     }
     if (m && m->getGraphicView()) {
         QG_GraphicView* view = m->getGraphicView();
-        view->getEventHandler()->setQActionStateActive(!view->isPrintPreview());
+        // The active window owns the shared QActions, a print preview included:
+        // its handler releases the zoom buttons it links like any other window.
+        view->getEventHandler()->setQActionStateActive(true);
         if (view->getCurrentAction()) {
             view->getCurrentAction()->showOptions();
         }
@@ -3290,7 +3292,7 @@ void QC_ApplicationWindow::relayAction(QAction* q_action)
     view->addRecentAction(q_action);
     const QVariant setAsCurrentAction = q_action->property("_SetAsCurrentActionInView");
     if (!setAsCurrentAction.isValid() || setAsCurrentAction.toBool()) {
-        view->setCurrentQAction(q_action);
+        view->getEventHandler()->setQAction(q_action);
     }
 
     const QString commands(q_action->data().toString());

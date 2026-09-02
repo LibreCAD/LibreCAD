@@ -295,8 +295,7 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                 // send command event directly to current action:
                 if (hasAction()) {
                     LC_LOG<<"RS_EventHandler::commandEvent(RS_CommandEvent* e): sending cmd("<<qPrintable(e->getCommand()) <<") to action: "<<currentActions.last()->rtti();
-                    const auto current = currentActions.last();
-                    current->commandEvent(e);
+                    currentActions.last()->commandEvent(e);
                 }
 
             if(hasAction() && !e->isAccepted()){
@@ -311,8 +310,7 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                         case ',':
                         {
                             RS_CoordinateEvent ce(at);
-                            const auto current = currentActions.last();
-                            current->coordinateEvent(&ce);
+                            currentActions.last()->coordinateEvent(&ce);
                             e->accept();
                             break;
                         }
@@ -336,8 +334,7 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                         RS_DEBUG->print("RS_EventHandler::commandEvent: 005");
                         RS_CoordinateEvent ce(RS_Vector(x,y));
                         RS_DEBUG->print("RS_EventHandler::commandEvent: 006");
-						const auto current = currentActions.last();
-						current->coordinateEvent(&ce);
+						currentActions.last()->coordinateEvent(&ce);
 					} else
 						RS_DIALOGFACTORY->commandMessage(
 									"Expression Syntax Error");
@@ -355,8 +352,7 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                         if (ok1 && ok2) {
                             RS_CoordinateEvent ce(RS_Vector(x,y) + relative_zero);
 
-                            const auto current = currentActions.last();
-                            current->coordinateEvent(&ce);
+                            currentActions.last()->coordinateEvent(&ce);
                             //                            currentActions[actionIndex]->coordinateEvent(&ce);
 						} else
 							RS_DIALOGFACTORY->commandMessage(
@@ -377,8 +373,7 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
 							RS_Vector pos{
 								RS_Vector::polar(r,RS_Math::deg2rad(a))};
                             RS_CoordinateEvent ce(pos);
-                            const auto current = currentActions.last();
-                            current->coordinateEvent(&ce);
+                            currentActions.last()->coordinateEvent(&ce);
 						} else
                                 RS_DIALOGFACTORY->commandMessage(
                                             "Expression Syntax Error");
@@ -397,8 +392,7 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
 						if (ok1 && ok2) {
 							RS_Vector pos = RS_Vector::polar(r,RS_Math::deg2rad(a));
                             RS_CoordinateEvent ce(pos + relative_zero);
-                            const auto current = currentActions.last();
-                            current->coordinateEvent(&ce);
+                            currentActions.last()->coordinateEvent(&ce);
 						} else
                                 RS_DIALOGFACTORY->commandMessage(
                                             "Expression Syntax Error");
@@ -533,6 +527,8 @@ void RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
         m_toQAction[action] = m_pendingQAction;
         m_pendingQAction = nullptr;
     }
+    // check the QAction of the new action, release the one of the suspended action
+    updateQActions();
     //    RS_DEBUG->print("RS_EventHandler::setCurrentAction: current action is: %s -> %s",
     //                    predecessor->getName().toLatin1().data(),
     //                    currentActions.last()->getName().toLatin1().data());
@@ -602,13 +598,7 @@ void RS_EventHandler::killAllActions()
 		}
 	}
     currentActions.clear();
-    if (m_qActionStateActive) {
-        for (const auto& link : m_toQAction)
-            link.second->setChecked(false);
-        if (m_pendingQAction != nullptr)
-            m_pendingQAction->setChecked(false);
-    }
-
+    uncheckLinkedQActions();
     m_toQAction.clear();
     m_pendingQAction = nullptr;
 
@@ -644,7 +634,6 @@ bool RS_EventHandler::hasAction()
     }
     auto it = std::remove_if(currentActions.begin(), currentActions.end(), isInactive);
     currentActions.erase(it, currentActions.end());
-    updateQActions();
     return !currentActions.empty();
 }
 
@@ -723,7 +712,10 @@ void RS_EventHandler::debugActions() const{
 void RS_EventHandler::setQAction(QAction* action)
 {
     // The QAction is triggered before the action handler creates the action,
-    // so the link is established by setCurrentAction()
+    // so the link is established by setCurrentAction(). This relies on
+    // QActionGroup::triggered() (relayed here by QC_ApplicationWindow::relayAction())
+    // being delivered before the QAction's own triggered() slot in QG_ActionHandler,
+    // see the note in LC_ActionGroupManager.
     QAction* dropped = m_pendingQAction;
     m_pendingQAction = action;
     if (m_qActionStateActive && dropped != nullptr && dropped != action) {
@@ -764,17 +756,24 @@ void RS_EventHandler::updateQActions()
     }
 }
 
+void RS_EventHandler::uncheckLinkedQActions()
+{
+    if (!m_qActionStateActive) {
+        return;
+    }
+    for (const auto& link : m_toQAction) {
+        link.second->setChecked(false);
+    }
+    if (m_pendingQAction != nullptr) {
+        m_pendingQAction->setChecked(false);
+    }
+}
+
 void RS_EventHandler::setQActionStateActive(bool active)
 {
-    if (!active && m_qActionStateActive) {
-        for (const auto& link : m_toQAction) {
-            link.second->setChecked(false);
-        }
-        if (m_pendingQAction != nullptr) {
-            m_pendingQAction->setChecked(false);
-        }
+    if (!active) {
+        uncheckLinkedQActions();
     }
-
     m_qActionStateActive = active;
     updateQActions();
 }

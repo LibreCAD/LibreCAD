@@ -254,23 +254,11 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                 "QG_ActionHandler::setCurrentAction: graphic view or "
                 "document is nullptr");
-        return nullptr;
-    }
-
-    if (view->isPrintPreview()) {
-        switch (id) {
-        case RS2::ActionZoomIn:
-        case RS2::ActionZoomOut:
-        case RS2::ActionZoomAuto:
-        case RS2::ActionZoomWindow:
-        case RS2::ActionZoomPan:
-        case RS2::ActionZoomPrevious:
-        case RS2::ActionZoomRedraw:
-            break;
-        default:
+        if (view != nullptr) {
+            // no action is started: release the QAction the user triggered
             view->getEventHandler()->setQAction(nullptr);
-            return nullptr;
         }
+        return nullptr;
     }
 
     auto a_layer = (document->getLayerList() != nullptr) ? document->getLayerList()->getActive() : nullptr;
