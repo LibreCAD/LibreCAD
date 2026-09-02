@@ -26090,3 +26090,38 @@ DWG format failures.
    Windows headers receive the same protection.
 3. Rebuild the standalone DWG target and rerun the native x64/ARM64 matrix;
    the Linux focused lane already passed before this header-only fix.
+
+## Current Active Plan (rev 1314): keep the page-map diagnostic type portable
+
+The replacement native matrix exposed one remaining MSVC access-control issue
+after the Windows `max` macro fixes. The DWG safety probe re-exported
+`dwgReader21::PageMapFailure` through a public `using` declaration, but MSVC
+still rejected code that named the inherited nested type because its defining
+declaration remained protected.
+
+### Implemented
+
+1. Make the internal page-map failure enum publicly nameable while keeping
+   `parseSectionPageMap` and the rest of the reader implementation protected.
+   This changes only test/diagnostic type visibility; it does not widen the
+   parser entry point or alter file parsing behavior.
+2. Rebuild the affected DWG safety target and rerun the native matrix. The
+   x64 job reached the DWG test target after a 1h13m24s build and failed only
+   on this access-control diagnostic; ARM64 was still compiling at that time.
+
+## Current Active Plan (rev 1315): keep native verification bounded in time
+
+The failed x64 run also showed that the dedicated Windows workflow invoked a
+Visual Studio build without CMake's parallel option. The source compiled
+through the production library and reached the DWG test sources, but a fresh
+matrix leg took 1h13m24s before reporting the type-visibility error. This
+turnaround is too slow for an incremental format-review gate and makes a
+second native retry unnecessarily expensive.
+
+### Implemented
+
+1. Add CMake's `--parallel` option to the Windows DWG/DXF test build, keeping
+   the existing two explicit test targets and all test-selection controls.
+2. Rerun the native x64 and ARM64 matrix from the public diagnostic-type fix;
+   retain the Linux result from the previous commit as already valid for the
+   unchanged source path.

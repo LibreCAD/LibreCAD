@@ -135,7 +135,7 @@ jobs:
 
       - name: Build bounded DWG/DXF test lanes
         run: |
-          cmake --build generated-tests --config Release --target librecad_dwg_fast_tests librecad_dxf_fast_tests
+          cmake --build generated-tests --config Release --parallel --target librecad_dwg_fast_tests librecad_dxf_fast_tests
         shell: cmd
 
       - name: Run bounded DWG/DXF test lanes

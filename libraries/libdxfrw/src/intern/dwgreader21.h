@@ -50,7 +50,7 @@ public:
 //    return false;
 //}
 
-protected:
+public:
     enum class PageMapFailure : std::uint8_t {
         None,
         InvalidInput,
@@ -63,6 +63,7 @@ protected:
         CountMismatch
     };
 
+protected:
     bool parseSysPage(std::uint64_t sizeCompressed, std::uint64_t sizeUncompressed,
                       std::uint64_t correctionFactor, std::uint64_t offset,
                       std::uint64_t crcSeed, std::uint64_t expectedCompressedCrc,
