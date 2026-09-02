@@ -171,7 +171,9 @@ void LC_ActionGroupManager::toggleTools(bool state)
     {
         foreach(auto action, group->actions())
         {
-            action->setDisabled(state);
+            const bool enabledInPrintPreview =
+                    action->property("_EnabledInPrintPreview").toBool();
+            action->setDisabled(state && !enabledInPrintPreview);
         }
     }
 }

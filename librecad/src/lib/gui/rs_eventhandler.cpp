@@ -655,11 +655,16 @@ bool RS_EventHandler::hasAction()
 void RS_EventHandler::cleanUp() {
     RS_DEBUG->print("RS_EventHandler::cleanUp");
 
-    if(hasAction()){
-        currentActions.last()->resume();
-        currentActions.last()->showOptions();
-    } else {
-		if (defaultAction) {
+    const std::shared_ptr<RS_ActionInterface> previous = currentActions.empty()
+            ? nullptr : currentActions.last();
+    RS_ActionInterface* current = hasAction()
+            ? currentActions.last().get() : nullptr;
+
+    if (current != previous.get()) {
+        if (current != nullptr) {
+            current->resume();
+            current->showOptions();
+        } else if (defaultAction) {
             defaultAction->resume();
             defaultAction->showOptions();
         }

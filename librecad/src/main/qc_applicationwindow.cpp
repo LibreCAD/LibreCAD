@@ -1135,6 +1135,7 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w, bool forced)
         }
 
         if(snapToolBar){
+            snapToolBar->setLockedRelativeZero(view && view->isRelativeZeroLocked());
             actionHandler->slotSetSnaps(snapToolBar->getSnaps());
         }else {
             RS_DEBUG->print(RS_Debug::D_ERROR,"snapToolBar is nullptr\n");
