@@ -26219,3 +26219,27 @@ throughput issue, not a reason to weaken the format test set.
 3. Cancel the superseded native matrix, push the configuration-only change, and
    compare the next x64 build duration, compiler diagnostics, and test result
    against the recorded baseline.
+
+## Current Active Plan (rev 1320): keep external DWG/DXF corpus files out of the PR
+
+The fixture audit found that three newly added DWGs were unmodified copies of
+LibreDWG test files: `TS1.dwg`, `example_2013.dwg`, and `example_2018.dwg`.
+Although their upstream licensing is documented, they are external corpus
+artifacts and should not be redistributed in this GPL-2.0-or-later PR. Four
+small ASCII DXFs are hand-authored witnesses, and the retained
+`ordinary_enc_*` DWGs are generated locally by the libdxfrw writer.
+
+### Implemented
+
+1. Remove the three external DWGs, their provenance sidecar, and four unused
+   numeric `ordinary_enc_*` outputs. Keep the four hand-authored DXFs and five
+   named locally generated DWGs, with their provenance recorded in
+   `testdata/PROVENANCE.md`.
+2. Remove the manifest records that described the deleted external modeler
+   fixtures. Do not alter the pre-existing baseline corpus entries.
+3. Keep all affected test cases. Direct modeler tests already pass when their
+   fixture is absent; TS1 safety tests now pass with a clear skip when
+   `LIBRECAD_EXTERNAL_DWG_FIXTURE_DIR` is unset, and can be run against a
+   separately obtained LibreDWG corpus when that variable is set.
+4. Validate the manifest, JSON syntax, focused DWG safety tests, and the
+   absence of newly added external DWG/DXF blobs before committing the cleanup.
