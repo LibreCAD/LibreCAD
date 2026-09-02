@@ -158,6 +158,11 @@ public:
         m_ent.kcoord("start", e.basePoint); m_ent.kcoord("end", e.secPoint);
         m_ent.kv("thickness", e.thickness); m_ent.kcoord("extrusion", e.extPoint); m_ent.endObj();
     }
+    void add3DLine(const DRW_3DLine& e) override {
+        m_ent.beginObj(); dumpCommon(e, "3DLINE");
+        m_ent.kcoord("start", e.basePoint); m_ent.kcoord("end", e.secPoint);
+        m_ent.kv("thickness", e.thickness); m_ent.kcoord("extrusion", e.extPoint); m_ent.endObj();
+    }
     void addRay(const DRW_Ray& e) override {
         m_ent.beginObj(); dumpCommon(e, "RAY");
         m_ent.kcoord("start", e.basePoint); m_ent.kcoord("dir", e.secPoint); m_ent.endObj();

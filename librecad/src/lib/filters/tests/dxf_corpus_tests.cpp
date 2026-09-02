@@ -20,14 +20,15 @@
 /**
  * DXF / DWG corpus round-trip harness (F0/F1 of the DXF-completeness plan).
  *
- * Gated behind the NON-default tag [corpus] so it never runs in the default
- * suite. It imports each developer-local sample through the REAL
+ * Gated behind the hidden [.slow] tag so it never runs in the default suite.
+ * Select [corpus] or [.slow] explicitly to run it. It imports each
+ * developer-local sample through the REAL
  * RS_FilterDXFRW and exports it to a tmp directory; scripts/ezdxf_audit.py
  * then audits the output dir externally (read failures, non-unique-handle
  * errors, per-type in->out diff).
  *
- *   DXF samples : ~/dev/dwg_samples (.dxf)  DXF->DXF round-trip   tag [corpus]
- *   DWG samples : ~/doc/dwg and ~/doc/dwg2 (.dwg)  DWG->DXF       tag [corpus][dwgdxf]
+ *   DXF samples : ~/dev/dwg_samples (.dxf)  DXF->DXF round-trip   tag [.slow][corpus]
+ *   DWG samples : ~/doc/dwg and ~/doc/dwg2 (.dwg)  DWG->DXF       tag [.slow][corpus][dwgdxf]
  *
  * Outputs land in <tmp>/lc_dxf_corpus_out and <tmp>/lc_dwg_corpus_out.
  * Run, then:  scripts/ezdxf_audit.py <tmp>/lc_dxf_corpus_out --input ~/dev/dwg_samples
@@ -303,7 +304,7 @@ TEST_CASE("DXF round-trip preserves a GROUP with resolved members (F3-3)",
 }
 
 TEST_CASE("DXF corpus: round-trip ~/dev/dwg_samples/*.dxf to a tmp dir",
-          "[corpus]") {
+          "[.slow][corpus]") {
   ensureSettings();
   const char *home = std::getenv("HOME");
   if (!home) {
@@ -347,7 +348,7 @@ TEST_CASE("DXF corpus: round-trip ~/dev/dwg_samples/*.dxf to a tmp dir",
 }
 
 TEST_CASE("DWG corpus: convert ~/doc/dwg{,2}/*.dwg to DXF in a tmp dir",
-          "[corpus][dwgdxf]") {
+          "[.slow][corpus][dwgdxf]") {
   ensureSettings();
   const char *home = std::getenv("HOME");
   if (!home) {

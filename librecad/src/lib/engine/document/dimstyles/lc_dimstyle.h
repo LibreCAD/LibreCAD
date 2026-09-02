@@ -282,7 +282,7 @@ class LC_DimStyle{
            0 - Displays dimension text in a Left-to-Right reading style
            1 - Displays dimension text in a Right-to-Left reading style
         */
-        TextDirection DIMTXTDIRECTION {LEFT_TO_RIGHT};  /* code 292 */
+        TextDirection DIMTXTDIRECTION {LEFT_TO_RIGHT};  /* DSTYLE code 295, R2010+ */
 
         /** Controls options for user-positioned text.
            Initial value:	0

@@ -107,7 +107,11 @@ win32 {
         QMAKE_POST_LINK = "$$_PRO_FILE_PWD_/../../scripts/postprocess-win.bat" $$LC_VERSION
     }
 
-    QMAKE_CXXFLAGS += -Wa,-mbig-obj
+    msvc {
+        QMAKE_CXXFLAGS += /bigobj
+    } else {
+        QMAKE_CXXFLAGS += -Wa,-mbig-obj
+    }
 
     LIBS += -ldbghelp
 }
@@ -124,6 +128,7 @@ LIBS += -L../../generated/lib  \
 INCLUDEPATH += \
     ../../libraries/lciconengine \
     ../../libraries/libdxfrw/src \
+    ../../libraries/libdxfrw/src/intern \
     ../../libraries/jwwlib/src \
     ../../libraries/shapelib/src \
     cmd \
@@ -327,7 +332,6 @@ INCLUDEPATH += \
     ../res  \
     ../res/arrows \
     ../res/controls \
-    ../res/dxf \
     ../res/gdt \
     ../res/icons \
     ../res/images \
@@ -335,7 +339,6 @@ INCLUDEPATH += \
 
 RESOURCES += ../res/arrows/arrows.qrc
 RESOURCES += ../res/controls/controls.qrc
-RESOURCES += ../res/dxf/dxf.qrc
 RESOURCES += ../res/gdt/gdt.qrc
 RESOURCES += ../res/icons/icons.qrc
 RESOURCES += ../res/images/images.qrc
@@ -2327,6 +2330,7 @@ SOURCES += \
     plugins/intern/qc_actiongetselect.cpp \
     plugins/intern/qc_actiongetent.cpp \
     main/main.cpp \
+    main/lc_release_label.cpp \
     main/console_dxf2dwg.cpp \
     main/console_dxf2pdf/console_dxf2pdf.cpp \
     main/console_dxf2pdf/pdf_print_loop.cpp

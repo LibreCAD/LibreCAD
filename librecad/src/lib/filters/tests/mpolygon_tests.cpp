@@ -47,6 +47,7 @@
 #include "drw_entities.h"
 #include "drw_header.h"
 #include "drw_objects.h"
+#include "libdwgr.h"
 #include "libdxfrw.h"
 
 namespace {
@@ -195,6 +196,19 @@ std::string writeMPolygonDxf(const char *name) {
   return out.str();
 }
 
+class OversizedMPolygonEmitter : public StubInterface {
+public:
+  dwgRW *m_writer = nullptr;
+  bool m_entityResult = true;
+
+  void writeEntities() override {
+    REQUIRE(m_writer != nullptr);
+    DRW_MPolygon polygon;
+    polygon.looplist.resize(10001);
+    m_entityResult = m_writer->writeMPolygon(&polygon);
+  }
+};
+
 // Exact ezdxf-emitted MPOLYGON: SOLID fill (pattern name "SOLID"), one external
 // polyline boundary path (flag 92==3), closed (73==1), 4 vertices forming a
 // 10x10 square, fill color ACI 3.
@@ -212,6 +226,21 @@ const char *kSolidMPolygon =
     "10\n0.0\n20\n10.0\n"
     "76\n1\n63\n3\n11\n0.0\n21\n0.0\n99\n0\n"
     "0\nENDSEC\n0\nEOF\n";
+
+std::string writeMalformedMPolygonDxf(const char *name) {
+  std::string dxf = kSolidMPolygon;
+  const std::string validCount = "91\n1\n";
+  const std::size_t pos = dxf.find(validCount);
+  REQUIRE(pos != std::string::npos);
+  dxf.replace(pos, validCount.size(), "91\n10001\n");
+
+  const auto path = std::filesystem::temp_directory_path() / name;
+  std::filesystem::remove(path);
+  std::ofstream out(path);
+  out << dxf;
+  out.close();
+  return path.string();
+}
 
 } // namespace
 
@@ -277,4 +306,28 @@ TEST_CASE("DXF MPOLYGON writer emits MPOLYGON and reads it back as DRW_MPolygon"
   REQUIRE(pl != nullptr);
   CHECK(pl->vertlist.size() == 4u);
   CHECK((pl->flags & 1) == 1);
+}
+
+TEST_CASE("DXF MPOLYGON rejects an out-of-range boundary count without a callback",
+          "[dxf][mpolygon][safety]") {
+  const std::string path = writeMalformedMPolygonDxf("lc_mpolygon_invalid_count.dxf");
+  MPolygonCapture cap;
+  dxfRW reader(path.c_str());
+  CHECK_FALSE(reader.read(&cap, /*ext=*/true));
+  CHECK(cap.m_callCount == 0);
+  std::filesystem::remove(path);
+}
+
+TEST_CASE("DWG MPOLYGON writer rejects oversized boundary storage before encoding",
+          "[dwg-write][mpolygon][safety]") {
+  const auto path = std::filesystem::temp_directory_path() / "lc_mpolygon_oversized.dwg";
+  std::filesystem::remove(path);
+
+  dwgRW writer(path.string().c_str());
+  OversizedMPolygonEmitter emitter;
+  emitter.m_writer = &writer;
+  REQUIRE(writer.write(&emitter, DRW::AC1027, /*bin=*/false));
+  CHECK_FALSE(emitter.m_entityResult);
+  CHECK(writer.getWriteSkipCounters().entityWrites == 1);
+  std::filesystem::remove(path);
 }

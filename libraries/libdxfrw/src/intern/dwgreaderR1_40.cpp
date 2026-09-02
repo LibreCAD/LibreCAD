@@ -7,6 +7,7 @@
 
 #include "dwgreaderR1_40.h"
 #include "drw_dbg.h"
+#include "drw_reserve.h"
 #include "../drw_entities.h"
 #include "../drw_objects.h"
 
@@ -28,6 +29,8 @@ bool dwgReaderR1_40::readMetaData() {
     std::string magic;
     for (int i = 0; i < 6; ++i)
         magic.push_back(static_cast<char>(fileBuf->getRawChar8()));
+    if (!fileBuf->isGood())
+        return false;
     if (magic != "AC1.40")
         return false;
     version = DRW::AC14;
@@ -54,24 +57,39 @@ bool dwgReaderR1_40::readDwgTables(DRW_Header& /*hdr*/) { return true; }
 bool dwgReaderR1_40::readDwgBlocks(DRW_Interface& /*intfa*/) { return true; }
 
 std::string dwgReaderR1_40::readTV(std::uint32_t end) {
-    if (fileBuf->getPosition() + 2 > end)
+    const std::size_t position = fileBuf->getPosition();
+    if (position > end || end - position < 2) {
+        fileBuf->invalidate();
         return {};
+    }
     std::uint16_t n = fileBuf->getRawShort16();
+    if (!fileBuf->isGood())
+        return {};
+    const std::size_t valuePosition = fileBuf->getPosition();
+    if (valuePosition > end || n > end - valuePosition) {
+        fileBuf->invalidate();
+        return {};
+    }
     std::string s;
-    s.reserve(n);
-    for (std::uint16_t i = 0; i < n && fileBuf->getPosition() < end; ++i)
+    if (!DRW::reserve(s, static_cast<int>(n))) {
+        fileBuf->invalidate();
+        return {};
+    }
+    for (std::uint16_t i = 0; i < n; ++i)
         s.push_back(static_cast<char>(fileBuf->getRawChar8()));
     return decoder.toUtf8(s);
 }
 
 bool dwgReaderR1_40::readEntity(DRW_Interface& intfa, std::uint32_t& cursor) {
     const std::uint32_t end = m_dwgSize;
-    if (cursor + 4 > end)
+    if (cursor > end || end - cursor < 4)
         return false;                 // need type(2)+layer(2)
     if (!fileBuf->setPosition(cursor))
         return false;
     const std::uint16_t rawType = fileBuf->getRawShort16();
     fileBuf->getRawShort16();          // layer index (into the 128-slot palette; unused for now)
+    if (!fileBuf->isGood())
+        return false;
 
     // Deleted marker: rawType > 127 -> real type = abs((int8_t)(rawType & 0xff)).
     std::uint8_t type;
@@ -85,7 +103,13 @@ bool dwgReaderR1_40::readEntity(DRW_Interface& intfa, std::uint32_t& cursor) {
     auto rd = [&]() { return fileBuf->getRawDouble(); };
     auto p2 = [&]() { DRW_Coord c; c.x = rd(); c.y = rd(); c.z = 0.0; return c; };
     const std::uint32_t bodyStart = cursor + 4;   // buffer is positioned here
-    auto bound = [&](std::uint32_t need) { return bodyStart + need <= end; };
+    auto bound = [&](std::uint32_t need) {
+        return bodyStart <= end && need <= end - bodyStart;
+    };
+    auto remaining = [&](std::uint32_t need) {
+        const std::size_t position = fileBuf->getPosition();
+        return position <= end && need <= end - position;
+    };
 
     bool ok = true;
     switch (type) {
@@ -111,6 +135,7 @@ bool dwgReaderR1_40::readEntity(DRW_Interface& intfa, std::uint32_t& cursor) {
         DRW_Text e; e.basePoint = p2(); e.height = rd();
         rd();                          // oblique (inline PRE R_2_0; not rendered)
         e.text = readTV(end);
+        if (!fileBuf->isGood()) { ok = false; break; }
         intfa.addText(e); break; }
     case T_TRACE: {
         if (!bound(64)) { ok = false; break; }
@@ -130,14 +155,14 @@ bool dwgReaderR1_40::readEntity(DRW_Interface& intfa, std::uint32_t& cursor) {
         intfa.addShape(e); break; }
     case T_BLOCK: {
         DRW_Block e; e.name = readTV(end);
-        if (fileBuf->getPosition() + 16 > end) { ok = false; break; }
+        if (!fileBuf->isGood() || !remaining(16)) { ok = false; break; }
         e.basePoint = p2();
         intfa.addBlock(e); break; }
     case T_ENDBLK: {
         intfa.endBlock(); break; }
     case T_INSERT: {
         DRW_Insert e; e.name = readTV(end);
-        if (fileBuf->getPosition() + 40 > end) { ok = false; break; }
+        if (!fileBuf->isGood() || !remaining(40)) { ok = false; break; }
         e.basePoint = p2();            // ins_pt 2RD
         e.xscale = rd(); e.yscale = rd();   // scale 2RD
         e.angle = rd();                // rotation RD
@@ -156,7 +181,7 @@ bool dwgReaderR1_40::readEntity(DRW_Interface& intfa, std::uint32_t& cursor) {
         ok = false; break;             // unknown type -> stop the walk (no size to skip)
     }
 
-    if (!ok)
+    if (!ok || !fileBuf->isGood())
         return false;
     // Advance by the exact number of bytes the body consumed.
     cursor = static_cast<std::uint32_t>(fileBuf->getPosition());
@@ -169,7 +194,7 @@ bool dwgReaderR1_40::readDwgEntities(DRW_Interface& intfa) {
     std::uint32_t cursor = R1_40_ENTITIES_START;
     while (cursor < m_dwgSize) {
         if (!readEntity(intfa, cursor))
-            break;
+            return false;
     }
-    return true;
+    return cursor == m_dwgSize;
 }

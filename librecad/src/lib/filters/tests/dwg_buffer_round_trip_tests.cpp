@@ -30,6 +30,10 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include <cstring>
+#include <filesystem>
+#include <fstream>
+#include <limits>
+#include <stdexcept>
 #include <string>
 #include <vector>
 
@@ -66,6 +70,69 @@ TEST_CASE("dwgBufferW: putBit round-trips", "[dwg-write][primitives]") {
     for (std::uint8_t b : expected) {
         REQUIRE(r.getBit() == b);
     }
+}
+
+TEST_CASE("dwgBuffer rejects truncated bit and default-double reads",
+          "[dwg-read][buffer][safety]") {
+    std::uint8_t byte = 0;
+    dwgBuffer empty(&byte, 0);
+    CHECK(empty.getBit() == 0);
+    CHECK_FALSE(empty.isGood());
+
+    dwgBuffer emptyPair(&byte, 0);
+    CHECK(emptyPair.get2Bits() == 0);
+    CHECK_FALSE(emptyPair.isGood());
+
+    // 01 selects the four-byte default-double payload, which is intentionally
+    // truncated here. The reader must report failure without using bytes it
+    // did not receive.
+    std::uint8_t truncatedDefault[] = {0x40};
+    dwgBuffer defaultReader(truncatedDefault, sizeof(truncatedDefault));
+    CHECK(defaultReader.getDefaultDouble(42.0) == 0.0);
+    CHECK_FALSE(defaultReader.isGood());
+
+    dwgBuffer nullReader(nullptr, 1);
+    CHECK(nullReader.getRawChar8() == 0);
+    CHECK_FALSE(nullReader.isGood());
+
+    dwgBuffer nullCrc(nullptr, 1);
+    CHECK(nullCrc.crc8(0, 0, 1) == 0);
+    CHECK_FALSE(nullCrc.isGood());
+}
+
+TEST_CASE("file-backed dwgBuffer copies keep independent cursors",
+          "[dwg-read][buffer][safety]") {
+    const auto path = std::filesystem::temp_directory_path()
+        / "libdxfrw-file-stream-clone.dwg";
+    {
+        std::ofstream output(path, std::ios::binary | std::ios::trunc);
+        REQUIRE(output.good());
+        const std::uint8_t bytes[] = {0x11, 0x22, 0x33};
+        output.write(reinterpret_cast<const char*>(bytes), sizeof(bytes));
+        REQUIRE(output.good());
+    }
+
+    {
+        std::ifstream input(path, std::ios::binary);
+        REQUIRE(input.good());
+        dwgBuffer source(&input);
+        REQUIRE(source.getRawChar8() == 0x11u);
+
+        dwgBuffer copy = source;
+        CHECK(copy.getRawChar8() == 0x22u);
+        CHECK(source.getRawChar8() == 0x22u);
+        CHECK(copy.getRawChar8() == 0x33u);
+        CHECK(source.getRawChar8() == 0x33u);
+
+        dwgBuffer failed = source.forkIndependent();
+        CHECK_FALSE(failed.setPosition(4));
+        CHECK_FALSE(failed.isGood());
+        CHECK(source.isGood());
+    }
+
+    std::error_code error;
+    std::filesystem::remove(path, error);
+    CHECK_FALSE(error);
 }
 
 TEST_CASE("dwgBufferW: putBit crosses byte boundary", "[dwg-write][primitives]") {
@@ -134,6 +201,26 @@ TEST_CASE("dwgBufferW: putBitLongLong uses compact little-endian payloads",
         REQUIRE(r.getBitLongLong() == v);
 }
 
+TEST_CASE("dwgBufferW: bounded integer and handle fields reject overflow",
+          "[dwg-write][primitives][safety]") {
+    dwgBufferW bll;
+    bll.putBitLongLong(std::uint64_t{1} << 56);
+    CHECK_FALSE(bll.isGood());
+    CHECK(bll.data().empty());
+
+    dwgBufferW fixedHandle;
+    fixedHandle.putFixedHandle(4, 9, 1);
+    CHECK_FALSE(fixedHandle.isGood());
+    CHECK(fixedHandle.data().empty());
+
+    dwgBufferW handle;
+    dwgHandle invalid;
+    invalid.size = 9;
+    handle.putHandle(invalid);
+    CHECK_FALSE(handle.isGood());
+    CHECK(handle.data().empty());
+}
+
 TEST_CASE("dwgBufferW: putBitDouble special and arbitrary values", "[dwg-write][primitives]") {
     dwgBufferW w;
     const std::vector<double> values = {0.0, 1.0, -1.0, 3.14159265358979, 1e-300, 1e300};
@@ -142,6 +229,47 @@ TEST_CASE("dwgBufferW: putBitDouble special and arbitrary values", "[dwg-write][
     auto bytes = snapshot(w);
     dwgBuffer r(bytes.data(), bytes.size());
     for (auto v : values) REQUIRE(r.getBitDouble() == v);
+}
+
+TEST_CASE("dwgBufferW: raw doubles followed by zero bit-doubles", "[dwg-write][primitives]") {
+    dwgBufferW w;
+    for (int i = 0; i < 4; ++i)
+        w.putBit(0);
+    w.put3BitDouble(DRW_Coord{0.0, 0.0, 0.0});
+    w.put3BitDouble(DRW_Coord{1.0e10, 1.0e10, 0.0});
+    w.put3BitDouble(DRW_Coord{-1.0e10, -1.0e10, 0.0});
+    w.put2RawDouble(DRW_Coord{210.0, 297.0, 0.0});
+    w.put2RawDouble(DRW_Coord{0.0, 0.0, 0.0});
+    w.putBitDouble(0.0);
+    w.put3BitDouble(DRW_Coord{0.0, 0.0, 0.0});
+
+    auto bytes = snapshot(w);
+    dwgBuffer r(bytes.data(), bytes.size());
+    for (int i = 0; i < 4; ++i)
+        CHECK(r.getBit() == 0);
+    const DRW_Coord insBase = r.get3BitDouble();
+    CHECK(insBase.x == 0.0);
+    CHECK(insBase.y == 0.0);
+    CHECK(insBase.z == 0.0);
+    const DRW_Coord extMin = r.get3BitDouble();
+    CHECK(extMin.x == 1.0e10);
+    CHECK(extMin.y == 1.0e10);
+    CHECK(extMin.z == 0.0);
+    const DRW_Coord extMax = r.get3BitDouble();
+    CHECK(extMax.x == -1.0e10);
+    CHECK(extMax.y == -1.0e10);
+    CHECK(extMax.z == 0.0);
+    const DRW_Coord limits = r.get2RawDouble();
+    CHECK(limits.x == 210.0);
+    CHECK(limits.y == 297.0);
+    const DRW_Coord zerosBefore = r.get2RawDouble();
+    CHECK(zerosBefore.x == 0.0);
+    CHECK(zerosBefore.y == 0.0);
+    CHECK(r.getBitDouble() == 0.0);
+    const DRW_Coord zeros = r.get3BitDouble();
+    CHECK(zeros.x == 0.0);
+    CHECK(zeros.y == 0.0);
+    CHECK(zeros.z == 0.0);
 }
 
 TEST_CASE("dwgBufferW: putRawChar8 byte-aligned and bit-shifted", "[dwg-write][primitives]") {
@@ -236,9 +364,10 @@ TEST_CASE("dwgBufferW: putRawDouble matches IEEE 754", "[dwg-write][primitives]"
 
 TEST_CASE("dwgBufferW: putUModularChar boundary widths", "[dwg-write][primitives]") {
     dwgBufferW w;
-    // Boundary values: chunk size changes at 2^7, 2^14, 2^21, 2^28.
-    const std::vector<std::uint32_t> values = {
-        0, 1, 0x7F, 0x80, 0x3FFF, 0x4000, 0x1FFFFF, 0x200000, 0x0FFFFFFFu
+    // Boundary values include the five-byte DWG form used by large deltas.
+    const std::vector<std::uint64_t> values = {
+        0, 1, 0x7F, 0x80, 0x3FFF, 0x4000, 0x1FFFFF, 0x200000,
+        0x0FFFFFFFu, 0x10000000u, 0x7FFFFFFFFULL
     };
     for (auto v : values) w.putUModularChar(v);
 
@@ -249,18 +378,86 @@ TEST_CASE("dwgBufferW: putUModularChar boundary widths", "[dwg-write][primitives
 
 TEST_CASE("dwgBufferW: putModularChar signed boundaries", "[dwg-write][primitives]") {
     dwgBufferW w;
-    const std::vector<std::int32_t> values = {
+    const std::vector<std::int64_t> values = {
         0, 1, -1, 63, -63, 64, -64, 8191, -8191, 8192, -8192,
-        1048575, -1048575, 1048576, -1048576
+        1048575, -1048575, 1048576, -1048576,
+        0x20000000LL, -0x20000000LL, 0x3FFFFFFFFLL, -0x3FFFFFFFFLL
     };
     for (auto v : values) w.putModularChar(v);
 
     auto bytes = snapshot(w);
     dwgBuffer r(bytes.data(), bytes.size());
     for (auto v : values) {
-        std::int32_t got = r.getModularChar();
+        std::int64_t got = r.getModularChar();
         REQUIRE(got == v);
     }
+}
+
+TEST_CASE("dwgBufferW: modular chars reject values outside the wire range",
+          "[dwg-write][primitives][safety]") {
+    dwgBufferW unsignedBuffer;
+    CHECK_FALSE(unsignedBuffer.putUModularChar(std::uint64_t{1} << 35));
+    CHECK_FALSE(unsignedBuffer.isGood());
+    CHECK(unsignedBuffer.data().empty());
+
+    dwgBufferW signedBuffer;
+    const std::int64_t tooLarge = static_cast<std::int64_t>(std::uint64_t{1} << 34);
+    CHECK_FALSE(signedBuffer.putModularChar(tooLarge));
+    CHECK_FALSE(signedBuffer.isGood());
+    CHECK_FALSE(signedBuffer.putModularChar(-tooLarge));
+    CHECK(signedBuffer.data().empty());
+}
+
+TEST_CASE("dwgBufferW: modular shorts reject nonrepresentable lengths",
+          "[dwg-write][primitives][safety]") {
+    dwgBufferW tooLarge;
+    tooLarge.putModularShort(1 << 30);
+    CHECK_FALSE(tooLarge.isGood());
+    CHECK(tooLarge.data().empty());
+
+    dwgBufferW negative;
+    negative.putModularShort(-1);
+    CHECK_FALSE(negative.isGood());
+    CHECK(negative.data().empty());
+
+    dwgBufferW maximum;
+    maximum.putModularShort((1 << 30) - 1);
+    CHECK(maximum.isGood());
+    auto bytes = snapshot(maximum);
+    dwgBuffer decoded(bytes.data(), bytes.size());
+    CHECK(decoded.getModularShort() == (1 << 30) - 1);
+}
+
+TEST_CASE("dwgBufferW: text primitives reject length overflow",
+          "[dwg-write][primitives][safety]") {
+    const std::string tooLong(0xFFFFu, 'x');
+
+    dwgBufferW cp8;
+    cp8.putCP8Text(tooLong);
+    CHECK_FALSE(cp8.isGood());
+    CHECK(cp8.data().empty());
+
+    dwgBufferW enc;
+    enc.putENCText(tooLong);
+    CHECK_FALSE(enc.isGood());
+    CHECK(enc.data().empty());
+
+    dwgBufferW ucs;
+    ucs.putUCSText(tooLong);
+    CHECK_FALSE(ucs.isGood());
+    CHECK(ucs.data().empty());
+}
+
+TEST_CASE("dwgBuffer: modular chars reject missing five-byte terminators",
+          "[dwg][safety][primitives]") {
+    std::uint8_t continuation[] = {0x81, 0x82, 0x83, 0x84, 0x85};
+    dwgBuffer unsignedBuffer(continuation, sizeof(continuation));
+    (void)unsignedBuffer.getUModularChar();
+    CHECK_FALSE(unsignedBuffer.isGood());
+
+    dwgBuffer signedBuffer(continuation, sizeof(continuation));
+    (void)signedBuffer.getModularChar();
+    CHECK_FALSE(signedBuffer.isGood());
 }
 
 TEST_CASE("dwgBufferW: putModularShort", "[dwg-write][primitives]") {
@@ -271,6 +468,19 @@ TEST_CASE("dwgBufferW: putModularShort", "[dwg-write][primitives]") {
     auto bytes = snapshot(w);
     dwgBuffer r(bytes.data(), bytes.size());
     for (auto v : values) REQUIRE(r.getModularShort() == v);
+}
+
+TEST_CASE("dwgBuffer: modular shorts reject overlong continuation",
+          "[dwg][safety][primitives]") {
+    const std::uint8_t overlong[] = {
+        0x00, 0x80, // first 15-bit word continues
+        0x00, 0x80, // second word incorrectly continues
+        0x00, 0x00  // bytes that must remain unread
+    };
+    dwgBuffer buffer(const_cast<std::uint8_t*>(overlong), sizeof(overlong));
+    CHECK(buffer.getModularShort() == 0);
+    CHECK_FALSE(buffer.isGood());
+    CHECK(buffer.getPosition() == 4);
 }
 
 TEST_CASE("dwgBufferW: putHandle round-trip", "[dwg-write][primitives]") {
@@ -362,6 +572,65 @@ TEST_CASE("dwgBufferW: putVariableText AC1021 UTF-16 code-unit round-trip",
     REQUIRE(r.getVariableText(DRW::AC1021, false) == "Table");
 }
 
+TEST_CASE("dwgBufferW: ENC orders RGB before alpha and converts CP8 names",
+          "[dwg-write][primitives][enc]") {
+    {
+        dwgBufferW w;
+        w.putEnColor(DRW::AC1027, 7, 0x112233, {}, {}, 0x03000080, false);
+        auto bytes = snapshot(w);
+        dwgBuffer flags(bytes.data(), bytes.size());
+        CHECK((flags.getBitShort() & 0xFF00u) == 0xA000u);
+        dwgBuffer r(bytes.data(), bytes.size());
+        CHECK(r.getEnColor(DRW::AC1027) == 7);
+        CHECK(r.lastEnColorRgb == 0x112233);
+        CHECK(r.lastEnColorAlphaRaw == 0x03000080);
+    }
+    {
+        dwgBufferW w;
+        w.putEnColor(DRW::AC1027, 256, -1, "Entry", "Book", 0, true);
+        auto bytes = snapshot(w);
+        dwgBuffer flags(bytes.data(), bytes.size());
+        // ACadSharp emits both the DBCOLOR (0x40) and complex-color (0x80)
+        // markers for a book-color reference.  A semantic self-read would
+        // accept the incomplete 0x40 form, so assert the raw wire flags.
+        CHECK((flags.getBitShort() & 0xFF00u) == 0xC300u);
+        dwgBuffer r(bytes.data(), bytes.size());
+        CHECK(r.getEnColor(DRW::AC1027) == 256);
+        CHECK(r.lastEnColorHadDbColorRef);
+        CHECK(r.lastEnColorName == "Entry");
+        CHECK(r.lastEnColorBookName == "Book");
+    }
+    {
+        dwgBufferW w;
+        w.putEnColor(DRW::AC1027, 256, -1, {}, {}, 0, true);
+        auto bytes = snapshot(w);
+        dwgBuffer flags(bytes.data(), bytes.size());
+        // A nameless DBCOLOR reference cannot carry ACI 256 in the shared
+        // low flag bit; ACadSharp emits the reference form with index zero.
+        CHECK((flags.getBitShort() & 0xFF00u) == 0xC000u);
+        dwgBuffer r(bytes.data(), bytes.size());
+        CHECK(r.getEnColor(DRW::AC1027) == 0);
+        CHECK(r.lastEnColorHadDbColorRef);
+    }
+}
+
+TEST_CASE("dwgBufferW: ENC names use a secondary codepage on AC1027",
+          "[dwg-write][primitives][enc][i18n]") {
+    DRW_TextCodec codec;
+    codec.setVersion(DRW::AC1027, false);
+    codec.setByteCodePage("ANSI_932");
+
+    dwgBufferW w(&codec);
+    // Name flags share the low index byte's bit 8; the canonical named
+    // DBCOLOR form therefore carries the ByLayer index representation.
+    w.putEnColor(DRW::AC1027, 256, -1, "Ａ", "Ａ", 0, true);
+    auto bytes = snapshot(w);
+    dwgBuffer r(bytes.data(), bytes.size(), &codec);
+    REQUIRE(r.getEnColor(DRW::AC1027) == 256);
+    REQUIRE(r.lastEnColorName == "Ａ");
+    REQUIRE(r.lastEnColorBookName == "Ａ");
+}
+
 TEST_CASE("dwgBufferW: putBytes large block, aligned and shifted", "[dwg-write][primitives]") {
     std::vector<std::uint8_t> payload(257);
     for (size_t i = 0; i < payload.size(); ++i)
@@ -419,8 +688,12 @@ TEST_CASE("dwgBuffer::crc8/crc32 guard the empty/negative byte range",
     REQUIRE(r.crc8(0xC0C1, 4, 0) == 0xC0C1);
     // end == start (empty range): seed returned.
     REQUIRE(r.crc8(0xC0C1, 4, 4) == 0xC0C1);
+    // A negative endpoint is also an invalid range and must not reach the
+    // stream seek or signed subtraction.
+    REQUIRE(r.crc8(0xC0C1, -1, 4) == 0xC0C1);
     REQUIRE(r.crc32(0xFFFFFFFFu, 8, 0) == 0xFFFFFFFFu);
     REQUIRE(r.crc32(0x12345678u, 4, 4) == 0x12345678u);
+    REQUIRE(r.crc32(0x12345678u, -1, 4) == 0x12345678u);
 
     // Valid range still produces a real CRC (happy path unaffected).
     dwgBufferW w2;
@@ -528,4 +801,19 @@ TEST_CASE("HandleAllocator: 0x04 gap is honored (not in reserved set)",
     // Allocation continues from 0x31 regardless of the late reserve
     // because m_next has moved past it.
     REQUIRE(alloc.next() == 0x31);
+}
+
+TEST_CASE("HandleAllocator: exhaustion reservation is transactional",
+          "[dwg-write][primitives][safety]") {
+    HandleAllocator alloc;
+    const auto maximum = std::numeric_limits<std::uint32_t>::max();
+
+    REQUIRE_THROWS_AS(alloc.reserve(maximum), std::overflow_error);
+    REQUIRE(alloc.current() == 0x30u);
+    REQUIRE(alloc.next() == 0x30u);
+
+    HandleAllocator nearMaximum;
+    nearMaximum.reserve(maximum - 1u);
+    REQUIRE_THROWS_AS(nearMaximum.next(), std::overflow_error);
+    REQUIRE(nearMaximum.current() == maximum);
 }

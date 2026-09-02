@@ -180,6 +180,27 @@ bool dwgSupportAvailable() {
 #endif
 }
 
+RS2::FormatType dwgFormatForVersion(const QString& version) {
+#ifdef DWGSUPPORT
+    const QString normalized = version.toLower().trimmed().remove('r');
+    if (normalized == "2000")
+        return RS2::FormatDWG;
+    if (normalized == "2004")
+        return RS2::FormatDWG2004;
+    if (normalized == "2007")
+        return RS2::FormatDWG2007;
+    if (normalized == "2010")
+        return RS2::FormatDWG2010;
+    if (normalized == "2013")
+        return RS2::FormatDWG2013;
+    if (normalized == "2018")
+        return RS2::FormatDWG2018;
+#else
+    (void)version;
+#endif
+    return RS2::FormatUnknown;
+}
+
 QString defaultOutputPath(const QString& inputFile, const QString& outputExt,
                           const QString& outputDir) {
     const QFileInfo inputInfo(inputFile);

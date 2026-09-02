@@ -88,7 +88,7 @@ TEST_CASE("dxfReaderAscii: group 160 reads 64-bit integer",
   REQUIRE(reader.readRec(&code));
   REQUIRE(code == 160);
   REQUIRE(reader.type == dxfReader::INT64);
-  REQUIRE(reader.getInt64() == 5124095576030430ULL);
+  REQUIRE(reader.getInt64() == 5124095576030430LL);
 }
 
 TEST_CASE("DRW_Variant: layer-ref flag survives copy", "[eed][drw_variant]") {

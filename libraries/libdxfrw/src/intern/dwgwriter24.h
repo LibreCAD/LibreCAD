@@ -23,8 +23,8 @@
 ///   - Object bodies use the R2010 three-stream format: numeric DATA + string
 ///     section + handle section (each byte-aligned); wire format is
 ///     [MS totalBodyBytes][UMC handleBits][dataSectionBytes][handleSectionBytes][RS CRC16]
-///   - CLASSES section adds an RL bitSize field after RL size, and an extra
-///     RS "unknown CRC" before the end sentinel.
+///   - CLASSES section adds an RL bitSize field after RL size, and eight
+///     ODA-defined unknown zero bytes before the end sentinel.
 ///   - Entity common data adds materialFlag (BB) + shadowFlag (RC) for
 ///     version > AC1018, and three visual-style B flags for version > AC1021.
 ///   - Object type encoding uses the R2010 two-bit OT prefix instead of BS.
@@ -35,6 +35,7 @@ public:
         : dwgWriter18(stream, header)
     {
         m_version = DRW::AC1024;
+        configureTextCodec();
     }
 
     bool writeDwgHeader() override;
@@ -43,10 +44,23 @@ public:
 
     bool encodeEntity(DRW_Entity *ent) override;
 
+    bool finalize() override;
+
 protected:
+    // Append the R2007+ string stream and its backward-readable footer.
+    static bool appendR2007StringStream(dwgBufferW& data,
+                                        const dwgBufferW& strings,
+                                        bool writeAbsentFooter);
+
     void finishObject() override;
 
+    bool objectWriteFailed() const override {
+        return m_writeError || dwgWriter15::objectWriteFailed();
+    }
+
     const char* fileHeaderVersion() const override { return "AC1024"; }
+
+    bool m_writeError {false};
 };
 
 #endif // DWGWRITER24_H

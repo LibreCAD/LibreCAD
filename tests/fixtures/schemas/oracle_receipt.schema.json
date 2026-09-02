@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "oracle_receipt.schema.json",
+  "title": "libdxfrw external oracle receipt",
+  "type": "object",
+  "required": [
+    "schema",
+    "receiptKey",
+    "fixture",
+    "operation",
+    "oracle",
+    "commandTemplate",
+    "status",
+    "failureClass",
+    "diagnostics"
+  ],
+  "properties": {
+    "schema": {"const": 1},
+    "receiptKey": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"},
+    "fixture": {
+      "type": "object",
+      "required": ["id", "path", "format", "version", "sha256"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"},
+        "path": {"type": "string", "minLength": 1},
+        "format": {"type": "string", "minLength": 1},
+        "version": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      },
+      "additionalProperties": false
+    },
+    "operation": {
+      "type": "object",
+      "required": ["name", "sourceFormat"],
+      "properties": {
+        "name": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"},
+        "sourceFormat": {"type": "string", "minLength": 1},
+        "targetFormat": {"type": "string", "minLength": 1},
+        "targetVersion": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "oracle": {
+      "type": "object",
+      "required": ["name", "path", "version", "mode"],
+      "properties": {
+        "name": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"},
+        "path": {"type": "string", "minLength": 1},
+        "version": {"type": "string", "minLength": 1},
+        "mode": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "commandTemplate": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "status": {
+      "enum": ["passed", "failed", "skipped", "missing-required", "error"]
+    },
+    "failureClass": {
+      "enum": [
+        "none",
+        "fixture-id",
+        "fixture-integrity",
+        "tool-unavailable",
+        "tool-probe",
+        "timeout",
+        "oracle-rejected",
+        "output-missing",
+        "internal"
+      ]
+    },
+    "diagnostics": {
+      "type": "array",
+      "maxItems": 32,
+      "items": {"type": "string", "maxLength": 1000}
+    },
+    "exitCode": {"type": "integer"},
+    "output": {
+      "type": "object",
+      "required": ["format", "sha256"],
+      "properties": {
+        "format": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

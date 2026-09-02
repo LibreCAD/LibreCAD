@@ -52,6 +52,7 @@ public:
   ~LC_ExtDataTag();
   void add(RS_Variable *v);
   void add(LC_ExtDataTag *tag);
+  void makeList();
   bool isAtomic() const;
   bool isRef() const;
   bool isLayerRef() const;

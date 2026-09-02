@@ -48,19 +48,39 @@ public:
     explicit dwgFileStream(std::ifstream *s)
         :stream{s}
     {
-        stream->seekg (0, std::ios::end);
-        sz = stream->tellg();
+        if (stream == nullptr) {
+            isOk = false;
+            return;
+        }
+        stream->clear();
+        stream->seekg(0, std::ios::end);
+        const std::streampos end = stream->tellg();
+        if (end < 0) {
+            stream->clear();
+            isOk = false;
+            return;
+        }
+        sz = static_cast<std::uint64_t>(end);
         stream->seekg(0, std::ios_base::beg);
+        isOk = stream->good();
     }
     bool read(std::uint8_t* s, std::uint64_t n) override;
     std::uint64_t size() const override{return sz;}
-    std::uint64_t getPos() const override{return stream->tellg();}
+    std::uint64_t getPos() const override{return pos;}
     bool setPos(std::uint64_t p) override;
-    bool good() const override{return stream->good();}
-    dwgBasicStream* clone() const override{return new dwgFileStream(stream);}
+    bool good() const override{return isOk;}
+    dwgBasicStream* clone() const override {
+        auto *copy = new dwgFileStream(stream);
+        copy->sz = sz;
+        copy->pos = pos;
+        copy->isOk = isOk;
+        return copy;
+    }
 private:
     std::ifstream *stream{nullptr};
     std::uint64_t sz{0};
+    std::uint64_t pos{0};
+    bool isOk{true};
 };
 
 class dwgCharStream: public dwgBasicStream{
@@ -74,9 +94,15 @@ public:
     std::uint64_t getPos() const override {return pos;}
     bool setPos(std::uint64_t p) override;
     bool good() const override {return isOk;}
-    dwgBasicStream* clone() const override {return new dwgCharStream(stream, sz);}
+    dwgBasicStream* clone() const override {
+        auto *copy = new dwgCharStream(stream, sz);
+        copy->pos = pos;
+        copy->isOk = isOk;
+        return copy;
+    }
     const std::uint8_t* directPointer(std::uint64_t p, std::uint64_t n) const override {
-        return (n <= sz && p <= sz - n) ? stream + p : nullptr;
+        return (stream != nullptr && n <= sz && p <= sz - n)
+            ? stream + p : nullptr;
     }
 private:
     std::uint8_t *stream{nullptr};
@@ -91,6 +117,10 @@ public:
     dwgBuffer(std::uint8_t *buf, std::uint64_t size, DRW_TextCodec *decoder= nullptr);
     dwgBuffer( const dwgBuffer& org );
     dwgBuffer& operator=( const dwgBuffer& org );
+    //! Copy the cursor and stream without sharing the invalid-state flag.
+    //! Use for bounded speculative reads that must not poison the publishing
+    //! cursor when a probe reaches a truncated field.
+    [[nodiscard]] dwgBuffer forkIndependent() const;
     virtual ~dwgBuffer() = default;
     std::uint64_t size() const {return filestr->size();}
     bool setPosition(std::uint64_t pos);
@@ -99,6 +129,16 @@ public:
     void setBitPos(std::uint8_t pos);
     std::uint8_t getBitPos() const {return bitPos;}
     bool moveBitPos(std::int32_t size);
+    /// Locate the first byte of an R2007+ object's string stream. The
+    /// argument is the exclusive bit position immediately after the footer's
+    /// presence flag; on failure the cursor is restored unchanged.
+    [[nodiscard]] bool seekR2007StringStream(std::uint64_t objectEndBit);
+    /// Return the bit range occupied by an R2007+ object's string stream.
+    /// The footer itself is excluded. This is useful when a caller must
+    /// validate several variable-text fields before consuming the stream.
+    [[nodiscard]] bool getR2007StringStreamBounds(
+        std::uint64_t objectEndBit, std::uint64_t& startBit,
+        std::uint64_t& endBit) const;
     void setVariableTextByteLength(bool enabled) { variableTextByteLength = enabled; }
 
     std::uint8_t getBit();  //B
@@ -119,13 +159,16 @@ public:
     std::uint64_t getRawLong64();   //RLL
     DRW_Coord get2RawDouble(); //2RD
     //3RD => call RD 3 times
-    std::uint32_t getUModularChar(); //UMC, unsigned for offsets in 1015
-    std::int32_t getModularChar(); //MC
+    std::uint64_t getUModularChar(); //UMC, unsigned for offsets in 1015
+    std::int64_t getModularChar(); //MC
     std::int32_t getModularShort(); //MS
     dwgHandle getHandle(); //H
-    dwgHandle getOffsetHandle(std::uint32_t href); //H converted to hard
+    dwgHandle getOffsetHandle(std::uint64_t href); //H converted to hard
     UTF8STRING getVariableText(DRW::Version v, bool nullTerm = true); //TV => call TU for 2007+ or T for previous versions
     UTF8STRING getCP8Text(); //T 8 bit text converted from codepage to utf8
+    /// Read an ENC color/book name. These fields are length-prefixed 8-bit
+    /// data even in R2007+ files, so they must not use the UTF-16 DWG codec.
+    UTF8STRING getENCText();
     UTF8STRING getUCSText(bool nullTerm = true); //TU unicode 16 bit (UCS) text converted to utf8
     UTF8STRING getUCSStr(std::uint16_t ts);
 
@@ -153,17 +196,24 @@ public:
     ///                 for R2007+ but matches the historical behavior.
     /// @param outName  out: color name (when method byte bit 1 set)
     /// @param outBookName out: book name (when method byte bit 2 set)
+    /// @param hasRgbColor out: true when the CMC uses the type-0xC2 true-color
+    ///                     form, including RGB(0,0,0)
     std::uint32_t getCmColor(DRW::Version v,
                        std::int32_t* rgb24 = nullptr,
                        dwgBuffer* strBuf = nullptr,
                        UTF8STRING* outName = nullptr,
-                       UTF8STRING* outBookName = nullptr); //CMC
+                       UTF8STRING* outBookName = nullptr,
+                       bool* hasRgbColor = nullptr); //CMC
     std::uint32_t getEnColor(DRW::Version v); //ENC
     //TC
 
     std::uint16_t getBERawShort16();  //RS big-endian order
 
-    bool isGood() const {return filestr->good();}
+    bool isGood() const {return !*invalidState && filestr->good();}
+    // Mark a structurally invalid field.  The flag is shared by copied
+    // cursors so a failed handle read in a forked R2007+ handle stream also
+    // fails the owning object cursor.
+    void invalidate() {*invalidState = true;}
     bool getBytes(std::uint8_t *buf, std::uint64_t size);
     int numRemainingBytes() const {return (maxSize- filestr->getPos());}
 
@@ -176,8 +226,8 @@ public:
     /// Side-channel: getEnColor() sets this true when the ENC field's flag
     /// byte has bit 0x40 (AcDbColor reference). Caller (DRW_Entity::parseDwg)
     /// captures it immediately, then DRW_Entity::parseDwgEntHandle consumes
-    /// the corresponding offset handle at the START of the handle stream
-    /// (libreDWG common_entity_data.spec:454-459 — read from hdl_dat).
+    /// the corresponding handle after owner/reactor/xdictionary references
+    /// and before the layer reference in the R2004+ handle stream.
     bool lastEnColorHadDbColorRef{false};
 
     /// Side-channel: ENC inline color/book names. Populated by getEnColor()
@@ -190,6 +240,10 @@ public:
     /// dbColorMap-resolved DBCOLOR name (entity-level override).
     UTF8STRING lastEnColorName;
     UTF8STRING lastEnColorBookName;
+
+    /// Side-channel: inline ENC RGB value, or -1 when the field did not carry
+    /// an inline RGB value. RGB(0,0,0) is therefore represented as 0, not -1.
+    std::int32_t lastEnColorRgb{-1};
 
     /// Side-channel: ENC alpha-raw (DXF code 440). Populated by getEnColor()
     /// when flag 0x20 is set. libreDWG common_entity_data.spec:439 — the
@@ -205,6 +259,7 @@ private:
     std::uint8_t currByte{0};
     std::uint8_t bitPos{0};
     bool variableTextByteLength{false};
+    std::shared_ptr<bool> invalidState{std::make_shared<bool>(false)};
 
     UTF8STRING get8bitStr();
     UTF8STRING get16bitStr(std::uint16_t textSize, bool nullTerm = true);

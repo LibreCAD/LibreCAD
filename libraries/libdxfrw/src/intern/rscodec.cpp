@@ -26,61 +26,66 @@
 
 
 #include "rscodec.h"
-#include <new>          // std::nothrow
+#include <cstdint>
 #include <fstream>
+#include <limits>
+#include <new>          // std::nothrow
 
-RScodec::RScodec(unsigned int pp, int mm, int tt) {
-    this->mm = mm;
-    this->tt = tt;
-    nn = (1<<mm) -1; //mm==8 nn=255
-    kk = nn -(tt*2);
+RScodec::RScodec(unsigned int pp, int mmValue, int ttValue)
+    : mm(mmValue), tt(ttValue) {
+    if (mm <= 0 || mm >= 31 || tt <= 0)
+        return;
+
+    const std::int64_t fieldSize = std::int64_t{1} << mm;
+    if (fieldSize - 1 > std::numeric_limits<int>::max())
+        return;
+    nn = static_cast<int>(fieldSize - 1); // mm==8 -> nn==255
+    if (tt > nn / 2)
+        return;
+    kk = nn - (tt * 2);
+
+    alpha_to.reset(new (std::nothrow) int[nn + 1]);
+    index_of.reset(new (std::nothrow) unsigned int[nn + 1]);
+    gg.reset(new (std::nothrow) int[nn - kk + 1]);
+    if (!alpha_to || !index_of || !gg)
+        return;
     isOk = true;
-
-    alpha_to = new (std::nothrow) int[nn+1];
-    index_of = new (std::nothrow) unsigned int[nn+1];
-    gg = new (std::nothrow) int[nn-kk+1];
 
     RSgenerate_gf(pp) ;
     /* compute the generator polynomial for this RS code */
     RSgen_poly() ;
+    if (!isOk)
+        return;
+    isOk = false;
 
     // decode() scratch buffers -- see the member declarations in rscodec.h.
     const int bb = nn - kk;
-    recd = new (std::nothrow) int[nn];
-    elp = new int*[bb + 2];
+    recd.reset(new (std::nothrow) int[nn]);
+    elp.reset(new (std::nothrow) int*[bb + 2]());
+    if (!recd || !elp)
+        return;
+    try {
+        elpRows.resize(static_cast<std::size_t>(bb + 2));
+    } catch (...) {
+        return;
+    }
     for (int i = 0; i < bb + 2; ++i) {
-        elp[i] = new int[bb];
+        elpRows[static_cast<std::size_t>(i)].reset(
+            new (std::nothrow) int[bb]);
+        if (!elpRows[static_cast<std::size_t>(i)])
+            return;
+        elp[i] = elpRows[static_cast<std::size_t>(i)].get();
     }
-    d = new int[bb + 2];
-    l = new int[bb + 2];
-    u_lu = new int[bb + 2];
-    s = new int[bb + 1];
-    root = new int[tt];
-    loc = new int[tt];
-    z = new int[tt + 1];
-    err = new int[nn];
-    reg = new int[tt + 1];
-}
-
-RScodec::~RScodec() {
-    delete[] alpha_to;
-    delete[] index_of;
-    delete[] gg;
-
-    delete[] recd;
-    for (int i = 0; i < nn - kk + 2; ++i) {
-        delete[] elp[i];
-    }
-    delete[] elp;
-    delete[] d;
-    delete[] l;
-    delete[] u_lu;
-    delete[] s;
-    delete[] root;
-    delete[] loc;
-    delete[] z;
-    delete[] err;
-    delete[] reg;
+    d.reset(new (std::nothrow) int[bb + 2]);
+    l.reset(new (std::nothrow) int[bb + 2]);
+    u_lu.reset(new (std::nothrow) int[bb + 2]);
+    s.reset(new (std::nothrow) int[bb + 1]);
+    root.reset(new (std::nothrow) int[tt]);
+    loc.reset(new (std::nothrow) int[tt]);
+    z.reset(new (std::nothrow) int[tt + 1]);
+    err.reset(new (std::nothrow) int[nn]);
+    reg.reset(new (std::nothrow) int[tt + 1]);
+    isOk = d && l && u_lu && s && root && loc && z && err && reg;
 }
 
 
@@ -430,5 +435,7 @@ int RScodec::decode(unsigned char *data) {
 
     // Scratch buffers are member-owned (sized once in the constructor) and
     // reused across every call -- see the member declarations in rscodec.h.
-    return calcDecode(data, recd, elp, d, l, u_lu, s, root, loc, z, err, reg, bb);
+    return calcDecode(data, recd.get(), elp.get(), d.get(), l.get(),
+                      u_lu.get(), s.get(), root.get(), loc.get(), z.get(),
+                      err.get(), reg.get(), bb);
 }

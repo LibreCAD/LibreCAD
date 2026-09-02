@@ -27,25 +27,6 @@ public:
     bool readDwgClasses() override;
 //    bool readDwgHandles(){return false;}
 //    bool readDwgTables(){return false;}
-    bool readDwgBlocks(DRW_Interface& intfa) override {
-        bool ret = true;
-        dwgBuffer dataBuf(objData.get(), uncompSize, &decoder);
-        ret = dwgReader::readDwgBlocks(intfa, &dataBuf);
-        return ret;
-    }
-    bool readDwgEntities(DRW_Interface& intfa) override {
-        bool ret = true;
-        dwgBuffer dataBuf(objData.get(), uncompSize, &decoder);
-        ret = dwgReader::readDwgEntities(intfa, &dataBuf);
-        return ret;
-    }
-    bool readDwgObjects(DRW_Interface& intfa) override {
-        bool ret = true;
-        dwgBuffer dataBuf(objData.get(), uncompSize, &decoder);
-        ret = dwgReader::readDwgObjects(intfa, &dataBuf);
-        return ret;
-    }
-
 //    bool readDwgEntity(objHandle& obj, DRW_Interface& intfa){
 //        DRW_UNUSED(obj);
 //        DRW_UNUSED(intfa);

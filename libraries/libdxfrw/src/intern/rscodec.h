@@ -28,6 +28,9 @@
 
 #ifndef RSCODEC_H
 #define RSCODEC_H
+
+#include <memory>
+#include <vector>
 /**
 mm: RS code over GF(2^4)
 nn: nn= (2^mm) - 1   length of codeword
@@ -39,29 +42,31 @@ class RScodec {
 public:
     RScodec(unsigned int pp, int mm, int tt);
 
-    ~RScodec();
+    ~RScodec() = default;
+    RScodec(const RScodec&) = delete;
+    RScodec& operator=(const RScodec&) = delete;
 //    bool encode(int *data, int *parity);
 //    int decode(int *recd);
     bool encode(unsigned char *data, unsigned char *parity) const;
     int decode(unsigned char *data);
     bool isOkey() const {return isOk;}
-    const unsigned int* indexOf() const {return index_of;}
-    const int* alphaTo() const {return alpha_to;}
+    const unsigned int* indexOf() const {return index_of.get();}
+    const int* alphaTo() const {return alpha_to.get();}
 
 private:
     void RSgenerate_gf(unsigned int pp) const;
     void RSgen_poly();
     int calcDecode(unsigned char* data, int* recd, int** elp, int* d, int* l, int* u_lu, int* s, int* root, int* loc, int* z, int* err, int* reg, int bb) const;
 
-    int mm; //RS code over GF(2^4)
-    int tt; //number of errors that can be corrected
-    int nn; //(2^mm) - 1   length of codeword
-    int kk; //nn-2*tt length of original data
+    int mm = 0; //RS code over GF(2^4)
+    int tt = 0; //number of errors that can be corrected
+    int nn = 0; //(2^mm) - 1   length of codeword
+    int kk = 0; //nn-2*tt length of original data
 
-    int *gg;
-    bool isOk;
-    unsigned int *index_of;
-    int *alpha_to;
+    std::unique_ptr<int[]> gg;
+    bool isOk = false;
+    std::unique_ptr<unsigned int[]> index_of;
+    std::unique_ptr<int[]> alpha_to;
 
     // calcDecode() scratch buffers, sized once from nn/tt/(nn-kk) in the
     // constructor and reused by every decode() call on this instance instead
@@ -71,17 +76,18 @@ private:
     // which is fine: callers (dwgRSCodec::decode239I/decode251I) construct one
     // RScodec and call decode() in a plain sequential loop, never concurrently
     // or recursively.
-    int *recd;
-    int **elp;
-    int *d;
-    int *l;
-    int *u_lu;
-    int *s;
-    int *root;
-    int *loc;
-    int *z;
-    int *err;
-    int *reg;
+    std::unique_ptr<int[]> recd;
+    std::unique_ptr<int*[]> elp;
+    std::vector<std::unique_ptr<int[]>> elpRows;
+    std::unique_ptr<int[]> d;
+    std::unique_ptr<int[]> l;
+    std::unique_ptr<int[]> u_lu;
+    std::unique_ptr<int[]> s;
+    std::unique_ptr<int[]> root;
+    std::unique_ptr<int[]> loc;
+    std::unique_ptr<int[]> z;
+    std::unique_ptr<int[]> err;
+    std::unique_ptr<int[]> reg;
 };
 
 #endif

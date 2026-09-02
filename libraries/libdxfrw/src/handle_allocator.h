@@ -16,8 +16,12 @@
 
 #include <cassert>
 #include <cstdint>
+#include <limits>
 #include <stdexcept>
 #include <set>
+
+#include "drw_base.h"
+#include "intern/dwg_fixed_handles.h"
 
 /// Allocates object handles for a fresh DWG or DXF write.  Both write paths
 /// reserve their canonical fixed-handle table up front so user-allocated
@@ -39,47 +43,50 @@ public:
     /// its own set via `reserve()`.
     void seedReserved() {
         // Control objects (0x01..0x0B).  0x04 is intentionally unused.
-        m_reserved.insert(0x01);  // BLOCK_CONTROL_OBJECT
-        m_reserved.insert(0x02);  // LAYER_CONTROL_OBJECT
-        m_reserved.insert(0x03);  // STYLE_CONTROL_OBJECT
-        m_reserved.insert(0x05);  // LTYPE_CONTROL_OBJECT
-        m_reserved.insert(0x06);  // VIEW_CONTROL_OBJECT
-        m_reserved.insert(0x07);  // UCS_CONTROL_OBJECT
-        m_reserved.insert(0x08);  // VPORT_CONTROL_OBJECT
-        m_reserved.insert(0x09);  // APPID_CONTROL_OBJECT
-        m_reserved.insert(0x0A);  // DIMSTYLE_CONTROL_OBJECT
-        m_reserved.insert(0x0B);  // VPORT_ENTITY_HEADER_CONTROL_OBJECT (R2000 only)
-        // Phase 3.5 reserves 0x0C/0x0D/0x0E for the NOD + sub-dicts; Phase 3
-        // leaves them free so user allocations could in principle use them,
-        // but the convention is first-user = 0x30 anyway.
+        reserve(DRW::DwgBlockControlHandle);
+        reserve(DRW::DwgLayerControlHandle);
+        reserve(DRW::DwgStyleControlHandle);
+        reserve(DRW::DwgLtypeControlHandle);
+        reserve(DRW::DwgViewControlHandle);
+        reserve(DRW::DwgUcsControlHandle);
+        reserve(DRW::DwgVportControlHandle);
+        reserve(DRW::DwgAppIdControlHandle);
+        reserve(DRW::DwgDimstyleControlHandle);
+        reserve(DRW::DwgViewportEntityHeaderControlHandle);
+        // Named Objects Dictionary and its mandatory ACAD_GROUP child.
+        reserve(DRW::DwgNamedObjectsDictionaryHandle);
+        reserve(DRW::DwgAcadGroupDictionaryHandle);
         // Table records.
-        m_reserved.insert(0x0F);  // LTYPE "BYBLOCK"
-        m_reserved.insert(0x10);  // LTYPE "BYLAYER"
-        m_reserved.insert(0x11);  // LTYPE "CONTINUOUS"
-        m_reserved.insert(0x12);  // LAYER "0"
-        m_reserved.insert(0x13);  // STYLE "STANDARD"
-        m_reserved.insert(0x14);  // APPID "ACAD"
-        m_reserved.insert(0x15);  // DIMSTYLE "STANDARD"
-        m_reserved.insert(0x16);  // VPORT "*ACTIVE"
-        m_reserved.insert(0x17);  // BLOCK_RECORD "*MODEL_SPACE"
-        m_reserved.insert(0x18);  // BLOCK_RECORD "*PAPER_SPACE"
+        reserve(DRW::DwgLtypeByBlockHandle);
+        reserve(DRW::DwgLtypeByLayerHandle);
+        reserve(DRW::DwgLtypeContinuousHandle);
+        reserve(DRW::DwgLayer0Handle);
+        reserve(DRW::DwgStandardTextStyleHandle);
+        reserve(DRW::DwgAcadAppIdHandle);
+        reserve(DRW::DwgStandardDimstyleHandle);
+        reserve(DRW::DwgActiveVportHandle);
+        reserve(DRW::DwgModelSpaceBlockRecordHandle);
+        reserve(DRW::DwgPaperSpaceBlockRecordHandle);
         // Phase 4d Block + ENDBLK entities for *Model_Space / *Paper_Space.
         // Master plan calls 0x19-0x1E "reserved but unused"; we use 0x1B-0x1E
         // for the four Block entities the BLOCK_CONTROL phantom-handle pair
         // points at via their Block_Records.
-        m_reserved.insert(0x1B);  // BLOCK "*Model_Space"
-        m_reserved.insert(0x1C);  // ENDBLK "*Model_Space"
-        m_reserved.insert(0x1D);  // BLOCK "*Paper_Space"
-        m_reserved.insert(0x1E);  // ENDBLK "*Paper_Space"
+        reserve(DRW::DwgModelSpaceBlockEntityHandle);
+        reserve(DRW::DwgModelSpaceEndBlockEntityHandle);
+        reserve(DRW::DwgPaperSpaceBlockEntityHandle);
+        reserve(DRW::DwgPaperSpaceEndBlockEntityHandle);
     }
 
     /// Mark a specific handle as in-use.  Used during read-then-write
     /// to preserve source handles; idempotent.
     void reserve(std::uint32_t h) {
-        m_reserved.insert(h);
+        if (h >= m_next && h == (std::numeric_limits<std::uint32_t>::max)())
+            throw std::overflow_error("DWG/DXF handle allocator exhausted");
+        // Keep caller-owned reservations separate from handles minted during
+        // a write.  This lets a codec be reused without losing source/raw
+        // handles that were reserved before the write started.
+        m_explicitReserved.insert(h);
         if (h >= m_next) {
-            if (h == UINT32_MAX)
-                throw std::overflow_error("DWG/DXF handle allocator exhausted");
             m_next = h + 1;
         }
     }
@@ -88,16 +95,32 @@ public:
     /// Marks the returned handle as reserved so subsequent calls don't
     /// return the same value.
     std::uint32_t next() {
-        while (m_reserved.count(m_next)) {
-            if (m_next == UINT32_MAX)
+        while (isReserved(m_next)) {
+            if (m_next == (std::numeric_limits<std::uint32_t>::max)())
                 throw std::overflow_error("DWG/DXF handle allocator exhausted");
             ++m_next;
         }
-        if (m_next == UINT32_MAX)
+        if (m_next == (std::numeric_limits<std::uint32_t>::max)())
             throw std::overflow_error("DWG/DXF handle allocator exhausted");
         std::uint32_t h = m_next++;
-        m_reserved.insert(h);
+        m_allocated.insert(h);
         return h;
+    }
+
+    /// Reset handles minted by the previous write while retaining explicit
+    /// source/raw reservations.  Failed allocations are not retained as
+    /// reservations across writes; within one write, callers never receive a
+    /// handle twice because `next()` is monotonic.
+    void resetGenerated() {
+        m_allocated.clear();
+        m_next = 0x30;
+        if (!m_explicitReserved.empty()) {
+            const auto highest = *m_explicitReserved.rbegin();
+            if (highest == (std::numeric_limits<std::uint32_t>::max)())
+                m_next = highest;
+            else if (highest >= m_next)
+                m_next = highest + 1;
+        }
     }
 
     /// High-water mark.  Used to populate the HANDSEED header variable.
@@ -107,7 +130,12 @@ private:
     /// First candidate for user-allocated handles.  All canonical
     /// reserved handles are below 0x30, so seeding starts here.
     std::uint32_t m_next {0x30};
-    std::set<std::uint32_t> m_reserved;
+    bool isReserved(std::uint32_t h) const {
+        return m_explicitReserved.count(h) != 0 || m_allocated.count(h) != 0;
+    }
+
+    std::set<std::uint32_t> m_explicitReserved;
+    std::set<std::uint32_t> m_allocated;
 };
 
 #endif // HANDLE_ALLOCATOR_H

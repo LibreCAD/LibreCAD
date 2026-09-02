@@ -15,6 +15,7 @@
 #include "dwgutil.h"
 #include "../drw_entities.h"
 #include <cctype>
+#include <limits>
 
 namespace {
 static std::string toUpperCase(const std::string& s) {
@@ -24,6 +25,46 @@ static std::string toUpperCase(const std::string& s) {
     return r;
 }
 } // namespace
+
+bool dwgWriter24::appendR2007StringStream(dwgBufferW& data,
+                                          const dwgBufferW& strings,
+                                          bool writeAbsentFooter) {
+    const std::size_t stringSize = strings.data().size();
+    if (stringSize > std::numeric_limits<std::uint32_t>::max())
+        return false;
+
+    const auto stringBytes = static_cast<std::uint32_t>(stringSize);
+    if (stringBytes == 0 && !writeAbsentFooter)
+        return true;
+
+    if (stringBytes == 0) {
+        for (int bit = 0; bit < 7; ++bit)
+            data.putBit(0);
+        data.putRawShort16(0);
+        data.putBit(0);
+        return true;
+    }
+
+    // The extended trailer stores a 31-bit bit count split as 16 + 15 bits.
+    const std::uint64_t stringBitSize =
+        static_cast<std::uint64_t>(stringBytes) * 8u + 7u;
+    if (stringBitSize > 0x7FFFFFFFULL)
+        return false;
+
+    if (stringBytes != 0)
+        data.putBytes(strings.data().data(), stringBytes);
+    for (int bit = 0; bit < 7; ++bit)
+        data.putBit(0);
+    if (stringBitSize <= 0x7FFFU) {
+        data.putRawShort16(static_cast<std::uint16_t>(stringBitSize));
+    } else {
+        data.putRawShort16(static_cast<std::uint16_t>(stringBitSize >> 15));
+        data.putRawShort16(static_cast<std::uint16_t>(
+            0x8000U | (stringBitSize & 0x7FFFU)));
+    }
+    data.putBit(stringBytes != 0 ? 1 : 0);
+    return true;
+}
 
 // --- dwgWriter24::writeDwgHeader --------------------------------------------
 // AC1024 HEADER section differs from AC1018 in that the handle stream is
@@ -40,9 +81,9 @@ bool dwgWriter24::writeDwgHeader() {
 
     size_t sizeOffset = beginSentinelSection(dwgSentinels::HEADER_BEGIN);
 
-    // R2018 always carries the high-size long after the section size. R2010/
-    // R2013 only use it for maintenance versions this writer does not emit.
-    if (m_version >= DRW::AC1032)
+    // R2013 files emitted by this writer use application maintenance 6, so
+    // the R2010/R2013 high-size field is required. R2018 always carries it.
+    if (m_version == DRW::AC1027 || m_version >= DRW::AC1032)
         m_buf.putRawLong32(0);
 
     // AC1024+: RL bitSize placeholder.
@@ -62,28 +103,20 @@ bool dwgWriter24::writeDwgHeader() {
         strBuf.alignToByte();
         handleBuf.alignToByte();
 
-        // R2007+ string-stream footer (same convention as finishObject):
-        // append the string bytes to the data section, then 7 zero pad bits +
-        // RS(strDataSize) + present bit (24 bits = 3 bytes, byte-aligned).
-        // strDataSize = strBytes*8 + 7 so the reader's backward scan
-        // (DRW_Header::parseDwg:2329-2348) lands at the first string byte.
         if (m_version > DRW::AC1018) {
-            std::uint32_t strBytes = static_cast<std::uint32_t>(strBuf.data().size());
-            bool hasStrings = strBytes > 0;
-            if (hasStrings)
-                dataBuf.putBytes(strBuf.data().data(), strBytes);
-            std::uint16_t strDataSize = hasStrings
-                ? static_cast<std::uint16_t>(strBytes * 8u + 7u) : 0u;
-            for (int i = 0; i < 7; ++i) dataBuf.putBit(0);
-            dataBuf.putRawShort16(strDataSize);
-            dataBuf.putBit(hasStrings ? 1 : 0);
-            // dataBuf is byte-aligned again (+strBytes +3 footer bytes).
+            if (!appendR2007StringStream(dataBuf, strBuf, true))
+                return false;
         }
 
+        if (dataBuf.size() >
+            (std::numeric_limits<std::uint32_t>::max() - 32u) / 8u)
+            return false;
         std::uint32_t bitSize = 32u + static_cast<std::uint32_t>(dataBuf.size()) * 8u;
         m_buf.patchRawLong32(bitSizeOffset, bitSize);
 
+        const std::uint32_t dataStartBit = m_buf.bitCount();
         m_buf.putBytes(dataBuf.data().data(), dataBuf.size());
+        recordHeaderHandseedOffset(dataStartBit);
         if (handleBuf.size() > 0)
             m_buf.putBytes(handleBuf.data().data(), handleBuf.size());
     }
@@ -98,10 +131,11 @@ bool dwgWriter24::writeDwgHeader() {
 // --- dwgWriter24::writeDwgClasses -------------------------------------------
 // AC1024 CLASSES section differs from AC1018 in two ways:
 //   1. An RL bitSize field is inserted after RL size.
-//   2. An extra RS (unknown CRC = 0) is written before the end sentinel.
+//   2. Eight ODA-defined unknown zero bytes are written before the end
+//      sentinel.
 //
 bool dwgWriter24::writeDwgClasses() {
-    if (hasDwgClassConflict())
+    if (hasDwgClassConflict() || !validateDwgClassManifest())
         return false;
 
     size_t sectionStart = m_buf.size();
@@ -109,7 +143,7 @@ bool dwgWriter24::writeDwgClasses() {
 
     size_t sizeOffset = beginSentinelSection(dwgSentinels::CLASSES_BEGIN);
 
-    const bool hasHSize = m_version >= DRW::AC1032;
+    const bool hasHSize = m_version == DRW::AC1027 || m_version >= DRW::AC1032;
     if (hasHSize)
         m_buf.putRawLong32(0);
 
@@ -127,31 +161,58 @@ bool dwgWriter24::writeDwgClasses() {
     m_buf.putBit(0);        // flag
 
     dwgBufferW classStrings;
-    for (const auto& definition : sortedDwgClassDefinitions())
-        writeDwgClassDefinition(definition, &m_buf, &classStrings);
+    if (!emitDwgClassDefinitions(
+            [this, &classStrings](const DwgClassDefinition& definition) {
+                return writeDwgClassDefinition(definition, &m_buf,
+                                               &classStrings);
+            }))
+        return false;
 
     m_buf.alignToByte();
     classStrings.alignToByte();
 
     if (classStrings.size() > 0)
         m_buf.putBytes(classStrings.data().data(), classStrings.size());
-    const std::uint16_t strDataSize =
-        static_cast<std::uint16_t>(classStrings.size() * 8u);
-    m_buf.putRawShort16(strDataSize);
-    const std::uint32_t crcStartBit =
-        m_buf.bitCount() - static_cast<std::uint32_t>(sectionStart) * 8u;
-    m_buf.putRawShort16(0);   // classes CRC placeholder (reader does not validate)
-    m_buf.putRawChar8(0);     // unknown CRC tail byte for R2007+
-
-    // Back-patch RL bitSize. The reader adds 159 bits without hSize, or
-    // 191 bits with hSize, and then backs up 16 bits to read strDataSize.
-    std::uint32_t bitSize = crcStartBit - (hasHSize ? 191u : 159u);
+    const std::uint64_t stringBitSize =
+        static_cast<std::uint64_t>(classStrings.size()) * 8u;
+    if (stringBitSize > 0x7FFFFFFFu)
+        return false;
+    if (stringBitSize > 0x7FFFu) {
+        // The extended footer is written high word first because the reader
+        // walks backwards from the low word at the end of the stream.
+        m_buf.putRawShort16(static_cast<std::uint16_t>(stringBitSize >> 15));
+        m_buf.putRawShort16(static_cast<std::uint16_t>(
+            0x8000u | (stringBitSize & 0x7FFFu)));
+    } else {
+        m_buf.putRawShort16(static_cast<std::uint16_t>(stringBitSize));
+    }
+    // The class string stream terminates with a true endbit.  bitSize includes
+    // its own 32-bit field and everything through that marker; the reader's
+    // 159/191-bit base then lands on the marker's first bit.
+    m_buf.putBit(1);
+    const std::uint64_t endBit =
+        static_cast<std::uint64_t>(m_buf.bitCount())
+        - static_cast<std::uint64_t>(sectionStart) * 8u;
+    const std::uint64_t dataStartBit =
+        (static_cast<std::uint64_t>(bitSizeOffset) + 4u) * 8u
+        - static_cast<std::uint64_t>(sectionStart) * 8u;
+    const std::uint64_t bitSize64 = 32u + endBit - dataStartBit;
+    if (bitSize64 > std::numeric_limits<std::uint32_t>::max())
+        return false;
+    const std::uint32_t bitSize = static_cast<std::uint32_t>(bitSize64);
     m_buf.patchRawLong32(bitSizeOffset, bitSize);
 
-    // Patch RL size and write end sentinel.
+    m_buf.alignToByte();
+
+    // The RL covers the payload up to, but not including, the CRC.
     std::uint32_t payloadSize =
         static_cast<std::uint32_t>(m_buf.size()) - static_cast<std::uint32_t>(sizeOffset + 4);
     m_buf.patchRawLong32(sizeOffset, payloadSize);
+
+    const std::uint16_t crc = m_buf.crc16(0xC0C1, sectionStart + 16, m_buf.size());
+    m_buf.putRawShort16(crc);
+    for (std::size_t i = 0; i < dwgSpec::kClassesUnknownTailBytes; ++i)
+        m_buf.putRawChar8(0);
 
     m_buf.putBytes(dwgSentinels::CLASSES_END, 16);
 
@@ -168,7 +229,12 @@ bool dwgWriter24::writeDwgClasses() {
 // finishObject() assembles these into the AC1024 wire format.
 
 bool dwgWriter24::encodeEntity(DRW_Entity *ent) {
-    if (ent == nullptr) return false;
+    if (ent == nullptr || objectWriteFailed() || blockControlEmitted())
+        return false;
+    if (!prepareEntityEed(*ent)) {
+        m_entityEedWriteFailure = !ent->extData.empty();
+        return false;
+    }
     if (ent->handle == 0) {
         ent->handle = m_handles.next();
     } else {
@@ -196,17 +262,30 @@ bool dwgWriter24::encodeEntity(DRW_Entity *ent) {
         }
     }
     prepareBlockOwnedEntity(*ent);
+    if (!canRecordBlockOwnedEntity(*ent))
+        return false;
 
     beginObject(ent->handle);
-    m_objectStrings.reset();
-    m_objectHandles.reset();
-
-    bool ok = ent->encodeDwg(m_version, &m_objectBody, 0,
+    bool ok = false;
+    if (m_version > DRW::AC1018) {
+        m_objectStrings.reset();
+        m_objectHandles.reset();
+        ok = ent->encodeDwg(m_version, &m_objectBody, 0,
                              &m_objectStrings, &m_objectHandles);
-    if (!ok) return false;
+    } else {
+        ok = ent->encodeDwg(m_version, &m_objectBody, 0);
+    }
+    if (!ok) {
+        if (!ent->extData.empty())
+            m_entityEedWriteFailure = true;
+        return false;
+    }
     finishObject();
-    recordBlockOwnedEntity(ent->handle);
-    return true;
+    if (objectWriteFailed())
+        return false;
+    if (!recordBlockOwnedEntity(*ent))
+        return false;
+    return recordBlockInsertReference(*ent);
 }
 
 // --- dwgWriter24::finishObject ----------------------------------------------
@@ -220,43 +299,76 @@ bool dwgWriter24::encodeEntity(DRW_Entity *ent) {
 // handleBits (= bs) = handleSectionBytes * 8.
 
 void dwgWriter24::finishObject() {
+    // Keep the R2010+ three-stream writer consistent with the legacy frame
+    // assembler: reject duplicate handles before appending a second frame.
+    if (std::any_of(m_objectMap.cbegin(), m_objectMap.cend(),
+                    [this](const auto& entry) {
+                        return entry.first == m_currentHandle;
+                    })) {
+        m_writeError = true;
+        return;
+    }
+
     // --- Assemble the DATA section -----------------------------------------
-    // String section footer: 7 zero bits + RS(strDataSize) + flag bit = 24 bits.
-    // Flag at bit objSize-1 (= LSB of last data byte after alignToByte + 7 zeros
-    // + 16 RS bits + 1 flag bit).  RS at bits [objSize-17..objSize-2].
-    // strDataSize = strBytes*8+7 so moveBitPos(-strDataSize-16) from after RS
-    // lands at the first string byte (byte-aligned, bitPos=0).
-    // Derivation: after getRawShort16 at bitPos=7, getPosition()=filePos-1.
-    // moveBitPos(b) with b=-strDataSize-9 sets bitPos=b&7 and shifts by b>>3.
-    // Need bitPos=0: b&7=0 → strDataSize≡7(mod 8). Need landing at preamble
-    // start: (dataBytes-1)+(b>>3)=dataBytesBeforeStrings=(dataBytes-strBytes-3)
-    // → b=-((strBytes+2)*8) → strDataSize=strBytes*8+7.
+    if (!m_buf.isGood() || !m_objectBody.isGood() || !m_objectStrings.isGood()
+        || !m_objectHandles.isGood()) {
+        m_writeError = true;
+        return;
+    }
+    // The footer stores strBytes * 8 + 7 bits. Its low size word carries
+    // 0x8000 when the preceding word supplies the upper 16 bits.
     m_objectBody.alignToByte();
-    std::uint32_t strBytes = static_cast<std::uint32_t>(m_objectStrings.data().size());
-    bool hasStrings = (strBytes > 0);
-    if (hasStrings)
-        m_objectBody.putBytes(m_objectStrings.data().data(), strBytes);
-    std::uint16_t strDataSize = hasStrings
-        ? static_cast<std::uint16_t>(strBytes * 8u + 7u)
-        : 0u;
-    for (int i = 0; i < 7; ++i) m_objectBody.putBit(0);
-    m_objectBody.putRawShort16(strDataSize);
-    m_objectBody.putBit(hasStrings ? 1 : 0);
-    // 7+16+1 = 24 bits = 3 bytes; body is now byte-aligned.
+    const std::uint64_t mergedStringBaseBit = m_objectBody.bitCount();
+    if (!appendR2007StringStream(m_objectBody, m_objectStrings, true)) {
+        m_writeError = true;
+        m_objectStrings.reset();
+        m_objectHandles.reset();
+        return;
+    }
+    // The short trailer occupies 3 bytes; extended trailers occupy 5 bytes.
 
     // --- Byte-align the handle section -------------------------------------
     m_objectHandles.alignToByte();
 
-    std::uint32_t dataBytes   = static_cast<std::uint32_t>(m_objectBody.size());
-    std::uint32_t handleBytes = static_cast<std::uint32_t>(m_objectHandles.size());
-    std::uint32_t totalBytes  = dataBytes + handleBytes;
-    std::uint32_t bs          = handleBytes * 8;  // bit count of handle section
+    if (m_objectBody.size() > std::numeric_limits<std::uint32_t>::max()
+        || m_objectHandles.size() > std::numeric_limits<std::uint32_t>::max()
+        || m_buf.size() > std::numeric_limits<std::uint32_t>::max()) {
+        m_writeError = true;
+        m_objectStrings.reset();
+        m_objectHandles.reset();
+        return;
+    }
+    const auto dataBytes = static_cast<std::uint32_t>(m_objectBody.size());
+    const auto handleBytes = static_cast<std::uint32_t>(m_objectHandles.size());
+    const std::uint64_t totalBytes64 =
+        static_cast<std::uint64_t>(dataBytes) + handleBytes;
+    if (handleBytes > std::numeric_limits<std::uint32_t>::max() / 8u
+        || totalBytes64 > std::numeric_limits<std::int32_t>::max()) {
+        m_writeError = true;
+        m_objectStrings.reset();
+        m_objectHandles.reset();
+        return;
+    }
+    const auto totalBytes = static_cast<std::uint32_t>(totalBytes64);
+    const auto bs = handleBytes * 8u;  // bit count of handle section
 
     std::uint32_t frameStart = static_cast<std::uint32_t>(m_buf.size());
 
     // MS totalBodyBytes + UMC bs + body bytes.
     m_buf.putModularShort(static_cast<std::int32_t>(totalBytes));
+    if (!m_buf.isGood()) {
+        m_writeError = true;
+        m_objectStrings.reset();
+        m_objectHandles.reset();
+        return;
+    }
     m_buf.putUModularChar(bs);
+    if (!m_buf.isGood()) {
+        m_writeError = true;
+        m_objectStrings.reset();
+        m_objectHandles.reset();
+        return;
+    }
     size_t bodyStart = m_buf.size();
     m_buf.putBytes(m_objectBody.data().data(), dataBytes);
     if (handleBytes > 0)
@@ -266,6 +378,20 @@ void dwgWriter24::finishObject() {
     std::uint16_t crc = m_buf.crc16(0xC0C1, frameStart, bodyStart + totalBytes);
     m_buf.putRawShort16(crc);
 
+    if (!captureLastDwgObjectHandleOccurrences(mergedStringBaseBit, 0, true,
+                                               false)) {
+        m_buf.truncate(frameStart);
+        m_writeError = true;
+        m_currentHandle = 0;
+        m_objectStrings.reset();
+        m_objectHandles.reset();
+        return;
+    }
     m_objectMap.emplace_back(m_currentHandle, frameStart);
+    markDwgClassInstanceEmitted(m_currentHandle);
     m_currentHandle = 0;
+}
+
+bool dwgWriter24::finalize() {
+    return !m_writeError && dwgWriter18::finalize();
 }

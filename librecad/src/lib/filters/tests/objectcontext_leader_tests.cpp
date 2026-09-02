@@ -28,11 +28,11 @@
  * The typed record is delivered via addObjectContextData while the raw DWG
  * bytes are still emitted (addUnsupportedObject) for lossless replay.
  *
- * Fixtures (in testdata):
- *   ocd_leader_r2000.dwg   <- ~/dev/libredwg/test/test-data/2000/Leader.dwg (AC1015)
+ * Optional local fixtures (not bundled):
+ *   ~/dev/libredwg/test/test-data/2000/Leader.dwg (AC1015)
  *       one LEADEROBJECTCONTEXTDATA: classVersion 3, default flag set, 3 points,
  *       xDirection (1,0,0), endpointProjection (0,-0.09,0).
- *   dynblock_r2018.dwg     <- ~/doc/dwg6/makeall-plus.dwg
+ *   ~/doc/dwg6/makeall-plus.dwg
  *       (shared AC1032 kitchen-sink fixture; also used by the dynamic-block and
  *        EVALUATION_GRAPH suites)
  *       two BLKREFOBJECTCONTEXTDATA: classVersion 4, rotation 0, insertion
@@ -44,6 +44,7 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+#include <algorithm>
 #include <cmath>
 #include <filesystem>
 #include <string>
@@ -121,9 +122,11 @@ public:
 class ContextCapture : public StubInterface {
 public:
   std::vector<DRW_ObjectContextData> m_ctx;
+  std::vector<DRW_Section> m_sections;
   void addObjectContextData(const DRW_ObjectContextData &d) override {
     m_ctx.push_back(d);
   }
+  void addSection(const DRW_Section &d) override { m_sections.push_back(d); }
 
   std::vector<const DRW_ObjectContextData *>
   ofKind(DRW_ObjectContextData::Kind k) const {
@@ -209,6 +212,29 @@ TEST_CASE("DWG BLKREFOBJECTCONTEXTDATA structured decode (makeall-plus)",
 
   const auto blkrefs = cap.ofKind(DRW_ObjectContextData::Kind::BlockReference);
   REQUIRE(blkrefs.size() >= 2);
+
+  const auto managers = std::count_if(
+      cap.m_sections.cbegin(), cap.m_sections.cend(),
+      [](const DRW_Section &s) { return s.m_kind == DRW_Section::Manager; });
+  const auto settings = std::count_if(
+      cap.m_sections.cbegin(), cap.m_sections.cend(),
+      [](const DRW_Section &s) { return s.m_kind == DRW_Section::Settings; });
+  REQUIRE(managers == 1);
+  REQUIRE(settings == 1);
+  const auto manager = std::find_if(
+      cap.m_sections.cbegin(), cap.m_sections.cend(),
+      [](const DRW_Section &s) { return s.m_kind == DRW_Section::Manager; });
+  REQUIRE(manager != cap.m_sections.cend());
+  CHECK(manager->handle == 2019u);
+  CHECK(manager->m_sectionCount == 1);
+  CHECK(manager->m_sectionHandles == std::vector<std::uint32_t>{1310});
+  const auto sectionSettings = std::find_if(
+      cap.m_sections.cbegin(), cap.m_sections.cend(),
+      [](const DRW_Section &s) { return s.m_kind == DRW_Section::Settings; });
+  REQUIRE(sectionSettings != cap.m_sections.cend());
+  CHECK(sectionSettings->handle == 1312u);
+  CHECK(sectionSettings->m_sectionType == 2);
+  CHECK(sectionSettings->parentHandle == 1310);
 
   // Both oracle instances: classVersion 4, rotation 0, insertion (26,24,0).
   bool sawScale2 = false;

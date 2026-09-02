@@ -41,6 +41,7 @@
 #include <filesystem>
 #include <fstream>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "drw_base.h"
@@ -617,4 +618,50 @@ TEST_CASE("DRW_Header::encodeDwg resolves $-prefixed (DXF-style) header keys",
     REQUIRE(dbl(dst, "LTSCALE") == 4.25);
     REQUIRE(i32(dst, "LUNITS")  == 4);
     REQUIRE(i32(dst, "LUPREC")  == 6);
+}
+
+TEST_CASE("DRW_Header copy and move preserve owned variants and DWG state",
+          "[dwg-read][header][ownership]") {
+    DRW_Header source;
+    source.addDouble("LTSCALE", 4.25, 40);
+    source.vars.emplace("NULL-VARIANT", nullptr);
+    source.addCustomVar("CUSTOM", "value");
+    HA::linetypeCtrl(source) = 0x11;
+    HA::blockCtrl(source) = 0x22;
+    HA::handSeed(source) = 0x33;
+
+    DRW_Header copy(source);
+    REQUIRE(copy.vars.at("LTSCALE") != source.vars.at("LTSCALE"));
+    REQUIRE(copy.vars.at("LTSCALE")->content.d == 4.25);
+    REQUIRE(copy.vars.at("NULL-VARIANT") == nullptr);
+    REQUIRE(copy.customVars.at("CUSTOM") != source.customVars.at("CUSTOM"));
+    REQUIRE(*copy.customVars.at("CUSTOM")->content.s == "value");
+    REQUIRE(HA::linetypeCtrl(copy) == 0x11u);
+    REQUIRE(HA::blockCtrl(copy) == 0x22u);
+    REQUIRE(HA::handSeed(copy) == 0x33u);
+
+    DRW_Header assigned;
+    assigned.addInt("OLD", 1, 70);
+    assigned = source;
+    REQUIRE(assigned.vars.find("OLD") == assigned.vars.end());
+    REQUIRE(assigned.vars.at("LTSCALE") != source.vars.at("LTSCALE"));
+    REQUIRE(assigned.vars.at("NULL-VARIANT") == nullptr);
+    REQUIRE(HA::handSeed(assigned) == 0x33u);
+
+    DRW_Header moved(std::move(copy));
+    REQUIRE(moved.vars.at("LTSCALE")->content.d == 4.25);
+    REQUIRE(moved.customVars.at("CUSTOM") != nullptr);
+    REQUIRE(copy.vars.empty());
+    REQUIRE(copy.customVars.empty());
+
+    auto truncatedBytes = encodeWithSizePrefix(source);
+    REQUIRE(truncatedBytes.size() > 1u);
+    truncatedBytes.pop_back();
+    dwgBuffer truncated(truncatedBytes.data(), truncatedBytes.size());
+    DRW_Header failed;
+    failed.addInt("OLD", 1, 70);
+    CHECK_FALSE(DrwHeaderEncodeTestAccess::parse(
+        failed, DRW::AC1015, &truncated, &truncated));
+    CHECK(failed.vars.empty());
+    CHECK(failed.customVars.empty());
 }

@@ -138,8 +138,11 @@ LC_DimStylePreviewGraphicView* LC_DimStylePreviewGraphicView::init(QWidget* pare
         result->hideNonRelevantLayers(dimensionType);
         return result;
     }
-    // how it could be???
-    return nullptr;
+
+    // Keep the settings dialog usable when the optional sample is unavailable.
+    LC_DimStylePreviewGraphicView* result = createAndSetupView(parent, graphic, originalGraphic, true);
+    result->hideNonRelevantLayers(dimensionType);
+    return result;
 }
 
 LC_DimStylePreviewGraphicView* LC_DimStylePreviewGraphicView::init(QWidget* parent, RS_Graphic* originalGraphic, const RS_Dimension* dimension) {

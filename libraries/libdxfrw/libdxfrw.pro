@@ -38,10 +38,13 @@ SOURCES += \
     src/intern/drw_textcodec.cpp \
     src/intern/dxfreader.cpp \
     src/intern/dxfwriter.cpp \
+    src/intern/dwg_dxf_output_transaction.cpp \
+    src/intern/dwgwriterlayoutvalidation.cpp \
     src/intern/dwgreader.cpp \
     src/intern/dwgreaderR1_40.cpp \
     src/intern/dwgreaderR11.cpp \
     src/intern/dwgbuffer.cpp \
+    src/intern/dwgobjectframe.cpp \
     src/intern/drw_dbg.cpp \
     src/intern/dwgreader21.cpp \
     src/intern/dwgreader18.cpp \
@@ -55,6 +58,7 @@ SOURCES += \
     src/intern/dwgbufferw.cpp \
     src/intern/dwgwriter15.cpp \
     src/intern/dwgwriter18.cpp \
+    src/intern/dwgwriter21.cpp \
     src/intern/dwgwriter24.cpp \
     src/intern/dwgwriter27.cpp \
     src/intern/dwgwriter32.cpp
@@ -72,11 +76,16 @@ HEADERS += \
     src/drw_acis.h \
     src/intern/drw_textcodec.h \
     src/intern/dxfreader.h \
+    src/intern/dxfparserlimits.h \
     src/intern/dxfwriter.h \
+    src/intern/dwg_dxf_output_transaction.h \
+    src/intern/dwgwriterlayoutvalidation.h \
     src/intern/dwgreader.h \
     src/intern/dwgreaderR1_40.h \
     src/intern/dwgreaderR11.h \
     src/intern/dwgbuffer.h \
+    src/intern/dwgobjectframe.h \
+    src/intern/dwgsafety.h \
     src/intern/drw_cptables.h \
     src/intern/drw_cptable950.h \
     src/intern/drw_cptable949.h \
@@ -97,6 +106,7 @@ HEADERS += \
     src/intern/dwgwriter.h \
     src/intern/dwgwriter15.h \
     src/intern/dwgwriter18.h \
+    src/intern/dwgwriter21.h \
     src/intern/dwgwriter24.h \
     src/intern/dwgwriter27.h \
     src/intern/dwgwriter32.h

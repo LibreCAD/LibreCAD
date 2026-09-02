@@ -1,7 +1,7 @@
 {
   "$schema": "schemas/fixture_manifest.schema.json",
   "schema": 1,
-  "description": "libdxfrw fixture manifest: covers DWG versions AC1.40, AC2.10, AC1003, AC1004, AC1006, AC1009, AC1012, AC1014, AC1015, AC1018, AC1021, AC1024, AC1027, AC1032 and DXF versions AC1003-AC1032. All entries are local-only (defaultEnabled:false) since the corpora live outside this repo; SHA256s pin the exact bytes when the fixture is present, so any drift is caught by validate_fixture_manifest. Paths use ${HOME} prefixes for portability; license tags identify the upstream project (libredwg=GPLv3, ezdxf=MIT, test-corpus-local=user's local corpus, not redistributable).",
+  "description": "libdxfrw fixture manifest: covers DWG versions AC1.40, AC2.10, AC1003, AC1004, AC1006, AC1009, AC1012, AC1014, AC1015, AC1018, AC1021, AC1024, AC1027, AC1032 and DXF versions AC1003-AC1032. Default entries, when present, are source-controlled, hash-pinned CI fixtures; optional local-only entries describe external corpora without making them CI dependencies. Paths using ${HOME} are portable local references. License tags identify the upstream project or LibreCAD-authored test data.",
   "fixtures": [
     {
       "id": "ac1.40-entities",
@@ -944,6 +944,124 @@
       "writerRows": [],
       "expectedDiagnostics": [],
       "requiredOracles": []
+    },
+    {
+      "id": "dxf-ac1021-block-record-preview",
+      "path": "librecad/src/lib/filters/tests/testdata/dxf/block_record_preview_r2007.dxf",
+      "format": "DXF",
+      "version": "AC1021",
+      "releaseFamily": "DXF R2007",
+      "sha256": "ac47c4691a04be79f65f9a0f94f029556df4b2afb072abb42828619e6c66d75e",
+      "license": "GPL-2.0-or-later (LibreCAD project-authored fixture)",
+      "redistribution": "repo",
+      "defaultEnabled": true,
+      "evidenceRole": "both",
+      "provenance": {
+        "source": "LibreCAD project-authored DXF regression fixture",
+        "createdBy": "DWG roadmap rev 1169 P5a.1",
+        "licenseBasis": "GPL-2.0-or-later project source"
+      },
+      "featureFamilies": ["dxf", "block-record", "binary-310"],
+      "versionRows": ["AC1021"],
+      "dwgTsRows": [],
+      "writerRows": ["dxf:AC1021:block-record-preview"],
+      "expectedDiagnostics": ["read:BAD_NONE", "block-record-preview:typed"],
+      "requiredOracles": ["ezdxf:audit"],
+      "expectedOutcomes": {
+        "owner": "BLOCK_RECORD:PREVIEW_BLOCK",
+        "sourceChunks": ["414243", "DE"],
+        "decodedBytes": "414243DE",
+        "writeTargetVersion": "AC1021"
+      }
+    },
+    {
+      "id": "dxf-ac1021-eed-binary",
+      "path": "librecad/src/lib/filters/tests/testdata/dxf/eed_binary_r2007.dxf",
+      "format": "DXF",
+      "version": "AC1021",
+      "releaseFamily": "DXF R2007",
+      "sha256": "ff32b882f51e8fd46ca040a86ed2755f7eeab40553e43205c3e1765f5d71f434",
+      "license": "GPL-2.0-or-later (LibreCAD project-authored fixture)",
+      "redistribution": "repo",
+      "defaultEnabled": true,
+      "evidenceRole": "both",
+      "provenance": {
+        "source": "LibreCAD project-authored DXF regression fixture",
+        "createdBy": "DWG roadmap rev 1171 P5b.1",
+        "licenseBasis": "GPL-2.0-or-later project source"
+      },
+      "featureFamilies": ["dxf", "eed", "xdata", "binary-1004"],
+      "versionRows": ["AC1021"],
+      "dwgTsRows": [],
+      "writerRows": ["dxf:AC1021:eed-binary"],
+      "expectedDiagnostics": ["read:BAD_NONE", "eed-binary:two-items"],
+      "requiredOracles": ["ezdxf:audit"],
+      "expectedOutcomes": {
+        "owner": "POINT:10",
+        "application": "LIBRECAD_EED",
+        "sourceChunks": ["0102", "A0B1C2"],
+        "writeTargetVersion": "AC1021"
+      }
+    },
+    {
+      "id": "dxf-ac1021-classes-raw-entity",
+      "path": "librecad/src/lib/filters/tests/testdata/dxf/classes_raw_entity_r2007.dxf",
+      "format": "DXF",
+      "version": "AC1021",
+      "releaseFamily": "DXF R2007",
+      "sha256": "5f510094f3427d4ebf1aeffee930c24aa9fd56caed3f4582846fedb4d5f0783f",
+      "license": "GPL-2.0-or-later (LibreCAD project-authored fixture)",
+      "redistribution": "repo",
+      "defaultEnabled": true,
+      "evidenceRole": "both",
+      "provenance": {
+        "source": "LibreCAD project-authored DXF regression fixture",
+        "createdBy": "DWG roadmap rev 1171 P5c.0",
+        "licenseBasis": "GPL-2.0-or-later project source"
+      },
+      "featureFamilies": ["dxf", "classes", "raw-entity"],
+      "versionRows": ["AC1021"],
+      "dwgTsRows": [],
+      "writerRows": ["dxf:AC1021:classes-raw-entity"],
+      "expectedDiagnostics": ["read:BAD_NONE", "classes:instance-count-recomputed"],
+      "requiredOracles": ["ezdxf:audit"],
+      "expectedOutcomes": {
+        "classRecord": "WEIRDENT",
+        "rawEntity": "WEIRDENT:7A",
+        "sourceInstanceCount": 7,
+        "emittedInstanceCount": 1,
+        "writeTargetVersion": "AC1021"
+      }
+    },
+    {
+      "id": "dxf-ac1021-raw-control-groups",
+      "path": "librecad/src/lib/filters/tests/testdata/dxf/raw_control_groups_r2007.dxf",
+      "format": "DXF",
+      "version": "AC1021",
+      "releaseFamily": "DXF R2007",
+      "sha256": "228f3748e568f137aebe76307b969e365339510bd4e3520abbeab0f3c8b1a682",
+      "license": "GPL-2.0-or-later (LibreCAD project-authored fixture)",
+      "redistribution": "repo",
+      "defaultEnabled": true,
+      "evidenceRole": "both",
+      "provenance": {
+        "source": "LibreCAD project-authored DXF regression fixture",
+        "createdBy": "DWG roadmap rev 1171 P5d.0",
+        "licenseBasis": "GPL-2.0-or-later project source"
+      },
+      "featureFamilies": ["dxf", "raw-object", "application-groups", "handle-remap"],
+      "versionRows": ["AC1021"],
+      "dwgTsRows": [],
+      "writerRows": ["dxf:AC1021:raw-control-groups"],
+      "expectedDiagnostics": ["read:BAD_NONE", "raw-control-groups:481-remapped"],
+      "requiredOracles": ["ezdxf:audit"],
+      "expectedOutcomes": {
+        "source": "MATERIAL:SOURCE",
+        "target": "MATERIAL:TARGET",
+        "sourceHandle": "90",
+        "sourceTargetHandle": "14",
+        "writeTargetVersion": "AC1021"
+      }
     }
   ]
 }

@@ -24,9 +24,9 @@
  * parseDwg was a no-op stub delivering an empty struct; this test proves the
  * full legacy / r2010b / r2013b body transcription.
  *
- * Fixtures (in-corpus, copied to testdata):
- *   visualstyle_r2013.dwg  <- ~/doc/dwg6/Point.dwg   (AC1027, r2010b + r2013b)
- *   visualstyle_r2007.dwg  <- ~/doc/dwg6/Point_1.dwg (AC1021, legacy body)
+ * Optional local fixtures (not bundled):
+ *   ~/doc/dwg6/Point.dwg   (AC1027, r2010b + r2013b)
+ *   ~/doc/dwg6/Point_1.dwg (AC1021, legacy body)
  *
  * Oracle: dwgread -O JSON (LibreDWG). The "Flat" visual style (index 49,
  * dwg type 506, handle [0,1,154]) field values are baked in below. Note the
@@ -153,6 +153,8 @@ TEST_CASE("DWG VISUALSTYLE r2010b+r2013b body decodes (Point.dwg / AC1027)",
 
   const DRW_VisualStyle *flat = cap.byDesc("Flat");
   REQUIRE(flat != nullptr);
+  CHECK(flat->m_bodyDecoded);
+  CHECK(flat->parentHandle != 0);
   const DRW_VisualStyleBody &b = flat->m_body;
 
   // style_type (70) is a BL == 0 for "Flat".
@@ -224,6 +226,8 @@ TEST_CASE("DWG VISUALSTYLE legacy body decodes (Point_1.dwg / AC1021)",
 
   const DRW_VisualStyle *flat = cap.byDesc("Flat");
   REQUIRE(flat != nullptr);
+  CHECK(flat->m_bodyDecoded);
+  CHECK(flat->parentHandle != 0);
   const DRW_VisualStyleBody &b = flat->m_body;
 
   CHECK(flat->type == 0);

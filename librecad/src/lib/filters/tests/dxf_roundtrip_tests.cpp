@@ -28,14 +28,19 @@
  * instances.
  */
 
+#include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 
 #include <algorithm>
 #include <cmath>
+#include <cstddef>
 #include <cstdlib>
 #include <filesystem>
 #include <fstream>
+#include <limits>
 #include <map>
+#include <memory>
+#include <sstream>
 #include <set>
 #include <string>
 #include <tuple>
@@ -43,11 +48,17 @@
 
 #include <QCoreApplication>
 
+#include "drw_base.h"
+#include "lc_dimstyle.h"
 #include "lc_dwgadvancedmetadata.h"
+#include "rs_dimaligned.h"
+#include "rs_dimension.h"
 #include "rs_filterdxfrw.h"
 #include "rs_graphic.h"
 #include "rs_entity.h"
+#include "rs_block.h"
 #include "rs_layer.h"
+#include "rs_point.h"
 #include "rs_settings.h"
 
 namespace {
@@ -78,6 +89,60 @@ std::string tmpFile(const char *suffix) {
 void writeText(const std::string &path, const std::string &content) {
   std::ofstream out(path);
   out << content;
+}
+
+std::string trimDxfToken(std::string value) {
+  if (!value.empty() && value.back() == '\r')
+    value.pop_back();
+  const size_t first = value.find_first_not_of(" \t");
+  return first == std::string::npos ? std::string() : value.substr(first);
+}
+
+std::string dstyleDirectionVariant(const std::string &path,
+                                   const std::string &directionCode,
+                                   const std::string &valueCode,
+                                   const std::string &value,
+                                   bool closeGroup = true) {
+  std::ifstream input(path);
+  std::vector<std::pair<std::string, std::string>> groups;
+  std::string code, groupValue;
+  while (std::getline(input, code) && std::getline(input, groupValue))
+    groups.emplace_back(trimDxfToken(code), trimDxfToken(groupValue));
+
+  bool inDimension = false;
+  bool inDstyle = false;
+  for (size_t i = 0; i + 1 < groups.size(); ++i) {
+    const auto &[groupCode, groupValueText] = groups[i];
+    if (groupCode == "0") {
+      inDimension = groupValueText == "DIMENSION";
+      inDstyle = false;
+      continue;
+    }
+    if (!inDimension)
+      continue;
+    if (groupCode == "1000" && groupValueText == "DSTYLE") {
+      inDstyle = true;
+      continue;
+    }
+    if (!inDstyle || groupCode != "1070" || groups[i + 1].first != "1070")
+      continue;
+
+    groups[i].second = directionCode;
+    groups[i + 1] = {valueCode, value};
+    if (!closeGroup) {
+      const auto close = std::find_if(groups.begin() + static_cast<std::ptrdiff_t>(i + 2),
+                                      groups.end(), [](const auto &group) {
+        return group.first == "1002" && group.second == "}";
+      });
+      if (close != groups.end())
+        groups.erase(close);
+    }
+    std::ostringstream output;
+    for (const auto &[outCode, outValue] : groups)
+      output << outCode << '\n' << outValue << '\n';
+    return output.str();
+  }
+  return {};
 }
 
 // Counts occurrences of a "0\n<NAME>\n" record marker in a DXF file.
@@ -123,6 +188,72 @@ std::vector<std::string> recordGroupValues(const std::string &path,
       values.push_back(value);
   }
   return values;
+}
+
+using DxfRecordGroups = std::vector<std::pair<std::string, std::string>>;
+
+DxfRecordGroups recordGroupsWithValue(const std::string &path,
+                                      const std::string &recordName,
+                                      const std::string &selectorCode,
+                                      const std::string &selectorValue) {
+  std::ifstream in(path);
+  std::string codeLine, valueLine;
+  DxfRecordGroups groups;
+  bool inRecord = false;
+  bool selected = false;
+  while (std::getline(in, codeLine) && std::getline(in, valueLine)) {
+    const std::string code = trimDxfToken(codeLine);
+    const std::string value = trimDxfToken(valueLine);
+    if (code == "0") {
+      if (selected)
+        return groups;
+      inRecord = value == recordName;
+      groups.clear();
+      continue;
+    }
+    if (!inRecord)
+      continue;
+    groups.emplace_back(code, value);
+    selected = selected || (code == selectorCode && value == selectorValue);
+  }
+  return selected ? groups : DxfRecordGroups{};
+}
+
+std::vector<std::string> namedRecordGroupValues(
+    const std::string &path, const std::string &recordType,
+    const std::string &recordName, const std::string &code) {
+  std::ifstream in(path);
+  std::string codeLine, valueLine;
+  std::vector<std::string> values;
+  std::vector<std::string> result;
+  bool inRecord = false;
+  bool matchingName = false;
+  auto trim = [](std::string value) {
+    if (!value.empty() && value.back() == '\r')
+      value.pop_back();
+    const size_t first = value.find_first_not_of(" \t");
+    return first == std::string::npos ? std::string() : value.substr(first);
+  };
+  while (std::getline(in, codeLine) && std::getline(in, valueLine)) {
+    const std::string groupCode = trim(codeLine);
+    const std::string value = trim(valueLine);
+    if (groupCode == "0") {
+      if (inRecord && matchingName)
+        result = values;
+      inRecord = value == recordType;
+      matchingName = false;
+      values.clear();
+    }
+    else if (inRecord && groupCode == "2" && value == recordName) {
+      matchingName = true;
+    }
+    else if (inRecord && matchingName && groupCode == code) {
+      values.push_back(value);
+    }
+  }
+  if (inRecord && matchingName)
+    result = values;
+  return result;
 }
 
 // Reads the first value of a group as a double, requiring that the group is
@@ -305,6 +436,18 @@ std::string layerPlotFlag(const std::string &path, const std::string &layerName)
   return std::string();
 }
 
+bool containsLine(const std::string &path, const std::string &expected) {
+  std::ifstream in(path);
+  std::string line;
+  while (std::getline(in, line)) {
+    if (!line.empty() && line.back() == '\r')
+      line.pop_back();
+    if (line == expected)
+      return true;
+  }
+  return false;
+}
+
 } // namespace
 
 TEST_CASE("DXF round-trip via RS_FilterDXFRW preserves unmodeled object + entity",
@@ -368,6 +511,109 @@ TEST_CASE("DXF round-trip via RS_FilterDXFRW preserves unmodeled object + entity
 
   std::filesystem::remove(src);
   std::filesystem::remove(out);
+}
+
+TEST_CASE("DXF entity common reference groups round-trip",
+          "[dxf][roundtrip][filter][common-references]") {
+  ensureSettings();
+  const std::string src = tmpFile("entity_common_references_src.dxf");
+  const std::string out = tmpFile("entity_common_references_out.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  writeText(src,
+            "0\nSECTION\n2\nENTITIES\n"
+            "0\nLINE\n5\n40\n330\n1F\n"
+            "102\n{ACAD_REACTORS\n330\nA0\n330\nA1\n102\n}\n"
+            "102\n{ACAD_XDICTIONARY\n360\nB0\n102\n}\n"
+            "100\nAcDbEntity\n8\n0\n10\n0\n20\n0\n"
+            "11\n1\n21\n1\n347\nC0\n348\nD0\n"
+            "390\nE0\n284\n3\n0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+
+  RS_Entity *line = graphic.firstEntity();
+  REQUIRE(line != nullptr);
+  CHECK(line->materialHandle() == 0xC0u);
+  CHECK(line->plotStyleHandle() == 0xE0u);
+  CHECK(line->shadowMode() == static_cast<int>(DRW::IgnoreShadows));
+  CHECK(line->fullVisualStyleHandle() == 0xD0u);
+  CHECK(line->reactorHandles() == std::vector<quint32>{0xA0u, 0xA1u});
+  CHECK(line->xDictHandle() == 0xB0u);
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+
+  CHECK(containsLine(out, "{ACAD_REACTORS"));
+  CHECK(containsLine(out, "{ACAD_XDICTIONARY"));
+  CHECK(recordGroupValues(out, "LINE", "330")
+        == std::vector<std::string>{"1F", "A0", "A1"});
+  CHECK(recordGroupValues(out, "LINE", "360")
+        == std::vector<std::string>{"B0"});
+  CHECK(recordGroupValues(out, "LINE", "348")
+        == std::vector<std::string>{"D0"});
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
+TEST_CASE("DXF application groups reject excessive nesting before publishing",
+          "[dxf][safety][application-groups]") {
+  ensureSettings();
+  const std::string src = tmpFile("application_group_nesting_src.dxf");
+  std::filesystem::remove(src);
+
+  std::string dxf = "0\nSECTION\n2\nENTITIES\n"
+                    "0\nLINE\n8\n0\n102\n{OUTER\n";
+  for (int i = 0; i < 64; ++i)
+    dxf += "102\n{NESTED\n";
+  dxf += "102\n{TOO_DEEP\n";
+  for (int i = 0; i < 65; ++i)
+    dxf += "102\n}\n";
+  dxf += "10\n0\n20\n0\n11\n1\n21\n1\n"
+         "0\nENDSEC\n0\nEOF\n";
+  writeText(src, dxf);
+
+  RS_Graphic graphic;
+  RS_FilterDXFRW filter;
+  CHECK_FALSE(filter.fileImport(graphic, QString::fromStdString(src),
+                                RS2::FormatDXFRW));
+  CHECK(graphic.count() == 0);
+
+  std::filesystem::remove(src);
+}
+
+TEST_CASE("DXF application groups reject excessive pairs before publishing",
+          "[dxf][safety][application-groups]") {
+  ensureSettings();
+  const std::string src = tmpFile("application_group_pairs_src.dxf");
+  std::filesystem::remove(src);
+
+  std::string dxf = "0\nSECTION\n2\nENTITIES\n"
+                    "0\nLINE\n8\n0\n102\n{TOO_LARGE\n";
+  // The first pair is the opener.  One more than the shared 65,536-pair
+  // transaction limit must be rejected without adding a partial LINE.
+  for (int i = 0; i < 65536; ++i)
+    dxf += "1\nopaque\n";
+  dxf += "102\n}\n10\n0\n20\n0\n11\n1\n21\n1\n"
+         "0\nENDSEC\n0\nEOF\n";
+  writeText(src, dxf);
+
+  RS_Graphic graphic;
+  RS_FilterDXFRW filter;
+  CHECK_FALSE(filter.fileImport(graphic, QString::fromStdString(src),
+                                RS2::FormatDXFRW));
+  CHECK(graphic.count() == 0);
+
+  std::filesystem::remove(src);
 }
 
 TEST_CASE("DXF filter normalizes reflected LWPOLYLINE extrusion once",
@@ -498,7 +744,7 @@ TEST_CASE("DXF filter normalizes reflected legacy POLYLINE extrusion once",
   std::filesystem::remove(out2);
 }
 
-TEST_CASE("DXF filter normalizes reflected planar curves once",
+TEST_CASE("DXF filter preserves reflected planar curve conventions once",
           "[dxf][roundtrip][filter][extrusion]") {
   ensureSettings();
   const std::string src = tmpFile("planar_curves_reflected_src.dxf");
@@ -531,12 +777,22 @@ TEST_CASE("DXF filter normalizes reflected planar curves once",
   REQUIRE(countRecords(out, "CIRCLE") == 1);
   REQUIRE(countRecords(out, "ARC") == 1);
   REQUIRE(countRecords(out, "ELLIPSE") == 1);
-  CHECK(firstGroupValueAsDouble(out, "CIRCLE", "10") == -10.0);
-  CHECK(firstGroupValueAsDouble(out, "ARC", "10") == -20.0);
+  // CIRCLE and ARC retain their source OCS plane metadata so editable
+  // geometry can be exported back to the original source fields. ELLIPSE
+  // remains on the normalized WCS path used by its existing implementation.
+  CHECK(firstGroupValueAsDouble(out, "CIRCLE", "10") == 10.0);
+  CHECK(firstGroupValueAsDouble(out, "ARC", "10") == 20.0);
   CHECK(firstGroupValueAsDouble(out, "ELLIPSE", "10") == -30.0);
   CHECK(firstGroupValueAsDouble(out, "ELLIPSE", "11") == -5.0);
-  for (const char *record : {"CIRCLE", "ARC", "ELLIPSE"})
-    CHECK(recordGroupValues(out, record, "210").empty());
+  for (const char *record : {"CIRCLE", "ARC"}) {
+    CHECK(recordGroupValues(out, record, "210") ==
+          std::vector<std::string>{"0"});
+    CHECK(recordGroupValues(out, record, "220") ==
+          std::vector<std::string>{"0"});
+    CHECK(recordGroupValues(out, record, "230") ==
+          std::vector<std::string>{"-1"});
+  }
+  CHECK(recordGroupValues(out, "ELLIPSE", "210").empty());
 
   RS_Graphic graphic2;
   {
@@ -547,8 +803,8 @@ TEST_CASE("DXF filter normalizes reflected planar curves once",
                               RS2::FormatDXFRW));
   }
 
-  // The first export is normalized WCS, so reading it again must not reflect
-  // centers, axes, or curve parameters a second time.
+  // Reading the first export again must not transform any curve a second
+  // time, regardless of whether its export convention is OCS or WCS.
   for (const auto &[record, codes] : std::vector<
            std::pair<const char *, std::vector<const char *>>>{
            {"CIRCLE", {"10", "20", "40"}},
@@ -557,7 +813,9 @@ TEST_CASE("DXF filter normalizes reflected planar curves once",
     for (const char *code : codes)
       CHECK(recordGroupValues(out2, record, code)
             == recordGroupValues(out, record, code));
-    CHECK(recordGroupValues(out2, record, "210").empty());
+    for (const char *code : {"210", "220", "230"})
+      CHECK(recordGroupValues(out2, record, code) ==
+            recordGroupValues(out, record, code));
   }
 
   std::filesystem::remove(src);
@@ -571,9 +829,13 @@ TEST_CASE("DXF filter preserves WCS POINT and LINE extrusion fields",
   const std::string src = tmpFile("wcs_point_line_extrusion_src.dxf");
   const std::string out = tmpFile("wcs_point_line_extrusion_out.dxf");
   const std::string out2 = tmpFile("wcs_point_line_extrusion_out2.dxf");
+  const std::string dwg = tmpFile("wcs_point_line_extrusion.dwg");
+  const std::string dwgOut = tmpFile("wcs_point_line_extrusion_from_dwg.dxf");
   std::filesystem::remove(src);
   std::filesystem::remove(out);
   std::filesystem::remove(out2);
+  std::filesystem::remove(dwg);
+  std::filesystem::remove(dwgOut);
 
   // POINT and LINE coordinates are WCS. Their extrusion vectors govern
   // thickness, so the filter must retain them rather than OCS-transforming
@@ -585,6 +847,8 @@ TEST_CASE("DXF filter preserves WCS POINT and LINE extrusion fields",
             "0\nLINE\n8\n0\n10\n4.0\n20\n5.0\n30\n6.0\n"
             "11\n7.0\n21\n8.0\n31\n9.0\n39\n2.5\n"
             "210\n0.0\n220\n1.0\n230\n0.0\n"
+            "0\n3DLINE\n8\n0\n10\n10.0\n20\n11.0\n30\n12.0\n"
+            "11\n13.0\n21\n14.0\n31\n15.0\n"
             "0\nENDSEC\n0\nEOF\n");
 
   RS_Graphic graphic;
@@ -601,7 +865,9 @@ TEST_CASE("DXF filter preserves WCS POINT and LINE extrusion fields",
            {"POINT", {{"30", "3"}, {"39", "0.5"}, {"50", "30"}, {"210", "0.2"},
                       {"220", "0.3"}, {"230", "0.9327379053088815"}}},
            {"LINE", {{"30", "6"}, {"31", "9"}, {"39", "2.5"},
-                     {"210", "0"}, {"220", "1"}, {"230", "0"}}}}) {
+                     {"210", "0"}, {"220", "1"}, {"230", "0"}}},
+           {"3DLINE", {{"30", "12"}, {"31", "15"}, {"39", "0"},
+                       {"210", "0"}, {"220", "0"}, {"230", "1"}}}}) {
     for (const auto &[code, expected] : values) {
       const auto actual = recordGroupValues(out, record, code);
       REQUIRE(actual.size() == 1);
@@ -620,15 +886,237 @@ TEST_CASE("DXF filter preserves WCS POINT and LINE extrusion fields",
   for (const auto &[record, codes] : std::vector<
            std::pair<const char *, std::vector<const char *>>>{
            {"POINT", {"10", "20", "30", "39", "50", "210", "220", "230"}},
-           {"LINE", {"10", "20", "30", "11", "21", "31", "39", "210", "220", "230"}}}) {
+           {"LINE", {"10", "20", "30", "11", "21", "31", "39", "210", "220", "230"}},
+           {"3DLINE", {"10", "20", "30", "11", "21", "31", "39", "210", "220", "230"}}}) {
     for (const char *code : codes)
-      CHECK(recordGroupValues(out2, record, code)
+    CHECK(recordGroupValues(out2, record, code)
             == recordGroupValues(out, record, code));
   }
+
+  RS_Graphic dwgGraphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(dwg),
+                              RS2::FormatDWG));
+  }
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(dwgGraphic, QString::fromStdString(dwg),
+                              RS2::FormatDWG));
+    REQUIRE(filter.fileExport(dwgGraphic, QString::fromStdString(dwgOut),
+                              RS2::FormatDXFRW));
+  }
+  REQUIRE(countRecords(dwgOut, "3DLINE") == 1);
+  CHECK(firstGroupValueAsDouble(dwgOut, "3DLINE", "30") == 12.0);
+  CHECK(firstGroupValueAsDouble(dwgOut, "3DLINE", "31") == 15.0);
 
   std::filesystem::remove(src);
   std::filesystem::remove(out);
   std::filesystem::remove(out2);
+  std::filesystem::remove(dwg);
+  std::filesystem::remove(dwgOut);
+}
+
+TEST_CASE("DXF filter preserves ARC OCS extrusion and reflected sweep",
+          "[dxf][roundtrip][filter][extrusion]") {
+  ensureSettings();
+  const std::string src = tmpFile("arc_ocs_extrusion_src.dxf");
+  const std::string out = tmpFile("arc_ocs_extrusion_out.dxf");
+  const std::string out2 = tmpFile("arc_ocs_extrusion_out2.dxf");
+  const std::string dwg = tmpFile("arc_ocs_extrusion.dwg");
+  const std::string dwgOut = tmpFile("arc_ocs_extrusion_from_dwg.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+  std::filesystem::remove(out2);
+  std::filesystem::remove(dwg);
+  std::filesystem::remove(dwgOut);
+
+  // ARC center and angles are OCS data. The importer applies the -Z OCS
+  // transform for LibreCAD's planar model; export must invert it before
+  // writing group 10/20/30 and 50/51 back to the source plane.
+  writeText(src,
+            "0\nSECTION\n2\nENTITIES\n"
+            "0\nARC\n8\n0\n10\n4.0\n20\n5.0\n30\n2.0\n"
+            "40\n6.0\n39\n2.5\n210\n0.0\n220\n0.0\n230\n-1.0\n"
+            "50\n11.4591559026165\n51\n63.0253574643906\n"
+            "0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+
+  REQUIRE(countRecords(out, "ARC") == 1);
+  for (const auto &[code, expected] :
+       std::initializer_list<std::pair<const char *, double>>{
+           {"10", 4.0}, {"20", 5.0}, {"30", 2.0}, {"40", 6.0},
+           {"39", 2.5}, {"210", 0.0}, {"220", 0.0}, {"230", -1.0},
+           {"50", 11.4591559026165}, {"51", 63.0253574643906}}) {
+    CHECK(firstGroupValueAsDouble(out, "ARC", code) ==
+          Catch::Approx(expected));
+  }
+
+  RS_Graphic graphic2;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic2, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(graphic2, QString::fromStdString(out2),
+                              RS2::FormatDXFRW));
+  }
+  for (const char *code :
+       {"10", "20", "30", "40", "39", "210", "220", "230", "50", "51"}) {
+    CHECK(recordGroupValues(out2, "ARC", code) ==
+          recordGroupValues(out, "ARC", code));
+  }
+
+#ifdef DWGSUPPORT
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(dwg),
+                              RS2::FormatDWG2004));
+  }
+  RS_Graphic fromDwg;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(fromDwg, QString::fromStdString(dwg),
+                              RS2::FormatDWG));
+    REQUIRE(filter.fileExport(fromDwg, QString::fromStdString(dwgOut),
+                              RS2::FormatDXFRW));
+  }
+  for (const char *code :
+       {"10", "20", "30", "40", "39", "210", "220", "230", "50", "51"}) {
+    CHECK(recordGroupValues(dwgOut, "ARC", code) ==
+          recordGroupValues(out, "ARC", code));
+  }
+#endif
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+  std::filesystem::remove(out2);
+  std::filesystem::remove(dwg);
+  std::filesystem::remove(dwgOut);
+}
+
+TEST_CASE("DXF filter preserves CIRCLE OCS extrusion",
+          "[dxf][roundtrip][filter][extrusion]") {
+  ensureSettings();
+  const std::string src = tmpFile("circle_ocs_extrusion_src.dxf");
+  const std::string out = tmpFile("circle_ocs_extrusion_out.dxf");
+  const std::string out2 = tmpFile("circle_ocs_extrusion_out2.dxf");
+  const std::string dwg = tmpFile("circle_ocs_extrusion.dwg");
+  const std::string dwgOut = tmpFile("circle_ocs_extrusion_from_dwg.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+  std::filesystem::remove(out2);
+  std::filesystem::remove(dwg);
+  std::filesystem::remove(dwgOut);
+
+  // CIRCLE center is OCS data. With -Z, the importer's axial OCS transform
+  // reflects the editable center; export must restore the original OCS center.
+  writeText(src,
+            "0\nSECTION\n2\nENTITIES\n"
+            "0\nCIRCLE\n8\n0\n10\n4.0\n20\n5.0\n30\n2.0\n"
+            "40\n6.0\n39\n2.5\n210\n0.0\n220\n0.0\n230\n-1.0\n"
+            "0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+
+  REQUIRE(countRecords(out, "CIRCLE") == 1);
+  for (const auto &[code, expected] :
+       std::initializer_list<std::pair<const char *, double>>{
+           {"10", 4.0}, {"20", 5.0}, {"30", 2.0}, {"40", 6.0},
+           {"39", 2.5}, {"210", 0.0}, {"220", 0.0}, {"230", -1.0}}) {
+    CHECK(firstGroupValueAsDouble(out, "CIRCLE", code) ==
+          Catch::Approx(expected));
+  }
+
+  RS_Graphic graphic2;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic2, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(graphic2, QString::fromStdString(out2),
+                              RS2::FormatDXFRW));
+  }
+  for (const char *code : {"10", "20", "30", "40", "39", "210",
+                           "220", "230"}) {
+    CHECK(recordGroupValues(out2, "CIRCLE", code) ==
+          recordGroupValues(out, "CIRCLE", code));
+  }
+
+#ifdef DWGSUPPORT
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(dwg),
+                              RS2::FormatDWG2004));
+  }
+  RS_Graphic fromDwg;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(fromDwg, QString::fromStdString(dwg),
+                              RS2::FormatDWG));
+    REQUIRE(filter.fileExport(fromDwg, QString::fromStdString(dwgOut),
+                              RS2::FormatDXFRW));
+  }
+  for (const char *code : {"10", "20", "30", "40", "39", "210",
+                           "220", "230"}) {
+    CHECK(recordGroupValues(dwgOut, "CIRCLE", code) ==
+          recordGroupValues(out, "CIRCLE", code));
+  }
+#endif
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+  std::filesystem::remove(out2);
+  std::filesystem::remove(dwg);
+  std::filesystem::remove(dwgOut);
+}
+
+TEST_CASE("DXF filter preserves WCS POINT and LINE Z without side metadata",
+          "[dxf][roundtrip][filter][extrusion]") {
+  ensureSettings();
+  const std::string src = tmpFile("wcs_point_line_z_src.dxf");
+  const std::string out = tmpFile("wcs_point_line_z_out.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  // POINT and LINE coordinates are WCS even with the default normal. Their
+  // nonzero Z values still require a sidecar because LibreCAD stores 2D
+  // geometry and would otherwise write an implicit z=0.
+  writeText(src,
+            "0\nSECTION\n2\nENTITIES\n"
+            "0\nPOINT\n8\n0\n10\n1.0\n20\n2.0\n30\n3.0\n"
+            "0\nLINE\n8\n0\n10\n4.0\n20\n5.0\n30\n6.0\n"
+            "11\n7.0\n21\n8.0\n31\n9.0\n"
+            "0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+
+  CHECK(firstGroupValueAsDouble(out, "POINT", "30") == Catch::Approx(3.0));
+  CHECK(firstGroupValueAsDouble(out, "LINE", "30") == Catch::Approx(6.0));
+  CHECK(firstGroupValueAsDouble(out, "LINE", "31") == Catch::Approx(9.0));
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
 }
 
 TEST_CASE("DXF filter preserves raw HATCH OCS elevation and extrusion",
@@ -743,7 +1231,7 @@ TEST_CASE("DXF filter preserves IMAGE WCS frame Z coordinates",
             "10\n1.0\n20\n2.0\n30\n3.0\n"
             "11\n0.5\n21\n0.0\n31\n4.0\n"
             "12\n0.0\n22\n0.25\n32\n5.0\n"
-            "13\n16.0\n23\n12.0\n340\n1\n70\n3\n"
+            "13\n16.0\n23\n12.0\n340\n1\n70\n3\n90\n4\n"
             "280\n1\n281\n50\n282\n50\n283\n0\n"
             "71\n1\n91\n2\n14\n-0.5\n24\n-0.5\n"
             "14\n15.5\n24\n11.5\n"
@@ -759,6 +1247,7 @@ TEST_CASE("DXF filter preserves IMAGE WCS frame Z coordinates",
   }
 
   REQUIRE(countRecords(out, "IMAGE") == 1);
+  REQUIRE(recordGroupValues(out, "IMAGE", "90") == std::vector<std::string>{"4"});
   const auto xdataApps = recordGroupValues(out, "IMAGE", "1001");
   CHECK(std::find(xdataApps.begin(), xdataApps.end(), "LibreCAD_IMAGE_FRAME")
         == xdataApps.end());
@@ -921,12 +1410,12 @@ TEST_CASE("DXF filter preserves reflected MINSERT source fields with a block def
   // children. The nonzero block base point also exercises the source equation.
   writeText(src,
             "0\nSECTION\n2\nBLOCKS\n"
-            "0\nBLOCK\n8\n0\n2\nGRID_SYMBOL\n70\n0\n"
+            "0\nBLOCK\n5\n20\n8\n0\n2\nGRID_SYMBOL\n70\n0\n"
             "10\n1.0\n20\n2.0\n30\n0.0\n3\nGRID_SYMBOL\n1\n\n"
             "0\nLINE\n8\n0\n10\n1.0\n20\n2.0\n11\n3.0\n21\n2.0\n"
-            "0\nENDBLK\n8\n0\n0\nENDSEC\n"
+            "0\nENDBLK\n5\n21\n8\n0\n0\nENDSEC\n"
             "0\nSECTION\n2\nENTITIES\n"
-            "0\nINSERT\n8\n0\n2\nGRID_SYMBOL\n"
+            "0\nINSERT\n5\n22\n8\n0\n2\nGRID_SYMBOL\n"
             "10\n10.0\n20\n20.0\n30\n30.0\n"
             "41\n2.0\n42\n-3.0\n43\n4.0\n50\n30.0\n"
             "70\n3\n71\n2\n44\n5.0\n45\n6.0\n"
@@ -972,6 +1461,315 @@ TEST_CASE("DXF filter preserves reflected MINSERT source fields with a block def
   }
 
   std::filesystem::remove(src);
+  std::filesystem::remove(out);
+  std::filesystem::remove(out2);
+}
+
+TEST_CASE("DXF filter preserves fixture-backed BLOCK_RECORD preview chunks",
+          "[dxf][roundtrip][filter][blockrecord][preview]") {
+  ensureSettings();
+  const std::string src = std::string(LIBRECAD_TEST_DIR)
+                          + "/dxf/block_record_preview_r2007.dxf";
+  const std::string out = tmpFile("block_record_preview_out.dxf");
+  const std::string out2 = tmpFile("block_record_preview_out2.dxf");
+  std::filesystem::remove(out);
+  std::filesystem::remove(out2);
+  if (!std::filesystem::is_regular_file(src)) {
+    SUCCEED("block_record_preview_r2007.dxf fixture absent; skipping");
+    return;
+  }
+  CHECK(recordGroupValues(src, "BLOCK_RECORD", "310")
+        == std::vector<std::string>{"414243", "DE"});
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+
+  const RS_Block* block = graphic.findBlock(QStringLiteral("PREVIEW_BLOCK"));
+  REQUIRE(block != nullptr);
+  CHECK(block->getPreviewData()
+        == std::vector<std::uint8_t>{0x41, 0x42, 0x43, 0xDE});
+  CHECK(recordGroupValues(out, "BLOCK_RECORD", "310")
+        == std::vector<std::string>{"414243DE"});
+
+  RS_Graphic graphic2;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic2, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(graphic2, QString::fromStdString(out2),
+                              RS2::FormatDXFRW));
+  }
+  CHECK(recordGroupValues(out2, "BLOCK_RECORD", "310")
+        == recordGroupValues(out, "BLOCK_RECORD", "310"));
+
+  std::filesystem::remove(out);
+  std::filesystem::remove(out2);
+}
+
+TEST_CASE("DXF filter preserves fixture-backed EED binary items",
+          "[dxf][roundtrip][filter][eed][binary]") {
+  ensureSettings();
+  const std::string src = std::string(LIBRECAD_TEST_DIR)
+                          + "/dxf/eed_binary_r2007.dxf";
+  const std::string out = tmpFile("eed_binary_out.dxf");
+  const std::string out2 = tmpFile("eed_binary_out2.dxf");
+  std::filesystem::remove(out);
+  std::filesystem::remove(out2);
+  if (!std::filesystem::is_regular_file(src)) {
+    SUCCEED("eed_binary_r2007.dxf fixture absent; skipping");
+    return;
+  }
+  CHECK(recordGroupValues(src, "POINT", "1004")
+        == std::vector<std::string>{"0102", "A0B1C2"});
+
+  const auto checkPointXData = [](RS_Graphic& drawing) {
+    auto* point = dynamic_cast<RS_Point*>(drawing.firstEntity());
+    REQUIRE(point != nullptr);
+    const auto& extData = point->getDrwExtData();
+    REQUIRE(extData.size() == 4);
+    REQUIRE(extData[0] != nullptr);
+    REQUIRE(extData[1] != nullptr);
+    REQUIRE(extData[2] != nullptr);
+    REQUIRE(extData[3] != nullptr);
+    CHECK(extData[0]->code() == 1001);
+    CHECK(std::string(extData[0]->c_str()) == "LIBRECAD_EED");
+    CHECK(extData[1]->code() == 1000);
+    CHECK(std::string(extData[1]->c_str()) == "binary items stay distinct");
+    for (std::size_t i = 0; i < 2; ++i) {
+      const auto& chunk = extData[i + 2];
+      CHECK(chunk->code() == 1004);
+      CHECK(chunk->type() == DRW_Variant::STRING);
+    }
+    CHECK(std::string(extData[2]->c_str()) == "0102");
+    CHECK(std::string(extData[3]->c_str()) == "A0B1C2");
+  };
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+  checkPointXData(graphic);
+  CHECK(recordGroupValues(out, "POINT", "1004")
+        == std::vector<std::string>{"0102", "A0B1C2"});
+
+  RS_Graphic graphic2;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic2, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(graphic2, QString::fromStdString(out2),
+                              RS2::FormatDXFRW));
+  }
+  checkPointXData(graphic2);
+  CHECK(recordGroupValues(out2, "POINT", "1004")
+        == std::vector<std::string>{"0102", "A0B1C2"});
+
+  std::filesystem::remove(out);
+  std::filesystem::remove(out2);
+}
+
+TEST_CASE("DXF filter preserves fixture-backed CLASS and raw entity",
+          "[dxf][roundtrip][filter][classes][raw]") {
+  ensureSettings();
+  const std::string src = std::string(LIBRECAD_TEST_DIR)
+                          + "/dxf/classes_raw_entity_r2007.dxf";
+  const std::string out = tmpFile("classes_raw_entity_out.dxf");
+  const std::string out2 = tmpFile("classes_raw_entity_out2.dxf");
+  std::filesystem::remove(out);
+  std::filesystem::remove(out2);
+  if (!std::filesystem::is_regular_file(src)) {
+    SUCCEED("classes_raw_entity_r2007.dxf fixture absent; skipping");
+    return;
+  }
+  CHECK(recordGroupValues(src, "CLASS", "91")
+        == std::vector<std::string>{"7"});
+
+  const auto checkMetadata = [](const RS_Graphic& drawing,
+                                int expectedInstanceCount) {
+    const auto& metadata = drawing.dwgAdvancedMetadata();
+    const auto& classes = metadata.dxfClasses();
+    const auto classIt = std::find_if(
+        classes.cbegin(), classes.cend(), [](const auto& entry) {
+          return entry.recName == "WEIRDENT";
+        });
+    REQUIRE(classIt != classes.cend());
+    CHECK(classIt->className == "AcDbWeirdEntity");
+    CHECK(classIt->appName == "CUSTOM_APP");
+    CHECK(classIt->proxyFlag == 4095);
+    CHECK(classIt->instanceCount == expectedInstanceCount);
+    CHECK(classIt->wasaProxyFlag == 1);
+    CHECK(classIt->entityFlag == 1);
+
+    const auto& rawEntities = metadata.rawDxfEntities();
+    const auto rawIt = std::find_if(
+        rawEntities.cbegin(), rawEntities.cend(), [](const auto& entry) {
+          return entry.name == "WEIRDENT";
+        });
+    REQUIRE(rawIt != rawEntities.cend());
+    CHECK(rawIt->handle == 0x7Au);
+  };
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+  checkMetadata(graphic, 7);
+  CHECK(countRecords(out, "WEIRDENT") == 1);
+  CHECK(classRecordNames(out) == std::set<std::string>{"WEIRDENT"});
+  CHECK(recordGroupValues(out, "CLASS", "2")
+        == std::vector<std::string>{"AcDbWeirdEntity"});
+  CHECK(recordGroupValues(out, "CLASS", "3")
+        == std::vector<std::string>{"CUSTOM_APP"});
+  CHECK(recordGroupValues(out, "CLASS", "90")
+        == std::vector<std::string>{"4095"});
+  CHECK(recordGroupValues(out, "CLASS", "91")
+        == std::vector<std::string>{"1"});
+  CHECK(recordGroupValues(out, "CLASS", "280")
+        == std::vector<std::string>{"1"});
+  CHECK(recordGroupValues(out, "CLASS", "281")
+        == std::vector<std::string>{"1"});
+
+  RS_Graphic graphic2;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic2, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(graphic2, QString::fromStdString(out2),
+                              RS2::FormatDXFRW));
+  }
+  checkMetadata(graphic2, 1);
+  CHECK(countRecords(out2, "WEIRDENT") == 1);
+  CHECK(classRecordNames(out2) == std::set<std::string>{"WEIRDENT"});
+  CHECK(recordGroupValues(out2, "CLASS", "91")
+        == std::vector<std::string>{"1"});
+
+  std::filesystem::remove(out);
+  std::filesystem::remove(out2);
+}
+
+TEST_CASE("DXF filter preserves fixture-backed raw control groups and remaps 481",
+          "[dxf][roundtrip][filter][application-groups][handles]") {
+  ensureSettings();
+  const std::string src = std::string(LIBRECAD_TEST_DIR)
+                          + "/dxf/raw_control_groups_r2007.dxf";
+  const std::string out = tmpFile("raw_control_groups_out.dxf");
+  const std::string out2 = tmpFile("raw_control_groups_out2.dxf");
+  std::filesystem::remove(out);
+  std::filesystem::remove(out2);
+  if (!std::filesystem::is_regular_file(src)) {
+    SUCCEED("raw_control_groups_r2007.dxf fixture absent; skipping");
+    return;
+  }
+
+  const auto values = [](const DxfRecordGroups& groups, const char* code) {
+    std::vector<std::string> result;
+    for (const auto& [groupCode, value] : groups) {
+      if (groupCode == code)
+        result.push_back(value);
+    }
+    return result;
+  };
+  const auto firstValue = [&](const DxfRecordGroups& groups, const char* code) {
+    const std::vector<std::string> found = values(groups, code);
+    REQUIRE(found.size() == 1);
+    return found.front();
+  };
+  const auto controlGroups = [&](const DxfRecordGroups& groups) {
+    std::vector<std::string> result;
+    for (const auto& [code, value] : groups) {
+      if (code == "102")
+        result.push_back(value);
+    }
+    return result;
+  };
+  const auto rawValues = [](const std::vector<DRW_Variant>& groups, int code) {
+    std::vector<std::string> result;
+    for (const DRW_Variant& group : groups) {
+      if (group.code() == code && group.c_str() != nullptr)
+        result.emplace_back(group.c_str());
+    }
+    return result;
+  };
+  const auto verifySourceRecord = [&](const DxfRecordGroups& source,
+                                      const DxfRecordGroups& target) {
+    REQUIRE_FALSE(source.empty());
+    REQUIRE_FALSE(target.empty());
+    CHECK(values(source, "330") == std::vector<std::string>{"C", "80"});
+    CHECK(values(source, "360") == std::vector<std::string>{"81"});
+    CHECK(controlGroups(source)
+          == std::vector<std::string>{"{CUSTOM_CONTROL", "{NESTED", "}", "}",
+                                      "{ACAD_REACTORS", "}",
+                                      "{ACAD_XDICTIONARY", "}"});
+    const std::string targetHandle = firstValue(target, "5");
+    CHECK(targetHandle != "14");
+    CHECK(values(source, "481") == std::vector<std::string>{targetHandle});
+
+    const auto owner = std::find(source.cbegin(), source.cend(),
+                                 std::pair<std::string, std::string>{"330", "C"});
+    const auto custom = std::find(source.cbegin(), source.cend(),
+                                  std::pair<std::string, std::string>{"102", "{CUSTOM_CONTROL"});
+    REQUIRE(owner != source.cend());
+    REQUIRE(custom != source.cend());
+    CHECK(owner < custom);
+  };
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+  const auto raw = std::find_if(
+      graphic.dwgAdvancedMetadata().rawDxfObjects().cbegin(),
+      graphic.dwgAdvancedMetadata().rawDxfObjects().cend(),
+      [](const auto& entry) { return entry.name == "MATERIAL" && entry.handle == 0x90u; });
+  REQUIRE(raw != graphic.dwgAdvancedMetadata().rawDxfObjects().cend());
+  CHECK(raw->parentHandle == 0xCu);
+  CHECK(rawValues(raw->groups, 481) == std::vector<std::string>{"14"});
+  CHECK(rawValues(raw->groups, 102)
+        == std::vector<std::string>{"{CUSTOM_CONTROL", "{NESTED", "}", "}",
+                                    "{ACAD_REACTORS", "}",
+                                    "{ACAD_XDICTIONARY", "}"});
+
+  const DxfRecordGroups sourceOut =
+      recordGroupsWithValue(out, "MATERIAL", "1", "SOURCE");
+  const DxfRecordGroups targetOut =
+      recordGroupsWithValue(out, "MATERIAL", "1", "TARGET");
+  verifySourceRecord(sourceOut, targetOut);
+  const std::vector<std::string> handles = collectHandles(out);
+  std::set<std::string> uniqueHandles;
+  for (const std::string& handle : handles) {
+    INFO("duplicate handle: " << handle);
+    CHECK(uniqueHandles.insert(handle).second);
+  }
+
+  RS_Graphic graphic2;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic2, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(graphic2, QString::fromStdString(out2),
+                              RS2::FormatDXFRW));
+  }
+  verifySourceRecord(recordGroupsWithValue(out2, "MATERIAL", "1", "SOURCE"),
+                     recordGroupsWithValue(out2, "MATERIAL", "1", "TARGET"));
+
   std::filesystem::remove(out);
   std::filesystem::remove(out2);
 }
@@ -1153,6 +1951,591 @@ TEST_CASE("DXF export re-emits DWG-read LIGHT entities", "[dxf][roundtrip][filte
   std::filesystem::remove(out);
 }
 
+TEST_CASE("DXF export re-emits DWG-read CAMERA entities",
+          "[dxf][roundtrip][filter][camera]") {
+  ensureSettings();
+  const std::string src = tmpFile("camerasrc.dxf");
+  const std::string out = tmpFile("camera.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  writeText(src,
+            "0\nSECTION\n2\nENTITIES\n"
+            "0\nLINE\n8\n0\n10\n0.0\n20\n0.0\n11\n1.0\n21\n1.0\n"
+            "0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+
+  DRW_Camera camera;
+  camera.handle = 0x310u;
+  camera.parentHandle = 0x1Fu;
+  camera.m_viewHandle = 0x90u;
+  camera.extData.push_back(
+      std::make_shared<DRW_Variant>(1001, std::string{"CAMERA_APP"}));
+  camera.extData.push_back(
+      std::make_shared<DRW_Variant>(1000, std::string{"camera-xdata"}));
+  graphic.dwgAdvancedMetadata().addCamera(camera);
+  REQUIRE(graphic.dwgAdvancedMetadata().cameras().size() == 1);
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+
+  CHECK(countRecords(out, "CAMERA") == 1);
+  CHECK(recordHasCode(out, "CAMERA", "100"));
+  CHECK(recordHasCode(out, "CAMERA", "340"));
+  CHECK(recordHasCode(out, "CAMERA", "1000"));
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
+TEST_CASE("DWG export re-emits metadata CAMERA entities",
+          "[dwg][roundtrip][filter][camera]") {
+  ensureSettings();
+  const std::string src = tmpFile("camera_dwg_src.dxf");
+  const std::string out = tmpFile("camera_dwg.dwg");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  writeText(src,
+            "0\nSECTION\n2\nENTITIES\n"
+            "0\nLINE\n8\n0\n10\n0.0\n20\n0.0\n11\n1.0\n21\n1.0\n"
+            "0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+
+  DRW_Camera camera;
+  camera.handle = 0x310u;
+  camera.parentHandle = 0x1Fu;
+  camera.m_viewHandle = 0x90u;
+  camera.extData = {
+      std::make_shared<DRW_Variant>(1001, std::string{"CAMERA_EED"}),
+      std::make_shared<DRW_Variant>(1000, std::string{"camera-eed"}),
+  };
+  auto *namedView = new LC_View("CameraView");
+  graphic.getViewList()->add(namedView);
+  DRW_View view;
+  view.handle = camera.m_viewHandle;
+  view.name = "CameraView";
+  graphic.dwgAdvancedMetadata().addView(view);
+  graphic.dwgAdvancedMetadata().addCamera(camera);
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDWG2013));
+  }
+
+  RS_Graphic reopened;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(reopened, QString::fromStdString(out),
+                              RS2::FormatDWG));
+  }
+
+  REQUIRE(reopened.dwgAdvancedMetadata().cameras().size() == 1);
+  const auto &stored = reopened.dwgAdvancedMetadata().cameras().front();
+  CHECK(stored.viewHandle != DRW::NoHandle);
+  CHECK(stored.viewHandle != camera.m_viewHandle);
+  // Model-space entity ownership is carried by the BLOCK_RECORD entity list;
+  // the common entity data therefore uses entmode=2 and has no owner handle.
+  CHECK(stored.parentHandle == DRW::NoHandle);
+  REQUIRE(stored.extData.size() == 2);
+  CHECK(std::string(stored.extData[0]->c_str()) == "CAMERA_EED");
+  CHECK(std::string(stored.extData[1]->c_str()) == "camera-eed");
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
+TEST_CASE("DXF round-trip preserves SECTIONOBJECT settings reference",
+          "[dxf][roundtrip][filter][section-object]") {
+  ensureSettings();
+  const std::string src = tmpFile("section_object_dxf_src.dxf");
+  const std::string out = tmpFile("section_object_dxf.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  writeText(src,
+            "0\nSECTION\n2\nENTITIES\n"
+            "0\nLINE\n8\n0\n10\n0.0\n20\n0.0\n11\n1.0\n21\n1.0\n"
+            "0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+
+  DRW_Section settings;
+  settings.handle = 0x420u;
+  settings.parentHandle = DRW::DwgNamedObjectsDictionaryHandle;
+  settings.m_kind = DRW_Section::Settings;
+  settings.m_classVersion = 3;
+  settings.m_sectionType = 4;
+  settings.m_generationOptions = 5;
+  settings.m_currentType = 4;
+  settings.m_typeCount = 1;
+  DRW_SectionTypeSettings dxfType;
+  dxfType.m_type = 4;
+  dxfType.m_generation = 17;
+  dxfType.m_sourceHandles = {0x421u};
+  dxfType.m_numSources = 1;
+  dxfType.m_destinationBlockHandle = DRW::DxfModelSpaceBlockRecordHandle;
+  dxfType.m_destinationFile = "section.dwg";
+  dxfType.m_numGeometrySettings = 1;
+  DRW_SectionGeometrySettings dxfGeometry;
+  dxfGeometry.m_numGeometries = 2;
+  dxfGeometry.m_hexIndex = 9;
+  dxfGeometry.m_flags = 3;
+  dxfGeometry.m_color = 2;
+  dxfGeometry.m_layer = "CUT";
+  dxfGeometry.m_lineType = "CONTINUOUS";
+  dxfGeometry.m_lineTypeScale = 1.25;
+  dxfGeometry.m_plotStyle = "Normal";
+  dxfGeometry.m_lineWeight = 25;
+  dxfGeometry.m_faceTransparency = 1;
+  dxfGeometry.m_edgeTransparency = 2;
+  dxfGeometry.m_hatchType = 3;
+  dxfGeometry.m_hatchPattern = "ANSI31";
+  dxfGeometry.m_hatchAngle = 0.5;
+  dxfGeometry.m_hatchSpacing = 2.0;
+  dxfGeometry.m_hatchScale = 0.75;
+  dxfType.m_geometry.push_back(dxfGeometry);
+  settings.m_types.push_back(dxfType);
+  graphic.dwgAdvancedMetadata().addSection(settings);
+
+  DRW_SectionObject section;
+  section.handle = 0x421u;
+  section.parentHandle = DRW::DxfModelSpaceBlockRecordHandle;
+  section.m_state = 7u;
+  section.m_flags = 9u;
+  section.m_name = "Section DXF";
+  section.m_vertDir = {0.0, 0.0, 1.0};
+  section.m_verts = {{1.0, 2.0, 0.0}, {3.0, 4.0, 0.0}};
+  section.m_sectionSettingsHandle = settings.handle;
+  graphic.dwgAdvancedMetadata().addSectionObject(section);
+
+  DRW_Section manager;
+  manager.handle = 0x422u;
+  manager.parentHandle = DRW::DwgNamedObjectsDictionaryHandle;
+  manager.m_kind = DRW_Section::Manager;
+  manager.m_isLive = true;
+  manager.m_sectionHandles = {section.handle};
+  graphic.dwgAdvancedMetadata().addSection(manager);
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+
+  CHECK(countRecords(out, "SECTIONOBJECT") == 1);
+  CHECK(countRecords(out, "SECTIONSETTINGS") == 1);
+  CHECK(recordHasCode(out, "SECTIONOBJECT", "360"));
+
+  RS_Graphic reopened;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(reopened, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+
+  REQUIRE(reopened.dwgAdvancedMetadata().sectionObjects().size() == 1u);
+  const auto& storedSection =
+      reopened.dwgAdvancedMetadata().sectionObjects().front();
+  CHECK(storedSection.parentHandle == DRW::DxfModelSpaceBlockRecordHandle);
+  CHECK(storedSection.name == section.m_name);
+  CHECK(storedSection.sectionSettingsHandle == settings.handle);
+  REQUIRE(reopened.dwgAdvancedMetadata().sections().size() == 2u);
+  const auto settingsIt = std::find_if(
+      reopened.dwgAdvancedMetadata().sections().begin(),
+      reopened.dwgAdvancedMetadata().sections().end(),
+      [](const LC_DwgAdvancedMetadata::SectionRecord& record) {
+        return record.kind == DRW_Section::Settings;
+      });
+  REQUIRE(settingsIt != reopened.dwgAdvancedMetadata().sections().end());
+  CHECK(settingsIt->typeCount == 1);
+  REQUIRE(settingsIt->types.size() == 1u);
+  CHECK(settingsIt->types.front().m_type == dxfType.m_type);
+  CHECK(settingsIt->types.front().m_generation == dxfType.m_generation);
+  CHECK(settingsIt->types.front().m_destinationFile
+        == dxfType.m_destinationFile);
+  CHECK(settingsIt->types.front().m_sourceHandles.size() == 1u);
+  CHECK(settingsIt->types.front().m_sourceHandles.front()
+        == storedSection.handle);
+  REQUIRE(settingsIt->types.front().m_geometry.size() == 1u);
+  CHECK(settingsIt->types.front().m_geometry.front().m_layer
+        == dxfGeometry.m_layer);
+  CHECK(settingsIt->types.front().m_geometry.front().m_hatchScale
+        == dxfGeometry.m_hatchScale);
+  const auto managerIt = std::find_if(
+      reopened.dwgAdvancedMetadata().sections().begin(),
+      reopened.dwgAdvancedMetadata().sections().end(),
+      [](const LC_DwgAdvancedMetadata::SectionRecord& record) {
+        return record.kind == DRW_Section::Manager;
+      });
+  REQUIRE(managerIt != reopened.dwgAdvancedMetadata().sections().end());
+  REQUIRE(managerIt->sectionHandles.size() == 1u);
+  CHECK(managerIt->sectionHandles.front() == storedSection.handle);
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
+TEST_CASE("DWG round-trip preserves SECTIONOBJECT settings reference",
+          "[dwg][roundtrip][filter][section-object]") {
+  ensureSettings();
+  const std::string out = tmpFile("section_object_dwg.dwg");
+  std::filesystem::remove(out);
+
+  RS_Graphic source;
+  source.initForNewDocument();
+
+  DRW_Section settings;
+  settings.handle = 0x430u;
+  settings.parentHandle = DRW::DwgNamedObjectsDictionaryHandle;
+  settings.m_kind = DRW_Section::Settings;
+  settings.m_currentType = 4;
+  settings.m_typeCount = 1;
+  DRW_SectionTypeSettings dwgType;
+  dwgType.m_type = 4;
+  dwgType.m_generation = 17;
+  dwgType.m_sourceHandles = {0x431u};
+  dwgType.m_numSources = 1;
+  dwgType.m_destinationBlockHandle = DRW::DwgModelSpaceBlockRecordHandle;
+  dwgType.m_destinationFile = "section.dwg";
+  dwgType.m_numGeometrySettings = 1;
+  DRW_SectionGeometrySettings dwgGeometry;
+  dwgGeometry.m_numGeometries = 2;
+  dwgGeometry.m_hexIndex = 9;
+  dwgGeometry.m_flags = 3;
+  dwgGeometry.m_color = 2;
+  dwgGeometry.m_layer = "CUT";
+  dwgGeometry.m_lineType = "CONTINUOUS";
+  dwgGeometry.m_lineTypeScale = 1.25;
+  dwgGeometry.m_plotStyle = "Normal";
+  dwgGeometry.m_lineWeight = 25;
+  dwgGeometry.m_faceTransparency = 1;
+  dwgGeometry.m_edgeTransparency = 2;
+  dwgGeometry.m_hatchType = 3;
+  dwgGeometry.m_hatchPattern = "ANSI31";
+  dwgGeometry.m_hatchAngle = 0.5;
+  dwgGeometry.m_hatchSpacing = 2.0;
+  dwgGeometry.m_hatchScale = 0.75;
+  dwgType.m_geometry.push_back(dwgGeometry);
+  settings.m_types.push_back(dwgType);
+  source.dwgAdvancedMetadata().addSection(settings);
+
+  DRW_SectionObject section;
+  section.handle = 0x431u;
+  section.parentHandle = DRW::DwgModelSpaceBlockRecordHandle;
+  section.m_state = 10u;
+  section.m_flags = 11u;
+  section.m_name = "Section DWG";
+  section.m_vertDir = {0.0, 1.0, 0.0};
+  section.m_topHeight = 12.0;
+  section.m_bottomHeight = -1.0;
+  section.m_verts = {{5.0, 6.0, 0.0}, {7.0, 8.0, 0.0}};
+  section.m_sectionSettingsHandle = settings.handle;
+  source.dwgAdvancedMetadata().addSectionObject(section);
+
+  // DWG imports retain the bounded raw entity alongside the typed callback.
+  // The typed route must replace that carrier rather than register/replay it
+  // a second time.
+  DRW_UnsupportedObject rawSection;
+  rawSection.m_version = DRW::AC1027;
+  rawSection.m_handle = section.handle;
+  rawSection.m_isEntity = true;
+  rawSection.m_isCustomClass = true;
+  rawSection.m_recordName = "SECTIONOBJECT";
+  rawSection.m_className = "AcDbSection";
+  rawSection.m_rawBytes = {0u};
+  rawSection.m_objectSize = 1u;
+  rawSection.m_bodyBitSize = 8u;
+  source.dwgAdvancedMetadata().addUnsupportedObject(rawSection);
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(source, QString::fromStdString(out),
+                              RS2::FormatDWG2013));
+  }
+
+  RS_Graphic reopened;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(reopened, QString::fromStdString(out),
+                              RS2::FormatDWG));
+  }
+
+  REQUIRE(reopened.dwgAdvancedMetadata().sectionObjects().size() == 1u);
+  const auto& storedSection =
+      reopened.dwgAdvancedMetadata().sectionObjects().front();
+  CHECK(storedSection.handle == section.handle);
+  CHECK(storedSection.parentHandle == DRW::NoHandle);
+  CHECK(storedSection.name == section.m_name);
+  CHECK(storedSection.state == section.m_state);
+  CHECK(storedSection.flags == section.m_flags);
+  CHECK(storedSection.sectionSettingsHandle == settings.handle);
+  REQUIRE(reopened.dwgAdvancedMetadata().sections().size() == 1u);
+  const auto& storedSettings =
+      reopened.dwgAdvancedMetadata().sections().front();
+  CHECK(storedSettings.handle == settings.handle);
+  CHECK(storedSettings.currentType == settings.m_currentType);
+  CHECK(storedSettings.typeCount == settings.m_typeCount);
+  REQUIRE(storedSettings.types.size() == 1u);
+  CHECK(storedSettings.types.front().m_type == dwgType.m_type);
+  CHECK(storedSettings.types.front().m_generation == dwgType.m_generation);
+  CHECK(storedSettings.types.front().m_sourceHandles
+        == std::vector<std::uint32_t>{section.handle});
+  CHECK(storedSettings.types.front().m_destinationFile
+        == dwgType.m_destinationFile);
+  REQUIRE(storedSettings.types.front().m_geometry.size() == 1u);
+  CHECK(storedSettings.types.front().m_geometry.front().m_layer
+        == dwgGeometry.m_layer);
+  CHECK(storedSettings.types.front().m_geometry.front().m_hatchScale
+        == dwgGeometry.m_hatchScale);
+
+  std::filesystem::remove(out);
+}
+
+TEST_CASE("DWG export re-emits metadata TVDEVICEPROPERTIES objects",
+          "[dwg][roundtrip][filter][tv-device-properties]") {
+  ensureSettings();
+  const std::string src = tmpFile("tv_device_properties_dwg_src.dxf");
+  const std::string out = tmpFile("tv_device_properties_dwg.dwg");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  writeText(src,
+            "0\nSECTION\n2\nENTITIES\n"
+            "0\nLINE\n8\n0\n10\n0.0\n20\n0.0\n11\n1.0\n21\n1.0\n"
+            "0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+
+  DRW_TvDeviceProperties properties;
+  properties.handle = 0x650u;
+  properties.parentHandle = 0x1Fu;
+  properties.reactorHandles = {0x651u};
+  properties.xDictHandle = 0x652u;
+  properties.setDwgCommonObjectState(1, 0, false);
+  properties.flags = 0x1234;
+  properties.maxRegenThreads = 9;
+  properties.useLutPalette = 1;
+  properties.alternateHighlight = 0x112233445566ULL;
+  properties.alternateHighlightColor = 0x223344556677ULL;
+  properties.geometryShaderUsage = 0x334455667788ULL;
+  properties.blendingMode = 4;
+  properties.antialiasingLevel = 1.25;
+  properties.valueBd2 = 2.5;
+  graphic.dwgAdvancedMetadata().addTvDeviceProperties(properties);
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDWG2013));
+  }
+
+  RS_Graphic reopened;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(reopened, QString::fromStdString(out),
+                              RS2::FormatDWG));
+  }
+
+  REQUIRE(reopened.dwgAdvancedMetadata().tvDeviceProperties().size() == 1);
+  const auto& stored =
+      reopened.dwgAdvancedMetadata().tvDeviceProperties().front();
+  CHECK(stored.flags == 0x1234);
+  CHECK(stored.maxRegenThreads == 9);
+  CHECK(stored.useLutPalette == 1);
+  CHECK(stored.alternateHighlight == 0x112233445566ULL);
+  CHECK(stored.alternateHighlightColor == 0x223344556677ULL);
+  CHECK(stored.geometryShaderUsage == 0x334455667788ULL);
+  CHECK(stored.blendingMode == 4);
+  CHECK(stored.antialiasingLevel == 1.25);
+  CHECK(stored.valueBd2 == 2.5);
+  CHECK(stored.parentHandle == DRW::DwgModelSpaceBlockRecordHandle);
+  CHECK(stored.reactorHandles.empty());
+  CHECK(stored.xDictHandle == DRW::NoHandle);
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
+TEST_CASE("DWG export re-emits metadata VX objects",
+          "[dwg][roundtrip][filter][vx]") {
+  ensureSettings();
+  const std::string src = tmpFile("vx_dwg_src.dxf");
+  const std::string out = tmpFile("vx_dwg.dwg");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  writeText(src,
+            "0\nSECTION\n2\nENTITIES\n"
+            "0\nLINE\n8\n0\n10\n0.0\n20\n0.0\n11\n1.0\n21\n1.0\n"
+            "0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+
+  DRW_VxControl control;
+  control.handle = 0x660u;
+  control.parentHandle = 0x1Fu;
+  control.classVersion = 7u;
+  control.flags = 3u;
+  control.recordHandles = {0x662u, 0x663u};
+  control.reactorHandles = {0x664u};
+  control.xDictHandle = 0x665u;
+  control.setDwgCommonObjectState(1, 0, false);
+  REQUIRE(control.setDwgRawData({0xA5u, 0x3Cu}, 16, DRW::AC1027));
+  graphic.dwgAdvancedMetadata().addVxControl(control);
+
+  DRW_VxTableRecord record;
+  record.handle = 0x666u;
+  record.parentHandle = 0x1Fu;
+  record.name = "VX-RECORD";
+  record.classVersion = 9u;
+  record.flags = 5u;
+  record.reactorHandles = {0x668u};
+  record.xDictHandle = 0x669u;
+  record.setDwgCommonObjectState(1, 0, false);
+  REQUIRE(record.setDwgRawData({0xF0u, 0x0Du}, 16, DRW::AC1027));
+  graphic.dwgAdvancedMetadata().addVxTableRecord(record);
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDWG2013));
+  }
+
+  RS_Graphic reopened;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(reopened, QString::fromStdString(out),
+                              RS2::FormatDWG));
+  }
+
+  REQUIRE(reopened.dwgAdvancedMetadata().vxControls().size() == 1);
+  REQUIRE(reopened.dwgAdvancedMetadata().vxTableRecords().size() == 1);
+  const auto& storedControl =
+      reopened.dwgAdvancedMetadata().vxControls().front();
+  const auto& storedRecord =
+      reopened.dwgAdvancedMetadata().vxTableRecords().front();
+  CHECK(storedControl.classVersion == 7u);
+  CHECK(storedControl.flags == 3u);
+  CHECK(storedControl.recordHandles.empty());
+  CHECK(storedRecord.classVersion == 9u);
+  CHECK(storedRecord.flags == 5u);
+  CHECK(storedRecord.name == "VX-RECORD");
+  CHECK(storedControl.parentHandle == DRW::DwgModelSpaceBlockRecordHandle);
+  CHECK(storedRecord.parentHandle == DRW::DwgModelSpaceBlockRecordHandle);
+  CHECK(storedControl.reactorHandles.empty());
+  CHECK(storedRecord.reactorHandles.empty());
+  CHECK(storedControl.xDictHandle == DRW::NoHandle);
+  CHECK(storedRecord.xDictHandle == DRW::NoHandle);
+  REQUIRE(storedControl.rawDataValid);
+  CHECK(storedControl.rawDataBitSize >= 16u);
+  REQUIRE(storedControl.rawData.size() >= 2u);
+  CHECK(storedControl.rawData[0] == 0xA5u);
+  CHECK(storedControl.rawData[1] == 0x3Cu);
+  REQUIRE(storedRecord.rawDataValid);
+  CHECK(storedRecord.rawDataBitSize >= 16u);
+  REQUIRE(storedRecord.rawData.size() >= 2u);
+  CHECK(storedRecord.rawData[0] == 0xF0u);
+  CHECK(storedRecord.rawData[1] == 0x0Du);
+  // The fixture has no replayable AcDb:AcDsPrototype_1b section.  Do not
+  // advertise inline DataStorage bytes that were not emitted.
+  CHECK_FALSE(storedControl.hasDsData);
+  CHECK_FALSE(storedRecord.hasDsData);
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
+TEST_CASE("DXF export re-emits DWG-read NAVISWORKSMODEL entities",
+          "[dxf][roundtrip][filter][navisworks]") {
+  ensureSettings();
+  const std::string src = tmpFile("navisworkssrc.dxf");
+  const std::string out = tmpFile("navisworks.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  const std::string dxf =
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nLINE\n8\n0\n10\n0.0\n20\n0.0\n11\n10.0\n21\n10.0\n"
+      "0\nENDSEC\n0\nEOF\n";
+  writeText(src, dxf);
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+
+  DRW_NavisworksModel model;
+  model.handle = 0x310;
+  model.parentHandle = 0x1F;
+  model.flags = 0x8001;
+  model.definitionHandle = 0x311;
+  for (std::size_t i = 0; i < model.transform.size(); ++i)
+    model.transform[i] = static_cast<double>(i + 1);
+  model.unitFactor = 0.001;
+  graphic.dwgAdvancedMetadata().addNavisworksModel(model);
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+
+  CHECK(countRecords(out, "NAVISWORKSMODEL") == 1);
+  CHECK(recordHasCode(out, "NAVISWORKSMODEL", "340"));
+  CHECK(recordGroupValues(out, "NAVISWORKSMODEL", "40").size() == 17);
+
+  RS_Graphic imported;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(imported, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+  REQUIRE(imported.dwgAdvancedMetadata().navisworksModels().size() == 1);
+  const auto& stored = imported.dwgAdvancedMetadata().navisworksModels()[0];
+  CHECK(stored.parentHandle == DRW::DxfModelSpaceBlockRecordHandle);
+  CHECK(stored.flags == model.flags);
+  CHECK(stored.definitionHandle == model.definitionHandle);
+  CHECK(stored.transform == model.transform);
+  CHECK(stored.unitFactor == model.unitFactor);
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
 // D4 write-path: a SHAPE read from a DWG lands only on the metadata shelf; the
 // export now re-emits it as a typed AcDbShape with group 2 = the resolved
 // SHAPEFILE/STYLE name (the glyph index is not round-trippable without the .shx).
@@ -1269,6 +2652,24 @@ TEST_CASE("DXF export re-emits DWG-read OLE2FRAME entities", "[dxf][roundtrip][f
   std::filesystem::remove(out);
 }
 
+TEST_CASE("DXF filter propagates typed writer rejection",
+          "[dxf][roundtrip][filter][write-errors]") {
+  ensureSettings();
+  const std::string out = tmpFile("typed-write-failure.dxf");
+  std::filesystem::remove(out);
+
+  RS_Graphic graphic;
+  DRW_Shape invalid;
+  invalid.handle = 0x301;
+  invalid.m_insertionPoint.x = std::numeric_limits<double>::quiet_NaN();
+  graphic.dwgAdvancedMetadata().addShape(invalid);
+
+  RS_FilterDXFRW filter;
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(out),
+                                RS2::FormatDXFRW));
+  std::filesystem::remove(out);
+}
+
 TEST_CASE("DXF CLASSES section round-trips source custom entity metadata",
           "[dxf][roundtrip][filter][classes]") {
   ensureSettings();
@@ -1279,7 +2680,7 @@ TEST_CASE("DXF CLASSES section round-trips source custom entity metadata",
 
   const std::string dxf =
       "0\nSECTION\n2\nCLASSES\n"
-      "0\nCLASS\n1\nWEIRDENT\n2\nAcDbWeirdEntity\n3\nCUSTOM_APP\n"
+      "0\nCLASS\n1\nweirdent\n2\nAcDbWeirdEntity\n3\nCUSTOM_APP\n"
       "90\n4095\n91\n1\n280\n0\n281\n1\n"
       "0\nENDSEC\n"
       "0\nSECTION\n2\nENTITIES\n"
@@ -1298,7 +2699,7 @@ TEST_CASE("DXF CLASSES section round-trips source custom entity metadata",
   const auto &metadata = graphic.dwgAdvancedMetadata();
   bool sawClass = false;
   for (const DRW_Class &cls : metadata.dxfClasses()) {
-    if (cls.recName == "WEIRDENT" && cls.className == "AcDbWeirdEntity"
+    if (cls.recName == "weirdent" && cls.className == "AcDbWeirdEntity"
         && cls.appName == "CUSTOM_APP") {
       sawClass = true;
     }
@@ -1312,7 +2713,104 @@ TEST_CASE("DXF CLASSES section round-trips source custom entity metadata",
   }
 
   CHECK(countRecords(out, "WEIRDENT") == 1);
-  CHECK(classRecordNames(out).count("WEIRDENT") == 1);
+  CHECK(classRecordNames(out).count("weirdent") == 1);
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
+TEST_CASE("DXF unused CLASS definitions survive filter round trip",
+          "[dxf][roundtrip][filter][classes]") {
+  ensureSettings();
+  const std::string src = tmpFile("unused-class-src.dxf");
+  const std::string out = tmpFile("unused-class-out.dxf");
+  const std::string r12Out = tmpFile("unused-class-r12-out.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+  std::filesystem::remove(r12Out);
+
+  writeText(src,
+            "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n0\nENDSEC\n"
+            "0\nSECTION\n2\nCLASSES\n"
+            "0\nCLASS\n1\nUNUSEDCLASS\n2\nAcDbUnusedClass\n3\nCUSTOM_APP\n"
+            "90\n4095\n91\n17\n280\n0\n281\n0\n"
+            "0\nCLASS\n1\n\n2\nAcDbProxyOnly\n3\nCUSTOM_APP\n"
+            "90\n4095\n91\n9\n280\n1\n281\n0\n"
+            "0\nENDSEC\n0\nSECTION\n2\nENTITIES\n0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  REQUIRE(graphic.dwgAdvancedMetadata().dxfClasses().size() == 2);
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+  {
+    RS_FilterDXFRW filter;
+    CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(r12Out),
+                                  RS2::FormatDXFRW12));
+  }
+
+  RS_Graphic reloaded;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(reloaded, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+  bool sawUnused = false;
+  bool sawProxyOnly = false;
+  for (const DRW_Class& cls : reloaded.dwgAdvancedMetadata().dxfClasses()) {
+    if (cls.recName == "UNUSEDCLASS") {
+      sawUnused = cls.className == "AcDbUnusedClass" && cls.instanceCount == 0;
+    } else if (cls.recName.empty() && cls.className == "AcDbProxyOnly") {
+      sawProxyOnly = cls.instanceCount == 0;
+    }
+  }
+  CHECK(sawUnused);
+  CHECK(sawProxyOnly);
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+  std::filesystem::remove(r12Out);
+}
+
+TEST_CASE("DXF export rejects conflicting case-insensitive CLASS metadata",
+          "[dxf][roundtrip][filter][classes][safety]") {
+  ensureSettings();
+  const std::string src = tmpFile("class-conflict-src.dxf");
+  const std::string out = tmpFile("class-conflict-out.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  const std::string dxf =
+      "0\nSECTION\n2\nCLASSES\n"
+      "0\nCLASS\n1\nWEIRDENT\n2\nAcDbFirst\n3\nCUSTOM_APP\n"
+      "90\n4095\n91\n1\n280\n0\n281\n1\n"
+      "0\nCLASS\n1\nweirdent\n2\nAcDbSecond\n3\nCUSTOM_APP\n"
+      "90\n4095\n91\n1\n280\n0\n281\n1\n"
+      "0\nENDSEC\n"
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nWEIRDENT\n5\n7B\n8\n0\n"
+      "0\nENDSEC\n0\nEOF\n";
+  writeText(src, dxf);
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+
+  RS_FilterDXFRW filter;
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(out),
+                                RS2::FormatDXFRW));
+  CHECK_FALSE(std::filesystem::exists(out));
 
   std::filesystem::remove(src);
   std::filesystem::remove(out);
@@ -1747,6 +3245,98 @@ TEST_CASE("DXF unmodeled source custom ENTITY round-trips with a CLASS record",
   std::filesystem::remove(out);
 }
 
+TEST_CASE("DXF raw ENTITY remap updates typed GROUP members",
+          "[dxf][roundtrip][filter][handles][raw]") {
+  ensureSettings();
+  const std::string src = tmpFile("raw-group-src.dxf");
+  const std::string out = tmpFile("raw-group-out.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  // 1F is owned by the generated Model_Space BLOCK_RECORD on export. The raw
+  // entity must therefore be remapped, and the typed GROUP's source reference
+  // must follow that remap instead of retaining the colliding 1F.
+  writeText(src,
+            "0\nSECTION\n2\nENTITIES\n"
+            "0\nWEIRDENT\n5\n1F\n8\n0\n10\n1\n20\n2\n"
+            "0\nENDSEC\n"
+            "0\nSECTION\n2\nOBJECTS\n"
+            "0\nDICTIONARY\n5\nC\n100\nAcDbDictionary\n281\n1\n"
+            "3\nACAD_GROUP\n350\nD\n"
+            "0\nDICTIONARY\n5\nD\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+            "3\n*RAW\n350\n90\n"
+            "0\nGROUP\n5\n90\n330\nD\n100\nAcDbGroup\n300\nraw\n"
+            "70\n1\n71\n1\n340\n1F\n"
+            "0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  REQUIRE(graphic.dwgAdvancedMetadata().rawDxfEntities().size() == 1);
+  REQUIRE(graphic.dwgAdvancedMetadata().groups().size() == 1);
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+
+  const std::vector<std::string> entityHandles =
+      recordGroupValues(out, "WEIRDENT", "5");
+  REQUIRE(entityHandles.size() == 1);
+  CHECK(entityHandles.front() != "1F");
+  CHECK(recordGroupValues(out, "GROUP", "340")
+        == entityHandles);
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
+TEST_CASE("DXF proxy raw carriers preserve wide self handles",
+          "[dxf][roundtrip][filter][proxy][handles]") {
+  ensureSettings();
+  const std::string src = tmpFile("proxy-wide-handle-src.dxf");
+  const std::string out = tmpFile("proxy-wide-handle-out.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  // DXF code-5 handles use the same 64-bit-width lexeme space as DWG handles.
+  // The typed proxy convenience field remains 32-bit, but the raw carrier must
+  // accept and replay the complete source spelling.
+  writeText(src,
+            "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n"
+            "0\nENDSEC\n"
+            "0\nSECTION\n2\nENTITIES\n"
+            "0\nACAD_PROXY_ENTITY\n"
+            "5\n1234567890ABCDEF\n"
+            "330\n1\n"
+            "100\nAcDbEntity\n8\n0\n"
+            "0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  REQUIRE(graphic.dwgAdvancedMetadata().rawDxfEntities().size() == 1);
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+
+  CHECK(recordGroupValues(out, "ACAD_PROXY_ENTITY", "5")
+        == std::vector<std::string>{"1234567890ABCDEF"});
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
 // Regression for the raw-vs-fixed-structural handle collision (the bug that made
 // 35/42 real AC1015+ exports unreadable by ezdxf). The source reuses the codec's
 // OWN fixed structural handles for unrelated OBJECTS: a DICTIONARY at 0x10 (==
@@ -1833,13 +3423,40 @@ TEST_CASE("DXF export remaps raw objects colliding with fixed structural handles
   std::filesystem::remove(out);
 }
 
+TEST_CASE("DXF export rejects duplicate raw self-handles",
+          "[dxf][roundtrip][filter][handles][safety]") {
+  ensureSettings();
+  const std::string out = tmpFile("duplicate_raw_handles.dxf");
+  std::filesystem::remove(out);
+
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  auto makeRaw = [](const char *value) {
+    DRW_RawDxfObject raw;
+    raw.name = "XRECORD";
+    raw.handle = 0xAAu;
+    raw.m_version = DRW::AC1021;
+    raw.groups.emplace_back(5, std::string{value});
+    raw.groups.emplace_back(100, std::string{"AcDbXrecord"});
+    raw.groups.emplace_back(280, static_cast<std::int32_t>(1));
+    return raw;
+  };
+  graphic.dwgAdvancedMetadata().addRawDxfObject(makeRaw("AA"));
+  graphic.dwgAdvancedMetadata().addRawDxfObject(makeRaw("aa"));
+
+  RS_FilterDXFRW filter;
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(out),
+                                RS2::FormatDXFRW));
+  std::filesystem::remove(out);
+}
+
 // A-4: the structural-collision handle remap must rewrite hard-pointer references
 // carried in codes 390-399 and 480-481, not only 5/105/320-369/1005. A target raw
 // object placed on a codec-fixed structural handle (0x14 == codec LTYPE
 // CONTINUOUS) is remapped to a fresh handle; a second raw object referencing it
-// via code 390 AND 480 must have those refs rewritten to the new handle, not left
-// dangling at the reused literal.
-TEST_CASE("DXF export rewrites 390/480 hard-pointer refs to remapped raw objects",
+// via codes 390, 480, and 481 must have those refs rewritten to the new handle,
+// not left dangling at the reused literal.
+TEST_CASE("DXF export rewrites 390/480/481 hard-pointer refs to remapped raw objects",
           "[dxf][roundtrip][filter][handles]") {
   ensureSettings();
   const std::string src = tmpFile("ref390src.dxf");
@@ -1859,8 +3476,9 @@ TEST_CASE("DXF export rewrites 390/480 hard-pointer refs to remapped raw objects
       "3\nTGT\n350\n14\n3\nREF\n350\n40\n"
       // target raw object collides with codec LTYPE 0x14 -> remapped to fresh handle
       "0\nMATERIAL\n5\n14\n330\n12\n100\nAcDbMaterial\n1\nTgtMat\n94\n7\n"
-      // referencing raw object (no collision) points at 0x14 via 390 AND 480
-      "0\nMATERIAL\n5\n40\n330\n12\n100\nAcDbMaterial\n1\nRefMat\n390\n14\n480\n14\n"
+      // Referencing raw object (no collision) points at 0x14 via 390, 480, and
+      // 481. All three must follow the target's structural-collision remap.
+      "0\nMATERIAL\n5\n40\n330\n12\n100\nAcDbMaterial\n1\nRefMat\n390\n14\n480\n14\n481\n14\n"
       "0\nENDSEC\n0\nEOF\n";
   writeText(src, dxf);
 
@@ -1877,7 +3495,7 @@ TEST_CASE("DXF export rewrites 390/480 hard-pointer refs to remapped raw objects
   }
 
   // Parse the output into ordered (code,value) pairs and pull out the two
-  // MATERIAL records' fields (handle 5, name 1, refs 390/480).
+  // MATERIAL records' fields (handle 5, name 1, refs 390/480/481).
   std::ifstream in(out);
   std::string codeLine, valueLine;
   auto trim = [](std::string s) {
@@ -1886,8 +3504,8 @@ TEST_CASE("DXF export rewrites 390/480 hard-pointer refs to remapped raw objects
     size_t a = s.find_first_not_of(" \t");
     return a == std::string::npos ? std::string() : s.substr(a);
   };
-  std::string targetHandle, ref390, ref480;
-  std::string curType, curHandle, curName, cur390, cur480;
+  std::string targetHandle, ref390, ref480, ref481;
+  std::string curType, curHandle, curName, cur390, cur480, cur481;
   auto flush = [&]() {
     if (curType == "MATERIAL") {
       if (curName == "TgtMat")
@@ -1895,9 +3513,10 @@ TEST_CASE("DXF export rewrites 390/480 hard-pointer refs to remapped raw objects
       if (curName == "RefMat") {
         ref390 = cur390;
         ref480 = cur480;
+        ref481 = cur481;
       }
     }
-    curType = curHandle = curName = cur390 = cur480 = "";
+  curType = curHandle = curName = cur390 = cur480 = cur481 = "";
   };
   while (std::getline(in, codeLine) && std::getline(in, valueLine)) {
     const std::string c = trim(codeLine), v = trim(valueLine);
@@ -1906,20 +3525,24 @@ TEST_CASE("DXF export rewrites 390/480 hard-pointer refs to remapped raw objects
     else if (c == "1") curName = v;
     else if (c == "390") cur390 = v;
     else if (c == "480") cur480 = v;
+    else if (c == "481") cur481 = v;
   }
   flush();
 
   // The target was remapped off the colliding literal 0x14...
   REQUIRE_FALSE(targetHandle.empty());
   CHECK(targetHandle != "14");
-  // ...and the referencing object's 390 + 480 were rewritten to the new handle
-  // (LOAD-BEARING: both are "14" before the fix -> dangling).
+  // ...and every reference was rewritten to the new handle (load-bearing: each
+  // value was "14" before the remap and would otherwise be dangling).
   REQUIRE_FALSE(ref390.empty());
   REQUIRE_FALSE(ref480.empty());
+  REQUIRE_FALSE(ref481.empty());
   CHECK(ref390 == targetHandle);
   CHECK(ref480 == targetHandle);
+  CHECK(ref481 == targetHandle);
   CHECK(ref390 != "14");
   CHECK(ref480 != "14");
+  CHECK(ref481 != "14");
 
   in.close();
   std::filesystem::remove(src);
@@ -2181,6 +3804,741 @@ TEST_CASE("DXF export always emits the layer plot flag (290)",
   std::filesystem::remove(out);
 }
 
+TEST_CASE("DXF layer application groups survive filter round trip",
+          "[dxf][roundtrip][filter][layer][application-groups]") {
+  ensureSettings();
+  const std::string src = tmpFile("layer_application_groups_src.dxf");
+  const std::string out = tmpFile("layer_application_groups_out.dxf");
+  const std::string dwgOut = tmpFile("layer_application_groups_out.dwg");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+  std::filesystem::remove(dwgOut);
+
+  writeText(src,
+            "0\nSECTION\n2\nTABLES\n"
+            "0\nTABLE\n2\nLAYER\n70\n1\n"
+            "0\nLAYER\n5\n10\n330\n2\n"
+            "100\nAcDbSymbolTableRecord\n100\nAcDbLayerTableRecord\n"
+            "2\nAPP_LAYER\n70\n0\n62\n7\n6\nCONTINUOUS\n"
+            "102\n{CUSTOM_LAYER_APP\n310\nABCD\n"
+            "102\n{NESTED\n481\n1F\n102\n}\n102\n}\n"
+            "1001\nLAYER_XAPP\n1000\nlayer payload\n1040\n1.25\n1004\nA0B1\n"
+            "102\n{ACAD_REACTORS\n330\nA0\n102\n}\n"
+            "102\n{ACAD_XDICTIONARY\n360\nB0\n102\n}\n"
+            "0\nENDTAB\n0\nENDSEC\n"
+            "0\nSECTION\n2\nENTITIES\n0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  REQUIRE(graphic.findLayer(QStringLiteral("APP_LAYER")) != nullptr);
+  const auto* sourceLayer = graphic.dwgAdvancedMetadata()
+                                .findLayerTableEntryByName("APP_LAYER");
+  REQUIRE(sourceLayer != nullptr);
+  CHECK(sourceLayer->appData.size() == 3);
+  CHECK(sourceLayer->reactorHandles == std::vector<std::uint32_t>{0xA0u});
+  CHECK(sourceLayer->xDictHandle == 0xB0u);
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+
+#ifdef DWGSUPPORT
+  {
+    RS_FilterDXFRW filter;
+    CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(dwgOut),
+                                  RS2::FormatDWG));
+  }
+#endif
+
+  CHECK(recordGroupValues(out, "LAYER", "102")
+        == std::vector<std::string>{"{CUSTOM_LAYER_APP", "{NESTED", "}", "}",
+                                    "{ACAD_REACTORS", "}",
+                                    "{ACAD_XDICTIONARY", "}"});
+  CHECK(recordGroupValues(out, "LAYER", "310")
+        == std::vector<std::string>{"ABCD"});
+  CHECK(recordGroupValues(out, "LAYER", "481")
+        == std::vector<std::string>{"1F"});
+  CHECK(recordGroupValues(out, "LAYER", "1001")
+        == std::vector<std::string>{"LAYER_XAPP"});
+  CHECK(recordGroupValues(out, "LAYER", "1000")
+        == std::vector<std::string>{"layer payload"});
+  CHECK(recordGroupValues(out, "LAYER", "1004")
+        == std::vector<std::string>{"A0B1"});
+  const auto layerXdataReals = recordGroupValues(out, "LAYER", "1040");
+  REQUIRE(layerXdataReals.size() == 1);
+  CHECK(std::abs(std::stod(layerXdataReals.front()) - 1.25) < 1.0e-12);
+  const auto layerOwnersAndReactors = recordGroupValues(out, "LAYER", "330");
+  CHECK(std::count(layerOwnersAndReactors.cbegin(),
+                   layerOwnersAndReactors.cend(), "A0") == 1);
+  CHECK(recordGroupValues(out, "LAYER", "360")
+        == std::vector<std::string>{"B0"});
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+  std::filesystem::remove(dwgOut);
+}
+
+TEST_CASE("DXF FIELD application groups block DWG export",
+          "[dxf][roundtrip][filter][field][application-groups]") {
+  ensureSettings();
+  const std::string src = tmpFile("field_application_groups_src.dxf");
+  const std::string dwgOut = tmpFile("field_application_groups_out.dwg");
+  std::filesystem::remove(src);
+  std::filesystem::remove(dwgOut);
+
+  writeText(src,
+            "0\nSECTION\n2\nOBJECTS\n"
+            "0\nFIELD\n5\nE0\n330\nC\n"
+            "102\n{ACAD_REACTORS\n330\nE1\n102\n}\n"
+            "102\n{ACAD_XDICTIONARY\n360\nE2\n102\n}\n"
+            "102\n{CUSTOM\n1\npayload\n102\n}\n"
+            "100\nAcDbField\n1\nAcExpr\n2\n1+1\n"
+            "90\n0\n97\n0\n91\n0\n92\n0\n94\n0\n95\n0\n96\n0\n"
+            "300\n\n93\n0\n"
+            "7\nACFD_FIELD_VALUE\n93\n0\n90\n2\n140\n2\n"
+            "94\n0\n300\n\n302\n\n304\nACVALUE_END\n"
+            "301\n\n98\n0\n"
+            "0\nFIELDLIST\n5\nE3\n330\nC\n"
+            "102\n{ACAD_REACTORS\n330\nE4\n102\n}\n"
+            "102\n{ACAD_XDICTIONARY\n360\nE5\n102\n}\n"
+            "102\n{CUSTOM\n1\npayload\n102\n}\n"
+            "100\nAcDbIdSet\n90\n1\n290\n0\n330\nE0\n"
+            "100\nAcDbFieldList\n"
+            "0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  REQUIRE(graphic.dwgAdvancedMetadata().fields().size() == 1);
+  REQUIRE(graphic.dwgAdvancedMetadata().fieldLists().size() == 1);
+  CHECK(graphic.dwgAdvancedMetadata().fields().front().appData.size() == 3);
+  CHECK(graphic.dwgAdvancedMetadata().fieldLists().front().appData.size() == 3);
+
+#ifdef DWGSUPPORT
+  {
+    RS_FilterDXFRW filter;
+    CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(dwgOut),
+                                  RS2::FormatDWG2013));
+  }
+#endif
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(dwgOut);
+}
+
+TEST_CASE("DXF FIELD XDATA survives filter DXF and DWG round trips",
+          "[dxf][roundtrip][filter][field][xdata]") {
+  ensureSettings();
+  const std::string src = tmpFile("field_xdata_src.dxf");
+  const std::string out = tmpFile("field_xdata_out.dxf");
+  const std::string dwgOut = tmpFile("field_xdata_out.dwg");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+  std::filesystem::remove(dwgOut);
+
+  writeText(src,
+            "0\nSECTION\n2\nOBJECTS\n"
+            "0\nFIELD\n5\nE0\n330\nC\n"
+            "100\nAcDbField\n1\nAcExpr\n2\n1+1\n"
+            "90\n0\n97\n0\n91\n0\n92\n0\n94\n0\n95\n0\n96\n0\n"
+            "300\n\n93\n0\n"
+            "7\nACFD_FIELD_VALUE\n93\n0\n90\n2\n140\n2\n"
+            "94\n0\n300\n\n302\n\n304\nACVALUE_END\n"
+            "301\n\n98\n0\n"
+            "1001\nFIELD_EED\n1000\nfield payload\n1070\n7\n"
+            "0\nFIELDLIST\n5\nE3\n330\nC\n"
+            "100\nAcDbIdSet\n90\n1\n290\n0\n330\nE0\n"
+            "100\nAcDbFieldList\n"
+            "1001\nFIELDLIST_EED\n1000\nfield list payload\n1070\n8\n"
+            "0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  REQUIRE(graphic.dwgAdvancedMetadata().fields().size() == 1);
+  REQUIRE(graphic.dwgAdvancedMetadata().fieldLists().size() == 1);
+  CHECK(graphic.dwgAdvancedMetadata().fields().front().extData.size() == 3);
+  CHECK(graphic.dwgAdvancedMetadata().fieldLists().front().extData.size() == 3);
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+  CHECK(recordGroupValues(out, "FIELD", "1001")
+        == std::vector<std::string>{"FIELD_EED"});
+  CHECK(recordGroupValues(out, "FIELD", "1000")
+        == std::vector<std::string>{"field payload"});
+  CHECK(recordGroupValues(out, "FIELD", "1070")
+        == std::vector<std::string>{"7"});
+  CHECK(recordGroupValues(out, "FIELDLIST", "1001")
+        == std::vector<std::string>{"FIELDLIST_EED"});
+  CHECK(recordGroupValues(out, "FIELDLIST", "1000")
+        == std::vector<std::string>{"field list payload"});
+  CHECK(recordGroupValues(out, "FIELDLIST", "1070")
+        == std::vector<std::string>{"8"});
+
+#ifdef DWGSUPPORT
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(dwgOut),
+                              RS2::FormatDWG2013));
+  }
+  RS_Graphic reopened;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(reopened, QString::fromStdString(dwgOut),
+                              RS2::FormatDWG));
+  }
+  REQUIRE(reopened.dwgAdvancedMetadata().fields().size() == 1);
+  REQUIRE(reopened.dwgAdvancedMetadata().fieldLists().size() == 1);
+  const auto& fieldExtData = reopened.dwgAdvancedMetadata().fields().front().extData;
+  const auto& fieldListExtData =
+      reopened.dwgAdvancedMetadata().fieldLists().front().extData;
+  REQUIRE(fieldExtData.size() == 3);
+  REQUIRE(fieldListExtData.size() == 3);
+  CHECK(std::string(fieldExtData[0]->c_str()) == "FIELD_EED");
+  CHECK(std::string(fieldExtData[1]->c_str()) == "field payload");
+  CHECK(fieldExtData[2]->i_val() == 7);
+  CHECK(std::string(fieldListExtData[0]->c_str()) == "FIELDLIST_EED");
+  CHECK(std::string(fieldListExtData[1]->c_str()) == "field list payload");
+  CHECK(fieldListExtData[2]->i_val() == 8);
+#endif
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+  std::filesystem::remove(dwgOut);
+}
+
+TEST_CASE("DXF construction layer retains one LibreCAD XDATA marker",
+          "[dxf][roundtrip][filter][layer][xdata]") {
+  ensureSettings();
+  const std::string src = tmpFile("construction_layer_xdata_src.dxf");
+  const std::string out = tmpFile("construction_layer_xdata_out.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  writeText(src,
+            "0\nSECTION\n2\nTABLES\n"
+            "0\nTABLE\n2\nLAYER\n70\n1\n"
+            "0\nLAYER\n5\n10\n330\n2\n"
+            "100\nAcDbSymbolTableRecord\n100\nAcDbLayerTableRecord\n"
+            "2\nCONSTRUCTION\n70\n0\n62\n7\n6\nCONTINUOUS\n"
+            "1001\nLibreCad\n1070\n1\n"
+            "0\nENDTAB\n0\nENDSEC\n"
+            "0\nSECTION\n2\nENTITIES\n0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  const auto* layer = graphic.findLayer(QStringLiteral("CONSTRUCTION"));
+  REQUIRE(layer != nullptr);
+  CHECK(layer->isConstruction());
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+
+  CHECK(recordGroupValues(out, "LAYER", "1001")
+        == std::vector<std::string>{"LibreCad"});
+  CHECK(recordGroupValues(out, "LAYER", "1070")
+        == std::vector<std::string>{"1"});
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
+TEST_CASE("DXF layer marker classification does not duplicate malformed data",
+          "[dxf][roundtrip][filter][layer][xdata][malformed]") {
+  ensureSettings();
+  const std::string src = tmpFile("malformed_layer_marker_src.dxf");
+  const std::string out = tmpFile("malformed_layer_marker_out.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  writeText(src,
+            "0\nSECTION\n2\nTABLES\n"
+            "0\nTABLE\n2\nLAYER\n70\n3\n"
+            "0\nLAYER\n5\n10\n330\n2\n"
+            "100\nAcDbSymbolTableRecord\n100\nAcDbLayerTableRecord\n"
+            "2\nBAD_DUPLICATE\n70\n0\n62\n7\n6\nCONTINUOUS\n"
+            "1001\nLibreCad\n1070\n1\n"
+            "1001\nACME_APP\n1000\nunrelated\n"
+            "1001\nLibreCad\n1070\n1\n"
+            "0\nLAYER\n5\n11\n330\n2\n"
+            "100\nAcDbSymbolTableRecord\n100\nAcDbLayerTableRecord\n"
+            "2\nBAD_TYPE\n70\n0\n62\n7\n6\nCONTINUOUS\n"
+            "1001\nLibreCad\n1000\nwrong payload type\n"
+            "0\nLAYER\n5\n12\n330\n2\n"
+            "100\nAcDbSymbolTableRecord\n100\nAcDbLayerTableRecord\n"
+            "2\nVALID\n70\n0\n62\n7\n6\nCONTINUOUS\n"
+            "1001\nLibreCad\n1070\n1\n"
+            "0\nENDTAB\n0\nENDSEC\n"
+            "0\nSECTION\n2\nENTITIES\n0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+
+  const auto* duplicate = graphic.findLayer(QStringLiteral("BAD_DUPLICATE"));
+  const auto* wrongType = graphic.findLayer(QStringLiteral("BAD_TYPE"));
+  const auto* valid = graphic.findLayer(QStringLiteral("VALID"));
+  REQUIRE(duplicate != nullptr);
+  REQUIRE(wrongType != nullptr);
+  REQUIRE(valid != nullptr);
+  CHECK_FALSE(duplicate->isConstruction());
+  CHECK_FALSE(wrongType->isConstruction());
+  CHECK(valid->isConstruction());
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+
+  CHECK(namedRecordGroupValues(out, "LAYER", "BAD_DUPLICATE", "1001")
+        == std::vector<std::string>{"LibreCad", "ACME_APP", "LibreCad"});
+  CHECK(namedRecordGroupValues(out, "LAYER", "BAD_TYPE", "1001")
+        == std::vector<std::string>{"LibreCad"});
+  CHECK(namedRecordGroupValues(out, "LAYER", "VALID", "1001")
+        == std::vector<std::string>{"LibreCad"});
+  CHECK(namedRecordGroupValues(out, "LAYER", "BAD_DUPLICATE", "1070")
+        == std::vector<std::string>{"1", "1"});
+  CHECK(namedRecordGroupValues(out, "LAYER", "BAD_TYPE", "1070").empty());
+  CHECK(namedRecordGroupValues(out, "LAYER", "VALID", "1070")
+        == std::vector<std::string>{"1"});
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
+TEST_CASE("DXF view-table application groups survive filter round trip",
+          "[dxf][roundtrip][filter][view-tables][application-groups]") {
+  ensureSettings();
+  const std::string src = tmpFile("view_table_application_groups_src.dxf");
+  const std::string out = tmpFile("view_table_application_groups_out.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  writeText(src,
+            "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n0\nENDSEC\n"
+            "0\nSECTION\n2\nTABLES\n"
+            "0\nTABLE\n2\nVPORT\n70\n1\n"
+            "0\nVPORT\n5\n20\n330\n8\n"
+            "100\nAcDbSymbolTableRecord\n100\nAcDbViewportTableRecord\n"
+            "2\nSAVED_VPORT\n70\n0\n"
+            "10\n0\n20\n0\n11\n1\n21\n1\n12\n0\n22\n0\n"
+            "13\n0\n23\n0\n14\n10\n24\n10\n15\n10\n25\n10\n"
+            "16\n0\n26\n0\n36\n1\n17\n0\n27\n0\n37\n0\n"
+            "40\n10\n41\n1\n42\n50\n43\n0\n44\n0\n50\n0\n51\n0\n"
+            "71\n0\n72\n100\n73\n1\n74\n3\n75\n0\n76\n0\n77\n0\n78\n0\n"
+            "102\n{VPORT_APP\n310\nCAFE\n102\n{NESTED\n481\nA1\n102\n}\n102\n}\n"
+            "1001\nVPORT_XAPP\n1000\nvport payload\n1040\n1.25\n1004\nA0B1\n"
+            "102\n{ACAD_REACTORS\n330\nA2\n102\n}\n"
+            "102\n{ACAD_XDICTIONARY\n360\nA3\n102\n}\n"
+            "0\nENDTAB\n"
+            "0\nTABLE\n2\nUCS\n70\n1\n"
+            "0\nUCS\n5\n21\n330\n7\n"
+            "100\nAcDbSymbolTableRecord\n100\nAcDbUCSTableRecord\n"
+            "2\nSAVED_UCS\n70\n0\n"
+            "10\n0\n20\n0\n30\n0\n11\n1\n21\n0\n31\n0\n"
+            "12\n0\n22\n1\n32\n0\n"
+            "102\n{UCS_APP\n310\nBEEF\n102\n}\n"
+            "1001\nUCS_XAPP\n1000\nucs payload\n1040\n2.5\n1004\nC2D3\n"
+            "102\n{ACAD_REACTORS\n330\nB1\n102\n}\n"
+            "102\n{ACAD_XDICTIONARY\n360\nB2\n102\n}\n"
+            "0\nENDTAB\n"
+            "0\nTABLE\n2\nVIEW\n70\n1\n"
+            "0\nVIEW\n5\n22\n330\n6\n"
+            "100\nAcDbSymbolTableRecord\n100\nAcDbViewTableRecord\n"
+            "2\nSAVED_VIEW\n70\n0\n"
+            "40\n10\n41\n10\n10\n0\n20\n0\n"
+            "11\n0\n21\n0\n31\n1\n12\n0\n22\n0\n32\n0\n"
+            "42\n50\n43\n0\n44\n0\n50\n0\n71\n0\n72\n0\n73\n0\n"
+            "102\n{VIEW_APP\n310\nF00D\n102\n}\n"
+            "1001\nVIEW_XAPP\n1000\nview payload\n1040\n3.75\n1004\nE4F5\n"
+            "102\n{ACAD_REACTORS\n330\nC1\n102\n}\n"
+            "102\n{ACAD_XDICTIONARY\n360\nC2\n102\n}\n"
+            "0\nENDTAB\n0\nENDSEC\n"
+            "0\nSECTION\n2\nENTITIES\n0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  REQUIRE(graphic.dwgAdvancedMetadata().vportTableEntries().size() == 1);
+  REQUIRE(graphic.dwgAdvancedMetadata().findUcsByName("SAVED_UCS") != nullptr);
+  REQUIRE(graphic.dwgAdvancedMetadata().findViewByName("SAVED_VIEW") != nullptr);
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+
+  CHECK(countRecords(out, "VPORT") == 2);
+  CHECK(countRecords(out, "UCS") == 1);
+  CHECK(countRecords(out, "VIEW") == 1);
+  for (const auto& [record, chunk] :
+       std::initializer_list<std::pair<const char*, const char*>>{
+           {"VPORT", "CAFE"}, {"UCS", "BEEF"}, {"VIEW", "F00D"}}) {
+    CHECK(recordGroupValues(out, record, "310")
+          == std::vector<std::string>{chunk});
+  }
+  for (const auto& [record, appId, payload, binary, real] :
+       std::initializer_list<std::tuple<const char*, const char*, const char*,
+                                        const char*, double>>{
+           {"VPORT", "VPORT_XAPP", "vport payload", "A0B1", 1.25},
+           {"UCS", "UCS_XAPP", "ucs payload", "C2D3", 2.5},
+           {"VIEW", "VIEW_XAPP", "view payload", "E4F5", 3.75}}) {
+    CHECK(recordGroupValues(out, record, "1001")
+          == std::vector<std::string>{appId});
+    CHECK(recordGroupValues(out, record, "1000")
+          == std::vector<std::string>{payload});
+    CHECK(recordGroupValues(out, record, "1004")
+          == std::vector<std::string>{binary});
+    const auto reals = recordGroupValues(out, record, "1040");
+    REQUIRE(reals.size() == 1);
+    CHECK(std::abs(std::stod(reals.front()) - real) < 1.0e-12);
+  }
+  for (const auto& [record, reactor, dictionary] :
+       std::initializer_list<std::tuple<const char*, const char*, const char*>>{
+           {"VPORT", "A2", "A3"}, {"UCS", "B1", "B2"},
+           {"VIEW", "C1", "C2"}}) {
+    const auto reactors = recordGroupValues(out, record, "330");
+    CHECK(std::count(reactors.cbegin(), reactors.cend(), reactor) == 1);
+    CHECK(recordGroupValues(out, record, "360")
+          == std::vector<std::string>{dictionary});
+  }
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
+TEST_CASE("DXF DIMSTYLE and APPID application groups survive filter round trip",
+          "[dxf][roundtrip][filter][dimstyle][appid][application-groups]") {
+  ensureSettings();
+  const std::string src = tmpFile("dimstyle_appid_application_groups_src.dxf");
+  const std::string out = tmpFile("dimstyle_appid_application_groups_out.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  writeText(src,
+            "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n0\nENDSEC\n"
+            "0\nSECTION\n2\nTABLES\n"
+            "0\nTABLE\n2\nAPPID\n70\n1\n"
+            "0\nAPPID\n5\n30\n330\n9\n"
+            "100\nAcDbSymbolTableRecord\n100\nAcDbRegAppTableRecord\n"
+            "2\nSAVED_APPID\n70\n0\n"
+            "102\n{APPID_APP\n310\nA991\n102\n}\n"
+            "1001\nAPPID_XAPP\n1000\nappid payload\n1040\n1.5\n1004\nA1B2\n"
+            "102\n{ACAD_REACTORS\n330\nA1\n102\n}\n"
+            "102\n{ACAD_XDICTIONARY\n360\nA2\n102\n}\n"
+            "0\nENDTAB\n"
+            "0\nTABLE\n2\nDIMSTYLE\n70\n1\n"
+            "0\nDIMSTYLE\n105\n31\n330\nA\n"
+            "100\nAcDbSymbolTableRecord\n100\nAcDbDimStyleTableRecord\n"
+            "2\nSAVED_DIMSTYLE\n70\n0\n"
+            "102\n{DIMSTYLE_APP\n310\nD1A5\n102\n}\n"
+            "1001\nDIMSTYLE_XAPP\n1000\ndimstyle payload\n1040\n2.5\n1004\nC3D4\n"
+            "102\n{ACAD_REACTORS\n330\nD1\n102\n}\n"
+            "102\n{ACAD_XDICTIONARY\n360\nD2\n102\n}\n"
+            "0\nENDTAB\n0\nENDSEC\n"
+            "0\nSECTION\n2\nENTITIES\n0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  REQUIRE(graphic.dwgAdvancedMetadata()
+              .findDimStyleTableEntryByName("SAVED_DIMSTYLE") != nullptr);
+  REQUIRE(graphic.dwgAdvancedMetadata()
+              .findAppIdTableEntryByName("SAVED_APPID") != nullptr);
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+
+  CHECK(recordGroupValues(out, "DIMSTYLE", "310")
+        == std::vector<std::string>{"D1A5"});
+  CHECK(recordGroupValues(out, "APPID", "310")
+        == std::vector<std::string>{"A991"});
+  for (const auto& [record, appId, payload, binary, real] :
+       std::initializer_list<std::tuple<const char*, const char*, const char*,
+                                        const char*, double>>{
+           {"DIMSTYLE", "DIMSTYLE_XAPP", "dimstyle payload", "C3D4", 2.5},
+           {"APPID", "APPID_XAPP", "appid payload", "A1B2", 1.5}}) {
+    const auto appIds = recordGroupValues(out, record, "1001");
+    CHECK(std::count(appIds.cbegin(), appIds.cend(), appId) == 1);
+    const auto payloads = recordGroupValues(out, record, "1000");
+    CHECK(std::count(payloads.cbegin(), payloads.cend(), payload) == 1);
+    const auto binaries = recordGroupValues(out, record, "1004");
+    CHECK(std::count(binaries.cbegin(), binaries.cend(), binary) == 1);
+    const auto reals = recordGroupValues(out, record, "1040");
+    const double expectedReal = real;
+    CHECK(std::any_of(reals.cbegin(), reals.cend(),
+                      [expectedReal](const auto& value) {
+        return std::abs(std::stod(value) - expectedReal) < 1.0e-12;
+    }));
+  }
+  for (const auto& [record, reactor, dictionary] :
+       std::initializer_list<std::tuple<const char*, const char*, const char*>>{
+           {"DIMSTYLE", "D1", "D2"}, {"APPID", "A1", "A2"}}) {
+    const auto reactors = recordGroupValues(out, record, "330");
+    CHECK(std::count(reactors.cbegin(), reactors.cend(), reactor) == 1);
+    CHECK(recordGroupValues(out, record, "360")
+          == std::vector<std::string>{dictionary});
+  }
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
+TEST_CASE("DXF R2010 DIMSTYLE text direction reaches the filter model",
+          "[dxf][roundtrip][filter][dimstyle]") {
+  ensureSettings();
+  const std::string src = tmpFile("dimstyle_direction_r2010_src.dxf");
+  const std::string out = tmpFile("dimstyle_direction_r2010_out.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+  writeText(src,
+            "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1024\n0\nENDSEC\n"
+            "0\nSECTION\n2\nTABLES\n"
+            "0\nTABLE\n2\nDIMSTYLE\n5\nA\n330\n0\n"
+            "100\nAcDbSymbolTable\n70\n1\n100\nAcDbDimStyleTable\n71\n1\n"
+            "0\nDIMSTYLE\n105\n27\n330\nA\n"
+            "100\nAcDbSymbolTableRecord\n100\nAcDbDimStyleTableRecord\n"
+            "2\nRTL\n70\n0\n295\n1\n"
+            "0\nENDTAB\n0\nENDSEC\n"
+            "0\nSECTION\n2\nENTITIES\n0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  LC_DimStyle *style = graphic.getDimStyleByName("RTL");
+  REQUIRE(style != nullptr);
+  CHECK(style->text()->readingDirection() == LC_DimStyle::Text::RIGHT_TO_LEFT);
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW2018));
+  }
+  CHECK(namedRecordGroupValues(out, "DIMSTYLE", "RTL", "295")
+        == std::vector<std::string>{"1"});
+  CHECK(namedRecordGroupValues(out, "DIMSTYLE", "RTL", "292").empty());
+  CHECK(namedRecordGroupValues(out, "DIMSTYLE", "RTL", "294").empty());
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
+TEST_CASE("DXF R2010 DSTYLE text direction survives a dimension round trip",
+          "[dxf][roundtrip][filter][dimension][dimstyle]") {
+  ensureSettings();
+  const std::string out = tmpFile("dimension_dstyle_direction_r2010.dxf");
+  const std::string legacyOut = tmpFile("dimension_dstyle_direction_r2007.dxf");
+  std::filesystem::remove(out);
+  std::filesystem::remove(legacyOut);
+
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  RS_DimensionData data;
+  data.definitionPoint = RS_Vector(5.0, 3.0);
+  data.middleOfText = RS_Vector(5.0, 3.0);
+  data.style = "Standard";
+  auto* dimension = new RS_DimAligned(
+      &graphic, data,
+      RS_DimAlignedData(RS_Vector(0.0, 0.0), RS_Vector(10.0, 0.0)));
+  LC_DimStyle override;
+  override.text()->setReadingDirection(LC_DimStyle::Text::RIGHT_TO_LEFT);
+  dimension->setDimStyleOverride(&override);
+  graphic.addEntity(dimension);
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW2018));
+  }
+  CHECK(recordGroupValues(out, "DIMENSION", "1070")
+        == std::vector<std::string>{"295", "1"});
+
+  RS_Graphic reloaded;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(reloaded, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+  auto* reloadedDimension = dynamic_cast<RS_Dimension*>(reloaded.firstEntity());
+  REQUIRE(reloadedDimension != nullptr);
+  LC_DimStyle* reloadedOverride = reloadedDimension->getDimStyleOverride();
+  REQUIRE(reloadedOverride != nullptr);
+  CHECK(reloadedOverride->text()->readingDirection()
+        == LC_DimStyle::Text::RIGHT_TO_LEFT);
+
+  const auto checkDstyleInput = [&](const char *name,
+                                    const std::string &directionCode,
+                                    const std::string &valueCode,
+                                    const std::string &value,
+                                    bool closeGroup,
+                                    bool expectedOverride,
+                                    bool expectRtl) {
+    const std::string input = tmpFile(name);
+    std::filesystem::remove(input);
+    const std::string variant = dstyleDirectionVariant(
+        out, directionCode, valueCode, value, closeGroup);
+    REQUIRE_FALSE(variant.empty());
+    writeText(input, variant);
+
+    RS_Graphic imported;
+    {
+      RS_FilterDXFRW filter;
+      REQUIRE(filter.fileImport(imported, QString::fromStdString(input),
+                                RS2::FormatDXFRW));
+    }
+    auto* importedDimension = dynamic_cast<RS_Dimension*>(imported.firstEntity());
+    REQUIRE(importedDimension != nullptr);
+    LC_DimStyle* importedOverride = importedDimension->getDimStyleOverride();
+    if (expectedOverride) {
+      REQUIRE(importedOverride != nullptr);
+      CHECK(importedOverride->text()->readingDirection()
+            == (expectRtl ? LC_DimStyle::Text::RIGHT_TO_LEFT
+                          : LC_DimStyle::Text::LEFT_TO_RIGHT));
+    } else {
+      CHECK(importedOverride == nullptr);
+    }
+
+    std::filesystem::remove(input);
+  };
+
+  for (const char *alias : {"292", "294", "295"}) {
+    const std::string name = std::string("dimension_dstyle_") + alias + ".dxf";
+    checkDstyleInput(name.c_str(), alias, "1070", "1", true, true, true);
+  }
+  checkDstyleInput("dimension_dstyle_invalid_negative.dxf", "295", "1070",
+                   "-1", true, false, false);
+  checkDstyleInput("dimension_dstyle_invalid_bit.dxf", "295", "1070", "2",
+                   true, false, false);
+  checkDstyleInput("dimension_dstyle_invalid_type.dxf", "295", "1040", "1.0",
+                   true, false, false);
+  checkDstyleInput("dimension_dstyle_unclosed.dxf", "295", "1070", "1",
+                   false, false, false);
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(legacyOut),
+                              RS2::FormatDXFRW));
+  }
+  CHECK(recordGroupValues(legacyOut, "DIMENSION", "1070").empty());
+
+  std::filesystem::remove(out);
+  std::filesystem::remove(legacyOut);
+}
+
+TEST_CASE("DXF unused LTYPE and STYLE application groups survive filter round trip",
+          "[dxf][roundtrip][filter][ltype][style][application-groups]") {
+  ensureSettings();
+  const std::string src = tmpFile("ltype_style_application_groups_src.dxf");
+  const std::string out = tmpFile("ltype_style_application_groups_out.dxf");
+  const std::string dwgOut = tmpFile("ltype_style_application_groups_out.dwg");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+  std::filesystem::remove(dwgOut);
+
+  writeText(src,
+            "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n0\nENDSEC\n"
+            "0\nSECTION\n2\nTABLES\n"
+            "0\nTABLE\n2\nLTYPE\n70\n1\n"
+            "0\nLTYPE\n5\n40\n330\n5\n"
+            "100\nAcDbSymbolTableRecord\n100\nAcDbLinetypeTableRecord\n"
+            "2\nSAVED_LTYPE\n70\n0\n3\nSaved linetype\n72\n65\n73\n0\n40\n0\n"
+            "102\n{LTYPE_APP\n310\nCAFE\n102\n}\n"
+            "102\n{ACAD_REACTORS\n330\nA1\n102\n}\n"
+            "102\n{ACAD_XDICTIONARY\n360\nA2\n102\n}\n"
+            "0\nENDTAB\n"
+            "0\nTABLE\n2\nSTYLE\n70\n1\n"
+            "0\nSTYLE\n5\n41\n330\n3\n"
+            "100\nAcDbSymbolTableRecord\n100\nAcDbTextStyleTableRecord\n"
+            "2\nSAVED_STYLE\n70\n0\n40\n0\n41\n1\n50\n0\n71\n0\n42\n1\n"
+            "3\ntxt\n4\n\n"
+            "102\n{STYLE_APP\n310\nBEEF\n102\n}\n"
+            "102\n{ACAD_REACTORS\n330\nB1\n102\n}\n"
+            "102\n{ACAD_XDICTIONARY\n360\nB2\n102\n}\n"
+            "0\nENDTAB\n0\nENDSEC\n"
+            "0\nSECTION\n2\nENTITIES\n0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  REQUIRE(graphic.dwgAdvancedMetadata()
+              .findLineTypeTableEntryByName("SAVED_LTYPE") != nullptr);
+  REQUIRE(graphic.dwgAdvancedMetadata()
+              .findTextStyleTableEntryByName("SAVED_STYLE") != nullptr);
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+
+#ifdef DWGSUPPORT
+  {
+    RS_FilterDXFRW filter;
+    CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(dwgOut),
+                                  RS2::FormatDWG));
+  }
+#endif
+
+  for (const auto& [record, chunk, reactor, dictionary] :
+       std::initializer_list<std::tuple<const char*, const char*, const char*,
+                                        const char*>>{
+           {"LTYPE", "CAFE", "A1", "A2"},
+           {"STYLE", "BEEF", "B1", "B2"}}) {
+    CHECK(recordGroupValues(out, record, "310")
+          == std::vector<std::string>{chunk});
+    const auto reactors = recordGroupValues(out, record, "330");
+    CHECK(std::count(reactors.cbegin(), reactors.cend(), reactor) == 1);
+    CHECK(recordGroupValues(out, record, "360")
+          == std::vector<std::string>{dictionary});
+  }
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+  std::filesystem::remove(dwgOut);
+}
+
 // Regression (Save-As failure on AC1021 sources, e.g. 植物.dwg): the DWG
 // writer emits its control objects at FIXED low handles (LTYPE_CONTROL=0x05,
 // UCS_CONTROL=0x07, ...) while real source files reuse those very numbers for
@@ -2239,6 +4597,31 @@ TEST_CASE("DWG export remaps preserved objects colliding with fixed writer handl
       if (e.name == "LC_REMAP_TEST" && e.handle == phHandle)
         entryFollowsRemap = true;
   CHECK(entryFollowsRemap);
+
+  std::filesystem::remove(out);
+}
+
+TEST_CASE("DXF export rejects malformed typed conversion sidecars",
+          "[dxf][typed-conversion][safety]") {
+  ensureSettings();
+  const std::string out = tmpFile("invalid_typed_conversion.dxf");
+  std::filesystem::remove(out);
+
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  auto* point = new RS_Point(&graphic, RS_Vector(1.0, 2.0));
+  point->setDrwExtData({
+      std::make_shared<DRW_Variant>(
+          1001, std::string("LibreCAD_POINT_EXTRUSION")),
+      std::make_shared<DRW_Variant>(1010, DRW_Coord(1.0, 2.0, 3.0)),
+      std::make_shared<DRW_Variant>(1011, DRW_Coord(0.0, 0.0, 1.0)),
+      std::make_shared<DRW_Variant>(1040, 0.0)});
+  graphic.addEntity(point);
+
+  RS_FilterDXFRW filter;
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(out),
+                                RS2::FormatDXFRW));
+  CHECK(countRecords(out, "POINT") == 0);
 
   std::filesystem::remove(out);
 }

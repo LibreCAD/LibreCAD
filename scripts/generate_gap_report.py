@@ -38,17 +38,25 @@ from __future__ import annotations
 import argparse
 from collections import defaultdict
 from dataclasses import dataclass
+import json
 from pathlib import Path
 import sys
 
-from dwg_inventory_common import markdown_cell, read_text, repo_root_from_script, write_or_check
+from dwg_inventory_common import (
+    dwg_writer_dispatch,
+    markdown_cell,
+    parse_versions,
+    read_text,
+    repo_root_from_script,
+    write_or_check,
+)
 
 
 DEFAULT_OUTPUT = Path("docs/gap-report.md")
 REFERENCE_INPUT = Path("libraries/libdxfrw/DWG_REFERENCE_COVERAGE_STATUS.md")
 WRITER_INPUT = Path("libraries/libdxfrw/DWG_DXF_WRITER_SUPPORT_STATUS.md")
 VERSION_INPUT = Path("libraries/libdxfrw/DWG_VERSION_SUPPORT_STATUS.md")
-WRITER_VERSIONS = ("AC1015", "AC1018", "AC1024", "AC1027", "AC1032")
+FIXTURE_MANIFEST = Path("tests/fixtures/fixture_manifest.json")
 PRIORITY_ORDER = {"P0": 0, "P1": 1, "P2": 2, "P3": 3}
 
 
@@ -71,6 +79,33 @@ class WriterState:
     oracle: str
     fixture: str
     blockers: str
+
+
+def default_fixture_rows(repo: Path) -> list[dict[str, str]]:
+    path = repo / FIXTURE_MANIFEST
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except OSError as exc:
+        raise SystemExit(f"error: cannot read fixture manifest {path}: {exc}") from exc
+    except json.JSONDecodeError as exc:
+        raise SystemExit(f"error: invalid fixture manifest {path}: {exc}") from exc
+    fixtures = data.get("fixtures") if isinstance(data, dict) else None
+    if not isinstance(fixtures, list):
+        raise SystemExit("error: fixture manifest must contain a fixtures list")
+    rows: list[dict[str, str]] = []
+    for fixture in fixtures:
+        if not isinstance(fixture, dict) or fixture.get("defaultEnabled") is not True:
+            continue
+        rows.append({
+            "id": str(fixture.get("id", "")),
+            "format": str(fixture.get("format", "")),
+            "version": str(fixture.get("version", "")),
+            "role": str(fixture.get("evidenceRole", "")),
+            "features": ", ".join(str(value) for value in fixture.get("featureFamilies", [])),
+            "diagnostics": ", ".join(str(value) for value in fixture.get("expectedDiagnostics", [])),
+            "oracles": ", ".join(str(value) for value in fixture.get("requiredOracles", [])),
+        })
+    return sorted(rows, key=lambda row: (row["format"], row["version"], row["id"]))
 
 
 def split_markdown_row(line: str) -> list[str]:
@@ -151,7 +186,9 @@ def reference_gaps(path: Path) -> list[ReferenceGap]:
     ]
 
 
-def writer_states(path: Path) -> dict[tuple[str, str], list[WriterState]]:
+def writer_states(
+    path: Path, writer_versions: tuple[str, ...]
+) -> dict[tuple[str, str], list[WriterState]]:
     rows = table_rows(read_text(path), "## Matrix")
     required = {
         "format", "targetVersion", "featureName", "family", "writerMode",
@@ -161,7 +198,7 @@ def writer_states(path: Path) -> dict[tuple[str, str], list[WriterState]]:
         raise SystemExit("error: writer-support table columns changed")
     states: dict[tuple[str, str], list[WriterState]] = defaultdict(list)
     for row in rows:
-        if row["format"] != "DWG" or row["targetVersion"] not in WRITER_VERSIONS:
+        if row["format"] != "DWG" or row["targetVersion"] not in writer_versions:
             continue
         states[(row["family"], row["featureName"])].append(
             WriterState(
@@ -191,15 +228,17 @@ def compact(values: list[str], fallback: str = "not-recorded") -> str:
     return "; ".join(unique) if unique else fallback
 
 
-def writer_summary(states: list[WriterState]) -> tuple[str, str, str, str, str]:
+def writer_summary(
+    states: list[WriterState], writer_versions: tuple[str, ...]
+) -> tuple[str, str, str, str, str]:
     by_version = {state.version: state for state in states}
-    modes = [f"{version}:{by_version[version].mode}" for version in WRITER_VERSIONS if version in by_version]
+    modes = [f"{version}:{by_version[version].mode}" for version in writer_versions if version in by_version]
     return (
         "; ".join(modes) if modes else "no DWG writer row",
         compact([state.fixture for state in states], "fixture-blocked:family/name"),
         compact([state.oracle for state in states], "libdxfrw reread + configured external oracle"),
         compact([state.blockers for state in states], "code-path and fixture audit required"),
-        ", ".join(version for version in WRITER_VERSIONS if version in by_version) or "not-recorded",
+        ", ".join(version for version in writer_versions if version in by_version) or "not-recorded",
     )
 
 
@@ -208,8 +247,14 @@ def build_report(repo: Path) -> str:
     writer_path = repo / WRITER_INPUT
     version_path = repo / VERSION_INPUT
     gaps = reference_gaps(reference_path)
-    writers = writer_states(writer_path)
+    writer_versions = tuple(
+        version.code
+        for version in parse_versions(repo)
+        if version.code in dwg_writer_dispatch(repo)
+    )
+    writers = writer_states(writer_path, writer_versions)
     versions = version_rows(version_path)
+    fixtures = default_fixture_rows(repo)
 
     grouped: dict[tuple[str, str], list[ReferenceGap]] = defaultdict(list)
     for gap in gaps:
@@ -229,7 +274,7 @@ def build_report(repo: Path) -> str:
         f"- `{REFERENCE_INPUT.as_posix()}`",
         f"- `{WRITER_INPUT.as_posix()}`",
         f"- `{VERSION_INPUT.as_posix()}`",
-        "- `tests/fixtures/fixture_manifest.json` and configured external oracles",
+        f"- `{FIXTURE_MANIFEST.as_posix()}` and configured external oracles",
         "",
         "## Version Gates",
         "",
@@ -244,6 +289,20 @@ def build_report(repo: Path) -> str:
                 "versionCode", "readerPath", "writerPath", "currentLevel", "targetLevel",
                 "blockers", "promotionGate")) + " |"
         )
+
+    lines.extend([
+        "",
+        "## Default Fixture Evidence",
+        "",
+        "| fixture id | format | version | evidence role | feature families | expected diagnostics | oracle policy |",
+        "| --- | --- | --- | --- | --- | --- | --- |",
+    ])
+    if fixtures:
+        for fixture in fixtures:
+            lines.append("| " + " | ".join(markdown_cell(fixture[key]) for key in (
+                "id", "format", "version", "role", "features", "diagnostics", "oracles")) + " |")
+    else:
+        lines.append("| _none_ |  |  |  |  |  |  |")
 
     lines.extend([
         "",
@@ -262,7 +321,7 @@ def build_report(repo: Path) -> str:
     for index, ((family, name), sources) in enumerate(ordered, start=1):
         priority = min(sources, key=lambda gap: PRIORITY_ORDER.get(gap.priority, 99)).priority
         modes, fixtures, oracle, blockers, affected_versions = writer_summary(
-            writers.get((family, name), [])
+            writers.get((family, name), []), writer_versions
         )
         source_evidence = compact([f"{gap.source}: {gap.evidence}" for gap in sources])
         status = compact([gap.status for gap in sources])

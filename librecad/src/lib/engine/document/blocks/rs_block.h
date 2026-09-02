@@ -27,7 +27,10 @@
 #ifndef RS_BLOCK_H
 #define RS_BLOCK_H
 
+#include <cstdint>
 #include <memory>
+#include <utility>
+#include <vector>
 
 #include "rs_document.h"
 
@@ -48,6 +51,7 @@ struct RS_BlockData {
      */
     RS_Vector basePoint;
     int insUnits {0};                  //!< BLOCK_RECORD insertion units
+    std::vector<std::uint8_t> previewData; //!< BLOCK_RECORD preview image bytes
     bool frozen{false}; //!< Frozen flag
     // fixme - sand - rework?
     mutable bool visibleInBlockList{true}; //!< Visible in block list
@@ -100,6 +104,12 @@ public:
 
     int getInsertionUnits() const {return m_data.insUnits;}
     void setInsertionUnits(int units) {m_data.insUnits = units;}
+    const std::vector<std::uint8_t>& getPreviewData() const {
+        return m_data.previewData;
+    }
+    void setPreviewData(std::vector<std::uint8_t> data) {
+        m_data.previewData = std::move(data);
+    }
 
     RS_LayerList* getLayerList() override;
     RS_BlockList* getBlockList() override;

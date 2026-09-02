@@ -17,7 +17,9 @@
 
 #include <map>
 #include <memory>
+#include <limits>
 #include <unordered_map>
+#include <utility>
 #include "drw_base.h"
 
 class dxfReader;
@@ -25,12 +27,14 @@ class dxfWriter;
 class dwgBuffer;
 class dwgBufferW;
 class DrwHeaderEncodeTestAccess;  // test-only friend; defined in tests/dwg_header_encode_round_trip_tests.cpp
+class DwgHandseedTestAccess;      // test-only friend; defined in tests/dwg_handseed_tests.cpp
 class dwgWriter24;                // forward declaration for friend access
 
 #define SETHDRFRIENDS  friend class dxfRW; \
                        friend class dwgReader; \
                        friend class dwgWriter15; \
                        friend class dwgWriter24; \
+                       friend class DwgHandseedTestAccess; \
                        friend class DrwHeaderEncodeTestAccess;
 
 //! Class to handle header entries
@@ -78,37 +82,69 @@ public:
         Metric = 1,             ///< Metric drawing */
     };
 
-    DRW_Header(const DRW_Header& h){
-        this->version = h.version;
-        this->comments = h.comments;
-        for (auto it=h.vars.begin(); it!=h.vars.end(); ++it){
-            this->vars[it->first] = new DRW_Variant( *(it->second) );
+    DRW_Header(const DRW_Header& h)
+        : m_handseedValueOffset(std::streampos(-1)),
+          handSeed(h.handSeed),
+          m_dwgHandseedBitOffset(kInvalidDwgHandseedBitOffset) {
+        copyScalarStateFrom(h);
+        try {
+            copyVariantMap(vars, h.vars);
+            copyVariantMap(customVars, h.customVars);
+        } catch (...) {
+            clearVars();
+            throw;
         }
-        for (auto it=h.customVars.begin(); it!=h.customVars.end(); ++it){
-            this->customVars[it->first] = new DRW_Variant( *(it->second) );
-        }
-        this->curr = NULL;
+        curr = nullptr;
+        name.clear();
     }
+
+    DRW_Header(DRW_Header&& h) noexcept
+        : m_handseedValueOffset(h.m_handseedValueOffset),
+          vars(std::move(h.vars)),
+          customVars(std::move(h.customVars)),
+          comments(std::move(h.comments)),
+          name(std::move(h.name)),
+          curr(h.curr),
+          version(h.version),
+          linetypeCtrl(h.linetypeCtrl),
+          layerCtrl(h.layerCtrl),
+          styleCtrl(h.styleCtrl),
+          dimstyleCtrl(h.dimstyleCtrl),
+          appidCtrl(h.appidCtrl),
+          blockCtrl(h.blockCtrl),
+          viewCtrl(h.viewCtrl),
+          ucsCtrl(h.ucsCtrl),
+          vportCtrl(h.vportCtrl),
+          vpEntHeaderCtrl(h.vpEntHeaderCtrl),
+          handSeed(h.handSeed),
+          m_dwgHandseedBitOffset(h.m_dwgHandseedBitOffset) {
+        h.curr = nullptr;
+    }
+
     DRW_Header& operator=(const DRW_Header &h) {
-       if(this != &h) {
-           clearVars();
-           this->curr = nullptr;   // clearVars() freed what curr pointed at
-           this->version = h.version;
-           this->comments = h.comments;
-           for (auto it=h.vars.begin(); it!=h.vars.end(); ++it){
-               this->vars[it->first] = new DRW_Variant( *(it->second) );
-           }
-           for (auto it=h.customVars.begin(); it!=h.customVars.end(); ++it){
-               this->customVars[it->first] = new DRW_Variant( *(it->second) );
-           }
-       }
-       return *this;
+        if (this != &h) {
+            DRW_Header copy(h);
+            swap(copy);
+        }
+        return *this;
+    }
+
+    DRW_Header& operator=(DRW_Header&& h) noexcept {
+        if (this != &h) {
+            DRW_Header moved(std::move(h));
+            swap(moved);
+        }
+        return *this;
     }
 
     void addDouble(std::string key, double value, int code);
     void addInt(std::string key, int value, int code);
     void addStr(std::string key, std::string value, int code);
     void addCoord(std::string key, DRW_Coord value, int code);
+    void addCustomVar(std::string key, std::string value, int code = 1) {
+        storeCustomVar(key, std::make_unique<DRW_Variant>(
+            code, UTF8STRING(std::move(value))));
+    }
     std::string getComments() const {return comments;}
     void write(const std::unique_ptr<dxfWriter>& writer, DRW::Version ver);
     void addComment(std::string c);
@@ -118,6 +154,12 @@ public:
     /// HANDSEED on first save.  See [Risk 4j] in the writer plan.
     std::uint32_t getHandSeed() const { return handSeed; }
     void    setHandSeed(std::uint32_t h) { handSeed = h; }
+
+    static constexpr std::uint32_t kInvalidDwgHandseedBitOffset =
+        (std::numeric_limits<std::uint32_t>::max)();
+    std::uint32_t dwgHandseedBitOffset() const {
+        return m_dwgHandseedBitOffset;
+    }
 
     /// Stream offset of the $HANDSEED value field written by the ASCII DXF
     /// header writer (DRW_Header::write).  The value is emitted as a fixed
@@ -132,6 +174,9 @@ public:
 
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader);
+    [[nodiscard]] bool parseDwgImpl(DRW::Version version, dwgBuffer *buf,
+                                    dwgBuffer *hBbuf,
+                                    std::uint8_t mv = 0);
     [[nodiscard]] bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf, std::uint8_t mv=0);
     /// Inverse of parseDwg: emits the bit-packed body of the HEADER
     /// section.  For R2000 (AC1015), `buf` and `hBbuf` may alias the
@@ -142,6 +187,62 @@ protected:
     [[nodiscard]] bool encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hBbuf,
                    dwgBufferW *strBuf = nullptr);
 private:
+    template <typename Map>
+    static void copyVariantMap(Map& destination, const Map& source) {
+        try {
+            for (const auto& item : source) {
+                std::unique_ptr<DRW_Variant> copy = item.second != nullptr
+                    ? std::make_unique<DRW_Variant>(*item.second) : nullptr;
+                auto result = destination.emplace(item.first, copy.get());
+                if (result.second)
+                    copy.release();
+            }
+        } catch (...) {
+            for (auto& item : destination)
+                delete item.second;
+            destination.clear();
+            throw;
+        }
+    }
+
+    void copyScalarStateFrom(const DRW_Header& h) {
+        comments = h.comments;
+        version = h.version;
+        linetypeCtrl = h.linetypeCtrl;
+        layerCtrl = h.layerCtrl;
+        styleCtrl = h.styleCtrl;
+        dimstyleCtrl = h.dimstyleCtrl;
+        appidCtrl = h.appidCtrl;
+        blockCtrl = h.blockCtrl;
+        viewCtrl = h.viewCtrl;
+        ucsCtrl = h.ucsCtrl;
+        vportCtrl = h.vportCtrl;
+        vpEntHeaderCtrl = h.vpEntHeaderCtrl;
+    }
+
+    void swap(DRW_Header& other) noexcept {
+        using std::swap;
+        swap(m_handseedValueOffset, other.m_handseedValueOffset);
+        vars.swap(other.vars);
+        customVars.swap(other.customVars);
+        swap(comments, other.comments);
+        swap(name, other.name);
+        swap(curr, other.curr);
+        swap(version, other.version);
+        swap(linetypeCtrl, other.linetypeCtrl);
+        swap(layerCtrl, other.layerCtrl);
+        swap(styleCtrl, other.styleCtrl);
+        swap(dimstyleCtrl, other.dimstyleCtrl);
+        swap(appidCtrl, other.appidCtrl);
+        swap(blockCtrl, other.blockCtrl);
+        swap(viewCtrl, other.viewCtrl);
+        swap(ucsCtrl, other.ucsCtrl);
+        swap(vportCtrl, other.vportCtrl);
+        swap(vpEntHeaderCtrl, other.vpEntHeaderCtrl);
+        swap(handSeed, other.handSeed);
+        swap(m_dwgHandseedBitOffset, other.m_dwgHandseedBitOffset);
+    }
+
     bool getDouble(std::string key, double *varDouble);
     bool getInt(std::string key, int *varInt);
     bool getStr(std::string key, std::string *varStr);
@@ -158,11 +259,37 @@ private:
     /// (avoids a leak when a header variable appears more than once).
     /// Updates curr so subsequent parseCode value reads land in v.
     void storeVar(const std::string& key, DRW_Variant* v) {
+        if (v == nullptr) {
+            curr = nullptr;
+            return;
+        }
+        std::unique_ptr<DRW_Variant> replacement(v);
         auto it = vars.find(key);
-        if (it != vars.end() && it->second != v)
-            delete it->second;
-        vars[key] = v;
-        curr = v;
+        if (it == vars.end()) {
+            auto result = vars.emplace(key, replacement.get());
+            curr = result.second ? replacement.release() : result.first->second;
+        } else {
+            DRW_Variant* previous = it->second;
+            curr = replacement.release();
+            it->second = curr;
+            delete previous;
+        }
+    }
+
+    void storeCustomVar(const std::string& key,
+                        std::unique_ptr<DRW_Variant> replacement) {
+        if (!replacement)
+            return;
+        auto it = customVars.find(key);
+        if (it == customVars.end()) {
+            auto result = customVars.emplace(key, replacement.get());
+            if (result.second)
+                replacement.release();
+            return;
+        }
+        DRW_Variant* previous = it->second;
+        it->second = replacement.release();
+        delete previous;
     }
 
 public:
@@ -185,12 +312,14 @@ private:
     std::uint32_t vportCtrl;
     std::uint32_t vpEntHeaderCtrl;
     /// HANDSEED: the document's high-water-mark allocated handle.
-    /// parseDwg captures it from the data stream; encodeDwg writes it
-    /// back.  Default 0 means "fresh document — encoder emits null and
-    /// AutoCAD will refresh it on first save".  For round-trip
-    /// preservation, populate via the captured value from the source
-    /// file.
+    /// parseDwg captures it from the data stream; a fresh DWG encode writes a
+    /// fixed-width placeholder and finalizes it after object handles exist.
+    /// For round-trip preservation, populate via the captured source value.
     std::uint32_t handSeed {0};
+    /// Bit offset of the fixed-width HANDSEED payload relative to the start
+    /// of the buffer passed to encodeDwg(). It is a write-time locator, never
+    /// persisted.
+    std::uint32_t m_dwgHandseedBitOffset {kInvalidDwgHandseedBitOffset};
 
 
 };

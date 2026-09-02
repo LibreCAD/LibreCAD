@@ -127,6 +127,11 @@ namespace RS2 {
         FormatJWW, /**< JWW Format type */
         FormatJWC, /**< JWC Format type */
         FormatSHP /**< ESRI Shapefile (import only). */
+#ifdef DWGSUPPORT
+        /* Keep this new value at the end so existing format enum values stay
+           stable for settings and plugins. */
+        , FormatDWG2007 /**< DWG format (R2007, AC1021). */
+#endif
     };
 
     /*

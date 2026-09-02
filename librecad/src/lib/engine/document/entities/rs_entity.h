@@ -520,10 +520,16 @@ public:
     void setPlotStyleHandle(quint32 h);
     int shadowMode() const;
     void setShadowMode(int mode);
+    quint32 shadowHandle() const;
+    void setShadowHandle(quint32 h);
     quint32 fullVisualStyleHandle() const;
     quint32 faceVisualStyleHandle() const;
     quint32 edgeVisualStyleHandle() const;
     void setVisualStyleHandles(quint32 full, quint32 face, quint32 edge);
+    const std::vector<quint32>& reactorHandles() const;
+    void setReactorHandles(std::vector<quint32> handles);
+    quint32 xDictHandle() const;
+    void setXDictHandle(quint32 h);
     /// Source DXF/DWG entity handle (group code 5) from import. 0 if unset.
     quint32 sourceHandle() const;
     void setSourceHandle(quint32 h);

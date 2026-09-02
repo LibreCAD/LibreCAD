@@ -18,6 +18,9 @@
 //#include "../drw_textcodec.h"
 #include "dwgbuffer.h"
 
+#include <limits>
+#include <unordered_map>
+
 static const int DRW_magicNum18[] = {
     0x29, 0x23, 0xbe, 0x84, 0xe1, 0x6c, 0xd6, 0xae,
     0x52, 0x90, 0x49, 0xf1, 0xf1, 0xbb, 0xe9, 0xeb,
@@ -51,22 +54,37 @@ public:
     bool readDwgHandles() override;
     bool readDwgTables(DRW_Header& hdr) override;
     bool readDwgBlocks(DRW_Interface& intfa) override {
+        const auto it = sections.find(secEnum::OBJECTS);
+        if (it == sections.end() || it->second.size == 0
+            || it->second.size > uncompSize || objData == nullptr)
+            return false;
+        dwgBuffer dataBuf(objData.get(), it->second.size, &decoder);
         bool ret = true;
-        dwgBuffer dataBuf(objData.get(), uncompSize, &decoder);
-        ret = dwgReader::readDwgBlocks(intfa, &dataBuf);
+        ret = dwgReader::readDwgBlocks(
+            intfa, &dataBuf, DwgIntegrityAddressSpace::DecodedBuffer);
         return ret;
     }
 
     bool readDwgEntities(DRW_Interface& intfa) override {
+        const auto it = sections.find(secEnum::OBJECTS);
+        if (it == sections.end() || it->second.size == 0
+            || it->second.size > uncompSize || objData == nullptr)
+            return false;
+        dwgBuffer dataBuf(objData.get(), it->second.size, &decoder);
         bool ret = true;
-        dwgBuffer dataBuf(objData.get(), uncompSize, &decoder);
-        ret = dwgReader::readDwgEntities(intfa, &dataBuf);
+        ret = dwgReader::readDwgEntities(
+            intfa, &dataBuf, DwgIntegrityAddressSpace::DecodedBuffer);
         return ret;
     }
     bool readDwgObjects(DRW_Interface& intfa) override {
+        const auto it = sections.find(secEnum::OBJECTS);
+        if (it == sections.end() || it->second.size == 0
+            || it->second.size > uncompSize || objData == nullptr)
+            return false;
+        dwgBuffer dataBuf(objData.get(), it->second.size, &decoder);
         bool ret = true;
-        dwgBuffer dataBuf(objData.get(), uncompSize, &decoder);
-        ret = dwgReader::readDwgObjects(intfa, &dataBuf);
+        ret = dwgReader::readDwgObjects(
+            intfa, &dataBuf, DwgIntegrityAddressSpace::DecodedBuffer);
         return ret;
     }
 
@@ -80,11 +98,22 @@ protected:
     std::uint64_t uncompSize{0};
 
     bool captureRawDwgDataSections();
-    bool parseSysPage(std::uint8_t *decompSec, std::uint32_t decompSize); //called: Section page map: 0x41630e3b
+    bool parseSysPage(
+        std::uint8_t *decompSec, std::uint32_t decompSize,
+        DwgIntegrityPhase phase = DwgIntegrityPhase::PageMap,
+        std::uint64_t pageId = 0, bool hasPageId = false,
+        std::uint64_t pageOffset = 0, bool hasPageOffset = false); //called: Section page map: 0x41630e3b
     bool parseDataPage(const dwgSectionInfo &si/*, std::uint8_t *dData*/); //called ???: Section map: 0x4163003b
     bool parseDataPage(const dwgSectionInfo& si,
                        std::unique_ptr<std::uint8_t[]>& sectionData,
                        std::uint64_t& sectionSize);
+    /// Decode the R2004 global page map. Negative record IDs describe unused
+    /// gaps and advance the file address, but are never page-map entries.
+    static bool parseSectionPageMap(
+        std::uint8_t* data, std::uint64_t size,
+        std::uint64_t firstAddress,
+        std::unordered_map<std::uint32_t, dwgPageInfo>& pages,
+        std::uint64_t fileSize = (std::numeric_limits<std::uint64_t>::max)());
 
 private:
     void genMagicNumber();

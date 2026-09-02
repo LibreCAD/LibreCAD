@@ -16,6 +16,7 @@
 
 #define DRW_VERSION "0.6.3"
 
+#include <array>
 #include <cstdint>
 #include <string>
 #include <cmath>
@@ -23,6 +24,13 @@
 #include <unordered_map>
 #include <utility>
 #include <vector>
+
+// Solaris/Illumos may predefine `sun` as a numeric platform macro.  It
+// collides with valid libdxfrw identifiers such as DRW_Sun parameters and
+// locals, so remove the non-standard macro before exposing the C++ API.
+#ifdef sun
+# undef sun
+#endif
 
 #ifdef DRW_ASSERTS
 # define drw_assert(a) assert(a)
@@ -177,6 +185,167 @@ enum HandleCodes {
     NoHandle = 0
 };
 
+// DWG typed-object reference codes. Keep the wire meanings named at call
+// sites so a field cannot silently use a different ownership relationship.
+enum DwgHandleReferenceCode : std::uint8_t {
+    DwgNullReference = 0,
+    DwgSoftOwnership = 2,
+    DwgHardOwnership = 3,
+    DwgSoftPointer = 4,
+    DwgHardPointer = 5
+};
+
+// Fixed DWG OBJECTS types for the standard TABLES controls and records.
+// These values are stable from R13 onward (libreDWG include/dwg.h).
+inline constexpr std::int16_t DwgBlockEntityType = 4;
+inline constexpr std::int16_t DwgEndBlockEntityType = 5;
+inline constexpr std::int16_t DwgBlockControlObjectType = 0x30;
+inline constexpr std::int16_t DwgBlockRecordObjectType = 0x31;
+inline constexpr std::int16_t DwgLayerControlObjectType = 0x32;
+inline constexpr std::int16_t DwgLayerObjectType = 0x33;
+inline constexpr std::int16_t DwgStyleControlObjectType = 0x34;
+inline constexpr std::int16_t DwgStyleObjectType = 0x35;
+inline constexpr std::int16_t DwgLTypeControlObjectType = 0x38;
+inline constexpr std::int16_t DwgLTypeObjectType = 0x39;
+inline constexpr std::int16_t DwgViewControlObjectType = 0x3C;
+inline constexpr std::int16_t DwgViewObjectType = 0x3D;
+inline constexpr std::int16_t DwgUcsControlObjectType = 0x3E;
+inline constexpr std::int16_t DwgUcsObjectType = 0x3F;
+inline constexpr std::int16_t DwgVPortControlObjectType = 0x40;
+inline constexpr std::int16_t DwgVPortObjectType = 0x41;
+inline constexpr std::int16_t DwgAppIdControlObjectType = 0x42;
+inline constexpr std::int16_t DwgAppIdObjectType = 0x43;
+inline constexpr std::int16_t DwgDimStyleControlObjectType = 0x44;
+inline constexpr std::int16_t DwgDimStyleObjectType = 0x45;
+
+/// One handle token accepted by the DWG writer. The bit range is local to
+/// the writer buffer that emitted the token.
+struct DwgHandleWriteOccurrence {
+    std::uint8_t code {0};
+    std::uint64_t reference {0};
+    std::uint64_t startBit {0};
+    std::uint64_t endBit {0};
+};
+
+enum class DwgObjectHandleStream : std::uint8_t {
+    Data,
+    Strings,
+    Handles
+};
+
+/// The serialized segment containing a handle token after object-frame
+/// assembly. String tokens are logically separate while encoding, but the
+/// supported object writers append them to the data segment.
+enum class DwgObjectSerializedSegment : std::uint8_t {
+    Data,
+    Handles
+};
+
+/// A handle token captured from one committed DWG object frame. The token
+/// range is relative to serializedSegment, not to an unassembled scratch
+/// buffer. segmentOrdinal disambiguates equal code/reference pairs.
+struct DwgObjectHandleOccurrence {
+    std::uint32_t objectHandle {0};
+    DwgObjectHandleStream stream {DwgObjectHandleStream::Data};
+    DwgObjectSerializedSegment serializedSegment {
+        DwgObjectSerializedSegment::Data};
+    std::uint32_t segmentOrdinal {0};
+    DwgHandleWriteOccurrence token;
+};
+
+/// Writer-local provenance attached to one object-frame admission. The
+/// operation value uses the underlying integer representation deliberately:
+/// drw_base.h is included by the DWG utility headers that define the enum.
+struct DwgObjectFrameProvenance {
+    std::uint16_t classNumber {0};
+    std::uint16_t writerOperation {0};
+    std::uint64_t admissionToken {0};
+};
+
+/// Physical layout and handle evidence for the most recently committed DWG
+/// object frame. Segment sizes exclude the object-frame length prefix and CRC.
+struct DwgObjectFrameReceipt {
+    /// True only when the producer committed this frame receipt. This is
+    /// independent of whether the object contains handle tokens.
+    bool valid {false};
+    /// Producer-local generation. Zero is reserved for an absent receipt.
+    std::uint64_t generation {0};
+    std::uint32_t objectHandle {0};
+    Version version {UNKNOWNV};
+    std::uint64_t dataBitSize {0};
+    std::uint64_t handleBitSize {0};
+    /// Writer-local class ordinal decoded from the serialized frame. Zero is
+    /// used when the frame has no class expectation or cannot expose one.
+    std::uint16_t classNumber {0};
+    /// Underlying value of DwgDataStorageWriterOperation, or zero when the
+    /// frame was not emitted for a classified DataStorage operation.
+    std::uint16_t writerOperation {0};
+    /// Filter-scoped admission token, or zero for an unbound frame.
+    std::uint64_t admissionToken {0};
+    std::vector<DwgObjectHandleOccurrence> occurrences;
+};
+
+/// Role of one physical frame in a compound entity write.  The roles describe
+/// the stable parent/child sequence shape without exposing writer internals.
+enum class DwgCompoundEntityFrameRole : std::uint8_t {
+    Parent,
+    Vertex,
+    Attribute,
+    SeqEnd
+};
+
+/// Physical receipt for one frame in a compound entity write.
+struct DwgCompoundEntityFrameReceipt {
+    DwgCompoundEntityFrameRole role {DwgCompoundEntityFrameRole::Parent};
+    DwgObjectFrameReceipt frame;
+};
+
+/// Ordered evidence for one successfully emitted POLYLINE/VERTEX/SEQEND
+/// compound. It is published only after every frame exists.
+struct DwgCompoundEntityWriteReceipt {
+    bool valid {false};
+    std::uint32_t parentHandle {0};
+    std::uint32_t parentOwnerHandle {0};
+    std::vector<DwgCompoundEntityFrameReceipt> frames;
+};
+
+// Model/paper-space BLOCK_RECORD handles are format-specific. Keep the
+// canonical writer values in one place so cross-format metadata replay does
+// not accidentally carry a DXF owner into a DWG entity (or vice versa).
+inline constexpr std::uint32_t DxfModelSpaceBlockRecordHandle = 0x1F;
+inline constexpr std::uint32_t DxfPaperSpaceBlockRecordHandle = 0x1E;
+inline constexpr std::uint32_t DwgModelSpaceBlockRecordHandle = 0x17;
+inline constexpr std::uint32_t DwgPaperSpaceBlockRecordHandle = 0x18;
+inline constexpr std::uint32_t DwgNamedObjectsDictionaryHandle = 0x0C;
+inline constexpr std::uint32_t DwgAcadGroupDictionaryHandle = 0x0D;
+
+/// One named child published by the physical DWG Named Objects Dictionary.
+/// The writer exposes this receipt only after both frames have committed.
+struct DwgNamedObjectDictionaryEntry {
+    std::string name;
+    std::uint32_t childHandle {0};
+
+    bool operator==(const DwgNamedObjectDictionaryEntry& other) const {
+        return name == other.name && childHandle == other.childHandle;
+    }
+};
+
+/// Result of the deferred DWG block-structure transaction. Handles are
+/// published only after BLOCK_CONTROL and every BLOCK_RECORD frame succeed.
+struct DwgBlockWriteRecord {
+    std::uint32_t blockRecordHandle {0};
+    std::uint32_t blockHandle {0};
+    std::uint32_t endBlockHandle {0};
+    std::vector<std::uint32_t> entityHandles;
+    std::vector<std::uint32_t> insertHandles;
+};
+
+struct DwgBlockWriteResult {
+    std::uint32_t blockControlHandle {0};
+    std::vector<std::uint32_t> blockEntityHandles;
+    std::vector<DwgBlockWriteRecord> blockRecords;
+};
+
 //! Shadow mode
 enum ShadowMode {
     CastAndReceieveShadows = 0,
@@ -294,7 +463,7 @@ public:
 
     DRW_Variant(int c, std::vector<std::uint8_t> b): sdata(std::string()), vdata(), bdata(std::move(b)), content(&bdata), vType(BINARY), vCode(c) {}
 
-    DRW_Variant(const DRW_Variant& d): sdata(d.sdata), vdata(d.vdata), bdata(d.bdata), content(d.content), vType(d.vType), vCode(d.vCode), sIsLayerRef(d.sIsLayerRef) {
+    DRW_Variant(const DRW_Variant& d): sdata(d.sdata), vdata(d.vdata), bdata(d.bdata), content(d.content), vType(d.vType), vCode(d.vCode), sIsLayerRef(d.sIsLayerRef), hasDwgRawLayerReference(d.hasDwgRawLayerReference), dwgRawLayerReference(d.dwgRawLayerReference), dwgRawLayerReferenceText(d.dwgRawLayerReferenceText), dwgRawLayerReferenceVersion(d.dwgRawLayerReferenceVersion) {
         if (d.vType == COORD)
             content.v = &vdata;
         if (d.vType == STRING)
@@ -313,6 +482,10 @@ public:
         vType = d.vType;
         vCode = d.vCode;
         sIsLayerRef = d.sIsLayerRef;
+        hasDwgRawLayerReference = d.hasDwgRawLayerReference;
+        dwgRawLayerReference = d.dwgRawLayerReference;
+        dwgRawLayerReferenceText = d.dwgRawLayerReferenceText;
+        dwgRawLayerReferenceVersion = d.dwgRawLayerReferenceVersion;
         if (d.vType == COORD)
             content.v = &vdata;
         if (d.vType == STRING)
@@ -329,7 +502,11 @@ public:
         , content(d.content)
         , vType(d.vType)
         , vCode(d.vCode)
-        , sIsLayerRef(d.sIsLayerRef) {
+        , sIsLayerRef(d.sIsLayerRef)
+        , hasDwgRawLayerReference(d.hasDwgRawLayerReference)
+        , dwgRawLayerReference(d.dwgRawLayerReference)
+        , dwgRawLayerReferenceText(std::move(d.dwgRawLayerReferenceText))
+        , dwgRawLayerReferenceVersion(d.dwgRawLayerReferenceVersion) {
         if (d.vType == COORD)
             content.v = &vdata;
         if (d.vType == STRING)
@@ -348,6 +525,10 @@ public:
         vType = d.vType;
         vCode = d.vCode;
         sIsLayerRef = d.sIsLayerRef;
+        hasDwgRawLayerReference = d.hasDwgRawLayerReference;
+        dwgRawLayerReference = d.dwgRawLayerReference;
+        dwgRawLayerReferenceText = std::move(d.dwgRawLayerReferenceText);
+        dwgRawLayerReferenceVersion = d.dwgRawLayerReferenceVersion;
         if (d.vType == COORD)
             content.v = &vdata;
         if (d.vType == STRING)
@@ -360,16 +541,33 @@ public:
     ~DRW_Variant() {
     }
 
-    void addString(int c, UTF8STRING s) {vType = STRING; sdata = s; content.s = &sdata; vCode=c; sIsLayerRef=false;}
-    void addInt(int c, int i) {vType = INTEGER; content.i = i; vCode=c;}
-    void addInt64(int c, std::int64_t i) {vType = INTEGER64; content.i64 = i; vCode=c;}
-    void addDouble(int c, double d) {vType = DOUBLE; content.d = d; vCode=c;}
-    void addCoord(int c, DRW_Coord v) {vType = COORD; vdata = v; content.v = &vdata; vCode=c;}
-    void addBinary(int c, std::vector<std::uint8_t> b) {vType = BINARY; bdata = std::move(b); content.b = &bdata; vCode=c;}
+    void addString(int c, UTF8STRING s) {clearDwgRawLayerReference(); vType = STRING; sdata = s; content.s = &sdata; vCode=c; sIsLayerRef=false;}
+    void addInt(int c, int i) {clearDwgRawLayerReference(); vType = INTEGER; content.i = i; vCode=c;}
+    void addInt64(int c, std::int64_t i) {clearDwgRawLayerReference(); vType = INTEGER64; content.i64 = i; vCode=c;}
+    void addDouble(int c, double d) {clearDwgRawLayerReference(); vType = DOUBLE; content.d = d; vCode=c;}
+    void addCoord(int c, DRW_Coord v) {clearDwgRawLayerReference(); vType = COORD; vdata = v; content.v = &vdata; vCode=c;}
+    void addBinary(int c, std::vector<std::uint8_t> b) {clearDwgRawLayerReference(); vType = BINARY; bdata = std::move(b); content.b = &bdata; vCode=c;}
     void setCoordX(double d) { if (vType == COORD) vdata.x = d;}
     void setCoordY(double d) { if (vType == COORD) vdata.y = d;}
     void setCoordZ(double d) { if (vType == COORD) vdata.z = d;}
     void setLayerRefName(const UTF8STRING& s) { if (vType == STRING) { sdata = s; content.s = &sdata; sIsLayerRef = true; } }
+    void setDwgRawLayerReference(std::uint64_t reference,
+                                 DRW::Version sourceVersion) noexcept {
+        if (vType != STRING || vCode != 1003)
+            return;
+        hasDwgRawLayerReference = true;
+        dwgRawLayerReference = reference;
+        dwgRawLayerReferenceText = sdata;
+        dwgRawLayerReferenceVersion = sourceVersion;
+    }
+    bool canReplayDwgRawLayerReference(DRW::Version targetVersion) const noexcept {
+        return hasDwgRawLayerReference && vType == STRING && vCode == 1003
+            && dwgRawLayerReferenceVersion == targetVersion
+            && sdata == dwgRawLayerReferenceText;
+    }
+    std::uint64_t rawDwgLayerReference() const noexcept {
+        return dwgRawLayerReference;
+    }
     enum TYPE type() const { return vType;}
     int code() const { return vCode;}       /*!< returns dxf code of this value*/
     bool isLayerRef() const { return sIsLayerRef && vType == STRING; }
@@ -407,6 +605,17 @@ private:
     TYPE vType = INVALID;
     int vCode;            /*!< dxf code of this value*/
     bool sIsLayerRef{false}; /*!< when type==STRING, marks code 1003 layer-name references */
+    bool hasDwgRawLayerReference{false};
+    std::uint64_t dwgRawLayerReference{0};
+    UTF8STRING dwgRawLayerReferenceText;
+    DRW::Version dwgRawLayerReferenceVersion{DRW::UNKNOWNV};
+
+    void clearDwgRawLayerReference() noexcept {
+        hasDwgRawLayerReference = false;
+        dwgRawLayerReference = 0;
+        dwgRawLayerReferenceText.clear();
+        dwgRawLayerReferenceVersion = DRW::UNKNOWNV;
+    }
 
 };
 
@@ -417,12 +626,15 @@ private:
 */
 class dwgHandle{
 public:
-    dwgHandle(): code(0), size(0), ref(0){}
+    dwgHandle() = default;
 
     ~dwgHandle() = default;
-    std::uint8_t code;
-    std::uint8_t size;
-    std::uint32_t ref;
+    std::uint8_t code{0};
+    std::uint8_t size{0};
+    // Legacy callers and object maps use the low 32 bits.
+    std::uint32_t ref{0};
+    // Exact low-64-bit encoded reference retained for custom/wide handles.
+    std::uint64_t ref64{0};
 };
 
 //! Class to convert between line width and integer

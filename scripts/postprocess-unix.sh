@@ -16,10 +16,15 @@ cd "${THISDIR}"
 # Postprocess for unix
 mkdir -p "${RESOURCEDIR}"/fonts
 mkdir -p "${RESOURCEDIR}"/patterns
-cp "${SPTDIR}"/patterns/*.dxf "${RESOURCEDIR}"/patterns
+if [ -d "${SPTDIR}/patterns" ]; then
+        find "${SPTDIR}/patterns" -maxdepth 1 -type f -name '*.dxf' \
+                -exec cp {} "${RESOURCEDIR}/patterns" \;
+fi
 cp "${SPTDIR}"/fonts/*.lff* "${RESOURCEDIR}"/fonts
-find "${SPTDIR}"/library -type d | sed 's:^.*support/::' | xargs -IFILES  mkdir -p "${RESOURCEDIR}"/FILES
-find "${SPTDIR}"/library -type f -iname "*.dxf" | sed 's/^.*support//' | xargs -IFILES  cp "${SPTDIR}"/FILES "${RESOURCEDIR}"/FILES
+if [ -d "${SPTDIR}/library" ]; then
+        find "${SPTDIR}"/library -type d | sed 's:^.*support/::' | xargs -IFILES  mkdir -p "${RESOURCEDIR}"/FILES
+        find "${SPTDIR}"/library -type f -iname "*.dxf" | sed 's/^.*support//' | xargs -IFILES  cp "${SPTDIR}"/FILES "${RESOURCEDIR}"/FILES
+fi
 
 # Generate translations
 ${LRELEASE} "${LCDIR}"/src/src.pro

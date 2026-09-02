@@ -31,6 +31,13 @@
 #include <sys/_size_t.h>
 #endif
 
+#if defined(__GNUC__) || defined(__clang__)
+#define RS_DEBUG_PRINTF_FORMAT(formatIndex, firstArg) \
+    __attribute__((format(printf, formatIndex, firstArg)))
+#else
+#define RS_DEBUG_PRINTF_FORMAT(formatIndex, firstArg)
+#endif
+
 class RS_Vector;
 class QByteArray;
 class QChar;
@@ -137,8 +144,10 @@ public:
 
     void setLevel(RS_DebugLevel level);
     RS_DebugLevel getLevel();
-    void print(RS_DebugLevel level, const char* format ...);
-    void print(const char* format ...);
+    void print(RS_DebugLevel level, const char* format ...)
+        RS_DEBUG_PRINTF_FORMAT(3, 4);
+    void print(const char* format ...)
+        RS_DEBUG_PRINTF_FORMAT(2, 3);
     void print(const QString& text);
     void printUnicode(const QString& text);
     void timestamp();
@@ -148,5 +157,7 @@ private:
 
     RS_DebugLevel m_debugLevel = D_INFORMATIONAL;
 };
+
+#undef RS_DEBUG_PRINTF_FORMAT
 
 #endif

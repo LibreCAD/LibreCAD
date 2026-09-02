@@ -24,8 +24,8 @@
  * new DRW_SectionObject typed decode restores the section geometry + metadata + the
  * section_settings reference; the raw shelf is still emitted for round-trip.
  *
- * Fixture: testdata/section_object_r2018.dwg (AC1032/R2018, 40 KB, copied from
- * ~/doc/dwg6/LiveSection1.dwg). Oracle values are from `dwgread -O JSON`:
+ * Optional local fixture (not bundled): ~/doc/dwg6/LiveSection1.dwg
+ * (AC1032/R2018, 40 KB). Oracle values are from `dwgread -O JSON`:
  *   state 1, flags 5, name "Section Plane (1)", vert_dir (0,0,1),
  *   top_height 5.0, bottom_height 15.0, indicator_alpha 70,
  *   num_verts 2 -> [(14.02991512351477, 6.95425112892047, 0),
@@ -33,10 +33,13 @@
  *   num_blverts 0, section_settings handle 0x22A (554).
  */
 
+#include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers_floating_point.hpp>
 
+#include <cstdlib>
 #include <filesystem>
+#include <fstream>
 #include <string>
 #include <vector>
 
@@ -112,8 +115,23 @@ public:
 class SectionCapture : public StubInterface {
 public:
   std::vector<DRW_SectionObject> m_sections;
+  std::vector<DRW_Section> m_settings;
   void addSectionObject(const DRW_SectionObject &s) override { m_sections.push_back(s); }
+  void addSection(const DRW_Section &s) override { m_settings.push_back(s); }
 };
+
+std::string shellQuote(const std::string& value) {
+  std::string quoted = "'";
+  for (const char character : value) {
+    if (character == '\'') {
+      quoted += "'\\''";
+    } else {
+      quoted += character;
+    }
+  }
+  quoted += "'";
+  return quoted;
+}
 
 } // namespace
 
@@ -161,4 +179,100 @@ TEST_CASE("DWG SECTIONOBJECT (AcDbSection) decodes to typed DRW_Section",
 
   // section_settings hard reference resolves to handle 0x22A (554).
   CHECK(s.m_sectionSettingsHandle == 0x22Au);
+}
+
+TEST_CASE("DWG SECTION_SETTINGS decodes type and geometry settings",
+          "[section_settings]") {
+  const std::string path =
+      std::string(LIBRECAD_TEST_DIR) + "/section_object_r2018.dwg";
+  if (!std::filesystem::is_regular_file(path)) {
+    SUCCEED("section_object_r2018.dwg fixture absent; skipping");
+    return;
+  }
+
+  SectionCapture cap;
+  dwgR reader(path.c_str());
+  REQUIRE(reader.read(&cap, /*ext=*/true));
+  REQUIRE(reader.getError() == DRW::BAD_NONE);
+  const DRW_Section *settingsPtr = nullptr;
+  for (const DRW_Section &candidate : cap.m_settings) {
+    if (candidate.m_kind == DRW_Section::Settings) {
+      settingsPtr = &candidate;
+      break;
+    }
+  }
+  REQUIRE(settingsPtr != nullptr);
+
+  const DRW_Section &settings = *settingsPtr;
+  CHECK(settings.m_currentType == 4);
+  CHECK(settings.m_typeCount == 1);
+  REQUIRE(settings.m_types.size() == 1);
+
+  const DRW_SectionTypeSettings &type = settings.m_types.front();
+  CHECK(type.m_type == 4);
+  CHECK(type.m_generation == 17);
+  CHECK(type.m_numSources == 0);
+  CHECK(type.m_sourceHandles.empty());
+  CHECK(type.m_destinationBlockHandle == 0);
+  CHECK(type.m_destinationFile.empty());
+  REQUIRE(type.m_geometry.size() == 4);
+
+  const DRW_SectionGeometrySettings &first = type.m_geometry.front();
+  CHECK(first.m_numGeometries == 4);
+  CHECK(first.m_hexIndex == 1);
+  CHECK(first.m_flags == 1);
+  CHECK(first.m_layer == "Defpoints");
+  CHECK(first.m_lineType == "Continuous");
+  CHECK(first.m_plotStyle == "ByColor");
+  CHECK(first.m_lineWeight == 40);
+  CHECK(first.m_hatchPattern == "SOLID");
+
+  const DRW_SectionGeometrySettings &second = type.m_geometry[1];
+  CHECK(second.m_hexIndex == 2);
+  CHECK(second.m_flags == 5);
+  CHECK(second.m_layer == "0");
+  CHECK(second.m_lineWeight == -1);
+  CHECK(second.m_hatchPattern == "ANGLE");
+  CHECK(second.m_hatchSpacing == Catch::Approx(21.0));
+}
+
+TEST_CASE("LibreDWG recognizes the Section object family",
+          "[section_object][external][.slow]") {
+  if (std::system("command -v dwgread >/dev/null 2>&1") != 0) {
+    SUCCEED("dwgread is unavailable; external-reader gate skipped");
+    return;
+  }
+
+  const std::filesystem::path fixture =
+      std::string(LIBRECAD_TEST_DIR) + "/section_object_r2018.dwg";
+  if (!std::filesystem::is_regular_file(fixture)) {
+    SUCCEED("section_object_r2018.dwg fixture absent; skipping");
+    return;
+  }
+
+  const auto output = std::filesystem::temp_directory_path()
+      / "librecad-section-object-libredwg.json";
+  const auto log = std::filesystem::temp_directory_path()
+      / "librecad-section-object-libredwg.log";
+  std::filesystem::remove(output);
+  std::filesystem::remove(log);
+
+  const std::string command =
+      "dwgread -O JSON " + shellQuote(fixture.string())
+      + " > " + shellQuote(output.string()) + " 2> " + shellQuote(log.string());
+  REQUIRE(std::system(command.c_str()) == 0);
+
+  std::ifstream json(output, std::ios::binary);
+  REQUIRE(json);
+  const std::string contents((std::istreambuf_iterator<char>(json)),
+                             std::istreambuf_iterator<char>());
+  CHECK(contents.find("\"entity\": \"SECTIONOBJECT\"")
+        != std::string::npos);
+  CHECK(contents.find("\"object\": \"SECTION_MANAGER\"")
+        != std::string::npos);
+  CHECK(contents.find("\"object\": \"SECTION_SETTINGS\"")
+        != std::string::npos);
+
+  std::filesystem::remove(output);
+  std::filesystem::remove(log);
 }

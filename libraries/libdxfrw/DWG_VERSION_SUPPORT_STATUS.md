@@ -18,8 +18,8 @@ until the Phase 0 corpus proves positive and negative behavior.
 | --- | ---: |
 | V0-recognized-unsupported | 5 |
 | V1-static-container-reader | 2 |
-| V2-static-reader | 7 |
-| V2/V4-static-entrypoint | 5 |
+| V2-static-reader | 6 |
+| V2/V4-static-entrypoint | 6 |
 
 ## Matrix
 
@@ -40,7 +40,7 @@ until the Phase 0 corpus proves positive and negative behavior.
 | AC1014 | DWG Release 14/14.01 (LT97/LT98) | dwgReader15 | unsupported | V2-core-read | V2-static-reader | read-only-static-dispatch | fixture-blocked:ac1014-positive-needed | fixture-blocked:ac1014-negative-needed | writer decision and fixture-backed output diagnostic | version-diagnostic-fixture |
 | AC1015 | AutoCAD 2000/2000i/2002 | dwgReader15 | dwgWriter15 | V4-writer-gated | V2/V4-static-entrypoint | reader-writer-static-dispatch | fixture-blocked:ac1015-positive-needed | fixture-blocked:ac1015-negative-needed | positive/negative fixtures and external writer smoke | writer-matrix+fixture+oracle-smoke |
 | AC1018 | AutoCAD 2004/2005/2006 | dwgReader18 | dwgWriter18 | V4-writer-gated | V2/V4-static-entrypoint | reader-writer-static-dispatch | fixture-blocked:ac1018-positive-needed | fixture-blocked:ac1018-negative-needed | positive/negative fixtures and external writer smoke | writer-matrix+fixture+oracle-smoke |
-| AC1021 | AutoCAD 2007/2008/2009 | dwgReader21 | unsupported | V3-structural-preservation | V2-static-reader | read-only-static-dispatch | fixture-blocked:ac1021-positive-needed | fixture-blocked:ac1021-negative-needed | writer decision and fixture-backed output diagnostic | version-diagnostic-fixture |
+| AC1021 | AutoCAD 2007/2008/2009 | dwgReader21 | dwgWriter21 | V4-writer-gated | V2/V4-static-entrypoint | reader-writer-static-dispatch | fixture-blocked:ac1021-positive-needed | fixture-blocked:ac1021-negative-needed | positive/negative fixtures and external writer smoke | writer-matrix+fixture+oracle-smoke |
 | AC1024 | AutoCAD 2010/2011/2012 | dwgReader24 | dwgWriter24 | V4-writer-gated | V2/V4-static-entrypoint | reader-writer-static-dispatch | fixture-blocked:ac1024-positive-needed | fixture-blocked:ac1024-negative-needed | positive/negative fixtures and external writer smoke | writer-matrix+fixture+oracle-smoke |
 | AC1027 | AutoCAD 2013/2014/2015/2016/2017 | dwgReader27 | dwgWriter27 | V4-writer-gated | V2/V4-static-entrypoint | reader-writer-static-dispatch | fixture-blocked:ac1027-positive-needed | fixture-blocked:ac1027-negative-needed | positive/negative fixtures and external writer smoke | writer-matrix+fixture+oracle-smoke |
 | AC1032 | AutoCAD 2018/2019/2020 | dwgReader32 | dwgWriter32 | V4-writer-gated | V2/V4-static-entrypoint | reader-writer-static-dispatch | fixture-blocked:ac1032-positive-needed | fixture-blocked:ac1032-negative-needed | positive/negative fixtures and external writer smoke | writer-matrix+fixture+oracle-smoke |

@@ -15,29 +15,78 @@
 #include "intern/dxfwriter.h"
 #include "intern/dwgbuffer.h"
 #include "intern/drw_dbg.h"
+#include <limits>
+#include <string>
+
+namespace {
+
+bool isSafeDxfClassString(const std::string& value) {
+    return value.find_first_of("\r\n") == std::string::npos
+        && value.find('\0') == std::string::npos;
+}
+
+bool isValidDxfClass(const DRW_Class& cls) {
+    // recName may be empty for proxy-only classes, but the C++ class name is
+    // required by the DXF CLASS record and all emitted strings must be one
+    // physical DXF value.
+    if (cls.className.empty() || !isSafeDxfClassString(cls.recName)
+        || !isSafeDxfClassString(cls.className)
+        || !isSafeDxfClassString(cls.appName)) {
+        return false;
+    }
+    if (cls.proxyFlag < 0
+        || cls.proxyFlag > std::numeric_limits<std::uint16_t>::max()
+        || cls.instanceCount < 0
+        || cls.wasaProxyFlag < 0 || cls.wasaProxyFlag > 1
+        || cls.entityFlag < 0 || cls.entityFlag > 1) {
+        return false;
+    }
+    return true;
+}
+
+} // namespace
 
 
 bool DRW_Class::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf){
     DRW_DBG("\n***************************** parsing Class *********************************************\n");
 
-    classNum = buf->getBitShort();
-    DRW_DBG("Class number: "); DRW_DBG(classNum);
-    proxyFlag = buf->getBitShort(); //in dwg specs says "version"
+    if (buf == nullptr || strBuf == nullptr || !buf->isGood()
+        || !strBuf->isGood()) {
+        if (buf != nullptr)
+            buf->invalidate();
+        if (strBuf != nullptr && strBuf != buf)
+            strBuf->invalidate();
+        return false;
+    }
 
-    appName = strBuf->getVariableText(version, false);
-    className = strBuf->getVariableText(version, false);
-    recName = strBuf->getVariableText(version, false);
+    // A class is consumed from one or two bit streams depending on the DWG
+    // version. Decode into independent cursors so a malformed record cannot
+    // publish partial metadata or advance the caller past the failed field.
+    DRW_Class parsed;
+    dwgBuffer dataProbe = buf->forkIndependent();
+    dwgBuffer stringProbe = strBuf == buf
+        ? dataProbe : strBuf->forkIndependent();
+    dwgBuffer *const classStrings = strBuf == buf
+        ? &dataProbe : &stringProbe;
 
-    DRW_DBG("\napp name: "); DRW_DBG(appName.c_str());
-    DRW_DBG("\nclass name: "); DRW_DBG(className.c_str());
-    DRW_DBG("\ndxf rec name: "); DRW_DBG(recName.c_str());
-    wasaProxyFlag = buf->getBit(); //in dwg says wasazombie
-    entityFlag = buf->getBitShort();
-    entityFlag = entityFlag == 0x1F2 ? 1: 0;
+    parsed.classNum = dataProbe.getBitShort();
+    DRW_DBG("Class number: "); DRW_DBG(parsed.classNum);
+    parsed.proxyFlag = dataProbe.getBitShort(); //in dwg specs says "version"
 
-    DRW_DBG("\nProxy capabilities flag: "); DRW_DBG(proxyFlag);
-    DRW_DBG(", proxy flag (280): "); DRW_DBG(wasaProxyFlag);
-    DRW_DBG(", entity flag: "); DRW_DBGH(entityFlag);
+    parsed.appName = classStrings->getVariableText(version, false);
+    parsed.className = classStrings->getVariableText(version, false);
+    parsed.recName = classStrings->getVariableText(version, false);
+
+    DRW_DBG("\napp name: "); DRW_DBG(parsed.appName.c_str());
+    DRW_DBG("\nclass name: "); DRW_DBG(parsed.className.c_str());
+    DRW_DBG("\ndxf rec name: "); DRW_DBG(parsed.recName.c_str());
+    parsed.wasaProxyFlag = dataProbe.getBit(); //in dwg says wasazombie
+    parsed.entityFlagRaw = dataProbe.getBitShort();
+    parsed.entityFlag = parsed.entityFlagRaw == 0x1F2 ? 1 : 0;
+
+    DRW_DBG("\nProxy capabilities flag: "); DRW_DBG(parsed.proxyFlag);
+    DRW_DBG(", proxy flag (280): "); DRW_DBG(parsed.wasaProxyFlag);
+    DRW_DBG(", entity flag: "); DRW_DBGH(parsed.entityFlag);
 
     if (version > DRW::AC1015) {//2004+
         // R2004+ per-class trailer: num_instances, dwg_version, maint_version,
@@ -51,32 +100,61 @@ bool DRW_Class::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf
         // DwgClassesReader (ReadBitLong), and is identical to BS for all real
         // AutoCAD files (whose values are < 256). Recovers the ACadSharp
         // AC1018-AC1032 corpus (10+ files) with zero regressions.
-        instanceCount = buf->getBitLong();
-        DRW_DBG("\nInstance Count: "); DRW_DBG(instanceCount);
-        std::uint32_t dwgVersion = buf->getBitLong();
-        DRW_DBG("\nDWG version: "); DRW_DBG(dwgVersion);
-        DRW_DBG("\nmaintenance version: "); DRW_DBG(buf->getBitLong());
-        DRW_DBG("\nunknown 1: "); DRW_DBG(buf->getBitLong());
-        DRW_DBG("\nunknown 2: "); DRW_DBG(buf->getBitLong());
+        parsed.instanceCount = dataProbe.getBitLong();
+        DRW_DBG("\nInstance Count: "); DRW_DBG(parsed.instanceCount);
+        if (parsed.instanceCount < 0) {
+            buf->invalidate();
+            if (strBuf != buf)
+                strBuf->invalidate();
+            return false;
+        }
+        parsed.dwgVersion = dataProbe.getBitLong();
+        DRW_DBG("\nDWG version: "); DRW_DBG(parsed.dwgVersion);
+        parsed.maintenanceVersion = dataProbe.getBitLong();
+        parsed.unknown1 = dataProbe.getBitLong();
+        parsed.unknown2 = dataProbe.getBitLong();
+        DRW_DBG("\nmaintenance version: "); DRW_DBG(parsed.maintenanceVersion);
+        DRW_DBG("\nunknown 1: "); DRW_DBG(parsed.unknown1);
+        DRW_DBG("\nunknown 2: "); DRW_DBG(parsed.unknown2);
     }
+
+    if (!dataProbe.isGood() || !classStrings->isGood()) {
+        buf->invalidate();
+        if (strBuf != buf)
+            strBuf->invalidate();
+        return false;
+    }
+
+    parsed.toDwgType();
+    *this = parsed;
+    *buf = dataProbe;
+    if (strBuf != buf)
+        *strBuf = stringProbe;
     DRW_DBG("\n");
-    toDwgType();
-    return buf->isGood();
+    return true;
 }
 
-void DRW_Class::write(dxfWriter *writer, DRW::Version ver) const {
-    if (ver > DRW::AC1009) {
-        writer->writeString(0, "CLASS");
-        writer->writeString(1, recName);
-        writer->writeString(2, className);
-        writer->writeString(3, appName);
-        writer->writeInt32(90, proxyFlag);
-        if (ver > DRW::AC1015) { //2004+
-            writer->writeInt32(91, instanceCount);
-        }
-        writer->writeInt16(280, wasaProxyFlag);
-        writer->writeInt16(281, entityFlag);
+bool DRW_Class::write(dxfWriter *writer, DRW::Version ver) const {
+    if (writer == nullptr)
+        return false;
+    if (ver <= DRW::AC1009)
+        return true;
+    if (!isValidDxfClass(*this))
+        return false;
+
+    if (!writer->writeString(0, "CLASS") ||
+        !writer->writeUtf8String(1, recName) ||
+        !writer->writeUtf8String(2, className) ||
+        !writer->writeUtf8String(3, appName) ||
+        !writer->writeInt32(90, proxyFlag)) {
+        return false;
     }
+    if (ver > DRW::AC1015 &&
+        !writer->writeInt32(91, instanceCount)) { // 2004+
+        return false;
+    }
+    return writer->writeInt16(280, wasaProxyFlag) &&
+           writer->writeInt16(281, entityFlag);
 }
 
 void DRW_Class::toDwgType(){
@@ -94,6 +172,12 @@ void DRW_Class::toDwgType(){
         dwgType = 101;
     else if (recName == "IMAGEDEF")
         dwgType = 102;
+    else if (recName == "NAVISWORKSMODEL")
+        dwgType = 1150;
+    else if (recName == "_3DLINE" || recName == "3DLINE")
+        dwgType = 1162;
+    else if (recName == "GEOPOSITIONMARKER" || recName == "POSITIONMARKER")
+        dwgType = 1164;
     else
         dwgType = 0;
     // NOTE: ARC_DIMENSION must NOT be added here. It has no fixed DWG type < 500.

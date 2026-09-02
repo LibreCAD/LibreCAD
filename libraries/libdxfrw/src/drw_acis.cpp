@@ -89,7 +89,7 @@ private:
     const std::uint8_t* m_data;
     std::size_t m_len;
     void require(std::size_t n) {
-        if (index + n > m_len) throw SabError();
+        if (index > m_len || n > m_len - index) throw SabError();
     }
 };
 
@@ -136,7 +136,10 @@ DRW_SabRecord readRecord(SabByteReader& r) {
 
     for (;;) {
         if (!r.hasData()) {
-            if (isEndMarker(type)) { out.type = type; return out; }
+            if (isEndMarker(type) && typeParts.empty() && subtypeLevel == 0) {
+                out.type = type;
+                return out;
+            }
             throw SabError();
         }
         int tag = r.readByte();
@@ -166,7 +169,11 @@ DRW_SabRecord readRecord(SabByteReader& r) {
             break;
         }
         case DRW_SabTag::LiteralStr: {
-            DRW_SabToken t = tok(tag); t.sval = r.readStr(r.readInt()); out.tokens.push_back(t);
+            const int length = r.readInt();
+            if (length < 0) throw SabError();
+            DRW_SabToken t = tok(tag);
+            t.sval = r.readStr(static_cast<std::size_t>(length));
+            out.tokens.push_back(std::move(t));
             break;
         }
         case DRW_SabTag::EntityTypeEx: {
@@ -207,11 +214,14 @@ DRW_SabRecord readRecord(SabByteReader& r) {
             break;
         }
         case DRW_SabTag::SubtypeEnd: {
+            if (subtypeLevel == 0) throw SabError();
             DRW_SabToken t = tok(tag); t.ival = subtypeLevel; out.tokens.push_back(t);
             --subtypeLevel;
             break;
         }
         case DRW_SabTag::RecordEnd:
+            if (type.empty() || !typeParts.empty() || subtypeLevel != 0)
+                throw SabError();
             out.type = type;
             return out;
         default:
@@ -444,19 +454,27 @@ std::string toStr(int v) { return std::to_string(v); }
 // ── Layer 1 entry: drw_parseSab ────────────────────────────────────────────
 
 bool drw_parseSab(const std::uint8_t* data, std::size_t length, DRW_SabData& out) {
+    out = DRW_SabData();
     if (!data) return false;
     try {
         SabByteReader r(data, length);
-        out.header = readHeader(r, data, length);
-        out.records.clear();
+        DRW_SabData parsed;
+        parsed.header = readHeader(r, data, length);
         while (r.hasData()) {
             DRW_SabRecord record = readRecord(r);
             bool marker = isEndMarker(record.type);
-            out.records.push_back(std::move(record));
+            parsed.records.push_back(std::move(record));
             if (marker) break;
         }
+        if (parsed.header.numRecords >= 0
+            && parsed.records.size()
+                != static_cast<std::size_t>(parsed.header.numRecords)) {
+            throw SabError();
+        }
+        out = std::move(parsed);
         return true;
     } catch (...) {
+        out = DRW_SabData();
         return false;
     }
 }
@@ -474,29 +492,36 @@ std::vector<int> DRW_AcisModel::nodesOfType(const std::string& type) const {
 
 DRW_AcisModel drw_buildAcisModel(const DRW_SabData& sab) {
     DRW_AcisModel model;
-    model.header = sab.header;
-    model.nodes.resize(sab.records.size());
-    for (std::size_t i = 0; i < sab.records.size(); ++i) {
-        DRW_AcisNode& node = model.nodes[i];
-        node.index = static_cast<int>(i);
-        node.type = sab.records[i].type;
-        node.record = sab.records[i];
-    }
-    // Resolve POINTER tokens -> node indices (-1 => null / out of range).
-    const int n = static_cast<int>(model.nodes.size());
-    for (DRW_AcisNode& node : model.nodes) {
-        for (const DRW_SabToken& t : node.record.tokens) {
-            if (t.tag != DRW_SabTag::Pointer) continue;
-            int target = static_cast<int>(t.ival);
-            node.refs.push_back((target >= 0 && target < n) ? target : -1);
+    try {
+        if (sab.records.size() > static_cast<std::size_t>(std::numeric_limits<int>::max()))
+            return model;
+        model.header = sab.header;
+        model.nodes.resize(sab.records.size());
+        for (std::size_t i = 0; i < sab.records.size(); ++i) {
+            DRW_AcisNode& node = model.nodes[i];
+            node.index = static_cast<int>(i);
+            node.type = sab.records[i].type;
+            node.record = sab.records[i];
         }
+        // Resolve POINTER tokens -> node indices (-1 => null / out of range).
+        const int n = static_cast<int>(model.nodes.size());
+        for (DRW_AcisNode& node : model.nodes) {
+            for (const DRW_SabToken& t : node.record.tokens) {
+                if (t.tag != DRW_SabTag::Pointer) continue;
+                int target = static_cast<int>(t.ival);
+                node.refs.push_back((target >= 0 && target < n) ? target : -1);
+            }
+        }
+    } catch (...) {
+        return DRW_AcisModel();
     }
     return model;
 }
 
 // ── Layer 3 entry: drw_extractAcisWireframe ────────────────────────────────
 
-bool drw_extractAcisWireframe(const DRW_AcisModel& model, DRW_AcisBrep& out) {
+static bool extractAcisWireframeImpl(const DRW_AcisModel& model,
+                                     DRW_AcisBrep& out) {
     out = DRW_AcisBrep();
 
     double minX = std::numeric_limits<double>::infinity();
@@ -588,25 +613,80 @@ bool drw_extractAcisWireframe(const DRW_AcisModel& model, DRW_AcisBrep& out) {
     return true;
 }
 
+bool drw_extractAcisWireframe(const DRW_AcisModel& model, DRW_AcisBrep& out) {
+    try {
+        DRW_AcisBrep extracted;
+        if (!extractAcisWireframeImpl(model, extracted)) {
+            out = DRW_AcisBrep();
+            return false;
+        }
+        out = std::move(extracted);
+        return true;
+    } catch (...) {
+        out = DRW_AcisBrep();
+        return false;
+    }
+}
+
 // ── Convenience entry: drw_decodeAcisWireframe ─────────────────────────────
 
 namespace {
 
 const char* const kSignaturesLocal[] = { "ACIS BinaryFile", "ASM BinaryFile4" };
 
-long long signatureOffset(const std::vector<unsigned char>& data) {
+std::uint8_t peekBitAlignedByte(const std::vector<unsigned char>& data,
+                                std::size_t index, std::uint8_t bit) {
+    if (index >= data.size()) return 0;
+    if (bit == 0) return data[index];
+    const std::uint8_t next = index + 1 < data.size() ? data[index + 1] : 0;
+    return static_cast<std::uint8_t>((data[index] << bit) | (next >> (8 - bit)));
+}
+
+bool signatureAt(const std::vector<unsigned char>& data, std::size_t offset,
+                 std::uint8_t bit, const char* signature) {
+    const std::size_t length = std::strlen(signature);
+    if (offset > data.size() || length > data.size() - offset)
+        return false;
+    for (std::size_t i = 0; i < length; ++i) {
+        if (peekBitAlignedByte(data, offset + i, bit)
+            != static_cast<std::uint8_t>(signature[i]))
+            return false;
+    }
+    return true;
+}
+
+bool findSignature(const std::vector<unsigned char>& data,
+                   std::size_t& offset, std::uint8_t& bit) {
     for (const char* sig : kSignaturesLocal) {
-        std::size_t plen = std::strlen(sig);
-        if (data.size() < plen) continue;
-        for (std::size_t i = 0; i + plen <= data.size(); ++i) {
-            bool match = true;
-            for (std::size_t j = 0; j < plen; ++j) {
-                if (data[i + j] != static_cast<std::uint8_t>(sig[j])) { match = false; break; }
+        for (std::uint8_t candidateBit = 0; candidateBit < 8; ++candidateBit) {
+            for (std::size_t candidateOffset = 0;
+                 candidateOffset < data.size(); ++candidateOffset) {
+                if (signatureAt(data, candidateOffset, candidateBit, sig)) {
+                    offset = candidateOffset;
+                    bit = candidateBit;
+                    return true;
+                }
             }
-            if (match) return static_cast<long long>(i);
         }
     }
-    return -1;
+    return false;
+}
+
+std::vector<unsigned char> realignSignature(const std::vector<unsigned char>& data,
+                                             std::size_t offset,
+                                             std::uint8_t bit) {
+    if (offset >= data.size()) return {};
+    if (bit == 0) {
+        return std::vector<unsigned char>(data.begin() + offset, data.end());
+    }
+
+    // For a non-zero bit offset, dropping the leading partial byte leaves one
+    // fewer complete byte. Avoid multiplying a file-sized value by eight.
+    const std::size_t byteCount = data.size() - offset - 1u;
+    std::vector<unsigned char> aligned(byteCount);
+    for (std::size_t i = 0; i < byteCount; ++i)
+        aligned[i] = peekBitAlignedByte(data, offset + i, bit);
+    return aligned;
 }
 
 } // namespace
@@ -614,10 +694,13 @@ long long signatureOffset(const std::vector<unsigned char>& data) {
 LIBDXFRW_EXPORT bool drw_decodeAcisWireframe(const std::vector<unsigned char>& raw, DRW_AcisBrep& out) {
     out = DRW_AcisBrep();
     try {
-        long long off = signatureOffset(raw);
-        if (off < 0) return false;
+        std::size_t offset = 0;
+        std::uint8_t bit = 0;
+        if (!findSignature(raw, offset, bit)) return false;
+        const std::vector<unsigned char> aligned = realignSignature(raw, offset, bit);
+        if (aligned.empty()) return false;
         DRW_SabData sab;
-        if (!drw_parseSab(raw.data() + off, raw.size() - static_cast<std::size_t>(off), sab)) {
+        if (!drw_parseSab(aligned.data(), aligned.size(), sab)) {
             return false;
         }
         DRW_AcisModel model = drw_buildAcisModel(sab);

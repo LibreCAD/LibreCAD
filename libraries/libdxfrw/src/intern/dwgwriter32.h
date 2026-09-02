@@ -28,6 +28,7 @@ public:
         : dwgWriter27(stream, header)
     {
         m_version = DRW::AC1032;
+        configureTextCodec();
     }
 
 protected:

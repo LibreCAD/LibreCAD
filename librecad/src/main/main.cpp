@@ -287,8 +287,10 @@ int main(int argc, char** argv) {
     //
     //     dxf2pdf [options] ...
     //
+    QStringList consoleCommands = LC_Console::converterCommandNames();
+    consoleCommands.append(QStringLiteral("dwg-admission-report"));
     const LC_Console::CommandContext consoleCommand =
-        LC_Console::detectCommand(argc, argv, LC_Console::converterCommandNames());
+        LC_Console::detectCommand(argc, argv, consoleCommands);
     if (!consoleCommand.commandName.isEmpty()) {
         const QString& command = consoleCommand.commandName;
         if (command == "dxf2pdf")
@@ -307,6 +309,8 @@ int main(int argc, char** argv) {
             return consoleDxf2dwg(argc, argv);
         if (command == "dwg2dxf")
             return consoleDwg2dxf(argc, argv);
+        if (command == "dwg-admission-report")
+            return consoleDwgAdmissionReport(argc, argv);
     }
 
     RS_DEBUG->setLevel(RS_Debug::D_WARNING);
@@ -564,23 +568,6 @@ QStringList handleArgs(const int argc, char** argv, const QList<int>& argClean){
     }
     RS_DEBUG->print("main: handling args: OK");
     return ret;
-}
-
-QString LCReleaseLabel(){
-    const QString version{XSTR(LC_VERSION)};
-    const std::map<QString, QString> labelMap = {
-        {"rc", QObject::tr("Release Candidate")},
-        {"beta", QObject::tr("BETA")},
-        {"alpha", QObject::tr("ALPHA")}
-    };
-    for (const auto& [key, value]: labelMap) {
-        if (version.contains(key, Qt::CaseInsensitive)) {
-            return value;
-        }
-    }
-
-    // Issue #2371: default version to alpha
-    return QObject::tr("ALPHA");
 }
 
 namespace {

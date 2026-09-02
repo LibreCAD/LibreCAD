@@ -14,19 +14,85 @@
 #ifndef DWGUTIL_H
 #define DWGUTIL_H
 
+#include <cstddef>
+#include <cstdint>
+
 #include "../drw_base.h"
 
 namespace DRW {
     std::string toHexStr(int n);
 }
 
+/// Concrete OBJECTS operation used by a typed DataStorage writer. Several
+/// class identities can share one encoder, so this is separate from the
+/// DataStorage class binding and from file-local DWG class ordinals.
+enum class DwgDataStorageWriterOperation : std::uint8_t {
+    None,
+    WriteMLeaderStyle,
+    WriteTableStyle,
+    WriteMaterial,
+    WriteLightList,
+    WriteGroup,
+    WriteDictionary,
+    WriteXRecord,
+    WriteLayout,
+    WriteMLineStyle,
+    WriteAcDbPlaceholder,
+    WriteRasterVariables,
+    WriteWipeoutVariables,
+    WriteGeoData,
+    WriteSpatialFilter,
+    WriteScale,
+    WriteIDBuffer,
+    WriteLayerIndex,
+    WriteSpatialIndex,
+    WriteDictionaryVar,
+    WriteDictionaryWithDefault,
+    WriteSortEntsTable,
+    WriteFieldList,
+    WriteField,
+    WriteUnderlayDefinition,
+    WritePointCloudDef,
+    WriteNavisworksModelDef,
+    WritePointCloudColorMap,
+    WriteDbColor,
+    WriteDimensionAssociation,
+    WriteEvaluationGraph,
+    WriteTvDeviceProperties,
+    WriteVxControl,
+    WriteVxTableRecord
+};
+
+namespace dwgSpec {
+    /// R18+ CLASSES sections carry eight ODA-defined unknown bytes between
+    /// the class CRC and the closing sentinel. ODA specifies zero values.
+    constexpr std::size_t kClassesUnknownTailBytes = 8;
+}
+
 namespace dwgRSCodec {
+    /// Encode interleaved RS(255,239) codewords used by R2007 system pages.
+    /// The input contains `blk` consecutive 239-byte data blocks; the output
+    /// contains the corresponding 255-byte codewords in DWG's transposed
+    /// (interleaved) layout.
+    bool encode239I(const std::uint8_t *in, std::uint8_t *out,
+                    std::uint32_t blk);
+
+    /// Encode interleaved RS(255,251) codewords used by R2007 data pages.
+    bool encode251I(const std::uint8_t *in, std::uint8_t *out,
+                    std::uint32_t blk);
+
+    /// Encode non-interleaved RS(255,251) codewords used by R2007 data pages
+    /// whose section-map encoding field is 1.
+    bool encode251(const std::uint8_t *in, std::uint8_t *out,
+                   std::uint32_t blk);
+
     /// Returns true if all codewords decoded cleanly; false if any block had
     /// uncorrectable Reed-Solomon errors. Output buffer is still populated
     /// with whatever the codec recovered, so callers can decide whether to
     /// bail or continue best-effort.
     bool decode239I(std::uint8_t *in, std::uint8_t *out, std::uint32_t blk);
     bool decode251I(std::uint8_t *in, std::uint8_t *out, std::uint32_t blk);
+    bool decode251(std::uint8_t *in, std::uint8_t *out, std::uint32_t blk);
 }
 
 namespace dwgUtil {
@@ -38,6 +104,26 @@ namespace dwgUtil {
     /// Standard CRC-32/ISO-HDLC (same table as dwgBuffer::crc32).  Used
     /// by the R2004 writer to compute the encrypted variable-header CRC.
     std::uint32_t crc32(std::uint32_t seed, const std::uint8_t* data, std::uint32_t sz);
+
+    /// R2007 page checksum.  The seed is advanced with UpdateSeed1's 64-bit
+    /// arithmetic, then the bytes are accumulated in the DWG-specific
+    /// two-byte/reversed-four-byte order from the R2007 specification.
+    std::uint32_t checksum21(std::uint64_t seed, const std::uint8_t* data,
+                             std::uint64_t sz);
+
+    /// R2007 CRC seed transformations from the Open Design Specification.
+    std::uint64_t updateSeed1(std::uint64_t seed, std::uint64_t dataLength);
+    std::uint64_t updateSeed2(std::uint64_t seed, std::uint64_t dataLength);
+
+    /// Extract the ten-bit CRC seed from its R2007 random-encoded form.
+    std::uint64_t decodeCrcSeed(std::uint64_t encoded);
+
+    /// R2007 64-bit CRC variants.  Both use the specification's byte-block
+    /// order; the normal form is ECMA-182 and complements its final value.
+    std::uint64_t crc64Normal(std::uint64_t seed, const std::uint8_t* data,
+                              std::uint64_t sz);
+    std::uint64_t crc64Mirrored(std::uint64_t seed, const std::uint8_t* data,
+                                std::uint64_t sz);
 }
 
 class dwgCompressor {
@@ -49,10 +135,12 @@ class dwgCompressor {
 public:
     dwgCompressor()=default;
 
-    bool decompress18(std::uint8_t *cbuf, std::uint8_t *dbuf, std::uint64_t csize, std::uint64_t dsize);
+    bool decompress18(const std::uint8_t *cbuf, std::uint8_t *dbuf, std::uint64_t csize, std::uint64_t dsize);
     static void decrypt18Hdr(std::uint8_t *buf, std::uint64_t size, std::uint64_t offset);
+    /// Return the AC1021 literal-byte permutation for a block of this size.
+    static const std::uint8_t* literalOrder21(std::uint32_t size);
 //    static void decrypt18Data(std::uint8_t *buf, std::uint32_t size, std::uint32_t offset);
-    bool decompress21(std::uint8_t *cbuf, std::uint8_t *dbuf, std::uint64_t csize, std::uint64_t dsize);
+    bool decompress21(const std::uint8_t *cbuf, std::uint8_t *dbuf, std::uint64_t csize, std::uint64_t dsize);
 
     // Number of decompressed bytes produced by the last decompress18/21 call.
     // Callers of fixed-size pages (parseSysPage) require an exact-window fill;
@@ -80,7 +168,7 @@ private:
 
     // Decode state — instance members (formerly static, which made decompress
     // non-reentrant and was a verbose/non-verbose nondeterminism hazard).
-    std::uint8_t *compressedBuffer{nullptr};
+    const std::uint8_t *compressedBuffer{nullptr};
     std::uint32_t compressedSize{0};
     std::uint32_t compressedPos{0};
     bool    compressedGood{true};
@@ -218,9 +306,16 @@ namespace dwgType {
         TEXT = 1,
         ATTRIB = 2,
         ATTDEF = 3,
+        BLOCK = 4,
+        ENDBLK = 5,
         SEQEND = 6,
         INSERT = 7,
         MINSERT = 8,
+        VERTEX_2D = 10,
+        VERTEX_3D = 11,
+        VERTEX_MESH = 12,
+        VERTEX_PFACE = 13,
+        VERTEX_PFACE_FACE = 14,
         POLYLINE_2D = 15,
         POLYLINE_3D = 16,
         ARC = 17,
@@ -252,10 +347,18 @@ namespace dwgType {
         LEADER = 45,
         TOLERANCE = 46,
         MLINE = 47,
+        OLEFRAME = 43,
         LWPOLYLINE = 77,
         HATCH = 78,
         OLE2FRAME = 74,
         IMAGE = 101,
+        NAVISWORKSMODEL = 1150,
+        CAMERA = 1160,
+        // Modern custom-class 3DLINE. The legacy pre-R13 3DLINE uses a
+        // separate type code in dwgreaderR11.cpp.
+        THREEDLINE = 1162,
+        // WIPEOUT is a fixed DWG entity type, not a CLASSES ordinal.
+        WIPEOUT = 1109,
     };
 }
 
@@ -291,14 +394,57 @@ namespace dwgColor {
 
 namespace dwgObjType {
     enum Object {
+        UNKNOWN_9 = 9,
         DICTIONARY = 42,
+        UNKNOWN_36 = 54,
+        UNKNOWN_37 = 55,
+        UNKNOWN_3A = 58,
+        UNKNOWN_3B = 59,
         GROUP = 72,
         MLINESTYLE = 73,
+        DUMMY = 75,
+        LONG_TRANSACTION = 76,
         XRECORD = 79,
         ACDBPLACEHOLDER = 80,
+        VBA_PROJECT = 81,
+        // Fixed entity type, distinct from a file-local CLASSES ordinal.
+        PROXY_ENTITY = 498,
+        PROXY_OBJECT = 499,
         LAYOUT = 82,
         IMAGEDEF = 102,
+        VPORT_ENTITY_HEADER = 71,
+        // Fixed OBJECT type from dwgTs/model/dwgTypeMap.ts and the ODA
+        // OBJECTS type table. It is not a CLASSES ordinal.
+        DBCOLOR = 1004,
+        BLOCKREPRESENTATION = 1120,
     };
+
+    inline bool isFixedObject(std::int16_t type) {
+        switch (type) {
+        case UNKNOWN_9:
+        case DICTIONARY:
+        case UNKNOWN_36:
+        case UNKNOWN_37:
+        case UNKNOWN_3A:
+        case UNKNOWN_3B:
+        case GROUP:
+        case MLINESTYLE:
+        case DUMMY:
+        case LONG_TRANSACTION:
+        case XRECORD:
+        case ACDBPLACEHOLDER:
+        case VBA_PROJECT:
+        case PROXY_OBJECT:
+        case LAYOUT:
+        case IMAGEDEF:
+        case VPORT_ENTITY_HEADER:
+        case DBCOLOR:
+        case BLOCKREPRESENTATION:
+            return true;
+        default:
+            return false;
+        }
+    }
 }
 
 #endif // DWGUTIL_H
