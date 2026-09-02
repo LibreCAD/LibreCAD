@@ -26147,3 +26147,33 @@ the same superseded configuration.
 3. Rerun the native x64 and ARM64 matrix from this target-level build fix. The
    prior x64 failure is superseded; the next run must provide the final native
    test evidence.
+
+## Current Active Plan (rev 1317): remove the Windows staging replacement failure
+
+The corrected replacement matrix proved that the `/bigobj` fix solved the x64
+compile failure: Ubuntu passed in 19m07s and Windows x64 built both bounded
+executables in 1h02m41s. The x64 test step then reported 23 failures. The
+failures split into two independent portability defects:
+
+1. Every DWG export, including simple geometry, returned `BAD_OPEN` on Windows
+   immediately after the filter created its staged `QTemporaryFile`. The DWG
+   writer then tried to publish its own transaction over that already-existing
+   staged path. POSIX rename replacement succeeds, but Windows `MoveFileExW`
+   can reject replacement of the Qt-created temporary file. This occurs before
+   any format-specific writer diagnostic, so it is a transaction boundary
+   failure rather than an object-encoding failure.
+2. Eleven DXF/DWG tests removed generated files while a local `ifstream` or
+   `dxfRW`/`dwgRW` reader was still alive. Windows denies deletion of those open
+   handles; POSIX permits it. The affected tests need lexical scopes ending
+   before cleanup, not platform-specific deletion workarounds.
+
+### Implemented
+
+1. Keep the unique Qt-generated staging name, close it, and remove the empty
+   placeholder before `dwgRW::write()`. The low-level transaction can then
+   publish to a non-existing path on every platform, while the outer filter
+   still owns the final commit and never exposes a partial destination.
+2. Scope the failing test readers/streams so their handles are closed before
+   `std::filesystem::remove()`.
+3. Rerun the native x64 and ARM64 matrix and use the resulting test counts as
+   the next roadmap evidence. Do not weaken the bounded selector.

@@ -719,6 +719,7 @@ TEST_CASE("R12 binary DXF writer emits native and escaped group codes",
       0x46, 0x01, 0x80,
       0xFF, 0xE8, 0x03, 'X', 'D', 'A', 'T', 'A', 0x00};
   CHECK(bytes == expected);
+  input.close();
   std::filesystem::remove(path);
 }
 
@@ -743,6 +744,7 @@ TEST_CASE("DXF AC1009 binary export selects the R12 group-code form",
   dxfRW reader(path.string().c_str());
   CHECK(reader.read(&reread, /*ext=*/true));
   CHECK(reader.getVersion() == DRW::AC1009);
+  input.close();
   std::filesystem::remove(path);
 }
 
@@ -994,6 +996,7 @@ TEST_CASE("DXF DIMSTYLE resolves forward BLOCK_RECORD references",
   CHECK(output.find("342\n" + handle + "\n") != std::string::npos);
   CHECK(output.find("343\n" + handle + "\n") != std::string::npos);
   CHECK(output.find("344\n" + handle + "\n") != std::string::npos);
+  input.close();
   std::filesystem::remove(path);
 }
 
@@ -1031,6 +1034,7 @@ TEST_CASE("DXF R2007 DIMSTYLE emits linetype hard pointers",
   CHECK(output.find("346\n" + handle + "\n") != std::string::npos);
   CHECK(output.find("347\n" + handle + "\n") != std::string::npos);
   CHECK(output.find("348\n" + handle + "\n") == std::string::npos);
+  input.close();
   std::filesystem::remove(path);
 }
 
@@ -1052,6 +1056,7 @@ TEST_CASE("DXF R2004 omits DIMSTYLE linetype hard pointers",
   CHECK(output.find("345\n" + handle + "\n") == std::string::npos);
   CHECK(output.find("346\n" + handle + "\n") == std::string::npos);
   CHECK(output.find("347\n" + handle + "\n") == std::string::npos);
+  input.close();
   std::filesystem::remove(path);
 }
 
@@ -1074,6 +1079,7 @@ TEST_CASE("DXF writing context preserves high-bit handles",
   const std::string handle = writer.toHexStrHandle(source.m_linetypeHandle);
   CHECK(output.find("  5\n" + handle + "\n") != std::string::npos);
   CHECK(output.find("345\n" + handle + "\n") != std::string::npos);
+  input.close();
   std::filesystem::remove(path);
 }
 
@@ -1123,6 +1129,7 @@ TEST_CASE("DXF BLOCK handle arithmetic remains unsigned",
   const std::string endBlockHandle = writer.toHexStrHandle(source.m_lookup + 2);
   CHECK(output.find("5\n" + blockHandle + "\n") != std::string::npos);
   CHECK(output.find("5\n" + endBlockHandle + "\n") != std::string::npos);
+  input.close();
   std::filesystem::remove(path);
 }
 
@@ -1386,6 +1393,7 @@ TEST_CASE("DXF surface writer emits modeler and subtype subclasses",
   std::ifstream serializedFile(path);
   const std::string serialized((std::istreambuf_iterator<char>(serializedFile)),
                                std::istreambuf_iterator<char>());
+  serializedFile.close();
   CHECK(serialized.find("AcDbModelerGeometry") != std::string::npos);
   CHECK(serialized.find("AcDbExtrudedSurface") != std::string::npos);
 

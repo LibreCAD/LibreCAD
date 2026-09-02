@@ -10946,6 +10946,16 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     }
     const QString stagedOutputPath = stagedOutput.fileName();
     stagedOutput.close();
+    // QTemporaryFile creates the name eagerly. Remove its empty placeholder
+    // before dwgRW opens its own transaction: Windows cannot reliably replace
+    // that still-associated temporary path with MoveFileExW. The unique name
+    // remains reserved for this process, and the outer staged commit still
+    // protects the caller's destination from partial output.
+    if (!QFile::remove(stagedOutputPath)) {
+      RS_DEBUG->print(RS_Debug::D_WARNING,
+                      "RS_FilterDXFRW: cannot release staged DWG path");
+      return false;
+    }
     m_dwgW = new dwgRW(QFile::encodeName(stagedOutputPath).constData());
     clearDwgWriteIdentity();
     m_dwgExportAdmissionPlan = {};

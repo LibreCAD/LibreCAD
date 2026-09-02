@@ -3128,6 +3128,7 @@ TEST_CASE("DXF binary writer uses explicit little-endian primitive encoding",
       0x28, 0x00, 0x00, 0x00, 0x00, 0x00,
       0x00, 0x00, 0xF0, 0x3F};
   CHECK(bytes == expected);
+  input.close();
   std::filesystem::remove(path);
 }
 
@@ -3155,6 +3156,7 @@ TEST_CASE("DXF ASCII writer preserves 32-bit values and rejects truncated fields
   CHECK(text.find("-32769") == std::string::npos);
   CHECK(text.find("invalid-code") == std::string::npos);
   CHECK(text.find("LINE\n0\nEOF") == std::string::npos);
+  input.close();
   std::filesystem::remove(path);
 }
 
@@ -8067,9 +8069,11 @@ TEST_CASE("DXF binary raw OBJECT rejects malformed chunks",
   }
 
   RawObjectCapture captured;
-  dxfRW reader(path.string().c_str());
-  CHECK_FALSE(reader.read(&captured, /*ext=*/true));
-  CHECK(captured.m_objects.empty());
+  {
+    dxfRW reader(path.string().c_str());
+    CHECK_FALSE(reader.read(&captured, /*ext=*/true));
+    CHECK(captured.m_objects.empty());
+  }
 
   std::filesystem::remove(path);
 }

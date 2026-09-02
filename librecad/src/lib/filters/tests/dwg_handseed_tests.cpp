@@ -346,9 +346,12 @@ TEST_CASE("DWG R2007 writer duplicates the complete file header page",
     writer.reset();
     stream.close();
 
-    std::ifstream input(path, std::ios::binary);
-    const std::vector<std::uint8_t> bytes{
-        std::istreambuf_iterator<char>(input), std::istreambuf_iterator<char>()};
+    std::vector<std::uint8_t> bytes;
+    {
+        std::ifstream input(path, std::ios::binary);
+        bytes.assign(std::istreambuf_iterator<char>(input),
+                     std::istreambuf_iterator<char>());
+    }
     constexpr std::size_t headerOffset = 0x80;
     constexpr std::size_t headerPageSize = 0x400;
     REQUIRE(bytes.size() >= headerOffset + headerPageSize * 2u);

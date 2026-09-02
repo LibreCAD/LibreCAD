@@ -112,21 +112,23 @@ TEST_CASE("file-backed dwgBuffer copies keep independent cursors",
         REQUIRE(output.good());
     }
 
-    std::ifstream input(path, std::ios::binary);
-    REQUIRE(input.good());
-    dwgBuffer source(&input);
-    REQUIRE(source.getRawChar8() == 0x11u);
+    {
+        std::ifstream input(path, std::ios::binary);
+        REQUIRE(input.good());
+        dwgBuffer source(&input);
+        REQUIRE(source.getRawChar8() == 0x11u);
 
-    dwgBuffer copy = source;
-    CHECK(copy.getRawChar8() == 0x22u);
-    CHECK(source.getRawChar8() == 0x22u);
-    CHECK(copy.getRawChar8() == 0x33u);
-    CHECK(source.getRawChar8() == 0x33u);
+        dwgBuffer copy = source;
+        CHECK(copy.getRawChar8() == 0x22u);
+        CHECK(source.getRawChar8() == 0x22u);
+        CHECK(copy.getRawChar8() == 0x33u);
+        CHECK(source.getRawChar8() == 0x33u);
 
-    dwgBuffer failed = source.forkIndependent();
-    CHECK_FALSE(failed.setPosition(4));
-    CHECK_FALSE(failed.isGood());
-    CHECK(source.isGood());
+        dwgBuffer failed = source.forkIndependent();
+        CHECK_FALSE(failed.setPosition(4));
+        CHECK_FALSE(failed.isGood());
+        CHECK(source.isGood());
+    }
 
     std::error_code error;
     std::filesystem::remove(path, error);
