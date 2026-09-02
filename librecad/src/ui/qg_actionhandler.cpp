@@ -257,6 +257,22 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         return nullptr;
     }
 
+    if (view->isPrintPreview()) {
+        switch (id) {
+        case RS2::ActionZoomIn:
+        case RS2::ActionZoomOut:
+        case RS2::ActionZoomAuto:
+        case RS2::ActionZoomWindow:
+        case RS2::ActionZoomPan:
+        case RS2::ActionZoomPrevious:
+        case RS2::ActionZoomRedraw:
+            break;
+        default:
+            view->getEventHandler()->setQAction(nullptr);
+            return nullptr;
+        }
+    }
+
     auto a_layer = (document->getLayerList() != nullptr) ? document->getLayerList()->getActive() : nullptr;
 
     switch (id) {
@@ -2229,4 +2245,3 @@ void QG_ActionHandler::slotDrawLinePoints(){
     setCurrentAction(RS2::ActionDrawLinePoints);
 }
 // EOF
-

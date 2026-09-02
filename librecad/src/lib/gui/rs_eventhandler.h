@@ -62,9 +62,9 @@ public:
      * Remember the QAction (toolbar button or menu entry) triggered by the user.
      * The QAction is linked to the action started next by setCurrentAction().
      *
-     * Only one QAction is checked (per graphic view, the QActions are shared by
-     * all drawing windows): the one of the topmost action on the stack which
-     * was started from a QAction. Helper actions started by an action (e.g.
+     * Only the active graphic view updates the shared QActions. Its checked
+     * QAction belongs to the topmost action which was started from one.
+     * Helper actions started by an action (e.g.
      * RS_ActionSelectSingle) and actions started from the command line run on
      * top of it without changing it. RS_ActionSelect, which finishes and starts
      * the modify action once the selection is done, passes its QAction on.
@@ -72,6 +72,8 @@ public:
      * a QAction for which no action is started gets its state back.
      */
     void setQAction(QAction* action);
+    //! Enable shared QAction updates while this is the active drawing handler.
+    void setQActionStateActive(bool active);
 
     void back();
     void enter();
@@ -118,6 +120,8 @@ private:
 
     //! QAction triggered by the user, waiting for its action to be started by setCurrentAction()
     QAction* m_pendingQAction{nullptr};
+    //! Only the active drawing may update application-wide QActions.
+    bool m_qActionStateActive{false};
     std::shared_ptr<RS_ActionInterface> defaultAction{nullptr};
     QList<std::shared_ptr<RS_ActionInterface>> currentActions;
     //! actions started by the user from a QAction, and their QAction
