@@ -2611,6 +2611,9 @@ if (BUILD_TESTS)
                            Qt6::Widgets
     )
     target_compile_features(librecad_fast_tests PRIVATE cxx_std_17)
+    if (MSVC)
+        target_compile_options(librecad_fast_tests PRIVATE /bigobj)
+    endif ()
     target_compile_definitions(librecad_fast_tests PRIVATE
         BUILD_TESTS=1
         DWGSUPPORT
@@ -2659,6 +2662,9 @@ if (BUILD_TESTS)
                            Qt6::Widgets
     )
     target_compile_features(librecad_dwg_fast_tests PRIVATE cxx_std_17)
+    if (MSVC)
+        target_compile_options(librecad_dwg_fast_tests PRIVATE /bigobj)
+    endif ()
     target_compile_definitions(librecad_dwg_fast_tests PRIVATE
         BUILD_TESTS=1
         DWGSUPPORT
@@ -2691,6 +2697,9 @@ if (BUILD_TESTS)
                            Qt6::Widgets
     )
     target_compile_features(librecad_dwg_write_fast_tests PRIVATE cxx_std_17)
+    if (MSVC)
+        target_compile_options(librecad_dwg_write_fast_tests PRIVATE /bigobj)
+    endif ()
     target_compile_definitions(librecad_dwg_write_fast_tests PRIVATE
         BUILD_TESTS=1
         DWGSUPPORT
@@ -2729,6 +2738,9 @@ if (BUILD_TESTS)
                            Qt6::Widgets
     )
     target_compile_features(librecad_dxf_fast_tests PRIVATE cxx_std_17)
+    if (MSVC)
+        target_compile_options(librecad_dxf_fast_tests PRIVATE /bigobj)
+    endif ()
     target_compile_definitions(librecad_dxf_fast_tests PRIVATE
         BUILD_TESTS=1
         DWGSUPPORT
@@ -2764,6 +2776,9 @@ if (BUILD_TESTS)
                                Qt6::Widgets
         )
         target_compile_features(${target} PRIVATE cxx_std_17)
+        if (MSVC)
+            target_compile_options(${target} PRIVATE /bigobj)
+        endif ()
         target_compile_definitions(${target} PRIVATE
             BUILD_TESTS=1
             DWGSUPPORT
@@ -2864,6 +2879,9 @@ if (BUILD_TESTS)
         AUTORCC OFF
     )
     target_compile_features(libdxfrw_test_core PUBLIC cxx_std_17)
+    if (MSVC)
+        target_compile_options(libdxfrw_test_core PRIVATE /bigobj)
+    endif ()
     target_compile_definitions(libdxfrw_test_core PRIVATE
         DWGSUPPORT
         _USE_MATH_DEFINES
@@ -2909,6 +2927,9 @@ if (BUILD_TESTS)
         AUTORCC OFF
     )
     target_compile_features(libdxfrw_dwg_writer_test_core PUBLIC cxx_std_17)
+    if (MSVC)
+        target_compile_options(libdxfrw_dwg_writer_test_core PRIVATE /bigobj)
+    endif ()
     target_compile_definitions(libdxfrw_dwg_writer_test_core PRIVATE
         DWGSUPPORT
         DWG_LAYOUT_VALIDATION_TESTS
@@ -2928,6 +2949,9 @@ if (BUILD_TESTS)
                                libdxfrw_test_core
                                Catch2::Catch2WithMain)
         target_compile_features(${target} PRIVATE cxx_std_17)
+        if (MSVC)
+            target_compile_options(${target} PRIVATE /bigobj)
+        endif ()
         target_compile_definitions(${target} PRIVATE
             BUILD_TESTS=1
             DWGSUPPORT

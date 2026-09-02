@@ -26125,3 +26125,25 @@ second native retry unnecessarily expensive.
 2. Rerun the native x64 and ARM64 matrix from the public diagnostic-type fix;
    retain the Linux result from the previous commit as already valid for the
    unchanged source path.
+
+## Current Active Plan (rev 1316): apply `/bigobj` to the bounded test targets
+
+The replacement matrix reached the bounded DWG test sources on Windows x64 and
+then failed with MSVC C1128 in `dwg_safety_tests.cpp`: the translation unit
+exceeded the COFF section limit because `/bigobj` had only been applied to the
+production filter and compile-check targets. The compiler error is independent
+of the DWG test code and is reproducible from the exact native log:
+`VerifyDwgDxfWindows` x64 failed after **58m19s** at workflow line 1317,
+while the Ubuntu lane passed in **24m13s**. The ARM64 leg was still compiling
+the same superseded configuration.
+
+### Implemented
+
+1. Apply `/bigobj` to the aggregate, bounded DWG, bounded DXF, writer-smoke,
+   micro, and libdxfrw test targets in CMake. This keeps the option scoped to
+   the large test object producers and leaves non-MSVC toolchains unchanged.
+2. Reconfigure and rebuild the affected DWG target locally; the safety test
+   translation unit and final executable now compile and link successfully.
+3. Rerun the native x64 and ARM64 matrix from this target-level build fix. The
+   prior x64 failure is superseded; the next run must provide the final native
+   test evidence.
