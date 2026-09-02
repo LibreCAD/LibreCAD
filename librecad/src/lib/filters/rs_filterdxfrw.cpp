@@ -11160,9 +11160,14 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       // and every typed reference to it. Colliding raw objects are
       // blocked in writeObjects instead (verbatim bytes cannot be
       // rewritten).
-      auto remapIfColliding = [&](const auto &records) {
+      auto remapIfColliding = [&](const auto &records,
+                                  bool skipGeneratedDictionaries = false) {
         for (const auto &r : records) {
           if (r.handle == 0 || !isFixedStructuralDwgHandle(r.handle))
+            continue;
+          if (skipGeneratedDictionaries &&
+              (r.handle == DRW::DwgNamedObjectsDictionaryHandle ||
+               r.handle == DRW::DwgAcadGroupDictionaryHandle))
             continue;
           if (m_dwgWriteHandleRemap.count(r.handle) != 0)
             continue;
@@ -11172,7 +11177,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
         }
       };
       remapIfColliding(md.placeholders());
-      remapIfColliding(md.dictionaries());
+      remapIfColliding(md.dictionaries(), true);
       remapIfColliding(md.xrecords());
       remapIfColliding(md.groups());
       remapIfColliding(md.layouts());
@@ -20297,13 +20302,38 @@ void RS_FilterDXFRW::writeObjects() {
         };
     auto remapObjectOwnerHandle =
         [this, &referenceContext, &recordOptionalDrop,
-         &recordRetainedReference](
+         &recordRetainedReference, &remapHandle](
             std::uint32_t sourceHandle,
             const char *referenceKind = "DWG object owner",
             std::uint32_t referenceOrdinal = 0,
             std::uint8_t wireHandleCode = DRW::DwgSoftPointer) {
           if (sourceHandle == DRW::NoHandle)
             return std::uint32_t{0};
+          // A source handle can collide with a fixed block record while also
+          // identifying a preserved dictionary. For OBJECTS owners, the
+          // dictionary identity is authoritative; block-owned entities use
+          // remapBlockOwnerHandle separately.
+          const auto &dictionaries =
+              m_graphic->dwgAdvancedMetadata().dictionaries();
+          const bool isRemappedDictionary =
+              hasDwgWriteHandleRemap(sourceHandle) &&
+              std::any_of(dictionaries.cbegin(), dictionaries.cend(),
+                          [sourceHandle](const auto &record) {
+                            return record.handle == sourceHandle &&
+                                   record.handle !=
+                                       DRW::DwgNamedObjectsDictionaryHandle &&
+                                   record.handle !=
+                                       DRW::DwgAcadGroupDictionaryHandle;
+                          });
+          if (isRemappedDictionary) {
+            const std::uint32_t outputHandle = remapHandle(sourceHandle);
+            if (referenceContext.producerOutputHandle != 0 &&
+                !recordRetainedReference(
+                    sourceHandle, outputHandle, DwgWriteSourceKind::Object,
+                    referenceKind, referenceOrdinal, wireHandleCode, false))
+              return std::uint32_t{0};
+            return outputHandle;
+          }
           std::uint32_t outputHandle = 0;
           const DwgWriteReferenceStatus status =
               resolveDwgWriteOwnerHandle(sourceHandle, &outputHandle);
@@ -20514,8 +20544,9 @@ void RS_FilterDXFRW::writeObjects() {
     const bool canWriteFixedTypeObjects = m_dwgW->getVersion() >= DRW::AC1015;
     const bool canWriteDbColor = m_dwgW->getVersion() >= DRW::AC1018;
     const bool canWriteAssociativeObjects = m_dwgW->getVersion() >= DRW::AC1021;
-    auto remapRequiredDictionaryEntries =
-        [this, &remapRequiredObjectHandle](DRW_Dictionary &dictionary) {
+    auto sanitizeDictionaryEntries =
+        [this, &metadata, &recordOptionalDrop, &recordRetainedReference,
+         &isLiveDwgWriteReference](DRW_Dictionary &dictionary) {
           std::vector<DRW_Dictionary::Entry> remapped;
           remapped.reserve(dictionary.m_entries.size());
           for (std::size_t ordinal = 0; ordinal < dictionary.m_entries.size();
@@ -20529,11 +20560,54 @@ void RS_FilterDXFRW::writeObjects() {
                               static_cast<int>(ordinal));
               return false;
             }
-            const std::uint32_t outputHandle =
-                remapRequiredObjectHandle(entry.m_handle, "DICTIONARY entry",
-                                          static_cast<std::uint32_t>(ordinal),
-                                          dictionary.dwgItemHandleCode());
-            if (outputHandle == 0)
+            std::uint32_t outputHandle = 0;
+            const DwgWriteReferenceStatus status =
+                resolveDwgWriteObjectHandle(entry.m_handle, &outputHandle);
+            if (!isLiveDwgWriteReference(status) || outputHandle == 0) {
+              // A declared raw source object that is unavailable in the target
+              // version is different from a genuinely dangling member. Do
+              // not silently sever that ownership edge.
+              if (metadata.hasRawObjectForHandle(entry.m_handle)) {
+                m_writeFailed = true;
+                RS_DEBUG->print(
+                    RS_Debug::D_WARNING,
+                    "RS_FilterDXFRW: unresolved DWG DICTIONARY "
+                    "entry target 0x%X",
+                    entry.m_handle);
+                return false;
+              }
+              if (status != DwgWriteReferenceStatus::Missing &&
+                  status != DwgWriteReferenceStatus::Suppressed &&
+                  status != DwgWriteReferenceStatus::Ambiguous) {
+                m_writeFailed = true;
+                RS_DEBUG->print(
+                    RS_Debug::D_WARNING,
+                    "RS_FilterDXFRW: unresolved DWG DICTIONARY "
+                    "entry target 0x%X",
+                    entry.m_handle);
+                return false;
+              }
+              if (!recordOptionalDrop(
+                      entry.m_handle, status, "DICTIONARY entry",
+                      static_cast<std::uint32_t>(ordinal),
+                      status == DwgWriteReferenceStatus::Ambiguous
+                          ? "ambiguous target"
+                          : status == DwgWriteReferenceStatus::Suppressed
+                              ? "suppressed target"
+                              : "missing target"))
+                return false;
+              RS_DEBUG->print(
+                  RS_Debug::D_WARNING,
+                  "RS_FilterDXFRW: dropping dangling DWG DICTIONARY entry "
+                  "target 0x%X",
+                  entry.m_handle);
+              continue;
+            }
+            if (!recordRetainedReference(
+                    entry.m_handle, outputHandle,
+                    DwgWriteSourceKind::Object, "DICTIONARY entry",
+                    static_cast<std::uint32_t>(ordinal),
+                    dictionary.dwgItemHandleCode(), true))
               return false;
             remapped.push_back({entry.m_name, outputHandle});
           }
@@ -22159,7 +22233,7 @@ void RS_FilterDXFRW::writeObjects() {
       dictionary.parentHandle = graph->rootOutputHandle;
       referenceContext = {DwgWriteSourceKind::Object, graph->childSourceHandle,
                           graph->childOutputHandle};
-      if (!remapRequiredDictionaryEntries(dictionary) ||
+      if (!sanitizeDictionaryEntries(dictionary) ||
           !sanitizeCommonObjectReferences(dictionary,
                                           "DICTIONARY common reference") ||
           !writeDwgObject(DwgWriteSourceKind::Object, graph->childSourceHandle,
@@ -22811,7 +22885,7 @@ void RS_FilterDXFRW::writeObjects() {
         }
         sanitizeDictionaryOwner(dictionary.parentHandle, "dictionary");
         remapEntryHandle(dictionary);
-        if (!remapRequiredDictionaryEntries(dictionary) ||
+        if (!sanitizeDictionaryEntries(dictionary) ||
             !sanitizeCommonObjectReferences(dictionary,
                                             "DICTIONARY common reference")) {
           hasBlockedReplay = true;
@@ -24126,7 +24200,7 @@ void RS_FilterDXFRW::writeObjects() {
         }
         sanitizeDictionaryOwner(dwd.parentHandle, "dictionary-with-default");
         remapEntryHandle(dwd);
-        if (!remapRequiredDictionaryEntries(dwd)) {
+        if (!sanitizeDictionaryEntries(dwd)) {
           hasBlockedReplay = true;
           ++blockedWriterRejected;
           continue;

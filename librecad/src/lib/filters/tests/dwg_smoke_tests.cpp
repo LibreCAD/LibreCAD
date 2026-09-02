@@ -92,6 +92,11 @@
 
 namespace {
 
+bool isGeneratedDwgDictionary(const DRW_Dictionary &dictionary) {
+  return dictionary.handle == DRW::DwgNamedObjectsDictionaryHandle ||
+         dictionary.handle == DRW::DwgAcadGroupDictionaryHandle;
+}
+
 // ---- capturing DRW debug printer -------------------------------------------
 
 class CapturingPrinter : public DRW::DebugPrinter {
@@ -587,6 +592,8 @@ public:
   }
 
   void addDictionary(const DRW_Dictionary &value) override {
+    if (isGeneratedDwgDictionary(value))
+      return;
     capturedDictionaries.push_back(value);
   }
 };
@@ -628,6 +635,8 @@ public:
   }
 
   void addDictionary(const DRW_Dictionary &value) override {
+    if (isGeneratedDwgDictionary(value))
+      return;
     capturedDictionaries.push_back(value);
   }
 
@@ -3775,11 +3784,11 @@ std::string buildCycleDxf(const std::string &blockName,
        "0\nENDSEC\n"
        "0\nSECTION\n2\nTABLES\n"
        "0\nTABLE\n2\nLAYER\n70\n1\n"
-       "0\nLAYER\n2\n0\n70\n0\n62\n7\n6\nCONTINUOUS\n"
+       "0\nLAYER\n5\n10\n2\n0\n70\n0\n62\n7\n6\nCONTINUOUS\n"
        "0\nENDTAB\n"
        "0\nENDSEC\n"
        "0\nSECTION\n2\nBLOCKS\n"
-       "0\nBLOCK\n8\n0\n2\n"
+       "0\nBLOCK\n5\n20\n8\n0\n2\n"
     << blockName
     << "\n70\n4\n"
        "10\n0.0\n20\n0.0\n30\n0.0\n"
@@ -3789,7 +3798,7 @@ std::string buildCycleDxf(const std::string &blockName,
        "1\n"
     << xrefTarget
     << "\n"
-       "0\nENDBLK\n8\n0\n"
+       "0\nENDBLK\n5\n21\n8\n0\n"
        "0\nENDSEC\n"
        "0\nSECTION\n2\nENTITIES\n"
        "0\nENDSEC\n"
@@ -10406,9 +10415,12 @@ TEST_CASE("RS_FilterDXFRW preserves point-cloud definition dictionary linkage",
   }
 
   const auto &metadata = graphic.dwgAdvancedMetadata();
-  REQUIRE(metadata.dictionaries().size() == 1);
+  const auto sourceDictionaryIt = std::find_if(
+      metadata.dictionaries().cbegin(), metadata.dictionaries().cend(),
+      [](const auto &record) { return record.handle == 0xD40u; });
+  REQUIRE(sourceDictionaryIt != metadata.dictionaries().cend());
   REQUIRE(metadata.pointCloudDefinitions().size() == 1);
-  const auto &sourceDictionary = metadata.dictionaries().front();
+  const auto &sourceDictionary = *sourceDictionaryIt;
   const auto &sourceDefinition = metadata.pointCloudDefinitions().front();
   CHECK(sourceDictionary.handle == 0xD40u);
   CHECK(sourceDictionary.parentHandle == 0xCu);
@@ -10528,7 +10540,14 @@ TEST_CASE("RS_FilterDXFRW preserves nested point-cloud and Navisworks references
   }
 
   const auto &metadata = graphic.dwgAdvancedMetadata();
-  REQUIRE(metadata.dictionaries().size() == 3);
+  const auto hasDictionary = [&metadata](std::uint32_t handle) {
+    return std::any_of(
+        metadata.dictionaries().cbegin(), metadata.dictionaries().cend(),
+        [handle](const auto &record) { return record.handle == handle; });
+  };
+  CHECK(hasDictionary(0xD50u));
+  CHECK(hasDictionary(0xD51u));
+  CHECK(hasDictionary(0xD53u));
   REQUIRE(metadata.pointCloudDefinitions().size() == 1);
   REQUIRE(metadata.navisworksModelDefinitions().size() == 1);
   REQUIRE(metadata.navisworksModels().size() == 1);
