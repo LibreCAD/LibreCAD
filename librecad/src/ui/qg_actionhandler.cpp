@@ -193,7 +193,8 @@ bool QG_ActionHandler::command(const QString& cmd) const {
 
     RS_DEBUG->print("QG_ActionHandler::command: %s", cmd.toLatin1().data());
     const QString c = cmd.toLower().trimmed();
-    if (c == tr("escape", "escape, go back from action steps")) {
+    if (RS_Commands::matchesLocalizedCommand(c, "escape", "escape, go back from action steps",
+                                              "QG_ActionHandler")) {
         m_view->back(Qt::KeyboardModifier::NoModifier);
         RS_DEBUG->print("QG_ActionHandler::command: back");
         return true;
