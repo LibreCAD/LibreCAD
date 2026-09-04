@@ -91,7 +91,7 @@ void QG_DlgInitial::ok() {
     RS_SETTINGS->writeEntry("/Language",
                             cbLanguage->itemData(cbLanguage->currentIndex()));
     RS_SETTINGS->writeEntry("/LanguageCmd",
-                            cbLanguage->itemData(cbLanguage->currentIndex()));
+                            cbLanguageCmd->itemData(cbLanguageCmd->currentIndex()));
     RS_SETTINGS->endGroup();
 
     RS_SETTINGS->beginGroup("/Defaults");

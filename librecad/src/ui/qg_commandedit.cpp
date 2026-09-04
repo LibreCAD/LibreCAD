@@ -38,6 +38,24 @@
 #include "rs_math.h"
 #include "rs_settings.h"
 
+namespace {
+int calculatorCommandLength(const QString& input, bool acceptColon = false) {
+    static constexpr const char* commandNames[] = {"cal", "calculate"};
+    for (const char* commandName : commandNames) {
+        const QString localized = RS_Commands::localizedCommand(commandName,
+                                                                 "command to trigger cli calculator");
+        for (const QString& candidate : {QString::fromLatin1(commandName), localized}) {
+            if (!input.startsWith(candidate, Qt::CaseInsensitive))
+                continue;
+            const int length = candidate.size();
+            if (input.size() == length || input.at(length).isSpace()
+                || (acceptColon && input.at(length) == QLatin1Char(':')))
+                return length;
+        }
+    }
+    return -1;
+}
+}
 
 /**
  * Default Constructor. You must call init manually if you choose
@@ -252,16 +270,12 @@ void QG_CommandEdit::processInput(QString input)
 QString QG_CommandEdit::filterCliCal(const QString& cmd)
 {
     QString str=cmd.trimmed();
-    const QRegularExpression calCmd(R"(^\s*(cal|calculate)\s?)", QRegularExpression::CaseInsensitiveOption);
-    QRegularExpressionMatch match = calCmd.match(str);
-    if(!(match.hasMatch()
-         || str.startsWith(QObject::tr("cal ","command to trigger cli calculator"), Qt::CaseInsensitive)
-         || str.startsWith(QObject::tr("calculate ","command to trigger cli calculator"), Qt::CaseInsensitive)
-                           )) {
+    const int commandLength = calculatorCommandLength(str);
+    if (commandLength < 0) {
         return cmd;
     }
-    int index = match.capturedEnd(0);
-    bool spaceFound=(index>=0);
+    int index = commandLength;
+    bool spaceFound = index < str.size() && str.at(index).isSpace();
     str=str.mid(index);
     index=str.indexOf(QRegularExpression(R"(\S)"));
     if(!(spaceFound && index>=0))
@@ -294,7 +308,7 @@ bool QG_CommandEdit::isForeignCommand(QString input)
     else if ((input = filterCliCal(input)).isEmpty()) {
         r_value = false;
     }
-    else if (input == QObject::tr("cal"))
+    else if (calculatorCommandLength(input.trimmed(), true) >= 0)
     {
         calculator_mode = !calculator_mode;
         if(calculator_mode)
@@ -391,5 +405,4 @@ void QG_CommandEdit::modifiedPaste()
     txt.replace("\n", ";");
     setText(txt);
 }
-
 

@@ -107,7 +107,7 @@ void QG_DlgOptionsGeneral::init()
 
     // set current language:
     setLanguageItem(cbLanguage, "/Language");
-    setLanguageItem(cbLanguageCmd, "/Language");
+    setLanguageItem(cbLanguageCmd, "/LanguageCmd");
 
     // graphic view:
 

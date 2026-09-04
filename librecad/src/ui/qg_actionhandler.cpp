@@ -1279,7 +1279,8 @@ bool QG_ActionHandler::command(const QString& cmd)
     RS_DEBUG->print("QG_ActionHandler::command: %s", cmd.toLatin1().data());
     QString c = cmd.toLower();
 
-    if (c==tr("escape", "escape, go back from action steps"))
+    if (RS_Commands::matchesLocalizedCommand(c, "escape", "escape, go back from action steps",
+                                             "QG_ActionHandler"))
     {
         view->back();
         RS_DEBUG->print("QG_ActionHandler::command: back");
