@@ -2474,6 +2474,7 @@ if (BUILD_TESTS)
         librecad/src/lib/modification/tests/rs_modification_trim_tests.cpp
         librecad/src/lib/filters/tests/dwg_buffer_round_trip_tests.cpp
         librecad/src/lib/creation/tests/lc_action_draw_line_parallel_tests.cpp
+        librecad/src/lib/creation/tests/lc_action_draw_polyline_tests.cpp
         librecad/src/lib/engine/undo/tests/rs_undo_tests.cpp
         librecad/src/lib/filters/tests/dwg_entity_encode_round_trip_tests.cpp
         librecad/src/lib/filters/tests/dwg_header_encode_round_trip_tests.cpp
@@ -2794,6 +2795,9 @@ if (BUILD_TESTS)
     add_librecad_filter_micro_test(
         librecad_acis_wireframe_tests
         librecad/src/lib/filters/tests/acis_wireframe_tests.cpp)
+    add_librecad_filter_micro_test(
+        librecad_polyline_command_tests
+        librecad/src/lib/creation/tests/lc_action_draw_polyline_tests.cpp)
     add_executable(librecad_console_command_utils_tests
         EXCLUDE_FROM_ALL
         librecad/src/main/lc_release_label.cpp

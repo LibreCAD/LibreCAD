@@ -62,7 +62,7 @@ public:
         // RadAngCenp
     };
 
-    explicit LC_ActionDrawPolyline(LC_ActionContext *actionContext);
+    explicit LC_ActionDrawPolyline(LC_ActionContext *actionContext, bool startInLineMode = false);
     ~LC_ActionDrawPolyline() override;
     void reset() const;
     void init(int status) override;
@@ -133,6 +133,8 @@ protected:
     double m_radius = 0.;
     double m_angleDegrees = 0.;
     SegmentMode m_mode{};
+    bool m_startInLineMode = false;
+    bool m_modeWasExplicitlySet = false;
     bool m_alternateArc = false;
     int m_reversed = 1;
     bool m_calculatedSegment = false;

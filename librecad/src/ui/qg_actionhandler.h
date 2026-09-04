@@ -62,7 +62,7 @@ public:
     void setDocumentAndView(RS_Document* doc, RS_GraphicView* graphicView);
     void setActionContext(LC_DefaultActionContext* actionContext) {m_actionContext = actionContext;}
     void setSnapManager(LC_SnapManager* snapManager);
-    std::shared_ptr<RS_ActionInterface> createActionInstance(RS2::ActionType id, void* data) const;
+    virtual std::shared_ptr<RS_ActionInterface> createActionInstance(RS2::ActionType id, void* data) const;
 public slots:
     void setSnaps(const RS_SnapMode&s) const;
     void slotSnapMiddleManual() const;
