@@ -37,6 +37,8 @@
 
 #define RS_SYSTEM RS_System::instance()
 
+class QTranslator;
+
 /**
  * Class for some system methods such as file system operations.
  * Implemented as singleton. Use init to Initialize the class
@@ -176,6 +178,8 @@ public:
     static QString getEncoding(const QString& str);
 
     void loadTranslation(const QString& lang, const QString& langCmd);
+    QString translateCommand(const char* source, const char* disambiguation = nullptr,
+                             const char* context = "QObject") const;
 
     static bool test();
 
@@ -199,6 +203,7 @@ protected:
     bool initialized {false};
     bool externalAppDir {false};
     QList<QSharedPointer<RS_Locale> > allKnownLocales;
+    QTranslator* m_commandTranslator{nullptr};
 };
 
 #endif

@@ -58,6 +58,11 @@ public:
     RS2::ActionType keycodeToAction(const QString& code) const;
 
     static QString command(const QString& cmd);
+    static QString localizedCommand(const char* source, const char* disambiguation = nullptr,
+                                    const char* context = "QObject");
+    static bool matchesLocalizedCommand(const QString& command, const char* source,
+                                        const char* disambiguation = nullptr,
+                                        const char* context = "QObject");
 
     static bool checkCommand(const QString& cmd, const QString& str,
                              RS2::ActionType action=RS2::ActionNone);

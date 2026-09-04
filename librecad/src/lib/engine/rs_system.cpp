@@ -390,14 +390,9 @@ void RS_System::initAllLanguagesList() {
 
 
 /**
- * Loads a different translation for the application GUI.
- *
- *fixme, need to support command language
+ * Loads .qm translation files for the application GUI and command line.
  */
-/**
- * Loads .qm translation files matching the requested language (case-insensitive).
- */
-void RS_System::loadTranslation(const QString& lang, const QString& /*langCmd*/)
+void RS_System::loadTranslation(const QString& lang, const QString& langCmd)
 {
     if (lang.trimmed().isEmpty())
         return;
@@ -473,13 +468,48 @@ void RS_System::loadTranslation(const QString& lang, const QString& /*langCmd*/)
             }
 
             if (tr[0] && tr[1] && tr[2])
-                return;
+                break;
         }
+
+        if (tr[0] && tr[1] && tr[2])
+            break;
     }
 
     if (!loadedAny) {
         LC_ERR << "No matching .qm files for language: " << lang;
     }
+
+    delete m_commandTranslator;
+    m_commandTranslator = nullptr;
+
+    if (langCmd.trimmed().isEmpty())
+        return;
+
+    const QLocale commandLocale(langCmd.trimmed());
+    for (const QString& path : std::as_const(paths)) {
+        QDir dir(path);
+        for (const QString& file : dir.entryList({"librecad_*.qm"}, QDir::Files)) {
+            QString language = file.mid(9);
+            language.chop(3);
+            if (commandLocale != QLocale(language))
+                continue;
+
+            QTranslator* translator = new QTranslator(nullptr);
+            if (translator->load(dir.absoluteFilePath(file))) {
+                m_commandTranslator = translator;
+                return;
+            }
+            delete translator;
+        }
+    }
+}
+
+QString RS_System::translateCommand(const char* source, const char* disambiguation,
+                                    const char* context) const {
+    const QString translation = m_commandTranslator != nullptr
+                                    ? m_commandTranslator->translate(context, source, disambiguation)
+                                    : QString{};
+    return translation.isEmpty() ? QString::fromUtf8(source) : translation;
 }
 
 /**
