@@ -89,7 +89,7 @@ void QG_DlgInitial::setPixmap(const QPixmap& p) const {
 void QG_DlgInitial::ok() {
     LC_GROUP_GUARD("Appearance"); {
         LC_SET("Language",cbLanguage->itemData(cbLanguage->currentIndex()).toString());
-        LC_SET("LanguageCmd",cbLanguage->itemData(cbLanguage->currentIndex()).toString());
+        LC_SET("LanguageCmd",cbLanguageCmd->itemData(cbLanguageCmd->currentIndex()).toString());
     }
 
     LC_SET_ONE("Defaults", "Unit", cbUnit->currentText());

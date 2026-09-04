@@ -45,13 +45,11 @@ constexpr auto PREFIX_FN = "Fn";
 constexpr auto PREFIX_ALT = "Alt-";
 constexpr auto PREFIX_META = "Meta-";
 
-/*
-struct LC_CommandItem {
-    const std::vector<std::pair<QString, QString>> m_fullCmdList;
-    const std::vector<std::pair<QString, QString>> m_shortCmdList;
-    RS2::ActionType m_actionType;
-};
-*/
+QString resolveCommandText(const LC_CommandText& text) {
+    return text.translatable
+               ? RS_SYSTEM->translateCommand(text.source, text.disambiguation)
+               : QString::fromUtf8(text.source);
+}
 
 // helper function to check and report command collision
 template<typename T1, typename T2>
@@ -104,8 +102,8 @@ void writeAliasFile(const QString& aliasName,
 
     // full commands should be used first
     for(const auto& item: g_commandList) {
-        for(const auto& [fullCmd, translation]: item.fullCmdList) {
-            actionToMain.emplace(item.actionType, fullCmd);
+        for(const auto& command: item.fullCmdList) {
+            actionToMain.emplace(item.actionType, QString::fromUtf8(command.first.source));
         }
     }
 
@@ -164,7 +162,9 @@ RS_Commands::RS_Commands() {
 
     for(const auto& [fullCmdList, aliasList, action]: g_commandList){
         //add full commands
-        for(const auto& [fullCmd, cmdTranslation]: fullCmdList){
+        for(const auto& [fullCmdText, cmdTranslationText]: fullCmdList){
+            const QString fullCmd = resolveCommandText(fullCmdText);
+            const QString cmdTranslation = resolveCommandText(cmdTranslationText);
             if (fullCmd == cmdTranslation) {
                 continue;
             }
@@ -177,7 +177,8 @@ RS_Commands::RS_Commands() {
                 m_actionToCommand.emplace(action, cmdTranslation);
             }
         }
-        for(const auto& [fullCmd, cmdTranslation]: fullCmdList){
+        for(const auto& command: fullCmdList){
+            const QString fullCmd = resolveCommandText(command.first);
             if(isCollisionFree(m_mainCommands, fullCmd, action, m_actionToCommand.count(action) ? m_actionToCommand[action] : QString{})) {
                 // enable english commands, if no conflict is found
                 m_mainCommands.emplace(fullCmd, action);
@@ -185,7 +186,9 @@ RS_Commands::RS_Commands() {
             }
         }
         //add short commands
-        for(const auto& [alias, aliasTranslation]: aliasList){
+        for(const auto& [aliasText, aliasTranslationText]: aliasList){
+            const QString alias = resolveCommandText(aliasText);
+            const QString aliasTranslation = resolveCommandText(aliasTranslationText);
             if (alias == aliasTranslation) {
                 continue;
             }
@@ -200,7 +203,9 @@ RS_Commands::RS_Commands() {
                 }
             }
         }
-        for(const auto& [alias, aliasTranslation]: aliasList){
+        for(const auto& [aliasText, aliasTranslationText]: aliasList){
+            const QString alias = resolveCommandText(aliasText);
+            const QString aliasTranslation = resolveCommandText(aliasTranslationText);
             if(isCollisionFree(m_shortCommands, alias, action, m_actionToCommand.count(action) ? m_actionToCommand[action] : QString{})) {
                 // enable english short commands, if no conflict is found
                 m_shortCommands.emplace(alias, action);
@@ -212,8 +217,8 @@ RS_Commands::RS_Commands() {
     }
 
     // translations, overriding existing translation
-    for(const auto& [command, translation]: g_transList) {
-        m_cmdTranslation[command] = translation;
+    for(const auto& [commandText, translationText]: g_transList) {
+        m_cmdTranslation[resolveCommandText(commandText)] = resolveCommandText(translationText);
     }
 
     // prefer to use translated commands and aliases
@@ -456,6 +461,17 @@ QString RS_Commands::command(const QString& cmd) {
     RS_DEBUG->print(RS_Debug::D_WARNING,
                     "RS_Commands::command: command '%s' unknown", cmd.toLatin1().data());
     return "";
+}
+
+QString RS_Commands::localizedCommand(const char* source, const char* disambiguation,
+                                      const char* context) {
+    return RS_SYSTEM->translateCommand(source, disambiguation, context);
+}
+
+bool RS_Commands::matchesLocalizedCommand(const QString& command, const char* source,
+                                          const char* disambiguation, const char* context) {
+    return command.compare(QLatin1String(source), Qt::CaseInsensitive) == 0
+           || command.compare(localizedCommand(source, disambiguation, context), Qt::CaseInsensitive) == 0;
 }
 
 

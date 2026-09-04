@@ -257,7 +257,8 @@ void QG_CommandWidget::tabPressed() const {
 void QG_CommandWidget::escape() const {
     //leCommand->clearFocus();
     if (m_actionHandler != nullptr) {
-        m_actionHandler->command(QString(tr("escape", "escape, go back from action steps")));
+        m_actionHandler->command(RS_Commands::localizedCommand("escape", "escape, go back from action steps",
+                                                                "QG_ActionHandler"));
     }
 }
 

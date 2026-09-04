@@ -35,6 +35,7 @@
 
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
+#include "rs_commands.h"
 #include "rs_math.h"
 #include "rs_settings.h"
 
@@ -44,6 +45,25 @@ namespace {
 constexpr unsigned g_maxLinesToRead = 10240;
 // the maximum line length allowed
 constexpr unsigned g_maxLineLength = 4096;
+
+int calculatorCommandLength(const QString& input, const bool acceptColon = false) {
+    static constexpr const char* commandNames[] = {"cal", "calculate"};
+    for (const char* commandName : commandNames) {
+        const QString localized = RS_Commands::localizedCommand(commandName,
+                                                                 "command to trigger cli calculator");
+        for (const QString& candidate : {QString::fromLatin1(commandName), localized}) {
+            if (!input.startsWith(candidate, Qt::CaseInsensitive)) {
+                continue;
+            }
+            const int length = candidate.size();
+            if (input.size() == length || input.at(length).isSpace()
+                || (acceptColon && input.at(length) == QLatin1Char(':'))) {
+                return length;
+            }
+        }
+    }
+    return -1;
+}
 
 // returns true, if value exists, evaluated and printed to output
 bool calculatorEvaluation(const QString& input){
@@ -269,16 +289,12 @@ void QG_CommandEdit::processInput(QString input) {
  */
 QString QG_CommandEdit::filterCliCal(const QString& cmd) {
     QString str = cmd.trimmed();
-    static const QRegularExpression CAL_CMD(R"(^\s*(cal|calculate)\s?)", QRegularExpression::CaseInsensitiveOption);
-    const QRegularExpressionMatch match = CAL_CMD.match(str);
-    if (!(match.hasMatch()
-        || str.startsWith(QObject::tr("cal ", "command to trigger cli calculator"), Qt::CaseInsensitive)
-        || str.startsWith(QObject::tr("calculate ", "command to trigger cli calculator"), Qt::CaseInsensitive)
-    )) {
+    const int commandLength = calculatorCommandLength(str);
+    if (commandLength < 0) {
         return cmd;
     }
-    int index = match.capturedEnd(0);
-    const bool spaceFound = (index >= 0);
+    int index = commandLength;
+    const bool spaceFound = index < str.size() && str.at(index).isSpace();
     str = str.mid(index);
     static QRegularExpression reSpace(R"(\S)");
     index = str.indexOf(reSpace);
@@ -308,7 +324,7 @@ bool QG_CommandEdit::isForeignCommand(QString input) {
     else if ((input = filterCliCal(input)).isEmpty()) {  // fixme - sand - rework this!!!
         r_value = false;
     }
-    else if (input.startsWith(QObject::tr("cal"))) {
+    else if (calculatorCommandLength(input.trimmed(), true) >= 0) {
         // Allow inline calculation. Tweak the calculator mode only if there's
         // no expression after "cal " or "cal:"
         if (!calculatorEvaluation(input)) {

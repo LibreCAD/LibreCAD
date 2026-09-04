@@ -393,11 +393,9 @@ void RS_System::initAllLanguagesList() {
 }
 
 /**
- * Loads a different translation for the application GUI.
- *
- *fixme, need to support command language
+ * Loads translations for the application GUI and command line.
  */
-void RS_System::loadTranslation(const QString& lang, const QString& /*langCmd*/) {
+void RS_System::loadTranslation(const QString& lang, const QString& langCmd) {
     static QTranslator* tQt = nullptr;
     static QTranslator* tLibreCAD = nullptr;
     static QTranslator* tPlugIns = nullptr;
@@ -414,6 +412,17 @@ void RS_System::loadTranslation(const QString& lang, const QString& /*langCmd*/)
     else {
         langLower = lang;
         langUpper.clear();
+    }
+    QString langCmdLower("");
+    QString langCmdUpper("");
+    const int i1 = langCmd.indexOf('_');
+    if (i1 >= 2 && langCmd.size() - i1 >= 2) {
+        langCmdLower = langCmd.left(i1) + '_' + langCmd.mid(i1 + 1).toLower();
+        langCmdUpper = langCmd.left(i1) + '_' + langCmd.mid(i1 + 1).toUpper();
+    }
+    else {
+        langCmdLower = langCmd;
+        langCmdUpper.clear();
     }
     // search in various directories for translations
     QStringList lst = getDirectoryList( "qm");
@@ -477,6 +486,28 @@ void RS_System::loadTranslation(const QString& lang, const QString& /*langCmd*/)
     }
 
     delete t;
+
+    delete m_commandTranslator;
+    m_commandTranslator = new QTranslator(nullptr);
+    const QString commandFileLower = "librecad_" + langCmdLower + ".qm";
+    const QString commandFileUpper = "librecad_" + langCmdUpper + ".qm";
+    for (const QString& directory : lst) {
+        if (m_commandTranslator->load(commandFileLower, directory)
+            || (!langCmdUpper.isEmpty() && m_commandTranslator->load(commandFileUpper, directory))) {
+            return;
+        }
+    }
+
+    delete m_commandTranslator;
+    m_commandTranslator = nullptr;
+}
+
+QString RS_System::translateCommand(const char* source, const char* disambiguation,
+                                    const char* context) const {
+    const QString translation = m_commandTranslator != nullptr
+                                    ? m_commandTranslator->translate(context, source, disambiguation)
+                                    : QString{};
+    return translation.isEmpty() ? QString::fromUtf8(source) : translation;
 }
 
 

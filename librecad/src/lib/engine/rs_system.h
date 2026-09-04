@@ -33,6 +33,7 @@
 #include <QSharedPointer>
 
 class RS_Locale;
+class QTranslator;
 /**
  * Class for some system methods such as file system operations.
  * Implemented as singleton. Use init to Initialize the class
@@ -154,6 +155,8 @@ public:
     static QString getEncoding(const QString& str);
 
     void loadTranslation(const QString& lang, const QString& langCmd);
+    QString translateCommand(const char* source, const char* disambiguation = nullptr,
+                             const char* context = "QObject") const;
 
     /** Returns ISO code for given locale. Needed for win32 to convert
      *  from system encodings.
@@ -174,6 +177,7 @@ protected:
     bool m_initialized{false};
     bool m_externalAppDir{false};
     QList<QSharedPointer<RS_Locale>> m_allKnownLocales;
+    QTranslator* m_commandTranslator{nullptr};
 };
 
 #endif
