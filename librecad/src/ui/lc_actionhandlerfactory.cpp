@@ -453,7 +453,8 @@ namespace InnerFactory{
                 return new LC_ActionDrawLineRelAngle(ctx, M_PI_2, false);
             }
             case RS2::ActionDrawPolyline: {
-                return new LC_ActionDrawPolyline(ctx);
+                const auto* startInLineMode = static_cast<const bool*>(data);
+                return new LC_ActionDrawPolyline(ctx, startInLineMode != nullptr && *startInLineMode);
             }
             case RS2::ActionDrawLineOrthogonalRel: {
                 return new LC_ActionDrawLineAngleRel(ctx, 90.0, true);

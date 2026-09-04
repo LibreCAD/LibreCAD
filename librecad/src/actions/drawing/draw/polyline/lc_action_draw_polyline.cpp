@@ -41,8 +41,9 @@
 #include "emu_c99.h"
 #endif
 
-LC_ActionDrawPolyline::LC_ActionDrawPolyline(LC_ActionContext *actionContext)
+LC_ActionDrawPolyline::LC_ActionDrawPolyline(LC_ActionContext *actionContext, const bool startInLineMode)
         :LC_UndoableDocumentModificationAction("ActionDrawPolyline",actionContext, RS2::ActionDrawPolyline)
+        , m_startInLineMode(startInLineMode)
         , m_actionData(std::make_unique<Points>()){
     reset();
 }
@@ -56,7 +57,9 @@ LC_ActionDrawPolyline::LC_ActionDrawPolyline(const QString& name, LC_ActionConte
 LC_ActionDrawPolyline::~LC_ActionDrawPolyline() = default;
 
 void LC_ActionDrawPolyline::doSaveOptions() {
-    save("Mode", m_mode);
+    if (!m_startInLineMode || m_modeWasExplicitlySet) {
+        save("Mode", m_mode);
+    }
     save("Radius", m_radius);
     save("Angle", m_angleDegrees);
     save("Reversed", m_reversed);
@@ -64,7 +67,7 @@ void LC_ActionDrawPolyline::doSaveOptions() {
 
 void LC_ActionDrawPolyline::doLoadOptions() {
     int mode = loadInt("Mode", SegmentMode::Line);
-    m_mode = static_cast<SegmentMode>(mode);
+    m_mode = m_startInLineMode ? Line : static_cast<SegmentMode>(mode);
     m_radius = loadDouble("Radius", 10.0);
     m_angleDegrees = loadDouble("Angle", 90.0);
     m_reversed = loadBool("Reversed", false);
@@ -450,6 +453,7 @@ void LC_ActionDrawPolyline::onCoordinateEvent(const int status, [[maybe_unused]]
 
 void LC_ActionDrawPolyline::setMode(const SegmentMode m){
     m_mode = m;
+    m_modeWasExplicitlySet = true;
     updateActionPrompt();
 }
 
@@ -506,27 +510,27 @@ bool LC_ActionDrawPolyline::doProcessCommand(const int status, const QString &co
     bool accept = false;
     // fixme - sand - register in commands
     if (checkCommand("li", command)){
-        m_mode = Line;
+        setMode(Line);
         updateOptions();
         accept = true;
     }
     else if (checkCommand("tan",command)){
-        m_mode = Tangential;
+        setMode(Tangential);
         updateOptions();
         accept = true;
     }
     else if (checkCommand("tar", command)){
-        m_mode = TangentalArcFixedRadius;
+        setMode(TangentalArcFixedRadius);
         updateOptions();
         accept = true;
     }
     else if (checkCommand("taa", command)){
-        m_mode = TangentalArcFixedRadius;
+        setMode(TangentalArcFixedAngle);
         updateOptions();
         accept = true;
     }
     else if (checkCommand("aa", command)){
-        m_mode = ArcFixedAngle;
+        setMode(ArcFixedAngle);
         updateOptions();
         accept = true;
     }

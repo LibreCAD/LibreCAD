@@ -220,7 +220,8 @@ bool QG_ActionHandler::command(const QString& cmd) const {
             //special handling, currently needed for snap actions
             if (!m_snapManager->tryToProcessSnapActions(type)) {
                 //not handled yet
-                setCurrentAction(type);
+                bool startInLineMode = type == RS2::ActionDrawPolyline;
+                setCurrentAction(type, startInLineMode ? &startInLineMode : nullptr);
             }
             RS_DEBUG->print("QG_ActionHandler::command: current action set");
             return true;
