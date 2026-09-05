@@ -1463,8 +1463,15 @@ bool dwgWriter15::getEmittedDwgBlockWriteResult(
     return true;
 }
 
-bool dwgWriter15::emitLtypeRecord(std::uint32_t handle, const DRW_LType& lt) {
-    DRW_LType object = lt;
+// Shared body of the per-type table-record emitters below.  Each of them
+// differs only in the DRW type it copies and the DWG object-type code it
+// stamps into the preamble, so the sequence - copy, prepare common object
+// state, prepare table-entry EED, open the object, write the standard
+// preamble, encode the payload, finish the record - lives here once.
+template <typename T>
+bool dwgWriter15::emitTableRecord(std::uint32_t handle, const T& source,
+                                  std::uint16_t objectType) {
+    T object = source;
     if (!prepareDwgCommonObjectState(object, m_version))
         return false;
     std::vector<DRW_Entity::PendingHandleRef> appIdRefs;
@@ -1473,7 +1480,7 @@ bool dwgWriter15::emitLtypeRecord(std::uint32_t handle, const DRW_LType& lt) {
         return false;
     dwgBufferW& body = beginObject(handle);
     dwgBufferW *sb, *hb;
-    if (!emitRecordPreamble(body, m_version, DRW::DwgLTypeObjectType, handle,
+    if (!emitRecordPreamble(body, m_version, objectType, handle,
                             m_objectStrings, m_objectHandles, sb, hb,
                             object.reactorCount(), object.extensionDictionaryFlag(),
                             object.hasDataStorageBinaryData(), &object.extData,
@@ -1483,6 +1490,10 @@ bool dwgWriter15::emitLtypeRecord(std::uint32_t handle, const DRW_LType& lt) {
         return false;
 
     return finishTableRecord(handle);
+}
+
+bool dwgWriter15::emitLtypeRecord(std::uint32_t handle, const DRW_LType& lt) {
+    return emitTableRecord(handle, lt, DRW::DwgLTypeObjectType);
 }
 
 bool dwgWriter15::emitLayerRecord(std::uint32_t handle, const DRW_Layer& lay) {
@@ -1519,91 +1530,19 @@ bool dwgWriter15::emitLayerRecord(std::uint32_t handle, const DRW_Layer& lay) {
 }
 
 bool dwgWriter15::emitStyleRecord(std::uint32_t handle, const DRW_Textstyle& ts) {
-    DRW_Textstyle object = ts;
-    if (!prepareDwgCommonObjectState(object, m_version))
-        return false;
-    std::vector<DRW_Entity::PendingHandleRef> appIdRefs;
-    std::vector<DRW_Entity::PendingHandleRef> layerRefs;
-    if (!prepareTableEntryEed(object, appIdRefs, layerRefs))
-        return false;
-    dwgBufferW& body = beginObject(handle);
-    dwgBufferW *sb, *hb;
-    if (!emitRecordPreamble(body, m_version, DRW::DwgStyleObjectType, handle,
-                            m_objectStrings, m_objectHandles, sb, hb,
-                            object.reactorCount(), object.extensionDictionaryFlag(),
-                            object.hasDataStorageBinaryData(), &object.extData,
-                            &appIdRefs, &layerRefs, fileCodePageId()))
-        return false;
-    if (!object.encodeDwg(m_version, &body, sb, hb))
-        return false;
-
-    return finishTableRecord(handle);
+    return emitTableRecord(handle, ts, DRW::DwgStyleObjectType);
 }
 
 bool dwgWriter15::emitUcsRecord(std::uint32_t handle, const DRW_UCS& ucs) {
-    DRW_UCS object = ucs;
-    if (!prepareDwgCommonObjectState(object, m_version))
-        return false;
-    std::vector<DRW_Entity::PendingHandleRef> appIdRefs;
-    std::vector<DRW_Entity::PendingHandleRef> layerRefs;
-    if (!prepareTableEntryEed(object, appIdRefs, layerRefs))
-        return false;
-    dwgBufferW& body = beginObject(handle);
-    dwgBufferW *sb, *hb;
-    if (!emitRecordPreamble(body, m_version, DRW::DwgUcsObjectType, handle,
-                            m_objectStrings, m_objectHandles, sb, hb,
-                            object.reactorCount(), object.extensionDictionaryFlag(),
-                            object.hasDataStorageBinaryData(), &object.extData,
-                            &appIdRefs, &layerRefs, fileCodePageId()))
-        return false;
-    if (!object.encodeDwg(m_version, &body, sb, hb))
-        return false;
-
-    return finishTableRecord(handle);
+    return emitTableRecord(handle, ucs, DRW::DwgUcsObjectType);
 }
 
 bool dwgWriter15::emitViewRecord(std::uint32_t handle, const DRW_View& view) {
-    DRW_View object = view;
-    if (!prepareDwgCommonObjectState(object, m_version))
-        return false;
-    std::vector<DRW_Entity::PendingHandleRef> appIdRefs;
-    std::vector<DRW_Entity::PendingHandleRef> layerRefs;
-    if (!prepareTableEntryEed(object, appIdRefs, layerRefs))
-        return false;
-    dwgBufferW& body = beginObject(handle);
-    dwgBufferW *sb, *hb;
-    if (!emitRecordPreamble(body, m_version, DRW::DwgViewObjectType, handle,
-                            m_objectStrings, m_objectHandles, sb, hb,
-                            object.reactorCount(), object.extensionDictionaryFlag(),
-                            object.hasDataStorageBinaryData(), &object.extData,
-                            &appIdRefs, &layerRefs, fileCodePageId()))
-        return false;
-    if (!object.encodeDwg(m_version, &body, sb, hb))
-        return false;
-
-    return finishTableRecord(handle);
+    return emitTableRecord(handle, view, DRW::DwgViewObjectType);
 }
 
 bool dwgWriter15::emitVportRecord(std::uint32_t handle, const DRW_Vport& vp) {
-    DRW_Vport object = vp;
-    if (!prepareDwgCommonObjectState(object, m_version))
-        return false;
-    std::vector<DRW_Entity::PendingHandleRef> appIdRefs;
-    std::vector<DRW_Entity::PendingHandleRef> layerRefs;
-    if (!prepareTableEntryEed(object, appIdRefs, layerRefs))
-        return false;
-    dwgBufferW& body = beginObject(handle);
-    dwgBufferW *sb, *hb;
-    if (!emitRecordPreamble(body, m_version, DRW::DwgVPortObjectType, handle,
-                            m_objectStrings, m_objectHandles, sb, hb,
-                            object.reactorCount(), object.extensionDictionaryFlag(),
-                            object.hasDataStorageBinaryData(), &object.extData,
-                            &appIdRefs, &layerRefs, fileCodePageId()))
-        return false;
-    if (!object.encodeDwg(m_version, &body, sb, hb))
-        return false;
-
-    return finishTableRecord(handle);
+    return emitTableRecord(handle, vp, DRW::DwgVPortObjectType);
 }
 
 bool dwgWriter15::emitViewportEntityHeaderRecord(
@@ -1640,47 +1579,11 @@ bool dwgWriter15::emitViewportEntityHeaderRecord(
 }
 
 bool dwgWriter15::emitAppIdRecord(std::uint32_t handle, const DRW_AppId& ai) {
-    DRW_AppId object = ai;
-    if (!prepareDwgCommonObjectState(object, m_version))
-        return false;
-    std::vector<DRW_Entity::PendingHandleRef> appIdRefs;
-    std::vector<DRW_Entity::PendingHandleRef> layerRefs;
-    if (!prepareTableEntryEed(object, appIdRefs, layerRefs))
-        return false;
-    dwgBufferW& body = beginObject(handle);
-    dwgBufferW *sb, *hb;
-    if (!emitRecordPreamble(body, m_version, DRW::DwgAppIdObjectType, handle,
-                            m_objectStrings, m_objectHandles, sb, hb,
-                            object.reactorCount(), object.extensionDictionaryFlag(),
-                            object.hasDataStorageBinaryData(), &object.extData,
-                            &appIdRefs, &layerRefs, fileCodePageId()))
-        return false;
-    if (!object.encodeDwg(m_version, &body, sb, hb))
-        return false;
-
-    return finishTableRecord(handle);
+    return emitTableRecord(handle, ai, DRW::DwgAppIdObjectType);
 }
 
 bool dwgWriter15::emitDimstyleRecord(std::uint32_t handle, const DRW_Dimstyle& ds) {
-    DRW_Dimstyle object = ds;
-    if (!prepareDwgCommonObjectState(object, m_version))
-        return false;
-    std::vector<DRW_Entity::PendingHandleRef> appIdRefs;
-    std::vector<DRW_Entity::PendingHandleRef> layerRefs;
-    if (!prepareTableEntryEed(object, appIdRefs, layerRefs))
-        return false;
-    dwgBufferW& body = beginObject(handle);
-    dwgBufferW *sb, *hb;
-    if (!emitRecordPreamble(body, m_version, DRW::DwgDimStyleObjectType, handle,
-                            m_objectStrings, m_objectHandles, sb, hb,
-                            object.reactorCount(), object.extensionDictionaryFlag(),
-                            object.hasDataStorageBinaryData(), &object.extData,
-                            &appIdRefs, &layerRefs, fileCodePageId()))
-        return false;
-    if (!object.encodeDwg(m_version, &body, sb, hb))
-        return false;
-
-    return finishTableRecord(handle);
+    return emitTableRecord(handle, ds, DRW::DwgDimStyleObjectType);
 }
 
 bool dwgWriter15::emitAcDbPlaceholderObject(
