@@ -339,8 +339,7 @@ TEST_CASE("LibreDWG 2007 HELIX DXF fixture reads through addHelix",
   const std::string path =
       "D:/data/dli/libredwg/test/test-data/2007/Helix.dxf";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("LibreDWG 2007 Helix.dxf fixture not found; skipping");
-    return;
+    SKIP("LibreDWG 2007 Helix.dxf fixture not found; skipping");
   }
 
   HelixCapture cap;

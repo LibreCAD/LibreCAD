@@ -127,8 +127,7 @@ TEST_CASE("DWG load profiling: phase timing for an arbitrary file", "[.dwg_profi
                     : (home ? std::string(home) + "/doc/dwg4/\xe6\xa4\x8d\xe7\x89\xa9.dwg"
                             : std::string());
   if (path.empty() || !std::filesystem::is_regular_file(path)) {
-    SUCCEED("profiling target not present; skipping (path=" << path << ")");
-    return;
+    SKIP("profiling target not present; skipping (path=" << path << ")");
   }
 
   std::cout << "\n=== DWG load profiling: " << path << " ===\n";
@@ -215,14 +214,12 @@ TEST_CASE("DWG load profiling: phase timing for an arbitrary file", "[.dwg_profi
 TEST_CASE("GUI import of usa_dollar100_front.dwg completes", "[.dwg6_gui_import]") {
   const char *home = std::getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path =
       std::string(home) + "/doc/dwg6/usa_dollar100_front.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("usa_dollar100_front.dwg not present; skipping");
-    return;
+    SKIP("usa_dollar100_front.dwg not present; skipping");
   }
 
   static int qargc = 1;
@@ -272,14 +269,12 @@ TEST_CASE("GUI import of usa_dollar100_front.dwg completes", "[.dwg6_gui_import]
 TEST_CASE("GUI import of makeall-plus.dwg counts entities", "[.dwg_makeall_gui]") {
   const char *home = std::getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path =
       std::string(home) + "/doc/dwg3/makeall-plus.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("makeall-plus.dwg not present; skipping");
-    return;
+    SKIP("makeall-plus.dwg not present; skipping");
   }
 
   static int qargc = 1;
@@ -332,14 +327,12 @@ TEST_CASE("GUI import of makeall-plus.dwg counts entities", "[.dwg_makeall_gui]"
 TEST_CASE("GUI import of visualization_condominium.dwg counts entities", "[.dwg_condo]") {
   const char *home = std::getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path =
       std::string(home) + "/doc/dwg/visualization_-_condominium_with_skylight.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("condo dwg not present; skipping");
-    return;
+    SKIP("condo dwg not present; skipping");
   }
 
   static int qargc = 1;

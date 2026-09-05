@@ -474,8 +474,7 @@ void printEntityReport(const std::string &filename, const EntityValidationIface 
 TEST_CASE("DWG tArch: validate all entities", "[.dwg_tarch]") {
   const std::filesystem::path manifest = "D:/data/dli/doc/dwg_files.txt";
   if (!std::filesystem::is_regular_file(manifest)) {
-    SUCCEED("DWG manifest not found at " << manifest << "; skipping tArch tests");
-    return;
+    SKIP("DWG manifest not found at " << manifest << "; skipping tArch tests");
   }
 
   std::vector<std::string> paths;
@@ -495,8 +494,7 @@ TEST_CASE("DWG tArch: validate all entities", "[.dwg_tarch]") {
   std::sort(paths.begin(), paths.end());
 
   if (paths.empty()) {
-    SUCCEED("No valid .dwg files found in manifest; skipping");
-    return;
+    SKIP("No valid .dwg files found in manifest; skipping");
   }
 
   std::cout << "\n"
@@ -553,8 +551,7 @@ TEST_CASE("DWG tArch: validate all entities", "[.dwg_tarch]") {
 TEST_CASE("DWG tArch: deep validation of selected files", "[.dwg_tarch_deep]") {
   const std::string dir = LIBRECAD_TEST_DIR "/tarch/";
   if (!std::filesystem::is_directory(dir)) {
-    SUCCEED("DWG directory not found; skipping deep tArch tests");
-    return;
+    SKIP("DWG directory not found; skipping deep tArch tests");
   }
 
   const char *targets[] = {
@@ -620,8 +617,7 @@ TEST_CASE("DWG tArch: VIEWPORT preserved as replayable raw carrier",
           "[dwg_tarch_viewport][viewport]") {
   const std::string path = LIBRECAD_TEST_DIR "/tarch/t1.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("t1.dwg fixture not found; skipping");
-    return;
+    SKIP("t1.dwg fixture not found; skipping");
   }
 
   ViewportRawCaptureIface iface;

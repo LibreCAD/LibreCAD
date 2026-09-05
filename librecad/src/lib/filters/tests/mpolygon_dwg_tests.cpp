@@ -138,8 +138,7 @@ TEST_CASE("DWG MPOLYGON is read into a DRW_MPolygon via parseDwg",
   const std::string path =
       std::string(LIBRECAD_TEST_DIR) + "/mpolygon_solid.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("mpolygon_solid.dwg fixture not found; skipping");
-    return;
+    SKIP("mpolygon_solid.dwg fixture not found; skipping");
   }
 
   MPolygonDwgCapture cap;

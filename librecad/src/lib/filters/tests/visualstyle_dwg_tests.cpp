@@ -141,8 +141,7 @@ TEST_CASE("DWG VISUALSTYLE r2010b+r2013b body decodes (Point.dwg / AC1027)",
           "[dwg][visualstyle][parity]") {
   const std::string path = std::string(LIBRECAD_TEST_DIR) + "/visualstyle_r2013.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("visualstyle_r2013.dwg fixture not found; skipping");
-    return;
+    SKIP("visualstyle_r2013.dwg fixture not found; skipping");
   }
 
   VisualStyleCapture cap;
@@ -209,8 +208,7 @@ TEST_CASE("DWG VISUALSTYLE legacy body decodes (Point_1.dwg / AC1021)",
           "[dwg][visualstyle][parity]") {
   const std::string path = std::string(LIBRECAD_TEST_DIR) + "/visualstyle_r2007.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("visualstyle_r2007.dwg fixture not found; skipping");
-    return;
+    SKIP("visualstyle_r2007.dwg fixture not found; skipping");
   }
 
   VisualStyleCapture cap;
@@ -219,8 +217,7 @@ TEST_CASE("DWG VISUALSTYLE legacy body decodes (Point_1.dwg / AC1021)",
     // section-name UTF-16 decode bug in dwgReader21::readMetaData) is now
     // fixed, so this normally reads and asserts the legacy-body decode below;
     // this branch only guards a missing/unreadable fixture.
-    SUCCEED("visualstyle_r2007.dwg: fixture unavailable");
-    return;
+    SKIP("visualstyle_r2007.dwg: fixture unavailable");
   }
   REQUIRE(cap.m_styles.size() >= 1);
 

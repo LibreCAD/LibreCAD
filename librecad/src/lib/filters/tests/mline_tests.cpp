@@ -455,13 +455,11 @@ TEST_CASE("DWG smoke: Multiline.dwg delivers >= 1 MLINE entity",
           "[.dwg_mline_probe]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set");
-    return;
+    SKIP("HOME not set");
   }
   const std::string path = std::string(home) + "/doc/dwg3/Multiline.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("~/doc/dwg3/Multiline.dwg not found");
-    return;
+    SKIP("~/doc/dwg3/Multiline.dwg not found");
   }
   MLineCapture capture;
   dwgR reader(path.c_str());

@@ -1658,8 +1658,7 @@ TEST_CASE("DWG surface entities retain typed and raw carriers",
   const std::string path =
       std::string(LIBRECAD_TEST_DIR) + "/assoc_surface_r2004.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("assoc_surface_r2004.dwg fixture not found; skipping");
-    return;
+    SKIP("assoc_surface_r2004.dwg fixture not found; skipping");
   }
 
   StubInterface cap;
@@ -1747,8 +1746,7 @@ TEST_CASE("DWG surface raw carriers replay through the filter",
   const std::string sourcePath =
       std::string(LIBRECAD_TEST_DIR) + "/assoc_surface_r2004.dwg";
   if (!std::filesystem::is_regular_file(sourcePath)) {
-    SUCCEED("assoc_surface_r2004.dwg fixture not found; skipping");
-    return;
+    SKIP("assoc_surface_r2004.dwg fixture not found; skipping");
   }
   ensureQtContext();
 
@@ -1795,8 +1793,7 @@ TEST_CASE("DWG dynblock_point has non-empty DataStorage records",
   const std::string path =
       std::string(LIBRECAD_TEST_DIR) + "/dynblock_point.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("dynblock_point.dwg fixture not found; skipping");
-    return;
+    SKIP("dynblock_point.dwg fixture not found; skipping");
   }
 
   StubInterface cap;
@@ -1890,7 +1887,7 @@ TEST_CASE("DWG DataStorage counts agree with independent TS reader",
     ++checked;
   }
   if (checked == 0u)
-    SUCCEED("DataStorage corpus fixtures not found; skipping");
+    SKIP("DataStorage corpus fixtures not found; skipping");
 }
 
 TEST_CASE("DWG AC1027 VISUALSTYLE keeps its physical DataStorage boundary",
@@ -1898,8 +1895,7 @@ TEST_CASE("DWG AC1027 VISUALSTYLE keeps its physical DataStorage boundary",
   const std::string path =
       std::string(LIBRECAD_TEST_DIR) + "/visualstyle_r2013.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("visualstyle_r2013.dwg fixture not found; skipping");
-    return;
+    SKIP("visualstyle_r2013.dwg fixture not found; skipping");
   }
 
   StubInterface cap;
@@ -1933,8 +1929,7 @@ TEST_CASE("DWG AC1027 modeler fixture binds DataStorage owner records",
   const std::string path =
       std::string(LIBRECAD_TEST_DIR) + "/datastorage_modeler_r2013.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("datastorage_modeler_r2013.dwg fixture not found; skipping");
-    return;
+    SKIP("datastorage_modeler_r2013.dwg fixture not found; skipping");
   }
 
   StubInterface cap;
@@ -2026,8 +2021,7 @@ TEST_CASE("DWG AC1027 fixture-derived DataStorage corruption stops publication",
   const std::filesystem::path sourcePath =
       std::string(LIBRECAD_TEST_DIR) + "/datastorage_modeler_r2013.dwg";
   if (!std::filesystem::is_regular_file(sourcePath)) {
-    SUCCEED("datastorage_modeler_r2013.dwg fixture not found; skipping");
-    return;
+    SKIP("datastorage_modeler_r2013.dwg fixture not found; skipping");
   }
 
   StubInterface source;
@@ -2142,8 +2136,7 @@ TEST_CASE("DWG AC1032 modeler fixture binds DataStorage owner records",
   const std::string path = std::string(LIBRECAD_TEST_DIR)
       + "/datastorage_modeler_r2018.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("datastorage_modeler_r2018.dwg fixture not found; skipping");
-    return;
+    SKIP("datastorage_modeler_r2018.dwg fixture not found; skipping");
   }
 
   StubInterface cap;
@@ -2224,8 +2217,7 @@ TEST_CASE("DWG AC1027 modeler fixture replays DataStorage through the filter",
   const std::filesystem::path sourcePath =
       std::string(LIBRECAD_TEST_DIR) + "/datastorage_modeler_r2013.dwg";
   if (!std::filesystem::is_regular_file(sourcePath)) {
-    SUCCEED("datastorage_modeler_r2013.dwg fixture not found; skipping");
-    return;
+    SKIP("datastorage_modeler_r2013.dwg fixture not found; skipping");
   }
 
   const std::filesystem::path sameVersionPath =
@@ -2415,8 +2407,7 @@ TEST_CASE("DWG AC1032 modeler fixture replays DataStorage through the filter",
   const std::filesystem::path sourcePath =
       std::string(LIBRECAD_TEST_DIR) + "/datastorage_modeler_r2018.dwg";
   if (!std::filesystem::is_regular_file(sourcePath)) {
-    SUCCEED("datastorage_modeler_r2018.dwg fixture not found; skipping");
-    return;
+    SKIP("datastorage_modeler_r2018.dwg fixture not found; skipping");
   }
 
   const std::filesystem::path sameVersionPath =
@@ -2861,8 +2852,7 @@ TEST_CASE("DWG DataStorage linkage is optional and handle keyed",
   }
 
   if (filesWithStorage == 0) {
-    SUCCEED("no DataStorage fixture available; linkage is optional");
-    return;
+    SKIP("no DataStorage fixture available; linkage is optional");
   }
   if (linkedModelers == 0)
     SUCCEED("available DataStorage fixtures contain no modeler entity");

@@ -427,10 +427,10 @@ std::uint32_t leU32(const std::vector<std::uint8_t>& b, size_t off) {
 TEST_CASE("DRW_Header::encodeDwg replays a real fixture header round-trip",
           "[.dwg_header_fixture_replay]") {
     const char* home = std::getenv("HOME");
-    if (home == nullptr) { SUCCEED("HOME not set"); return; }
+    if (home == nullptr) { SKIP("HOME not set"); return; }
     const std::string path = std::string(home) + "/doc/dwg2/Patterns-art-block.dwg";
     if (!std::filesystem::is_regular_file(path)) {
-        SUCCEED("~/doc/dwg2/Patterns-art-block.dwg not found"); return;
+        SKIP("~/doc/dwg2/Patterns-art-block.dwg not found"); return;
     }
 
     // Slurp the file for the section locator + original HEADER body.

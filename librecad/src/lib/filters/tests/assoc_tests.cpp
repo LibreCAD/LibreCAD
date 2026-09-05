@@ -169,7 +169,7 @@ public:
 // read fails outright. On success, asserts a clean read with no desync.
 bool tryReadAssoc(const std::string &path, AssocCapture &cap) {
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("fixture not found; skipping: " << path);
+    SKIP("fixture not found; skipping: " << path);
     return false;
   }
   dwgR reader(path.c_str());

@@ -1475,8 +1475,7 @@ TEST_CASE("DXF filter preserves fixture-backed BLOCK_RECORD preview chunks",
   std::filesystem::remove(out);
   std::filesystem::remove(out2);
   if (!std::filesystem::is_regular_file(src)) {
-    SUCCEED("block_record_preview_r2007.dxf fixture absent; skipping");
-    return;
+    SKIP("block_record_preview_r2007.dxf fixture absent; skipping");
   }
   CHECK(recordGroupValues(src, "BLOCK_RECORD", "310")
         == std::vector<std::string>{"414243", "DE"});
@@ -1522,8 +1521,7 @@ TEST_CASE("DXF filter preserves fixture-backed EED binary items",
   std::filesystem::remove(out);
   std::filesystem::remove(out2);
   if (!std::filesystem::is_regular_file(src)) {
-    SUCCEED("eed_binary_r2007.dxf fixture absent; skipping");
-    return;
+    SKIP("eed_binary_r2007.dxf fixture absent; skipping");
   }
   CHECK(recordGroupValues(src, "POINT", "1004")
         == std::vector<std::string>{"0102", "A0B1C2"});
@@ -1588,8 +1586,7 @@ TEST_CASE("DXF filter preserves fixture-backed CLASS and raw entity",
   std::filesystem::remove(out);
   std::filesystem::remove(out2);
   if (!std::filesystem::is_regular_file(src)) {
-    SUCCEED("classes_raw_entity_r2007.dxf fixture absent; skipping");
-    return;
+    SKIP("classes_raw_entity_r2007.dxf fixture absent; skipping");
   }
   CHECK(recordGroupValues(src, "CLASS", "91")
         == std::vector<std::string>{"7"});
@@ -1671,8 +1668,7 @@ TEST_CASE("DXF filter preserves fixture-backed raw control groups and remaps 481
   std::filesystem::remove(out);
   std::filesystem::remove(out2);
   if (!std::filesystem::is_regular_file(src)) {
-    SUCCEED("raw_control_groups_r2007.dxf fixture absent; skipping");
-    return;
+    SKIP("raw_control_groups_r2007.dxf fixture absent; skipping");
   }
 
   const auto values = [](const DxfRecordGroups& groups, const char* code) {

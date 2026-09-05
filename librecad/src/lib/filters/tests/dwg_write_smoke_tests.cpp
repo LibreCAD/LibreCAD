@@ -4664,8 +4664,7 @@ TEST_CASE(
   const std::filesystem::path fixture = findFixture(
       "librecad/src/lib/filters/tests/testdata/blockvisibility.dwg");
   if (!std::filesystem::is_regular_file(fixture)) {
-    SUCCEED("blockvisibility.dwg fixture absent; skipping");
-    return;
+    SKIP("blockvisibility.dwg fixture absent; skipping");
   }
   REQUIRE(std::filesystem::file_size(fixture) == 38641u);
 
@@ -14074,8 +14073,7 @@ TEST_CASE(
   const std::string sourcePath =
       std::string(LIBRECAD_TEST_DIR) + "/datatable_r2010.dwg";
   if (!std::filesystem::is_regular_file(sourcePath)) {
-    SUCCEED("datatable_r2010.dwg fixture absent; skipping");
-    return;
+    SKIP("datatable_r2010.dwg fixture absent; skipping");
   }
 
   RS_Graphic source;
@@ -19662,8 +19660,7 @@ TEST_CASE("RS_FilterDXFRW retains final DWG reports for source graphs",
   const auto source =
       std::filesystem::path(LIBRECAD_TEST_DIR) / "visualstyle_r2007.dwg";
   if (!std::filesystem::is_regular_file(source)) {
-    SUCCEED("visualstyle_r2007.dwg fixture absent; skipping");
-    return;
+    SKIP("visualstyle_r2007.dwg fixture absent; skipping");
   }
   RS_Graphic graphic;
   RS_FilterDXFRW filter;
@@ -27712,7 +27709,7 @@ TEST_CASE("DWG ordinary ENC source fixtures preserve names and handle order",
     const std::filesystem::path path =
         std::filesystem::path(LIBRECAD_TEST_DIR) / fixture.name;
     if (!std::filesystem::is_regular_file(path)) {
-      SUCCEED("ordinary ENC fixture absent; skipping: " << fixture.name);
+      SKIP("ordinary ENC fixture absent; skipping: " << fixture.name);
       continue;
     }
 
@@ -29964,7 +29961,7 @@ TEST_CASE("DWG cross-tool readback: libreDWG decodes typed 3DLINE",
 
   const ReadbackResult result = dwgReadbackMinJson(path);
   if (!result.found) {
-    SUCCEED("DWGREAD minJSON unavailable; skipping typed 3DLINE readback gate");
+    SKIP("DWGREAD minJSON unavailable; skipping typed 3DLINE readback gate");
     std::remove(path.c_str());
     return;
   }
@@ -29994,8 +29991,7 @@ TEST_CASE("DWG cross-tool readback: libreDWG dwgread decodes libdxfrw output",
     }
     ReadbackResult r = dwgReadback(path);
     if (!r.found) {
-      SUCCEED("dwgread absent; skipping cross-tool readback gate");
-      return;
+      SKIP("dwgread absent; skipping cross-tool readback gate");
     }
     INFO(v.tag << " dwgread output:\n" << r.output);
     CHECK(r.ok);
@@ -30016,8 +30012,7 @@ TEST_CASE("DWG cross-tool readback: LibreDWG decodes typed SECTION objects",
   const ReadbackResult result = dwgReadbackMinJson(path);
   if (!result.found) {
     std::remove(path.c_str());
-    SUCCEED("DWGREAD minJSON unavailable; skipping Section readback gate");
-    return;
+    SKIP("DWGREAD minJSON unavailable; skipping Section readback gate");
   }
 
   INFO("dwgread output:\n" << result.output);
@@ -30055,8 +30050,7 @@ TEST_CASE(
   const ReadbackResult result = dwgReadbackMinJson(path);
   if (!result.found) {
     std::remove(path.c_str());
-    SUCCEED("DWGREAD absent; skipping embedded ATTRIB cross-tool gate");
-    return;
+    SKIP("DWGREAD absent; skipping embedded ATTRIB cross-tool gate");
   }
 
   INFO(result.output);
@@ -30089,8 +30083,7 @@ TEST_CASE("DWG cross-tool readback: libreDWG decodes user-block compounds",
   const ReadbackResult result = dwgReadbackMinJson(path);
   if (!result.found) {
     std::remove(path.c_str());
-    SUCCEED("DWGREAD absent; skipping user-block compound cross-tool gate");
-    return;
+    SKIP("DWGREAD absent; skipping user-block compound cross-tool gate");
   }
 
   INFO(result.output);
@@ -30167,8 +30160,7 @@ TEST_CASE(
   const ReadbackResult result = dwgReadbackMinJson(path);
   if (!result.found) {
     std::remove(path.c_str());
-    SUCCEED("DWGREAD absent; skipping legacy INSERT cross-tool gate");
-    return;
+    SKIP("DWGREAD absent; skipping legacy INSERT cross-tool gate");
   }
 
   INFO(result.output);
@@ -30200,8 +30192,7 @@ TEST_CASE("DWG cross-tool readback: libreDWG decodes native MLEADER",
   const ReadbackResult result = dwgReadbackMinJson(path);
   if (!result.found) {
     std::remove(path.c_str());
-    SUCCEED("DWGREAD absent; skipping native MLEADER cross-tool gate");
-    return;
+    SKIP("DWGREAD absent; skipping native MLEADER cross-tool gate");
   }
 
   INFO(result.output);
@@ -30233,8 +30224,7 @@ TEST_CASE("DWG cross-tool readback: libreDWG decodes native MLEADERSTYLE",
   const ReadbackResult result = dwgReadbackMinJson(path);
   if (!result.found) {
     std::remove(path.c_str());
-    SUCCEED("DWGREAD absent; skipping native MLEADERSTYLE cross-tool gate");
-    return;
+    SKIP("DWGREAD absent; skipping native MLEADERSTYLE cross-tool gate");
   }
 
   INFO(result.output);
@@ -30269,8 +30259,7 @@ TEST_CASE("DWG cross-tool readback: libreDWG decodes native MESH",
   const ReadbackResult result = dwgReadbackMinJson(path);
   if (!result.found) {
     std::remove(path.c_str());
-    SUCCEED("DWGREAD absent; skipping native MESH cross-tool gate");
-    return;
+    SKIP("DWGREAD absent; skipping native MESH cross-tool gate");
   }
 
   INFO(result.output);
@@ -30302,8 +30291,7 @@ TEST_CASE("DWG cross-tool readback: libreDWG decodes WIPEOUTVARIABLES",
   const ReadbackResult result = dwgReadbackMinJson(path);
   if (!result.found) {
     std::remove(path.c_str());
-    SUCCEED("DWGREAD absent; skipping WIPEOUTVARIABLES cross-tool gate");
-    return;
+    SKIP("DWGREAD absent; skipping WIPEOUTVARIABLES cross-tool gate");
   }
 
   INFO(result.output);
@@ -30338,8 +30326,7 @@ TEST_CASE("DWG cross-tool readback: libreDWG decodes native LIGHT",
   const ReadbackResult result = dwgReadbackMinJson(path);
   if (!result.found) {
     std::remove(path.c_str());
-    SUCCEED("DWGREAD absent; skipping LIGHT cross-tool gate");
-    return;
+    SKIP("DWGREAD absent; skipping LIGHT cross-tool gate");
   }
 
   INFO(result.output);
@@ -30373,8 +30360,7 @@ TEST_CASE("DWG cross-tool readback: libreDWG decodes native CAMERA",
   const ReadbackResult result = dwgReadbackMinJson(path);
   if (!result.found) {
     std::remove(path.c_str());
-    SUCCEED("DWGREAD absent; skipping CAMERA cross-tool gate");
-    return;
+    SKIP("DWGREAD absent; skipping CAMERA cross-tool gate");
   }
 
   INFO(result.output);
@@ -30411,8 +30397,7 @@ TEST_CASE("DWG cross-tool readback: libreDWG decodes native DBCOLOR",
   const ReadbackResult result = dwgReadbackMinJson(path);
   if (!result.found) {
     std::remove(path.c_str());
-    SUCCEED("DWGREAD absent; skipping DBCOLOR cross-tool gate");
-    return;
+    SKIP("DWGREAD absent; skipping DBCOLOR cross-tool gate");
   }
 
   INFO(path);
@@ -30464,8 +30449,7 @@ TEST_CASE("DWG cross-tool readback: libreDWG decodes native MATERIAL",
   const ReadbackResult result = dwgReadbackMinJson(path);
   if (!result.found) {
     std::remove(path.c_str());
-    SUCCEED("DWGREAD absent; skipping MATERIAL cross-tool gate");
-    return;
+    SKIP("DWGREAD absent; skipping MATERIAL cross-tool gate");
   }
 
   INFO(result.output);
@@ -30550,8 +30534,7 @@ TEST_CASE("DWG cross-tool readback: libreDWG decodes native LIGHTLIST",
   const ReadbackResult result = dwgReadbackMinJson(path);
   if (!result.found) {
     std::remove(path.c_str());
-    SUCCEED("DWGREAD absent; skipping LIGHTLIST cross-tool gate");
-    return;
+    SKIP("DWGREAD absent; skipping LIGHTLIST cross-tool gate");
   }
 
   INFO(result.output);
@@ -30589,8 +30572,7 @@ TEST_CASE("DWG cross-tool readback: libreDWG decodes ordinary ENC LINE records",
     const ReadbackResult result = dwgReadbackMinJson(path);
     if (!result.found) {
       std::remove(path.c_str());
-      SUCCEED("DWGREAD absent; skipping ordinary ENC cross-tool gate");
-      return;
+      SKIP("DWGREAD absent; skipping ordinary ENC cross-tool gate");
     }
 
     INFO(result.output);
@@ -30628,8 +30610,7 @@ TEST_CASE("DWG cross-tool readback: libreDWG decodes native VISUALSTYLE",
   const ReadbackResult result = dwgReadbackMinJson(path);
   if (!result.found) {
     std::remove(path.c_str());
-    SUCCEED("dwgread absent; skipping VISUALSTYLE cross-tool gate");
-    return;
+    SKIP("dwgread absent; skipping VISUALSTYLE cross-tool gate");
   }
 
   INFO(result.output);
@@ -30671,8 +30652,7 @@ TEST_CASE("DWG cross-tool readback: libreDWG decodes native GEODATA",
   const ReadbackResult result = dwgReadbackMinJson(path);
   if (!result.found) {
     std::remove(path.c_str());
-    SUCCEED("dwgread absent; skipping GEODATA cross-tool gate");
-    return;
+    SKIP("dwgread absent; skipping GEODATA cross-tool gate");
   }
 
   INFO(result.output);
@@ -30724,8 +30704,7 @@ TEST_CASE("DWG typed class ordinals survive a GEODATA collision",
   const ReadbackResult result = dwgReadbackMinJson(path);
   if (!result.found) {
     std::remove(path.c_str());
-    SUCCEED("dwgread absent; skipping GEODATA collision readback gate");
-    return;
+    SKIP("dwgread absent; skipping GEODATA collision readback gate");
   }
 
   INFO(result.output);
@@ -30833,8 +30812,7 @@ TEST_CASE("DWG cross-tool: VIEWPORT raw carrier round-trips through dwgread",
           "[.dwg_readback][viewport]") {
   const std::string src = std::string(LIBRECAD_TEST_DIR) + "/tarch/t1.dwg";
   if (!std::filesystem::is_regular_file(src)) {
-    SUCCEED("t1.dwg fixture not found; skipping");
-    return;
+    SKIP("t1.dwg fixture not found; skipping");
   }
 
   // 1) Read t1.dwg (AC1027) and capture the 2 VIEWPORT (type 34) carriers.
@@ -30877,8 +30855,7 @@ TEST_CASE("DWG cross-tool: VIEWPORT raw carrier round-trips through dwgread",
   const std::string json = vpDwgreadJson(out);
   std::remove(out.c_str());
   if (json.empty()) {
-    SUCCEED("dev dwgread not available; skipping cross-tool assertion");
-    return;
+    SKIP("dev dwgread not available; skipping cross-tool assertion");
   }
   REQUIRE(json != "\x01"); // dwgread ran without fatal error
   CHECK(vpCountSubstr(json, "\"entity\": \"VIEWPORT\"") == 2u);
