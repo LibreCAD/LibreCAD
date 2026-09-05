@@ -206,7 +206,10 @@ TEST_CASE("DXF round-trip: UNDERLAY entity preserves fields",
   {
     dxfRW w(path.string().c_str());
     emitter.m_rw = &w;
-    REQUIRE(w.write(&emitter, DRW::AC1021, false));
+    // DRW_Underlay::inverseClipBoundary is an R2010+ field (see its
+    // declaration in drw_entities.h); dxfRW::writeUnderlay() refuses to
+    // emit it for AC1021 and older, so round-trip it at AC1024.
+    REQUIRE(w.write(&emitter, DRW::AC1024, false));
   }
 
   UnderlayCapture capture;
@@ -385,8 +388,14 @@ TEST_CASE("UNDERLAY rejects oversized clip storage before writing",
   std::filesystem::remove(path);
   dxfRW writer(path.string().c_str());
   emitter.m_rw = &writer;
-  REQUIRE(writer.write(&emitter, DRW::AC1021, false));
+  // Writing an entity the encoder cannot represent is atomic: every
+  // rejecting writer sets m_writeError (dxfRW::rejectUnsupportedDxfWrite()
+  // and the per-entity validation branches), and dxfRW::write() turns that
+  // into a failed write rather than silently dropping the entity.
+  CHECK_FALSE(writer.write(&emitter, DRW::AC1021, false));
   CHECK_FALSE(emitter.m_writeResult);
+  // The output transaction is aborted, so no partial file is left behind.
+  CHECK_FALSE(std::filesystem::exists(path));
   std::filesystem::remove(path);
 }
 
@@ -401,7 +410,9 @@ TEST_CASE("DXF UNDERLAY rejects an oversized inverse clip count",
   {
     dxfRW writer(path.string().c_str());
     emitter.m_rw = &writer;
-    REQUIRE(writer.write(&emitter, DRW::AC1021, false));
+    // The inverse clip count (group 170) this test corrupts is only
+    // emitted for R2010+, so the seed file must be written at AC1024.
+    REQUIRE(writer.write(&emitter, DRW::AC1024, false));
   }
 
   std::ifstream in(path);
