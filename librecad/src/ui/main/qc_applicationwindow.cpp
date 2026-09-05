@@ -2017,6 +2017,10 @@ QAction* QC_ApplicationWindow::getAction(const QString& actionName) const {
     return m_actionGroupManager->getActionByName(actionName);
 }
 
+void QC_ApplicationWindow::populatePluginMenu() const {
+    m_pluginInvoker->populatePluginMenu();
+}
+
 void QC_ApplicationWindow::commandMessage(const QString& msg) const {
    m_commandWidget->appendHistory(msg);
 }

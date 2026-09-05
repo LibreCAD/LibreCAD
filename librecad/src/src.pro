@@ -290,6 +290,7 @@ INCLUDEPATH += \
     ui/dock_widgets/library_widget \
     ui/dock_widgets/pen_palette \
     ui/dock_widgets/pen_wizard \
+    ui/dock_widgets/plugin \
     ui/dock_widgets/property_sheet \
     ui/dock_widgets/property_sheet/lib \
     ui/dock_widgets/property_sheet/lib/properties \
@@ -594,6 +595,7 @@ HEADERS += \
     ui/components/utils/lc_mouse_tracking_table_view.h \
     ui/components/utils/lc_tableitem_delegate_base.h \
     ui/components/creators/lc_creatorinvoker.h \
+    ui/dock_widgets/plugin/lc_pluginwidget.h \
     ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.h \
     ui/dialogs/creators/lc_dlg_menu_assigner.h \
     ui/dialogs/creators/lc_dlg_widget_creator.h \
@@ -1017,6 +1019,7 @@ SOURCES += \
     ui/components/creators/lc_creatorinvoker.cpp \
     ui/components/utils/lc_mouse_tracking_table_view.cpp \
     ui/components/utils/lc_tableitem_delegate_base.cpp \
+    ui/dock_widgets/plugin/lc_pluginwidget.cpp \
     ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.cpp  \
     ui/dialogs/creators/lc_dlg_menu_assigner.cpp \
     ui/dialogs/creators/lc_dlg_widget_creator.cpp \
