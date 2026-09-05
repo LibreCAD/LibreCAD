@@ -19,6 +19,7 @@
 #include <limits>
 #include <map>
 #include <set>
+#include <cstring>
 #include <string>
 #include <utility>
 #include <vector>
@@ -83,6 +84,57 @@ struct DwgRawClassIdentityKey {
 /// Mirror of `class dwgReader` ([intern/dwgreader.h](dwgreader.h)).
 /// Read side dispatches via `dwgRW::createReaderForVersion`; write
 /// side will dispatch similarly once additional target versions land.
+// Class metadata for the typed OBJECT registrars below.  Every row holds the
+// six DwgClassDefinition fields those registrars used to assign one by one;
+// collecting them here makes the per-type values reviewable side by side and
+// leaves each registrar a single lookup.  Registrars that do more than fill
+// these six fields (PlotSettings, LightList, ImageDefReactor and the
+// DimensionAssociation variants) keep their own bodies.
+struct DwgTypedClassRow {
+    const char* key;
+    std::uint16_t classNum;
+    std::uint16_t proxyFlag;
+    const char* appName;
+    const char* className;
+    const char* recordName;
+    std::uint16_t entityFlagRaw;
+};
+
+inline constexpr DwgTypedClassRow kDwgTypedClassRows[] = {
+    {"Sun", DRW_Sun::kDwgClassNum, 0x401, "SCENEOE", "AcDbSun", "SUN", 0x1F3},
+    {"TvDeviceProperties", DRW_TvDeviceProperties::kDwgClassNum, 0x401, "ACTION", "AcDbTvDeviceProperties", "TVDEVICEPROPERTIES", 0x1F3},
+    {"VxControl", DRW_VxControl::kDwgClassNum, 0x401, "ObjectDBX Classes", "AcDbVxControl", "VXCONTROL", 0x1F3},
+    {"VxTableRecord", DRW_VxTableRecord::kDwgClassNum, 0x401, "ObjectDBX Classes", "AcDbVxTableRecord", "VXTABLERECORD", 0x1F3},
+    {"MLeaderStyle", DRW_MLeaderStyle::kDwgClassNum, 0x401, "ACDB_MLEADERSTYLE_CLASS", "AcDbMLeaderStyle", "MLEADERSTYLE", 0x1F3},
+    {"TableStyle", DRW_TableStyle::kDwgClassNum, 0xFFF, "ObjectDBX Classes", "AcDbTableStyle", "TABLESTYLE", 0x1F3},
+    {"Material", DRW_Material::kDwgClassNum, 0x401, "ObjectDBX Classes", "AcDbMaterial", "MATERIAL", 0x1F3},
+    {"DbColor", DRW_DbColor::kDwgClassNum, 0x401, "ACTION", "AcDbColor", "DBCOLOR", 0x1F3},
+    {"SunStudy", DRW_SunStudy::kDwgClassNum, 0x401, "SCENEOE", "AcDbSunStudy", "SUNSTUDY", 0x1F3},
+    {"MotionPath", DRW_MotionPath::kDwgClassNum, 0x401, "ACTION", "AcDbMotionPath", "MOTIONPATH", 0x1F3},
+    {"CurvePath", DRW_CurvePath::kDwgClassNum, 0x401, "ACTION", "AcDbCurvePath", "CURVEPATH", 0x1F3},
+    {"PointPath", DRW_PointPath::kDwgClassNum, 0x401, "ACTION", "AcDbPointPath", "POINTPATH", 0x1F3},
+    {"PartialViewingIndex", DRW_PartialViewingIndex::kDwgClassNum, 0x401, "ObjectDBX Classes", "AcDbPartialViewingIndex", "PARTIAL_VIEWING_INDEX", 0x1F3},
+    {"ObjectPtr", DRW_ObjectPtr::kDwgClassNum, 0x401, "ObjectDBX Classes", "AcDbObjectPtr", "OBJECT_PTR", 0x1F3},
+    {"VisualStyle", DRW_VisualStyle::kDwgClassNum, 0x401, "ObjectDBX Classes", "AcDbVisualStyle", "VISUALSTYLE", 0x1F3},
+    {"EvaluationGraph", DRW_EvaluationGraph::kDwgClassNum, 0x481, "ObjectDBX Classes", "AcDbEvalGraph", "ACAD_EVALUATION_GRAPH", 0x1F3},
+    {"DimensionAssociation", DRW_DimensionAssociation::kDwgClassNum, 0, "AcDbDimAssoc|Product Desc: AcDim ARX App For Dimension|" "Company: Autodesk, Inc.|WEB Address: www.autodesk.com", "AcDbDimAssoc", "DIMASSOC", 0x1F3},
+    {"RasterVariables", DRW_RasterVariables::kDwgClassNum, 0x401, "ISM", "AcDbRasterVariables", "RASTERVARIABLES", 0x1F3},
+    {"WipeoutVariables", DRW_WipeoutVariables::kDwgClassNum, 0x401, "WipeOut", "AcDbWipeoutVariables", "WIPEOUTVARIABLES", 0x1F3},
+    {"NavisworksModelDef", DRW_NavisworksModelDef::kDwgClassNum, 0x401, "ObjectDBX Classes", "AcDbNavisworksModelDef", "NAVISWORKSMODELDEF", 0x1F3},
+    {"PointCloudColorMap", DRW_PointCloudColorMap::kDwgClassNum, 0x401, "ObjectDBX Classes", "AcDbPointCloudColorMap", "POINTCLOUDCOLORMAP", 0x1F3},
+    {"GeoData", DRW_GeoData::kDwgClassNum, 0xFFF, "ObjectDBX Classes", "AcDbGeoData", "GEODATA", 0x1F3},
+    {"SpatialFilter", DRW_SpatialFilter::kDwgClassNum, 0x401, "ACAD", "AcDbSpatialFilter", "SPATIAL_FILTER", 0x1F3},
+    {"Scale", DRW_Scale::kDwgClassNum, 0x401, "ACAD", "AcDbScale", "SCALE", 0x1F3},
+    {"IDBuffer", DRW_IDBuffer::kDwgClassNum, 0x401, "ACAD", "AcDbIdBuffer", "IDBUFFER", 0x1F3},
+    {"LayerIndex", DRW_LayerIndex::kDwgClassNum, 0x401, "ACAD", "AcDbLayerIndex", "LAYER_INDEX", 0x1F3},
+    {"SpatialIndex", DRW_SpatialIndex::kDwgClassNum, 0x401, "ACAD", "AcDbSpatialIndex", "SPATIAL_INDEX", 0x1F3},
+    {"DictionaryVar", DRW_DictionaryVar::kDwgClassNum, 0x401, "ACAD", "AcDbDictionaryVar", "DICTIONARYVAR", 0x1F3},
+    {"DictionaryWithDefault", DRW_DictionaryWithDefault::kDwgClassNum, 0x401, "ACAD", "AcDbDictionaryWithDefault", "ACDBDICTIONARYWDFLT", 0x1F3},
+    {"SortEntsTable", DRW_SortEntsTable::kDwgClassNum, 0x401, "ACAD", "AcDbSortentsTable", "SORTENTSTABLE", 0x1F3},
+    {"FieldList", DRW_FieldList::kDwgClassNum, 0x401, "ACAD", "AcDbFieldList", "FIELDLIST", 0x1F3},
+    {"Field", DRW_Field::kDwgClassNum, 0x401, "ACAD", "AcDbField", "FIELD", 0x1F3},
+};
+
 class dwgWriter {
 public:
     /// Construct around an output stream and a populated header.
@@ -724,92 +776,55 @@ public:
         return m_rawObjectOverrides.count({objectType, handle}) != 0;
     }
 
+    /// Register a typed OBJECT class from kDwgTypedClassRows.  The per-type
+    /// registrars below are thin wrappers so their names remain the writer's
+    /// API; registrars needing extra logic keep their own bodies.
+    bool registerTypedObjectClassRow(const char* key, std::uint32_t handle) {
+        for (const DwgTypedClassRow& row : kDwgTypedClassRows) {
+            if (std::strcmp(row.key, key) != 0)
+                continue;
+            DwgClassDefinition definition;
+            definition.m_classNum = row.classNum;
+            definition.m_proxyFlag = row.proxyFlag;
+            definition.m_appName = row.appName;
+            definition.m_className = row.className;
+            definition.m_recordName = row.recordName;
+            definition.m_entityFlagRaw = row.entityFlagRaw;
+            return registerTypedObjectClass(definition, handle);
+        }
+        return false;
+    }
+
     bool registerSunObjectClass(std::uint32_t handle = 0) {
-        DwgClassDefinition definition;
-        definition.m_classNum = DRW_Sun::kDwgClassNum;
-        definition.m_proxyFlag = 0x401;
-        definition.m_appName = "SCENEOE";
-        definition.m_className = "AcDbSun";
-        definition.m_recordName = "SUN";
-        definition.m_entityFlagRaw = 0x1F3;  // object class (ODA item_class_id)
-        return registerTypedObjectClass(definition, handle);
+        return registerTypedObjectClassRow("Sun", handle);
     }
 
     bool registerTvDevicePropertiesObjectClass(std::uint32_t handle = 0) {
-        DwgClassDefinition definition;
-        definition.m_classNum = DRW_TvDeviceProperties::kDwgClassNum;
-        definition.m_proxyFlag = 0x401;
-        definition.m_appName = "ACTION";
-        definition.m_className = "AcDbTvDeviceProperties";
-        definition.m_recordName = "TVDEVICEPROPERTIES";
-        definition.m_entityFlagRaw = 0x1F3;
-        return registerTypedObjectClass(definition, handle);
+        return registerTypedObjectClassRow("TvDeviceProperties", handle);
     }
 
     bool registerVxControlObjectClass(std::uint32_t handle = 0) {
-        DwgClassDefinition definition;
-        definition.m_classNum = DRW_VxControl::kDwgClassNum;
-        definition.m_proxyFlag = 0x401;
-        definition.m_appName = "ObjectDBX Classes";
-        definition.m_className = "AcDbVxControl";
-        definition.m_recordName = "VXCONTROL";
-        definition.m_entityFlagRaw = 0x1F3;
-        return registerTypedObjectClass(definition, handle);
+        return registerTypedObjectClassRow("VxControl", handle);
     }
 
     bool registerVxTableRecordObjectClass(std::uint32_t handle = 0) {
-        DwgClassDefinition definition;
-        definition.m_classNum = DRW_VxTableRecord::kDwgClassNum;
-        definition.m_proxyFlag = 0x401;
-        definition.m_appName = "ObjectDBX Classes";
-        definition.m_className = "AcDbVxTableRecord";
-        definition.m_recordName = "VXTABLERECORD";
-        definition.m_entityFlagRaw = 0x1F3;
-        return registerTypedObjectClass(definition, handle);
+        return registerTypedObjectClassRow("VxTableRecord", handle);
     }
 
     bool registerMLeaderStyleObjectClass(std::uint32_t handle = 0) {
-        DwgClassDefinition definition;
-        definition.m_classNum = DRW_MLeaderStyle::kDwgClassNum;
-        definition.m_proxyFlag = 0x401;
-        definition.m_appName = "ACDB_MLEADERSTYLE_CLASS";
-        definition.m_className = "AcDbMLeaderStyle";
-        definition.m_recordName = "MLEADERSTYLE";
-        definition.m_entityFlagRaw = 0x1F3;  // object class (ODA item_class_id)
-        return registerTypedObjectClass(definition, handle);
+        return registerTypedObjectClassRow("MLeaderStyle", handle);
     }
 
     bool registerTableStyleObjectClass(std::uint32_t handle = 0) {
-        DwgClassDefinition definition;
-        definition.m_classNum = DRW_TableStyle::kDwgClassNum;
-        definition.m_proxyFlag = 0xFFF;
-        definition.m_appName = "ObjectDBX Classes";
-        definition.m_className = "AcDbTableStyle";
-        definition.m_recordName = "TABLESTYLE";
-        definition.m_entityFlagRaw = 0x1F3;
-        return registerTypedObjectClass(definition, handle);
+        return registerTypedObjectClassRow("TableStyle", handle);
     }
 
     bool registerMaterialObjectClass(std::uint32_t handle = 0) {
-        DwgClassDefinition definition;
-        definition.m_classNum = DRW_Material::kDwgClassNum;
-        definition.m_proxyFlag = 0x401;
-        definition.m_appName = "ObjectDBX Classes";
-        definition.m_className = "AcDbMaterial";
-        definition.m_recordName = "MATERIAL";
-        definition.m_entityFlagRaw = 0x1F3;  // object class
-        return registerTypedObjectClass(definition, handle);
+        return registerTypedObjectClassRow("Material", handle);
     }
 
     bool registerDbColorObjectClass(std::uint32_t handle = 0) {
-        DwgClassDefinition definition;
-        definition.m_classNum = DRW_DbColor::kDwgClassNum;
-        definition.m_proxyFlag = 0x401;
-        definition.m_appName = "ACTION";
-        definition.m_className = "AcDbColor";
-        definition.m_recordName = "DBCOLOR";
-        definition.m_entityFlagRaw = 0x1F3;
-        return registerTypedObjectClass(definition, handle);
+        return registerTypedObjectClassRow("DbColor", handle);
     }
 
     bool registerPlotSettingsObjectClass(std::uint32_t handle = 0) {
@@ -885,69 +900,27 @@ public:
     }
 
     bool registerSunStudyObjectClass(std::uint32_t handle = 0) {
-        DwgClassDefinition definition;
-        definition.m_classNum = DRW_SunStudy::kDwgClassNum;
-        definition.m_proxyFlag = 0x401;
-        definition.m_appName = "SCENEOE";
-        definition.m_className = "AcDbSunStudy";
-        definition.m_recordName = "SUNSTUDY";
-        definition.m_entityFlagRaw = 0x1F3;
-        return registerTypedObjectClass(definition, handle);
+        return registerTypedObjectClassRow("SunStudy", handle);
     }
 
     bool registerMotionPathObjectClass(std::uint32_t handle = 0) {
-        DwgClassDefinition definition;
-        definition.m_classNum = DRW_MotionPath::kDwgClassNum;
-        definition.m_proxyFlag = 0x401;
-        definition.m_appName = "ACTION";
-        definition.m_className = "AcDbMotionPath";
-        definition.m_recordName = "MOTIONPATH";
-        definition.m_entityFlagRaw = 0x1F3;
-        return registerTypedObjectClass(definition, handle);
+        return registerTypedObjectClassRow("MotionPath", handle);
     }
 
     bool registerCurvePathObjectClass(std::uint32_t handle = 0) {
-        DwgClassDefinition definition;
-        definition.m_classNum = DRW_CurvePath::kDwgClassNum;
-        definition.m_proxyFlag = 0x401;
-        definition.m_appName = "ACTION";
-        definition.m_className = "AcDbCurvePath";
-        definition.m_recordName = "CURVEPATH";
-        definition.m_entityFlagRaw = 0x1F3;
-        return registerTypedObjectClass(definition, handle);
+        return registerTypedObjectClassRow("CurvePath", handle);
     }
 
     bool registerPointPathObjectClass(std::uint32_t handle = 0) {
-        DwgClassDefinition definition;
-        definition.m_classNum = DRW_PointPath::kDwgClassNum;
-        definition.m_proxyFlag = 0x401;
-        definition.m_appName = "ACTION";
-        definition.m_className = "AcDbPointPath";
-        definition.m_recordName = "POINTPATH";
-        definition.m_entityFlagRaw = 0x1F3;
-        return registerTypedObjectClass(definition, handle);
+        return registerTypedObjectClassRow("PointPath", handle);
     }
 
     bool registerPartialViewingIndexObjectClass(std::uint32_t handle = 0) {
-        DwgClassDefinition definition;
-        definition.m_classNum = DRW_PartialViewingIndex::kDwgClassNum;
-        definition.m_proxyFlag = 0x401;
-        definition.m_appName = "ObjectDBX Classes";
-        definition.m_className = "AcDbPartialViewingIndex";
-        definition.m_recordName = "PARTIAL_VIEWING_INDEX";
-        definition.m_entityFlagRaw = 0x1F3;
-        return registerTypedObjectClass(definition, handle);
+        return registerTypedObjectClassRow("PartialViewingIndex", handle);
     }
 
     bool registerObjectPtrObjectClass(std::uint32_t handle = 0) {
-        DwgClassDefinition definition;
-        definition.m_classNum = DRW_ObjectPtr::kDwgClassNum;
-        definition.m_proxyFlag = 0x401;
-        definition.m_appName = "ObjectDBX Classes";
-        definition.m_className = "AcDbObjectPtr";
-        definition.m_recordName = "OBJECT_PTR";
-        definition.m_entityFlagRaw = 0x1F3;
-        return registerTypedObjectClass(definition, handle);
+        return registerTypedObjectClassRow("ObjectPtr", handle);
     }
 
     bool registerRenderSettingsObjectClass(
@@ -997,60 +970,23 @@ public:
     }
 
     bool registerVisualStyleObjectClass(std::uint32_t handle = 0) {
-        DwgClassDefinition definition;
-        definition.m_classNum = DRW_VisualStyle::kDwgClassNum;
-        definition.m_proxyFlag = 0x401;
-        definition.m_appName = "ObjectDBX Classes";
-        definition.m_className = "AcDbVisualStyle";
-        definition.m_recordName = "VISUALSTYLE";
-        definition.m_entityFlagRaw = 0x1F3;
-        return registerTypedObjectClass(definition, handle);
+        return registerTypedObjectClassRow("VisualStyle", handle);
     }
 
     bool registerEvaluationGraphObjectClass(std::uint32_t handle = 0) {
-        DwgClassDefinition definition;
-        definition.m_classNum = DRW_EvaluationGraph::kDwgClassNum;
-        definition.m_proxyFlag = 0x481;
-        definition.m_appName = "ObjectDBX Classes";
-        definition.m_className = "AcDbEvalGraph";
-        definition.m_recordName = "ACAD_EVALUATION_GRAPH";
-        definition.m_entityFlagRaw = 0x1F3;
-        return registerTypedObjectClass(definition, handle);
+        return registerTypedObjectClassRow("EvaluationGraph", handle);
     }
 
     bool registerDimensionAssociationObjectClass(std::uint32_t handle = 0) {
-        DwgClassDefinition definition;
-        definition.m_classNum = DRW_DimensionAssociation::kDwgClassNum;
-        definition.m_proxyFlag = 0;
-        definition.m_appName =
-            "AcDbDimAssoc|Product Desc:     AcDim ARX App For Dimension|"
-            "Company:          Autodesk, Inc.|WEB Address:      www.autodesk.com";
-        definition.m_className = "AcDbDimAssoc";
-        definition.m_recordName = "DIMASSOC";
-        definition.m_entityFlagRaw = 0x1F3;
-        return registerTypedObjectClass(definition, handle);
+        return registerTypedObjectClassRow("DimensionAssociation", handle);
     }
 
     bool registerRasterVariablesObjectClass(std::uint32_t handle = 0) {
-        DwgClassDefinition definition;
-        definition.m_classNum = DRW_RasterVariables::kDwgClassNum;
-        definition.m_proxyFlag = 0x401;
-        definition.m_appName = "ISM";
-        definition.m_className = "AcDbRasterVariables";
-        definition.m_recordName = "RASTERVARIABLES";
-        definition.m_entityFlagRaw = 0x1F3;  // object class (ODA item_class_id)
-        return registerTypedObjectClass(definition, handle);
+        return registerTypedObjectClassRow("RasterVariables", handle);
     }
 
     bool registerWipeoutVariablesObjectClass(std::uint32_t handle = 0) {
-        DwgClassDefinition definition;
-        definition.m_classNum = DRW_WipeoutVariables::kDwgClassNum;
-        definition.m_proxyFlag = 0x401;
-        definition.m_appName = "WipeOut";
-        definition.m_className = "AcDbWipeoutVariables";
-        definition.m_recordName = "WIPEOUTVARIABLES";
-        definition.m_entityFlagRaw = 0x1F3;  // object class (ODA item_class_id)
-        return registerTypedObjectClass(definition, handle);
+        return registerTypedObjectClassRow("WipeoutVariables", handle);
     }
 
     bool registerWipeoutEntityClass() {
@@ -1111,152 +1047,61 @@ public:
     }
 
     bool registerNavisworksModelDefObjectClass(std::uint32_t handle = 0) {
-        DwgClassDefinition definition;
-        definition.m_classNum = DRW_NavisworksModelDef::kDwgClassNum;
-        definition.m_proxyFlag = 0x401;
-        definition.m_appName = "ObjectDBX Classes";
-        definition.m_className = "AcDbNavisworksModelDef";
-        definition.m_recordName = "NAVISWORKSMODELDEF";
-        definition.m_entityFlagRaw = 0x1F3;
-        return registerTypedObjectClass(definition, handle);
+        return registerTypedObjectClassRow("NavisworksModelDef", handle);
     }
 
     bool registerPointCloudColorMapObjectClass(std::uint32_t handle = 0) {
-        DwgClassDefinition definition;
-        definition.m_classNum = DRW_PointCloudColorMap::kDwgClassNum;
-        definition.m_proxyFlag = 0x401;
-        definition.m_appName = "ObjectDBX Classes";
-        definition.m_className = "AcDbPointCloudColorMap";
-        definition.m_recordName = "POINTCLOUDCOLORMAP";
-        definition.m_entityFlagRaw = 0x1F3;
-        return registerTypedObjectClass(definition, handle);
+        return registerTypedObjectClassRow("PointCloudColorMap", handle);
     }
 
     bool registerGeoDataObjectClass(std::uint32_t handle = 0) {
-        DwgClassDefinition definition;
-        definition.m_classNum = DRW_GeoData::kDwgClassNum;
-        definition.m_proxyFlag = 0xFFF;
-        definition.m_appName = "ObjectDBX Classes";
-        definition.m_className = "AcDbGeoData";
-        definition.m_recordName = "GEODATA";
-        definition.m_entityFlagRaw = 0x1F3;  // object class (ODA item_class_id)
-        return registerTypedObjectClass(definition, handle);
+        return registerTypedObjectClassRow("GeoData", handle);
     }
 
     bool registerSpatialFilterObjectClass(std::uint32_t handle = 0) {
-        DwgClassDefinition definition;
-        definition.m_classNum = DRW_SpatialFilter::kDwgClassNum;
-        definition.m_proxyFlag = 0x401;
-        definition.m_appName = "ACAD";
-        definition.m_className = "AcDbSpatialFilter";
-        definition.m_recordName = "SPATIAL_FILTER";
-        definition.m_entityFlagRaw = 0x1F3;  // object class (ODA item_class_id)
-        return registerTypedObjectClass(definition, handle);
+        return registerTypedObjectClassRow("SpatialFilter", handle);
     }
 
     // PR 8d.2a — five small no-storage OBJECTS families.  All are custom-class
     // (≥ 500); recName / className strings follow the dwgreader.cpp dispatch
     // (case-sensitive look-up against classesmap).
     bool registerScaleObjectClass(std::uint32_t handle = 0) {
-        DwgClassDefinition definition;
-        definition.m_classNum = DRW_Scale::kDwgClassNum;
-        definition.m_proxyFlag = 0x401;
-        definition.m_appName = "ACAD";
-        definition.m_className = "AcDbScale";
-        definition.m_recordName = "SCALE";
-        definition.m_entityFlagRaw = 0x1F3;  // object class (ODA item_class_id)
-        return registerTypedObjectClass(definition, handle);
+        return registerTypedObjectClassRow("Scale", handle);
     }
 
     bool registerIDBufferObjectClass(std::uint32_t handle = 0) {
-        DwgClassDefinition definition;
-        definition.m_classNum = DRW_IDBuffer::kDwgClassNum;
-        definition.m_proxyFlag = 0x401;
-        definition.m_appName = "ACAD";
-        definition.m_className = "AcDbIdBuffer";
-        definition.m_recordName = "IDBUFFER";
-        definition.m_entityFlagRaw = 0x1F3;  // object class (ODA item_class_id)
-        return registerTypedObjectClass(definition, handle);
+        return registerTypedObjectClassRow("IDBuffer", handle);
     }
 
     bool registerLayerIndexObjectClass(std::uint32_t handle = 0) {
-        DwgClassDefinition definition;
-        definition.m_classNum = DRW_LayerIndex::kDwgClassNum;
-        definition.m_proxyFlag = 0x401;
-        definition.m_appName = "ACAD";
-        definition.m_className = "AcDbLayerIndex";
-        definition.m_recordName = "LAYER_INDEX";
-        definition.m_entityFlagRaw = 0x1F3;  // object class (ODA item_class_id)
-        return registerTypedObjectClass(definition, handle);
+        return registerTypedObjectClassRow("LayerIndex", handle);
     }
 
     bool registerSpatialIndexObjectClass(std::uint32_t handle = 0) {
-        DwgClassDefinition definition;
-        definition.m_classNum = DRW_SpatialIndex::kDwgClassNum;
-        definition.m_proxyFlag = 0x401;
-        definition.m_appName = "ACAD";
-        definition.m_className = "AcDbSpatialIndex";
-        definition.m_recordName = "SPATIAL_INDEX";
-        definition.m_entityFlagRaw = 0x1F3;  // object class (ODA item_class_id)
-        return registerTypedObjectClass(definition, handle);
+        return registerTypedObjectClassRow("SpatialIndex", handle);
     }
 
     bool registerDictionaryVarObjectClass(std::uint32_t handle = 0) {
-        DwgClassDefinition definition;
-        definition.m_classNum = DRW_DictionaryVar::kDwgClassNum;
-        definition.m_proxyFlag = 0x401;
-        definition.m_appName = "ACAD";
-        definition.m_className = "AcDbDictionaryVar";
-        definition.m_recordName = "DICTIONARYVAR";
-        definition.m_entityFlagRaw = 0x1F3;  // object class (ODA item_class_id)
-        return registerTypedObjectClass(definition, handle);
+        return registerTypedObjectClassRow("DictionaryVar", handle);
     }
 
     // PR 8d.2b — four larger no-storage OBJECTS families.  Same shape as
     // PR 8d.2a; recName / className strings follow the dwgreader.cpp dispatch
     // (case-sensitive look-up against classesmap).
     bool registerDictionaryWithDefaultObjectClass(std::uint32_t handle = 0) {
-        DwgClassDefinition definition;
-        definition.m_classNum = DRW_DictionaryWithDefault::kDwgClassNum;
-        definition.m_proxyFlag = 0x401;
-        definition.m_appName = "ACAD";
-        definition.m_className = "AcDbDictionaryWithDefault";
-        definition.m_recordName = "ACDBDICTIONARYWDFLT";
-        definition.m_entityFlagRaw = 0x1F3;  // object class (ODA item_class_id)
-        return registerTypedObjectClass(definition, handle);
+        return registerTypedObjectClassRow("DictionaryWithDefault", handle);
     }
 
     bool registerSortEntsTableObjectClass(std::uint32_t handle = 0) {
-        DwgClassDefinition definition;
-        definition.m_classNum = DRW_SortEntsTable::kDwgClassNum;
-        definition.m_proxyFlag = 0x401;
-        definition.m_appName = "ACAD";
-        definition.m_className = "AcDbSortentsTable";
-        definition.m_recordName = "SORTENTSTABLE";
-        definition.m_entityFlagRaw = 0x1F3;  // object class (ODA item_class_id)
-        return registerTypedObjectClass(definition, handle);
+        return registerTypedObjectClassRow("SortEntsTable", handle);
     }
 
     bool registerFieldListObjectClass(std::uint32_t handle = 0) {
-        DwgClassDefinition definition;
-        definition.m_classNum = DRW_FieldList::kDwgClassNum;
-        definition.m_proxyFlag = 0x401;
-        definition.m_appName = "ACAD";
-        definition.m_className = "AcDbFieldList";
-        definition.m_recordName = "FIELDLIST";
-        definition.m_entityFlagRaw = 0x1F3;  // object class (ODA item_class_id)
-        return registerTypedObjectClass(definition, handle);
+        return registerTypedObjectClassRow("FieldList", handle);
     }
 
     bool registerFieldObjectClass(std::uint32_t handle = 0) {
-        DwgClassDefinition definition;
-        definition.m_classNum = DRW_Field::kDwgClassNum;
-        definition.m_proxyFlag = 0x401;
-        definition.m_appName = "ACAD";
-        definition.m_className = "AcDbField";
-        definition.m_recordName = "FIELD";
-        definition.m_entityFlagRaw = 0x1F3;  // object class (ODA item_class_id)
-        return registerTypedObjectClass(definition, handle);
+        return registerTypedObjectClassRow("Field", handle);
     }
 
     bool registerSectionObjectClass(DRW_Section::Kind kind,

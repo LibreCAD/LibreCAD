@@ -265,6 +265,28 @@ protected:
                          bool isEnd);
 
     /// Full table-record emitters — preamble + encodeDwg + finishObject.
+    /// Shared body of the table-record emitters: copy the record, prepare
+    /// common object state and table-entry EED, then wrap the type's own
+    /// encodeDwg() in the standard record preamble.  Only the DRW type and
+    /// the DWG object-type code differ between the emitters below, so each
+    /// of them is a single call into this.
+    template <typename T>
+    bool emitTableRecord(std::uint32_t handle, const T& source,
+                         std::uint16_t objectType);
+
+    /// Shared body of the typed OBJECT writers: version gate, copy, prepare
+    /// common object state and table-entry EED, mint or reserve the handle,
+    /// register the class and emit the object.  Only the payload type, the
+    /// minimum version and the register/emit pair differ between them.
+    template <typename T>
+    bool writeTypedObject(
+        const T& source, DRW::Version minVersion,
+        bool (dwgWriter::*registerClass)(std::uint32_t),
+        bool (dwgWriter15::*emitObject)(
+            std::uint32_t, const T&,
+            const std::vector<DRW_Entity::PendingHandleRef>&,
+            const std::vector<DRW_Entity::PendingHandleRef>&));
+
     bool emitLtypeRecord(std::uint32_t handle, const DRW_LType& lt);
     bool emitLayerRecord(std::uint32_t handle, const DRW_Layer& lay);
     bool emitStyleRecord(std::uint32_t handle, const DRW_Textstyle& ts);
