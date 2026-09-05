@@ -182,8 +182,7 @@ TEST_CASE("DWG LARGE_RADIAL_DIMENSION decodes via parseDwg with DXF-consistent f
           "[dwg][dimension][large_radial]") {
   const std::string path = std::string(LIBRECAD_TEST_DIR) + "/large_radial.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("large_radial.dwg fixture not found; skipping");
-    return;
+    SKIP("large_radial.dwg fixture not found; skipping");
   }
 
   LargeRadialDwgCapture cap;

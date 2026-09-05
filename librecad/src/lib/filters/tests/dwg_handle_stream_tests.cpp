@@ -133,14 +133,12 @@ TEST_CASE("DWG <=AC1018 IMAGEDEF_REACTOR owner handle decodes correctly",
           "[.dwg6_imagedef_reactor]") {
   const char *home = std::getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path =
       std::string(home) + "/doc/dwg6/Big-Blocks-CAD.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("Big-Blocks-CAD.dwg not present; skipping");
-    return;
+    SKIP("Big-Blocks-CAD.dwg not present; skipping");
   }
 
   ReactorCapture cap;
@@ -168,14 +166,12 @@ TEST_CASE("DWG <=AC1018 dynamic-block object owner handle decodes correctly",
           "[.dwg6_dynblock_ac1015]") {
   const char *home = std::getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path =
       std::string(home) + "/doc/dwg6/sample_AC1015.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("sample_AC1015.dwg not present; skipping");
-    return;
+    SKIP("sample_AC1015.dwg not present; skipping");
   }
 
   DynBlockCapture cap;

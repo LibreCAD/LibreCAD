@@ -475,13 +475,11 @@ TEST_CASE("DWG smoke: Underlay.dwg delivers >= 3 PDFUNDERLAY entities",
           "[.dwg_underlay_probe]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set");
-    return;
+    SKIP("HOME not set");
   }
   const std::string path = std::string(home) + "/doc/dwg3/Underlay.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("~/doc/dwg3/Underlay.dwg not found");
-    return;
+    SKIP("~/doc/dwg3/Underlay.dwg not found");
   }
   UnderlayCounter capture;
   dwgR reader(path.c_str());

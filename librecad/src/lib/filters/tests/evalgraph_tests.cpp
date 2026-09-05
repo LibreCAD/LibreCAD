@@ -143,8 +143,7 @@ TEST_CASE("DWG EVALUATION_GRAPH decodes on R2004 / AC1018 (<=AC1018 inline handl
           "[dwg][evalgraph][parity][fixture]") {
   const std::string path = std::string(LIBRECAD_TEST_DIR) + "/evalgraph_r2004.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("evalgraph_r2004.dwg fixture not found; skipping");
-    return;
+    SKIP("evalgraph_r2004.dwg fixture not found; skipping");
   }
 
   EvalGraphCapture cap;
@@ -186,8 +185,7 @@ TEST_CASE("DWG EVALUATION_GRAPH still decodes on R2018 / AC1032 (no >AC1018 regr
   // dynamic-block suite) as an R2018 EVALUATION_GRAPH carrier.
   const std::string path = std::string(LIBRECAD_TEST_DIR) + "/dynblock_r2018.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("dynblock_r2018.dwg fixture not found; skipping");
-    return;
+    SKIP("dynblock_r2018.dwg fixture not found; skipping");
   }
 
   EvalGraphCapture cap;

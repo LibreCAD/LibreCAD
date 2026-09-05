@@ -345,8 +345,7 @@ TEST_CASE("dxfRW reads the local ezdxf ACAD_TABLE sample",
   const std::filesystem::path fixture =
       "D:/data/dli/ezdxf/examples_dxf/acad_table_simple.dxf";
   if (!std::filesystem::is_regular_file(fixture)) {
-    SUCCEED("ACAD_TABLE fixture not found at " << fixture.string());
-    return;
+    SKIP("ACAD_TABLE fixture not found at " << fixture.string());
   }
 
   TableCapture cap;
@@ -422,8 +421,7 @@ TEST_CASE("dwgRW reads R2000 ACAD_TABLE grid + resolves *T block (TS1.dwg)",
           "[acad_table][dwg][fixture]") {
   const std::string path = libredwgFixturePath("2000", "TS1.dwg");
   if (path.empty() || !std::filesystem::is_regular_file(path)) {
-    SUCCEED("TS1.dwg fixture absent: " << path);
-    return;
+    SKIP("TS1.dwg fixture absent: " << path);
   }
 
   TableCapture cap;
@@ -475,8 +473,7 @@ TEST_CASE("dwgRW reads R2004 ACAD_TABLE + resolves *T block (example_2004.dwg)",
           "[acad_table][dwg][fixture]") {
   const std::string path = libredwgFixturePath("", "example_2004.dwg");
   if (path.empty() || !std::filesystem::is_regular_file(path)) {
-    SUCCEED("example_2004.dwg fixture absent: " << path);
-    return;
+    SKIP("example_2004.dwg fixture absent: " << path);
   }
 
   TableCapture cap;
@@ -529,8 +526,7 @@ TEST_CASE("dwgRW R2010 ACAD_TABLE read is unchanged (example_2010.dwg)",
   // transcript, pristine tree) — the fix must not alter any of them.
   const std::string path = libredwgFixturePath("", "example_2010.dwg");
   if (path.empty() || !std::filesystem::is_regular_file(path)) {
-    SUCCEED("example_2010.dwg fixture absent: " << path);
-    return;
+    SKIP("example_2010.dwg fixture absent: " << path);
   }
 
   TableCapture cap;

@@ -440,8 +440,7 @@ TEST_CASE("DWG RTEXT + ARCALIGNEDTEXT are read as text via parseDwg",
   const std::string path =
       std::string(LIBRECAD_TEST_DIR) + "/rtext_arctext.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("rtext_arctext.dwg fixture not found; skipping");
-    return;
+    SKIP("rtext_arctext.dwg fixture not found; skipping");
   }
 
   TextCapture cap;
@@ -489,8 +488,7 @@ TEST_CASE("DWG BYDD00301 sample reads cleanly with RTEXT/ARCALIGNEDTEXT dispatch
           "[.rtext_bydd]") {
   const std::string dir = "d:/data/dli/doc/dwg4";
   if (!std::filesystem::is_directory(dir)) {
-    SUCCEED("BYDD corpus directory not present; skipping");
-    return;
+    SKIP("BYDD corpus directory not present; skipping");
   }
   std::string path;
   for (const auto &e : std::filesystem::directory_iterator(dir)) {
@@ -502,8 +500,7 @@ TEST_CASE("DWG BYDD00301 sample reads cleanly with RTEXT/ARCALIGNEDTEXT dispatch
     }
   }
   if (path.empty()) {
-    SUCCEED("BYDD00301*.dwg not found; skipping");
-    return;
+    SKIP("BYDD00301*.dwg not found; skipping");
   }
 
   TextCapture cap;

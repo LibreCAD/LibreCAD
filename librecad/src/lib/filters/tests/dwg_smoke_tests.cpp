@@ -1562,8 +1562,7 @@ TEST_CASE("dwgRW::readBuffer matches file-path read for a committed fixture",
   const std::string path =
       std::string(LIBRECAD_TEST_DIR) + "/mpolygon_solid.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("mpolygon_solid.dwg fixture absent; skipping");
-    return;
+    SKIP("mpolygon_solid.dwg fixture absent; skipping");
   }
 
   CountingIface fileIface;
@@ -1595,8 +1594,7 @@ TEST_CASE("DWG R2007: section names decode via UTF-16 (no BAD_READ_HEADER)",
   const std::string path =
       std::string(LIBRECAD_TEST_DIR) + "/visualstyle_r2007.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("visualstyle_r2007.dwg fixture absent; skipping");
-    return;
+    SKIP("visualstyle_r2007.dwg fixture absent; skipping");
   }
   const DwgResult r = readDwg(path);
   REQUIRE(r.version == DRW::AC1021);
@@ -1630,8 +1628,7 @@ TEST_CASE("DWG pre-R13 R10: JUMP-split polyline recovered from EXTRAS section",
   const std::string path =
       std::string(LIBRECAD_TEST_DIR) + "/pre_r13_r10_entities.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("pre_r13_r10_entities.dwg fixture absent; skipping");
-    return;
+    SKIP("pre_r13_r10_entities.dwg fixture absent; skipping");
   }
   PolyCountIface iface;
   dwgR reader(path.c_str());
@@ -1674,8 +1671,7 @@ TEST_CASE("DWG pre-R13 R11: embedded APPID + DIMSTYLE tables decode name-only",
   const std::string path =
       std::string(LIBRECAD_TEST_DIR) + "/pre_r13_r11_tables.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("pre_r13_r11_tables.dwg fixture absent; skipping");
-    return;
+    SKIP("pre_r13_r11_tables.dwg fixture absent; skipping");
   }
   TableNameCapture iface;
   dwgR reader(path.c_str());
@@ -1764,7 +1760,7 @@ TEST_CASE("DWG pre-R10 tier (R2.6/R9/R2.10) reads entities with 2D bodies",
     const std::string path = std::string(LIBRECAD_TEST_DIR) + "/" + c.file;
     INFO("fixture: " << c.file);
     if (!std::filesystem::is_regular_file(path)) {
-      SUCCEED("fixture absent; skipping");
+      SKIP("fixture absent; skipping");
       continue;
     }
     LineCapture iface;
@@ -1787,16 +1783,14 @@ TEST_CASE("DWG pre-R13 external R2.6 dimensions use typed callbacks",
           "[dwg][pre-r13][external]") {
   const char *home = std::getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping external corpus");
-    return;
+    SKIP("HOME not set; skipping external corpus");
   }
   const std::string path =
       (std::filesystem::path(home) / "dev" / "dwg-writer" / "tests" /
        "fixtures" / "committed" / "libredwg" / "dim_r2_6.dwg")
           .string();
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("dwg-writer dim_r2_6.dwg absent; skipping external corpus");
-    return;
+    SKIP("dwg-writer dim_r2_6.dwg absent; skipping external corpus");
   }
 
   LegacyDimensionCapture iface;
@@ -1824,8 +1818,7 @@ TEST_CASE("DWG pre-R13 derived angular and ordinate dimensions use typed callbac
           "[dwg][pre-r13][external]") {
   const char *root = std::getenv("LIBRECAD_PRE_R13_DIMENSION_FIXTURES");
   if (!root || root[0] == '\0') {
-    SUCCEED("derived pre-R13 dimension fixtures not configured; skipping");
-    return;
+    SKIP("derived pre-R13 dimension fixtures not configured; skipping");
   }
   struct Case {
     const char *file;
@@ -1839,7 +1832,7 @@ TEST_CASE("DWG pre-R13 derived angular and ordinate dimensions use typed callbac
     const std::string path = (std::filesystem::path(root) / c.file).string();
     INFO("fixture: " << c.file);
     if (!std::filesystem::is_regular_file(path)) {
-      SUCCEED("derived fixture absent; skipping");
+      SKIP("derived fixture absent; skipping");
       continue;
     }
     LegacyDimensionCapture iface;
@@ -1871,8 +1864,7 @@ TEST_CASE("DWG R1.40 (AC1.40) dedicated reader decodes the entity stream",
   const std::string path =
       std::string(LIBRECAD_TEST_DIR) + "/pre_r10_r140_entities.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("pre_r10_r140_entities.dwg fixture absent; skipping");
-    return;
+    SKIP("pre_r10_r140_entities.dwg fixture absent; skipping");
   }
   LineCapture iface;
   dwgR reader(path.c_str());
@@ -1913,14 +1905,12 @@ TEST_CASE("DWG R2007 stored-page: usa_dollar100_front.dwg reads tables",
           "[.dwg6_stored_page]") {
   const char *home = std::getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path =
       std::string(home) + "/doc/dwg6/usa_dollar100_front.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("usa_dollar100_front.dwg not present; skipping");
-    return;
+    SKIP("usa_dollar100_front.dwg not present; skipping");
   }
   CountingIface iface;
   const DwgResult r = readDwg(path, /*verbose=*/false, &iface);
@@ -1953,7 +1943,7 @@ TEST_CASE("DWG XLINE reads as typed construction line across LibreDWG versions",
         std::string(LIBRECAD_TEST_DIR) + "/" + fixture.file;
     INFO("fixture: " << fixture.file);
     if (!std::filesystem::is_regular_file(path)) {
-      SUCCEED("fixture absent; skipping");
+      SKIP("fixture absent; skipping");
       continue;
     }
     testedFixture = true;
@@ -1978,7 +1968,7 @@ TEST_CASE("DWG XLINE reads as typed construction line across LibreDWG versions",
     CHECK(dirLen > 0.0);
   }
   if (!testedFixture)
-    SUCCEED("XLINE fixtures absent; skipping");
+    SKIP("XLINE fixtures absent; skipping");
 }
 
 TEST_CASE("DWG optional fixtures cover AC1015 through AC1032",
@@ -2003,7 +1993,7 @@ TEST_CASE("DWG optional fixtures cover AC1015 through AC1032",
         std::string(LIBRECAD_TEST_DIR) + "/" + fixture.file;
     INFO("fixture: " << fixture.file);
     if (!std::filesystem::is_regular_file(path)) {
-      SUCCEED("fixture absent; skipping");
+      SKIP("fixture absent; skipping");
       continue;
     }
     testedFixture = true;
@@ -2016,7 +2006,7 @@ TEST_CASE("DWG optional fixtures cover AC1015 through AC1032",
     CHECK(iface.entities > 0);
   }
   if (!testedFixture)
-    SUCCEED("source-controlled DWG fixtures absent; skipping");
+    SKIP("source-controlled DWG fixtures absent; skipping");
 }
 
 TEST_CASE("DWG sibling oracle fixtures preserve dictionary ownership",
@@ -2043,8 +2033,7 @@ TEST_CASE("DWG sibling oracle fixtures preserve dictionary ownership",
   const auto r14Path = findFixture("example_r14.dwg");
   const auto r13Path = findFixture("example_r13.dwg");
   if (r14Path.empty() || r13Path.empty()) {
-    SUCCEED("dwg-parser sibling fixtures absent; skipping");
-    return;
+    SKIP("dwg-parser sibling fixtures absent; skipping");
   }
 
   DictionaryFixtureIface r14Iface;
@@ -2118,8 +2107,7 @@ TEST_CASE("DWG sibling oracle fixtures deliver R13/R14 viewport headers",
   const auto r14Path = findFixture("example_r14.dwg");
   const auto r13Path = findFixture("example_r13.dwg");
   if (r14Path.empty() || r13Path.empty()) {
-    SUCCEED("dwg-parser sibling fixtures absent; skipping");
-    return;
+    SKIP("dwg-parser sibling fixtures absent; skipping");
   }
 
   struct Expected {
@@ -2263,13 +2251,11 @@ TEST_CASE("DWG smoke test: read ~/doc/dwg/*.dwg and report entity counts",
   // test passes for everyone else.
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping DWG corpus tests");
-    return;
+    SKIP("HOME not set; skipping DWG corpus tests");
   }
   const std::string dir = std::string(home) + "/doc/dwg/";
   if (!std::filesystem::is_directory(dir)) {
-    SUCCEED("DWG corpus directory not found at " << dir << "; skipping");
-    return;
+    SKIP("DWG corpus directory not found at " << dir << "; skipping");
   }
 
   // Print a header once
@@ -2317,13 +2303,11 @@ TEST_CASE("DWG lineweights: distribution in lineweights.dwg",
           "[.dwg_lineweights]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set");
-    return;
+    SKIP("HOME not set");
   }
   const std::string path = std::string(home) + "/doc/dwg/lineweights.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("lineweights.dwg not present; skipping");
-    return;
+    SKIP("lineweights.dwg not present; skipping");
   }
 
   CountingIface iface;
@@ -2365,13 +2349,11 @@ TEST_CASE("DWG lineweights: distribution in lineweights.dwg",
 TEST_CASE("DWG verbose debug: failing AC1021 files", "[.dwg_verbose]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping verbose DWG corpus tests");
-    return;
+    SKIP("HOME not set; skipping verbose DWG corpus tests");
   }
   const std::string dir = std::string(home) + "/doc/dwg/";
   if (!std::filesystem::is_directory(dir)) {
-    SUCCEED("DWG corpus directory not found at " << dir << "; skipping");
-    return;
+    SKIP("DWG corpus directory not found at " << dir << "; skipping");
   }
 
   const char *failingFiles[] = {
@@ -2400,13 +2382,11 @@ TEST_CASE("DWG deep diagnostic: entity type breakdown for target files",
           "[.dwg_deep]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string dir = std::string(home) + "/doc/dwg/";
   if (!std::filesystem::is_directory(dir)) {
-    SUCCEED("DWG corpus directory not found; skipping");
-    return;
+    SKIP("DWG corpus directory not found; skipping");
   }
 
   const char *targets[] = {
@@ -2440,13 +2420,11 @@ TEST_CASE("DWG deep diagnostic: entity type breakdown for target files",
 TEST_CASE("DWG Pool_Detail.dwg: dump every circle", "[.dwg_pool_circles]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path = std::string(home) + "/doc/dwg/Pool_Detail.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("Pool_Detail.dwg not present; skipping");
-    return;
+    SKIP("Pool_Detail.dwg not present; skipping");
   }
 
   struct CircleCollector : public TypeTrackingIface {
@@ -2527,13 +2505,11 @@ TEST_CASE("DWG Pool_Detail.dwg: dump every circle", "[.dwg_pool_circles]") {
 TEST_CASE("DWG Cover.dwg: deep entity/type breakdown", "[.dwg_cover]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path = std::string(home) + "/doc/dwg/Cover.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("Cover.dwg not present; skipping");
-    return;
+    SKIP("Cover.dwg not present; skipping");
   }
   const DeepResult dr = readDwgDeep(path);
   printDeepReport("Cover.dwg", dr);
@@ -2549,13 +2525,11 @@ TEST_CASE("DWG samples: load all files in ~/dev/dwg_samples/",
           "[.slow][dwg][corpus]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string dir = std::string(home) + "/dev/dwg_samples/";
   if (!std::filesystem::is_directory(dir)) {
-    SUCCEED("~/dev/dwg_samples/ not found; skipping");
-    return;
+    SKIP("~/dev/dwg_samples/ not found; skipping");
   }
 
   // Collect *.dwg paths, sorted for deterministic output.
@@ -2571,8 +2545,7 @@ TEST_CASE("DWG samples: load all files in ~/dev/dwg_samples/",
   std::sort(paths.begin(), paths.end());
 
   if (paths.empty()) {
-    SUCCEED("No .dwg files found in ~/dev/dwg_samples/; skipping");
-    return;
+    SKIP("No .dwg files found in ~/dev/dwg_samples/; skipping");
   }
 
   // Header
@@ -2615,14 +2588,12 @@ TEST_CASE("DWG samples: load all files in ~/dev/dwg_samples/",
 TEST_CASE("DWG polyline2d_line_R14: deep + verbose", "[.dwg_polyR14]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set");
-    return;
+    SKIP("HOME not set");
   }
   const std::string path =
       std::string(home) + "/dev/dwg_samples/polyline2d_line_R14.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("polyline2d_line_R14.dwg not present; skipping");
-    return;
+    SKIP("polyline2d_line_R14.dwg not present; skipping");
   }
 
   // readDwgDeep captures the full debug log internally — no separate verbose
@@ -2639,13 +2610,11 @@ TEST_CASE("DWG polyline2d_line_R14: deep + verbose", "[.dwg_polyR14]") {
 TEST_CASE("DWG Cover.dwg: verbose reader trace", "[.dwg_cover_verbose]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path = std::string(home) + "/doc/dwg/Cover.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("Cover.dwg not present; skipping");
-    return;
+    SKIP("Cover.dwg not present; skipping");
   }
   std::cout << "\n=== Cover.dwg (verbose) ===\n";
   const DwgResult r = readDwg(path, /*verbose=*/true);
@@ -2669,13 +2638,11 @@ TEST_CASE("DWG Cover.dwg: verbose reader trace", "[.dwg_cover_verbose]") {
 TEST_CASE("DWG verbose: example_*.dwg in ~/doc/dwg3/", "[.dwg3_verbose]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set");
-    return;
+    SKIP("HOME not set");
   }
   const std::string dir = std::string(home) + "/doc/dwg3/";
   if (!std::filesystem::is_directory(dir)) {
-    SUCCEED("~/doc/dwg3/ not found");
-    return;
+    SKIP("~/doc/dwg3/ not found");
   }
   const char *names[] = {
       "example_2007.dwg",
@@ -2704,13 +2671,11 @@ TEST_CASE("DWG verbose: example_*.dwg in ~/doc/dwg3/", "[.dwg3_verbose]") {
 TEST_CASE("DWG corpus: load all files in ~/doc/dwg3/", "[.dwg3]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string dir = std::string(home) + "/doc/dwg3/";
   if (!std::filesystem::is_directory(dir)) {
-    SUCCEED("~/doc/dwg3/ not found; skipping");
-    return;
+    SKIP("~/doc/dwg3/ not found; skipping");
   }
 
   std::vector<std::string> paths;
@@ -2727,8 +2692,7 @@ TEST_CASE("DWG corpus: load all files in ~/doc/dwg3/", "[.dwg3]") {
   }
   std::sort(paths.begin(), paths.end());
   if (paths.empty()) {
-    SUCCEED("No .dwg files in ~/doc/dwg3/; skipping");
-    return;
+    SKIP("No .dwg files in ~/doc/dwg3/; skipping");
   }
 
   std::cout << "\n"
@@ -2764,13 +2728,11 @@ TEST_CASE("DWG corpus: load all files in ~/doc/dwg3/", "[.dwg3]") {
 TEST_CASE("DWG makeall-plus.dwg: deep coverage diagnostic", "[.dwg_makeall]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path = std::string(home) + "/doc/dwg3/makeall-plus.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("makeall-plus.dwg not present; skipping");
-    return;
+    SKIP("makeall-plus.dwg not present; skipping");
   }
 
   // Counts EVERY delivery path, including those the shared TypeTrackingIface
@@ -2856,13 +2818,11 @@ TEST_CASE("DWG corpus: load all files in ~/doc/dwg2/",
           "[.slow][dwg][corpus]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string dir = std::string(home) + "/doc/dwg2/";
   if (!std::filesystem::is_directory(dir)) {
-    SUCCEED("~/doc/dwg2/ not found; skipping");
-    return;
+    SKIP("~/doc/dwg2/ not found; skipping");
   }
 
   std::vector<std::string> paths;
@@ -2882,8 +2842,7 @@ TEST_CASE("DWG corpus: load all files in ~/doc/dwg2/",
   std::sort(paths.begin(), paths.end());
 
   if (paths.empty()) {
-    SUCCEED("No .dwg files found in ~/doc/dwg2/; skipping");
-    return;
+    SKIP("No .dwg files found in ~/doc/dwg2/; skipping");
   }
 
   std::cout << "\n"
@@ -2925,14 +2884,12 @@ TEST_CASE("DWG Architectural-Modern-Building-Design: hatch parsing",
           "[.dwg_arch_hatch]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path =
       std::string(home) + "/doc/dwg2/Architectural-Modern-Building-Design.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("Architectural-Modern-Building-Design.dwg not present; skipping");
-    return;
+    SKIP("Architectural-Modern-Building-Design.dwg not present; skipping");
   }
 
   const DeepResult dr = readDwgDeep(path);
@@ -2966,14 +2923,12 @@ TEST_CASE("DWG Architectural-Modern-Building-Design: hatch fill pipeline",
           "[.dwg_arch_hatch_fill]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path =
       std::string(home) + "/doc/dwg2/Architectural-Modern-Building-Design.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("Architectural-Modern-Building-Design.dwg not present; skipping");
-    return;
+    SKIP("Architectural-Modern-Building-Design.dwg not present; skipping");
   }
 
   HatchFillIface iface;
@@ -3043,13 +2998,11 @@ TEST_CASE("DWG Sport-Man-Signs: SOLID hatches render with positive area",
           "[.dwg_sport_signs]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path = std::string(home) + "/doc/dwg2/Sport-Man-Signs.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("Sport-Man-Signs.dwg not present; skipping");
-    return;
+    SKIP("Sport-Man-Signs.dwg not present; skipping");
   }
 
   HatchFillIface iface;
@@ -3152,14 +3105,12 @@ TEST_CASE("DWG Sport-Man-Signs: SOLID hatches render with positive area",
 TEST_CASE("DWG trolley_structure: entity population", "[.dwg_trolley]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path =
       std::string(home) + "/doc/dwg2/trolley_structure.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("trolley_structure.dwg not present; skipping");
-    return;
+    SKIP("trolley_structure.dwg not present; skipping");
   }
 
   const DeepResult dr = readDwgDeep(path);
@@ -3209,14 +3160,12 @@ TEST_CASE("DWG trolley_structure: entity population", "[.dwg_trolley]") {
 TEST_CASE("DWG gear_pump_subassy: entity population", "[.dwg_gear_pump]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path =
       std::string(home) + "/doc/dwg2/gear_pump_subassy.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("gear_pump_subassy.dwg not present; skipping");
-    return;
+    SKIP("gear_pump_subassy.dwg not present; skipping");
   }
 
   const DeepResult dr = readDwgDeep(path);
@@ -3285,13 +3234,11 @@ TEST_CASE("DWG gear_pump_subassy: entity population", "[.dwg_gear_pump]") {
 TEST_CASE("DWG lever_detail: entity population", "[.dwg_lever]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path = std::string(home) + "/doc/dwg2/lever_detail.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("lever_detail.dwg not present; skipping");
-    return;
+    SKIP("lever_detail.dwg not present; skipping");
   }
 
   const DeepResult dr = readDwgDeep(path);
@@ -3385,13 +3332,11 @@ TEST_CASE("DWG lever_detail: filter pipeline + visibility audit",
           "[.dwg_lever_filter]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path = std::string(home) + "/doc/dwg2/lever_detail.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("lever_detail.dwg not present; skipping");
-    return;
+    SKIP("lever_detail.dwg not present; skipping");
   }
 
   // Bootstrap a minimal Qt app context so RS_Graphic ctor's
@@ -3535,14 +3480,12 @@ TEST_CASE("DWG gear_pump_subassy: filter pipeline + block routing audit",
           "[.dwg_gear_pump_filter]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path =
       std::string(home) + "/doc/dwg2/gear_pump_subassy.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("gear_pump_subassy.dwg not present; skipping");
-    return;
+    SKIP("gear_pump_subassy.dwg not present; skipping");
   }
 
   static int qargc = 1;
@@ -3701,20 +3644,17 @@ TEST_CASE("DWG lever_detail: XREF resolution embeds external geometry",
           "[.dwg_lever_xref_resolve]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string hostPath = std::string(home) + "/doc/dwg2/lever_detail.dwg";
   const std::string xrefPath =
       std::string(home) + "/doc/dwg2/gripper_assembly_new.dwg";
   if (!std::filesystem::is_regular_file(hostPath)) {
-    SUCCEED("lever_detail.dwg not present; skipping");
-    return;
+    SKIP("lever_detail.dwg not present; skipping");
   }
   if (!std::filesystem::is_regular_file(xrefPath)) {
-    SUCCEED("gripper_assembly_new.dwg (XREF source) not present; "
+    SKIP("gripper_assembly_new.dwg (XREF source) not present; "
             "skipping");
-    return;
   }
 
   static int qargc = 1;
@@ -3879,14 +3819,12 @@ TEST_CASE("DWG gripper_assembly_new: XREF source population",
           "[.dwg_gripper_xref]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path =
       std::string(home) + "/doc/dwg2/gripper_assembly_new.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("gripper_assembly_new.dwg not present; skipping");
-    return;
+    SKIP("gripper_assembly_new.dwg not present; skipping");
   }
   const DeepResult dr = readDwgDeep(path);
   REQUIRE(dr.ok);
@@ -4050,13 +3988,11 @@ TEST_CASE("DWG lever_detail: per-block entity delivery",
           "[.dwg_lever_blocks]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path = std::string(home) + "/doc/dwg2/lever_detail.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("lever_detail.dwg not present; skipping");
-    return;
+    SKIP("lever_detail.dwg not present; skipping");
   }
 
   BlockTrackingIface iface;
@@ -4140,14 +4076,12 @@ TEST_CASE("DWG lever_detail: per-block entity delivery",
 TEST_CASE("DWG gear_pump_subassy: ATTRIB pipeline", "[.dwg_gear_pump_attrib]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path =
       std::string(home) + "/doc/dwg2/gear_pump_subassy.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("gear_pump_subassy.dwg not present; skipping");
-    return;
+    SKIP("gear_pump_subassy.dwg not present; skipping");
   }
 
   HatchFillIface iface;
@@ -4178,14 +4112,12 @@ TEST_CASE("DWG gear_pump_subassy: ATTRIB pipeline", "[.dwg_gear_pump_attrib]") {
 TEST_CASE("DWG House-Dwgfree.com_-1: entity population", "[.dwg_house]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path =
       std::string(home) + "/doc/dwg2/House-Dwgfree.com_-1.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("House-Dwgfree.com_-1.dwg not present; skipping");
-    return;
+    SKIP("House-Dwgfree.com_-1.dwg not present; skipping");
   }
 
   const DeepResult dr = readDwgDeep(path);
@@ -4219,13 +4151,11 @@ TEST_CASE("DWG House-Dwgfree.com_-1: entity population", "[.dwg_house]") {
 TEST_CASE("DWG pump_wheel: entity population", "[.dwg_pump_wheel]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path = std::string(home) + "/doc/dwg2/pump_wheel.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("pump_wheel.dwg not present; skipping");
-    return;
+    SKIP("pump_wheel.dwg not present; skipping");
   }
 
   const DeepResult dr = readDwgDeep(path);
@@ -4259,14 +4189,12 @@ TEST_CASE("DWG pump_wheel: entity population", "[.dwg_pump_wheel]") {
 TEST_CASE("DWG robot_handling_cell: entity population", "[.dwg_robot]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path =
       std::string(home) + "/doc/dwg2/robot_handling_cell.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("robot_handling_cell.dwg not present; skipping");
-    return;
+    SKIP("robot_handling_cell.dwg not present; skipping");
   }
 
   const DeepResult dr = readDwgDeep(path);
@@ -4303,20 +4231,17 @@ TEST_CASE("DWG robot_handling_cell: filter pipeline + XREF embed",
           "[.dwg_robot_filter]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path =
       std::string(home) + "/doc/dwg2/robot_handling_cell.dwg";
   const std::string xrefPath =
       std::string(home) + "/doc/dwg2/gripper_assembly_new.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("robot_handling_cell.dwg not present; skipping");
-    return;
+    SKIP("robot_handling_cell.dwg not present; skipping");
   }
   if (!std::filesystem::is_regular_file(xrefPath)) {
-    SUCCEED("gripper_assembly_new.dwg not present; skipping");
-    return;
+    SKIP("gripper_assembly_new.dwg not present; skipping");
   }
 
   static int qargc = 1;
@@ -4366,14 +4291,12 @@ TEST_CASE("DWG robot_handling_cell: negative extrusion arc placement",
           "[.dwg_robot_arc_ext]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path =
       std::string(home) + "/doc/dwg2/robot_handling_cell.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("robot_handling_cell.dwg not present; skipping");
-    return;
+    SKIP("robot_handling_cell.dwg not present; skipping");
   }
 
   struct ArcProbe : public DRW_Interface {
@@ -5022,13 +4945,11 @@ TEST_CASE("DWG 2带尺寸图库: entities near (120,35220)",
           "[.dwg_chicun_near]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path = std::string(home) + "/doc/dwg4/2带尺寸图库.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("fixture not present; skipping");
-    return;
+    SKIP("fixture not present; skipping");
   }
 
   static int qargc = 1;
@@ -5236,13 +5157,11 @@ TEST_CASE("DWG 2带尺寸图库: block-local geometry near (1.026,301.026)",
           "[.dwg_chicun_blocklocal]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path = std::string(home) + "/doc/dwg4/2带尺寸图库.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("fixture not present; skipping");
-    return;
+    SKIP("fixture not present; skipping");
   }
 
   constexpr double kDimScale = 117.0;
@@ -5437,13 +5356,11 @@ TEST_CASE("DWG 2带尺寸图库: deng1 circles at insert point (84004,115511)",
           "[.dwg_chicun_circle]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path = std::string(home) + "/doc/dwg4/2带尺寸图库.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("fixture not present; skipping");
-    return;
+    SKIP("fixture not present; skipping");
   }
 
   Deng1RawIface rawIface;
@@ -5768,13 +5685,11 @@ TEST_CASE("DWG 2带尺寸图库: entities near (-774805.88,588320.79)",
           "[.dwg_chicun_stray]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path = std::string(home) + "/doc/dwg4/2带尺寸图库.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("fixture not present; skipping");
-    return;
+    SKIP("fixture not present; skipping");
   }
 
   static int qargc = 1;
@@ -5955,13 +5870,11 @@ TEST_CASE("DWG 2带尺寸图库: entities near (52984.74,222052.06)",
           "[.dwg_chicun_stray2]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path = std::string(home) + "/doc/dwg4/2带尺寸图库.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("fixture not present; skipping");
-    return;
+    SKIP("fixture not present; skipping");
   }
 
   static int qargc = 1;
@@ -6141,13 +6054,11 @@ TEST_CASE("DWG 2带尺寸图库: entities near (-294315.21,48571.66)",
           "[.dwg_chicun_stray3]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path = std::string(home) + "/doc/dwg4/2带尺寸图库.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("fixture not present; skipping");
-    return;
+    SKIP("fixture not present; skipping");
   }
 
   static int qargc = 1;
@@ -6296,13 +6207,11 @@ TEST_CASE("DWG 2带尺寸图库: entities near stray WCS triple",
           "[.dwg_chicun_stray4]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path = std::string(home) + "/doc/dwg4/2带尺寸图库.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("fixture not present; skipping");
-    return;
+    SKIP("fixture not present; skipping");
   }
 
   static int qargc = 1;
@@ -6556,13 +6465,11 @@ TEST_CASE("DWG 2带尺寸图库: entities near stray WCS triple (neg X)",
           "[.dwg_chicun_stray5]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path = std::string(home) + "/doc/dwg4/2带尺寸图库.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("fixture not present; skipping");
-    return;
+    SKIP("fixture not present; skipping");
   }
 
   static int qargc = 1;
@@ -6753,13 +6660,11 @@ TEST_CASE("DWG 2带尺寸图库: entities near (-2230355.08,1646735.10)",
           "[.dwg_chicun_stray6]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path = std::string(home) + "/doc/dwg4/2带尺寸图库.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("fixture not present; skipping");
-    return;
+    SKIP("fixture not present; skipping");
   }
 
   static int qargc = 1;
@@ -6907,13 +6812,11 @@ TEST_CASE("DWG 2带尺寸图库: entities near (-2230420.44,1646754.55)",
           "[.dwg_chicun_stray7]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path = std::string(home) + "/doc/dwg4/2带尺寸图库.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("fixture not present; skipping");
-    return;
+    SKIP("fixture not present; skipping");
   }
 
   static int qargc = 1;
@@ -7060,8 +6963,7 @@ TEST_CASE("DWG 2带尺寸图库: entities near (-2230420.44,1646754.55)",
 TEST_CASE("DWG 2带尺寸图库: stray8 broad diagnostic",
           "[.dwg_chicun_stray8_diag]") {
   if (chicun::fixturePath().empty()) {
-    SUCCEED("fixture not present; skipping");
-    return;
+    SKIP("fixture not present; skipping");
   }
   chicun::ensureTestApp();
   RS_Graphic graphic;
@@ -7206,8 +7108,7 @@ TEST_CASE("DWG 2带尺寸图库: stray8 broad diagnostic",
 TEST_CASE("DWG 2带尺寸图库: stray8 after GUI onLoadingCompleted",
           "[.dwg_chicun_stray8_gui]") {
   if (chicun::fixturePath().empty()) {
-    SUCCEED("fixture not present; skipping");
-    return;
+    SKIP("fixture not present; skipping");
   }
   chicun::ensureTestApp();
   RS_Graphic graphic;
@@ -7231,8 +7132,7 @@ TEST_CASE("DWG 2带尺寸图库: stray8 after GUI onLoadingCompleted",
 TEST_CASE("DWG 2带尺寸图库: stray8 nearest-on-arc snap distance",
           "[.dwg_chicun_stray8_snap]") {
   if (chicun::fixturePath().empty()) {
-    SUCCEED("fixture not present; skipping");
-    return;
+    SKIP("fixture not present; skipping");
   }
   chicun::ensureTestApp();
   RS_Graphic graphic;
@@ -7270,13 +7170,11 @@ TEST_CASE("DWG 2带尺寸图库: entities near (-1099671.57,492101.30)",
           "[.dwg_chicun_stray8]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path = std::string(home) + "/doc/dwg4/2带尺寸图库.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("fixture not present; skipping");
-    return;
+    SKIP("fixture not present; skipping");
   }
 
   static int qargc = 1;
@@ -7423,8 +7321,7 @@ TEST_CASE("DWG 2带尺寸图库: entities near (-1099671.57,492101.30)",
 TEST_CASE("DWG 2带尺寸图库: 015 insert transform audit",
           "[.dwg_chicun_015_audit]") {
   if (chicun::fixturePath().empty()) {
-    SUCCEED("fixture not present; skipping");
-    return;
+    SKIP("fixture not present; skipping");
   }
   chicun::ensureTestApp();
   RS_Graphic graphic;
@@ -7497,8 +7394,7 @@ TEST_CASE("DWG 2带尺寸图库: 015 insert transform audit",
 TEST_CASE("DWG 2带尺寸图库: LNG-13 wipeout insert audit",
           "[.dwg_chicun_lng13_audit]") {
   if (chicun::fixturePath().empty()) {
-    SUCCEED("fixture not present; skipping");
-    return;
+    SKIP("fixture not present; skipping");
   }
   chicun::ensureTestApp();
   RS_Graphic graphic;
@@ -7615,13 +7511,11 @@ TEST_CASE("DWG 2带尺寸图库: LNG-13 wipeout insert audit",
 TEST_CASE("DWG ACEB10: resolved bbox audit", "[.dwg_aceb10_bbox]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path = std::string(home) + "/doc/dwg3/ACEB10.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("ACEB10.dwg not present; skipping");
-    return;
+    SKIP("ACEB10.dwg not present; skipping");
   }
   chicun::ensureTestApp();
   RS_Graphic graphic;
@@ -7868,8 +7762,7 @@ TEST_CASE("DWG ACEB10: resolved bbox audit", "[.dwg_aceb10_bbox]") {
 TEST_CASE("DWG 2带尺寸图库: CUSH sofa insert chain diagnostic",
           "[.dwg_chicun_cush_diag]") {
   if (chicun::fixturePath().empty()) {
-    SUCCEED("fixture not present; skipping");
-    return;
+    SKIP("fixture not present; skipping");
   }
   chicun::ensureTestApp();
   RS_Graphic graphic;
@@ -7970,14 +7863,12 @@ TEST_CASE("DWG 全国通用节点详细解析: libdxfrw + filter load",
           "[.dwg_jiedian]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path =
       std::string(home) + "/doc/dwg4/全国通用节点详细解析.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("fixture not present; skipping");
-    return;
+    SKIP("fixture not present; skipping");
   }
 
   dwgR reader(path.c_str());
@@ -8032,13 +7923,11 @@ TEST_CASE("DWG 全国通用节点详细解析: libdxfrw + filter load",
 TEST_CASE("DWG corpus: WIPEOUT entity inventory", "[.dwg_wipeout]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string dir = std::string(home) + "/doc/dwg2/";
   if (!std::filesystem::is_directory(dir)) {
-    SUCCEED("~/doc/dwg2/ not found; skipping");
-    return;
+    SKIP("~/doc/dwg2/ not found; skipping");
   }
 
   int totalWipeouts = 0;
@@ -8090,8 +7979,7 @@ TEST_CASE("DWG corpus: WIPEOUT entity inventory", "[.dwg_wipeout]") {
 TEST_CASE("DWG corpus: MULTILEADER entity inventory", "[.dwg_mleader]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::array<std::string, 2> dirs = {
       std::string(home) + "/doc/dwg/",  // primary corpus (has the
@@ -8155,8 +8043,7 @@ TEST_CASE("DWG visualstyle probe: count R2010+ visual-style flag triggers",
           "[.dwg_visualstyle_probe]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set");
-    return;
+    SKIP("HOME not set");
   }
 
   struct Witness {
@@ -8252,8 +8139,7 @@ TEST_CASE("DWG acdbcolor probe: count DBCOLOR objects + resolved entity refs",
           "[.dwg_acdbcolor_probe]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set");
-    return;
+    SKIP("HOME not set");
   }
 
   // Custom interface that counts DBCOLOR objects via addDbColor and
@@ -8386,14 +8272,12 @@ TEST_CASE("DWG acdbcolor: book color load + dbColor object inventory",
           "[.dwg_acdbcolor]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set");
-    return;
+    SKIP("HOME not set");
   }
   const std::string path =
       std::string(home) + "/doc/dwg2/Architectural-Modern-Building-Design.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("witness file not present; skipping");
-    return;
+    SKIP("witness file not present; skipping");
   }
 
   int dbColors = 0;
@@ -8439,8 +8323,7 @@ TEST_CASE("DWG acdbcolor: layer colorName probe",
           "[.dwg_acdbcolor_layer_probe]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set");
-    return;
+    SKIP("HOME not set");
   }
 
   class LayerColorIface : public TypeTrackingIface {
@@ -8533,8 +8416,7 @@ TEST_CASE("DWG plotsettings probe: count PLOTSETTINGS objects per file",
           "[.dwg_plotsettings_probe]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set");
-    return;
+    SKIP("HOME not set");
   }
 
   class PlotSettingsIface : public TypeTrackingIface {
@@ -8617,8 +8499,7 @@ TEST_CASE("DWG transparency probe: count entities with ENC alpha set",
           "[.dwg_transparency_probe]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set");
-    return;
+    SKIP("HOME not set");
   }
 
   class TransparencyIface : public TypeTrackingIface {
@@ -8815,14 +8696,12 @@ TEST_CASE("DWG hatch field parity: gradient + seed points populate",
           "[.dwg_hatch_fields]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path =
       std::string(home) + "/doc/dwg2/Architectural-Modern-Building-Design.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("Architectural-Modern-Building-Design.dwg not present; skipping");
-    return;
+    SKIP("Architectural-Modern-Building-Design.dwg not present; skipping");
   }
 
   FieldCaptureIface iface;
@@ -8868,13 +8747,11 @@ TEST_CASE("DWG dimension field parity: measureValue + flipArrow populate",
           "[.dwg_dim_fields]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string dir = std::string(home) + "/doc/dwg2/";
   if (!std::filesystem::is_directory(dir)) {
-    SUCCEED("DWG corpus directory not found; skipping");
-    return;
+    SKIP("DWG corpus directory not found; skipping");
   }
 
   int filesScanned = 0;
@@ -8927,13 +8804,11 @@ TEST_CASE("DWG pre-R13 detection: ~/doc/dwg3/block.dwg classifies AC2.10",
           "[.dwg_pre_r13]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set");
-    return;
+    SKIP("HOME not set");
   }
   const std::string path = std::string(home) + "/doc/dwg3/block.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("~/doc/dwg3/block.dwg not found");
-    return;
+    SKIP("~/doc/dwg3/block.dwg not found");
   }
   const DwgResult r = readDwg(path);
   CHECK_FALSE(r.ok);
@@ -8952,15 +8827,13 @@ TEST_CASE("DWG arch_multileaders: deep fidelity probe",
           "[.dwg_arch_mleader_probe]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set");
-    return;
+    SKIP("HOME not set");
   }
   const std::string path =
       std::string(home) +
       "/doc/dwg/architectural_-_annotation_scaling_and_multileaders.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("file not present; skipping");
-    return;
+    SKIP("file not present; skipping");
   }
 
   class Probe : public TypeTrackingIface {
@@ -9202,15 +9075,13 @@ TEST_CASE("DWG arch_multileaders: MLEADER body parser fidelity",
           "[.slow][dwg][corpus][mleader]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set");
-    return;
+    SKIP("HOME not set");
   }
   const std::string path =
       std::string(home) +
       "/doc/dwg/architectural_-_annotation_scaling_and_multileaders.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("fixture not present; skipping");
-    return;
+    SKIP("fixture not present; skipping");
   }
 
   struct Snap {
@@ -9359,15 +9230,13 @@ TEST_CASE("DWG arch_multileaders: SCALE table delivery",
           "[.slow][dwg][corpus][scale]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set");
-    return;
+    SKIP("HOME not set");
   }
   const std::string path =
       std::string(home) +
       "/doc/dwg/architectural_-_annotation_scaling_and_multileaders.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("fixture not present; skipping");
-    return;
+    SKIP("fixture not present; skipping");
   }
 
   class ScaleIface : public TypeTrackingIface {
@@ -9439,8 +9308,7 @@ TEST_CASE("DWG Mechanical and Annotative: object-context data delivery",
     }
   }
   if (path.empty()) {
-    SUCCEED("fixture not present; skipping");
-    return;
+    SKIP("fixture not present; skipping");
   }
 
   class ObjectContextIface : public TypeTrackingIface {
@@ -9502,15 +9370,13 @@ TEST_CASE("DWG arch_multileaders: OBJECTS metadata delivery",
           "[.slow][dwg][corpus][objects]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set");
-    return;
+    SKIP("HOME not set");
   }
   const std::string path =
       std::string(home) +
       "/doc/dwg/architectural_-_annotation_scaling_and_multileaders.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("fixture not present; skipping");
-    return;
+    SKIP("fixture not present; skipping");
   }
 
   class MetadataIface : public TypeTrackingIface {
@@ -9615,15 +9481,13 @@ TEST_CASE("DWG ACAD_TABLE entities render through anonymous table blocks",
           "[.slow][dwg][corpus][acad_table]") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping ACAD_TABLE corpus test");
-    return;
+    SKIP("HOME not set; skipping ACAD_TABLE corpus test");
   }
 
   const std::string path =
       std::string(home) + "/doc/dwg/blocks_and_tables_-_metric.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("DWG table corpus file not found at " << path << "; skipping");
-    return;
+    SKIP("DWG table corpus file not found at " << path << "; skipping");
   }
 
   struct TableProbe : CountingIface {
@@ -9698,8 +9562,7 @@ TEST_CASE("DWG R2004 multi-page section (AcDbObjects at 3 x 0x7400) reads",
   // load that yields entities proves the multi-page (k x maxSize) buffer model.
   DwgResult r;
   if (!readSample("arc_2004.dwg", r)) {
-    SUCCEED("~/dev/dwg_samples/arc_2004.dwg absent; skipping multi-page pin");
-    return;
+    SKIP("~/dev/dwg_samples/arc_2004.dwg absent; skipping multi-page pin");
   }
   CHECK(r.error == DRW::BAD_NONE);
   CHECK(r.version == DRW::AC1018);
@@ -9713,8 +9576,7 @@ TEST_CASE("DWG R2010 CLASSES content past page uSize decodes",
   // uSize (the old uSize cap zeroed the string stream -> BAD_READ_CLASSES).
   DwgResult r;
   if (!readSample("arc_2010.dwg", r)) {
-    SUCCEED("~/dev/dwg_samples/arc_2010.dwg absent; skipping past-uSize pin");
-    return;
+    SKIP("~/dev/dwg_samples/arc_2010.dwg absent; skipping past-uSize pin");
   }
   CHECK(r.error == DRW::BAD_NONE);
   CHECK(r.version == DRW::AC1024);
@@ -9725,8 +9587,7 @@ TEST_CASE("DWG R2013 reads (dwgReader27 inherits the buffer-model fixes)",
           "[dwg][r2013][buffermodel]") {
   DwgResult r;
   if (!readSample("arc_2013.dwg", r)) {
-    SUCCEED("~/dev/dwg_samples/arc_2013.dwg absent; skipping R2013 pin");
-    return;
+    SKIP("~/dev/dwg_samples/arc_2013.dwg absent; skipping R2013 pin");
   }
   CHECK(r.error == DRW::BAD_NONE);
   CHECK(r.version == DRW::AC1027);
@@ -9896,8 +9757,7 @@ TEST_CASE("DWG R2013 writer round-trips a zero-source POINTCLOUD",
 TEST_CASE("LibreDWG reads a valid AC1027 POINTCLOUD container",
           "[.slow][dwg][r2013][pointcloud][external]") {
   if (std::system("command -v dwgread >/dev/null 2>&1") != 0) {
-    SUCCEED("dwgread is unavailable; external-reader gate skipped");
-    return;
+    SKIP("dwgread is unavailable; external-reader gate skipped");
   }
 
   const auto path = std::filesystem::temp_directory_path()
@@ -9936,8 +9796,7 @@ TEST_CASE("LibreDWG reads a valid AC1027 POINTCLOUD container",
 TEST_CASE("LibreDWG reads a valid AC1027 POINTCLOUDEX container",
           "[.slow][dwg][r2013][pointcloud][external]") {
   if (std::system("command -v dwgread >/dev/null 2>&1") != 0) {
-    SUCCEED("dwgread is unavailable; external-reader gate skipped");
-    return;
+    SKIP("dwgread is unavailable; external-reader gate skipped");
   }
 
   const auto path = std::filesystem::temp_directory_path()
@@ -10937,8 +10796,7 @@ TEST_CASE("DWG R2007 writer is readable by libreDWG",
     }
   }
   if (executable.empty()) {
-    SUCCEED("libreDWG dwgread not available; skipping cross-tool gate");
-    return;
+    SKIP("libreDWG dwgread not available; skipping cross-tool gate");
   }
 
   const auto path = std::filesystem::temp_directory_path()
@@ -10979,7 +10837,7 @@ TEST_CASE("DWG R2007 writer is readable by libreDWG",
 TEST_CASE("DWG R13/R14/R2000 sample files read OK (BLOCKS-walk regression)",
           "[.slow][dwg][r2000][blockswalk][corpus]") {
   const char* home = std::getenv("HOME");
-  if (!home) { SUCCEED("no HOME"); return; }
+  if (!home) { SKIP("no HOME"); return; }
   struct Want { const char* file; DRW::Version ver; };
   const Want wants[] = {
     {"example_r13.dwg",  DRW::AC1012},
@@ -11005,7 +10863,7 @@ TEST_CASE("DWG R13/R14/R2000 sample files read OK (BLOCKS-walk regression)",
     CHECK(r.entities >= 1);
   }
   if (checked == 0)
-    SUCCEED("~/doc/dwg{,2,3} canonical samples absent; skipping BLOCKS-walk pin");
+    SKIP("~/doc/dwg{,2,3} canonical samples absent; skipping BLOCKS-walk pin");
 }
 
 
@@ -11019,7 +10877,7 @@ TEST_CASE("DWG R13/R14/R2000 sample files read OK (BLOCKS-walk regression)",
 TEST_CASE("DWG coverage scan: aggregate skip telemetry across corpus",
           "[.coverage]") {
   const char* home = std::getenv("HOME");
-  if (!home) { SUCCEED("no HOME"); return; }
+  if (!home) { SKIP("no HOME"); return; }
   std::map<std::string, std::size_t> skippedClasses, skippedObjects;
   std::map<std::string, int> handledTypes;
   int files = 0, okFiles = 0;
@@ -11046,7 +10904,7 @@ TEST_CASE("DWG coverage scan: aggregate skip telemetry across corpus",
       } catch (...) {}
     }
   }
-  if (files == 0) { SUCCEED("~/doc/dwg{,2,3} absent; skipping coverage scan"); return; }
+  if (files == 0) { SKIP("~/doc/dwg{,2,3} absent; skipping coverage scan"); return; }
   auto dump = [](const char* title, std::map<std::string, std::size_t> m) {
     std::vector<std::pair<std::string, std::size_t>> v(m.begin(), m.end());
     std::sort(v.begin(), v.end(),
@@ -11068,7 +10926,7 @@ TEST_CASE("DWG coverage scan: aggregate skip telemetry across corpus",
 // divergence). Counts EVERY delivery path. Run: ./librecad_tests "[.audit]" -s
 TEST_CASE("DWG corpus audit: per-file TSV vs oracle", "[.audit]") {
   const char* home = std::getenv("HOME");
-  if (!home) { SUCCEED("no HOME"); return; }
+  if (!home) { SKIP("no HOME"); return; }
   struct AuditIface : public TypeTrackingIface {
     int meshes = 0, modelerGeoms = 0, unsupported = 0;
     void addMesh(const DRW_Mesh& e) override { trackT(e, "MESH"); ++meshes; }
@@ -11123,7 +10981,7 @@ TEST_CASE("DWG corpus audit: per-file TSV vs oracle", "[.audit]") {
 // it must deliver geometry. Skip-when-absent (corpus is developer-local).
 TEST_CASE("DWG MESH decoded + delivered, not skipped", "[.dwg_readback_corpus]") {
   const char* home = std::getenv("HOME");
-  if (!home) { SUCCEED("no HOME"); return; }
+  if (!home) { SKIP("no HOME"); return; }
   struct MeshProbe : public TypeTrackingIface {
     int meshCount = 0;
     std::size_t meshVertices = 0, meshFaces = 0;
@@ -11166,7 +11024,7 @@ TEST_CASE("DWG MESH decoded + delivered, not skipped", "[.dwg_readback_corpus]")
       } catch (...) {}
     }
   }
-  if (!anyFile) { SUCCEED("~/doc/dwg{,2,3} absent; skipping MESH probe"); return; }
+  if (!anyFile) { SKIP("~/doc/dwg{,2,3} absent; skipping MESH probe"); return; }
   std::cerr << "\nMESH probe: meshCount=" << meshCount << " vertices=" << meshVerts
             << " filesStillSkippingMESH=" << filesStillSkippingMesh << "\n";
   std::cerr << "PROXY probe: decodedPrimitives=" << proxyPrims
@@ -11705,9 +11563,9 @@ TEST_CASE("proxy op16/18/23 attribute resolution", "[proxy]") {
 // range.  Ground truth baked from the oracle cross-check on gripper.dwg.
 TEST_CASE("proxy attr layer-order oracle pin", "[.dwg_proxy_attr]") {
   const char* home = std::getenv("HOME");
-  if (!home) { SUCCEED("no HOME"); return; }
+  if (!home) { SKIP("no HOME"); return; }
   const std::string f = std::string(home) + "/doc/dwg2/gripper.dwg";
-  if (!std::filesystem::exists(f)) { SUCCEED("gripper.dwg absent"); return; }
+  if (!std::filesystem::exists(f)) { SKIP("gripper.dwg absent"); return; }
   TypeTrackingIface iface;
   dwgR reader(f.c_str());
   REQUIRE(reader.read(&iface, true));
@@ -11728,16 +11586,14 @@ TEST_CASE("proxy attr layer-order oracle pin", "[.dwg_proxy_attr]") {
 TEST_CASE("DWG pre-R13: read AC1009/R11 entities section") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping pre-R13 test");
-    return;
+    SKIP("HOME not set; skipping pre-R13 test");
   }
   const std::string dir =
       std::string(home) + "/dev/libredwg/test/test-data/r11/";
   const std::string path = dir + "entities-2d.dwg";
   std::ifstream probe(path, std::ios::binary);
   if (!probe.good()) {
-    SUCCEED("pre-R13 corpus absent; skipping");
-    return;
+    SKIP("pre-R13 corpus absent; skipping");
   }
   probe.close();
 
@@ -11761,13 +11617,11 @@ struct R11LineCollector : public CountingIface {
 TEST_CASE("DWG pre-R13: map R11 3DLINE to DRW_Line") {
   const std::string path = libredwgFixturePath("r11", "entities-3d.dwg");
   if (path.empty()) {
-    SUCCEED("pre-R13 corpus root absent; skipping");
-    return;
+    SKIP("pre-R13 corpus root absent; skipping");
   }
   std::ifstream probe(path, std::ios::binary);
   if (!probe.good()) {
-    SUCCEED("entities-3d.dwg absent; skipping");
-    return;
+    SKIP("entities-3d.dwg absent; skipping");
   }
   probe.close();
 
@@ -11824,14 +11678,13 @@ struct DimCollector : public CountingIface {
 TEST_CASE("DWG pre-R13: R11 typed DIMENSION (LINEAR + ALIGNED)") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   SECTION("entities-2d.dwg — 1 ALIGNED dim, no double-render") {
     const std::string path =
         std::string(home) + "/dev/libredwg/test/test-data/r11/entities-2d.dwg";
     std::ifstream probe(path, std::ios::binary);
-    if (!probe.good()) { SUCCEED("entities-2d.dwg absent"); return; }
+    if (!probe.good()) { SKIP("entities-2d.dwg absent"); return; }
     probe.close();
     DimCollector iface;
     const DwgResult r = readDwg(path, /*verbose=*/false, &iface);
@@ -11863,7 +11716,7 @@ TEST_CASE("DWG pre-R13: R11 typed DIMENSION (LINEAR + ALIGNED)") {
     const std::string path =
         std::string(home) + "/dev/libredwg/test/test-data/r11/ACEB10.dwg";
     std::ifstream probe(path, std::ios::binary);
-    if (!probe.good()) { SUCCEED("ACEB10.dwg absent"); return; }
+    if (!probe.good()) { SKIP("ACEB10.dwg absent"); return; }
     probe.close();
     DimCollector iface;
     const DwgResult r = readDwg(path, /*verbose=*/false, &iface);
@@ -11919,13 +11772,11 @@ TEST_CASE("DWG pre-R13: R11/R10 SHAPE style_id + ATTDEF/ATTRIB rotation") {
                           DRW::Version expectVer) {
     const std::string path = libredwgFixturePath(release, file);
     if (path.empty()) {
-      SUCCEED("pre-R13 corpus root absent; skipping");
-      return;
+      SKIP("pre-R13 corpus root absent; skipping");
     }
     std::ifstream probe(path, std::ios::binary);
     if (!probe.good()) {
-      SUCCEED(std::string(file) + " absent; skipping");
-      return;
+      SKIP(std::string(file) + " absent; skipping");
     }
     probe.close();
 
@@ -11996,15 +11847,13 @@ struct R10LineCollector : public CountingIface {
 TEST_CASE("DWG pre-R13: read AC1006/R10 entities section") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping pre-R13 R10 test");
-    return;
+    SKIP("HOME not set; skipping pre-R13 R10 test");
   }
   const std::string path =
       std::string(home) + "/dev/libredwg/test/test-data/r10/entities.dwg";
   std::ifstream probe(path, std::ios::binary);
   if (!probe.good()) {
-    SUCCEED("pre-R13 R10 corpus absent; skipping");
-    return;
+    SKIP("pre-R13 R10 corpus absent; skipping");
   }
   probe.close();
 
@@ -12094,14 +11943,13 @@ struct HdrCollector : public CountingIface {
 TEST_CASE("DWG pre-R13: R11 header variables decode") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   SECTION("entities-2d.dwg (defaults — minimal coverage)") {
     const std::string path =
         std::string(home) + "/dev/libredwg/test/test-data/r11/entities-2d.dwg";
     std::ifstream probe(path, std::ios::binary);
-    if (!probe.good()) { SUCCEED("entities-2d.dwg absent"); return; }
+    if (!probe.good()) { SKIP("entities-2d.dwg absent"); return; }
     probe.close();
     HdrCollector iface;
     const DwgResult r = readDwg(path, /*verbose=*/false, &iface);
@@ -12147,7 +11995,7 @@ TEST_CASE("DWG pre-R13: R11 header variables decode") {
     const std::string path =
         std::string(home) + "/dev/libredwg/test/test-data/r11/ACEB10.dwg";
     std::ifstream probe(path, std::ios::binary);
-    if (!probe.good()) { SUCCEED("ACEB10.dwg absent"); return; }
+    if (!probe.good()) { SKIP("ACEB10.dwg absent"); return; }
     probe.close();
     HdrCollector iface;
     const DwgResult r = readDwg(path, /*verbose=*/false, &iface);
@@ -12170,16 +12018,14 @@ TEST_CASE("DWG pre-R13: R11 header variables decode") {
 TEST_CASE("DWG pre-R13: R11 LAYER/LTYPE/STYLE table records") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   SECTION("entities-2d.dwg (minimal: 2 layers, 1 ltype, 2 styles)") {
     const std::string path =
         std::string(home) + "/dev/libredwg/test/test-data/r11/entities-2d.dwg";
     std::ifstream probe(path, std::ios::binary);
     if (!probe.good()) {
-      SUCCEED("entities-2d.dwg absent");
-      return;
+      SKIP("entities-2d.dwg absent");
     }
     probe.close();
     R11TableCollector iface;
@@ -12210,8 +12056,7 @@ TEST_CASE("DWG pre-R13: R11 LAYER/LTYPE/STYLE table records") {
         std::string(home) + "/dev/libredwg/test/test-data/r11/ACEB10.dwg";
     std::ifstream probe(path, std::ios::binary);
     if (!probe.good()) {
-      SUCCEED("ACEB10.dwg absent");
-      return;
+      SKIP("ACEB10.dwg absent");
     }
     probe.close();
     R11TableCollector iface;
@@ -12256,11 +12101,11 @@ TEST_CASE("DWG pre-R13: R11 LAYER/LTYPE/STYLE table records") {
 TEST_CASE("DWG pre-R13: ACEB10 resolves $DWGCODEPAGE = ANSI_1252",
           "[dwg][prer13][codepage]") {
   const char *home = getenv("HOME");
-  if (!home) { SUCCEED("HOME not set; skipping"); return; }
+  if (!home) { SKIP("HOME not set; skipping"); return; }
   const std::string path =
       std::string(home) + "/dev/libredwg/test/test-data/r11/ACEB10.dwg";
   std::ifstream probe(path, std::ios::binary);
-  if (!probe.good()) { SUCCEED("ACEB10.dwg absent"); return; }
+  if (!probe.good()) { SKIP("ACEB10.dwg absent"); return; }
   probe.close();
   CountingIface iface;
   dwgR reader(path.c_str());
@@ -12279,15 +12124,13 @@ TEST_CASE("DWG pre-R13: ACEB10 resolves $DWGCODEPAGE = ANSI_1252",
 TEST_CASE("DWG pre-R13: R10 LAYER/LTYPE/STYLE table records + header") {
   const char *home = getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping");
-    return;
+    SKIP("HOME not set; skipping");
   }
   const std::string path =
       std::string(home) + "/dev/libredwg/test/test-data/r10/entities.dwg";
   std::ifstream probe(path, std::ios::binary);
   if (!probe.good()) {
-    SUCCEED("pre-R13 R10 corpus absent; skipping");
-    return;
+    SKIP("pre-R13 R10 corpus absent; skipping");
   }
   probe.close();
   SECTION("table records (used field absent in R10)") {
@@ -12357,7 +12200,7 @@ TEST_CASE("DWG pre-R13: R10 LAYER/LTYPE/STYLE table records + header") {
 // adjustOffsetControls → forcedCalculateBorders) vs zoomAuto
 // (LC_GraphicViewport::zoomAuto → calculateBorders).
 TEST_CASE("DWG chicun WNS2 drivers", "[.dwg_chicun_wns2]") {
-  if (chicun::fixturePath().empty()) { SUCCEED("skip"); return; }
+  if (chicun::fixturePath().empty()) { SKIP("skip"); return; }
   chicun::ensureTestApp();
   RS_Graphic graphic;
   REQUIRE(chicun::importFixture(graphic));

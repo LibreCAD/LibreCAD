@@ -308,14 +308,12 @@ TEST_CASE("DXF corpus: round-trip ~/dev/dwg_samples/*.dxf to a tmp dir",
   ensureSettings();
   const char *home = std::getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping DXF corpus round-trip");
-    return;
+    SKIP("HOME not set; skipping DXF corpus round-trip");
   }
   const std::filesystem::path src = std::filesystem::path(home) / "dev" / "dwg_samples";
   const auto files = listByExt(src, ".dxf");
   if (files.empty()) {
-    SUCCEED("no DXF samples at " << src.string() << "; skipping");
-    return;
+    SKIP("no DXF samples at " << src.string() << "; skipping");
   }
 
   const std::filesystem::path outDir =
@@ -352,8 +350,7 @@ TEST_CASE("DWG corpus: convert ~/doc/dwg{,2}/*.dwg to DXF in a tmp dir",
   ensureSettings();
   const char *home = std::getenv("HOME");
   if (!home) {
-    SUCCEED("HOME not set; skipping DWG corpus conversion");
-    return;
+    SKIP("HOME not set; skipping DWG corpus conversion");
   }
   std::vector<std::filesystem::path> files;
   for (const char *sub : {"doc/dwg", "doc/dwg2"}) {
@@ -361,8 +358,7 @@ TEST_CASE("DWG corpus: convert ~/doc/dwg{,2}/*.dwg to DXF in a tmp dir",
     files.insert(files.end(), found.begin(), found.end());
   }
   if (files.empty()) {
-    SUCCEED("no DWG samples at ~/doc/dwg{,2}; skipping");
-    return;
+    SKIP("no DWG samples at ~/doc/dwg{,2}; skipping");
   }
 
   const std::filesystem::path outDir =
@@ -409,8 +405,7 @@ TEST_CASE("[jsondump] libdxfrw JSON dump emits canonical entities", "[jsondump]"
                 "test-data" / "r11" / "entities-2d.dwg"
           : std::filesystem::path{};
   if (fixture.empty() || !std::filesystem::exists(fixture)) {
-    SUCCEED("entities-2d.dwg fixture absent; skipping [jsondump] self-test");
-    return;
+    SKIP("entities-2d.dwg fixture absent; skipping [jsondump] self-test");
   }
 
   std::ostringstream oss;

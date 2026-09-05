@@ -150,8 +150,7 @@ TEST_CASE("DWG ACSH_* shape classes decode primitive dims (ATMOS / AC1021)",
           "[dwg][acsh][parity][fixture]") {
   const std::string path = std::string(LIBRECAD_TEST_DIR) + "/acsh_r2007.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("acsh_r2007.dwg fixture not found; skipping");
-    return;
+    SKIP("acsh_r2007.dwg fixture not found; skipping");
   }
 
   AcShCapture cap;

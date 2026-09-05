@@ -176,8 +176,7 @@ TEST_CASE("DWG dynamic-block family decodes typed (makeall-plus / AC1032)",
           "[dwg][dynblock][parity][fixture]") {
   const std::string path = std::string(LIBRECAD_TEST_DIR) + "/dynblock_r2018.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("dynblock_r2018.dwg fixture not found; skipping");
-    return;
+    SKIP("dynblock_r2018.dwg fixture not found; skipping");
   }
 
   DynBlockCapture cap;

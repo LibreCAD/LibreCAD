@@ -6075,8 +6075,7 @@ TEST_CASE("DWG R2007 CRC primitives follow the specification",
     CHECK(dwgUtil::decodeCrcSeed(0xb4490d12407037daULL) == 0);
 
     if (!hasLocalFixture("visualstyle_r2007.dwg")) {
-        SUCCEED("visualstyle_r2007.dwg fixture absent; skipping");
-        return;
+        SKIP("visualstyle_r2007.dwg fixture absent; skipping");
     }
     const auto bytes = readFile(localFixture("visualstyle_r2007.dwg"));
     REQUIRE(bytes.size() >= r2007FileHeaderOffset + r2007EncodedHeaderSize);
@@ -6263,8 +6262,7 @@ TEST_CASE("DWG R2007 page CRC mismatch is surfaced", "[dwg][safety]") {
 TEST_CASE("DWG R2007 integrity diagnostics are exposed", "[dwg][safety]") {
     const auto source = localFixture("visualstyle_r2007.dwg");
     if (!std::filesystem::is_regular_file(source)) {
-        SUCCEED("visualstyle_r2007.dwg fixture absent; skipping");
-        return;
+        SKIP("visualstyle_r2007.dwg fixture absent; skipping");
     }
     DwgReadProbe interface;
     dwgRW reader(source.string().c_str());
@@ -6472,8 +6470,7 @@ TEST_CASE("DWG R2004 file-header CRC mismatch is surfaced",
           "[dwg][safety][fixture]") {
     const auto source = localFixture("xline/constructionline_2004.dwg");
     if (!std::filesystem::is_regular_file(source)) {
-        SUCCEED("constructionline_2004.dwg fixture absent; skipping");
-        return;
+        SKIP("constructionline_2004.dwg fixture absent; skipping");
     }
     auto bytes = readFile(source);
     REQUIRE(bytes.size() > 0x80 + 36);
@@ -6507,8 +6504,7 @@ TEST_CASE("DWG R2004 file-header tail magic is required",
           "[dwg][safety][fixture]") {
     const auto source = localFixture("xline/constructionline_2004.dwg");
     if (!std::filesystem::is_regular_file(source)) {
-        SUCCEED("constructionline_2004.dwg fixture absent; skipping");
-        return;
+        SKIP("constructionline_2004.dwg fixture absent; skipping");
     }
     auto bytes = readFile(source);
     REQUIRE(bytes.size() > 0xEC);
@@ -6523,8 +6519,7 @@ TEST_CASE("DWG R2004 file-header constants are required",
           "[dwg][safety][fixture]") {
     const auto source = localFixture("xline/constructionline_2004.dwg");
     if (!std::filesystem::is_regular_file(source)) {
-        SUCCEED("constructionline_2004.dwg fixture absent; skipping");
-        return;
+        SKIP("constructionline_2004.dwg fixture absent; skipping");
     }
     auto bytes = readFile(source);
     REQUIRE(bytes.size() > 0x80 + 20);
@@ -6574,7 +6569,7 @@ TEST_CASE("DWG optional version fixtures reject truncated containers",
         CHECK(reader.getVersion() == fixture.version);
     }
     if (!testedFixture)
-        SUCCEED("source-controlled DWG fixtures absent; skipping");
+        SKIP("source-controlled DWG fixtures absent; skipping");
 }
 
 TEST_CASE("DWG CLASSES CRC covers the section payload", "[dwg][safety]") {
@@ -6775,8 +6770,7 @@ TEST_CASE("DWG CLASSES report finalization is independent of DXF classes",
           "[dwg][safety][classes][fixture]") {
     const auto source = localFixture("visualstyle_r2007.dwg");
     if (!std::filesystem::is_regular_file(source)) {
-        SUCCEED("visualstyle_r2007.dwg fixture absent; skipping");
-        return;
+        SKIP("visualstyle_r2007.dwg fixture absent; skipping");
     }
     DwgReadProbe interface;
     dwgRW reader(source.string().c_str());
@@ -6826,8 +6820,7 @@ TEST_CASE("DWG process keeps a class-report callback failure best effort",
           "[dwg][safety][classes][fixture]") {
     const auto source = localFixture("visualstyle_r2007.dwg");
     if (!std::filesystem::is_regular_file(source)) {
-        SUCCEED("visualstyle_r2007.dwg fixture absent; skipping");
-        return;
+        SKIP("visualstyle_r2007.dwg fixture absent; skipping");
     }
     DwgThrowingClassCoverageProbe interface;
     dwgRW reader(source.string().c_str());
@@ -6869,8 +6862,7 @@ TEST_CASE("DWG R2000 rejects unsupported section locator counts",
           "[dwg][safety][fixture]") {
     const auto source = localFixture("xline/constructionline_2000.dwg");
     if (!std::filesystem::is_regular_file(source)) {
-        SUCCEED("constructionline_2000.dwg fixture absent; skipping");
-        return;
+        SKIP("constructionline_2000.dwg fixture absent; skipping");
     }
     auto bytes = readFile(source);
     REQUIRE(bytes.size() > 80u);
@@ -6887,8 +6879,7 @@ TEST_CASE("DWG R2000 rejects a corrupt file-header sentinel",
           "[dwg][safety][fixture]") {
     const auto source = localFixture("xline/constructionline_2000.dwg");
     if (!std::filesystem::is_regular_file(source)) {
-        SUCCEED("constructionline_2000.dwg fixture absent; skipping");
-        return;
+        SKIP("constructionline_2000.dwg fixture absent; skipping");
     }
     auto bytes = readFile(source);
     constexpr std::size_t locatorOffset = 21u;
@@ -6914,8 +6905,7 @@ TEST_CASE("DWG R2000 rejects a corrupt section locator CRC",
           "[dwg][safety][fixture]") {
     const auto source = localFixture("xline/constructionline_2000.dwg");
     if (!std::filesystem::is_regular_file(source)) {
-        SUCCEED("constructionline_2000.dwg fixture absent; skipping");
-        return;
+        SKIP("constructionline_2000.dwg fixture absent; skipping");
     }
     auto bytes = readFile(source);
     constexpr std::size_t locatorOffset = 21u;
@@ -6940,8 +6930,7 @@ TEST_CASE("DWG R2000 section locators publish transactionally",
           "[dwg][safety][fixture]") {
     const auto source = localFixture("xline/constructionline_2000.dwg");
     if (!std::filesystem::is_regular_file(source)) {
-        SUCCEED("constructionline_2000.dwg fixture absent; skipping");
-        return;
+        SKIP("constructionline_2000.dwg fixture absent; skipping");
     }
     const auto original = readFile(source);
     REQUIRE(original.size() > 80u);
@@ -7127,8 +7116,7 @@ TEST_CASE("DWG AC1018 CLASSES CRC mismatch is reported after parsing",
           "[dwg][safety][fixture]") {
     const auto source = localFixture("xline/constructionline_2004.dwg");
     if (!std::filesystem::is_regular_file(source)) {
-        SUCCEED("constructionline_2004.dwg fixture absent; skipping");
-        return;
+        SKIP("constructionline_2004.dwg fixture absent; skipping");
     }
     const auto original = readFile(source);
     REQUIRE(!original.empty());
@@ -7191,8 +7179,7 @@ TEST_CASE("DWG INSERT callbacks contain complete ATTRIB sequences",
     const std::filesystem::path source =
         std::filesystem::path(LIBRECAD_TEST_DIR) / "dynblock_r2018.dwg";
     if (!std::filesystem::is_regular_file(source)) {
-        SUCCEED("dynamic-block fixture not present; skipping");
-        return;
+        SKIP("dynamic-block fixture not present; skipping");
     }
 
     DwgReadProbe interface;
@@ -7222,8 +7209,7 @@ TEST_CASE("DWG R2018 POLYLINE trace is bounded by its object-map frame",
     const std::filesystem::path source =
         std::filesystem::path(LIBRECAD_TEST_DIR) / "dynblock_r2018.dwg";
     if (!std::filesystem::is_regular_file(source)) {
-        SUCCEED("dynamic-block fixture not present; skipping");
-        return;
+        SKIP("dynamic-block fixture not present; skipping");
     }
 
     auto bytes = readFile(source);
@@ -7260,8 +7246,7 @@ TEST_CASE("DWG AC1032 fixture commits direct POLYLINE child sequences",
     const std::filesystem::path source =
         std::filesystem::path(LIBRECAD_TEST_DIR) / "dynblock_r2018.dwg";
     if (!std::filesystem::is_regular_file(source)) {
-        SUCCEED("dynamic-block fixture not present; skipping");
-        return;
+        SKIP("dynamic-block fixture not present; skipping");
     }
 
     auto bytes = readFile(source);
@@ -7284,8 +7269,7 @@ TEST_CASE("DWG R2018 common handles preserve block owners and DBCOLOR references
     const std::filesystem::path source =
         std::filesystem::path(LIBRECAD_TEST_DIR) / "dynblock_r2018.dwg";
     if (!std::filesystem::is_regular_file(source)) {
-        SUCCEED("dynamic-block fixture not present; skipping");
-        return;
+        SKIP("dynamic-block fixture not present; skipping");
     }
 
     // dwg-parser and LibreDWG decode the R2004+ common handle stream as
@@ -13978,9 +13962,8 @@ TEST_CASE("DWG AC1015 FIELD/FIELDLIST fixture publishes typed receipts",
           "[dwg][safety][field][fieldlist][fixture]") {
     const std::filesystem::path source = findTs1Fixture();
     if (source.empty()) {
-        SUCCEED("TS1.dwg is an external fixture; set "
+        SKIP("TS1.dwg is an external fixture; set "
                 "LIBRECAD_EXTERNAL_DWG_FIXTURE_DIR to run this case");
-        return;
     }
     REQUIRE(std::filesystem::file_size(source) == 418007u);
 
@@ -14080,9 +14063,8 @@ TEST_CASE("DWG AC1015 3DSOLID skips opaque ACIS data before common handles",
           "[dwg][safety][modeler][fixture]") {
     const std::filesystem::path source = findTs1Fixture();
     if (source.empty()) {
-        SUCCEED("TS1.dwg is an external fixture; set "
+        SKIP("TS1.dwg is an external fixture; set "
                 "LIBRECAD_EXTERNAL_DWG_FIXTURE_DIR to run this case");
-        return;
     }
 
     auto bytes = readFile(source);
@@ -14130,9 +14112,8 @@ TEST_CASE("DWG AC1015 LEADER reads its mandatory arrowhead type",
           "[dwg][safety][leader][fixture]") {
     const std::filesystem::path source = findTs1Fixture();
     if (source.empty()) {
-        SUCCEED("TS1.dwg is an external fixture; set "
+        SKIP("TS1.dwg is an external fixture; set "
                 "LIBRECAD_EXTERNAL_DWG_FIXTURE_DIR to run this case");
-        return;
     }
 
     auto bytes = readFile(source);
@@ -14175,9 +14156,8 @@ TEST_CASE("DWG AC1015 model space completes legacy INSERT attributes",
           "[dwg][safety][compound][fixture]") {
     const std::filesystem::path source = findTs1Fixture();
     if (source.empty()) {
-        SUCCEED("TS1.dwg is an external fixture; set "
+        SKIP("TS1.dwg is an external fixture; set "
                 "LIBRECAD_EXTERNAL_DWG_FIXTURE_DIR to run this case");
-        return;
     }
     REQUIRE(std::filesystem::file_size(source) == 418007u);
 
@@ -14234,9 +14214,8 @@ TEST_CASE("DWG AC1015 fixture completes the BLOCKS phase",
           "[dwg][safety][compound][fixture]") {
     const std::filesystem::path source = findTs1Fixture();
     if (source.empty()) {
-        SUCCEED("TS1.dwg is an external fixture; set "
+        SKIP("TS1.dwg is an external fixture; set "
                 "LIBRECAD_EXTERNAL_DWG_FIXTURE_DIR to run this case");
-        return;
     }
 
     auto bytes = readFile(source);
@@ -16971,8 +16950,7 @@ TEST_CASE("DWG R2007 page-map header bounds are enforced before allocation",
           "[dwg][safety][fixture]") {
     const auto source = localFixture("visualstyle_r2007.dwg");
     if (!std::filesystem::is_regular_file(source)) {
-        SUCCEED("visualstyle_r2007.dwg fixture absent; skipping");
-        return;
+        SKIP("visualstyle_r2007.dwg fixture absent; skipping");
     }
     const auto original = readFile(source);
     REQUIRE(!original.empty());
@@ -17010,8 +16988,7 @@ TEST_CASE("DWG R2007 page-map count must match the decoded map",
           "[dwg][safety][fixture]") {
     const auto source = localFixture("visualstyle_r2007.dwg");
     if (!std::filesystem::is_regular_file(source)) {
-        SUCCEED("visualstyle_r2007.dwg fixture absent; skipping");
-        return;
+        SKIP("visualstyle_r2007.dwg fixture absent; skipping");
     }
     const auto original = readFile(source);
     REQUIRE(!original.empty());
@@ -17040,8 +17017,7 @@ TEST_CASE("DWG R2007 section-map count must match decoded descriptors",
           "[dwg][safety][fixture]") {
     const auto source = localFixture("visualstyle_r2007.dwg");
     if (!std::filesystem::is_regular_file(source)) {
-        SUCCEED("visualstyle_r2007.dwg fixture absent; skipping");
-        return;
+        SKIP("visualstyle_r2007.dwg fixture absent; skipping");
     }
     const auto original = readFile(source);
     REQUIRE(!original.empty());
@@ -17079,8 +17055,7 @@ TEST_CASE("DWG R2007 page-map rejects an out-of-range page ID",
           "[dwg][safety][fixture]") {
     const auto source = localFixture("visualstyle_r2007.dwg");
     if (!std::filesystem::is_regular_file(source)) {
-        SUCCEED("visualstyle_r2007.dwg fixture absent; skipping");
-        return;
+        SKIP("visualstyle_r2007.dwg fixture absent; skipping");
     }
     const auto original = readFile(source);
     REQUIRE(!original.empty());

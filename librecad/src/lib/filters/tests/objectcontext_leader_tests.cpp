@@ -146,7 +146,7 @@ bool approx(double a, double b, double eps = 1e-6) {
 // asserts a clean read with no stream desync.
 bool tryRead(const std::string &path, ContextCapture &cap) {
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("fixture not found; skipping: " << path);
+    SKIP("fixture not found; skipping: " << path);
     return false;
   }
   dwgR reader(path.c_str());

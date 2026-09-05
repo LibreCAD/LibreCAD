@@ -143,8 +143,7 @@ TEST_CASE("DWG SECTIONOBJECT (AcDbSection) decodes to typed DRW_Section",
   const std::string path =
       std::string(LIBRECAD_TEST_DIR) + "/section_object_r2018.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("section_object_r2018.dwg fixture absent; skipping");
-    return;
+    SKIP("section_object_r2018.dwg fixture absent; skipping");
   }
 
   SectionCapture cap;
@@ -186,8 +185,7 @@ TEST_CASE("DWG SECTION_SETTINGS decodes type and geometry settings",
   const std::string path =
       std::string(LIBRECAD_TEST_DIR) + "/section_object_r2018.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("section_object_r2018.dwg fixture absent; skipping");
-    return;
+    SKIP("section_object_r2018.dwg fixture absent; skipping");
   }
 
   SectionCapture cap;
@@ -239,15 +237,13 @@ TEST_CASE("DWG SECTION_SETTINGS decodes type and geometry settings",
 TEST_CASE("LibreDWG recognizes the Section object family",
           "[section_object][external][.slow]") {
   if (std::system("command -v dwgread >/dev/null 2>&1") != 0) {
-    SUCCEED("dwgread is unavailable; external-reader gate skipped");
-    return;
+    SKIP("dwgread is unavailable; external-reader gate skipped");
   }
 
   const std::filesystem::path fixture =
       std::string(LIBRECAD_TEST_DIR) + "/section_object_r2018.dwg";
   if (!std::filesystem::is_regular_file(fixture)) {
-    SUCCEED("section_object_r2018.dwg fixture absent; skipping");
-    return;
+    SKIP("section_object_r2018.dwg fixture absent; skipping");
   }
 
   const auto output = std::filesystem::temp_directory_path()

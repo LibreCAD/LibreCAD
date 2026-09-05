@@ -134,8 +134,7 @@ TEST_CASE("DWG DATATABLE prefix decodes (gh209_1.dwg / AC1024)",
           "[dwg][datatable][parity]") {
   const std::string path = std::string(LIBRECAD_TEST_DIR) + "/datatable_r2010.dwg";
   if (!std::filesystem::is_regular_file(path)) {
-    SUCCEED("datatable_r2010.dwg fixture not found; skipping");
-    return;
+    SKIP("datatable_r2010.dwg fixture not found; skipping");
   }
 
   DataTableCapture cap;
