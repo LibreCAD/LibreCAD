@@ -11337,17 +11337,28 @@ bool dxfRW::processMaterial() {
 
 // DBCOLOR (AcDbColor): structured color/book fields plus raw-net preservation
 // for any producer-specific groups not represented by DRW_DbColor.
-bool dxfRW::processDbColor() {
-    DRW_DBG("dxfRW::processDbColor");
+// Shared body of the raw-capture object readers below.  Each of them differs
+// only in the DRW payload type, the debug label and which DRW_Interface
+// callback receives the decoded object, so the loop - capture every group into
+// a DRW_RawDxfObject for lossless re-emit, parse it into the typed payload,
+// and hand both to the interface at the object boundary - lives here once.
+//
+// The callback is passed in rather than deduced because a few readers take the
+// payload by pointer.  Readers that do more than this (a kind dispatch before
+// the loop, a finalize step or extra validation at the boundary) keep their
+// own bodies.
+template <typename T, typename AddFn>
+bool dxfRW::processRawCapturedObject(const char* debugName, AddFn addTyped) {
+    DRW_DBG(debugName);
     int code;
-    DRW_DbColor data;
+    T data;
     DRW_RawDxfObject raw;
     raw.name = nextentity;
     while (reader->readRec(&code)) {
         if (code == 0) {
             if (!acceptObjectBoundary(code))
                 return setError(DRW::BAD_READ_OBJECTS);
-            iface->addDbColor(data);
+            addTyped(data);
             iface->addRawDxfObject(raw);
             return true;
         }
@@ -11355,6 +11366,11 @@ bool dxfRW::processDbColor() {
             return setError(DRW::BAD_CODE_PARSED);
     }
     return setError(DRW::BAD_READ_OBJECTS);
+}
+
+bool dxfRW::processDbColor() {
+    return processRawCapturedObject<DRW_DbColor>(
+        "dxfRW::processDbColor", [this](DRW_DbColor& data) { iface->addDbColor(data); });
 }
 
 // GEODATA (AcDbGeoData): structured DXF read of the scalar geolocation fields,
@@ -11410,89 +11426,29 @@ bool dxfRW::processVisualStyle() {
 // IMAGEDEF_REACTOR (AcDbRasterImageDefReactor): structured DXF read of the
 // class-version field + raw-net preservation for lossless DXF re-emit.
 bool dxfRW::processImageDefReactor() {
-    DRW_DBG("dxfRW::processImageDefReactor");
-    int code;
-    DRW_ImageDefinitionReactor data;
-    DRW_RawDxfObject raw;
-    raw.name = nextentity;
-    while (reader->readRec(&code)) {
-        if (code == 0) {
-            if (!acceptObjectBoundary(code))
-                return setError(DRW::BAD_READ_OBJECTS);
-            iface->addImageDefinitionReactor(data);
-            iface->addRawDxfObject(raw);
-            return true;
-        }
-        if (!captureAndParseRawDxfGroup(raw, code, data))
-            return setError(DRW::BAD_CODE_PARSED);
-    }
-    return setError(DRW::BAD_READ_OBJECTS);
+    return processRawCapturedObject<DRW_ImageDefinitionReactor>(
+        "dxfRW::processImageDefReactor", [this](DRW_ImageDefinitionReactor& data) { iface->addImageDefinitionReactor(data); });
 }
 
 // SPATIAL_FILTER (AcDbSpatialFilter): structured DXF read of the clip boundary +
 // planes + raw-net preservation.
 bool dxfRW::processSpatialFilter() {
-    DRW_DBG("dxfRW::processSpatialFilter");
-    int code;
-    DRW_SpatialFilter data;
-    DRW_RawDxfObject raw;
-    raw.name = nextentity;
-    while (reader->readRec(&code)) {
-        if (code == 0) {
-            if (!acceptObjectBoundary(code))
-                return setError(DRW::BAD_READ_OBJECTS);
-            iface->addSpatialFilter(data);
-            iface->addRawDxfObject(raw);
-            return true;
-        }
-        if (!captureAndParseRawDxfGroup(raw, code, data))
-            return setError(DRW::BAD_CODE_PARSED);
-    }
-    return setError(DRW::BAD_READ_OBJECTS);
+    return processRawCapturedObject<DRW_SpatialFilter>(
+        "dxfRW::processSpatialFilter", [this](DRW_SpatialFilter& data) { iface->addSpatialFilter(data); });
 }
 
 // TABLESTYLE (AcDbTableStyle): structured DXF read of the top-level fields +
 // raw-net preservation (nested row/cell styles round-tripped raw only).
 bool dxfRW::processTableStyle() {
-    DRW_DBG("dxfRW::processTableStyle");
-    int code;
-    DRW_TableStyle data;
-    DRW_RawDxfObject raw;
-    raw.name = nextentity;
-    while (reader->readRec(&code)) {
-        if (code == 0) {
-            if (!acceptObjectBoundary(code))
-                return setError(DRW::BAD_READ_OBJECTS);
-            iface->addTableStyle(data);
-            iface->addRawDxfObject(raw);
-            return true;
-        }
-        if (!captureAndParseRawDxfGroup(raw, code, data))
-            return setError(DRW::BAD_CODE_PARSED);
-    }
-    return setError(DRW::BAD_READ_OBJECTS);
+    return processRawCapturedObject<DRW_TableStyle>(
+        "dxfRW::processTableStyle", [this](DRW_TableStyle& data) { iface->addTableStyle(data); });
 }
 
 // MLEADERSTYLE (AcDbMLeaderStyle): structured DXF read of the full scalar record
 // + raw-net preservation.  Delivered via addMLeaderStyle (pointer callback).
 bool dxfRW::processMLeaderStyle() {
-    DRW_DBG("dxfRW::processMLeaderStyle");
-    int code;
-    DRW_MLeaderStyle data;
-    DRW_RawDxfObject raw;
-    raw.name = nextentity;
-    while (reader->readRec(&code)) {
-        if (code == 0) {
-            if (!acceptObjectBoundary(code))
-                return setError(DRW::BAD_READ_OBJECTS);
-            iface->addMLeaderStyle(&data);
-            iface->addRawDxfObject(raw);
-            return true;
-        }
-        if (!captureAndParseRawDxfGroup(raw, code, data))
-            return setError(DRW::BAD_CODE_PARSED);
-    }
-    return setError(DRW::BAD_READ_OBJECTS);
+    return processRawCapturedObject<DRW_MLeaderStyle>(
+        "dxfRW::processMLeaderStyle", [this](DRW_MLeaderStyle& data) { iface->addMLeaderStyle(&data); });
 }
 
 // SORTENTSTABLE (AcDbSortentsTable): structured DXF read of the draw-order map
@@ -11522,23 +11478,8 @@ bool dxfRW::processSortEntsTable() {
 // DIMASSOC (AcDbDimAssoc): structured DXF read of the associative-dimension
 // metadata (dimension handle, flags, osnap refs) + raw-net preservation.
 bool dxfRW::processDimAssoc() {
-    DRW_DBG("dxfRW::processDimAssoc");
-    int code;
-    DRW_DimensionAssociation data;
-    DRW_RawDxfObject raw;
-    raw.name = nextentity;
-    while (reader->readRec(&code)) {
-        if (code == 0) {
-            if (!acceptObjectBoundary(code))
-                return setError(DRW::BAD_READ_OBJECTS);
-            iface->addDimensionAssociation(data);
-            iface->addRawDxfObject(raw);
-            return true;
-        }
-        if (!captureAndParseRawDxfGroup(raw, code, data))
-            return setError(DRW::BAD_CODE_PARSED);
-    }
-    return setError(DRW::BAD_READ_OBJECTS);
+    return processRawCapturedObject<DRW_DimensionAssociation>(
+        "dxfRW::processDimAssoc", [this](DRW_DimensionAssociation& data) { iface->addDimensionAssociation(data); });
 }
 
 // EVALUATION_GRAPH (AcDbEvalGraph): preserve the repeated node/edge payload in
@@ -11645,23 +11586,8 @@ bool dxfRW::processPointCloudDef() {
 }
 
 bool dxfRW::processNavisworksModelDef() {
-    DRW_DBG("dxfRW::processNavisworksModelDef");
-    int code;
-    DRW_NavisworksModelDef data;
-    DRW_RawDxfObject raw;
-    raw.name = nextentity;
-    while (reader->readRec(&code)) {
-        if (code == 0) {
-            if (!acceptObjectBoundary(code))
-                return setError(DRW::BAD_READ_OBJECTS);
-            iface->addNavisworksModelDef(data);
-            iface->addRawDxfObject(raw);
-            return true;
-        }
-        if (!captureAndParseRawDxfGroup(raw, code, data))
-            return setError(DRW::BAD_CODE_PARSED);
-    }
-    return setError(DRW::BAD_READ_OBJECTS);
+    return processRawCapturedObject<DRW_NavisworksModelDef>(
+        "dxfRW::processNavisworksModelDef", [this](DRW_NavisworksModelDef& data) { iface->addNavisworksModelDef(data); });
 }
 
 bool dxfRW::processPointCloudColorMap() {
@@ -11691,106 +11617,31 @@ bool dxfRW::processPointCloudColorMap() {
 // SUNSTUDY (AcDbSunStudy): structured DXF read of the scalar study config +
 // raw-net preservation (date/hour lists left raw).
 bool dxfRW::processSunStudy() {
-    DRW_DBG("dxfRW::processSunStudy");
-    int code;
-    DRW_SunStudy data;
-    DRW_RawDxfObject raw;
-    raw.name = nextentity;
-    while (reader->readRec(&code)) {
-        if (code == 0) {
-            if (!acceptObjectBoundary(code))
-                return setError(DRW::BAD_READ_OBJECTS);
-            iface->addSunStudy(data);
-            iface->addRawDxfObject(raw);
-            return true;
-        }
-        if (!captureAndParseRawDxfGroup(raw, code, data))
-            return setError(DRW::BAD_CODE_PARSED);
-    }
-    return setError(DRW::BAD_READ_OBJECTS);
+    return processRawCapturedObject<DRW_SunStudy>(
+        "dxfRW::processSunStudy", [this](DRW_SunStudy& data) { iface->addSunStudy(data); });
 }
 
 // MOTIONPATH (AcDbMotionPath): positional DXF fields plus raw-net
 // preservation.  The record name is accepted in both forms emitted by
 // current producers.
 bool dxfRW::processMotionPath() {
-    DRW_DBG("dxfRW::processMotionPath");
-    int code;
-    DRW_MotionPath data;
-    DRW_RawDxfObject raw;
-    raw.name = nextentity;
-    while (reader->readRec(&code)) {
-        if (code == 0) {
-            if (!acceptObjectBoundary(code))
-                return setError(DRW::BAD_READ_OBJECTS);
-            iface->addMotionPath(data);
-            iface->addRawDxfObject(raw);
-            return true;
-        }
-        if (!captureAndParseRawDxfGroup(raw, code, data))
-            return setError(DRW::BAD_CODE_PARSED);
-    }
-    return setError(DRW::BAD_READ_OBJECTS);
+    return processRawCapturedObject<DRW_MotionPath>(
+        "dxfRW::processMotionPath", [this](DRW_MotionPath& data) { iface->addMotionPath(data); });
 }
 
 bool dxfRW::processCurvePath() {
-    DRW_DBG("dxfRW::processCurvePath");
-    int code;
-    DRW_CurvePath data;
-    DRW_RawDxfObject raw;
-    raw.name = nextentity;
-    while (reader->readRec(&code)) {
-        if (code == 0) {
-            if (!acceptObjectBoundary(code))
-                return setError(DRW::BAD_READ_OBJECTS);
-            iface->addCurvePath(data);
-            iface->addRawDxfObject(raw);
-            return true;
-        }
-        if (!captureAndParseRawDxfGroup(raw, code, data))
-            return setError(DRW::BAD_CODE_PARSED);
-    }
-    return setError(DRW::BAD_READ_OBJECTS);
+    return processRawCapturedObject<DRW_CurvePath>(
+        "dxfRW::processCurvePath", [this](DRW_CurvePath& data) { iface->addCurvePath(data); });
 }
 
 bool dxfRW::processPointPath() {
-    DRW_DBG("dxfRW::processPointPath");
-    int code;
-    DRW_PointPath data;
-    DRW_RawDxfObject raw;
-    raw.name = nextentity;
-    while (reader->readRec(&code)) {
-        if (code == 0) {
-            if (!acceptObjectBoundary(code))
-                return setError(DRW::BAD_READ_OBJECTS);
-            iface->addPointPath(data);
-            iface->addRawDxfObject(raw);
-            return true;
-        }
-        if (!captureAndParseRawDxfGroup(raw, code, data))
-            return setError(DRW::BAD_CODE_PARSED);
-    }
-    return setError(DRW::BAD_READ_OBJECTS);
+    return processRawCapturedObject<DRW_PointPath>(
+        "dxfRW::processPointPath", [this](DRW_PointPath& data) { iface->addPointPath(data); });
 }
 
 bool dxfRW::processObjectPtr() {
-    DRW_DBG("dxfRW::processObjectPtr");
-    int code;
-    DRW_ObjectPtr data;
-    DRW_RawDxfObject raw;
-    raw.name = nextentity;
-    while (reader->readRec(&code)) {
-        if (code == 0) {
-            if (!acceptObjectBoundary(code))
-                return setError(DRW::BAD_READ_OBJECTS);
-            iface->addObjectPtr(data);
-            iface->addRawDxfObject(raw);
-            return true;
-        }
-        if (!captureAndParseRawDxfGroup(raw, code, data))
-            return setError(DRW::BAD_CODE_PARSED);
-    }
-    return setError(DRW::BAD_READ_OBJECTS);
+    return processRawCapturedObject<DRW_ObjectPtr>(
+        "dxfRW::processObjectPtr", [this](DRW_ObjectPtr& data) { iface->addObjectPtr(data); });
 }
 
 bool dxfRW::processPartialViewingIndex() {
@@ -12156,23 +12007,8 @@ bool dxfRW::processSpatialIndex() {
 }
 
 bool dxfRW::processIDBuffer() {
-    DRW_DBG("dxfRW::processIDBuffer");
-    int code;
-    DRW_IDBuffer data;
-    DRW_RawDxfObject raw;
-    raw.name = nextentity;
-    while (reader->readRec(&code)) {
-        if (code == 0) {
-            if (!acceptObjectBoundary(code))
-                return setError(DRW::BAD_READ_OBJECTS);
-            iface->addIDBuffer(data);
-            iface->addRawDxfObject(raw);
-            return true;
-        }
-        if (!captureAndParseRawDxfGroup(raw, code, data))
-            return setError(DRW::BAD_CODE_PARSED);
-    }
-    return setError(DRW::BAD_READ_OBJECTS);
+    return processRawCapturedObject<DRW_IDBuffer>(
+        "dxfRW::processIDBuffer", [this](DRW_IDBuffer& data) { iface->addIDBuffer(data); });
 }
 
 bool dxfRW::processGeoMapImage() {
