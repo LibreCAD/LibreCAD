@@ -53,9 +53,10 @@ windows/
     │   └── plugins_*.qm
     ├── fonts/         (LFF font files)
     │   └── *.lff
-    ├── patterns/      (Optional hatch patterns)
-    └── library/       (Optional library parts)
-        └── *.dxf (when supplied separately)
+    ├── patterns/      (Hatch patterns)
+    │   └── *.dxf
+    └── library/       (Library parts)
+        └── *.dxf (with subfolder structure)
 ```
 
 This ensures the portable build works identically to the installed version.
@@ -203,8 +204,8 @@ The script executes these steps in order:
 - Copies Qt translations to `resources/qm/`
 - Copies LibreCAD translations to `resources/qm/`
 - Copies LFF fonts to `resources/fonts/`
-- Copies hatch patterns to `resources/patterns/` when supplied
-- Copies library parts to `resources/library/` when supplied
+- Copies hatch patterns to `resources/patterns/`
+- Copies library parts to `resources/library/` (preserves structure)
 
 ### Step 5: Version Extraction & NSIS Packaging
 - Extracts version from Git or source

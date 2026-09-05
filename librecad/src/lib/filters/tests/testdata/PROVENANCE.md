@@ -77,8 +77,19 @@ They are kept as local regression artifacts rather than external corpus copies:
 | `mpolygon_solid.dwg` | `66a171c55bc90fdd0764ad3556ec786503666a30a4473a637d168a01979ffc29` |
 | `rtext_arctext.dwg` | `db5663cdc5c1759fdc1f68f9122e596307de06317e766cd5e0aab55912e5d511` |
 
-The unresolved DXFs previously bundled under `librecad/support/library` and
-`librecad/support/patterns`, together with `librecad/res/dxf/dim_sample.dxf`,
-are removed from the repository. Application and packaging code treats those
-optional resources as absent; test cases remain in place and skip only when an
-optional external fixture is unavailable.
+The bundled application data under `librecad/support/patterns`,
+`librecad/support/library` and `librecad/res/dxf` is retained; its origin is
+recorded here because an earlier revision of this document described it as
+unresolved:
+
+| Data | Origin |
+| --- | --- |
+| 47 hatch patterns, 8 library parts | Present since the initial CADuntu import (`53feefc72`, 2010-08-16); moved to these paths by the directory restructure `839912da8` (R. van Twisk, 2012-02-15). |
+| 15 `gost_*` hatch patterns, 1267 library parts | The LLGE library, offered to LibreCAD under the GNU GPL v2 by its author in issue #506 and imported by `3417326b5` (2015-04-04). Upstream: https://savannah.gnu.org/projects/llge/ |
+| `millstone.dxf` | Contributed by @Lamy78 in PR #964, merged as `0559d3098` (2018-04-04). |
+| `angle45.dxf` | Added by `f55a33e72` (2025-06-17). |
+| `res/dxf/dim_sample.dxf` | Authored for the dimension-style preview in PR #2286, commit `64fa97a12` (2025-09-22). |
+
+Packaging code still tolerates the absence of the optional directories, and
+test cases remain in place and skip only when an optional external fixture is
+unavailable.

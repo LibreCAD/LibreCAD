@@ -162,6 +162,7 @@ set (SHARED_INCLUDES
      libraries/shapelib/src
      librecad/res/arrows
      librecad/res/controls
+     librecad/res/dxf
      librecad/res/gdt
      librecad/res/icons
      librecad/res/images
@@ -377,6 +378,7 @@ set (SHARED_INCLUDES
 set (LIBRECAD_RES
      librecad/res/arrows/arrows.qrc
      librecad/res/controls/controls.qrc
+     librecad/res/dxf/dxf.qrc
      librecad/res/gdt/gdt.qrc
      librecad/res/icons/icons.qrc
      librecad/res/images/images.qrc
