@@ -2529,6 +2529,8 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/mleader_dxf_context_tests.cpp
         librecad/src/lib/filters/tests/dxf_roundtrip_tests.cpp
         librecad/src/lib/filters/tests/dxf_layer0_declared_tests.cpp
+        librecad/src/lib/filters/tests/dxf_unknown_version_tests.cpp
+        librecad/src/lib/filters/tests/byte_identity_harness.cpp
         librecad/src/lib/filters/tests/dxf_corpus_tests.cpp
         librecad/src/lib/filters/tests/i18n_codec_tests.cpp
         librecad/src/lib/filters/tests/i18n_caret_nfc_tests.cpp

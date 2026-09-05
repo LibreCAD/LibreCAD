@@ -30185,11 +30185,37 @@ void RS_FilterDXFRW::writeLeader(const RS_Leader *l) {
 
 namespace {
 
+// Fill the clamped uniform knot vector a control-point spline must carry.
+//
+// A DXF SPLINE always stores its knots (group 40), and libdxfrw's payload
+// validation requires knots == controls + degree + 1
+// (isValidControlSplineLayout in drw_entities.cpp). Emitting none produced a
+// boundary edge that dxfRW::validateHatchPayload() rejects, and because a
+// rejected entity fails the whole write, a drawing containing a
+// spline-bordered hatch could not be exported to DXF at all.
+//
+// The vector generated here is the one the reader used to re-derive for an
+// empty knot list, so consumers see the same curve as before.
+void fillClampedUniformKnots(DRW_Spline &drw) {
+  const std::int32_t degree = drw.degree;
+  const std::int32_t controls = static_cast<std::int32_t>(drw.controllist.size());
+  if (degree < 1 || controls < degree + 1)
+    return;
+  const std::int32_t spans = controls - degree;
+  drw.knotslist.clear();
+  drw.knotslist.reserve(static_cast<std::size_t>(controls + degree + 1));
+  for (std::int32_t i = 0; i <= degree; ++i)
+    drw.knotslist.push_back(0.0);
+  for (std::int32_t i = 1; i < spans; ++i)
+    drw.knotslist.push_back(static_cast<double>(i));
+  for (std::int32_t i = 0; i <= degree; ++i)
+    drw.knotslist.push_back(static_cast<double>(spans));
+  drw.nknots = static_cast<std::int32_t>(drw.knotslist.size());
+}
+
 // Emit an LC_SplinePoints boundary edge as a degree-2 DRW_Spline. Either
 // the control net or the fit points are populated depending on the
-// LC_SplinePointsData mode. Knotslist is left empty; the libdxfrw reader
-// re-derives a clamped uniform knot vector when consuming this struct
-// (see drw_entities.cpp parseDwg). See plan §B.1.
+// LC_SplinePointsData mode. See plan §B.1.
 std::shared_ptr<DRW_Spline>
 makeDrwSplineFromSplinePoints(const LC_SplinePoints *sp) {
   auto drw = std::make_shared<DRW_Spline>();
@@ -30204,6 +30230,7 @@ makeDrwSplineFromSplinePoints(const LC_SplinePoints *sp) {
     for (const auto &v : d.controlPoints)
       drw->controllist.push_back(std::make_shared<DRW_Coord>(v.x, v.y, 0.0));
     drw->ncontrol = static_cast<std::int32_t>(d.controlPoints.size());
+    fillClampedUniformKnots(*drw);
   } else {
     for (const auto &v : d.splinePoints)
       drw->fitlist.push_back(std::make_shared<DRW_Coord>(v.x, v.y, 0.0));
@@ -30243,6 +30270,8 @@ std::shared_ptr<DRW_Spline> makeDrwSplineFromRSSpline(const RS_Spline *sp) {
   }
   drw->knotslist = sd.knotslist;
   drw->nknots = static_cast<std::int32_t>(sd.knotslist.size());
+  if (drw->knotslist.empty())
+    fillClampedUniformKnots(*drw);
   return drw;
 }
 

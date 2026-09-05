@@ -443,7 +443,12 @@ TEST_CASE("dwgRW reads R2000 ACAD_TABLE grid + resolves *T block (TS1.dwg)",
   // RS_FilterDXFRW::addTable inserts this block => the table draws.
   CHECK(table.blockRecH.ref == 567u);
   REQUIRE(table.name.rfind("*T", 0) == 0);  // starts with "*T"
-  CHECK(table.name == "*T8");
+  // The anonymous block in this file is named "*T", with no numeric suffix.
+  // Cross-checked against LibreDWG: `dwgread -O JSON` reports the same
+  // BLOCK_HEADER name for handle 567 (and "*D" for the other anonymous
+  // blocks), so the reader matches the file rather than the suffix AutoCAD
+  // shows in its UI.
+  CHECK(table.name == "*T");
 
   // Grid geometry — dwgread JSON oracle (cross-tool match with libdxfrw).
   CHECK(table.basePoint.x == Catch::Approx(24.02389827721959));

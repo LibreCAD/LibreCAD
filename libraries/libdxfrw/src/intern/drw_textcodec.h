@@ -33,7 +33,14 @@ private:
 
 private:
     DRW::Version version{DRW::UNKNOWNV};
-    DRW::Version sourceVersion{DRW::AC1021};
+    // Until $ACADVER is read the source version is genuinely unknown.  Every
+    // consumer of getSourceVersion() already treats UNKNOWNV as "do not apply
+    // post-R12 strictness" (see requiresDxfSelfHandle() and
+    // dxfTableEntryComplete() in libdxfrw.cpp), so defaulting to a concrete
+    // modern version made those guards unreachable and rejected any DXF that
+    // omits $ACADVER - including hand-written files and R12 output, whose
+    // table records legitimately carry no handle.
+    DRW::Version sourceVersion{DRW::UNKNOWNV};
     bool m_sourceVersionSet { false };
     std::string cp;
     std::unique_ptr< DRW_Converter> conv;
