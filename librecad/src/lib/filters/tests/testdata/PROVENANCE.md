@@ -77,8 +77,8 @@ They are kept as local regression artifacts rather than external corpus copies:
 | `mpolygon_solid.dwg` | `66a171c55bc90fdd0764ad3556ec786503666a30a4473a637d168a01979ffc29` |
 | `rtext_arctext.dwg` | `db5663cdc5c1759fdc1f68f9122e596307de06317e766cd5e0aab55912e5d511` |
 
-The unresolved DXFs previously bundled under `librecad/support/library` and
-`librecad/support/patterns`, together with `librecad/res/dxf/dim_sample.dxf`,
-are removed from the repository. Application and packaging code treats those
-optional resources as absent; test cases remain in place and skip only when an
-optional external fixture is unavailable.
+`librecad/res/dxf/dim_sample.dxf` is removed from the repository. The hatch
+patterns under `librecad/support/patterns` and the parts library under
+`librecad/support/library` are kept as shipped by the 2.2.1 release branch;
+packaging code still tolerates their absence, and test cases remain in place
+and skip only when an optional external fixture is unavailable.
