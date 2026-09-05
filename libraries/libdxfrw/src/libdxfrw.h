@@ -366,6 +366,14 @@ private:
     bool processBreakData();
     bool processBreakPointRef();
     bool processMaterial();
+    /// Shared body of the raw-capture object readers: capture every group
+    /// into a DRW_RawDxfObject for lossless re-emit, parse it into the typed
+    /// payload, and hand both to the interface at the object boundary.  Only
+    /// the payload type, the debug label and the interface callback differ
+    /// between the readers that use it.
+    template <typename T, typename AddFn>
+    bool processRawCapturedObject(const char* debugName, AddFn addTyped);
+
     bool processDbColor();
     bool processEvaluationGraph();
     bool processGeoData();
