@@ -31823,129 +31823,59 @@ QString RS_FilterDXFRW::lineTypeToName(RS2::LineType lineType) {
 /**
  * Converts a DRW_LW_Conv::lineWidth into a RS2::LineWidth.
  */
+namespace {
+// The DXF/DWG line-weight encoding and LibreCAD's RS2::LineWidth are a
+// one-to-one mapping. numberToWidth() and widthToNumber() are the two
+// directions of it; they used to be a pair of 27-case switches that had to be
+// kept in step by hand, so state the pairs once here instead.
+struct LineWidthPair {
+    DRW_LW_Conv::lineWidth drw;
+    RS2::LineWidth rs;
+};
+
+constexpr LineWidthPair kLineWidthPairs[] = {
+    {DRW_LW_Conv::widthByLayer, RS2::WidthByLayer},
+    {DRW_LW_Conv::widthByBlock, RS2::WidthByBlock},
+    {DRW_LW_Conv::widthDefault, RS2::WidthDefault},
+    {DRW_LW_Conv::width00, RS2::Width00},
+    {DRW_LW_Conv::width01, RS2::Width01},
+    {DRW_LW_Conv::width02, RS2::Width02},
+    {DRW_LW_Conv::width03, RS2::Width03},
+    {DRW_LW_Conv::width04, RS2::Width04},
+    {DRW_LW_Conv::width05, RS2::Width05},
+    {DRW_LW_Conv::width06, RS2::Width06},
+    {DRW_LW_Conv::width07, RS2::Width07},
+    {DRW_LW_Conv::width08, RS2::Width08},
+    {DRW_LW_Conv::width09, RS2::Width09},
+    {DRW_LW_Conv::width10, RS2::Width10},
+    {DRW_LW_Conv::width11, RS2::Width11},
+    {DRW_LW_Conv::width12, RS2::Width12},
+    {DRW_LW_Conv::width13, RS2::Width13},
+    {DRW_LW_Conv::width14, RS2::Width14},
+    {DRW_LW_Conv::width15, RS2::Width15},
+    {DRW_LW_Conv::width16, RS2::Width16},
+    {DRW_LW_Conv::width17, RS2::Width17},
+    {DRW_LW_Conv::width18, RS2::Width18},
+    {DRW_LW_Conv::width19, RS2::Width19},
+    {DRW_LW_Conv::width20, RS2::Width20},
+    {DRW_LW_Conv::width21, RS2::Width21},
+    {DRW_LW_Conv::width22, RS2::Width22},
+    {DRW_LW_Conv::width23, RS2::Width23},
+};
+} // namespace
+
 RS2::LineWidth RS_FilterDXFRW::numberToWidth(DRW_LW_Conv::lineWidth lw) {
-  switch (lw) {
-  case DRW_LW_Conv::widthByLayer:
-    return RS2::WidthByLayer;
-  case DRW_LW_Conv::widthByBlock:
-    return RS2::WidthByBlock;
-  case DRW_LW_Conv::widthDefault:
-    return RS2::WidthDefault;
-  case DRW_LW_Conv::width00:
-    return RS2::Width00;
-  case DRW_LW_Conv::width01:
-    return RS2::Width01;
-  case DRW_LW_Conv::width02:
-    return RS2::Width02;
-  case DRW_LW_Conv::width03:
-    return RS2::Width03;
-  case DRW_LW_Conv::width04:
-    return RS2::Width04;
-  case DRW_LW_Conv::width05:
-    return RS2::Width05;
-  case DRW_LW_Conv::width06:
-    return RS2::Width06;
-  case DRW_LW_Conv::width07:
-    return RS2::Width07;
-  case DRW_LW_Conv::width08:
-    return RS2::Width08;
-  case DRW_LW_Conv::width09:
-    return RS2::Width09;
-  case DRW_LW_Conv::width10:
-    return RS2::Width10;
-  case DRW_LW_Conv::width11:
-    return RS2::Width11;
-  case DRW_LW_Conv::width12:
-    return RS2::Width12;
-  case DRW_LW_Conv::width13:
-    return RS2::Width13;
-  case DRW_LW_Conv::width14:
-    return RS2::Width14;
-  case DRW_LW_Conv::width15:
-    return RS2::Width15;
-  case DRW_LW_Conv::width16:
-    return RS2::Width16;
-  case DRW_LW_Conv::width17:
-    return RS2::Width17;
-  case DRW_LW_Conv::width18:
-    return RS2::Width18;
-  case DRW_LW_Conv::width19:
-    return RS2::Width19;
-  case DRW_LW_Conv::width20:
-    return RS2::Width20;
-  case DRW_LW_Conv::width21:
-    return RS2::Width21;
-  case DRW_LW_Conv::width22:
-    return RS2::Width22;
-  case DRW_LW_Conv::width23:
-    return RS2::Width23;
-  default:
-    break;
+  for (const LineWidthPair &pair : kLineWidthPairs) {
+    if (pair.drw == lw)
+      return pair.rs;
   }
   return RS2::WidthDefault;
 }
 
-/**
- * Converts a RS2::LineWidth into an DRW_LW_Conv::lineWidth.
- */
 DRW_LW_Conv::lineWidth RS_FilterDXFRW::widthToNumber(RS2::LineWidth width) {
-  switch (width) {
-  case RS2::WidthByLayer:
-    return DRW_LW_Conv::widthByLayer;
-  case RS2::WidthByBlock:
-    return DRW_LW_Conv::widthByBlock;
-  case RS2::WidthDefault:
-    return DRW_LW_Conv::widthDefault;
-  case RS2::Width00:
-    return DRW_LW_Conv::width00;
-  case RS2::Width01:
-    return DRW_LW_Conv::width01;
-  case RS2::Width02:
-    return DRW_LW_Conv::width02;
-  case RS2::Width03:
-    return DRW_LW_Conv::width03;
-  case RS2::Width04:
-    return DRW_LW_Conv::width04;
-  case RS2::Width05:
-    return DRW_LW_Conv::width05;
-  case RS2::Width06:
-    return DRW_LW_Conv::width06;
-  case RS2::Width07:
-    return DRW_LW_Conv::width07;
-  case RS2::Width08:
-    return DRW_LW_Conv::width08;
-  case RS2::Width09:
-    return DRW_LW_Conv::width09;
-  case RS2::Width10:
-    return DRW_LW_Conv::width10;
-  case RS2::Width11:
-    return DRW_LW_Conv::width11;
-  case RS2::Width12:
-    return DRW_LW_Conv::width12;
-  case RS2::Width13:
-    return DRW_LW_Conv::width13;
-  case RS2::Width14:
-    return DRW_LW_Conv::width14;
-  case RS2::Width15:
-    return DRW_LW_Conv::width15;
-  case RS2::Width16:
-    return DRW_LW_Conv::width16;
-  case RS2::Width17:
-    return DRW_LW_Conv::width17;
-  case RS2::Width18:
-    return DRW_LW_Conv::width18;
-  case RS2::Width19:
-    return DRW_LW_Conv::width19;
-  case RS2::Width20:
-    return DRW_LW_Conv::width20;
-  case RS2::Width21:
-    return DRW_LW_Conv::width21;
-  case RS2::Width22:
-    return DRW_LW_Conv::width22;
-  case RS2::Width23:
-    return DRW_LW_Conv::width23;
-  default:
-    break;
+  for (const LineWidthPair &pair : kLineWidthPairs) {
+    if (pair.rs == width)
+      return pair.drw;
   }
   return DRW_LW_Conv::widthDefault;
 }
