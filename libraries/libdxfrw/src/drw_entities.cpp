@@ -21285,32 +21285,10 @@ bool DRW_Viewport::parseCode(int code, const std::unique_ptr<dxfReader>& reader)
     case 74:
         ucsAtOrigin = reader->getInt32() != 0;
         break;
-    case 110:
-        ucsOrigin.x = reader->getDouble();
-        break;
-    case 120:
-        ucsOrigin.y = reader->getDouble();
-        break;
-    case 130:
-        ucsOrigin.z = reader->getDouble();
-        break;
-    case 111:
-        ucsXAxis.x = reader->getDouble();
-        break;
-    case 121:
-        ucsXAxis.y = reader->getDouble();
-        break;
-    case 131:
-        ucsXAxis.z = reader->getDouble();
-        break;
-    case 112:
-        ucsYAxis.x = reader->getDouble();
-        break;
-    case 122:
-        ucsYAxis.y = reader->getDouble();
-        break;
-    case 132:
-        ucsYAxis.z = reader->getDouble();
+    case 110: case 120: case 130:
+    case 111: case 121: case 131:
+    case 112: case 122: case 132:
+        readUcsTripletCode(code, reader, ucsOrigin, ucsXAxis, ucsYAxis);
         break;
     case 146:
         ucsElevation = reader->getDouble();
