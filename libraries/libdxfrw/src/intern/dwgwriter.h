@@ -135,6 +135,60 @@ inline constexpr DwgTypedClassRow kDwgTypedClassRows[] = {
     {"Field", DRW_Field::kDwgClassNum, 0x401, "ACAD", "AcDbField", "FIELD", 0x1F3},
 };
 
+// The table above is now the single source of truth for those registrars, so
+// the properties they used to hold simply by being written out one at a time
+// are checked here at compile time instead: every row needs a non-empty key,
+// application name, class name and record name, and the key, record name and
+// class name have to be unique. A copy-paste slip in a new row then fails the
+// build instead of silently registering the wrong metadata.
+//
+// Class numbers are deliberately NOT required to be unique. The custom-class
+// range (>= 500) is assigned per file, and several types share a default here
+// - MLEADERSTYLE with MATERIAL at 504, TABLESTYLE with IDBUFFER at 509, and
+// EVALUATION_GRAPH with FIELD at 516. registerTypedObjectClass() resolves a
+// collision by handing the later type the next free number, so the defaults
+// are a starting point rather than an identity.
+constexpr bool dwgClassTextEqual(const char* a, const char* b) {
+    if (a == nullptr || b == nullptr)
+        return a == b;
+    while (*a != '\0' && *a == *b) {
+        ++a;
+        ++b;
+    }
+    return *a == *b;
+}
+
+constexpr bool dwgClassTextNonEmpty(const char* text) {
+    return text != nullptr && *text != '\0';
+}
+
+constexpr bool dwgTypedClassRowsAreWellFormed() {
+    constexpr std::size_t count =
+        sizeof(kDwgTypedClassRows) / sizeof(kDwgTypedClassRows[0]);
+    for (std::size_t i = 0; i < count; ++i) {
+        const DwgTypedClassRow& a = kDwgTypedClassRows[i];
+        if (!dwgClassTextNonEmpty(a.key) || !dwgClassTextNonEmpty(a.appName)
+            || !dwgClassTextNonEmpty(a.className)
+            || !dwgClassTextNonEmpty(a.recordName))
+            return false;
+        for (std::size_t j = i + 1; j < count; ++j) {
+            const DwgTypedClassRow& b = kDwgTypedClassRows[j];
+            if (dwgClassTextEqual(a.key, b.key)
+                || dwgClassTextEqual(a.recordName, b.recordName)
+                || dwgClassTextEqual(a.className, b.className))
+                return false;
+        }
+    }
+    return true;
+}
+
+static_assert(dwgTypedClassRowsAreWellFormed(),
+              "kDwgTypedClassRows: every row needs a non-empty key, app name, "
+              "class name and record name, and the key, record name and class "
+              "name must each be unique across the table (class numbers may "
+              "collide and are remapped at registration)");
+
+
 class dwgWriter {
 public:
     /// Construct around an output stream and a populated header.
