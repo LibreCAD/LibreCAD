@@ -129,7 +129,8 @@ int console_dxf2png(int argc, char* argv[])
     parser.addVersionOption();
 
     QCommandLineOption outFileOpt(QStringList() << "o" << "outfile",
-        "Output PNG file.", "file");
+        "Output file. Used as given; a relative path is resolved against the "
+        "current working directory.", "file");
     parser.addOption(outFileOpt);
 
     QCommandLineOption pngSizeOpt(QStringList() << "r" << "resolution",
@@ -168,12 +169,16 @@ int console_dxf2png(int argc, char* argv[])
     if(fn.isEmpty())
         fn = "unnamed";
 
-    // Set output filename from user input if present
+    // Set output filename from user input if present.
+    //
+    // --outfile is used as given, as dxf2pdf and master do: an absolute path
+    // lands where it says, a relative one resolves against the working
+    // directory. It used to be prefixed with the input file's directory,
+    // which turned an absolute path into an uncreatable
+    // "/input/dir/C:/tmp/out.png".
     QString outFile = parser.value(outFileOpt);
     if (outFile.isEmpty()) {
         outFile = dxfFileInfo.path() + "/" + fn + "." + args[0].mid(args[0].size()-3);
-    } else {
-        outFile = dxfFileInfo.path() + "/" + outFile;
     }
 
     // Open the file and process the graphics
@@ -215,7 +220,14 @@ int console_dxf2png(int argc, char* argv[])
                        black, bw);
     }
 
-    qDebug() << "Printing" << dxfFile << "to" << outFile << (ret ? "Done" : "Failed");
+    if (!ret) {
+        // Returning 0 here made a conversion that wrote nothing look like a
+        // success to any caller checking the exit status.
+        qCritical("ERROR: failed to write %s", qPrintable(outFile));
+        return 1;
+    }
+
+    qDebug() << "Printing" << dxfFile << "to" << outFile << "Done";
     return 0;
 }
 
