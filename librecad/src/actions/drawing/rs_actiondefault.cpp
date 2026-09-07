@@ -54,6 +54,7 @@ class RS_Polyline;
 struct RS_ActionDefault::ActionData {
     RS_Vector v1;
     RS_Vector v2;
+    RS_Vector pressSnapPoint;
     RS_Entity* refMovingEntity = nullptr;
 };
 
@@ -283,10 +284,9 @@ void RS_ActionDefault::onMouseMoveEvent([[maybe_unused]] const int status, const
                     // test for an entity to drag:
                     RS_Entity *en =  catchEntity(m_actionData->v1);
                     if (en != nullptr && en->isSelected()){
-                        //RS_Vector vp = en->getNearestRef(m_actionData->v1);
-                        /*if (vp.valid) {
-                            m_actionData->v1 = vp;
-                        }*/
+                        if (m_actionData->pressSnapPoint.valid) {
+                            m_actionData->v1 = m_actionData->pressSnapPoint;
+                        }
                         moveRelativeZero(m_actionData->v1);
                         setStatus(Moving);
                     }
@@ -855,6 +855,7 @@ void RS_ActionDefault::onMouseLeftButtonPress(const int status, const LC_MouseEv
                 // dragging should be without modifiers to let custom menu invocation
                 if (e->originalEvent->modifiers() == Qt::NoModifier) {
                     m_actionData->v1 = e->graphPoint;
+                    m_actionData->pressSnapPoint = e->snapPoint;
                     setStatus(Dragging);
                 }
             }
@@ -1066,7 +1067,6 @@ bool RS_ActionDefault::isInVisualSnapStatus(int status) {
 
 void RS_ActionDefault::clearHighLighting(){
     deleteHighlights();
-    clearQuickInfoWidget();
 }
 
 void RS_ActionDefault::resume(){
@@ -1095,14 +1095,6 @@ void RS_ActionDefault::initFromSettings() {
     LC_OverlayBoxAction::initFromSettings();
     LC_GROUP("CADPreferences"); {
         m_completeMovingByMousePressed = LC_GET_BOOL("AdHockMovingEndsByMouseClick", true);
-    }
-}
-
-// fixme - sand - avoid direct call to appWindow??
-void RS_ActionDefault::clearQuickInfoWidget(){
-    const LC_QuickInfoWidget *entityInfoWidget = QC_ApplicationWindow::getAppWindow()->getEntityInfoWidget();
-    if (entityInfoWidget != nullptr){
-//        entityInfoWidget->processEntity(nullptr);
     }
 }
 
