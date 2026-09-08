@@ -3021,6 +3021,9 @@ private:
    *  colliding with the fixed root/group handles C/D). Computed in fileExport
    *  before write(), consumed by the rawDxfObjects re-emit in writeObjects. */
   std::set<std::uint32_t> m_dxfSuppressedObjectHandles;
+  // Normalised names of the built-in LTYPE records written by writeLType()
+  // during writeLTypes(); imported raw records with these names are skipped.
+  std::set<std::string> m_builtinLTypeNames;
 
   /** DXF export (DWG->DXF): SOURCE handles of the named parent dictionaries
    *  emitted via setNamedDictObjects (F4-followup). Computed in fileExport,

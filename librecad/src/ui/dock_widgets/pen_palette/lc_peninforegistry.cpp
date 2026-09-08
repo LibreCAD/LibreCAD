@@ -307,6 +307,10 @@ void LC_PenInfoRegistry::registerLineTypes(){
     doRegisterLineType(":linetypes/linetype03.lci", tr("Dash (tiny)"), RS2::DashLineTiny);
     doRegisterLineType(":linetypes/linetype03.lci", tr("Dash (small)"), RS2::DashLine2);
     doRegisterLineType(":linetypes/linetype03.lci", tr("Dash (large)"), RS2::DashLineX2);
+    doRegisterLineType(":linetypes/linetype08.lci", tr("Hidden"), RS2::HiddenLine);
+    doRegisterLineType(":linetypes/linetype08.lci", tr("Hidden (tiny)"), RS2::HiddenLineTiny);
+    doRegisterLineType(":linetypes/linetype08.lci", tr("Hidden (small)"), RS2::HiddenLine2);
+    doRegisterLineType(":linetypes/linetype08.lci", tr("Hidden (large)"), RS2::HiddenLineX2);
     doRegisterLineType(":linetypes/linetype04.lci", tr("Dash Dot"), RS2::DashDotLine);
     doRegisterLineType(":linetypes/linetype04.lci", tr("Dash Dot (tiny)"), RS2::DashDotLineTiny);
     doRegisterLineType(":linetypes/linetype04.lci", tr("Dash Dot (small)"), RS2::DashDotLine2);

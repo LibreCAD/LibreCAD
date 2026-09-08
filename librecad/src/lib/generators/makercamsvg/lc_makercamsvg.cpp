@@ -813,6 +813,8 @@ std::string LC_MakerCamSVG::svgPathAnyLineType(RS_Vector startpoint, RS_Vector e
     constexpr double lineScale2 = 0.5;
     constexpr double lineScaleOne = 1.0;
     constexpr double lineScaleX2 = 2.0;
+    // acad.lin defines HIDDEN as half of DASHED (.25,-.125 vs .5,-.25)
+    constexpr double hiddenScale = 0.5;
 
     std::string path;
     double lineScale;
@@ -858,6 +860,27 @@ std::string LC_MakerCamSVG::svgPathAnyLineType(RS_Vector startpoint, RS_Vector e
         }
         case RS2::DashLineX2: {
             lineScale = lineScaleX2;
+            lineFactor = dashFactor;
+            break;
+        }
+
+        case RS2::HiddenLineTiny: {
+            lineScale = lineScaleTiny * hiddenScale;
+            lineFactor = dashFactor;
+            break;
+        }
+        case RS2::HiddenLine2: {
+            lineScale = lineScale2 * hiddenScale;
+            lineFactor = dashFactor;
+            break;
+        }
+        case RS2::HiddenLine: {
+            lineScale = lineScaleOne * hiddenScale;
+            lineFactor = dashFactor;
+            break;
+        }
+        case RS2::HiddenLineX2: {
+            lineScale = lineScaleX2 * hiddenScale;
             lineFactor = dashFactor;
             break;
         }
@@ -988,7 +1011,11 @@ std::string LC_MakerCamSVG::getLinePattern(RS_Vector* lastPos, RS_Vector step, R
         case RS2::DashLineTiny:
         case RS2::DashLine2:
         case RS2::DashLine:
-        case RS2::DashLineX2: {
+        case RS2::DashLineX2:
+        case RS2::HiddenLineTiny:
+        case RS2::HiddenLine2:
+        case RS2::HiddenLine:
+        case RS2::HiddenLineX2: {
             path += getLineSegment(lastPos, step, lineScale, true);
             break;
         }

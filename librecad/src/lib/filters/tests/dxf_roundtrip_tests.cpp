@@ -58,6 +58,8 @@
 #include "rs_entity.h"
 #include "rs_block.h"
 #include "rs_layer.h"
+#include "rs_line.h"
+#include "rs_linetypepattern.h"
 #include "rs_pen.h"
 #include "rs_point.h"
 #include "rs_settings.h"
@@ -144,6 +146,32 @@ std::string dstyleDirectionVariant(const std::string &path,
     return output.str();
   }
   return {};
+}
+
+// Returns the group-`code` values of the LTYPE table record named `ltypeName`.
+// libdxfrw writes the name (2) before the pattern groups (3/73/40/49), so the
+// name is matched first and the values are collected until the next record.
+std::vector<std::string> ltypeRecordGroupValues(const std::string &path,
+                                                const std::string &ltypeName,
+                                                const std::string &code) {
+  std::ifstream in(path);
+  std::string codeLine, valueLine;
+  std::vector<std::string> values;
+  bool inLtype = false;
+  bool nameMatched = false;
+  while (std::getline(in, codeLine) && std::getline(in, valueLine)) {
+    const std::string groupCode = trimDxfToken(codeLine);
+    const std::string value = trimDxfToken(valueLine);
+    if (groupCode == "0") {
+      inLtype = value == "LTYPE";
+      nameMatched = false;
+    } else if (inLtype && groupCode == "2") {
+      nameMatched = value == ltypeName;
+    } else if (inLtype && nameMatched && groupCode == code) {
+      values.push_back(value);
+    }
+  }
+  return values;
 }
 
 // Counts occurrences of a "0\n<NAME>\n" record marker in a DXF file.
@@ -4623,7 +4651,7 @@ TEST_CASE("DXF export rejects malformed typed conversion sidecars",
   std::filesystem::remove(out);
 }
 
-TEST_CASE("DXF import maps HIDDEN2 to the half-scale dashed linetype",
+TEST_CASE("DXF import maps HIDDEN2 to the half-scale hidden linetype",
           "[dxf][filter][linetype][regression]") {
   ensureSettings();
   const std::string src = tmpFile("hidden2_src.dxf");
@@ -4651,11 +4679,129 @@ TEST_CASE("DXF import maps HIDDEN2 to the half-scale dashed linetype",
   }
   const auto *layer = graphic.findLayer(QStringLiteral("HIDDEN_LAYER"));
   REQUIRE(layer != nullptr);
-  CHECK(layer->getPen().getLineType() == RS2::DashLine2);
+  CHECK(layer->getPen().getLineType() == RS2::HiddenLine2);
 
   RS_Entity *line = graphic.firstEntity();
   REQUIRE(line != nullptr);
-  CHECK(line->getPen(false).getLineType() == RS2::DashLine2);
+  CHECK(line->getPen(false).getLineType() == RS2::HiddenLine2);
 
   std::filesystem::remove(src);
+}
+
+TEST_CASE("DXF round-trip preserves the HIDDEN linetype on an entity",
+          "[dxf][roundtrip][filter][linetype]") {
+  ensureSettings();
+  const std::string out = tmpFile("hidden_out.dxf");
+  const std::string dwg = tmpFile("hidden.dwg");
+  std::filesystem::remove(out);
+  std::filesystem::remove(dwg);
+
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  auto *line = new RS_Line(&graphic, RS_LineData(RS_Vector(0.0, 0.0),
+                                                 RS_Vector(10.0, 10.0)));
+  line->setPen(RS_Pen(RS_Color(255, 0, 0), RS2::Width00, RS2::HiddenLine));
+  graphic.addEntity(line);
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+
+  // The entity references the linetype by its acad.lin name...
+  CHECK(recordGroupValues(out, "LINE", "6") ==
+        std::vector<std::string>{"HIDDEN"});
+  // ...and the LTYPE table carries acad.lin's HIDDEN (A,.25,-.125) in mm.
+  const auto dashes = ltypeRecordGroupValues(out, "HIDDEN", "49");
+  REQUIRE(dashes.size() == 2);
+  CHECK(std::stod(dashes[0]) == Catch::Approx(6.35));
+  CHECK(std::stod(dashes[1]) == Catch::Approx(-3.175));
+  CHECK(ltypeRecordGroupValues(out, "HIDDEN", "73") ==
+        std::vector<std::string>{"2"});
+
+  RS_Graphic reimported;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(reimported, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+  RS_Entity *imported = reimported.firstEntity();
+  REQUIRE(imported != nullptr);
+  CHECK(imported->getPen(false).getLineType() == RS2::HiddenLine);
+
+  // The reimported drawing now carries HIDDEN in its raw LTYPE table copy as
+  // well; saving it again must write the record once, not once per source.
+  const std::string out2 = tmpFile("hidden_out2.dxf");
+  std::filesystem::remove(out2);
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(reimported, QString::fromStdString(out2),
+                              RS2::FormatDXFRW));
+  }
+  CHECK(ltypeRecordGroupValues(out2, "HIDDEN", "73") ==
+        std::vector<std::string>{"2"});
+  CHECK(recordGroupValues(out2, "LINE", "6") ==
+        std::vector<std::string>{"HIDDEN"});
+  std::filesystem::remove(out2);
+
+#ifdef DWGSUPPORT
+  // The DWG writer resolves entity linetypes by handle against the LTYPE
+  // table emitted by writeLTypes(), so a missing record would silently
+  // degrade the pen here.
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(dwg),
+                              RS2::FormatDWG2004));
+  }
+  RS_Graphic fromDwg;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(fromDwg, QString::fromStdString(dwg),
+                              RS2::FormatDWG));
+  }
+  RS_Entity *dwgLine = fromDwg.firstEntity();
+  REQUIRE(dwgLine != nullptr);
+  CHECK(dwgLine->getPen(false).getLineType() == RS2::HiddenLine);
+#endif
+
+  std::filesystem::remove(out);
+  std::filesystem::remove(dwg);
+}
+
+TEST_CASE("Every DXF linetype name LibreCAD writes maps back to the same RS2::LineType",
+          "[dxf][filter][linetype]") {
+  for (const RS2::LineType type : {
+           RS2::SolidLine,
+           RS2::DotLine, RS2::DotLineTiny, RS2::DotLine2, RS2::DotLineX2,
+           RS2::DashLine, RS2::DashLineTiny, RS2::DashLine2, RS2::DashLineX2,
+           RS2::HiddenLine, RS2::HiddenLineTiny, RS2::HiddenLine2,
+           RS2::HiddenLineX2,
+           RS2::DashDotLine, RS2::DashDotLineTiny, RS2::DashDotLine2,
+           RS2::DashDotLineX2,
+           RS2::DivideLine, RS2::DivideLineTiny, RS2::DivideLine2,
+           RS2::DivideLineX2,
+           RS2::CenterLine, RS2::CenterLineTiny, RS2::CenterLine2,
+           RS2::CenterLineX2,
+           RS2::BorderLine, RS2::BorderLineTiny, RS2::BorderLine2,
+           RS2::BorderLineX2,
+           RS2::LineByLayer, RS2::LineByBlock}) {
+    const QString name = RS_FilterDXFRW::lineTypeToName(type);
+    INFO("linetype " << static_cast<int>(type) << " -> " << name.toStdString());
+    CHECK(RS_FilterDXFRW::nameToLineType(name) == type);
+  }
+
+  // The hidden family keeps its acad.lin names, distinct from DASHED*.
+  CHECK(RS_FilterDXFRW::lineTypeToName(RS2::HiddenLine) == "HIDDEN");
+  CHECK(RS_FilterDXFRW::lineTypeToName(RS2::HiddenLineTiny) == "HIDDENTINY");
+  CHECK(RS_FilterDXFRW::lineTypeToName(RS2::HiddenLine2) == "HIDDEN2");
+  CHECK(RS_FilterDXFRW::lineTypeToName(RS2::HiddenLineX2) == "HIDDENX2");
+
+  // Every drawable type must have a screen pattern: RS_Painter dereferences
+  // getPattern() without a null check.
+  for (const RS2::LineType type : {RS2::HiddenLine, RS2::HiddenLineTiny,
+                                   RS2::HiddenLine2, RS2::HiddenLineX2}) {
+    INFO("linetype " << static_cast<int>(type));
+    CHECK(RS_LineTypePattern::getPattern(type) != nullptr);
+  }
 }

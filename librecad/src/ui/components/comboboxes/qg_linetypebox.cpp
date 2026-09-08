@@ -95,6 +95,10 @@ void QG_LineTypeBox::init(const bool showByLayer, const bool showUnchanged, cons
     addItem(QIcon(":linetypes/linetype03.lci"), tr("Dash (tiny)"), RS2::DashLineTiny);
     addItem(QIcon(":linetypes/linetype03.lci"), tr("Dash (small)"), RS2::DashLine2);
     addItem(QIcon(":linetypes/linetype03.lci"), tr("Dash (large)"), RS2::DashLineX2);
+    addItem(QIcon(":linetypes/linetype08.lci"), tr("Hidden"), RS2::HiddenLine);
+    addItem(QIcon(":linetypes/linetype08.lci"), tr("Hidden (tiny)"), RS2::HiddenLineTiny);
+    addItem(QIcon(":linetypes/linetype08.lci"), tr("Hidden (small)"), RS2::HiddenLine2);
+    addItem(QIcon(":linetypes/linetype08.lci"), tr("Hidden (large)"), RS2::HiddenLineX2);
     addItem(QIcon(":linetypes/linetype04.lci"), tr("Dash Dot"), RS2::DashDotLine);
     addItem(QIcon(":linetypes/linetype04.lci"), tr("Dash Dot (tiny)"), RS2::DashDotLineTiny);
     addItem(QIcon(":linetypes/linetype04.lci"), tr("Dash Dot (small)"), RS2::DashDotLine2);

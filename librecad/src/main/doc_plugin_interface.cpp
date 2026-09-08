@@ -70,6 +70,9 @@ convLTW::convLTW() {
     lType.insert(RS2::DashLine, "DashLine");
     lType.insert(RS2::DashLine2, "DashLine2");
     lType.insert(RS2::DashLineX2, "DashLineX2");
+    lType.insert(RS2::HiddenLine, "HiddenLine");
+    lType.insert(RS2::HiddenLine2, "HiddenLine2");
+    lType.insert(RS2::HiddenLineX2, "HiddenLineX2");
     lType.insert(RS2::DashDotLine, "DashDotLine");
     lType.insert(RS2::DashDotLine2, "DashDotLine2");
     lType.insert(RS2::DashDotLineX2, "DashDotLineX2");
