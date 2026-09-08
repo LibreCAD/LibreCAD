@@ -29,6 +29,13 @@
 */
 const char* preR13CodePageName(std::uint16_t numHeaderVars, std::uint16_t cp);
 
+/// Read a pre-R13 fixed-width, NUL-padded text field. Always consumes @p width
+/// bytes so the sequential record layout stays aligned, keeps only the bytes
+/// before the first NUL, and decodes them with @p codec ($DWGCODEPAGE). Table
+/// records store names as raw codepage bytes, so without this they reach the
+/// document undecoded. Declared here so it can be unit tested.
+std::string preR13FixedText(dwgBuffer& buf, int width, DRW_TextCodec& codec);
+
 //! Class to read pre-R13 (R10/R11) DWG files
 /*!
 *  Reads the fixed pre-R13 container: file header section pointers, then the
