@@ -61,6 +61,10 @@ TEST_CASE("RS_Modification::trim does not cast a container limit entity",
     // The trim of the atomic entity is still allowed; only the container side is
     // declined, so nothing is produced for it.
     CHECK(result.trimmed2 == nullptr);
+
+    // trim() hands the clones it makes to the batch, whose destructor frees
+    // nothing, so a test that never applies the batch has to release them.
+    qDeleteAll(ctx.entitiesToAdd);
 }
 
 TEST_CASE("RS_Modification::trim still trims against an atomic limit entity",
@@ -76,4 +80,6 @@ TEST_CASE("RS_Modification::trim still trims against an atomic limit entity",
                                                        true, ctx);
     CHECK(result.trimmed1 != nullptr);
     CHECK(result.trimmed2 != nullptr);
+
+    qDeleteAll(ctx.entitiesToAdd);
 }

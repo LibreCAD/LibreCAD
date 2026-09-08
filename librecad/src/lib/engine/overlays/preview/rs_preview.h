@@ -63,6 +63,8 @@ public:
                          RS_Vector& worldCorner4) const;
     void addAllFrom(RS_EntityContainer& container, LC_GraphicViewport* view);
     void addClonesFromList(const QList<RS_Entity*>& list);
+    // Take ownership of every entity in the list. Entities past the preview
+    // limit are released rather than shown, so the caller must not reuse them.
     void addAllFromList(const QList<RS_Entity*>& list);
     void addAllFromList(const std::list<RS_Entity*>& list);
     void addStretchablesFrom(RS_EntityContainer& container, LC_GraphicViewport* view,

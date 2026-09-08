@@ -207,26 +207,30 @@ void RS_Preview::addClonesFromList(const QList<RS_Entity*>& list) {
 void RS_Preview::addAllFromList(const QList<RS_Entity*>& list) {
     unsigned int c = 0;
     for (const auto e: list) {
+        if (e == nullptr) {
+            continue;
+        }
         if (c > m_maxEntities) {
-            break;
+            delete e;                       // adopted or released, never dropped
+            continue;
         }
-        if (e != nullptr) {
-            c += e->countDeep();
-            addEntity(e);
-        }
+        c += e->countDeep();
+        addEntity(e);
     }
 }
 
 void RS_Preview::addAllFromList(const std::list<RS_Entity*>& list) {
     unsigned int c = 0;
     for (const auto e: list) {
+        if (e == nullptr) {
+            continue;
+        }
         if (c > m_maxEntities) {
-            break;
+            delete e;
+            continue;
         }
-        if (e != nullptr) {
-            c += e->countDeep();
-            addEntity(e);
-        }
+        c += e->countDeep();
+        addEntity(e);
     }
 }
 
