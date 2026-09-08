@@ -1531,7 +1531,10 @@ bool RS_Modification::cut(const RS_Vector& cutCoord, RS_AtomicEntity* cutEntity,
             // interpolation spline can be closed
             // so we cannot use the default implementation
             // fixme - review cutting for spline points!!!!
-            cut2 = static_cast<LC_SplinePoints*>(cutEntity->clone())->cut(cutCoord);
+            // cut() returns a freshly allocated spline, never the receiver,
+            // so the clone it is called on has to be owned here.
+            const std::unique_ptr<RS_Entity> spline{cutEntity->clone()};
+            cut2 = static_cast<LC_SplinePoints*>(spline.get())->cut(cutCoord);
             cut1 = static_cast<RS_AtomicEntity*>(cutEntity->clone());
             break;
         }

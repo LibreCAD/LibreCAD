@@ -40,6 +40,7 @@
 
 #include "lc_action_modify_round.h"
 #include "lc_actioncontext.h"
+#include "rs_preview.h"
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
 #include "rs_line.h"
@@ -72,35 +73,24 @@ QApplication* application() {
 }
 
 /**
- * A line that keeps count of how many of its clones are alive. round() clones
- * the picked entities through RS_Entity::clone(), so overriding it here makes
- * the clones the fillet preview produces observable: if the action drops one,
- * the count never comes back down.
+ * A line that keeps count of how many of its instances are alive, clones
+ * included. Entities reach these code paths either by RS_Entity::clone(), which
+ * this overrides, or by being built directly, and in both cases a dropped
+ * entity shows up as a count that never comes back down.
  */
 class CountingLine : public RS_Line {
 public:
-    static int s_liveClones;
+    static int s_live;
 
-    CountingLine(RS_EntityContainer* parent, const RS_LineData& d) : RS_Line(parent, d) {}
+    CountingLine(RS_EntityContainer* parent, const RS_LineData& d) : RS_Line(parent, d) { ++s_live; }
+    CountingLine(const CountingLine& other) : RS_Line(other) { ++s_live; }
 
-    RS_Entity* clone() const override {
-        auto* copy = new CountingLine(*this);
-        copy->m_isClone = true;
-        ++s_liveClones;
-        return copy;
-    }
+    RS_Entity* clone() const override { return new CountingLine(*this); }
 
-    ~CountingLine() override {
-        if (m_isClone) {
-            --s_liveClones;
-        }
-    }
-
-private:
-    bool m_isClone{false};
+    ~CountingLine() override { --s_live; }
 };
 
-int CountingLine::s_liveClones = 0;
+int CountingLine::s_live = 0;
 
 class RoundTestView final : public RS_GraphicView {
 public:
@@ -131,6 +121,7 @@ public:
     using RS_ActionInterface::setStatus;
     using RS_PreviewActionInterface::deletePreviewAndHighlights;
     using RS_PreviewActionInterface::drawPreviewAndHighlights;
+    using RS_PreviewActionInterface::m_preview;
 };
 
 LC_MouseEvent eventAt(const double x, const double y) {
@@ -188,7 +179,7 @@ TEST_CASE("fillet hover preview releases the entities round() hands back",
 
     // Hover the second line, where round() produces a preview.
     f.hover(100.0, 50.0);
-    const int afterFirstHover = CountingLine::s_liveClones;
+    const int afterFirstHover = CountingLine::s_live;
 
     for (int i = 0; i < 50; ++i) {
         f.hover(100.0, 50.0);
@@ -197,8 +188,8 @@ TEST_CASE("fillet hover preview releases the entities round() hands back",
     // Each move clones both picked lines. Whatever the preview does not adopt
     // is the action's to release, so the count must not grow with the number of
     // mouse moves.
-    INFO("clones still alive after 50 further hover moves");
-    CHECK(CountingLine::s_liveClones == afterFirstHover);
+    INFO("lines still alive after 50 further hover moves");
+    CHECK(CountingLine::s_live == afterFirstHover);
 }
 
 TEST_CASE("a mouse move on a view without a relative point widget does not crash",
@@ -212,4 +203,30 @@ TEST_CASE("a mouse move on a view without a relative point widget does not crash
                      Qt::NoButton, Qt::NoButton, Qt::NoModifier);
     f.m_action->mouseMoveEvent(&move);
     SUCCEED("dispatched a mouse move through a view with no relative point widget");
+}
+
+TEST_CASE("the preview releases entities it does not adopt past its cap",
+          "[preview][overlay]") {
+    // addAllFromList() is handed entities the caller has already built and
+    // expects the preview to take. It stops adding at m_maxEntities, so
+    // everything past the cap has to be released rather than dropped.
+    RoundFixture f;
+    RS_Preview* preview = f.m_action->m_preview.get();
+    const int cap = preview->getMaxAllowedEntities();
+    REQUIRE(cap > 0);
+
+    const int baseline = CountingLine::s_live;
+    const int count = cap + 50;
+
+    QList<RS_Entity*> handedOver;
+    for (int i = 0; i < count; ++i) {
+        handedOver.append(new CountingLine(nullptr, RS_LineData{{0.0, double(i)}, {1.0, double(i)}}));
+    }
+    REQUIRE(CountingLine::s_live == baseline + count);
+
+    preview->addAllFromList(handedOver);
+    preview->clear();
+
+    INFO("entities past the preview cap were neither adopted nor released");
+    CHECK(CountingLine::s_live == baseline);
 }
