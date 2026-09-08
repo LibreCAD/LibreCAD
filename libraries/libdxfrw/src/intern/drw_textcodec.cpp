@@ -435,6 +435,11 @@ std::string DRW_ConvDBCSTable::toUtf8(std::string_view s) {
         } else if(c == 0x80 ){//1 byte table
             notFound = false;
             res += encodeNum(0x20AC);//euro sign
+        } else if (it + 1 == s.end()) {
+            // Trailing lead byte with no trail byte. Fixed-width DWG fields are
+            // NUL-padded and can cut a double-byte character in half, so this is
+            // reachable; fall through to the not-found replacement rather than
+            // stepping past the end.
         } else {//2 bytes
             ++it;
             int code = (c << 8) | static_cast<unsigned char >(*it);
@@ -533,6 +538,8 @@ std::string DRW_Conv932Table::toUtf8(std::string_view s) {
         } else if(c > 0xA0 && c < 0xE0 ){//1 byte table
             notFound = false;
             res += encodeNum(c + CPOFFSET932); //translate from table
+        } else if (it + 1 == s.end()) {
+            // Trailing lead byte with no trail byte; see DRW_ConvDBCSTable.
         } else {//2 bytes
             ++it;
             int code = (c << 8) | static_cast<unsigned char>(*it);

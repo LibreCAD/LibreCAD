@@ -101,6 +101,17 @@ const char* preR13CodePageName(std::uint16_t numHeaderVars, std::uint16_t cp) {
     return dwgCodePageName(cp);
 }
 
+std::string preR13FixedText(dwgBuffer& buf, const int width, DRW_TextCodec& codec) {
+    std::string raw;
+    bool ended = false;
+    for (int j = 0; j < width; ++j) {
+        const char c = static_cast<char>(buf.getRawChar8());
+        if (c == '\0') ended = true;
+        if (!ended) raw.push_back(c);
+    }
+    return codec.toUtf8(raw);
+}
+
 bool dwgReaderR11::readMetaData() {
     // Identify the precise pre-R13 version from the 6-byte magic. Both AC1006
     // (R10) and AC1009 (R11) are validatable against dwgread; their containers
@@ -377,13 +388,7 @@ bool dwgReaderR11::readNameTable(std::uint32_t hdrPos, std::vector<std::string>&
                 || !dwgSafety::add(recordOffset, 1, nameOffset)
                 || !fileBuf->setPosition(nameOffset))
                 return false;
-            std::string name;
-            bool ended = false;
-            for (int j = 0; j < 32; ++j) {
-                const char c = static_cast<char>(fileBuf->getRawChar8());
-                if (c == '\0') ended = true;
-                if (!ended) name.push_back(c);
-            }
+            std::string name = preR13FixedText(*fileBuf, 32, decoder);
             if (!fileBuf->isGood())
                 return false;
             names.push_back(std::move(name));
@@ -475,24 +480,13 @@ bool dwgReaderR11::readLTypeTable(std::uint32_t hdrPos) {
             || !fileBuf->setPosition(offset))
             return false;
         const std::uint8_t flag = fileBuf->getRawChar8();
-        std::string name;
-        bool ended = false;
-        for (int j = 0; j < 32; ++j) {
-            const char c = static_cast<char>(fileBuf->getRawChar8());
-            if (c == '\0') ended = true;
-            if (!ended) name.push_back(c);
-        }
+        std::string name = preR13FixedText(*fileBuf, 32, decoder);
         // off 33: used (signed RS, ignored — header lists "used count"
         // sentinel; libreDWG keeps it for debugging only). R11 only; R10 omits.
         if (hasUsed) static_cast<void>(fileBuf->getRawShort16());
         // description (48 FIXED null-padded bytes).
         std::string desc;
-        ended = false;
-        for (int j = 0; j < 48; ++j) {
-            const char c = static_cast<char>(fileBuf->getRawChar8());
-            if (c == '\0') ended = true;
-            if (!ended) desc.push_back(c);
-        }
+        desc = preR13FixedText(*fileBuf, 48, decoder);
         // off 83: alignment (always 'A' for AutoCAD ltypes); off 84: numdashes.
         const std::uint8_t alignment = fileBuf->getRawChar8();
         const std::uint8_t numdashes = fileBuf->getRawChar8();
@@ -572,13 +566,7 @@ bool dwgReaderR11::readLayerTable(std::uint32_t hdrPos) {
             || !fileBuf->setPosition(offset))
             return false;
         const std::uint8_t flag = fileBuf->getRawChar8();
-        std::string name;
-        bool ended = false;
-        for (int j = 0; j < 32; ++j) {
-            const char c = static_cast<char>(fileBuf->getRawChar8());
-            if (c == '\0') ended = true;
-            if (!ended) name.push_back(c);
-        }
+        std::string name = preR13FixedText(*fileBuf, 32, decoder);
         if (hasUsed) static_cast<void>(fileBuf->getRawShort16()); // off33 used (R11)
         const std::int16_t color =
             static_cast<std::int16_t>(fileBuf->getRawShort16());
@@ -638,13 +626,7 @@ bool dwgReaderR11::readStyleTable(std::uint32_t hdrPos) {
             || !fileBuf->setPosition(offset))
             return false;
         const std::uint8_t flag = fileBuf->getRawChar8();
-        std::string name;
-        bool ended = false;
-        for (int j = 0; j < 32; ++j) {
-            const char c = static_cast<char>(fileBuf->getRawChar8());
-            if (c == '\0') ended = true;
-            if (!ended) name.push_back(c);
-        }
+        std::string name = preR13FixedText(*fileBuf, 32, decoder);
         if (hasUsed) static_cast<void>(fileBuf->getRawShort16()); // off33 used (R11)
         const double textSize = fileBuf->getRawDouble();
         const double widthFactor = fileBuf->getRawDouble();   // off43
@@ -652,18 +634,8 @@ bool dwgReaderR11::readStyleTable(std::uint32_t hdrPos) {
         const std::uint8_t generation = fileBuf->getRawChar8(); // off59
         const double lastHeight = fileBuf->getRawDouble();    // off60
         std::string font, bigFont;
-        ended = false;
-        for (int j = 0; j < 64; ++j) {
-            const char c = static_cast<char>(fileBuf->getRawChar8());
-            if (c == '\0') ended = true;
-            if (!ended) font.push_back(c);
-        }
-        ended = false;
-        for (int j = 0; j < 64; ++j) {
-            const char c = static_cast<char>(fileBuf->getRawChar8());
-            if (c == '\0') ended = true;
-            if (!ended) bigFont.push_back(c);
-        }
+        font = preR13FixedText(*fileBuf, 64, decoder);
+        bigFont = preR13FixedText(*fileBuf, 64, decoder);
         auto st = std::make_unique<DRW_Textstyle>();
         st->name = name;
         st->height = textSize;
@@ -751,13 +723,7 @@ bool dwgReaderR11::readExtendedNameTable(std::uint32_t hdrPos, bool isDimstyle) 
                 || !fileBuf->setPosition(offset))
                 return false;
             const std::uint8_t flag = fileBuf->getRawChar8();
-            std::string name;
-            bool ended = false;
-            for (int j = 0; j < 32; ++j) {
-                const char c = static_cast<char>(fileBuf->getRawChar8());
-                if (c == '\0') ended = true;
-                if (!ended) name.push_back(c);
-            }
+            std::string name = preR13FixedText(*fileBuf, 32, decoder);
             if (!fileBuf->isGood())
                 return false;
             auto ds = std::make_unique<DRW_Dimstyle>();
@@ -780,13 +746,7 @@ bool dwgReaderR11::readExtendedNameTable(std::uint32_t hdrPos, bool isDimstyle) 
             || !fileBuf->setPosition(offset))
             return false;
         const std::uint8_t flag = fileBuf->getRawChar8();
-        std::string name;
-        bool ended = false;
-        for (int j = 0; j < 32; ++j) {
-            const char c = static_cast<char>(fileBuf->getRawChar8());
-            if (c == '\0') ended = true;
-            if (!ended) name.push_back(c);
-        }
+        std::string name = preR13FixedText(*fileBuf, 32, decoder);
         if (!fileBuf->isGood())
             return false;
         auto ai = std::make_unique<DRW_AppId>();
