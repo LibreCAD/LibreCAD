@@ -207,16 +207,14 @@ void LC_ActionModifyRound::onMouseMoveEvent(const int status, const LC_MouseEven
                                 previewEntityModifications(se, roundResult.trimmed2, roundResult.trimmingPoint2, roundResult.trim2Mode);
                             }
                         }
-                        if (m_actionData->data.trim && !roundResult.isPolyline){
-                            m_preview->removeEntity(roundResult.trimmed1);
-                            m_preview->removeEntity(roundResult.trimmed2);
-                        }
+                        bool previewOwnsArc = false;
 
                         const auto *arc = roundResult.round;
                         if (arc != nullptr){
                             if (m_showRefEntitiesOnPreview) {
                                 if (!roundResult.isPolyline) {
                                     previewEntity(arc);
+                                    previewOwnsArc = true;
                                 }
                             }
                             if (isInfoCursorForModificationEnabled()){
@@ -229,7 +227,19 @@ void LC_ActionModifyRound::onMouseMoveEvent(const int status, const LC_MouseEven
                             }
                         }
                         if (roundResult.isPolyline) {
+                            // The clone owns the arc and both trimmed segments,
+                            // so handing it to the preview hands over all three.
                             previewEntity(roundResult.polyline);
+                        }
+                        else {
+                            // round() hands back raw ownership and the batch it
+                            // filled in is a local that frees nothing, so what
+                            // the preview did not take is ours to release.
+                            delete roundResult.trimmed1;
+                            delete roundResult.trimmed2;
+                            if (!previewOwnsArc) {
+                                delete roundResult.round;
+                            }
                         }
                     }
 

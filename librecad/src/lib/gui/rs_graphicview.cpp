@@ -453,5 +453,7 @@ void RS_GraphicView::restoreRelativeInputWidget() const {
 }
 
 bool RS_GraphicView::isInRelativePointInput() const {
-    return m_relativePointWidgetHolder->isVisible();
+    // Only QG_GraphicView creates the holder, so the base class cannot assume
+    // it exists. This is the first statement of every mouse move event.
+    return m_relativePointWidgetHolder != nullptr && m_relativePointWidgetHolder->isVisible();
 }
