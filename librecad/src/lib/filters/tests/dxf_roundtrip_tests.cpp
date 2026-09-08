@@ -58,6 +58,8 @@
 #include "rs_entity.h"
 #include "rs_block.h"
 #include "rs_layer.h"
+#include "rs_line.h"
+#include "rs_pen.h"
 #include "rs_point.h"
 #include "rs_settings.h"
 
@@ -4620,4 +4622,38 @@ TEST_CASE("DXF export rejects malformed typed conversion sidecars",
   CHECK(countRecords(out, "POINT") == 0);
 
   std::filesystem::remove(out);
+}
+
+TEST_CASE("DXF import maps HIDDEN2 to the half-scale dashed linetype, not the tiny one",
+          "[dxf][filter][linetype][regression]") {
+  ensureSettings();
+  const std::string src = tmpFile("hidden2_src.dxf");
+  std::filesystem::remove(src);
+
+  // No LTYPE table on purpose: the entity's group 6 is resolved by name in
+  // nameToLineType(), so the mapping is exercised without a table record.
+  writeText(src,
+            "0\nSECTION\n2\nENTITIES\n"
+            "0\nLINE\n8\n0\n6\nHIDDEN2\n"
+            "10\n0.0\n20\n0.0\n11\n10.0\n21\n0.0\n"
+            "0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  RS_Entity *line = graphic.firstEntity();
+  REQUIRE(line != nullptr);
+  // HIDDEN2 is acad.lin's .5x hidden line; DASHED2 is the .5x dashed line.
+  // DASHEDTINY is LibreCAD's own .15x variant and far too fine for it.
+  CHECK(line->getPen(false).getLineType() == RS2::DashLine2);
+
+  // Table neighbours, so a reshuffle of nameToLineType() is caught as well.
+  CHECK(RS_FilterDXFRW::nameToLineType("DASHEDTINY") == RS2::DashLineTiny);
+  CHECK(RS_FilterDXFRW::nameToLineType("DASHED2") == RS2::DashLine2);
+  CHECK(RS_FilterDXFRW::nameToLineType("hidden2") == RS2::DashLine2);
+
+  std::filesystem::remove(src);
 }
