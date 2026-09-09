@@ -3317,7 +3317,7 @@ RS2::LineType RS_FilterDXFRW::nameToLineType(const QString& name) {
                uName=="DASHED" || uName=="HIDDEN") {
         return RS2::DashLine;
 
-    } else if (uName=="DASHEDTINY" || uName=="HIDDEN2") {
+    } else if (uName=="DASHEDTINY") {
         return RS2::DashLineTiny;
 
     } else if (uName=="DASHED2" || uName=="HIDDEN2") {
