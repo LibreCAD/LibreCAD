@@ -117,7 +117,13 @@ inline constexpr DwgTypedClassRow kDwgTypedClassRows[] = {
     {"ObjectPtr", DRW_ObjectPtr::kDwgClassNum, 0x401, "ObjectDBX Classes", "AcDbObjectPtr", "OBJECT_PTR", 0x1F3},
     {"VisualStyle", DRW_VisualStyle::kDwgClassNum, 0x401, "ObjectDBX Classes", "AcDbVisualStyle", "VISUALSTYLE", 0x1F3},
     {"EvaluationGraph", DRW_EvaluationGraph::kDwgClassNum, 0x481, "ObjectDBX Classes", "AcDbEvalGraph", "ACAD_EVALUATION_GRAPH", 0x1F3},
-    {"DimensionAssociation", DRW_DimensionAssociation::kDwgClassNum, 0, "AcDbDimAssoc|Product Desc: AcDim ARX App For Dimension|" "Company: Autodesk, Inc.|WEB Address: www.autodesk.com", "AcDbDimAssoc", "DIMASSOC", 0x1F3},
+    {"DimensionAssociation", DRW_DimensionAssociation::kDwgClassNum, 0,
+     // The padding inside this app name is what AutoCAD writes; it goes
+     // into the CLASSES section verbatim, so the runs of spaces are
+     // significant and must not be collapsed.
+     "AcDbDimAssoc|Product Desc:     AcDim ARX App For Dimension|"
+     "Company:          Autodesk, Inc.|WEB Address:      www.autodesk.com",
+     "AcDbDimAssoc", "DIMASSOC", 0x1F3},
     {"RasterVariables", DRW_RasterVariables::kDwgClassNum, 0x401, "ISM", "AcDbRasterVariables", "RASTERVARIABLES", 0x1F3},
     {"WipeoutVariables", DRW_WipeoutVariables::kDwgClassNum, 0x401, "WipeOut", "AcDbWipeoutVariables", "WIPEOUTVARIABLES", 0x1F3},
     {"NavisworksModelDef", DRW_NavisworksModelDef::kDwgClassNum, 0x401, "ObjectDBX Classes", "AcDbNavisworksModelDef", "NAVISWORKSMODELDEF", 0x1F3},
