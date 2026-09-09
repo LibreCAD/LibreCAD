@@ -1,3 +1,4 @@
+#include <cstdio>
 #include "drw_textcodec.h"
 #include <sstream>
 #include <iomanip>
@@ -303,19 +304,15 @@ std::string DRW_Converter::encodeMifText(const std::string &tok){
 }
 
 std::string DRW_Converter::decodeText(int c){
-    std::string res = "\\U+";
-    std::string num;
-#if defined(__APPLE__)
-    std::string str(16, '\0');
-    snprintf (&(str[0]), 16, "%04X", c );
-    num = str;
-#else
-    std::stringstream ss;
-    ss << std::uppercase << std::setfill('0') << std::setw(4) << std::hex << c;
-    ss >> num;
-#endif
-    res += num;
-    return res;
+    // The Apple branch this replaces built a fixed 16-char std::string and
+    // assigned it whole, so snprintf's 4 digits were followed by 12 NUL bytes
+    // that stayed part of the string: every escape came out 19 bytes instead
+    // of 7. A DXF writer refuses such a string outright (the NUL guards in
+    // dxfwriter.cpp), and a DWG <= R2004 writer put the NULs straight into
+    // the file. Format the digits into a bounded buffer on every platform.
+    char digits[8];
+    std::snprintf(digits, sizeof digits, "%04X", c);
+    return std::string("\\U+") + digits;
 }
 
 std::string DRW_Converter::encodeNum(int c){
