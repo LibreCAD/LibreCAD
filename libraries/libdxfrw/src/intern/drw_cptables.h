@@ -875,7 +875,10 @@ static const int DRW_Table1255[] = {
     0x05B7, //72 #HEBREW POINT PATAH
     0x05B8, //73 #HEBREW POINT QAMATS
     0x05B9, //74 #HEBREW POINT HOLAM
-    0x00  , //75 #UNDEFINED
+    // 0xCA is the only hole in the run 0xC0+n -> U+05B0+n. It was left
+    // undefined because U+05BA did not exist when windows-1255 was
+    // defined; Unicode 5.0 added it, so the slot has an answer now.
+    0x05BA, //75 #HEBREW POINT HOLAM HASER FOR VAV
     0x05BB, //76 #HEBREW POINT QUBUTS
     0x05BC, //77 #HEBREW POINT DAGESH OR MAPIQ
     0x05BD, //78 #HEBREW POINT METEG

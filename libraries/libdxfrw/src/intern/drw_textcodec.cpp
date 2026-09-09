@@ -1,6 +1,6 @@
 #include "drw_textcodec.h"
+#include <cstdio>
 #include <sstream>
-#include <iomanip>
 #include <algorithm>
 #include <cstring>
 #include "../drw_base.h"
@@ -292,7 +292,12 @@ std::string DRW_Converter::encodeMifText(const std::string &tok){
     sd >> std::hex >> code;
     if (!sd) return std::string{};
 #endif
-    if (code <= 0) return std::string{};
+    // A MIF escape names a double-byte character, so the lead byte is
+    // code >> 8. Below 0x100 that lead is zero, which is not a DBCS lead at
+    // all: the pair {0x00, low} decoded straight through as a NUL, and a NUL
+    // in a layer name makes the DXF writers refuse the whole string. Reject
+    // it so the caller keeps the escape as literal text instead.
+    if (code < 0x100) return std::string{};
     DRW_TextCodec codec;
     codec.setVersion(DRW::AC1015, /*dxfFormat=*/false);
     codec.setCodePage(cpName, /*dxfFormat=*/false);
@@ -303,19 +308,30 @@ std::string DRW_Converter::encodeMifText(const std::string &tok){
 }
 
 std::string DRW_Converter::decodeText(int c){
-    std::string res = "\\U+";
-    std::string num;
-#if defined(__APPLE__)
-    std::string str(16, '\0');
-    snprintf (&(str[0]), 16, "%04X", c );
-    num = str;
-#else
-    std::stringstream ss;
-    ss << std::uppercase << std::setfill('0') << std::setw(4) << std::hex << c;
-    ss >> num;
-#endif
-    res += num;
-    return res;
+    // \U+ carries exactly four hex digits, so it cannot express a code point
+    // above the BMP. %04X is a minimum width, not a maximum, and the reader
+    // side reads a fixed four: emitting five digits made U+20021 come back as
+    // U+2002 followed by '1'. Fall back to the same '?' an unmappable
+    // double-byte sequence already produces.
+    if (c < 0 || c > 0xFFFF)
+        return "?";
+    // Format into a bounded buffer, not a sized std::string: such a string
+    // keeps its padding NULs, which the DXF writers reject and putCP8Text
+    // would embed in the file.
+    char digits[8];
+    std::snprintf(digits, sizeof digits, "%04X", c);
+    return std::string("\\U+") + digits;
+}
+
+std::string DRW_Converter::decodeTableValue(int v){
+    // Four big5-hkscs sequences stand for two code points rather than one
+    // (U+00CA/U+00EA followed by U+0304/U+030C). A table cell holds one int,
+    // so those cells carry the pair packed as (first << 16) | second. Every
+    // real code point is at most U+10FFFF, and the packed values start above
+    // 0x00CA0000, so the two cannot be confused.
+    if (v > 0x10FFFF)
+        return encodeNum(v >> 16) + encodeNum(v & 0xFFFF);
+    return encodeNum(v);
 }
 
 std::string DRW_Converter::encodeNum(int c){
@@ -369,9 +385,20 @@ int DRW_Converter::decodeNum(const std::string &s, int *b){
 }
 
 
+const std::unordered_map<int, int>& DRW_Converter::reverseIndex(
+        const int (*doubles)[2]) {
+    if (m_reverse.empty() && cpLength > 0 && doubles != nullptr) {
+        m_reverse.reserve(static_cast<std::size_t>(cpLength));
+        for (int k = 0; k < cpLength; ++k) {
+            m_reverse.emplace(doubles[k][1], doubles[k][0]);
+        }
+    }
+    return m_reverse;
+}
+
 std::string DRW_ConvDBCSTable::fromUtf8(std::string_view s) {
+    const auto& index = reverseIndex(doubleTable);
     std::string result;
-    bool notFound;
     int code;
 
     int j = 0;
@@ -384,21 +411,13 @@ std::string DRW_ConvDBCSTable::fromUtf8(std::string_view s) {
             code = decodeNum(part1, &l);
             j = i+l;
             i = j - 1;
-            notFound = true;
-                for (int k=0; k<cpLength; k++){
-                    if(doubleTable[k][1] == code) {
-                        int data = doubleTable[k][0];
-                        char d[3];
-                        d[0] = data >> 8;
-                        d[1] = data & 0xFF;
-                        d[2]= '\0';
-                        result += d; //translate from table
-                        notFound = false;
-                        break;
-                    }
-                }
-            if (notFound)
+            const auto it = index.find(code);
+            if (it != index.end()) {
+                result += static_cast<char>(it->second >> 8);
+                result += static_cast<char>(it->second & 0xFF);
+            } else {
                 result += decodeText(code);
+            }
         } //direct conversion
     }
     result += s.substr(j);
@@ -447,7 +466,7 @@ std::string DRW_ConvDBCSTable::toUtf8(std::string_view s) {
             int end = leadTable[c-0x80];
             for (int k=sta; k<end; k++){
                 if(doubleTable[k][0] == code) {
-                    res += encodeNum(doubleTable[k][1]); //translate from table
+                    res += decodeTableValue(doubleTable[k][1]); //translate from table
                     notFound = false;
                     break;
                 }
@@ -465,6 +484,7 @@ DRW_Conv932Table::DRW_Conv932Table()
 }
 
 std::string DRW_Conv932Table::fromUtf8(std::string_view s) {
+    const auto& index = reverseIndex(DRW_DoubleTable932);
     std::string result;
     bool notFound;
     int code;
@@ -487,17 +507,11 @@ std::string DRW_Conv932Table::fromUtf8(std::string_view s) {
             }
             if (notFound && ( code<0xF8 || (code>0x390 && code<0x542) ||
                     (code>0x200F && code<0x9FA1) || code>0xF928 )) {
-                for (int k=0; k<cpLength; k++){
-                    if(DRW_DoubleTable932[k][1] == code) {
-                        int data = DRW_DoubleTable932[k][0];
-                        char d[3];
-                        d[0] = data >> 8;
-                        d[1] = data & 0xFF;
-                        d[2]= '\0';
-                        result += d; //translate from table
-                        notFound = false;
-                        break;
-                    }
+                const auto it = index.find(code);
+                if (it != index.end()) {
+                    result += static_cast<char>(it->second >> 8);
+                    result += static_cast<char>(it->second & 0xFF);
+                    notFound = false;
                 }
             }
             if (notFound)

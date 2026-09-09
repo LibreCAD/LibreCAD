@@ -1,0 +1,190 @@
+/****************************************************************************
+**
+** This file is part of the LibreCAD project, a 2D CAD program
+**
+** Copyright (C) 2026 LibreCAD.org
+**
+** This program is free software; you can redistribute it and/or
+** modify it under the terms of the GNU General Public License
+** as published by the Free Software Foundation; either version 2
+** of the License, or (at your option) any later version.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+** GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program; if not, write to the Free Software
+** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+**********************************************************************/
+
+// Codepage-table behaviour that is invisible until a file is written or a
+// specific character is read, so each case here pins bytes rather than shapes.
+
+#include <catch2/catch_test_macros.hpp>
+
+#include <string>
+
+#include "drw_textcodec.h"
+
+namespace {
+
+std::string decodeBytes(const char* codePage, std::initializer_list<int> bytes) {
+    DRW_TextCodec codec;
+    codec.setCodePage(codePage, false);
+    std::string raw;
+    for (int b : bytes) {
+        raw += static_cast<char>(static_cast<unsigned char>(b));
+    }
+    return codec.toUtf8(raw);
+}
+
+std::string decodeText8(const char* codePage, const std::string& raw) {
+    DRW_TextCodec codec;
+    codec.setCodePage(codePage, false);
+    return codec.toUtf8(raw);
+}
+
+std::string encodeUtf8(const char* codePage, const std::string& utf8) {
+    DRW_TextCodec codec;
+    codec.setCodePage(codePage, false);
+    return codec.fromUtf8(utf8);
+}
+
+} // namespace
+
+TEST_CASE("an unmappable code point becomes a bare escape",
+          "[dwg][dxf][codec]") {
+    // A code point the target codepage cannot hold is written as AutoCAD's
+    // \U+XXXX escape. On macOS this used to be built by assigning a whole
+    // 16-char buffer, so the escape carried 12 trailing NUL bytes: a DXF
+    // writer then refused the string outright and a DWG <= R2004 writer put
+    // the NULs into the file.
+    const std::string escaped = encodeUtf8("ANSI_1252", "\xE4\xB8\x80"); // U+4E00
+    CHECK(escaped == "\\U+4E00");
+    CHECK(escaped.size() == 7);
+    CHECK(escaped.find('\0') == std::string::npos);
+
+    SECTION("a code point above the BMP does not become a five-digit escape") {
+        // The escape carries exactly four hex digits and the reader consumes
+        // exactly four, so a fifth silently splits one character into two:
+        // U+20021 came back as U+2002 followed by '1'. Big5 gained 1713
+        // supplementary mappings with the hkscs rows, so this is reachable.
+        const std::string smp = encodeUtf8("ANSI_1252", "\xF0\xA0\x80\xA1"); // U+20021
+        CHECK(smp == "?");
+        CHECK(smp.find("\\U+") == std::string::npos);
+    }
+}
+TEST_CASE("windows-1255 maps the hole at 0xCA", "[dwg][dxf][codec]") {
+    // The Hebrew points run 0xC0+n -> U+05B0+n. 0xCA was the only gap,
+    // because U+05BA did not exist when the codepage was defined.
+    CHECK(decodeBytes("ANSI_1255", {0xC9}) == "\xD6\xB9");  // U+05B9
+    CHECK(decodeBytes("ANSI_1255", {0xCA}) == "\xD6\xBA");  // U+05BA
+    CHECK(decodeBytes("ANSI_1255", {0xCB}) == "\xD6\xBB");  // U+05BB
+
+    SECTION("and encodes back to the same byte") {
+        CHECK(encodeUtf8("ANSI_1255", "\xD6\xBA") == "\xCA");
+    }
+}
+TEST_CASE("every double-byte entry is reachable through its lead byte",
+          "[dwg][dxf][codec]") {
+    // The lead table indexes ranges of the double table, so an off-by-one
+    // there silently drops mappings that are present in the data: the
+    // decoder just answers '?'. These are entries that were unreachable.
+    SECTION("cp936 entries that sat in the wrong bucket") {
+        CHECK(decodeBytes("ANSI_936", {0xA0, 0x40}) == "\xE7\x87\x96"); // U+71D6
+        CHECK(decodeBytes("ANSI_936", {0xA0, 0x41}) == "\xE7\x87\x97"); // U+71D7
+    }
+    SECTION("cp949 entries that sat in the wrong bucket, and its last entry") {
+        CHECK(decodeBytes("ANSI_949", {0x84, 0x41}) == "\xEA\xBB\xA6"); // U+AEE6
+        CHECK(decodeBytes("ANSI_949", {0xFD, 0xFE}) == "\xE8\xA9\xB0"); // U+8A70
+    }
+    SECTION("cp950 entries that sat in the wrong bucket, and its last entry") {
+        CHECK(decodeBytes("ANSI_950", {0xC4, 0x40}) == "\xE9\xA1\x98"); // U+9858
+        CHECK(decodeBytes("ANSI_950", {0xC4, 0x49}) == "\xE9\xAF\xA7"); // U+9BE7
+        CHECK(decodeBytes("ANSI_950", {0xF9, 0xFE}) == "\xE2\x96\x93"); // U+2593
+    }
+}
+TEST_CASE("big5 carries the hkscs extension", "[dwg][dxf][codec]") {
+    // Sequences the plain cp950 table did not hold.
+    CHECK(decodeBytes("ANSI_950", {0x87, 0x40}) == "\xE4\x8F\xB0"); // U+43F0
+
+    SECTION("the cp950 reading of 0xF9FE is kept, not the hkscs one") {
+        // cp950 says U+2593 (DARK SHADE), big5-hkscs says U+FFED. The two
+        // are a genuine vendor fork rather than a gap, so the existing
+        // reading stands and only absent sequences were added.
+        CHECK(decodeBytes("ANSI_950", {0xF9, 0xFE}) == "\xE2\x96\x93");
+    }
+
+}
+TEST_CASE("double-byte encoding round-trips through the reverse index",
+          "[dwg][dxf][codec]") {
+    // fromUtf8 answers from a prebuilt map now instead of scanning the whole
+    // double table per character; it must still pick the same mapping.
+    struct { const char* cp; int lead; int trail; } cases[] = {
+        {"ANSI_936", 0xA4, 0x40}, {"ANSI_936", 0xA0, 0x40},
+        {"ANSI_949", 0x84, 0x41}, {"ANSI_950", 0xA4, 0x40},
+        {"ANSI_950", 0x87, 0x40},
+    };
+    for (const auto& c : cases) {
+        const std::string utf8 = decodeBytes(c.cp, {c.lead, c.trail});
+        INFO(c.cp << " 0x" << std::hex << c.lead << c.trail);
+        REQUIRE_FALSE(utf8.empty());
+        if (utf8 == "?") {
+            continue; // not in this codepage; nothing to round-trip
+        }
+        const std::string back = encodeUtf8(c.cp, utf8);
+        REQUIRE(back.size() == 2);
+        CHECK(static_cast<unsigned char>(back[0]) == c.lead);
+        CHECK(static_cast<unsigned char>(back[1]) == c.trail);
+    }
+}
+
+TEST_CASE("a MIF escape names a double-byte character",
+          "[dwg][dxf][codec]") {
+    // \M+cXXXX carries a selector and one double-byte code: 1 Shift_JIS,
+    // 2 Big5, 3 EUC-KR, 5 GBK. The escape is read out of text that is
+    // otherwise in the file's own codepage.
+    CHECK(decodeText8("ANSI_1252", "\\M+18140") == "\xE3\x80\x80"); // U+3000
+    CHECK(decodeText8("ANSI_1252", "\\M+2A440") == "\xE4\xB8\x80"); // U+4E00
+    CHECK(decodeText8("ANSI_1252", "\\M+5D2BB") == "\xE4\xB8\x80"); // U+4E00
+
+    SECTION("a code below 0x100 is not a double-byte character") {
+        // Its lead byte is zero, and {0x00, low} used to decode straight
+        // through as a NUL. A NUL in a layer name makes the DXF writers
+        // refuse the whole string, so the text vanishes rather than being
+        // written wrong. A malformed escape stays literal instead.
+        const std::string out = decodeText8("ANSI_1252", "\\M+1005C");
+        CHECK(out.find('\0') == std::string::npos);
+        CHECK(out == "\\M+1005C");
+    }
+}
+
+TEST_CASE("four big5-hkscs sequences stand for two code points",
+          "[dwg][dxf][codec][cjk]") {
+    // The Encoding Standard keeps these out of the big5 index and lists them
+    // separately, because an index holds one code point per pointer. The
+    // table cell packs the pair as (first << 16) | second, which cannot be
+    // confused with a real code point: the largest in any of these tables is
+    // U+2F9D4 and the packed values start above 0x00CA0000.
+    CHECK(decodeBytes("ANSI_950", {0x88, 0x62}) == "\xC3\x8A\xCC\x84"); // U+00CA U+0304
+    CHECK(decodeBytes("ANSI_950", {0x88, 0x64}) == "\xC3\x8A\xCC\x8C"); // U+00CA U+030C
+    CHECK(decodeBytes("ANSI_950", {0x88, 0xA3}) == "\xC3\xAA\xCC\x84"); // U+00EA U+0304
+    CHECK(decodeBytes("ANSI_950", {0x88, 0xA5}) == "\xC3\xAA\xCC\x8C"); // U+00EA U+030C
+
+    SECTION("their single-code-point neighbours are untouched") {
+        CHECK(decodeBytes("ANSI_950", {0x88, 0x66}) == "\xC3\x8A");       // U+00CA
+        CHECK(decodeBytes("ANSI_950", {0x88, 0xA7}) == "\xC3\xAA");       // U+00EA
+    }
+
+    SECTION("encoding is asymmetric, as the standard defines it") {
+        // The Big5 encoder looks up one code point at a time and has no case
+        // for these, so the pair comes back as the base character plus an
+        // escape for the combining mark. The text survives; the bytes differ.
+        const std::string once = decodeBytes("ANSI_950", {0x88, 0x62});
+        const std::string bytes = encodeUtf8("ANSI_950", once);
+        CHECK(bytes == std::string("\x88\x66") + "\\U+0304");
+        CHECK(decodeText8("ANSI_950", bytes) == once);
+    }
+}

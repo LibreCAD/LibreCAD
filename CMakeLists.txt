@@ -2197,11 +2197,13 @@ qt_add_library (librecad_lib STATIC
                 ${MUPARSER_SOURCES}
                 ${SHARED_SOURCES}
 )
+# MUPARSER_STATIC, LC_VERSION and LC_PRERELEASE are already set for every
+# target by the add_compile_definitions() calls near the top of this file.
+# Repeating them here only gave them room to drift apart, and they did: this
+# block pinned LC_VERSION a release behind the global one, so every object in
+# the target was compiled with both -D's and a -Wmacro-redefined warning.
 target_compile_definitions (librecad_lib PRIVATE
                             DWGSUPPORT
-                            MUPARSER_STATIC
-                            LC_VERSION=2.2.2.5-alpha
-                            LC_PRERELEASE=true
 )
 target_include_directories(librecad_lib PRIVATE
     ${SHARED_INCLUDES}
@@ -2472,6 +2474,8 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/dwg_pre_r13_codepage_tests.cpp
         librecad/src/lib/filters/tests/dwg_pre_r13_section_size_tests.cpp
         librecad/src/lib/filters/tests/dwg_pre_r13_record_layout_tests.cpp
+        librecad/src/lib/filters/tests/dwg_textcodec_tables_tests.cpp
+        librecad/src/lib/filters/tests/dxf_cjk_codepage_tests.cpp
         librecad/src/lib/math/tests/rs_math_tests.cpp
         librecad/src/lib/math/tests/lc_quadratic_tests.cpp
         librecad/src/lib/creation/tests/rs_creation_null_entity_tests.cpp
