@@ -116,6 +116,7 @@ TEST_CASE("big5 carries the hkscs extension", "[dwg][dxf][codec]") {
         // reading stands and only absent sequences were added.
         CHECK(decodeBytes("ANSI_950", {0xF9, 0xFE}) == "\xE2\x96\x93");
     }
+
 }
 TEST_CASE("double-byte encoding round-trips through the reverse index",
           "[dwg][dxf][codec]") {
@@ -157,5 +158,33 @@ TEST_CASE("a MIF escape names a double-byte character",
         const std::string out = decodeText8("ANSI_1252", "\\M+1005C");
         CHECK(out.find('\0') == std::string::npos);
         CHECK(out == "\\M+1005C");
+    }
+}
+
+TEST_CASE("four big5-hkscs sequences stand for two code points",
+          "[dwg][dxf][codec][cjk]") {
+    // The Encoding Standard keeps these out of the big5 index and lists them
+    // separately, because an index holds one code point per pointer. The
+    // table cell packs the pair as (first << 16) | second, which cannot be
+    // confused with a real code point: the largest in any of these tables is
+    // U+2F9D4 and the packed values start above 0x00CA0000.
+    CHECK(decodeBytes("ANSI_950", {0x88, 0x62}) == "\xC3\x8A\xCC\x84"); // U+00CA U+0304
+    CHECK(decodeBytes("ANSI_950", {0x88, 0x64}) == "\xC3\x8A\xCC\x8C"); // U+00CA U+030C
+    CHECK(decodeBytes("ANSI_950", {0x88, 0xA3}) == "\xC3\xAA\xCC\x84"); // U+00EA U+0304
+    CHECK(decodeBytes("ANSI_950", {0x88, 0xA5}) == "\xC3\xAA\xCC\x8C"); // U+00EA U+030C
+
+    SECTION("their single-code-point neighbours are untouched") {
+        CHECK(decodeBytes("ANSI_950", {0x88, 0x66}) == "\xC3\x8A");       // U+00CA
+        CHECK(decodeBytes("ANSI_950", {0x88, 0xA7}) == "\xC3\xAA");       // U+00EA
+    }
+
+    SECTION("encoding is asymmetric, as the standard defines it") {
+        // The Big5 encoder looks up one code point at a time and has no case
+        // for these, so the pair comes back as the base character plus an
+        // escape for the combining mark. The text survives; the bytes differ.
+        const std::string once = decodeBytes("ANSI_950", {0x88, 0x62});
+        const std::string bytes = encodeUtf8("ANSI_950", once);
+        CHECK(bytes == std::string("\x88\x66") + "\\U+0304");
+        CHECK(decodeText8("ANSI_950", bytes) == once);
     }
 }

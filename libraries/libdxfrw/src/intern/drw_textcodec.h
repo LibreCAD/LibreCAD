@@ -54,6 +54,9 @@ public:
     std::string encodeText(const std::string& stmp);
     std::string decodeText(int c);
     std::string encodeNum(int c);
+    /// Turn one double-table cell into UTF-8, expanding the packed pair the
+    /// four big5-hkscs two-code-point sequences use.
+    std::string decodeTableValue(int v);
     int decodeNum(const std::string& s, int *b);
     /// Decode a `\M+cXXXX` MIF escape (8 chars; c=selector 1..5, XXXX=hex
     /// of a 2-byte sequence in the selector's codepage) to UTF-8.

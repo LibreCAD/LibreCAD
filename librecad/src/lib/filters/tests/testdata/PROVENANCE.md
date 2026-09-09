@@ -51,13 +51,13 @@ anywhere - and cover the two tables that no corpus file reaches:
 | File | Codepage | Contents |
 | --- | --- | --- |
 | `dxf/big5_traditional.dxf` | ANSI_950 | layer 圖層, text 中文測試 |
-| `dxf/big5_hkscs.dxf` | ANSI_950 | layer 龘䒑, text Ê䒑𠀡 — a base Big5 row, an hkscs row, the Hong Kong Latin block and a supplementary code point |
+| `dxf/big5_hkscs.dxf` | ANSI_950 | layer 龘䒑, text Ê̄䒑𠀡 — an hkscs sequence standing for two code points, an hkscs row, and a supplementary code point |
 | `dxf/uhc_korean.dxf` | ANSI_949 | layer 도면, text 한글도면 |
 
 | File | SHA-256 |
 | --- | --- |
 | `dxf/big5_traditional.dxf` | `d44c3da8a87f100f63e044b72a28cab077932ae4e5771c5f8617e5cd4b243442` |
-| `dxf/big5_hkscs.dxf` | `63edba27f66c6695a12dbb463fe736ca35f05bf2841049e57822475ff2cb4946` |
+| `dxf/big5_hkscs.dxf` | `694de552f02b928dcb3fefc595d3e38f0510f4312d40e6b4df7a83913ca4c437` |
 | `dxf/uhc_korean.dxf` | `9c5d6f81e5331f01e29400f9a5e2df80d1921a116612d4a5852eda9889c0cc18` |
 
 ## Locally generated DWG

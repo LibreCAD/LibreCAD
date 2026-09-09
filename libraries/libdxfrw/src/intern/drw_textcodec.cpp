@@ -323,6 +323,17 @@ std::string DRW_Converter::decodeText(int c){
     return std::string("\\U+") + digits;
 }
 
+std::string DRW_Converter::decodeTableValue(int v){
+    // Four big5-hkscs sequences stand for two code points rather than one
+    // (U+00CA/U+00EA followed by U+0304/U+030C). A table cell holds one int,
+    // so those cells carry the pair packed as (first << 16) | second. Every
+    // real code point is at most U+10FFFF, and the packed values start above
+    // 0x00CA0000, so the two cannot be confused.
+    if (v > 0x10FFFF)
+        return encodeNum(v >> 16) + encodeNum(v & 0xFFFF);
+    return encodeNum(v);
+}
+
 std::string DRW_Converter::encodeNum(int c){
     unsigned char ret[5];
     if (c < 128) { // 0-7F US-ASCII 7 bits
@@ -455,7 +466,7 @@ std::string DRW_ConvDBCSTable::toUtf8(std::string_view s) {
             int end = leadTable[c-0x80];
             for (int k=sta; k<end; k++){
                 if(doubleTable[k][0] == code) {
-                    res += encodeNum(doubleTable[k][1]); //translate from table
+                    res += decodeTableValue(doubleTable[k][1]); //translate from table
                     notFound = false;
                     break;
                 }

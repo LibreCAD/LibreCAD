@@ -35,6 +35,7 @@
 #include "rs_filterdxfrw.h"
 #include "rs_graphic.h"
 #include "rs_layer.h"
+#include "rs_text.h"
 #include "rs_settings.h"
 
 namespace {
@@ -74,6 +75,19 @@ QString importedLayerName(const char* name) {
     return QString{};
 }
 
+// The single TEXT entity the fixture carries.
+QString importedText(const char* name) {
+    ensureSettings();
+    RS_Graphic graphic;
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, fixture(name), RS2::FormatDXFRW));
+    for (RS_Entity* e : graphic) {
+        if (e != nullptr && e->rtti() == RS2::EntityText)
+            return static_cast<RS_Text*>(e)->getText();
+    }
+    return QString{};
+}
+
 } // namespace
 
 TEST_CASE("a Big5 drawing decodes its traditional Chinese names",
@@ -91,6 +105,16 @@ TEST_CASE("a Big5-HKSCS drawing decodes the Hong Kong additions",
     // engine cannot draw it yet.
     CHECK(importedLayerName("big5_hkscs.dxf")
           == QString::fromUtf8("\xE9\xBE\x98\xE4\x92\x91"));      // U+9F98 U+4491
+
+    SECTION("a sequence standing for two code points expands to both") {
+        // 88 62 is one of the four big5-hkscs pointers the standard maps to a
+        // pair rather than a single code point, so a one-int table cell packs
+        // them. It used to decode as '?'.
+        CHECK(importedText("big5_hkscs.dxf")
+              == QString::fromUtf8("\xC3\x8A\xCC\x84"               // U+00CA U+0304
+                                   "\xE4\x92\x91"                     // U+4491
+                                   "\xF0\xA0\x80\xA1"));             // U+20021
+    }
 }
 
 TEST_CASE("a UHC drawing decodes its Korean names", "[dxf][codec][cjk]") {
