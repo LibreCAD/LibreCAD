@@ -68,6 +68,11 @@ const RS_LineTypePattern PATTERN_HIDDEN_LINE_TINY{{1., -0.5}};
 const RS_LineTypePattern PATTERN_HIDDEN_LINE{{6.0, -3.0}};
 const RS_LineTypePattern PATTERN_HIDDEN_LINE2{{3.0, -1.5}};
 const RS_LineTypePattern PATTERN_HIDDEN_LINE_X2{{12.0, -6.0}};
+// acad.lin PHANTOM is CENTER with a second short dash (1.25,-.25,.25,-.25,.25,-.25)
+const RS_LineTypePattern PATTERN_PHANTOM_LINE_TINY{{5., -1., 1., -1., 1., -1.}};
+const RS_LineTypePattern PATTERN_PHANTOM_LINE{{32.0, -6.0, 6.0, -6.0, 6.0, -6.0}};
+const RS_LineTypePattern PATTERN_PHANTOM_LINE2{{16.0, -3.0, 3.0, -3.0, 3.0, -3.0}};
+const RS_LineTypePattern PATTERN_PHANTOM_LINE_X2{{64.0, -12.0, 12.0, -12.0, 12.0, -12.0}};
 
 const RS_LineTypePattern PATTERN_BLOCK_LINE{{0.5, -0.5}};
 const RS_LineTypePattern PATTERN_SELECTED{{1.0, -3.0}};
@@ -113,6 +118,10 @@ const RS_LineTypePattern* RS_LineTypePattern::getPattern(const RS2::LineType lin
             {RS2::HiddenLineTiny, &PATTERN_HIDDEN_LINE_TINY},
             {RS2::HiddenLine2, &PATTERN_HIDDEN_LINE2},
             {RS2::HiddenLineX2, &PATTERN_HIDDEN_LINE_X2},
+            {RS2::PhantomLine, &PATTERN_PHANTOM_LINE},
+            {RS2::PhantomLineTiny, &PATTERN_PHANTOM_LINE_TINY},
+            {RS2::PhantomLine2, &PATTERN_PHANTOM_LINE2},
+            {RS2::PhantomLineX2, &PATTERN_PHANTOM_LINE_X2},
             {RS2::LineByLayer, &PATTERN_BLOCK_LINE},
             {RS2::LineByBlock, &PATTERN_BLOCK_LINE},
             {RS2::LineSelected, &PATTERN_SELECTED}

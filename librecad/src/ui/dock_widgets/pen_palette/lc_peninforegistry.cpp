@@ -323,6 +323,10 @@ void LC_PenInfoRegistry::registerLineTypes(){
     doRegisterLineType(":linetypes/linetype06.lci", tr("Center (tiny)"), RS2::CenterLineTiny);
     doRegisterLineType(":linetypes/linetype06.lci", tr("Center (small)"), RS2::CenterLine2);
     doRegisterLineType(":linetypes/linetype06.lci", tr("Center (large)"), RS2::CenterLineX2);
+    doRegisterLineType(":linetypes/linetype09.lci", tr("Phantom"), RS2::PhantomLine);
+    doRegisterLineType(":linetypes/linetype09.lci", tr("Phantom (tiny)"), RS2::PhantomLineTiny);
+    doRegisterLineType(":linetypes/linetype09.lci", tr("Phantom (small)"), RS2::PhantomLine2);
+    doRegisterLineType(":linetypes/linetype09.lci", tr("Phantom (large)"), RS2::PhantomLineX2);
     doRegisterLineType(":linetypes/linetype07.lci", tr("Border"), RS2::BorderLine);
     doRegisterLineType(":linetypes/linetype07.lci", tr("Border (tiny)"), RS2::BorderLineTiny);
     doRegisterLineType(":linetypes/linetype07.lci", tr("Border (small)"), RS2::BorderLine2);

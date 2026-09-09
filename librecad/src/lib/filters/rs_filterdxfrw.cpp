@@ -18422,6 +18422,16 @@ void RS_FilterDXFRW::writeLTypes() {
              28.575, {19.05, -3.175, 3.175, -3.175});
   writeLType("CENTERX2", "Center (2x) ________  __  ________  __  _____", 4,
              101.6, {63.5, -12.7, 12.7, -12.7});
+  // acad.lin: PHANTOM A,1.25,-.25,.25,-.25,.25,-.25; PHANTOM2 and PHANTOMX2
+  // are its .5x and 2x.
+  writeLType("PHANTOM", "Phantom ______  __  __  ______  __  __  ______", 6,
+             63.5, {31.75, -6.35, 6.35, -6.35, 6.35, -6.35});
+  writeLType("PHANTOMTINY", "Phantom (.15x) ___ _ _ ___ _ _ ___ _ _ ___ _ _", 6,
+             9.525, {4.7625, -0.9525, 0.9525, -0.9525, 0.9525, -0.9525});
+  writeLType("PHANTOM2", "Phantom (.5x) ___ _ _ ___ _ _ ___ _ _ ___ _ _", 6,
+             31.75, {15.875, -3.175, 3.175, -3.175, 3.175, -3.175});
+  writeLType("PHANTOMX2", "Phantom (2x) ____________    ____    ____   _", 6,
+             127.0, {63.5, -12.7, 12.7, -12.7, 12.7, -12.7});
   // Imported LTYPE records that are not part of the built-in table above are
   // re-emitted as they came in; writeLType() records the built-in names so a
   // new built-in type cannot end up written twice.
@@ -31759,6 +31769,20 @@ RS2::LineType RS_FilterDXFRW::nameToLineType(const QString &name) {
   if (uName == "CENTERX2") {
     return RS2::CenterLineX2;
   }
+  // ISO 128-20 type 09 "long-dashed double-short-dashed" (24,-3,6,-3,6,-3)
+  // is PHANTOM's shape at PHANTOM's scale, like the ISO04/ISO05 aliases.
+  if (uName == "ACAD_ISO09W100" || uName == "PHANTOM") {
+    return RS2::PhantomLine;
+  }
+  if (uName == "PHANTOMTINY") {
+    return RS2::PhantomLineTiny;
+  }
+  if (uName == "PHANTOM2") {
+    return RS2::PhantomLine2;
+  }
+  if (uName == "PHANTOMX2") {
+    return RS2::PhantomLineX2;
+  }
   if (uName == "BORDER") {
     return RS2::BorderLine;
   }
@@ -31831,6 +31855,14 @@ QString RS_FilterDXFRW::lineTypeToName(RS2::LineType lineType) {
     return "CENTER2";
   case RS2::CenterLineX2:
     return "CENTERX2";
+  case RS2::PhantomLine:
+    return "PHANTOM";
+  case RS2::PhantomLineTiny:
+    return "PHANTOMTINY";
+  case RS2::PhantomLine2:
+    return "PHANTOM2";
+  case RS2::PhantomLineX2:
+    return "PHANTOMX2";
   case RS2::BorderLine:
     return "BORDER";
   case RS2::BorderLineTiny:

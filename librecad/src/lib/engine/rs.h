@@ -872,7 +872,12 @@ namespace RS2 {
         HiddenLine     = 28, /**< hidden line (acad.lin HIDDEN). */
         HiddenLineTiny = 29, /**< hidden line tiny */
         HiddenLine2    = 30, /**< hidden line small. */
-        HiddenLineX2   = 31  /**< hidden line large. */
+        HiddenLineX2   = 31, /**< hidden line large. */
+
+        PhantomLine     = 32, /**< long dash, dash, dash (acad.lin PHANTOM). */
+        PhantomLineTiny = 33, /**< long dash, dash, dash tiny */
+        PhantomLine2    = 34, /**< long dash, dash, dash small. */
+        PhantomLineX2   = 35  /**< long dash, dash, dash large. */
     };
 
     /**
