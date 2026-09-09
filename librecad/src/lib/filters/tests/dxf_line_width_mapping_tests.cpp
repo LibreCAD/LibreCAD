@@ -95,9 +95,12 @@ TEST_CASE("DXF line-width mapping round-trips in both directions",
 
     SECTION("an unmapped value falls back to the default width") {
         // The lookup has to answer something for a value outside the table;
-        // the switches it replaced fell through to the default arm.
-        const auto bogus = static_cast<DRW_LW_Conv::lineWidth>(99);
-        CHECK(RS_FilterDXFRW::numberToWidth(bogus) == RS2::WidthDefault);
+        // the switches it replaced fell through to the default arm.  The enum
+        // has no fixed underlying type, so its value range stops at its
+        // largest enumerator (31): 24-28 are the only unmapped values that can
+        // be formed without undefined behaviour.
+        const auto unmapped = static_cast<DRW_LW_Conv::lineWidth>(25);
+        CHECK(RS_FilterDXFRW::numberToWidth(unmapped) == RS2::WidthDefault);
     }
 }
 
