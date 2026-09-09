@@ -90,3 +90,14 @@ TEST_CASE("every double-byte entry is reachable through its lead byte",
         CHECK(decodeBytes("ANSI_950", {0xF9, 0xFE}) == "\xE2\x96\x93"); // U+2593
     }
 }
+TEST_CASE("big5 carries the hkscs extension", "[dwg][dxf][codec]") {
+    // Sequences the plain cp950 table did not hold.
+    CHECK(decodeBytes("ANSI_950", {0x87, 0x40}) == "\xE4\x8F\xB0"); // U+43F0
+
+    SECTION("the cp950 reading of 0xF9FE is kept, not the hkscs one") {
+        // cp950 says U+2593 (DARK SHADE), big5-hkscs says U+FFED. The two
+        // are a genuine vendor fork rather than a gap, so the existing
+        // reading stands and only absent sequences were added.
+        CHECK(decodeBytes("ANSI_950", {0xF9, 0xFE}) == "\xE2\x96\x93");
+    }
+}
