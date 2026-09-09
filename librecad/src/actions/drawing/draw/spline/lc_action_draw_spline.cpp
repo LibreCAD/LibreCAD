@@ -144,13 +144,14 @@ void LC_ActionDrawSpline::onMouseLeftButtonRelease([[maybe_unused]] int status, 
 
 void LC_ActionDrawSpline::onMouseRightButtonRelease(const int status, [[maybe_unused]] const LC_MouseEvent* e) {
     const auto spline = m_actionData->spline;
-    if (status == SetNextPoint && spline != nullptr) {
-        const size_t nPoints = spline->getNumberOfControlPoints();
-        const bool isClosed = spline->isClosed();
-        // Issue #1689: allow closed splines by 3 control points
-        if (nPoints > static_cast<size_t>(spline->getDegree()) || (isClosed && nPoints == 3)) {
-            trigger();
+    if (status == SetNextPoint) {
+        if (spline == nullptr ||
+            spline->getNumberOfControlPoints() <= static_cast<size_t>(getDegree())) {
+            commandMessage(tr("Cannot finalize spline: at least %1 control points required.")
+                           .arg(getDegree() + 1));
+            return;
         }
+        trigger();
     }
     deletePreview();
     initPrevious(status);
@@ -195,12 +196,11 @@ bool LC_ActionDrawSpline::doProcessCommand(const int status, const QString& comm
             break;
         }
         case SetNextPoint: {
-            /*if (checkCommand("close", c)) {
+            if (checkCommand("close", command)) {
                 close();
-                updateMouseButtonHints();
-                return;
-            }*/
-            if (checkCommand("undo", command)) {
+                accept = true;
+            }
+            else if (checkCommand("undo", command)) {
                 undo();
                 updateActionPrompt();
                 accept = true;
@@ -223,7 +223,7 @@ QStringList LC_ActionDrawSpline::getAvailableCommands() {
             if (m_actionData->history.size() >= 2) {
                 cmd += command("undo");
             }
-            else if (m_actionData->history.size() >= 3) {
+            if (m_actionData->history.size() > getDegree()) {
                 cmd += command("close");
             }
             break;
@@ -243,7 +243,7 @@ void LC_ActionDrawSpline::updateActionPrompt() {
         case SetNextPoint: {
             QString msg = "";
 
-            if (m_actionData->history.size() >= 3) {
+            if (m_actionData->history.size() > getDegree()) {
                 msg += command("close");
                 msg += "/";
             }
@@ -266,25 +266,20 @@ RS2::CursorType LC_ActionDrawSpline::doGetMouseCursor([[maybe_unused]] int statu
     return RS2::CadCursor;
 }
 
-/*
-void RS_ActionDrawSpline::close() {
-    if (history.count()>2 && start.valid) {
-        //data.endpoint = start;
-        //trigger();
-                if (spline) {
-                        RS_CoordinateEvent e(spline->getStartpoint());
-                        coordinateEvent(&e);
-                }
-                trigger();
-        setStatus(SetStartpoint);
-        graphicView->moveRelativeZero(start);
-    } else {
-        RS_DIALOGFACTORY->commandMessage(
-            tr("Cannot close sequence of lines: "
-               "Not enough entities defined yet."));
+void LC_ActionDrawSpline::close() {
+    const auto spline = m_actionData->spline;
+    if (spline == nullptr ||
+        spline->getNumberOfControlPoints() <= static_cast<size_t>(getDegree())) {
+        commandMessage(tr("Cannot close spline: at least %1 control points required.")
+                       .arg(getDegree() + 1));
+        return;
     }
+
+    spline->setClosed(true);
+    trigger();
+    reset();
+    setStatus(SetStartPoint);
 }
-*/
 
 void LC_ActionDrawSpline::undo() {
     if (m_actionData->history.size() > 1) {

@@ -81,5 +81,8 @@ protected:
 
     struct ActionData;
     std::unique_ptr<ActionData> m_actionData;
+
+private:
+    void close();
 };
 #endif
