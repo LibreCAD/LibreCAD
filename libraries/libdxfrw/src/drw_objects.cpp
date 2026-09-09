@@ -86,6 +86,42 @@ bool objectBodyFitsSize(std::uint64_t bodyBitOffset,
 
 std::uint64_t currentObjectDwgBit(const dwgBuffer *buf);
 
+// Resolve the body/string split of an R2007+ object body.
+//
+// From R2007 a DWG object stores its strings in a separate stream whose bounds
+// are declared at the end of the object.  Every typed parser needs the same
+// three things from that: where the body data ends, where the string data
+// ends, and a check that the declared bounds are consistent with the object
+// size and with the buffer's current position.  Before R2007, and for a
+// zero-sized object, both ends are simply the object size.
+//
+// Returns false when the declared bounds are inconsistent; callers turn that
+// into their own fail() so the parser's error reporting is unchanged.
+bool resolveR2007StreamBounds(DRW::Version version, dwgBuffer& stringBuffer,
+                              std::uint32_t objSize, std::uint32_t& bodyEnd,
+                              std::uint32_t& stringEnd) {
+    bodyEnd = objSize;
+    stringEnd = objSize;
+    if (version <= DRW::AC1018 || objSize == 0)
+        return true;
+
+    std::uint64_t stringStartBit = 0;
+    std::uint64_t stringEndBit = 0;
+    if (!stringBuffer.getR2007StringStreamBounds(objSize, stringStartBit,
+                                                 stringEndBit)
+        || stringStartBit > objSize
+        || stringEndBit > objSize
+        || stringEndBit < stringStartBit
+        || stringStartBit > std::numeric_limits<std::uint32_t>::max()
+        || stringEndBit > std::numeric_limits<std::uint32_t>::max()
+        || currentObjectDwgBit(&stringBuffer) != stringStartBit)
+        return false;
+
+    bodyEnd = static_cast<std::uint32_t>(stringStartBit);
+    stringEnd = static_cast<std::uint32_t>(stringEndBit);
+    return true;
+}
+
 bool objectBodyIsEmpty(const dwgBuffer *buf, DRW::Version version,
                        std::uint32_t bodyEnd) {
     return buf != nullptr && buf->isGood() && version >= DRW::AC1012
@@ -2960,23 +2996,10 @@ bool DRW_Dimstyle::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t 
     if (!parsed.DRW_TableEntry::parseDwg(version, buf, sBuf, bs))
         return fail();
     DRW_DBG("\n***************************** parsing dimension style **************************************\n");
-    std::uint32_t bodyEnd = parsed.objSize;
-    std::uint32_t stringEnd = parsed.objSize;
-    if (version > DRW::AC1018 && parsed.objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!sBuff.getR2007StringStreamBounds(
-                parsed.objSize, stringStartBit, stringEndBit)
-            || stringStartBit > parsed.objSize
-            || stringEndBit > parsed.objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&sBuff) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, sBuff, parsed.objSize, bodyEnd, stringEnd))
+        return fail();
     const auto readText = [version, buf, sBuf, bodyEnd, stringEnd](UTF8STRING& value) {
         return readVariableTextWithinBounds(buf, sBuf, version, bodyEnd,
                                             stringEnd, value);
@@ -3491,23 +3514,10 @@ bool DRW_LType::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
     dwgBuffer *bodyBuf = version > DRW::AC1018 ? &bodyBuff : buf;
     dwgBuffer *bodySBuf = version > DRW::AC1018 ? &bodyStringBuff : sBuf;
 
-    std::uint32_t bodyEnd = parsed.objSize;
-    std::uint32_t stringEnd = parsed.objSize;
-    if (version > DRW::AC1018 && parsed.objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!bodyStringBuff.getR2007StringStreamBounds(
-                parsed.objSize, stringStartBit, stringEndBit)
-            || stringStartBit > parsed.objSize
-            || stringEndBit > parsed.objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&bodyStringBuff) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, bodyStringBuff, parsed.objSize, bodyEnd, stringEnd))
+        return fail();
 
     const auto readText = [version, bodyBuf, bodySBuf,
                            bodyEnd, stringEnd](UTF8STRING& value) {
@@ -3735,22 +3745,10 @@ bool DRW_Layer::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
     if (!ret)
         return fail();
 
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!sBuff.getR2007StringStreamBounds(
-            objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&sBuff) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, sBuff, objSize, bodyEnd, stringEnd))
+        return fail();
 
     UTF8STRING parsedName;
     if (!readVariableTextWithinBounds(buf, sBuf, version, bodyEnd, stringEnd,
@@ -3943,23 +3941,10 @@ bool DRW_Block_Record::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint3
     dwgBuffer bodyStringBuff = *sBuf;
     dwgBuffer *bodyBuf = version > DRW::AC1018 ? &bodyBuff : buf;
     dwgBuffer *bodySBuf = version > DRW::AC1018 ? &bodyStringBuff : sBuf;
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!bodyStringBuff.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize
-            || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&bodyStringBuff) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, bodyStringBuff, objSize, bodyEnd, stringEnd))
+        return fail();
 
     const auto readText = [version, bodyBuf, bodySBuf, bodyEnd,
                            stringEnd](UTF8STRING& value) {
@@ -4344,22 +4329,10 @@ bool DRW_Textstyle::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t
     if (!ret)
         return fail();
 
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!sBuff.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&sBuff) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, sBuff, objSize, bodyEnd, stringEnd))
+        return fail();
 
     const auto readText = [version, buf, sBuf, bodyEnd, stringEnd](UTF8STRING& value) {
         return readVariableTextWithinBounds(buf, sBuf, version, bodyEnd,
@@ -4611,32 +4584,10 @@ bool DRW_Vport::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     case 79:
         ucsOrthoType = reader->getInt32();
         break;
-    case 110:
-        ucsOrigin.x = reader->getDouble();
-        break;
-    case 120:
-        ucsOrigin.y = reader->getDouble();
-        break;
-    case 130:
-        ucsOrigin.z = reader->getDouble();
-        break;
-    case 111:
-        ucsXAxis.x = reader->getDouble();
-        break;
-    case 121:
-        ucsXAxis.y = reader->getDouble();
-        break;
-    case 131:
-        ucsXAxis.z = reader->getDouble();
-        break;
-    case 112:
-        ucsYAxis.x = reader->getDouble();
-        break;
-    case 122:
-        ucsYAxis.y = reader->getDouble();
-        break;
-    case 132:
-        ucsYAxis.z = reader->getDouble();
+    case 110: case 120: case 130:
+    case 111: case 121: case 131:
+    case 112: case 122: case 132:
+        readCoordTripletCode(code, reader, ucsOrigin, ucsXAxis, ucsYAxis);
         break;
     case 141:
         brightness = reader->getDouble();
@@ -4773,23 +4724,10 @@ bool DRW_Vport::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
     dwgBuffer *bodyBuf = version > DRW::AC1018 ? &bodyBuff : buf;
     dwgBuffer *bodySBuf = version > DRW::AC1018 ? &bodyStringBuff : sBuf;
 
-    std::uint32_t bodyEnd = parsed.objSize;
-    std::uint32_t stringEnd = parsed.objSize;
-    if (version > DRW::AC1018 && parsed.objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!bodyStringBuff.getR2007StringStreamBounds(
-                parsed.objSize, stringStartBit, stringEndBit)
-            || stringStartBit > parsed.objSize
-            || stringEndBit > parsed.objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&bodyStringBuff) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, bodyStringBuff, parsed.objSize, bodyEnd, stringEnd))
+        return fail();
 
     const auto readText = [version, bodyBuf, bodySBuf,
                            bodyEnd, stringEnd](UTF8STRING& value) {
@@ -5171,23 +5109,10 @@ bool DRW_ImageDef::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t 
     dwgBuffer *bodyBuf = version > DRW::AC1018 ? &bodyBuff : buf;
     dwgBuffer *bodySBuf = version > DRW::AC1018 ? &bodyStringBuff : sBuf;
 
-    std::uint32_t bodyEnd = parsed.objSize;
-    std::uint32_t stringEnd = parsed.objSize;
-    if (version > DRW::AC1018 && parsed.objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!bodyStringBuff.getR2007StringStreamBounds(
-                parsed.objSize, stringStartBit, stringEndBit)
-            || stringStartBit > parsed.objSize
-            || stringEndBit > parsed.objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&bodyStringBuff) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, bodyStringBuff, parsed.objSize, bodyEnd, stringEnd))
+        return fail();
 
     std::int32_t parsedImageVersion = 0;
     if (!readBitLongWithinBody(bodyBuf, version, bodyEnd,
@@ -5433,23 +5358,10 @@ bool DRW_PlotSettings::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint3
     dwgBuffer *bodyBuf = version > DRW::AC1018 ? &bodyBuff : buf;
     dwgBuffer *bodySBuf = version > DRW::AC1018 ? &bodyStringBuff : sBuf;
 
-    std::uint32_t bodyEnd = parsed.objSize;
-    std::uint32_t stringEnd = parsed.objSize;
-    if (version > DRW::AC1018 && parsed.objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!bodyStringBuff.getR2007StringStreamBounds(
-                parsed.objSize, stringStartBit, stringEndBit)
-            || stringStartBit > parsed.objSize
-            || stringEndBit > parsed.objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&bodyStringBuff) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, bodyStringBuff, parsed.objSize, bodyEnd, stringEnd))
+        return fail();
 
     const auto readText = [version, bodyBuf, bodySBuf,
                            bodyEnd, stringEnd](UTF8STRING& value) {
@@ -5776,23 +5688,10 @@ bool DRW_UCS::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     dwgBuffer *bodyBuf = version > DRW::AC1018 ? &bodyBuff : buf;
     dwgBuffer *bodySBuf = version > DRW::AC1018 ? &bodyStringBuff : sBuf;
 
-    std::uint32_t bodyEnd = parsed.objSize;
-    std::uint32_t stringEnd = parsed.objSize;
-    if (version > DRW::AC1018 && parsed.objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!bodyStringBuff.getR2007StringStreamBounds(
-                parsed.objSize, stringStartBit, stringEndBit)
-            || stringStartBit > parsed.objSize
-            || stringEndBit > parsed.objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&bodyStringBuff) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, bodyStringBuff, parsed.objSize, bodyEnd, stringEnd))
+        return fail();
 
     const auto readText = [version, bodyBuf, bodySBuf,
                            bodyEnd, stringEnd](UTF8STRING& value) {
@@ -6049,32 +5948,10 @@ bool DRW_View::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     case 73:
         cameraPlottable = reader->getBool();
         break;
-    case 110:
-        ucsOrigin.x = reader->getDouble();
-        break;
-    case 120:
-        ucsOrigin.y = reader->getDouble();
-        break;
-    case 130:
-        ucsOrigin.z = reader->getDouble();
-        break;
-    case 111:
-        ucsXAxis.x = reader->getDouble();
-        break;
-    case 121:
-        ucsXAxis.y = reader->getDouble();
-        break;
-    case 131:
-        ucsXAxis.z = reader->getDouble();
-        break;
-    case 112:
-        ucsYAxis.x = reader->getDouble();
-        break;
-    case 122:
-        ucsYAxis.y = reader->getDouble();
-        break;
-    case 132:
-        ucsYAxis.z = reader->getDouble();
+    case 110: case 120: case 130:
+    case 111: case 121: case 131:
+    case 112: case 122: case 132:
+        readCoordTripletCode(code, reader, ucsOrigin, ucsXAxis, ucsYAxis);
         break;
     case 79:
         ucsOrthoType = reader->getInt32();
@@ -6164,23 +6041,10 @@ bool DRW_View::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     dwgBuffer *bodyBuf = version > DRW::AC1018 ? &bodyBuff : buf;
     dwgBuffer *bodySBuf = version > DRW::AC1018 ? &bodyStringBuff : sBuf;
 
-    std::uint32_t bodyEnd = parsed.objSize;
-    std::uint32_t stringEnd = parsed.objSize;
-    if (version > DRW::AC1018 && parsed.objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!bodyStringBuff.getR2007StringStreamBounds(
-                parsed.objSize, stringStartBit, stringEndBit)
-            || stringStartBit > parsed.objSize
-            || stringEndBit > parsed.objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&bodyStringBuff) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, bodyStringBuff, parsed.objSize, bodyEnd, stringEnd))
+        return fail();
 
     const auto readText = [version, bodyBuf, bodySBuf,
                            bodyEnd, stringEnd](UTF8STRING& value) {
@@ -6485,22 +6349,10 @@ bool DRW_AppId::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
     dwgBuffer *bodyStringBuf = version > DRW::AC1018
         ? &bodyStringBuffer : buf;
 
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!bodyStringBuffer.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&bodyStringBuffer) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, bodyStringBuffer, objSize, bodyEnd, stringEnd))
+        return fail();
 
     UTF8STRING parsedName;
     if (!readVariableTextWithinBounds(bodyBuf, bodyStringBuf, version,
@@ -7193,22 +7045,10 @@ bool DRW_ViewportEntityHeader::parseDwg(DRW::Version version,
     dwgBuffer *bodyStringBuf = version > DRW::AC1018
         ? &bodyStringBuffer : buf;
 
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!bodyStringBuffer.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&bodyStringBuffer) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, bodyStringBuffer, objSize, bodyEnd, stringEnd))
+        return fail();
     UTF8STRING parsedName;
     if (!readVariableTextWithinBounds(bodyBuf, bodyStringBuf, version,
                                       bodyEnd, stringEnd, parsedName))
@@ -7649,22 +7489,10 @@ bool DRW_TvDeviceProperties::parseDwg(DRW::Version version,
     dwgBuffer *bodyBuf = version > DRW::AC1018 ? &bodyBuffer : buf;
     dwgBuffer *bodyStringBuf = version > DRW::AC1018
         ? &bodyStringBuffer : buf;
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!bodyStringBuffer.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&bodyStringBuffer) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, bodyStringBuffer, objSize, bodyEnd, stringEnd))
+        return fail();
 
     // dwgTs::parseTvDeviceProperties reads the first six fields in every
     // version. Optional fields are present only while the bounded R2007+
@@ -7816,22 +7644,10 @@ bool DRW_CsacDocumentOptions::parseDwg(DRW::Version version,
     dwgBuffer *bodyBuf = version > DRW::AC1018 ? &bodyBuffer : buf;
     dwgBuffer *bodyStringBuf = version > DRW::AC1018
         ? &bodyStringBuffer : buf;
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!bodyStringBuffer.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&bodyStringBuffer) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, bodyStringBuffer, objSize, bodyEnd, stringEnd))
+        return fail();
 
     const auto bodyBytesRemaining = [version, bodyBuf, bodyEnd]() {
         if (version <= DRW::AC1018 || bodyEnd == 0)
@@ -7906,22 +7722,10 @@ bool DRW_ContextDataManager::parseDwg(DRW::Version version,
     dwgBuffer *bodyStringBuf = version > DRW::AC1018
         ? &bodyStringBuffer : buf;
 
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!bodyStringBuffer.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&bodyStringBuffer) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, bodyStringBuffer, objSize, bodyEnd, stringEnd))
+        return fail();
 
     bool countReadOk = true;
     std::uint32_t remainingRecordBudget =
@@ -8424,22 +8228,10 @@ bool DRW_DictionaryVar::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint
         return fail();
     }
 
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!sBuff.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&sBuff) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, sBuff, objSize, bodyEnd, stringEnd))
+        return fail();
 
     std::uint8_t parsedSchema = 0;
     if (!readRawCharWithinBody(buf, version, bodyEnd, parsedSchema))
@@ -9321,22 +9113,10 @@ bool DRW_FieldList::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t
     dwgBuffer *bodyBuf = version > DRW::AC1018 ? &bodyBuffer : buf;
     dwgBuffer *bodyStringBuf = version > DRW::AC1018
         ? &bodyStringBuffer : buf;
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!bodyStringBuffer.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&bodyStringBuffer) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, bodyStringBuffer, objSize, bodyEnd, stringEnd))
+        return fail();
 
     std::int32_t parsedFieldCount = 0;
     bool parsedUnknown = false;
@@ -9617,22 +9397,10 @@ bool DRW_RasterVariables::parseDwg(DRW::Version version, dwgBuffer *buf, std::ui
     dwgBuffer *bodyBuf = version > DRW::AC1018 ? &bodyBuffer : buf;
     dwgBuffer *bodyStringBuf = version > DRW::AC1018
         ? &bodyStringBuffer : buf;
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!bodyStringBuffer.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&bodyStringBuffer) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, bodyStringBuffer, objSize, bodyEnd, stringEnd))
+        return fail();
     if (!readBitLongWithinBody(bodyBuf, version, bodyEnd, parsedClassVersion)
         || !readBitShortWithinBody(bodyBuf, version, bodyEnd, parsedImageFrame)
         || !readBitShortWithinBody(bodyBuf, version, bodyEnd, parsedImageQuality)
@@ -9703,22 +9471,10 @@ bool DRW_WipeoutVariables::parseDwg(DRW::Version version, dwgBuffer *buf, std::u
     dwgBuffer *bodyBuf = version > DRW::AC1018 ? &bodyBuffer : buf;
     dwgBuffer *bodyStringBuf = version > DRW::AC1018
         ? &bodyStringBuffer : buf;
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!bodyStringBuffer.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&bodyStringBuffer) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, bodyStringBuffer, objSize, bodyEnd, stringEnd))
+        return fail();
     std::int32_t parsedDisplayFrame = 0;
     if (!readBitShortWithinBody(bodyBuf, version, bodyEnd, parsedDisplayFrame)
         || !bodyBuf->isGood()
@@ -11337,22 +11093,10 @@ bool DRW_PointCloudDef::parseDwg(DRW::Version version, dwgBuffer *buf,
 
     dwgBuffer bodyBuffer = *buf;
     dwgBuffer *bodyBuf = version > DRW::AC1018 ? &bodyBuffer : buf;
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!stringBuffer.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&stringBuffer) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, stringBuffer, objSize, bodyEnd, stringEnd))
+        return fail();
     std::int32_t classVersion = 0;
     if (!readBitLongWithinBody(bodyBuf, version, bodyEnd, classVersion)
         || classVersion < 0 || classVersion > kMaxClassVersion)
@@ -11531,22 +11275,10 @@ bool DRW_NavisworksModelDef::parseDwg(DRW::Version version, dwgBuffer *buf,
 
     dwgBuffer bodyBuffer = *buf;
     dwgBuffer *bodyBuf = version > DRW::AC1018 ? &bodyBuffer : buf;
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!stringBuffer.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&stringBuffer) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, stringBuffer, objSize, bodyEnd, stringEnd))
+        return fail();
     std::int32_t parsedFlags = 0;
     UTF8STRING parsedPath;
     bool parsedStatus = false;
@@ -11743,22 +11475,10 @@ bool DRW_PointCloudColorMap::parseDwg(DRW::Version version, dwgBuffer *buf,
     dwgBuffer *bodyBuf = version > DRW::AC1018 ? &bodyBuffer : buf;
     dwgBuffer *bodyStringBuf = version > DRW::AC1018
         ? &bodyStringBuffer : buf;
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!bodyStringBuffer.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&bodyStringBuffer) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, bodyStringBuffer, objSize, bodyEnd, stringEnd))
+        return fail();
     std::int32_t classVersion = 0;
     if (!readBitShortWithinBody(bodyBuf, version, bodyEnd, classVersion)
         || classVersion < 0 || classVersion > kMaxClassVersion)
@@ -11999,22 +11719,10 @@ bool DRW_SunStudy::parseDwg(DRW::Version version, dwgBuffer *buf,
     if (!DRW_TableEntry::parseDwg(version, buf, textBuffer, bs))
         return fail();
 
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!stringBuffer.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&stringBuffer) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, stringBuffer, objSize, bodyEnd, stringEnd))
+        return fail();
 
     const auto readLong = [&](std::int32_t& value) {
         return readBitLongWithinBody(buf, version, bodyEnd, value);
@@ -12314,22 +12022,10 @@ bool DRW_MotionPath::parseDwg(DRW::Version version, dwgBuffer *buf,
     dwgBuffer bodyBuffer = *buf;
     dwgBuffer *bodyBuf = version > DRW::AC1018 ? &bodyBuffer : buf;
 
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!stringBuffer.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&stringBuffer) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, stringBuffer, objSize, bodyEnd, stringEnd))
+        return fail();
 
     std::int32_t classVersion = 0;
     dwgHandle cameraPath;
@@ -12458,22 +12154,10 @@ bool DRW_CurvePath::parseDwg(DRW::Version version, dwgBuffer *buf,
     dwgBuffer bodyBuffer = *buf;
     dwgBuffer *bodyBuf = version > DRW::AC1018 ? &bodyBuffer : buf;
 
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!stringBuffer.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&stringBuffer) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, stringBuffer, objSize, bodyEnd, stringEnd))
+        return fail();
 
     std::int32_t classVersion = 0;
     dwgHandle entity;
@@ -12585,22 +12269,10 @@ bool DRW_PointPath::parseDwg(DRW::Version version, dwgBuffer *buf,
     dwgBuffer bodyBuffer = *buf;
     dwgBuffer *bodyBuf = version > DRW::AC1018 ? &bodyBuffer : buf;
 
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!stringBuffer.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&stringBuffer) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, stringBuffer, objSize, bodyEnd, stringEnd))
+        return fail();
 
     std::int32_t classVersion = 0;
     DRW_Coord point;
@@ -13078,22 +12750,10 @@ bool DRW_Background::parseDwg(DRW::Version version, dwgBuffer *buf,
     if (!DRW_TableEntry::parseDwg(version, buf, strBuf, bs))
         return fail();
 
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!stringBuffer.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&stringBuffer) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, stringBuffer, objSize, bodyEnd, stringEnd))
+        return fail();
 
     std::int32_t classVersion = 0;
     std::int32_t solidColor = 0;
@@ -13518,22 +13178,10 @@ bool DRW_TableStyle::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_
     dwgBuffer *bodyBuf = version > DRW::AC1018 ? &bodyBuff : buf;
     dwgBuffer *bodySBuf = version > DRW::AC1018 ? &bodyStringBuff : sBuf;
 
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!bodyStringBuff.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&bodyStringBuff) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, bodyStringBuff, objSize, bodyEnd, stringEnd))
+        return fail();
 
     // The body cursor reaches the inline handle stream for R2000/R2004;
     // R2007+ uses the separate absolute objSize boundary.
@@ -13850,22 +13498,10 @@ bool DRW_CellStyleMap::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint3
     dwgBuffer *bodyBuf = version > DRW::AC1018 ? &bodyBuff : buf;
     dwgBuffer *bodySBuf = version > DRW::AC1018 ? &bodyStringBuff : sBuf;
 
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!bodyStringBuff.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&bodyStringBuff) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, bodyStringBuff, objSize, bodyEnd, stringEnd))
+        return fail();
 
     // The body cursor reaches the inline handle stream for R2000/R2004;
     // R2007+ uses the separate absolute objSize boundary.
@@ -14080,22 +13716,10 @@ bool DRW_Layout::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs
     dwgBuffer *bodySBuf = version > DRW::AC1018 ? &bodyStringBuff
                                                 : &bodyBuff;
 
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!bodyStringBuff.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&bodyStringBuff) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, bodyStringBuff, objSize, bodyEnd, stringEnd))
+        return fail();
 
     const auto readShort = [&](std::int32_t& value) {
         return readBitShortWithinBody(bodyBuf, version, bodyEnd, value);
@@ -14439,23 +14063,10 @@ bool DRW_MLineStyle::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_
     dwgBuffer *bodyBuf = version > DRW::AC1018 ? &bodyBuff : buf;
     dwgBuffer *bodySBuf = version > DRW::AC1018 ? &bodyStringBuff : sBuf;
 
-    std::uint32_t bodyEnd = parsed.objSize;
-    std::uint32_t stringEnd = parsed.objSize;
-    if (version > DRW::AC1018 && parsed.objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!bodyStringBuff.getR2007StringStreamBounds(
-                parsed.objSize, stringStartBit, stringEndBit)
-            || stringStartBit > parsed.objSize
-            || stringEndBit > parsed.objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&bodyStringBuff) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, bodyStringBuff, parsed.objSize, bodyEnd, stringEnd))
+        return fail();
 
     const auto readText = [version, bodyBuf, bodySBuf, bodyEnd,
                            stringEnd](UTF8STRING& value) {
@@ -14725,23 +14336,10 @@ bool DRW_MLeaderStyle::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint3
     dwgBuffer *bodyBuf = version > DRW::AC1018 ? &bodyBuff : buf;
     dwgBuffer *bodySBuf = version > DRW::AC1018 ? &bodyStringBuff : sBuf;
 
-    std::uint32_t bodyEnd = parsed.objSize;
-    std::uint32_t stringEnd = parsed.objSize;
-    if (version > DRW::AC1018 && parsed.objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!bodyStringBuff.getR2007StringStreamBounds(
-                parsed.objSize, stringStartBit, stringEndBit)
-            || stringStartBit > parsed.objSize
-            || stringEndBit > parsed.objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&bodyStringBuff) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, bodyStringBuff, parsed.objSize, bodyEnd, stringEnd))
+        return fail();
 
     const auto readText = [version, bodyBuf, bodySBuf, bodyEnd,
                            stringEnd](UTF8STRING& value) {
@@ -15032,22 +14630,10 @@ bool DRW_Index::parseDwg(DRW::Version version, dwgBuffer *buf,
     dwgBuffer *bodyBuf = version > DRW::AC1018 ? &bodyBuffer : buf;
     dwgBuffer *bodyStringBuf = version > DRW::AC1018
         ? &bodyStringBuffer : buf;
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!bodyStringBuffer.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&bodyStringBuffer) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, bodyStringBuffer, objSize, bodyEnd, stringEnd))
+        return fail();
 
     std::int32_t parsedDays = 0;
     std::int32_t parsedMilliseconds = 0;
@@ -15135,22 +14721,10 @@ bool DRW_IDBuffer::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t 
     dwgBuffer *bodyBuf = version > DRW::AC1018 ? &bodyBuffer : buf;
     dwgBuffer *bodyStringBuf = version > DRW::AC1018
         ? &bodyStringBuffer : buf;
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!bodyStringBuffer.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&bodyStringBuffer) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, bodyStringBuffer, objSize, bodyEnd, stringEnd))
+        return fail();
 
     std::uint8_t parsedClassVersion = 0;
     std::int32_t parsedIdCount = 0;
@@ -15313,22 +14887,10 @@ bool DRW_LayerIndex::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_
     dwgBuffer *bodyBuf = version > DRW::AC1018 ? &bodyBuffer : buf;
     dwgBuffer *bodyStringBuf = version > DRW::AC1018
         ? &bodyStringBuffer : buf;
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!bodyStringBuffer.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&bodyStringBuffer) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, bodyStringBuffer, objSize, bodyEnd, stringEnd))
+        return fail();
     std::int32_t parsedTimestamp1 = 0;
     std::int32_t parsedTimestamp2 = 0;
     std::int32_t parsedEntryCount = 0;
@@ -15436,22 +14998,10 @@ bool DRW_SpatialIndex::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint3
     dwgBuffer *bodyBuf = version > DRW::AC1018 ? &bodyBuffer : buf;
     dwgBuffer *bodyStringBuf = version > DRW::AC1018
         ? &bodyStringBuffer : buf;
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!bodyStringBuffer.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&bodyStringBuffer) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, bodyStringBuffer, objSize, bodyEnd, stringEnd))
+        return fail();
 
     std::int32_t parsedTimestamp1 = 0;
     std::int32_t parsedTimestamp2 = 0;
@@ -16642,22 +16192,10 @@ bool DRW_UnderlayDefinition::parseDwg(DRW::Version version, dwgBuffer *buf, std:
     dwgBuffer *bodyBuf = version > DRW::AC1018 ? &bodyBuffer : buf;
     dwgBuffer *bodyStringBuf = version > DRW::AC1018
         ? &bodyStringBuffer : buf;
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!bodyStringBuffer.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&bodyStringBuffer) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, bodyStringBuffer, objSize, bodyEnd, stringEnd))
+        return fail();
     const auto readText = [version, bodyBuf, bodyStringBuf, bodyEnd, stringEnd](
                                UTF8STRING& value) {
         return readVariableTextWithinBounds(bodyBuf, bodyStringBuf, version,
@@ -16792,22 +16330,10 @@ bool DRW_Scale::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
 
     dwgBuffer bodyBuff = *buf;
     dwgBuffer *bodyBuf = version > DRW::AC1018 ? &bodyBuff : buf;
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!sBuff.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&sBuff) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, sBuff, objSize, bodyEnd, stringEnd))
+        return fail();
     std::int32_t parsedFlag = 0;
     double parsedPaperUnits = 1.0;
     double parsedDrawingUnits = 1.0;
@@ -17367,22 +16893,10 @@ bool DRW_Group::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
     dwgBuffer *bodyBuf = version > DRW::AC1018 ? &bodyBuffer : buf;
     dwgBuffer *bodyStringBuf = version > DRW::AC1018
         ? &bodyStringBuffer : buf;
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!bodyStringBuffer.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&bodyStringBuffer) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, bodyStringBuffer, objSize, bodyEnd, stringEnd))
+        return fail();
 
     UTF8STRING parsedDescription;
     if (!readVariableTextWithinBounds(bodyBuf, bodyStringBuf, version,
@@ -17533,22 +17047,10 @@ bool DRW_LightList::parseDwg(DRW::Version version, dwgBuffer *buf,
     dwgBuffer *bodyBuf = version > DRW::AC1018 ? &bodyBuffer : buf;
     dwgBuffer *bodyStringBuf = version > DRW::AC1018
         ? &bodyStringBuffer : buf;
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!bodyStringBuffer.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&bodyStringBuffer) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, bodyStringBuffer, objSize, bodyEnd, stringEnd))
+        return fail();
     std::int32_t classVersion = 0;
     std::int32_t lightCount = 0;
     if (!readBitLongWithinBody(bodyBuf, version, bodyEnd, classVersion)
@@ -17688,22 +17190,10 @@ bool DRW_LayerFilter::parseDwg(DRW::Version version, dwgBuffer *buf,
     dwgBuffer *bodyBuf = version > DRW::AC1018 ? &bodyBuffer : buf;
     dwgBuffer *bodyStringBuf = version > DRW::AC1018
         ? &bodyStringBuffer : buf;
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!bodyStringBuffer.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&bodyStringBuffer) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, bodyStringBuffer, objSize, bodyEnd, stringEnd))
+        return fail();
     std::int32_t nameCount = 0;
     if (!readBitLongWithinBody(bodyBuf, version, bodyEnd, nameCount)
         || nameCount < 0
@@ -17873,22 +17363,10 @@ bool DRW_DataLink::parseDwg(DRW::Version version, dwgBuffer *buf,
     dwgBuffer *bodyBuf = version > DRW::AC1018 ? &bodyBuffer : buf;
     dwgBuffer *bodyStringBuf = version > DRW::AC1018
         ? &bodyStringBuffer : buf;
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!bodyStringBuffer.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&bodyStringBuffer) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, bodyStringBuffer, objSize, bodyEnd, stringEnd))
+        return fail();
     const auto readText = [&](UTF8STRING& value) {
         return readVariableTextWithinBounds(bodyBuf, bodyStringBuf, version,
                                             bodyEnd, stringEnd, value);
@@ -18082,22 +17560,10 @@ bool DRW_GeoMapImage::parseDwg(DRW::Version version, dwgBuffer *buf,
     dwgBuffer *bodyBuf = version > DRW::AC1018 ? &bodyBuffer : buf;
     dwgBuffer *bodyStringBuf = version > DRW::AC1018
         ? &bodyStringBuffer : buf;
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!bodyStringBuffer.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&bodyStringBuffer) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, bodyStringBuffer, objSize, bodyEnd, stringEnd))
+        return fail();
     std::int32_t classVersion = 0;
     DRW_Coord insertionPoint;
     DRW_Coord imageSize;
@@ -18562,22 +18028,10 @@ bool DRW_ImageDefinitionReactor::parseDwg(DRW::Version version, dwgBuffer *buf, 
     dwgBuffer *bodyBuf = version > DRW::AC1018 ? &bodyBuffer : buf;
     dwgBuffer *bodyStringBuf = version > DRW::AC1018
         ? &bodyStringBuffer : buf;
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!bodyStringBuffer.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&bodyStringBuffer) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, bodyStringBuffer, objSize, bodyEnd, stringEnd))
+        return fail();
     std::int32_t classVersion = 0;
     if (!readBitLongWithinBody(bodyBuf, version, bodyEnd, classVersion)
         || classVersion < 0 || classVersion > kMaxClassVersion
@@ -18741,22 +18195,10 @@ bool DRW_SpatialFilter::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint
     dwgBuffer *bodyBuf = version > DRW::AC1018 ? &bodyBuffer : buf;
     dwgBuffer *bodyStringBuf = version > DRW::AC1018
         ? &bodyStringBuffer : sBuf;
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!bodyStringBuffer.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&bodyStringBuffer) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, bodyStringBuffer, objSize, bodyEnd, stringEnd))
+        return fail();
     std::int32_t pointCount = 0;
     if (!readBitShortWithinBody(bodyBuf, version, bodyEnd, pointCount)
         || pointCount < 0
@@ -19056,22 +18498,10 @@ bool DRW_GeoData::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t b
     dwgBuffer *bodyBuf = &bodyBuffer;
     dwgBuffer *bodyStringBuf = sBuf != buf ? &bodyStringBuffer
                                            : &bodyBuffer;
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!bodyStringBuffer.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&bodyStringBuffer) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, bodyStringBuffer, objSize, bodyEnd, stringEnd))
+        return fail();
     const auto readLong = [&](std::int32_t& value) {
         return readBitLongWithinBody(bodyBuf, version, bodyEnd, value);
     };
@@ -19323,22 +18753,10 @@ bool DRW_TableGeometry::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint
     dwgBuffer *bodyBuf = version > DRW::AC1018 ? &bodyBuff : buf;
     dwgBuffer bodyStringBuff = *sBuf;
     dwgBuffer *bodySBuf = version > DRW::AC1018 ? &bodyStringBuff : buf;
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!bodyStringBuff.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&bodyStringBuff) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, bodyStringBuff, objSize, bodyEnd, stringEnd))
+        return fail();
     std::int32_t rowCount = 0;
     std::int32_t columnCount = 0;
     std::int32_t cellCount = 0;
@@ -19705,22 +19123,10 @@ bool DRW_EvaluationGraph::parseDwg(DRW::Version version, dwgBuffer *buf, std::ui
     dwgBuffer *bodyBuf = &bodyBuff;
     dwgBuffer bodyStringBuff = *sBuf;
     dwgBuffer *bodySBuf = &bodyStringBuff;
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!bodyStringBuff.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&bodyStringBuff) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, bodyStringBuff, objSize, bodyEnd, stringEnd))
+        return fail();
     std::int32_t value96 = 0;
     std::int32_t value97 = 0;
     if (!readBitLongWithinBody(bodyBuf, version, bodyEnd, value96)
@@ -20284,22 +19690,10 @@ bool DRW_Sun::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     dwgBuffer *bodyBuf = version > DRW::AC1018 ? &bodyBuff : buf;
     dwgBuffer *bodyStringBuf = version > DRW::AC1018
         ? &bodyStringBuff : sBuf;
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!bodyStringBuff.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&bodyStringBuff) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, bodyStringBuff, objSize, bodyEnd, stringEnd))
+        return fail();
     dwgBuffer hBuff = *buf;
     std::int32_t classVersion = 0;
     bool isOn = false;
@@ -24413,22 +23807,10 @@ bool DRW_VisualStyle::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32
     dwgBuffer stringBuff = sBuff;
     dwgBuffer *bodyBuf = &bodyBuff;
     dwgBuffer *bodySBuf = version > DRW::AC1018 ? &stringBuff : bodyBuf;
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!sBuff.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&sBuff) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, sBuff, objSize, bodyEnd, stringEnd))
+        return fail();
     const auto bodyBytesRemaining = [&]() {
         if (version >= DRW::AC1015 && bodyEnd != 0)
             return currentObjectDwgBit(bodyBuf) < bodyEnd;
@@ -24829,22 +24211,10 @@ bool DRW_DbColor::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t b
     if (!ret)
         return fail();
 
-    std::uint32_t bodyEnd = objSize;
-    std::uint32_t stringEnd = objSize;
-    if (version > DRW::AC1018 && objSize != 0) {
-        std::uint64_t stringStartBit = 0;
-        std::uint64_t stringEndBit = 0;
-        if (!sBuff.getR2007StringStreamBounds(
-                objSize, stringStartBit, stringEndBit)
-            || stringStartBit > objSize || stringEndBit > objSize
-            || stringEndBit < stringStartBit
-            || stringStartBit > std::numeric_limits<std::uint32_t>::max()
-            || stringEndBit > std::numeric_limits<std::uint32_t>::max()
-            || currentObjectDwgBit(&sBuff) != stringStartBit)
-            return fail();
-        bodyEnd = static_cast<std::uint32_t>(stringStartBit);
-        stringEnd = static_cast<std::uint32_t>(stringEndBit);
-    }
+    std::uint32_t bodyEnd = 0;
+    std::uint32_t stringEnd = 0;
+    if (!resolveR2007StreamBounds(version, sBuff, objSize, bodyEnd, stringEnd))
+        return fail();
 
     // Single FIELD_CMC per the spec. Stage the complete payload so a short
     // RGB/method/name field cannot advance the body or string cursor.

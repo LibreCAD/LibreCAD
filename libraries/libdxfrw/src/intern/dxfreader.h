@@ -140,4 +140,30 @@ public:
     virtual bool readBool();
 };
 
+
+/// Read one group code of a coordinate triplet - an origin plus an X and a Y
+/// axis - into the three coordinates that carry it.  DXF spells this the same
+/// way wherever a record stores such a frame: VPORT, VIEW and VIEWPORT use it
+/// for their UCS, and MLEADER's context data for its content base point and
+/// base direction/vertical.  The nine cases live here once instead of being
+/// repeated per record.
+///
+/// Returns true when the code belonged to the triplet and was consumed.
+inline bool readCoordTripletCode(int code, const std::unique_ptr<dxfReader>& reader,
+                                 DRW_Coord& origin, DRW_Coord& xAxis,
+                                 DRW_Coord& yAxis) {
+    switch (code) {
+    case 110: origin.x = reader->getDouble(); return true;
+    case 120: origin.y = reader->getDouble(); return true;
+    case 130: origin.z = reader->getDouble(); return true;
+    case 111: xAxis.x = reader->getDouble(); return true;
+    case 121: xAxis.y = reader->getDouble(); return true;
+    case 131: xAxis.z = reader->getDouble(); return true;
+    case 112: yAxis.x = reader->getDouble(); return true;
+    case 122: yAxis.y = reader->getDouble(); return true;
+    case 132: yAxis.z = reader->getDouble(); return true;
+    default: return false;
+    }
+}
+
 #endif // DXFREADER_H

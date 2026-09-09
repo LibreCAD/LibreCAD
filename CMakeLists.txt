@@ -2488,6 +2488,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/libdxfrw_debug_tests.cpp
         librecad/src/lib/filters/tests/libdxfrw_qt_free_tests.cpp
         librecad/src/lib/filters/tests/dwg_object_encode_round_trip_tests.cpp
+        librecad/src/lib/filters/tests/dwg_class_table_tests.cpp
         librecad/src/lib/filters/tests/dwg_smoke_tests.cpp
         librecad/src/lib/filters/tests/dwg_write_smoke_tests.cpp
         librecad/src/lib/filters/tests/eed_tests.cpp
@@ -2530,6 +2531,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/mleader_text_tests.cpp
         librecad/src/lib/filters/tests/mleader_dxf_context_tests.cpp
         librecad/src/lib/filters/tests/dxf_roundtrip_tests.cpp
+        librecad/src/lib/filters/tests/dxf_line_width_mapping_tests.cpp
         librecad/src/lib/filters/tests/dxf_layer0_declared_tests.cpp
         librecad/src/lib/filters/tests/dxf_corpus_tests.cpp
         librecad/src/lib/filters/tests/i18n_codec_tests.cpp
