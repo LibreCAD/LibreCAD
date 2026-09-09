@@ -89,12 +89,9 @@ public:
     std::string fromUtf8(std::string_view s) override;
     std::string toUtf8(std::string_view s) override;
 private:
-    /// Unicode -> DBCS code, built on first encode and kept for the life of
-    /// the converter (one per file, not per string). It replaces a scan of
-    /// the whole double table for every character encoded, which cost 18590
-    /// comparisons per character for Big5. Built in table order with
-    /// emplace(), so a code point that appears twice keeps its first
-    /// mapping - the same one the scan returned.
+    /// Unicode -> DBCS, built once per converter. Filled in table order, so a
+    /// repeated code point keeps its first mapping - the one the linear scan
+    /// this replaces returned.
     const std::unordered_map<int, int>& reverseIndex();
 
     const int *leadTable{nullptr};

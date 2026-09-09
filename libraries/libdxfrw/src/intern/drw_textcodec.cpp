@@ -1,7 +1,6 @@
-#include <cstdio>
 #include "drw_textcodec.h"
+#include <cstdio>
 #include <sstream>
-#include <iomanip>
 #include <algorithm>
 #include <cstring>
 #include "../drw_base.h"
@@ -304,12 +303,9 @@ std::string DRW_Converter::encodeMifText(const std::string &tok){
 }
 
 std::string DRW_Converter::decodeText(int c){
-    // The Apple branch this replaces built a fixed 16-char std::string and
-    // assigned it whole, so snprintf's 4 digits were followed by 12 NUL bytes
-    // that stayed part of the string: every escape came out 19 bytes instead
-    // of 7. A DXF writer refuses such a string outright (the NUL guards in
-    // dxfwriter.cpp), and a DWG <= R2004 writer put the NULs straight into
-    // the file. Format the digits into a bounded buffer on every platform.
+    // Format into a bounded buffer, not a sized std::string: such a string
+    // keeps its padding NULs, which the DXF writers reject and putCP8Text
+    // would embed in the file.
     char digits[8];
     std::snprintf(digits, sizeof digits, "%04X", c);
     return std::string("\\U+") + digits;
@@ -370,8 +366,6 @@ const std::unordered_map<int, int>& DRW_ConvDBCSTable::reverseIndex() {
     if (m_reverse.empty() && cpLength > 0) {
         m_reverse.reserve(static_cast<std::size_t>(cpLength));
         for (int k = 0; k < cpLength; ++k) {
-            // emplace keeps the FIRST mapping for a repeated code point,
-            // which is what the linear scan's `break` used to return.
             m_reverse.emplace(doubleTable[k][1], doubleTable[k][0]);
         }
     }
@@ -379,9 +373,8 @@ const std::unordered_map<int, int>& DRW_ConvDBCSTable::reverseIndex() {
 }
 
 std::string DRW_ConvDBCSTable::fromUtf8(std::string_view s) {
-    const std::unordered_map<int, int>& index = reverseIndex();
+    const auto& index = reverseIndex();
     std::string result;
-    bool notFound;
     int code;
 
     int j = 0;
@@ -395,14 +388,12 @@ std::string DRW_ConvDBCSTable::fromUtf8(std::string_view s) {
             j = i+l;
             i = j - 1;
             const auto it = index.find(code);
-            notFound = (it == index.end());
-            if (!notFound) {
-                const int data = it->second; //translate from table
-                result += static_cast<char>(data >> 8);
-                result += static_cast<char>(data & 0xFF);
-            }
-            if (notFound)
+            if (it != index.end()) {
+                result += static_cast<char>(it->second >> 8);
+                result += static_cast<char>(it->second & 0xFF);
+            } else {
                 result += decodeText(code);
+            }
         } //direct conversion
     }
     result += s.substr(j);
