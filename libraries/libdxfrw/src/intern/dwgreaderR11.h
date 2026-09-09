@@ -55,7 +55,7 @@ constexpr std::uint32_t preR13SectionSize(std::uint32_t raw) {
 *  Reads the fixed pre-R13 container: file header section pointers, then the
 *  flat entity records in the ENTITIES section. Each record advances by its
 *  own size field, so unhandled entity types are skipped safely.
-*  @author Claude
+*  @author libdxfrw
 */
 class dwgReaderR11 : public dwgReader {
 public:
