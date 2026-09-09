@@ -132,7 +132,7 @@ jobs:
           git commit -m "latest analyzer report"
 
       - name: Push changes
-        if: github.repository_owner == 'LibreCAD'
+        if: github.event_name != 'pull_request' && github.repository_owner == 'LibreCAD'
         uses: ad-m/github-push-action@master
         with:
           repository: ${{github.repository_owner}}/static-analyzer-reports

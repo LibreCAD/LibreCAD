@@ -63,6 +63,11 @@ const RS_LineTypePattern PATTERN_BORDER_LINE_TINY{{2., -1., 2., -1., 0.15, -1.}}
 const RS_LineTypePattern PATTERN_BORDER_LINE{{12.0, -4.0, 12.0, -4., 0.2, -4.}};
 const RS_LineTypePattern PATTERN_BORDER_LINE2{{6.0, -3.0, 6.0, -3., 0.2, -3.}};
 const RS_LineTypePattern PATTERN_BORDER_LINE_X2{{24.0, -8.0, 24.0, -8., 0.2, -8.}};
+// acad.lin HIDDEN is half of DASHED (.25,-.125 vs .5,-.25)
+const RS_LineTypePattern PATTERN_HIDDEN_LINE_TINY{{1., -0.5}};
+const RS_LineTypePattern PATTERN_HIDDEN_LINE{{6.0, -3.0}};
+const RS_LineTypePattern PATTERN_HIDDEN_LINE2{{3.0, -1.5}};
+const RS_LineTypePattern PATTERN_HIDDEN_LINE_X2{{12.0, -6.0}};
 
 const RS_LineTypePattern PATTERN_BLOCK_LINE{{0.5, -0.5}};
 const RS_LineTypePattern PATTERN_SELECTED{{1.0, -3.0}};
@@ -104,6 +109,10 @@ const RS_LineTypePattern* RS_LineTypePattern::getPattern(const RS2::LineType lin
             {RS2::BorderLineTiny, &PATTERN_BORDER_LINE_TINY},
             {RS2::BorderLine2, &PATTERN_BORDER_LINE2},
             {RS2::BorderLineX2, &PATTERN_BORDER_LINE_X2},
+            {RS2::HiddenLine, &PATTERN_HIDDEN_LINE},
+            {RS2::HiddenLineTiny, &PATTERN_HIDDEN_LINE_TINY},
+            {RS2::HiddenLine2, &PATTERN_HIDDEN_LINE2},
+            {RS2::HiddenLineX2, &PATTERN_HIDDEN_LINE_X2},
             {RS2::LineByLayer, &PATTERN_BLOCK_LINE},
             {RS2::LineByBlock, &PATTERN_BLOCK_LINE},
             {RS2::LineSelected, &PATTERN_SELECTED}

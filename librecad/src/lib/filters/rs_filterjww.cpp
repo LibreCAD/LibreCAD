@@ -1284,7 +1284,10 @@ bool RS_FilterJWW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
 
         // Line types:
         RS_DEBUG->print("writing line types...");
-        int numLT = (int)RS2::BorderLineX2-(int)RS2::LineByBlock;
+        // RS2::LineTypeUnchanged and RS2::LineSelected sit between the two
+        // blocks and are UI-only, so the table is written as two ranges.
+        int numLT = (int)RS2::BorderLineX2-(int)RS2::LineByBlock
+                  + (int)RS2::HiddenLineX2-(int)RS2::HiddenLine+1;
         if (type==RS2::FormatJWC) {
                 numLT-=2;
         }
@@ -1293,6 +1296,9 @@ bool RS_FilterJWW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
                 if ((RS2::LineType)t!=RS2::NoPen) {
                         writeLineType(*dw, (RS2::LineType)t);
                 }
+        }
+        for (int t=(int)RS2::HiddenLine; t<=(int)RS2::HiddenLineX2; ++t) {
+                writeLineType(*dw, (RS2::LineType)t);
         }
         dw->tableEnd();
 
@@ -2755,14 +2761,23 @@ RS2::LineType RS_FilterJWW::nameToLineType(const QString& name) {
 
 
         } else if (uName=="ACAD_ISO02W100" || uName=="ACAD_ISO03W100" ||
-                           uName=="DASHED" || uName=="HIDDEN") {
+                           uName=="DASHED") {
                 return RS2::DashLine;
 
-        } else if (uName=="DASHED2" || uName=="HIDDEN2") {
+        } else if (uName=="DASHED2") {
                 return RS2::DashLine2;
 
-        } else if (uName=="DASHEDX2" || uName=="HIDDENX2") {
+        } else if (uName=="DASHEDX2") {
                 return RS2::DashLineX2;
+
+        } else if (uName=="HIDDEN") {
+                return RS2::HiddenLine;
+
+        } else if (uName=="HIDDEN2") {
+                return RS2::HiddenLine2;
+
+        } else if (uName=="HIDDENX2") {
+                return RS2::HiddenLineX2;
 
 
         } else if (uName=="ACAD_ISO10W100" ||
@@ -2842,6 +2857,16 @@ QString RS_FilterJWW::lineTypeToName(RS2::LineType lineType) {
                 break;
         case RS2::DashLineX2:
                 return "DASHEDX2";
+                break;
+
+        case RS2::HiddenLine:
+                return "HIDDEN";
+                break;
+        case RS2::HiddenLine2:
+                return "HIDDEN2";
+                break;
+        case RS2::HiddenLineX2:
+                return "HIDDENX2";
                 break;
 
         case RS2::DashDotLine:

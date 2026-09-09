@@ -864,7 +864,15 @@ namespace RS2 {
         BorderLineX2   = 25, /**< dash, dash, dot large. */
 
         LineTypeUnchanged = 26, /**< Line type defined by block not entity */
-        LineSelected      = 27 /**< Line type for selected */
+        LineSelected      = 27, /**< Line type for selected */
+
+        // Append new line types after this point. The numeric values are
+        // persisted (QSettings, .lcp pen palettes, $DIMLTYPE) and handed to
+        // plugins, so existing values must never be renumbered.
+        HiddenLine     = 28, /**< hidden line (acad.lin HIDDEN). */
+        HiddenLineTiny = 29, /**< hidden line tiny */
+        HiddenLine2    = 30, /**< hidden line small. */
+        HiddenLineX2   = 31  /**< hidden line large. */
     };
 
     /**

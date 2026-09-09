@@ -18332,6 +18332,7 @@ void RS_FilterDXFRW::writeLType(const UTF8STRING &lTypeName,
               lTypeName)) {
     ltype = *source;
   }
+  m_builtinLTypeNames.insert(normalizeDwgTableName(lTypeName));
   (void)writeLTypeRecord(ltype);
 }
 
@@ -18360,6 +18361,7 @@ bool RS_FilterDXFRW::writeLTypeRecord(DRW_LType &ltype) {
 }
 
 void RS_FilterDXFRW::writeLTypes() {
+  m_builtinLTypeNames.clear();
   writeLType("CONTINUOUS", "Solid line", 0, 0, {});
   writeLType("ByLayer", "", 0, 0, {});
   writeLType("ByBlock", "", 0, 0, {});
@@ -18379,6 +18381,15 @@ void RS_FilterDXFRW::writeLTypes() {
              9.525, {6.35, -3.175});
   writeLType("DASHEDX2", "Dashed (2x) ____  ____  ____  ____  ____  ___", 2,
              38.1, {25.4, -12.7});
+  // acad.lin: HIDDEN A,.25,-.125 / HIDDEN2 A,.125,-.0625 / HIDDENX2 A,.5,-.25
+  writeLType("HIDDEN", "Hidden __ __ __ __ __ __ __ __ __ __ __ __ __ __", 2,
+             9.525, {6.35, -3.175});
+  writeLType("HIDDENTINY", "Hidden (.15x) _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _", 2,
+             1.42875, {0.9525, -0.47625});
+  writeLType("HIDDEN2", "Hidden (.5x) _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _", 2,
+             4.7625, {3.175, -1.5875});
+  writeLType("HIDDENX2", "Hidden (2x) ____ ____ ____ ____ ____ ____ ____", 2,
+             19.05, {12.7, -6.35});
   writeLType("DASHDOT", "Dash dot __ . __ . __ . __ . __ . __ . __ . __", 4,
              25.4, {12.7, -6.35, 0.0, -6.35});
   writeLType("DASHDOTTINY", "Dash dot (.15x) _._._._._._._._._._._._._._._.", 4,
@@ -18411,13 +18422,10 @@ void RS_FilterDXFRW::writeLTypes() {
              28.575, {19.05, -3.175, 3.175, -3.175});
   writeLType("CENTERX2", "Center (2x) ________  __  ________  __  _____", 4,
              101.6, {63.5, -12.7, 12.7, -12.7});
-  std::set<std::string> emittedNames{
-      "CONTINUOUS", "BYLAYER",    "BYBLOCK",     "DOT",        "DOTTINY",
-      "DOT2",       "DOTX2",      "DASHED",      "DASHEDTINY", "DASHED2",
-      "DASHEDX2",   "DASHDOT",    "DASHDOTTINY", "DASHDOT2",   "DASHDOTX2",
-      "DIVIDE",     "DIVIDETINY", "DIVIDE2",     "DIVIDEX2",   "BORDER",
-      "BORDERTINY", "BORDER2",    "BORDERX2",    "CENTER",     "CENTERTINY",
-      "CENTER2",    "CENTERX2"};
+  // Imported LTYPE records that are not part of the built-in table above are
+  // re-emitted as they came in; writeLType() records the built-in names so a
+  // new built-in type cannot end up written twice.
+  std::set<std::string> emittedNames = m_builtinLTypeNames;
   for (const auto &entry :
        m_graphic->dwgAdvancedMetadata().lineTypeTableEntries()) {
     if (!emittedNames.insert(normalizeDwgTableName(entry.first)).second)
@@ -31662,17 +31670,29 @@ RS2::LineType RS_FilterDXFRW::nameToLineType(const QString &name) {
     return RS2::DotLineX2;
   }
   if (uName == "ACAD_ISO02W100" || uName == "ACAD_ISO03W100" ||
-      uName == "DASHED" || uName == "HIDDEN") {
+      uName == "DASHED") {
     return RS2::DashLine;
   }
-  if (uName == "DASHEDTINY" || uName == "HIDDEN2") {
+  if (uName == "DASHEDTINY") {
     return RS2::DashLineTiny;
   }
-  if (uName == "DASHED2" || uName == "HIDDEN2") {
+  if (uName == "DASHED2") {
     return RS2::DashLine2;
   }
-  if (uName == "DASHEDX2" || uName == "HIDDENX2") {
+  if (uName == "DASHEDX2") {
     return RS2::DashLineX2;
+  }
+  if (uName == "HIDDEN") {
+    return RS2::HiddenLine;
+  }
+  if (uName == "HIDDENTINY") {
+    return RS2::HiddenLineTiny;
+  }
+  if (uName == "HIDDEN2") {
+    return RS2::HiddenLine2;
+  }
+  if (uName == "HIDDENX2") {
+    return RS2::HiddenLineX2;
   }
   if (uName == "ACAD_ISO10W100" || uName == "DASHDOT") {
     return RS2::DashDotLine;
@@ -31750,6 +31770,14 @@ QString RS_FilterDXFRW::lineTypeToName(RS2::LineType lineType) {
     return "DASHED2";
   case RS2::DashLineX2:
     return "DASHEDX2";
+  case RS2::HiddenLine:
+    return "HIDDEN";
+  case RS2::HiddenLineTiny:
+    return "HIDDENTINY";
+  case RS2::HiddenLine2:
+    return "HIDDEN2";
+  case RS2::HiddenLineX2:
+    return "HIDDENX2";
   case RS2::DashDotLine:
     return "DASHDOT";
   case RS2::DashDotLineTiny:
