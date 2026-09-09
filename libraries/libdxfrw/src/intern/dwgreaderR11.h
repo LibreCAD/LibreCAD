@@ -36,12 +36,82 @@ const char* preR13CodePageName(std::uint16_t numHeaderVars, std::uint16_t cp);
 /// document undecoded. Declared here so it can be unit tested.
 std::string preR13FixedText(dwgBuffer& buf, int width, DRW_TextCodec& codec);
 
+/// Decode a pre-R13 section-size field (blocks_size at file offset 0x20,
+/// extras_size at 0x28). AutoCAD keeps two flags in the top bits - 0x40000000
+/// on a section that is present, 0x80000000 on one that is absent - and the
+/// size itself is the low 30 bits, so clear exactly those two.
+///
+/// Masking any narrower silently truncates a section larger than the mask
+/// rather than rejecting it: a 24-bit mask turned the 22.5 MB blocks section
+/// of a real R11 drawing (blocks_size 0x41585E43) into a 5.6 MB one, and the
+/// read then failed on the record that straddled the false end. Declared here
+/// so it can be unit tested.
+constexpr std::uint32_t preR13SectionSize(std::uint32_t raw) {
+    return raw & 0x3FFFFFFFu;
+}
+
+/// Smallest STYLE record a pre-R13 file of this version may declare.
+/// R11 adds a 2-byte `used` field to R10's 194; R2.10 and older predate big
+/// fonts and stop after font_file, 64 bytes short of R10. A reader that
+/// demands R10's width rejects those older files outright.
+constexpr std::uint16_t preR13StyleRecordMinSize(DRW::Version version) {
+    if (version == DRW::AC1009)
+        return 196;
+    return version > DRW::AC210 ? 194 : 130;
+}
+
+/// Upper bound on how many records a pre-R13 entity section can hold.
+/// Each record advances by its own size field, which the walker rejects
+/// below 5 bytes. Deriving the bound from the section rather than fixing it
+/// at a constant matters: a constant that a large drawing exceeds does not
+/// degrade, it fails the whole file.
+constexpr std::uint64_t preR13MaxRecordCount(std::uint32_t start,
+                                             std::uint32_t end) {
+    return end <= start ? 0 : (static_cast<std::uint64_t>(end - start) / 5 + 1);
+}
+
+/// Which fields a pre-R13 VERTEX record carries, decoded from its `opts`
+/// word (libredwg dwg.h VERTEX_PFACE_FACE). The members are listed in the
+/// order they appear in the record body.
+///
+/// HAS_NOT_X_Y marks a polyface FACE record: it carries up to four vertex
+/// indices INSTEAD of a point. Reading a point there runs past the end of
+/// the record and takes the whole section down with it.
+struct PreR13VertexLayout {
+    bool hasPoint;        ///< 2RD, unless HAS_NOT_X_Y (0x4000)
+    bool hasStartWidth;   ///< RD, 0x01
+    bool hasEndWidth;     ///< RD, 0x02
+    bool hasBulge;        ///< RD, 0x04
+    bool hasFlag;         ///< RC, 0x08
+    bool hasTangent;      ///< RD, 0x10 - point records only
+    bool hasIndex1;       ///< RSd, 0x20  - face records only
+    bool hasIndex2;       ///< RSd, 0x40  - face records only
+    bool hasIndex3;       ///< RSd, 0x80  - face records only
+    bool hasIndex4;       ///< RSd, 0x100 - face records only
+};
+
+constexpr PreR13VertexLayout preR13VertexLayout(std::uint16_t opts) {
+    const bool isFace = (opts & 0x4000) != 0;
+    return PreR13VertexLayout{
+        !isFace,
+        !isFace && (opts & 0x0001) != 0,
+        !isFace && (opts & 0x0002) != 0,
+        !isFace && (opts & 0x0004) != 0,
+        (opts & 0x0008) != 0,
+        !isFace && (opts & 0x0010) != 0,
+        isFace && (opts & 0x0020) != 0,
+        isFace && (opts & 0x0040) != 0,
+        isFace && (opts & 0x0080) != 0,
+        isFace && (opts & 0x0100) != 0,
+    };
+}
+
 //! Class to read pre-R13 (R10/R11) DWG files
 /*!
 *  Reads the fixed pre-R13 container: file header section pointers, then the
 *  flat entity records in the ENTITIES section. Each record advances by its
 *  own size field, so unhandled entity types are skipped safely.
-*  @author Claude
+*  @author libdxfrw
 */
 class dwgReaderR11 : public dwgReader {
 public:

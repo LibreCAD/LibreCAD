@@ -1,6 +1,7 @@
 #ifndef DRW_TEXTCODEC_H
 #define DRW_TEXTCODEC_H
 
+#include <unordered_map>
 #include <string>
 #include <string_view>
 #include <memory>
@@ -53,6 +54,9 @@ public:
     std::string encodeText(const std::string& stmp);
     std::string decodeText(int c);
     std::string encodeNum(int c);
+    /// Turn one double-table cell into UTF-8, expanding the packed pair the
+    /// four big5-hkscs two-code-point sequences use.
+    std::string decodeTableValue(int v);
     int decodeNum(const std::string& s, int *b);
     /// Decode a `\M+cXXXX` MIF escape (8 chars; c=selector 1..5, XXXX=hex
     /// of a 2-byte sequence in the selector's codepage) to UTF-8.
@@ -61,6 +65,16 @@ public:
     std::string encodeMifText(const std::string& tok);
     const int *table{nullptr};
     int cpLength;
+
+protected:
+    /// Unicode -> DBCS, over the caller's cpLength-entry double table, built
+    /// once per converter. Filled in table order, so a repeated code point
+    /// keeps its first mapping - the one the linear scan this replaces
+    /// returned.
+    const std::unordered_map<int, int>& reverseIndex(const int (*doubles)[2]);
+
+private:
+    std::unordered_map<int, int> m_reverse;
 };
 
 class DRW_ConvUTF16 : public DRW_Converter {
@@ -90,7 +104,6 @@ public:
 private:
     const int *leadTable{nullptr};
     const int (*doubleTable)[2];
-
 };
 
 class DRW_Conv932Table : public DRW_Converter {

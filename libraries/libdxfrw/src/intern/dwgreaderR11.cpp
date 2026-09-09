@@ -146,18 +146,16 @@ bool dwgReaderR11::readFileHeader() {
     // Section-pointer block. Offsets (from libredwg header.spec pre-R13 branch):
     //   0x14 entities_start RL, 0x18 entities_end RL, 0x1C blocks_start RL,
     //   0x20 blocks_size RL, 0x24 extras_start RL, 0x28 extras_size RL.
-    // The *_size fields can carry sentinel high bits (0x40000000/0x80000000) and
-    // must be masked to 24 bits.
+    // The *_size fields keep flags in their top two bits; preR13SectionSize()
+    // clears them and explains why the mask cannot be narrower.
     if (!fileBuf->setPosition(0x14))
         return false;
     m_entitiesStart = fileBuf->getRawLong32();
     m_entitiesEnd = fileBuf->getRawLong32();
     m_blocksStart = fileBuf->getRawLong32();
-    std::uint32_t blocksSize = fileBuf->getRawLong32();
-    if (blocksSize > 0xFFFFFF) blocksSize &= 0xFFFFFF;
+    std::uint32_t blocksSize = preR13SectionSize(fileBuf->getRawLong32());
     m_extrasStart = fileBuf->getRawLong32();
-    std::uint32_t extrasSize = fileBuf->getRawLong32();
-    if (extrasSize > 0xFFFFFF) extrasSize &= 0xFFFFFF;
+    std::uint32_t extrasSize = preR13SectionSize(fileBuf->getRawLong32());
 
     const std::uint64_t fileSize = static_cast<std::uint64_t>(fileBuf->size());
     if (!fileBuf->isGood())
@@ -598,7 +596,9 @@ bool dwgReaderR11::readStyleTable(std::uint32_t hdrPos) {
     //   generation RC        last_height RD
     //   font_file 64 FIXED   bigfont_file 64 FIXED
     // R10 (AC1006) omits the 2-byte `used` field; the rest is identical.
+    // R2.10 and older predate big fonts and stop after font_file.
     const bool hasUsed = (version == DRW::AC1009);
+    const bool hasBigFont = (version > DRW::AC210);
     if (!fileBuf->setPosition(hdrPos))
         return false;
     const std::uint16_t recSize = fileBuf->getRawShort16();
@@ -607,8 +607,8 @@ bool dwgReaderR11::readStyleTable(std::uint32_t hdrPos) {
     const std::uint32_t addr = fileBuf->getRawLong32();
     if (!fileBuf->isGood())
         return false;
-    if (!validR11Table(recSize, recNum, addr, hasUsed ? 196 : 194,
-                       fileBuf->size()))
+    if (!validR11Table(recSize, recNum, addr,
+                       preR13StyleRecordMinSize(version), fileBuf->size()))
         return false;
     if (recNum == 0) {
         m_styleNames.clear();
@@ -635,7 +635,8 @@ bool dwgReaderR11::readStyleTable(std::uint32_t hdrPos) {
         const double lastHeight = fileBuf->getRawDouble();    // off60
         std::string font, bigFont;
         font = preR13FixedText(*fileBuf, 64, decoder);
-        bigFont = preR13FixedText(*fileBuf, 64, decoder);
+        if (hasBigFont)
+            bigFont = preR13FixedText(*fileBuf, 64, decoder);
         auto st = std::make_unique<DRW_Textstyle>();
         st->name = name;
         st->height = textSize;
@@ -810,10 +811,12 @@ bool dwgReaderR11::readEntitySection(std::uint32_t start, std::uint32_t end,
         return false;
     if (!fileBuf->setPosition(start))
         return false;
-    std::uint32_t guard = 0;
+    // Backstop only - forward progress is enforced after the call below.
+    const std::uint64_t maxRecords = preR13MaxRecordCount(start, end);
+    std::uint64_t guard = 0;
     while (fileBuf->getPosition() < end) {
         const std::uint64_t position = fileBuf->getPosition();
-        if (end - position < 4 || ++guard > 2000000)
+        if (end - position < 4 || ++guard > maxRecords)
             return false;
         if (!readEntityR11(intfa, end))
             return false;
@@ -1053,13 +1056,31 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa,
             if (opts & 0x01) m_curPoly->flags = fileBuf->getRawChar8(); // closed/3d bits
             break; }
         case R11_VERTEX: {
-            DRW_Coord p = fileBuf->get2RawDouble();
-            double bulge = 0.0;
-            if (opts & 0x01) rd();        // start width
-            if (opts & 0x02) rd();        // end width
-            if (opts & 0x04) bulge = rd();
+            // Body order (libredwg dwg.h VERTEX_PFACE_FACE): point 2RD
+            // unless HAS_NOT_X_Y, then start width, end width, bulge, flag
+            // RC, tangent RD, then the four face indices as RSd.
+            const PreR13VertexLayout layout = preR13VertexLayout(opts);
+            DRW_Vertex v;
+            const auto faceIndex = [&]() {
+                return static_cast<int>(
+                    static_cast<std::int16_t>(fileBuf->getRawShort16())); };
+            if (layout.hasPoint) {
+                v.basePoint = fileBuf->get2RawDouble();
+                v.basePoint.z = elevation;
+            }
+            if (layout.hasStartWidth) v.stawidth = rd();
+            if (layout.hasEndWidth) v.endwidth = rd();
+            if (layout.hasBulge) v.bulge = rd();
+            if (layout.hasFlag) v.flags = fileBuf->getRawChar8();
+            if (layout.hasTangent) v.tgdir = rd();
+            if (layout.hasIndex1) v.vindex1 = faceIndex();
+            if (layout.hasIndex2) v.vindex2 = faceIndex();
+            if (layout.hasIndex3) v.vindex3 = faceIndex();
+            if (layout.hasIndex4) v.vindex4 = faceIndex();
+            if (!layout.hasPoint)
+                v.setDwgSubtype(DRW_Vertex::DwgSubtype::PolyfaceFace);
             if (m_curPoly && fileBuf->isGood())
-                m_curPoly->addVertex(DRW_Vertex(p.x, p.y, elevation, bulge));
+                m_curPoly->addVertex(v);
             break; }
         case R11_SEQEND: {
             if (fileBuf->isGood() && m_curPoly) {
