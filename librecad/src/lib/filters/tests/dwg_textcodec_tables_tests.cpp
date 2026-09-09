@@ -60,3 +60,14 @@ TEST_CASE("an unmappable code point becomes a bare escape",
     CHECK(escaped.size() == 7);
     CHECK(escaped.find('\0') == std::string::npos);
 }
+TEST_CASE("windows-1255 maps the hole at 0xCA", "[dwg][dxf][codec]") {
+    // The Hebrew points run 0xC0+n -> U+05B0+n. 0xCA was the only gap,
+    // because U+05BA did not exist when the codepage was defined.
+    CHECK(decodeBytes("ANSI_1255", {0xC9}) == "\xD6\xB9");  // U+05B9
+    CHECK(decodeBytes("ANSI_1255", {0xCA}) == "\xD6\xBA");  // U+05BA
+    CHECK(decodeBytes("ANSI_1255", {0xCB}) == "\xD6\xBB");  // U+05BB
+
+    SECTION("and encodes back to the same byte") {
+        CHECK(encodeUtf8("ANSI_1255", "\xD6\xBA") == "\xCA");
+    }
+}
