@@ -596,7 +596,11 @@ bool dwgReaderR11::readStyleTable(std::uint32_t hdrPos) {
     //   generation RC        last_height RD
     //   font_file 64 FIXED   bigfont_file 64 FIXED
     // R10 (AC1006) omits the 2-byte `used` field; the rest is identical.
+    // R2.10 and older predate big fonts and stop after font_file, which is
+    // exactly the 64 bytes between their 130-byte record and R10's 194;
+    // preR13StyleRecordMinSize() carries the per-version widths.
     const bool hasUsed = (version == DRW::AC1009);
+    const bool hasBigFont = (version > DRW::AC210);
     if (!fileBuf->setPosition(hdrPos))
         return false;
     const std::uint16_t recSize = fileBuf->getRawShort16();
@@ -605,8 +609,8 @@ bool dwgReaderR11::readStyleTable(std::uint32_t hdrPos) {
     const std::uint32_t addr = fileBuf->getRawLong32();
     if (!fileBuf->isGood())
         return false;
-    if (!validR11Table(recSize, recNum, addr, hasUsed ? 196 : 194,
-                       fileBuf->size()))
+    if (!validR11Table(recSize, recNum, addr,
+                       preR13StyleRecordMinSize(version), fileBuf->size()))
         return false;
     if (recNum == 0) {
         m_styleNames.clear();
@@ -633,7 +637,8 @@ bool dwgReaderR11::readStyleTable(std::uint32_t hdrPos) {
         const double lastHeight = fileBuf->getRawDouble();    // off60
         std::string font, bigFont;
         font = preR13FixedText(*fileBuf, 64, decoder);
-        bigFont = preR13FixedText(*fileBuf, 64, decoder);
+        if (hasBigFont)
+            bigFont = preR13FixedText(*fileBuf, 64, decoder);
         auto st = std::make_unique<DRW_Textstyle>();
         st->name = name;
         st->height = textSize;
@@ -808,10 +813,17 @@ bool dwgReaderR11::readEntitySection(std::uint32_t start, std::uint32_t end,
         return false;
     if (!fileBuf->setPosition(start))
         return false;
-    std::uint32_t guard = 0;
+    // Every record advances by its own size field, which readEntityR11
+    // rejects below 5, so the section's own length bounds how many it can
+    // hold. A fixed 2,000,000 was below that bound for a large drawing: a
+    // 180 MB BLOCKS section holds far more, and tripping the cap failed the
+    // whole file. Forward progress is enforced after the call, so this is a
+    // backstop rather than the thing keeping the walk finite.
+    const std::uint64_t maxRecords = preR13MaxRecordCount(start, end);
+    std::uint64_t guard = 0;
     while (fileBuf->getPosition() < end) {
         const std::uint64_t position = fileBuf->getPosition();
-        if (end - position < 4 || ++guard > 2000000)
+        if (end - position < 4 || ++guard > maxRecords)
             return false;
         if (!readEntityR11(intfa, end))
             return false;
@@ -1051,13 +1063,38 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa,
             if (opts & 0x01) m_curPoly->flags = fileBuf->getRawChar8(); // closed/3d bits
             break; }
         case R11_VERTEX: {
-            DRW_Coord p = fileBuf->get2RawDouble();
-            double bulge = 0.0;
-            if (opts & 0x01) rd();        // start width
-            if (opts & 0x02) rd();        // end width
-            if (opts & 0x04) bulge = rd();
+            // The VERTEX body is opts-driven, in this order (libredwg
+            // dwg.h VERTEX_PFACE_FACE): the point 2RD unless HAS_NOT_X_Y,
+            // then 0x01 start width, 0x02 end width, 0x04 bulge, 0x08 flag
+            // RC, 0x10 tangent RD, and 0x20/0x40/0x80/0x100 the four face
+            // indices as RSd.
+            //
+            // HAS_NOT_X_Y (0x4000) marks a polyface FACE record, which
+            // carries indices INSTEAD of a point. Reading a point there ran
+            // past the end of the record, so any drawing holding a polyface
+            // mesh failed to open at all.
+            const PreR13VertexLayout layout = preR13VertexLayout(opts);
+            DRW_Vertex v;
+            const auto faceIndex = [&]() {
+                return static_cast<int>(
+                    static_cast<std::int16_t>(fileBuf->getRawShort16())); };
+            if (layout.hasPoint) {
+                v.basePoint = fileBuf->get2RawDouble();
+            }
+            v.basePoint.z = elevation;
+            if (layout.hasStartWidth) v.stawidth = rd();
+            if (layout.hasEndWidth) v.endwidth = rd();
+            if (layout.hasBulge) v.bulge = rd();
+            if (layout.hasFlag) v.flags = fileBuf->getRawChar8();
+            if (layout.hasTangent) v.tgdir = rd();
+            if (layout.hasIndex1) v.vindex1 = faceIndex();
+            if (layout.hasIndex2) v.vindex2 = faceIndex();
+            if (layout.hasIndex3) v.vindex3 = faceIndex();
+            if (layout.hasIndex4) v.vindex4 = faceIndex();
+            if (!layout.hasPoint)
+                v.setDwgSubtype(DRW_Vertex::DwgSubtype::PolyfaceFace);
             if (m_curPoly && fileBuf->isGood())
-                m_curPoly->addVertex(DRW_Vertex(p.x, p.y, elevation, bulge));
+                m_curPoly->addVertex(v);
             break; }
         case R11_SEQEND: {
             if (fileBuf->isGood() && m_curPoly) {
