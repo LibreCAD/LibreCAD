@@ -31820,9 +31820,6 @@ QString RS_FilterDXFRW::lineTypeToName(RS2::LineType lineType) {
     return "CONTINUOUS";
 }*/
 
-/**
- * Converts a DRW_LW_Conv::lineWidth into a RS2::LineWidth.
- */
 namespace {
 // The DXF/DWG line-weight encoding and LibreCAD's RS2::LineWidth are a
 // one-to-one mapping. numberToWidth() and widthToNumber() are the two
@@ -31862,8 +31859,33 @@ constexpr LineWidthPair kLineWidthPairs[] = {
     {DRW_LW_Conv::width22, RS2::Width22},
     {DRW_LW_Conv::width23, RS2::Width23},
 };
+
+// The pair of switches this table replaced could not carry a duplicate case
+// label - the compiler rejected it.  Keep that guarantee here: both lookups
+// return the first matching row, so a repeated value on either side would
+// silently shadow a later one instead of failing the build.
+constexpr bool lineWidthPairsAreOneToOne() {
+    constexpr std::size_t count =
+        sizeof(kLineWidthPairs) / sizeof(kLineWidthPairs[0]);
+    for (std::size_t i = 0; i < count; ++i) {
+        for (std::size_t j = i + 1; j < count; ++j) {
+            if (kLineWidthPairs[i].drw == kLineWidthPairs[j].drw
+                || kLineWidthPairs[i].rs == kLineWidthPairs[j].rs)
+                return false;
+        }
+    }
+    return true;
+}
+
+static_assert(lineWidthPairsAreOneToOne(),
+              "kLineWidthPairs: every DRW_LW_Conv::lineWidth and every "
+              "RS2::LineWidth may appear once, so neither direction of the "
+              "lookup can shadow a later row");
 } // namespace
 
+/**
+ * Converts a DRW_LW_Conv::lineWidth into a RS2::LineWidth.
+ */
 RS2::LineWidth RS_FilterDXFRW::numberToWidth(DRW_LW_Conv::lineWidth lw) {
   for (const LineWidthPair &pair : kLineWidthPairs) {
     if (pair.drw == lw)
@@ -31872,6 +31894,9 @@ RS2::LineWidth RS_FilterDXFRW::numberToWidth(DRW_LW_Conv::lineWidth lw) {
   return RS2::WidthDefault;
 }
 
+/**
+ * Converts a RS2::LineWidth into an DRW_LW_Conv::lineWidth.
+ */
 DRW_LW_Conv::lineWidth RS_FilterDXFRW::widthToNumber(RS2::LineWidth width) {
   for (const LineWidthPair &pair : kLineWidthPairs) {
     if (pair.rs == width)
