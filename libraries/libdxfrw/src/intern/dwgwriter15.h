@@ -269,7 +269,9 @@ protected:
     /// common object state and table-entry EED, then wrap the type's own
     /// encodeDwg() in the standard record preamble.  Only the DRW type and
     /// the DWG object-type code differ between the emitters below, so each
-    /// of them is a single call into this.
+    /// of them is a single call into this.  Defined in dwgwriter15.cpp and
+    /// instantiated only there, so a derived writer in another translation
+    /// unit cannot call it without moving the definition here first.
     template <typename T>
     bool emitTableRecord(std::uint32_t handle, const T& source,
                          std::uint16_t objectType);
@@ -278,6 +280,9 @@ protected:
     /// common object state and table-entry EED, mint or reserve the handle,
     /// register the class and emit the object.  Only the payload type, the
     /// minimum version and the register/emit pair differ between them.
+    /// Defined in dwgwriter15.cpp and instantiated only there, so a derived
+    /// writer in another translation unit cannot call it without moving the
+    /// definition here first.
     template <typename T>
     bool writeTypedObject(
         const T& source, DRW::Version minVersion,
