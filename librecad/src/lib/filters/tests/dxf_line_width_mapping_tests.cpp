@@ -26,6 +26,7 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+#include <iterator>
 #include <vector>
 
 #include "drw_base.h"
@@ -98,4 +99,30 @@ TEST_CASE("DXF line-width mapping round-trips in both directions",
         const auto bogus = static_cast<DRW_LW_Conv::lineWidth>(99);
         CHECK(RS_FilterDXFRW::numberToWidth(bogus) == RS2::WidthDefault);
     }
+}
+
+TEST_CASE("DXF line widths map to the standard lineweight values",
+          "[dxf][filter][linewidth]") {
+    // The round-trip and injectivity checks above hold just as well for a table
+    // shifted by one, so pin the values themselves. RS2::LineWidth is the DXF
+    // lineweight in hundredths of a millimetre, and DRW_LW_Conv::widthNN is the
+    // index into AutoCAD's standard lineweight list, so the expected values are
+    // that list and do not come from the mapping under test.
+    static constexpr int kStandardLineweights[] = {
+        0, 5, 9, 13, 15, 18, 20, 25, 30, 35, 40, 50,
+        53, 60, 70, 80, 90, 100, 106, 120, 140, 158, 200, 211};
+
+    for (int i = 0; i < static_cast<int>(std::size(kStandardLineweights)); ++i) {
+        const auto encoded = static_cast<DRW_LW_Conv::lineWidth>(i);
+        INFO("width" << (i < 10 ? "0" : "") << i);
+        CHECK(static_cast<int>(RS_FilterDXFRW::numberToWidth(encoded))
+              == kStandardLineweights[i]);
+        CHECK(RS_FilterDXFRW::widthToNumber(
+                  static_cast<RS2::LineWidth>(kStandardLineweights[i])) == encoded);
+    }
+
+    // The three sentinels carry the negative DXF codes.
+    CHECK(static_cast<int>(RS_FilterDXFRW::numberToWidth(DRW_LW_Conv::widthByLayer)) == -1);
+    CHECK(static_cast<int>(RS_FilterDXFRW::numberToWidth(DRW_LW_Conv::widthByBlock)) == -2);
+    CHECK(static_cast<int>(RS_FilterDXFRW::numberToWidth(DRW_LW_Conv::widthDefault)) == -3);
 }
