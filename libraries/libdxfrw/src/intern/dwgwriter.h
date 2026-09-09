@@ -15,11 +15,11 @@
 #define DWGWRITER_H
 
 #include <algorithm>
+#include <cstddef>
 #include <fstream>
 #include <limits>
 #include <map>
 #include <set>
-#include <cstring>
 #include <string>
 #include <utility>
 #include <vector>
@@ -168,9 +168,23 @@ constexpr bool dwgClassTextNonEmpty(const char* text) {
     return text != nullptr && *text != '\0';
 }
 
+constexpr std::size_t kDwgTypedClassRowCount =
+    sizeof(kDwgTypedClassRows) / sizeof(kDwgTypedClassRows[0]);
+
+// Resolve a row key to its index while compiling.  Returns the row count for a
+// key that is not in the table; registerTypedObjectClassRow() turns that into a
+// build failure, so a mistyped key can no longer compile and then show up at
+// write time as a class registration that quietly refused.
+constexpr std::size_t dwgTypedClassRowIndex(const char* key) {
+    for (std::size_t i = 0; i < kDwgTypedClassRowCount; ++i) {
+        if (dwgClassTextEqual(kDwgTypedClassRows[i].key, key))
+            return i;
+    }
+    return kDwgTypedClassRowCount;
+}
+
 constexpr bool dwgTypedClassRowsAreWellFormed() {
-    constexpr std::size_t count =
-        sizeof(kDwgTypedClassRows) / sizeof(kDwgTypedClassRows[0]);
+    constexpr std::size_t count = kDwgTypedClassRowCount;
     for (std::size_t i = 0; i < count; ++i) {
         const DwgTypedClassRow& a = kDwgTypedClassRows[i];
         if (!dwgClassTextNonEmpty(a.key) || !dwgClassTextNonEmpty(a.appName)
@@ -836,55 +850,56 @@ public:
         return m_rawObjectOverrides.count({objectType, handle}) != 0;
     }
 
-    /// Register a typed OBJECT class from kDwgTypedClassRows.  The per-type
-    /// registrars below are thin wrappers so their names remain the writer's
-    /// API; registrars needing extra logic keep their own bodies.
-    bool registerTypedObjectClassRow(const char* key, std::uint32_t handle) {
-        for (const DwgTypedClassRow& row : kDwgTypedClassRows) {
-            if (std::strcmp(row.key, key) != 0)
-                continue;
-            DwgClassDefinition definition;
-            definition.m_classNum = row.classNum;
-            definition.m_proxyFlag = row.proxyFlag;
-            definition.m_appName = row.appName;
-            definition.m_className = row.className;
-            definition.m_recordName = row.recordName;
-            definition.m_entityFlagRaw = row.entityFlagRaw;
-            return registerTypedObjectClass(definition, handle);
-        }
-        return false;
+    /// Register a typed OBJECT class from kDwgTypedClassRows.  The row is
+    /// selected by index, resolved from its key by dwgTypedClassRowIndex()
+    /// while compiling, so a key the table does not carry fails the build.
+    /// The per-type registrars below are thin wrappers so their names remain
+    /// the writer's API; registrars needing extra logic keep their own bodies.
+    template <std::size_t Index>
+    bool registerTypedObjectClassRow(std::uint32_t handle) {
+        static_assert(Index < kDwgTypedClassRowCount,
+                      "no row in kDwgTypedClassRows carries this key");
+        const DwgTypedClassRow& row = kDwgTypedClassRows[Index];
+        DwgClassDefinition definition;
+        definition.m_classNum = row.classNum;
+        definition.m_proxyFlag = row.proxyFlag;
+        definition.m_appName = row.appName;
+        definition.m_className = row.className;
+        definition.m_recordName = row.recordName;
+        definition.m_entityFlagRaw = row.entityFlagRaw;
+        return registerTypedObjectClass(definition, handle);
     }
 
     bool registerSunObjectClass(std::uint32_t handle = 0) {
-        return registerTypedObjectClassRow("Sun", handle);
+        return registerTypedObjectClassRow<dwgTypedClassRowIndex("Sun")>(handle);
     }
 
     bool registerTvDevicePropertiesObjectClass(std::uint32_t handle = 0) {
-        return registerTypedObjectClassRow("TvDeviceProperties", handle);
+        return registerTypedObjectClassRow<dwgTypedClassRowIndex("TvDeviceProperties")>(handle);
     }
 
     bool registerVxControlObjectClass(std::uint32_t handle = 0) {
-        return registerTypedObjectClassRow("VxControl", handle);
+        return registerTypedObjectClassRow<dwgTypedClassRowIndex("VxControl")>(handle);
     }
 
     bool registerVxTableRecordObjectClass(std::uint32_t handle = 0) {
-        return registerTypedObjectClassRow("VxTableRecord", handle);
+        return registerTypedObjectClassRow<dwgTypedClassRowIndex("VxTableRecord")>(handle);
     }
 
     bool registerMLeaderStyleObjectClass(std::uint32_t handle = 0) {
-        return registerTypedObjectClassRow("MLeaderStyle", handle);
+        return registerTypedObjectClassRow<dwgTypedClassRowIndex("MLeaderStyle")>(handle);
     }
 
     bool registerTableStyleObjectClass(std::uint32_t handle = 0) {
-        return registerTypedObjectClassRow("TableStyle", handle);
+        return registerTypedObjectClassRow<dwgTypedClassRowIndex("TableStyle")>(handle);
     }
 
     bool registerMaterialObjectClass(std::uint32_t handle = 0) {
-        return registerTypedObjectClassRow("Material", handle);
+        return registerTypedObjectClassRow<dwgTypedClassRowIndex("Material")>(handle);
     }
 
     bool registerDbColorObjectClass(std::uint32_t handle = 0) {
-        return registerTypedObjectClassRow("DbColor", handle);
+        return registerTypedObjectClassRow<dwgTypedClassRowIndex("DbColor")>(handle);
     }
 
     bool registerPlotSettingsObjectClass(std::uint32_t handle = 0) {
@@ -960,27 +975,27 @@ public:
     }
 
     bool registerSunStudyObjectClass(std::uint32_t handle = 0) {
-        return registerTypedObjectClassRow("SunStudy", handle);
+        return registerTypedObjectClassRow<dwgTypedClassRowIndex("SunStudy")>(handle);
     }
 
     bool registerMotionPathObjectClass(std::uint32_t handle = 0) {
-        return registerTypedObjectClassRow("MotionPath", handle);
+        return registerTypedObjectClassRow<dwgTypedClassRowIndex("MotionPath")>(handle);
     }
 
     bool registerCurvePathObjectClass(std::uint32_t handle = 0) {
-        return registerTypedObjectClassRow("CurvePath", handle);
+        return registerTypedObjectClassRow<dwgTypedClassRowIndex("CurvePath")>(handle);
     }
 
     bool registerPointPathObjectClass(std::uint32_t handle = 0) {
-        return registerTypedObjectClassRow("PointPath", handle);
+        return registerTypedObjectClassRow<dwgTypedClassRowIndex("PointPath")>(handle);
     }
 
     bool registerPartialViewingIndexObjectClass(std::uint32_t handle = 0) {
-        return registerTypedObjectClassRow("PartialViewingIndex", handle);
+        return registerTypedObjectClassRow<dwgTypedClassRowIndex("PartialViewingIndex")>(handle);
     }
 
     bool registerObjectPtrObjectClass(std::uint32_t handle = 0) {
-        return registerTypedObjectClassRow("ObjectPtr", handle);
+        return registerTypedObjectClassRow<dwgTypedClassRowIndex("ObjectPtr")>(handle);
     }
 
     bool registerRenderSettingsObjectClass(
@@ -1030,23 +1045,23 @@ public:
     }
 
     bool registerVisualStyleObjectClass(std::uint32_t handle = 0) {
-        return registerTypedObjectClassRow("VisualStyle", handle);
+        return registerTypedObjectClassRow<dwgTypedClassRowIndex("VisualStyle")>(handle);
     }
 
     bool registerEvaluationGraphObjectClass(std::uint32_t handle = 0) {
-        return registerTypedObjectClassRow("EvaluationGraph", handle);
+        return registerTypedObjectClassRow<dwgTypedClassRowIndex("EvaluationGraph")>(handle);
     }
 
     bool registerDimensionAssociationObjectClass(std::uint32_t handle = 0) {
-        return registerTypedObjectClassRow("DimensionAssociation", handle);
+        return registerTypedObjectClassRow<dwgTypedClassRowIndex("DimensionAssociation")>(handle);
     }
 
     bool registerRasterVariablesObjectClass(std::uint32_t handle = 0) {
-        return registerTypedObjectClassRow("RasterVariables", handle);
+        return registerTypedObjectClassRow<dwgTypedClassRowIndex("RasterVariables")>(handle);
     }
 
     bool registerWipeoutVariablesObjectClass(std::uint32_t handle = 0) {
-        return registerTypedObjectClassRow("WipeoutVariables", handle);
+        return registerTypedObjectClassRow<dwgTypedClassRowIndex("WipeoutVariables")>(handle);
     }
 
     bool registerWipeoutEntityClass() {
@@ -1107,61 +1122,61 @@ public:
     }
 
     bool registerNavisworksModelDefObjectClass(std::uint32_t handle = 0) {
-        return registerTypedObjectClassRow("NavisworksModelDef", handle);
+        return registerTypedObjectClassRow<dwgTypedClassRowIndex("NavisworksModelDef")>(handle);
     }
 
     bool registerPointCloudColorMapObjectClass(std::uint32_t handle = 0) {
-        return registerTypedObjectClassRow("PointCloudColorMap", handle);
+        return registerTypedObjectClassRow<dwgTypedClassRowIndex("PointCloudColorMap")>(handle);
     }
 
     bool registerGeoDataObjectClass(std::uint32_t handle = 0) {
-        return registerTypedObjectClassRow("GeoData", handle);
+        return registerTypedObjectClassRow<dwgTypedClassRowIndex("GeoData")>(handle);
     }
 
     bool registerSpatialFilterObjectClass(std::uint32_t handle = 0) {
-        return registerTypedObjectClassRow("SpatialFilter", handle);
+        return registerTypedObjectClassRow<dwgTypedClassRowIndex("SpatialFilter")>(handle);
     }
 
     // PR 8d.2a — five small no-storage OBJECTS families.  All are custom-class
     // (≥ 500); recName / className strings follow the dwgreader.cpp dispatch
     // (case-sensitive look-up against classesmap).
     bool registerScaleObjectClass(std::uint32_t handle = 0) {
-        return registerTypedObjectClassRow("Scale", handle);
+        return registerTypedObjectClassRow<dwgTypedClassRowIndex("Scale")>(handle);
     }
 
     bool registerIDBufferObjectClass(std::uint32_t handle = 0) {
-        return registerTypedObjectClassRow("IDBuffer", handle);
+        return registerTypedObjectClassRow<dwgTypedClassRowIndex("IDBuffer")>(handle);
     }
 
     bool registerLayerIndexObjectClass(std::uint32_t handle = 0) {
-        return registerTypedObjectClassRow("LayerIndex", handle);
+        return registerTypedObjectClassRow<dwgTypedClassRowIndex("LayerIndex")>(handle);
     }
 
     bool registerSpatialIndexObjectClass(std::uint32_t handle = 0) {
-        return registerTypedObjectClassRow("SpatialIndex", handle);
+        return registerTypedObjectClassRow<dwgTypedClassRowIndex("SpatialIndex")>(handle);
     }
 
     bool registerDictionaryVarObjectClass(std::uint32_t handle = 0) {
-        return registerTypedObjectClassRow("DictionaryVar", handle);
+        return registerTypedObjectClassRow<dwgTypedClassRowIndex("DictionaryVar")>(handle);
     }
 
     // PR 8d.2b — four larger no-storage OBJECTS families.  Same shape as
     // PR 8d.2a; recName / className strings follow the dwgreader.cpp dispatch
     // (case-sensitive look-up against classesmap).
     bool registerDictionaryWithDefaultObjectClass(std::uint32_t handle = 0) {
-        return registerTypedObjectClassRow("DictionaryWithDefault", handle);
+        return registerTypedObjectClassRow<dwgTypedClassRowIndex("DictionaryWithDefault")>(handle);
     }
 
     bool registerSortEntsTableObjectClass(std::uint32_t handle = 0) {
-        return registerTypedObjectClassRow("SortEntsTable", handle);
+        return registerTypedObjectClassRow<dwgTypedClassRowIndex("SortEntsTable")>(handle);
     }
 
     bool registerFieldListObjectClass(std::uint32_t handle = 0) {
-        return registerTypedObjectClassRow("FieldList", handle);
+        return registerTypedObjectClassRow<dwgTypedClassRowIndex("FieldList")>(handle);
     }
 
     bool registerFieldObjectClass(std::uint32_t handle = 0) {
-        return registerTypedObjectClassRow("Field", handle);
+        return registerTypedObjectClassRow<dwgTypedClassRowIndex("Field")>(handle);
     }
 
     bool registerSectionObjectClass(DRW_Section::Kind kind,
