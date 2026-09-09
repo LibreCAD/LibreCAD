@@ -59,6 +59,16 @@ TEST_CASE("an unmappable code point becomes a bare escape",
     CHECK(escaped == "\\U+4E00");
     CHECK(escaped.size() == 7);
     CHECK(escaped.find('\0') == std::string::npos);
+
+    SECTION("a code point above the BMP does not become a five-digit escape") {
+        // The escape carries exactly four hex digits and the reader consumes
+        // exactly four, so a fifth silently splits one character into two:
+        // U+20021 came back as U+2002 followed by '1'. Big5 gained 1713
+        // supplementary mappings with the hkscs rows, so this is reachable.
+        const std::string smp = encodeUtf8("ANSI_1252", "\xF0\xA0\x80\xA1"); // U+20021
+        CHECK(smp == "?");
+        CHECK(smp.find("\\U+") == std::string::npos);
+    }
 }
 TEST_CASE("windows-1255 maps the hole at 0xCA", "[dwg][dxf][codec]") {
     // The Hebrew points run 0xC0+n -> U+05B0+n. 0xCA was the only gap,

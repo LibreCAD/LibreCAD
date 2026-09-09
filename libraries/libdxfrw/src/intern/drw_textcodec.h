@@ -62,6 +62,16 @@ public:
     std::string encodeMifText(const std::string& tok);
     const int *table{nullptr};
     int cpLength;
+
+protected:
+    /// Unicode -> DBCS, over the caller's cpLength-entry double table, built
+    /// once per converter. Filled in table order, so a repeated code point
+    /// keeps its first mapping - the one the linear scan this replaces
+    /// returned.
+    const std::unordered_map<int, int>& reverseIndex(const int (*doubles)[2]);
+
+private:
+    std::unordered_map<int, int> m_reverse;
 };
 
 class DRW_ConvUTF16 : public DRW_Converter {
@@ -89,14 +99,8 @@ public:
     std::string fromUtf8(std::string_view s) override;
     std::string toUtf8(std::string_view s) override;
 private:
-    /// Unicode -> DBCS, built once per converter. Filled in table order, so a
-    /// repeated code point keeps its first mapping - the one the linear scan
-    /// this replaces returned.
-    const std::unordered_map<int, int>& reverseIndex();
-
     const int *leadTable{nullptr};
     const int (*doubleTable)[2];
-    std::unordered_map<int, int> m_reverse;
 };
 
 class DRW_Conv932Table : public DRW_Converter {

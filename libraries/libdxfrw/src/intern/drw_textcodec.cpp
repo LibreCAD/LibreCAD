@@ -303,6 +303,13 @@ std::string DRW_Converter::encodeMifText(const std::string &tok){
 }
 
 std::string DRW_Converter::decodeText(int c){
+    // \U+ carries exactly four hex digits, so it cannot express a code point
+    // above the BMP. %04X is a minimum width, not a maximum, and the reader
+    // side reads a fixed four: emitting five digits made U+20021 come back as
+    // U+2002 followed by '1'. Fall back to the same '?' an unmappable
+    // double-byte sequence already produces.
+    if (c < 0 || c > 0xFFFF)
+        return "?";
     // Format into a bounded buffer, not a sized std::string: such a string
     // keeps its padding NULs, which the DXF writers reject and putCP8Text
     // would embed in the file.
@@ -362,18 +369,19 @@ int DRW_Converter::decodeNum(const std::string &s, int *b){
 }
 
 
-const std::unordered_map<int, int>& DRW_ConvDBCSTable::reverseIndex() {
-    if (m_reverse.empty() && cpLength > 0) {
+const std::unordered_map<int, int>& DRW_Converter::reverseIndex(
+        const int (*doubles)[2]) {
+    if (m_reverse.empty() && cpLength > 0 && doubles != nullptr) {
         m_reverse.reserve(static_cast<std::size_t>(cpLength));
         for (int k = 0; k < cpLength; ++k) {
-            m_reverse.emplace(doubleTable[k][1], doubleTable[k][0]);
+            m_reverse.emplace(doubles[k][1], doubles[k][0]);
         }
     }
     return m_reverse;
 }
 
 std::string DRW_ConvDBCSTable::fromUtf8(std::string_view s) {
-    const auto& index = reverseIndex();
+    const auto& index = reverseIndex(doubleTable);
     std::string result;
     int code;
 
@@ -460,6 +468,7 @@ DRW_Conv932Table::DRW_Conv932Table()
 }
 
 std::string DRW_Conv932Table::fromUtf8(std::string_view s) {
+    const auto& index = reverseIndex(DRW_DoubleTable932);
     std::string result;
     bool notFound;
     int code;
@@ -482,17 +491,11 @@ std::string DRW_Conv932Table::fromUtf8(std::string_view s) {
             }
             if (notFound && ( code<0xF8 || (code>0x390 && code<0x542) ||
                     (code>0x200F && code<0x9FA1) || code>0xF928 )) {
-                for (int k=0; k<cpLength; k++){
-                    if(DRW_DoubleTable932[k][1] == code) {
-                        int data = DRW_DoubleTable932[k][0];
-                        char d[3];
-                        d[0] = data >> 8;
-                        d[1] = data & 0xFF;
-                        d[2]= '\0';
-                        result += d; //translate from table
-                        notFound = false;
-                        break;
-                    }
+                const auto it = index.find(code);
+                if (it != index.end()) {
+                    result += static_cast<char>(it->second >> 8);
+                    result += static_cast<char>(it->second & 0xFF);
+                    notFound = false;
                 }
             }
             if (notFound)
