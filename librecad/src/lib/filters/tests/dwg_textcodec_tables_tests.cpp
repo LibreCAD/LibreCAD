@@ -71,3 +71,22 @@ TEST_CASE("windows-1255 maps the hole at 0xCA", "[dwg][dxf][codec]") {
         CHECK(encodeUtf8("ANSI_1255", "\xD6\xBA") == "\xCA");
     }
 }
+TEST_CASE("every double-byte entry is reachable through its lead byte",
+          "[dwg][dxf][codec]") {
+    // The lead table indexes ranges of the double table, so an off-by-one
+    // there silently drops mappings that are present in the data: the
+    // decoder just answers '?'. These are entries that were unreachable.
+    SECTION("cp936 entries that sat in the wrong bucket") {
+        CHECK(decodeBytes("ANSI_936", {0xA0, 0x40}) == "\xE7\x87\x96"); // U+71D6
+        CHECK(decodeBytes("ANSI_936", {0xA0, 0x41}) == "\xE7\x87\x97"); // U+71D7
+    }
+    SECTION("cp949 entries that sat in the wrong bucket, and its last entry") {
+        CHECK(decodeBytes("ANSI_949", {0x84, 0x41}) == "\xEA\xBB\xA6"); // U+AEE6
+        CHECK(decodeBytes("ANSI_949", {0xFD, 0xFE}) == "\xE8\xA9\xB0"); // U+8A70
+    }
+    SECTION("cp950 entries that sat in the wrong bucket, and its last entry") {
+        CHECK(decodeBytes("ANSI_950", {0xC4, 0x40}) == "\xE9\xA1\x98"); // U+9858
+        CHECK(decodeBytes("ANSI_950", {0xC4, 0x49}) == "\xE9\xAF\xA7"); // U+9BE7
+        CHECK(decodeBytes("ANSI_950", {0xF9, 0xFE}) == "\xE2\x96\x93"); // U+2593
+    }
+}

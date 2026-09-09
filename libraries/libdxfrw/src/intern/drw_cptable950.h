@@ -1,52 +1,57 @@
 #ifndef DRW_CPTABLE950_H
 #define DRW_CPTABLE950_H
 
-//Chinese (Taiwan, Hong Kong SAR)
+//Chinese Big5 (cp950) plus the big5-hkscs extension
 
-//first entry in this table are 0x80
+//first entry in this tables are 0x80
+
 #define CPOFFSET950 0x80
 #define CPLENGTH950 13503
 #define NOTFOUND950 0x003F
 
 //Table 950 one byte
-static const int DRW_Table950[1] = {
+static const int DRW_Table950[] = {
+    0x20AC  //1 #EURO SIGN
 };
 
-//Table 950 lead byte
 //pairs of start/end in DRW_DoubleTable950
+//leadTable[i] is the first index whose lead byte is 0x81+i, so the
+//range for lead c is [leadTable[c-0x81], leadTable[c-0x80]).  The last
+//two entries are the total, which both terminates lead 0xFE and keeps
+//a stray 0xFF lead byte inside the array.
 static const int DRW_LeadTable950[] = {
-    0, //1#DBCS LEAD BYTE 0x81, empty
-    0, //2#DBCS LEAD BYTE 0x82, empty
-    0, //3#DBCS LEAD BYTE 0x83, empty
-    0, //4#DBCS LEAD BYTE 0x84, empty
-    0, //5#DBCS LEAD BYTE 0x85, empty
-    0, //6#DBCS LEAD BYTE 0x86, empty
-    0, //7#DBCS LEAD BYTE 0x87, empty
-    0, //8#DBCS LEAD BYTE 0x88, empty
-    0, //9#DBCS LEAD BYTE 0x89, empty
-    0, //10#DBCS LEAD BYTE 0x8A, empty
-    0, //11#DBCS LEAD BYTE 0x8B, empty
-    0, //12#DBCS LEAD BYTE 0x8C, empty
-    0, //13#DBCS LEAD BYTE 0x8D, empty
-    0, //14#DBCS LEAD BYTE 0x8E, empty
-    0, //15#DBCS LEAD BYTE 0x8F, empty
-    0, //16#DBCS LEAD BYTE 0x90, empty
-    0, //17#DBCS LEAD BYTE 0x91, empty
-    0, //18#DBCS LEAD BYTE 0x92, empty
-    0, //19#DBCS LEAD BYTE 0x93, empty
-    0, //20#DBCS LEAD BYTE 0x94, empty
-    0, //21#DBCS LEAD BYTE 0x95, empty
-    0, //22#DBCS LEAD BYTE 0x96, empty
-    0, //23#DBCS LEAD BYTE 0x97, empty
-    0, //24#DBCS LEAD BYTE 0x98, empty
-    0, //25#DBCS LEAD BYTE 0x99, empty
-    0, //26#DBCS LEAD BYTE 0x9A, empty
-    0, //27#DBCS LEAD BYTE 0x9B, empty
-    0, //28#DBCS LEAD BYTE 0x9C, empty
-    0, //29#DBCS LEAD BYTE 0x9D, empty
-    0, //30#DBCS LEAD BYTE 0x9E, empty
-    0, //31#DBCS LEAD BYTE 0x9F, empty
-    0, //32#DBCS LEAD BYTE 0xA0, empty
+    0, //1#DBCS LEAD BYTE 0x81
+    0, //2#DBCS LEAD BYTE 0x82
+    0, //3#DBCS LEAD BYTE 0x83
+    0, //4#DBCS LEAD BYTE 0x84
+    0, //5#DBCS LEAD BYTE 0x85
+    0, //6#DBCS LEAD BYTE 0x86
+    0, //7#DBCS LEAD BYTE 0x87
+    0, //8#DBCS LEAD BYTE 0x88
+    0, //9#DBCS LEAD BYTE 0x89
+    0, //10#DBCS LEAD BYTE 0x8A
+    0, //11#DBCS LEAD BYTE 0x8B
+    0, //12#DBCS LEAD BYTE 0x8C
+    0, //13#DBCS LEAD BYTE 0x8D
+    0, //14#DBCS LEAD BYTE 0x8E
+    0, //15#DBCS LEAD BYTE 0x8F
+    0, //16#DBCS LEAD BYTE 0x90
+    0, //17#DBCS LEAD BYTE 0x91
+    0, //18#DBCS LEAD BYTE 0x92
+    0, //19#DBCS LEAD BYTE 0x93
+    0, //20#DBCS LEAD BYTE 0x94
+    0, //21#DBCS LEAD BYTE 0x95
+    0, //22#DBCS LEAD BYTE 0x96
+    0, //23#DBCS LEAD BYTE 0x97
+    0, //24#DBCS LEAD BYTE 0x98
+    0, //25#DBCS LEAD BYTE 0x99
+    0, //26#DBCS LEAD BYTE 0x9A
+    0, //27#DBCS LEAD BYTE 0x9B
+    0, //28#DBCS LEAD BYTE 0x9C
+    0, //29#DBCS LEAD BYTE 0x9D
+    0, //30#DBCS LEAD BYTE 0x9E
+    0, //31#DBCS LEAD BYTE 0x9F
+    0, //32#DBCS LEAD BYTE 0xA0
     0, //33#DBCS LEAD BYTE 0xA1
     157, //34#DBCS LEAD BYTE 0xA2
     314, //35#DBCS LEAD BYTE 0xA3
@@ -82,11 +87,11 @@ static const int DRW_LeadTable950[] = {
     4962, //65#DBCS LEAD BYTE 0xC1
     5119, //66#DBCS LEAD BYTE 0xC2
     5276, //67#DBCS LEAD BYTE 0xC3
-    5443, //68#DBCS LEAD BYTE 0xC4
+    5433, //68#DBCS LEAD BYTE 0xC4
     5590, //69#DBCS LEAD BYTE 0xC5
     5747, //70#DBCS LEAD BYTE 0xC6
-    5810, //71#DBCS LEAD BYTE 0xC7, empty
-    5810, //72#DBCS LEAD BYTE 0xC8, empty
+    5810, //71#DBCS LEAD BYTE 0xC7
+    5810, //72#DBCS LEAD BYTE 0xC8
     5810, //73#DBCS LEAD BYTE 0xC9
     5967, //74#DBCS LEAD BYTE 0xCA
     6124, //75#DBCS LEAD BYTE 0xCB
@@ -136,15 +141,16 @@ static const int DRW_LeadTable950[] = {
     13032, //119#DBCS LEAD BYTE 0xF7
     13189, //120#DBCS LEAD BYTE 0xF8
     13346, //121#DBCS LEAD BYTE 0xF9
-    13502, //122#DBCS LEAD BYTE 0xFA, empty
-    13502, //123#DBCS LEAD BYTE 0xFB, empty
-    13502, //124#DBCS LEAD BYTE 0xFC, empty
-    13502, //125#DBCS LEAD BYTE 0xFD, empty
-    13502, //126#DBCS LEAD BYTE 0xFE, empty
-    13502, //127#UNDEFINED 0xFF, END OF TABLE
+    13503, //122#DBCS LEAD BYTE 0xFA
+    13503, //123#DBCS LEAD BYTE 0xFB
+    13503, //124#DBCS LEAD BYTE 0xFC
+    13503, //125#DBCS LEAD BYTE 0xFD
+    13503, //126#DBCS LEAD BYTE 0xFE
+    13503, //127#END OF TABLE
+    13503 //128#END OF TABLE
 };
 
-//Table 950 tail byte
+//Table 950
 static const int DRW_DoubleTable950[][2] = {
     {0xA140, 0x3000}, //1 #IDEOGRAPHIC SPACE
     {0xA141, 0xFF0C}, //2 #FULLWIDTH COMMA
@@ -13648,7 +13654,7 @@ static const int DRW_DoubleTable950[][2] = {
     {0xF9FB, 0x256E}, //13500 #BOX DRAWINGS LIGHT ARC DOWN AND LEFT
     {0xF9FC, 0x2570}, //13501 #BOX DRAWINGS LIGHT ARC UP AND RIGHT
     {0xF9FD, 0x256F}, //13502 #BOX DRAWINGS LIGHT ARC UP AND LEFT
-    {0xF9FE, 0x2593}, //13503 #DARK SHADE
+    {0xF9FE, 0x2593} //13503 #DARK SHADE
 };
 
-#endif
+#endif // DRW_CPTABLE950_H
