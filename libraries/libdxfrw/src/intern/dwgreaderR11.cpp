@@ -146,18 +146,16 @@ bool dwgReaderR11::readFileHeader() {
     // Section-pointer block. Offsets (from libredwg header.spec pre-R13 branch):
     //   0x14 entities_start RL, 0x18 entities_end RL, 0x1C blocks_start RL,
     //   0x20 blocks_size RL, 0x24 extras_start RL, 0x28 extras_size RL.
-    // The *_size fields can carry sentinel high bits (0x40000000/0x80000000) and
-    // must be masked to 24 bits.
+    // The *_size fields keep flags in their top two bits; preR13SectionSize()
+    // clears them and explains why the mask cannot be narrower.
     if (!fileBuf->setPosition(0x14))
         return false;
     m_entitiesStart = fileBuf->getRawLong32();
     m_entitiesEnd = fileBuf->getRawLong32();
     m_blocksStart = fileBuf->getRawLong32();
-    std::uint32_t blocksSize = fileBuf->getRawLong32();
-    if (blocksSize > 0xFFFFFF) blocksSize &= 0xFFFFFF;
+    std::uint32_t blocksSize = preR13SectionSize(fileBuf->getRawLong32());
     m_extrasStart = fileBuf->getRawLong32();
-    std::uint32_t extrasSize = fileBuf->getRawLong32();
-    if (extrasSize > 0xFFFFFF) extrasSize &= 0xFFFFFF;
+    std::uint32_t extrasSize = preR13SectionSize(fileBuf->getRawLong32());
 
     const std::uint64_t fileSize = static_cast<std::uint64_t>(fileBuf->size());
     if (!fileBuf->isGood())

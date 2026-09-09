@@ -36,6 +36,20 @@ const char* preR13CodePageName(std::uint16_t numHeaderVars, std::uint16_t cp);
 /// document undecoded. Declared here so it can be unit tested.
 std::string preR13FixedText(dwgBuffer& buf, int width, DRW_TextCodec& codec);
 
+/// Decode a pre-R13 section-size field (blocks_size at file offset 0x20,
+/// extras_size at 0x28). AutoCAD keeps two flags in the top bits - 0x40000000
+/// on a section that is present, 0x80000000 on one that is absent - and the
+/// size itself is the low 30 bits, so clear exactly those two.
+///
+/// Masking any narrower silently truncates a section larger than the mask
+/// rather than rejecting it: a 24-bit mask turned the 22.5 MB blocks section
+/// of a real R11 drawing (blocks_size 0x41585E43) into a 5.6 MB one, and the
+/// read then failed on the record that straddled the false end. Declared here
+/// so it can be unit tested.
+constexpr std::uint32_t preR13SectionSize(std::uint32_t raw) {
+    return raw & 0x3FFFFFFFu;
+}
+
 //! Class to read pre-R13 (R10/R11) DWG files
 /*!
 *  Reads the fixed pre-R13 container: file header section pointers, then the
