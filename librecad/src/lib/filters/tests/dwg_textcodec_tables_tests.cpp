@@ -101,3 +101,25 @@ TEST_CASE("big5 carries the hkscs extension", "[dwg][dxf][codec]") {
         CHECK(decodeBytes("ANSI_950", {0xF9, 0xFE}) == "\xE2\x96\x93");
     }
 }
+TEST_CASE("double-byte encoding round-trips through the reverse index",
+          "[dwg][dxf][codec]") {
+    // fromUtf8 answers from a prebuilt map now instead of scanning the whole
+    // double table per character; it must still pick the same mapping.
+    struct { const char* cp; int lead; int trail; } cases[] = {
+        {"ANSI_936", 0xA4, 0x40}, {"ANSI_936", 0xA0, 0x40},
+        {"ANSI_949", 0x84, 0x41}, {"ANSI_950", 0xA4, 0x40},
+        {"ANSI_950", 0x87, 0x40},
+    };
+    for (const auto& c : cases) {
+        const std::string utf8 = decodeBytes(c.cp, {c.lead, c.trail});
+        INFO(c.cp << " 0x" << std::hex << c.lead << c.trail);
+        REQUIRE_FALSE(utf8.empty());
+        if (utf8 == "?") {
+            continue; // not in this codepage; nothing to round-trip
+        }
+        const std::string back = encodeUtf8(c.cp, utf8);
+        REQUIRE(back.size() == 2);
+        CHECK(static_cast<unsigned char>(back[0]) == c.lead);
+        CHECK(static_cast<unsigned char>(back[1]) == c.trail);
+    }
+}

@@ -1,6 +1,7 @@
 #ifndef DRW_TEXTCODEC_H
 #define DRW_TEXTCODEC_H
 
+#include <unordered_map>
 #include <string>
 #include <string_view>
 #include <memory>
@@ -88,9 +89,17 @@ public:
     std::string fromUtf8(std::string_view s) override;
     std::string toUtf8(std::string_view s) override;
 private:
+    /// Unicode -> DBCS code, built on first encode and kept for the life of
+    /// the converter (one per file, not per string). It replaces a scan of
+    /// the whole double table for every character encoded, which cost 18590
+    /// comparisons per character for Big5. Built in table order with
+    /// emplace(), so a code point that appears twice keeps its first
+    /// mapping - the same one the scan returned.
+    const std::unordered_map<int, int>& reverseIndex();
+
     const int *leadTable{nullptr};
     const int (*doubleTable)[2];
-
+    std::unordered_map<int, int> m_reverse;
 };
 
 class DRW_Conv932Table : public DRW_Converter {

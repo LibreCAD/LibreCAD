@@ -366,7 +366,20 @@ int DRW_Converter::decodeNum(const std::string &s, int *b){
 }
 
 
+const std::unordered_map<int, int>& DRW_ConvDBCSTable::reverseIndex() {
+    if (m_reverse.empty() && cpLength > 0) {
+        m_reverse.reserve(static_cast<std::size_t>(cpLength));
+        for (int k = 0; k < cpLength; ++k) {
+            // emplace keeps the FIRST mapping for a repeated code point,
+            // which is what the linear scan's `break` used to return.
+            m_reverse.emplace(doubleTable[k][1], doubleTable[k][0]);
+        }
+    }
+    return m_reverse;
+}
+
 std::string DRW_ConvDBCSTable::fromUtf8(std::string_view s) {
+    const std::unordered_map<int, int>& index = reverseIndex();
     std::string result;
     bool notFound;
     int code;
@@ -381,19 +394,13 @@ std::string DRW_ConvDBCSTable::fromUtf8(std::string_view s) {
             code = decodeNum(part1, &l);
             j = i+l;
             i = j - 1;
-            notFound = true;
-                for (int k=0; k<cpLength; k++){
-                    if(doubleTable[k][1] == code) {
-                        int data = doubleTable[k][0];
-                        char d[3];
-                        d[0] = data >> 8;
-                        d[1] = data & 0xFF;
-                        d[2]= '\0';
-                        result += d; //translate from table
-                        notFound = false;
-                        break;
-                    }
-                }
+            const auto it = index.find(code);
+            notFound = (it == index.end());
+            if (!notFound) {
+                const int data = it->second; //translate from table
+                result += static_cast<char>(data >> 8);
+                result += static_cast<char>(data & 0xFF);
+            }
             if (notFound)
                 result += decodeText(code);
         } //direct conversion
