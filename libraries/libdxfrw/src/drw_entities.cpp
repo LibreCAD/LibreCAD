@@ -20385,15 +20385,14 @@ bool DRW_MLeader::parseDxfContextCode(int code, const std::unique_ptr<dxfReader>
         case 46: context.blockRotation = reader->getDouble(); return true;
         case 93: context.blockColor = reader->getInt32(); return true;
         /* common tail */
-        case 110: context.basePoint.x = reader->getDouble(); return true;
-        case 120: context.basePoint.y = reader->getDouble(); return true;
-        case 130: context.basePoint.z = reader->getDouble(); return true;
-        case 111: context.baseDirection.x = reader->getDouble(); return true;
-        case 121: context.baseDirection.y = reader->getDouble(); return true;
-        case 131: context.baseDirection.z = reader->getDouble(); return true;
-        case 112: context.baseVertical.x = reader->getDouble(); return true;
-        case 122: context.baseVertical.y = reader->getDouble(); return true;
-        case 132: context.baseVertical.z = reader->getDouble(); return true;
+        case 110: case 120: case 130:
+        case 111: case 121: case 131:
+        case 112: case 122: case 132:
+            // The helper answers true for every code in this set, so this
+            // matches the nine `return true` arms it replaces.
+            return readCoordTripletCode(code, reader, context.basePoint,
+                                        context.baseDirection,
+                                        context.baseVertical);
         case 297: context.isNormalReversed = (reader->getInt32() != 0); return true;
         case 272: context.styleBottomAttach = reader->getInt32(); return true;
         case 273: context.styleTopAttach = reader->getInt32(); return true;
@@ -21288,7 +21287,7 @@ bool DRW_Viewport::parseCode(int code, const std::unique_ptr<dxfReader>& reader)
     case 110: case 120: case 130:
     case 111: case 121: case 131:
     case 112: case 122: case 132:
-        readUcsTripletCode(code, reader, ucsOrigin, ucsXAxis, ucsYAxis);
+        readCoordTripletCode(code, reader, ucsOrigin, ucsXAxis, ucsYAxis);
         break;
     case 146:
         ucsElevation = reader->getDouble();

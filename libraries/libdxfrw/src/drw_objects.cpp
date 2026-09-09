@@ -4587,7 +4587,7 @@ bool DRW_Vport::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     case 110: case 120: case 130:
     case 111: case 121: case 131:
     case 112: case 122: case 132:
-        readUcsTripletCode(code, reader, ucsOrigin, ucsXAxis, ucsYAxis);
+        readCoordTripletCode(code, reader, ucsOrigin, ucsXAxis, ucsYAxis);
         break;
     case 141:
         brightness = reader->getDouble();
@@ -5951,7 +5951,7 @@ bool DRW_View::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     case 110: case 120: case 130:
     case 111: case 121: case 131:
     case 112: case 122: case 132:
-        readUcsTripletCode(code, reader, ucsOrigin, ucsXAxis, ucsYAxis);
+        readCoordTripletCode(code, reader, ucsOrigin, ucsXAxis, ucsYAxis);
         break;
     case 79:
         ucsOrthoType = reader->getInt32();
