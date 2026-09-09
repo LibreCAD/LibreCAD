@@ -292,7 +292,12 @@ std::string DRW_Converter::encodeMifText(const std::string &tok){
     sd >> std::hex >> code;
     if (!sd) return std::string{};
 #endif
-    if (code <= 0) return std::string{};
+    // A MIF escape names a double-byte character, so the lead byte is
+    // code >> 8. Below 0x100 that lead is zero, which is not a DBCS lead at
+    // all: the pair {0x00, low} decoded straight through as a NUL, and a NUL
+    // in a layer name makes the DXF writers refuse the whole string. Reject
+    // it so the caller keeps the escape as literal text instead.
+    if (code < 0x100) return std::string{};
     DRW_TextCodec codec;
     codec.setVersion(DRW::AC1015, /*dxfFormat=*/false);
     codec.setCodePage(cpName, /*dxfFormat=*/false);

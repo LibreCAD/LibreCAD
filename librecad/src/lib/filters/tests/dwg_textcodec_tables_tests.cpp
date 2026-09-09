@@ -40,6 +40,12 @@ std::string decodeBytes(const char* codePage, std::initializer_list<int> bytes) 
     return codec.toUtf8(raw);
 }
 
+std::string decodeText8(const char* codePage, const std::string& raw) {
+    DRW_TextCodec codec;
+    codec.setCodePage(codePage, false);
+    return codec.toUtf8(raw);
+}
+
 std::string encodeUtf8(const char* codePage, const std::string& utf8) {
     DRW_TextCodec codec;
     codec.setCodePage(codePage, false);
@@ -131,5 +137,25 @@ TEST_CASE("double-byte encoding round-trips through the reverse index",
         REQUIRE(back.size() == 2);
         CHECK(static_cast<unsigned char>(back[0]) == c.lead);
         CHECK(static_cast<unsigned char>(back[1]) == c.trail);
+    }
+}
+
+TEST_CASE("a MIF escape names a double-byte character",
+          "[dwg][dxf][codec]") {
+    // \M+cXXXX carries a selector and one double-byte code: 1 Shift_JIS,
+    // 2 Big5, 3 EUC-KR, 5 GBK. The escape is read out of text that is
+    // otherwise in the file's own codepage.
+    CHECK(decodeText8("ANSI_1252", "\\M+18140") == "\xE3\x80\x80"); // U+3000
+    CHECK(decodeText8("ANSI_1252", "\\M+2A440") == "\xE4\xB8\x80"); // U+4E00
+    CHECK(decodeText8("ANSI_1252", "\\M+5D2BB") == "\xE4\xB8\x80"); // U+4E00
+
+    SECTION("a code below 0x100 is not a double-byte character") {
+        // Its lead byte is zero, and {0x00, low} used to decode straight
+        // through as a NUL. A NUL in a layer name makes the DXF writers
+        // refuse the whole string, so the text vanishes rather than being
+        // written wrong. A malformed escape stays literal instead.
+        const std::string out = decodeText8("ANSI_1252", "\\M+1005C");
+        CHECK(out.find('\0') == std::string::npos);
+        CHECK(out == "\\M+1005C");
     }
 }
