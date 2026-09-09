@@ -7798,6 +7798,82 @@ TEST_CASE("DXF raw capture matches reader types in the reserved 240 range",
   CHECK(object.groups[2].i_val() == 1);
 }
 
+TEST_CASE("DXF group-code value types are stated once per range",
+          "[dxf][rawobject][rawcapture][types]") {
+  // Pins the group-code -> value-type map used by dxfReader::readRec(). The
+  // map used to be an if/else chain whose ranges overlapped by accident; this
+  // walks one representative code from each assigned range plus both edges of
+  // the unassigned span so a future edit that shifts a boundary is visible.
+  SECTION("assigned ranges keep their published types") {
+    RawObjectCapture cap;
+    const char *dxf =
+        "0\nSECTION\n2\nOBJECTS\n"
+        "0\nACDBWFDIAG\n5\n3B\n"
+        "40\n1.5\n"     // 10-59   double
+        "70\n7\n"       // 60-79   int16
+        "90\n9\n"       // 90-99   int32
+        "140\n2.5\n"    // 110-149 double
+        "170\n3\n"      // 170-179 int16
+        "210\n4.5\n"    // 210-259 double
+        "270\n5\n"      // 270-289 int16
+        "290\n1\n"      // 290-299 boolean
+        "300\ntext\n"   // 300-309 string
+        "370\n6\n"      // 370-389 int16
+        "420\n77\n"     // 420-429 int32
+        "460\n8.5\n"    // 460-469 double
+        "0\nENDSEC\n0\nEOF\n";
+    readDxf(dxf, cap, "lc_codemap_assigned.dxf");
+
+    REQUIRE(cap.m_objects.size() == 1);
+    const DRW_RawDxfObject &o = cap.m_objects.front();
+    const auto typeOf = [&o](int code) {
+      for (const auto &g : o.groups)
+        if (g.code() == code)
+          return static_cast<int>(g.type());
+      return -1;
+    };
+    CHECK(typeOf(40) == DRW_Variant::DOUBLE);
+    CHECK(typeOf(70) == DRW_Variant::INTEGER);
+    CHECK(typeOf(90) == DRW_Variant::INTEGER);
+    CHECK(typeOf(140) == DRW_Variant::DOUBLE);
+    CHECK(typeOf(170) == DRW_Variant::INTEGER);
+    CHECK(typeOf(210) == DRW_Variant::DOUBLE);
+    CHECK(typeOf(270) == DRW_Variant::INTEGER);
+    CHECK(typeOf(290) == DRW_Variant::INTEGER);
+    CHECK(typeOf(300) == DRW_Variant::STRING);
+    CHECK(typeOf(370) == DRW_Variant::INTEGER);
+    CHECK(typeOf(420) == DRW_Variant::INTEGER);
+    CHECK(typeOf(460) == DRW_Variant::DOUBLE);
+  }
+
+  SECTION("the unassigned 482-998 span keeps its current decoding") {
+    // 482-998 has no published type. Both the reader's map and
+    // classifyDxfCode() in libdxfrw.cpp decode it as a double, which also
+    // makes the reader's explicit unknown-code fallback unreachable for the
+    // span. Pinned here so that changing it becomes a deliberate act - the two
+    // maps have to move together, since the raw re-emit path picks its writer
+    // from classifyDxfCode().
+    RawObjectCapture cap;
+    const char *dxf =
+        "0\nSECTION\n2\nOBJECTS\n"
+        "0\nACDBWFDIAG\n5\n3B\n500\n2.5\n"
+        "0\nENDSEC\n0\nEOF\n";
+    readDxf(dxf, cap, "lc_codemap_unassigned.dxf");
+
+    REQUIRE(cap.m_objects.size() == 1);
+    const DRW_RawDxfObject &o = cap.m_objects.front();
+    bool seen = false;
+    for (const auto &g : o.groups) {
+      if (g.code() != 500)
+        continue;
+      seen = true;
+      CHECK(g.type() == DRW_Variant::DOUBLE);
+      CHECK(g.d_val() == 2.5);
+    }
+    CHECK(seen);
+  }
+}
+
 TEST_CASE("DXF raw capture preserves reserved string ranges",
           "[dxf][rawobject][rawcapture][types]") {
   RawObjectCapture cap;
