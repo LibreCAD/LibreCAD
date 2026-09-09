@@ -1066,8 +1066,8 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa,
                     static_cast<std::int16_t>(fileBuf->getRawShort16())); };
             if (layout.hasPoint) {
                 v.basePoint = fileBuf->get2RawDouble();
+                v.basePoint.z = elevation;
             }
-            v.basePoint.z = elevation;
             if (layout.hasStartWidth) v.stawidth = rd();
             if (layout.hasEndWidth) v.endwidth = rd();
             if (layout.hasBulge) v.bulge = rd();
