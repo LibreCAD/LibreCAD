@@ -228,11 +228,11 @@ void RS_ActionDrawSpline::commandEvent(RS_CommandEvent* e) {
         break;
 
     case SetNextPoint:
-        /*if (checkCommand("close", c)) {
+        if (checkCommand("close", c)) {
             close();
             updateMouseButtonHints();
             return;
-        }*/
+        }
 
         if (checkCommand("undo", c)) {
             undo();
@@ -257,7 +257,8 @@ QStringList RS_ActionDrawSpline::getAvailableCommands() {
     case SetNextPoint:
 		if (pPoints->history.size()>=2) {
             cmd += command("undo");
-		}else if (pPoints->history.size()>=3) {
+        }
+		if (pPoints->history.size()>=3) {
             cmd += command("close");
         }
         break;
@@ -321,25 +322,18 @@ void RS_ActionDrawSpline::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
 
-/*
 void RS_ActionDrawSpline::close() {
-    if (history.count()>2 && start.valid) {
-        //data.endpoint = start;
-        //trigger();
-                if (spline) {
-                        RS_CoordinateEvent e(spline->getStartpoint());
-                        coordinateEvent(&e);
-                }
-                trigger();
+    if (pPoints->spline && pPoints->history.size()>2) {
+        pPoints->spline->setClosed(true);
+        trigger();
+        reset();
         setStatus(SetStartpoint);
-        graphicView->moveRelativeZero(start);
     } else {
         RS_DIALOGFACTORY->commandMessage(
             tr("Cannot close sequence of lines: "
                "Not enough entities defined yet."));
     }
 }
-*/
 
 void RS_ActionDrawSpline::undo() {
 	if (pPoints->history.size()>1) {
