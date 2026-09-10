@@ -1849,6 +1849,75 @@ RS_Vector LC_Hyperbola::dualLineTangentPoint(const RS_Vector &line) const {
  * @return EndingStart if trimming/extending start point, EndingEnd for end point,
  *         EndingNone if invalid/unbounded
  */
+RS_Vector LC_Hyperbola::prepareTrim(const RS_Vector& trimCoord,
+                                    const RS_VectorSolutions& trimSol)
+{
+  if (!m_valid || trimSol.empty() || isInfinite()) {
+    return RS_Vector(false);
+  }
+
+         // Project click onto current arc to get reference parameter
+  RS_Vector nearest = getNearestPointOnEntity(trimCoord, false);
+  if (!nearest.valid) {
+    nearest = trimCoord;
+  }
+
+  double phi_ref = getParamFromPoint(nearest, m_data.reversed);
+  if (std::isnan(phi_ref)) {
+    return RS_Vector(false);
+  }
+
+  RS_Vector bestSol(false);
+  double minDeltaPhi = RS_MAXDOUBLE;
+
+         // Choose intersection with smallest |Δφ| from click position
+  for (const RS_Vector& intersect : trimSol) {
+    if (!intersect.valid)
+      continue;
+
+    // RS_Vector proj = getNearestPointOnEntity(sol, false);
+    // if (!proj.valid) proj = sol;
+
+    double phi = getParamFromPoint(intersect, m_data.reversed);
+    if (std::isnan(phi))
+      continue;
+
+    // LC_Quadratic describes the whole conic, so the solver hands back the
+    // mirrored intersection on the other branch too, and getParamFromPoint()
+    // recovers phi from y alone - both points yield the *same* phi. |dphi|
+    // therefore cannot separate them and whichever came first would win. Round
+    // the parameter back into a point: only the one on this branch returns.
+    if (getPoint(phi, m_data.reversed).distanceTo(intersect) > RS_TOLERANCE)
+      continue;
+
+    double deltaPhi = std::abs(phi - phi_ref);
+    if (deltaPhi < minDeltaPhi) {
+      minDeltaPhi = deltaPhi;
+      bestSol = intersect;
+    }
+  }
+
+  if (!bestSol.valid)
+    return RS_Vector(false);
+
+  double newPhi = getParamFromPoint(bestSol, m_data.reversed);
+
+  // Use getTrimPoint() with the chosen intersection to decide which end to move
+  RS2::Ending side = getTrimPoint(trimCoord, bestSol);
+
+  if (side == RS2::EndingStart) {
+    m_data.angle1 = newPhi;
+  } else if (side == RS2::EndingEnd) {
+    m_data.angle2 = newPhi;
+  } else {
+    return RS_Vector(false);
+  }
+
+  calculateBorders();
+
+  return bestSol;
+}
+
 RS2::Ending LC_Hyperbola::getTrimPoint(const RS_Vector& trimCoord,
                                        const RS_Vector& trimPoint)
 {

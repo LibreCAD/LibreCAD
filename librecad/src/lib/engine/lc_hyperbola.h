@@ -166,6 +166,13 @@ public:
    * @return The new position for the trimmed endpoint
    */
 
+  /**
+   * @brief prepareTrim move whichever end of the arc the click is nearer to
+   *        the chosen intersection. RS_Modification drives trim through this.
+   */
+  RS_Vector prepareTrim(const RS_Vector &trimCoord,
+                        const RS_VectorSolutions &trimSol) override;
+
   RS_Vector getTangentDirectionParam(double parameter) const;
   RS_Vector getTangentDirection(const RS_Vector &point) const override;
   RS_VectorSolutions getTangentPoint(const RS_Vector &point) const override;
