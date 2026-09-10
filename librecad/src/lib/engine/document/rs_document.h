@@ -162,7 +162,12 @@ public:
     }
 
     void addEntity(const RS_Entity* entity) override;
+    void appendEntity(RS_Entity* entity) override;
+    void prependEntity(RS_Entity* entity) override;
+    void moveEntity(int index, QList<RS_Entity*>& entList) override;
+    void insertEntity(int index, RS_Entity* entity) override;
     bool removeEntity(RS_Entity* entity) override;
+    void setEntityAt(int index, RS_Entity* entity) override;
     void clear() override;
     void calculateBorders() override;
 
@@ -171,6 +176,11 @@ public:
      * \p coord.  The cache is rebuilt lazily after document geometry changes.
      */
     QList<RS_Entity*> getSnapCandidates(const RS_Vector& coord, double range) const;
+
+    /**
+     * Invalidates the cached snap index. Call this after directly changing the
+     * geometry of an entity already owned by this document.
+     */
     void invalidateSnapIndex();
 
     void select(const QList<RS_Entity*>& list, const bool select = true) {

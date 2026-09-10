@@ -16,6 +16,8 @@
 #include <QApplication>
 
 #include "rs_graphic.h"
+#include "rs_constructionline.h"
+#include "rs_layer.h"
 #include "rs_line.h"
 #include "rs_mtext.h"
 #include "rs_settings.h"
@@ -105,9 +107,52 @@ TEST_CASE("snap candidate index is invalidated when document entities change",
     CHECK(graphic.getSnapCandidates(RS_Vector{25.0, 0.0}, 1.0).size() == 1);
 
     replacement->move(RS_Vector{20.0, 0.0});
-    graphic.calculateBorders();
+    graphic.invalidateSnapIndex();
     CHECK(graphic.getSnapCandidates(RS_Vector{25.0, 0.0}, 1.0).empty());
     CHECK(graphic.getSnapCandidates(RS_Vector{45.0, 0.0}, 1.0).size() == 1);
+}
+
+TEST_CASE("snap candidate index retains unbounded construction lines", "[snap][candidates]") {
+    (void)application();
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    auto* constructionLine = new RS_ConstructionLine(nullptr, {{0.0, 0.0}, {1.0, 0.0}});
+    graphic.addEntity(constructionLine);
+
+    const QList<RS_Entity*> candidates = graphic.getSnapCandidates({1000.0, 0.0}, 1.0);
+
+    CHECK(candidates.contains(constructionLine));
+}
+
+TEST_CASE("snap candidate index retains construction-layer lines", "[snap][candidates]") {
+    (void)application();
+    RS_Layer constructionLayer(QStringLiteral("construction"));
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    REQUIRE(constructionLayer.setConstruction(true));
+    auto* line = new RS_Line(nullptr, RS_Vector{0.0, 0.0}, RS_Vector{1.0, 0.0});
+    line->setLayer(&constructionLayer);
+    graphic.addEntity(line);
+
+    const QList<RS_Entity*> candidates = graphic.getSnapCandidates({1000.0, 0.0}, 1.0);
+
+    CHECK(candidates.contains(line));
+}
+
+TEST_CASE("snap candidate index follows document draw order changes", "[snap][candidates]") {
+    (void)application();
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    auto* first = new RS_Line(nullptr, RS_Vector{0.0, 0.0}, RS_Vector{10.0, 0.0});
+    auto* second = new RS_Line(nullptr, RS_Vector{0.0, 0.0}, RS_Vector{10.0, 0.0});
+    graphic.addEntity(first);
+    graphic.addEntity(second);
+    REQUIRE(graphic.getSnapCandidates(RS_Vector{5.0, 0.0}, 1.0) == QList<RS_Entity*>{first, second});
+
+    QList<RS_Entity*> moved{first};
+    graphic.moveEntity(graphic.count() + 1, moved);
+
+    CHECK(graphic.getSnapCandidates(RS_Vector{5.0, 0.0}, 1.0) == QList<RS_Entity*>{second, first});
 }
 
 TEST_CASE("ResolveAllButTexts never descends into text geometry",

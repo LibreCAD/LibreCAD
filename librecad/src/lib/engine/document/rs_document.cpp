@@ -59,6 +59,19 @@ BBox makeBox(const RS_Vector& min, const RS_Vector& max) {
     return {{min.x, min.y}, {max.x, max.y}};
 }
 
+bool hasUnboundedSnapGeometry(const RS_Entity& entity) {
+    switch (entity.rtti()) {
+        case RS2::EntityConstructionLine:
+        case RS2::EntityRefConstructionLine:
+        case RS2::EntitySnapConstructionLine:
+            return true;
+        case RS2::EntityLine:
+            return entity.isConstruction();
+        default:
+            return false;
+    }
+}
+
 } // namespace
 
 struct RS_Document::SnapIndex {
@@ -107,7 +120,7 @@ struct RS_Document::SnapIndex {
                 }
             }
 
-            if (isFiniteBox(min, max)) {
+            if (!hasUnboundedSnapGeometry(*entity) && isFiniteBox(min, max)) {
                 values.emplace_back(makeBox(min, max), entry);
             } else {
                 fallback.push_back(entry);
@@ -169,9 +182,34 @@ void RS_Document::addEntity(const RS_Entity* entity) {
     RS_EntityContainer::addEntity(entity);
 }
 
+void RS_Document::appendEntity(RS_Entity* entity) {
+    invalidateSnapIndex();
+    RS_EntityContainer::appendEntity(entity);
+}
+
+void RS_Document::prependEntity(RS_Entity* entity) {
+    invalidateSnapIndex();
+    RS_EntityContainer::prependEntity(entity);
+}
+
+void RS_Document::moveEntity(const int index, QList<RS_Entity*>& entList) {
+    invalidateSnapIndex();
+    RS_EntityContainer::moveEntity(index, entList);
+}
+
+void RS_Document::insertEntity(const int index, RS_Entity* entity) {
+    invalidateSnapIndex();
+    RS_EntityContainer::insertEntity(index, entity);
+}
+
 bool RS_Document::removeEntity(RS_Entity* entity) {
     invalidateSnapIndex();
     return RS_EntityContainer::removeEntity(entity);
+}
+
+void RS_Document::setEntityAt(const int index, RS_Entity* entity) {
+    invalidateSnapIndex();
+    RS_EntityContainer::setEntityAt(index, entity);
 }
 
 void RS_Document::clear() {
