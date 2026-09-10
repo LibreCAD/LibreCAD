@@ -187,7 +187,7 @@ void RS_Spline::update() {
 
     // wrap control points, if it's not wrapped yet
     std::vector<RS_Vector>& tControlPoints = data.controlPoints;
-    if (data.closed && (data.degree == 2 || !hasWrappedControlPoints())) {
+    if (data.closed && !hasWrappedControlPoints()) {
         std::vector<RS_Vector> wrappedPoints{data.controlPoints.cbegin(), data.controlPoints.cbegin() + data.degree};
         tControlPoints.insert(tControlPoints.end(), wrappedPoints.cbegin(), wrappedPoints.cend());
         RS_DEBUG->print(RS_Debug::D_NOTICE, "%s: controlPoints: size=%llu\n", __func__, data.controlPoints.size());
@@ -493,13 +493,12 @@ void RS_Spline::removeLastControlPoint() {
 
 /**
  * @brief hasWrappedControlPoints whether the control points are wrapped, needed for a closed spline.
- *          only implemented for cubic splines
  * @return bool - true, if the control points are already wrapped.
- *          for a cubic spline with wrapped splines, the last three control points are the same as the first three.
+ *          the last degree control points are the same as the first degree control points.
  */
 bool RS_Spline::hasWrappedControlPoints() const {
     const std::vector<RS_Vector>& controlPoints = data.controlPoints;
-    if (!data.closed || data.degree < 3 || controlPoints.size() < size_t(2 * data.degree) + 1)
+    if (!data.closed || data.degree < 1 || controlPoints.size() < size_t(2 * data.degree))
         return false;
 
     return std::equal(controlPoints.cbegin(), controlPoints.cbegin() + data.degree,

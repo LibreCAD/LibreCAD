@@ -71,7 +71,7 @@ public:
 	void updateMouseCursor() override;
 //    void updateToolBar() override;
 
-	//void close();
+	void close();
 	virtual void undo();
 	virtual void setDegree(int deg);
 	int getDegree();
