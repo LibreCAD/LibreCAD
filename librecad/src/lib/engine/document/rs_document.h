@@ -161,6 +161,9 @@ public:
         return true;
     }
 
+    bool undo() override;
+    bool redo() override;
+
     void addEntity(const RS_Entity* entity) override;
     void appendEntity(RS_Entity* entity) override;
     void prependEntity(RS_Entity* entity) override;

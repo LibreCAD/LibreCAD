@@ -66,10 +66,23 @@ bool hasUnboundedSnapGeometry(const RS_Entity& entity) {
         case RS2::EntitySnapConstructionLine:
             return true;
         case RS2::EntityLine:
-            return entity.isConstruction();
+            if (entity.isConstruction()) {
+                return true;
+            }
+            break;
         default:
-            return false;
+            break;
     }
+
+    if (!entity.isContainer()) {
+        return false;
+    }
+    for (const RS_Entity* child : static_cast<const RS_EntityContainer&>(entity)) {
+        if (child != nullptr && hasUnboundedSnapGeometry(*child)) {
+            return true;
+        }
+    }
+    return false;
 }
 
 } // namespace
@@ -174,6 +187,22 @@ RS_Document::RS_Document(RS_EntityContainer* parent)
 }
 
 RS_Document::~RS_Document() {
+}
+
+bool RS_Document::undo() {
+    const bool result = RS_Undo::undo();
+    if (result) {
+        invalidateSnapIndex();
+    }
+    return result;
+}
+
+bool RS_Document::redo() {
+    const bool result = RS_Undo::redo();
+    if (result) {
+        invalidateSnapIndex();
+    }
+    return result;
 }
 
 void RS_Document::addEntity(const RS_Entity* entity) {

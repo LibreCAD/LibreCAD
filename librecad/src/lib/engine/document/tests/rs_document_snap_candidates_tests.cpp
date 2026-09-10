@@ -56,6 +56,13 @@ RS_MTextData mtextData(const RS_Vector& insertionPoint) {
             QStringLiteral("M"), QStringLiteral("standard"), 0.0, RS2::NoUpdate};
 }
 
+class UndoGraphic : public RS_Graphic {
+public:
+    using RS_Document::endUndoCycle;
+    using RS_Document::startUndoCycle;
+    using RS_Undo::addUndoable;
+};
+
 } // namespace
 
 TEST_CASE("snap candidate index returns only local entities in drawing order",
@@ -139,6 +146,53 @@ TEST_CASE("snap candidate index retains construction-layer lines", "[snap][candi
     CHECK(candidates.contains(line));
 }
 
+TEST_CASE("snap candidate index retains containers with unbounded children", "[snap][candidates]") {
+    (void)application();
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    auto* container = new RS_EntityContainer(nullptr);
+    container->addEntity(new RS_ConstructionLine(container, {{0.0, 0.0}, {1.0, 0.0}}));
+    container->calculateBorders();
+    graphic.RS_Document::addEntity(container);
+
+    CHECK(graphic.getSnapCandidates({1000.0, 0.0}, 1.0).contains(container));
+}
+
+TEST_CASE("snap candidate index follows construction layer state changes", "[snap][candidates]") {
+    (void)application();
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    RS_Layer* layer = graphic.getActiveLayer();
+    REQUIRE(layer != nullptr);
+    REQUIRE_FALSE(layer->isConstruction());
+    auto* line = new RS_Line(nullptr, RS_Vector{0.0, 0.0}, RS_Vector{1.0, 0.0});
+    line->setLayer(layer);
+    graphic.addEntity(line);
+
+    CHECK(graphic.getSnapCandidates({1000.0, 0.0}, 1.0).empty());
+    graphic.toggleLayerConstruction(layer);
+
+    CHECK(graphic.getSnapCandidates({1000.0, 0.0}, 1.0).contains(line));
+}
+
+TEST_CASE("snap candidate index follows construction layer edits", "[snap][candidates]") {
+    (void)application();
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    RS_Layer* layer = graphic.getActiveLayer();
+    REQUIRE(layer != nullptr);
+    auto* line = new RS_Line(nullptr, RS_Vector{0.0, 0.0}, RS_Vector{1.0, 0.0});
+    line->setLayer(layer);
+    graphic.addEntity(line);
+    CHECK(graphic.getSnapCandidates({1000.0, 0.0}, 1.0).empty());
+
+    RS_Layer source(*layer);
+    REQUIRE(source.setConstruction(true));
+    graphic.editLayer(layer, source);
+
+    CHECK(graphic.getSnapCandidates({1000.0, 0.0}, 1.0).contains(line));
+}
+
 TEST_CASE("snap candidate index follows document draw order changes", "[snap][candidates]") {
     (void)application();
     RS_Graphic graphic;
@@ -153,6 +207,22 @@ TEST_CASE("snap candidate index follows document draw order changes", "[snap][ca
     graphic.moveEntity(graphic.count() + 1, moved);
 
     CHECK(graphic.getSnapCandidates(RS_Vector{5.0, 0.0}, 1.0) == QList<RS_Entity*>{second, first});
+}
+
+TEST_CASE("snap candidate index follows undo and redo state changes", "[snap][candidates]") {
+    (void)application();
+    UndoGraphic graphic;
+    graphic.initForNewDocument();
+    auto* line = new RS_Line(nullptr, RS_Vector{0.0, 0.0}, RS_Vector{10.0, 0.0});
+    graphic.startUndoCycle();
+    graphic.addEntity(line);
+    graphic.addUndoable(line);
+    graphic.endUndoCycle();
+
+    REQUIRE(graphic.undo());
+    CHECK(graphic.getSnapCandidates(RS_Vector{5.0, 0.0}, 1.0).empty());
+    REQUIRE(graphic.redo());
+    CHECK(graphic.getSnapCandidates(RS_Vector{5.0, 0.0}, 1.0).contains(line));
 }
 
 TEST_CASE("ResolveAllButTexts never descends into text geometry",
