@@ -509,12 +509,22 @@ RS_VectorSolutions LC_Hyperbola::getTangentPoint(const RS_Vector &point) const {
     if (!tp.valid)
       continue;
 
-    RS_Vector radius = tp - point;
-    RS_Vector tangentDir = getTangentDirection(tp);
-    if (tangentDir.valid &&
-        std::abs(RS_Vector::dotP(radius, tangentDir)) < RS_TOLERANCE * 10.0) {
+    const RS_Vector chord = tp - point;
+    const RS_Vector tangentDir = getTangentDirection(tp);
+    if (!tangentDir.valid)
+      continue;
+    const double lengths = chord.magnitude() * tangentDir.magnitude();
+    if (lengths < RS_TOLERANCE)
+      continue;
+    // The line from the given point to a point of tangency runs *along* the
+    // curve's tangent there, so the two are parallel and the cross product
+    // vanishes. Testing the dot product asks for perpendicular instead, which
+    // no genuine tangency satisfies - it discarded every solution. Normalising
+    // keeps the comparison scale-free, and it also drops the mirrored point
+    // the conic solver returns from the other branch.
+    const double sine = std::abs(chord.x * tangentDir.y - chord.y * tangentDir.x) / lengths;
+    if (sine < RS_TOLERANCE)
       tangents.push_back(tp);
-    }
   }
 
   return tangents;
