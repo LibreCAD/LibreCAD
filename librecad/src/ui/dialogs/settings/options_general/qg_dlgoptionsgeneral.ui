@@ -259,6 +259,30 @@
             </property>
            </widget>
           </item>
+          <item row="9" column="0">
+           <widget class="QLabel" name="labelSelectionPointer">
+            <property name="text">
+             <string>Selection pointer:</string>
+            </property>
+            <property name="buddy">
+             <cstring>cbSelectionPointer</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="1">
+           <widget class="QComboBox" name="cbSelectionPointer">
+            <item>
+             <property name="text">
+              <string>System arrow</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>LibreCAD crosshair</string>
+             </property>
+            </item>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>

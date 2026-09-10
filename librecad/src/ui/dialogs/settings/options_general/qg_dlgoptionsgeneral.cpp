@@ -192,6 +192,7 @@ void QG_DlgOptionsGeneral::init(){
 
         bool cursor_hiding = LC_GET_BOOL("cursor_hiding");
         cursor_hiding_checkbox->setChecked(cursor_hiding);
+        cbSelectionPointer->setCurrentIndex(LC_GET_BOOL("UseLibreCADSelectionPointer", false) ? 1 : 0);
 
         bool showSnapOptionsInSnapToolbar = LC_GET_BOOL("showSnapOptionsInSnapToolbar");
         cbShowSnapOptionsInSnapBar->setChecked(showSnapOptionsInSnapToolbar);
@@ -808,6 +809,7 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("selection_overlay_inverted_line_type", wOverlaySelectionInvertedLineType->getLineType());
             LC_SET("indicator_lines_line_width", sbSnapLinesLineWidth->value());
             LC_SET("cursor_hiding", cursor_hiding_checkbox->isChecked());
+            LC_SET("UseLibreCADSelectionPointer", cbSelectionPointer->currentIndex() == 1);
             LC_SET("showSnapOptionsInSnapToolbar", cbShowSnapOptionsInSnapBar->isChecked());
             LC_SET("UnitlessGrid", cb_unitless_grid->isChecked());
             LC_SET("Antialiasing", cb_antialiasing->isChecked());

@@ -314,6 +314,7 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, RS_Document* doc, LC_ActionConte
       m_cursorCad(new QCursor(QPixmap(":cursors/cur_cad_bmp.png"), HOTSPOT_XY, HOTSPOT_XY)),
       m_cursorDel(new QCursor(QPixmap(":cursors/cur_del_bmp.png"), HOTSPOT_XY, HOTSPOT_XY)),
       m_cursorSelect(new QCursor(QPixmap(":cursors/cur_select_bmp.png"), HOTSPOT_XY, HOTSPOT_XY)),
+      m_cursorSelectionPointer(new QCursor(QPixmap(":cursors/librecad_selection_cursor.png"), HOTSPOT_XY, HOTSPOT_XY)),
       m_cursorMagnifier(new QCursor(QPixmap(":cursors/cur_glass_bmp.png"), HOTSPOT_XY, HOTSPOT_XY)),
       m_cursorHand(new QCursor(QPixmap(":cursors/cur_hand_bmp.png"), HOTSPOT_XY, HOTSPOT_XY)), m_isSmoothScrolling(false),
       m_ucsMarkOptions{std::make_unique<LC_UCSMarkOptions>()}, m_panData{std::make_unique<AutoPanData>()},
@@ -398,9 +399,10 @@ int QG_GraphicView::getHeight() const {
  * Sets the mouse cursor to the given type.
  */
 void QG_GraphicView::setMouseCursor(const RS2::CursorType cursorType) {
+    m_currentCursorType = cursorType;
     switch (cursorType) {
         default: case RS2::ArrowCursor:
-            setCursor(Qt::ArrowCursor);
+            m_useLibreCADSelectionPointer ? setCursor(*m_cursorSelectionPointer) : setCursor(Qt::ArrowCursor);
             break;
         case RS2::UpArrowCursor:
             setCursor(Qt::UpArrowCursor);
@@ -1349,6 +1351,7 @@ void QG_GraphicView::loadSettings() {
     LC_GROUP("Appearance");
     {
         m_cursorHiding = LC_GET_BOOL("cursor_hiding", false);
+        m_useLibreCADSelectionPointer = LC_GET_BOOL("UseLibreCADSelectionPointer", false);
         bool showSnapIndicatorLines = LC_GET_BOOL("indicator_lines_state", true);
         bool showSnapIndicatorShape = LC_GET_BOOL("indicator_shape_state", true);
         if (HIDE_SELECT_CURSOR) {
@@ -1360,6 +1363,9 @@ void QG_GraphicView::loadSettings() {
         m_selectCursorHiding = false;
     }
     LC_GROUP_END();
+    if (m_currentCursorType == RS2::ArrowCursor) {
+        setMouseCursor(RS2::ArrowCursor);
+    }
     m_ucsMarkOptions->loadSettings();
 
     LC_GROUP("Colors");
