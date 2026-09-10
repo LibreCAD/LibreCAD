@@ -36,7 +36,7 @@
 
 static bool openDocAndSetGraphic(RS_Document**, RS_Graphic**, const QString&);
 static void touchGraphic(RS_Graphic*, PdfPrintParams&);
-static void setupPrinterAndPaper(RS_Graphic*, QPrinter&, PdfPrintParams&);
+static bool setupPrinterAndPaper(RS_Graphic*, QPrinter&, PdfPrintParams&);
 static void drawPage(RS_Graphic*, QPrinter&, RS_PainterQt&);
 
 
@@ -78,7 +78,11 @@ void PdfPrintLoop::printOneDxfToOnePdf(const QString& dxfFile) {
 
     QPrinter printer(QPrinter::HighResolution);
 
-    setupPrinterAndPaper(graphic, printer, params);
+    if (!setupPrinterAndPaper(graphic, printer, params)) {
+        qDebug() << "ERROR: Failed to apply page layout for" << dxfFile;
+        delete doc;
+        return;
+    }
 
     RS_PainterQt painter(&printer);
 
@@ -135,13 +139,19 @@ void PdfPrintLoop::printManyDxfToOnePdf() {
         nrPages++;
     }
 
+    if (nrPages == 0)
+        return;
+
     QPrinter printer(QPrinter::HighResolution);
 
-    if (nrPages > 0) {
-        // FIXME: Is it possible to set up printer and paper for every
-        // opened dxf file and tie them with painter? For now just using
-        // data extracted from the first opened dxf file for all pages.
-        setupPrinterAndPaper(pages.at(0).graphic, printer, params);
+    // FIXME: Is it possible to set up printer and paper for every
+    // opened dxf file and tie them with painter? For now just using
+    // data extracted from the first opened dxf file for all pages.
+    if (!setupPrinterAndPaper(pages.at(0).graphic, printer, params)) {
+        qDebug() << "ERROR: Failed to apply page layout for" << params.outFile;
+        for (const auto& page : pages)
+            delete page.doc;
+        return;
     }
 
     RS_PainterQt painter(&printer);
@@ -213,7 +223,7 @@ static void touchGraphic(RS_Graphic* graphic, PdfPrintParams& params)
 }
 
 
-static void setupPrinterAndPaper(RS_Graphic* graphic, QPrinter& printer,
+static bool setupPrinterAndPaper(RS_Graphic* graphic, QPrinter& printer,
     PdfPrintParams& params)
 {
     bool landscape = false;
@@ -227,9 +237,6 @@ static void setupPrinterAndPaper(RS_Graphic* graphic, QPrinter& printer,
                            graphic->getMarginRight(),
                            graphic->getMarginBottom()};
 
-    QPageSize pageSize = LC_Printing::toPageSize(paperSizeName, paperSize, graphic->getUnit());
-    LC_Printing::setupPageLayout(printer, landscape, pageSize, paperMargins);
-
     printer.setOutputFileName(params.outFile);
     printer.setOutputFormat(QPrinter::PdfFormat);
     printer.setResolution(params.resolution);
@@ -239,6 +246,9 @@ static void setupPrinterAndPaper(RS_Graphic* graphic, QPrinter& printer,
         printer.setColorMode(QPrinter::GrayScale);
     else
         printer.setColorMode(QPrinter::Color);
+
+    QPageSize pageSize = LC_Printing::toPageSize(paperSizeName, paperSize, graphic->getUnit());
+    return LC_Printing::setupPageLayout(printer, landscape, pageSize, paperMargins);
 }
 
 

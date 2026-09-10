@@ -2454,6 +2454,10 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
 
     statusBar()->showMessage(tr("Printing..."));
     QPrinter printer(QPrinter::HighResolution);
+    if (printPDF) {
+        printer.setOutputFormat(QPrinter::PdfFormat);
+        printer.setFullPage(true);
+    }
 
     bool landscape = false;
     RS2::PaperFormat pf = graphic->getPaperFormat(&landscape);
@@ -2473,13 +2477,24 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
     // after setPageSize() with a standard size ID may not propagate correctly,
     // resulting in portrait-only output regardless of the landscape setting.
     QPageSize pageSize = LC_Printing::toPageSize(paperSizeName, paperSize, graphic->getUnit());
-    LC_Printing::setupPageLayout(printer, landscape, pageSize, paperMargins);
+    if (!LC_Printing::setupPageLayout(printer, landscape, pageSize, paperMargins)) {
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "QC_ApplicationWindow::slotFilePrint: failed to apply drawing page layout");
+        RS_DIALOGFACTORY->commandMessage(tr("Cannot apply the drawing page settings."));
+        if (printPDF)
+            return;
+    }
 
     if (printPDF) {
         // Issue #1897, exporting PDF margins to to follow the drawing settings
         QPageLayout pdfLayout = printer.pageLayout();
         pdfLayout.setMinimumMargins({});
-        printer.setPageLayout(pdfLayout);
+        if (!printer.setPageLayout(pdfLayout)) {
+            RS_DEBUG->print(RS_Debug::D_WARNING,
+                            "QC_ApplicationWindow::slotFilePrint: failed to apply PDF page layout");
+            RS_DIALOGFACTORY->commandMessage(tr("Cannot apply the drawing page settings."));
+            return;
+        }
     }
 
     QString strDefaultFile("");
@@ -2492,10 +2507,8 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
     // printer setup:
     bool    bStartPrinting = false;
     if(printPDF) {
-        printer.setOutputFormat(QPrinter::PdfFormat);
         printer.setColorMode(QPrinter::Color);
         printer.setResolution(1200);
-        printer.setFullPage(true);
         QFileInfo   infDefaultFile(strDefaultFile);
         QFileDialog fileDlg(this, tr("Export as PDF"));
         QString     defFilter("PDF files (*.pdf)");

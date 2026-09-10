@@ -17,7 +17,7 @@ namespace LC_Printing
      * orientation to setupPageLayout().
      */
     QPageSize toPageSize(QPrinter::PageSize paperSizeName, const RS_Vector& paperSize, RS2::Unit unit);
-    void setupPageLayout(QPrinter& printer, bool landscape, const QPageSize& pageSize,
+    bool setupPageLayout(QPrinter& printer, bool landscape, const QPageSize& pageSize,
                          const QMarginsF& paperMargins);
 }
 

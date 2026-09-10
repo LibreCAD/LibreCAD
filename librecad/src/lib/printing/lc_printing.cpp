@@ -77,7 +77,7 @@ QPageSize LC_Printing::toPageSize(QPrinter::PageSize paperSizeName, const RS_Vec
     return QPageSize{QSizeF(qMin(s.x, s.y), qMax(s.x, s.y)), QPageSize::Millimeter};
 }
 
-void LC_Printing::setupPageLayout(QPrinter& printer, bool landscape,
+bool LC_Printing::setupPageLayout(QPrinter& printer, bool landscape,
                                   const QPageSize& pageSize, const QMarginsF& paperMargins)
 {
     QPageLayout layout;
@@ -89,5 +89,5 @@ void LC_Printing::setupPageLayout(QPrinter& printer, bool landscape,
     // minimum-margins argument, so set them explicitly - otherwise the print
     // clip rect and PDF export margins are lost (issue #1897).
     layout.setMargins(paperMargins);
-    printer.setPageLayout(layout);
+    return printer.setPageLayout(layout);
 }

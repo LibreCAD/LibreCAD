@@ -98,7 +98,7 @@ int console_dxf2pdf(int argc, char* argv[])
     parser.addOption(monoOpt);
 
     QCommandLineOption pageSizeOpt(QStringList() << "p" << "paper",
-        QObject::tr( "Paper size (Width x Height) in mm.", "WxH"));
+        QObject::tr( "Paper size (Width x Height) in mm."), "WxH");
     parser.addOption(pageSizeOpt);
 
     QCommandLineOption resOpt(QStringList() << "r" << "resolution",
