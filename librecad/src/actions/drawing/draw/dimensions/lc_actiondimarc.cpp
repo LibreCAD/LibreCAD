@@ -74,6 +74,12 @@ void LC_ActionDimArc::doTriggerCompletion([[maybe_unused]]bool success) {
     RS_Snapper::finish();
 }
 
+// SetEntity picks an arc; only SetPos takes a point through the snapper
+// (LibreCAD#2824).
+bool LC_ActionDimArc::isInVisualSnapStatus(int status) {
+    return status == SetPos;
+}
+
 void LC_ActionDimArc::onMouseMoveEvent(const int status, const LC_MouseEvent* e) {
     RS_Vector snap = e->snapPoint;
     switch (status) {

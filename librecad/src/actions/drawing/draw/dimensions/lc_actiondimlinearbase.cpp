@@ -63,6 +63,15 @@ void LC_ActionDimLinearBase::doInitWithContextEntity(RS_Entity* contextEntity, c
     }
 }
 
+// Both extension points and the dimension-line position are picked with the
+// mouse through the snapper, so the snap indicator belongs on all three
+// (LibreCAD#2824). SetText and SetAngle read from the command line and stay
+// excluded - suppressing the indicator where no point is being picked is what
+// isInVisualSnapStatus() was added for (LibreCAD#2143).
+bool LC_ActionDimLinearBase::isInVisualSnapStatus(int status) {
+    return status == SetExtPoint1 || status == SetExtPoint2 || status == SetDefPoint;
+}
+
 void LC_ActionDimLinearBase::onMouseMoveEvent(const int status, const LC_MouseEvent* e) {
     RS_Vector mouse = e->snapPoint;
 

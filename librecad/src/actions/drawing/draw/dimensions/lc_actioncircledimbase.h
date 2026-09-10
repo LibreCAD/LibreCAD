@@ -63,6 +63,7 @@ protected:
     void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;
     void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
     void onMouseMoveEvent(int status, const LC_MouseEvent* e) override;
+    bool isInVisualSnapStatus(int status) override;
     void setDimSourceEntity(RS_Entity* en, bool controlPressed, const RS_Vector& pos);
     bool doProcessCommand(int status, const QString &c) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &coord) override;

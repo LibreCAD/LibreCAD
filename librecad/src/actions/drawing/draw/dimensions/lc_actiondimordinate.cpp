@@ -113,6 +113,12 @@ LC_DimOrdinate*  LC_ActionDimOrdinate::createDim(const RS_Vector& leaderEndPoint
     return dimOrdinate;
 }
 
+// SetText reads from the command line; the feature point and the leader end
+// are both picked through the snapper (LibreCAD#2824).
+bool LC_ActionDimOrdinate::isInVisualSnapStatus(int status) {
+    return status == SetFeaturePoint || status == SetLeaderEnd;
+}
+
 void LC_ActionDimOrdinate::onMouseMoveEvent(const int status, const LC_MouseEvent* e) {
     RS_Vector mouse = e->snapPoint;
     switch (status) {
