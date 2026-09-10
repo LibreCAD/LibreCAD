@@ -255,6 +255,7 @@ librecad/src/lib/filters/rs_filterdxf1.cpp
 librecad/src/lib/filters/rs_filterjww.cpp
 librecad/src/lib/filters/rs_filterlff.cpp
 librecad/src/lib/filters/rs_filtercxf.cpp
+librecad/src/lib/filters/lc_hyperbolaspline.cpp
 librecad/src/lib/filters/rs_filterdxfrw.cpp
 librecad/src/lib/generators/lc_makercamsvg.cpp
 librecad/src/lib/generators/lc_xmlwriterqxmlstreamwriter.cpp

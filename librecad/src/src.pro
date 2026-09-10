@@ -220,6 +220,7 @@ HEADERS += \
     lib/engine/rs_vector.h \
     lib/fileio/rs_fileio.h \
     lib/filters/rs_filtercxf.h \
+    lib/filters/lc_hyperbolaspline.h \
     lib/filters/rs_filterdxfrw.h \
     lib/filters/rs_filterdxf1.h \
     lib/filters/rs_filterjww.h \
@@ -373,6 +374,7 @@ SOURCES += \
     lib/engine/rs_vector.cpp \
     lib/fileio/rs_fileio.cpp \
     lib/filters/rs_filtercxf.cpp \
+    lib/filters/lc_hyperbolaspline.cpp \
     lib/filters/rs_filterdxfrw.cpp \
     lib/filters/rs_filterdxf1.cpp \
     lib/filters/rs_filterjww.cpp \

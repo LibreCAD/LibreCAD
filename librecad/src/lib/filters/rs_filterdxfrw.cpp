@@ -49,6 +49,8 @@
 #include "rs_polyline.h"
 #include "rs_solid.h"
 #include "rs_spline.h"
+#include "lc_hyperbola.h"
+#include "lc_hyperbolaspline.h"
 #include "lc_splinepoints.h"
 #include "rs_system.h"
 #include "rs_text.h"
@@ -628,6 +630,21 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
 	if(data->degree == 2)
 	{
         if (data->controllist.size() == 3) {
+            // A bounded hyperbola arc is stored as a rational quadratic with
+            // three control points, which is the same shape this branch has
+            // always handed to LC_Parabola. Only the exact canonical form -
+            // open knot vector, endpoint weights of 1, middle weight above 1 -
+            // is claimed here, so anything else keeps the existing behaviour.
+            if (LC_HyperbolaSpline::isHyperbolaSpline(*data)) {
+                auto hyperbola = LC_HyperbolaSpline::splineToHyperbola(*data, currentContainer);
+                if (hyperbola && hyperbola->isValid()) {
+                    auto* entity = hyperbola.release();
+                    setEntityAttributes(entity, data);
+                    entity->update();
+                    currentContainer->addEntity(entity);
+                    return;
+                }
+            }
             auto toRs = [](const std::shared_ptr<DRW_Coord>& coord) -> RS_Vector {
                 return coord ? RS_Vector{coord->x, coord->y} : RS_Vector{};
             };
@@ -2150,6 +2167,9 @@ void RS_FilterDXFRW::writeEntity(RS_Entity* e){
     case RS2::EntitySpline:
         writeSpline((RS_Spline*)e);
         break;
+    case RS2::EntityHyperbola:
+        writeHyperbola(static_cast<LC_Hyperbola*>(e));
+        break;
     case RS2::EntitySplinePoints:
     case RS2::EntityParabola:
         writeSplinePoints((LC_SplinePoints*)e);
@@ -2402,6 +2422,30 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
 /**
  * Writes the given spline entity to the file.
  */
+void RS_FilterDXFRW::writeHyperbola(LC_Hyperbola* h)
+{
+    if (h == nullptr)
+        return;
+
+    DRW_Spline spline;
+    if (!LC_HyperbolaSpline::hyperbolaToSpline(h->getData(), spline)) {
+        // A full, unbounded branch has no finite rational quadratic to write.
+        // Returning quietly would drop the entity without a trace: this branch
+        // never checks a writer's result - RS_FilterDXFRW calls writeEntity()
+        // and discards what it returns - so the warning is the only signal
+        // anyone gets. Substituting a clipped arc would be worse: the file
+        // would look complete and be wrong.
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_FilterDXFRW::writeHyperbola: an unbounded hyperbola "
+                        "cannot be written as a rational quadratic spline and "
+                        "was skipped");
+        return;
+    }
+
+    getEntityAttributes(&spline, h);
+    dxfW->writeSpline(&spline);
+}
+
 void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s)
 {
 	int nCtrls = s->getNumberOfControlPoints();
