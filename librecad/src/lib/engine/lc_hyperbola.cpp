@@ -649,16 +649,26 @@ void LC_Hyperbola::draw(RS_Painter *painter, RS_GraphicView *view,
   if (painter == nullptr || view == nullptr || !m_valid || isInfinite())
     return;
 
-  constexpr int kSegments = 128;
+  // Sample by how large the arc actually is on screen, not by a fixed count:
+  // a chord error that is invisible when the whole arc fits the window grows
+  // in proportion to the zoom, and a CAD user zooms. Aiming at a few pixels
+  // per segment keeps the polyline under half a pixel from the curve at any
+  // magnification, and the clamp bounds the cost either way.
+  const RS_Vector guiMin = view->toGui(getMin());
+  const RS_Vector guiMax = view->toGui(getMax());
+  const double screenSpan = std::max(std::abs(guiMax.x - guiMin.x),
+                                     std::abs(guiMax.y - guiMin.y));
+  const int segments = std::clamp(static_cast<int>(screenSpan / 3.0), 32, 4096);
+
   const double phi1 = m_data.angle1;
   const double phi2 = m_data.angle2;
-  const double step = (phi2 - phi1) / kSegments;
+  const double step = (phi2 - phi1) / segments;
 
   const RS_Vector start = view->toGui(getPoint(phi1, m_data.reversed));
   if (!start.valid)
     return;
   QPainterPath path{QPointF{start.x, start.y}};
-  for (int i = 1; i <= kSegments; ++i) {
+  for (int i = 1; i <= segments; ++i) {
     const RS_Vector p = view->toGui(getPoint(phi1 + step * i, m_data.reversed));
     if (!p.valid)
       return;
