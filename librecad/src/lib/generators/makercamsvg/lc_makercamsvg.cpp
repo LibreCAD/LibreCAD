@@ -808,6 +808,7 @@ std::string LC_MakerCamSVG::svgPathAnyLineType(RS_Vector startpoint, RS_Vector e
     constexpr int divideFactor = 5; // --.. --.. --.. --..
     constexpr int centerFactor = 5; // -- - -- - -- -
     constexpr int borderFactor = 7; // -- -- . -- -- . -- -- .
+    constexpr int phantomFactor = 7; // -- - - -- - - -- - -
 
     constexpr double lineScaleTiny = 0.25;
     constexpr double lineScale2 = 0.5;
@@ -968,6 +969,27 @@ std::string LC_MakerCamSVG::svgPathAnyLineType(RS_Vector startpoint, RS_Vector e
             lineFactor = borderFactor;
             break;
         }
+
+        case RS2::PhantomLineTiny: {
+            lineScale = lineScaleTiny;
+            lineFactor = phantomFactor;
+            break;
+        }
+        case RS2::PhantomLine2: {
+            lineScale = lineScale2;
+            lineFactor = phantomFactor;
+            break;
+        }
+        case RS2::PhantomLine: {
+            lineScale = lineScaleOne;
+            lineFactor = phantomFactor;
+            break;
+        }
+        case RS2::PhantomLineX2: {
+            lineScale = lineScaleX2;
+            lineFactor = phantomFactor;
+            break;
+        }
         default: {
             lineScale = lineScaleOne;
             lineFactor = dotFactor;
@@ -1055,6 +1077,16 @@ std::string LC_MakerCamSVG::getLinePattern(RS_Vector* lastPos, RS_Vector step, R
             path += getLineSegment(lastPos, step, lineScale, true);
             path += getLineSegment(lastPos, step, lineScale, true);
             path += getPointSegment(lastPos, step, lineScale);
+            break;
+        }
+
+        case RS2::PhantomLineTiny:
+        case RS2::PhantomLine2:
+        case RS2::PhantomLine:
+        case RS2::PhantomLineX2: {
+            path += getLineSegment(lastPos, step, lineScale, true);
+            path += getLineSegment(lastPos, step, lineScale, false);
+            path += getLineSegment(lastPos, step, lineScale, false);
             break;
         }
 

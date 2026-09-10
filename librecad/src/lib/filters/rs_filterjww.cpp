@@ -1287,7 +1287,7 @@ bool RS_FilterJWW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
         // RS2::LineTypeUnchanged and RS2::LineSelected sit between the two
         // blocks and are UI-only, so the table is written as two ranges.
         int numLT = (int)RS2::BorderLineX2-(int)RS2::LineByBlock
-                  + (int)RS2::HiddenLineX2-(int)RS2::HiddenLine+1;
+                  + (int)RS2::PhantomLineX2-(int)RS2::HiddenLine+1;
         if (type==RS2::FormatJWC) {
                 numLT-=2;
         }
@@ -1297,7 +1297,7 @@ bool RS_FilterJWW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
                         writeLineType(*dw, (RS2::LineType)t);
                 }
         }
-        for (int t=(int)RS2::HiddenLine; t<=(int)RS2::HiddenLineX2; ++t) {
+        for (int t=(int)RS2::HiddenLine; t<=(int)RS2::PhantomLineX2; ++t) {
                 writeLineType(*dw, (RS2::LineType)t);
         }
         dw->tableEnd();
@@ -2811,6 +2811,15 @@ RS2::LineType RS_FilterJWW::nameToLineType(const QString& name) {
         } else if (uName=="CENTERX2") {
                 return RS2::CenterLineX2;
 
+        } else if (uName=="ACAD_ISO09W100" || uName=="PHANTOM") {
+                return RS2::PhantomLine;
+
+        } else if (uName=="PHANTOM2") {
+                return RS2::PhantomLine2;
+
+        } else if (uName=="PHANTOMX2") {
+                return RS2::PhantomLineX2;
+
 
         } else if (uName=="BORDER") {
                 return RS2::BorderLine;
@@ -2897,6 +2906,16 @@ QString RS_FilterJWW::lineTypeToName(RS2::LineType lineType) {
                 break;
         case RS2::CenterLineX2:
                 return "CENTERX2";
+                break;
+
+        case RS2::PhantomLine:
+                return "PHANTOM";
+                break;
+        case RS2::PhantomLine2:
+                return "PHANTOM2";
+                break;
+        case RS2::PhantomLineX2:
+                return "PHANTOMX2";
                 break;
 
         case RS2::BorderLine:

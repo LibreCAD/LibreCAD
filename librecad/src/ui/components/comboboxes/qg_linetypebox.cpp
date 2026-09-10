@@ -111,6 +111,10 @@ void QG_LineTypeBox::init(const bool showByLayer, const bool showUnchanged, cons
     addItem(QIcon(":linetypes/linetype06.lci"), tr("Center (tiny)"), RS2::CenterLineTiny);
     addItem(QIcon(":linetypes/linetype06.lci"), tr("Center (small)"), RS2::CenterLine2);
     addItem(QIcon(":linetypes/linetype06.lci"), tr("Center (large)"), RS2::CenterLineX2);
+    addItem(QIcon(":linetypes/linetype09.lci"), tr("Phantom"), RS2::PhantomLine);
+    addItem(QIcon(":linetypes/linetype09.lci"), tr("Phantom (tiny)"), RS2::PhantomLineTiny);
+    addItem(QIcon(":linetypes/linetype09.lci"), tr("Phantom (small)"), RS2::PhantomLine2);
+    addItem(QIcon(":linetypes/linetype09.lci"), tr("Phantom (large)"), RS2::PhantomLineX2);
     addItem(QIcon(":linetypes/linetype07.lci"), tr("Border"), RS2::BorderLine);
     addItem(QIcon(":linetypes/linetype07.lci"), tr("Border (tiny)"), RS2::BorderLineTiny);
     addItem(QIcon(":linetypes/linetype07.lci"), tr("Border (small)"), RS2::BorderLine2);

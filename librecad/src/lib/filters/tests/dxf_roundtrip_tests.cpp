@@ -54,6 +54,7 @@
 #include "rs_dimaligned.h"
 #include "rs_dimension.h"
 #include "rs_filterdxfrw.h"
+#include "rs_filterjww.h"
 #include "rs_graphic.h"
 #include "rs_entity.h"
 #include "rs_block.h"
@@ -4777,6 +4778,8 @@ TEST_CASE("Every DXF linetype name LibreCAD writes maps back to the same RS2::Li
            RS2::DashLine, RS2::DashLineTiny, RS2::DashLine2, RS2::DashLineX2,
            RS2::HiddenLine, RS2::HiddenLineTiny, RS2::HiddenLine2,
            RS2::HiddenLineX2,
+           RS2::PhantomLine, RS2::PhantomLineTiny, RS2::PhantomLine2,
+           RS2::PhantomLineX2,
            RS2::DashDotLine, RS2::DashDotLineTiny, RS2::DashDotLine2,
            RS2::DashDotLineX2,
            RS2::DivideLine, RS2::DivideLineTiny, RS2::DivideLine2,
@@ -4797,11 +4800,274 @@ TEST_CASE("Every DXF linetype name LibreCAD writes maps back to the same RS2::Li
   CHECK(RS_FilterDXFRW::lineTypeToName(RS2::HiddenLine2) == "HIDDEN2");
   CHECK(RS_FilterDXFRW::lineTypeToName(RS2::HiddenLineX2) == "HIDDENX2");
 
+  // The phantom family keeps its acad.lin names (PHANTOM* used to fall
+  // through to CONTINUOUS).
+  CHECK(RS_FilterDXFRW::lineTypeToName(RS2::PhantomLine) == "PHANTOM");
+  CHECK(RS_FilterDXFRW::lineTypeToName(RS2::PhantomLineTiny) == "PHANTOMTINY");
+  CHECK(RS_FilterDXFRW::lineTypeToName(RS2::PhantomLine2) == "PHANTOM2");
+  CHECK(RS_FilterDXFRW::lineTypeToName(RS2::PhantomLineX2) == "PHANTOMX2");
+  // ISO 128-20 type 09 (long-dashed double-short-dashed) imports as PHANTOM,
+  // the way ACAD_ISO04W100 / ACAD_ISO05W100 already alias DASHDOTX2 / DIVIDEX2.
+  CHECK(RS_FilterDXFRW::nameToLineType(QStringLiteral("ACAD_ISO09W100")) ==
+        RS2::PhantomLine);
+  CHECK(RS_FilterDXFRW::nameToLineType(QStringLiteral("acad_iso09w100")) ==
+        RS2::PhantomLine);
+
+  // The JWW filter carries its own name tables (without tiny variants); they
+  // must agree with the DXF ones.
+  for (const RS2::LineType type : {RS2::HiddenLine, RS2::HiddenLine2,
+                                   RS2::HiddenLineX2, RS2::PhantomLine,
+                                   RS2::PhantomLine2, RS2::PhantomLineX2}) {
+    INFO("linetype " << static_cast<int>(type));
+    const QString name = RS_FilterJWW::lineTypeToName(type);
+    CHECK(name == RS_FilterDXFRW::lineTypeToName(type));
+    CHECK(RS_FilterJWW::nameToLineType(name) == type);
+  }
+
+  // The values are persisted (QSettings, .lcp palettes, $DIMLTYPE) and the JWW
+  // export loop treats HiddenLine..PhantomLineX2 as one contiguous range.
+  CHECK(static_cast<int>(RS2::HiddenLine) == 28);
+  CHECK(static_cast<int>(RS2::HiddenLineX2) == 31);
+  CHECK(static_cast<int>(RS2::PhantomLine) == 32);
+  CHECK(static_cast<int>(RS2::PhantomLineX2) == 35);
+
   // Every drawable type must have a screen pattern: RS_Painter dereferences
   // getPattern() without a null check.
   for (const RS2::LineType type : {RS2::HiddenLine, RS2::HiddenLineTiny,
-                                   RS2::HiddenLine2, RS2::HiddenLineX2}) {
+                                   RS2::HiddenLine2, RS2::HiddenLineX2,
+                                   RS2::PhantomLine, RS2::PhantomLineTiny,
+                                   RS2::PhantomLine2, RS2::PhantomLineX2}) {
     INFO("linetype " << static_cast<int>(type));
     CHECK(RS_LineTypePattern::getPattern(type) != nullptr);
   }
+}
+
+TEST_CASE("DXF import keeps PHANTOM on a layer and on an entity",
+          "[dxf][filter][linetype]") {
+  ensureSettings();
+  const std::string src = tmpFile("phantom_src.dxf");
+  std::filesystem::remove(src);
+
+  // acad.lin: PHANTOM A,1.25,-.25,.25,-.25,.25,-.25 and PHANTOM2 at half
+  // that (inch values, as an imperial AutoCAD drawing carries them; acadiso.lin
+  // is the same x 25.4). Without the phantom family nameToLineType() fell
+  // through to SolidLine for both names.
+  writeText(src,
+            "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1009\n0\nENDSEC\n"
+            "0\nSECTION\n2\nTABLES\n"
+            "0\nTABLE\n2\nLTYPE\n70\n2\n"
+            "0\nLTYPE\n2\nPHANTOM\n70\n0\n3\nPhantom ______  __  __  ______\n"
+            "72\n65\n73\n6\n40\n2.5\n"
+            "49\n1.25\n74\n0\n49\n-0.25\n74\n0\n49\n0.25\n74\n0\n"
+            "49\n-0.25\n74\n0\n49\n0.25\n74\n0\n49\n-0.25\n74\n0\n"
+            "0\nLTYPE\n2\nPHANTOM2\n70\n0\n3\nPhantom (.5x) ___ _ _ ___ _ _\n"
+            "72\n65\n73\n6\n40\n1.25\n"
+            "49\n0.625\n74\n0\n49\n-0.125\n74\n0\n49\n0.125\n74\n0\n"
+            "49\n-0.125\n74\n0\n49\n0.125\n74\n0\n49\n-0.125\n74\n0\n"
+            "0\nENDTAB\n0\nTABLE\n2\nLAYER\n70\n2\n"
+            "0\nLAYER\n2\n0\n70\n0\n62\n7\n6\nCONTINUOUS\n"
+            "0\nLAYER\n2\nPHANTOM_LAYER\n70\n0\n62\n7\n6\nPHANTOM\n"
+            "0\nENDTAB\n0\nENDSEC\n0\nSECTION\n2\nENTITIES\n"
+            "0\nLINE\n8\nPHANTOM_LAYER\n6\nPHANTOM\n"
+            "10\n0.0\n20\n0.0\n11\n10.0\n21\n0.0\n"
+            "0\nLINE\n8\n0\n6\nPHANTOM2\n"
+            "10\n0.0\n20\n5.0\n11\n10.0\n21\n5.0\n"
+            "0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  const auto *layer = graphic.findLayer(QStringLiteral("PHANTOM_LAYER"));
+  REQUIRE(layer != nullptr);
+  CHECK(layer->getPen().getLineType() == RS2::PhantomLine);
+
+  RS_Entity *line = graphic.firstEntity();
+  REQUIRE(line != nullptr);
+  CHECK(line->getPen(false).getLineType() == RS2::PhantomLine);
+
+  RS_Entity *half = graphic.nextEntity();
+  REQUIRE(half != nullptr);
+  CHECK(half->getPen(false).getLineType() == RS2::PhantomLine2);
+
+  std::filesystem::remove(src);
+}
+
+TEST_CASE("DXF round-trip preserves the PHANTOM linetype on an entity",
+          "[dxf][roundtrip][filter][linetype]") {
+  ensureSettings();
+  const std::string out = tmpFile("phantom_out.dxf");
+  const std::string dwg = tmpFile("phantom.dwg");
+  std::filesystem::remove(out);
+  std::filesystem::remove(dwg);
+
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  auto *line = new RS_Line(&graphic, RS_LineData(RS_Vector(0.0, 0.0),
+                                                 RS_Vector(10.0, 10.0)));
+  line->setPen(RS_Pen(RS_Color(255, 0, 0), RS2::Width00, RS2::PhantomLine));
+  graphic.addEntity(line);
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+
+  // The entity references the linetype by its acad.lin name...
+  CHECK(recordGroupValues(out, "LINE", "6") ==
+        std::vector<std::string>{"PHANTOM"});
+  // ...and the LTYPE table carries acad.lin's PHANTOM
+  // (A,1.25,-.25,.25,-.25,.25,-.25) in mm.
+  const auto dashes = ltypeRecordGroupValues(out, "PHANTOM", "49");
+  REQUIRE(dashes.size() == 6);
+  CHECK(std::stod(dashes[0]) == Catch::Approx(31.75));
+  CHECK(std::stod(dashes[1]) == Catch::Approx(-6.35));
+  CHECK(std::stod(dashes[2]) == Catch::Approx(6.35));
+  CHECK(std::stod(dashes[3]) == Catch::Approx(-6.35));
+  CHECK(std::stod(dashes[4]) == Catch::Approx(6.35));
+  CHECK(std::stod(dashes[5]) == Catch::Approx(-6.35));
+  CHECK(ltypeRecordGroupValues(out, "PHANTOM", "73") ==
+        std::vector<std::string>{"6"});
+  const auto length = ltypeRecordGroupValues(out, "PHANTOM", "40");
+  REQUIRE(length.size() == 1);
+  CHECK(std::stod(length[0]) == Catch::Approx(63.5));
+
+  // The three scaled records are emitted alongside, at acad.lin's ratios.
+  struct ScaledRecord {
+    const char *name;
+    double length;
+    std::vector<double> dashes;
+  };
+  for (const ScaledRecord &record : {
+           ScaledRecord{"PHANTOMTINY", 9.525,
+                        {4.7625, -0.9525, 0.9525, -0.9525, 0.9525, -0.9525}},
+           ScaledRecord{"PHANTOM2", 31.75,
+                        {15.875, -3.175, 3.175, -3.175, 3.175, -3.175}},
+           ScaledRecord{"PHANTOMX2", 127.0,
+                        {63.5, -12.7, 12.7, -12.7, 12.7, -12.7}}}) {
+    INFO("LTYPE " << record.name);
+    CHECK(ltypeRecordGroupValues(out, record.name, "73") ==
+          std::vector<std::string>{"6"});
+    const auto scaledLength = ltypeRecordGroupValues(out, record.name, "40");
+    REQUIRE(scaledLength.size() == 1);
+    CHECK(std::stod(scaledLength[0]) == Catch::Approx(record.length));
+    const auto scaledDashes = ltypeRecordGroupValues(out, record.name, "49");
+    REQUIRE(scaledDashes.size() == record.dashes.size());
+    for (std::size_t i = 0; i < record.dashes.size(); ++i) {
+      CHECK(std::stod(scaledDashes[i]) == Catch::Approx(record.dashes[i]));
+    }
+  }
+
+  RS_Graphic reimported;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(reimported, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+  RS_Entity *imported = reimported.firstEntity();
+  REQUIRE(imported != nullptr);
+  CHECK(imported->getPen(false).getLineType() == RS2::PhantomLine);
+
+  // The reimported drawing now carries PHANTOM in its raw LTYPE table copy
+  // as well; saving it again must write the record once, not once per
+  // source.
+  const std::string out2 = tmpFile("phantom_out2.dxf");
+  std::filesystem::remove(out2);
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(reimported, QString::fromStdString(out2),
+                              RS2::FormatDXFRW));
+  }
+  CHECK(ltypeRecordGroupValues(out2, "PHANTOM", "73") ==
+        std::vector<std::string>{"6"});
+  CHECK(recordGroupValues(out2, "LINE", "6") ==
+        std::vector<std::string>{"PHANTOM"});
+  std::filesystem::remove(out2);
+
+#ifdef DWGSUPPORT
+  // The DWG writer resolves entity linetypes by handle against the LTYPE
+  // table emitted by writeLTypes(), so a missing record would silently
+  // degrade the pen here.
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(dwg),
+                              RS2::FormatDWG2004));
+  }
+  RS_Graphic fromDwg;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(fromDwg, QString::fromStdString(dwg),
+                              RS2::FormatDWG));
+  }
+  RS_Entity *dwgLine = fromDwg.firstEntity();
+  REQUIRE(dwgLine != nullptr);
+  CHECK(dwgLine->getPen(false).getLineType() == RS2::PhantomLine);
+#endif
+
+  std::filesystem::remove(out);
+  std::filesystem::remove(dwg);
+}
+
+TEST_CASE("DXF import maps ACAD_ISO09W100 to PHANTOM and writes it back as PHANTOM",
+          "[dxf][roundtrip][filter][linetype]") {
+  ensureSettings();
+  const std::string src = tmpFile("iso09_src.dxf");
+  const std::string out = tmpFile("iso09_out.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  // acadiso.lin: ACAD_ISO09W100 "ISO long-dash double-short-dash"
+  // A,24,-3,6,-3,6,-3. Like the other ACAD_ISO aliases it is an import
+  // mapping only: the entity is saved with the acad.lin name of the family
+  // it landed on, and the source record survives as raw metadata.
+  writeText(src,
+            "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1009\n0\nENDSEC\n"
+            "0\nSECTION\n2\nTABLES\n"
+            "0\nTABLE\n2\nLTYPE\n70\n1\n"
+            "0\nLTYPE\n2\nACAD_ISO09W100\n70\n0\n"
+            "3\nISO long-dash double-short-dash\n"
+            "72\n65\n73\n6\n40\n45.0\n"
+            "49\n24.0\n74\n0\n49\n-3.0\n74\n0\n49\n6.0\n74\n0\n"
+            "49\n-3.0\n74\n0\n49\n6.0\n74\n0\n49\n-3.0\n74\n0\n"
+            "0\nENDTAB\n0\nTABLE\n2\nLAYER\n70\n2\n"
+            "0\nLAYER\n2\n0\n70\n0\n62\n7\n6\nCONTINUOUS\n"
+            "0\nLAYER\n2\nISO09_LAYER\n70\n0\n62\n7\n6\nACAD_ISO09W100\n"
+            "0\nENDTAB\n0\nENDSEC\n0\nSECTION\n2\nENTITIES\n"
+            "0\nLINE\n8\nISO09_LAYER\n6\nACAD_ISO09W100\n"
+            "10\n0.0\n20\n0.0\n11\n10.0\n21\n0.0\n"
+            "0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  const auto *layer = graphic.findLayer(QStringLiteral("ISO09_LAYER"));
+  REQUIRE(layer != nullptr);
+  CHECK(layer->getPen().getLineType() == RS2::PhantomLine);
+  RS_Entity *line = graphic.firstEntity();
+  REQUIRE(line != nullptr);
+  CHECK(line->getPen(false).getLineType() == RS2::PhantomLine);
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+  CHECK(recordGroupValues(out, "LINE", "6") ==
+        std::vector<std::string>{"PHANTOM"});
+  CHECK(namedRecordGroupValues(out, "LAYER", "ISO09_LAYER", "6") ==
+        std::vector<std::string>{"PHANTOM"});
+  CHECK(ltypeRecordGroupValues(out, "PHANTOM", "73") ==
+        std::vector<std::string>{"6"});
+  // The imported ISO09 record is re-emitted as it came in, once.
+  CHECK(ltypeRecordGroupValues(out, "ACAD_ISO09W100", "73") ==
+        std::vector<std::string>{"6"});
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
 }
