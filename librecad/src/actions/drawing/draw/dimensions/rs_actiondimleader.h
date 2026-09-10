@@ -61,6 +61,7 @@ protected:
     struct ActionData;
     std::unique_ptr<ActionData> m_actionData;
     RS2::CursorType doGetMouseCursor(int status) override;
+    bool isInVisualSnapStatus(int status) override;
     void reset() const;
     void onMouseMoveEvent(int status, const LC_MouseEvent* e) override;
     void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;
