@@ -62,6 +62,11 @@ bool isArc(const RS_Entity& entity){
     if (entity.isArc())
         return true;
     switch (entity.rtti()){
+    // A hyperbola is a conic and can carry a tangent, so it belongs in the
+    // same classification the tangent constructions test against. master
+    // lists it here; this branch never did, because it had no usable
+    // hyperbola to classify.
+    case RS2::EntityHyperbola:
     case RS2::EntityParabola:
         return true;
     default:

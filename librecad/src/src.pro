@@ -132,6 +132,7 @@ RESOURCES += ../../licenses/licenses.qrc
 HEADERS += \
     actions/lc_abstractactionwithpreview.h \
     actions/lc_actiondrawlinefrompointtoline.h \
+    actions/lc_actiondrawhyperbolafp.h \
     actions/lc_actiondrawparabola4points.h \
     actions/lc_actiondrawparabolaFD.h \
     actions/lc_actiondrawstar.h \
@@ -302,6 +303,7 @@ SOURCES += \
     actions/lc_actiondrawrectangle2points.cpp \
     actions/lc_actiondrawslicedivide.cpp \
     actions/lc_abstractactiondrawline.cpp \
+    actions/lc_actiondrawhyperbolafp.cpp \
     actions/lc_actiondrawparabola4points.cpp \
     actions/lc_actiondrawparabolaFD.cpp \
     actions/lc_actiondrawstar.cpp \
