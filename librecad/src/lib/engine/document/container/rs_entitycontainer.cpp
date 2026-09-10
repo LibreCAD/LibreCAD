@@ -27,6 +27,8 @@
 
 #include "rs_entitycontainer.h"
 
+#include <algorithm>
+#include <cmath>
 #include <iostream>
 
 #include "lc_containertraverser.h"
@@ -82,6 +84,19 @@ namespace {
         } else {
             entity->setSelectionFlag(false);
         }
+    }
+
+    double distanceToCachedBounds(const RS_Vector& coord, const RS_Entity& entity) {
+        const RS_Vector min = entity.getMin();
+        const RS_Vector max = entity.getMax();
+        if (!coord.valid || !min.valid || !max.valid || !std::isfinite(coord.x) || !std::isfinite(coord.y)
+            || !std::isfinite(min.x) || !std::isfinite(min.y) || !std::isfinite(max.x) || !std::isfinite(max.y)
+            || min.x > max.x || min.y > max.y) {
+            return -1.0;
+        }
+        const double dx = std::max({min.x - coord.x, 0.0, coord.x - max.x});
+        const double dy = std::max({min.y - coord.y, 0.0, coord.y - max.y});
+        return std::hypot(dx, dy);
     }
 }
 
@@ -1445,6 +1460,15 @@ double RS_EntityContainer::doGetDistanceToPoint(const RS_Vector& coord, RS_Entit
             if (level == RS2::ResolveAllButTextImage && e->rtti() == RS2::EntityImage) {
                 continue;
             }
+            if (level == RS2::ResolveAllButTexts && RS2::isTextEntity(e->rtti())) {
+                continue;
+            }
+            if ((RS2::isTextEntity(rtti()) || RS2::isTextEntity(e->rtti())) && minDist < RS_MAXDOUBLE) {
+                const double lowerBound = distanceToCachedBounds(coord, *e);
+                if (lowerBound >= 0.0 && lowerBound > minDist) {
+                    continue;
+                }
+            }
             curDist = e->getDistanceToPoint(coord, &subEntity, level, solidDist);
 
             RS_DEBUG->print("entity: getDistanceToPoint: OK");
@@ -1462,6 +1486,7 @@ double RS_EntityContainer::doGetDistanceToPoint(const RS_Vector& coord, RS_Entit
                 switch (level) {
                     case RS2::ResolveAll:
                     case RS2::ResolveAllButTextImage:
+                    case RS2::ResolveAllButTexts:
                         closestEntity = subEntity;
                         break;
                     default:

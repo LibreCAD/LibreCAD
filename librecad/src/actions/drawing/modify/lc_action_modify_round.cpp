@@ -171,7 +171,7 @@ void LC_ActionModifyRound::doTriggerCompletion([[maybe_unused]]bool success) {
 
 void LC_ActionModifyRound::onMouseMoveEvent(const int status, const LC_MouseEvent* e) {
     const RS_Vector mouse = e->graphPoint;
-    RS_Entity *se = catchAndDescribe(e, SUPPORTED_ENTITY_TYPES, RS2::ResolveAll);
+    RS_Entity *se = catchAndDescribe(e, SUPPORTED_ENTITY_TYPES, RS2::ResolveAllButTexts);
     switch (status) {
         case SetEntity1: {
             if (se != nullptr){
@@ -295,7 +295,7 @@ void LC_ActionModifyRound::previewEntityModifications(const RS_Entity *original,
 
 void LC_ActionModifyRound::onMouseLeftButtonRelease(const int status, const LC_MouseEvent* e) {
     const RS_Vector mouse = e->graphPoint;
-    RS_Entity *se = catchEntityByEvent(e, SUPPORTED_ENTITY_TYPES, RS2::ResolveAll);
+    RS_Entity *se = catchEntityByEvent(e, SUPPORTED_ENTITY_TYPES, RS2::ResolveAllButTexts);
     switch (status) {
         case SetEntity1: {
             if (isAtomic(se) && RS_Information::isTrimmable(se)){

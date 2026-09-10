@@ -162,6 +162,16 @@ public:
     }
 
     void addEntity(const RS_Entity* entity) override;
+    bool removeEntity(RS_Entity* entity) override;
+    void clear() override;
+    void calculateBorders() override;
+
+    /**
+     * Returns top-level entities whose cached bounds intersect a square around
+     * \p coord.  The cache is rebuilt lazily after document geometry changes.
+     */
+    QList<RS_Entity*> getSnapCandidates(const RS_Vector& coord, double range) const;
+    void invalidateSnapIndex();
 
     void select(const QList<RS_Entity*>& list, const bool select = true) {
         for (const auto e : list) {
@@ -238,6 +248,8 @@ public:
 
 
 protected:
+    struct SnapIndex;
+
     /** Flag set if the document was modified and not yet saved. */
     bool m_modified = false;
     /** Active pen. */
@@ -247,6 +259,7 @@ protected:
     RS_GraphicView* m_gv = nullptr; // fixme - sand -- REALLY BAD DEPENDANCE TO UI here, REWORK!
 
     std::unique_ptr<LC_SelectedSet> m_selectedSet;
+    mutable std::unique_ptr<SnapIndex> m_snapIndex;
 
     void startBulkUndoablesCleanup() override;
     void endBulkUndoablesCleanup() override;

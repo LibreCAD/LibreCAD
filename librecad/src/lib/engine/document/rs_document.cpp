@@ -27,10 +27,125 @@
 
 #include "rs_document.h"
 
+#include <algorithm>
+#include <cmath>
 #include <set>
+#include <vector>
+
+#include <boost/geometry.hpp>
+#include <boost/geometry/index/rtree.hpp>
 
 #include "lc_undosection.h"
 #include "rs_debug.h"
+
+namespace bg = boost::geometry;
+namespace bgi = boost::geometry::index;
+
+namespace {
+
+using BPoint = bg::model::point<double, 2, bg::cs::cartesian>;
+using BBox = bg::model::box<BPoint>;
+
+bool isFinitePoint(const RS_Vector& point) {
+    return point.valid && std::isfinite(point.x) && std::isfinite(point.y);
+}
+
+bool isFiniteBox(const RS_Vector& min, const RS_Vector& max) {
+    return isFinitePoint(min) && isFinitePoint(max) && min.x <= max.x && min.y <= max.y
+        && std::isfinite(max.x - min.x) && std::isfinite(max.y - min.y);
+}
+
+BBox makeBox(const RS_Vector& min, const RS_Vector& max) {
+    return {{min.x, min.y}, {max.x, max.y}};
+}
+
+} // namespace
+
+struct RS_Document::SnapIndex {
+    struct Entry {
+        RS_Entity* entity = nullptr;
+        size_t drawOrder = 0;
+
+        bool operator==(const Entry& other) const {
+            return entity == other.entity && drawOrder == other.drawOrder;
+        }
+    };
+
+    using Value = std::pair<BBox, Entry>;
+    using Tree = bgi::rtree<Value, bgi::quadratic<16>>;
+
+    Tree tree;
+    std::vector<Entry> fallback;
+
+    void rebuild(const RS_Document& document) {
+        std::vector<Value> values;
+        fallback.clear();
+
+        size_t drawOrder = 0;
+        for (RS_Entity* entity : document) {
+            Entry entry{entity, drawOrder++};
+            if (entity == nullptr || entity->isDeleted()) {
+                continue;
+            }
+
+            RS_Vector min = entity->getMin();
+            RS_Vector max = entity->getMax();
+            if (RS2::isTextEntity(entity->rtti())) {
+                for (const RS_Vector& ref : entity->getRefPoints()) {
+                    if (!isFinitePoint(ref)) {
+                        continue;
+                    }
+                    if (!isFiniteBox(min, max)) {
+                        min = ref;
+                        max = ref;
+                    } else {
+                        min.x = std::min(min.x, ref.x);
+                        min.y = std::min(min.y, ref.y);
+                        max.x = std::max(max.x, ref.x);
+                        max.y = std::max(max.y, ref.y);
+                    }
+                }
+            }
+
+            if (isFiniteBox(min, max)) {
+                values.emplace_back(makeBox(min, max), entry);
+            } else {
+                fallback.push_back(entry);
+            }
+        }
+
+        tree = Tree(values.begin(), values.end());
+    }
+
+    QList<RS_Entity*> query(const RS_Vector& coord, const double range) const {
+        std::vector<Entry> entries;
+        if (isFinitePoint(coord) && std::isfinite(range) && range < RS_MAXDOUBLE / 2.0) {
+            const RS_Vector delta{std::max(range, 0.0), std::max(range, 0.0)};
+            std::vector<Value> matches;
+            tree.query(bgi::intersects(makeBox(coord - delta, coord + delta)), std::back_inserter(matches));
+            entries.reserve(matches.size() + fallback.size());
+            for (const Value& value : matches) {
+                entries.push_back(value.second);
+            }
+        } else {
+            entries.reserve(tree.size() + fallback.size());
+            for (auto it = tree.begin(); it != tree.end(); ++it) {
+                entries.push_back(it->second);
+            }
+        }
+        entries.insert(entries.end(), fallback.begin(), fallback.end());
+        std::sort(entries.begin(), entries.end(), [](const Entry& lhs, const Entry& rhs) {
+            return lhs.drawOrder < rhs.drawOrder;
+        });
+
+        QList<RS_Entity*> result;
+        result.reserve(static_cast<qsizetype>(entries.size()));
+        for (const Entry& entry : entries) {
+            result.append(entry.entity);
+        }
+        return result;
+    }
+};
 
 /**
  * Constructor.
@@ -49,8 +164,36 @@ RS_Document::~RS_Document() {
 }
 
 void RS_Document::addEntity(const RS_Entity* entity) {
+    invalidateSnapIndex();
     entity->m_parent = this;
     RS_EntityContainer::addEntity(entity);
+}
+
+bool RS_Document::removeEntity(RS_Entity* entity) {
+    invalidateSnapIndex();
+    return RS_EntityContainer::removeEntity(entity);
+}
+
+void RS_Document::clear() {
+    invalidateSnapIndex();
+    RS_EntityContainer::clear();
+}
+
+void RS_Document::calculateBorders() {
+    RS_EntityContainer::calculateBorders();
+    invalidateSnapIndex();
+}
+
+QList<RS_Entity*> RS_Document::getSnapCandidates(const RS_Vector& coord, const double range) const {
+    if (!m_snapIndex) {
+        m_snapIndex = std::make_unique<SnapIndex>();
+        m_snapIndex->rebuild(*this);
+    }
+    return m_snapIndex->query(coord, range);
+}
+
+void RS_Document::invalidateSnapIndex() {
+    m_snapIndex.reset();
 }
 
 /**

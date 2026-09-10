@@ -2470,6 +2470,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/entities/tests/lc_textbidi_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_mtext_bidi_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_text_bidi_tests.cpp
+        librecad/src/lib/engine/document/tests/rs_document_snap_candidates_tests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_round_tests.cpp
         librecad/src/lib/filters/tests/dwg_pre_r13_codepage_tests.cpp
         librecad/src/lib/filters/tests/dwg_pre_r13_section_size_tests.cpp
