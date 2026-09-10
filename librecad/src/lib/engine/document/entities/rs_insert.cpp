@@ -129,10 +129,17 @@ InsertTransformCapability transformCapability(const RS_Entity& entity) {
     case RS2::EntitySpline:
     case RS2::EntitySplinePoints:
     case RS2::EntityParabola:
+    // An LFF glyph may be assembled from another glyph: "[0051] Q" is the
+    // line "C004f" - clone the block of 'O' - followed by its own stroke, so
+    // RS_Font::generateLffFont() nests that clone inside the letter block.
+    // RS_Block::clone() always returns an RS_Block, which is why the child
+    // arrives here as EntityBlock rather than EntityFontChar.
+    // RS_EntityContainer implements scale/rotate/move by recursing into its
+    // children, so such a child transforms natively like any other entity.
+    case RS2::EntityBlock:
         return InsertTransformCapability::NativeOrthogonal;
     case RS2::EntityUnknown:
     case RS2::EntityContainer:
-    case RS2::EntityBlock:
     case RS2::EntityFontChar:
     case RS2::EntityGraphic:
     case RS2::EntityVertex:
