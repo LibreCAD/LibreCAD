@@ -69,9 +69,10 @@ void QG_RecentFiles::saveToSettings() const {
 void QG_RecentFiles::add(const QString& filename) {
     RS_DEBUG->print("QG_RecentFiles::add");
     if (filename.size() > 2048) {
-        RS_DEBUG->print(RS_Debug::D_ERROR,
-                        "QG_RecentFiles::add filename too long at %zu\n",
-                        filename.size());
+        RS_DEBUG->print(RS_Debug::D_ERROR, "%s",
+                        qPrintable(QStringLiteral(
+                                       "QG_RecentFiles::add filename too long "
+                                       "at %1\n").arg(filename.size())));
         return;
     }
 
