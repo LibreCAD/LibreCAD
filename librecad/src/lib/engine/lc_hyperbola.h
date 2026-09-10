@@ -304,7 +304,6 @@ public:
 
 private:
   // Exact local antiderivatives (Green's theorem)
-  double computeLocalArea(double phi1, double phi2) const;
   
   
 
@@ -337,10 +336,7 @@ protected:
 
 
 private:
-  bool isInClipRect(const RS_Vector &p, const LC_Rect& rect) const;
 
-  void adaptiveSample(std::vector<RS_Vector> &out, double phiStart,
-                      double phiEnd, bool rev, double maxError) const;
   LC_HyperbolaData m_data;
   bool m_valid = false;
 };

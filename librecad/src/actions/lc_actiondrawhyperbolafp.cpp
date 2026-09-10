@@ -133,7 +133,11 @@ bool LC_ActionDrawHyperbolaFP::preparePreview(const RS_Vector& mouse) {
     if (!candidate.isValid())
         return false;
 
-    const bool reversed = signedFocalDifference(onCurve) < 0.;
+    // LC_HyperbolaData(f0, f1, p) already orients majorP toward the branch the
+    // point is on and leaves reversed false, so the flag is the constructor's
+    // to set. Deriving it again from the sign of the focal difference mirrors
+    // the arc onto the other branch, which is where the picked point is not.
+    const bool reversed = candidate.getData().reversed;
     const double phiStart = candidate.getParamFromPoint(onCurve, reversed);
     if (std::isnan(phiStart))
         return false;
@@ -150,7 +154,6 @@ bool LC_ActionDrawHyperbolaFP::preparePreview(const RS_Vector& mouse) {
 
     data.angle1 = phi1;
     data.angle2 = phi2;
-    data.reversed = reversed;
     pPoints->data = data;
     pPoints->valid = pPoints->startPoint.valid && pPoints->endPoint.valid;
 
@@ -179,9 +182,10 @@ void LC_ActionDrawHyperbolaFP::mouseReleaseEvent(QMouseEvent* e) {
     }
     else if (e->button() == Qt::RightButton) {
         deletePreview();
-        const int previous = std::max(0, getStatus() - 1);
-        init(previous);
-        setStatus(previous);
+        // RS_ActionInterface::init() treats a negative status as "finished",
+        // so stepping below the first status is what ends the action. Clamping
+        // here would trap the user inside it.
+        init(getStatus() - 1);
     }
 }
 

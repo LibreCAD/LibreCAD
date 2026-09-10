@@ -635,9 +635,6 @@ double LC_Hyperbola::getParamFromPoint(const RS_Vector& p,
 }
 
 //=====================================================================
-bool LC_Hyperbola::isInClipRect(const RS_Vector &p, const LC_Rect& rect) const {
-  return p.valid && rect.inArea(p);
-}
 
 //=====================================================================
 // Rendering
@@ -671,55 +668,6 @@ void LC_Hyperbola::draw(RS_Painter *painter, RS_GraphicView *view,
 }
 
 //=====================================================================
-void LC_Hyperbola::adaptiveSample(std::vector<RS_Vector> &out, double phiStart,
-                                  double phiEnd, bool rev,
-                                  double maxError) const {
-  if (phiStart > phiEnd)
-    std::swap(phiStart, phiEnd);
-
-  std::vector<std::pair<double, RS_Vector>> points;
-  points.reserve(256);
-
-  std::function<void(double, double)> subdiv = [&](double pa, double pb) {
-    RS_Vector A = getPoint(pa, rev);
-    RS_Vector B = getPoint(pb, rev);
-    if (!A.valid || !B.valid)
-      return;
-
-    double pm = (pa + pb) * 0.5;
-    RS_Vector M = getPoint(pm, rev);
-    if (!M.valid)
-      return;
-
-    double sagitta = (M - (A + B) * 0.5).magnitude();
-    double estimatedMaxError = sagitta * 1.15;
-
-    if (estimatedMaxError < maxError || (pb - pa) < 0.05) {
-      points.emplace_back(pa, A);
-      points.emplace_back(pb, B);
-      return;
-    }
-
-    subdiv(pa, pm);
-    subdiv(pm, pb);
-  };
-
-  RS_Vector first = getPoint(phiStart, rev);
-  if (first.valid)
-    points.emplace_back(phiStart, first);
-
-  subdiv(phiStart, phiEnd);
-
-  std::sort(points.begin(), points.end(),
-            [](const auto &a, const auto &b) { return a.first < b.first; });
-
-  out.reserve(out.size() + points.size());
-  for (const auto &kv : points) {
-    if (out.empty() || out.back().distanceTo(kv.second) > RS_TOLERANCE) {
-      out.push_back(kv.second);
-    }
-  }
-}
 
 //=====================================================================
 // Nearest methods
@@ -1842,18 +1790,6 @@ double LC_Hyperbola::areaLineIntegral() const
   return primitive(phi2) - primitive(phi1);
 }
 
-double LC_Hyperbola::computeLocalArea(double phi1, double phi2) const {
-  if (isInfinite()) return 0.0;
-  const double a = getMajorRadius();
-  const double b = getMinorRadius();
-  // areaLineIntegral = ∫ x dy ∝ ab cosh², so for the left branch (x_local =
-  // -a·cosh) the entire integrand picks up a -1.
-  const double sx = m_data.reversed ? -1.0 : 1.0;
-  auto F = [&](double phi) {
-    return sx * (a * b / 2.0) * (phi + 0.5 * std::sinh(2.0 * phi));
-  };
-  return F(phi2) - F(phi1);
-}
 
 
 
