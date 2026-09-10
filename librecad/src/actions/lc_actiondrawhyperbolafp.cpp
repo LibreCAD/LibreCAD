@@ -88,10 +88,23 @@ bool LC_ActionDrawHyperbolaFP::isOnSameBranch(const RS_Vector& point) const {
     const double separation = pPoints->focus1.distanceTo(pPoints->focus2);
     if (std::abs(reference) < RS_TOLERANCE || separation < RS_TOLERANCE)
         return false;
-    // Scale the tolerance by the construction's own size so the check behaves
-    // identically on a 1 mm and a 1 km hyperbola.
-    const double tolerance = std::max(RS_TOLERANCE, separation * 1e-6);
-    return std::abs(signedFocalDifference(point) - reference) < tolerance;
+
+    // Only the side matters here. The end point trims the arc - it is
+    // projected onto the curve through getParamFromPoint() - so it does not
+    // have to lie on the hyperbola, and it never will: a pick 0.01 units off
+    // a curve whose foci are 100 apart already moves the focal difference by
+    // 0.0098, a hundred times any sane on-curve tolerance. Comparing the
+    // magnitude therefore rejected every real mouse pick. The sign of
+    // ||PF1| - |PF2|| is what identifies the branch, and that survives a
+    // pick anywhere near the curve.
+    const double difference = signedFocalDifference(point);
+    // Near the perpendicular bisector the sign is arbitrary, so refuse there
+    // rather than guess a branch. The dead zone scales with the construction
+    // so it behaves the same on a 1 mm and a 1 km hyperbola.
+    const double deadZone = std::max(RS_TOLERANCE, separation * 1e-6);
+    if (std::abs(difference) < deadZone)
+        return false;
+    return (difference > 0.0) == (reference > 0.0);
 }
 
 void LC_ActionDrawHyperbolaFP::trigger() {
