@@ -23,6 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+#include <algorithm>
 #include <cmath>  // For std::abs, M_PI
 #include <limits>
 #include <catch2/catch_test_macros.hpp>
@@ -128,9 +129,136 @@ TEST_CASE("RS_Ellipse::getNearestPointOnEntity") {
     REQUIRE(nearest.valid == true);
 }
 
+TEST_CASE("RS_Ellipse::getNearestPointOnEntity for points on the axes", "[rs_ellipse][nearest]") {
+    // For a point on an axis the quartic has double roots that the solver can miss: at the major vertex
+    // it found no real root, and inside the ellipse on the major axis it missed the nearest points off
+    // the axis. The sine solved from the derivative also put nearest points of the major axis off the
+    // ellipse.
+    using Catch::Matchers::WithinAbs;
+    const auto sampledDistance = [](const RS_Ellipse& e, const RS_Vector& p) {
+        double best = std::numeric_limits<double>::infinity();
+        constexpr int samples = 40000;
+        for (int i = 0; i < samples; ++i) {
+            best = std::min(best, e.getEllipsePoint(2. * M_PI * i / samples).distanceTo(p));
+        }
+        return best;
+    };
+    for (const double ratio : {0.5, 0.2, 0.9, 2.0}) {
+        for (const double rotation : {0., 0.7, M_PI / 2.}) {
+            const RS_Vector center(3., -4.);
+            const RS_Vector major = RS_Vector::polar(500., rotation);
+            const RS_Vector minor = RS_Vector::polar(500. * ratio, rotation + M_PI / 2.);
+            RS_Ellipse e(nullptr, {center, major, ratio, 0., 0., false});
+            INFO("ratio " << ratio << ", rotation " << rotation);
+
+            for (const RS_Vector& vertex : {center + major, center - major, center + minor, center - minor}) {
+                INFO("vertex " << vertex.x << ", " << vertex.y);
+                double dist = -1.;
+                const RS_Vector nearest = e.getNearestPointOnEntity(vertex, true, &dist);
+                CHECK_THAT(dist, WithinAbs(0., 1e-6));
+                CHECK_THAT(nearest.distanceTo(vertex), WithinAbs(0., 1e-6));
+                CHECK_THAT(e.getDistanceToPoint(vertex), WithinAbs(0., 1e-6));
+            }
+
+            for (const RS_Vector& axis : {major, minor}) {
+                for (const double along : {0.2, -0.6, 1.3}) {
+                    const RS_Vector p = center + axis * along;
+                    INFO("point " << p.x << ", " << p.y);
+                    double dist = -1.;
+                    const RS_Vector nearest = e.getNearestPointOnEntity(p, true, &dist);
+                    CHECK(e.isPointOnEntity(nearest, 1e-6));
+                    CHECK_THAT(nearest.distanceTo(p), WithinAbs(dist, 1e-6));
+                    CHECK_THAT(dist, WithinAbs(sampledDistance(e, p), 0.1));
+                }
+            }
+        }
+    }
+}
+
+TEST_CASE("RS_Ellipse::getNearestPointOnEntity near the vertices", "[rs_ellipse][nearest]") {
+    // A point at h along the normal at an elliptic angle is nearest to the point at that angle, for |h| within
+    // the radius of curvature. Near a vertex the angle from a root of the quartic carries the root's error
+    // divided by the small sine, which missed the distance by up to 1e-5.
+    using Catch::Matchers::WithinAbs;
+    for (const double ratio : {0.2, 0.5, 2.0}) {
+        for (const double rotation : {0., 0.7}) {
+            const RS_Vector center(3., -4.);
+            const double a = 500.;
+            const double b = a * ratio;
+            RS_Ellipse e(nullptr, {center, RS_Vector::polar(a, rotation), ratio, 0., 0., false});
+            for (const double vertex : {0., M_PI / 2., M_PI, 1.5 * M_PI}) {
+                for (const double delta : {1e-7, -1e-5, 1e-3}) {
+                    for (const double h : {1e-7, -1e-5, 1e-3, -0.5, 3.}) {
+                        const double t = vertex + delta;
+                        const RS_Vector normal(b * std::cos(t), a * std::sin(t));
+                        RS_Vector local = RS_Vector(a * std::cos(t), b * std::sin(t)) + normal * (h / normal.magnitude());
+                        const RS_Vector p = center + local.rotate(rotation);
+                        INFO("ratio " << ratio << ", rotation " << rotation << ", angle " << t << ", offset " << h);
+                        double dist = -1.;
+                        const RS_Vector nearest = e.getNearestPointOnEntity(p, true, &dist);
+                        CHECK_THAT(dist, WithinAbs(std::abs(h), 1e-9));
+                        CHECK_THAT(nearest.distanceTo(p), WithinAbs(std::abs(h), 1e-9));
+                    }
+                }
+            }
+        }
+    }
+}
+
+TEST_CASE("RS_Ellipse::scale and setReversed keep borders and length current", "[rs_ellipse][borders]") {
+    using Catch::Matchers::WithinAbs;
+    const auto expectFresh = [](const RS_Ellipse& e) {
+        RS_Ellipse fresh(e);
+        fresh.calculateBorders();
+        CHECK_THAT(e.getMin().distanceTo(fresh.getMin()), WithinAbs(0., 1e-9));
+        CHECK_THAT(e.getMax().distanceTo(fresh.getMax()), WithinAbs(0., 1e-9));
+        CHECK_THAT(e.getLength(), WithinAbs(fresh.getLength(), 1e-9));
+    };
+    for (const bool arc : {false, true}) {
+        for (const RS_Vector& factor : {RS_Vector(2., 2.), RS_Vector(0.5, 0.5), RS_Vector(2., 1.), RS_Vector(-1., 1.), RS_Vector(1., -3.)}) {
+            RS_Ellipse e(nullptr, {RS_Vector(20., 10.), RS_Vector::polar(40., 0.5), 0.4, arc ? 0.3 : 0., arc ? 2.5 : 0., false});
+            e.calculateBorders();
+            e.scale(RS_Vector(3., 4.), factor);
+            INFO("elliptic arc " << arc << ", factor " << factor.x << " by " << factor.y);
+            expectFresh(e);
+        }
+    }
+
+    // reversed, the arc from 0 to 90 degrees runs through the other three quadrants
+    RS_Ellipse e(nullptr, {RS_Vector(0., 0.), RS_Vector(100., 0.), 0.5, 0., M_PI / 2., false});
+    e.calculateBorders();
+    e.setReversed(true);
+    expectFresh(e);
+    CHECK_THAT(e.getMin().x, WithinAbs(-100., 1e-9));
+}
+
 
 
 using namespace Catch;
+
+TEST_CASE("RS_Ellipse::revertDirection keeps the shape of an elliptic arc", "[rs_ellipse]") {
+    // "Is Reversed" in the ellipse dialog reverts the direction of an elliptic arc. setReversed() alone
+    // turns it into the rest of the ellipse.
+    using Catch::Matchers::WithinAbs;
+    for (const bool reversed : {false, true}) {
+        INFO("reversed " << reversed);
+        RS_Ellipse e(nullptr, {RS_Vector(3., -4.), RS_Vector::polar(100., 0.4), 0.5, 0.2, 1.7, reversed});
+        const RS_Vector start = e.getStartpoint();
+        const RS_Vector end = e.getEndpoint();
+        const RS_Vector min = e.getMin();
+        const RS_Vector max = e.getMax();
+        const double length = e.getLength();
+
+        e.revertDirection();
+
+        CHECK(e.isReversed() != reversed);
+        CHECK(e.getStartpoint().distanceTo(end) < 1e-9);
+        CHECK(e.getEndpoint().distanceTo(start) < 1e-9);
+        CHECK(e.getMin().distanceTo(min) < 1e-9);
+        CHECK(e.getMax().distanceTo(max) < 1e-9);
+        CHECK_THAT(e.getLength(), WithinAbs(length, 1e-6));
+    }
+}
 
 TEST_CASE("RS_Ellipse::areaLineIntegral()", "[rs_ellipse]") {
     double tol = 1e-8;

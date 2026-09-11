@@ -80,7 +80,7 @@ struct LC_ContainerTraverser::Data {
         case RS2::ResolveAllButInserts:
             return entity->rtti() != RS2::EntityInsert;
         case RS2::ResolveAllButTextImage:
-            return (entity->rtti() != RS2::EntityImage) && isText(*entity);
+            return (entity->rtti() != RS2::EntityImage) && !isText(*entity);
         case RS2::ResolveAllButTexts:
             return !isText(*entity);
         case RS2::ResolveAll:

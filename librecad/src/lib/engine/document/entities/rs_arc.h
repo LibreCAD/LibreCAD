@@ -142,6 +142,7 @@ public:
     /** Sets new arc parameters. **/
     void setData(const RS_ArcData& d) {
         m_data = d;
+        calculateBorders();
     }
 
     /** @return The center point (x) of this arc */

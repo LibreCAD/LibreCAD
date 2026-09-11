@@ -143,6 +143,7 @@ RS_Vector RS_Circle::getCenter() const {
 /** Sets new center. */
 void RS_Circle::setCenter(const RS_Vector& c) {
     m_data.center = c;
+    calculateBorders();
 }
 
 /** @return The radius of this arc */
@@ -153,6 +154,7 @@ double RS_Circle::getRadius() const {
 /** Sets new radius. */
 void RS_Circle::setRadius(const double r) {
     m_data.radius = r;
+    calculateBorders();
 }
 
 /**
@@ -448,7 +450,8 @@ void RS_Circle::scale(const RS_Vector& center, const RS_Vector& factor) {
     m_data.center.scale(center, factor);
     //radius always is positive
     m_data.radius *= std::abs(factor.x);
-    scaleBorders(center, factor);
+    // the length changes too, and scaling the old borders is wrong for negative and non-uniform factors
+    calculateBorders();
 }
 
 double RS_Circle::getDirection1() const {

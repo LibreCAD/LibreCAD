@@ -162,7 +162,28 @@ bool hasUsableEllipseData(const RS_EllipseData& data) {
     class ClosestEllipticPoint {
     public:
         ClosestEllipticPoint(const double a, const double b, const RS_Vector& point) :
-            m_point{point}, c2{(b * b) - (a * a)}, ax2{2. * a * point.x}, by2{2. * b * point.y} {
+            m_point{point}, m_a{a}, m_b{b}, c2{(b * b) - (a * a)}, ax2{2. * a * point.x}, by2{2. * b * point.y} {
+        }
+
+        // Newton-Raphson steps from the elliptic angle of a point near the closest one, taken while they do
+        // not move away from the point. Updates theta, and returns the squared distance at it.
+        double polishTheta(double& theta) const {
+            double best = ds2(theta);
+            for (short i = 0; i < 8; ++i) {
+                const double d2 = ds2D2(theta);
+                // no minimum to step towards
+                if (!(d2 > 0.)) {
+                    break;
+                }
+                const double next = theta - ds2D1(theta) / d2;
+                const double d = ds2(next);
+                if (!(d <= best)) {
+                    break;
+                }
+                theta = next;
+                best = d;
+            }
+            return best;
         }
 
         // The elliptic angle of the closest point on ellipse.
@@ -184,6 +205,11 @@ bool hasUsableEllipseData(const RS_EllipseData& data) {
         }
 
     private:
+        // ds2=dx^2+dy^2 at theta
+        double ds2(const double t) const {
+            return (RS_Vector{m_a * std::cos(t), m_b * std::sin(t)} - m_point).squared();
+        }
+
         // The first order derivative of ds2=dx^2+dy^2 over theta
         double ds2D1(const double t) const {
             using namespace std;
@@ -197,6 +223,8 @@ bool hasUsableEllipseData(const RS_EllipseData& data) {
         }
 
         RS_Vector m_point{};
+        double m_a = 0.;
+        double m_b = 0.;
         double c2 = 0.;
         double ax2 = 0.;
         double by2 = 0.;
@@ -473,7 +501,8 @@ RS_Vector RS_Ellipse::doGetNearestDist(const double distance, const RS_Vector& c
         // no end points for whole ellipse, therefore, no snap by distance from end points.
         return {};
     }
-    RS_Ellipse e(nullptr, m_data);
+    // a copy whose setters leave the borders alone, as the shape stays the same
+    EllipseBorderHelper e{*this};
     if (e.getRatio() > 1.) {
         e.switchMajorMinor();
     }
@@ -610,43 +639,47 @@ RS_Vector RS_Ellipse::doGetNearestPointOnEntity(const RS_Vector& coord, const bo
         // Just in case, the found solution is for the maximum distance. Then, the minimum is at the opposite
         roots.push_back(-roots.front());
     }
-    if (roots.empty()) {
-        //this should not happen
-        // std::cout << "(a= " << a << " b= " << b << " x= " << x << " y= " << y << " )\n";
-        std::cout << "finding minimum for (" << x << "-" << a << "*cos(t))^2+(" << y << "-" << b << "*sin(t))^2\n";
-        std::cout << "2::find cosine, variable c, solve(c^4 +(" << ce[0] << ")*c^3+(" << ce[1] << ")*c^2+(" << ce[2] << ")*c+(" << ce[3] <<
-            ")=0,c)\n";
-        std::cout << ce[0] << ' ' << ce[1] << ' ' << ce[2] << ' ' << ce[3] << std::endl;
-        std::cerr << "RS_Math::RS_Ellipse::getNearestPointOnEntity() finds no root from quartic, this should not happen\n";
-        return RS_Vector(coord); // better not to return invalid: return RS_Vector(false);
-    }
-
     //    RS_Vector vp2(false);
     double dDistance = RS_MAXDOUBLE * RS_MAXDOUBLE;
     //double ea;
-    std::vector<std::pair<double, double>> directions;
-    for (double cosTheta : roots) {
-      // Skip spurious roots from squaring during the quartic derivation —
-      // they have |cos| > 1 and do not correspond to any real angle on the
-      // ellipse. Without this filter, plugging such a root into the
-      // (cosTheta, sinTheta) → (a*cos, b*sin) mapping would yield an
-      // off-ellipse point that could undercut the true minimum distance.
-      if (std::abs(cosTheta) > 1.0 + RS_TOLERANCE)
-        continue;
-      double const c = std::clamp(cosTheta, -1.0, 1.0);  if (std::abs(twoax - (twoa2b2 * c)) > RS_TOLERANCE) {
-            const double sinTheta = twoby * c / (twoax - twoa2b2 * c);
-        directions.emplace_back(c, sinTheta);
+    // Every candidate is a point of the ellipse, so none can undercut the true minimum distance:
+    // - both points with the cosine of each real root. Solving the sine from the derivative instead
+    //   divides zero by zero for points on the major axis and gave points off the ellipse.
+    // - the stationary points for a point on an axis, where the quartic has double roots that the solver
+    //   can miss: the vertices, and the points with (a^2-b^2) cos = a x (for y = 0) or
+    //   (a^2-b^2) sin = -b y (for x = 0). At the vertex (a, 0) the solver returns only the double root
+    //   a^2/(a^2-b^2) > 1; at (-0.6 a, 0) with b = a/2 it misses the nearest points, at cos = -0.8.
+    //   Near an axis these points are close to the ones the solver can miss.
+    std::vector<std::pair<double, double>> directions{{1., 0.}, {-1., 0.}, {0., 1.}, {0., -1.}};
+    // the two points with a given cosine, or sine; values from squaring the equation can lie outside
+    // [-1, 1] and match no angle on the ellipse
+    const auto addPoints = [&directions](const double value, const bool isSine) {
+        if (std::abs(value) > 1.0 + RS_TOLERANCE) {
+            return;
         }
-        else {
-        directions.emplace_back(0., 1.);
-        directions.emplace_back(0., -1.);
-      }
+        const double known = std::clamp(value, -1.0, 1.0);
+        const double other = std::sqrt(1.0 - known * known);
+        if (isSine) {
+            directions.emplace_back(other, known);
+            directions.emplace_back(-other, known);
+        } else {
+            directions.emplace_back(known, other);
+            directions.emplace_back(known, -other);
+        }
+    };
+    for (const double cosTheta : roots) {
+        addPoints(cosTheta, false);
+    }
+    if (std::abs(twoa2b2) > RS_TOLERANCE) {
+        addPoints(twoax / twoa2b2, false);
+        addPoints(-twoby / twoa2b2, true);
     }
     // The quartic yields every critical point of the squared distance — both
     // minima and maxima. The global minimum is the critical point with the
     // smallest squared distance, so simply compare distances and keep the
     // smallest; no second-derivative test is needed.
     RS_Vector const query = ret;
+    double theta = 0.;
     for (const auto &[cosTheta, sinTheta] : directions) {
       RS_Vector vp3{a * cosTheta, b * sinTheta};
       double d = (vp3 - query).squared();
@@ -654,6 +687,15 @@ RS_Vector RS_Ellipse::doGetNearestPointOnEntity(const RS_Vector& coord, const bo
         continue;
       ret = vp3;
       dDistance = d;
+      theta = std::atan2(sinTheta, cosTheta);
+    }
+    // Refine the angle of the nearest candidate. The angle from a root carries the root's error divided by
+    // the sine, which is small near a vertex: within 1e-4 of one the distance was up to 1e-5 too large.
+    // The stationary points for a point on an axis are only close to those for a point near it.
+    const double polished = ClosestEllipticPoint{a, b, query}.polishTheta(theta);
+    if (polished < dDistance) {
+        ret = RS_Vector{a * std::cos(theta), b * std::sin(theta)};
+        dDistance = polished;
     }
     if (!ret.valid) {
         //this should not happen
@@ -1298,6 +1340,7 @@ void RS_Ellipse::scale(const RS_Vector& center, const RS_Vector& factor) {
     RS_Vector vp1(getMajorP());
     double a(vp1.magnitude());
     if (a < RS_TOLERANCE) {
+        calculateBorders();
         return; //ellipse too small
     }
     vp1 *= 1. / a;
@@ -1312,31 +1355,31 @@ void RS_Ellipse::scale(const RS_Vector& center, const RS_Vector& factor) {
     const double cA = 0.5 * a * a * (kx2 * ct2 + ky2 * st2);
     const double cB = 0.5 * b * b * (kx2 * st2 + ky2 * ct2);
     const double cC = a * b * ct * st * (ky2 - kx2);
+    // The data is set directly: the setters recalculate the borders on every call, and the borders of
+    // the scaled ellipse are calculated once at the end. Scaling the old borders instead is only right
+    // for uniform positive factors.
     if (factor.x < 0) {
-        setReversed(!isReversed());
+        m_data.reversed = !m_data.reversed;
     }
     if (factor.y < 0) {
-        setReversed(!isReversed());
+        m_data.reversed = !m_data.reversed;
     }
     const RS_Vector vp(cA - cB, cC);
     vp1.set(a, b);
     vp1.scale(RS_Vector(0.5 * vp.angle()));
     vp1.rotate(RS_Vector(ct, st));
     vp1.scale(factor);
-    setMajorP(vp1);
+    m_data.majorP = vp1;
     a = cA + cB;
     b = vp.magnitude();
-    setRatio(sqrt((a - b) / (a + b)));
+    m_data.ratio = sqrt((a - b) / (a + b));
     if (isEllipticArc()) {
         //only reset start/end points for ellipse arcs, i.e., angle1 angle2 are not both zero
-        setAngle1(getEllipseAngle(vpStart));
-        setAngle2(getEllipseAngle(vpEnd));
+        m_data.setAngle1(getEllipseAngle(vpStart));
+        m_data.setAngle2(getEllipseAngle(vpEnd));
         correctAngles(); //avoid extra 2.*M_PI in angles
     }
-
-    //calculateEndpoints();
-    scaleBorders(center, factor);
-    // calculateBorders();
+    calculateBorders();
 }
 
 /**
@@ -1630,6 +1673,7 @@ bool RS_Ellipse::isReversed() const {
 
 void RS_Ellipse::setReversed(const bool r) {
     m_data.reversed = r;
+    calculateBorders();
 }
 
 LC_FirstMoment RS_Ellipse::computeLocalFirstMoment(double t0, double t1) const {
@@ -1714,6 +1758,7 @@ double RS_Ellipse::getAngle1() const {
 
 void RS_Ellipse::setAngle1(const double a1) {
     m_data.setAngle1(a1);
+    calculateBorders();
 }
 
 double RS_Ellipse::getAngle2() const {
@@ -1722,6 +1767,7 @@ double RS_Ellipse::getAngle2() const {
 
 void RS_Ellipse::setAngle2(const double a2) {
     m_data.setAngle2(a2);
+    calculateBorders();
 }
 
 RS_Vector RS_Ellipse::getCenter() const {
@@ -1730,6 +1776,7 @@ RS_Vector RS_Ellipse::getCenter() const {
 
 void RS_Ellipse::setCenter(const RS_Vector& c) {
     m_data.center = c;
+    calculateBorders();
 }
 
 const RS_Vector& RS_Ellipse::getMajorP() const {
@@ -1738,6 +1785,7 @@ const RS_Vector& RS_Ellipse::getMajorP() const {
 
 void RS_Ellipse::setMajorP(const RS_Vector& p) {
     m_data.majorP = p;
+    calculateBorders();
 }
 
 double RS_Ellipse::getRatio() const {
@@ -1746,6 +1794,7 @@ double RS_Ellipse::getRatio() const {
 
 void RS_Ellipse::setRatio(const double r) {
     m_data.ratio = r;
+    calculateBorders();
 }
 
 double RS_Ellipse::getAngleLength() const {

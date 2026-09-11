@@ -1459,28 +1459,23 @@ void LC_Hyperbola::calculateBorders() {
 
   // Branch offset handled in getPoint() — use raw angles here
 
-  // Analytical extrema along global X and Y axes
-  double rot = getAngle();
-  RS_Vector dirX(cos(rot), sin(rot));
-  RS_Vector dirY(-sin(rot), cos(rot));
+  // Extrema along the world X and Y axes. A world axis u has the components
+  // (ux, uy) in the hyperbola's own frame, where the local point
+  // (±a cosh φ, b sinh φ) projects onto it as ±a·ux·cosh φ + b·uy·sinh φ.
+  // That is stationary where tanh φ = ∓(b·uy)/(a·ux); trying both signs covers
+  // either branch, and a parameter inside the arc always gives a point on it.
+  const double rot = getAngle();
+  const double a = getMajorRadius();
+  const double b = getMinorRadius();
 
-  auto addExtrema = [&](const RS_Vector &dir) {
-    double dx = dir.x, dy = dir.y;
-    if (std::abs(dx) < RS_TOLERANCE && std::abs(dy) < RS_TOLERANCE)
-      return;
-
-    double tanh_phi = -(getMinorRadius() * dy) / (getMajorRadius() * dx);
-    if (std::abs(tanh_phi) >= 1.0)
-      return; // no real solution
-
-    double phi = std::atanh(tanh_phi);
-    // Check both solutions (phi and phi + π) — but only one will be on the
-    // correct branch
-    for (int sign = 0; sign < 2; ++sign) {
-      double phi_cand = phi + sign * M_PI;
-      if (phi_cand >= phiStart - RS_TOLERANCE &&
-          phi_cand <= phiEnd + RS_TOLERANCE) {
-        RS_Vector p = getPoint(phi_cand, m_data.reversed);
+  auto addExtrema = [&](const double ux, const double uy) {
+    if (std::abs(b * uy) >= std::abs(a * ux))
+      return; // monotonic along this axis, so the endpoints bound it
+    const double phi = std::atanh((b * uy) / (a * ux));
+    for (const double candidate : {phi, -phi}) {
+      if (candidate >= phiStart - RS_TOLERANCE &&
+          candidate <= phiEnd + RS_TOLERANCE) {
+        const RS_Vector p = getPoint(candidate, m_data.reversed);
         if (p.valid) {
           m_minV = RS_Vector::minimum(m_minV, p);
           m_maxV = RS_Vector::maximum(m_maxV, p);
@@ -1489,8 +1484,9 @@ void LC_Hyperbola::calculateBorders() {
     }
   };
 
-  addExtrema(RS_Vector(1.0, 0.0)); // global X
-  addExtrema(RS_Vector(0.0, 1.0)); // global Y
+  // the world axes seen in the hyperbola's own frame
+  addExtrema(std::cos(rot), -std::sin(rot)); // world X
+  addExtrema(std::sin(rot), std::cos(rot));  // world Y
 
   // Endpoints
   RS_Vector start = getPoint(phiStart, m_data.reversed);

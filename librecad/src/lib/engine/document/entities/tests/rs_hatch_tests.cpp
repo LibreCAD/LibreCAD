@@ -1325,10 +1325,10 @@ TEST_CASE("snapSplineEdgeEndpoints - tiny gap closes",
 TEST_CASE("RS_Hatch snap - getNearestPointOnEntity inside solid fill terminates",
           "[rs_hatch][snap]")
 {
-    // Mirror the real snap path: RS_Snapper::snapOnEntity() calls
-    // m_container->getNearestPointOnEntity(). The hatch is a child of the
-    // container (parent set at construction, as for a loaded drawing) so the
-    // container recurses into it exactly as it did when the crash occurred.
+    // The hatch is a child of the container (parent set at construction, as for
+    // a loaded drawing), so the container recurses into it exactly as it did
+    // when the crash occurred. RS_Snapper::snapOnEntity() reaches the same guard
+    // from the hatch it finds nearest; lc_snappercatchtests.cpp covers that.
     RS_EntityContainer document{nullptr, true};
 
     auto* hatch = new RS_Hatch(&document, RS_HatchData(true, 1.0, 0.0, "SOLID"));

@@ -52,6 +52,7 @@ public:
     explicit RS_Information(RS_EntityContainer& container);
 
     static bool isDimension(RS2::EntityType type);
+    static bool isEditable(const RS_Entity* e);
     static bool isTrimmable(const RS_Entity* e);
 
     RS_Vector getNearestEndpoint(const RS_Vector& coord, double* dist = nullptr) const;

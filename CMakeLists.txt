@@ -2466,10 +2466,14 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/entities/tests/lc_parabola_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_ellipse_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_spline_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_circletests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_arctests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_dimarrowtests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_hatch_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_textbidi_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_mtext_bidi_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_text_bidi_tests.cpp
+        librecad/src/lib/actions/tests/lc_snappercatchtests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_round_tests.cpp
         librecad/src/lib/filters/tests/dwg_pre_r13_codepage_tests.cpp
         librecad/src/lib/filters/tests/dwg_pre_r13_section_size_tests.cpp

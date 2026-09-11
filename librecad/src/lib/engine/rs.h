@@ -667,11 +667,13 @@ namespace RS2 {
         */
         ResolveAllButInserts,
         /**
-         * Resolve all but not Text or MText.
+         * Resolve all but not Text or MText. Traversing yields text entities whole, while distance
+         * and nearest-entity queries (RS_EntityContainer::getDistanceToPoint()) skip them.
          */
         ResolveAllButTexts,
         /**
-         * Resolve no text or images, added as a quick fix for bug#422
+         * Resolve no text or images, added as a quick fix for bug#422. Traversing yields them whole,
+         * while distance and nearest-entity queries skip them, as neither has intersections (bug#426).
          */
         ResolveAllButTextImage,
         /**
