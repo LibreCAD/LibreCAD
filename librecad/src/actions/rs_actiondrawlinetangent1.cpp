@@ -103,6 +103,7 @@ void RS_ActionDrawLineTangent1::mouseMoveEvent(QMouseEvent* e) {
 		RS_Entity* en = catchEntity(e, circleType, RS2::ResolveAll);
 		if (en && (en->isArc() ||
                    en->rtti() == RS2::EntityParabola ||
+                   en->rtti() == RS2::EntityHyperbola ||
 				   en->rtti()==RS2::EntitySplinePoints)) {
 			if(circle){
 				circle->setHighlighted(false);

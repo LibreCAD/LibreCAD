@@ -50,7 +50,7 @@ struct RS_ActionDrawLineTangent2::Points {
 namespace {
 
 //list of entity types supported by current action
-const EntityTypeList circleType = EntityTypeList{RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse, RS2::EntityParabola};
+const EntityTypeList circleType = EntityTypeList{RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse, RS2::EntityParabola, RS2::EntityHyperbola};
 
 double linePointDist(const RS_Line& line, const RS_Vector& point)
 {

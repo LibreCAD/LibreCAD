@@ -62,10 +62,7 @@ bool isArc(const RS_Entity& entity){
     if (entity.isArc())
         return true;
     switch (entity.rtti()){
-    // A hyperbola is a conic and can carry a tangent, so it belongs in the
-    // same classification the tangent constructions test against. master
-    // lists it here; this branch never did, because it had no usable
-    // hyperbola to classify.
+    // a hyperbola is a conic and carries tangents, as a parabola does
     case RS2::EntityHyperbola:
     case RS2::EntityParabola:
         return true;
@@ -514,7 +511,7 @@ RS_Line* RS_Creation::createLineOrthTan(const RS_Vector& coord,
     // check given entities:
     if (!(circle && normal))
         return ret;
-    if (!(circle->isArc() || circle->rtti() == RS2::EntityParabola))
+    if (!(circle->isArc() || circle->rtti() == RS2::EntityParabola || circle->rtti() == RS2::EntityHyperbola))
         return ret;
     //if( normal->getLength()<RS_TOLERANCE) return ret;//line too short
     RS_Vector const& t0 = circle->getNearestOrthTan(coord,*normal,false);
@@ -612,9 +609,14 @@ std::vector<std::unique_ptr<RS_Line>> RS_Creation::createTangent2(
     std::vector<std::unique_ptr<RS_Line>> tangents;
     std::transform(sol1.begin(), sol1.end(), std::back_inserter(tangents),
                    [circle1, circle2](const RS_Vector& line) -> std::unique_ptr<RS_Line> {
+        // a hyperbola touches a common tangent only when the line is tangent to its own branch
+        const RS_Vector start = circle1->dualLineTangentPoint(line);
+        const RS_Vector end = circle2->dualLineTangentPoint(line);
+        if (!start.valid || !end.valid)
+            return nullptr;
         auto rsLine = std::make_unique<RS_Line>(nullptr, fromLineCoordinate(line));
-        rsLine->setStartpoint(circle1->dualLineTangentPoint(line));
-        rsLine->setEndpoint(circle2->dualLineTangentPoint(line));
+        rsLine->setStartpoint(start);
+        rsLine->setEndpoint(end);
         return std::unique_ptr<RS_Line>(std::move(rsLine));
     });
     // cleanup invalid lines
