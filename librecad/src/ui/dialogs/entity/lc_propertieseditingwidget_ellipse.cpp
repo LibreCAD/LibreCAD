@@ -105,7 +105,7 @@ void LC_PropertiesEditingWidgetEllipse::onAngle1EditingFinished() const {
 
 void LC_PropertiesEditingWidgetEllipse::onAngle2EditingFinished() const {
     const double angle = toRawAngleValue(ui->leAngle2, m_entity->getAngle2());
-    m_entity->setAngle1(angle);
+    m_entity->setAngle2(angle);
 }
 
 void LC_PropertiesEditingWidgetEllipse::onReversedToggled([[maybe_unused]]bool checked) const {
@@ -115,7 +115,7 @@ void LC_PropertiesEditingWidgetEllipse::onReversedToggled([[maybe_unused]]bool c
 void LC_PropertiesEditingWidgetEllipse::setupInteractiveInputWidgets() {
     pickPointSetup(ui->wPickPointCenter, "center", ui->leCenterX, ui->leCenterY);
     pickDistanceSetup(ui->tbPickMajor, "major", ui->leMajor);
-    pickDistanceSetup(ui->tbPickMajor, "minor", ui->leMinor);
+    pickDistanceSetup(ui->tbPickMinor, "minor", ui->leMinor);
     pickAngleSetup(ui->tbPickRotation, "rotation", ui->leRotation);
     pickAngleSetup(ui->tbPickStartAngle, "angle1", ui->leAngle1);
     pickAngleSetup(ui->tbPickEndAngle, "angle2", ui->leAngle2);
