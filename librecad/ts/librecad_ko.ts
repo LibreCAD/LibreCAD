@@ -1500,6 +1500,11 @@ or [%2]</source>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
         <translation>현재 펜을 활성 레이어 펜으로 업데이트</translation>
     </message>
+    <message>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="510"/>
+        <source>&amp;Hyperbola Foci Point</source>
+        <translation>&amp;쌍곡선 초점</translation>
+    </message>
 </context>
 <context>
     <name>LC_ActionFileExportMakerCam</name>
@@ -17538,6 +17543,66 @@ This block cannot be inserted.</source>
     <message>
         <source>Height:</source>
         <translation type="vanished">세로:</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawHyperbolaFP</name>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="260"/>
+        <source>Foci cannot be coincident</source>
+        <translation>초점은 일치할 수 없습니다.</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="273"/>
+        <source>The point does not define a hyperbola with these foci</source>
+        <translation>이 점은 주어진 초점으로 쌍곡선을 정의하지 않습니다.</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="286"/>
+        <source>The end point is not on the same hyperbola branch</source>
+        <translation>종료점은 동일한 쌍곡선 가지에 있지 않습니다.</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="295"/>
+        <source>Start and end points cannot be the same</source>
+        <translation>시작점과 종료점은 동일할 수 없습니다.</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="314"/>
+        <source>specify the two foci, then the start and end points on one branch</source>
+        <translation>두 초점을 지정한 다음, 하나의 가지에 있는 시작점과 종료점을 지정합니다.</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="326"/>
+        <source>Specify the first focus</source>
+        <translation>첫 번째 초점을 지정합니다.</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="327"/>
+        <source>Cancel</source>
+        <translation>취소</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="330"/>
+        <source>Specify the second focus</source>
+        <translation>두 번째 초점을 지정합니다.</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="331"/>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="335"/>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="339"/>
+        <source>Back</source>
+        <translation>뒤로</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="334"/>
+        <source>Specify the start point on the branch</source>
+        <translation>가지 위의 시작점을 지정합니다.</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="338"/>
+        <source>Specify the end point on the same branch</source>
+        <translation>동일한 가지 위의 종료점을 지정합니다.</translation>
     </message>
 </context>
 </TS>

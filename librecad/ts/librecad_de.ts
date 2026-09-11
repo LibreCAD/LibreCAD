@@ -1501,6 +1501,11 @@ oder [%2]</translation>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
         <translation>Aktuellen Stift mit Stift der aktiven Ebene aktualisieren</translation>
     </message>
+    <message>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="510"/>
+        <source>&amp;Hyperbola Foci Point</source>
+        <translation>&amp;Hyperbel-Brennpunkt</translation>
+    </message>
 </context>
 <context>
     <name>LC_ActionFileExportMakerCam</name>
@@ -17602,6 +17607,66 @@ This block cannot be inserted.</source>
     <message>
         <source>Height:</source>
         <translation type="vanished">Höhe:</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawHyperbolaFP</name>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="260"/>
+        <source>Foci cannot be coincident</source>
+        <translation>Die Brennpunkte dürfen nicht zusammenfallen</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="273"/>
+        <source>The point does not define a hyperbola with these foci</source>
+        <translation>Der Punkt definiert keine Hyperbel mit diesen Brennpunkten</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="286"/>
+        <source>The end point is not on the same hyperbola branch</source>
+        <translation>Der Endpunkt liegt nicht auf demselben Hyperbelzweig</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="295"/>
+        <source>Start and end points cannot be the same</source>
+        <translation>Start- und Endpunkt dürfen nicht identisch sein</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="314"/>
+        <source>specify the two foci, then the start and end points on one branch</source>
+        <translation>Geben Sie zuerst die beiden Brennpunkte und dann die Start- und Endpunkte auf einem Zweig an</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="326"/>
+        <source>Specify the first focus</source>
+        <translation>Ersten Brennpunkt angeben</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="327"/>
+        <source>Cancel</source>
+        <translation>Abbrechen</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="330"/>
+        <source>Specify the second focus</source>
+        <translation>Zweiten Brennpunkt angeben</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="331"/>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="335"/>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="339"/>
+        <source>Back</source>
+        <translation>Zurück</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="334"/>
+        <source>Specify the start point on the branch</source>
+        <translation>Startpunkt auf dem Zweig angeben</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="338"/>
+        <source>Specify the end point on the same branch</source>
+        <translation>Endpunkt auf demselben Zweig angeben</translation>
     </message>
 </context>
 </TS>

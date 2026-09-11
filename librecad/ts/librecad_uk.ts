@@ -1501,6 +1501,11 @@ or [%2]</source>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
         <translation>Оновити поточне перо пером активного шару</translation>
     </message>
+    <message>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="510"/>
+        <source>&amp;Hyperbola Foci Point</source>
+        <translation>&amp;Точка фокуса гіперболи</translation>
+    </message>
 </context>
 <context>
     <name>LC_ActionFileExportMakerCam</name>
@@ -17516,6 +17521,66 @@ This block cannot be inserted.</source>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
         <translation type="vanished">Ламана</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawHyperbolaFP</name>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="260"/>
+        <source>Foci cannot be coincident</source>
+        <translation>Фокуси не можуть збігатися</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="273"/>
+        <source>The point does not define a hyperbola with these foci</source>
+        <translation>Ця точка не визначає гіперболу з заданими фокусами</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="286"/>
+        <source>The end point is not on the same hyperbola branch</source>
+        <translation>Кінцева точка не належить до тієї ж гілки гіперболи</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="295"/>
+        <source>Start and end points cannot be the same</source>
+        <translation>Початкова та кінцева точки не можуть бути однаковими</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="314"/>
+        <source>specify the two foci, then the start and end points on one branch</source>
+        <translation>Вкажіть два фокуси, потім початкову та кінцеву точки на одній гілці</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="326"/>
+        <source>Specify the first focus</source>
+        <translation>Вкажіть перший фокус</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="327"/>
+        <source>Cancel</source>
+        <translation>Скасувати</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="330"/>
+        <source>Specify the second focus</source>
+        <translation>Вкажіть другий фокус</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="331"/>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="335"/>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="339"/>
+        <source>Back</source>
+        <translation>Назад</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="334"/>
+        <source>Specify the start point on the branch</source>
+        <translation>Вкажіть початкову точку на гілці</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="338"/>
+        <source>Specify the end point on the same branch</source>
+        <translation>Вкажіть кінцеву точку на тій самій гілці</translation>
     </message>
 </context>
 </TS>

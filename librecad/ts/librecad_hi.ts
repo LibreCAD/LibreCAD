@@ -1501,6 +1501,11 @@ or [%2]</source>
         <source>Focus on &amp;Command Line</source>
         <translation>&amp;कमांड लाइन पर फोकस करें</translation>
     </message>
+    <message>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="510"/>
+        <source>&amp;Hyperbola Foci Point</source>
+        <translation>&amp;अतिपरवलय फोकस बिंदु</translation>
+    </message>
 </context>
 <context>
     <name>LC_ActionFileExportMakerCam</name>
@@ -17312,6 +17317,66 @@ This block cannot be inserted.</source>
         <location filename="../src/ui/generic/widgetcreator.ui" line="223"/>
         <source>Update</source>
         <translation>अद्यतन करें</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawHyperbolaFP</name>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="260"/>
+        <source>Foci cannot be coincident</source>
+        <translation>फोकस एक ही बिंदु पर नहीं हो सकते</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="273"/>
+        <source>The point does not define a hyperbola with these foci</source>
+        <translation>यह बिंदु दिए गए फोकस के साथ अतिपरवलय को परिभाषित नहीं करता है</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="286"/>
+        <source>The end point is not on the same hyperbola branch</source>
+        <translation>अंतिम बिंदु उसी अतिपरवलय शाखा पर नहीं है</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="295"/>
+        <source>Start and end points cannot be the same</source>
+        <translation>प्रारंभिक और अंतिम बिंदु समान नहीं हो सकते</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="314"/>
+        <source>specify the two foci, then the start and end points on one branch</source>
+        <translation>पहले दो फोकस निर्दिष्ट करें, फिर एक शाखा पर प्रारंभिक और अंतिम बिंदु</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="326"/>
+        <source>Specify the first focus</source>
+        <translation>पहला फोकस निर्दिष्ट करें</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="327"/>
+        <source>Cancel</source>
+        <translation>रद्द करें</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="330"/>
+        <source>Specify the second focus</source>
+        <translation>दूसरा फोकस निर्दिष्ट करें</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="331"/>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="335"/>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="339"/>
+        <source>Back</source>
+        <translation>पिछला</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="334"/>
+        <source>Specify the start point on the branch</source>
+        <translation>शाखा पर प्रारंभिक बिंदु निर्दिष्ट करें</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="338"/>
+        <source>Specify the end point on the same branch</source>
+        <translation>उसी शाखा पर अंतिम बिंदु निर्दिष्ट करें</translation>
     </message>
 </context>
 </TS>

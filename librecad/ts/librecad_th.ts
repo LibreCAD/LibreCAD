@@ -1501,6 +1501,11 @@ or [%2]</source>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
         <translation>อัปเดตปากกาปัจจุบันด้วยปากกาของชั้นงานที่ใช้งาน</translation>
     </message>
+    <message>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="510"/>
+        <source>&amp;Hyperbola Foci Point</source>
+        <translation>&amp;จุดโฟกัสไฮเพอร์โบลา</translation>
+    </message>
 </context>
 <context>
     <name>LC_ActionFileExportMakerCam</name>
@@ -17312,6 +17317,66 @@ This block cannot be inserted.</source>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
         <translation type="vanished">เส้นตรงหลายขยัก</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawHyperbolaFP</name>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="260"/>
+        <source>Foci cannot be coincident</source>
+        <translation>จุดโฟกัสไม่สามารถอยู่ในตำแหน่งเดียวกันได้</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="273"/>
+        <source>The point does not define a hyperbola with these foci</source>
+        <translation>จุดนี้ไม่สามารถกำหนดไฮเพอร์โบลาที่มีจุดโฟกัสเหล่านี้ได้</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="286"/>
+        <source>The end point is not on the same hyperbola branch</source>
+        <translation>จุดสิ้นสุดไม่อยู่บนเส้นโค้งไฮเพอร์โบลาเดียวกัน</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="295"/>
+        <source>Start and end points cannot be the same</source>
+        <translation>จุดเริ่มต้นและจุดสิ้นสุดไม่สามารถเป็นจุดเดียวกันได้</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="314"/>
+        <source>specify the two foci, then the start and end points on one branch</source>
+        <translation>ระบุจุดโฟกัสทั้งสอง จากนั้นระบุจุดเริ่มต้นและจุดสิ้นสุดบนเส้นโค้ง</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="326"/>
+        <source>Specify the first focus</source>
+        <translation>ระบุจุดโฟกัสแรก</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="327"/>
+        <source>Cancel</source>
+        <translation>ยกเลิก</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="330"/>
+        <source>Specify the second focus</source>
+        <translation>ระบุจุดโฟกัสที่สอง</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="331"/>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="335"/>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="339"/>
+        <source>Back</source>
+        <translation>ย้อนกลับ</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="334"/>
+        <source>Specify the start point on the branch</source>
+        <translation>ระบุจุดเริ่มต้นบนเส้นโค้ง</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="338"/>
+        <source>Specify the end point on the same branch</source>
+        <translation>ระบุจุดสิ้นสุดบนเส้นโค้งเดียวกัน</translation>
     </message>
 </context>
 </TS>
