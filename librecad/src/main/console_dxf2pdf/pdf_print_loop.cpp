@@ -42,6 +42,7 @@ static bool openDocAndSetGraphic(RS_Document**, RS_Graphic**, const QString&);
 static void touchGraphic(RS_Graphic*, const PdfPrintParams&);
 static void setupPrinterAndPaper(const RS_Graphic*, QPrinter&, PdfPrintParams&);
 static void drawGraphic(RS_Graphic *graphic, QPrinter &printer, RS_Painter &painter);
+static void reportWriteFailure(const QString& outFile);
 
 void PdfPrintLoop::run(){
     int failed = 0;
@@ -82,7 +83,13 @@ bool PdfPrintLoop::printOneFileToOnePdf(const QString& inputFile) {
 
     setupPrinterAndPaper(graphic, printer, m_params);
 
+    // the printer opens the output file when painting begins
     RS_Painter painter(&printer);
+    if (!painter.isActive()) {
+        reportWriteFailure(m_params.outFile);
+        delete doc;
+        return false;
+    }
 
     if (m_params.monochrome) {
         painter.setDrawingMode(RS2::ModeBW);
@@ -90,11 +97,15 @@ bool PdfPrintLoop::printOneFileToOnePdf(const QString& inputFile) {
 
     drawGraphic(graphic, printer, painter);
 
-    painter.end();
+    // ending the painter flushes the PDF
+    const bool written = painter.end();
+    delete doc;
+    if (!written) {
+        reportWriteFailure(m_params.outFile);
+        return false;
+    }
 
     qDebug() << "Printing" << inputFile << "to" << m_params.outFile << "DONE";
-
-    delete doc;
     return true;
 }
 
@@ -148,7 +159,15 @@ int PdfPrintLoop::printManyFilesToOnePdf() {
         setupPrinterAndPaper(contentItems.at(0).graphic, printer, m_params);
     }
 
+    // the printer opens the output file when painting begins
     RS_Painter painter(&printer);
+    if (!painter.isActive()) {
+        reportWriteFailure(m_params.outFile);
+        for (const auto &item : contentItems) {
+            delete item.doc;
+        }
+        return failed + static_cast<int>(contentItems.size());
+    }
 
     if (m_params.monochrome) {
         painter.setDrawingMode(RS2::ModeBW);
@@ -173,8 +192,16 @@ int PdfPrintLoop::printManyFilesToOnePdf() {
         }
     }
 
-    painter.end();
+    // ending the painter flushes the PDF
+    if (!painter.end()) {
+        reportWriteFailure(m_params.outFile);
+        return failed + static_cast<int>(contentItems.size());
+    }
     return failed;
+}
+
+static void reportWriteFailure(const QString& outFile){
+    qCritical("ERROR: failed to write '%s'", qPrintable(outFile));
 }
 
 static bool openDocAndSetGraphic(RS_Document** doc, RS_Graphic** graphic,
