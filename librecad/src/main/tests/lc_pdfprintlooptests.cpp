@@ -37,7 +37,7 @@
 
 namespace {
 
-// a drawing holding one line
+// A drawing holding one line.
 constexpr const char* kLineDxf =
     "0\nSECTION\n2\nENTITIES\n"
     "0\nLINE\n8\n0\n10\n0.0\n20\n0.0\n30\n0.0\n11\n100.0\n21\n50.0\n31\n0.0\n"
@@ -51,7 +51,7 @@ QString writeLineDxf(const QTemporaryDir& dir, const QString& name) {
     return path;
 }
 
-// the exit code the console command returns for these parameters
+// The exit code the console command returns for these parameters.
 int printAndGetExitCode(const PdfPrintParams& params) {
     PdfPrintLoop loop{params};
     int exitCode = -1;
@@ -87,6 +87,9 @@ TEST_CASE("PDF printing fails when the output file cannot be written",
     }
 
     SECTION("each input to its own file in the output directory") {
+        // dxf2pdf creates the output directory before printing. A missing one
+        // stands in here for a directory that cannot be written, since a test
+        // running as root can write to any directory.
         params.outDir = missingDir;
         CHECK(printAndGetExitCode(params) == EXIT_FAILURE);
         CHECK_FALSE(QFileInfo::exists(missingDir + "/first.pdf"));
