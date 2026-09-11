@@ -33,8 +33,9 @@ class RS_Vector;
  * The foci fix the axis and the centre; the first point fixes the branch and
  * the semi-major axis, because a point on a hyperbola satisfies
  * ||PF1| - |PF2|| = 2a and the sign of that difference says which branch it
- * lies on. The second point only trims the arc, so it has to reproduce the
- * same signed difference - see isOnSameBranch().
+ * lies on. The second point only trims the arc: it has to lie on the same side
+ * of the foci (see isOnSameBranch()), and the arc ends where the branch passes
+ * nearest to it (see endOnBranch()).
  */
 class LC_ActionDrawHyperbolaFP : public RS_PreviewActionInterface {
     Q_OBJECT
@@ -62,6 +63,7 @@ public:
     void mouseReleaseEvent(QMouseEvent* e) override;
 
     void coordinateEvent(RS_CoordinateEvent* e) override;
+    void commandEvent(RS_CommandEvent* e) override;
     QStringList getAvailableCommands() override;
 
     void updateMouseButtonHints() override;
@@ -78,11 +80,31 @@ protected:
     double signedFocalDifference(const RS_Vector& point) const;
 
     /**
-     * @brief isOnSameBranch true when @p point reproduces the start point's
-     * signed focal difference within a tolerance scaled by the drawing's own
-     * size, so the test behaves the same on a 1 mm and a 1 km hyperbola.
+     * @brief minimumSize lengths below this count as zero. It scales with the
+     * distance between the foci, so a 1 mm and a 1 km hyperbola behave the same.
+     */
+    double minimumSize() const;
+
+    /**
+     * @brief isValidStartPoint true when @p point gives a hyperbola with these
+     * foci that is neither flat nor needle-thin: 2a stays minimumSize() away from
+     * both 0 and the distance between the foci.
+     */
+    bool isValidStartPoint(const RS_Vector& point) const;
+
+    /**
+     * @brief isOnSameBranch true when @p point lies on the start point's side of
+     * the perpendicular bisector of the foci, outside a dead zone of
+     * minimumSize(). Only the side is compared: the end point does not have to
+     * lie on the curve.
      */
     bool isOnSameBranch(const RS_Vector& point) const;
+
+    /**
+     * @brief endOnBranch the point of the start point's branch nearest to
+     * @p point, where the arc ends
+     */
+    RS_Vector endOnBranch(const RS_Vector& point) const;
 };
 
 #endif

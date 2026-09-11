@@ -631,10 +631,10 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
 	{
         if (data->controllist.size() == 3) {
             // A bounded hyperbola arc is stored as a rational quadratic with
-            // three control points, which is the same shape this branch has
-            // always handed to LC_Parabola. Only the exact canonical form -
-            // open knot vector, endpoint weights of 1, middle weight above 1 -
-            // is claimed here, so anything else keeps the existing behaviour.
+            // three control points, the same shape that otherwise becomes an
+            // LC_Parabola. Only the exact canonical form - open knot vector,
+            // endpoint weights of 1, middle weight above 1 - is claimed here,
+            // so anything else keeps the existing behaviour.
             if (LC_HyperbolaSpline::isHyperbolaSpline(*data)) {
                 auto hyperbola = LC_HyperbolaSpline::splineToHyperbola(*data, currentContainer);
                 if (hyperbola && hyperbola->isValid()) {
@@ -2420,25 +2420,52 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
 
 
 /**
- * Writes the given spline entity to the file.
+ * Writes the given hyperbola arc to the file.
  */
 void RS_FilterDXFRW::writeHyperbola(LC_Hyperbola* h)
 {
     if (h == nullptr)
         return;
 
+    // An invalid or unbounded hyperbola, or an arc of no length, has nothing
+    // finite to write. The result of writeEntity() is not checked, so the
+    // warning is the only trace of the skipped entity. Substituting a clipped
+    // arc would be worse: the file would look complete and be wrong.
+    const char* skipped = nullptr;
+    if (!h->isValid())
+        skipped = "an invalid hyperbola";
+    else if (h->isInfinite())
+        skipped = "an unbounded hyperbola";
+    else if (h->getStartpoint().distanceTo(h->getEndpoint()) < RS_TOLERANCE)
+        skipped = "a hyperbola arc of no length";
+    if (skipped != nullptr) {
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_FilterDXFRW::writeHyperbola: %s was skipped", skipped);
+        return;
+    }
+
+    // R12 has no SPLINE: write a polyline, as writeSpline() does. Points evenly
+    // spaced in phi crowd near the vertex, where the branch bends most.
+    if (version==1009) {
+        const LC_HyperbolaData& data = h->getData();
+        const double span = data.angle2 - data.angle1;
+        const int segments = qBound(8, static_cast<int>(32.0 * std::abs(span)) + 1, 1024);
+        DRW_Polyline pol;
+        for (int i = 0; i <= segments; ++i) {
+            const RS_Vector p = h->getPoint(data.angle1 + span * i / segments, data.reversed);
+            pol.addVertex(DRW_Vertex(p.x, p.y, 0.0, 0.0));
+        }
+        getEntityAttributes(&pol, h);
+        dxfW->writePolyline(&pol);
+        return;
+    }
+
     DRW_Spline spline;
     if (!LC_HyperbolaSpline::hyperbolaToSpline(h->getData(), spline)) {
-        // A full, unbounded branch has no finite rational quadratic to write.
-        // Returning quietly would drop the entity without a trace: this branch
-        // never checks a writer's result - RS_FilterDXFRW calls writeEntity()
-        // and discards what it returns - so the warning is the only signal
-        // anyone gets. Substituting a clipped arc would be worse: the file
-        // would look complete and be wrong.
         RS_DEBUG->print(RS_Debug::D_WARNING,
-                        "RS_FilterDXFRW::writeHyperbola: an unbounded hyperbola "
-                        "cannot be written as a rational quadratic spline and "
-                        "was skipped");
+                        "RS_FilterDXFRW::writeHyperbola: the hyperbola arc could "
+                        "not be written as a rational quadratic spline and was "
+                        "skipped");
         return;
     }
 

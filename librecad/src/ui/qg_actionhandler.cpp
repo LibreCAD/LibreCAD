@@ -622,7 +622,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         a = new RS_ActionDrawEllipseAxis(*document, *view, true);
         a->setActionType(id);
         break;
-    case RS2::ActionDrawHyperbolaFP:
+    case RS2::ActionDrawHyperbolaFoci2Points:
         a = new LC_ActionDrawHyperbolaFP(*document, *view);
         break;
     case RS2::ActionDrawParabola4Points:
@@ -1718,7 +1718,7 @@ void QG_ActionHandler::slotDrawEllipseInscribe() {
     setCurrentAction(RS2::ActionDrawEllipseInscribe);
 }
 void QG_ActionHandler::slotDrawHyperbolaFP() {
-    setCurrentAction(RS2::ActionDrawHyperbolaFP);
+    setCurrentAction(RS2::ActionDrawHyperbolaFoci2Points);
 }
 
 void QG_ActionHandler::slotDrawParabola4Points() {

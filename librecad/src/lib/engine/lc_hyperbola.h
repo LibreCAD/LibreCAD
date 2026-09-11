@@ -69,9 +69,8 @@ std::ostream &operator<<(std::ostream &os, const LC_HyperbolaData &d);
  * Represents a hyperbola (single branch or limited arc) with exact mathematical
  * operations. Supports:
  * - Construction from center/major axis/ratio or foci + point
- * - Conversion from general quadratic form (via LC_Quadratic)
  * - Exact point/tangent evaluation using hyperbolic functions (cosh/sinh)
- * - Precise intersection, offset, and geometric queries
+ * - Precise intersection and geometric queries
  * - Export as standard rational quadratic SPLINE (exact, no approximation)
  *
  * Stored as a single branch aligned with positive major axis direction.
@@ -81,13 +80,6 @@ class LC_Hyperbola : public RS_AtomicEntity {
 public:
   LC_Hyperbola() = default;
   LC_Hyperbola(RS_EntityContainer *parent, const LC_HyperbolaData &d);
-  LC_Hyperbola(const RS_Vector &focus0, const RS_Vector &focus1,
-               const RS_Vector &point);
-  LC_Hyperbola(RS_EntityContainer *parent, const std::vector<double> &coeffs);
-  LC_Hyperbola(RS_EntityContainer *parent, const LC_Quadratic &q);
-
-  bool createFromQuadratic(const LC_Quadratic &q);
-  bool createFromQuadratic(const std::vector<double> &coeffs);
 
   RS_Entity *clone() const override;
 
@@ -114,14 +106,9 @@ public:
   double getAngle1() const { return m_data.angle1; }
   double getAngle2() const { return m_data.angle2; }
 
-  // Property editing support
-  void setFocus1(const RS_Vector &f1);
-  void setFocus2(const RS_Vector &f2);
-  void setPointOnCurve(const RS_Vector &p);
-  void setRatio(double r);
-  void setMinorRadius(double b);
-  void setAngle1(double a1) { m_data.angle1 = a1; }
-  void setAngle2(double a2) { m_data.angle2 = a2; }
+  // the borders follow the arc: set with the default angles of 0, they span the unbounded branch
+  void setAngle1(double a1) { m_data.angle1 = a1; calculateBorders(); }
+  void setAngle2(double a2) { m_data.angle2 = a2; calculateBorders(); }
 
   RS_VectorSolutions getRefPoints() const override;
 
@@ -131,9 +118,7 @@ public:
 
   double getLength() const override;
 
-  bool isEdge() const override {
-    return true;
-  }
+  // not a contour edge: hatch filling and clipping do not handle a hyperbola
 
 
   double getDirection1() const override;
@@ -153,20 +138,6 @@ public:
                            const RS_Vector &trimPoint) override;
 
   /**
-   * @brief prepareTrim
-   * After a trim operation finds intersection points (trimSol), this selects
-   * the appropriate new endpoint for the hyperbola arc.
-   *    * Behavior:
-   * - If multiple solutions exist, chooses the one closest to the original
-   * trimPoint.
-   * - If only one solution, uses it.
-   * - Preserves the other endpoint and updates only the trimmed side.
-   *    * @param trimCoord  Mouse position during trim
-   * @param trimSol    Solution points from intersection calculation
-   * @return The new position for the trimmed endpoint
-   */
-
-  /**
    * @brief prepareTrim move whichever end of the arc the click is nearer to
    *        the chosen intersection. RS_Modification drives trim through this.
    */
@@ -181,15 +152,12 @@ public:
                               bool onEntity = false) const override;
 
   bool isReversed() const { return m_data.reversed; }
-  void setReversed(bool r) { m_data.reversed = r; }
 
   double getAngle() const { return m_data.majorP.angle(); }
 
   RS_Vector getCenter() const override { return m_data.center; }
-  void setCenter(const RS_Vector &c) { m_data.center = c; }
 
   RS_Vector getMajorP() const { return m_data.majorP; }
-  void setMajorP(const RS_Vector &p) { m_data.majorP = p; }
 
   void calculateBorders() override;
 
@@ -211,7 +179,6 @@ public:
   double getParamFromPoint(const RS_Vector &p,
                            bool branchReversed = false) const;
   RS_Vector getPoint(double phi, bool useReversed) const;
-  void setPrimaryVertex(const RS_Vector &v);
 
   /**
    * @brief dualLineTangentPoint
@@ -233,9 +200,8 @@ public:
   /**
    * @brief moveStartpoint
    * Moves the start point of the hyperbola arc to a new position.
-   * The new position is projected onto the hyperbola curve to ensure it lies
-   * exactly on the entity. The angular span (arc extent) is preserved, so the
-   * endpoint moves accordingly to maintain the same parametric length.
+   * The new position is projected onto the arc, and the start parameter moves
+   * there while the end point stays where it is, trimming the arc.
    *
    * For unbounded (full-branch) hyperbolas, the operation is ignored because no
    * defined start point exists.
@@ -273,28 +239,6 @@ public:
   double areaLineIntegral() const override;
 
   /**
-   * @brief firstMomentLineIntegral - computes the first-order moments of area
-   *        via Green's theorem contour integrals.
-   *    * Returns:
-   *   mx = ∬ x dA   (first moment with respect to y-axis)
-   *   my = ∬ y dA   (first moment with respect to x-axis)
-   *    * These values are used to compute the centroid: cx = mx / A, cy = my / A.
-   *    * @return LC_FirstMoment containing mx and my.
-   * @note For bounded arcs: exact elementary antiderivatives in local frame,
-   *       then rotated and translated to world coordinates.
-   *       Unbounded hyperbolas return zero.
-   */
-  
-
-  /**
-   * @brief secondMomentLineIntegral - computes the second-order moments of area
-   *        via Green's theorem contour integrals.
-   *    * @return LC_SecondMoment {ixx, iyy, ixy}.
-   * @note Exact closed-form in local frame + transformation (replaces previous Gauss quadrature).
-   */
-  
-
-  /**
    * @brief Arc length of the hyperbola between parameter values phi1 and phi2.
    * @param phi1  Start hyperbolic parameter (dimensionless; argument of
    * cosh/sinh).
@@ -310,10 +254,6 @@ public:
   bool isInfinite() const;
 
 private:
-  // Exact local antiderivatives (Green's theorem)
-  
-  
-
   /**
    * @brief worldToLocal convert from world coordinates to the local coordinates
    *        the hyperbola is centered in local coordinates, and with majorP along
@@ -323,6 +263,30 @@ private:
    */
   RS_Vector worldToLocal(const RS_Vector& world) const;
   RS_Vector localToWorld(const RS_Vector& local) const;
+
+  /**
+   * @brief pointAtArcLength the point at an arc length from the start point,
+   *        measured along the arc towards the end point
+   * @param fromStart   the arc length, from 0 to totalLength
+   * @param totalLength getLength(), which the callers already have
+   */
+  RS_Vector pointAtArcLength(double fromStart, double totalLength) const;
+
+  /**
+   * @brief transformLinear applies an affine map exactly, the image of a
+   *        hyperbola being a hyperbola
+   * @param newCenter the image of the centre
+   * @param imageOfX  the image of the unit vector along x
+   * @param imageOfY  the image of the unit vector along y
+   */
+  void transformLinear(const RS_Vector &newCenter, const RS_Vector &imageOfX,
+                       const RS_Vector &imageOfY);
+
+  /**
+   * @brief hasLength whether an arc from phi1 to phi2 has distinct ends. Equal
+   *        parameters leave no arc, and both 0 would read as the unbounded branch.
+   */
+  bool hasLength(double phi1, double phi2) const;
 
 public:
     RS_Vector getNearestEndpoint(const RS_Vector &coord, double *dist = nullptr) const override;

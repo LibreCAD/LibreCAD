@@ -39,18 +39,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_painter.h"
 
 namespace {
-// origin/2.2.1's LC_Quadratic has no evaluateAt(); this is the same expression
-// master's version uses, written against the accessors this branch exposes.
-double evaluateConicAt(const LC_Quadratic &q, const RS_Vector &p) {
-  if (!p.valid)
-    return 0.0;
-  const auto &m = q.getQuad();
-  const auto &v = q.getLinear();
-  return m(0, 0) * p.x * p.x + 2.0 * m(0, 1) * p.x * p.y + m(1, 1) * p.y * p.y +
-         v(0) * p.x + v(1) * p.y + q.constTerm();
-}
-
-// RS_Vector::rotated() arrives after 2.2.1; rotate a copy instead.
+// a copy of the vector, rotated by the angle
 RS_Vector rotatedCopy(const RS_Vector &v, double angle) {
   RS_Vector r = v;
   r.rotate(angle);
@@ -65,8 +54,8 @@ RS_Vector rotatedCopy(const RS_Vector &v, double angle) {
 LC_HyperbolaData::LC_HyperbolaData(const RS_Vector &c, const RS_Vector &m,
                                    double r, double a1, double a2, bool rev)
     : center(c), majorP(m), ratio(r), angle1(a1), angle2(a2), reversed(rev) {}
-// In lc_hyperbola.cpp – updated LC_HyperbolaData constructor (foci + point)
 
+// the branch through p, with the given foci
 LC_HyperbolaData::LC_HyperbolaData(const RS_Vector &f0, const RS_Vector &f1,
                                    const RS_Vector &p)
     : center((f0 + f1) * 0.5) {
@@ -155,153 +144,6 @@ LC_Hyperbola::LC_Hyperbola(RS_EntityContainer *parent,
     : RS_AtomicEntity(parent), m_data(d),
       m_valid(d.majorP.squared() >= RS_TOLERANCE2) {
   LC_Hyperbola::calculateBorders();
-}
-
-LC_Hyperbola::LC_Hyperbola(const RS_Vector &f0, const RS_Vector &f1,
-                           const RS_Vector &p)
-    : LC_Hyperbola(nullptr, LC_HyperbolaData(f0, f1, p)) {}
-
-LC_Hyperbola::LC_Hyperbola(RS_EntityContainer *parent,
-                           const std::vector<double> &coeffs)
-    : RS_AtomicEntity(parent), m_valid(false) {
-  createFromQuadratic(coeffs);
-}
-
-LC_Hyperbola::LC_Hyperbola(RS_EntityContainer *parent, const LC_Quadratic &q)
-    : RS_AtomicEntity(parent), m_valid(false) {
-  createFromQuadratic(q);
-}
-
-//=====================================================================
-// Factory methods from quadratic
-//=====================================================================
-bool LC_Hyperbola::createFromQuadratic(const LC_Quadratic &q) {
-  std::vector<double> ce = q.getCoefficients();
-  if (ce.size() < 6)
-    return false;
-
-  double A = ce[0], B = ce[1], C = ce[2];
-  double D = ce[3], E = ce[4], F = ce[5];
-
-  // === Step 1: Classify conic type using discriminant ===
-  double disc = B * B - 4.0 * A * C;
-  if (disc <= 0.0)
-    return false; // Not a hyperbola (ellipse or parabola)
-
-  // === Step 2: Degeneracy check using 3x3 determinant ===
-  double det = A * (C * F - E * E / 4.0) -
-               B / 2.0 * (B / 2.0 * F - D * E / 2.0) +
-               D / 2.0 * (B / 2.0 * E - D * C / 2.0);
-
-  if (std::abs(det) < RS_TOLERANCE)
-    return false; // Degenerate (e.g., two lines)
-
-  // === Step 3: Find rotation angle to eliminate xy term ===
-  double theta = 0.0;
-  if (std::abs(B) > RS_TOLERANCE) {
-    theta = 0.5 * std::atan2(B, A - C);
-  }
-
-  double ct = std::cos(theta);
-  double st = std::sin(theta);
-
-  // Rotate quadratic terms
-  double Ap = A * ct * ct + B * ct * st + C * st * st;
-  double Cp = A * st * st - B * ct * st + C * ct * ct;
-  // The rotation by θ = ½·atan2(B, A−C) is supposed to eliminate the cross
-  // term. Verify it actually did — if not (e.g. ill-conditioned input), the
-  // following center/classification reasoning is invalid.
-  double Bp = 2.0 * (A - C) * ct * st + B * (ct * ct - st * st);
-  if (std::abs(Bp) > RS_TOLERANCE * (std::abs(A) + std::abs(C) + 1.0))
-    return false;
-
-  // Rotate linear terms
-  double Dp = D * ct + E * st;
-  double Ep = -D * st + E * ct;
-
-  // === Step 4: Find center by solving partial derivatives ===
-  // 2 Ap x + Dp = 0
-  // 2 Cp y + Ep = 0
-  RS_Vector center{0., 0.};
-  if (std::abs(Ap) > RS_TOLERANCE) {
-    center.x = -Dp / (2.0 * Ap);
-  } else if (std::abs(Dp) > RS_TOLERANCE) {
-    return false; // Unbounded in x → invalid for hyperbola
-  }
-
-  if (std::abs(Cp) > RS_TOLERANCE) {
-    center.y = -Ep / (2.0 * Cp);
-  } else if (std::abs(Ep) > RS_TOLERANCE) {
-    return false; // Unbounded in y → invalid
-  }
-
-  // === Step 5: Translate to center and evaluate constant term ===
-  double Fp = evaluateConicAt(LC_Quadratic{{A, B, C, D, E, F}}, center);
-
-  // === Step 6: Normalize to standard form ===
-  // Ap (x')² + Cp (y')² + Fp = 0
-  double denom = -Fp;
-  if (std::abs(denom) < RS_TOLERANCE)
-    return false;
-
-  double coeff_x = Ap / denom;
-  double coeff_y = Cp / denom;
-
-  double a2 = 0., b2 = 0.;
-  bool transverse_x = (coeff_x > 0.0);
-
-  if (transverse_x) {
-    if (coeff_y >= 0.0)
-      return false; // Both positive → ellipse-like
-    a2 = 1.0 / coeff_x;
-    b2 = -1.0 / coeff_y; // Make positive
-  } else {
-    if (coeff_x >= 0.0)
-      return false;
-    a2 = 1.0 / coeff_y;
-    b2 = -1.0 / coeff_x;
-  }
-
-  if (a2 <= RS_TOLERANCE || b2 <= RS_TOLERANCE)
-    return false;
-
-  double a = std::sqrt(a2);
-  double ratio = std::sqrt(b2 / a2);
-
-  // === Step 7: Determine major axis direction and branch ===
-  // Along rotated x' or y'
-  RS_Vector major_dir = transverse_x ? RS_Vector(ct, st) : RS_Vector(-st, ct);
-
-  // Determine branch: evaluate sign at vertex
-  RS_Vector vertex = center + major_dir * a;
-  double sign_at_vertex = evaluateConicAt(q, vertex);
-  bool reversed = (sign_at_vertex < 0.0);
-
-  // For left branch, flip direction
-  if (reversed) {
-    major_dir = -major_dir;
-  }
-
-  // === Step 8: Set data ===
-  m_data.center = center;
-  m_data.majorP = major_dir * a;
-  m_data.ratio = ratio;
-  m_data.reversed = reversed;
-  m_data.angle1 = 0.0;
-  m_data.angle2 = 0.0; // Unbounded by default
-
-  m_valid = true;
-  LC_Hyperbola::calculateBorders();
-
-  return true;
-}
-
-//=====================================================================
-bool LC_Hyperbola::createFromQuadratic(const std::vector<double> &coeffs) {
-  if (coeffs.size() < 6)
-    return false;
-  LC_Quadratic q(coeffs);
-  return createFromQuadratic(q);
 }
 
 //=====================================================================
@@ -422,8 +264,7 @@ RS_Vector LC_Hyperbola::getMiddlePoint() const
   }
 
          // Midpoint is at half the total arc length.
-         // Use the center as a dummy coordinate — side detection is not needed for the true midpoint.
-  return getNearestDist(totalLength * 0.5, m_data.center);
+  return pointAtArcLength(totalLength * 0.5, totalLength);
 }
 
 //=====================================================================
@@ -577,15 +418,13 @@ RS_Vector LC_Hyperbola::localToWorld(const RS_Vector& local) const
  * The implementation uses the stable and exact formula:
  *   φ = asinh(y_local / b)
  *
- * Then verifies consistency with x_local using cosh(φ), with proper handling of the branch.
- *
  * This approach avoids quartics, tanh substitution, and logarithmic forms that can
  * suffer from cancellation or overflow. It is numerically robust for all eccentricities,
  * including rectangular (b/a ≈ 1) and highly eccentric cases.
  *
  * @param p               Point on the hyperbola
  * @param branchReversed  Ignored — branch is automatically detected from geometry
- * @return                Hyperbolic parameter φ, or NaN if point is not on the hyperbola
+ * @return                Hyperbolic parameter φ, or NaN for an invalid hyperbola or point
  */
 double LC_Hyperbola::getParamFromPoint(const RS_Vector& p,
                                        bool /*branchReversed*/) const
@@ -619,28 +458,6 @@ double LC_Hyperbola::getParamFromPoint(const RS_Vector& p,
   double sinh_phi = y_local / b;
   double phi = std::asinh(sinh_phi);
 
-  //        // Reconstruct expected x from φ
-  // double cosh_phi = std::cosh(phi);
-  // double x_expected = a * cosh_phi;
-
-  //        // Determine which branch the point belongs to by sign of x_local
-  //        // m_data.reversed == true means left branch (x negative in local
-  //        coords)
-  // //bool pointOnLeftBranch = (x_local < 0.0);
-
-  //        // Expected x sign based on m_data.reversed
-  // double expectedSign = m_data.reversed ? -1.0 : 1.0;
-
-  //        // Check consistency: reconstructed |x| should match, and sign should align with branch
-  // double x_expected_signed = expectedSign * x_expected;
-
-  // if (std::abs(x_local - x_expected_signed) > RS_TOLERANCE * a) {
-  //   // Point does not lie on this hyperbola branch
-  //   return std::numeric_limits<double>::quiet_NaN();
-  // }
-
-  //        // For left branch (reversed=true), φ is defined such that cosh(φ) is still positive,
-  //        // so the same φ works for both branches — no sign flip needed
   return phi;
 }
 
@@ -652,10 +469,10 @@ double LC_Hyperbola::getParamFromPoint(const RS_Vector& p,
 
 void LC_Hyperbola::draw(RS_Painter *painter, RS_GraphicView *view,
                         double & /*patternOffset*/) {
-  // origin/2.2.1 paints in GUI coordinates through RS_GraphicView, so the
-  // arc is sampled in world space and handed over as a path, the way the
-  // other curve entities on this branch render. An unbounded hyperbola has
-  // no parameter range to sample and is not drawn.
+  // The painter works in GUI coordinates through RS_GraphicView, so the arc is
+  // sampled in world space and handed over as a path, as the other curve
+  // entities render. An unbounded hyperbola has no parameter range to sample
+  // and is not drawn.
   if (painter == nullptr || view == nullptr || !m_valid || isInfinite())
     return;
 
@@ -668,7 +485,7 @@ void LC_Hyperbola::draw(RS_Painter *painter, RS_GraphicView *view,
   const RS_Vector guiMax = view->toGui(getMax());
   const double screenSpan = std::max(std::abs(guiMax.x - guiMin.x),
                                      std::abs(guiMax.y - guiMin.y));
-  const int segments = std::clamp(static_cast<int>(screenSpan / 3.0), 32, 4096);
+  const int segments = std::clamp(static_cast<int>(std::min(screenSpan / 3.0, 4096.0)), 32, 4096);
 
   const double phi1 = m_data.angle1;
   const double phi2 = m_data.angle2;
@@ -775,9 +592,8 @@ RS_Vector LC_Hyperbola::getNearestMiddle(const RS_Vector& coord,
     targetArcFromStart = middleEnd;
   }
 
-         // Use existing high-precision method to get point at target arc distance
-         // Dummy coordinate (center) — side selection irrelevant since we specify exact distance
-  RS_Vector middlePoint = getNearestDist(targetArcFromStart, m_data.center);
+         // The point at that arc length from the start, without measuring the arc again
+  RS_Vector middlePoint = pointAtArcLength(targetArcFromStart, totalLength);
 
   if (dist) {
     *dist = coord.distanceTo(middlePoint);
@@ -786,41 +602,6 @@ RS_Vector LC_Hyperbola::getNearestMiddle(const RS_Vector& coord,
   return middlePoint;
 }
 
-/**
- * @brief getNearestOrthTan
- * Returns the point on the hyperbola where the tangent is orthogonal to the given normal line.
- *
- * This implements orthogonal tangent snapping using conic pole-polar duality:
- * - The normal line through coord is interpreted as a point in dual space.
- * - The polar line of this point with respect to the hyperbola is computed using the dual conic.
- * - The polar line is tangent to the hyperbola.
- * - The point of tangency is returned.
- *
- * The dual conic is obtained via LC_Quadratic::getDualCurve() (normalized to constant +1).
- *
- * @param coord   Coordinate (usually mouse position) defining the normal direction
- * @param normal  Normal line direction (interpreted as line through origin in dual space)
- * @param onEntity Restrict to bounded arc if true
- * @return Point of tangency on hyperbola, or invalid if no real tangent
- */
-/**
- * @brief getNearestOrthTan
- * Returns the point on the hyperbola where the tangent is orthogonal to the given normal line.
- *
- * Uses conic pole-polar duality:
- * - The normal line is interpreted as a point in dual space.
- * - The polar line of this point w.r.t. the hyperbola is computed using the dual conic.
- * - The polar line is tangent to the hyperbola.
- * - The point of tangency is found using the existing dualLineTangentPoint() method.
- *
- * The dual conic is normalized to constant term +1 to match the line form u x + v y + 1 = 0
- * used in dualLineTangentPoint().
- *
- * @param coord   Coordinate (usually mouse position) — not used directly
- * @param normal  Normal line (direction defines the required tangent orientation)
- * @param onEntity Restrict to bounded arc if true (handled by dualLineTangentPoint)
- * @return Point of tangency on hyperbola, or invalid if no real tangent
- */
 /**
  * @brief getNearestOrthTan
  * Returns the point on the hyperbola where the tangent is orthogonal to the given normal line.
@@ -878,6 +659,12 @@ RS_Vector LC_Hyperbola::getNearestOrthTan(const RS_Vector& /*coord*/,
 bool LC_Hyperbola::isInfinite() const
 {
   return RS_Math::equal(m_data.angle1, 0.) && RS_Math::equal(m_data.angle2, 0.);
+}
+
+bool LC_Hyperbola::hasLength(const double phi1, const double phi2) const
+{
+  return std::isfinite(phi1) && std::isfinite(phi2) &&
+         getPoint(phi1, m_data.reversed).distanceTo(getPoint(phi2, m_data.reversed)) >= RS_TOLERANCE;
 }
 
 
@@ -943,7 +730,7 @@ RS_Vector LC_Hyperbola::getNearestDist(double distance,
   if (!m_valid || isInfinite())
     return RS_Vector(false);
 
-  double totalLength = getLength();
+  const double totalLength = getLength();
   if (totalLength <= std::abs(distance))
     return RS_Vector(false);
 
@@ -951,7 +738,7 @@ RS_Vector LC_Hyperbola::getNearestDist(double distance,
   const bool fromStart =
       std::abs(phi0 - m_data.angle1) <= std::abs(phi0 - m_data.angle2);
 
-  double targetArcFromStart = fromStart ? distance : totalLength - distance;
+  const double targetArcFromStart = fromStart ? distance : totalLength - distance;
 
   if (distance < 0.0 || targetArcFromStart < 0.0 || targetArcFromStart > totalLength + RS_TOLERANCE)
     return RS_Vector(false);
@@ -959,62 +746,60 @@ RS_Vector LC_Hyperbola::getNearestDist(double distance,
   if (dist)
     *dist = targetArcFromStart;
 
-  double a = getMajorRadius();
-  double ecc2 = getEccentricity() * getEccentricity();
+  return pointAtArcLength(targetArcFromStart, totalLength);
+}
 
-         // Initial guess from nearest point on curve
+RS_Vector LC_Hyperbola::pointAtArcLength(const double fromStart,
+                                         const double totalLength) const
+{
+  const double phi1 = m_data.angle1;
+  const double phi2 = m_data.angle2;
+  if (!(totalLength > 0.0))
+    return getPoint(phi1, m_data.reversed);
+
+  // The arc runs towards the smaller parameter after revertDirection() or a
+  // start grip dragged past the end, so measure along it in either direction.
+  const double direction = phi2 >= phi1 ? 1.0 : -1.0;
+  const auto alongArc = [this, phi1, direction](const double phi) {
+    return direction * getArcLength(phi1, phi);
+  };
+  const double a = getMajorRadius();
+  const double ecc2 = getEccentricity() * getEccentricity();
 
   using std::asinh, std::cosh, std::sinh;
-  double phi = asinh(sinh(m_data.angle1) +
-                     targetArcFromStart / totalLength *
-                         (sinh(m_data.angle2) - sinh(m_data.angle1)));
+  double phi = asinh(sinh(phi1) + fromStart / totalLength * (sinh(phi2) - sinh(phi1)));
   if (std::isnan(phi))
-    phi = m_data.angle1;
+    phi = phi1;
 
   constexpr int maxIter = 30;
   constexpr double tol = 1e-12;
 
   bool converged = false;
   for (int i = 0; i < maxIter; ++i) {
-    double s = getArcLength(m_data.angle1, phi);
-    double ds_dphi_current = a * std::sqrt(ecc2 * cosh(phi) * cosh(phi) - 1.0);
-    if (ds_dphi_current < RS_TOLERANCE) break;
-
-    double residual = targetArcFromStart - s;
-    double delta = residual / ds_dphi_current;
-    phi += delta;
-
-    // LC_LOG<<__func__<<"(): "<<i<<": phi="<<phi<<", "<<s<<"("<<targetArcFromStart<<"): "<<residual;
+    const double speed = a * std::sqrt(std::max(0.0, ecc2 * cosh(phi) * cosh(phi) - 1.0));
+    if (speed < RS_TOLERANCE)
+      break;
+    const double delta = (fromStart - alongArc(phi)) / speed;
+    phi += direction * delta;
     if (std::abs(delta) < tol) {
       converged = true;
       break;
     }
   }
 
-         // Bisection fallback if Newton fails
+  // Bisection between the ends, where the arc length runs from 0 to totalLength
   if (!converged) {
-    double phiLow = std::min(m_data.angle1, m_data.angle2) - 30.0;
-    double phiHigh = std::max(m_data.angle1, m_data.angle2) + 30.0;
-
-    double sLow = getArcLength(m_data.angle1, phiLow);
-    double sHigh = getArcLength(m_data.angle1, phiHigh);
-
-    while (sLow > targetArcFromStart) {
-      phiLow -= 30.0;
-      sLow = getArcLength(m_data.angle1, phiLow);
-    }
-    while (sHigh < targetArcFromStart) {
-      phiHigh += 30.0;
-      sHigh = getArcLength(m_data.angle1, phiHigh);
-    }
-
+    double low = phi1;
+    double high = phi2;
     for (int i = 0; i < 80; ++i) {
-      phi = 0.5 * (phiLow + phiHigh);
-      double s = getArcLength(m_data.angle1, phi);
-      if (std::abs(s - targetArcFromStart) < 1e-9) break;
-
-      if (s < targetArcFromStart) phiLow = phi;
-      else phiHigh = phi;
+      phi = 0.5 * (low + high);
+      const double s = alongArc(phi);
+      if (std::abs(s - fromStart) < 1e-9)
+        break;
+      if (s < fromStart)
+        low = phi;
+      else
+        high = phi;
     }
   }
 
@@ -1041,39 +826,56 @@ void LC_Hyperbola::rotate(const RS_Vector &center,
   calculateBorders();
 }
 
-void LC_Hyperbola::scale(const RS_Vector &center, const RS_Vector &factor) {
-  // NOTE: assigning `*this = LC_Hyperbola{...}` would clobber base-class
-  // state (parent, layer, pen, selection). Mutate `m_data` in place instead
-  // so the entity keeps its provenance.
-  // NOTE: non-uniform scaling of a hyperbola does not generally yield a
-  // hyperbola — same caveat as RS_Ellipse. We approximate by re-deriving the
-  // hyperbola through the scaled foci + scaled start point.
-  RS_VectorSolutions foci = getFoci();
-  RS_Vector vpStart = isInfinite() ? getPrimaryVertex() : getStartpoint();
-  RS_Vector vpEnd = isInfinite() ? RS_Vector{false} : getEndpoint();
-  foci.scale(center, factor);
-  vpStart.scale(center, factor);
-  if (vpEnd.valid)
-    vpEnd.scale(center, factor);
-
-  LC_HyperbolaData newData{foci[0], foci[1], vpStart};
-  if (newData.majorP.squared() < RS_TOLERANCE2)
-    return; // degenerate scaling result (e.g. collinear foci) — leave unchanged
-  m_data = newData;
-  m_valid = true;
-
-  if (vpEnd.valid) {
-    const double phiStart = getParamFromPoint(vpStart, m_data.reversed);
-    const double phiEnd = getParamFromPoint(vpEnd, m_data.reversed);
-    if (!std::isnan(phiStart))
-      m_data.angle1 = phiStart;
-    if (!std::isnan(phiEnd))
-      m_data.angle2 = phiEnd;
-    if (m_data.angle1 > m_data.angle2)
-      std::swap(m_data.angle1, m_data.angle2);
+// An affine map takes a hyperbola to a hyperbola, and conjugate semi-diameters
+// to conjugate semi-diameters: with u and v the images of the semi-axes, the
+// image is C' + u cosh(phi) + v sinh(phi). As in the DXF spline import,
+// u + v = e^d (a' û + b' v̂) and u - v = e^-d (a' û - b' v̂) give the axes of the
+// image; the parameter shifts by d, and changes sign where the map reverses
+// orientation.
+void LC_Hyperbola::transformLinear(const RS_Vector &newCenter,
+                                   const RS_Vector &imageOfX,
+                                   const RS_Vector &imageOfY) {
+  if (!m_valid)
+    return;
+  const double a = getMajorRadius();
+  const double b = getMinorRadius();
+  const RS_Vector unitMajor = m_data.majorP / a;
+  const RS_Vector unitMinor{-unitMajor.y, unitMajor.x};
+  const auto linear = [&imageOfX, &imageOfY](const RS_Vector &w) {
+    return imageOfX * w.x + imageOfY * w.y;
+  };
+  const RS_Vector u = linear(unitMajor * (m_data.reversed ? -a : a));
+  const RS_Vector v = linear(unitMinor * b);
+  const RS_Vector sum = u + v;
+  const RS_Vector difference = u - v;
+  const double g = std::sqrt(sum.magnitude() / difference.magnitude());
+  const RS_Vector major = (sum / g + difference * g) * 0.5;
+  const RS_Vector minor = (sum / g - difference * g) * 0.5;
+  const double newA = major.magnitude();
+  const double newB = minor.magnitude();
+  // a singular map collapses the curve: leave it as it is
+  if (!std::isfinite(newA) || !std::isfinite(newB) || newA < RS_TOLERANCE ||
+      newB < RS_TOLERANCE || !std::isfinite(newCenter.x) ||
+      !std::isfinite(newCenter.y))
+    return;
+  const double orientation = u.x * v.y - u.y * v.x >= 0.0 ? 1.0 : -1.0;
+  const double shift = std::log(g);
+  const bool unbounded = isInfinite();
+  m_data.center = newCenter;
+  m_data.majorP = major;
+  m_data.ratio = newB / newA;
+  m_data.reversed = false;
+  if (!unbounded) {
+    m_data.angle1 = orientation * (m_data.angle1 + shift);
+    m_data.angle2 = orientation * (m_data.angle2 + shift);
   }
-
   calculateBorders();
+}
+
+void LC_Hyperbola::scale(const RS_Vector &center, const RS_Vector &factor) {
+  RS_Vector newCenter = m_data.center;
+  newCenter.scale(center, factor);
+  transformLinear(newCenter, RS_Vector(factor.x, 0.0), RS_Vector(0.0, factor.y));
 }
 
 void LC_Hyperbola::mirror(const RS_Vector &axisPoint1,
@@ -1097,14 +899,10 @@ void LC_Hyperbola::mirror(const RS_Vector &axisPoint1,
 }
 
 RS_Entity &LC_Hyperbola::shear(double k) {
-  // Shearing a hyperbola in general does not preserve the standard form
-  // (the result can be a non-axis-aligned hyperbola or, for some k, a
-  // different conic). We approximate by shearing the data members
-  // analogously to the ellipse — center and majorP — and re-deriving via
-  // calculateBorders. Same caveat as non-uniform scaling.
-  m_data.center.shear(k);
-  m_data.majorP.shear(k);
-  calculateBorders();
+  RS_Vector newCenter = m_data.center;
+  newCenter.shear(k);
+  // RS_Vector::shear() maps (x, y) to (x + k y, y)
+  transformLinear(newCenter, RS_Vector(1.0, 0.0), RS_Vector(k, 1.0));
   return *this;
 }
 
@@ -1168,141 +966,86 @@ RS_Vector LC_Hyperbola::getNearestPointOnEntity(const RS_Vector &coord,
   if (entity)
     *entity = const_cast<LC_Hyperbola *>(this);
 
-  // For unbounded (full-branch) hyperbolas, fall through to the same
-  // parametric quartic search as bounded arcs but with very wide phi bounds
-  // (cosh(30) already saturates double precision). The previous heuristic
-  // returned the vertex regardless of `coord`, which is wrong for any point
-  // not near the vertex.
-  // TODO: full hyperbolas have two branches; this implementation searches the
-  // active `m_data.reversed` branch. A future improvement should also
-  // evaluate the opposite branch and return the closer candidate.
-  const bool unbounded = isInfinite();
+  const double a = getMajorRadius();
+  const double b = getMinorRadius();
+  // Work on the branch as if it were the right one: x = a cosh(phi), y = b sinh(phi).
+  const RS_Vector local = worldToLocal(coord);
+  const double x = m_data.reversed ? -local.x : local.x;
+  const double y = local.y;
 
-  // Initial parametric guess from coord projection
-  double phiGuess = getParamFromPoint(coord, m_data.reversed);
-  if (std::isnan(phiGuess)) {
-    phiGuess = unbounded ? 0.0 : (m_data.angle1 + m_data.angle2) * 0.5;
+  // A bounded arc restricts phi to its range. Otherwise the whole branch
+  // counts; cosh(30) already exceeds any drawing.
+  const bool bounded = onEntity && !isInfinite();
+  const double phiMin = bounded ? std::min(m_data.angle1, m_data.angle2) : -30.0;
+  const double phiMax = bounded ? std::max(m_data.angle1, m_data.angle2) : 30.0;
+
+  const auto squaredDistance = [a, b, x, y](const double phi) {
+    const double dx = a * std::cosh(phi) - x;
+    const double dy = b * std::sinh(phi) - y;
+    return dx * dx + dy * dy;
+  };
+
+  // Every candidate is a point of the arc, so none can undercut the true
+  // minimum.
+  double bestPhi = std::clamp(0.0, phiMin, phiMax);
+  double best = squaredDistance(bestPhi);
+  const auto consider = [&](const double phi) {
+    if (!std::isfinite(phi) || phi < phiMin || phi > phiMax)
+      return;
+    const double d = squaredDistance(phi);
+    if (d < best) {
+      best = d;
+      bestPhi = phi;
+    }
+  };
+  if (bounded) {
+    consider(phiMin);
+    consider(phiMax);
   }
 
-  // Effective arc range: real bounds for arcs, wide finite range for full
-  // curves.
-  double phiMin = unbounded ? -30.0 : std::min(m_data.angle1, m_data.angle2);
-  double phiMax = unbounded ? 30.0 : std::max(m_data.angle1, m_data.angle2);
-  phiGuess = std::max(phiMin, std::min(phiMax, phiGuess));
-
-  // Evaluate distance squared at endpoints and initial guess
-  RS_Vector pStart = getPoint(m_data.angle1, m_data.reversed);
-  RS_Vector pEnd = getPoint(m_data.angle2, m_data.reversed);
-  RS_Vector pGuess = getPoint(phiGuess, m_data.reversed);
-
-  double d2Start = coord.squaredTo(pStart);
-  double d2End = coord.squaredTo(pEnd);
-  double d2Guess = coord.squaredTo(pGuess);
-
-  double minD2 = std::min({d2Start, d2End, d2Guess});
-  RS_Vector nearest =
-      (minD2 == d2Start) ? pStart : (minD2 == d2End ? pEnd : pGuess);
-
-  // Now solve the exact quartic equation for critical points
-  // Distance squared: d²(phi) = (x(phi) - px)² + (y(phi) - py)²
-  // d(d²)/dphi = 0 ⇒ (x - px) x' + (y - py) y' = 0
-
-  double px = coord.x, py = coord.y;
-  double cx = m_data.center.x, cy = m_data.center.y;
-  double aa = m_data.majorP.magnitude(); // semi-major a
-  double bb = aa * m_data.ratio;         // semi-minor b
-  double ct = std::cos(m_data.majorP.angle());
-  double st = std::sin(m_data.majorP.angle());
-
-  double A = aa * ct;
-  double B = -bb * st;
-  double C = aa * st;
-  double D = bb * ct;
-
-  // Coefficients of the quartic: tanh⁴ + p tanh³ + q tanh² + r tanh + s = 0
-  double dx = cx + A - px;
-  double dy = cy + C - py;
-
-  // Every coefficient below divides by this. It is zero when coord lies on a
-  // vertex: the vertex is at (cx + A, cy + C), so dx and dy are both zero
-  // there, and the divisions yield NaN. The loop below already declined to use
-  // any root in that case, but only after the solver had run - and a NaN
-  // coefficient reaches std::polar() with a NaN modulus inside the complex
-  // cubic step, which aborts when the standard library is built with
-  // _GLIBCXX_ASSERTIONS. Leave the roots empty instead; the endpoint and
-  // initial-guess candidates already computed above remain the answer.
-  const double denom = B * dx + D * dy;
-
-  std::vector<double> roots;
-  if (std::abs(denom) >= RS_TOLERANCE) {
-    double p = 4.0 * (A * dx + C * dy) / denom;
-    double q = (dx * dx + dy * dy - aa * aa + bb * bb) / denom * 2.0 -
-               p * p / 2.0 - 3.0;
-    double r = -p * (q + 5.0);
-    double s = -(dx * dx + dy * dy - aa * aa - bb * bb) / denom - q;
-
-    std::vector<double> ce = {s, r, q, p,
-                              1.0}; // t^4 + p t^3 + q t^2 + r t + s = 0
-    roots = RS_Math::quarticSolverFull(ce);
-  }
-
-  // Evaluate all valid real roots
-  for (double t : roots) {
-    double phi = std::atanh(t);
-    if (std::isnan(phi) || std::isinf(phi))
-      continue;
-
-    // Check if phi is within the arc range
-    bool inRange = (phi >= phiMin - RS_TOLERANCE_ANGLE &&
-                    phi <= phiMax + RS_TOLERANCE_ANGLE);
-
-    if (onEntity && !inRange)
-      continue;
-
-    RS_Vector cand = getPoint(phi, m_data.reversed);
-    if (!cand.valid)
-      continue;
-
-    double d2Cand = coord.squaredTo(cand);
-
-    if (onEntity) {
-      // For onEntity=true, clamp to arc endpoints if outside
-      if (!inRange) {
-        double d2StartNew = coord.squaredTo(pStart);
-        double d2EndNew = coord.squaredTo(pEnd);
-        if (d2StartNew < minD2) {
-          minD2 = d2StartNew;
-          nearest = pStart;
-        }
-        if (d2EndNew < minD2) {
-          minD2 = d2EndNew;
-          nearest = pEnd;
-        }
-        continue;
-      }
-    }
-
-    if (d2Cand < minD2 - RS_TOLERANCE) {
-      minD2 = d2Cand;
-      nearest = cand;
+  // Half the derivative of the squared distance is
+  // (a^2+b^2) sinh cosh - a x sinh - b y cosh. With u = e^phi, times 4u^2, it
+  // is the quartic (a^2+b^2) u^4 - 2(ax+by) u^3 + 2(ax-by) u - (a^2+b^2) = 0,
+  // whose positive roots are every stationary point on the branch.
+  const double k = a * a + b * b;
+  const std::vector<double> ce{-1.0, 2.0 * (a * x - b * y) / k, 0.0,
+                               -2.0 * (a * x + b * y) / k, 1.0};
+  // A coordinate far enough out overflows the coefficients, and a non-finite
+  // coefficient reaches std::polar() inside the solver, which aborts when the
+  // standard library is built with _GLIBCXX_ASSERTIONS.
+  if (std::isfinite(ce[1]) && std::isfinite(ce[3])) {
+    for (const double u : RS_Math::quarticSolverFull(ce)) {
+      if (u > 0.0)
+        consider(std::log(u));
     }
   }
+  // On the major axis two of those roots coincide and the solver can miss
+  // them; there the stationary points are the vertex and cosh(phi) = ax/k.
+  const double coshOnAxis = a * x / k;
+  if (coshOnAxis >= 1.0) {
+    consider(std::acosh(coshOnAxis));
+    consider(-std::acosh(coshOnAxis));
+  }
 
-  // Final fallback to endpoints if onEntity
-  if (onEntity) {
-    if (coord.squaredTo(pStart) < minD2) {
-      minD2 = coord.squaredTo(pStart);
-      nearest = pStart;
-    }
-    if (coord.squaredTo(pEnd) < minD2) {
-      minD2 = coord.squaredTo(pEnd);
-      nearest = pEnd;
-    }
+  // Newton steps on phi, taken while they stay in range and do not move away
+  for (int i = 0; i < 8; ++i) {
+    const double ch = std::cosh(bestPhi);
+    const double sh = std::sinh(bestPhi);
+    const double d1 = k * sh * ch - a * x * sh - b * y * ch;
+    const double d2 = k * (ch * ch + sh * sh) - a * x * ch - b * y * sh;
+    if (!(d2 > 0.0))
+      break;
+    const double next = std::clamp(bestPhi - d1 / d2, phiMin, phiMax);
+    const double d = squaredDistance(next);
+    if (!(d <= best))
+      break;
+    best = d;
+    bestPhi = next;
   }
 
   if (dist)
-    *dist = std::sqrt(minD2);
-  return nearest;
+    *dist = std::sqrt(best);
+  return getPoint(bestPhi, m_data.reversed);
 }
 
 //=====================================================================
@@ -1381,28 +1124,23 @@ void LC_Hyperbola::calculateBorders() {
 
   // Branch offset handled in getPoint() — use raw angles here
 
-  // Analytical extrema along global X and Y axes
-  double rot = getAngle();
-  RS_Vector dirX(cos(rot), sin(rot));
-  RS_Vector dirY(-sin(rot), cos(rot));
+  // Extrema along the world X and Y axes. A world axis u has the components
+  // (ux, uy) in the hyperbola's own frame, where the local point
+  // (±a cosh φ, b sinh φ) projects onto it as ±a·ux·cosh φ + b·uy·sinh φ.
+  // That is stationary where tanh φ = ∓(b·uy)/(a·ux); trying both signs covers
+  // either branch, and a parameter inside the arc always gives a point on it.
+  const double rot = getAngle();
+  const double a = getMajorRadius();
+  const double b = getMinorRadius();
 
-  auto addExtrema = [&](const RS_Vector &dir) {
-    double dx = dir.x, dy = dir.y;
-    if (std::abs(dx) < RS_TOLERANCE && std::abs(dy) < RS_TOLERANCE)
-      return;
-
-    double tanh_phi = -(getMinorRadius() * dy) / (getMajorRadius() * dx);
-    if (std::abs(tanh_phi) >= 1.0)
-      return; // no real solution
-
-    double phi = std::atanh(tanh_phi);
-    // Check both solutions (phi and phi + π) — but only one will be on the
-    // correct branch
-    for (int sign = 0; sign < 2; ++sign) {
-      double phi_cand = phi + sign * M_PI;
-      if (phi_cand >= phiStart - RS_TOLERANCE &&
-          phi_cand <= phiEnd + RS_TOLERANCE) {
-        RS_Vector p = getPoint(phi_cand, m_data.reversed);
+  auto addExtrema = [&](const double ux, const double uy) {
+    if (std::abs(b * uy) >= std::abs(a * ux))
+      return; // monotonic along this axis, so the endpoints bound it
+    const double phi = std::atanh((b * uy) / (a * ux));
+    for (const double candidate : {phi, -phi}) {
+      if (candidate >= phiStart - RS_TOLERANCE &&
+          candidate <= phiEnd + RS_TOLERANCE) {
+        const RS_Vector p = getPoint(candidate, m_data.reversed);
         if (p.valid) {
           minV = RS_Vector::minimum(minV, p);
           maxV = RS_Vector::maximum(maxV, p);
@@ -1411,8 +1149,9 @@ void LC_Hyperbola::calculateBorders() {
     }
   };
 
-  addExtrema(RS_Vector(1.0, 0.0)); // global X
-  addExtrema(RS_Vector(0.0, 1.0)); // global Y
+  // the world axes seen in the hyperbola's own frame
+  addExtrema(std::cos(rot), -std::sin(rot)); // world X
+  addExtrema(std::sin(rot), std::cos(rot));  // world Y
 
   // Endpoints
   RS_Vector start = getPoint(phiStart, m_data.reversed);
@@ -1437,158 +1176,11 @@ double LC_Hyperbola::getLength() const {
   if (!m_valid)
     return 0.0;
 
-  return getArcLength(m_data.angle1, m_data.angle2);
+  // getArcLength() is signed, and the arc runs towards the smaller parameter
+  // after revertDirection() or a start grip dragged past the end
+  return std::abs(getArcLength(m_data.angle1, m_data.angle2));
 }
 
-
-//=====================================================================
-void LC_Hyperbola::setFocus1(const RS_Vector &f1) {
-  if (!f1.valid || !m_valid)
-    return;
-
-  // Capture original arc bounds before rebuilding so we can re-project them
-  // onto the new geometry (mirrors the moveRef pattern). The constructor
-  // resets angle1/angle2 to 0, so without this the bounded arc would be
-  // silently widened to the full unbounded hyperbola.
-  const RS_Vector originalStart = getStartpoint();
-  const RS_Vector originalEnd = getEndpoint();
-  const bool hadBounds = originalStart.valid && originalEnd.valid;
-
-  RS_Vector f2 = m_data.getFocus2();
-  RS_Vector currentPoint = getPoint(0.0, m_data.reversed);
-  if (!currentPoint.valid) {
-    currentPoint = getPoint(0.0, !m_data.reversed);
-  }
-  if (!currentPoint.valid)
-    return;
-
-  LC_HyperbolaData newData(f1, f2, currentPoint);
-  if (newData.isValid()) {
-    m_data = newData;
-    m_valid = true;
-    if (hadBounds) {
-      const double phiStart = getParamFromPoint(originalStart, m_data.reversed);
-      const double phiEnd = getParamFromPoint(originalEnd, m_data.reversed);
-      if (!std::isnan(phiStart))
-        m_data.angle1 = phiStart;
-      if (!std::isnan(phiEnd))
-        m_data.angle2 = phiEnd;
-      if (m_data.angle1 > m_data.angle2)
-        std::swap(m_data.angle1, m_data.angle2);
-    }
-    calculateBorders();
-    }
-}
-
-void LC_Hyperbola::setFocus2(const RS_Vector &f2) {
-  if (!f2.valid || !m_valid)
-    return;
-
-  const RS_Vector originalStart = getStartpoint();
-  const RS_Vector originalEnd = getEndpoint();
-  const bool hadBounds = originalStart.valid && originalEnd.valid;
-
-  RS_Vector f1 = m_data.getFocus1();
-  RS_Vector currentPoint = getPoint(0.0, m_data.reversed);
-  if (!currentPoint.valid) {
-    currentPoint = getPoint(0.0, !m_data.reversed);
-  }
-  if (!currentPoint.valid)
-    return;
-
-  LC_HyperbolaData newData(f1, f2, currentPoint);
-  if (newData.isValid()) {
-    m_data = newData;
-    m_valid = true;
-    if (hadBounds) {
-      const double phiStart = getParamFromPoint(originalStart, m_data.reversed);
-      const double phiEnd = getParamFromPoint(originalEnd, m_data.reversed);
-      if (!std::isnan(phiStart))
-        m_data.angle1 = phiStart;
-      if (!std::isnan(phiEnd))
-        m_data.angle2 = phiEnd;
-      if (m_data.angle1 > m_data.angle2)
-        std::swap(m_data.angle1, m_data.angle2);
-    }
-    calculateBorders();
-    }
-}
-
-void LC_Hyperbola::setPointOnCurve(const RS_Vector &p) {
-  if (!p.valid || !m_valid)
-    return;
-
-  const RS_Vector originalStart = getStartpoint();
-  const RS_Vector originalEnd = getEndpoint();
-  const bool hadBounds = originalStart.valid && originalEnd.valid;
-
-  RS_Vector f1 = m_data.getFocus1();
-  RS_Vector f2 = m_data.getFocus2();
-
-  LC_HyperbolaData newData(f1, f2, p);
-  if (newData.isValid()) {
-    m_data = newData;
-    m_valid = true;
-    if (hadBounds) {
-      const double phiStart = getParamFromPoint(originalStart, m_data.reversed);
-      const double phiEnd = getParamFromPoint(originalEnd, m_data.reversed);
-      if (!std::isnan(phiStart))
-        m_data.angle1 = phiStart;
-      if (!std::isnan(phiEnd))
-        m_data.angle2 = phiEnd;
-      if (m_data.angle1 > m_data.angle2)
-        std::swap(m_data.angle1, m_data.angle2);
-    }
-    calculateBorders();
-    }
-}
-
-//=====================================================================
-void LC_Hyperbola::setRatio(double r) {
-  if (r <= 0.0 || !m_valid)
-    return;
-  m_data.ratio = r;
-  calculateBorders();
-}
-
-void LC_Hyperbola::setMinorRadius(double b) {
-  if (b <= 0.0 || !m_valid)
-    return;
-  double a = getMajorRadius();
-  if (a >= RS_TOLERANCE) {
-    m_data.ratio = b / a;
-    calculateBorders();
-    }
-}
-
-//=====================================================================
-void LC_Hyperbola::setPrimaryVertex(const RS_Vector &v) {
-  if (!v.valid || !m_valid)
-    return;
-
-  RS_Vector dir = m_data.majorP;
-  if (dir.squared() < RS_TOLERANCE2)
-    return;
-  dir.normalize();
-
-  RS_Vector expectedVertex = m_data.reversed
-                                 ? m_data.center - dir * getMajorRadius()
-                                 : m_data.center + dir * getMajorRadius();
-
-  RS_Vector offset = v - expectedVertex;
-  double distanceAlongAxis = offset.dotP(dir);
-
-  double newA = std::abs(getMajorRadius() + distanceAlongAxis);
-  if (newA < RS_TOLERANCE)
-    return;
-
-  // Adjust majorP magnitude
-  m_data.majorP = dir * newA;
-  if (m_data.reversed)
-    m_data.majorP = -m_data.majorP; // preserve direction for left branch
-
-  calculateBorders();
-}
 
 // ==========================================================================
 /**
@@ -1609,6 +1201,7 @@ void LC_Hyperbola::moveRef(const RS_Vector& ref, const RS_Vector& offset)
   RS_Vector originalStart = getStartpoint();
   RS_Vector originalEnd   = getEndpoint();
   bool hadBounds = originalStart.valid && originalEnd.valid;
+  const LC_HyperbolaData previous = m_data;
 
   RS_Vector newRef = ref + offset;
 
@@ -1623,13 +1216,14 @@ void LC_Hyperbola::moveRef(const RS_Vector& ref, const RS_Vector& offset)
     // Start or end point movement
     if (ref.distanceTo(originalStart) < RS_TOLERANCE) {
       double phi = getParamFromPoint(newRef, m_data.reversed);
-      if (!std::isnan(phi)) {
+      // a start dragged onto the end would leave no arc
+      if (hasLength(phi, m_data.angle2)) {
         m_data.angle1 = phi;
       }
     }
     else if (ref.distanceTo(originalEnd) < RS_TOLERANCE) {
       double phi = getParamFromPoint(newRef, m_data.reversed);
-      if (!std::isnan(phi)) {
+      if (hasLength(m_data.angle1, phi)) {
         m_data.angle2 = phi;
       }
     }
@@ -1657,15 +1251,17 @@ void LC_Hyperbola::moveRef(const RS_Vector& ref, const RS_Vector& offset)
         return;  // Not recognized
       }
 
-             // Re-project original endpoints after focus move
+      // Re-project the original end points where the new branch passes
+      // nearest to them, and undo a change that would leave no arc
       if (hadBounds) {
-        double phiStart = getParamFromPoint(originalStart, m_data.reversed);
-        double phiEnd = getParamFromPoint(originalEnd, m_data.reversed);
-
-        if (!std::isnan(phiStart))
-          m_data.angle1 = phiStart;
-        if (!std::isnan(phiEnd))
-          m_data.angle2 = phiEnd;
+        const double phiStart = getParamFromPoint(getNearestPointOnEntity(originalStart, false), m_data.reversed);
+        const double phiEnd = getParamFromPoint(getNearestPointOnEntity(originalEnd, false), m_data.reversed);
+        if (!hasLength(phiStart, phiEnd)) {
+          m_data = previous;
+          return;
+        }
+        m_data.angle1 = phiStart;
+        m_data.angle2 = phiEnd;
 
         if (m_data.angle1 > m_data.angle2)
           std::swap(m_data.angle1, m_data.angle2);
@@ -1722,7 +1318,8 @@ void LC_Hyperbola::moveStartpoint(const RS_Vector &pos) {
   // end parameter untouched. (Earlier code preserved the angular span,
   // which slid the entire arc instead of trimming one end.)
   const double newPhi1 = getParamFromPoint(newStart, m_data.reversed);
-  if (std::isnan(newPhi1))
+  // a start moved onto the end would leave no arc
+  if (!hasLength(newPhi1, m_data.angle2))
     return;
   m_data.angle1 = newPhi1;
 
@@ -1746,7 +1343,7 @@ void LC_Hyperbola::moveEndpoint(const RS_Vector &pos) {
     return;
 
   const double newPhi2 = getParamFromPoint(newEnd, m_data.reversed);
-  if (std::isnan(newPhi2))
+  if (!hasLength(m_data.angle1, newPhi2))
     return;
   m_data.angle2 = newPhi2;
 
@@ -1795,25 +1392,19 @@ double LC_Hyperbola::areaLineIntegral() const
   // }\frac{\mathbf{ab}}{\mathbf{2}}\mathbf{t+
   // c}_{\mathbf{x}}\mathbf{(a}\sin \mathbf{\alpha }\cosh \mathbf{t+b}\cos
   // \mathbf{\alpha }\sinh \mathbf{t)+C}\)
-  // Reversed branch: x_local = -a·cosh φ flips the sign of every term that
-  // carries a single power of `a` from the local x coordinate. The cxTerm
-  // also flips because R/S sit in front of the local-x and local-y
-  // contributions to world x.
+  // Reversed branch: x_local = -a·cosh φ flips the terms with a single power
+  // of the local x, a·b (sinh 2φ and φ) and cx·a·cosh φ; the (a²-b²) term and
+  // cx·b·sinh φ keep their sign.
   const double sx = m_data.reversed ? -1.0 : 1.0;
   auto primitive = [&](double phi) -> double {
     double c1Term = c1 * sin2_th * std::cosh(2. * phi);
     double c2Term = c2 * cos2_th * std::sinh(2. * phi);
-    double cxTerm = cx * sx * (R * std::cosh(phi) + S * std::sinh(phi));
-    return sx * (c1Term + c2Term + c3 * phi) + cxTerm;
+    double cxTerm = cx * (sx * R * std::cosh(phi) + S * std::sinh(phi));
+    return c1Term + sx * (c2Term + c3 * phi) + cxTerm;
   };
 
   return primitive(phi2) - primitive(phi1);
 }
-
-
-
-
-
 
 //=====================================================================
 RS_Vector LC_Hyperbola::dualLineTangentPoint(const RS_Vector &line) const {
@@ -1838,26 +1429,34 @@ RS_Vector LC_Hyperbola::dualLineTangentPoint(const RS_Vector &line) const {
   if (std::abs(r) > 1. - RS_TOLERANCE)
     return RS_Vector{false};
 
-  return getPoint(std::atanh(r), false);
+  // The slope fixes the tangent point up to its reflection through the centre,
+  // which lies on the other branch. As in RS_Ellipse, the line equation
+  // u x + v y + 1 = 0 picks the point the line actually touches.
+  const double phi = std::atanh(r);
+  const RS_Vector onRight = getPoint(phi, false);
+  const RS_Vector onLeft = getPoint(-phi, true);
+  const auto lineEqu = [&line](const RS_Vector& vp) {
+    return std::abs(line.dotP(vp) + 1.);
+  };
+  const bool touchesLeft = lineEqu(onLeft) < lineEqu(onRight);
+  // a line tangent to the other branch does not touch this entity
+  if (touchesLeft != m_data.reversed)
+    return RS_Vector{false};
+  return touchesLeft ? onLeft : onRight;
 }
 
 //=====================================================================
 // Trim support – updated to match LC_Parabola behavior
 //=====================================================================
 /**
- * @brief getTrimPoint
- * Determines which endpoint to move for trimming, based on the click position
- * relative to the chosen intersection point.
+ * @brief prepareTrim
+ * Selects the intersection point closest along the branch to the click position.
  *
- * Updated to match modern LibreCAD behavior (used by parabola, spline, etc.):
- * - The click point (trimCoord) and the chosen intersection (from prepareTrim())
- *   are used to decide whether to trim/extend the start or end.
- * - Keeps the portion containing the click point.
+ * Returns the chosen intersection so getTrimPoint() can use it to decide direction.
  *
- * @param trimCoord  Click coordinate (user's mouse position)
- * @param trimPoint  Chosen intersection point (returned by prepareTrim())
- * @return EndingStart if trimming/extending start point, EndingEnd for end point,
- *         EndingNone if invalid/unbounded
+ * @param trimCoord  Click coordinate
+ * @param trimSol    All intersection solutions
+ * @return Chosen intersection point (closest along parametric branch to click)
  */
 RS_Vector LC_Hyperbola::prepareTrim(const RS_Vector& trimCoord,
                                     const RS_VectorSolutions& trimSol)
@@ -1884,9 +1483,6 @@ RS_Vector LC_Hyperbola::prepareTrim(const RS_Vector& trimCoord,
   for (const RS_Vector& intersect : trimSol) {
     if (!intersect.valid)
       continue;
-
-    // RS_Vector proj = getNearestPointOnEntity(sol, false);
-    // if (!proj.valid) proj = sol;
 
     double phi = getParamFromPoint(intersect, m_data.reversed);
     if (std::isnan(phi))
@@ -1915,11 +1511,12 @@ RS_Vector LC_Hyperbola::prepareTrim(const RS_Vector& trimCoord,
   // Use getTrimPoint() with the chosen intersection to decide which end to move
   RS2::Ending side = getTrimPoint(trimCoord, bestSol);
 
-  if (side == RS2::EndingStart) {
+  if (side == RS2::EndingStart && hasLength(newPhi, m_data.angle2)) {
     m_data.angle1 = newPhi;
-  } else if (side == RS2::EndingEnd) {
+  } else if (side == RS2::EndingEnd && hasLength(m_data.angle1, newPhi)) {
     m_data.angle2 = newPhi;
   } else {
+    // no side to trim, or a trim that would leave no arc
     return RS_Vector(false);
   }
 
@@ -1928,6 +1525,20 @@ RS_Vector LC_Hyperbola::prepareTrim(const RS_Vector& trimCoord,
   return bestSol;
 }
 
+/**
+ * @brief getTrimPoint
+ * Determines which endpoint to move for trimming, based on the click position
+ * relative to the chosen intersection point.
+ *
+ * The click point (trimCoord) and the chosen intersection (from prepareTrim())
+ * decide whether the start or the end is trimmed or extended; the portion
+ * containing the click point is kept.
+ *
+ * @param trimCoord  Click coordinate (user's mouse position)
+ * @param trimPoint  Chosen intersection point (returned by prepareTrim())
+ * @return EndingStart if trimming/extending start point, EndingEnd for end point,
+ *         EndingNone if invalid/unbounded
+ */
 RS2::Ending LC_Hyperbola::getTrimPoint(const RS_Vector& trimCoord,
                                        const RS_Vector& trimPoint)
 {
@@ -1957,16 +1568,8 @@ RS2::Ending LC_Hyperbola::getTrimPoint(const RS_Vector& trimCoord,
          // Keep the side containing the click point
          // If intersection is on the "start" side of click → move startpoint
          // Otherwise → move endpoint
-  return (phi_inter < phi_click) ? RS2::EndingStart : RS2::EndingEnd;
+  // The start is at the smaller parameter unless the arc runs backwards, after
+  // revertDirection() or a start grip dragged past the end
+  const bool forward = m_data.angle2 >= m_data.angle1;
+  return ((phi_inter < phi_click) == forward) ? RS2::EndingStart : RS2::EndingEnd;
 }
-
-/**
- * @brief prepareTrim
- * Selects the intersection point closest along the branch to the click position.
- *
- * Returns the chosen intersection so getTrimPoint() can use it to decide direction.
- *
- * @param trimCoord  Click coordinate
- * @param trimSol    All intersection solutions
- * @return Chosen intersection point (closest along parametric branch to click)
- */

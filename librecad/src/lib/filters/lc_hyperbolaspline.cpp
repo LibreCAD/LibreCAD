@@ -36,6 +36,11 @@
 namespace {
 // Global tolerance for floating-point comparisons
 constexpr double kTolerance = 1e-10;
+
+// How far above 1 the middle weight must be for a spline to be read as a
+// hyperbola. Closer to 1 the arc cannot be told from a parabola, and the
+// reconstruction divides by w^2 - 1.
+constexpr double kHyperbolaWeightTolerance = 1e-8;
 }
 
 /**
@@ -57,21 +62,30 @@ bool LC_HyperbolaSpline::isHyperbolaSpline(const DRW_Spline& s)
       s.knotslist.size() != 6) {
     return false;
   }
+  for (const auto& p : s.controllist) {
+    if (!p || !std::isfinite(p->x) || !std::isfinite(p->y)) {
+      return false;
+    }
+  }
 
-         // Knot vector must be the standard open uniform [0,0,0,1,1,1]
+  // Only the form hyperbolaToSpline() writes is claimed: the knot vector
+  // [0,0,0,1,1,1], end weights of 1 and a middle weight above 1. Any other
+  // spline goes to LC_Parabola, as before.
   const auto& k = s.knotslist;
+  for (const double knot : k) {
+    if (!std::isfinite(knot)) {
+      return false;
+    }
+  }
   if (std::abs(k[0]) > tol || std::abs(k[1]) > tol || std::abs(k[2]) > tol ||
       std::abs(k[3] - 1.0) > tol || std::abs(k[4] - 1.0) > tol || std::abs(k[5] - 1.0) > tol) {
     return false;
   }
-
-         // Endpoint weights must be exactly 1.0
   if (!RS_Math::equal(s.weightlist[0], 1.0) || !RS_Math::equal(s.weightlist[2], 1.0)) {
     return false;
   }
-
- // Middle weight must be positive (and typically > 1 for hyperbolas)
-  return s.weightlist[1] >= 1.0 + tol;
+  const double w = s.weightlist[1];
+  return std::isfinite(w) && w >= 1.0 + kHyperbolaWeightTolerance;
 }
 
 /**
@@ -92,65 +106,50 @@ std::unique_ptr<LC_Hyperbola> LC_HyperbolaSpline::splineToHyperbola(const DRW_Sp
     return nullptr;
   }
 
-         // Extract control points and weights
+         // Extract control points and the middle weight of the standard form
   const RS_Vector p0(s.controllist[0]->x, s.controllist[0]->y); // start
   const RS_Vector p1(s.controllist[1]->x, s.controllist[1]->y); // shoulder (middle control point)
   const RS_Vector p2(s.controllist[2]->x, s.controllist[2]->y); // end
+  const double w = s.weightlist[1];                   // cosh of half the parameter span
+  const double wSquaredMinus1 = (w - 1.0) * (w + 1.0); // w^2 - 1 without cancellation
 
-  //const double w0 = s.weightlist[0]; // always 1.0
-  const double w1 = s.weightlist[1]; // middle weight (key parameter)
-  //const double w2 = s.weightlist[2]; // always 1.0
+  // The arc from phi_m - d to phi_m + d has w = cosh d. With the chord midpoint
+  // M = (p0 + p2)/2, M - C = w^2 (p1 - C), so p1 - C = (M - p1) / (w^2 - 1).
+  // Taking that from the control points, rather than subtracting a centre that
+  // can lie far away, keeps arcs far from the vertex exact.
+  const RS_Vector shoulder = ((p0 + p2) * 0.5 - p1) / wSquaredMinus1;
+  const RS_Vector center = p1 - shoulder;
 
-         // Middle weight must be > 1 for a proper hyperbola segment
-  if (w1 <= 1.0 + RS_TOLERANCE) {
-    return nullptr;
-  }
+  // Conjugate semi-diameters at phi_m: u from the centre to P(phi_m), and the
+  // tangent v = P'(phi_m). For a hyperbola |u|^2 - |v|^2 = a^2 - b^2 and
+  // |u x v| = a b.
+  const RS_Vector u = shoulder * w;
+  const RS_Vector v = (p2 - p0) / (2.0 * std::sqrt(wSquaredMinus1));
+  const RS_Vector sum = u + v;
+  const RS_Vector difference = u - v;
+  const double d = difference.dotP(sum);
+  const double c = std::abs(u.x * v.y - u.y * v.x);
+  const double h = std::hypot(d, 2.0 * c);
+  // a^2 solves a^4 - d a^2 - c^2 = 0; the second form avoids cancellation for d < 0
+  const double aSquared = d >= 0.0 ? 0.5 * (h + d) : 2.0 * c * c / (h - d);
+  // u + v = e^phi_m (a û + b v̂) and u - v = e^-phi_m (a û - b v̂), so
+  // e^phi_m = sqrt(|u + v| / |u - v|) gives the major axis a û. It points at the
+  // arc's branch, as u does.
+  const double g = std::sqrt(sum.magnitude() / difference.magnitude());
+  const RS_Vector major = (sum / g + difference * g) * 0.5;
 
-  const double w1_sq = w1 * w1;
-
-         // Midpoint of chord (start to end)
-  const RS_Vector chord_mid = (p0 + p2) * 0.5;
-
-         // Center calculation derived from rational Bézier geometry
-  const RS_Vector center = (p1 * w1_sq - chord_mid) / (w1_sq - 1.0);
-
-         // Vectors relative to center
-  const RS_Vector p1_rel = p1 - center;
-  const RS_Vector chord_dir = (p2 - p0) * 0.5; // half chord vector
-
-  const double l_sq = p1_rel.squared();          // ||p1 - center||²
-  const double j_sq = chord_dir.squared();       // (half chord length)²
-  const double dot   = p1_rel.dotP(chord_dir);   // alignment term
-  const double s_sq  = w1_sq - 1.0;               // derived scale factor
-
-  if (std::abs(s_sq) < kTolerance) {
-    return nullptr;
-  }
-  const double inv_s_sq = 1.0 / s_sq;
-
-         // Intermediate terms for radius calculations
-  const double term1 = (w1_sq * l_sq) + (j_sq * inv_s_sq);
-  const double term2 = 4.0 * dot * dot * w1_sq * inv_s_sq;
-  const double q = std::sqrt((term1 * term1) - term2);
-
-         // Semi-transverse axis (a) and semi-conjugate axis (b)
-  const double a = std::sqrt(0.5 * (w1_sq * l_sq - j_sq * inv_s_sq + q));
-  const double b = std::sqrt(0.5 * (j_sq * inv_s_sq - w1_sq * l_sq + q));
-
-  if (a < RS_TOLERANCE || b < RS_TOLERANCE) {
+  const double a = std::sqrt(aSquared);
+  const double b = c / a;
+  if (!std::isfinite(center.x) || !std::isfinite(center.y) ||
+      !std::isfinite(major.x) || !std::isfinite(major.y) || !std::isfinite(b) ||
+      a < RS_TOLERANCE || b < RS_TOLERANCE || major.squared() < RS_TOLERANCE2) {
     return nullptr;
   }
 
          // Construct hyperbola data
   LC_HyperbolaData hd;
   hd.center = center;
-
-         // Major axis vector: direction and magnitude a
-         // Derived analytically to align with the control points
-  const double proj_factor = (a * a + (j_sq * inv_s_sq));
-  const RS_Vector major_vec = p1_rel * proj_factor - chord_dir * (dot * inv_s_sq);
-  hd.majorP = major_vec.normalized() * a;
-
+  hd.majorP = major.normalized() * a;
   hd.ratio = b / a;
 
          // Create hyperbola entity
@@ -160,9 +159,15 @@ std::unique_ptr<LC_Hyperbola> LC_HyperbolaSpline::splineToHyperbola(const DRW_Sp
     return nullptr;
   }
 
-         // Set angular limits based on endpoints
-  hyperbola->setAngle1(hyperbola->getParamFromPoint(p0));
-  hyperbola->setAngle2(hyperbola->getParamFromPoint(p2));
+  // The start and end stay where the spline has them, so the arc keeps its
+  // direction.
+  const double phi1 = hyperbola->getParamFromPoint(p0);
+  const double phi2 = hyperbola->getParamFromPoint(p2);
+  if (!std::isfinite(phi1) || !std::isfinite(phi2)) {
+    return nullptr;
+  }
+  hyperbola->setAngle1(phi1);
+  hyperbola->setAngle2(phi2);
 
   return hyperbola;
 }
@@ -195,21 +200,21 @@ bool LC_HyperbolaSpline::hyperbolaToSpline(const LC_HyperbolaData& hd, DRW_Splin
   double phi1 = hd.angle1;
   double phi2 = hd.angle2;
 
-         // An unbounded hyperbola has no parameter range to encode. master
-         // substitutes [-2, 2] here to keep the middle weight above 1, which
-         // writes a clipped arc that looks like the whole branch on re-read.
-         // Refuse instead and let the caller report it: a file that is missing
-         // an entity is recoverable, a file that quietly contains the wrong
-         // geometry is not.
+         // An unbounded hyperbola has no parameter range to encode. A finite
+         // range in its place would write a clipped arc that reads back as
+         // the whole branch, so refuse and let the caller report it: a file
+         // that is missing an entity is recoverable, a file that quietly
+         // contains the wrong geometry is not.
   if (std::abs(phi1) < kTolerance && std::abs(phi2) < kTolerance) {
     return false;
   }
-
-         // Ensure phi1 ≤ phi2 for consistent calculations
-  if (phi1 > phi2) {
-    std::swap(phi1, phi2);
+  // an arc of no length has no curve to encode
+  if (phi1 == phi2) {
+    return false;
   }
 
+  // phi1 stays the start even when it is the larger parameter, so the arc keeps
+  // its direction; the formulas below hold for a negative half span as well
   const double phi_mid = (phi1 + phi2) * 0.5;
   const double phi_delta = (phi2 - phi1) * 0.5;
 
@@ -231,11 +236,6 @@ bool LC_HyperbolaSpline::hyperbolaToSpline(const LC_HyperbolaData& hd, DRW_Splin
     start_standard.x = -start_standard.x;
     end_standard.x   = -end_standard.x;
     shoulder_standard.x = -shoulder_standard.x;
-  }
-
-         // Weight must be > 1 for a proper hyperbola segment
-  if (weight_middle <= 1.0 + kTolerance) {
-    return false;
   }
 
          // Apply rotation by major axis angle and translation by center

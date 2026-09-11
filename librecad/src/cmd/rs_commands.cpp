@@ -488,12 +488,6 @@ RS_Commands::RS_Commands() {
             {{"ae", LC_CommandText QT_TRANSLATE_NOOP3("QObject", "ae", "arc ellipse")}},
             RS2::ActionDrawEllipseArcAxis
         },
-        // draw hyperbola by foci and two points on one branch
-        {
-            {{"hyperbolafp", LC_CommandText QT_TRANSLATE_NOOP3("QObject", "hyperbolafp", "Hyperbola foci point")}},
-            {{"hb", LC_CommandText QT_TRANSLATE_NOOP3("QObject", "hb", "Hyperbola foci point")}},
-            RS2::ActionDrawHyperbolaFP
-        },
         // draw parabola by 4 points - v2.2.1
         {
             {{"parabola4p", LC_CommandText QT_TRANSLATE_NOOP3("QObject", "parabola4p", "Parabola 4 points")}},

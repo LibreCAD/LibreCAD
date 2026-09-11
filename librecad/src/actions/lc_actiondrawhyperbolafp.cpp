@@ -25,6 +25,7 @@
 #include "lc_actiondrawhyperbolafp.h"
 
 #include "lc_hyperbola.h"
+#include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
@@ -46,7 +47,7 @@ LC_ActionDrawHyperbolaFP::LC_ActionDrawHyperbolaFP(
         RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Draw hyperbola from foci and points", container,
                                graphicView,
-                               RS2::ActionDrawHyperbolaFP)
+                               RS2::ActionDrawHyperbolaFoci2Points)
     , pPoints(std::make_unique<Points>())
 {
 }
@@ -79,38 +80,59 @@ double LC_ActionDrawHyperbolaFP::signedFocalDifference(const RS_Vector& point) c
     return point.distanceTo(pPoints->focus1) - point.distanceTo(pPoints->focus2);
 }
 
+double LC_ActionDrawHyperbolaFP::minimumSize() const {
+    return std::max(RS_TOLERANCE, pPoints->focus1.distanceTo(pPoints->focus2) * 1e-6);
+}
+
+bool LC_ActionDrawHyperbolaFP::isValidStartPoint(const RS_Vector& point) const {
+    if (!point.valid || !pPoints->focus1.valid || !pPoints->focus2.valid)
+        return false;
+    // 2a near 0 is the perpendicular bisector, which is not a hyperbola branch at
+    // all; 2a near the distance between the foci is the axis outside them, where
+    // the branch collapses onto a ray.
+    const double twoA = std::abs(signedFocalDifference(point));
+    const double separation = pPoints->focus1.distanceTo(pPoints->focus2);
+    return twoA >= minimumSize() && separation - twoA >= minimumSize()
+        && LC_HyperbolaData{pPoints->focus1, pPoints->focus2, point}.isValid();
+}
+
 bool LC_ActionDrawHyperbolaFP::isOnSameBranch(const RS_Vector& point) const {
     if (!point.valid || !pPoints->startPoint.valid)
         return false;
     const double reference = signedFocalDifference(pPoints->startPoint);
-    // 2a must stay away from zero: a point equidistant from both foci lies on
-    // the perpendicular bisector, which is not a hyperbola branch at all.
-    const double separation = pPoints->focus1.distanceTo(pPoints->focus2);
-    if (std::abs(reference) < RS_TOLERANCE || separation < RS_TOLERANCE)
+    if (std::abs(reference) < minimumSize())
         return false;
 
-    // Only the side matters here. The end point trims the arc - it is
-    // projected onto the curve through getParamFromPoint() - so it does not
-    // have to lie on the hyperbola, and it never will: a pick 0.01 units off
-    // a curve whose foci are 100 apart already moves the focal difference by
-    // 0.0098, a hundred times any sane on-curve tolerance. Comparing the
-    // magnitude therefore rejected every real mouse pick. The sign of
-    // ||PF1| - |PF2|| is what identifies the branch, and that survives a
-    // pick anywhere near the curve.
+    // Only the side matters here. The end point trims the arc - the arc ends
+    // where the branch passes nearest to it - so it does not have to lie on the
+    // hyperbola, and it never will: a pick 0.01 units off a curve whose foci are
+    // 100 apart already moves the focal difference by 0.0098, a hundred times
+    // any sane on-curve tolerance. Comparing the magnitude therefore rejected
+    // every real mouse pick. The sign of ||PF1| - |PF2|| is what identifies the
+    // branch, and that survives a pick anywhere near the curve.
     const double difference = signedFocalDifference(point);
     // Near the perpendicular bisector the sign is arbitrary, so refuse there
-    // rather than guess a branch. The dead zone scales with the construction
-    // so it behaves the same on a 1 mm and a 1 km hyperbola.
-    const double deadZone = std::max(RS_TOLERANCE, separation * 1e-6);
-    if (std::abs(difference) < deadZone)
+    // rather than guess a branch.
+    if (std::abs(difference) < minimumSize())
         return false;
     return (difference > 0.0) == (reference > 0.0);
+}
+
+RS_Vector LC_ActionDrawHyperbolaFP::endOnBranch(const RS_Vector& point) const {
+    if (!point.valid || !pPoints->startPoint.valid)
+        return RS_Vector(false);
+    const LC_Hyperbola branch{nullptr, LC_HyperbolaData{pPoints->focus1, pPoints->focus2, pPoints->startPoint}};
+    if (!branch.isValid())
+        return RS_Vector(false);
+    // the whole, unbounded branch
+    return branch.getNearestPointOnEntity(point, false);
 }
 
 void LC_ActionDrawHyperbolaFP::trigger() {
     RS_PreviewActionInterface::trigger();
 
     deletePreview();
+    RS_Vector relativeZero = graphicView->getRelativeZero();
     if (pPoints->valid) {
         auto* en = new LC_Hyperbola{container, pPoints->data};
         container->addEntity(en);
@@ -119,10 +141,11 @@ void LC_ActionDrawHyperbolaFP::trigger() {
             document->addUndoable(en);
             document->endUndoCycle();
         }
+        // at the centre, as the ellipse foci action does
+        relativeZero = en->getCenter();
     }
-    const RS_Vector rz = graphicView->getRelativeZero();
     graphicView->redraw(RS2::RedrawDrawing);
-    graphicView->moveRelativeZero(rz);
+    graphicView->moveRelativeZero(relativeZero);
     drawSnapper();
     setStatus(SetFocus1);
     init(SetFocus1);
@@ -138,7 +161,7 @@ bool LC_ActionDrawHyperbolaFP::preparePreview(const RS_Vector& mouse) {
     // The point that defines the branch is the committed start point once we
     // have one, otherwise the point currently under the cursor.
     const RS_Vector& onCurve = pPoints->startPoint.valid ? pPoints->startPoint : mouse;
-    if (!onCurve.valid)
+    if (!isValidStartPoint(onCurve))
         return false;
 
     LC_HyperbolaData data{pPoints->focus1, pPoints->focus2, onCurve};
@@ -158,7 +181,11 @@ bool LC_ActionDrawHyperbolaFP::preparePreview(const RS_Vector& mouse) {
     double phi1 = -std::abs(phiStart);
     double phi2 = std::abs(phiStart);
     if (pPoints->startPoint.valid && mouse.valid && isOnSameBranch(mouse)) {
-        const double phiEnd = candidate.getParamFromPoint(mouse, reversed);
+        // The arc ends where the branch passes nearest to the pick. The
+        // parameter of the pick itself follows its local y alone, which can put
+        // the end far from the click.
+        const RS_Vector end = endOnBranch(mouse);
+        const double phiEnd = end.valid ? candidate.getParamFromPoint(end, reversed) : std::nan("");
         if (!std::isnan(phiEnd)) {
             phi1 = std::min(phiStart, phiEnd);
             phi2 = std::max(phiStart, phiEnd);
@@ -199,6 +226,18 @@ void LC_ActionDrawHyperbolaFP::mouseReleaseEvent(QMouseEvent* e) {
         // so stepping below the first status is what ends the action. Clamping
         // here would trap the user inside it.
         init(getStatus() - 1);
+        // Relative coordinates typed next start from the last point still
+        // committed, as in Parabola4Points.
+        switch (getStatus()) {
+        case SetFocus2:
+            graphicView->moveRelativeZero(pPoints->focus1);
+            break;
+        case SetStartPoint:
+            graphicView->moveRelativeZero(pPoints->focus2);
+            break;
+        default:
+            break;
+        }
     }
 }
 
@@ -226,11 +265,10 @@ void LC_ActionDrawHyperbolaFP::coordinateEvent(RS_CoordinateEvent* e) {
         setStatus(SetStartPoint);
         break;
 
-    case SetStartPoint: {
+    case SetStartPoint:
         // The start point fixes 2a and the branch, so it must be a point that
-        // actually admits a hyperbola through these foci.
-        LC_Hyperbola candidate{nullptr, LC_HyperbolaData{pPoints->focus1, pPoints->focus2, mouse}};
-        if (!candidate.isValid()) {
+        // admits a hyperbola through these foci that is not degenerate.
+        if (!isValidStartPoint(mouse)) {
             RS_DIALOGFACTORY->commandMessage(
                 tr("The point does not define a hyperbola with these foci"));
             return;
@@ -239,14 +277,8 @@ void LC_ActionDrawHyperbolaFP::coordinateEvent(RS_CoordinateEvent* e) {
         graphicView->moveRelativeZero(mouse);
         setStatus(SetEndPoint);
         break;
-    }
 
-    case SetEndPoint:
-        if (pPoints->startPoint.distanceTo(mouse) < RS_TOLERANCE) {
-            RS_DIALOGFACTORY->commandMessage(
-                tr("Start and end points cannot be the same"));
-            return;
-        }
+    case SetEndPoint: {
         if (!isOnSameBranch(mouse)) {
             // Covers both a point off the curve and a point on the opposite
             // branch, which has the opposite signed focal difference.
@@ -254,13 +286,33 @@ void LC_ActionDrawHyperbolaFP::coordinateEvent(RS_CoordinateEvent* e) {
                 tr("The end point is not on the same hyperbola branch"));
             return;
         }
+        // The arc ends where the branch passes nearest to the pick. When that is
+        // the start point itself the arc has no length, and at the vertex both
+        // of its angles would be 0, which reads as the whole unbounded branch.
+        const RS_Vector end = endOnBranch(mouse);
+        if (!end.valid || end.distanceTo(pPoints->startPoint) < minimumSize()) {
+            RS_DIALOGFACTORY->commandMessage(
+                tr("Start and end points cannot be the same"));
+            return;
+        }
         pPoints->endPoint = mouse;
         if (preparePreview(mouse) && pPoints->valid)
             trigger();
         break;
+    }
 
     default:
         break;
+    }
+}
+
+void LC_ActionDrawHyperbolaFP::commandEvent(RS_CommandEvent* e) {
+    const QString cmd = e->getCommand().toLower();
+    if (checkCommand("help", cmd)) {
+        RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
+                                         + getAvailableCommands().join(", ")
+                                         + tr("specify the two foci, then the start and end points on one branch"));
+        e->accept();
     }
 }
 
