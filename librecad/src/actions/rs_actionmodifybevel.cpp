@@ -108,7 +108,8 @@ void RS_ActionModifyBevel::mouseMoveEvent(QMouseEvent* e) {
     {
         if (entity2 != nullptr && entity2 != entity1)
             graphicView->drawEntityHighlighted(entity2, false);
-        if (RS_Information::isTrimmable(se) && se != entity1 && se->isAtomic()) {
+        if (RS_Information::isTrimmable(se) && se != entity1 && se->isAtomic()
+                && se->rtti() != RS2::EntityHyperbola) {
             pPoints->coord2 = mouse;
             entity2 = se;
             graphicView->drawEntityHighlighted(entity2, true);
@@ -131,7 +132,8 @@ void RS_ActionModifyBevel::mouseReleaseEvent(QMouseEvent* e) {
         case SetEntity1:
         {
             unhighlightEntity();
-            if (entity1 != nullptr && entity1->isAtomic() && RS_Information::isTrimmable(entity1)) {
+            if (entity1 != nullptr && entity1->isAtomic() && RS_Information::isTrimmable(entity1)
+                    && entity1->rtti() != RS2::EntityHyperbola) {
                 graphicView->drawEntityHighlighted(entity1, true);
                 setStatus(SetEntity2);
             }

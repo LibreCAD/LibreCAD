@@ -42,6 +42,7 @@ class RS_Ellipse;
 class RS_Solid;
 class RS_Polyline;
 class RS_Spline;
+class LC_Hyperbola;
 class LC_SplinePoints;
 class RS_Insert;
 class RS_MText;
@@ -152,6 +153,7 @@ public:
     void writeLWPolyline(RS_Polyline* l);
     void writeSpline(RS_Spline* s);
 	void writeSplinePoints(LC_SplinePoints *s);
+    void writeHyperbola(LC_Hyperbola* h);
     void writeInsert(RS_Insert* i);
     void writeMText(RS_MText* t);
     void writeText(RS_Text* t);

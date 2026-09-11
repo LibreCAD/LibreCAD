@@ -255,6 +255,7 @@ librecad/src/lib/filters/rs_filterdxf1.cpp
 librecad/src/lib/filters/rs_filterjww.cpp
 librecad/src/lib/filters/rs_filterlff.cpp
 librecad/src/lib/filters/rs_filtercxf.cpp
+librecad/src/lib/filters/lc_hyperbolaspline.cpp
 librecad/src/lib/filters/rs_filterdxfrw.cpp
 librecad/src/lib/generators/lc_makercamsvg.cpp
 librecad/src/lib/generators/lc_xmlwriterqxmlstreamwriter.cpp
@@ -551,6 +552,7 @@ librecad/src/actions/lc_actiondrawlineanglerel.cpp
 librecad/src/actions/lc_actiondrawlinefrompointtoline.cpp
 librecad/src/actions/lc_actiondrawlinepoints.cpp
 librecad/src/actions/lc_actiondrawlinesnake.cpp
+librecad/src/actions/lc_actiondrawhyperbolafp.cpp
 librecad/src/actions/lc_actiondrawparabola4points.cpp
 librecad/src/actions/lc_actiondrawparabolaFD.cpp
 librecad/src/actions/lc_actiondrawrectangle1point.cpp

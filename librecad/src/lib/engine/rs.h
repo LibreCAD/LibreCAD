@@ -262,6 +262,7 @@ namespace RS2 {
         ActionDrawEllipseInscribe,
 
         ActionDrawParabola4Points,
+        ActionDrawHyperbolaFoci2Points,
         ActionDrawParabolaFD,
 
         ActionDrawHatch,

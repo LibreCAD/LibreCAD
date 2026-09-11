@@ -65,7 +65,7 @@ void RS_ActionModifyTrimAmount::trigger() {
 
     RS_DEBUG->print("RS_ActionModifyTrimAmount::trigger()");
 
-    if (trimEntity && trimEntity->isAtomic()) {
+    if (trimEntity && trimEntity->isAtomic() && trimEntity->rtti() != RS2::EntityHyperbola) {
 
         RS_Modification m(*container, graphicView);
         double d;
@@ -93,7 +93,7 @@ void RS_ActionModifyTrimAmount::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case ChooseTrimEntity:
-            if (trimEntity && trimEntity->isAtomic()) {
+            if (trimEntity && trimEntity->isAtomic() && trimEntity->rtti() != RS2::EntityHyperbola) {
                 trigger();
             } else {
 				if (trimEntity == nullptr) {
