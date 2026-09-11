@@ -26,9 +26,9 @@ plot::plot(QObject *parent) :
 }
 
 QString plot::name() const
- {
-     return (tr("Plot plugin"));
- }
+{
+    return (tr("Plot plugin"));
+}
 
 PluginCapabilities plot::getCapabilities() const
 {
@@ -39,7 +39,12 @@ PluginCapabilities plot::getCapabilities() const
     return pluginCapabilities;
 }
 
-void plot::execComm([[maybe_unused]] Document_Interface *doc, QWidget *parent, [[maybe_unused]] QString cmd)
+void plot::init(Document_Interface *doc, QWidget *parent) {
+    m_doc = doc;
+    m_parent = parent;
+}
+
+void plot::execComm([[maybe_unused]] QString cmd)
 {
     QString equation1;
     QString equation2;
@@ -52,7 +57,7 @@ void plot::execComm([[maybe_unused]] Document_Interface *doc, QWidget *parent, [
     QList<double> yValues2;
     plotDialog::EntityType lineType=plotDialog::Polyline;
 
-    plotDialog plotDlg(parent);
+    plotDialog plotDlg(m_parent);
     int result =  plotDlg.exec();
     if (result == QDialog::Accepted)
     {
@@ -108,15 +113,15 @@ void plot::execComm([[maybe_unused]] Document_Interface *doc, QWidget *parent, [
             if (lineType == plotDialog::SplinePoints){
                 //TODO add option for splinepoints: closed
                 //hardcoded to false now
-                doc->addSplinePoints(points, false);
+                m_doc->addSplinePoints(points, false);
             } else
-                doc->addLines(points, false);
+                m_doc->addLines(points, false);
         } else { //default plotDialog::Polyline
             std::vector<Plug_VertexData> points;
             for(int i=0; i< xpoints.size(); ++i){
                 points.emplace_back(Plug_VertexData(QPointF(xpoints[i], ypoints[i]), 0.0));
             }
-            doc->addPolyline(points, false);
+            m_doc->addPolyline(points, false);
         }
 
     }

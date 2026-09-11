@@ -22,9 +22,9 @@
 #include "sample.h"
 
 QString LC_Sample::name() const
- {
-     return (tr("Sample plugin"));
- }
+{
+    return (tr("Sample plugin"));
+}
 
 PluginCapabilities LC_Sample::getCapabilities() const
 {
@@ -35,13 +35,17 @@ PluginCapabilities LC_Sample::getCapabilities() const
     return pluginCapabilities;
 }
 
-void LC_Sample::execComm([[maybe_unused]] Document_Interface *doc,
-                             QWidget *parent, [[maybe_unused]] QString cmd)
+void LC_Sample::init(Document_Interface *doc, QWidget *parent) {
+    m_doc = doc;
+    m_parent = parent;
+}
+
+void LC_Sample::execComm([[maybe_unused]] QString cmd)
 {
-    lc_Sampledlg pdt(parent);
+    lc_Sampledlg pdt(m_parent);
     int result =  pdt.exec();
     if (result == QDialog::Accepted)
-        pdt.processAction(doc);
+        pdt.processAction(m_doc);
 }
 
 

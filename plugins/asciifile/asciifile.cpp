@@ -38,17 +38,21 @@ PluginCapabilities AsciiFile::getCapabilities() const
 }
 
 QString AsciiFile::name() const
- {
-     return tr("Read ascii points");
- }
-
-void AsciiFile::execComm(Document_Interface *doc,
-                             QWidget *parent, [[maybe_unused]] QString cmd)
 {
-    dibPunto pdt(parent);
+    return tr("Read ascii points");
+}
+
+void AsciiFile::init(Document_Interface *doc, QWidget *parent) {
+    m_doc = doc;
+    m_parent = parent;
+}
+
+void AsciiFile::execComm([[maybe_unused]] QString cmd)
+{
+    dibPunto pdt(m_parent);
     int result = pdt.exec();
     if (result == QDialog::Accepted)
-        pdt.procesFile(doc);
+        pdt.procesFile(m_doc);
 }
 
 #define POINT 12

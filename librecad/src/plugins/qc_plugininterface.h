@@ -29,6 +29,8 @@
 
 #include <QtPlugin>
 
+#include <QAction>
+
 class Document_Interface;
 
 /**
@@ -48,9 +50,48 @@ class PluginMenuLocation
     QString menuEntryAction_Tip;
 };
 
+class PluginMenu
+{
+public:
+    PluginMenu(const QString& name, QMenu* menu) {
+        this->name = name;
+        this->menu = menu;
+    }
+
+    QString name;
+    QMenu* menu;
+};
+
+class PluginToolbar
+{
+public:
+    PluginToolbar(const QString& name, QList<QAction*> actions) {
+        this->name = name;
+        this->actions = actions;
+    }
+
+    QString name;
+    QList<QAction*> actions;
+};
+
+class PluginWidget
+{
+public:
+    PluginWidget(const QString& name, QWidget* widget) {
+        this->name = name;
+        this->widget = widget;
+    }
+
+    QString name;
+    QWidget* widget;
+};
+
 class PluginCapabilities {
     public:
         QList<PluginMenuLocation> menuEntryPoints;
+        QList<PluginMenu> menus;
+        QList<PluginToolbar> toolbars;
+        QList<PluginWidget> widgets;
         QList<int> paintEventPriorities;    // if set, this plugin will get it's paintEvent function called
                                         // lower numbers are drawn first
 
@@ -68,9 +109,12 @@ public:
     virtual ~QC_PluginInterface() = default;
     virtual QString name() const = 0;
     virtual PluginCapabilities getCapabilities() const = 0;
-    virtual void execComm(Document_Interface *doc, QWidget *parent, QString cmd) = 0;
+    virtual void init(Document_Interface *doc, QWidget *parent) = 0;
+    virtual void execComm(QString cmd) = 0;
 //    virtual void paintEvent(Document_Interface *doc) = 0;
-
+protected:
+    Document_Interface *m_doc;
+    QWidget *m_parent;
 };
 
 #define LC_DocumentInterface_iid "org.librecad.PluginInterface/1.0"

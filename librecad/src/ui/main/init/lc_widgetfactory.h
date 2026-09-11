@@ -35,6 +35,7 @@ class QG_ActionHandler;
 class LC_CADDockWidget;
 class QC_ApplicationWindow;
 class LC_ActionGroupManager;
+class PluginWidget;
 
 /**
  * creates the widgets and adds them to the main window;
@@ -46,12 +47,13 @@ public:
     explicit LC_WidgetFactory(QC_ApplicationWindow *mainWin);
     ~LC_WidgetFactory() override = default;
     void initWidgets();
+    void initPluginWidgets();
     static void updateDockWidgetsTitleBarType(const QC_ApplicationWindow* mainWin, bool verticalTitle);
     static void updateDockOptions(QC_ApplicationWindow* mainWin, bool allowDockNesting, bool verticalTabs);
 private:
     LC_ActionGroupManager *m_agm {nullptr};
     LC_ActionFactory *m_actionFactory {nullptr};
-    QDockWidget *createDockWidget(const QString &horizontalTitle, const char *name, const QString& verticalTitle = "") const;
+    QDockWidget *createDockWidget(const QString &horizontalTitle, const QString& name, const QString& verticalTitle = "") const;
     QDockWidget *createPenPalletteWidget();
     QDockWidget* createLayerWidget(const QG_ActionHandler* actionHandler);
     QDockWidget *createNamedViewsWidget();
@@ -62,6 +64,7 @@ private:
     QDockWidget *createBlockListWidget(const QG_ActionHandler* actionHandler);
     QDockWidget* createLibraryWidget(const QG_ActionHandler* actionHandler);
     QDockWidget *createCmdWidget(QG_ActionHandler *actionHandler);
+    QDockWidget *createPluginWidget(const PluginWidget &pluginWidget);
     // Avoid right dock widgets getting too large, when opened for the first time
     void initializeRightDockWidgets() const;
     void modifyCommandTitleBar(Qt::DockWidgetArea area) const;

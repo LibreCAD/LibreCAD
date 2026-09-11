@@ -40,6 +40,7 @@ public:
     explicit LC_ToolbarFactory(QC_ApplicationWindow *mainWin);
     ~LC_ToolbarFactory() override = default;
     void initToolBars();
+    void initPluginToolbars();
 private:
     LC_ActionGroupManager *m_agm;
     LC_ActionFactory *m_actionFactory;
