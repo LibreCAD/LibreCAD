@@ -109,7 +109,22 @@ void LC_PropertiesEditingWidgetEllipse::onAngle2EditingFinished() const {
 }
 
 void LC_PropertiesEditingWidgetEllipse::onReversedToggled([[maybe_unused]]bool checked) const {
-    m_entity->setReversed(ui->cbReversed->isChecked());
+    const bool reversed = ui->cbReversed->isChecked();
+    if (m_entity->isReversed() == reversed) {
+        return;
+    }
+    // As in the arc dialog, an elliptic arc keeps its shape and runs the other way, so its angles swap.
+    // setReversed() alone turns it into the rest of the ellipse. A whole ellipse has no angles to swap.
+    if (m_entity->isEllipticArc()) {
+        m_entity->revertDirection();
+        QSignalBlocker a1(ui->leAngle1);
+        QSignalBlocker a2(ui->leAngle2);
+        toUIAngleDegRaw(m_entity->getAngle1(), ui->leAngle1);
+        toUIAngleDegRaw(m_entity->getAngle2(), ui->leAngle2);
+    }
+    else {
+        m_entity->setReversed(reversed);
+    }
 }
 
 void LC_PropertiesEditingWidgetEllipse::setupInteractiveInputWidgets() {

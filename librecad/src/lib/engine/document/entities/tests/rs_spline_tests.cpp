@@ -25,7 +25,11 @@
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 
+#include <cmath>
+#include <memory>
+
 #include "lc_splinehelper.h"
+#include "lc_splinepoints.h"
 #include "rs_debug.h"
 #include "rs_math.h"
 #include "rs_spline.h"
@@ -62,6 +66,126 @@ TEST_CASE("RS_Spline Basic Functionality", "[RS_Spline]")
     }
 }
 
+namespace {
+    std::unique_ptr<RS_Spline> makeCubic(const bool closed) {
+        auto spline = std::make_unique<RS_Spline>(nullptr, RS_SplineData(3, false));
+        for (const RS_Vector& p : {RS_Vector(0., 0.), RS_Vector(10., 20.), RS_Vector(20., -20.), RS_Vector(30., 0.), RS_Vector(40., 15.)}) {
+            spline->addControlPoint(p);
+        }
+        if (closed) {
+            spline->setClosed(true);
+            spline->update();
+        }
+        return spline;
+    }
+
+    // the lines the spline is drawn and hit-tested by match a fresh rebuild from its data
+    void requireRebuilt(RS_Spline& spline) {
+        const std::unique_ptr<RS_Spline> rebuilt{static_cast<RS_Spline*>(spline.clone())};
+        rebuilt->update();
+        REQUIRE(spline.count() > 0);
+        REQUIRE(spline.count() == rebuilt->count());
+        const unsigned last = spline.count() - 1;
+        CHECK(compareVector(spline.entityAt(0)->getStartpoint(), rebuilt->entityAt(0)->getStartpoint(), 1e-9));
+        CHECK(compareVector(spline.entityAt(last)->getEndpoint(), rebuilt->entityAt(last)->getEndpoint(), 1e-9));
+        CHECK(compareVector(spline.getMin(), rebuilt->getMin(), 1e-9));
+        CHECK(compareVector(spline.getMax(), rebuilt->getMax(), 1e-9));
+    }
+}
+
+TEST_CASE("RS_Spline transforms rebuild the lines it is drawn with", "[RS_Spline]")
+{
+    const std::unique_ptr<RS_Spline> spline = makeCubic(false);
+
+    spline->move(RS_Vector(1000., 0.));
+    requireRebuilt(*spline);
+    // a clamped spline starts at its first control point
+    CHECK(compareVector(spline->entityAt(0)->getStartpoint(), RS_Vector(1000., 0.), 1e-9));
+
+    spline->rotate(RS_Vector(5., 5.), 0.7);
+    requireRebuilt(*spline);
+    spline->scale(RS_Vector(3., 4.), RS_Vector(2., 0.5));
+    requireRebuilt(*spline);
+    spline->mirror(RS_Vector(0., 0.), RS_Vector(1., 1.));
+    requireRebuilt(*spline);
+    spline->shear(0.3);
+    requireRebuilt(*spline);
+}
+
+TEST_CASE("RS_Spline::setDegree keeps the spline drawable", "[RS_Spline]")
+{
+    for (const bool closed : {false, true}) {
+        for (const int degree : {2, 1, 3}) {
+            const std::unique_ptr<RS_Spline> spline = makeCubic(closed);
+            REQUIRE(spline->count() > 0);
+            spline->setDegree(degree);
+            INFO("closed " << closed << ", degree " << degree);
+            CHECK(spline->getDegree() == static_cast<size_t>(degree));
+            CHECK(spline->isClosed() == closed);
+            CHECK(spline->getNumberOfControlPoints() == 5);
+            requireRebuilt(*spline);
+        }
+    }
+}
+
+TEST_CASE("LC_SplinePoints offset keeps a usable spline", "[LC_SplinePoints]")
+{
+    LC_SplinePointsData data(false, false);
+    data.splinePoints = {RS_Vector(0., 0.), RS_Vector(10., 10.), RS_Vector(20., 0.), RS_Vector(30., 10.)};
+    LC_SplinePoints spline(nullptr, data);
+    spline.update();
+
+    spline.offset(RS_Vector(15., 20.), 5.);
+
+    CHECK(spline.getData().controlPoints.size() == 4);
+    CHECK(spline.getMin().valid);
+    CHECK(spline.getMax().valid);
+    CHECK(spline.getLength() > 0.);
+    CHECK(spline.getStartpoint().distanceTo(RS_Vector(0., 0.)) == Approx(5.).margin(1e-6));
+}
+
+TEST_CASE("LC_SplinePoints length with fewer than four control points", "[LC_SplinePoints]")
+{
+    LC_SplinePointsData data(false, false);
+    data.useControlPoints = true;
+    data.controlPoints = {RS_Vector(0., 0.), RS_Vector(10., 20.), RS_Vector(20., 0.)};
+    LC_SplinePoints spline(nullptr, data);
+    spline.update();
+
+    // a quadratic Bezier is longer than its chord and shorter than its control polygon
+    CHECK(spline.getLength() > 20.);
+    CHECK(spline.getLength() < 2. * std::hypot(10., 20.));
+}
+
+
+TEST_CASE("RS_Spline grips move its control points", "[RS_Spline]")
+{
+    // The reference points are the control points. The nearest one used to come from the ends of the
+    // drawn lines, and moving a reference point moved only those ends, until the next rebuild.
+    for (const bool closed : {false, true}) {
+        INFO((closed ? "closed" : "open"));
+        const std::unique_ptr<RS_Spline> spline = makeCubic(closed);
+        const std::vector<RS_Vector> before = spline->getControlPoints();
+        REQUIRE(before.size() == 5);
+        // an inner control point lies off the drawn curve
+        const RS_Vector inner = before[2];
+
+        CHECK(compareVector(spline->getNearestRef(inner + RS_Vector(0.5, -0.5)), inner, 1e-9));
+        // setSelected() is for the document; the selection flag is what getNearestSelectedRef() reads
+        spline->setFlag(RS2::FlagSelected);
+        CHECK(compareVector(spline->getNearestSelectedRef(inner + RS_Vector(0.5, -0.5)), inner, 1e-9));
+
+        const RS_Vector offset(3., -4.);
+        spline->moveRef(inner, offset);
+
+        const std::vector<RS_Vector> after = spline->getControlPoints();
+        REQUIRE(after.size() == before.size());
+        for (size_t i = 0; i < after.size(); ++i) {
+            CHECK(compareVector(after[i], i == 2 ? inner + offset : before[i], 1e-9));
+        }
+        requireRebuilt(*spline);
+    }
+}
 
 TEST_CASE("Non-uniform knot vectors - validation and type handling", "[RS_Spline][nonuniform]")
 {

@@ -32,6 +32,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_entity.h"
 #include "rs_entitycontainer.h"
 #include "rs_graphicview.h"
+#include "rs_information.h"
 #include "rs_line.h"
 #include "rs_point.h"
 #include "rs_preview.h"
@@ -642,6 +643,11 @@ bool LC_AbstractActionWithPreview::checkMayExpandEntity(const RS_Entity *e, cons
     if (locked){
         if (!entityName.isEmpty()){
             commandMessage(entityName + tr(" is not divided as it is locked."));
+        }
+    } else if (!RS_Information::isEditable(e)) {
+        // block references, dimensions, hatches and text rebuild their children
+        if (!entityName.isEmpty()){
+            commandMessage(entityName + tr(" is not divided as it is part of another entity."));
         }
     } else {
         const RS_EntityContainer *pContainer = e->getParent();

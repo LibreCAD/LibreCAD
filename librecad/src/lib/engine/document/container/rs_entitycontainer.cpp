@@ -30,19 +30,24 @@
 #include <algorithm>
 #include <cmath>
 #include <iostream>
+#include <optional>
 
 #include "lc_containertraverser.h"
 #include "lc_looputils.h"
 #include "qg_dialogfactory.h"
+#include "rs_block.h"
+#include "rs_blocklist.h"
 #include "rs_constructionline.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_dimension.h"
 #include "rs_document.h"
 #include "rs_ellipse.h"
+#include "rs_graphic.h"
 #include "rs_information.h"
 #include "rs_insert.h"
 #include "rs_layer.h"
+#include "rs_layerlist.h"
 #include "rs_line.h"
 #include "rs_painter.h"
 #include "rs_solid.h"
@@ -84,19 +89,6 @@ namespace {
         } else {
             entity->setSelectionFlag(false);
         }
-    }
-
-    double distanceToCachedBounds(const RS_Vector& coord, const RS_Entity& entity) {
-        const RS_Vector min = entity.getMin();
-        const RS_Vector max = entity.getMax();
-        if (!coord.valid || !min.valid || !max.valid || !std::isfinite(coord.x) || !std::isfinite(coord.y)
-            || !std::isfinite(min.x) || !std::isfinite(min.y) || !std::isfinite(max.x) || !std::isfinite(max.y)
-            || min.x > max.x || min.y > max.y) {
-            return -1.0;
-        }
-        const double dx = std::max({min.x - coord.x, 0.0, coord.x - max.x});
-        const double dy = std::max({min.y - coord.y, 0.0, coord.y - max.y});
-        return std::hypot(dx, dy);
     }
 }
 
@@ -1440,6 +1432,124 @@ RS_EntityContainer::RefInfo RS_EntityContainer::getNearestSelectedRefInfo(const 
     return result;
 }
 
+namespace {
+    // ResolveAllButTextImage looks for an entity to intersect: images (bug#426) and text have no
+    // intersections. On-entity snapping (ResolveAllButTexts) never lands on text either, and
+    // measuring text would walk every glyph.
+    bool isSkippedAt(const RS2::EntityType type, const RS2::ResolveLevel level) {
+        return (level == RS2::ResolveAllButTextImage && (type == RS2::EntityImage || RS2::isTextEntity(type)))
+            || (level == RS2::ResolveAllButTexts && RS2::isTextEntity(type));
+    }
+
+    // Whether a construction line lies in the container, other than in the block references it holds.
+    bool holdsConstructionLine(const RS_EntityContainer& container) {
+        return std::any_of(container.begin(), container.end(), [](const RS_Entity* entity) {
+            if (entity == nullptr) {
+                return false;
+            }
+            switch (entity->rtti()) {
+                case RS2::EntityConstructionLine:
+                    return true;
+                // a block reference shows a block definition, and each definition is checked on its own
+                case RS2::EntityInsert:
+                    return false;
+                default:
+                    return entity->isContainer() && holdsConstructionLine(static_cast<const RS_EntityContainer&>(*entity));
+            }
+        });
+    }
+
+    /**
+     * Tells from cached borders, without measuring any geometry, when an entity of a drawing lies
+     * farther from a point than a distance. RS_Entity::getDistanceToPoint() never reports less than
+     * the distance to the borders, or to the center of an atomic entity (selection by center point),
+     * except for construction lines and lines on a construction layer, which reach past their
+     * borders. Containers are searched for those only when the drawing has a construction layer or a
+     * block definition holding a construction line.
+     */
+    class DistanceLowerBound {
+    public:
+        explicit DistanceLowerBound(const RS_EntityContainer& drawing) : m_graphic{drawing.getGraphic()} {
+            const RS_LayerList* layers = m_graphic != nullptr ? m_graphic->getLayerList() : nullptr;
+            m_constructionLayers = layers == nullptr || std::any_of(layers->begin(), layers->end(), [](const RS_Layer* layer) {
+                return layer != nullptr && layer->isConstruction();
+            });
+        }
+
+        // whether entity.getDistanceToPoint(coord) is certainly larger than distance
+        bool exceeds(const RS_Entity& entity, const RS_Vector& coord, const double distance) const {
+            const RS_Vector min = entity.getMin();
+            const RS_Vector max = entity.getMax();
+            // unknown, reset or non-finite borders bound nothing
+            if (!coord.valid || !min.valid || !max.valid || !(min.x <= max.x && min.y <= max.y)
+                || !std::isfinite(min.x + min.y + max.x + max.y)) {
+                return false;
+            }
+            // the slack absorbs rounding, so an entity measured exactly as far away is never skipped
+            const double limit = distance + RS_TOLERANCE + 1e-12 * (std::abs(coord.x) + std::abs(coord.y) + distance);
+            const double dx = std::max({min.x - coord.x, 0., coord.x - max.x});
+            const double dy = std::max({min.y - coord.y, 0., coord.y - max.y});
+            if (dx * dx + dy * dy <= limit * limit) {
+                return false;
+            }
+            const RS_Vector center = entity.isContainer() ? RS_Vector(false) : entity.getCenter();
+            return !(center.valid && center.distanceTo(coord) <= limit) && !reachesPastBorders(entity);
+        }
+
+    private:
+        bool reachesPastBorders(const RS_Entity& entity) const {
+            switch (entity.rtti()) {
+                case RS2::EntityConstructionLine:
+                case RS2::EntityRefConstructionLine:
+                case RS2::EntitySnapConstructionLine:
+                    return true;
+                case RS2::EntityLine:
+                    // drawn and hit-tested as infinite on a construction layer
+                    return m_constructionLayers && entity.isConstruction();
+                // glyphs have no layer of their own, and a hatch is measured by its filled area
+                case RS2::EntityText:
+                case RS2::EntityMText:
+                case RS2::EntityHatch:
+                    return false;
+                default:
+                    break;
+            }
+            if (!entity.isContainer() || !containersMayReach()) {
+                return false;
+            }
+            const auto& container = static_cast<const RS_EntityContainer&>(entity);
+            return std::any_of(container.begin(), container.end(), [this](const RS_Entity* child) {
+                return child != nullptr && reachesPastBorders(*child);
+            });
+        }
+
+        bool containersMayReach() const {
+            if (!m_containersMayReach.has_value()) {
+                const RS_BlockList* blocks = m_graphic != nullptr ? m_graphic->getBlockList() : nullptr;
+                m_containersMayReach = m_constructionLayers || blocks == nullptr
+                    || std::any_of(blocks->begin(), blocks->end(), [](const RS_Block* block) {
+                           return block != nullptr && holdsConstructionLine(*block);
+                       });
+            }
+            return *m_containersMayReach;
+        }
+
+        RS_Graphic* m_graphic = nullptr;
+        bool m_constructionLayers = true;
+        mutable std::optional<bool> m_containersMayReach;
+    };
+}
+
+void RS_EntityContainer::appendNearby(const RS_Vector& coord, const double range, RS_EntityContainer& nearby) const {
+    const DistanceLowerBound bound{*this};
+    for (RS_Entity* e : *this) {
+        // push_back keeps the drawing order that settles ties; addEntity() would move hatches and images to the front
+        if (e != nullptr && e->isVisible() && !bound.exceeds(*e, coord, range)) {
+            nearby.push_back(e);
+        }
+    }
+}
+
 double RS_EntityContainer::doGetDistanceToPoint(const RS_Vector& coord, RS_Entity** entity, const RS2::ResolveLevel level,
                                               const double solidDist) const {
     RS_DEBUG->print("RS_EntityContainer::getDistanceToPoint");
@@ -1447,6 +1557,12 @@ double RS_EntityContainer::doGetDistanceToPoint(const RS_Vector& coord, RS_Entit
     double curDist = 0.; // currently measured distance
     RS_Entity* closestEntity = nullptr; // closest entity found
     RS_Entity* subEntity = nullptr;
+
+    // a drawing skips every entity whose borders lie farther away than the nearest entity found so far
+    std::optional<DistanceLowerBound> bound;
+    if (isDocument()) {
+        bound.emplace(*this);
+    }
 
     for (RS_Entity* e : *this) {
         if (e == nullptr) {
@@ -1456,18 +1572,8 @@ double RS_EntityContainer::doGetDistanceToPoint(const RS_Vector& coord, RS_Entit
         if (e->isVisible() && (entityLayer == nullptr || !entityLayer->isLocked())) {
             RS_DEBUG->print("entity: getDistanceToPoint");
             RS_DEBUG->print("entity: %d", e->rtti());
-            // bug#426, need to ignore Images to find nearest intersections
-            if (level == RS2::ResolveAllButTextImage && e->rtti() == RS2::EntityImage) {
+            if (isSkippedAt(e->rtti(), level) || (bound.has_value() && bound->exceeds(*e, coord, minDist))) {
                 continue;
-            }
-            if (level == RS2::ResolveAllButTexts && RS2::isTextEntity(e->rtti())) {
-                continue;
-            }
-            if ((RS2::isTextEntity(rtti()) || RS2::isTextEntity(e->rtti())) && minDist < RS_MAXDOUBLE) {
-                const double lowerBound = distanceToCachedBounds(coord, *e);
-                if (lowerBound >= 0.0 && lowerBound > minDist) {
-                    continue;
-                }
             }
             curDist = e->getDistanceToPoint(coord, &subEntity, level, solidDist);
 
@@ -1763,6 +1869,8 @@ void RS_EntityContainer::stretch(const RS_Vector& firstCorner, const RS_Vector& 
     }
     // some entitiycontainers might need an update (e.g. RS_Leader):
     update();
+    // children stretched in place leave the borders of the container behind
+    calculateBorders();
 }
 
 void RS_EntityContainer::calculateBordersIfNeeded() {

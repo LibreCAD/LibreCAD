@@ -33,44 +33,17 @@
 
 #include <catch2/catch_test_macros.hpp>
 
-#include <memory>
-
-#include <QApplication>
 #include <QMouseEvent>
 
 #include "lc_action_modify_round.h"
-#include "lc_actioncontext.h"
+#include "lc_actiontestsupport.h"
 #include "rs_preview.h"
-#include "rs_graphic.h"
-#include "rs_graphicview.h"
 #include "rs_line.h"
-#include "rs_settings.h"
 #include "rs_vector.h"
 
 namespace {
 
-/**
- * Returns a QApplication, reusing the process-wide one if another test built it
- * first. The pointer is deliberately leaked: only one QApplication may exist at
- * a time and only one ~QApplication may run at exit.
- */
-QApplication* application() {
-    static int argc = 1;
-    static char name[] = "librecad_tests";
-    static char* argv[] = {name, nullptr};
-    static QApplication* app = [] {
-        auto* existing = qobject_cast<QApplication*>(QCoreApplication::instance());
-        return existing != nullptr ? existing : new QApplication(argc, argv);
-    }();
-    static bool settingsReady = [] {
-        QCoreApplication::setOrganizationName("LibreCAD");
-        QCoreApplication::setApplicationName("LibreCAD-tests");
-        RS_Settings::init("LibreCAD", "LibreCAD-tests");
-        return true;
-    }();
-    (void)settingsReady;
-    return app;
-}
+using lc::test::eventAt;
 
 /**
  * A line that keeps count of how many of its instances are alive, clones
@@ -92,20 +65,6 @@ public:
 
 int CountingLine::s_live = 0;
 
-class RoundTestView final : public RS_GraphicView {
-public:
-    RoundTestView() : RS_GraphicView(nullptr) {}
-
-    int getWidth() const override { return 640; }
-    int getHeight() const override { return 480; }
-    void redraw([[maybe_unused]] RS2::RedrawMethod method = RS2::RedrawAll,
-                [[maybe_unused]] bool immediately = false) override {}
-    void adjustOffsetControls() override {}
-    void adjustZoomControls() override {}
-    void setMouseCursor([[maybe_unused]] RS2::CursorType cursor) override {}
-    void updateGridStatusWidget([[maybe_unused]] QString status) override {}
-};
-
 /**
  * The action caches the first picked entity and acts on it in the mouse move
  * handler, so the probe exposes that field plus the two framework halves that
@@ -124,31 +83,7 @@ public:
     using RS_PreviewActionInterface::m_preview;
 };
 
-LC_MouseEvent eventAt(const double x, const double y) {
-    LC_MouseEvent e;
-    e.graphPoint = RS_Vector{x, y};
-    e.snapPoint = RS_Vector{x, y};
-    return e;
-}
-
-/**
- * Member order matters: the action is destroyed before the view, because
- * ~RS_PreviewActionInterface reaches into overlay containers the view owns.
- */
-struct RoundFixture {
-    const bool m_qtReady{application() != nullptr};
-    RS_Graphic m_graphic;
-    RoundTestView m_view;
-    LC_ActionContext m_context;
-    std::unique_ptr<RoundProbe> m_action;
-
-    RoundFixture() {
-        m_graphic.initForNewDocument();
-        m_view.setDocument(&m_graphic);
-        m_context.setDocumentAndView(&m_graphic, &m_view);
-        m_action = std::make_unique<RoundProbe>(&m_context);
-    }
-
+struct RoundFixture : lc::test::ActionFixture<RoundProbe> {
     CountingLine* addLine(const RS_Vector& from, const RS_Vector& to) {
         auto* line = new CountingLine(&m_graphic, RS_LineData{from, to});
         m_graphic.addEntity(line);

@@ -185,7 +185,32 @@ void RS_Spline::setDegree(const int degree) {
   if (degree < 1 || degree > 3) {
       throw std::invalid_argument("Degree must be 1-3");
   }
+  if (m_data.degree == static_cast<size_t>(degree)) {
+      return;
+  }
+  // The knot vector, and the control points a closed spline wraps, are sized by the degree: a closed
+  // spline is unwrapped with its old degree and wrapped again with the new one, and knots made for
+  // the old degree are replaced by uniform knots for the spline's type. Setting the degree alone left
+  // a spline that failed validate(), so update() drew nothing.
+  const bool closed = isClosed();
+  if (closed) {
+      removeWrapping();
+  }
   m_data.degree = degree;
+  const size_t count = m_data.controlPoints.size();
+  if (count < m_data.degree + 1) {
+      m_data.knotslist.clear();
+  }
+  else if (m_data.type == RS_SplineData::SplineType::Standard) {
+      m_data.knotslist = LC_SplineHelper::generateOpenUniformKnotVector(count, m_data.degree + 1);
+  }
+  else {
+      m_data.knotslist = LC_SplineHelper::knot(count, m_data.degree + 1);
+  }
+  if (closed) {
+      addWrapping();
+  }
+  update();
 }
 int RS_Spline::getDegree() const { return m_data.degree; }
 
@@ -287,12 +312,13 @@ RS_Spline::adjustToOpenClamped(const std::vector<double> &knots, const size_t nu
 RS_VectorSolutions RS_Spline::getRefPoints() const {
   return RS_VectorSolutions(getControlPoints());
 }
+// the nearest of the reference points above, not of the ends of the drawn lines, which moveRef() does not move
 RS_Vector RS_Spline::doGetNearestRef(const RS_Vector &coord, double *dist) const {
-  return RS_EntityContainer::doGetNearestRef(coord, dist);
+  return RS_Entity::doGetNearestRef(coord, dist);
 }
 
 RS_Vector RS_Spline::doGetNearestSelectedRef(const RS_Vector& coord, double* dist) const {
-    return RS_EntityContainer::doGetNearestSelectedRef(coord, dist);
+    return RS_Entity::doGetNearestSelectedRef(coord, dist);
 }
 
 /** Update approximation */
@@ -341,7 +367,10 @@ RS_Vector RS_Spline::doGetNearestDist(double, const RS_Vector &, double *) const
   return RS_Vector(false);
 }
 
-/** Transformations */
+/** Transformations
+ * Each transforms the control and fit points, then update() rebuilds the lines the spline is drawn,
+ * hit-tested and bounded by; transforming the points alone left those lines where they were.
+ */
 void RS_Spline::move(const RS_Vector &offset) {
   for (auto &cp : m_data.controlPoints) {
       cp += offset;
@@ -349,7 +378,7 @@ void RS_Spline::move(const RS_Vector &offset) {
   for (auto &fp : m_data.fitPoints) {
       fp += offset;
   }
-  calculateBorders();
+  update();
 }
 
 void RS_Spline::rotate(const RS_Vector &center, const double angle) {
@@ -359,7 +388,7 @@ void RS_Spline::rotate(const RS_Vector &center, const double angle) {
   for (auto &fp : m_data.fitPoints) {
       fp.rotate(center, angle);
   }
-  calculateBorders();
+  update();
 }
 
 void RS_Spline::rotate(const RS_Vector &center, const RS_Vector &angleVector) {
@@ -369,7 +398,7 @@ void RS_Spline::rotate(const RS_Vector &center, const RS_Vector &angleVector) {
   for (auto &fp : m_data.fitPoints) {
       fp.rotate(center, angleVector);
   }
-  calculateBorders();
+  update();
 }
 
 void RS_Spline::scale(const RS_Vector &center, const RS_Vector &factor) {
@@ -379,7 +408,7 @@ void RS_Spline::scale(const RS_Vector &center, const RS_Vector &factor) {
   for (auto &fp : m_data.fitPoints) {
       fp.scale(center, factor);
   }
-  calculateBorders();
+  update();
 }
 
 RS_Entity &RS_Spline::shear(const double k) {
@@ -389,7 +418,7 @@ RS_Entity &RS_Spline::shear(const double k) {
   for (auto &fp : m_data.fitPoints) {
       fp.shear(k);
   }
-  calculateBorders();
+  update();
   return *this;
 }
 
@@ -400,11 +429,27 @@ void RS_Spline::mirror(const RS_Vector &a1, const RS_Vector &a2) {
   for (auto &fp : m_data.fitPoints) {
       fp.mirror(a1, a2);
   }
-  calculateBorders();
+  update();
 }
 
 void RS_Spline::moveRef(const RS_Vector &ref, const RS_Vector &offset) {
-  RS_EntityContainer::moveRef(ref, offset);
+  // The reference points are the control points. Moving the ends of the drawn lines instead, as the
+  // container does, left the control points in place and lasted only until the lines were rebuilt.
+  bool moved = false;
+  for (size_t i = 0; i < getUnwrappedSize(); ++i) {
+      RS_Vector &point = m_data.controlPoints[i];
+      if (std::abs(point.x - ref.x) < 1.0e-4 && std::abs(point.y - ref.y) < 1.0e-4) {
+          point.move(offset);
+          moved = true;
+      }
+  }
+  if (!moved) {
+      return;
+  }
+  if (isClosed()) {
+      updateControlAndWeightWrapping();
+  }
+  update();
 }
 
 /** Revert direction */

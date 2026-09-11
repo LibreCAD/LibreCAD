@@ -1292,6 +1292,7 @@ void RS_Dimension::updateDim(const bool autoText) {
         return;
     }
     resolveEffectiveDimStyleAndUpdateDim();
+    calculateBorders();
 }
 
 void RS_Dimension::addDimComponentEntity(RS_Entity* en, const RS_Pen& pen) {

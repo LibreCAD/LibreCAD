@@ -154,43 +154,26 @@ public:
     void activateLayer(const QString& name, const bool notify = false) {m_layerList.activate(name, notify);}
     void activateLayer(RS_Layer* layer, const bool notify = false) {m_layerList.activate(layer, notify);}
     RS_Layer* getActiveLayer() const {return m_layerList.getActive();}
-    virtual void addLayer(RS_Layer* layer) {
-        m_layerList.add(layer);
-        invalidateSnapIndex();
-    }
+    virtual void addLayer(RS_Layer* layer) {m_layerList.add(layer);}
     void addEntity(const RS_Entity* entity) override;
     void removeLayer(RS_Layer* layer);
-    void editLayer(RS_Layer* layer, const RS_Layer& source) {
-        m_layerList.edit(layer, source);
-        invalidateSnapIndex();
-    }
+    void editLayer(RS_Layer* layer, const RS_Layer& source) {m_layerList.edit(layer, source);}
     RS_Layer* findLayer(const QString& name) {return m_layerList.find(name);}
     void toggleLayer(const QString& name);
     void toggleLayer(RS_Layer* layer);
     void toggleLayerLock(RS_Layer* layer) {m_layerList.toggleLock(layer); validateSelection();}
     void toggleLayerPrint(RS_Layer* layer) {m_layerList.togglePrint(layer);}
-    void toggleLayerConstruction(RS_Layer* layer) {
-        m_layerList.toggleConstruction(layer);
-        invalidateSnapIndex();
-    }
+    void toggleLayerConstruction(RS_Layer* layer) {m_layerList.toggleConstruction(layer);}
     void freezeAllLayers(bool freeze);
     void lockAllLayers(const bool lock) {m_layerList.lockAll(lock);validateSelection();}
     void toggleLockLayers(const QList<RS_Layer*>& layers){m_layerList.toggleLockMulti(layers);validateSelection();}
     void togglePrintLayers(const QList<RS_Layer*>& layers){m_layerList.togglePrintMulti(layers);validateSelection();}
-    void toggleConstructionLayers(const QList<RS_Layer*>& layers){
-        m_layerList.toggleConstructionMulti(layers);
-        invalidateSnapIndex();
-        validateSelection();
-    }
+    void toggleConstructionLayers(const QList<RS_Layer*>& layers){m_layerList.toggleConstructionMulti(layers);validateSelection();}
     void toggleFreezeLayers(const QList<RS_Layer*>& layers);
     void setFreezeLayers(const QList<RS_Layer*>& layersEnable, const QList<RS_Layer*>& layersDisable);
     void setLockLayers(const QList<RS_Layer*>& layersToUnlock, const QList<RS_Layer*>& layersToLock){m_layerList.setLockMulti(layersToUnlock, layersToLock);validateSelection();}
     void setPrintLayers(const QList<RS_Layer*>& layersNoPrint, const QList<RS_Layer*>& layersPrint){m_layerList.setPrintMulti(layersNoPrint, layersPrint);validateSelection();}
-    void setConstructionLayers(const QList<RS_Layer*>& layersNoConstruction, const QList<RS_Layer*>& layersConstruction){
-        m_layerList.setConstructionMulti(layersNoConstruction, layersConstruction);
-        invalidateSnapIndex();
-        validateSelection();
-    }
+    void setConstructionLayers(const QList<RS_Layer*>& layersNoConstruction, const QList<RS_Layer*>& layersConstruction){m_layerList.setConstructionMulti(layersNoConstruction, layersConstruction);validateSelection();}
 
     void addLayerListListener(RS_LayerListListener* listener) {m_layerList.addListener(listener);}
     void removeLayerListListener(RS_LayerListListener* listener) {m_layerList.removeListener(listener);}

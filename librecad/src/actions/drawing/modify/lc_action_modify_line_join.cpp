@@ -27,6 +27,7 @@
 #include "lc_line_join_options_widget.h"
 #include "lc_linemath.h"
 #include "rs_document.h"
+#include "rs_information.h"
 #include "rs_line.h"
 #include "rs_pen.h"
 #include "rs_polyline.h"
@@ -73,7 +74,8 @@ void LC_ActionModifyLineJoin::doInitWithContextEntity(RS_Entity* contextEntity, 
 RS_Line *LC_ActionModifyLineJoin::catchLine(const LC_MouseEvent *e, const bool forPreview) const {
     RS_Entity *en = forPreview ? catchModifiableAndDescribe(e, m_lineType) :catchModifiableEntity(e, m_lineType);
     RS_Line *snappedLine = nullptr;
-    if (isLine(en)){
+    // the joined lines may be extended, trimmed or removed
+    if (isLine(en) && RS_Information::isEditable(en)){
         snappedLine = dynamic_cast<RS_Line *>(en);
     }
     return snappedLine;

@@ -90,6 +90,7 @@ bool RS_Point::isTangent(const RS_CircleData& circleData) const {
 
 void RS_Point::setPos(const RS_Vector& pos) {
     m_data.pos = pos;
+    calculateBorders();
 }
 
 RS_Vector RS_Point::doGetNearestEndpoint(const RS_Vector& coord, double* dist,  RS_Entity** entity) const {
