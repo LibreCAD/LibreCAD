@@ -2173,11 +2173,17 @@ bool DRW_Spline::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     if (!DRW::reserve( controllist, ncontrol)) {
         return false;
     }
+    if (weight && !DRW::reserve( weightlist, ncontrol)) {
+        return false;
+    }
     for (dint32 i= 0; i<ncontrol; ++i){
         controllist.push_back(std::make_shared<DRW_Coord>(buf->get3BitDouble()));
         if (weight) {
+            // kept, as the DXF reader keeps code 41: a rational spline such as
+            // a hyperbola arc is a different curve without its weights
+            weightlist.push_back(buf->getBitDouble()); //RLZ Warning: D (BD or RD)
             DRW_DBG("\n w: ");
-            DRW_DBG(buf->getBitDouble()); //RLZ Warning: D (BD or RD)
+            DRW_DBG(weightlist.back());
         }
     }
     if (!DRW::reserve( fitlist, nfit)) {
