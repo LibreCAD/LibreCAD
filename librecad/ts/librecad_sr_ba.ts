@@ -665,12 +665,14 @@ distance between points=%2 is larger than diameter=%3</source>
 <context>
     <name>LC_ActionDrawHyperbolaFP</name>
     <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="260"/>
         <source>Foci cannot be coincident</source>
-        <translation type="vanished">Fokusne tačke ne mogu biti iste</translation>
+        <translation>Žiže ne smeju biti u istom položaju</translation>
     </message>
     <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="295"/>
         <source>Start and end points cannot be the same</source>
-        <translation type="vanished">Početna i završna tačka ne mogu biti iste</translation>
+        <translation>Početna i krajnja tačka ne smeju biti iste</translation>
     </message>
     <message>
         <source>Invalid foci or point</source>
@@ -695,6 +697,53 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <source>Specify end point on branch</source>
         <translation type="vanished">Odredite krajnju tačku na ogranku</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="273"/>
+        <source>The point does not define a hyperbola with these foci</source>
+        <translation>Tačka ne definiše hiperbolu sa ovim žižama</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="286"/>
+        <source>The end point is not on the same hyperbola branch</source>
+        <translation>Krajnja tačka nije na istoj grani hiperbole</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="314"/>
+        <source>specify the two foci, then the start and end points on one branch</source>
+        <translation>Odredite dve žiže, zatim početnu i krajnju tačku na jednoj grani</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="326"/>
+        <source>Specify the first focus</source>
+        <translation>Odredite prvu žižu</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="327"/>
+        <source>Cancel</source>
+        <translation>Otkaži</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="330"/>
+        <source>Specify the second focus</source>
+        <translation>Odredite drugu žižu</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="331"/>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="335"/>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="339"/>
+        <source>Back</source>
+        <translation>Nazad</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="334"/>
+        <source>Specify the start point on the branch</source>
+        <translation>Odredite početnu tačku na grani</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="338"/>
+        <source>Specify the end point on the same branch</source>
+        <translation>Odredite krajnju tačku na istoj grani</translation>
     </message>
 </context>
 <context>
@@ -3046,6 +3095,11 @@ ili [%2]</translation>
         <source>Ctrl+I</source>
         <comment>Hide Statusbar</comment>
         <translation>Ctrl+I</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="510"/>
+        <source>&amp;Hyperbola Foci Point</source>
+        <translation>&amp;Žiže hiperbole - tačka</translation>
     </message>
 </context>
 <context>

@@ -754,12 +754,14 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="100"></location>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="211"></location>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="260"/>
         <source>Foci cannot be coincident</source>
         <translation>ຈຸດໂຟກັດບໍ່ສາມາດຢູ່ຕໍາແໜ່ງດຽວກັນໄດ້</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="106"></location>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="225"></location>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="295"/>
         <source>Start and end points cannot be the same</source>
         <translation>ຈຸດເລີ່ມຕົ້ນ ແລະ ຈຸດສິ້ນສຸດບໍ່ສາມາດເປັນຈຸດດຽວກັນໄດ້</translation>
     </message>
@@ -792,6 +794,53 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="250"></location>
         <source>Specify end point on branch</source>
         <translation>ລະບຸຈຸດສິ້ນສຸດເທິງງ່າ</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="273"/>
+        <source>The point does not define a hyperbola with these foci</source>
+        <translation>ຈຸດນີ້ບໍ່ກໍານົດເສັ້ນໄຮເປີໂບລາດ້ວຍຈຸດໂຟກັດເຫຼົ່ານີ້</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="286"/>
+        <source>The end point is not on the same hyperbola branch</source>
+        <translation>ຈຸດສິ້ນສຸດບໍ່ໄດ້ຢູ່ເທິງງ່າເສັ້ນໄຮເປີໂບລາດຽວກັນ</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="314"/>
+        <source>specify the two foci, then the start and end points on one branch</source>
+        <translation>ລະບຸຈຸດໂຟກັດທັງສອງ ຈາກນັ້ນລະບຸຈຸດເລີ່ມຕົ້ນ ແລະ ຈຸດສິ້ນສຸດໃນງ່າດຽວ</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="326"/>
+        <source>Specify the first focus</source>
+        <translation>ລະບຸໂຟກັດທໍາອິດ</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="327"/>
+        <source>Cancel</source>
+        <translation>ຍົກເລີກ</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="330"/>
+        <source>Specify the second focus</source>
+        <translation>ລະບຸໂຟກັດທີສອງ</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="331"/>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="335"/>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="339"/>
+        <source>Back</source>
+        <translation>ກັບ</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="334"/>
+        <source>Specify the start point on the branch</source>
+        <translation>ລະບຸຈຸດເລີ່ມຕົ້ນເທິງງ່າ</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="338"/>
+        <source>Specify the end point on the same branch</source>
+        <translation>ລະບຸຈຸດສິ້ນສຸດເທິງງ່າດຽວກັນ</translation>
     </message>
 </context>
 <context>
@@ -3228,6 +3277,11 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="598"></location>
         <source>Save A&amp;ll...</source>
         <translation>ບັນທຶກທັງໝົ&amp;ດ...</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="510"/>
+        <source>&amp;Hyperbola Foci Point</source>
+        <translation>&amp;ຈຸດໂຟກັດເສັ້ນໄຮເປີໂບລາ</translation>
     </message>
 </context>
 <context>

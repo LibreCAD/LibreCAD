@@ -1501,6 +1501,11 @@ or [%2]</source>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
         <translation>ਐਕਟਿਵ ਲੇਅਰ ਦੀ ਪੈਨ ਨਾਲ ਮੌਜੂਦਾ ਪੈਨ ਅੱਪਡੇਟ ਕਰੋ</translation>
     </message>
+    <message>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="510"/>
+        <source>&amp;Hyperbola Foci Point</source>
+        <translation>&amp;ਹਾਈਪਰਬੋਲਾ ਫੋਸੀ ਬਿੰਦੂ</translation>
+    </message>
 </context>
 <context>
     <name>LC_ActionFileExportMakerCam</name>
@@ -17532,6 +17537,66 @@ This block cannot be inserted.</source>
     <message>
         <source>Height:</source>
         <translation type="vanished">ਉਚਾਈ:</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawHyperbolaFP</name>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="260"/>
+        <source>Foci cannot be coincident</source>
+        <translation>ਫੋਸੀ ਇੱਕੋ ਜਗ੍ਹਾ &apos;ਤੇ ਨਹੀਂ ਹੋ ਸਕਦੇ।</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="273"/>
+        <source>The point does not define a hyperbola with these foci</source>
+        <translation>ਇਹ ਬਿੰਦੂ ਇਹਨਾਂ ਫੋਸੀ ਨਾਲ ਇੱਕ ਹਾਈਪਰਬੋਲਾ ਨੂੰ ਪਰਿਭਾਸ਼ਿਤ ਨਹੀਂ ਕਰਦਾ।</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="286"/>
+        <source>The end point is not on the same hyperbola branch</source>
+        <translation>ਅੰਤ ਬਿੰਦੂ ਇੱਕੋ ਹਾਈਪਰਬੋਲਾ ਸ਼ਾਖਾ &apos;ਤੇ ਨਹੀਂ ਹੈ।</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="295"/>
+        <source>Start and end points cannot be the same</source>
+        <translation>ਸ਼ੁਰੂਆਤੀ ਅਤੇ ਅੰਤ ਬਿੰਦੂ ਇੱਕੋ ਨਹੀਂ ਹੋ ਸਕਦੇ।</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="314"/>
+        <source>specify the two foci, then the start and end points on one branch</source>
+        <translation>ਪਹਿਲਾਂ ਦੋਵੇਂ ਫੋਸੀ ਦੱਸੋ, ਫਿਰ ਇੱਕ ਸ਼ਾਖਾ &apos;ਤੇ ਸ਼ੁਰੂਆਤੀ ਅਤੇ ਅੰਤ ਬਿੰਦੂ ਦੱਸੋ।</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="326"/>
+        <source>Specify the first focus</source>
+        <translation>ਪਹਿਲਾ ਫੋਕਸ ਦੱਸੋ।</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="327"/>
+        <source>Cancel</source>
+        <translation>ਰੱਦ ਕਰੋ</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="330"/>
+        <source>Specify the second focus</source>
+        <translation>ਦੂਜਾ ਫੋਕਸ ਦੱਸੋ।</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="331"/>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="335"/>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="339"/>
+        <source>Back</source>
+        <translation>ਪਿੱਛੇ</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="334"/>
+        <source>Specify the start point on the branch</source>
+        <translation>ਸ਼ਾਖਾ &apos;ਤੇ ਸ਼ੁਰੂਆਤੀ ਬਿੰਦੂ ਦੱਸੋ।</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="338"/>
+        <source>Specify the end point on the same branch</source>
+        <translation>ਇੱਕੋ ਸ਼ਾਖਾ &apos;ਤੇ ਅੰਤ ਬਿੰਦੂ ਦੱਸੋ।</translation>
     </message>
 </context>
 </TS>
