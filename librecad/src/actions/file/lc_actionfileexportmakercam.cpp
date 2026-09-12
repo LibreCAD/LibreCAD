@@ -24,7 +24,7 @@
 
 #include "lc_actionfileexportmakercam.h"
 
-#include <QFile>
+#include <QSaveFile>
 #include <QTextStream>
 
 #include "lc_makercamsvg.h"
@@ -74,16 +74,27 @@ bool LC_ActionFileExportMakerCam::writeSvg(const QString& fileName, RS_Graphic& 
     }
 
     const auto generator = getGenerator();
-    if (generator->generate(&graphic)) {
-        QFile file{fileName};
-        if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-            LC_ERR << __func__ << "(): failed in creating file " << fileName << ", no SVG is generated";
-            return false;
-        }
-
-        QTextStream out(&file);
-        out << QString::fromStdString(generator->resultAsString());
+    if (!generator->generate(&graphic)) {
+        LC_ERR << __func__ << "(): failed in generating the SVG for " << fileName;
+        return false;
     }
+
+    // QSaveFile reports a write that fails after the file is open, and leaves an
+    // existing file alone until the new one is complete.
+    QSaveFile file{fileName};
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        LC_ERR << __func__ << "(): failed in creating file " << fileName << ", no SVG is generated";
+        return false;
+    }
+
+    QTextStream out(&file);
+    out << QString::fromStdString(generator->resultAsString());
+    out.flush();
+    if (out.status() != QTextStream::Ok || !file.commit()) {
+        LC_ERR << __func__ << "(): failed in writing file " << fileName;
+        return false;
+    }
+
     return true;
 }
 
@@ -95,7 +106,11 @@ void LC_ActionFileExportMakerCam::trigger() {
 
         if (accepted) {
             const QString filename = RS_DIALOGFACTORY->requestFileSaveAsDialog(tr("Export as"), "", "Scalable Vector Graphics (*.svg)");
-            writeSvg(filename, *m_graphic);
+            // An empty name means the dialog was cancelled
+            if (!filename.isEmpty() && !writeSvg(filename, *m_graphic)) {
+                RS_DIALOGFACTORY->requestWarningDialog(
+                    tr("Cannot write the file\n%1\nPlease check the filename and permissions.").arg(filename));
+            }
         }
     }
 
