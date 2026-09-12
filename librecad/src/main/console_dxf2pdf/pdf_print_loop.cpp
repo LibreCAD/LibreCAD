@@ -29,7 +29,7 @@
 #include <QPrinter>
 #include <QtCore>
 
-#include "lc_documentsstorage.h"
+#include "console_command_utils.h"
 #include "lc_graphicviewport.h"
 #include "lc_printing.h"
 #include "lc_printviewportrenderer.h"
@@ -199,22 +199,17 @@ static void reportWriteFailure(const QString& outFile){
 
 static bool openDocAndSetGraphic(RS_Document** doc, RS_Graphic** graphic,
     const QString& dxfFile){
-    *doc = new RS_Graphic();
-    const LC_DocumentsStorage storage;
-    if (!storage.loadDocument((*doc)->getGraphic(), dxfFile, RS2::FormatUnknown)) {
-    // if (!(*doc)->open(dxfFile, RS2::FormatUnknown)) {
-        qDebug() << "ERROR: Failed to open document" << dxfFile;
+    auto* newGraphic = new RS_Graphic();
+    *doc = newGraphic;
+    // LC_Console::importGraphic() reports on stderr. Importing through the
+    // document storage opens a message box no console command can close.
+    if (!LC_Console::importGraphic(*newGraphic, dxfFile)) {
         delete *doc;
+        *doc = nullptr;
         return false;
     }
 
-    *graphic = (*doc)->getGraphic();
-    if (*graphic == nullptr) {
-        qDebug() << "ERROR: No graphic in" << dxfFile;
-        delete *doc;
-        return false;
-    }
-
+    *graphic = newGraphic;
     return true;
 }
 
