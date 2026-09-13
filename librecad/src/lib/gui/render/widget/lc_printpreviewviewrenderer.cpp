@@ -213,7 +213,9 @@ void LC_PrintPreviewViewRenderer::setPenForPrintingEntity(RS_Painter *painter, R
     RS_Pen originalPen = pen;
 
     double patternOffset = painter->currentDashOffset();
-    if (m_lastPaintEntityPen.isSameAs(pen, patternOffset)) {
+    // The dash offset is applied below on exactly this condition, so it is part
+    // of the pen's identity on exactly this condition too.
+    if (m_lastPaintEntityPen.isSameAs(pen, patternOffset, pen.getLineType() != RS2::SolidLine)) {
         return;
     }
     // Avoid negative widths

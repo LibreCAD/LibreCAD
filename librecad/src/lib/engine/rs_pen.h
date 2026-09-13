@@ -167,9 +167,22 @@ public:
         return m_lineType==p.m_lineType && m_width==p.m_width && m_color==p.m_color;
     }
 
-    bool isSameAs(const RS_Pen& p, const double patternOffset) const {
+    /**
+     * Whether the painter may keep the pen it already holds instead of being
+     * given this one. patternOffset is the painter's running dash offset, which
+     * RS_Painter::updateDashOffset() moves by the length of every entity drawn.
+     *
+     * comparePatternOffset asks for that offset to be part of the pen's identity.
+     * It is the caller's call, not this pen's line type: a renderer may install a
+     * dash pattern on a pen whose own line type is solid, which is what
+     * LC_GraphicViewRenderer does to every selected entity. Callers pass a
+     * deliberate superset of "a pattern is painted with this pen" - a needless
+     * true only costs a pen the cache could have kept, while a wrong false would
+     * paint a pattern at a stale phase.
+     */
+    bool isSameAs(const RS_Pen& p, const double patternOffset, const bool comparePatternOffset) const {
         return m_lineType == p.m_lineType && m_width == p.m_width && m_color == p.m_color && LC_LineMath::isSameLength(m_alpha, p.m_alpha) &&
-            LC_LineMath::isSameLength(m_dashOffset, patternOffset) && !getFlag(RS2::FlagInvalid);
+            (!comparePatternOffset || LC_LineMath::isSameLength(m_dashOffset, patternOffset)) && !getFlag(RS2::FlagInvalid);
     }
 
     void updateBy(const RS_Pen & p){

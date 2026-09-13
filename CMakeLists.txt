@@ -2477,6 +2477,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/entities/tests/lc_textbidi_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_mtext_bidi_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_text_bidi_tests.cpp
+        librecad/src/lib/engine/tests/rs_pen_tests.cpp
         librecad/src/lib/actions/tests/lc_snappercatchtests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_round_tests.cpp
         librecad/src/lib/filters/tests/dwg_pre_r13_codepage_tests.cpp
@@ -2564,6 +2565,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/settings/tests/rs_settings_migration_tests.cpp
         librecad/src/lib/gui/tests/rs_graphicview_close_tests.cpp
         librecad/src/lib/gui/tests/rs_painter_tests.cpp
+        librecad/src/lib/gui/tests/lc_graphicviewrenderer_tests.cpp
         librecad/src/main/tests/console_command_utils_tests.cpp
         librecad/src/main/tests/lc_pdfprintlooptests.cpp
         librecad/src/main/tests/lc_consoleimporttests.cpp
