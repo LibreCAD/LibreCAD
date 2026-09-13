@@ -577,6 +577,8 @@ set (SHARED_SOURCES
      librecad/src/actions/drawing/draw/line/lc_action_draw_line_angle.h
      librecad/src/actions/drawing/draw/line/lc_action_draw_line_bisector.cpp
      librecad/src/actions/drawing/draw/line/lc_action_draw_line_bisector.h
+     librecad/src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp
+     librecad/src/actions/drawing/draw/line/lc_actiondrawlinedirect.h
      librecad/src/actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp
      librecad/src/actions/drawing/draw/line/rs_actiondrawlinehorvert.h
      librecad/src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp
@@ -1157,6 +1159,8 @@ set (SHARED_SOURCES
      librecad/src/lib/math/lc_formatter.h
      librecad/src/lib/math/lc_linemath.cpp
      librecad/src/lib/math/lc_linemath.h
+     librecad/src/lib/math/lc_archparser.cpp
+     librecad/src/lib/math/lc_archparser.h
      librecad/src/lib/math/lc_quadratic.cpp
      librecad/src/lib/math/lc_quadratic.h
      librecad/src/lib/math/lc_quadraticutils.cpp
@@ -2480,6 +2484,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/dwg_pre_r13_record_layout_tests.cpp
         librecad/src/lib/filters/tests/dwg_textcodec_tables_tests.cpp
         librecad/src/lib/filters/tests/dxf_cjk_codepage_tests.cpp
+        librecad/src/lib/math/tests/lc_archparser_tests.cpp
         librecad/src/lib/math/tests/rs_math_tests.cpp
         librecad/src/lib/math/tests/lc_quadratic_tests.cpp
         librecad/src/lib/creation/tests/rs_creation_null_entity_tests.cpp
@@ -2489,6 +2494,7 @@ if (BUILD_TESTS)
         librecad/src/lib/modification/tests/rs_modification_trim_tests.cpp
         librecad/src/lib/filters/tests/dwg_buffer_round_trip_tests.cpp
         librecad/src/lib/creation/tests/lc_action_draw_line_parallel_tests.cpp
+        librecad/src/lib/creation/tests/lc_action_draw_fast_tests.cpp
         librecad/src/lib/creation/tests/lc_action_draw_polyline_tests.cpp
         librecad/src/lib/creation/tests/lc_action_draw_spline_tests.cpp
         librecad/src/lib/engine/undo/tests/rs_undo_tests.cpp
@@ -2570,6 +2576,7 @@ if (BUILD_TESTS)
     # Include directories for rs_math.h and other dependencies
     target_include_directories (librecad_tests PRIVATE
                                 ${SHARED_INCLUDES}
+                                "${CMAKE_CURRENT_BINARY_DIR}/librecad_lib_autogen/include"
                                 # (shapelib include comes via SHARED_INCLUDES)
     )
 
@@ -2817,6 +2824,11 @@ if (BUILD_TESTS)
     add_librecad_filter_micro_test(
         librecad_acis_wireframe_tests
         librecad/src/lib/filters/tests/acis_wireframe_tests.cpp)
+    add_librecad_filter_micro_test(
+        librecad_draw_fast_tests
+        librecad/src/lib/creation/tests/lc_action_draw_fast_tests.cpp)
+    target_include_directories(librecad_draw_fast_tests PRIVATE
+        "${CMAKE_CURRENT_BINARY_DIR}/librecad_lib_autogen/include")
     add_librecad_filter_micro_test(
         librecad_polyline_command_tests
         librecad/src/lib/creation/tests/lc_action_draw_polyline_tests.cpp)

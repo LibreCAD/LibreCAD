@@ -724,6 +724,7 @@ HEADERS += \
     lib/information/rs_locale.h \
     lib/information/rs_information.h \
     lib/information/rs_infoarea.h \
+    lib/math/lc_archparser.h \
     lib/math/lc_convert.h \
     lib/math/lc_linemath.h \
     lib/math/lc_formatter.h \
@@ -1248,6 +1249,7 @@ SOURCES += \
     lib/information/rs_locale.cpp \
     lib/information/rs_information.cpp \
     lib/information/rs_infoarea.cpp \
+    lib/math/lc_archparser.cpp \
     lib/math/lc_convert.cpp \
     lib/math/lc_linemath.cpp \
     lib/math/rs_math.cpp \
@@ -1404,6 +1406,7 @@ HEADERS += actions/dock_widgets/block/rs_actionblocksadd.h \
     actions/drawing/draw/line/lc_action_draw_line.h \
     actions/drawing/draw/line/lc_action_draw_line_angle.h \
     actions/drawing/draw/line/lc_action_draw_line_bisector.h \
+    actions/drawing/draw/line/lc_actiondrawlinedirect.h \
     actions/drawing/draw/line/rs_actiondrawlinehorvert.h \
     actions/drawing/draw/line/rs_actiondrawlineorthtan.h \
     actions/drawing/draw/line/lc_action_draw_line_parallel.h \
@@ -1569,6 +1572,7 @@ SOURCES += actions/dock_widgets/block/rs_actionblocksadd.cpp \
     actions/drawing/draw/line/lc_action_draw_line.cpp \
     actions/drawing/draw/line/lc_action_draw_line_angle.cpp \
     actions/drawing/draw/line/lc_action_draw_line_bisector.cpp \
+    actions/drawing/draw/line/lc_actiondrawlinedirect.cpp \
     actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp \
     actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp \
     actions/drawing/draw/line/lc_action_draw_line_parallel.cpp \

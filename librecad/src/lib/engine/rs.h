@@ -374,6 +374,7 @@ namespace RS2 {
         ActionDrawLineAngleRel,
         ActionDrawLineOrthogonalRel,
         ActionDrawLineFromPointToLine,
+        ActionDrawLineDirect,
         ActionDrawSliceDivideLine,
         ActionDrawSliceDivideCircle,
         ActionDrawPointsLine,

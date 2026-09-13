@@ -1626,6 +1626,11 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
     const int dialogResult = m_dlgHelpr->showGeneralOptionsDialog();
     if (dialogResult == QDialog::Accepted) {
         m_actionOptionsManager->update();
+        if (m_actionHandler != nullptr) {
+            if (const auto currentAction = m_actionHandler->getCurrentAction()) {
+                currentAction->refreshBySettings();
+            }
+        }
         // fixme - check this signal, probably it's better to rely on settings change
         const bool hideRelativeZero = LC_GET_ONE_BOOL("Appearance", "hideRelativeZero");
         emit signalEnableRelativeZeroSnaps(!hideRelativeZero);

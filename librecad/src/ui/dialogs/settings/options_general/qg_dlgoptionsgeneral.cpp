@@ -23,10 +23,12 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include "qg_dlgoptionsgeneral.h"
+#include <cmath>
 
 #include <QColorDialog>
 #include <QMessageBox>
+
+#include "qg_dlgoptionsgeneral.h"
 
 #include "dxf_format.h"
 #include "lc_defaults.h"
@@ -116,8 +118,26 @@ QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget *parent)
        cbVSAutoAddLastSnapOnly->setEnabled(checked);
     });
 
+    connect(cbSoftSnapEnabled, &QCheckBox::toggled,
+            this, &QG_DlgOptionsGeneral::updateSoftSnapControls);
+    connect(cbAngleSnapStep, qOverload<int>(&QComboBox::currentIndexChanged), this, [this](int) {
+        updateSoftSnapSensitivityRange();
+    });
+
     // hide temporary until support will be added
     cbShowCommandInMenu->setVisible(false);
+}
+
+void QG_DlgOptionsGeneral::updateSoftSnapControls(const bool enabled) const {
+    lblSoftSnapSensitivity->setEnabled(enabled);
+    sbSoftSnapSensitivity->setEnabled(enabled);
+    lblSoftSnapSensitivityDeg->setEnabled(enabled);
+}
+
+void QG_DlgOptionsGeneral::updateSoftSnapSensitivityRange() {
+    const double step = cbAngleSnapStep->currentText().toDouble();
+    const double maximum = std::floor(step * 4.5) / 10.0;
+    sbSoftSnapSensitivity->setMaximum(maximum >= 0.1 ? maximum : 0.1);
 }
 
 void QG_DlgOptionsGeneral::onExpandToolsMenuToggled([[maybe_unused]]bool checked) const {
@@ -639,6 +659,10 @@ void QG_DlgOptionsGeneral::init(){
         cbWheelScrollInvertV->setChecked(LC_GET_BOOL("WheelScrollInvertV"));
         cbInvertZoomDirection->setChecked(LC_GET_BOOL("InvertZoomDirection"));
         cbAngleSnapStep->setCurrentIndex(LC_GET_INT("AngleSnapStep", 3));
+        cbSoftSnapEnabled->setChecked(LC_GET_BOOL("SoftSnapEnabled", false));
+        sbSoftSnapSensitivity->setValue(LC_GET_STR("SoftSnapSensitivityAngle", "3.0").toDouble());
+        updateSoftSnapSensitivityRange();
+        updateSoftSnapControls(cbSoftSnapEnabled->isChecked());
 
         cbNewDrawingGridOff->setChecked(LC_GET_BOOL("GridOffForNewDrawing", false));
 
@@ -675,6 +699,13 @@ void QG_DlgOptionsGeneral::init(){
         leDefAngleBaseZero->setText(defaultAnglesBase);
 
         cbInteractiveInputInActionToolbarEnabled->setChecked(LC_GET_BOOL("InteractiveInputEnabled", true));
+
+        // Draw Fast preset defaults
+        sbDrawFastOpeningDepth->setValue(LC_GET_STR("OpeningDepth", "4").toDouble());
+        sbDrawFastWindowOffsetWidth->setValue(LC_GET_STR("WindowOffsetWidth", "1.5").toDouble());
+        sbDrawFastDoorThickness->setValue(LC_GET_STR("DrawFastDoorThickness", "1.5").toDouble());
+        cbDrawFastDoorSwingAngle->setCurrentText(LC_GET_STR("DrawFastDoorSwingAngle", "90"));
+        cbDrawFastDoorDesign->setCurrentIndex(LC_GET_STR("DrawFastDoorDesign", "0").toInt());
     }
     LC_GROUP_END();
 
@@ -1028,6 +1059,11 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("WheelScrollInvertV", cbWheelScrollInvertV->isChecked());
             LC_SET("InvertZoomDirection", cbInvertZoomDirection->isChecked());
             LC_SET("AngleSnapStep", cbAngleSnapStep->currentIndex());
+            LC_SET("SoftSnapEnabled", cbSoftSnapEnabled->isChecked());
+            {
+                double sens = sbSoftSnapSensitivity->value();
+                LC_SET("SoftSnapSensitivityAngle", QString::number(sens < 0.1 ? 3.0 : sens));
+            }
             LC_SET("GridOffForNewDrawing", cbNewDrawingGridOff->isChecked());
 
             const bool defaultIsometricGrid = !rbGridOrtho->isChecked();
@@ -1051,6 +1087,13 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("AnglesBaseAngle", leDefAngleBaseZero->text());
             LC_SET("AnglesCounterClockwise", rbDefAngleBasePositive->isChecked());
             LC_SET("InteractiveInputEnabled", cbInteractiveInputInActionToolbarEnabled->isChecked());
+
+            // Draw Fast preset defaults
+            LC_SET("OpeningDepth", QString::number(sbDrawFastOpeningDepth->value()));
+            LC_SET("WindowOffsetWidth", QString::number(sbDrawFastWindowOffsetWidth->value()));
+            LC_SET("DrawFastDoorThickness", QString::number(sbDrawFastDoorThickness->value()));
+            LC_SET("DrawFastDoorSwingAngle", cbDrawFastDoorSwingAngle->currentText());
+            LC_SET("DrawFastDoorDesign", QString::number(cbDrawFastDoorDesign->currentIndex()));
         }
         LC_GROUP_END();
 

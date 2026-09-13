@@ -61,6 +61,7 @@
 #include "lc_action_draw_line_radiant.h"
 #include "lc_action_draw_line_rel_angle.h"
 #include "lc_action_draw_line_snake.h"
+#include "lc_actiondrawlinedirect.h"
 #include "lc_action_draw_mtext.h"
 #include "lc_action_draw_point.h"
 #include "lc_action_draw_points_lattice.h"
@@ -464,6 +465,9 @@ namespace InnerFactory{
             }
             case RS2::ActionDrawLineFromPointToLine: {
                 return new LC_ActionDrawLineFromPointToLine(ctx);
+            }
+            case RS2::ActionDrawLineDirect: {
+                return new LC_ActionDrawLineDirect(ctx);
             }
             case RS2::ActionDrawCenterLine: {
                 return new LC_ActionDrawCenterLine(ctx);
