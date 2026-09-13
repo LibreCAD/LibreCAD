@@ -521,7 +521,6 @@ void LC_GraphicViewRenderer::setPenForEntity(RS_Painter* painter, const RS_Entit
 #ifdef DEBUG_RENDERING
     getPenTime += getPenTimer.nsecsElapsed();
 #endif
-    const RS_Pen originalPen = pen;
     const bool highlighted = e->getFlag(RS2::FlagHighlighted);
     const bool selected = e->getFlag(RS2::FlagSelected);
     const bool overlayPaint = inOverlay || m_inOverlayDrawing;
@@ -547,6 +546,7 @@ void LC_GraphicViewRenderer::setPenForEntity(RS_Painter* painter, const RS_Entit
         m_lastPaintOverlay = overlayPaint;
         m_lastPenInVisualSnap = inVisualSnap;
     }
+    const RS_Pen originalPen = pen;
 
 #ifdef DEBUG_RENDERING
     setPenTimer.start();
@@ -649,7 +649,6 @@ void LC_GraphicViewRenderer::setPenForDraftEntity(RS_Painter* painter, const RS_
     setPenTimer.start();
 #endif
     RS_Pen pen = e->getPenResolved();
-    const RS_Pen originalPen = pen;
     const bool highlighted = e->getFlag(RS2::FlagHighlighted);
     const bool selected = e->getFlag(RS2::FlagSelected);
     const bool overlayPaint = inOverlay || m_inOverlayDrawing;
@@ -674,6 +673,7 @@ void LC_GraphicViewRenderer::setPenForDraftEntity(RS_Painter* painter, const RS_
         m_lastPaintOverlay = overlayPaint;
         m_lastPenInVisualSnap = inVisualSnap;
     }
+    const RS_Pen originalPen = pen;
     pen.setScreenWidth(0.0);
 
     if (overlayPaint) {

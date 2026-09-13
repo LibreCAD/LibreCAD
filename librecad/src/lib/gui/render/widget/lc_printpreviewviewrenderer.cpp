@@ -210,7 +210,6 @@ void LC_PrintPreviewViewRenderer::setPenForPrintingEntity(RS_Painter *painter, R
 #endif
     // Getting pen from entity (or layer)
     RS_Pen pen = e->getPenResolved();
-    RS_Pen originalPen = pen;
 
     double patternOffset = painter->currentDashOffset();
     // The dash offset is applied below on exactly this condition, so it is part
@@ -218,6 +217,7 @@ void LC_PrintPreviewViewRenderer::setPenForPrintingEntity(RS_Painter *painter, R
     if (m_lastPaintEntityPen.isSameAs(pen, patternOffset, pen.getLineType() != RS2::SolidLine)) {
         return;
     }
+    RS_Pen originalPen = pen;
     // Avoid negative widths
     double width = pen.getWidth();
 //    int w = std::max(static_cast<int>(pen.getWidth()), 0);
