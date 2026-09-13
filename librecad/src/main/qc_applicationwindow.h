@@ -110,6 +110,8 @@ public:
 
     bool eventFilter(QObject *obj, QEvent *event) override;
     QAction* getAction(const QString& name) const;
+    // Reports to the command history: a status-bar message hides the status widgets (issue #2841). timeout is ignored.
+    void showStatusMessage(const QString& msg, int timeout = 0) const;
 
 public slots:
     void relayAction(QAction* q_action);
