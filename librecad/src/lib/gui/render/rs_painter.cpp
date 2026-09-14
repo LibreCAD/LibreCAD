@@ -98,7 +98,13 @@ namespace {
         dpmm = std::max(dpmm, 1e-6);
         double k = dpmm / std::max(screenWidth, 1.);
 
-        const std::vector<double>& pattern = RS_LineTypePattern::getPattern(t)->pattern;
+        const RS_LineTypePattern* linePattern = RS_LineTypePattern::getPattern(t);
+        if (linePattern == nullptr) {
+            // Unknown line type (a stale settings value, or an enum with no table
+            // entry): an empty pattern makes the caller fall back to a solid pen.
+            return {};
+        }
+        const std::vector<double>& pattern = linePattern->pattern;
         QVector<qreal> dashPattern;
         std::transform(pattern.cbegin(), pattern.cend(), std::back_inserter(dashPattern), [k](const double d) {
             return std::max(k * std::abs(d), 1.);
