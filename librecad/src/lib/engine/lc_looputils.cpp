@@ -317,12 +317,15 @@ RS_Entity* LoopExtractor::findOutermost(std::vector<RS_Entity*> edges) const
     if (cuts.empty())
         throw "no cut found";
 
-    // find the minimum left turning angle to get the next outermost edge
-    std::sort(cuts.begin(), cuts.end(),
-              [a0=std::get<double>(current)](const CutPair& cut0, const CutPair& cut1){
-                  using namespace RS_Math;
-                  return getAngleDifference(a0, std::get<double>(cut0)) < getAngleDifference(a0, std::get<double>(cut1));
-              });
+    // find the minimum left turning angle to get the next outermost edge; an edge
+    // back along the current one, a second copy of it, turns a full circle
+    auto turn = [a0 = std::get<double>(current)](const CutPair& cut) {
+        const double angle = RS_Math::getAngleDifference(a0, std::get<double>(cut));
+        return (angle < RS_TOLERANCE_ANGLE || angle > 2. * M_PI - RS_TOLERANCE_ANGLE) ? 2. * M_PI : angle;
+    };
+    std::sort(cuts.begin(), cuts.end(), [&turn](const CutPair& cut0, const CutPair& cut1) {
+        return turn(cut0) < turn(cut1);
+    });
     return std::get<RS_Entity*>(cuts.front());
 }
 
@@ -366,9 +369,11 @@ std::vector<std::unique_ptr<RS_EntityContainer>> LoopExtractor::extract() {
             LC_LOG<<"id = "<<m_data->current->getId();
             success = findNext();
         }
-        if (!validate())
+        // an open run, such as the second copy of an edge drawn twice, has no area
+        if (validate())
+            loops.push_back(std::move(m_loop));
+        else
             LC_ERR << __func__<<"(): invalid loop of size = "<<m_loop->count();
-        loops.push_back(std::move(m_loop));
     }
     LC_LOG<<__func__<<"(): loops.size() = "<<loops.size();
     return loops;
