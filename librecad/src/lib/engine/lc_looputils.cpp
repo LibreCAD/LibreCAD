@@ -190,6 +190,13 @@ struct LoopExtractor::LoopData {
     LoopData(RS_EntityContainer &edges):
     edges{edges}
     {
+        // leave out edges too short to trace, such as zero-length lines
+        const std::vector<RS_Entity*> all(edges.begin(), edges.end());
+        for (RS_Entity* edge : all) {
+            edge->calculateBorders();
+            if (edge->getSize().magnitude() < contourGapTolerance)
+                edges.removeEntity(edge);
+        }
         edges.forcedCalculateBorders();
         size = edges.getSize().magnitude();
     }
@@ -204,9 +211,6 @@ struct LoopExtractor::LoopData {
 LoopExtractor::LoopExtractor(RS_EntityContainer &edges) :
     m_data{std::make_unique<LoopData>(edges)}
 {
-    // edges must be a valid contour, so its bounding box size cannot be zero
-    assert(m_data->size > RS_TOLERANCE);
-    assert(!edges.isEmpty());
 }
 
 //------------------------------------------------------------------------------------//
