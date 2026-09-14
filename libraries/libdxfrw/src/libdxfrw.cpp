@@ -8450,6 +8450,11 @@ bool dxfRW::processLayer() {
 
 bool dxfRW::processDimStyle() {
     DRW_DBG("dxfRW::processDimStyle");
+    struct DimstyleNameScope {
+        dxfReader& reader;
+        explicit DimstyleNameScope(dxfReader& r) : reader(r) { reader.setAllowDimstyleNames(true); }
+        ~DimstyleNameScope() { reader.setAllowDimstyleNames(false); }
+    } dimstyleNames(*reader);
     int code;
     std::string sectionstr;
     bool reading = false;

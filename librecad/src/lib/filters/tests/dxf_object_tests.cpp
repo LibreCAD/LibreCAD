@@ -12955,6 +12955,38 @@ TEST_CASE("DXF DIMSTYLE records keep their own values (issue #2723)",
   CHECK(cap.m_captured[2].m_dimblk.empty());
 }
 
+// DXF written by libdxfrw 0.5 (LibreCAD 2.0, and most of the bundled parts
+// library) failed to open: DIMSTYLE 340 names the text style and 341 is empty
+// where newer files hold handles, and some headers hold a subnormal double.
+TEST_CASE("DXF reads what libdxfrw 0.5 wrote", "[dxf][dimstyle]") {
+  SECTION("DIMSTYLE names instead of handles") {
+    DimStyleCapture cap;
+    const char *dxf =
+        "0\nSECTION\n2\nTABLES\n"
+        "0\nTABLE\n2\nDIMSTYLE\n5\nA\n100\nAcDbSymbolTable\n70\n1\n"
+        "0\nDIMSTYLE\n105\n27\n100\nAcDbDimStyleTableRecord\n2\nStandard\n70\n0\n"
+        "41\n2.5\n340\nStandard\n341\n\n"
+        "0\nENDTAB\n0\nENDSEC\n0\nEOF\n";
+    REQUIRE(tryReadDxf(dxf, cap, "lc_dimstyle_legacy_names.dxf"));
+    REQUIRE(cap.m_captured.size() == 1);
+    CHECK(cap.m_captured[0].m_name == "Standard");
+    CHECK(cap.m_captured[0].m_dimasz == 2.5);
+
+    std::string arrowName(dxf);
+    arrowName.replace(arrowName.find("341\n\n"), 5, "341\nGZ\n");
+    DimStyleCapture rejected;
+    CHECK_FALSE(tryReadDxf(arrowName, rejected, "lc_dimstyle_bad_341.dxf"));
+  }
+
+  SECTION("a subnormal header value") {
+    StubInterface capture;
+    CHECK(tryReadDxf(
+        "999\ndxfrw 0.5.10\n0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n"
+        "9\n$PSVPSCALE\n40\n4.94065645841e-324\n0\nENDSEC\n0\nEOF\n",
+        capture, "lc_legacy_subnormal_header.dxf"));
+  }
+}
+
 TEST_CASE("DXF DIMSTYLE text direction uses canonical R2010 group 295",
           "[dxf][dimstyle]") {
   const auto dimstyleDxf = [](int code, int value) {
