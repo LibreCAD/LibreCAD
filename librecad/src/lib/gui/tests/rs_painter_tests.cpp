@@ -22,6 +22,8 @@
 // Regression tests for RS_Painter::setPen(): which QPen it installs for a given
 // RS_Pen, and when it may keep the pen it already holds instead.
 
+#include <cmath>
+
 #include <catch2/catch_test_macros.hpp>
 
 #include <QApplication>
@@ -90,4 +92,180 @@ TEST_CASE("RS_Painter paints solid for a line type with no pattern",
         CHECK(rig.painter.pen().style() == Qt::SolidLine);
         CHECK(rig.painter.pen().dashPattern().isEmpty());
     }
+}
+
+TEST_CASE("RS_Painter answers a repeated request with the same pen",
+          "[gui][painter]") {
+    (void)application();
+
+    for (const RS2::LineType lineType : {RS2::SolidLine, RS2::DashLine}) {
+        PenTestPainter rig;
+        RS_Painter& painter = rig.painter;
+
+        const RS_Pen requested = testPen(lineType, 2.0);
+        painter.setPen(requested);
+        const QPen first = painter.pen();
+        painter.setPen(requested);
+        CHECK(painter.pen() == first);
+
+        // Join and cap come from the painter, and a change reaches QPainter on the
+        // next request even when the RS_Pen is the same.
+        painter.setPenCapStyle(Qt::FlatCap);
+        painter.setPenJoinStyle(Qt::BevelJoin);
+        painter.setPen(requested);
+        CHECK(painter.pen().capStyle() == Qt::FlatCap);
+        CHECK(painter.pen().joinStyle() == Qt::BevelJoin);
+        CHECK(painter.pen().style() == first.style());
+        CHECK(painter.pen().dashPattern() == first.dashPattern());
+    }
+}
+
+TEST_CASE("RS_Painter installs a pen the painter no longer holds", "[gui][painter]") {
+    (void)application();
+
+    // A pen set on the QPainter base replaces the painter's pen without
+    // RS_Painter knowing; the next identical request must still install.
+    const QPen marker{QColor(Qt::green)};
+
+    for (const RS2::LineType lineType : {RS2::SolidLine, RS2::DashLine}) {
+        PenTestPainter rig;
+        RS_Painter& painter = rig.painter;
+        QPainter& asQPainter = rig.painter;
+
+        const RS_Pen requested = testPen(lineType);
+        painter.setPen(requested);
+        const QPen installed = painter.pen();
+        asQPainter.setPen(marker);
+        painter.setPen(requested);
+        CHECK(painter.pen() == installed);
+    }
+}
+
+TEST_CASE("RS_Painter installs a pen that QPainter::restore() put back",
+          "[gui][painter]") {
+    (void)application();
+
+    // RS_Painter overrides neither save() nor restore(); LC_OverlayInfoCursor
+    // sets colour pens inside such a pair.
+    PenTestPainter rig;
+    RS_Painter& painter = rig.painter;
+
+    painter.setPen(testPen(RS2::SolidLine, 2.0));
+    painter.save();
+    painter.setPen(RS_Color(Qt::red));
+    painter.restore();
+    REQUIRE(painter.pen().color() == QColor(Qt::black));
+    REQUIRE(painter.pen().widthF() == 2.0);
+
+    RS_Pen red = testPen(RS2::SolidLine);
+    red.setColor(RS_Color(Qt::red));
+    painter.setPen(red);
+    CHECK(painter.pen().color() == QColor(Qt::red));
+    CHECK(painter.pen().widthF() == 1.0);
+    CHECK(painter.pen().style() == Qt::SolidLine);
+}
+
+TEST_CASE("RS_Painter builds dashed pens from line type, width and offset",
+          "[gui][painter]") {
+    (void)application();
+
+    PenTestPainter rig;
+    RS_Painter& painter = rig.painter;
+
+    const RS_Pen solid = testPen(RS2::SolidLine);
+    painter.setPen(solid);
+    CHECK(painter.pen().style() == Qt::SolidLine);
+
+    const RS_Pen dashed = testPen(RS2::DashLine);
+    painter.setPen(dashed);
+    const QPen blackDashed = painter.pen();
+    CHECK(blackDashed.style() == Qt::CustomDashLine);
+    CHECK(blackDashed.color() == QColor(Qt::black));
+    CHECK(blackDashed.widthF() == 1.0);
+    CHECK_FALSE(blackDashed.dashPattern().isEmpty());
+    CHECK(blackDashed.dashOffset() == 0.0);
+    CHECK(blackDashed.capStyle() == Qt::RoundCap);
+    CHECK(blackDashed.joinStyle() == Qt::RoundJoin);
+
+    RS_Pen red = dashed;
+    red.setColor(RS_Color(Qt::red));
+    painter.setPen(red);
+    CHECK(painter.pen().color() == QColor(Qt::red));
+    CHECK(painter.pen().dashPattern() == blackDashed.dashPattern());
+
+    // The pattern is keyed on the line type, not on the expanded pattern.
+    painter.setPen(testPen(RS2::DotLine));
+    CHECK(painter.pen().style() == Qt::CustomDashLine);
+    CHECK_FALSE(painter.pen().dashPattern().isEmpty());
+    CHECK(painter.pen().dashPattern() != blackDashed.dashPattern());
+    painter.setPen(dashed);
+    CHECK(painter.pen().dashPattern() == blackDashed.dashPattern());
+
+    // The offset is scaled to device units, so compare a ratio.
+    RS_Pen phaseOne = dashed;
+    phaseOne.setDashOffset(-1.0);
+    painter.setPen(phaseOne);
+    const double offsetOne = painter.pen().dashOffset();
+    RS_Pen phaseThree = dashed;
+    phaseThree.setDashOffset(-3.0);
+    painter.setPen(phaseThree);
+    const double offsetThree = painter.pen().dashOffset();
+    CHECK(offsetOne != 0.0);
+    CHECK(std::abs(offsetThree - 3.0 * offsetOne) <= 1e-9 * std::abs(offsetOne));
+    CHECK(painter.pen().dashPattern() == blackDashed.dashPattern());
+
+    painter.setPen(testPen(RS2::DashLine, 2.0));
+    CHECK(painter.pen().widthF() == 2.0);
+    CHECK(painter.pen().style() == Qt::CustomDashLine);
+    CHECK_FALSE(painter.pen().dashPattern().isEmpty());
+
+    painter.setPen(solid);
+    CHECK(painter.pen().style() == Qt::SolidLine);
+    CHECK(painter.pen().dashPattern().isEmpty());
+    painter.setPen(dashed);
+    CHECK(painter.pen().dashPattern() == blackDashed.dashPattern());
+    CHECK(painter.pen().dashOffset() == 0.0);
+}
+
+TEST_CASE("RS_Painter re-installs a pen that noCapStyle() replaced", "[gui][painter]") {
+    (void)application();
+
+    // LC_GridSystem sets a grid pen, then noCapStyle(). The next request, even for
+    // the same pen, gets the painter's configured cap back.
+    for (const RS2::LineType lineType : {RS2::SolidLine, RS2::DashLine}) {
+        PenTestPainter rig;
+        RS_Painter& painter = rig.painter;
+
+        const RS_Pen requested = testPen(lineType);
+        painter.setPen(requested);
+        painter.noCapStyle();
+        REQUIRE(painter.pen().capStyle() == Qt::FlatCap);
+
+        painter.setPen(requested);
+        CHECK(painter.pen().capStyle() == Qt::RoundCap);
+        CHECK(painter.pen().style() == (lineType == RS2::SolidLine ? Qt::SolidLine : Qt::CustomDashLine));
+    }
+}
+
+TEST_CASE("RS_Painter re-installs a pen that setPen(RS_Color) replaced", "[gui][painter]") {
+    (void)application();
+
+    // setPen(RS_Color) installs QPen(QColor): width 1 with Qt's SquareCap and
+    // BevelJoin. A request for that colour at width 1 must still get the painter's
+    // configured cap and join.
+    PenTestPainter rig;
+    RS_Painter& painter = rig.painter;
+
+    painter.setPen(testPen(RS2::SolidLine));
+    painter.setPen(RS_Color(Qt::red));
+    REQUIRE(painter.pen().capStyle() == Qt::SquareCap);
+    REQUIRE(painter.pen().joinStyle() == Qt::BevelJoin);
+
+    RS_Pen red = testPen(RS2::SolidLine);
+    red.setColor(RS_Color(Qt::red));
+    painter.setPen(red);
+    CHECK(painter.pen().color() == QColor(Qt::red));
+    CHECK(painter.pen().widthF() == 1.0);
+    CHECK(painter.pen().capStyle() == Qt::RoundCap);
+    CHECK(painter.pen().joinStyle() == Qt::RoundJoin);
 }

@@ -90,28 +90,29 @@ namespace {
             && radiusY > 0.;
     }
 
-    // Convert from LibreCAD line style pattern to QPen Dash Pattern.
-    // QPen dash pattern by default is in the unit of pixel
-    QVector<qreal> rsToQDashPattern(const RS2::LineType t, const double screenWidth, double dpmm, double& newDashOffset) {
+    // Screen units per pattern millimetre. Both the dash pattern and the dash
+    // offset are scaled by it.
+    double dashPatternScale(const double screenWidth, double dpmm) {
         // dash pattern is in mm
         // d*dpmm/screenWidth, so, the scaling factor k = dpmm/screenWidth
         dpmm = std::max(dpmm, 1e-6);
-        double k = dpmm / std::max(screenWidth, 1.);
+        return dpmm / std::max(screenWidth, 1.);
+    }
 
+    // Convert from LibreCAD line style pattern to QPen Dash Pattern.
+    // QPen dash pattern by default is in the unit of pixel
+    QVector<qreal> rsToQDashPattern(const RS2::LineType t, const double k) {
         const RS_LineTypePattern* linePattern = RS_LineTypePattern::getPattern(t);
         if (linePattern == nullptr) {
             // Unknown line type (a stale settings value, or an enum with no table
             // entry): an empty pattern makes the caller fall back to a solid pen.
             return {};
         }
-        const std::vector<double>& pattern = linePattern->pattern;
-        QVector<qreal> dashPattern;
-        std::transform(pattern.cbegin(), pattern.cend(), std::back_inserter(dashPattern), [k](const double d) {
+        QVector<qreal> dashPattern = linePattern->pattern;
+        std::transform(dashPattern.begin(), dashPattern.end(), dashPattern.begin(), [k](const qreal d) {
             return std::max(k * std::abs(d), 1.);
         });
         dashPattern.resize(dashPattern.size() - dashPattern.size() % 2);
-
-        newDashOffset = newDashOffset * k;
         return dashPattern;
     }
 
@@ -1575,43 +1576,43 @@ void RS_Painter::setPen(const RS_Pen& pen) {
 
     double screenWidth = pen.getScreenWidth();
     if (style == Qt::CustomDashLine) {
-        double newDashOffset = pen.dashOffset();
-        auto dashPattern = rsToQDashPattern(lineType, screenWidth/*p.widthF()*/, getDpmmCached(), newDashOffset);
-        if (dashPattern.isEmpty()) {
-            style = Qt::SolidLine;
+        const double dpmm = getDpmmCached();
+        const double k = dashPatternScale(screenWidth/*p.widthF()*/, dpmm);
+        // The pattern depends only on the line type, width and resolution.
+        if (!m_lastDashValid || m_lastDashLineType != lineType
+            || m_lastDashScreenWidth != screenWidth || m_lastDashDpmm != dpmm) {
+            QVector<qreal> dashPattern = rsToQDashPattern(lineType, k);
+            if (dashPattern.isEmpty()) {
+                style = Qt::SolidLine;
+            }
+            else {
+                m_lastUsedPen.setDashPattern(dashPattern); // also sets Qt::CustomDashLine
+                m_lastDashValid = true;
+                m_lastDashLineType = lineType;
+                m_lastDashScreenWidth = screenWidth;
+                m_lastDashDpmm = dpmm;
+            }
         }
-        else {
-            QPen p(pColor, screenWidth, style);
-            p.setDashPattern(std::move(dashPattern));
+        if (style == Qt::CustomDashLine) {
             // fixme - how this is related to RS_AtomicEntity::updateDashOffset??? Will we set dash offset twice?
-            p.setDashOffset(newDashOffset);
-            p.setJoinStyle(m_penJoinStyle);
-            p.setCapStyle(m_penCapStyle);
-            m_lastUsedPen = p;
-            QPainter::setPen(p);
-            return;
+            m_lastUsedPen.setDashOffset(pen.dashOffset() * k);
         }
     }
-    // processing solid line
-
-    bool changed = false;
+    if (style != Qt::CustomDashLine && m_lastUsedPen.style() != style) {
+        m_lastUsedPen.setStyle(style); // drops any dash pattern
+        m_lastDashValid = false;
+    }
     if (m_lastUsedPen.color() != pColor) {
         m_lastUsedPen.setColor(pColor);
-        changed = true;
     }
-    if (m_lastUsedPen.widthF() != screenWidth) {
-        // fixme - sand - check whether it's ok to compare doubles there!
-        m_lastUsedPen.setWidthF(screenWidth);
-        changed = true;
-    }
-    if (m_lastUsedPen.style() != style) {
-        m_lastUsedPen.setStyle(style);
-        changed = true;
-    }
+    m_lastUsedPen.setWidthF(screenWidth);
     m_lastUsedPen.setJoinStyle(m_penJoinStyle);
     m_lastUsedPen.setCapStyle(m_penCapStyle);
 
-    if (changed) {
+    // QPen setters leave an unchanged pen shared, so this is a pointer comparison
+    // unless something changed. It checks the painter's own pen, which
+    // QPainter::restore() or a pen set on the QPainter base may have replaced.
+    if (QPainter::pen() != m_lastUsedPen) {
         QPainter::setPen(m_lastUsedPen);
     }
 }
