@@ -8,6 +8,7 @@
         <file>cur_del_bmp.png</file>
         <file>cur_glass_bmp.png</file>
         <file>cur_hand_bmp.png</file>
+        <file>librecad_selection_cursor.png</file>
         <file>cur_select_bmp.png</file>
     </qresource>
     <qresource prefix="/linetypes">
