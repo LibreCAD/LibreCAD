@@ -108,9 +108,8 @@ namespace {
             // entry): an empty pattern makes the caller fall back to a solid pen.
             return {};
         }
-        const std::vector<double>& pattern = linePattern->pattern;
-        QVector<qreal> dashPattern;
-        std::transform(pattern.cbegin(), pattern.cend(), std::back_inserter(dashPattern), [k](const double d) {
+        QVector<qreal> dashPattern = linePattern->pattern;
+        std::transform(dashPattern.begin(), dashPattern.end(), dashPattern.begin(), [k](const qreal d) {
             return std::max(k * std::abs(d), 1.);
         });
         dashPattern.resize(dashPattern.size() - dashPattern.size() % 2);
@@ -407,8 +406,6 @@ void RS_Painter::drawLineWCSScaled(const RS_Vector& wcsP1, const RS_Vector& wcsP
 void RS_Painter::drawLineUIScaled(const QPointF& from, const QPointF& to, const double lineWidthFactor) {
     if (!hasFinitePoint(from) || !hasFinitePoint(to) || !hasFiniteValue(lineWidthFactor))
         return;
-    // Installs a pen without touching m_lastUsedPen, and puts the previous one back
-    // before returning, so the painter still holds the mirrored pen at exit.
     const auto savedPen = pen();
     const auto width = savedPen.widthF();
     auto newPen = savedPen;
@@ -1550,31 +1547,10 @@ RS_Pen RS_Painter::getPen() const {
     return m_lpen;
 }
 
-/**
- * Copy the pen QPainter now holds into m_lastUsedPen, and drop the dash key.
- *
- * setPen(const RS_Pen&) puts the question to the painter before it may skip its
- * work, so a member that installs a pen on the QPainter base and leaves this copy
- * behind costs one extra QPainter::setPen() and nothing worse. This is for the
- * member that wants the opposite: noCapStyle() installs the pen this class had just
- * given the painter with one attribute changed, and recording it is what keeps that
- * attribute from being undone by the next request for the same pen.
- *
- * The dash key is cleared because the pattern in the new pen, if it has one, is not
- * one this class built from that key. Together with QPen::setStyle() on the solid
- * branch, this is the only place that can put another pattern into m_lastUsedPen,
- * which is what lets the key be read without re-testing the pen it describes.
- */
-void RS_Painter::syncLastUsedPen() {
-    m_lastUsedPen = QPainter::pen();
-    m_lastDashValid = false;
-}
-
 void RS_Painter::noCapStyle() {
     QPen pen = QPainter::pen();
     pen.setCapStyle(Qt::PenCapStyle::FlatCap);
     QPainter::setPen(pen);
-    syncLastUsedPen();
 }
 
 void RS_Painter::setPen(const RS_Pen& pen) {
@@ -1599,132 +1575,44 @@ void RS_Painter::setPen(const RS_Pen& pen) {
     Qt::PenStyle style = rsToQtLineType(lineType);
 
     double screenWidth = pen.getScreenWidth();
-
-    // Both branches below can answer a request by leaving the painter alone, and
-    // that is sound only while the painter still holds the pen m_lastUsedPen
-    // describes. So the question goes to the painter rather than to the copy:
-    // QPainter::restore() reinstates a pen from before any of this ran - this class
-    // overrides neither save() nor restore() - and a member that installs a pen on
-    // the QPainter base moves the painter's pen without this class hearing about
-    // it. Either way the comparison fails and the pen is installed again, which is
-    // all that is needed; nothing here depends on knowing which members those are.
-    // Read before anything mutates m_lastUsedPen: a pen this class installed is
-    // still shared with the painter's copy, so QPen::operator== answers from the
-    // shared d-pointer and a hit costs a pointer comparison.
-    const bool painterHoldsLastUsedPen = QPainter::pen() == m_lastUsedPen;
-
     if (style == Qt::CustomDashLine) {
         const double dpmm = getDpmmCached();
         const double k = dashPatternScale(screenWidth/*p.widthF()*/, dpmm);
-        // fixme - how this is related to RS_AtomicEntity::updateDashOffset??? Will we set dash offset twice?
-        const double newDashOffset = pen.dashOffset() * k;
-
-        // rsToQDashPattern() derives the pattern from the line type, the screen
-        // width and the resolution and reads nothing else, so while those three
-        // still match the ones m_lastUsedPen was built from, the pen already holds
-        // the pattern this call would build. Comparing them takes the place of
-        // building a pattern and comparing it against the installed one.
-        // m_lastDashValid is what makes that key meaningful (see its declaration).
-        // The key is about m_lastUsedPen, which this class owns, so it stays true
-        // when the painter has been given some other pen in the meantime: such a
-        // pattern needs installing, not rebuilding.
-        bool patternIsCurrent = m_lastDashValid
-            && m_lastDashLineType == lineType
-            && m_lastDashScreenWidth == screenWidth
-            && m_lastDashDpmm == dpmm;
-        // A pen the painter no longer holds is installed however little of it
-        // changed - including nothing at all.
-        bool changed = !painterHoldsLastUsedPen;
-
-        if (!patternIsCurrent) {
+        // The pattern depends only on the line type, width and resolution.
+        if (!m_lastDashValid || m_lastDashLineType != lineType
+            || m_lastDashScreenWidth != screenWidth || m_lastDashDpmm != dpmm) {
             QVector<qreal> dashPattern = rsToQDashPattern(lineType, k);
-            if (!dashPattern.isEmpty()) {
-                // setDashPattern() also sets the style to Qt::CustomDashLine
-                m_lastUsedPen.setDashPattern(std::move(dashPattern));
+            if (dashPattern.isEmpty()) {
+                style = Qt::SolidLine;
+            }
+            else {
+                m_lastUsedPen.setDashPattern(dashPattern); // also sets Qt::CustomDashLine
                 m_lastDashValid = true;
                 m_lastDashLineType = lineType;
                 m_lastDashScreenWidth = screenWidth;
                 m_lastDashDpmm = dpmm;
-                patternIsCurrent = true;
-                changed = true;
             }
-            // An empty pattern is deliberately not recorded in the key: it never
-            // becomes the pen's pattern, so there would be nothing for a later call
-            // to reuse. The next request for the same line type builds an empty
-            // vector again and falls through again - on this path the repeat work
-            // this commit removes is not removed, and only a line type with no
-            // usable pattern takes it.
         }
-
-        if (patternIsCurrent) {
-            if (m_lastUsedPen.color() != pColor) {
-                m_lastUsedPen.setColor(pColor);
-                changed = true;
-            }
-            if (m_lastUsedPen.widthF() != screenWidth) {
-                m_lastUsedPen.setWidthF(screenWidth);
-                changed = true;
-            }
-            if (m_lastUsedPen.dashOffset() != newDashOffset) {
-                m_lastUsedPen.setDashOffset(newDashOffset);
-                changed = true;
-            }
-            // Join and cap come from the painter, not from the pen. They are part
-            // of the comparison because this branch used to install a fresh pen on
-            // every call, which is what made setPenJoinStyle() and setPenCapStyle()
-            // take effect for a dashed pen.
-            if (m_lastUsedPen.joinStyle() != m_penJoinStyle) {
-                m_lastUsedPen.setJoinStyle(m_penJoinStyle);
-                changed = true;
-            }
-            if (m_lastUsedPen.capStyle() != m_penCapStyle) {
-                m_lastUsedPen.setCapStyle(m_penCapStyle);
-                changed = true;
-            }
-            if (changed) {
-                QPainter::setPen(m_lastUsedPen);
-            }
-            return;
+        if (style == Qt::CustomDashLine) {
+            // fixme - how this is related to RS_AtomicEntity::updateDashOffset??? Will we set dash offset twice?
+            m_lastUsedPen.setDashOffset(pen.dashOffset() * k);
         }
-        // No pattern to paint with. Either the line type has no entry in
-        // RS_LineTypePattern's table, or its entry held an odd number of elements
-        // and rsToQDashPattern()'s truncation to an even length emptied it (the
-        // table has one such entry, PATTERN_SOLID_LINE, and the line types that use
-        // it never reach this branch). Both cases fall through to a solid pen, as
-        // this branch did before the change detection was added.
-        style = Qt::SolidLine;
     }
-    // processing solid line
-
-    bool changed = !painterHoldsLastUsedPen;
+    if (style != Qt::CustomDashLine && m_lastUsedPen.style() != style) {
+        m_lastUsedPen.setStyle(style); // drops any dash pattern
+        m_lastDashValid = false;
+    }
     if (m_lastUsedPen.color() != pColor) {
         m_lastUsedPen.setColor(pColor);
-        changed = true;
     }
-    if (m_lastUsedPen.widthF() != screenWidth) {
-        // fixme - sand - check whether it's ok to compare doubles there!
-        m_lastUsedPen.setWidthF(screenWidth);
-        changed = true;
-    }
-    if (m_lastUsedPen.style() != style) {
-        // QPen::setStyle() drops any custom dash pattern, so the dash key stops
-        // describing this pen.
-        m_lastUsedPen.setStyle(style);
-        m_lastDashValid = false;
-        changed = true;
-    }
+    m_lastUsedPen.setWidthF(screenWidth);
+    m_lastUsedPen.setJoinStyle(m_penJoinStyle);
+    m_lastUsedPen.setCapStyle(m_penCapStyle);
 
-    if (changed) {
-        // Applied here rather than unconditionally so that m_lastUsedPen never
-        // records a join or cap the painter was not given: on the skip path they
-        // used to be written into the copy alone, which moved no pixel but left the
-        // copy describing a pen QPainter does not hold. What reaches the painter is
-        // unchanged - a join or cap change on its own still installs nothing on
-        // this branch, as has always been the case here. The dashed branch above
-        // does compare them, because it used to install a fresh pen on every call,
-        // which is what made those setters take effect there.
-        m_lastUsedPen.setJoinStyle(m_penJoinStyle);
-        m_lastUsedPen.setCapStyle(m_penCapStyle);
+    // QPen setters leave an unchanged pen shared, so this is a pointer comparison
+    // unless something changed. It checks the painter's own pen, which
+    // QPainter::restore() or a pen set on the QPainter base may have replaced.
+    if (QPainter::pen() != m_lastUsedPen) {
         QPainter::setPen(m_lastUsedPen);
     }
 }
@@ -1748,14 +1636,6 @@ void RS_Painter::setPen(const RS_Color& color) {
             QPainter::setPen(color);
             break;
     }
-    // m_lastUsedPen is deliberately left describing the pen before this one. What
-    // Qt installs here is QPen(QColor): width 1, and its own SquareCap and
-    // BevelJoin rather than this painter's configured cap and join. Recording it
-    // would let the next request for that colour at width 1 - the width most screen
-    // pens have - match on everything the solid branch compares and be skipped,
-    // leaving a square cap and a bevel join behind, a pen the caller never asked
-    // for. Left alone it costs one comparison: setPen(const RS_Pen&) asks the
-    // painter, does not find this copy, and installs.
 }
 
 void RS_Painter::setPen(int r, int g, int b) {
@@ -1779,16 +1659,11 @@ void RS_Painter::setPen(int r, int g, int b) {
             break;
         }
     }
-    // Left alone, for the reason given in setPen(const RS_Color&): it installs the
-    // same QPen(QColor).
 }
 
 void RS_Painter::disablePen() {
     m_lpen = RS_Pen(RS2::FlagInvalid);
     QPainter::setPen(Qt::NoPen);
-    // Left alone, as in setPen(const RS_Color&): Qt builds the pen for a bare style
-    // with its own defaults for everything except the style, and a request that
-    // matched those would be skipped against a pen no caller chose.
 }
 
 void RS_Painter::setBrushColor(const RS_Color& color) {

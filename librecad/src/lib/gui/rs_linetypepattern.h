@@ -27,7 +27,7 @@
 #ifndef RS_LINETYPEPATTERN_H
 #define RS_LINETYPEPATTERN_H
 
-#include <vector>
+#include <QVector>
 
 namespace RS2 {
     enum LineType : short;
@@ -37,9 +37,9 @@ namespace RS2 {
  * Stores a line type pattern.
  */
 struct RS_LineTypePattern {
-    RS_LineTypePattern(const std::initializer_list<double>& pattern);
+    RS_LineTypePattern(const std::initializer_list<qreal>& pattern);
 
-    std::vector<double> pattern;
+    QVector<qreal> pattern;
     double totalLength = 0.;
     std::size_t num = 0;
 
