@@ -424,8 +424,8 @@ bool dxfKeywordEquals(const std::string& value, const char* keyword) {
 }
 
 bool dxfTableEntryComplete(const DRW_TableEntry& entry,
-                           DRW::Version sourceVersion) {
-    if (entry.name.empty())
+                           DRW::Version sourceVersion, bool nameOptional = false) {
+    if (entry.name.empty() && !nameOptional)
         return false;
     return sourceVersion == DRW::UNKNOWNV || sourceVersion <= DRW::AC1009
         || entry.handle != DRW::NoHandle;
@@ -8075,6 +8075,9 @@ bool dxfRW::processClasses() {
                 return setError(DRW::BAD_CODE_PARSED);
             hasProxyFlag = true;
             cls.proxyFlag = reader->getInt32();
+            // A 16-bit mask; LibreDWG sets the upper 16 bits.
+            if ((static_cast<std::uint32_t>(cls.proxyFlag) >> 16) == 0xFFFFu)
+                cls.proxyFlag &= 0xFFFF;
             if (cls.proxyFlag < 0)
                 return setError(DRW::BAD_CODE_PARSED);
             break;
@@ -8287,8 +8290,10 @@ bool dxfRW::processBlockRecord() {
                 {
                     const std::uint32_t insertHandle =
                         reader->getHandleString();
-                    if (insertHandle == DRW::NoHandle
-                        || !recordInsertHandles.insert(insertHandle).second)
+                    // BricsCAD writes null references in {BLKREFS.
+                    if (insertHandle == DRW::NoHandle)
+                        break;
+                    if (!recordInsertHandles.insert(insertHandle).second)
                         return setError(DRW::BAD_CODE_PARSED);
                     record.insertHandles.push_back(insertHandle);
                 }
@@ -8516,7 +8521,10 @@ bool dxfRW::processTextStyle(){
     std::vector<DRW_Textstyle> pendingTextStyles;
     std::set<std::uint32_t> seenHandles;
     const auto publishTextStyle = [&]() -> bool {
-        if (!dxfTableEntryComplete(TxtSty, reader->getSourceVersion())
+        // A shape file (flag 1), such as the ltypeshp.shx AutoCAD adds for
+        // complex linetypes, is a STYLE record without a name.
+        const bool shapeFile = (TxtSty.flags & 0x01) != 0;
+        if (!dxfTableEntryComplete(TxtSty, reader->getSourceVersion(), shapeFile)
             || !TxtSty.validateDxf())
             return false;
         if (TxtSty.handle != DRW::NoHandle
@@ -8978,11 +8986,10 @@ bool dxfRW::processBlock() {
             const bool requiresHandle =
                 reader->getSourceVersion() != DRW::UNKNOWNV
                 && reader->getSourceVersion() > DRW::AC1009;
-            if (!hasName || block.name.empty()
-                || (requiresHandle && (!hasHandle
-                                       || block.handle == DRW::NoHandle))) {
+            if (requiresHandle && (!hasHandle || block.handle == DRW::NoHandle))
                 return setError(DRW::BAD_READ_BLOCKS);
-            }
+            if (!hasName)
+                block.name.clear();
             if (block.handle != DRW::NoHandle
                 && m_readingContext.blockRecordMap.find(block.handle)
                        != m_readingContext.blockRecordMap.end()) {
@@ -8999,14 +9006,19 @@ bool dxfRW::processBlock() {
                 block.previewData =
                     m_readingContext.resolveBlockRecordPreview(block.parentHandle);
             }
+            // A BLOCK without a name takes its BLOCK_RECORD name, found above.
+            // Without one no INSERT can refer to it, so it is read and dropped.
+            const bool dropBlock = block.name.empty();
             if (block.handle != DRW::NoHandle && !block.name.empty()) {
                 stagedBlockRecord.name = block.name;
                 stagedBlockRecord.insUnits = block.insUnits;
                 stagedBlockRecord.previewData = block.previewData;
                 hasStagedBlockRecord = true;
             }
-            iface->addBlock(block);
-            blockPublished = true;
+            if (!dropBlock) {
+                iface->addBlock(block);
+                blockPublished = true;
+            }
             if (boundary == DxfEntityBoundary::EndBlock) {
                 if (!consumeEndBlock()) {
                     closePublishedBlock();
@@ -9044,7 +9056,7 @@ bool dxfRW::processBlock() {
                     closePublishedBlock();
                     return setError(DRW::BAD_READ_BLOCKS);
                 }
-                if (!blockEvents.flush()) {
+                if (!dropBlock && !blockEvents.flush()) {
                     closePublishedBlock();
                     return setError(DRW::BAD_READ_BLOCKS);
                 }
@@ -11481,7 +11493,13 @@ bool dxfRW::processSortEntsTable() {
             iface->addRawDxfObject(raw);
             return true;
         }
-        if (!captureAndParseRawDxfGroup(raw, code, data))
+        // In the body 5 is an entity's sort handle, which is often that
+        // entity's own handle, not this object's.
+        const bool sortHandle = data.m_dxfInBody && code == DRW::dxfCode::HANDLE;
+        if (sortHandle ? !(captureRawGroup(raw, code, /*validateHandles=*/true,
+                                           /*selfHandle=*/false)
+                           && data.parseCode(code, reader))
+                       : !captureAndParseRawDxfGroup(raw, code, data))
             return setError(DRW::BAD_CODE_PARSED);
     }
     return setError(DRW::BAD_READ_OBJECTS);
@@ -12171,7 +12189,12 @@ bool dxfRW::processXRecord() {
             return true;
         }
 
-        if (!captureAndParseRawDxfGroup(raw, code, record))
+        // In the record data every 102 is a value, such as AutoCAD's
+        // DISPLAYNAME or "{ATTRRECORD" ... "ATTRRECORD}".
+        const bool dataGroup = code == 102 && record.m_dxfBodySeen;
+        if (dataGroup ? !(captureRawGroup(raw, code, /*validateHandles=*/true)
+                          && record.parseCode(code, reader))
+                      : !captureAndParseRawDxfGroup(raw, code, record))
             return setError(DRW::BAD_CODE_PARSED);
     }
     return setError(DRW::BAD_READ_OBJECTS);
@@ -12593,7 +12616,7 @@ bool dxfRW::processFieldList() {
                 return setError(DRW::BAD_READ_OBJECTS);
             DRW_DBG(nextentity); DRW_DBG("\n");
             if (state != FieldListState::Complete || !sawHandle
-                || !sawCount || !sawUnknown || list.handle == 0 || fieldCount < 0
+                || !sawCount || list.handle == 0 || fieldCount < 0
                 || static_cast<std::size_t>(fieldCount)
                     != list.m_fieldHandles.size()
                 || !validateCapturedRawDxfObject(raw, binFile))
@@ -12636,8 +12659,9 @@ bool dxfRW::processFieldList() {
                 state = FieldListState::IdSet;
                 continue;
             }
+            // 290 is optional: ezdxf omits it.
             if (sub == "AcDbFieldList" && state == FieldListState::IdSet
-                && sawCount && sawUnknown
+                && sawCount
                 && static_cast<std::size_t>(fieldCount)
                        == list.m_fieldHandles.size()) {
                 state = FieldListState::Complete;
@@ -12650,7 +12674,8 @@ bool dxfRW::processFieldList() {
             return setError(DRW::BAD_CODE_PARSED);
 
         if (state == FieldListState::Preamble) {
-            if (sawApplicationData)
+            // AutoCAD writes the owner after the reactors group.
+            if (sawApplicationData && code != 330)
                 return setError(DRW::BAD_CODE_PARSED);
             switch (code) {
             case 5:
@@ -12691,7 +12716,7 @@ bool dxfRW::processFieldList() {
             break;
         case 330: {
             const std::uint32_t h = reader->getHandleString();
-            if (!sawCount || !sawUnknown || fieldCount < 0
+            if (!sawCount || fieldCount < 0
                 || list.m_fieldHandles.size() >= DRW_Field::kMaxItems
                 || list.m_fieldHandles.size()
                        >= static_cast<std::size_t>(fieldCount))
@@ -13102,6 +13127,7 @@ bool validateRawDxfGroups(const std::vector<DRW_Variant>& groups,
 
     const bool writesRawValues = hasRawValues && !binaryOutput;
     int applicationDepth = 0;
+    bool xrecordData = false;
     for (std::size_t groupIndex = 0; groupIndex < groups.size(); ++groupIndex) {
         const DRW_Variant& group = groups[groupIndex];
         const int code = group.code();
@@ -13172,6 +13198,11 @@ bool validateRawDxfGroups(const std::vector<DRW_Variant>& groups,
             break;
         }
 
+        // XRECORD data 102 groups are values, not application groups.
+        if (code == 0 || (code == 100 && applicationDepth == 0))
+            xrecordData = code == 100 && std::string(group.c_str()) == "AcDbXrecord";
+        if (code == 102 && xrecordData)
+            continue;
         if (code == 102 && writesRawValues) {
             const DRW_Variant rawMarker(code, rawValues[groupIndex]);
             if (!updateRawDxfApplicationDepth(rawMarker, applicationDepth))
@@ -13317,8 +13348,11 @@ bool validateProxyDxfPayloads(const DxfProxyCapture& capture) {
                             capture.primaryByteSize)
         && bitCountMatches(capture.body, capture.hasBodyBitSize,
                            capture.bodyBitSize)
-        && byteCountMatches(capture.unknown, capture.hasUnknownByteSize,
-                            capture.unknownByteSize);
+        // 96/162 may count bytes or bits.
+        && (byteCountMatches(capture.unknown, capture.hasUnknownByteSize,
+                             capture.unknownByteSize)
+            || bitCountMatches(capture.unknown, capture.hasUnknownByteSize,
+                               capture.unknownByteSize));
 }
 
 int proxyDxfHandleCode(int code) {
@@ -13644,7 +13678,7 @@ void applyProxyDxfCapture(DRW_ProxyObject& object,
 //type and uses rawValues only for ASCII source spellings. Also latches code 5
 //-> handle and code 330 -> parentHandle.
 bool dxfRW::captureRawGroup(DRW_RawDxfObject &obj, int code,
-                            bool validateHandles) {
+                            bool validateHandles, bool selfHandle) {
     if (obj.m_version == DRW::UNKNOWNV)
         obj.m_version = reader->getSourceVersion();
     obj.hasRawValues = !binFile;
@@ -13655,7 +13689,7 @@ bool dxfRW::captureRawGroup(DRW_RawDxfObject &obj, int code,
         if (!validHandle)
             return false;
     }
-    if (code == DRW::dxfCode::HANDLE) {
+    if (code == DRW::dxfCode::HANDLE && selfHandle) {
         std::uint64_t rawHandle = 0;
         if (!parseRawDxfHandleLexeme(reader->getString(), rawHandle))
             return false;

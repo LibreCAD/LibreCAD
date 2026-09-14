@@ -15000,8 +15000,9 @@ bool DRW_Spline::validatePayloadFields(bool allowMixedLists) const {
     };
 
     if (!isValidSplineDegree(degree)
-        || flags < 0
-        || (static_cast<std::uint32_t>(flags) & ~0x1Fu) != 0u
+        // Bits above 16 (AutoCAD 2013+ sets 32 and 1024 on fit splines) are
+        // not used, but a 16-bit value is accepted.
+        || flags < 0 || flags > 0xFFFF
         || !finiteCoord(normalVec) || !finiteCoord(tgStart)
         || !finiteCoord(tgEnd) || !finite(tolknot)
         || !finite(tolcontrol) || !finite(tolfit)
