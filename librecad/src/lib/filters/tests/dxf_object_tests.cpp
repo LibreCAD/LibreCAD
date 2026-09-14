@@ -3751,6 +3751,35 @@ TEST_CASE("DXF BLOCK handle requirement follows source version",
   }
 }
 
+// Issue #2851: every DXF LibreCAD 2.2 saved failed to open, because its
+// Paper_Space ENDBLK names the Model_Space BLOCK_RECORD as owner.
+TEST_CASE("DXF reads the blocks LibreCAD 2.2 writes", "[dxf][block]") {
+  BlockCapture capture;
+  const std::string dxf =
+      "999\ndxfrw 0.6.3\n0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n"
+      "0\nENDSEC\n0\nSECTION\n2\nTABLES\n"
+      "0\nTABLE\n2\nBLOCK_RECORD\n5\n1\n330\n0\n100\nAcDbSymbolTable\n70\n2\n"
+      "0\nBLOCK_RECORD\n5\n1F\n330\n1\n100\nAcDbSymbolTableRecord\n"
+      "100\nAcDbBlockTableRecord\n2\n*Model_Space\n70\n0\n280\n1\n281\n0\n"
+      "0\nBLOCK_RECORD\n5\n1E\n330\n1\n100\nAcDbSymbolTableRecord\n"
+      "100\nAcDbBlockTableRecord\n2\n*Paper_Space\n70\n0\n280\n1\n281\n0\n"
+      "0\nENDTAB\n0\nENDSEC\n0\nSECTION\n2\nBLOCKS\n"
+      "0\nBLOCK\n5\n20\n330\n1F\n100\nAcDbEntity\n8\n0\n100\nAcDbBlockBegin\n"
+      "2\n*Model_Space\n70\n0\n10\n0\n20\n0\n30\n0\n3\n*Model_Space\n1\n\n"
+      "0\nENDBLK\n5\n21\n330\n1F\n100\nAcDbEntity\n8\n0\n100\nAcDbBlockEnd\n"
+      "0\nBLOCK\n5\n1C\n330\n1B\n100\nAcDbEntity\n8\n0\n100\nAcDbBlockBegin\n"
+      "2\n*Paper_Space\n70\n0\n10\n0\n20\n0\n30\n0\n3\n*Paper_Space\n1\n\n"
+      "0\nENDBLK\n5\n1D\n330\n1F\n100\nAcDbEntity\n8\n0\n100\nAcDbBlockEnd\n"
+      "0\nENDSEC\n0\nSECTION\n2\nENTITIES\n"
+      "0\nLINE\n5\n4D\n100\nAcDbEntity\n8\n0\n100\nAcDbLine\n"
+      "10\n0\n20\n85\n11\n0\n21\n0\n"
+      "0\nENDSEC\n0\nEOF\n";
+  CHECK(tryReadDxf(dxf, capture, "lc_librecad22_blocks.dxf"));
+  CHECK(capture.m_blocks.size() == 2);
+  CHECK(capture.m_endBlockCount == 2);
+  CHECK(capture.m_lineCount == 1);
+}
+
 TEST_CASE("DXF ENDBLK validates modern footer identity",
           "[dxf][block][malformed]") {
   const auto makeDxf = [](const std::string& footer) {
@@ -3777,11 +3806,22 @@ TEST_CASE("DXF ENDBLK validates modern footer identity",
     CHECK(capture.m_endBlockCount == 1);
   }
 
-  SECTION("rejects an owner that differs from BLOCK") {
+  SECTION("accepts an owner that differs from BLOCK") {
     BlockCapture capture;
-    CHECK_FALSE(tryReadDxf(
+    CHECK(tryReadDxf(
         makeDxf("0\nENDBLK\n5\nA2\n330\nA9\n"), capture,
         "lc_endblk_owner_mismatch.dxf"));
+    CHECK(capture.m_blocks.size() == 1);
+    CHECK(capture.m_endBlockCount == 1);
+  }
+
+  SECTION("accepts common entity codes") {
+    BlockCapture capture;
+    CHECK(tryReadDxf(
+        makeDxf("0\nENDBLK\n5\nA2\n330\nA1\n100\nAcDbEntity\n67\n1\n"
+                "8\n0\n62\n7\n420\n16777215\n48\n1.0\n"
+                "100\nAcDbBlockEnd\n"),
+        capture, "lc_endblk_common_entity_codes.dxf"));
     CHECK(capture.m_blocks.size() == 1);
     CHECK(capture.m_endBlockCount == 1);
   }

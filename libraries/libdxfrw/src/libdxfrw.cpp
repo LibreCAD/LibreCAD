@@ -8871,11 +8871,20 @@ bool dxfRW::processBlock() {
                 || (value >= 1040 && value <= 1042)
                 || value == 1070 || value == 1071;
         };
-        const auto isAllowedCode = [isXdataCode](int value) {
+        // ENDBLK is an entity: AutoCAD, dxflib and others write common entity
+        // codes on it, such as 67 on the Paper_Space footer.
+        const auto isCommonEntityCode = [](int value) {
+            return value == 6 || value == 48 || value == 60 || value == 62
+                || value == 67 || value == 284 || value == 347 || value == 360
+                || value == 370 || value == 390 || value == 420 || value == 430
+                || value == 440;
+        };
+        const auto isAllowedCode = [isXdataCode, isCommonEntityCode](int value) {
             return value == DRW::dxfCode::HANDLE
                 || value == DRW::dxfCode::OWNER_HANDLE
                 || value == DRW::dxfCode::LAYER
-                || value == 100 || value == 102 || isXdataCode(value);
+                || value == 100 || value == 102 || isXdataCode(value)
+                || isCommonEntityCode(value);
         };
 
         while (reader->readRec(&code)) {
@@ -8938,17 +8947,15 @@ bool dxfRW::processBlock() {
                 sourceVersion != DRW::UNKNOWNV && sourceVersion > DRW::AC1009;
             // Minimal modern BLOCK fixtures may omit the optional-looking
             // owner pair entirely. Once BLOCK carries a BLOCK_RECORD owner,
-            // however, ENDBLK must carry the same owner as well.
+            // however, ENDBLK must carry an owner as well. It need not be the
+            // same one: LibreCAD 2.2 wrote the Model_Space owner on the
+            // Paper_Space ENDBLK (issue #2851), and the BLOCK owner governs.
             const bool requiresOwner = reader->hasSourceVersion()
                 && sourceVersion > DRW::AC1014
                 && block.parentHandle != DRW::NoHandle;
             if ((requiresHandle && !hasEndHandle)
                 || (requiresOwner && !hasEndOwner))
                 return false;
-            if (hasEndOwner && block.parentHandle != DRW::NoHandle
-                && endOwner != block.parentHandle)
-                return false;
-
             return boundary == DxfEntityBoundary::NextEntity
                 || boundary == DxfEntityBoundary::EndSection;
         }
