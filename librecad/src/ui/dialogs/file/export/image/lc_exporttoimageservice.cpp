@@ -49,7 +49,6 @@ bool LC_ExportToImageService::exportGraphicsToImage(RS_Graphic* graphic, const Q
         options.fileName = fileName;
         options.format = format;
 
-        m_appWin->showStatusMessage(tr("Exporting drawing..."), 2000);
         QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 
         LC_ImageExporter exporter;
@@ -57,7 +56,7 @@ bool LC_ExportToImageService::exportGraphicsToImage(RS_Graphic* graphic, const Q
         const bool ret = exporter.exportToImage(graphic, options);
         if (ret) {
             const QString message = tr("Exported: %1").arg(fileName);
-            m_appWin->notificationMessage(message, 20000);
+            m_appWin->showStatusMessage(message, 20000);
         } else {
             m_appWin->showStatusMessage(tr("Export failed!"), 2000);
         }

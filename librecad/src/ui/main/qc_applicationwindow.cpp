@@ -262,8 +262,7 @@ bool QC_ApplicationWindow::doSave(QC_MDIWindow* w, const bool forceSaveAs) {
         if (drawingFileFullPath.isEmpty()) {
             doActivate(w); // show the user the drawing for save as
         }
-        QString msg = drawingFileFullPath.isEmpty() ? tr("Saving drawing...") : tr("Saving drawing: %1").arg(drawingFileFullPath);
-        showStatusMessage(msg);
+        QString msg;
         bool cancelled = false;
         const bool saved = forceSaveAs ? w->saveDocumentAs(cancelled) : w->saveDocument(cancelled);
         if (saved) {
@@ -274,7 +273,7 @@ bool QC_ApplicationWindow::doSave(QC_MDIWindow* w, const bool forceSaveAs) {
 
             drawingFileFullPath = w->getFileName();
             msg = tr("Saved drawing: %1").arg(drawingFileFullPath);
-            notificationMessage(msg, 2000);
+            showStatusMessage(msg, 2000);
 
             m_recentFilesList->addIfAbsent(drawingFileFullPath);
 
@@ -287,7 +286,7 @@ bool QC_ApplicationWindow::doSave(QC_MDIWindow* w, const bool forceSaveAs) {
         }
         else {
             msg = tr("Cannot save the file ") + w->getFileName() + tr(" , please check the filename and permissions.");
-            notificationMessage(msg, 2000);
+            showStatusMessage(msg, 2000);
             return doSave(w, true);
         }
     }
@@ -843,7 +842,6 @@ bool QC_ApplicationWindow::newDrawingFromTemplate(const QString& fileName, QC_MD
     constexpr RS2::FormatType type = RS2::FormatDXFRW;
 
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
-    showStatusMessage(tr("Creating new file..."));
     w = createNewDrawingWindow(nullptr, "");
     qApp->processEvents(QEventLoop::AllEvents, 1000);
 
@@ -863,7 +861,7 @@ bool QC_ApplicationWindow::newDrawingFromTemplate(const QString& fileName, QC_MD
         autoZoomAfterLoad(w->getGraphicView());
         if (!noFile) {
             const QString message = tr("New document from template: ") + fileName;
-            notificationMessage(message, 2000);
+            showStatusMessage(message, 2000);
         }
         else {
             showStatusMessage(tr("New Drawing created."), 2000);
@@ -1072,7 +1070,6 @@ int QC_ApplicationWindow::maybeSurfaceBlocksDock(RS_Graphic *graphic) {
 void QC_ApplicationWindow::openFile(const QString& fileName, const RS2::FormatType type) {
     if (!QFileInfo::exists(fileName)) {
         m_commandWidget->appendHistory(tr("File '%1' does not exist. Opening aborted").arg(fileName));
-        showStatusMessage(tr("Opening aborted"), 2000);
         return;
     }
 
@@ -1080,7 +1077,7 @@ void QC_ApplicationWindow::openFile(const QString& fileName, const RS2::FormatTy
 
     if (m_openedFiles.indexOf(fileName) >= 0) {
         const QString message = tr("Warning: File already opened : ") + fileName;
-        notificationMessage(message, 2000);
+        showStatusMessage(message, 2000);
     }
 
     // Create new document window:
@@ -1147,7 +1144,7 @@ void QC_ApplicationWindow::openFile(const QString& fileName, const RS2::FormatTy
       message = tr("Loaded document: ") + fileName;
       messageTimeout = 2000;
     }
-    notificationMessage(message, messageTimeout);
+    showStatusMessage(message, messageTimeout);
 
     QApplication::restoreOverrideCursor();
 }
@@ -1234,7 +1231,6 @@ void QC_ApplicationWindow::autoSaveCurrentDrawing() {
         startAutoSaveTimer(false);
         return;
     }
-    showStatusMessage(tr("Auto-saving drawing..."), 2000);
 
     const QC_MDIWindow* w = getCurrentMDIWindow();
     RS_DEBUG->print("QC_ApplicationWindow::autoSaveCurrentDrawing(): current window=%p", w);
@@ -1261,16 +1257,8 @@ void QC_ApplicationWindow::autoSaveCurrentDrawing() {
     }
 }
 
-void QC_ApplicationWindow::showStatusMessage(const QString& msg, const int timeout) const {
-    statusBar()->showMessage(msg, timeout);
-}
-
-void QC_ApplicationWindow::notificationMessage(const QString& msg, const int timeout) const {
-    statusBar()->showMessage(msg, timeout);
-    const bool duplicateMessageInCmdWidget = true; // fixme - sand - complete - setting? Rework later with cmd
-    if (duplicateMessageInCmdWidget) {
-        m_commandWidget->appendHistory(msg);
-    }
+void QC_ApplicationWindow::showStatusMessage(const QString& msg, [[maybe_unused]] const int timeout) const {
+    commandMessage(msg);
 }
 
 void QC_ApplicationWindow::initCompleted() {
@@ -1402,11 +1390,9 @@ void QC_ApplicationWindow::slotFilePrint(const bool printPDF) {
 
     const RS_Graphic* graphic = w->getDocument()->getGraphic();
     if (graphic != nullptr) {
-        showStatusMessage(tr("Printing..."));
         using namespace LC_Printing;
         const PrinterType type = printPDF ? PrinterType::PDF : PrinterType::Printer;
         print(*w, type);
-        showStatusMessage(tr("Printing complete"), 2000);
     }
 }
 
@@ -1499,7 +1485,6 @@ void QC_ApplicationWindow::slotFilePrintPreview(const bool on) {
  * Menu file -> quit.
  */
 void QC_ApplicationWindow::slotFileQuit() {
-    showStatusMessage(tr("Exiting application..."));
     qApp->quit(); // signal handler closeEvent() will take care of modifications
 }
 
@@ -1870,7 +1855,6 @@ void QC_ApplicationWindow::toggleMainMenu(const bool toggle) {
 void QC_ApplicationWindow::slotFileOpenRecent(const QAction* action) {
     const auto variant = action->data();
     if (variant.isValid()) {
-        showStatusMessage(tr("Opening recent file..."));
         const QString fileName = variant.toString();
         openFile(fileName, RS2::FormatUnknown);
     }

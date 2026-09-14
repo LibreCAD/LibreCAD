@@ -74,8 +74,8 @@ bool LC_ActionLayersExport::collectLayersToExport(LC_LayersExportOptions* export
         /* No export layer found. */
         const QString exportModeString = (m_exportMode == SelectedMode) ? tr("selected", "Layers to export"): tr("visible", "Layers to export");
         // fixme - sand - files - use more generic way for message notify!
-        QC_ApplicationWindow::getAppWindow()->statusBar()->showMessage( QObject::tr("No %1 layers found").arg(exportModeString),
-                                                                        QC_ApplicationWindow::DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT);
+        QC_ApplicationWindow::getAppWindow()->showStatusMessage( QObject::tr("No %1 layers found").arg(exportModeString),
+                                                                 QC_ApplicationWindow::DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT);
         RS_DEBUG->print(RS_Debug::D_ERROR, "LC_ActionLayersExport::trigger: No %s layers found", exportModeString.toStdString().c_str());
         return false;
     }
