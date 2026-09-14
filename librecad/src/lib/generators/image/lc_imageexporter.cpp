@@ -95,8 +95,8 @@ void LC_ImageExporter::renderGraphic(RS_Graphic* graphic, const ExportOptions& o
     prepareViewport(graphic, options, viewport);
 
     auto renderer = LC_PrintViewportRenderer(&viewport, &painter);
+    renderer.loadSettings(); // sets white paper
     renderer.setBackground(options.backgroundBlack ? Qt::black : Qt::white);
-    renderer.loadSettings();
     renderer.render();
 }
 
