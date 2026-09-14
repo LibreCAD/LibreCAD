@@ -3371,19 +3371,23 @@ TEST_CASE("DXF rejects duplicate BLOCK self handles",
   CHECK(cap.m_endBlockCount == 1);
 }
 
-TEST_CASE("DXF rejects duplicate typed entity self handles",
+TEST_CASE("DXF drops the empty or repeated handle of a typed entity",
           "[dxf][entities][handles][malformed]") {
-  LineCapture cap;
+  class Capture final : public StubInterface {
+  public:
+    std::vector<std::uint32_t> handles;
+    void addLine(const DRW_Line &line) override { handles.push_back(line.handle); }
+  } cap;
   const char *dxf =
       "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n"
       "0\nENDSEC\n0\nSECTION\n2\nENTITIES\n"
       "0\nLINE\n5\n30\n8\n0\n10\n0\n20\n0\n11\n1\n21\n1\n"
       "0\nLINE\n5\n30\n8\n0\n10\n2\n20\n2\n11\n3\n21\n3\n"
+      "0\nLINE\n5\n\n8\n0\n10\n4\n20\n4\n11\n5\n21\n5\n"
       "0\nENDSEC\n0\nEOF\n";
 
-  CHECK_FALSE(tryReadDxf(dxf, cap, "lc_duplicate_entity_handle.dxf"));
-  CHECK(cap.m_callCount == 1);
-  CHECK(cap.m_captured.handle == 0x30u);
+  CHECK(tryReadDxf(dxf, cap, "lc_duplicate_entity_handle.dxf"));
+  CHECK(cap.handles == std::vector<std::uint32_t>{0x30u, 0u, 0u});
 }
 
 TEST_CASE("DXF basic entities require mandatory geometry fields",

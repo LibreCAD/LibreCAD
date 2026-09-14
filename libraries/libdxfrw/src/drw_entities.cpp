@@ -3024,9 +3024,14 @@ bool DRW_Entity::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     try {
     switch (code) {
     case DRW::dxfCode::HANDLE:
-        if (!reader->isValidHandleString() || !reader->registerSelfHandle())
+        // A damaged file's empty or repeated handle on a typed entity is
+        // dropped; the entity loads and gets a new handle when saved.
+        if (reader->getString().empty())
+            break;
+        if (!reader->isValidHandleString())
             return false;
-        handle = reader->getHandleString();
+        if (reader->registerSelfHandle())
+            handle = reader->getHandleString();
         break;
     case DRW::dxfCode::OWNER_HANDLE:
         parentHandle = reader->getHandleString();
