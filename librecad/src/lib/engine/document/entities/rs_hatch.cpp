@@ -275,6 +275,21 @@ void RS_Hatch::update() {
     m_updateRunning = true;
     m_updateError = HATCH_OK;
 
+    // Delete the pattern lines of an earlier update: validate() drops them only
+    // when the loops need optimizing.
+    std::vector<RS_Entity*> loops;
+    std::vector<RS_Entity*> patternLines;
+    for (RS_Entity* en : std::as_const(*this)) {
+        (en->isContainer() ? loops : patternLines).push_back(en);
+    }
+    setOwner(false);
+    clear();
+    setOwner(true);
+    std::copy(loops.begin(), loops.end(), std::back_inserter(*this));
+    for (RS_Entity* en : patternLines) {
+        delete en;
+    }
+
     // Reset caches
     m_area = RS_MAXDOUBLE;
     m_secondMomentValid = false;
