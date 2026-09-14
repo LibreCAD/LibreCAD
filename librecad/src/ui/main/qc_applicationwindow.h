@@ -127,8 +127,8 @@ class QC_ApplicationWindow : public LC_MDIApplicationWindow {
     void fireWidgetSettingsChanged();
     void fireWorkspacesChanged();
     void fireCurrentActionIconChanged(QAction* actionIcon);
+    // Reports to the command history: a status-bar message hides the status widgets (issue #2841). timeout is ignored.
     void showStatusMessage(const QString& msg, int timeout = 0) const;
-    void notificationMessage(const QString& msg, int timeout) const;
     void initCompleted();
     void openFilesOnStartup(QStringList& fileList, QSplashScreen* splash) const;
     QMenu* createGraphicViewContentMenu(const QMouseEvent* event, QG_GraphicView* view, RS_Entity* entity, const RS_Vector& pos) const;

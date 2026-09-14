@@ -425,34 +425,14 @@ protected:
 
     Qt::PenJoinStyle m_penJoinStyle = Qt::RoundJoin;
     Qt::PenCapStyle m_penCapStyle = Qt::RoundCap;
-    // The pen setPen(const RS_Pen&) last built, and the pen it compares the next
-    // request against. It is not taken on trust to be the pen QPainter holds: that
-    // setPen() compares it against the painter's own pen before it may skip its
-    // work, so a pen installed by any other route - QPainter::restore(), or a
-    // member of this class that goes to the QPainter base - costs one extra
-    // QPainter::setPen() and cannot cause a wrong one to be kept.
+    // The pen setPen(const RS_Pen&) last built. It is compared with the painter's
+    // own pen before installing, not trusted to be it.
     QPen m_lastUsedPen;
-    // The dash pattern in m_lastUsedPen, and what it was built from, so that a
-    // repeated request can be answered without building the pattern again.
-    // m_lastDashValid carries the invariant: while it is true, m_lastUsedPen holds
-    // the pattern rsToQDashPattern() produces for exactly these three values. It is
-    // set where that pattern is built, and cleared by both places that can put
-    // another pattern into m_lastUsedPen - QPen::setStyle() on the solid branch and
-    // syncLastUsedPen() - so the key is never read against a pen it does not
-    // describe. It says nothing about what the painter holds, which is a separate
-    // question and asked separately.
-    // The three values are compared exactly, the doubles included: they are a memo
-    // key over the inputs of a pure function, not a test for a visible difference.
-    // An exact comparison can only rebuild a pattern that was already current -
-    // which is what every call did before the comparison existed - and can never
-    // keep one that belongs to another line type, width or resolution.
+    // What the dash pattern in m_lastUsedPen was built from, valid while it holds
+    // that pattern. Compared exactly: a mismatch only rebuilds the pattern.
     bool m_lastDashValid = false;
-    RS2::LineType m_lastDashLineType = RS2::SolidLine; // unread while !m_lastDashValid
+    RS2::LineType m_lastDashLineType = RS2::SolidLine;
     double m_lastDashScreenWidth = 0.;
-    // Cannot discriminate today: m_cachedDpmm is filled in the constructor and never
-    // updated, so every call on one painter sees the same resolution. It is in the
-    // key because it is an input of the pattern, and leaving it out would turn any
-    // later refresh of that cache into a silently stale pattern.
     double m_lastDashDpmm = 0.;
     double m_cachedDpmm = 0.;
     double m_minCircleDrawingRadius = 2.0;
@@ -491,7 +471,6 @@ protected:
 //    void drawPolygonF(const QPolygonF &a, Qt::FillRule rule);
     void debugOutPath(const QPainterPath &tmpPath) const;
     double getDpmmCached() const {return m_cachedDpmm;}
-    void syncLastUsedPen();
 
     void drawArcEntity(RS_Arc* arc, QPainterPath &path);
 
