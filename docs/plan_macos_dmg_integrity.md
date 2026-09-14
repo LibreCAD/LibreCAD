@@ -44,18 +44,18 @@ implementation details.
 
 | Phase | Status | Commit | Required evidence |
 | --- | --- | --- | --- |
-| 0. Baseline | Complete | Pending final commit hashes | Reusable app snapshot plus positive and generated negative checks |
-| 1. Independent verifier | Complete | Pending final commit hashes | App, mounted DMG, tamper, architecture, dependency, path, and cleanup checks |
-| 2. Deployment and signing | Complete | Pending final commit hashes | Account-free inside-out signing with no post-sign mutation |
-| 3. Plug-in layout | Implemented; GUI smoke pending | Pending final commit hashes | qmake/CMake place all ten plug-ins in `Contents/PlugIns/LibreCAD` |
-| 4. DMG construction | Complete | Pending final commit hashes | Direct and conversion backends both produce verified read-only images |
-| 5. Caller migration | Complete | Pending final commit hashes | CI, nightly, and legacy wrappers use the shared helpers |
-| 6. Optional notarization | Implemented; credentialed run pending | Pending final commit hashes | Fail-closed Developer ID, timestamp, team, runtime, stapling, and Gatekeeper checks |
-| 7. Documentation and cleanup | Complete | Pending final commit hashes | User guidance and search proving one owned DMG creation path |
+| 0. Baseline | Complete | `fcea8a45e` | Reusable app snapshot plus positive and generated negative checks |
+| 1. Independent verifier | Complete | `fcea8a45e` | App, mounted DMG, tamper, architecture, dependency, path, and cleanup checks |
+| 2. Deployment and signing | Complete | `fcea8a45e` | Account-free inside-out signing with no post-sign mutation |
+| 3. Plug-in layout | Implemented; GUI smoke pending | `97b976260` | qmake/CMake place all ten plug-ins in `Contents/PlugIns/LibreCAD` |
+| 4. DMG construction | Complete | `fcea8a45e` | Direct and conversion backends both produce verified read-only images |
+| 5. Caller migration | Complete | `101f7ae7f` | CI, nightly, and legacy wrappers use the shared helpers |
+| 6. Optional notarization | Implemented; credentialed run pending | `fcea8a45e` | Fail-closed Developer ID, timestamp, team, runtime, stapling, and Gatekeeper checks |
+| 7. Documentation and cleanup | Complete | `101f7ae7f` | User guidance and search proving one owned DMG creation path |
 
-Final commit hashes are recorded here after the implementation commits are
-rebased onto the current target branch. A phase is not marked complete when its
-required environment is unavailable; those limits are called out explicitly.
+The commit column records the implementation commits after rebasing onto the
+current target branch. A phase is not marked complete when its required
+environment is unavailable; those limits are called out explicitly.
 
 ## Implementation Evidence
 
