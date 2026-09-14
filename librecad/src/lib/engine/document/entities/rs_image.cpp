@@ -31,9 +31,9 @@
 #include <QApplication>
 #include<iostream>
 
-#include "qc_applicationwindow.h"
 #include "rs_debug.h"
 #include "rs_entitycontainer.h"
+#include "rs_graphic.h"
 #include "rs_line.h"
 #include "rs_math.h"
 #include "rs_painter.h"
@@ -43,16 +43,17 @@
 namespace {
     // fixme - sand - files - move to utility for relative paths calculations
 
-    // Return the file path name to use relative to the dxf file folder
-    QString imageRelativePathName(QString& imageFile) {
-        // fixme - sand - files - this logic is incorrect, as it relies on the currently open document.
-        // relative part should be calculated via graphics...
-        const auto currentDocumentFileName = QC_ApplicationWindow::getAppWindow()->getCurrentDocumentFileName();
-        if (currentDocumentFileName.isEmpty() || imageFile.isEmpty()) {
+    // Return the file path name to use relative to the folder of the image's drawing.
+    // The drawing, not the application window: console tools have no window, and
+    // creating one here crashed them at exit.
+    QString imageRelativePathName(const RS_Entity& image, QString& imageFile) {
+        const RS_Graphic* graphic = image.getGraphic();
+        const QString documentFileName = graphic != nullptr ? graphic->getFilename() : QString();
+        if (documentFileName.isEmpty() || imageFile.isEmpty()) {
             return imageFile;
         }
 
-        const QFileInfo dxfFileInfo(currentDocumentFileName);
+        const QFileInfo dxfFileInfo(documentFileName);
         QFileInfo fileInfo(imageFile);
         if (fileInfo.exists()) {
             // file exists as input file path
@@ -120,7 +121,7 @@ void RS_Image::update() {
     }
 
     // the whole image:
-    QString filePathName = imageRelativePathName(m_data.file);
+    QString filePathName = imageRelativePathName(*this, m_data.file);
 
     //QImage image = QImage(data.file);
     m_img = std::make_shared<QImage>(filePathName);

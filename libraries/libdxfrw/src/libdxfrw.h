@@ -503,7 +503,7 @@ private:
      * trusted for them — that was the A1/A4 capture bug). ASCII-DXF only. Also
      * latches code 5 -> handle and code 330 -> parentHandle. */
     bool captureRawGroup(DRW_RawDxfObject &obj, int code,
-                         bool validateHandles = false);
+                         bool validateHandles = false, bool selfHandle = true);
     bool captureRawDxfApplicationGroup(DRW_RawDxfObject &obj,
                                        std::list<std::list<DRW_Variant>> &appData,
                                        std::vector<std::uint32_t> &reactorHandles,

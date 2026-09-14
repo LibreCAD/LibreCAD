@@ -56,6 +56,11 @@ public:
     bool allowsWideHandleLexemes() const {
         return m_allowWideHandleLexemes;
     }
+    // DXF written by libdxfrw 0.5 holds the text style name in DIMSTYLE 340
+    // and leaves 341 empty, where handles belong.
+    void setAllowDimstyleNames(bool allow) {
+        m_allowDimstyleNames = allow;
+    }
     std::string toUtf8String(std::string t) {return decoder.toUtf8(t);}
     std::string getUtf8String() {return decoder.toUtf8(strData);}
     double getDouble() {return doubleData;}
@@ -95,6 +100,7 @@ private:
     DRW_TextCodec decoder;
     bool m_bIgnoreComments {false};
     bool m_allowWideHandleLexemes {false};
+    bool m_allowDimstyleNames {false};
     std::unordered_set<std::uint64_t> m_selfHandles;
     std::uint64_t m_currentSelfHandle {0};
     bool m_currentSelfHandleRegistered {false};
