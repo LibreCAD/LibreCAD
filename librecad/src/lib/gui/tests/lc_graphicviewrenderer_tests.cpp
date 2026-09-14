@@ -169,6 +169,31 @@ TEST_CASE("the pen cache ignores the dash offset of solid pens", "[gui][pen][lin
     }
 }
 
+TEST_CASE("draft and scaled pens do not answer for each other", "[gui][pen]") {
+    (void)lc::test::application();
+
+    // While panning, texts are drawn as draft at screen width 0 and other entities
+    // at their lineweight in the same pass.
+    LC_GraphicViewport viewport;
+    viewport.setSize(640, 480);
+    QImage image{64, 64, QImage::Format_RGB32};
+    RS_Painter painter{&image};
+    TestViewRenderer renderer{&viewport, &image};
+    renderer.beginPass();
+
+    RS_Line line{RS_Vector{0., 0.}, RS_Vector{100., 0.}};
+    line.setPen(testPen(RS2::SolidLine));
+
+    renderer.setPenForDraftEntity(&painter, &line, false);
+    installMarker(painter, RS2::SolidLine);
+    renderer.setPenForEntity(&painter, &line, false);
+    CHECK(painter.pen().color() != QColor(Qt::red));
+
+    installMarker(painter, RS2::SolidLine);
+    renderer.setPenForDraftEntity(&painter, &line, false);
+    CHECK(painter.pen().color() != QColor(Qt::red));
+}
+
 TEST_CASE("pens set outside the entity pen cache invalidate it", "[gui][pen]") {
     (void)lc::test::application();
 
