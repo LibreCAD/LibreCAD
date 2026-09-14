@@ -27,35 +27,20 @@
 #include <memory>
 #include <utility>
 
-#include <QApplication>
+#include <QColor>
+#include <QImage>
+#include <QPixmap>
 #include <QPoint>
 #include <QSettings>
 #include <QVariant>
 
 #include "lc_actioncontext.h"
+#include "lc_actiontestsupport.h"
 #include "qg_graphicview.h"
 #include "rs_graphic.h"
 #include "rs_settings.h"
 
 namespace {
-
-QApplication& application() {
-    static int argc = 1;
-    static char name[] = "librecad-tests";
-    static char* argv[] = {name, nullptr};
-    static QApplication* app = [] {
-        auto* existing = qobject_cast<QApplication*>(QCoreApplication::instance());
-        return existing != nullptr ? existing : new QApplication(argc, argv);
-    }();
-    static bool settingsReady = [] {
-        QCoreApplication::setOrganizationName("LibreCAD");
-        QCoreApplication::setApplicationName("LibreCAD-tests");
-        RS_Settings::init("LibreCAD", "LibreCAD-tests");
-        return true;
-    }();
-    (void)settingsReady;
-    return *app;
-}
 
 class SettingGuard {
 public:
@@ -109,7 +94,7 @@ private:
 } // namespace
 
 TEST_CASE("selection pointer reflects the appearance preference", "[gui][cursor]") {
-    (void)application();
+    (void)lc::test::application();
     SettingGuard selectionPointer{RS_SETTINGS, "Appearance", "UseLibreCADSelectionPointer"};
     GraphicViewFixture fixture;
 
@@ -122,6 +107,22 @@ TEST_CASE("selection pointer reflects the appearance preference", "[gui][cursor]
     fixture.view().loadSettings();
     CHECK(fixture.view().cursor().shape() == Qt::BitmapCursor);
     CHECK(fixture.view().cursor().hotSpot() == QPoint{50, 50});
+
+    // Dark and light opaque pixels, so the pointer shows on any background.
+    const QImage pointer = fixture.view().cursor().pixmap().toImage();
+    bool dark = false;
+    bool light = false;
+    for (int y = 0; y < pointer.height(); ++y) {
+        for (int x = 0; x < pointer.width(); ++x) {
+            const QColor pixel = pointer.pixelColor(x, y);
+            if (pixel.alpha() == 255) {
+                dark = dark || pixel.lightness() < 64;
+                light = light || pixel.lightness() > 192;
+            }
+        }
+    }
+    CHECK(dark);
+    CHECK(light);
 
     selectionPointer.set(false);
     fixture.view().loadSettings();
