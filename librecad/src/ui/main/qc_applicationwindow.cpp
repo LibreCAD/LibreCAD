@@ -689,11 +689,7 @@ void QC_ApplicationWindow::doWindowActivated(QMdiSubWindow* w, const bool forced
         // whether to enable undo/redo buttons
         activatedDocument->updateUndoState();
 
-        QAction* lockRelZeroAction = m_actionGroupManager->getActionByName("LockRelativeZero");
-        if (lockRelZeroAction != nullptr) {
-            const bool locked = activatedGraphicView->getViewPort()->isRelativeZeroLocked();
-            lockRelZeroAction->setChecked(locked);
-        }
+        m_snapManager->setRelativeZeroLock(activatedGraphicView->getViewPort()->isRelativeZeroLocked());
 
         activatedGraphicView->redraw();
 
