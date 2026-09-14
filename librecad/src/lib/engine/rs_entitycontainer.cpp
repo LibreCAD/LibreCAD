@@ -24,9 +24,11 @@
 **
 **********************************************************************/
 
+#include <algorithm>
 #include <cmath>
 #include <iostream>
 #include <set>
+#include <vector>
 
 #include <QtGlobal>
 #include "lc_looputils.h"
@@ -74,6 +76,24 @@ double endPointDistance(const RS_Vector& point, const RS_Entity& entity)
     double distance=RS_MAXDOUBLE;
     entity.getNearestEndpoint(point, &distance);
     return distance;
+}
+
+// Whether an end point of the edges meets no other: the contour is open. Around a
+// closed region, also one with an edge drawn twice, every end point meets another.
+bool hasLooseEnd(const QList<RS_Entity*>& edges)
+{
+    std::vector<RS_Vector> ends;
+    for (RS_Entity* edge: edges) {
+        ends.push_back(edge->getStartpoint());
+        ends.push_back(edge->getEndpoint());
+    }
+    std::sort(ends.begin(), ends.end(), [](const RS_Vector& a, const RS_Vector& b) { return a.x < b.x; });
+    std::vector<bool> met(ends.size(), false);
+    for (size_t i = 0; i < ends.size(); ++i)
+        for (size_t j = i + 1; j < ends.size() && ends[j].x - ends[i].x <= contourTolerance; ++j)
+            if (ends[i].distanceTo(ends[j]) <= contourTolerance)
+                met[i] = met[j] = true;
+    return std::find(met.begin(), met.end(), false) != met.end();
 }
 }
 
@@ -1624,6 +1644,9 @@ bool RS_EntityContainer::optimizeContours() {
     for(RS_Entity* it: enList)
         removeEntity(it);
 
+    // with an edge drawn twice, a closed contour may not chain back to its start
+    const bool looseEnd = hasLooseEnd(entities);
+
     /** check and form a closed contour **/
     /** the first entity **/
     const auto errMsg = QObject::tr("Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)");
@@ -1649,7 +1672,7 @@ bool RS_EntityContainer::optimizeContours() {
         double dist = 0.;
         RS_Vector vpTmp = getNearestEndpoint(vpEnd,&dist,&next);
         if (dist > contourTolerance) {
-            if(vpEnd.distanceTo(vpStart) < contourTolerance) {
+            if(!looseEnd || vpEnd.distanceTo(vpStart) < contourTolerance) {
                 RS_Entity* e2=entityAt(0);
                 RS_Entity* cl = e2->clone();
 		origVis[cl] = origVis[e2];
@@ -1682,7 +1705,7 @@ bool RS_EntityContainer::optimizeContours() {
         removeEntity(next);
     }
 
-    if (current && vpEnd.distanceTo(vpStart) > contourTolerance) {
+    if (current && looseEnd && vpEnd.distanceTo(vpStart) > contourTolerance) {
         QG_DIALOGFACTORY->commandMessage(errMsg.arg(vpEnd.distanceTo(vpStart))
                                          .arg(vpStart.x).arg(vpStart.y).arg(vpEnd.x).arg(vpEnd.y));
         RS_DEBUG->print("RS_EntityContainer::optimizeContours: hatch failed due to a gap");
