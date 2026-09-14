@@ -222,7 +222,9 @@ bool dxfReader::readRec(int *codeData) {
     const bool validHandle = m_allowWideHandleLexemes
         ? isValidHandleLexeme()
         : isValidHandleString();
-    if (isUnambiguousDxfHandleCode(code) && !validHandle) {
+    const bool dimstyleName = m_allowDimstyleNames
+        && (code == 340 || (code > 340 && code <= 344 && strData.empty()));
+    if (isUnambiguousDxfHandleCode(code) && !validHandle && !dimstyleName) {
         invalidateRecord();
         return false;
     }
@@ -552,8 +554,10 @@ bool dxfReaderAscii::readDouble() {
                && std::isspace(static_cast<unsigned char>(*end))) {
             ++end;
         }
+        // Overflow gives infinity. Underflow also sets ERANGE but is a valid,
+        // tiny value: libdxfrw 0.5 wrote 4.94065645841e-324 for $PSVPSCALE.
         if (end == text.c_str() || end == nullptr || *end != '\0'
-            || errno == ERANGE || !std::isfinite(parsed)) {
+            || !std::isfinite(parsed)) {
             DRW_DBG("dxfReaderAscii::readDouble(): reading double error: ");
             DRW_DBG(text);
             DRW_DBG('\n');

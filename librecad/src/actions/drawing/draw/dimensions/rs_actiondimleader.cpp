@@ -61,6 +61,12 @@ RS_Entity* RS_ActionDimLeader::doTriggerCreateEntity() {
     return nullptr;
 }
 
+// Every status of this action picks a point through the snapper
+// (LibreCAD#2824).
+bool RS_ActionDimLeader::isInVisualSnapStatus(int status) {
+    return status == SetStartpoint || status == SetEndpoint;
+}
+
 void RS_ActionDimLeader::onMouseMoveEvent(const int status, const LC_MouseEvent* e) {
     RS_Vector mouse = e->snapPoint;
     switch (status) {

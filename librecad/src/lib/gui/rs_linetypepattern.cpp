@@ -78,9 +78,9 @@ const RS_LineTypePattern PATTERN_BLOCK_LINE{{0.5, -0.5}};
 const RS_LineTypePattern PATTERN_SELECTED{{1.0, -3.0}};
 }
 
-RS_LineTypePattern::RS_LineTypePattern(const std::initializer_list<double>& pattern):
+RS_LineTypePattern::RS_LineTypePattern(const std::initializer_list<qreal>& pattern):
     pattern(pattern), num { pattern.size()}{
-    for(const double l: pattern){
+    for(const qreal l: pattern){
         totalLength += std::abs(l);
     }
 }

@@ -69,6 +69,7 @@ private:
     QAction* m_actionSnapVisual;
     QAction* m_actionSnapVisualLock;
     QAction* m_actionSnapFree;
+    QAction* m_actionSnapAngle;
     QAction* m_actionSnapGrid;
     QAction* m_actionSnapEnd;
     QAction* m_actionSnapOnEntity;

@@ -34,6 +34,8 @@
 
 #include "rs.h"
 
+class RS_Graphic;
+
 namespace LC_Console {
 
 struct CommandContext {
@@ -63,8 +65,13 @@ CommandContext contextForCommand(int argc, char** argv, const QString& commandNa
 QStringList acceptedExtensions(const QString& primaryExt,
                                const QStringList& compatibilityExts = {});
 QString extensionDescription(const QStringList& extensions);
+/**
+ * @brief collectInputFiles picks the arguments that name input files
+ * @param skippedArgs if given, receives the arguments that were left out
+ */
 QStringList collectInputFiles(const QStringList& positionalArgs,
-                              const QStringList& extensions);
+                              const QStringList& extensions,
+                              QStringList* skippedArgs = nullptr);
 bool containsDwgInput(const QStringList& files);
 bool dwgSupportAvailable();
 RS2::FormatType dwgFormatForVersion(const QString& version);
@@ -77,6 +84,25 @@ bool validateOutputOptions(int inputCount, const QString& outputFile,
                            bool allowOutputWithMultipleInputs,
                            bool allowOutputAndDirectory,
                            QString* errorMessage = nullptr);
+
+/**
+ * @brief validateOutputTargets refuses output paths that would destroy data: an
+ *        existing directory, one of the input files, or the same file twice
+ * @return false and a message naming the path, when the outputs are not safe
+ */
+bool validateOutputTargets(const QStringList& inputFiles, const QStringList& outputFiles,
+                           QString* errorMessage = nullptr);
+
+/**
+ * @brief importGraphic reads a drawing for a console command
+ *
+ * Import errors are reported on stderr. Without this, the import opens a
+ * message box that a console command can never close.
+ *
+ * @return false if the file cannot be read; a partial import is accepted
+ */
+bool importGraphic(RS_Graphic& graphic, const QString& inputFile,
+                   RS2::FormatType type = RS2::FormatUnknown);
 
 } // namespace LC_Console
 

@@ -1154,3 +1154,67 @@ TEST_CASE("LC_Hyperbola: isInfinite() and getStartpoint stay consistent (A9)",
   REQUIRE(hb2.getStartpoint().valid);
   REQUIRE(hb2.getEndpoint().valid);
 }
+
+TEST_CASE("LC_Hyperbola: borders of a rotated arc hold the whole arc and no more",
+          "[hyperbola][borders][regression]") {
+  // Catching skips entities whose borders are farther away than the cursor
+  // range, so borders missing part of the arc make that part uncatchable.
+  const double phiStart = -2.0;
+  const double phiEnd = 1.5;
+  for (const double degrees : {0.0, 40.0, 90.0, 135.0, 250.0}) {
+    for (const bool reversed : {false, true}) {
+      const RS_Vector majorP =
+          RS_Vector::polar(1000.0, RS_Math::deg2rad(degrees));
+      LC_Hyperbola hb{nullptr,
+                      LC_HyperbolaData(RS_Vector{30.0, -20.0}, majorP, 0.7,
+                                       phiStart, phiEnd, reversed)};
+      hb.calculateBorders();
+
+      RS_Vector sampledMin{RS_MAXDOUBLE, RS_MAXDOUBLE};
+      RS_Vector sampledMax{-RS_MAXDOUBLE, -RS_MAXDOUBLE};
+      const int samples = 4000;
+      for (int i = 0; i <= samples; ++i) {
+        const RS_Vector p =
+            hb.getPoint(phiStart + (phiEnd - phiStart) * i / samples, reversed);
+        REQUIRE(p.valid);
+        sampledMin = RS_Vector::minimum(sampledMin, p);
+        sampledMax = RS_Vector::maximum(sampledMax, p);
+      }
+
+      INFO("rotation " << degrees << " reversed " << reversed);
+      const RS_Vector min = hb.getMin();
+      const RS_Vector max = hb.getMax();
+      CHECK(min.x <= sampledMin.x);
+      CHECK(min.y <= sampledMin.y);
+      CHECK(max.x >= sampledMax.x);
+      CHECK(max.y >= sampledMax.y);
+      // no looser than the sampling step allows
+      CHECK(sampledMin.x - min.x < 1.0);
+      CHECK(sampledMin.y - min.y < 1.0);
+      CHECK(max.x - sampledMax.x < 1.0);
+      CHECK(max.y - sampledMax.y < 1.0);
+    }
+  }
+}
+
+TEST_CASE("LC_Hyperbola: setters keep the borders current",
+          "[hyperbola][borders][regression]") {
+  auto hb = makeCanonicalHyperbola(2.0, 1.0, -0.5, 0.5);
+  hb.setCenter(RS_Vector{100.0, 50.0});
+  CHECK(hb.getMin().x > 90.0);
+  CHECK(hb.getMin().y > 40.0);
+
+  hb.setMajorP(RS_Vector{0.0, 2.0});
+  const RS_Vector vertex = hb.getPoint(0.0, hb.isReversed());
+  CHECK(vertex.x >= hb.getMin().x);
+  CHECK(vertex.x <= hb.getMax().x);
+  CHECK(vertex.y >= hb.getMin().y);
+  CHECK(vertex.y <= hb.getMax().y);
+
+  hb.setAngle2(1.5);
+  const RS_Vector end = hb.getEndpoint();
+  CHECK(end.x <= hb.getMax().x);
+  CHECK(end.y <= hb.getMax().y);
+  CHECK(end.x >= hb.getMin().x);
+  CHECK(end.y >= hb.getMin().y);
+}

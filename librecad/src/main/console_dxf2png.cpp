@@ -28,6 +28,7 @@
 #include <QApplication>
 #include <QCoreApplication>
 #include <QImageWriter>
+#include <QSaveFile>
 #include <QtCore>
 #include <QtSvg>
 
@@ -38,7 +39,6 @@
 #include "qg_dialogfactory.h"
 
 #include "lc_actionfileexportmakercam.h"
-#include "lc_documentsstorage.h"
 #include "lc_graphicviewport.h"
 #include "lc_printviewportrenderer.h"
 #include "main.h"
@@ -64,7 +64,7 @@ static std::unique_ptr<RS_Document> openDocAndSetGraphic(const QString&);
 
 static void touchGraphic(RS_Graphic*);
 
-static QSize parsePngSizeArg(const QString&);
+static bool parsePngSizeArg(const QString& arg, QSize& size);
 
 bool slotFileExport(RS_Graphic* graphic,
                     const QString& name,
@@ -108,9 +108,13 @@ bool exportOneImageFile(const ImageCommandSpec& spec, const QString& inputFile,
                              borders, black, bw);
             }
 
-    qDebug() << "Printing" << inputFile << "to" << outputFile
-             << (ret ? "Done" : "Failed");
-    return ret;
+    if (!ret) {
+        qCritical("ERROR: failed to write '%s'", qPrintable(outputFile));
+        return false;
+    }
+
+    qDebug() << "Printing" << inputFile << "to" << outputFile << "Done";
+    return true;
 }
 
 int runImageCommand(int argc, char* argv[], const ImageCommandSpec& spec) {
@@ -181,13 +185,24 @@ int runImageCommand(int argc, char* argv[], const ImageCommandSpec& spec) {
         parser.showHelp(EXIT_FAILURE);
 
     // Set PNG size from user input
-    const QSize pngSize = parsePngSizeArg(parser.value(pngSizeOpt)); // If nothing, use default values.
+    QSize pngSize;
+    if (!parsePngSizeArg(parser.value(pngSizeOpt), pngSize)) {
+        qCritical("ERROR: invalid output size '%s'; use WxH in pixels, such as 1920x1080.",
+                  qPrintable(parser.value(pngSizeOpt)));
+        return EXIT_FAILURE;
+    }
 
-    const QStringList inputFiles = LC_Console::collectInputFiles(args, spec.acceptedExts);
+    QStringList skippedArgs;
+    const QStringList inputFiles =
+        LC_Console::collectInputFiles(args, spec.acceptedExts, &skippedArgs);
     if (inputFiles.isEmpty()) {
         qCritical("ERROR: no %s files found in arguments.",
                   qPrintable(LC_Console::extensionDescription(spec.acceptedExts)));
         return EXIT_FAILURE;
+    }
+    for (const QString& skipped : skippedArgs) {
+        qWarning("WARNING: '%s' is not a %s file and was skipped.", qPrintable(skipped),
+                 qPrintable(LC_Console::extensionDescription(spec.acceptedExts)));
     }
 
     if (LC_Console::containsDwgInput(inputFiles) &&
@@ -212,15 +227,25 @@ int runImageCommand(int argc, char* argv[], const ImageCommandSpec& spec) {
         return EXIT_FAILURE;
     }
 
+    QStringList outputFiles;
+    for (const QString& inputFile : inputFiles) {
+        outputFiles.append(outFile.isEmpty()
+            ? LC_Console::defaultOutputPath(inputFile, spec.outputExt, outDir)
+            : outFile);
+    }
+
+    QString outputTargetsError;
+    if (!LC_Console::validateOutputTargets(inputFiles, outputFiles, &outputTargetsError)) {
+        qCritical("ERROR: %s", qPrintable(outputTargetsError));
+        return EXIT_FAILURE;
+    }
+
     RS_FONTLIST->init();
     RS_PATTERNLIST->init();
 
     int failed = 0;
-    for (const QString& inputFile : inputFiles) {
-        const QString outputFile = outFile.isEmpty()
-            ? LC_Console::defaultOutputPath(inputFile, spec.outputExt, outDir)
-            : outFile;
-        if (!exportOneImageFile(spec, inputFile, outputFile, pngSize))
+    for (int i = 0; i < inputFiles.size(); ++i) {
+        if (!exportOneImageFile(spec, inputFiles.at(i), outputFiles.at(i), pngSize))
             ++failed;
     }
 
@@ -263,17 +288,14 @@ int console_dwg2svg(int argc, char* argv[])
 
 static std::unique_ptr<RS_Document> openDocAndSetGraphic(const QString& dxfFile){
     auto doc = std::make_unique<RS_Graphic>();
-    const LC_DocumentsStorage storage;
-    if (!storage.loadDocument(doc.get(), dxfFile, RS2::FormatUnknown)) {
-    // if (!doc->open(dxfFile, RS2::FormatUnknown)) {
-        qDebug() << "ERROR: Failed to open document" << dxfFile;
-        qDebug() << "Check if file exists";
+    // LC_Console::importGraphic() reports on stderr. Importing through the
+    // document storage opens a message box no console command can close.
+    if (!LC_Console::importGraphic(*doc, dxfFile))
         return {};
-    }
 
     const RS_Graphic* graphic = doc->getGraphic();
     if (graphic == nullptr) {
-        qDebug() << "ERROR: No graphic in" << dxfFile;
+        qCritical("ERROR: no drawing in '%s'", qPrintable(dxfFile));
         return {};
     }
 
@@ -374,17 +396,14 @@ bool slotFileExport(RS_Graphic* graphic, const QString& name,
 
     // end the picture output
     if(format.toLower() != "svg")  {
-        // RVT_PORT QImageIO iio;
-        QImageWriter iio;
         const QImage img = picture->toImage();
-        // RVT_PORT iio.setImage(img);
-        iio.setFileName(name);
-        iio.setFormat(format.toLatin1());
-        // RVT_PORT if (iio.write()) {
-        if (iio.write(img)) {
-            ret = true;
+        // QSaveFile reports a write that fails after the file is open, and
+        // leaves an existing file alone until the new one is complete.
+        QSaveFile file{name};
+        if (file.open(QIODevice::WriteOnly)) {
+            QImageWriter iio{&file, format.toLatin1()};
+            ret = iio.write(img) && file.commit();
         }
-//        QString error=iio.errorString();
     }
     QApplication::restoreOverrideCursor();
 
@@ -398,29 +417,30 @@ bool slotFileExport(RS_Graphic* graphic, const QString& name,
 }
 
 /////////////////
-/// \brief Parses the user input of PNG output resolution and
-/// converts it to a vector value
-/// \param arg - input string
-/// \return
+/// \brief Parses the user input of PNG output resolution
+/// \param arg - input string, empty for the default size
+/// \param size - receives the output size in pixels
+/// \return false if the input is not a positive WxH size
 ///
-static QSize parsePngSizeArg(const QString& arg) {
-    QSize v(2000, 1000); // default resolution
+static bool parsePngSizeArg(const QString& arg, QSize& size) {
+    size = QSize(2000, 1000); // default resolution
 
     if (arg.isEmpty()) {
-        return v;
+        return true;
     }
 
-    const QRegularExpression re("^(?<width>\\d+)[x|X]{1}(?<height>\\d+)$");
+    const QRegularExpression re("^(?<width>\\d+)[xX](?<height>\\d+)$");
     const QRegularExpressionMatch match = re.match(arg);
-
-    if (match.hasMatch()) {
-        const QString width = match.captured("width");
-        const QString height = match.captured("height");
-        v.setWidth(width.toDouble());
-        v.setHeight(height.toDouble());
-    } else {
-        qDebug() << "WARNING: Ignoring incorrect PNG resolution:" << arg;
+    if (!match.hasMatch()) {
+        return false;
     }
 
-    return v;
+    const int width = match.captured("width").toInt();
+    const int height = match.captured("height").toInt();
+    if (width <= 0 || height <= 0) {
+        return false;
+    }
+
+    size = QSize(width, height);
+    return true;
 }

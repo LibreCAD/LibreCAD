@@ -164,6 +164,7 @@ class RS_Snapper : public QObject {
 
     /**manually set snapPoint*/
     bool isSnapToGrid() const;
+    bool isLastSnapFree() const;
     /**
      * Suspends this snapper while another action takes place.
      */
@@ -261,6 +262,8 @@ protected:
 
     double m_snapToAngleStep;
     bool m_angleSnapSnapToGridLinesIfGrid = true;
+    bool m_softSnapEnabled = false;
+    double m_softSnapSensitivityRad = 0.0;
 
     RS_Vector toGraph(const QMouseEvent* e) const;
     void updateCoordinateWidget(const RS_Vector& abs, const RS_Vector& rel) const;

@@ -3215,7 +3215,7 @@ TEST_CASE("DXF LEADER writer rejects invalid payloads before output",
   std::filesystem::remove(path);
 }
 
-TEST_CASE("DXF BLOCK requires a non-default name before callback",
+TEST_CASE("DXF BLOCK without a name is dropped with its entities",
           "[dxf][block][malformed]") {
   BlockCapture cap;
   const char *dxf =
@@ -3223,9 +3223,13 @@ TEST_CASE("DXF BLOCK requires a non-default name before callback",
       "0\nBLOCK\n5\n20\n8\nBlockLayer\n70\n0\n"
       "0\nLINE\n5\n21\n8\nInnerLayer\n10\n0\n20\n0\n11\n1\n21\n1\n"
       "0\nENDBLK\n5\n22\n8\nBlockLayer\n"
+      "0\nBLOCK\n5\n23\n8\nBlockLayer\n2\nB1\n70\n0\n"
+      "0\nENDBLK\n5\n24\n8\nBlockLayer\n"
       "0\nENDSEC\n0\nEOF\n";
-  CHECK_FALSE(tryReadDxf(dxf, cap, "lc_block_missing_name.dxf"));
-  CHECK(cap.m_blocks.empty());
+  CHECK(tryReadDxf(dxf, cap, "lc_block_missing_name.dxf"));
+  REQUIRE(cap.m_blocks.size() == 1u);
+  CHECK(cap.m_blocks.front().name == "B1");
+  CHECK(cap.m_lineCount == 0);
 }
 
 TEST_CASE("DXF BLOCK record boundaries are case-insensitive",
@@ -3367,19 +3371,23 @@ TEST_CASE("DXF rejects duplicate BLOCK self handles",
   CHECK(cap.m_endBlockCount == 1);
 }
 
-TEST_CASE("DXF rejects duplicate typed entity self handles",
+TEST_CASE("DXF drops the empty or repeated handle of a typed entity",
           "[dxf][entities][handles][malformed]") {
-  LineCapture cap;
+  class Capture final : public StubInterface {
+  public:
+    std::vector<std::uint32_t> handles;
+    void addLine(const DRW_Line &line) override { handles.push_back(line.handle); }
+  } cap;
   const char *dxf =
       "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n"
       "0\nENDSEC\n0\nSECTION\n2\nENTITIES\n"
       "0\nLINE\n5\n30\n8\n0\n10\n0\n20\n0\n11\n1\n21\n1\n"
       "0\nLINE\n5\n30\n8\n0\n10\n2\n20\n2\n11\n3\n21\n3\n"
+      "0\nLINE\n5\n\n8\n0\n10\n4\n20\n4\n11\n5\n21\n5\n"
       "0\nENDSEC\n0\nEOF\n";
 
-  CHECK_FALSE(tryReadDxf(dxf, cap, "lc_duplicate_entity_handle.dxf"));
-  CHECK(cap.m_callCount == 1);
-  CHECK(cap.m_captured.handle == 0x30u);
+  CHECK(tryReadDxf(dxf, cap, "lc_duplicate_entity_handle.dxf"));
+  CHECK(cap.handles == std::vector<std::uint32_t>{0x30u, 0u, 0u});
 }
 
 TEST_CASE("DXF basic entities require mandatory geometry fields",
@@ -3751,6 +3759,327 @@ TEST_CASE("DXF BLOCK handle requirement follows source version",
   }
 }
 
+// Issue #2851: every DXF LibreCAD 2.2 saved failed to open, because its
+// Paper_Space ENDBLK names the Model_Space BLOCK_RECORD as owner.
+TEST_CASE("DXF reads the blocks LibreCAD 2.2 writes", "[dxf][block]") {
+  BlockCapture capture;
+  const std::string dxf =
+      "999\ndxfrw 0.6.3\n0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n"
+      "0\nENDSEC\n0\nSECTION\n2\nTABLES\n"
+      "0\nTABLE\n2\nBLOCK_RECORD\n5\n1\n330\n0\n100\nAcDbSymbolTable\n70\n2\n"
+      "0\nBLOCK_RECORD\n5\n1F\n330\n1\n100\nAcDbSymbolTableRecord\n"
+      "100\nAcDbBlockTableRecord\n2\n*Model_Space\n70\n0\n280\n1\n281\n0\n"
+      "0\nBLOCK_RECORD\n5\n1E\n330\n1\n100\nAcDbSymbolTableRecord\n"
+      "100\nAcDbBlockTableRecord\n2\n*Paper_Space\n70\n0\n280\n1\n281\n0\n"
+      "0\nENDTAB\n0\nENDSEC\n0\nSECTION\n2\nBLOCKS\n"
+      "0\nBLOCK\n5\n20\n330\n1F\n100\nAcDbEntity\n8\n0\n100\nAcDbBlockBegin\n"
+      "2\n*Model_Space\n70\n0\n10\n0\n20\n0\n30\n0\n3\n*Model_Space\n1\n\n"
+      "0\nENDBLK\n5\n21\n330\n1F\n100\nAcDbEntity\n8\n0\n100\nAcDbBlockEnd\n"
+      "0\nBLOCK\n5\n1C\n330\n1B\n100\nAcDbEntity\n8\n0\n100\nAcDbBlockBegin\n"
+      "2\n*Paper_Space\n70\n0\n10\n0\n20\n0\n30\n0\n3\n*Paper_Space\n1\n\n"
+      "0\nENDBLK\n5\n1D\n330\n1F\n100\nAcDbEntity\n8\n0\n100\nAcDbBlockEnd\n"
+      "0\nENDSEC\n0\nSECTION\n2\nENTITIES\n"
+      "0\nLINE\n5\n4D\n100\nAcDbEntity\n8\n0\n100\nAcDbLine\n"
+      "10\n0\n20\n85\n11\n0\n21\n0\n"
+      "0\nENDSEC\n0\nEOF\n";
+  CHECK(tryReadDxf(dxf, capture, "lc_librecad22_blocks.dxf"));
+  CHECK(capture.m_blocks.size() == 2);
+  CHECK(capture.m_endBlockCount == 2);
+  CHECK(capture.m_lineCount == 1);
+}
+
+// Valid files other producers write that the DXF reader rejected after #2790;
+// each opened in LibreCAD before, and ezdxf reads them without audit errors.
+TEST_CASE("DXF reads what AutoCAD, BricsCAD, ezdxf and LibreDWG write",
+          "[dxf][compat]") {
+  const std::string r2007 = "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n0\nENDSEC\n";
+
+  SECTION("an unnamed shape-file STYLE") {
+    TextStyleCapture capture;
+    CHECK(tryReadDxf(r2007 +
+        "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nSTYLE\n70\n1\n"
+        "0\nSTYLE\n5\n11\n330\n3\n100\nAcDbSymbolTableRecord\n"
+        "100\nAcDbTextStyleTableRecord\n2\n\n70\n1\n40\n0\n41\n1\n50\n0\n"
+        "71\n0\n42\n0.2\n3\nltypeshp.shx\n4\n\n"
+        "0\nENDTAB\n0\nENDSEC\n0\nEOF\n",
+        capture, "lc_compat_shapefile_style.dxf"));
+    CHECK(capture.m_styles.size() == 1u);
+  }
+
+  SECTION("102 values inside XRECORD data") {
+    XRecordCapture capture;
+    CHECK(tryReadDxf(
+        "0\nSECTION\n2\nOBJECTS\n0\nXRECORD\n5\n30\n330\nC\n"
+        "100\nAcDbXrecord\n280\n1\n102\nDISPLAYNAME\n1\nImperial24\n"
+        "102\n{ATTRRECORD\n341\n1B9\n2\nAcDbDs::Legacy\n102\nATTRRECORD}\n"
+        "102\nFLAGS\n90\n0\n0\nENDSEC\n0\nEOF\n",
+        capture, "lc_compat_xrecord_102.dxf"));
+    REQUIRE(capture.m_callCount == 1);
+    CHECK(capture.m_captured.m_values.size() == 7u);
+    CHECK(capture.m_captured.m_handleValues.size() == 1u);
+  }
+
+  SECTION("null references in a BLOCK_RECORD BLKREFS group") {
+    BlockCapture capture;
+    CHECK(tryReadDxf(r2007 +
+        "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nBLOCK_RECORD\n5\n1\n330\n0\n"
+        "100\nAcDbSymbolTable\n70\n1\n"
+        "0\nBLOCK_RECORD\n5\nA7\n330\n1\n100\nAcDbSymbolTableRecord\n"
+        "100\nAcDbBlockTableRecord\n2\narrows\n340\n0\n"
+        "102\n{BLKREFS\n331\n0\n331\n0\n331\nD7\n102\n}\n70\n6\n280\n1\n281\n0\n"
+        "0\nENDTAB\n0\nENDSEC\n0\nEOF\n",
+        capture, "lc_compat_null_blkrefs.dxf"));
+  }
+
+  SECTION("a BLOCK without a name") {
+    const std::string blocks =
+        "0\nSECTION\n2\nBLOCKS\n"
+        "0\nBLOCK\n5\nA1\n330\nA0\n100\nAcDbEntity\n8\n0\n100\nAcDbBlockBegin\n"
+        "70\n0\n10\n0\n20\n0\n30\n0\n"
+        "0\nENDBLK\n5\nA2\n330\nA0\n100\nAcDbEntity\n8\n0\n100\nAcDbBlockEnd\n"
+        "0\nENDSEC\n0\nEOF\n";
+    const std::string record =
+        "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nBLOCK_RECORD\n5\n1\n330\n0\n"
+        "100\nAcDbSymbolTable\n70\n1\n"
+        "0\nBLOCK_RECORD\n5\nA0\n330\n1\n100\nAcDbSymbolTableRecord\n"
+        "100\nAcDbBlockTableRecord\n2\nTest\n70\n0\n280\n1\n281\n0\n"
+        "0\nENDTAB\n0\nENDSEC\n";
+
+    BlockCapture named;
+    CHECK(tryReadDxf(r2007 + record + blocks, named, "lc_compat_block_record_name.dxf"));
+    REQUIRE(named.m_blocks.size() == 1u);
+    CHECK(named.m_blocks.front().name == "Test");
+
+    BlockCapture unnamed;
+    CHECK(tryReadDxf(r2007 + blocks, unnamed, "lc_compat_block_no_name.dxf"));
+    CHECK(unnamed.m_blocks.empty());
+  }
+
+  SECTION("shape flag 8 in a complex LTYPE") {
+    LTypeCapture capture;
+    CHECK(tryReadDxf(r2007 +
+        "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLTYPE\n5\n5\n330\n0\n"
+        "100\nAcDbSymbolTable\n70\n1\n"
+        "0\nLTYPE\n5\n6BE\n330\n5\n100\nAcDbSymbolTableRecord\n"
+        "100\nAcDbLinetypeTableRecord\n2\nGAS_LINE\n70\n0\n3\nGas line\n"
+        "72\n65\n73\n3\n40\n0.95\n49\n0.5\n74\n0\n49\n-0.2\n74\n10\n75\n0\n"
+        "340\n11\n46\n0.1\n50\n0\n44\n-0.1\n45\n-0.05\n9\nGAS\n49\n-0.25\n74\n0\n"
+        "0\nENDTAB\n0\nENDSEC\n0\nEOF\n",
+        capture, "lc_compat_ltype_upright_text.dxf"));
+    CHECK(capture.m_ltypes.size() == 1u);
+  }
+
+  SECTION("350 entries in a hard-owner DICTIONARY") {
+    DictionaryCapture capture;
+    CHECK(tryReadDxf(
+        "0\nSECTION\n2\nOBJECTS\n0\nDICTIONARY\n5\n2D\n330\nA\n100\nAcDbDictionary\n"
+        "280\n1\n281\n1\n3\nCREATED_BY_EZDXF\n350\n2E\n0\nENDSEC\n0\nEOF\n",
+        capture, "lc_compat_dictionary_350.dxf"));
+    REQUIRE(capture.m_callCount == 1);
+    CHECK(capture.m_captured.m_entries.size() == 1u);
+  }
+
+  SECTION("sign-extended CLASS proxy flags") {
+    StubInterface capture;
+    CHECK(tryReadDxf(
+        "0\nSECTION\n2\nCLASSES\n0\nCLASS\n1\nEXACXREFPANELOBJECT\n"
+        "2\nExAcXREFPanelObject\n3\nEXAC_ESW\n90\n-64511\n91\n0\n280\n0\n281\n0\n"
+        "0\nENDSEC\n0\nEOF\n",
+        capture, "lc_compat_class_proxy_flags.dxf"));
+  }
+
+  SECTION("a proxy entity whose 162 counts bits") {
+    ProxyEntityCapture capture;
+    CHECK(tryReadDxf(
+        "0\nSECTION\n2\nENTITIES\n0\nACAD_PROXY_ENTITY\n5\n25\n330\n1F\n"
+        "100\nAcDbEntity\n8\n0\n100\nAcDbProxyEntity\n90\n498\n91\n500\n"
+        "95\n0\n70\n0\n160\n1\n310\nAB\n162\n12\n311\nCDEF\n161\n8\n310\n12\n94\n0\n"
+        "0\nENDSEC\n0\nEOF\n",
+        capture, "lc_compat_proxy_162_bits.dxf"));
+    CHECK(capture.m_entities.size() == 1u);
+  }
+
+  SECTION("extended SPLINE flags") {
+    SplineCapture capture;
+    CHECK(tryReadDxf(
+        "0\nSECTION\n2\nENTITIES\n0\nSPLINE\n8\n0\n100\nAcDbSpline\n"
+        "70\n1064\n71\n3\n72\n8\n73\n4\n74\n4\n"
+        "40\n0\n40\n0\n40\n0\n40\n0\n40\n1\n40\n1\n40\n1\n40\n1\n"
+        "10\n0\n20\n0\n30\n0\n10\n1\n20\n1\n30\n0\n10\n2\n20\n0\n30\n0\n10\n3\n20\n1\n30\n0\n"
+        "11\n0\n21\n0\n31\n0\n11\n1\n21\n0.5\n31\n0\n11\n2\n21\n0.5\n31\n0\n11\n3\n21\n1\n31\n0\n"
+        "0\nENDSEC\n0\nEOF\n",
+        capture, "lc_compat_spline_flags.dxf"));
+    CHECK(capture.m_callCount == 1);
+  }
+
+  SECTION("ACAD_TABLE date, point and object cells after proxy graphics") {
+    class Capture final : public StubInterface {
+    public:
+      std::vector<DRW_Table> tables;
+      void addTable(const DRW_Table &table) override { tables.push_back(table); }
+    } capture;
+    const std::string cell =
+        "171\n1\n172\n0\n173\n0\n174\n0\n175\n1\n176\n1\n91\n0\n178\n0\n"
+        "145\n0.0\n92\n0\n301\nCELL_VALUE\n93\n6\n";
+    CHECK(tryReadDxf(r2007 +
+        "0\nSECTION\n2\nENTITIES\n0\nACAD_TABLE\n5\n7A\n330\n1F\n"
+        "100\nAcDbEntity\n8\n0\n92\n2\n310\nAABB\n"
+        "100\nAcDbBlockReference\n2\n*T1\n10\n0\n20\n0\n30\n0\n"
+        "100\nAcDbTable\n342\n6B\n11\n1\n21\n0\n31\n0\n"
+        "90\n22\n91\n1\n92\n3\n93\n0\n94\n0\n95\n0\n96\n0\n"
+        "141\n10\n142\n20\n142\n20\n142\n20\n" + cell +
+        "90\n8\n92\n16\n310\nE8070B0005000F000000000000000000\n"
+        "94\n0\n300\n\n302\n11/15/2024\n304\nACVALUE_END\n" + cell +
+        "90\n32\n92\n24\n11\n7\n21\n8\n31\n9\n"
+        "94\n0\n300\n\n302\n7,8,9\n304\nACVALUE_END\n" + cell +
+        "90\n64\n330\n2F\n94\n0\n300\n\n302\nobject\n304\nACVALUE_END\n"
+        "0\nENDSEC\n0\nEOF\n",
+        capture, "lc_compat_table_cell_values.dxf"));
+    REQUIRE(capture.tables.size() == 1u);
+    const DRW_Table &table = capture.tables.front();
+    CHECK(table.proxyGraphics == std::string("\xAA\xBB", 2));
+    CHECK(table.parentHandle == 0x1Fu);
+    CHECK(table.m_horizontalDirection.x == 1.0);
+    CHECK(table.m_horizontalDirection.z == 0.0);
+    REQUIRE(table.m_content.m_rows.size() == 1u);
+    const auto &cells = table.m_content.m_rows.front().m_cells;
+    REQUIRE(cells.size() == 3u);
+    CHECK(cells[0].m_contents.front().m_text == "11/15/2024");
+    CHECK(cells[1].m_contents.front().m_text == "7,8,9");
+    CHECK(cells[2].m_contents.front().m_text == "object");
+  }
+
+  SECTION("R12 XDATA that repeats Y and Z after a point") {
+    LineCapture capture;
+    CHECK(tryReadDxf(
+        "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1009\n0\nENDSEC\n"
+        "0\nSECTION\n2\nENTITIES\n0\nLINE\n8\n0\n10\n0\n20\n0\n11\n1\n21\n1\n"
+        "1001\nACAD_MATERIAL_MAPPER\n1070\n2\n"
+        "1011\n1\n1021\n2\n1031\n3\n1021\n4\n1031\n5\n"
+        "1011\n6\n1021\n7\n1031\n8\n"
+        "0\nENDSEC\n0\nEOF\n",
+        capture, "lc_compat_r12_xdata_points.dxf"));
+    REQUIRE(capture.m_callCount == 1);
+    REQUIRE(capture.m_captured.extData.size() == 4u);
+    const DRW_Coord *first = capture.m_captured.extData[2]->coord();
+    const DRW_Coord *second = capture.m_captured.extData[3]->coord();
+    REQUIRE(first != nullptr);
+    REQUIRE(second != nullptr);
+    CHECK((first->x == 1.0 && first->y == 2.0 && first->z == 3.0));
+    CHECK((second->x == 6.0 && second->y == 7.0 && second->z == 8.0));
+  }
+
+  SECTION("R2000 FIELD values without ACVALUE_END") {
+    FieldCapture capture;
+    CHECK(tryReadDxf(
+        "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1015\n0\nENDSEC\n"
+        "0\nSECTION\n2\nOBJECTS\n0\nFIELD\n5\n15E\n330\n15D\n100\nAcDbField\n"
+        "1\n_text\n2\n%<\\_FldIdx 0>%\n90\n0\n97\n0\n4\n\n"
+        "91\n63\n92\n0\n94\n9\n95\n2\n96\n0\n300\n\n93\n2\n"
+        "6\nACFD_FIELDTEXT_ATTDEF\n90\n1\n91\n1\n"
+        "6\nACFD_FIELDTEXT_CHECKSUM\n90\n2\n140\n350.0\n"
+        "7\nACFD_FIELD_VALUE\n90\n0\n91\n0\n301\n\n98\n0\n"
+        "0\nENDSEC\n0\nEOF\n",
+        capture, "lc_compat_r2000_field_values.dxf"));
+    REQUIRE(capture.m_fields.size() == 1u);
+    const DRW_Field &field = capture.m_fields.front();
+    REQUIRE(field.m_childValues.size() == 2u);
+    CHECK(field.m_childValues[0].m_value.m_value.i_val() == 1);
+    CHECK(field.m_childValues[1].m_value.m_value.d_val() == 350.0);
+    CHECK(field.m_value.m_dataType == 0);
+  }
+
+  SECTION("FIELD strings split into chunks before the final group") {
+    FieldCapture capture;
+    CHECK(tryReadDxf(r2007 +
+        "0\nSECTION\n2\nOBJECTS\n0\nFIELD\n5\nA9\n330\nAA\n100\nAcDbField\n"
+        "1\n_text\n3\nab\n3\ncd\n2\nef\n90\n0\n97\n0\n"
+        "91\n63\n92\n0\n94\n41\n95\n2\n96\n0\n300\n\n93\n0\n"
+        "7\nACFD_FIELD_VALUE\n93\n0\n90\n4\n2\none \n2\ntwo \n1\nthree\n"
+        "94\n0\n300\nstatic\n302\n\n304\nACVALUE_END\n"
+        "9\nuv\n301\nwx\n98\n4\n"
+        "0\nENDSEC\n0\nEOF\n",
+        capture, "lc_compat_field_chunks.dxf"));
+    REQUIRE(capture.m_fields.size() == 1u);
+    const DRW_Field &field = capture.m_fields.front();
+    CHECK(field.m_fieldCode == "abcdef");
+    CHECK(std::string(field.m_value.m_value.c_str()) == "one two three");
+    CHECK(field.m_valueString == "uvwx");
+  }
+
+  SECTION("surface subclass data sizes and 310 data") {
+    class Capture final : public StubInterface {
+    public:
+      std::vector<std::vector<std::uint8_t>> acis;
+      std::uint32_t extrudedClassId = 0;
+      std::vector<std::uint8_t> sweepData;
+      std::vector<std::uint8_t> pathData;
+      void addSurface(const DRW_Surface *surface) override {
+        acis.push_back(surface->rawAcisData);
+        if (const auto *e = dynamic_cast<const DRW_ExtrudedSurface *>(surface))
+          extrudedClassId = e->classId;
+        if (const auto *s = dynamic_cast<const DRW_SweptSurface *>(surface)) {
+          sweepData = s->sweepData;
+          pathData = s->pathData;
+        }
+      }
+    } capture;
+    const auto repeat = [](const char *code, int count) {
+      std::string groups;
+      for (int i = 0; i < count; ++i)
+        groups += std::string(code) + "\n0\n";
+      return groups;
+    };
+    const std::string preamble =
+        "100\nAcDbEntity\n8\n0\n100\nAcDbModelerGeometry\n70\n1\n310\n41434953\n"
+        "100\nAcDbSurface\n71\n6\n72\n6\n";
+    CHECK(tryReadDxf(r2007 +
+        "0\nSECTION\n2\nENTITIES\n"
+        "0\nEXTRUDEDSURFACE\n5\n2D8\n" + preamble +
+        "100\nAcDbExtrudedSurface\n90\n35\n90\n2\n310\nAABB\n10\n0\n20\n0\n30\n1\n"
+        + repeat("40", 16) + "42\n0\n43\n0\n44\n0\n45\n0\n48\n1\n49\n0\n"
+        + repeat("46", 16) + repeat("47", 16) +
+        "290\n0\n70\n0\n71\n2\n292\n1\n293\n0\n294\n0\n295\n1\n296\n0\n"
+        "11\n0\n21\n0\n31\n0\n"
+        "0\nREVOLVEDSURFACE\n5\n366\n" + preamble +
+        "100\nAcDbRevolvedSurface\n90\n77\n90\n2\n310\nAABB\n"
+        "10\n0\n20\n0\n30\n0\n11\n0\n21\n1\n31\n0\n40\n1\n41\n0\n"
+        + repeat("42", 16) + "43\n0\n44\n0\n45\n0\n46\n0\n290\n0\n291\n0\n"
+        "0\nSWEPTSURFACE\n5\n411\n" + preamble +
+        "100\nAcDbSweptSurface\n90\n77\n90\n2\n310\nAABB\n91\n19\n90\n2\n310\nCCDD\n"
+        + repeat("40", 16) + repeat("41", 16)
+        + "42\n0\n43\n0\n44\n0\n45\n0\n48\n1\n49\n0\n"
+        + repeat("46", 16) + repeat("47", 16) +
+        "290\n0\n70\n1\n71\n2\n292\n0\n293\n0\n294\n1\n295\n1\n296\n1\n"
+        "11\n0\n21\n0\n31\n0\n"
+        "0\nENDSEC\n0\nEOF\n",
+        capture, "lc_compat_surface_data.dxf"));
+    const std::vector<std::uint8_t> acis{0x41, 0x43, 0x49, 0x53};
+    REQUIRE(capture.acis.size() == 3u);
+    CHECK(capture.acis[0] == acis);
+    CHECK(capture.acis[1] == acis);
+    CHECK(capture.acis[2] == acis);
+    CHECK(capture.extrudedClassId == 35u);
+    CHECK(capture.sweepData == std::vector<std::uint8_t>{0xAA, 0xBB});
+    CHECK(capture.pathData == std::vector<std::uint8_t>{0xCC, 0xDD});
+  }
+
+  SECTION("a proxy object with 311 data counted by 162 and a spare byte") {
+    ProxyObjectCapture capture;
+    CHECK(tryReadDxf(r2007 +
+        "0\nSECTION\n2\nOBJECTS\n0\nACAD_PROXY_OBJECT\n5\n90\n330\n8F\n"
+        "100\nAcDbProxyObject\n90\n499\n91\n519\n95\n14811165\n70\n0\n"
+        "162\n12\n311\nCDEF\n161\n16\n310\n406C00\n94\n0\n"
+        "0\nENDSEC\n0\nEOF\n",
+        capture, "lc_compat_proxy_object_311.dxf"));
+    REQUIRE(capture.m_objects.size() == 1u);
+    CHECK(capture.m_objects.front().m_unknownData
+          == std::vector<std::uint8_t>{0xCD, 0xEF});
+    CHECK(capture.m_objects.front().m_objectData
+          == std::vector<std::uint8_t>{0x40, 0x6C, 0x00});
+  }
+}
+
 TEST_CASE("DXF ENDBLK validates modern footer identity",
           "[dxf][block][malformed]") {
   const auto makeDxf = [](const std::string& footer) {
@@ -3777,11 +4106,22 @@ TEST_CASE("DXF ENDBLK validates modern footer identity",
     CHECK(capture.m_endBlockCount == 1);
   }
 
-  SECTION("rejects an owner that differs from BLOCK") {
+  SECTION("accepts an owner that differs from BLOCK") {
     BlockCapture capture;
-    CHECK_FALSE(tryReadDxf(
+    CHECK(tryReadDxf(
         makeDxf("0\nENDBLK\n5\nA2\n330\nA9\n"), capture,
         "lc_endblk_owner_mismatch.dxf"));
+    CHECK(capture.m_blocks.size() == 1);
+    CHECK(capture.m_endBlockCount == 1);
+  }
+
+  SECTION("accepts common entity codes") {
+    BlockCapture capture;
+    CHECK(tryReadDxf(
+        makeDxf("0\nENDBLK\n5\nA2\n330\nA1\n100\nAcDbEntity\n67\n1\n"
+                "8\n0\n62\n7\n420\n16777215\n48\n1.0\n"
+                "100\nAcDbBlockEnd\n"),
+        capture, "lc_endblk_common_entity_codes.dxf"));
     CHECK(capture.m_blocks.size() == 1);
     CHECK(capture.m_endBlockCount == 1);
   }
@@ -3998,9 +4338,9 @@ TEST_CASE("DXF BLOCK_RECORD rejects malformed BLKREFS",
         makeDxf("102\n{BLKREFS\n331\nB1\n331\nB1\n102\n}\n"),
         capture, "lc_block_record_blkrefs_duplicate.dxf"));
   }
-  SECTION("null handle") {
+  SECTION("null handle, which BricsCAD writes, is skipped") {
     StubInterface capture;
-    CHECK_FALSE(tryReadDxf(
+    CHECK(tryReadDxf(
         makeDxf("102\n{BLKREFS\n331\n0\n102\n}\n"),
         capture, "lc_block_record_blkrefs_null.dxf"));
   }
@@ -5883,18 +6223,19 @@ TEST_CASE("DXF DICTIONARY rejects malformed entry pairs atomically",
     CHECK(nullTarget.m_callCount == 0);
   }
 
-  SECTION("the entry reference code follows hard-owner") {
+  SECTION("the entry reference code need not match hard-owner") {
     DictionaryCapture softWithHardCode;
-    CHECK_FALSE(tryReadDxf(prefix + "3\nSOFT\n360\n2A\n" + suffix,
-                           softWithHardCode,
-                           "lc_dictionary_soft_entry_hard_code.dxf"));
-    CHECK(softWithHardCode.m_callCount == 0);
+    CHECK(tryReadDxf(prefix + "3\nSOFT\n360\n2A\n" + suffix,
+                     softWithHardCode,
+                     "lc_dictionary_soft_entry_hard_code.dxf"));
+    CHECK(softWithHardCode.m_callCount == 1);
 
+    // ezdxf writes 350 entries under 280 = 1.
     DictionaryCapture hardWithSoftCode;
-    CHECK_FALSE(tryReadDxf(prefix + "280\n1\n3\nHARD\n350\n2A\n" + suffix,
-                           hardWithSoftCode,
-                           "lc_dictionary_hard_entry_soft_code.dxf"));
-    CHECK(hardWithSoftCode.m_callCount == 0);
+    CHECK(tryReadDxf(prefix + "280\n1\n3\nHARD\n350\n2A\n" + suffix,
+                     hardWithSoftCode,
+                     "lc_dictionary_hard_entry_soft_code.dxf"));
+    CHECK(hardWithSoftCode.m_callCount == 1);
   }
 }
 
@@ -12913,6 +13254,38 @@ TEST_CASE("DXF DIMSTYLE records keep their own values (issue #2723)",
   CHECK(cap.m_captured[2].m_dimasz == 0.25);
   CHECK(cap.m_captured[2].m_dimtxt == 0.25);
   CHECK(cap.m_captured[2].m_dimblk.empty());
+}
+
+// DXF written by libdxfrw 0.5 (LibreCAD 2.0, and most of the bundled parts
+// library) failed to open: DIMSTYLE 340 names the text style and 341 is empty
+// where newer files hold handles, and some headers hold a subnormal double.
+TEST_CASE("DXF reads what libdxfrw 0.5 wrote", "[dxf][dimstyle]") {
+  SECTION("DIMSTYLE names instead of handles") {
+    DimStyleCapture cap;
+    const char *dxf =
+        "0\nSECTION\n2\nTABLES\n"
+        "0\nTABLE\n2\nDIMSTYLE\n5\nA\n100\nAcDbSymbolTable\n70\n1\n"
+        "0\nDIMSTYLE\n105\n27\n100\nAcDbDimStyleTableRecord\n2\nStandard\n70\n0\n"
+        "41\n2.5\n340\nStandard\n341\n\n"
+        "0\nENDTAB\n0\nENDSEC\n0\nEOF\n";
+    REQUIRE(tryReadDxf(dxf, cap, "lc_dimstyle_legacy_names.dxf"));
+    REQUIRE(cap.m_captured.size() == 1);
+    CHECK(cap.m_captured[0].m_name == "Standard");
+    CHECK(cap.m_captured[0].m_dimasz == 2.5);
+
+    std::string arrowName(dxf);
+    arrowName.replace(arrowName.find("341\n\n"), 5, "341\nGZ\n");
+    DimStyleCapture rejected;
+    CHECK_FALSE(tryReadDxf(arrowName, rejected, "lc_dimstyle_bad_341.dxf"));
+  }
+
+  SECTION("a subnormal header value") {
+    StubInterface capture;
+    CHECK(tryReadDxf(
+        "999\ndxfrw 0.5.10\n0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n"
+        "9\n$PSVPSCALE\n40\n4.94065645841e-324\n0\nENDSEC\n0\nEOF\n",
+        capture, "lc_legacy_subnormal_header.dxf"));
+  }
 }
 
 TEST_CASE("DXF DIMSTYLE text direction uses canonical R2010 group 295",

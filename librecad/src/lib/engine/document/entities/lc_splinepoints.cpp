@@ -544,6 +544,8 @@ void LC_SplinePoints::updateQuadExtentUI(const RS_Vector& x1, const RS_Vector& c
 }
 
 void LC_SplinePoints::calculateBorders() {
+    // the length does not depend on the borders; computed last, it was skipped by the early returns below
+    updateLength();
     m_minV = RS_Vector(false);
     m_maxV = RS_Vector(false);
 
@@ -618,7 +620,6 @@ void LC_SplinePoints::calculateBorders() {
         vEnd = m_data.controlPoints.at(n - 1);
         updateQuadExtentUI(vStart, vControl, vEnd);
     }
-    updateLength();
 }
 
 RS_VectorSolutions LC_SplinePoints::getRefPoints() const {
@@ -2230,7 +2231,10 @@ bool LC_SplinePoints::offset(const RS_Vector& coord, const double distance) {
     if (m_data.cut) {
         return offsetCut(coord, distance);
     }
-    return offsetSpline(coord, distance);
+    // offsetSpline() keeps only the spline points: rebuild the control points, borders and length
+    const bool offsetDone = offsetSpline(coord, distance);
+    update();
+    return offsetDone;
 }
 
 std::vector<RS_Entity*> addLineOffsets(const RS_Vector& vx1, const RS_Vector& vx2, const double& distance) {

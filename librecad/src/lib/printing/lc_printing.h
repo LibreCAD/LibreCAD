@@ -40,6 +40,16 @@ namespace LC_Printing
                          const RS_Vector& paperSize, RS2::Unit unit, const QMarginsF& paperMargins);
 
     /**
+     * @brief printGraphic - draws the graphic on the printer's pages, as its plot settings lay them out
+     * @param printer - a printer set up for its output: a print job or a PDF file
+     * @param graphic - the graphic to print
+     * @param drawingMode - the drawing mode of the painter
+     * @param scaleLineWidth - whether line widths scale with the drawing
+     * @return false if the printer could not start, as when the output file cannot be opened
+     */
+    bool printGraphic(QPrinter& printer, RS_Graphic& graphic, RS2::DrawingMode drawingMode, bool scaleLineWidth);
+
+    /**
      * @brief Print - the implementation of drawing printing
      * @param mdiWindow - the mdiWindow to print
      * @param printerType - whether printing to a printer or a PDF file

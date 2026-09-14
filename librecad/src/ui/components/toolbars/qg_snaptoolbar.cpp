@@ -94,8 +94,9 @@ QG_SnapToolBar::QG_SnapToolBar(QWidget* parent, QG_ActionHandler* ah, const LC_A
 
     // m_actionSnapMiddleManual = addOwnAction("SnapMiddleManual", actionsMap);
 
-    m_actionSnapFree = addOwnAction("SnapFree", actionsMap);
-    m_actionSnapGrid = addOwnAction("SnapGrid", actionsMap);
+    m_actionSnapFree  = addOwnAction("SnapFree",  actionsMap);
+    m_actionSnapAngle = addOwnAction("SnapAngle", actionsMap);
+    m_actionSnapGrid  = addOwnAction("SnapGrid",  actionsMap);
     m_actionSnapEnd = addOwnAction("SnapEnd", actionsMap);
     m_actionSnapOnEntity = addOwnAction("SnapEntity", actionsMap);
     m_actionSnapCenter = addOwnAction("SnapCenter", actionsMap);
@@ -109,7 +110,7 @@ QG_SnapToolBar::QG_SnapToolBar(QWidget* parent, QG_ActionHandler* ah, const LC_A
     m_actionRestrictVertical = addOwnAction("RestrictVertical", actionsMap);
     m_actionRestrictOrthogonal = justAddAction("RestrictOrthogonal", actionsMap);
     connect(m_actionRestrictOrthogonal, &QAction::triggered, this, &QG_SnapToolBar::slotRestrictOrthogonal);
-    // Default shortcut for AutoCAD compatibility (F8). Still fully configurable in Options → Keyboard Shortcuts.
+    // Default shortcut for AutoCAD compatibility (F8). Still fully configurable in Options -> Keyboard Shortcuts.
     m_actionRestrictNothing = justAddAction("RestrictNothing", actionsMap);
     connect(m_actionRestrictNothing, &QAction::triggered, this, &QG_SnapToolBar::slotRestrictNothing);
     // todo - in general, restrict nothing has no practical sense at all - as buttons are toggled, the amount of clicks is the same
@@ -164,6 +165,7 @@ void QG_SnapToolBar::saveSnapMode() const {
 void QG_SnapToolBar::setSnaps(const RS_SnapMode& s) const {
     m_actionSnapVisual->setChecked(s.snapVisual);
     m_actionSnapFree->setChecked(s.snapFree);
+    m_actionSnapAngle->setChecked(s.snapAngle);
     m_actionSnapGrid->setChecked(s.snapGrid);
     m_actionSnapEnd->setChecked(s.snapEndpoint);
     m_actionSnapOnEntity->setChecked(s.snapOnEntity);
@@ -186,6 +188,7 @@ RS_SnapMode QG_SnapToolBar::getSnaps() const {
     RS_SnapMode s;
     s.snapVisual = m_actionSnapVisual->isChecked();
     s.snapFree = m_actionSnapFree->isChecked();
+    s.snapAngle = m_actionSnapAngle->isChecked();
     s.snapGrid = m_actionSnapGrid->isChecked();
     s.snapEndpoint = m_actionSnapEnd->isChecked();
     s.snapOnEntity = m_actionSnapOnEntity->isChecked();

@@ -105,17 +105,32 @@ void LC_PropertiesEditingWidgetEllipse::onAngle1EditingFinished() const {
 
 void LC_PropertiesEditingWidgetEllipse::onAngle2EditingFinished() const {
     const double angle = toRawAngleValue(ui->leAngle2, m_entity->getAngle2());
-    m_entity->setAngle1(angle);
+    m_entity->setAngle2(angle);
 }
 
 void LC_PropertiesEditingWidgetEllipse::onReversedToggled([[maybe_unused]]bool checked) const {
-    m_entity->setReversed(ui->cbReversed->isChecked());
+    const bool reversed = ui->cbReversed->isChecked();
+    if (m_entity->isReversed() == reversed) {
+        return;
+    }
+    // As in the arc dialog, an elliptic arc keeps its shape and runs the other way, so its angles swap.
+    // setReversed() alone turns it into the rest of the ellipse. A whole ellipse has no angles to swap.
+    if (m_entity->isEllipticArc()) {
+        m_entity->revertDirection();
+        QSignalBlocker a1(ui->leAngle1);
+        QSignalBlocker a2(ui->leAngle2);
+        toUIAngleDegRaw(m_entity->getAngle1(), ui->leAngle1);
+        toUIAngleDegRaw(m_entity->getAngle2(), ui->leAngle2);
+    }
+    else {
+        m_entity->setReversed(reversed);
+    }
 }
 
 void LC_PropertiesEditingWidgetEllipse::setupInteractiveInputWidgets() {
     pickPointSetup(ui->wPickPointCenter, "center", ui->leCenterX, ui->leCenterY);
     pickDistanceSetup(ui->tbPickMajor, "major", ui->leMajor);
-    pickDistanceSetup(ui->tbPickMajor, "minor", ui->leMinor);
+    pickDistanceSetup(ui->tbPickMinor, "minor", ui->leMinor);
     pickAngleSetup(ui->tbPickRotation, "rotation", ui->leRotation);
     pickAngleSetup(ui->tbPickStartAngle, "angle1", ui->leAngle1);
     pickAngleSetup(ui->tbPickEndAngle, "angle2", ui->leAngle2);

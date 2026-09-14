@@ -425,7 +425,15 @@ protected:
 
     Qt::PenJoinStyle m_penJoinStyle = Qt::RoundJoin;
     Qt::PenCapStyle m_penCapStyle = Qt::RoundCap;
+    // The pen setPen(const RS_Pen&) last built. It is compared with the painter's
+    // own pen before installing, not trusted to be it.
     QPen m_lastUsedPen;
+    // What the dash pattern in m_lastUsedPen was built from, valid while it holds
+    // that pattern. Compared exactly: a mismatch only rebuilds the pattern.
+    bool m_lastDashValid = false;
+    RS2::LineType m_lastDashLineType = RS2::SolidLine;
+    double m_lastDashScreenWidth = 0.;
+    double m_lastDashDpmm = 0.;
     double m_cachedDpmm = 0.;
     double m_minCircleDrawingRadius = 2.0;
     double m_minArcDrawingRadius = 0.8;

@@ -95,7 +95,9 @@ void RS_Arc::setReversed(const bool r) {
         // fixme - Plus, swap of angles breaks modification actions, such as mirror (probably other too..)
         // **********************************************************************************************************************
         // std::swap(data.angle1, data.angle2);
-        std::swap(m_startPoint, m_endPoint);
+        // The arc now runs the other way round the circle from the same start and end points, so its
+        // borders, middle point, painting angles and length all change.
+        calculateBorders();
     }
 }
 

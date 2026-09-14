@@ -26,6 +26,10 @@
 
 #include "rs_snapper.h"
 
+#include <algorithm>
+#include <cmath>
+#include <vector>
+
 #include <QMouseEvent>
 
 #include "lc_actioncontext.h"
@@ -63,6 +67,32 @@ namespace {
     }
 
     constexpr int DEFAULT_CATCH_ENTITY_RANGE_PX = 32;
+
+    bool isContainerTarget(const RS2::EntityType type) {
+        switch (type) {
+            case RS2::EntityPolyline:
+            case RS2::EntityContainer:
+            case RS2::EntitySpline:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    bool matchesRequestedType(const RS_Entity& entity, const RS2::EntityType type) {
+        if (entity.rtti() == type) {
+            return true;
+        }
+        if (!isContainerTarget(type)) {
+            return false;
+        }
+        for (const RS_EntityContainer* parent = entity.getParent(); parent != nullptr; parent = parent->getParent()) {
+            if (parent->rtti() == type) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
 /**
@@ -223,6 +253,8 @@ struct RS_Snapper::Indicator {
 
 namespace {
     constexpr double DEFAULT_SNAP_ANGLE_STEP = RS_Math::deg2rad(15.0);
+    constexpr double DEFAULT_SOFT_SNAP_SENSITIVITY = RS_Math::deg2rad(3.0);
+    constexpr double MAX_SOFT_SNAP_FRACTION_OF_STEP = 0.45;
 }
 
 /**
@@ -232,7 +264,8 @@ RS_Snapper::RS_Snapper(LC_ActionContext* actionContext, QObject* parent) :
     QObject(parent), m_document(actionContext->getDocument()), m_graphicView(actionContext->getGraphicView()),
     m_actionContext(actionContext), m_infoCursorOverlayData{std::make_unique<LC_InfoCursorData>()},
     m_visualSnapManager{std::make_unique<LC_VisualSnapManager>(this)}, m_impData{std::make_unique<ImpData>()},
-    m_snapIndicator{std::make_unique<Indicator>()}, m_snapToAngleStep{DEFAULT_SNAP_ANGLE_STEP} {
+    m_snapIndicator{std::make_unique<Indicator>()}, m_snapToAngleStep{DEFAULT_SNAP_ANGLE_STEP},
+    m_softSnapSensitivityRad{DEFAULT_SOFT_SNAP_SENSITIVITY} {
     Q_ASSERT(m_document != nullptr);
     Q_ASSERT(m_graphicView != nullptr);
     m_viewport = m_graphicView->getViewPort();
@@ -346,6 +379,17 @@ void RS_Snapper::updateSnapAngleStep() {
             break;
     }
     m_snapToAngleStep = RS_Math::deg2rad(snapStepDegrees);
+
+    bool ok = false;
+    const double softSnapSensitivityDegrees = LC_GET_ONE_STR("Defaults", "SoftSnapSensitivityAngle", "3.0").toDouble(&ok);
+    m_softSnapEnabled = LC_GET_ONE_BOOL("Defaults", "SoftSnapEnabled", false);
+    const double maximumSoftSnapSensitivity = RS_Math::rad2deg(m_snapToAngleStep)
+                                              * MAX_SOFT_SNAP_FRACTION_OF_STEP;
+    const double requestedSoftSnapSensitivity = ok && softSnapSensitivityDegrees >= 0.1
+                                                ? softSnapSensitivityDegrees
+                                                : RS_Math::rad2deg(DEFAULT_SOFT_SNAP_SENSITIVITY);
+    m_softSnapSensitivityRad = RS_Math::deg2rad(std::min(std::clamp(requestedSoftSnapSensitivity, 0.1, 45.0),
+                                                           maximumSoftSnapSensitivity));
 }
 
 void RS_Snapper::initFromGraphic(RS_Graphic* graphic) {
@@ -876,9 +920,34 @@ RS_Vector RS_Snapper::snapGrid(const RS_Vector& coord, RS_Entity* entity) const 
  * @return The coordinates of the point or an invalid vector.
  */
 RS_Vector RS_Snapper::snapOnEntity(const RS_Vector& coord, RS_Entity** entity) {
-    const RS_Vector vec = m_document->getNearestPointOnEntity(coord, true, nullptr, &m_keyEntity);
+    // Text is skipped at every depth: points on glyphs are never snap targets, and measuring
+    // them would walk every glyph (issue #2804)
+    RS_Entity* nearest = nullptr;
+    if (m_snapMode.snapFree) {
+        // A point beyond the snap range gives way to free snapping anyway, and must not leave a key
+        // entity behind: Delete Free acts on the key entity.
+        RS_EntityContainer nearby(nullptr, false);
+        m_document->appendNearby(coord, getSnapRange(), nearby);
+        nearby.getDistanceToPoint(coord, &nearest, RS2::ResolveAllButTexts);
+    }
+    else {
+        // the drawing skips every entity that lies farther away than the nearest one found so far
+        m_document->getDistanceToPoint(coord, &nearest, RS2::ResolveAllButTexts);
+    }
+
+    RS_Vector point(false);
+    m_keyEntity = nullptr;
+    // what RS_EntityContainer::getNearestPointOnEntity() refuses to snap to
+    const RS_EntityContainer* parent = nearest != nullptr ? nearest->getParent() : nullptr;
+    if (nearest != nullptr && (parent == nullptr || !parent->ignoredSnap())) {
+        RS_Entity* snapEntity = nullptr;
+        point = nearest->getNearestPointOnEntity(coord, true, nullptr, &snapEntity);
+        if (point.valid) {
+            m_keyEntity = snapEntity != nullptr ? snapEntity : nearest;
+        }
+    }
     *entity = m_keyEntity;
-    return vec;
+    return point;
 }
 
 /**
@@ -1010,18 +1079,9 @@ RS_Vector RS_Snapper::restrictAngle(const RS_Vector& basePoint, const RS_Vector&
 RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos, const RS2::ResolveLevel level) const {
     // set default distance for points inside solids
     double dist(0.);
-    //    std::cout<<"getSnapRange()="<<getSnapRange()<<"\tsnap distance = "<<dist<<std::endl;
-
     RS_Entity* entity = m_document->getNearestEntity(pos, &dist, level);
-
-    int idx = -1;
-    if (entity != nullptr && (entity->getParent() != nullptr)) {
-        idx = entity->getParent()->findEntity(entity);
-    }
-
     if (entity != nullptr && dist <= getCatchDistance(getSnapRange(), m_catchEntityGuiRange)) {
-        // highlight:
-        RS_DEBUG->print("RS_Snapper::catchEntity: found: %d", idx);
+        RS_DEBUG->print("RS_Snapper::catchEntity: found");
         return entity;
     }
     RS_DEBUG->print("RS_Snapper::catchEntity: not found");
@@ -1039,68 +1099,7 @@ RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos, const RS2::ResolveLevel
  * @return Pointer to the entity or nullptr.
  */
 RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos, const RS2::EntityType enType, const RS2::ResolveLevel level) const {
-    RS_DEBUG->print("RS_Snapper::catchEntity");
-    //  std::cout<<"RS_Snapper::catchEntity(): enType= "<<enType<<std::endl;
-
-    // set default distance for points inside solids
-    RS_EntityContainer ec(nullptr, false);
-    //isContainer
-    bool isContainer{false};
-    switch (enType) {
-        case RS2::EntityPolyline:
-        case RS2::EntityContainer:
-        case RS2::EntitySpline:
-            isContainer = true;
-            break;
-        default:
-            break;
-    }
-
-    const auto traversedEntities = lc::LC_ContainerTraverser{*m_document, level}.entities();
-    // fixme - iteration over all elements of drawing
-    for (const RS_Entity* en : traversedEntities) {
-        if (!en->isVisible()) {
-            continue;
-        }
-        if (en->rtti() != enType && isContainer) {
-            //whether this entity is a member of member of the type enType
-            const RS_Entity* parent(en->getParent());
-            bool matchFound{false};
-            while (parent != nullptr) {
-                if (parent->rtti() == enType) {
-                    matchFound = true;
-                    ec.addEntity(en);
-                    break;
-                }
-                parent = parent->getParent();
-            }
-            if (!matchFound) {
-                continue;
-            }
-        }
-        if (en->rtti() == enType) {
-            ec.addEntity(en);
-        }
-    }
-    if (ec.count() == 0) {
-        return nullptr;
-    }
-    double dist(0.);
-
-    RS_Entity* entity = ec.getNearestEntity(pos, &dist, RS2::ResolveNone);
-
-    int idx = -1;
-    if (entity != nullptr && (entity->getParent() != nullptr)) {
-        idx = entity->getParent()->findEntity(entity);
-    }
-
-    if (entity != nullptr && dist <= getCatchDistance(getSnapRange(), m_catchEntityGuiRange)) {
-        // highlight:
-        RS_DEBUG->print("RS_Snapper::catchEntity: found: %d", idx);
-        return entity;
-    }
-    RS_DEBUG->print("RS_Snapper::catchEntity: not found");
-    return nullptr;
+    return catchEntity(pos, EntityTypeList{enType}, level);
 }
 
 /**
@@ -1136,32 +1135,32 @@ RS_Entity* RS_Snapper::catchEntity(const QMouseEvent* e, const EntityTypeList& e
 }
 
 RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos, const EntityTypeList& enTypeList, const RS2::ResolveLevel level) const {
-    RS_Entity* pten = nullptr;
-    switch (enTypeList.size()) {
-        case 0:
-            return catchEntity(pos, level);
-        default: {
-            RS_EntityContainer ec(nullptr, false);
-            for (const auto t0 : enTypeList) {
-                const RS_Entity* en = catchEntity(pos, t0, level);
-                if (en != nullptr) {
-                    // fixme - sand - due to some unknown reasons, there is a duplication of entity to be added on catch!!! Investigate and fix!!
-                    if (ec.findEntity(en) == -1) {
-                        ec.addEntity(en);
-                    }
-                }
-                //			if(en) {
-                //            std::cout<<__FILE__<<" : "<<__func__<<" : lines "<<__LINE__<<std::endl;
-                //            std::cout<<"caught id= "<<en->getId()<<std::endl;
-                //            }
-            }
-            if (ec.count() > 0) {
-                ec.getDistanceToPoint(pos, &pten, RS2::ResolveNone);
-                return pten;
+    if (enTypeList.empty()) {
+        return catchEntity(pos, level);
+    }
+
+    const double catchDistance = getCatchDistance(getSnapRange(), m_catchEntityGuiRange);
+    RS_EntityContainer nearby(nullptr, false);
+    m_document->appendNearby(pos, catchDistance, nearby);
+    // Text and MText stay whole: their glyphs are generated geometry that no action may pick or
+    // edit, and walking them on every mouse move froze Fillet (issue #2804)
+    const RS2::ResolveLevel candidateLevel = level == RS2::ResolveAll ? RS2::ResolveAllButTexts : level;
+    const std::vector<RS_Entity*> candidates = lc::LC_ContainerTraverser{nearby, candidateLevel}.entities();
+
+    // The matches of each type follow those of the types listed before it, so an exact tie goes to
+    // the type listed last and, within a type, to the entity drawn last, as when each type was
+    // caught on its own.
+    RS_EntityContainer matches(nullptr, false);
+    for (const RS2::EntityType type : enTypeList) {
+        for (RS_Entity* candidate : candidates) {
+            if (candidate->isVisible() && matchesRequestedType(*candidate, type)) {
+                matches.push_back(candidate);
             }
         }
     }
-    return nullptr;
+    double dist = 0.;
+    RS_Entity* entity = matches.getNearestEntity(pos, &dist, RS2::ResolveNone);
+    return entity != nullptr && dist <= catchDistance ? entity : nullptr;
 }
 
 void RS_Snapper::suspend() {
@@ -1476,6 +1475,10 @@ bool RS_Snapper::isSnapToGrid() const {
     return result;
 }
 
+bool RS_Snapper::isLastSnapFree() const {
+    return m_impData->snapType == RS2::SnapType::FREE;
+}
+
 RS_Vector RS_Snapper::snapToRelativeAngle(const double baseAngle, const RS_Vector& currentCoord, const RS_Vector& referenceCoord,
                                           const double angularResolution) {
     if (m_snapMode.restriction != RS2::RestrictNothing || isSnapToGrid()) {
@@ -1570,6 +1573,7 @@ const RS_Vector& RS_Snapper::getRelativeZero() const {
 
 void RS_Snapper::refreshBySettings() {
     initFromSettings();
+    updateSnapAngleStep();
     m_visualSnapManager->invalidateSolution();
 }
 

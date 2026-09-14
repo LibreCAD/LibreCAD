@@ -57,34 +57,9 @@ RS2::FormatType parseDxfVersion(const QString& ver) {
 }
 
 bool convertFile(const QString& inputFile, const QString& outputFile, RS2::FormatType outFmt) {
-    // Fix 7: check existence before hitting the parser with a cryptic error
-    if (!QFileInfo::exists(inputFile)) {
-        qCritical("ERROR: input file does not exist: '%s'", qPrintable(inputFile));
-        return false;
-    }
-
     RS_Graphic graphic;
-    graphic.initForNewDocument();
-
-    // Fix 3: pass callback so partial/full failures print to stderr, no dialog
-    bool imported = RS_FileIO::instance()->fileImport(
-        graphic, inputFile, RS2::FormatUnknown,
-        [&](bool partial, const QString& errMsg) -> bool {
-            if (partial) {
-                qWarning("WARNING: partial import of '%s': %s",
-                         qPrintable(inputFile), qPrintable(errMsg));
-                return true;
-            }
-            qCritical("ERROR: import failed for '%s': %s",
-                      qPrintable(inputFile), qPrintable(errMsg));
-            return false;
-        });
-
-    if (!imported)
+    if (!LC_Console::importGraphic(graphic, inputFile))
         return false;
-
-    // Fix 2: finalise dimension styles before export
-    graphic.onLoadingCompleted();
 
     if (!RS_FileIO::instance()->fileExport(graphic, outputFile, outFmt)) {
         qCritical("ERROR: failed to export '%s'", qPrintable(outputFile));
@@ -293,13 +268,18 @@ int runConversion(int argc, char** argv,
     QString outFile = parser.value(outFileOpt);
     QString outDir  = parser.value(outDirOpt);
 
+    QStringList skippedArgs;
     const QStringList inputFiles =
-        LC_Console::collectInputFiles(args, LC_Console::acceptedExtensions(inputExt));
+        LC_Console::collectInputFiles(args, LC_Console::acceptedExtensions(inputExt), &skippedArgs);
 
     // Fix 8: clear diagnostic instead of dumping the full help page
     if (inputFiles.isEmpty()) {
         qCritical("ERROR: no .%s files found in arguments.", qPrintable(inputExt));
         return EXIT_FAILURE;
+    }
+    for (const QString& skipped : skippedArgs) {
+        qWarning("WARNING: '%s' is not a .%s file and was skipped.", qPrintable(skipped),
+                 qPrintable(inputExt));
     }
 
     if (inputExt == "dwg" && !LC_Console::dwgSupportAvailable()) {
@@ -334,16 +314,22 @@ int runConversion(int argc, char** argv,
         return EXIT_FAILURE;
     }
 
-    int failed = 0;
+    QStringList outputFiles;
     for (const auto& inputFile : inputFiles) {
-        QString outputFile;
-        if (!outFile.isEmpty()) {
-            outputFile = outFile;
-        } else {
-            outputFile = LC_Console::defaultOutputPath(inputFile, outputExt, outDir);
-        }
+        outputFiles.append(outFile.isEmpty()
+            ? LC_Console::defaultOutputPath(inputFile, outputExt, outDir)
+            : outFile);
+    }
 
-        if (!convertFile(inputFile, outputFile, outFmt))
+    QString outputTargetsError;
+    if (!LC_Console::validateOutputTargets(inputFiles, outputFiles, &outputTargetsError)) {
+        qCritical("ERROR: %s", qPrintable(outputTargetsError));
+        return EXIT_FAILURE;
+    }
+
+    int failed = 0;
+    for (int i = 0; i < inputFiles.size(); ++i) {
+        if (!convertFile(inputFiles.at(i), outputFiles.at(i), outFmt))
             ++failed;
     }
 

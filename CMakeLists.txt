@@ -577,6 +577,8 @@ set (SHARED_SOURCES
      librecad/src/actions/drawing/draw/line/lc_action_draw_line_angle.h
      librecad/src/actions/drawing/draw/line/lc_action_draw_line_bisector.cpp
      librecad/src/actions/drawing/draw/line/lc_action_draw_line_bisector.h
+     librecad/src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp
+     librecad/src/actions/drawing/draw/line/lc_actiondrawlinedirect.h
      librecad/src/actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp
      librecad/src/actions/drawing/draw/line/rs_actiondrawlinehorvert.h
      librecad/src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp
@@ -1157,6 +1159,8 @@ set (SHARED_SOURCES
      librecad/src/lib/math/lc_formatter.h
      librecad/src/lib/math/lc_linemath.cpp
      librecad/src/lib/math/lc_linemath.h
+     librecad/src/lib/math/lc_archparser.cpp
+     librecad/src/lib/math/lc_archparser.h
      librecad/src/lib/math/lc_quadratic.cpp
      librecad/src/lib/math/lc_quadratic.h
      librecad/src/lib/math/lc_quadraticutils.cpp
@@ -2466,24 +2470,32 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/entities/tests/lc_parabola_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_ellipse_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_spline_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_circletests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_arctests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_dimarrowtests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_hatch_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/rs_image_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_textbidi_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_mtext_bidi_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_text_bidi_tests.cpp
+        librecad/src/lib/actions/tests/lc_snappercatchtests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_round_tests.cpp
         librecad/src/lib/filters/tests/dwg_pre_r13_codepage_tests.cpp
         librecad/src/lib/filters/tests/dwg_pre_r13_section_size_tests.cpp
         librecad/src/lib/filters/tests/dwg_pre_r13_record_layout_tests.cpp
         librecad/src/lib/filters/tests/dwg_textcodec_tables_tests.cpp
         librecad/src/lib/filters/tests/dxf_cjk_codepage_tests.cpp
+        librecad/src/lib/math/tests/lc_archparser_tests.cpp
         librecad/src/lib/math/tests/rs_math_tests.cpp
         librecad/src/lib/math/tests/lc_quadratic_tests.cpp
         librecad/src/lib/creation/tests/rs_creation_null_entity_tests.cpp
         librecad/src/actions/print_preview/tests/rs_actionprintpreview_tests.cpp
+        librecad/src/lib/printing/tests/lc_printingtests.cpp
         librecad/src/lib/modification/tests/lc_division_tests.cpp
         librecad/src/lib/modification/tests/rs_modification_trim_tests.cpp
         librecad/src/lib/filters/tests/dwg_buffer_round_trip_tests.cpp
         librecad/src/lib/creation/tests/lc_action_draw_line_parallel_tests.cpp
+        librecad/src/lib/creation/tests/lc_action_draw_fast_tests.cpp
         librecad/src/lib/creation/tests/lc_action_draw_polyline_tests.cpp
         librecad/src/lib/creation/tests/lc_action_draw_spline_tests.cpp
         librecad/src/lib/engine/undo/tests/rs_undo_tests.cpp
@@ -2552,8 +2564,11 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/datastorage_tests.cpp
         librecad/src/lib/engine/settings/tests/rs_settings_migration_tests.cpp
         librecad/src/lib/gui/tests/rs_graphicview_close_tests.cpp
+        librecad/src/lib/gui/tests/rs_painter_tests.cpp
         librecad/src/ui/view/tests/qg_graphicview_cursor_tests.cpp
         librecad/src/main/tests/console_command_utils_tests.cpp
+        librecad/src/main/tests/lc_pdfprintlooptests.cpp
+        librecad/src/main/tests/lc_consoleimporttests.cpp
         # Shapelib safety-net tests.  shapelib sources are compiled into
         # librecad_lib (SHARED_SOURCES) since Phase 1b, so the test target
         # only needs the test file itself.
@@ -2564,6 +2579,7 @@ if (BUILD_TESTS)
     # Include directories for rs_math.h and other dependencies
     target_include_directories (librecad_tests PRIVATE
                                 ${SHARED_INCLUDES}
+                                "${CMAKE_CURRENT_BINARY_DIR}/librecad_lib_autogen/include"
                                 # (shapelib include comes via SHARED_INCLUDES)
     )
 
@@ -2811,6 +2827,11 @@ if (BUILD_TESTS)
     add_librecad_filter_micro_test(
         librecad_acis_wireframe_tests
         librecad/src/lib/filters/tests/acis_wireframe_tests.cpp)
+    add_librecad_filter_micro_test(
+        librecad_draw_fast_tests
+        librecad/src/lib/creation/tests/lc_action_draw_fast_tests.cpp)
+    target_include_directories(librecad_draw_fast_tests PRIVATE
+        "${CMAKE_CURRENT_BINARY_DIR}/librecad_lib_autogen/include")
     add_librecad_filter_micro_test(
         librecad_polyline_command_tests
         librecad/src/lib/creation/tests/lc_action_draw_polyline_tests.cpp)

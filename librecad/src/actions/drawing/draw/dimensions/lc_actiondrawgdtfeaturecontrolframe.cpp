@@ -103,6 +103,12 @@ void LC_ActionDrawGDTFeatureControlFrame::onCoordinateEvent(const int status, [[
     }
 }
 
+// ShowDialog waits on a modal dialog; SetInsertionPoint is the one status that
+// picks a point through the snapper (LibreCAD#2824).
+bool LC_ActionDrawGDTFeatureControlFrame::isInVisualSnapStatus(int status) {
+    return status == SetInsertionPoint;
+}
+
 void LC_ActionDrawGDTFeatureControlFrame::onMouseMoveEvent(const int status, const LC_MouseEvent* event) {
     auto snap = event->snapPoint;
     if (status == SetInsertionPoint){

@@ -50,6 +50,7 @@ protected:
     void onCoordinateEvent(int status, bool isZero, const RS_Vector& pos) override;
     LC_DimOrdinate* createDim(const RS_Vector& leaderEndPoint, bool alternateOrdinate, RS_EntityContainer * container) const;
     void onMouseMoveEvent(int status, const LC_MouseEvent* e) override;
+    bool isInVisualSnapStatus(int status) override;
     void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;
     void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
     QStringList doGetAvailableCommands(int status) override;

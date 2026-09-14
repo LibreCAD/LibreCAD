@@ -442,6 +442,11 @@ bool RS_Entity::doIsPointOnEntity(const RS_Vector& coord, const double tolerance
     return dist <= std::abs(tolerance);
 }
 
+bool RS_Entity::hasValidBorders() const {
+    return m_minV.valid && m_maxV.valid && std::isfinite(m_minV.x) && std::isfinite(m_minV.y) && std::isfinite(m_maxV.x)
+        && std::isfinite(m_maxV.y) && m_minV.x <= m_maxV.x && m_minV.y <= m_maxV.y;
+}
+
 double RS_Entity::doGetDistanceToPoint(const RS_Vector& coord, RS_Entity** entity, [[maybe_unused]]RS2::ResolveLevel level, [[maybe_unused]]double solidDist) const {
     if (entity != nullptr) {
         *entity = const_cast<RS_Entity*>(this);
@@ -449,8 +454,11 @@ double RS_Entity::doGetDistanceToPoint(const RS_Vector& coord, RS_Entity** entit
     double dToEntity = RS_MAXDOUBLE;
     (void)getNearestPointOnEntity(coord, true, &dToEntity, entity);
 
-    // RVT 6 Jan 2011 : Add selection by center point
-    if (getCenter().valid) {
+    // RVT 6 Jan 2011 : Add selection by center point.
+    // Only an entity of the drawing itself is picked by its center: the center of an arc inside a
+    // polyline, block reference, dimension or text does not pick that container, so a container is
+    // never nearer than its borders.
+    if (getCenter().valid && (m_parent == nullptr || m_parent->isDocument())) {
         const double dToCenter = getCenter().distanceTo(coord);
         return std::min(dToEntity, dToCenter);
     }

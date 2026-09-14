@@ -238,6 +238,10 @@ void LC_ActionModifyBevel::onMouseLeftButtonRelease(const int status, const LC_M
                 break;
             }
             case SetEntity2: {
+                if (isAtomic(se) && !RS_Information::isTrimmable(se)) {
+                    commandMessage(tr("Invalid entity selected (non-trimmable)."));
+                    break;
+                }
                 if (isAtomic(se)){
                     m_entity2 = static_cast<RS_AtomicEntity *>(se);
                     m_actionData->coord2 = e->graphPoint;
@@ -303,7 +307,7 @@ bool LC_ActionModifyBevel::isEntityAccepted(const RS_Entity *en) const{
 }
 
 bool LC_ActionModifyBevel::areBothEntityAccepted(const RS_Entity *en1, const RS_Entity *en2) const{
-    return isAtomic(en2) && en2 != en1 /* && RS_Information::isTrimmable(en1,en2)*/;
+    return isAtomic(en2) && en2 != en1 && RS_Information::isTrimmable(en2);
 }
 
 bool LC_ActionModifyBevel::doProcessCommand(const int status, const QString &command) {

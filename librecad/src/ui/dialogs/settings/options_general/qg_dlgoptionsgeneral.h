@@ -118,6 +118,8 @@ private:
     void init();
     void initComboBox(QComboBox* cb, const QString& text);
     void initReferencePoints() const;
+    void updateSoftSnapControls(bool enabled) const;
+    void updateSoftSnapSensitivityRange();
     void updateLPtSzUnits() const;
     void saveReferencePoints() const;
     QString selectFolder(const QString& title);

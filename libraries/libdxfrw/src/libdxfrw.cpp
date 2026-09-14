@@ -424,8 +424,8 @@ bool dxfKeywordEquals(const std::string& value, const char* keyword) {
 }
 
 bool dxfTableEntryComplete(const DRW_TableEntry& entry,
-                           DRW::Version sourceVersion) {
-    if (entry.name.empty())
+                           DRW::Version sourceVersion, bool nameOptional = false) {
+    if (entry.name.empty() && !nameOptional)
         return false;
     return sourceVersion == DRW::UNKNOWNV || sourceVersion <= DRW::AC1009
         || entry.handle != DRW::NoHandle;
@@ -8075,6 +8075,9 @@ bool dxfRW::processClasses() {
                 return setError(DRW::BAD_CODE_PARSED);
             hasProxyFlag = true;
             cls.proxyFlag = reader->getInt32();
+            // A 16-bit mask; LibreDWG sets the upper 16 bits.
+            if ((static_cast<std::uint32_t>(cls.proxyFlag) >> 16) == 0xFFFFu)
+                cls.proxyFlag &= 0xFFFF;
             if (cls.proxyFlag < 0)
                 return setError(DRW::BAD_CODE_PARSED);
             break;
@@ -8287,8 +8290,10 @@ bool dxfRW::processBlockRecord() {
                 {
                     const std::uint32_t insertHandle =
                         reader->getHandleString();
-                    if (insertHandle == DRW::NoHandle
-                        || !recordInsertHandles.insert(insertHandle).second)
+                    // BricsCAD writes null references in {BLKREFS.
+                    if (insertHandle == DRW::NoHandle)
+                        break;
+                    if (!recordInsertHandles.insert(insertHandle).second)
                         return setError(DRW::BAD_CODE_PARSED);
                     record.insertHandles.push_back(insertHandle);
                 }
@@ -8450,6 +8455,11 @@ bool dxfRW::processLayer() {
 
 bool dxfRW::processDimStyle() {
     DRW_DBG("dxfRW::processDimStyle");
+    struct DimstyleNameScope {
+        dxfReader& reader;
+        explicit DimstyleNameScope(dxfReader& r) : reader(r) { reader.setAllowDimstyleNames(true); }
+        ~DimstyleNameScope() { reader.setAllowDimstyleNames(false); }
+    } dimstyleNames(*reader);
     int code;
     std::string sectionstr;
     bool reading = false;
@@ -8511,7 +8521,10 @@ bool dxfRW::processTextStyle(){
     std::vector<DRW_Textstyle> pendingTextStyles;
     std::set<std::uint32_t> seenHandles;
     const auto publishTextStyle = [&]() -> bool {
-        if (!dxfTableEntryComplete(TxtSty, reader->getSourceVersion())
+        // A shape file (flag 1), such as the ltypeshp.shx AutoCAD adds for
+        // complex linetypes, is a STYLE record without a name.
+        const bool shapeFile = (TxtSty.flags & 0x01) != 0;
+        if (!dxfTableEntryComplete(TxtSty, reader->getSourceVersion(), shapeFile)
             || !TxtSty.validateDxf())
             return false;
         if (TxtSty.handle != DRW::NoHandle
@@ -8871,11 +8884,20 @@ bool dxfRW::processBlock() {
                 || (value >= 1040 && value <= 1042)
                 || value == 1070 || value == 1071;
         };
-        const auto isAllowedCode = [isXdataCode](int value) {
+        // ENDBLK is an entity: AutoCAD, dxflib and others write common entity
+        // codes on it, such as 67 on the Paper_Space footer.
+        const auto isCommonEntityCode = [](int value) {
+            return value == 6 || value == 48 || value == 60 || value == 62
+                || value == 67 || value == 284 || value == 347 || value == 360
+                || value == 370 || value == 390 || value == 420 || value == 430
+                || value == 440;
+        };
+        const auto isAllowedCode = [isXdataCode, isCommonEntityCode](int value) {
             return value == DRW::dxfCode::HANDLE
                 || value == DRW::dxfCode::OWNER_HANDLE
                 || value == DRW::dxfCode::LAYER
-                || value == 100 || value == 102 || isXdataCode(value);
+                || value == 100 || value == 102 || isXdataCode(value)
+                || isCommonEntityCode(value);
         };
 
         while (reader->readRec(&code)) {
@@ -8938,17 +8960,15 @@ bool dxfRW::processBlock() {
                 sourceVersion != DRW::UNKNOWNV && sourceVersion > DRW::AC1009;
             // Minimal modern BLOCK fixtures may omit the optional-looking
             // owner pair entirely. Once BLOCK carries a BLOCK_RECORD owner,
-            // however, ENDBLK must carry the same owner as well.
+            // however, ENDBLK must carry an owner as well. It need not be the
+            // same one: LibreCAD 2.2 wrote the Model_Space owner on the
+            // Paper_Space ENDBLK (issue #2851), and the BLOCK owner governs.
             const bool requiresOwner = reader->hasSourceVersion()
                 && sourceVersion > DRW::AC1014
                 && block.parentHandle != DRW::NoHandle;
             if ((requiresHandle && !hasEndHandle)
                 || (requiresOwner && !hasEndOwner))
                 return false;
-            if (hasEndOwner && block.parentHandle != DRW::NoHandle
-                && endOwner != block.parentHandle)
-                return false;
-
             return boundary == DxfEntityBoundary::NextEntity
                 || boundary == DxfEntityBoundary::EndSection;
         }
@@ -8966,11 +8986,10 @@ bool dxfRW::processBlock() {
             const bool requiresHandle =
                 reader->getSourceVersion() != DRW::UNKNOWNV
                 && reader->getSourceVersion() > DRW::AC1009;
-            if (!hasName || block.name.empty()
-                || (requiresHandle && (!hasHandle
-                                       || block.handle == DRW::NoHandle))) {
+            if (requiresHandle && (!hasHandle || block.handle == DRW::NoHandle))
                 return setError(DRW::BAD_READ_BLOCKS);
-            }
+            if (!hasName)
+                block.name.clear();
             if (block.handle != DRW::NoHandle
                 && m_readingContext.blockRecordMap.find(block.handle)
                        != m_readingContext.blockRecordMap.end()) {
@@ -8987,14 +9006,19 @@ bool dxfRW::processBlock() {
                 block.previewData =
                     m_readingContext.resolveBlockRecordPreview(block.parentHandle);
             }
+            // A BLOCK without a name takes its BLOCK_RECORD name, found above.
+            // Without one no INSERT can refer to it, so it is read and dropped.
+            const bool dropBlock = block.name.empty();
             if (block.handle != DRW::NoHandle && !block.name.empty()) {
                 stagedBlockRecord.name = block.name;
                 stagedBlockRecord.insUnits = block.insUnits;
                 stagedBlockRecord.previewData = block.previewData;
                 hasStagedBlockRecord = true;
             }
-            iface->addBlock(block);
-            blockPublished = true;
+            if (!dropBlock) {
+                iface->addBlock(block);
+                blockPublished = true;
+            }
             if (boundary == DxfEntityBoundary::EndBlock) {
                 if (!consumeEndBlock()) {
                     closePublishedBlock();
@@ -9032,7 +9056,7 @@ bool dxfRW::processBlock() {
                     closePublishedBlock();
                     return setError(DRW::BAD_READ_BLOCKS);
                 }
-                if (!blockEvents.flush()) {
+                if (!dropBlock && !blockEvents.flush()) {
                     closePublishedBlock();
                     return setError(DRW::BAD_READ_BLOCKS);
                 }
@@ -11469,7 +11493,13 @@ bool dxfRW::processSortEntsTable() {
             iface->addRawDxfObject(raw);
             return true;
         }
-        if (!captureAndParseRawDxfGroup(raw, code, data))
+        // In the body 5 is an entity's sort handle, which is often that
+        // entity's own handle, not this object's.
+        const bool sortHandle = data.m_dxfInBody && code == DRW::dxfCode::HANDLE;
+        if (sortHandle ? !(captureRawGroup(raw, code, /*validateHandles=*/true,
+                                           /*selfHandle=*/false)
+                           && data.parseCode(code, reader))
+                       : !captureAndParseRawDxfGroup(raw, code, data))
             return setError(DRW::BAD_CODE_PARSED);
     }
     return setError(DRW::BAD_READ_OBJECTS);
@@ -12159,7 +12189,12 @@ bool dxfRW::processXRecord() {
             return true;
         }
 
-        if (!captureAndParseRawDxfGroup(raw, code, record))
+        // In the record data every 102 is a value, such as AutoCAD's
+        // DISPLAYNAME or "{ATTRRECORD" ... "ATTRRECORD}".
+        const bool dataGroup = code == 102 && record.m_dxfBodySeen;
+        if (dataGroup ? !(captureRawGroup(raw, code, /*validateHandles=*/true)
+                          && record.parseCode(code, reader))
+                      : !captureAndParseRawDxfGroup(raw, code, record))
             return setError(DRW::BAD_CODE_PARSED);
     }
     return setError(DRW::BAD_READ_OBJECTS);
@@ -12252,6 +12287,7 @@ bool dxfRW::processField() {
     bool childOpen = false;
     bool primaryOpen = false;
     bool primarySeen = false;
+    bool activeHasFlags = false;
     bool activeHasType = false;
     bool activeHasDataSize = false;
     bool activeHasX = false;
@@ -12264,6 +12300,7 @@ bool dxfRW::processField() {
     DRW_Field::ChildValue child;
 
     const auto resetActiveValue = [&]() {
+        activeHasFlags = false;
         activeHasType = false;
         activeHasDataSize = false;
         activeHasX = false;
@@ -12322,6 +12359,13 @@ bool dxfRW::processField() {
 
     while (reader->readRec(&code)) {
         DRW_DBG(code); DRW_DBG("\n");
+        // R2004 and older write a value without 93 flags or ACVALUE_END; it
+        // ends where the next value, the value string or the record begins.
+        if (activeValue != nullptr && !activeHasFlags
+            && (code == 0 || code == 6 || code == 7 || code == 9 || code == 98
+                || code == 301)
+            && !closeValue())
+            return setError(DRW::BAD_CODE_PARSED);
         if (0 == code) {
             if (!acceptObjectBoundary(code))
                 return setError(DRW::BAD_READ_OBJECTS);
@@ -12374,19 +12418,16 @@ bool dxfRW::processField() {
         if (activeValue != nullptr) {
             switch (code) {
             case 1:
-                if (activeValue->m_dataType != 4
-                    || activeValue->m_value.type() != DRW_Variant::INVALID)
+            case 2: {
+                // 2 chunks join the 1 group in file order, before or after it.
+                if (activeValue->m_dataType != 4)
                     return setError(DRW::BAD_CODE_PARSED);
-                activeValue->m_value.addString(1, reader->getUtf8String());
+                UTF8STRING text;
+                if (activeValue->m_value.type() == DRW_Variant::STRING)
+                    text = activeValue->m_value.c_str();
+                activeValue->m_value.addString(1, text + reader->getUtf8String());
                 break;
-            case 2:
-                if (activeValue->m_dataType != 4
-                    || activeValue->m_value.type() != DRW_Variant::STRING)
-                    return setError(DRW::BAD_CODE_PARSED);
-                activeValue->m_value.addString(
-                    1, UTF8STRING(activeValue->m_value.c_str())
-                        + reader->getUtf8String());
-                break;
+            }
             case 11:
                 if (activeValue->m_dataType != 16
                     && activeValue->m_dataType != 32)
@@ -12434,6 +12475,7 @@ bool dxfRW::processField() {
                 if (activeHasType)
                     return setError(DRW::BAD_CODE_PARSED);
                 activeValue->m_formatFlags = reader->getInt32();
+                activeHasFlags = true;
                 break;
             case 94:
                 activeValue->m_unitType = reader->getInt32();
@@ -12472,7 +12514,8 @@ bool dxfRW::processField() {
 
         switch (code) {
         case 1:   field.m_evaluatorId = reader->getUtf8String(); break;
-        case 2:   field.m_fieldCode = reader->getUtf8String(); break;
+        // Chunked 2/3 and 9/301 strings join in file order, either first.
+        case 2:
         case 3:   field.m_fieldCode += reader->getUtf8String(); break;
         case 4:   field.m_formatString = reader->getUtf8String(); break;
         case 6:
@@ -12528,7 +12571,8 @@ bool dxfRW::processField() {
         case 95:  field.m_evaluationStatusFlags = reader->getInt32(); break;
         case 96:  field.m_evaluationErrorCode = reader->getInt32(); break;
         case 300: field.m_evaluationErrorMessage = reader->getUtf8String(); break;
-        case 301: field.m_valueString = reader->getUtf8String(); break;
+        case 9:
+        case 301: field.m_valueString += reader->getUtf8String(); break;
         case 98:  field.m_valueStringLength = reader->getInt32(); break;
         case 360: {
             const std::uint32_t h = reader->getHandleString();
@@ -12581,7 +12625,7 @@ bool dxfRW::processFieldList() {
                 return setError(DRW::BAD_READ_OBJECTS);
             DRW_DBG(nextentity); DRW_DBG("\n");
             if (state != FieldListState::Complete || !sawHandle
-                || !sawCount || !sawUnknown || list.handle == 0 || fieldCount < 0
+                || !sawCount || list.handle == 0 || fieldCount < 0
                 || static_cast<std::size_t>(fieldCount)
                     != list.m_fieldHandles.size()
                 || !validateCapturedRawDxfObject(raw, binFile))
@@ -12624,8 +12668,9 @@ bool dxfRW::processFieldList() {
                 state = FieldListState::IdSet;
                 continue;
             }
+            // 290 is optional: ezdxf omits it.
             if (sub == "AcDbFieldList" && state == FieldListState::IdSet
-                && sawCount && sawUnknown
+                && sawCount
                 && static_cast<std::size_t>(fieldCount)
                        == list.m_fieldHandles.size()) {
                 state = FieldListState::Complete;
@@ -12638,7 +12683,8 @@ bool dxfRW::processFieldList() {
             return setError(DRW::BAD_CODE_PARSED);
 
         if (state == FieldListState::Preamble) {
-            if (sawApplicationData)
+            // AutoCAD writes the owner after the reactors group.
+            if (sawApplicationData && code != 330)
                 return setError(DRW::BAD_CODE_PARSED);
             switch (code) {
             case 5:
@@ -12679,7 +12725,7 @@ bool dxfRW::processFieldList() {
             break;
         case 330: {
             const std::uint32_t h = reader->getHandleString();
-            if (!sawCount || !sawUnknown || fieldCount < 0
+            if (!sawCount || fieldCount < 0
                 || list.m_fieldHandles.size() >= DRW_Field::kMaxItems
                 || list.m_fieldHandles.size()
                        >= static_cast<std::size_t>(fieldCount))
@@ -13090,6 +13136,7 @@ bool validateRawDxfGroups(const std::vector<DRW_Variant>& groups,
 
     const bool writesRawValues = hasRawValues && !binaryOutput;
     int applicationDepth = 0;
+    bool xrecordData = false;
     for (std::size_t groupIndex = 0; groupIndex < groups.size(); ++groupIndex) {
         const DRW_Variant& group = groups[groupIndex];
         const int code = group.code();
@@ -13160,6 +13207,11 @@ bool validateRawDxfGroups(const std::vector<DRW_Variant>& groups,
             break;
         }
 
+        // XRECORD data 102 groups are values, not application groups.
+        if (code == 0 || (code == 100 && applicationDepth == 0))
+            xrecordData = code == 100 && std::string(group.c_str()) == "AcDbXrecord";
+        if (code == 102 && xrecordData)
+            continue;
         if (code == 102 && writesRawValues) {
             const DRW_Variant rawMarker(code, rawValues[groupIndex]);
             if (!updateRawDxfApplicationDepth(rawMarker, applicationDepth))
@@ -13203,6 +13255,7 @@ struct DxfProxyCapture {
     std::uint32_t bodyBitSize = 0;
     bool hasUnknownByteSize = false;
     std::uint64_t unknownByteSize = 0;
+    bool unknownSizeIs162 = false;
     std::vector<std::uint8_t> primary;
     std::vector<std::uint8_t> body;
     std::vector<std::uint8_t> unknown;
@@ -13298,15 +13351,20 @@ bool validateProxyDxfPayloads(const DxfProxyCapture& capture) {
             return true;
         if (expected > DRW::kMaxDxfBinaryPayloadBytes * 8u)
             return false;
-        return (expected + 7u) / 8u == data.size();
+        // Files also store bits / 8 + 1 bytes: a spare byte when bits % 8 == 0.
+        return (expected + 7u) / 8u == data.size()
+            || expected / 8u + 1u == data.size();
     };
 
     return byteCountMatches(capture.primary, capture.hasPrimaryByteSize,
                             capture.primaryByteSize)
         && bitCountMatches(capture.body, capture.hasBodyBitSize,
                            capture.bodyBitSize)
-        && byteCountMatches(capture.unknown, capture.hasUnknownByteSize,
-                            capture.unknownByteSize);
+        // 96/162 may count bytes or bits.
+        && (byteCountMatches(capture.unknown, capture.hasUnknownByteSize,
+                             capture.unknownByteSize)
+            || bitCountMatches(capture.unknown, capture.hasUnknownByteSize,
+                               capture.unknownByteSize));
 }
 
 int proxyDxfHandleCode(int code) {
@@ -13450,6 +13508,7 @@ bool collectProxyDxfGroup(DxfProxyCapture& capture,
         capture.inProxyRecord = true;
         capture.hasUnknownByteSize = true;
         capture.unknownByteSize = static_cast<std::uint64_t>(integer);
+        capture.unknownSizeIs162 = code == 162;
         capture.slot = DxfProxyPayloadSlot::Unknown;
         return true;
     case 70:
@@ -13472,9 +13531,11 @@ bool collectProxyDxfGroup(DxfProxyCapture& capture,
         return appendProxyDxfBytes(value, *target);
     }
     case 311:
+        // R2010+ files store the data counted by 162 in 311, objects included.
         capture.inProxyRecord = true;
         return appendProxyDxfBytes(value,
-                                   entity ? capture.unknown : capture.body);
+                                   entity || capture.unknownSizeIs162
+                                       ? capture.unknown : capture.body);
     default:
         return true;
     }
@@ -13632,7 +13693,7 @@ void applyProxyDxfCapture(DRW_ProxyObject& object,
 //type and uses rawValues only for ASCII source spellings. Also latches code 5
 //-> handle and code 330 -> parentHandle.
 bool dxfRW::captureRawGroup(DRW_RawDxfObject &obj, int code,
-                            bool validateHandles) {
+                            bool validateHandles, bool selfHandle) {
     if (obj.m_version == DRW::UNKNOWNV)
         obj.m_version = reader->getSourceVersion();
     obj.hasRawValues = !binFile;
@@ -13643,7 +13704,7 @@ bool dxfRW::captureRawGroup(DRW_RawDxfObject &obj, int code,
         if (!validHandle)
             return false;
     }
-    if (code == DRW::dxfCode::HANDLE) {
+    if (code == DRW::dxfCode::HANDLE && selfHandle) {
         std::uint64_t rawHandle = 0;
         if (!parseRawDxfHandleLexeme(reader->getString(), rawHandle))
             return false;
@@ -13979,7 +14040,7 @@ bool dxfRW::processProxyEntity() {
 }
 
 // ACAD_PROXY_OBJECT follows the same DXF proxy-data policy as the entity, but
-// code 311 belongs to object data rather than the entity's unknown slot.
+// code 311 belongs to object data unless a 162 size introduces it.
 bool dxfRW::processProxyObject() {
     DRW_DBG("dxfRW::processProxyObject\n");
     int code;

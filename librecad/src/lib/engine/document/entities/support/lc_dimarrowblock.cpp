@@ -43,6 +43,8 @@ void LC_DimArrow::move(const RS_Vector& offset) {
     // So the choice there is between worst and bad choices, and this is just due to incorrect application of the pattern...
 
     m_position.move(offset);
+    // the stem is drawn to the dim line point, and copies are built from the position and the angle
+    m_dimLinePoint.move(offset);
     doMove(offset);
     calculateBorders();
 }
@@ -59,7 +61,10 @@ void LC_DimArrow::rotate(const RS_Vector& center, const double angle) {
 }
 
 void LC_DimArrow::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
-    m_position.rotate(angleVector);
+    // about the center, as the vertices are; the position was rotated about the origin
+    m_position.rotate(center, angleVector);
+    m_dimLinePoint.rotate(center, angleVector);
+    m_angle = RS_Vector(m_angle).rotate(angleVector).angle();
     doRotate(center, angleVector);
     calculateBorders();
 }
@@ -69,6 +74,8 @@ void LC_DimArrow::doScale([[maybe_unused]] const RS_Vector& center, [[maybe_unus
 
 void LC_DimArrow::scale(const RS_Vector& center, const RS_Vector& factor) {
     m_position.scale(center, factor);
+    m_dimLinePoint.scale(center, factor);
+    m_angle = RS_Vector(m_angle).scale(factor).angle();
     doScale(center, factor);
     calculateBorders();
 }
@@ -78,6 +85,10 @@ void LC_DimArrow::doMirror([[maybe_unused]] const RS_Vector& axisPoint1, [[maybe
 
 void LC_DimArrow::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     m_position.mirror(axisPoint1, axisPoint2);
+    m_dimLinePoint.mirror(axisPoint1, axisPoint2);
+    RS_Vector direction(m_angle);
+    direction.mirror(RS_Vector(0., 0.), axisPoint2 - axisPoint1);
+    m_angle = direction.angle();
     doMirror(axisPoint1, axisPoint2);
     calculateBorders();
 }

@@ -23,6 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_printing.h"
 
 #include <QApplication>
+#include <QDir>
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QMessageBox>
@@ -115,6 +116,86 @@ void LC_Printing::setupPageLayout(QPrinter& printer, bool landscape, QPageSize::
     printer.setPageLayout(layout);
 }
 
+bool LC_Printing::printGraphic(QPrinter& printer, RS_Graphic& graphic, const RS2::DrawingMode drawingMode,
+                               const bool scaleLineWidth) {
+    // The printer opens the output file, or starts the print job, when painting begins
+    RS_Painter painter(&printer);
+    if (!painter.isActive()) {
+        return false;
+    }
+    painter.setDrawingMode(drawingMode);
+
+    QMarginsF margins = printer.pageLayout().margins(QPageLayout::Millimeter);
+    //        LC_ERR << "Printer margins (mm): " << margins.left()<<": "<<margins.top()<<" : "<<margins.right()<<" : "<<margins.bottom();
+
+    double printerWidth = printer.width();
+    double printerHeight = printer.height();
+
+    double printerFx = printerWidth / printer.widthMM();
+    double printerFy = printerHeight / printer.heightMM();
+
+    painter.setClipRect(margins.left() * printerFx, margins.top() * printerFy,
+                        printerWidth - (margins.left() + margins.right()) * printerFx,
+                        printerHeight - (margins.top() + margins.bottom()) * printerFy);
+
+    LC_GraphicViewport viewport;
+    viewport.setDocument(&graphic);
+    viewport.setBorders(0, 0, 0, 0);
+    viewport.setSize(printerWidth, printerHeight);
+
+    LC_PrintViewportRenderer renderer(&viewport, &painter);
+    viewport.loadSettings();
+    renderer.loadSettings();
+
+    renderer.setLineWidthScaling(scaleLineWidth);
+
+    RS2::Unit unit = graphic.getUnit();
+    double fx = printerFx * RS_Units::getFactorToMM(unit);
+    double fy = printerFy * RS_Units::getFactorToMM(unit);
+    //RS_DEBUG->print(RS_Debug::D_ERROR, "paper size=(%d, %d)\n",
+    //                printer.widthMM(),printer.heightMM());
+
+    double f = (fx + fy) / 2.0;
+
+    LC_PlotSettings* ps = graphic.getPlotSettings();
+    double scale = ps->getPaperScale();
+    double factor = f * scale;
+
+    //RS_DEBUG->print(RS_Debug::D_ERROR, "PaperSize=(%d, %d)\n",printer.widthMM(), printer.heightMM());
+
+    double baseX = graphic.getPaperInsertionBase().x;
+    double baseY = graphic.getPaperInsertionBase().y;
+
+    int numX = ps->getPagesNumHoriz();
+    int numY = ps->getPagesNumVert();
+    RS_Vector printArea = ps->getPrintAreaSize(false);
+
+    for (int pY = 0; pY < numY; pY++) {
+        double offsetY = printArea.y * pY;
+        for (int pX = 0; pX < numX; pX++) {
+            double offsetX = printArea.x * pX;
+            // First page is created automatically.
+            // Extra pages must be created manually.
+            if (pX > 0 || pY > 0) {
+                printer.newPage();
+            }
+
+            viewport.justSetOffsetAndFactor(static_cast<int>((baseX - offsetX) * f), static_cast<int>((baseY - offsetY) * f), factor);
+
+            painter.setViewPort(&viewport); // update offset
+            renderer.render();
+
+            //                painter.setDrawSelectedOnly(true);
+            //                gv.drawEntity(&painter, graphic);
+            //                painter.setDrawSelectedOnly(false);
+            //                gv.drawEntity(&painter, graphic);
+        }
+    }
+
+    // Calling QPainter::end() is automatic at QPainter destructor
+    return true;
+}
+
 void LC_Printing::print(QC_MDIWindow &mdiWindow, PrinterType printerType) {
     RS_Graphic* graphic = mdiWindow.getDocument()->getGraphic();
 
@@ -159,14 +240,15 @@ void LC_Printing::print(QC_MDIWindow &mdiWindow, PrinterType printerType) {
         QPageLayout pdfLayout = printer.pageLayout();
         pdfLayout.setMinimumMargins({});
         printer.setPageLayout(pdfLayout);
-        QString pdfFie = QFileDialog::getSaveFileName(
+        const QString pdfFile = QFileDialog::getSaveFileName(
             &mdiWindow,
             QObject::tr("Export to PDF"),
             defaultFile,
             QObject::tr("PDF files (*.pdf);;All files (*.*)"));
-        if (pdfFie.isEmpty())
-            pdfFie = defaultFile;
-        printer.setOutputFileName(pdfFie);
+        // An empty name means the dialog was cancelled
+        if (pdfFile.isEmpty())
+            return;
+        printer.setOutputFileName(pdfFile);
         bStartPrinting = true;
     }
     else {
@@ -258,104 +340,39 @@ void LC_Printing::print(QC_MDIWindow &mdiWindow, PrinterType printerType) {
         }
     }
 
-    if (bStartPrinting) {
-        RS_DEBUG->print(RS_Debug::D_INFORMATIONAL, "QC_ApplicationWindow::slotFilePrint: resolution is %d", printer.resolution());
-        QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+    if (!bStartPrinting)
+        return;
 
-        RS_Painter painter(&printer);
-        // RAII style to restore cursor. Not really a shared pointer for ownership
-        std::shared_ptr<RS_Painter> painterPtr{
-            &painter,
-            []([[maybe_unused]] RS_Painter* p) {
-                QApplication::restoreOverrideCursor();
-            }
-        };
+    RS_DEBUG->print(RS_Debug::D_INFORMATIONAL, "QC_ApplicationWindow::slotFilePrint: resolution is %d", printer.resolution());
 
-        // fixme - sand rework this later - it seems that printing in general should be refined.
-        QG_GraphicView* graphicView = mdiWindow.getGraphicView();
-        RS2::DrawingMode drawingMode = RS2::DrawingMode::ModeAuto;
-        if (graphicView->isPrintPreview()) {
-            auto printPreview = dynamic_cast<LC_PrintPreviewView*>(graphicView);
-            if (printPreview != nullptr) {
-                drawingMode = printPreview->getDrawingMode();
-            }
+    // fixme - sand rework this later - it seems that printing in general should be refined.
+    QG_GraphicView* graphicView = mdiWindow.getGraphicView();
+    RS2::DrawingMode drawingMode = RS2::DrawingMode::ModeAuto;
+    if (graphicView->isPrintPreview()) {
+        auto printPreview = dynamic_cast<LC_PrintPreviewView*>(graphicView);
+        if (printPreview != nullptr) {
+            drawingMode = printPreview->getDrawingMode();
         }
-        painter.setDrawingMode(drawingMode);
+    }
 
-        QMarginsF margins = printer.pageLayout().margins(QPageLayout::Millimeter);
-        //        LC_ERR << "Printer margins (mm): " << margins.left()<<": "<<margins.top()<<" : "<<margins.right()<<" : "<<margins.bottom();
+    QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+    const bool printed = printGraphic(printer, *graphic, drawingMode, graphicView->getLineWidthScaling());
+    QApplication::restoreOverrideCursor();
 
-        double printerWidth = printer.width();
-        double printerHeight = printer.height();
-
-        double printerFx = printerWidth / printer.widthMM();
-        double printerFy = printerHeight / printer.heightMM();
-
-        painter.setClipRect(margins.left() * printerFx, margins.top() * printerFy,
-                            printerWidth - (margins.left() + margins.right()) * printerFx,
-                            printerHeight - (margins.top() + margins.bottom()) * printerFy);
-
-        LC_GraphicViewport viewport;
-        viewport.setDocument(graphic);
-        viewport.setBorders(0, 0, 0, 0);
-        viewport.setSize(printerWidth, printerHeight);
-
-        LC_PrintViewportRenderer renderer(&viewport, &painter);
-        viewport.loadSettings();
-        renderer.loadSettings();
-
-        bool scaleLineWidth = mdiWindow.getGraphicView()->getLineWidthScaling();
-        renderer.setLineWidthScaling(scaleLineWidth);
-
-        double fx = printerFx * RS_Units::getFactorToMM(unit);
-        double fy = printerFy * RS_Units::getFactorToMM(unit);
-        //RS_DEBUG->print(RS_Debug::D_ERROR, "paper size=(%d, %d)\n",
-        //                printer.widthMM(),printer.heightMM());
-
-        double f = (fx + fy) / 2.0;
-
-        double scale = ps->getPaperScale();
-        double factor = f * scale;
-
-        //RS_DEBUG->print(RS_Debug::D_ERROR, "PaperSize=(%d, %d)\n",printer.widthMM(), printer.heightMM());
-
-        double baseX = graphic->getPaperInsertionBase().x;
-        double baseY = graphic->getPaperInsertionBase().y;
-
-        int numX = ps->getPagesNumHoriz();
-        int numY = ps->getPagesNumVert();
-        RS_Vector printArea = ps->getPrintAreaSize(false);
-
-        for (int pY = 0; pY < numY; pY++) {
-            double offsetY = printArea.y * pY;
-            for (int pX = 0; pX < numX; pX++) {
-                double offsetX = printArea.x * pX;
-                // First page is created automatically.
-                // Extra pages must be created manually.
-                if (pX > 0 || pY > 0) {
-                    printer.newPage();
-                }
-
-                viewport.justSetOffsetAndFactor(static_cast<int>((baseX - offsetX) * f), static_cast<int>((baseY - offsetY) * f), factor);
-
-                painter.setViewPort(&viewport); // update offset
-                renderer.render();
-
-                //                painter.setDrawSelectedOnly(true);
-                //                gv.drawEntity(&painter, graphic);
-                //                painter.setDrawSelectedOnly(false);
-                //                gv.drawEntity(&painter, graphic);
-            }
-        }
-
-        // GraphicView deletes painter
-        // Calling QPainter::end() is automatic at QPainter destructor
-        // painter.end();
-
+    {
         LC_GROUP_GUARD("Print");
-        {
-            LC_SET("ColorMode", printer.colorMode());
-            LC_SET("FileName", printer.outputFileName());
-        }
+        LC_SET("ColorMode", printer.colorMode());
+        LC_SET("FileName", printer.outputFileName());
+    }
+
+    if (!printed) {
+        // The output file could not be opened, or the print job could not start
+        const QString message = printer.outputFileName().isEmpty()
+            ? QObject::tr("Cannot start printing on %1.").arg(printer.printerName())
+            : QObject::tr("Cannot write the file\n%1\nPlease check the filename and permissions.")
+                  .arg(QDir::toNativeSeparators(printer.outputFileName()));
+        QMessageBox::critical(&mdiWindow,
+                              printerType == PrinterType::PDF ? QObject::tr("Export to PDF") : QObject::tr("Print"),
+                              message);
     }
 }

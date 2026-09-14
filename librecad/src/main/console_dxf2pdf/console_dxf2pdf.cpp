@@ -46,9 +46,9 @@
 #include "pdf_print_loop.h"
 
 
-static RS_Vector parsePageSizeArg(const QString& arg);
-static void parsePagesNumArg(const QString&, PdfPrintParams&);
-static void parseMarginsArg(const QString&, PdfPrintParams&);
+static bool parsePageSizeArg(const QString& arg, RS_Vector& pageSize);
+static bool parsePagesNumArg(const QString&, PdfPrintParams&);
+static bool parseMarginsArg(const QString&, PdfPrintParams&);
 
 namespace {
 
@@ -162,32 +162,63 @@ int runPdfCommand(int argc, char* argv[], const PdfCommandSpec& spec) {
     params.centerOnPage = parser.isSet(centerOpt);
     params.grayscale = parser.isSet(grayOpt);
     params.monochrome = parser.isSet(monoOpt);
-    params.pageSize = parsePageSizeArg(parser.value(pageSizeOpt));
 
-    bool resOk = false;
-    int res = parser.value(resOpt).toInt(&resOk);
-    if (resOk) {
+    // An option value that cannot be read is refused rather than ignored: a
+    // silently dropped value prints the drawing at the wrong size or scale.
+    if (!parsePageSizeArg(parser.value(pageSizeOpt), params.pageSize)) {
+        qCritical("ERROR: invalid paper size '%s'; use WxH in mm, such as 210x297.",
+                  qPrintable(parser.value(pageSizeOpt)));
+        return EXIT_FAILURE;
+    }
+
+    if (parser.isSet(resOpt)) {
+        bool resOk = false;
+        const int res = parser.value(resOpt).toInt(&resOk);
+        if (!resOk || res <= 0) {
+            qCritical("ERROR: invalid resolution '%s'; use a positive number of DPI.",
+                      qPrintable(parser.value(resOpt)));
+            return EXIT_FAILURE;
+        }
         params.resolution = res;
     }
 
-    bool scaleOk = false;
-    double scale = parser.value(scaleOpt).toDouble(&scaleOk);
-    if (scaleOk) {
+    if (parser.isSet(scaleOpt)) {
+        bool scaleOk = false;
+        const double scale = parser.value(scaleOpt).toDouble(&scaleOk);
+        if (!scaleOk || scale <= 0.0) {
+            qCritical("ERROR: invalid scale '%s'; use a positive number, such as 0.01 for 1:100.",
+                      qPrintable(parser.value(scaleOpt)));
+            return EXIT_FAILURE;
+        }
         params.scale = scale;
     }
 
-    parseMarginsArg(parser.value(marginsOpt), params);
-    parsePagesNumArg(parser.value(pagesNumOpt), params);
+    if (!parseMarginsArg(parser.value(marginsOpt), params)) {
+        qCritical("ERROR: invalid margins '%s'; use L,T,R,B in mm, such as 10,10,10,10.",
+                  qPrintable(parser.value(marginsOpt)));
+        return EXIT_FAILURE;
+    }
+
+    if (!parsePagesNumArg(parser.value(pagesNumOpt), params)) {
+        qCritical("ERROR: invalid number of pages '%s'; use HxV, such as 2x1.",
+                  qPrintable(parser.value(pagesNumOpt)));
+        return EXIT_FAILURE;
+    }
 
     params.outFile = parser.value(outFileOpt);
     params.outDir = parser.value(outDirOpt);
 
-    params.inputFiles = LC_Console::collectInputFiles(args, spec.acceptedExts);
+    QStringList skippedArgs;
+    params.inputFiles = LC_Console::collectInputFiles(args, spec.acceptedExts, &skippedArgs);
 
     if (params.inputFiles.isEmpty()) {
         qCritical("ERROR: no %s files found in arguments.",
                   qPrintable(LC_Console::extensionDescription(spec.acceptedExts)));
         return EXIT_FAILURE;
+    }
+    for (const QString& skipped : skippedArgs) {
+        qWarning("WARNING: '%s' is not a %s file and was skipped.", qPrintable(skipped),
+                 qPrintable(LC_Console::extensionDescription(spec.acceptedExts)));
     }
 
     if (LC_Console::containsDwgInput(params.inputFiles) &&
@@ -196,9 +227,33 @@ int runPdfCommand(int argc, char* argv[], const PdfCommandSpec& spec) {
         return EXIT_FAILURE;
     }
 
+    // -o names the single PDF every input is printed into, so it is allowed
+    // with several inputs, but not together with an output directory.
+    QString outputOptionsError;
+    if (!LC_Console::validateOutputOptions(params.inputFiles.size(), params.outFile,
+                                           params.outDir, true, false,
+                                           &outputOptionsError)) {
+        qCritical("ERROR: %s", qPrintable(outputOptionsError));
+        return EXIT_FAILURE;
+    }
+
     QString dirError;
     if (!LC_Console::ensureOutputDirectory(params.outDir, &dirError)) {
         qCritical("ERROR: %s.", qPrintable(dirError));
+        return EXIT_FAILURE;
+    }
+
+    QStringList outputFiles;
+    if (params.outFile.isEmpty()) {
+        for (const QString& inputFile : params.inputFiles)
+            outputFiles.append(LC_Console::defaultOutputPath(inputFile, "pdf", params.outDir));
+    } else {
+        outputFiles.append(params.outFile);
+    }
+
+    QString outputTargetsError;
+    if (!LC_Console::validateOutputTargets(params.inputFiles, outputFiles, &outputTargetsError)) {
+        qCritical("ERROR: %s", qPrintable(outputTargetsError));
         return EXIT_FAILURE;
     }
 
@@ -237,49 +292,43 @@ int console_dwg2pdf(int argc, char* argv[])
 }
 
 
-static RS_Vector parsePageSizeArg(const QString& arg){
-    RS_Vector v(0.0, 0.0);
+static bool parsePageSizeArg(const QString& arg, RS_Vector& pageSize){
+    pageSize = RS_Vector(0.0, 0.0);
 
     if (arg.isEmpty()) {
-        return v;
+        return true;
     }
 
-    const QRegularExpression re("^(?<width>\\d+)[x|X]{1}(?<height>\\d+)$");
+    const QRegularExpression re("^(?<width>\\d+)[xX](?<height>\\d+)$");
     const QRegularExpressionMatch match = re.match(arg);
-
-    if (match.hasMatch()) {
-        const QString width = match.captured("width");
-        const QString height = match.captured("height");
-        v.x = width.toDouble();
-        v.y = height.toDouble();
-    } else {
-        qDebug() << "WARNING: Ignoring bad page size:" << arg;
+    if (!match.hasMatch()) {
+        return false;
     }
 
-    return v;
+    pageSize.x = match.captured("width").toDouble();
+    pageSize.y = match.captured("height").toDouble();
+    return pageSize.x > 0.0 && pageSize.y > 0.0;
 }
 
-static void parsePagesNumArg(const QString& arg, PdfPrintParams& params){
+static bool parsePagesNumArg(const QString& arg, PdfPrintParams& params){
     if (arg.isEmpty()) {
-        return;
+        return true;
     }
 
-    const QRegularExpression re("^(?<horiz>\\d+)[x|X](?<vert>\\d+)$");
+    const QRegularExpression re("^(?<horiz>\\d+)[xX](?<vert>\\d+)$");
     const QRegularExpressionMatch match = re.match(arg);
-
-    if (match.hasMatch()) {
-        const QString h = match.captured("horiz");
-        const QString v = match.captured("vert");
-        params.pagesH = h.toInt();
-        params.pagesV = v.toInt();
-    } else {
-        qDebug() << "WARNING: Ignoring bad number of pages:" << arg;
+    if (!match.hasMatch()) {
+        return false;
     }
+
+    params.pagesH = match.captured("horiz").toInt();
+    params.pagesV = match.captured("vert").toInt();
+    return params.pagesH > 0 && params.pagesV > 0;
 }
 
-static void parseMarginsArg(const QString& arg, PdfPrintParams& params){
+static bool parseMarginsArg(const QString& arg, PdfPrintParams& params){
     if (arg.isEmpty()) {
-        return;
+        return true;
     }
 
     const QRegularExpression re("^(?<left>\\d+(?:\\.\\d+)?),"
@@ -288,16 +337,13 @@ static void parseMarginsArg(const QString& arg, PdfPrintParams& params){
                           "(?<bottom>\\d+(?:\\.\\d+)?)$");
     const QRegularExpressionMatch match = re.match(arg);
 
-    if (match.hasMatch()) {
-        const QString left = match.captured("left");
-        const QString top = match.captured("top");
-        const QString right = match.captured("right");
-        const QString bottom = match.captured("bottom");
-        params.margins.left = left.toDouble();
-        params.margins.top = top.toDouble();
-        params.margins.right = right.toDouble();
-        params.margins.bottom = bottom.toDouble();
-    } else {
-        qDebug() << "WARNING: Ignoring bad paper margins:" << arg;
+    if (!match.hasMatch()) {
+        return false;
     }
+
+    params.margins.left = match.captured("left").toDouble();
+    params.margins.top = match.captured("top").toDouble();
+    params.margins.right = match.captured("right").toDouble();
+    params.margins.bottom = match.captured("bottom").toDouble();
+    return true;
 }

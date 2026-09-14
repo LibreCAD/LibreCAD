@@ -70,6 +70,12 @@ void RS_ActionDimAngular::doTriggerCompletion([[maybe_unused]]bool success) {
     RS_Snapper::finish();
 }
 
+// SetLine1 and SetLine2 pick entities and SetText reads from the command
+// line; only SetPos takes a point through the snapper (LibreCAD#2824).
+bool RS_ActionDimAngular::isInVisualSnapStatus(int status) {
+    return status == SetPos;
+}
+
 void RS_ActionDimAngular::onMouseMoveEvent(const int status, const LC_MouseEvent* e) {
     RS_Vector snap = e->snapPoint;
     switch (status) {

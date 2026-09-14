@@ -217,6 +217,18 @@ public:
      */
     bool ignoredOnModification() const;
 
+    /**
+     * @brief ignoredSnap whether snapping is ignored
+     * @return true when entity of this container won't be considered for snapping points
+     */
+    bool ignoredSnap() const;
+
+    /**
+     * @brief appendNearby appends to nearby, in drawing order, the visible entities of this drawing
+     * that can lie within range of coord, judged from their borders without measuring any geometry.
+     */
+    void appendNearby(const RS_Vector& coord, double range, RS_EntityContainer& nearby) const;
+
     void push_back(RS_Entity* entity) {
         m_entities.push_back(entity);
     }
@@ -277,12 +289,6 @@ protected:
     mutable RS_EntityContainer* m_subContainer = nullptr;
 
 private:
-    /**
-     * @brief ignoredSnap whether snapping is ignored
-     * @return true when entity of this container won't be considered for snapping points
-     */
-    bool ignoredSnap() const;
-
     void debugEntityAlreadyPresentExists(const RS_Entity* entity) const;
 
     /** m_entities in the container */

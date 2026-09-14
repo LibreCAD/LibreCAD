@@ -27,7 +27,9 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include <QDir>
+#include <QFile>
 #include <QStringList>
+#include <QTemporaryDir>
 
 #include "console_command_utils.h"
 
@@ -146,3 +148,37 @@ TEST_CASE("console helper maps every supported DWG output version",
     CHECK(LC_Console::dwgFormatForVersion("2011") == RS2::FormatUnknown);
 }
 #endif
+
+TEST_CASE("console helper refuses output paths that would destroy data",
+          "[console][output]") {
+    const QTemporaryDir dir;
+    REQUIRE(dir.isValid());
+    const QString input = dir.filePath("drawing.dxf");
+    QFile file{input};
+    REQUIRE(file.open(QIODevice::WriteOnly));
+    file.close();
+    QString error;
+
+    CHECK(LC_Console::validateOutputTargets({input}, {dir.filePath("drawing.pdf")}, &error));
+
+    CHECK_FALSE(LC_Console::validateOutputTargets({input}, {input}, &error));
+    CHECK(error.contains("overwrite"));
+
+    CHECK_FALSE(LC_Console::validateOutputTargets({input}, {dir.path()}, &error));
+    CHECK(error.contains("directory"));
+
+    CHECK_FALSE(LC_Console::validateOutputTargets({dir.filePath("a/x.dxf"), dir.filePath("b/x.dxf")},
+                                                  {dir.filePath("out/x.png"), dir.filePath("out/x.png")},
+                                                  &error));
+    CHECK(error.contains("more than one"));
+}
+
+TEST_CASE("console helper reports the arguments it leaves out",
+          "[console][commands]") {
+    QStringList skipped;
+    const QStringList inputs =
+        LC_Console::collectInputFiles({"a.dxf", "typo.dfx", "notes.txt"}, {"dxf"}, &skipped);
+
+    CHECK(inputs == QStringList({"a.dxf"}));
+    CHECK(skipped == QStringList({"typo.dfx", "notes.txt"}));
+}

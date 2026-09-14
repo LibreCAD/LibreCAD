@@ -24,9 +24,11 @@
 **
 **********************************************************************/
 
-#include "rs_previewactioninterface.h"
+#include <cmath>
 
 #include <QMouseEvent>
+
+#include "rs_previewactioninterface.h"
 
 #include "lc_actioncontext.h"
 #include "lc_actioninfomessagebuilder.h"
@@ -230,6 +232,9 @@ bool RS_PreviewActionInterface::trySnapToRelZeroCoordinateEvent(const LC_MouseEv
 RS_Vector RS_PreviewActionInterface::getSnapAngleAwarePoint(const LC_MouseEvent* e, const RS_Vector& basepoint, const RS_Vector& pos,
                                                             const bool drawMark, const bool force) {
     RS_Vector result = pos;
+    if (!basepoint.valid) {
+        return result;
+    }
     if (force) {
         if (m_snapMode.restriction == RS2::RestrictNothing) {
             if (isSnapToGrid()) {
@@ -280,6 +285,24 @@ RS_Vector RS_PreviewActionInterface::getSnapAngleAwarePoint(const LC_MouseEvent*
                 if (drawMark) {
                     previewSnapAngleMark(basepoint, result);
                 }
+            }
+        }
+    }
+    else if (m_snapMode.snapAngle && m_snapMode.restriction == RS2::RestrictNothing && !isSnapToGrid() && isLastSnapFree()) {
+        bool snapToAngle = !m_softSnapEnabled;
+        if (m_softSnapEnabled) {
+            double wcsResultingAngle;
+            double ucsResultingAngle;
+            const RS_Vector anglePoint = obtainEndPointForAngleSnap(e->graphPoint, basepoint, m_snapToAngleStep,
+                                                                    wcsResultingAngle, ucsResultingAngle);
+            const double rawAngle = basepoint.angleTo(e->graphPoint);
+            const double snappedAngle = basepoint.angleTo(anglePoint);
+            snapToAngle = std::abs(std::remainder(rawAngle - snappedAngle, 2.0 * M_PI)) <= m_softSnapSensitivityRad;
+        }
+        if (snapToAngle) {
+            result = doSnapToAngle(e->graphPoint, basepoint, m_snapToAngleStep);
+            if (drawMark) {
+                previewSnapAngleMark(basepoint, result);
             }
         }
     }

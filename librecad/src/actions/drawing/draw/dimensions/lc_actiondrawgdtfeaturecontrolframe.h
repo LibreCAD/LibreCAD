@@ -62,6 +62,7 @@ protected:
     void doTriggerCompletion(bool success) override;
     RS_Entity* doTriggerCreateEntity() override;
     void onMouseMoveEvent(int status, const LC_MouseEvent* event) override;
+    bool isInVisualSnapStatus(int status) override;
     void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;
     void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
     QStringList doGetAvailableCommands(int status) override;

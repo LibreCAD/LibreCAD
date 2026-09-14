@@ -3398,8 +3398,9 @@ bool DRW_LType::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
         if (segments.empty())
             return false;
         segments.back().shapeFlags = reader->getInt32();
+        // 1 absolute rotation, 2 text, 4 shape; files also set 8.
         if (segments.back().shapeFlags < 0
-            || segments.back().shapeFlags > 0x07)
+            || segments.back().shapeFlags > 0x0F)
             return false;
         break;
     case 75:
@@ -6562,7 +6563,7 @@ bool DRW_LType::validatePayloadFields() const {
                                && segment.complexShapeCode >= 0
                                && segment.complexShapeCode <= 0xFFFF
                                && segment.shapeFlags >= 0
-                               && segment.shapeFlags <= 0x07;
+                               && segment.shapeFlags <= 0x0F;
                        })
         && flags >= 0 && (flags & ~0x70) == 0
         && dwgSafety::validReactorCount(numReactors)
@@ -6591,7 +6592,7 @@ bool DRW_LType::validateDxf() const {
                                && segment.complexShapeCode >= 0
                                && segment.complexShapeCode <= 0xFFFF
                                && segment.shapeFlags >= 0
-                               && segment.shapeFlags <= 0x07;
+                               && segment.shapeFlags <= 0x0F;
                        })
         && flags >= 0
         && flags <= std::numeric_limits<std::int16_t>::max()
@@ -7967,8 +7968,9 @@ bool DRW_Dictionary::parseCode(int code, const std::unique_ptr<dxfReader>& reade
     }
     case 350:   //soft-owned entry handle
     case 360: { //hard-owned entry handle
-        const int expectedCode = hardOwner == 0 ? 350 : 360;
-        if (m_pendingEntryName.empty() || code != expectedCode)
+        // The hard-owner flag says how entries are owned; files mix 350 and
+        // 360 regardless (ezdxf writes 350 under 280 = 1).
+        if (m_pendingEntryName.empty())
             return false;
         const std::uint32_t entryHandle =
             static_cast<std::uint32_t>(reader->getHandleString());
@@ -17948,10 +17950,8 @@ bool DRW_SortEntsTable::parseCode(int code, const std::unique_ptr<dxfReader>& re
                 || m_entityHandles.size() >= kMaxEntries
                 || !reader->isValidHandleString())
                 return false;
-            const std::uint32_t entity = reader->getHandleString();
-            if (entity == DRW::NoHandle)
-                return false;
-            m_dxfPendingEntity = entity;
+            // A null entity (ezdxf writes them) drops its pair at the sort handle.
+            m_dxfPendingEntity = reader->getHandleString();
             return true;
         }
         case 5: {
@@ -17959,8 +17959,10 @@ bool DRW_SortEntsTable::parseCode(int code, const std::unique_ptr<dxfReader>& re
                 || !reader->isValidHandleString())
                 return false;
             const std::uint32_t sort = reader->getHandleString();
-            m_entityHandles.push_back(*m_dxfPendingEntity);
-            m_sortHandles.push_back(sort);
+            if (*m_dxfPendingEntity != DRW::NoHandle) {
+                m_entityHandles.push_back(*m_dxfPendingEntity);
+                m_sortHandles.push_back(sort);
+            }
             m_dxfPendingEntity.reset();
             return true;
         }

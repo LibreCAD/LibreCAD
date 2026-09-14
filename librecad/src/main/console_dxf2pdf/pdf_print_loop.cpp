@@ -29,7 +29,7 @@
 #include <QPrinter>
 #include <QtCore>
 
-#include "lc_documentsstorage.h"
+#include "console_command_utils.h"
 #include "lc_graphicviewport.h"
 #include "lc_printing.h"
 #include "lc_printviewportrenderer.h"
@@ -42,6 +42,7 @@ static bool openDocAndSetGraphic(RS_Document**, RS_Graphic**, const QString&);
 static void touchGraphic(RS_Graphic*, const PdfPrintParams&);
 static void setupPrinterAndPaper(const RS_Graphic*, QPrinter&, PdfPrintParams&);
 static void drawGraphic(RS_Graphic *graphic, QPrinter &printer, RS_Painter &painter);
+static void reportWriteFailure(const QString& outFile);
 
 void PdfPrintLoop::run(){
     int failed = 0;
@@ -82,7 +83,14 @@ bool PdfPrintLoop::printOneFileToOnePdf(const QString& inputFile) {
 
     setupPrinterAndPaper(graphic, printer, m_params);
 
+    // The printer opens the output file when painting begins. That is the only
+    // write failure Qt reports: its PDF engine ignores errors once the file is open.
     RS_Painter painter(&printer);
+    if (!painter.isActive()) {
+        reportWriteFailure(m_params.outFile);
+        delete doc;
+        return false;
+    }
 
     if (m_params.monochrome) {
         painter.setDrawingMode(RS2::ModeBW);
@@ -148,7 +156,15 @@ int PdfPrintLoop::printManyFilesToOnePdf() {
         setupPrinterAndPaper(contentItems.at(0).graphic, printer, m_params);
     }
 
+    // The printer opens the output file when painting begins.
     RS_Painter painter(&printer);
+    if (!painter.isActive()) {
+        reportWriteFailure(m_params.outFile);
+        for (const auto &item : contentItems) {
+            delete item.doc;
+        }
+        return failed + static_cast<int>(contentItems.size());
+    }
 
     if (m_params.monochrome) {
         painter.setDrawingMode(RS2::ModeBW);
@@ -177,24 +193,23 @@ int PdfPrintLoop::printManyFilesToOnePdf() {
     return failed;
 }
 
+static void reportWriteFailure(const QString& outFile){
+    qCritical("ERROR: failed to write '%s'", qPrintable(outFile));
+}
+
 static bool openDocAndSetGraphic(RS_Document** doc, RS_Graphic** graphic,
     const QString& dxfFile){
-    *doc = new RS_Graphic();
-    const LC_DocumentsStorage storage;
-    if (!storage.loadDocument((*doc)->getGraphic(), dxfFile, RS2::FormatUnknown)) {
-    // if (!(*doc)->open(dxfFile, RS2::FormatUnknown)) {
-        qDebug() << "ERROR: Failed to open document" << dxfFile;
+    auto* newGraphic = new RS_Graphic();
+    *doc = newGraphic;
+    // LC_Console::importGraphic() reports on stderr. Importing through the
+    // document storage opens a message box no console command can close.
+    if (!LC_Console::importGraphic(*newGraphic, dxfFile)) {
         delete *doc;
+        *doc = nullptr;
         return false;
     }
 
-    *graphic = (*doc)->getGraphic();
-    if (*graphic == nullptr) {
-        qDebug() << "ERROR: No graphic in" << dxfFile;
-        delete *doc;
-        return false;
-    }
-
+    *graphic = newGraphic;
     return true;
 }
 

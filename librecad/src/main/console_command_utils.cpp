@@ -29,6 +29,10 @@
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
+#include <QSet>
+
+#include "rs_fileio.h"
+#include "rs_graphic.h"
 
 namespace LC_Console {
 namespace {
@@ -47,6 +51,14 @@ bool hasAcceptedExtension(const QString& fileName, const QStringList& extensions
             return true;
     }
     return false;
+}
+
+// A path two names can be compared by: the same file reached two ways compares
+// equal, and a file that does not exist yet still compares by where it would be.
+QString comparablePath(const QString& path) {
+    const QFileInfo info(path);
+    const QString canonical = info.canonicalFilePath();
+    return canonical.isEmpty() ? QDir::cleanPath(info.absoluteFilePath()) : canonical;
 }
 
 } // namespace
@@ -155,11 +167,14 @@ QString extensionDescription(const QStringList& extensions) {
 }
 
 QStringList collectInputFiles(const QStringList& positionalArgs,
-                              const QStringList& extensions) {
+                              const QStringList& extensions,
+                              QStringList* skippedArgs) {
     QStringList files;
     for (const QString& arg : positionalArgs) {
         if (hasAcceptedExtension(arg, extensions))
             files.append(arg);
+        else if (skippedArgs != nullptr)
+            skippedArgs->append(arg);
     }
     return files;
 }
@@ -240,6 +255,68 @@ bool validateOutputOptions(int inputCount, const QString& outputFile,
         return false;
     }
 
+    return true;
+}
+
+bool validateOutputTargets(const QStringList& inputFiles, const QStringList& outputFiles,
+                           QString* errorMessage) {
+    const auto fail = [errorMessage](const QString& message) {
+        if (errorMessage != nullptr)
+            *errorMessage = message;
+        return false;
+    };
+
+    QSet<QString> inputPaths;
+    for (const QString& inputFile : inputFiles)
+        inputPaths.insert(comparablePath(inputFile));
+
+    QSet<QString> outputPaths;
+    for (const QString& outputFile : outputFiles) {
+        if (QFileInfo(outputFile).isDir())
+            return fail(QStringLiteral("output '%1' is a directory.").arg(outputFile));
+
+        const QString path = comparablePath(outputFile);
+        if (inputPaths.contains(path))
+            return fail(QStringLiteral("output '%1' would overwrite an input file.").arg(outputFile));
+        if (outputPaths.contains(path))
+            return fail(QStringLiteral("more than one input would be written to '%1'.").arg(outputFile));
+        outputPaths.insert(path);
+    }
+
+    return true;
+}
+
+bool importGraphic(RS_Graphic& graphic, const QString& inputFile, RS2::FormatType type) {
+    if (!QFileInfo::exists(inputFile)) {
+        qCritical("ERROR: input file does not exist: '%s'", qPrintable(inputFile));
+        return false;
+    }
+
+    graphic.initForNewDocument();
+
+    bool reported = false;
+    const bool imported = RS_FileIO::instance()->fileImport(
+        graphic, inputFile, type,
+        [&reported, &inputFile](bool partial, const QString& error) {
+            reported = true;
+            if (partial) {
+                qWarning("WARNING: partial import of '%s': %s",
+                         qPrintable(inputFile), qPrintable(error));
+                return true;
+            }
+            qCritical("ERROR: import failed for '%s': %s",
+                      qPrintable(inputFile), qPrintable(error));
+            return false;
+        });
+
+    if (!imported) {
+        // the format was not recognised, so the import never reached a filter
+        if (!reported)
+            qCritical("ERROR: cannot read '%s'", qPrintable(inputFile));
+        return false;
+    }
+
+    graphic.onLoadingCompleted();
     return true;
 }
 

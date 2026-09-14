@@ -66,6 +66,7 @@ protected:
     bool setData(const RS_Vector& dimPos, bool calcCenter = false);
     void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;
     void onMouseMoveEvent(int status, const LC_MouseEvent* e) override;
+    bool isInVisualSnapStatus(int status) override;
     void setFirstLine(RS_Entity* en, const RS_Vector& pos);
     void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
     bool doProcessCommand(int status, const QString &command) override;

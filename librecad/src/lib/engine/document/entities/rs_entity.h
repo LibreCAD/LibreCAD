@@ -245,6 +245,12 @@ public:
     }
 
     /**
+     * @return true when getMin() and getMax() form a finite, non-inverted box; invalid vectors
+     * and reset borders (see resetBorders()) do not.
+     */
+    bool hasValidBorders() const;
+
+    /**
      * This method returns the difference of max and min returned
      * by the above functions.
      * @return size of the entity.

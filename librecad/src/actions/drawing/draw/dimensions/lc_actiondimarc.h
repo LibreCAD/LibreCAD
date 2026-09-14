@@ -53,6 +53,7 @@ protected:
     void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;
     void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
     void onMouseMoveEvent(int status, const LC_MouseEvent* e) override;
+    bool isInVisualSnapStatus(int status) override;
    void setArcEntity(RS_Entity* entity);
    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
    RS_Entity* doTriggerCreateEntity() override;
