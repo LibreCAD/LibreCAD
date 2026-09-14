@@ -2935,6 +2935,7 @@ private:
     std::size_t m_dxfSweepTransformCount = 0;
     std::size_t m_dxfPathTransformCount = 0;
     bool m_dxfClassIdSeen = false;
+    bool m_dxfDataSizeSeen = false;
     bool m_dxfInSubtype = false;
 };
 
@@ -3030,6 +3031,7 @@ private:
     std::size_t m_dxfPathEntityTransformedCount = 0;
     bool m_dxfSweepEntityIdSeen = false;
     bool m_dxfPathEntityIdSeen = false;
+    int m_dxfDataSizeCount = 0;
     bool m_dxfTypedFieldSeen = false;
     bool m_dxfInSubtype = false;
 };

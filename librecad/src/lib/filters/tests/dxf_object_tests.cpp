@@ -3907,6 +3907,173 @@ TEST_CASE("DXF reads what AutoCAD, BricsCAD, ezdxf and LibreDWG write",
         capture, "lc_compat_spline_flags.dxf"));
     CHECK(capture.m_callCount == 1);
   }
+
+  SECTION("ACAD_TABLE date, point and object cells after proxy graphics") {
+    class Capture final : public StubInterface {
+    public:
+      std::vector<DRW_Table> tables;
+      void addTable(const DRW_Table &table) override { tables.push_back(table); }
+    } capture;
+    const std::string cell =
+        "171\n1\n172\n0\n173\n0\n174\n0\n175\n1\n176\n1\n91\n0\n178\n0\n"
+        "145\n0.0\n92\n0\n301\nCELL_VALUE\n93\n6\n";
+    CHECK(tryReadDxf(r2007 +
+        "0\nSECTION\n2\nENTITIES\n0\nACAD_TABLE\n5\n7A\n330\n1F\n"
+        "100\nAcDbEntity\n8\n0\n92\n2\n310\nAABB\n"
+        "100\nAcDbBlockReference\n2\n*T1\n10\n0\n20\n0\n30\n0\n"
+        "100\nAcDbTable\n342\n6B\n11\n1\n21\n0\n31\n0\n"
+        "90\n22\n91\n1\n92\n3\n93\n0\n94\n0\n95\n0\n96\n0\n"
+        "141\n10\n142\n20\n142\n20\n142\n20\n" + cell +
+        "90\n8\n92\n16\n310\nE8070B0005000F000000000000000000\n"
+        "94\n0\n300\n\n302\n11/15/2024\n304\nACVALUE_END\n" + cell +
+        "90\n32\n92\n24\n11\n7\n21\n8\n31\n9\n"
+        "94\n0\n300\n\n302\n7,8,9\n304\nACVALUE_END\n" + cell +
+        "90\n64\n330\n2F\n94\n0\n300\n\n302\nobject\n304\nACVALUE_END\n"
+        "0\nENDSEC\n0\nEOF\n",
+        capture, "lc_compat_table_cell_values.dxf"));
+    REQUIRE(capture.tables.size() == 1u);
+    const DRW_Table &table = capture.tables.front();
+    CHECK(table.proxyGraphics == std::string("\xAA\xBB", 2));
+    CHECK(table.parentHandle == 0x1Fu);
+    CHECK(table.m_horizontalDirection.x == 1.0);
+    CHECK(table.m_horizontalDirection.z == 0.0);
+    REQUIRE(table.m_content.m_rows.size() == 1u);
+    const auto &cells = table.m_content.m_rows.front().m_cells;
+    REQUIRE(cells.size() == 3u);
+    CHECK(cells[0].m_contents.front().m_text == "11/15/2024");
+    CHECK(cells[1].m_contents.front().m_text == "7,8,9");
+    CHECK(cells[2].m_contents.front().m_text == "object");
+  }
+
+  SECTION("R12 XDATA that repeats Y and Z after a point") {
+    LineCapture capture;
+    CHECK(tryReadDxf(
+        "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1009\n0\nENDSEC\n"
+        "0\nSECTION\n2\nENTITIES\n0\nLINE\n8\n0\n10\n0\n20\n0\n11\n1\n21\n1\n"
+        "1001\nACAD_MATERIAL_MAPPER\n1070\n2\n"
+        "1011\n1\n1021\n2\n1031\n3\n1021\n4\n1031\n5\n"
+        "1011\n6\n1021\n7\n1031\n8\n"
+        "0\nENDSEC\n0\nEOF\n",
+        capture, "lc_compat_r12_xdata_points.dxf"));
+    REQUIRE(capture.m_callCount == 1);
+    REQUIRE(capture.m_captured.extData.size() == 4u);
+    const DRW_Coord *first = capture.m_captured.extData[2]->coord();
+    const DRW_Coord *second = capture.m_captured.extData[3]->coord();
+    REQUIRE(first != nullptr);
+    REQUIRE(second != nullptr);
+    CHECK((first->x == 1.0 && first->y == 2.0 && first->z == 3.0));
+    CHECK((second->x == 6.0 && second->y == 7.0 && second->z == 8.0));
+  }
+
+  SECTION("R2000 FIELD values without ACVALUE_END") {
+    FieldCapture capture;
+    CHECK(tryReadDxf(
+        "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1015\n0\nENDSEC\n"
+        "0\nSECTION\n2\nOBJECTS\n0\nFIELD\n5\n15E\n330\n15D\n100\nAcDbField\n"
+        "1\n_text\n2\n%<\\_FldIdx 0>%\n90\n0\n97\n0\n4\n\n"
+        "91\n63\n92\n0\n94\n9\n95\n2\n96\n0\n300\n\n93\n2\n"
+        "6\nACFD_FIELDTEXT_ATTDEF\n90\n1\n91\n1\n"
+        "6\nACFD_FIELDTEXT_CHECKSUM\n90\n2\n140\n350.0\n"
+        "7\nACFD_FIELD_VALUE\n90\n0\n91\n0\n301\n\n98\n0\n"
+        "0\nENDSEC\n0\nEOF\n",
+        capture, "lc_compat_r2000_field_values.dxf"));
+    REQUIRE(capture.m_fields.size() == 1u);
+    const DRW_Field &field = capture.m_fields.front();
+    REQUIRE(field.m_childValues.size() == 2u);
+    CHECK(field.m_childValues[0].m_value.m_value.i_val() == 1);
+    CHECK(field.m_childValues[1].m_value.m_value.d_val() == 350.0);
+    CHECK(field.m_value.m_dataType == 0);
+  }
+
+  SECTION("FIELD strings split into chunks before the final group") {
+    FieldCapture capture;
+    CHECK(tryReadDxf(r2007 +
+        "0\nSECTION\n2\nOBJECTS\n0\nFIELD\n5\nA9\n330\nAA\n100\nAcDbField\n"
+        "1\n_text\n3\nab\n3\ncd\n2\nef\n90\n0\n97\n0\n"
+        "91\n63\n92\n0\n94\n41\n95\n2\n96\n0\n300\n\n93\n0\n"
+        "7\nACFD_FIELD_VALUE\n93\n0\n90\n4\n2\none \n2\ntwo \n1\nthree\n"
+        "94\n0\n300\nstatic\n302\n\n304\nACVALUE_END\n"
+        "9\nuv\n301\nwx\n98\n4\n"
+        "0\nENDSEC\n0\nEOF\n",
+        capture, "lc_compat_field_chunks.dxf"));
+    REQUIRE(capture.m_fields.size() == 1u);
+    const DRW_Field &field = capture.m_fields.front();
+    CHECK(field.m_fieldCode == "abcdef");
+    CHECK(std::string(field.m_value.m_value.c_str()) == "one two three");
+    CHECK(field.m_valueString == "uvwx");
+  }
+
+  SECTION("surface subclass data sizes and 310 data") {
+    class Capture final : public StubInterface {
+    public:
+      std::vector<std::vector<std::uint8_t>> acis;
+      std::uint32_t extrudedClassId = 0;
+      std::vector<std::uint8_t> sweepData;
+      std::vector<std::uint8_t> pathData;
+      void addSurface(const DRW_Surface *surface) override {
+        acis.push_back(surface->rawAcisData);
+        if (const auto *e = dynamic_cast<const DRW_ExtrudedSurface *>(surface))
+          extrudedClassId = e->classId;
+        if (const auto *s = dynamic_cast<const DRW_SweptSurface *>(surface)) {
+          sweepData = s->sweepData;
+          pathData = s->pathData;
+        }
+      }
+    } capture;
+    const auto repeat = [](const char *code, int count) {
+      std::string groups;
+      for (int i = 0; i < count; ++i)
+        groups += std::string(code) + "\n0\n";
+      return groups;
+    };
+    const std::string preamble =
+        "100\nAcDbEntity\n8\n0\n100\nAcDbModelerGeometry\n70\n1\n310\n41434953\n"
+        "100\nAcDbSurface\n71\n6\n72\n6\n";
+    CHECK(tryReadDxf(r2007 +
+        "0\nSECTION\n2\nENTITIES\n"
+        "0\nEXTRUDEDSURFACE\n5\n2D8\n" + preamble +
+        "100\nAcDbExtrudedSurface\n90\n35\n90\n2\n310\nAABB\n10\n0\n20\n0\n30\n1\n"
+        + repeat("40", 16) + "42\n0\n43\n0\n44\n0\n45\n0\n48\n1\n49\n0\n"
+        + repeat("46", 16) + repeat("47", 16) +
+        "290\n0\n70\n0\n71\n2\n292\n1\n293\n0\n294\n0\n295\n1\n296\n0\n"
+        "11\n0\n21\n0\n31\n0\n"
+        "0\nREVOLVEDSURFACE\n5\n366\n" + preamble +
+        "100\nAcDbRevolvedSurface\n90\n77\n90\n2\n310\nAABB\n"
+        "10\n0\n20\n0\n30\n0\n11\n0\n21\n1\n31\n0\n40\n1\n41\n0\n"
+        + repeat("42", 16) + "43\n0\n44\n0\n45\n0\n46\n0\n290\n0\n291\n0\n"
+        "0\nSWEPTSURFACE\n5\n411\n" + preamble +
+        "100\nAcDbSweptSurface\n90\n77\n90\n2\n310\nAABB\n91\n19\n90\n2\n310\nCCDD\n"
+        + repeat("40", 16) + repeat("41", 16)
+        + "42\n0\n43\n0\n44\n0\n45\n0\n48\n1\n49\n0\n"
+        + repeat("46", 16) + repeat("47", 16) +
+        "290\n0\n70\n1\n71\n2\n292\n0\n293\n0\n294\n1\n295\n1\n296\n1\n"
+        "11\n0\n21\n0\n31\n0\n"
+        "0\nENDSEC\n0\nEOF\n",
+        capture, "lc_compat_surface_data.dxf"));
+    const std::vector<std::uint8_t> acis{0x41, 0x43, 0x49, 0x53};
+    REQUIRE(capture.acis.size() == 3u);
+    CHECK(capture.acis[0] == acis);
+    CHECK(capture.acis[1] == acis);
+    CHECK(capture.acis[2] == acis);
+    CHECK(capture.extrudedClassId == 35u);
+    CHECK(capture.sweepData == std::vector<std::uint8_t>{0xAA, 0xBB});
+    CHECK(capture.pathData == std::vector<std::uint8_t>{0xCC, 0xDD});
+  }
+
+  SECTION("a proxy object with 311 data counted by 162 and a spare byte") {
+    ProxyObjectCapture capture;
+    CHECK(tryReadDxf(r2007 +
+        "0\nSECTION\n2\nOBJECTS\n0\nACAD_PROXY_OBJECT\n5\n90\n330\n8F\n"
+        "100\nAcDbProxyObject\n90\n499\n91\n519\n95\n14811165\n70\n0\n"
+        "162\n12\n311\nCDEF\n161\n16\n310\n406C00\n94\n0\n"
+        "0\nENDSEC\n0\nEOF\n",
+        capture, "lc_compat_proxy_object_311.dxf"));
+    REQUIRE(capture.m_objects.size() == 1u);
+    CHECK(capture.m_objects.front().m_unknownData
+          == std::vector<std::uint8_t>{0xCD, 0xEF});
+    CHECK(capture.m_objects.front().m_objectData
+          == std::vector<std::uint8_t>{0x40, 0x6C, 0x00});
+  }
 }
 
 TEST_CASE("DXF ENDBLK validates modern footer identity",

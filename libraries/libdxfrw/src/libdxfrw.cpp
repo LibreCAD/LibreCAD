@@ -12287,6 +12287,7 @@ bool dxfRW::processField() {
     bool childOpen = false;
     bool primaryOpen = false;
     bool primarySeen = false;
+    bool activeHasFlags = false;
     bool activeHasType = false;
     bool activeHasDataSize = false;
     bool activeHasX = false;
@@ -12299,6 +12300,7 @@ bool dxfRW::processField() {
     DRW_Field::ChildValue child;
 
     const auto resetActiveValue = [&]() {
+        activeHasFlags = false;
         activeHasType = false;
         activeHasDataSize = false;
         activeHasX = false;
@@ -12357,6 +12359,13 @@ bool dxfRW::processField() {
 
     while (reader->readRec(&code)) {
         DRW_DBG(code); DRW_DBG("\n");
+        // R2004 and older write a value without 93 flags or ACVALUE_END; it
+        // ends where the next value, the value string or the record begins.
+        if (activeValue != nullptr && !activeHasFlags
+            && (code == 0 || code == 6 || code == 7 || code == 9 || code == 98
+                || code == 301)
+            && !closeValue())
+            return setError(DRW::BAD_CODE_PARSED);
         if (0 == code) {
             if (!acceptObjectBoundary(code))
                 return setError(DRW::BAD_READ_OBJECTS);
@@ -12409,19 +12418,16 @@ bool dxfRW::processField() {
         if (activeValue != nullptr) {
             switch (code) {
             case 1:
-                if (activeValue->m_dataType != 4
-                    || activeValue->m_value.type() != DRW_Variant::INVALID)
+            case 2: {
+                // 2 chunks join the 1 group in file order, before or after it.
+                if (activeValue->m_dataType != 4)
                     return setError(DRW::BAD_CODE_PARSED);
-                activeValue->m_value.addString(1, reader->getUtf8String());
+                UTF8STRING text;
+                if (activeValue->m_value.type() == DRW_Variant::STRING)
+                    text = activeValue->m_value.c_str();
+                activeValue->m_value.addString(1, text + reader->getUtf8String());
                 break;
-            case 2:
-                if (activeValue->m_dataType != 4
-                    || activeValue->m_value.type() != DRW_Variant::STRING)
-                    return setError(DRW::BAD_CODE_PARSED);
-                activeValue->m_value.addString(
-                    1, UTF8STRING(activeValue->m_value.c_str())
-                        + reader->getUtf8String());
-                break;
+            }
             case 11:
                 if (activeValue->m_dataType != 16
                     && activeValue->m_dataType != 32)
@@ -12469,6 +12475,7 @@ bool dxfRW::processField() {
                 if (activeHasType)
                     return setError(DRW::BAD_CODE_PARSED);
                 activeValue->m_formatFlags = reader->getInt32();
+                activeHasFlags = true;
                 break;
             case 94:
                 activeValue->m_unitType = reader->getInt32();
@@ -12507,7 +12514,8 @@ bool dxfRW::processField() {
 
         switch (code) {
         case 1:   field.m_evaluatorId = reader->getUtf8String(); break;
-        case 2:   field.m_fieldCode = reader->getUtf8String(); break;
+        // Chunked 2/3 and 9/301 strings join in file order, either first.
+        case 2:
         case 3:   field.m_fieldCode += reader->getUtf8String(); break;
         case 4:   field.m_formatString = reader->getUtf8String(); break;
         case 6:
@@ -12563,7 +12571,8 @@ bool dxfRW::processField() {
         case 95:  field.m_evaluationStatusFlags = reader->getInt32(); break;
         case 96:  field.m_evaluationErrorCode = reader->getInt32(); break;
         case 300: field.m_evaluationErrorMessage = reader->getUtf8String(); break;
-        case 301: field.m_valueString = reader->getUtf8String(); break;
+        case 9:
+        case 301: field.m_valueString += reader->getUtf8String(); break;
         case 98:  field.m_valueStringLength = reader->getInt32(); break;
         case 360: {
             const std::uint32_t h = reader->getHandleString();
@@ -13246,6 +13255,7 @@ struct DxfProxyCapture {
     std::uint32_t bodyBitSize = 0;
     bool hasUnknownByteSize = false;
     std::uint64_t unknownByteSize = 0;
+    bool unknownSizeIs162 = false;
     std::vector<std::uint8_t> primary;
     std::vector<std::uint8_t> body;
     std::vector<std::uint8_t> unknown;
@@ -13341,7 +13351,9 @@ bool validateProxyDxfPayloads(const DxfProxyCapture& capture) {
             return true;
         if (expected > DRW::kMaxDxfBinaryPayloadBytes * 8u)
             return false;
-        return (expected + 7u) / 8u == data.size();
+        // Files also store bits / 8 + 1 bytes: a spare byte when bits % 8 == 0.
+        return (expected + 7u) / 8u == data.size()
+            || expected / 8u + 1u == data.size();
     };
 
     return byteCountMatches(capture.primary, capture.hasPrimaryByteSize,
@@ -13496,6 +13508,7 @@ bool collectProxyDxfGroup(DxfProxyCapture& capture,
         capture.inProxyRecord = true;
         capture.hasUnknownByteSize = true;
         capture.unknownByteSize = static_cast<std::uint64_t>(integer);
+        capture.unknownSizeIs162 = code == 162;
         capture.slot = DxfProxyPayloadSlot::Unknown;
         return true;
     case 70:
@@ -13518,9 +13531,11 @@ bool collectProxyDxfGroup(DxfProxyCapture& capture,
         return appendProxyDxfBytes(value, *target);
     }
     case 311:
+        // R2010+ files store the data counted by 162 in 311, objects included.
         capture.inProxyRecord = true;
         return appendProxyDxfBytes(value,
-                                   entity ? capture.unknown : capture.body);
+                                   entity || capture.unknownSizeIs162
+                                       ? capture.unknown : capture.body);
     default:
         return true;
     }
@@ -14025,7 +14040,7 @@ bool dxfRW::processProxyEntity() {
 }
 
 // ACAD_PROXY_OBJECT follows the same DXF proxy-data policy as the entity, but
-// code 311 belongs to object data rather than the entity's unknown slot.
+// code 311 belongs to object data unless a 162 size introduces it.
 bool dxfRW::processProxyObject() {
     DRW_DBG("dxfRW::processProxyObject\n");
     int code;

@@ -3147,21 +3147,21 @@ bool DRW_Entity::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
             code, DRW_Coord(reader->getDouble(), 0.0, 0.0));
         extData.push_back(curr);
         break;
+    // Files repeat Y and Z after a point's Z (R12 ACAD_MATERIAL_MAPPER and
+    // ASC_SEEDPOINT); a component with no open point is dropped.
     case 1020:
     case 1021:
     case 1022:
     case 1023:
-        if (!curr)
-            return false;
-        curr->setCoordY(reader->getDouble());
+        if (curr)
+            curr->setCoordY(reader->getDouble());
         break;
     case 1030:
     case 1031:
     case 1032:
     case 1033:
-        if (!curr)
-            return false;
-        curr->setCoordZ(reader->getDouble());
+        if (curr)
+            curr->setCoordZ(reader->getDouble());
         curr.reset();
         break;
     case 1040:
@@ -8789,6 +8789,14 @@ bool DRW_Table::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
 
     if (m_dxfSubclass != DxfSubclass::Table)
         return DRW_Insert::parseCode(code, reader);
+
+    // A cell value's point, double, date and object-id groups reuse codes the
+    // table itself and its proxy graphics own; only the displayed text is kept.
+    if (m_dxfInCellValue
+        && (code == 11 || code == 21 || code == 31 || code == 140
+            || code == 310 || code == 330)) {
+        return true;
+    }
 
     switch (code) {
     case 342:
@@ -17233,15 +17241,23 @@ bool DRW_ExtrudedSurface::parseCode(
         break;
     }
     case 90:
-        if (m_dxfClassIdSeen)
-            return false;
         {
+            // The class id, then the size of the 310 data that follows.
             const std::int32_t value = reader->getInt32();
-            if (value < 0)
+            if (value < 0 || m_dxfDataSizeSeen)
                 return false;
+            if (m_dxfClassIdSeen) {
+                m_dxfDataSizeSeen = true;
+                break;
+            }
             classId = static_cast<std::uint32_t>(value);
             m_dxfClassIdSeen = true;
         }
+        break;
+    case 310:
+        // Extrusion data is not kept; it must not join the ACIS body.
+        if (!m_dxfInSubtype)
+            return DRW_Surface::parseCode(code, reader);
         break;
     case 10:
         sweepVector.x = reader->getDouble();
@@ -17368,13 +17384,18 @@ bool DRW_SweptSurface::parseCode(
     case 90:
         if (!m_dxfInSubtype)
             return DRW_Surface::parseCode(code, reader);
-        if (m_dxfSweepEntityIdSeen)
-            return false;
         m_dxfTypedFieldSeen = true;
         {
+            // Each entity id may be followed by the size of its 310 data.
             const std::int32_t value = reader->getInt32();
             if (value < 0)
                 return false;
+            if (m_dxfSweepEntityIdSeen) {
+                if (m_dxfDataSizeCount >= (m_dxfPathEntityIdSeen ? 2 : 1))
+                    return false;
+                ++m_dxfDataSizeCount;
+                break;
+            }
             sweepEntityId = static_cast<std::uint32_t>(value);
             m_dxfSweepEntityIdSeen = true;
         }
@@ -17881,6 +17902,11 @@ bool DRW_RevolvedSurface::parseCode(
                 return false;
             id = static_cast<std::uint32_t>(value);
         }
+        break;
+    case 310:
+        // Revolve data follows the subclass id; it must not join the ACIS body.
+        if (!m_dxfClassIdSeen)
+            return DRW_Surface::parseCode(code, reader);
         break;
     case 10:
         axisPoint.x = reader->getDouble();
