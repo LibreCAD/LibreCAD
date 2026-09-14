@@ -47,13 +47,20 @@ $ librecad dxf2svg foo.dxf
 ### Releases
 - [Releases and Prereleases](https://github.com/LibreCAD/LibreCAD/releases)
 
-The macOS build is a universal (Apple Silicon + Intel) app. It is ad-hoc signed
-rather than signed with an Apple Developer ID, so it is not notarized: macOS
-still shows an unidentified-developer warning on first launch. Open it once via
-right-click &rarr; Open, or clear the quarantine attribute
+The macOS build is a universal (Apple Silicon + Intel) app. CI verifies the app's
+ad-hoc code signature both before packaging and from the mounted DMG, and release
+assets include a `.sha256` file that can be checked with:
+```bash
+shasum -a 256 -c LibreCAD-*.dmg.sha256
+```
+
+Ad-hoc signing does not provide an Apple Developer ID or notarization, so macOS
+still shows an unidentified-developer warning on first launch. Drag LibreCAD to
+Applications and open it once via right-click &rarr; Open. If macOS retains the
+download quarantine after the user override, clear that attribute only
 ([#2162](https://github.com/LibreCAD/LibreCAD/issues/2162)):
 ```bash
-xattr -rc LibreCAD.app
+xattr -dr com.apple.quarantine /Applications/LibreCAD.app
 ```
 
 

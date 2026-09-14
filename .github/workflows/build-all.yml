@@ -208,18 +208,35 @@ jobs:
         env:
           QMAKE_OPTS: QMAKE_APPLE_DEVICE_ARCHS=arm64 QMAKE_APPLE_DEVICE_ARCHS+=x86_64
         run: |
-          scripts/build-osx.sh
-          # fail loudly if the "universal" DMG is silently thin
-          lipo -archs LibreCAD.app/Contents/MacOS/LibreCAD | tee /dev/stderr | grep -qw arm64
-          lipo -archs LibreCAD.app/Contents/MacOS/LibreCAD | grep -qw x86_64
-          mv LibreCAD.dmg LibreCAD-`git describe --always`-universal.dmg
+          DMG_NAME="LibreCAD-$(git describe --always)-universal.dmg"
+          scripts/build-osx.sh \
+            --sign-mode=adhoc \
+            --architectures=arm64,x86_64 \
+            --output="$DMG_NAME"
+
+          scripts/test-osx-package.sh \
+            --app LibreCAD.app \
+            --architectures arm64,x86_64
+
+          # Exercise the fallback image backend from the same finalized app.
+          # This validates both image paths without compiling LibreCAD twice.
+          scripts/create-osx-dmg.sh \
+            --app LibreCAD.app \
+            --output "$RUNNER_TEMP/LibreCAD-convert.dmg" \
+            --backend convert \
+            --mode adhoc \
+            --architectures arm64,x86_64
 
       - name: Upload artifact
         id: artifact-upload-step
         uses: actions/upload-artifact@main
         with:
           name: macOSAssets
-          path: LibreCAD*.dmg
+          path: |
+            LibreCAD*.dmg
+            LibreCAD*.dmg.sha256
+            LibreCAD*.dmg.verification.txt
+            LibreCAD*.dmg.app.manifest
           retention-days: 2
 
   BuildWindows64:
@@ -543,6 +560,9 @@ jobs:
             linuxAssetsAarch64/LibreCAD*.AppImage
             linuxAssetsAarch64/LibreCAD*.AppImage.zsync
             macOSAssets/LibreCAD*.dmg
+            macOSAssets/LibreCAD*.dmg.sha256
+            macOSAssets/LibreCAD*.dmg.verification.txt
+            macOSAssets/LibreCAD*.dmg.app.manifest
             win64Assets/LibreCAD*.exe
             winARM64Assets/LibreCAD*.exe
             snapAssets/LibreCAD*.snap
