@@ -30362,8 +30362,19 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch *h) {
       auto loop = static_cast<RS_EntityContainer *>(l);
       std::shared_ptr<DRW_HatchLoop> lData = std::make_shared<DRW_HatchLoop>(0);
 
+      // a container other than a spline, such as a polyline, is written as its edges
+      std::vector<RS_Entity *> edges;
       for (RS_Entity *ed :
            lc::LC_ContainerTraverser{*loop, RS2::ResolveNone}.entities()) {
+        if (ed->isContainer() && ed->rtti() != RS2::EntitySpline) {
+          const auto parts = lc::LC_ContainerTraverser{
+              *static_cast<RS_EntityContainer *>(ed), RS2::ResolveAll}.entities();
+          edges.insert(edges.end(), parts.begin(), parts.end());
+        } else {
+          edges.push_back(ed);
+        }
+      }
+      for (RS_Entity *ed : edges) {
         // Write hatch loop edges:
         if (ed->rtti() == RS2::EntityLine) {
           auto *ln = static_cast<RS_Line *>(ed);
