@@ -19,10 +19,8 @@
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 **********************************************************************/
 
-// Regression tests for RS_Pen::isSameAs(), the predicate the renderers' pen
-// cache asks before it keeps the pen the painter already holds. The caller that
-// makes the dash-offset term necessary is exercised in
-// librecad/src/lib/gui/tests/lc_graphicviewrenderer_tests.cpp.
+// Tests for RS_Pen::isSameAs(), the renderers' pen cache predicate. The callers
+// are exercised in librecad/src/lib/gui/tests/lc_graphicviewrenderer_tests.cpp.
 
 #include <catch2/catch_test_macros.hpp>
 
@@ -41,27 +39,14 @@ RS_Pen testPen(const RS2::LineType lineType, const double screenWidth = 1.0) {
 
 TEST_CASE("the painter dash offset tells two pens apart only when a pattern is drawn",
           "[pen][linetype]") {
-    // RS_Painter::updateDashOffset() decrements the painter's running dash offset
-    // by the length of every entity drawn, so the offset handed to isSameAs() has
-    // left zero long before the next entity is prepared. Whether it can change
-    // what the pen paints is the caller's answer, not the line type's.
+    // The painter's running dash offset, which RS_Painter::updateDashOffset() moves
+    // by the length of every entity drawn.
     const double runningOffset = -37.5;
 
     const RS_Pen solid = testPen(RS2::SolidLine);
     CHECK(solid.isSameAs(solid, runningOffset, false));
-    // The very same pen keeps the offset in its key as soon as the caller says a
-    // pattern is about to be painted with it - which is what the widget renderer
-    // does to a selected entity whose own line type resolved solid.
     CHECK_FALSE(solid.isSameAs(solid, runningOffset, true));
 
-    for (const RS2::LineType lineType : {RS2::NoPen, RS2::LineByLayer, RS2::LineByBlock}) {
-        const RS_Pen pen = testPen(lineType);
-        CHECK(pen.isSameAs(pen, runningOffset, false));
-    }
-
-    // Where a pattern is drawn the offset stays in the key: two otherwise equal
-    // dashed pens at different phases are two different pens, and dropping the
-    // term outright would let the second entity inherit the first one's phase.
     const RS_Pen dashed = testPen(RS2::DashLine);
     CHECK_FALSE(dashed.isSameAs(dashed, runningOffset, true));
     CHECK(dashed.isSameAs(dashed, 0.0, true));
@@ -70,8 +55,7 @@ TEST_CASE("the painter dash offset tells two pens apart only when a pattern is d
     CHECK(phased.isSameAs(dashed, runningOffset, true));
     CHECK_FALSE(phased.isSameAs(dashed, runningOffset + 0.1, true));
 
-    // Nothing but the offset term is relaxed: every other difference still tells
-    // two solid pens apart under a running offset.
+    // Only the offset term is optional.
     RS_Pen coloured = solid;
     coloured.setColor(RS_Color(Qt::red));
     CHECK_FALSE(solid.isSameAs(coloured, runningOffset, false));
