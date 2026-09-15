@@ -76,6 +76,27 @@ bool isCollisionFree(const std::map<T1, T2>& lookUp, const T1& key, const T2& va
     return false;
 }
 
+// The action of a command or alias that matches ignoring letter case, or
+// ActionNone if none does or the matches name different actions. Exact matches
+// are looked up first, so aliases that differ only in case still work.
+RS2::ActionType findActionIgnoringCase(const QString& command,
+                                       const std::map<QString, RS2::ActionType>& mainCommands,
+                                       const std::map<QString, RS2::ActionType>& shortCommands) {
+    RS2::ActionType found = RS2::ActionNone;
+    for (const auto* table : {&mainCommands, &shortCommands}) {
+        for (const auto& [key, action] : *table) {
+            if (key.compare(command, Qt::CaseInsensitive) != 0) {
+                continue;
+            }
+            if (found != RS2::ActionNone && found != action) {
+                return RS2::ActionNone;
+            }
+            found = action;
+        }
+    }
+    return found;
+}
+
 // write alias file
 void writeAliasFile(const QString& aliasName,
                     const std::map<QString, RS2::ActionType>& shortCommands,
@@ -392,6 +413,9 @@ RS2::ActionType RS_Commands::cmdToAction(const QString& cmd, const bool verbose)
             break;
         }
     }
+    if (ret == RS2::ActionNone) {
+        ret = findActionIgnoringCase(cmd, m_mainCommands, m_shortCommands);
+    }
     if (ret==RS2::ActionNone) {
         return ret;
     }
@@ -434,7 +458,10 @@ RS2::ActionType RS_Commands::keycodeToAction(const QString& code) const {
         }
     }
 
-    const auto action = commandToAction(code);
+    auto action = commandToAction(code);
+    if (action == RS2::ActionNone) {
+        action = findActionIgnoringCase(code, m_mainCommands, m_shortCommands);
+    }
 
     if (action != RS2::ActionNone) {
         //found
