@@ -210,12 +210,13 @@ void LC_PrintPreviewViewRenderer::setPenForPrintingEntity(RS_Painter *painter, R
 #endif
     // Getting pen from entity (or layer)
     RS_Pen pen = e->getPenResolved();
-    RS_Pen originalPen = pen;
 
     double patternOffset = painter->currentDashOffset();
-    if (m_lastPaintEntityPen.isSameAs(pen, patternOffset)) {
+    if (m_lastPaintEntityPen.isSameAs(pen, patternOffset, m_lastPaintedPattern)) {
         return;
     }
+    m_lastPaintEntityPen.updateBy(pen);
+    m_lastPaintEntityPen.setDashOffset(patternOffset);
     // Avoid negative widths
     double width = pen.getWidth();
 //    int w = std::max(static_cast<int>(pen.getWidth()), 0);
@@ -275,8 +276,7 @@ void LC_PrintPreviewViewRenderer::setPenForPrintingEntity(RS_Painter *painter, R
         pen.setColor(m_colorBackground);
     }
 
-    // we store original pen as last painted, not resolved one - since original pen lead to resulting resolved and may be used by the next entity
-    m_lastPaintEntityPen.updateBy(originalPen);
+    m_lastPaintedPattern = pen.getLineType() != RS2::SolidLine;
     painter->setPen(pen);
 #ifdef DEBUG_RENDERING
     setPenTime += setPenTimer.nsecsElapsed();

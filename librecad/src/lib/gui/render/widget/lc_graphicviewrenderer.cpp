@@ -334,6 +334,8 @@ void LC_GraphicViewRenderer::drawOverlayEntitiesInOverlay(const LC_OverlaysManag
     LC_OverlayDrawablesContainer* overlayContainer = overlaysManager->drawablesAt(overlayType);
     if (overlayContainer != nullptr) {
         overlayContainer->draw(painter);
+        // Drawables set their own pens, bypassing the entity pen cache.
+        m_lastPaintEntityPen.setFlag(RS2::FlagInvalid);
     }
 }
 
@@ -508,8 +510,11 @@ void LC_GraphicViewRenderer::setPenForOverlayEntity(RS_Painter* painter, const R
                     setPenForDraftEntity(painter, e, true);
                 }
             }
+            return;
         }
     }
+    // The pen above bypassed the entity pen cache.
+    m_lastPaintEntityPen.setFlag(RS2::FlagInvalid);
 }
 
 void LC_GraphicViewRenderer::setPenForEntity(RS_Painter* painter, const RS_Entity* e, const bool inOverlay) {
@@ -521,7 +526,6 @@ void LC_GraphicViewRenderer::setPenForEntity(RS_Painter* painter, const RS_Entit
 #ifdef DEBUG_RENDERING
     getPenTime += getPenTimer.nsecsElapsed();
 #endif
-    const RS_Pen originalPen = pen;
     const bool highlighted = e->getFlag(RS2::FlagHighlighted);
     const bool selected = e->getFlag(RS2::FlagSelected);
     const bool overlayPaint = inOverlay || m_inOverlayDrawing;
@@ -532,7 +536,7 @@ void LC_GraphicViewRenderer::setPenForEntity(RS_Painter* painter, const RS_Entit
     const double patternOffset = painter->currentDashOffset();
     // fixme - replace several booleans by Flags value
     if (m_lastPaintedHighlighted == highlighted && m_lastPaintedSelected == selected && m_lastPaintOverlay == overlayPaint && m_lastPenInVisualSnap == inVisualSnap) {
-        if (m_lastPaintEntityPen.isSameAs(pen, patternOffset)) {
+        if (m_lastPaintEntityPen.isSameAs(pen, patternOffset, m_lastPaintedPattern)) {
             return;
         }
     }
@@ -542,6 +546,8 @@ void LC_GraphicViewRenderer::setPenForEntity(RS_Painter* painter, const RS_Entit
         m_lastPaintOverlay = overlayPaint;
         m_lastPenInVisualSnap = inVisualSnap;
     }
+    m_lastPaintEntityPen.updateBy(pen);
+    m_lastPaintEntityPen.setDashOffset(patternOffset);
 
 #ifdef DEBUG_RENDERING
     setPenTimer.start();
@@ -631,7 +637,7 @@ void LC_GraphicViewRenderer::setPenForEntity(RS_Painter* painter, const RS_Entit
 #ifdef DEBUG_RENDERING
     setPenTime += setPenTimer.nsecsElapsed(); painterSetPenTimer.start();
 #endif
-    m_lastPaintEntityPen.updateBy(originalPen);
+    m_lastPaintedPattern = pen.getLineType() != RS2::SolidLine;
     painter->setPen(pen);
 #ifdef DEBUG_RENDERING
     painterSetPenTime += painterSetPenTimer.nsecsElapsed();
@@ -644,7 +650,6 @@ void LC_GraphicViewRenderer::setPenForDraftEntity(RS_Painter* painter, const RS_
     setPenTimer.start();
 #endif
     RS_Pen pen = e->getPenResolved();
-    const RS_Pen originalPen = pen;
     const bool highlighted = e->getFlag(RS2::FlagHighlighted);
     const bool selected = e->getFlag(RS2::FlagSelected);
     const bool overlayPaint = inOverlay || m_inOverlayDrawing;
@@ -654,7 +659,7 @@ void LC_GraphicViewRenderer::setPenForDraftEntity(RS_Painter* painter, const RS_
     // arbitrary QPainter::setPen was called between drawing entities.
     const double patternOffset = painter->currentDashOffset();
     if (m_lastPaintedHighlighted == highlighted && m_lastPaintedSelected == selected && m_lastPaintOverlay == overlayPaint && m_lastPenInVisualSnap == inVisualSnap) {
-        if (m_lastPaintEntityPen.isSameAs(pen, patternOffset)) {
+        if (m_lastPaintEntityPen.isSameAs(pen, patternOffset, m_lastPaintedPattern)) {
             return;
         }
     }
@@ -664,6 +669,8 @@ void LC_GraphicViewRenderer::setPenForDraftEntity(RS_Painter* painter, const RS_
         m_lastPaintOverlay = overlayPaint;
         m_lastPenInVisualSnap = inVisualSnap;
     }
+    m_lastPaintEntityPen.updateBy(pen);
+    m_lastPaintEntityPen.setDashOffset(patternOffset);
     pen.setScreenWidth(0.0);
 
     if (overlayPaint) {
@@ -712,7 +719,7 @@ void LC_GraphicViewRenderer::setPenForDraftEntity(RS_Painter* painter, const RS_
     }
 
     // LC_ERR << "PEN " << pen.getColor().name() << "Width: " << pen.getWidth() <<  " | " << pen.getScreenWidth() << " LT " << pen.getLineType();
-    m_lastPaintEntityPen.updateBy(originalPen);
+    m_lastPaintedPattern = pen.getLineType() != RS2::SolidLine;
     painter->setPen(pen);
 #ifdef DEBUG_RENDERING
     setPenTime += setPenTimer.nsecsElapsed();
