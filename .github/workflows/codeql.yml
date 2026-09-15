@@ -9,6 +9,11 @@ on:
   schedule:
     - cron: '59 14 * * 2'
 
+# A newer push to the same branch or pull request supersedes a run still in progress.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   analyze:
     name: Analyze
@@ -24,6 +29,8 @@ jobs:
       fail-fast: false
       matrix:
         language: [ 'cpp' ]
+        # Scan without building: the traced build took about two hours.
+        build-mode: [ 'none' ]
         # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby' ]
         # Use only 'java' to analyze code written in Java, Kotlin or both
         # Use only 'javascript' to analyze code written in JavaScript, TypeScript or both
@@ -35,34 +42,12 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Install Qt6
-      uses: jurplel/install-qt-action@v4
-      with:
-        aqtversion: '==3.1.*'
-        version: '6.9.*'
-        host: 'linux'
-        target: 'desktop'
-        arch: 'linux_gcc_64'
-        modules: 'qtwaylandcompositor'
-
-    - name: Install Qt and dependencies
-      run: |
-        sudo apt-get -y update
-        # ubuntu jammy(22.04) libqt6core5compat6-dev
-        # ubuntu nobel(24.04) qt6-5compat-dev
-        sudo apt-get -qq install qtchooser libqt6core5compat6-dev libgl-dev libmuparser-dev libboost-dev librsvg2-bin libfreetype6-dev libicu-dev pkg-config libfuse2
-        sudo ln -snf /usr/lib/x86_64-linux-gnu/qtchooser/qt5.conf /usr/lib/x86_64-linux-gnu/qtchooser/default.conf
-        sudo rm -rf /usr/local/lib/android
-
-    - name: Install Clang
-      run: |
-        sudo apt-get -qq install clang-15 clang-tools-15
-
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
       with:
         languages: ${{ matrix.language }}
+        build-mode: ${{ matrix.build-mode }}
         # If you wish to specify custom queries, you can do so here or in a config file.
         # By default, queries listed here will override any specified in a config file.
         # Prefix the list here with "+" to use these queries and those in the config file.
@@ -70,12 +55,6 @@ jobs:
         # For more details on CodeQL's query packs, refer to: https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
         # queries: security-extended,security-and-quality
 
-
-    - name: Build
-      run: |
-        export CC=g++
-        qmake6 -r librecad.pro CONFIG+=debug_and_release PREFIX=/usr
-        make release -j$(nproc)
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
@@ -85,6 +64,8 @@ jobs:
     
   ClangScan:
     name: Security scan
+    # The report is only published for pushes and scheduled runs.
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
