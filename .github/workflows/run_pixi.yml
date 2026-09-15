@@ -1,6 +1,11 @@
 name: Pixi Builds
 on: [workflow_dispatch, push, pull_request]
 
+# A newer push to the same branch or pull request supersedes a run still in progress.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build_with_pixi:
     runs-on: ${{ matrix.os }}

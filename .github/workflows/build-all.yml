@@ -280,11 +280,12 @@ jobs:
         env:
           BUILD_TYPE: release
           MSVC_VER_NUMBER: "Visual Studio 17 2022"
-          CMAKE_CXX_FLAGS: " /MP8"
+          # CMake reads CXXFLAGS from the environment; /MP compiles a project's files in parallel.
+          CXXFLAGS: "/MP"
 
       - name: Build
         run: |
-          cmake --build generated --config Release
+          cmake --build generated --config Release --parallel
         shell: cmd
 
       - name: listFile
@@ -398,11 +399,12 @@ jobs:
         env:
           BUILD_TYPE: release
           MSVC_VER_NUMBER: "Visual Studio 17 2022"
-          CMAKE_CXX_FLAGS: " /MP8"
+          # CMake reads CXXFLAGS from the environment; /MP compiles a project's files in parallel.
+          CXXFLAGS: "/MP"
 
       - name: Build
         run: |
-          cmake --build generated --config Release
+          cmake --build generated --config Release --parallel
         shell: cmd
 
       - name: listFile
