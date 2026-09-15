@@ -57,7 +57,9 @@ public:
     RS_Color(const QColor& c) : QColor(c) {
     }
 
-    explicit RS_Color(const Qt::GlobalColor color) : QColor(color) {
+    // not explicit, or RS_Color(unsigned int) would take a Qt::GlobalColor as flags
+    // ReSharper disable once CppNonExplicitConvertingConstructor
+    RS_Color(const Qt::GlobalColor color) : QColor(color) {
     }
 
     // ReSharper disable once CppNonExplicitConvertingConstructor
