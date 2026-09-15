@@ -3,9 +3,22 @@ on:
   push:
     branches:
       - master
+  # The macOS packaging scripts only run here, so check them before they
+  # reach master. Only BuildMacOS runs for a pull request.
+  pull_request:
+    paths:
+      - '.github/workflows/build-all.yml'
+      - 'scripts/*osx*'
+      - 'scripts/*macos*'
+
+# A newer push supersedes a build that is still running.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   BuildLinux:
+    if: github.event_name == 'push'
     runs-on: ubuntu-24.04
     outputs:
       output1: ${{ steps.artifact-upload-step.outputs.artifact-id }}
@@ -66,6 +79,7 @@ jobs:
           retention-days: 2
 
   BuildLinuxAarch64:
+    if: github.event_name == 'push'
     runs-on: ubuntu-24.04-arm
     outputs:
       output1: ${{ steps.artifact-upload-step.outputs.artifact-id }}
@@ -131,6 +145,7 @@ jobs:
           retention-days: 2
 
   BuildSnap:
+    if: github.event_name == 'push'
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
@@ -240,6 +255,7 @@ jobs:
           retention-days: 2
 
   BuildWindows64:
+    if: github.event_name == 'push'
     runs-on: windows-2022
     outputs:
       output1: ${{ steps.artifact-upload-step.outputs.artifact-id }}
@@ -356,6 +372,7 @@ jobs:
           retention-days: 2
 
   BuildWindowsARM64:
+    if: github.event_name == 'push'
     runs-on: windows-11-arm
     outputs:
       output1: ${{ steps.artifact-upload-step.outputs.artifact-id }}
@@ -483,6 +500,21 @@ jobs:
         with:
           fetch-depth: 0
 
+      # The workflow token cannot tag a commit whose workflow files differ
+      # from the head of master (it lacks the workflows permission), so a
+      # run for an older commit would delete the release and then fail to
+      # recreate it. Leave the current release alone in that case.
+      - name: Check that this commit is still the head of master
+        id: head
+        run: |
+          head=$(git ls-remote --heads origin master | cut -f1)
+          if [[ "$head" == "${GITHUB_SHA}" ]]; then
+            echo "publish=true" >> "${GITHUB_OUTPUT}"
+          else
+            echo "::notice::master moved on to ${head}; keeping the current release"
+            echo "publish=false" >> "${GITHUB_OUTPUT}"
+          fi
+
       - name: Prepare release metadata
         id: release_metadata
         run: |
@@ -538,6 +570,7 @@ jobs:
         uses: actions/download-artifact@main
 
       - name: Delete existing
+        if: steps.head.outputs.publish == 'true'
         run: |
           gh release delete "${{ steps.release_metadata.outputs.release_tag }}" --cleanup-tag -y || true
           git push origin ":refs/tags/${{ steps.release_metadata.outputs.release_tag }}" || true
@@ -545,6 +578,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload latest pre-release
+        if: steps.head.outputs.publish == 'true'
         uses: softprops/action-gh-release@v2
         with:
           name: ${{ steps.release_metadata.outputs.release_name }}
@@ -569,6 +603,7 @@ jobs:
             LICENSE
 
       - name: Refresh top download links
+        if: steps.head.outputs.publish == 'true'
         run: |
           gh release delete "downloads-latest" --cleanup-tag -y || true
           git push origin ":refs/tags/downloads-latest" || true
