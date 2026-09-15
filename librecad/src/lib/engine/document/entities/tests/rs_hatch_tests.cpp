@@ -1475,3 +1475,86 @@ TEST_CASE("LC_HatchPropertiesEditingWidget shows 8 significant digits, fully vis
     const int bigOverhead = widest->sizeHint().width() - 17 * bigFm.horizontalAdvance(QLatin1Char('x'));
     CHECK(widest->minimumWidth() - bigOverhead >= bigFm.horizontalAdvance(widest->text()));
 }
+
+// ============================================================
+// Pattern lines across updates: another update() replaces them, and an edit
+// of a clone, as the hatch dialog makes, reaches them.
+// ============================================================
+
+namespace {
+
+// Points the pattern search at the source tree's patterns while it lives.
+class SourcePatterns {
+public:
+    SourcePatterns() {
+        static int qargc = 1;
+        static char qarg0[] = "librecad_tests";
+        static char* qargv[] = {qarg0, nullptr};
+        static QCoreApplication* qapp = QCoreApplication::instance()
+                                            ? QCoreApplication::instance()
+                                            : new QCoreApplication(qargc, qargv);
+        static bool settingsReady = [] {
+            QCoreApplication::setOrganizationName("LibreCAD");
+            QCoreApplication::setApplicationName("LibreCAD-tests");
+            RS_Settings::init("LibreCAD", "LibreCAD-tests");
+            return true;
+        }();
+        (void)qapp;
+        (void)settingsReady;
+        LC_GROUP_GUARD("Paths");
+        m_previous = LC_GET_STR("Patterns", "");
+        LC_SET("Patterns", QStringLiteral(LIBRECAD_SOURCE_DIR "/librecad/support/patterns"));
+    }
+    ~SourcePatterns() {
+        LC_GROUP_GUARD("Paths");
+        LC_SET("Patterns", m_previous);
+    }
+private:
+    QString m_previous;
+};
+
+// Directions of the pattern lines, in whole degrees from 0 to 179, and how many there are.
+std::map<long, int> patternLineDirections(const RS_Hatch& hatch) {
+    std::map<long, int> directions;
+    for (const RS_Entity* en : hatch) {
+        if (en->getFlag(RS2::FlagHatchChild) && en->rtti() == RS2::EntityLine) {
+            const double degrees = static_cast<const RS_Line*>(en)->getAngle1() * 180.0 / M_PI;
+            ++directions[std::lround(std::fmod(degrees + 360.0, 180.0)) % 180];
+        }
+    }
+    return directions;
+}
+
+} // namespace
+
+TEST_CASE("RS_Hatch keeps one set of pattern lines across updates and edits", "[rs_hatch][pattern]") {
+    SourcePatterns patterns;
+    RS_Hatch hatch(nullptr, RS_HatchData(false, 1.0, 0.0, "ANSI31"));
+    auto* loop = new RS_EntityContainer(&hatch);
+    hatch.addEntity(loop);
+    loop->addEntity(new RS_Line(loop, RS_Vector(0, 0), RS_Vector(20, 0)));
+    loop->addEntity(new RS_Line(loop, RS_Vector(20, 0), RS_Vector(20, 10)));
+    loop->addEntity(new RS_Line(loop, RS_Vector(20, 10), RS_Vector(0, 10)));
+    loop->addEntity(new RS_Line(loop, RS_Vector(0, 10), RS_Vector(0, 0)));
+    hatch.update();
+    const auto directions = patternLineDirections(hatch);
+    REQUIRE(directions.size() == 1);
+    REQUIRE(directions.count(45) == 1);
+    const int lines = directions.at(45);
+
+    hatch.update();
+    CHECK(patternLineDirections(hatch).at(45) == lines);
+
+    // the hatch dialog edits a clone, which clone() has updated, and updates it again
+    const std::unique_ptr<RS_Entity> copy{hatch.clone()};
+    auto* edited = static_cast<RS_Hatch*>(copy.get());
+    edited->setAngle(M_PI / 2.0);
+    edited->update();
+    const auto turned = patternLineDirections(*edited);
+    CHECK(turned.size() == 1);
+    CHECK(turned.count(135) == 1);
+
+    edited->setSolid(true);
+    edited->update();
+    CHECK(patternLineDirections(*edited).empty());
+}
