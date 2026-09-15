@@ -643,8 +643,12 @@ QStringList RS_System::getDirectoryList(const QString& subDir) const{
     }
 
 #ifdef Q_OS_MAC
-    // Apple uses the resource directory
     if (!m_appDir.isEmpty() && m_appDir!="/") {
+        if (subDirectory == QStringLiteral("plugins")) {
+            dirList.append(QDir::cleanPath(m_appDir + "/../PlugIns/LibreCAD"));
+        }
+        // Keep the Resources path for bundles produced before plug-ins moved to
+        // the standard nested-code location.
         dirList.append( QDir::cleanPath( m_appDir + "/../Resources/" + subDirectory));
     }
 #endif

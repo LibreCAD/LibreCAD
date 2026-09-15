@@ -3,6 +3,12 @@ include_directories(
 ../libraries/muparser/include
 )
 
+if(APPLE)
+    set(LIBRECAD_PLUGIN_INSTALL_DIR "bin/LibreCAD.app/Contents/PlugIns/LibreCAD")
+else()
+    set(LIBRECAD_PLUGIN_INSTALL_DIR "bin/resources/plugins")
+endif()
+
 set(PLUGIN_HEADERS
   ../../librecad/src/plugins/qc_plugininterface.h
   ../../librecad/src/plugins/document_interface.h

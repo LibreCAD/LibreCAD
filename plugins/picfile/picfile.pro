@@ -26,7 +26,7 @@ win32 {
 }
 unix {
     macx {
-        DESTDIR = ../../LibreCAD.app/Contents/Resources/plugins
+        DESTDIR = ../../LibreCAD.app/Contents/PlugIns/LibreCAD
     }
     else {
         DESTDIR = ../../unix/resources/plugins
