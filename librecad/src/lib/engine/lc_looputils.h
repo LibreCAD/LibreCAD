@@ -164,8 +164,8 @@ private:
 
     void init();
 
-    // find all ancestor loops of a given loop
-    void findAncestors(RS_EntityContainer* loop);
+    // find the innermost loop enclosing a given loop
+    void findParent(RS_EntityContainer* loop);
 
     struct Data;
     std::unique_ptr<Data> m_data;
