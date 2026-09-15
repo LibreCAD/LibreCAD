@@ -447,7 +447,12 @@ normalize_plugin_layout
 if [[ $SKIP_DEPLOY -eq 0 ]]; then
     EXTRA_EXECUTABLES="$WORK_DIR/extra-executables.txt"
     collect_extra_executables "$EXTRA_EXECUTABLES"
-    MACDEPLOY_ARGS=("$APP_PATH" -verbose=1 -always-overwrite -no-codesign)
+    MACDEPLOY_ARGS=("$APP_PATH" -verbose=1 -always-overwrite)
+    # Qt 6.11 added -no-codesign and signs ad hoc by default; older macdeployqt never signs.
+    MACDEPLOY_HELP=$("$QT_BIN/macdeployqt" -help 2>&1 || true)
+    if [[ $MACDEPLOY_HELP == *-no-codesign* ]]; then
+        MACDEPLOY_ARGS+=(-no-codesign)
+    fi
     while IFS= read -r candidate; do
         [[ -n $candidate ]] || continue
         MACDEPLOY_ARGS+=("-executable=$candidate")
