@@ -329,6 +329,8 @@ public:
     *  \param va vertical alignment of text
     */
     virtual void addText(QString txt, QString sty, QPointF* start, double height, double angle, DPI::HAlign ha, DPI::VAlign va) = 0;
+    virtual void addMText(const QString& txt, const QString& sty, const QPointF *start,
+                  double height, double angle, DPI::HAlign ha,  DPI::VAlign va) = 0;
 
     //! Add circle entity to current document.
     /*! Add circle entity to current document with current attributes.

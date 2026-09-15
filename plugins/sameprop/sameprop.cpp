@@ -17,9 +17,9 @@
 #include "sameprop.h"
 
 QString LC_SameProp::name() const
- {
-     return (tr("Same properties"));
- }
+{
+    return (tr("Same properties"));
+}
 
 PluginCapabilities LC_SameProp::getCapabilities() const
 {
@@ -30,16 +30,20 @@ PluginCapabilities LC_SameProp::getCapabilities() const
     return pluginCapabilities;
 }
 
-void LC_SameProp::execComm(Document_Interface *doc,
-                             [[maybe_unused]] QWidget *parent, [[maybe_unused]] QString cmd)
+void LC_SameProp::init(Document_Interface *doc, QWidget *parent) {
+    m_doc = doc;
+    m_parent = parent;
+}
+
+void LC_SameProp::execComm([[maybe_unused]] QString cmd)
 {
     QHash<int, QVariant> data, moddata;
     QList<Plug_Entity *> obj;
     QVariant lay, col, ltype, lwidth;
     Plug_Entity *ent, *modent;
-    ent =  doc->getEnt(tr("select original entity:"));
+    ent =  m_doc->getEnt(tr("select original entity:"));
     if (ent == nullptr) return;
-    bool yes  = doc->getSelect(&obj, tr("select entities to change"));
+    bool yes  = m_doc->getSelect(&obj, tr("select entities to change"));
     if (!yes || obj.isEmpty()) {
         delete ent;
         return;

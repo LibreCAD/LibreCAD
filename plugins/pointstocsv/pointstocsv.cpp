@@ -42,14 +42,18 @@ PluginCapabilities ExpTo_Csv::getCapabilities() const
     return pluginCapabilities;
 }
 
-void ExpTo_Csv::execComm(Document_Interface *doc,
-                             [[maybe_unused]] QWidget *parent, [[maybe_unused]] QString cmd)
+void ExpTo_Csv::init(Document_Interface *doc, QWidget *parent) {
+    m_doc = doc;
+    m_parent = parent;
+}
+
+void ExpTo_Csv::execComm([[maybe_unused]] QString cmd)
 {
-    d = doc;
+    d = m_doc;
     //Deselecting all entities to start a fresh selection.
     d->unselectEntities();
     isCollectingElements = true;
-    lc_Exptocsvdlg dlg(parent, doc);
+    lc_Exptocsvdlg dlg(m_parent, m_doc);
     connect(&dlg, &lc_Exptocsvdlg::rejected, this, &ExpTo_Csv::setIsCollectingElementsToFalse);
     while(isCollectingElements){
         dlg.exec();

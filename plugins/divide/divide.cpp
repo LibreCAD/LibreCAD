@@ -43,14 +43,17 @@ PluginCapabilities divide::getCapabilities() const
     return pluginCapabilities;
 }
 
-void divide::execComm( Document_Interface *doc,
-                       [[maybe_unused]] QWidget *parent,
-                       [[maybe_unused]] QString cmd )
+void divide::init( Document_Interface *doc, QWidget *parent ) {
+    m_doc = doc;
+    m_parent = parent;
+}
+
+void divide::execComm( [[maybe_unused]] QString cmd )
 {
-    d = doc;
+    d = m_doc;
 
     QList<Plug_Entity *> obj;
-    bool yes = doc->getSelect( &obj, tr( "Select a line, circle or"
+    bool yes = m_doc->getSelect( &obj, tr( "Select a line, circle or"
                                          " arc and press return" ) );
     if ( ! yes || obj.isEmpty() || ( obj.size() > 1 ) ) //none or multiple
     {                                                   //entity selection
@@ -103,7 +106,7 @@ void divide::execComm( Document_Interface *doc,
         passedData.append( "\n" );
     }
 
-    dividedlg dlg( d, passedData, parent );
+    dividedlg dlg( d, passedData, m_parent );
     QObject::connect( &dlg, SIGNAL( returnData( QString ) ), this,
                       SLOT( gotReturnedDataSlot( QString ) ) );
     if ( dlg.exec() == QDialog::Accepted )
@@ -127,15 +130,15 @@ void divide::execComm( Document_Interface *doc,
             QString test { "" };
             QList<QString> xy { "" } ;
 
-            QString oldLayer = doc->getCurrentLayer();
+            QString oldLayer = m_doc->getCurrentLayer();
             int dataSize = data.size();
             if ( data.at( dataSize - 1 ) == "lay" )
-                doc->setLayer( data.at( dataSize - 2 ) ); //layer for ticks
+                m_doc->setLayer( data.at( dataSize - 2 ) ); //layer for ticks
 
             QList<QString> pData = ( passedData.split
                                      ( QRegularExpression ( "[\\n\\t\\r]" ) ) );
 
-            doc->updateView();
+            m_doc->updateView();
             QString entType = data.at( 0 ).simplified().toLower();
 
             //***********
@@ -342,9 +345,9 @@ void divide::execComm( Document_Interface *doc,
                          << totalLength << tickQ << div;
             } //POLYLINE              */
 
-            doc->setLayer( oldLayer );
+            m_doc->setLayer( oldLayer );
         } //end if ( ticks || breaks )
-        doc->updateView(); //updates & removes highlights
+        m_doc->updateView(); //updates & removes highlights
         while ( ! obj.isEmpty() )
             delete obj.takeFirst();
     } //end dlg.exec()

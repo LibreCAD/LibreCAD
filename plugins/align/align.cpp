@@ -20,9 +20,9 @@
 #include <QSettings>
 
 QString LC_Align::name() const
- {
-     return (tr("Align"));
- }
+{
+    return (tr("Align"));
+}
 
 PluginCapabilities LC_Align::getCapabilities() const
 {
@@ -33,8 +33,12 @@ PluginCapabilities LC_Align::getCapabilities() const
     return pluginCapabilities;
 }
 
-void LC_Align::execComm(Document_Interface *doc,
-                             [[maybe_unused]] QWidget *parent, QString cmd)
+void LC_Align::init(Document_Interface *doc, QWidget *parent) {
+    m_doc = doc;
+    m_parent = parent;
+}
+
+void LC_Align::execComm(QString cmd)
 {
     /* First load the settings */
     QSettings settings(QSettings::IniFormat, QSettings::UserScope,
@@ -74,19 +78,19 @@ void LC_Align::execComm(Document_Interface *doc,
     }
     QPointF base1, base2, target1, target2;
     QList<Plug_Entity *> obj;
-    bool yes  = doc->getSelect(&obj);
+    bool yes  = m_doc->getSelect(&obj);
     if (!yes || obj.isEmpty()) return;
-    yes = doc->getPoint(&base1, QString(tr("first base point:")));
+    yes = m_doc->getPoint(&base1, QString(tr("first base point:")));
     while (yes) {
         if (base_first)
-	     yes = doc->getPoint(&base2, QString(tr("second base point:")));
+         yes = m_doc->getPoint(&base2, QString(tr("second base point:")));
 	if (!yes) break;
-        yes = doc->getPoint(&target1, QString(tr("first target point:")), &base1);
+        yes = m_doc->getPoint(&target1, QString(tr("first target point:")), &base1);
 	if (!yes) break;
 	if (!base_first)
-	    yes = doc->getPoint(&base2, QString(tr("second base point:")));
+        yes = m_doc->getPoint(&base2, QString(tr("second base point:")));
 	if (!yes) break;
-	yes = doc->getPoint(&target2, QString(tr("second target point:")), &base2);
+    yes = m_doc->getPoint(&target2, QString(tr("second target point:")), &base2);
 	break;
     }
     if (yes) {

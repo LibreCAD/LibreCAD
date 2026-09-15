@@ -39,17 +39,21 @@ PluginCapabilities PicFile::getCapabilities() const
 }
 
 QString PicFile::name() const
- {
-     return (tr("import PIC file"));
- }
-
-void PicFile::execComm(Document_Interface *doc,
-                             QWidget *parent, [[maybe_unused]] QString cmd)
 {
-    picPunto pdt(parent);
+    return (tr("import PIC file"));
+}
+
+void PicFile::init(Document_Interface *doc, QWidget *parent) {
+    m_doc = doc;
+    m_parent = parent;
+}
+
+void PicFile::execComm([[maybe_unused]] QString cmd)
+{
+    picPunto pdt(m_parent);
     int result = pdt.exec();
     if (result == QDialog::Accepted)
-        pdt.processFile(doc);
+        pdt.processFile(m_doc);
 }
 
 /*****************************/

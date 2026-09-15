@@ -75,6 +75,7 @@ void LC_ApplicationWindowInitializer::initApplication(){
     initIconSize();
     initActionContext();
     initActionFactory();
+    initPlugins();
     initWidgets();
     initToolbars();
     initSnapManager();
@@ -91,7 +92,6 @@ void LC_ApplicationWindowInitializer::initApplication(){
     loadCmdWidgetVariablesFile();
     initAutoSaveTimer();
     updateCommandsAlias();
-    initPlugins();
     m_appWin->showStatusMessage(qApp->applicationName() + " Ready", 2000);
     initReleaseChecker();
 }

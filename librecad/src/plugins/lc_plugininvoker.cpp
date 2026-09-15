@@ -44,6 +44,10 @@ LC_PluginInvoker::LC_PluginInvoker(QC_ApplicationWindow *appWindow, LC_ActionCon
 
 LC_PluginInvoker::~LC_PluginInvoker() = default;
 
+QList<QC_PluginInterface*> LC_PluginInvoker::getLoadedPluginList() {
+    return m_loadedPluginList;
+}
+
 void LC_PluginInvoker::loadPlugins(){
     m_loadedPluginList.clear();
     const QStringList lst = RS_SYSTEM->getDirectoryList("plugins");
@@ -75,42 +79,7 @@ void LC_PluginInvoker::loadPlugins(){
                 if (pluginInterface != nullptr) {
                     m_loadedPluginList.push_back(pluginInterface);
                     loadedPluginFileNames.push_back(fileName);
-                    PluginCapabilities pluginCapabilities = pluginInterface->getCapabilities();
-                    for (const PluginMenuLocation &loc: pluginCapabilities.menuEntryPoints) {
-                        // Load from plugin's main .cpp file info:
-                        // menu name, plugin name, tooltip for plugin (short manual for user)
-                        auto *actpl = new QAction(loc.menuEntryActionName, plugin);
-                        actpl->setData(loc.menuEntryActionName);
-                        actpl->setToolTip(loc.menuEntryAction_Tip);
-                        connect(actpl, &QAction::triggered, this, &LC_PluginInvoker::execPlug);
-                        connect(m_appWindow, &QC_ApplicationWindow::windowsChanged, actpl, &QAction::setEnabled);
-                        const auto menuBar = m_appWindow -> menuBar();
-                        QMenu *atMenu = m_appWindow->findMenu("/" + loc.menuEntryPoint, menuBar->children(), "");
-                        if (atMenu != nullptr) {
-                            atMenu->addAction(actpl);
-                        } else {
-                            QStringList treemenu = loc.menuEntryPoint.split('/', Qt::SkipEmptyParts);
-                            QString currentLevel = "";
-                            QMenu *parentMenu = nullptr;
-                            do {
-                                QString menuName = treemenu.at(0);
-                                treemenu.removeFirst();
-                                currentLevel = currentLevel + "/" + menuName;
-                                atMenu = m_appWindow->findMenu(currentLevel, menuBar->children(), "");
-                                if (atMenu == nullptr) {
-                                    if (parentMenu == nullptr) {
-                                        parentMenu = menuBar->addMenu(menuName);
-                                    } else {
-                                        parentMenu = parentMenu->addMenu(menuName);
-                                    }
-                                    parentMenu->setObjectName(menuName);
-                                }
-                            } while (treemenu.size() > 0);
-                            if (parentMenu) {
-                                parentMenu->addAction(actpl);
-                            }
-                        }
-                    }
+                    pluginInterface->init(new Doc_plugin_interface(m_actionContext, m_appWindow), m_appWindow);
                 }
             } else {
                 QMessageBox::information(m_appWindow, "Info", pluginLoader.errorString());
@@ -120,23 +89,54 @@ void LC_PluginInvoker::loadPlugins(){
     }
 }
 
+void LC_PluginInvoker::populatePluginMenu() {
+    for (QC_PluginInterface *plugin : m_loadedPluginList) {
+        PluginCapabilities pluginCapabilities = plugin->getCapabilities();
+        for (const PluginMenuLocation &loc: pluginCapabilities.menuEntryPoints) {
+            // Load from plugin's main .cpp file info:
+            // menu name, plugin name, tooltip for plugin (short manual for user)
+            auto *actpl = new QAction(loc.menuEntryActionName);
+            actpl->setData(loc.menuEntryActionName);
+            actpl->setToolTip(loc.menuEntryAction_Tip);
+            connect(actpl, &QAction::triggered, this, [this, plugin] {
+                execPlug(plugin);
+            });
+            connect(m_appWindow, &QC_ApplicationWindow::windowsChanged, actpl, &QAction::setEnabled);
+            const auto menuBar = m_appWindow -> menuBar();
+            QMenu *atMenu = m_appWindow->findMenu("/" + loc.menuEntryPoint, menuBar->children(), "");
+            if (atMenu != nullptr) {
+                atMenu->addAction(actpl);
+            } else {
+                QStringList treemenu = loc.menuEntryPoint.split('/', Qt::SkipEmptyParts);
+                QString currentLevel = "";
+                QMenu *parentMenu = nullptr;
+                do {
+                    QString menuName = treemenu.at(0);
+                    treemenu.removeFirst();
+                    currentLevel = currentLevel + "/" + menuName;
+                    atMenu = m_appWindow->findMenu(currentLevel, menuBar->children(), "");
+                    if (atMenu == nullptr) {
+                        if (parentMenu == nullptr) {
+                            parentMenu = menuBar->addMenu(menuName);
+                        } else {
+                            parentMenu = parentMenu->addMenu(menuName);
+                        }
+                        parentMenu->setObjectName(menuName);
+                    }
+                } while (treemenu.size() > 0);
+                if (parentMenu) {
+                    parentMenu->addAction(actpl);
+                }
+            }
+        }
+    }
+}
+
 /**
  * Execute the plugin.
  */
-void LC_PluginInvoker::execPlug() const {
+void LC_PluginInvoker::execPlug(QC_PluginInterface *plugin) const {
     const auto *action = qobject_cast<QAction *>(sender());
-    const auto plugin = qobject_cast<QC_PluginInterface *>(action->parent());
-    //get actual drawing
-    const QC_MDIWindow *w = m_appWindow->getCurrentMDIWindow();
-    if (w != nullptr) {
-        RS_Document *currdoc = w->getDocument();
-        //create document interface instance
-        QG_GraphicView *graphicView = w->getGraphicView();
-        Doc_plugin_interface pligundoc(m_actionContext, m_appWindow);
-        //execute plugin
-        LC_UndoSection undo(currdoc, graphicView->getViewPort());
-        plugin->execComm(&pligundoc, m_appWindow, action->data().toString());
-        //TODO call update view
-        graphicView->redraw();
-    }
+    //execute plugin
+    plugin->execComm(action->data().toString());
 }
