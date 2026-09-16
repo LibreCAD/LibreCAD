@@ -38,21 +38,17 @@ namespace {
 // selectionFinishedByKey() runs the operation rather than ending the step.
 class ProbeSelectSingle : public LC_ActionSelectSingle {
 public:
-    ProbeSelectSingle(LC_ActionContext* actionContext, RS_ActionInterface* collector, bool allowEmpty)
-        : LC_ActionSelectSingle(actionContext, collector), m_allowEmpty{allowEmpty} {}
+    using LC_ActionSelectSingle::LC_ActionSelectSingle;
 
     bool m_finishedByKey = false;
 
 protected:
-    bool isAllowSelectionFinishByEnterForEmptySelection() override {return m_allowEmpty;}
+    bool isAllowSelectionFinishByEnterForEmptySelection() override {return false;}
 
     void selectionFinishedByKey(QKeyEvent* e, bool escape) override {
         m_finishedByKey = true;
         LC_ActionSelectSingle::selectionFinishedByKey(e, escape);
     }
-
-private:
-    bool m_allowEmpty;
 };
 }
 
@@ -74,6 +70,22 @@ TEST_CASE("Escape cancels a plugin selection instead of confirming it",
     lc::test::ActionFixture<QC_ActionGetSelect> fixture;
     QKeyEvent event(QEvent::KeyPress, Qt::Key_Escape, Qt::NoModifier);
     fixture.m_action->keyPressEvent(&event);
+    CHECK(fixture.m_action->isCompleted());
+    CHECK(fixture.m_action->wasCanceled());
+}
+
+TEST_CASE("Escape reaches the collector through the selection step",
+          "[plugins][selection][issue2241]") {
+    lc::test::ActionFixture<QC_ActionGetSelect> fixture;
+    auto* line = new RS_Line{&fixture.m_graphic, {{0., 0.}, {10., 10.}}};
+    fixture.m_graphic.addEntity(line);
+    RS_Selection(&fixture.m_view).selectSingle(line);
+    REQUIRE(fixture.m_graphic.hasSelection());
+
+    LC_ActionSelectSingle inner(&fixture.m_context, fixture.m_action.get());
+    QKeyEvent event(QEvent::KeyPress, Qt::Key_Escape, Qt::NoModifier);
+    inner.keyPressEvent(&event);
+
     CHECK(fixture.m_action->isCompleted());
     CHECK(fixture.m_action->wasCanceled());
 }
@@ -129,7 +141,7 @@ TEST_CASE("Return and keypad Enter complete a selection by the same path",
         RS_Selection(&fixture.m_view).selectSingle(line);
         REQUIRE(fixture.m_graphic.hasSelection());
 
-        ProbeSelectSingle probe(&fixture.m_context, fixture.m_action.get(), false);
+        ProbeSelectSingle probe(&fixture.m_context, fixture.m_action.get());
         QKeyEvent event(QEvent::KeyPress, key, Qt::NoModifier);
         probe.keyPressEvent(&event);
 
@@ -146,7 +158,7 @@ TEST_CASE("With nothing selected the step returns to its predecessor",
     REQUIRE_FALSE(fixture.m_graphic.hasSelection());
 
     const auto predecessor = std::make_shared<QC_ActionGetSelect>(&fixture.m_context);
-    ProbeSelectSingle probe(&fixture.m_context, predecessor.get(), false);
+    ProbeSelectSingle probe(&fixture.m_context, predecessor.get());
     probe.setPredecessor(predecessor);
 
     QKeyEvent event(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);

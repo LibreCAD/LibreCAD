@@ -94,6 +94,9 @@ void QC_ActionGetSelect::keyPressEvent(QKeyEvent* e){
             m_completed = true;
             break;
         default:
+            // Not ours: let the base ignore it, so the key carries on past
+            // this action.
+            RS_ActionInterface::keyPressEvent(e);
             break;
     }
 }

@@ -99,8 +99,14 @@ void QC_ActionGetPoint::mouseReleaseEvent(QMouseEvent* e) {
 void QC_ActionGetPoint::keyPressEvent(QKeyEvent* e) {
     if (e->key() == Qt::Key_Escape) {
         m_canceled = true;
-        m_completed = true;
+        updatePrompt();
         finish();
+        m_completed = true;
+    }
+    else {
+        // The base handles Tab, and ignores what it does not use so the key
+        // carries on past this action.
+        RS_PreviewActionInterface::keyPressEvent(e);
     }
 }
 
