@@ -440,9 +440,7 @@ void RS_GraphicView::setRenderer(std::unique_ptr<LC_WidgetViewPortRenderer> rend
 }
 
 void RS_GraphicView::showRelativeInputWidget(const RS_Vector& wcsPos, const RS_Vector& basePoint, bool baseIsRelativePoint, RS2::RelativePointParam param) const {
-    if (m_relativePointWidgetHolder != nullptr) {
-        m_relativePointWidgetHolder->show(wcsPos, basePoint,baseIsRelativePoint, param);
-    }
+    m_relativePointWidgetHolder->show(wcsPos, basePoint,baseIsRelativePoint, param);
 }
 
 void RS_GraphicView::hideRelativeInputWidget() const {
@@ -454,10 +452,8 @@ void RS_GraphicView::hideRelativeInputWidget() const {
 }
 
 void RS_GraphicView::restoreRelativeInputWidget() const {
-    if (m_relativePointWidgetHolder != nullptr) {
-        m_relativePointWidgetHolder->updatePosition(true);
-        m_relativePointWidgetHolder->setVisible(true);
-    }
+    m_relativePointWidgetHolder->updatePosition(true);
+    m_relativePointWidgetHolder->setVisible(true);
 }
 
 bool RS_GraphicView::isInRelativePointInput() const {

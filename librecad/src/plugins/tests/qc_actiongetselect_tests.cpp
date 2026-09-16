@@ -24,11 +24,37 @@
 
 #include <QKeyEvent>
 
+#include "doc_plugin_interface.h"
 #include "lc_actiontestsupport.h"
 #include "lc_action_select_single.h"
 #include "qc_actiongetselect.h"
 #include "rs_line.h"
 #include "rs_selection.h"
+
+namespace {
+// Stands in for the selection actions that route the finish key differently
+// from LC_ActionSelectSingle: those that refuse to finish on an empty
+// selection, and the pre-selection-aware modify actions, whose
+// selectionFinishedByKey() runs the operation rather than ending the step.
+class ProbeSelectSingle : public LC_ActionSelectSingle {
+public:
+    ProbeSelectSingle(LC_ActionContext* actionContext, RS_ActionInterface* collector, bool allowEmpty)
+        : LC_ActionSelectSingle(actionContext, collector), m_allowEmpty{allowEmpty} {}
+
+    bool m_finishedByKey = false;
+
+protected:
+    bool isAllowSelectionFinishByEnterForEmptySelection() override {return m_allowEmpty;}
+
+    void selectionFinishedByKey(QKeyEvent* e, bool escape) override {
+        m_finishedByKey = true;
+        LC_ActionSelectSingle::selectionFinishedByKey(e, escape);
+    }
+
+private:
+    bool m_allowEmpty;
+};
+}
 
 TEST_CASE("A plugin selection finishes on Return and on keypad Enter",
           "[plugins][selection][issue2241]") {
@@ -66,6 +92,14 @@ TEST_CASE("The selection step hands both finish keys to the plugin's collector",
         inner.keyPressEvent(&event);
 
         CHECK(fixture.m_action->isCompleted());
+
+        // getSelected() hands the plugin what it asked for: the picked entity.
+        QList<Plug_Entity*> selected;
+        fixture.m_action->getSelected(&selected, nullptr);
+        CHECK(selected.size() == 1);
+        for (auto* entity : selected) {
+            delete reinterpret_cast<Plugin_Entity*>(entity);
+        }
     }
 }
 
@@ -82,4 +116,43 @@ TEST_CASE("The selection step ends on Return with nothing selected",
     inner.keyPressEvent(&event);
 
     CHECK(fixture.m_action->isCompleted());
+}
+
+// Both keys must reach selectionFinishedByKey(), because that is what runs the
+// operation for the pre-selection-aware modify actions that share this base.
+TEST_CASE("Return and keypad Enter complete a selection by the same path",
+          "[plugins][selection][issue2241]") {
+    for (const auto key : {Qt::Key_Return, Qt::Key_Enter}) {
+        lc::test::ActionFixture<QC_ActionGetSelect> fixture;
+        auto* line = new RS_Line{&fixture.m_graphic, {{0., 0.}, {10., 10.}}};
+        fixture.m_graphic.addEntity(line);
+        RS_Selection(&fixture.m_view).selectSingle(line);
+        REQUIRE(fixture.m_graphic.hasSelection());
+
+        ProbeSelectSingle probe(&fixture.m_context, fixture.m_action.get(), false);
+        QKeyEvent event(QEvent::KeyPress, key, Qt::NoModifier);
+        probe.keyPressEvent(&event);
+
+        CHECK(probe.m_finishedByKey);
+    }
+}
+
+// What the deleted keyReleaseEvent() used to do: an action that will not finish
+// on an empty selection still hands control back to its predecessor, without
+// completing a selection that is not there.
+TEST_CASE("With nothing selected the step returns to its predecessor",
+          "[plugins][selection][issue2241]") {
+    lc::test::ActionFixture<QC_ActionGetSelect> fixture;
+    REQUIRE_FALSE(fixture.m_graphic.hasSelection());
+
+    const auto predecessor = std::make_shared<QC_ActionGetSelect>(&fixture.m_context);
+    ProbeSelectSingle probe(&fixture.m_context, predecessor.get(), false);
+    probe.setPredecessor(predecessor);
+
+    QKeyEvent event(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
+    probe.keyPressEvent(&event);
+
+    CHECK_FALSE(probe.m_finishedByKey);
+    CHECK(probe.isFinished());
+    CHECK_FALSE(predecessor->isCompleted());
 }
