@@ -631,7 +631,9 @@ jobs:
           if (-not $installed) { throw 'The package did not register.' }
           Write-Host "Registered $($installed.PackageFullName)"
           Remove-AppxPackage -Package $installed.PackageFullName
-        shell: pwsh
+        # Windows PowerShell, not pwsh: the Appx module is built on WinRT and
+        # fails to load in PowerShell 7 with 0x80131539.
+        shell: powershell
 
       - name: Windows App Certification Kit
         run: |
