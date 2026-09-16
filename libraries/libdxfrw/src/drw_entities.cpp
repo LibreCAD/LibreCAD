@@ -6358,6 +6358,11 @@ bool DRW_ModelerGeometry::parseCode(int code, const std::unique_ptr<dxfReader>& 
         m_historyHandle = static_cast<std::uint32_t>(reader->getHandleString());
         break;
     case 310:
+        // AcDbEntity proxy graphics precede the AcDbModelerGeometry subclass,
+        // so the announced bytes belong to the entity, not to the ACIS body.
+        if (numProxyGraph > 0
+            && proxyGraphics.size() < static_cast<std::size_t>(numProxyGraph))
+            return DRW_Entity::parseCode(code, reader);
         {
             std::vector<std::uint8_t> decoded;
             if (!decodeHexBytes(reader->getString(), decoded))
@@ -17218,6 +17223,11 @@ bool DRW_Surface::parseCode(int code, const std::unique_ptr<dxfReader>& reader) 
         vIsolines = reader->getInt32();
         break;
     case 310:
+        // AcDbEntity proxy graphics precede the AcDbModelerGeometry subclass,
+        // so the announced bytes belong to the entity, not to the ACIS body.
+        if (numProxyGraph > 0
+            && proxyGraphics.size() < static_cast<std::size_t>(numProxyGraph))
+            return DRW_Entity::parseCode(code, reader);
         {
             std::vector<std::uint8_t> decoded;
             if (!decodeHexBytes(reader->getString(), decoded))
