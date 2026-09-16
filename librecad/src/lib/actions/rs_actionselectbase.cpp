@@ -33,16 +33,6 @@ RS_ActionSelectBase::RS_ActionSelectBase(const QString& name, LC_ActionContext* 
     : LC_OverlayBoxAction(name, actionContext, actionType), m_catchForSelectionEntityTypes(std::move(entityTypeList)) {
 }
 
-/**
- * Default behaviour of this method is triggering the predecesing
- * action and finishing this one when the enter key is pressed.
- */
-void RS_ActionSelectBase::keyReleaseEvent(QKeyEvent* e) {
-    if (e->key() == Qt::Key_Return && m_predecessor) {
-        finish();
-    }
-}
-
 void RS_ActionSelectBase::keyPressEvent(QKeyEvent* e) {
     const int key = e->key();
     switch (key) {
@@ -50,14 +40,20 @@ void RS_ActionSelectBase::keyPressEvent(QKeyEvent* e) {
             selectionFinishedByKey(e, true);
             break;
         }
-        // The main keyboard sends Return; only the keypad sends Enter.
+        // The main keyboard sends Return; only the keypad sends Enter. Both
+        // finish here, on the press, so the release cannot reach whichever
+        // action resumes next and finish that one too.
         case Qt::Key_Return:
         case Qt::Key_Enter: {
-            if (m_document->hasSelection()) {
+            if (m_document->hasSelection()
+                || isAllowSelectionFinishByEnterForEmptySelection()) {
                 selectionFinishedByKey(e, false);
             }
-            else if (isAllowSelectionFinishByEnterForEmptySelection()) {
-                selectionFinishedByKey(e, false);
+            else if (m_predecessor != nullptr) {
+                // With nothing selected there is no selection to complete, so
+                // hand control back to the action that asked for one - what
+                // the key release used to do.
+                finish();
             }
             break;
         }

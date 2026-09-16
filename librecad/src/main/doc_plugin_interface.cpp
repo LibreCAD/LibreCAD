@@ -1236,7 +1236,7 @@ bool Doc_plugin_interface::performSelect(RS2::EntityType typeToSelect, const QSt
             break;
         }
     }
-    const bool completed = a->isCompleted();
+    const bool completed = a->isCompleted() && !a->wasCanceled();
     m_graphicView->killAllActions(); // Always cleanup
     if (completed) {
         a->getSelected(sel, this);

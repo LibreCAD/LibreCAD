@@ -50,6 +50,7 @@ public:
     void keyPressEvent(QKeyEvent* e) override;
     void setMessage(QString msg) const;
     bool isCompleted() const{return m_completed;}
+    bool wasCanceled() const{return m_canceled;}
     void getSelected(QList<Plug_Entity *> *se, Doc_plugin_interface* d) const;
     void unselectEntities() const;
 protected:
@@ -64,6 +65,7 @@ protected:
     void updateActionPrompt() override;
 private:
     bool m_completed = false;
+    bool m_canceled = false;
     std::unique_ptr<QString> m_message;
     RS2::EntityType m_entityTypeToSelect = RS2::EntityType::EntityUnknown;
 };

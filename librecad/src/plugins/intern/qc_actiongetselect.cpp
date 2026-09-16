@@ -88,9 +88,12 @@ void QC_ActionGetSelect::keyPressEvent(QKeyEvent* e){
             m_completed = true;
             break;
         case Qt::Key_Escape:
-            // Cancel: the plugin must not act on the selection it collected.
+            // Cancel: the step is over, so the plugin's event loop ends, but
+            // the plugin must not act on the selection it collected.
+            m_canceled = true;
             updatePrompt();
             finish();
+            m_completed = true;
             break;
         default:
             break;

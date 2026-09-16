@@ -440,20 +440,24 @@ void RS_GraphicView::setRenderer(std::unique_ptr<LC_WidgetViewPortRenderer> rend
 }
 
 void RS_GraphicView::showRelativeInputWidget(const RS_Vector& wcsPos, const RS_Vector& basePoint, bool baseIsRelativePoint, RS2::RelativePointParam param) const {
-    m_relativePointWidgetHolder->show(wcsPos, basePoint,baseIsRelativePoint, param);
+    if (m_relativePointWidgetHolder != nullptr) {
+        m_relativePointWidgetHolder->show(wcsPos, basePoint,baseIsRelativePoint, param);
+    }
 }
 
 void RS_GraphicView::hideRelativeInputWidget() const {
-    // Only QG_GraphicView creates the holder, and finishing an action reaches
-    // here on views that have none, as isRelativeInputWidgetVisible() assumes.
+    // Only QG_GraphicView creates the holder, and actions reach these on views
+    // that have none, as isRelativeInputWidgetVisible() already assumes.
     if (m_relativePointWidgetHolder != nullptr) {
         m_relativePointWidgetHolder->hide();
     }
 }
 
 void RS_GraphicView::restoreRelativeInputWidget() const {
-    m_relativePointWidgetHolder->updatePosition(true);
-    m_relativePointWidgetHolder->setVisible(true);
+    if (m_relativePointWidgetHolder != nullptr) {
+        m_relativePointWidgetHolder->updatePosition(true);
+        m_relativePointWidgetHolder->setVisible(true);
+    }
 }
 
 bool RS_GraphicView::isInRelativePointInput() const {
