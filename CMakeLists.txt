@@ -2567,6 +2567,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/settings/tests/rs_settings_migration_tests.cpp
         librecad/src/lib/gui/tests/rs_graphicview_close_tests.cpp
         librecad/src/lib/gui/tests/rs_painter_tests.cpp
+        librecad/src/ui/dock_widgets/command_line/tests/qg_commandwidget_tests.cpp
         librecad/src/lib/gui/tests/lc_graphicviewrenderer_tests.cpp
         librecad/src/main/tests/console_command_utils_tests.cpp
         librecad/src/main/tests/lc_pdfprintlooptests.cpp

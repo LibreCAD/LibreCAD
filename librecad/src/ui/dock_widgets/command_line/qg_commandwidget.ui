@@ -77,7 +77,7 @@
       <string>Command:</string>
      </property>
      <property name="wordWrap">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
     </widget>
    </item>
