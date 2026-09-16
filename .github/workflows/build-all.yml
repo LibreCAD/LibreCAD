@@ -364,6 +364,46 @@ jobs:
           mv generated/LibreCAD-*.exe LibreCAD-`git describe --always`-win-x64.exe
         shell: bash
 
+      - name: Package MSIX
+        run: |
+          # The Store reserves the revision component, so it stays 0; the run
+          # number keeps the build component increasing across pushes.
+          $version = '2.2.2'
+          $match = Select-String -Path CMakeLists.txt -Pattern '^project \(LibreCAD VERSION ([0-9]+\.[0-9]+)' |
+            Select-Object -First 1
+          if ($match) { $version = $match.Matches[0].Groups[1].Value }
+          $parts = $version.Split('.')
+          $packageVersion = "$($parts[0]).$($parts[1]).${{ github.run_number }}.0"
+
+          # Repository variables carry the real Store identity; the fallbacks
+          # below are placeholders that the submission workflow refuses.
+          $identity = '${{ vars.MICROSOFT_STORE_BETA_IDENTITY_NAME }}'
+          if (-not $identity) { $identity = 'LibreCAD.Beta.Development' }
+          $publisher = '${{ vars.MICROSOFT_STORE_PUBLISHER }}'
+          if (-not $publisher) { $publisher = 'CN=LibreCAD Development' }
+          $publisherDisplayName = '${{ vars.MICROSOFT_STORE_PUBLISHER_DISPLAY_NAME }}'
+          if (-not $publisherDisplayName) { $publisherDisplayName = 'LibreCAD' }
+
+          & scripts\build-msix.ps1 `
+            -Architecture x64 `
+            -InputDirectory windows `
+            -BuildDirectory generated `
+            -OutputDirectory msix-output `
+            -PackageVersion $packageVersion `
+            -IdentityName $identity `
+            -Publisher $publisher `
+            -PublisherDisplayName $publisherDisplayName `
+            -PackageName LibreCAD-beta
+        shell: pwsh
+
+      - name: Upload MSIX artifact
+        uses: actions/upload-artifact@main
+        with:
+          name: win64Msix
+          path: msix-output/*.msix*
+          if-no-files-found: error
+          retention-days: 2
+
       - name: Upload artifact
         id: artifact-upload-step
         uses: actions/upload-artifact@main
@@ -482,6 +522,46 @@ jobs:
           mv generated/LibreCAD-*.exe LibreCAD-`git describe --always`-win-arm64.exe
         shell: bash
 
+      - name: Package MSIX
+        run: |
+          # The Store reserves the revision component, so it stays 0; the run
+          # number keeps the build component increasing across pushes.
+          $version = '2.2.2'
+          $match = Select-String -Path CMakeLists.txt -Pattern '^project \(LibreCAD VERSION ([0-9]+\.[0-9]+)' |
+            Select-Object -First 1
+          if ($match) { $version = $match.Matches[0].Groups[1].Value }
+          $parts = $version.Split('.')
+          $packageVersion = "$($parts[0]).$($parts[1]).${{ github.run_number }}.0"
+
+          # Repository variables carry the real Store identity; the fallbacks
+          # below are placeholders that the submission workflow refuses.
+          $identity = '${{ vars.MICROSOFT_STORE_BETA_IDENTITY_NAME }}'
+          if (-not $identity) { $identity = 'LibreCAD.Beta.Development' }
+          $publisher = '${{ vars.MICROSOFT_STORE_PUBLISHER }}'
+          if (-not $publisher) { $publisher = 'CN=LibreCAD Development' }
+          $publisherDisplayName = '${{ vars.MICROSOFT_STORE_PUBLISHER_DISPLAY_NAME }}'
+          if (-not $publisherDisplayName) { $publisherDisplayName = 'LibreCAD' }
+
+          & scripts\build-msix.ps1 `
+            -Architecture arm64 `
+            -InputDirectory windows `
+            -BuildDirectory generated `
+            -OutputDirectory msix-output `
+            -PackageVersion $packageVersion `
+            -IdentityName $identity `
+            -Publisher $publisher `
+            -PublisherDisplayName $publisherDisplayName `
+            -PackageName LibreCAD-beta
+        shell: pwsh
+
+      - name: Upload MSIX artifact
+        uses: actions/upload-artifact@main
+        with:
+          name: winARM64Msix
+          path: msix-output/*.msix*
+          if-no-files-found: error
+          retention-days: 2
+
       - name: Upload artifact
         id: artifact-upload-step
         uses: actions/upload-artifact@main
@@ -489,6 +569,101 @@ jobs:
           name: winARM64Assets
           path: LibreCAD*.exe
           retention-days: 2
+
+  PackageWindowsMsix:
+    if: github.event_name == 'push'
+    needs: [BuildWindows64, BuildWindowsARM64]
+    # Package on x64: there is no arm64 build of makepri.exe, and importing a
+    # certificate into TrustedPublisher fails on windows-11-arm
+    # (actions/runner-images#14728).  MakeAppx packages any architecture.
+    runs-on: windows-2022
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@main
+
+      - name: Download x64 package
+        uses: actions/download-artifact@main
+        with:
+          name: win64Msix
+          path: msix-x64
+
+      - name: Download arm64 package
+        uses: actions/download-artifact@main
+        with:
+          name: winARM64Msix
+          path: msix-arm64
+
+      - name: Build MSIX bundle
+        run: |
+          # -Filter '*.msix' also matches '*.msixbundle' under 8.3 wildcard
+          # rules, so compare the extension instead.
+          $x64 = Get-ChildItem msix-x64 -File | Where-Object { $_.Extension -eq '.msix' } | Select-Object -First 1
+          $arm64 = Get-ChildItem msix-arm64 -File | Where-Object { $_.Extension -eq '.msix' } | Select-Object -First 1
+          if (-not $x64) { throw 'No x64 .msix was downloaded.' }
+          if (-not $arm64) { throw 'No arm64 .msix was downloaded.' }
+
+          $version = '2.2.2'
+          $match = Select-String -Path CMakeLists.txt -Pattern '^project \(LibreCAD VERSION ([0-9]+\.[0-9]+)' |
+            Select-Object -First 1
+          if ($match) { $version = $match.Matches[0].Groups[1].Value }
+          $parts = $version.Split('.')
+          $packageVersion = "$($parts[0]).$($parts[1]).${{ github.run_number }}.0"
+
+          & scripts\build-msix-bundle.ps1 `
+            -X64Package $x64.FullName `
+            -Arm64Package $arm64.FullName `
+            -OutputDirectory msix-bundle `
+            -PackageVersion $packageVersion `
+            -PackageName LibreCAD-beta
+        shell: pwsh
+
+      - name: Smoke test the package
+        run: |
+          # Registering an unpacked layout exercises the manifest, identity and
+          # entry point without a certificate.  Developer Mode is already on for
+          # every GitHub Windows image.
+          $x64 = Get-ChildItem msix-x64 -File | Where-Object { $_.Extension -eq '.msix' } | Select-Object -First 1
+          $staged = Join-Path $env:RUNNER_TEMP 'msix-register'
+          if (Test-Path $staged) { Remove-Item $staged -Recurse -Force }
+          Expand-Archive -LiteralPath $x64.FullName -DestinationPath $staged
+          Add-AppxPackage -Register (Join-Path $staged 'AppxManifest.xml')
+          $installed = Get-AppxPackage | Where-Object { $_.Name -like 'LibreCAD*' }
+          if (-not $installed) { throw 'The package did not register.' }
+          Write-Host "Registered $($installed.PackageFullName)"
+          Remove-AppxPackage -Package $installed.PackageFullName
+        shell: pwsh
+
+      - name: Windows App Certification Kit
+        run: |
+          # Not contractually present on hosted images, so skip rather than fail.
+          $appcert = Join-Path ${env:ProgramFiles(x86)} 'Windows Kits\10\App Certification Kit\appcert.exe'
+          if (-not (Test-Path -LiteralPath $appcert)) {
+            Write-Host 'App Certification Kit is not installed on this runner; skipping.'
+            exit 0
+          }
+          $bundle = Get-ChildItem msix-bundle -File |
+            Where-Object { $_.Extension -eq '.msixbundle' } | Select-Object -First 1
+          $report = Join-Path $env:RUNNER_TEMP 'wack-report.xml'
+          & $appcert reset
+          & $appcert test -appxpackagepath $bundle.FullName -reportoutputpath $report
+          if ($LASTEXITCODE -ne 0) {
+            Write-Host "::warning::App Certification Kit exited with $LASTEXITCODE"
+          }
+          if (Test-Path -LiteralPath $report) {
+            [xml]$xml = Get-Content -LiteralPath $report -Raw
+            $failed = @($xml.SelectNodes('//*[@OVERALL_RESULT="FAIL"]'))
+            Write-Host "App Certification Kit reported $($failed.Count) failing test(s)."
+          }
+        shell: pwsh
+        continue-on-error: true
+
+      - name: Upload MSIX bundle
+        uses: actions/upload-artifact@main
+        with:
+          name: winMsixBundle
+          path: msix-bundle/*.msix*
+          if-no-files-found: error
+          retention-days: 30
 
   UpdateAssets:
     if: github.repository_owner == 'LibreCAD' && github.ref == 'refs/heads/master'

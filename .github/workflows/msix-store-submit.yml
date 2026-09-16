@@ -1,0 +1,120 @@
+# ********************************************************************************
+# This file is part of the LibreCAD project, a 2D CAD program
+#
+# Copyright (C) 2026 LibreCAD.org
+# Copyright (C) 2026 Dongxu Li (github.com/dxli)
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+# USA.
+# ********************************************************************************
+
+# Submits an MSIX bundle built by "Continuous build" to the Microsoft Store.
+#
+# The Store re-signs submissions after certification, so the bundle this takes
+# is deliberately unsigned.  Submission is manual because the first submission
+# of any app has to be made by hand in Partner Center -- msstore can only
+# update a product that is already published and live.
+#
+# Setup lives in docs/development/msix-store.md.
+
+name: Submit MSIX to Microsoft Store
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: 'Run ID of the "Continuous build" run to submit (its winMsixBundle artifact)'
+        required: true
+        type: string
+
+concurrency: microsoft-store-submission
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  submit:
+    if: github.repository_owner == 'LibreCAD'
+    runs-on: windows-2022
+    environment: microsoft-store
+    steps:
+      - name: Download the bundle
+        run: |
+          gh run download ${{ inputs.run_id }} --repo "$env:GITHUB_REPOSITORY" --name winMsixBundle --dir msix-bundle
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Refuse placeholder identities
+        run: |
+          $upload = Get-ChildItem msix-bundle -File |
+            Where-Object { $_.Extension -eq '.msixupload' } | Select-Object -First 1
+          if (-not $upload) { throw 'The run did not produce a .msixupload artifact.' }
+
+          # The bundle carries whatever identity the build job used.  A build
+          # made without the repository variables set is not submittable.
+          $bundle = Get-ChildItem msix-bundle -File |
+            Where-Object { $_.Extension -eq '.msixbundle' } | Select-Object -First 1
+          $staged = Join-Path $env:RUNNER_TEMP 'bundle-inspect'
+          if (Test-Path $staged) { Remove-Item $staged -Recurse -Force }
+          Expand-Archive -LiteralPath $bundle.FullName -DestinationPath $staged
+          $inner = Get-ChildItem $staged -File | Where-Object { $_.Extension -eq '.msix' } | Select-Object -First 1
+          $unpacked = Join-Path $staged 'package'
+          Expand-Archive -LiteralPath $inner.FullName -DestinationPath $unpacked
+          [xml]$manifest = Get-Content -LiteralPath (Join-Path $unpacked 'AppxManifest.xml') -Raw
+          $identity = $manifest.Package.Identity
+
+          Write-Host "Identity Name=$($identity.Name) Publisher=$($identity.Publisher) Version=$($identity.Version)"
+          if ($identity.Name -like '*.Development') {
+            throw "The bundle carries the placeholder identity '$($identity.Name)'. Set MICROSOFT_STORE_BETA_IDENTITY_NAME and rebuild."
+          }
+          if ($identity.Publisher -eq 'CN=LibreCAD Development') {
+            throw 'The bundle carries the placeholder publisher. Set MICROSOFT_STORE_PUBLISHER and rebuild.'
+          }
+          if ($identity.Publisher -notmatch '(^|,)\s*CN=') {
+            throw "Publisher must contain a CN component: $($identity.Publisher)"
+          }
+          if ($env:MICROSOFT_STORE_PRODUCT_ID -notmatch '^[0-9A-Za-z]{12}$') {
+            throw 'MICROSOFT_STORE_BETA_PRODUCT_ID must be the 12-character Store product ID.'
+          }
+          "upload_path=$($upload.FullName)" | Out-File -FilePath $env:GITHUB_ENV -Append
+        shell: pwsh
+        env:
+          MICROSOFT_STORE_PRODUCT_ID: ${{ vars.MICROSOFT_STORE_BETA_PRODUCT_ID }}
+
+      - name: Set up the Store CLI
+        uses: microsoft/microsoft-store-apppublisher@v1.1
+
+      - name: Publish
+        run: |
+          msstore reconfigure `
+            --tenantId "$env:AZURE_AD_TENANT_ID" `
+            --sellerId "$env:SELLER_ID" `
+            --clientId "$env:AZURE_AD_APPLICATION_CLIENT_ID" `
+            --clientSecret "$env:AZURE_AD_APPLICATION_SECRET"
+          if ($LASTEXITCODE -ne 0) { throw "msstore reconfigure failed with exit code $LASTEXITCODE." }
+
+          # The positional argument must be the .msixupload file itself, not the
+          # directory holding it.
+          msstore publish "$env:upload_path" --appId "$env:MICROSOFT_STORE_PRODUCT_ID"
+          if ($LASTEXITCODE -ne 0) { throw "msstore publish failed with exit code $LASTEXITCODE." }
+        shell: pwsh
+        env:
+          AZURE_AD_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
+          AZURE_AD_APPLICATION_CLIENT_ID: ${{ secrets.AZURE_AD_APPLICATION_CLIENT_ID }}
+          AZURE_AD_APPLICATION_SECRET: ${{ secrets.AZURE_AD_APPLICATION_SECRET }}
+          SELLER_ID: ${{ secrets.SELLER_ID }}
+          MICROSOFT_STORE_PRODUCT_ID: ${{ vars.MICROSOFT_STORE_BETA_PRODUCT_ID }}
