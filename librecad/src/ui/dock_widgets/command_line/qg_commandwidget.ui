@@ -73,6 +73,12 @@
    </item>
    <item row="1" column="0" colspan="2">
     <widget class="QLabel" name="lCommand">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="text">
       <string>Command:</string>
      </property>
