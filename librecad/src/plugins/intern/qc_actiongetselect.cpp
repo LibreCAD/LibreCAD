@@ -79,10 +79,21 @@ void QC_ActionGetSelect::mouseReleaseEvent(QMouseEvent* e) {
 }
 
 void QC_ActionGetSelect::keyPressEvent(QKeyEvent* e){
-    if (e->key()==Qt::Key_Escape || e->key()==Qt::Key_Enter){
-        updatePrompt();
-        finish();
-        m_completed = true;
+    switch (e->key()) {
+        // The main keyboard sends Return; only the keypad sends Enter.
+        case Qt::Key_Return:
+        case Qt::Key_Enter:
+            updatePrompt();
+            finish();
+            m_completed = true;
+            break;
+        case Qt::Key_Escape:
+            // Cancel: the plugin must not act on the selection it collected.
+            updatePrompt();
+            finish();
+            break;
+        default:
+            break;
     }
 }
 

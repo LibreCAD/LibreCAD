@@ -50,6 +50,8 @@ void RS_ActionSelectBase::keyPressEvent(QKeyEvent* e) {
             selectionFinishedByKey(e, true);
             break;
         }
+        // The main keyboard sends Return; only the keypad sends Enter.
+        case Qt::Key_Return:
         case Qt::Key_Enter: {
             if (m_document->hasSelection()) {
                 selectionFinishedByKey(e, false);
