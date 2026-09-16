@@ -26,6 +26,8 @@
 
 #include "rs_actionmodifyentity.h"
 
+#include <algorithm>
+
 #include <QAction>
 #include <QMouseEvent>
 #include "rs_dialogfactory.h"
@@ -42,6 +44,25 @@ RS_ActionModifyEntity::RS_ActionModifyEntity(RS_EntityContainer& container,
 	actionType=RS2::ActionModifyEntity;
 }
 
+/**
+ * @return the entity itself if the container owns it directly, otherwise its
+ * closest ancestor the container owns, or nullptr if it does not belong to the
+ * container at all.
+ *
+ * Membership is checked against the container's list rather than only by the
+ * parent pointer, so an entity with a stale parent pointer still resolves to
+ * itself.
+ */
+RS_Entity* RS_ActionModifyEntity::ownedByContainer(RS_Entity* entity) const
+{
+    for (; entity != nullptr; entity = entity->getParent()) {
+        if (entity->getParent() == container
+                || std::find(container->begin(), container->end(), entity) != container->end())
+            return entity;
+    }
+    return nullptr;
+}
+
 void RS_ActionModifyEntity::setDisplaySelected(bool highlighted)
 {
     if (en != nullptr) {
@@ -51,6 +72,14 @@ void RS_ActionModifyEntity::setDisplaySelected(bool highlighted)
 }
 
 void RS_ActionModifyEntity::trigger() {
+    // The edit below adds an edited clone to the container and marks the
+    // original undone. That only works for an entity the container owns
+    // directly. For a child of a polyline, spline, dimension, leader or hatch the
+    // clone would land in the container still pointing at that parent, while the
+    // original stays inside it: still drawn, but no longer pickable, and left on
+    // the undo stack where the parent frees it the next time it regenerates its
+    // children. Edit the top-level entity it belongs to instead.
+    en = ownedByContainer(en);
     if (en != nullptr) {
         std::unique_ptr<RS_Entity> clone{en->clone()};
         bool selected = en->isSelected();

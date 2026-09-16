@@ -53,6 +53,9 @@ public:
     void setDisplaySelected(bool selected);
 
 private:
+    // the entity, or its closest ancestor, that the container owns directly
+    RS_Entity* ownedByContainer(RS_Entity* entity) const;
+
     RS_Entity* en = nullptr;
 };
 
