@@ -49,15 +49,15 @@ RS_ActionModifyEntity::RS_ActionModifyEntity(RS_EntityContainer& container,
  * closest ancestor the container owns, or nullptr if it does not belong to the
  * container at all.
  *
- * Membership is checked against the container's list rather than only by the
- * parent pointer, so an entity with a stale parent pointer still resolves to
- * itself.
+ * Ownership is decided by the container's entity list, not by parent pointers:
+ * addEntity() does not reparent, so a member can point elsewhere, and an entity
+ * can point at the container without being listed in it (a block's parent is
+ * the graphic).
  */
 RS_Entity* RS_ActionModifyEntity::ownedByContainer(RS_Entity* entity) const
 {
     for (; entity != nullptr; entity = entity->getParent()) {
-        if (entity->getParent() == container
-                || std::find(container->begin(), container->end(), entity) != container->end())
+        if (std::find(container->begin(), container->end(), entity) != container->end())
             return entity;
     }
     return nullptr;
