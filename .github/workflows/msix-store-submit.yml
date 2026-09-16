@@ -70,10 +70,12 @@ jobs:
             Where-Object { $_.Extension -eq '.msixbundle' } | Select-Object -First 1
           $staged = Join-Path $env:RUNNER_TEMP 'bundle-inspect'
           if (Test-Path $staged) { Remove-Item $staged -Recurse -Force }
-          Expand-Archive -LiteralPath $bundle.FullName -DestinationPath $staged
+          # Expand-Archive only accepts a .zip extension; the ZIP API does not care.
+          Add-Type -AssemblyName System.IO.Compression.FileSystem
+          [System.IO.Compression.ZipFile]::ExtractToDirectory($bundle.FullName, $staged)
           $inner = Get-ChildItem $staged -File | Where-Object { $_.Extension -eq '.msix' } | Select-Object -First 1
           $unpacked = Join-Path $staged 'package'
-          Expand-Archive -LiteralPath $inner.FullName -DestinationPath $unpacked
+          [System.IO.Compression.ZipFile]::ExtractToDirectory($inner.FullName, $unpacked)
           [xml]$manifest = Get-Content -LiteralPath (Join-Path $unpacked 'AppxManifest.xml') -Raw
           $identity = $manifest.Package.Identity
 

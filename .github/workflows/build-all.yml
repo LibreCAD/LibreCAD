@@ -625,7 +625,9 @@ jobs:
           $x64 = Get-ChildItem msix-x64 -File | Where-Object { $_.Extension -eq '.msix' } | Select-Object -First 1
           $staged = Join-Path $env:RUNNER_TEMP 'msix-register'
           if (Test-Path $staged) { Remove-Item $staged -Recurse -Force }
-          Expand-Archive -LiteralPath $x64.FullName -DestinationPath $staged
+          # Expand-Archive only accepts a .zip extension; the ZIP API does not care.
+          Add-Type -AssemblyName System.IO.Compression.FileSystem
+          [System.IO.Compression.ZipFile]::ExtractToDirectory($x64.FullName, $staged)
           Add-AppxPackage -Register (Join-Path $staged 'AppxManifest.xml')
           $installed = Get-AppxPackage | Where-Object { $_.Name -like 'LibreCAD*' }
           if (-not $installed) { throw 'The package did not register.' }
