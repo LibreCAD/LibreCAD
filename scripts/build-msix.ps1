@@ -187,14 +187,14 @@ function Test-PackagedManifest {
         $manifestXml.SelectNodes('//rescap3:MigrationProgId', $namespaceManager) |
             ForEach-Object { $_.InnerText }
     )
-    $requiredProgIds = @("$ExpectedPackageName.DXF", "$ExpectedPackageName.DWG")
+    $requiredProgIds = @('LibreCAD.DXF', 'LibreCAD.DWG')
     foreach ($requiredProgId in $requiredProgIds) {
         if ($requiredProgId -notin $migrationProgIds) {
             throw "MSIX manifest is missing migration ProgID $requiredProgId."
         }
     }
     if ($migrationProgIds.Count -ne $requiredProgIds.Count) {
-        throw "MSIX manifest contains migration ProgIDs for another package channel."
+        throw 'MSIX manifest contains unexpected migration ProgIDs.'
     }
 
     $customInstall = $manifestXml.SelectSingleNode(
@@ -452,8 +452,12 @@ $replacements = @{
     '@PUBLISHER@' = Escape-XmlAttribute -Value $Publisher
     '@PUBLISHER_DISPLAY_NAME@' = Escape-XmlAttribute -Value $PublisherDisplayName
     '@PACKAGE_NAME@' = Escape-XmlAttribute -Value $PackageName
-    '@LEGACY_DXF_PROGID@' = Escape-XmlAttribute -Value "$PackageName.DXF"
-    '@LEGACY_DWG_PROGID@' = Escape-XmlAttribute -Value "$PackageName.DWG"
+    # The ProgIDs the NSIS installer registers in HKCR, so an existing
+    # installation's associations migrate.  They are fixed, not derived from the
+    # package name: a hyphen is not legal in a ProgID and 'LibreCAD-beta.DXF'
+    # fails manifest schema validation.
+    '@LEGACY_DXF_PROGID@' = 'LibreCAD.DXF'
+    '@LEGACY_DWG_PROGID@' = 'LibreCAD.DWG'
     '@PACKAGE_VERSION@' = $PackageVersion
     '@ARCHITECTURE@' = $Architecture
 }
