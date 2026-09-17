@@ -535,12 +535,13 @@ void LC_GraphicViewRenderer::setPenForEntity(RS_Painter* painter, const RS_Entit
     // arbitrary QPainter::setPen was called between drawing entities.
     const double patternOffset = painter->currentDashOffset();
     // fixme - replace several booleans by Flags value
-    if (m_lastPaintedHighlighted == highlighted && m_lastPaintedSelected == selected && m_lastPaintOverlay == overlayPaint && m_lastPenInVisualSnap == inVisualSnap) {
+    if (!m_lastPaintedDraft && m_lastPaintedHighlighted == highlighted && m_lastPaintedSelected == selected && m_lastPaintOverlay == overlayPaint && m_lastPenInVisualSnap == inVisualSnap) {
         if (m_lastPaintEntityPen.isSameAs(pen, patternOffset, m_lastPaintedPattern)) {
             return;
         }
     }
     else {
+        m_lastPaintedDraft = false;
         m_lastPaintedHighlighted = highlighted;
         m_lastPaintedSelected = selected;
         m_lastPaintOverlay = overlayPaint;
@@ -658,12 +659,13 @@ void LC_GraphicViewRenderer::setPenForDraftEntity(RS_Painter* painter, const RS_
     // painter pen set previously. This check assumed that that all previous entity drawing were performed via this function and no
     // arbitrary QPainter::setPen was called between drawing entities.
     const double patternOffset = painter->currentDashOffset();
-    if (m_lastPaintedHighlighted == highlighted && m_lastPaintedSelected == selected && m_lastPaintOverlay == overlayPaint && m_lastPenInVisualSnap == inVisualSnap) {
+    if (m_lastPaintedDraft && m_lastPaintedHighlighted == highlighted && m_lastPaintedSelected == selected && m_lastPaintOverlay == overlayPaint && m_lastPenInVisualSnap == inVisualSnap) {
         if (m_lastPaintEntityPen.isSameAs(pen, patternOffset, m_lastPaintedPattern)) {
             return;
         }
     }
     else {
+        m_lastPaintedDraft = true;
         m_lastPaintedHighlighted = highlighted;
         m_lastPaintedSelected = selected;
         m_lastPaintOverlay = overlayPaint;
@@ -778,4 +780,5 @@ void LC_GraphicViewRenderer::doSetupBeforeContainerDraw() {
     m_lastPaintedHighlighted = false;
     m_lastPaintedSelected = false;
     m_lastPaintOverlay = false;
+    m_lastPaintedDraft = false;
 }
