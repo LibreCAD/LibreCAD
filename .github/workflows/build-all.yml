@@ -428,7 +428,7 @@ jobs:
         run: |
           cd generated
           dir *.*
-          dir ARM64\Release\*.*
+          dir Release\*.*
         shell: cmd
 
       - name: List files
@@ -466,9 +466,11 @@ jobs:
           powershell.exe -ExecutionPolicy Bypass -File scripts\generate-custom-nsh.ps1 -Architecture ARM64 -OutputPath "scripts\postprocess-windows\custom.nsh"
 
           cd generated
-          windeployqt6.exe --release --compiler-runtime ARM64\Release\LibreCAD.exe
+          windeployqt6.exe --release --compiler-runtime Release\LibreCAD.exe
+          if errorlevel 1 exit /b 1
           cd ..
-          xcopy /E /Y /I generated\ARM64\Release windows
+          xcopy /E /Y /I generated\Release windows
+          if errorlevel 1 exit /b 1
           for /r generated %%f in (librecad_*.qm) do copy "%%f" librecad\ts\
           for /r generated %%f in (plugins_*.qm) do copy "%%f" plugins\ts\
           powershell.exe -ExecutionPolicy Bypass -File scripts\copy-vc-runtime.ps1 -Architecture ARM64 -Destination windows
