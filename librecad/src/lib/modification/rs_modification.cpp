@@ -57,6 +57,36 @@
 namespace {
 
 /**
+ * @brief ownsTrimTarget - whether bevel() and round() may replace what they trim
+ * @param container - the container the modification works in
+ * @param entity - one of the two entities to bevel or round
+ * @return true if the container owns the entity directly, or owns the polyline
+ * the entity is a segment of. Both functions replace that entity, or that
+ * polyline, with an edited clone in the container, which is only sound for
+ * something the container owns.
+ */
+bool ownsTrimTarget(const RS_EntityContainer& container, const RS_Entity* entity)
+{
+    const RS_EntityContainer* parent = entity->getParent();
+    const RS_Entity* target = (parent != nullptr && parent->rtti() == RS2::EntityPolyline) ? parent : entity;
+    return RS_Information::isOwnedBy(target, container);
+}
+
+/**
+ * @brief ownsTrimTargets - ownsTrimTarget() for both entities, which must also be
+ * either both polyline segments or both not: bevel() and round() pick the polyline
+ * mode from the first entity alone.
+ */
+bool ownsTrimTargets(const RS_EntityContainer& container, const RS_Entity* entity1, const RS_Entity* entity2)
+{
+    auto isSegment = [](const RS_Entity* e) {
+        return e->getParent() != nullptr && e->getParent()->rtti() == RS2::EntityPolyline;
+    };
+    return isSegment(entity1) == isSegment(entity2)
+            && ownsTrimTarget(container, entity1) && ownsTrimTarget(container, entity2);
+}
+
+/**
  * @brief getPasteScale - find scaling factor for pasting
  * @param const RS_PasteData& data - RS_PasteData
  * @param RS_Graphic *& source - source graphic. If source is nullptr, the graphic on the clipboard is used instead
@@ -2506,6 +2536,11 @@ bool RS_Modification::bevel(const RS_Vector& coord1, RS_AtomicEntity* entity1,
     }
     if(entity1->isLocked() || ! entity1->isVisible()) return false;
     if(entity2->isLocked() || ! entity2->isVisible()) return false;
+    if (!ownsTrimTargets(*m_container, entity1, entity2)) {
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_Modification::bevel: entities do not belong to the container");
+        return false;
+    }
 
     RS_EntityContainer* baseContainer = m_container;
     bool isPolyline = false;
@@ -2770,6 +2805,11 @@ bool RS_Modification::round(const RS_Vector& coord,
     }
     if(entity1->isLocked() || ! entity1->isVisible()) return false;
     if(entity2->isLocked() || ! entity2->isVisible()) return false;
+    if (!ownsTrimTargets(*m_container, entity1, entity2)) {
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_Modification::round: entities do not belong to the container");
+        return false;
+    }
 
     RS_EntityContainer* baseContainer = m_container;
     bool isPolyline = false;
