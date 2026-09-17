@@ -19603,7 +19603,9 @@ RS_FilterDXFRW::findLineTypeHandleToWrite(const QString &name) const {
   if (m_dxfW == nullptr) {
     return DRW::NoHandle;
   }
-  std::string lineName = name.toUpper().toStdString();
+  // lineTypesMap is keyed by a byte-wise fold of the UTF-8 name, which a Qt
+  // case mapping does not reproduce for a name holding lower-case non-ASCII.
+  std::string lineName = normalizeDwgTableName(name.toStdString());
   for (auto p : m_dxfW->getWritingContext()->lineTypesMap) {
     if (p.first.compare(lineName) == 0) {
       return p.second;
