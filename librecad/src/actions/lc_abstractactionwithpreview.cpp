@@ -21,6 +21,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
 #include "lc_linemath.h"
+#include "rs_information.h"
 #include "rs_point.h"
 #include "QMouseEvent"
 #include <QList>
@@ -446,6 +447,15 @@ bool LC_AbstractActionWithPreview::doCheckMayDrawPreview([[maybe_unused]]QMouseE
  * @param entity entity to delete
  */
 void LC_AbstractActionWithPreview::deleteEntityUndoable(RS_Entity *entity){
+    // Only an entity the container owns directly can be removed this way. A child of
+    // a polyline, block reference, dimension, hatch, ... would stay inside its parent
+    // (drawn but no longer pickable), and parents that rebuild their children would
+    // later free it while the undo cycle still holds it.
+    if (entity == nullptr || container == nullptr || !RS_Information::isOwnedBy(entity, *container)){
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "LC_AbstractActionWithPreview::deleteEntityUndoable: entity is not owned by the container, not deleted");
+        return;
+    }
     // delete and add this into undo
     graphicView->deleteEntity(entity);
     entity->changeUndoState();
@@ -845,20 +855,24 @@ bool LC_AbstractActionWithPreview::checkMayExpandEntity(const RS_Entity *e, cons
         if (!entityName.isEmpty()){
             commandMessage(entityName + LC_ActionDrawSliceDivide::tr(" is not divided as it is locked."));
         }
-    } else {
-        RS_EntityContainer *pContainer = e->getParent();
-        if (pContainer != nullptr){
-            if (pContainer->rtti() == RS2::EntityPolyline){
-                mayDivide = false;
-                if (!entityName.isEmpty()){
-                    commandMessage(entityName + LC_ActionDrawSliceDivide::tr(" is not divided as it is part of polyline. Expand polyline first."));
-                }
-            } else {
-                mayDivide = true;
-            }
-        } else {
-            mayDivide = true;
+    } else if (!RS_Information::isEditable(e)){
+        // block references, dimensions, hatches, splines and text rebuild their children
+        if (!entityName.isEmpty()){
+            commandMessage(entityName + LC_ActionDrawSliceDivide::tr(" is not divided as it is part of another entity."));
         }
+    } else if (e->getParent() != nullptr && e->getParent()->rtti() == RS2::EntityPolyline){
+        if (!entityName.isEmpty()){
+            commandMessage(entityName + LC_ActionDrawSliceDivide::tr(" is not divided as it is part of polyline. Expand polyline first."));
+        }
+    } else if (container == nullptr || !RS_Information::isOwnedBy(e, *container)){
+        // The parent pointer says top level but the container does not list the
+        // entity: a segment of a pasted or exploded polyline, whose parent pointer
+        // names the drawing. Expanding it would leave the original in place.
+        if (!entityName.isEmpty()){
+            commandMessage(entityName + LC_ActionDrawSliceDivide::tr(" is not divided as it is part of another entity."));
+        }
+    } else {
+        mayDivide = true;
     }
     return mayDivide;
 }

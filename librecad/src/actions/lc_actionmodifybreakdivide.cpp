@@ -85,13 +85,15 @@ void LC_ActionModifyBreakDivide::doPreparePreviewEntities(QMouseEvent *e, RS_Vec
 void LC_ActionModifyBreakDivide::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint){
     if (status == SetLine){
         RS_Entity *en = catchEntity(e, enTypeList, RS2::ResolveAll);
-        if (en != nullptr){
+        // an entity that cannot be expanded is never replaced by segments
+        if (en != nullptr && checkMayExpandEntity(en, "")){
             int rtti = en->rtti();
             switch (rtti) {
                 case RS2::EntityLine:
                 case RS2::EntityCircle:
                 case RS2::EntityArc:
                     // store information about entity and snap point and pass to trigger()
+                    delete triggerData;
                     triggerData = new TriggerData();
                     triggerData->entity = en;
                     triggerData->snapPoint = snapPoint;
@@ -105,7 +107,11 @@ void LC_ActionModifyBreakDivide::doOnLeftMouseButtonRelease(QMouseEvent *e, int 
 }
 
 bool LC_ActionModifyBreakDivide::doCheckMayTrigger(){
-    return triggerData != nullptr;
+    // The trigger always removes the picked entity, so refuse it when that entity
+    // cannot be expanded (a polyline segment, a child of a block reference,
+    // dimension, hatch, ..., or a locked entity): no segments would replace it.
+    return triggerData != nullptr && triggerData->entity != nullptr
+           && checkMayExpandEntity(triggerData->entity, "");
 }
 
 bool LC_ActionModifyBreakDivide::isSetActivePenAndLayerOnTrigger(){

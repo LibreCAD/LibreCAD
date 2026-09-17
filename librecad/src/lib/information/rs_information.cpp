@@ -25,6 +25,7 @@
 **
 **********************************************************************/
 
+#include <algorithm>
 #include <random>
 #include <vector>
 
@@ -345,6 +346,40 @@ bool RS_Information::isDimension(RS2::EntityType type) {
 }
 
 
+
+/**
+ * @retval true if the entity may be modified on its own: it lies in a graphic
+ * or block, possibly inside polylines or plain containers, and is not generated
+ * by another entity. Block references, dimensions, leaders, hatches, splines
+ * and text rebuild their children, so a child of one of them is not editable.
+ */
+bool RS_Information::isEditable(const RS_Entity* e) {
+    if (e == nullptr) {
+        return false;
+    }
+    for (const RS_EntityContainer* parent = e->getParent(); parent != nullptr; parent = parent->getParent()) {
+        switch (parent->rtti()) {
+        case RS2::EntityGraphic:
+        case RS2::EntityBlock:
+            return true;
+        case RS2::EntityPolyline:
+        case RS2::EntityContainer:
+            break;
+        default:
+            return false;
+        }
+    }
+    return true;
+}
+
+/**
+ * @retval true if @p container holds @p e directly, not inside one of its
+ * children. Parent pointers are not a reliable test: RS_EntityContainer's
+ * addEntity() does not reparent.
+ */
+bool RS_Information::isOwnedBy(const RS_Entity* e, const RS_EntityContainer& container) {
+    return e != nullptr && std::find(container.begin(), container.end(), e) != container.end();
+}
 
 /**
  * @retval true the entity can be trimmed.

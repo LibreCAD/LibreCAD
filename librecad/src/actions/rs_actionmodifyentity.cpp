@@ -26,13 +26,12 @@
 
 #include "rs_actionmodifyentity.h"
 
-#include <algorithm>
-
 #include <QAction>
 #include <QMouseEvent>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_debug.h"
+#include "rs_information.h"
 
 
 
@@ -57,7 +56,7 @@ RS_ActionModifyEntity::RS_ActionModifyEntity(RS_EntityContainer& container,
 RS_Entity* RS_ActionModifyEntity::ownedByContainer(RS_Entity* entity) const
 {
     for (; entity != nullptr; entity = entity->getParent()) {
-        if (std::find(container->begin(), container->end(), entity) != container->end())
+        if (RS_Information::isOwnedBy(entity, *container))
             return entity;
     }
     return nullptr;

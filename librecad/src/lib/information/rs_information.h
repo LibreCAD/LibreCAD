@@ -52,6 +52,8 @@ public:
     RS_Information(RS_EntityContainer& entityContainer);
 
 	static bool isDimension(RS2::EntityType type);
+	static bool isEditable(const RS_Entity* e);
+	static bool isOwnedBy(const RS_Entity* e, const RS_EntityContainer& container);
 	static bool isTrimmable(RS_Entity* e);
 	static bool isTrimmable(RS_Entity* e1, RS_Entity* e2);
 
