@@ -2309,9 +2309,6 @@ public:
   static RS_Color numberToColor(int num);
   static int colorToNumber(const RS_Color &col, int *rgb);
 
-  static RS2::LineType nameToLineType(const QString &name);
-  static QString lineTypeToName(RS2::LineType lineType);
-  // static QString lineTypeToDescription(RS2::LineType lineType);
 
   /// True when raw-preserved OBJECT bytes captured at DWG version `src` can
   /// replay verbatim into target `tgt`. Opaque object frames are only safe

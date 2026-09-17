@@ -1008,6 +1008,8 @@ set (SHARED_SOURCES
      librecad/src/lib/engine/document/views/lc_viewslist.h
      librecad/src/lib/engine/lc_defaults.h
      librecad/src/lib/engine/lc_drawable.h
+     librecad/src/lib/engine/lc_linetypenames.cpp
+     librecad/src/lib/engine/lc_linetypenames.h
      librecad/src/lib/engine/overlays/angles_base/lc_overlayanglesbasemark.cpp
      librecad/src/lib/engine/overlays/angles_base/lc_overlayanglesbasemark.h
      librecad/src/lib/engine/overlays/crosshair/lc_crosshair.cpp
