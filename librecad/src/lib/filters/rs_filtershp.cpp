@@ -40,6 +40,7 @@
 
 #include "shapefil.h"
 
+#include "lc_linetypenames.h"
 #include "rs_color.h"
 #include "rs_debug.h"
 #include "rs_filterdxfrw.h"
@@ -271,7 +272,7 @@ std::optional<RS_Pen> penFromRecord(DBFHandle dbf, int record,
         const QString name = decodeDbfString(
             DBFReadStringAttribute(dbf, record, rf.ltype), codepage);
         if (!name.isEmpty()) {
-            pen.setLineType(RS_FilterDXFRW::nameToLineType(name));
+            pen.setLineType(LC_LineTypeNames::nameToLineType(name));
             any = true;
         }
     }

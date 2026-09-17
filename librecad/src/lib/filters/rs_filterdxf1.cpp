@@ -28,6 +28,7 @@
 #include<QRegularExpression>
 #include<QStringDecoder>
 
+#include "lc_linetypenames.h"
 #include "rs_filterdxfrw.h"
 #include "rs_filterdxf1.h"
 
@@ -564,7 +565,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                                 case  6:  // style
                                     //if(currentLayer)
                                     //currentLayer->setStyle( graphic->nameToStyle(dxfLine) );
-                                    pen.setLineType(RS_FilterDXFRW::nameToLineType(dxfLine));
+                                    pen.setLineType(LC_LineTypeNames::nameToLineType(dxfLine));
                                     break;
                                 case 39:  // Thickness
                                     //if(currentLayer) currentLayer->setWidth(dxfLine.toInt());
@@ -603,7 +604,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                             if(dxfLine.size()) {
                                 switch(code) {
                                 case  6:  // style
-                                    pen.setLineType(RS_FilterDXFRW::nameToLineType(dxfLine));
+                                    pen.setLineType(LC_LineTypeNames::nameToLineType(dxfLine));
                                     break;
                                 case  8:  // Layer
                                     //if(dxfLine!=lastLayer) {
@@ -655,7 +656,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                             if(dxfLine.size()) {
                                 switch(code) {
                                 case  6:  // style
-                                    pen.setLineType(RS_FilterDXFRW::nameToLineType(dxfLine));
+                                    pen.setLineType(LC_LineTypeNames::nameToLineType(dxfLine));
                                     break;
                                 case  8:  // Layer
                                     //if(dxfLine!=lastLayer) {
@@ -717,7 +718,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                             if(dxfLine.size()) {
                                 switch(code) {
                                 case  6:  // style
-                                    pen.setLineType(RS_FilterDXFRW::nameToLineType(dxfLine));
+                                    pen.setLineType(LC_LineTypeNames::nameToLineType(dxfLine));
                                     break;
                                 case  8:  // Layer
                                     //if(dxfLine!=lastLayer) {
@@ -782,7 +783,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                             if(dxfLine.size()) {
                                 switch(code) {
                                 case  6:  // style
-                                    pen.setLineType(RS_FilterDXFRW::nameToLineType(dxfLine));
+                                    pen.setLineType(LC_LineTypeNames::nameToLineType(dxfLine));
                                     break;
                                 case  8:  // Layer
                                     //if(dxfLine!=lastLayer) {
@@ -926,7 +927,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     break;
 
                                 case  6:  // style
-                                    pen.setLineType(RS_FilterDXFRW::nameToLineType(dxfLine));
+                                    pen.setLineType(LC_LineTypeNames::nameToLineType(dxfLine));
                                     break;
 
                                 case  7:  
@@ -1102,7 +1103,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                                         strDecodeDxfString(dimText);
                                     break;
                                 case  6:  // style
-                                    pen.setLineType(RS_FilterDXFRW::nameToLineType(dxfLine));
+                                    pen.setLineType(LC_LineTypeNames::nameToLineType(dxfLine));
                                     break;
                                 case  8:  // Layer
                                     //if(dxfLine!=lastLayer) {

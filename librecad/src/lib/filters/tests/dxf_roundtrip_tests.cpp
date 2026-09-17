@@ -51,6 +51,7 @@
 #include "drw_base.h"
 #include "lc_dimstyle.h"
 #include "lc_dwgadvancedmetadata.h"
+#include "lc_linetypenames.h"
 #include "rs_dimaligned.h"
 #include "rs_dimension.h"
 #include "rs_filterdxfrw.h"
@@ -4789,38 +4790,39 @@ TEST_CASE("Every DXF linetype name LibreCAD writes maps back to the same RS2::Li
            RS2::BorderLine, RS2::BorderLineTiny, RS2::BorderLine2,
            RS2::BorderLineX2,
            RS2::LineByLayer, RS2::LineByBlock}) {
-    const QString name = RS_FilterDXFRW::lineTypeToName(type);
+    const QString name = LC_LineTypeNames::lineTypeToName(type);
     INFO("linetype " << static_cast<int>(type) << " -> " << name.toStdString());
-    CHECK(RS_FilterDXFRW::nameToLineType(name) == type);
+    CHECK(LC_LineTypeNames::nameToLineType(name) == type);
   }
 
   // The hidden family keeps its acad.lin names, distinct from DASHED*.
-  CHECK(RS_FilterDXFRW::lineTypeToName(RS2::HiddenLine) == "HIDDEN");
-  CHECK(RS_FilterDXFRW::lineTypeToName(RS2::HiddenLineTiny) == "HIDDENTINY");
-  CHECK(RS_FilterDXFRW::lineTypeToName(RS2::HiddenLine2) == "HIDDEN2");
-  CHECK(RS_FilterDXFRW::lineTypeToName(RS2::HiddenLineX2) == "HIDDENX2");
+  CHECK(LC_LineTypeNames::lineTypeToName(RS2::HiddenLine) == "HIDDEN");
+  CHECK(LC_LineTypeNames::lineTypeToName(RS2::HiddenLineTiny) == "HIDDENTINY");
+  CHECK(LC_LineTypeNames::lineTypeToName(RS2::HiddenLine2) == "HIDDEN2");
+  CHECK(LC_LineTypeNames::lineTypeToName(RS2::HiddenLineX2) == "HIDDENX2");
 
   // The phantom family keeps its acad.lin names (PHANTOM* used to fall
   // through to CONTINUOUS).
-  CHECK(RS_FilterDXFRW::lineTypeToName(RS2::PhantomLine) == "PHANTOM");
-  CHECK(RS_FilterDXFRW::lineTypeToName(RS2::PhantomLineTiny) == "PHANTOMTINY");
-  CHECK(RS_FilterDXFRW::lineTypeToName(RS2::PhantomLine2) == "PHANTOM2");
-  CHECK(RS_FilterDXFRW::lineTypeToName(RS2::PhantomLineX2) == "PHANTOMX2");
+  CHECK(LC_LineTypeNames::lineTypeToName(RS2::PhantomLine) == "PHANTOM");
+  CHECK(LC_LineTypeNames::lineTypeToName(RS2::PhantomLineTiny) ==
+        "PHANTOMTINY");
+  CHECK(LC_LineTypeNames::lineTypeToName(RS2::PhantomLine2) == "PHANTOM2");
+  CHECK(LC_LineTypeNames::lineTypeToName(RS2::PhantomLineX2) == "PHANTOMX2");
   // ISO 128-20 type 09 (long-dashed double-short-dashed) imports as PHANTOM,
   // the way ACAD_ISO04W100 / ACAD_ISO05W100 already alias DASHDOTX2 / DIVIDEX2.
-  CHECK(RS_FilterDXFRW::nameToLineType(QStringLiteral("ACAD_ISO09W100")) ==
+  CHECK(LC_LineTypeNames::nameToLineType(QStringLiteral("ACAD_ISO09W100")) ==
         RS2::PhantomLine);
-  CHECK(RS_FilterDXFRW::nameToLineType(QStringLiteral("acad_iso09w100")) ==
+  CHECK(LC_LineTypeNames::nameToLineType(QStringLiteral("acad_iso09w100")) ==
         RS2::PhantomLine);
 
   // The JWW filter carries its own name tables (without tiny variants); they
-  // must agree with the DXF ones.
+  // must agree with the engine ones.
   for (const RS2::LineType type : {RS2::HiddenLine, RS2::HiddenLine2,
                                    RS2::HiddenLineX2, RS2::PhantomLine,
                                    RS2::PhantomLine2, RS2::PhantomLineX2}) {
     INFO("linetype " << static_cast<int>(type));
     const QString name = RS_FilterJWW::lineTypeToName(type);
-    CHECK(name == RS_FilterDXFRW::lineTypeToName(type));
+    CHECK(name == LC_LineTypeNames::lineTypeToName(type));
     CHECK(RS_FilterJWW::nameToLineType(name) == type);
   }
 
