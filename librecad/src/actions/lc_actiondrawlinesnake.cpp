@@ -600,7 +600,9 @@ void LC_ActionDrawLineSnake::close(){
 // creation of polyline. This will end line drawing sequence
 void LC_ActionDrawLineSnake::polyline(){
     // fixme - add support of alternative way of polyline based on selected entities (so only drawn lines will be converted to polyline, without others found
-    RS_Entity *en = catchEntity(pPoints->data.endpoint, RS2::EntityLine, RS2::ResolveAllButTextImage);
+    // the snake's own lines are top-level entities; a child of a block reference or
+    // dimension would be undone in place by the conversion
+    RS_Entity *en = catchEntity(pPoints->data.endpoint, RS2::EntityLine, RS2::ResolveNone);
     if (en != nullptr){
         finishAction();
         addHistory(HA_Polyline, pPoints->data.startpoint, pPoints->data.endpoint, pPoints->startOffset);

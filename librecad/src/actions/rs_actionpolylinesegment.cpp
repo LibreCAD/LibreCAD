@@ -34,6 +34,7 @@
 #include "rs_arc.h"
 #include "rs_polyline.h"
 #include "rs_debug.h"
+#include "rs_information.h"
 
 namespace {
 QList<RS2::EntityType>
@@ -160,6 +161,14 @@ RS_Vector RS_ActionPolylineSegment::appendPol(RS_Polyline *current, RS_Polyline 
 bool RS_ActionPolylineSegment::convertPolyline(RS_Entity* selectedEntity, bool useSelected) {
 
     RS_DEBUG->print("RS_ActionPolylineSegment::convertPolyline");
+
+    // The entity is replaced by undoing it in the container, which only works for
+    // an entity the container owns directly.
+    if (selectedEntity == nullptr || !RS_Information::isOwnedBy(selectedEntity, *container)) {
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_ActionPolylineSegment::convertPolyline: entity is not owned by the container");
+        return false;
+    }
 
     QList<RS_Entity*> remaining;
     QList<RS_Entity*> completed;
