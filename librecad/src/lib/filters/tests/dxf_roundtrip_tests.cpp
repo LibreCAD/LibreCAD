@@ -4491,6 +4491,68 @@ TEST_CASE("DXF R2010 DSTYLE text direction survives a dimension round trip",
   std::filesystem::remove(legacyOut);
 }
 
+TEST_CASE("DXF DSTYLE line type reference survives a non-ASCII linetype name",
+          "[dxf][roundtrip][filter][dimension][dimstyle][ltype]") {
+  ensureSettings();
+
+  // The writer keys its LTYPE handle table by folding the raw UTF-8 bytes, so
+  // the dimension style query has to fold the same way. An ASCII name folds
+  // identically under either rule and is the control.
+  const auto checkDimLineTypeRef = [](const char *fileStem,
+                                      const char *lineTypeName) {
+    const std::string out = tmpFile(fileStem);
+    std::filesystem::remove(out);
+
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    DRW_LType imported;
+    imported.updateValues(lineTypeName, "Imported dashed", 2, 12.7,
+                          {6.35, -6.35});
+    graphic.dwgAdvancedMetadata().addLineTypeName(imported);
+
+    RS_DimensionData data;
+    data.definitionPoint = RS_Vector(5.0, 3.0);
+    data.middleOfText = RS_Vector(5.0, 3.0);
+    data.style = "Standard";
+    auto *dimension = new RS_DimAligned(
+        &graphic, data,
+        RS_DimAlignedData(RS_Vector(0.0, 0.0), RS_Vector(10.0, 0.0)));
+    LC_DimStyle override;
+    override.dimensionLine()->setLineType(QString::fromUtf8(lineTypeName));
+    dimension->setDimStyleOverride(&override);
+    graphic.addEntity(dimension);
+
+    {
+      RS_FilterDXFRW filter;
+      REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                                RS2::FormatDXFRW2018));
+    }
+    CHECK(recordGroupValues(out, "DIMENSION", "1070")
+          == std::vector<std::string>{"345"});
+    CHECK(recordGroupValues(out, "DIMENSION", "1005").size() == 1);
+
+    RS_Graphic reloaded;
+    {
+      RS_FilterDXFRW filter;
+      REQUIRE(filter.fileImport(reloaded, QString::fromStdString(out),
+                                RS2::FormatDXFRW));
+    }
+    auto *reloadedDimension =
+        dynamic_cast<RS_Dimension *>(reloaded.firstEntity());
+    REQUIRE(reloadedDimension != nullptr);
+    LC_DimStyle *reloadedOverride = reloadedDimension->getDimStyleOverride();
+    CHECK(reloadedOverride != nullptr);
+    if (reloadedOverride != nullptr)
+      CHECK(reloadedOverride->dimensionLine()->lineTypeName()
+            == QString::fromUtf8(lineTypeName));
+
+    std::filesystem::remove(out);
+  };
+
+  checkDimLineTypeRef("dimension_dstyle_ltype_ascii.dxf", "vendor_dash");
+  checkDimLineTypeRef("dimension_dstyle_ltype_utf8.dxf", "\xC3\xB6lfarbe");
+}
+
 TEST_CASE("DXF unused LTYPE and STYLE application groups survive filter round trip",
           "[dxf][roundtrip][filter][ltype][style][application-groups]") {
   ensureSettings();
