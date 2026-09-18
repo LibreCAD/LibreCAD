@@ -6866,7 +6866,7 @@ TEST_CASE("DWG export keeps the linetype record a native MLEADER refers to",
 }
 #endif
 
-TEST_CASE("DXF import maps ACAD_ISO09W100 to PHANTOM and writes it back as PHANTOM",
+TEST_CASE("DXF import maps ACAD_ISO09W100 to PHANTOM and keeps its alias name on write",
           "[dxf][roundtrip][filter][linetype]") {
   ensureSettings();
   const std::string src = tmpFile("iso09_src.dxf");
@@ -6875,9 +6875,8 @@ TEST_CASE("DXF import maps ACAD_ISO09W100 to PHANTOM and writes it back as PHANT
   std::filesystem::remove(out);
 
   // acadiso.lin: ACAD_ISO09W100 "ISO long-dash double-short-dash"
-  // A,24,-3,6,-3,6,-3. Like the other ACAD_ISO aliases it is an import
-  // mapping only: the entity is saved with the acad.lin name of the family
-  // it landed on, and the source record survives as raw metadata.
+  // A,24,-3,6,-3,6,-3. Like the other ACAD_ISO aliases it is drawn as the
+  // family it maps to, while the entity and the layer keep the alias name.
   writeText(src,
             "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1009\n0\nENDSEC\n"
             "0\nSECTION\n2\nTABLES\n"
@@ -6914,9 +6913,9 @@ TEST_CASE("DXF import maps ACAD_ISO09W100 to PHANTOM and writes it back as PHANT
                               RS2::FormatDXFRW));
   }
   CHECK(recordGroupValues(out, "LINE", "6") ==
-        std::vector<std::string>{"PHANTOM"});
+        std::vector<std::string>{"ACAD_ISO09W100"});
   CHECK(namedRecordGroupValues(out, "LAYER", "ISO09_LAYER", "6") ==
-        std::vector<std::string>{"PHANTOM"});
+        std::vector<std::string>{"ACAD_ISO09W100"});
   CHECK(ltypeRecordGroupValues(out, "PHANTOM", "73") ==
         std::vector<std::string>{"6"});
   // The imported ISO09 record is re-emitted as it came in, once.

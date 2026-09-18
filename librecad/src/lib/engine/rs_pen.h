@@ -99,6 +99,10 @@ public:
     bool hasLineTypeName() const {
         return m_lineTypeId != 0;
     }
+    /// 0 when this pen paints as its enum says: no name, or its enum's own name.
+    std::uint16_t getLineTypeFoldId() const {
+        return m_lineTypeFoldId;
+    }
     RS2::LineWidth getWidth() const {
         return m_width;
     }

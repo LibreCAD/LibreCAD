@@ -45,6 +45,7 @@
 #include <sstream>
 #include <stack>
 #include <type_traits>
+#include <unordered_set>
 #include <utility>
 #include <vector>
 
@@ -54,6 +55,7 @@
 #include <QFileInfo>
 #include <QLocale>
 #include <QRegularExpression>
+#include <QSet>
 #include <QTemporaryFile>
 #if QT_VERSION >= QT_VERSION_CHECK(6, 4, 0)
 #include <QByteArrayView>
@@ -18832,10 +18834,110 @@ void RS_FilterDXFRW::writeDwgClasses() {
 #endif
 }
 
+namespace {
+// DXF cannot hold these in a name.
+bool isWritableLineTypeName(const QString &name) {
+  return !name.contains(QLatin1Char('\r')) &&
+         !name.contains(QLatin1Char('\n')) && !name.contains(QChar(u'\0'));
+}
+
+// A pen whose name means its own built-in, or cannot be written, uses the
+// built-in's name.
+QString lineTypeNameToWrite(const RS_Pen &pen) {
+  if (pen.getLineTypeFoldId() != 0) {
+    QString name = pen.getLineTypeName();
+    if (isWritableLineTypeName(name))
+      return name;
+  }
+  return LC_LineTypeNames::lineTypeToName(pen.getLineType());
+}
+
+// Every linetype name a writer emits as a string, first seen first, each once.
+// It walks what the writers walk: the top level of model space and of each
+// block, the children of pattern hatches, dimension overrides, layers, dim
+// styles, header variables and MLINESTYLE elements. Names given by handle are
+// left out: a handle only resolves through a record the file already has.
+std::vector<QString> referencedLineTypeNames(RS_Graphic &graphic) {
+  std::vector<QString> names;
+  QSet<QString> seenNames;
+  std::unordered_set<std::uint16_t> seenIds;
+  const auto addName = [&](const QString &name) {
+    if (name.trimmed().isEmpty() || !isWritableLineTypeName(name) ||
+        seenNames.contains(name))
+      return;
+    seenNames.insert(name);
+    names.push_back(name);
+  };
+  const auto addPen = [&](const RS_Pen &pen) {
+    if (pen.getLineTypeFoldId() != 0 &&
+        seenIds.insert(pen.getLineTypeId()).second)
+      addName(pen.getLineTypeName());
+  };
+  const auto addDimStyle = [&](const LC_DimStyle &style) {
+    addName(style.dimensionLine()->lineTypeName());
+    addName(style.extensionLine()->lineTypeFirstRaw());
+    addName(style.extensionLine()->lineTypeSecondRaw());
+  };
+  const auto addEntities = [&](const RS_EntityContainer &container) {
+    for (RS_Entity *e :
+         lc::LC_ContainerTraverser{container, RS2::ResolveNone}.entities()) {
+      if (e->getFlag(RS2::FlagDeleted))
+        continue;
+      addPen(e->getPen(false));
+      switch (e->rtti()) {
+      case RS2::EntityDimLinear:
+      case RS2::EntityDimOrdinate:
+      case RS2::EntityDimAligned:
+      case RS2::EntityDimAngular:
+      case RS2::EntityDimRadial:
+      case RS2::EntityDimDiametric:
+      case RS2::EntityDimArc:
+        if (const LC_DimStyle *style =
+                static_cast<RS_Dimension *>(e)->getDimStyleOverride())
+          addDimStyle(*style);
+        break;
+      case RS2::EntityHatch:
+        // R12 writes the pattern children with their own pens.
+        if (!static_cast<RS_Hatch *>(e)->isSolid()) {
+          for (RS_Entity *child :
+               lc::LC_ContainerTraverser{*static_cast<RS_Hatch *>(e),
+                                         RS2::ResolveNone}
+                   .entities())
+            addPen(child->getPen(false));
+        }
+        break;
+      default:
+        break;
+      }
+    }
+  };
+
+  addEntities(graphic);
+  for (unsigned i = 0; i < graphic.countBlocks(); i++) {
+    const RS_Block *block = graphic.blockAt(i);
+    if (!block->isDeleted())
+      addEntities(*block);
+  }
+  const RS_LayerList *layers = graphic.getLayerList();
+  for (unsigned i = 0; i < layers->count(); i++)
+    addPen(layers->at(i)->getPen());
+  for (const LC_DimStyle *style : *graphic.getDimStyleList()->getStylesList())
+    addDimStyle(*style);
+  for (const char *key : {"$CELTYPE", "$DIMLTYPE", "$DIMLTEX1", "$DIMLTEX2"})
+    addName(graphic.getVariableString(QLatin1String(key), QString()));
+  for (const auto &style : graphic.dwgAdvancedMetadata().mlineStyles()) {
+    for (const auto &element : style.elements)
+      addName(QString::fromStdString(element.linetype));
+  }
+  return names;
+}
+} // namespace
+
 void RS_FilterDXFRW::writeLType(const UTF8STRING &lTypeName,
                                 const UTF8STRING &ltDescription, int ltSize,
                                 double ltLength,
                                 const std::vector<double> &ltPath) {
+  m_builtinLTypePaths[normalizeDwgTableName(lTypeName)] = ltPath;
   DRW_LType ltype;
   ltype.updateValues(lTypeName, ltDescription, ltSize, ltLength, ltPath);
   if (const auto *source =
@@ -18881,6 +18983,7 @@ bool RS_FilterDXFRW::writeLTypeRecord(DRW_LType &ltype) {
 
 void RS_FilterDXFRW::writeLTypes() {
   m_builtinLTypeNames.clear();
+  m_builtinLTypePaths.clear();
   writeLType("CONTINUOUS", "Solid line", 0, 0, {});
   writeLType("ByLayer", "", 0, 0, {});
   writeLType("ByBlock", "", 0, 0, {});
@@ -18962,6 +19065,39 @@ void RS_FilterDXFRW::writeLTypes() {
     DRW_LType ltype = entry.second;
     (void)writeLTypeRecord(ltype);
   }
+  // A name that only a pen, a layer or a style gives still needs a record.
+  // It gets the dashes of the built-in it is drawn as, which are none for a
+  // name LibreCAD does not know. These records only add to the ones above.
+  // Blanks around a string do not make another name: pens have none, so
+  // names without them go first, and a padded one adds a record only for a
+  // name that has none yet.
+  std::vector<QString> names = referencedLineTypeNames(*m_graphic);
+  std::stable_partition(names.begin(), names.end(), [](const QString &name) {
+    return name.trimmed() == name;
+  });
+  for (const QString &name : names) {
+    const std::string utf8 = name.toStdString();
+    const std::string trimmed =
+        normalizeDwgTableName(name.trimmed().toStdString());
+    if (emittedNames.count(trimmed) != 0 ||
+        !emittedNames.insert(normalizeDwgTableName(utf8)).second)
+      continue;
+    emittedNames.insert(trimmed);
+    const std::string family = normalizeDwgTableName(
+        LC_LineTypeNames::lineTypeToName(
+            LC_LineTypeNames::nameToLineType(name))
+            .toStdString());
+    const auto literal = m_builtinLTypePaths.find(family);
+    const std::vector<double> path = literal != m_builtinLTypePaths.end()
+                                         ? literal->second
+                                         : std::vector<double>{};
+    double length = 0.0;
+    for (const double dash : path)
+      length += std::fabs(dash);
+    DRW_LType marker;
+    marker.updateValues(utf8, "", static_cast<int>(path.size()), length, path);
+    (void)writeLTypeRecord(marker);
+  }
 }
 
 void RS_FilterDXFRW::writeLayers() {
@@ -18976,8 +19112,7 @@ void RS_FilterDXFRW::writeLayers() {
     lay.color = LC_ColorNumbers::colorToNumber(pen.getColor(), &exact_rgb);
     lay.color24 = exact_rgb;
     lay.lWeight = widthToNumber(pen.getWidth());
-    lay.lineType =
-        LC_LineTypeNames::lineTypeToName(pen.getLineType()).toStdString();
+    lay.lineType = lineTypeNameToWrite(pen).toStdString();
     lay.flags = l->isFrozen() ? 0x01 : 0x00;
     if (l->isLocked()) {
       lay.flags |= 0x04;
@@ -31835,8 +31970,7 @@ void RS_FilterDXFRW::setEntityAttributes(RS_Entity *entity,
   pen.setColor(col);
 
   // Linetype:
-  pen.setLineType(LC_LineTypeNames::nameToLineType(
-      QString::fromUtf8(attrib->lineType.c_str())));
+  pen.setLineTypeName(QString::fromUtf8(attrib->lineType.c_str()));
 
   // Width:
   pen.setWidth(numberToWidth(attrib->lWeight));
@@ -32015,7 +32149,7 @@ void RS_FilterDXFRW::getEntityAttributes(DRW_Entity *ent,
   // color);
 
   // Linetype:
-  QString lineType = LC_LineTypeNames::lineTypeToName(pen.getLineType());
+  QString lineType = lineTypeNameToWrite(pen);
 
   // Width:
   DRW_LW_Conv::lineWidth width = widthToNumber(pen.getWidth());
@@ -32175,9 +32309,12 @@ RS_Pen RS_FilterDXFRW::attributesToPen(const DRW_Layer *att) const {
     col.setColorName(QString::fromUtf8(att->colorName.c_str()));
   }
 
+  // Blanks alone stay solid here: a layer cannot be ByLayer.
+  const QString lineType = QString::fromUtf8(att->lineType.c_str());
   RS_Pen pen(col, numberToWidth(att->lWeight),
-             LC_LineTypeNames::nameToLineType(
-                 QString::fromUtf8(att->lineType.c_str())));
+             LC_LineTypeNames::nameToLineType(lineType));
+  if (!lineType.trimmed().isEmpty())
+    pen.setLineTypeName(lineType);
   return pen;
 }
 
