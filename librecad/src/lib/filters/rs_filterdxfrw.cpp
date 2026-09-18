@@ -345,6 +345,15 @@ DRW_Variant *checkedDimStyleVariable(const DRW_Dimstyle &style,
   return value;
 }
 
+// The name of the imported LTYPE record with this handle, or empty.
+QString lineTypeNameForHandle(const RS_Graphic *graphic,
+                              std::uint32_t handle) {
+  if (graphic == nullptr || handle == 0)
+    return {};
+  return QString::fromStdString(
+      graphic->dwgAdvancedMetadata().lineTypeNameForHandle(handle));
+}
+
 std::string dwgDataStorageNumericHandleKey(std::uint64_t handle) {
   std::ostringstream stream;
   stream << std::uppercase << std::hex << handle;
@@ -8984,6 +8993,12 @@ RS_FilterDXFRW::parseDimStyleOverride(
   auto arc = result->arc();
 
   result->setModifyCheckMode(LC_DimStyle::ModificationAware::ALL);
+  // DSTYLE names a linetype by the hex handle of its LTYPE record.
+  const auto lineTypeNameForHex = [this](const QString &hex) {
+    bool ok = false;
+    const std::uint32_t handle = hex.toUInt(&ok, 16);
+    return ok ? lineTypeNameForHandle(m_graphic, handle) : QString{};
+  };
   bool directionSeen = false;
   int directionValue = 0;
   const auto count = dimStyleVariables->size();
@@ -9307,39 +9322,24 @@ RS_FilterDXFRW::parseDimStyleOverride(
     //      break;
     case 345: {
       // "$DIMLTYPE"
-      auto refHandleStr = var->getString();
-      bool ok;
-      int refHandle = refHandleStr.toInt(&ok, 16);
-      auto lineTypeName =
-          m_dxfR->getReadingContext()->resolveLineTypeName(refHandle);
-      if (!lineTypeName.empty()) {
-        QString name = QString::fromStdString(lineTypeName);
+      const QString name = lineTypeNameForHex(var->getString());
+      if (!name.isEmpty()) {
         dimensionLine->setLineType(name);
       }
       break;
     }
     case 347: {
       // "$DIMLTEX1"
-      auto refHandleStr = var->getString();
-      bool ok;
-      int refHandle = refHandleStr.toInt(&ok, 16);
-      auto lineTypeName =
-          m_dxfR->getReadingContext()->resolveLineTypeName(refHandle);
-      if (!lineTypeName.empty()) {
-        QString name = QString::fromStdString(lineTypeName);
+      const QString name = lineTypeNameForHex(var->getString());
+      if (!name.isEmpty()) {
         extensionLine->setLineTypeFirst(name);
       }
       break;
     }
     case 348: {
-      //"$DIMLTEX2"
-      auto refHandleStr = var->getString();
-      bool ok;
-      int refHandle = refHandleStr.toInt(&ok, 16);
-      auto lineTypeName =
-          m_dxfR->getReadingContext()->resolveLineTypeName(refHandle);
-      if (!lineTypeName.empty()) {
-        QString name = QString::fromStdString(lineTypeName);
+      // "$DIMLTEX2"
+      const QString name = lineTypeNameForHex(var->getString());
+      if (!name.isEmpty()) {
         extensionLine->setLineTypeSecond(name);
       }
       break;
@@ -20021,6 +20021,14 @@ RS_FilterDXFRW::findLineTypeHandleToWrite(const QString &name) const {
   // lineTypesMap is keyed by a byte-wise fold of the UTF-8 name, which a Qt
   // case mapping does not reproduce for a name holding lower-case non-ASCII.
   std::string lineName = normalizeDwgTableName(name.toStdString());
+  // ByLayer and Continuous are written at fixed handles, outside the map.
+  // ByBlock gets no reference: a missing one already means ByBlock.
+  if (m_dxfW->getVersion() > DRW::AC1009) {
+    if (lineName == "BYLAYER")
+      return 0x15;
+    if (lineName == "CONTINUOUS")
+      return 0x16;
+  }
   for (auto p : m_dxfW->getWritingContext()->lineTypesMap) {
     if (p.first.compare(lineName) == 0) {
       return p.second;
@@ -32755,6 +32763,16 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
     scaleStyle->setLinearFactor(var->d_val());
   }
 
+  // A variable holds the linetype name; the record holds its LTYPE handle.
+  // No reference means ByBlock, also in a style for one dimension type.
+  const auto lineTypeName = [&](const char *key, const dwgHandle &handle) {
+    const DRW_Variant *v = checkedDimStyleVariable(s, key);
+    const QString name = v != nullptr
+                             ? strVal(v)
+                             : lineTypeNameForHandle(m_graphic, handle.ref);
+    return name.isEmpty() ? QStringLiteral("ByBlock") : name;
+  };
+
   auto extLineStyle = result->extensionLine();
 
   var = checkedDimStyleVariable(s, "$DIMEXO");
@@ -32789,20 +32807,8 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
   if (var != nullptr) {
     extLineStyle->setSuppressSecondRaw(var->i_val());
   }
-  var = checkedDimStyleVariable(s, "$DIMLTEX1");
-  if (var != nullptr) {
-    auto dimltex1 = strVal(var);
-    if (!dimltex1.isEmpty()) {
-      extLineStyle->setLineTypeFirst(dimltex1);
-    }
-  }
-  var = checkedDimStyleVariable(s, "$DIMLTEX2");
-  if (var != nullptr) {
-    auto dimltex2 = strVal(var);
-    if (!dimltex2.isEmpty()) {
-      extLineStyle->setLineTypeSecond(dimltex2);
-    }
-  }
+  extLineStyle->setLineTypeFirst(lineTypeName("$DIMLTEX1", s.dimltex1H));
+  extLineStyle->setLineTypeSecond(lineTypeName("$DIMLTEX2", s.dimltex2H));
 
   auto dimLineStyle = result->dimensionLine();
   var = checkedDimStyleVariable(s, "$DIMLWD");
@@ -32837,13 +32843,7 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
   if (var != nullptr) {
     dimLineStyle->setDrawPolicyForOutsideTextRaw(var->i_val());
   }
-  var = checkedDimStyleVariable(s, "$DIMLTYPE");
-  if (var != nullptr) {
-    auto dimltype = strVal(var);
-    if (!dimltype.isEmpty()) {
-      dimLineStyle->setLineType(dimltype);
-    }
-  }
+  dimLineStyle->setLineType(lineTypeName("$DIMLTYPE", s.dimltypeH));
 
   auto textStyle = result->text();
   var = checkedDimStyleVariable(s, "$DIMTXT");

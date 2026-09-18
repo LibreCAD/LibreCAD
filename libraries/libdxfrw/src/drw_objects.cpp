@@ -2880,6 +2880,21 @@ bool DRW_Dimstyle::parseCode(int code, const std::unique_ptr<dxfReader>& reader)
     case 344:
         dimblk2 = reader->getUtf8String();
         break;
+    case 345:
+        dimltypeH.ref = reader->getHandleString();
+        break;
+    case 346:
+        dimltex1H.ref = reader->getHandleString();
+        break;
+    case 347:
+        dimltex2H.ref = reader->getHandleString();
+        break;
+    case 348:
+        // Legacy LibreCAD wrote DIMLTEX1 and DIMLTEX2 as 347 and 348, in
+        // that order.
+        dimltex1H = dimltex2H;
+        dimltex2H.ref = reader->getHandleString();
+        break;
     default:
         return DRW_TableEntry::parseCode(code, reader);
     }
