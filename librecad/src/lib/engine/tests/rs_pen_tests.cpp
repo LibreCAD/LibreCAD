@@ -238,6 +238,10 @@ TEST_CASE("a spelling that means its enum IS its enum, and one that does not is 
     CHECK(invalid.getLineTypeId() == 0);
     CHECK_FALSE(invalid.hasLineTypeName());
     CHECK(invalid == RS_Pen(RS_Color(Qt::black), RS2::Width00, RS2::SolidLine));
+
+    CHECK(hidden.getLineTypeFoldId() == 0);
+    CHECK(alias.getLineTypeFoldId() != 0);
+    CHECK(vendor.getLineTypeFoldId() != 0);
 }
 
 TEST_CASE("identity survives every pen-to-pen copy", "[pen][linetype]") {
