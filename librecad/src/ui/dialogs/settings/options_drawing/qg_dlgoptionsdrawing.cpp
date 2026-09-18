@@ -32,6 +32,7 @@
 #include <QStandardItemModel>
 #include <cfloat>
 
+#include "lc_colornumbers.h"
 #include "lc_defaults.h"
 #include "lc_dimstyleitem.h"
 #include "lc_dimstylepreviewgraphicview.h"
@@ -1117,9 +1118,9 @@ void QG_DlgOptionsDrawing::_toRemoveSetupLegacyDimsTab(RS2::LinearFormat& linear
     const int dimclrd = m_graphic->getVariableInt("$DIMCLRD", 0);
     const int dimclre = m_graphic->getVariableInt("$DIMCLRE", 0);
     const int dimclrt = m_graphic->getVariableInt("$DIMCLRT", 0);
-    cbDimClrD->setColor(RS_FilterDXFRW::numberToColor(dimclrd));
-    cbDimClrE->setColor(RS_FilterDXFRW::numberToColor(dimclre));
-    cbDimClrT->setColor(RS_FilterDXFRW::numberToColor(dimclrt));
+    cbDimClrD->setColor(LC_ColorNumbers::numberToColor(dimclrd));
+    cbDimClrE->setColor(LC_ColorNumbers::numberToColor(dimclre));
+    cbDimClrT->setColor(LC_ColorNumbers::numberToColor(dimclrt));
 
     const QString dimtxsty = m_graphic->getVariableString("$DIMTXSTY", "standard");
     cbDimTxSty->setFont(dimtxsty);
@@ -1316,11 +1317,11 @@ void QG_DlgOptionsDrawing::_toRemove_validateDimsOld() const {
     //        graphic->addVariable("$DIMAZIN", cbDimAZin->currentIndex(), 70);
     m_graphic->addVariable("$DIMAZIN", cbDimAZin->getData(), 70);
     int colRGB = 0;
-    int colNum = RS_FilterDXFRW::colorToNumber(cbDimClrD->getColor(), &colRGB);
+    int colNum = LC_ColorNumbers::colorToNumber(cbDimClrD->getColor(), &colRGB);
     m_graphic->addVariable("$DIMCLRD", colNum, 70);
-    colNum = RS_FilterDXFRW::colorToNumber(cbDimClrE->getColor(), &colRGB);
+    colNum = LC_ColorNumbers::colorToNumber(cbDimClrE->getColor(), &colRGB);
     m_graphic->addVariable("$DIMCLRE", colNum, 70);
-    colNum = RS_FilterDXFRW::colorToNumber(cbDimClrT->getColor(), &colRGB);
+    colNum = LC_ColorNumbers::colorToNumber(cbDimClrT->getColor(), &colRGB);
     m_graphic->addVariable("$DIMCLRT", colNum, 70);
     if (cbDimTxSty->getFont() != nullptr) {
         m_graphic->addVariable("$DIMTXSTY", cbDimTxSty->getFont()->getFileName(), 2);
