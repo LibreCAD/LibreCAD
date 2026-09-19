@@ -26,6 +26,7 @@ TRANSLATIONS = ./ts/plugins_ar.ts \
     ./ts/plugins_cs.ts \
     ./ts/plugins_en.ts \
     ./ts/plugins_en_au.ts \
+    ./ts/plugins_eo.ts \
     ./ts/plugins_da.ts \
     ./ts/plugins_de.ts \
     ./ts/plugins_el.ts \
@@ -58,6 +59,7 @@ TRANSLATIONS = ./ts/plugins_ar.ts \
     ./ts/plugins_hu.ts \
     ./ts/plugins_it.ts \
     ./ts/plugins_ja.ts \
+    ./ts/plugins_ka.ts \
     ./ts/plugins_ko.ts \
     ./ts/plugins_lo.ts \
     ./ts/plugins_lv.ts \
@@ -79,8 +81,8 @@ TRANSLATIONS = ./ts/plugins_ar.ts \
     ./ts/plugins_sr_rs.ts \
     ./ts/plugins_sv.ts \
     ./ts/plugins_ta.ts \
+    ./ts/plugins_th.ts \
     ./ts/plugins_tr.ts \
     ./ts/plugins_uk.ts \
     ./ts/plugins_zh_cn.ts \
     ./ts/plugins_zh_tw.ts
-
