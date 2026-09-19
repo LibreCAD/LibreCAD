@@ -649,6 +649,54 @@ TEST_CASE("nested INSERT resolves BYBLOCK attributes at the nearest owner",
   CHECK(expanded->getPen(false).getLineType() == nestedPen.getLineType());
 }
 
+TEST_CASE("BYBLOCK members take the linetype name of the INSERT",
+          "[block-insert][insert-attributes][linetype]") {
+  ensureTestApp();
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  const RS_Pen byBlock(RS2::FlagByBlock, RS2::WidthByBlock, RS2::LineByBlock);
+  auto *leaf = new RS_Block(&graphic,
+                            RS_BlockData(QStringLiteral("LEAF-NAME"), RS_Vector(0.0, 0.0), false));
+  auto *leafLine = new RS_Line(leaf, RS_LineData(RS_Vector(0.0, 0.0), RS_Vector(1.0, 0.0)));
+  leafLine->setPen(byBlock);
+  leaf->addEntity(leafLine);
+  graphic.addBlock(leaf);
+
+  // A BYBLOCK line, and a BYBLOCK insert of the leaf block.
+  auto *middle = new RS_Block(&graphic,
+                              RS_BlockData(QStringLiteral("MIDDLE-NAME"), RS_Vector(0.0, 0.0), false));
+  auto *child = new RS_Line(middle, RS_LineData(RS_Vector(0.0, 1.0), RS_Vector(1.0, 1.0)));
+  child->setPen(byBlock);
+  middle->addEntity(child);
+  auto *nested = new RS_Insert(middle, insertData(QStringLiteral("LEAF-NAME"), RS_Vector(0.0, 0.0)));
+  nested->setPen(byBlock);
+  middle->addEntity(nested);
+  graphic.addBlock(middle);
+
+  RS_Pen rootPen(RS_Color(200, 100, 50), RS2::Width09, RS2::SolidLine);
+  rootPen.setLineTypeName(QStringLiteral("VENDOR_TAB"));
+  REQUIRE(rootPen.hasLineTypeName());
+  RS_Insert root(&graphic, insertData(QStringLiteral("MIDDLE-NAME"), RS_Vector(0.0, 0.0)));
+  root.setPen(rootPen);
+  root.update();
+
+  REQUIRE(root.count() == 2);
+  for (const RS_Entity *expanded : root) {
+    const RS_Pen pen = expanded->getPen(false);
+    CHECK(pen.getLineTypeId() == rootPen.getLineTypeId());
+    CHECK(pen.getLineTypeName() == QStringLiteral("VENDOR_TAB"));
+    CHECK(pen.getLineType() == RS2::SolidLine);
+  }
+
+  // Explode leaves them the name as their own linetype.
+  LC_DocumentModificationBatch batch;
+  REQUIRE(RS_Modification::explode({&root}, batch));
+  REQUIRE(batch.entitiesToAdd.size() == 2);
+  for (const RS_Entity *exploded : batch.entitiesToAdd)
+    CHECK(exploded->getPen(false).getLineTypeId() == rootPen.getLineTypeId());
+  qDeleteAll(batch.entitiesToAdd);
+}
+
 TEST_CASE("INSERT preserves point geometry at the origin",
           "[block-insert][insert-bounds]") {
   ensureTestApp();
