@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 Generate the corpus-gap fixtures called out in Phase 4a of
-docs/plan_shp_native_filter.md.
+docs/plan_shp_native_filter.md, and one for the DBF LTYPE column.
 
 Produces (all under test_data/shp/, all genuinely NEW filenames — never
 touches existing pinned fixtures):
@@ -26,6 +26,10 @@ touches existing pinned fixtures):
                              guard.
   dos_nparts.shp / .shx   -- same as above but nParts=15_000_000
                              (> the 10 M cap).
+  ltype_point.shp/.shx/.dbf -- SHPT_POINT records whose .dbf carries an
+                             LTYPE C(32) column, one LTYPE_POINT_VALUES
+                             entry each, for the linetype name RS_FilterSHP
+                             puts on the entity pen.
 
 Pure-stdlib `struct`-packing.  No GDAL / no shapelib dependency; the
 generator is intentionally read-only against the corpus dir (it only
@@ -219,6 +223,12 @@ def build_multipatch_payload(parts: list) -> bytes:
     return body
 
 
+def build_point_payload(x: float, y: float) -> bytes:
+    """SHPT_POINT content payload: just the X and Y doubles (no bbox, no
+    part/point counts) -- the shape type itself is prefixed by write_shp_shx."""
+    return pack_le_double(x) + pack_le_double(y)
+
+
 # ---- top-level file writer -----------------------------------------------
 
 def write_shp_shx(basename: Path, shp_type: int, records: list, bbox=None):
@@ -257,11 +267,26 @@ def write_shp_shx(basename: Path, shp_type: int, records: list, bbox=None):
     basename.with_suffix(".shx").write_bytes(shx_header + shx_body)
 
 
-def write_minimal_dbf(basename: Path, n_records: int):
-    """Write a minimal dBase III file with a single 'FID' integer field and
-    n_records rows (values 1..n_records).  Required because shapelib's
-    open path is happy without a .dbf, but the RS_FilterSHP-level tests
-    can exercise the codepage/label path better if a .dbf is present."""
+# Default field list: a single 'FID' integer column, values 1..n_records.
+# A field is (name, type_char, width, decimals, value), where value is either a
+# constant string or a callable taking the 1-based record number.
+DEFAULT_DBF_FIELDS = [("FID", "N", 11, 0, lambda i: str(i))]
+
+
+def write_minimal_dbf(basename: Path, n_records: int, fields=None):
+    """Write a minimal dBase III file with `fields` and n_records rows.
+
+    Required because shapelib's open path is happy without a .dbf, but the
+    RS_FilterSHP-level tests can exercise the codepage/label/linetype paths
+    better if a .dbf is present.  The default field list reproduces the
+    original single-'FID' layout byte for byte, so fixtures generated before
+    this parameter existed regenerate identically.
+
+    Numeric ('N') values are right-justified and character ('C') values
+    left-justified in their field width, per dBase III.
+    """
+    if fields is None:
+        fields = DEFAULT_DBF_FIELDS
     # Header (32 bytes):
     #   byte 0: version 0x03
     #   bytes 1-3: YMD (Y = year since 1900)
@@ -269,25 +294,35 @@ def write_minimal_dbf(basename: Path, n_records: int):
     #   bytes 8-9: LE int16 header length
     #   bytes 10-11: LE int16 record length
     #   bytes 12-31: reserved zero
-    n_fields = 1
+    n_fields = len(fields)
     header_len = 32 + 32 * n_fields + 1  # +1 for terminator
-    record_len = 1 + 11  # deletion flag + FID width 11
+    record_len = 1 + sum(f[2] for f in fields)  # deletion flag + field widths
     header = struct.pack("<BBBBIHH20s",
                          0x03, 100, 1, 1, n_records, header_len, record_len,
                          b"\x00" * 20)
-    # Field descriptor (32 bytes): name (11 bytes, null-padded), type ('N'),
+    # Field descriptor (32 bytes): name (11 bytes, null-padded), type,
     #   4 reserved, length (1 byte), decimals (1 byte), 14 reserved
-    field = struct.pack("<11sBI B B14s",
-                        b"FID\x00" + b"\x00" * 7, ord("N"), 0,
-                        11, 0, b"\x00" * 14)
+    field_descriptors = b""
+    for name, type_char, width, decimals, _value in fields:
+        name_bytes = name.encode("ascii")
+        assert len(name_bytes) <= 10, f"DBF field name too long: {name}"
+        field_descriptors += struct.pack(
+            "<11sBI B B14s",
+            name_bytes.ljust(11, b"\x00"), ord(type_char), 0,
+            width, decimals, b"\x00" * 14)
     terminator = b"\x0D"
     records = b""
     for i in range(1, n_records + 1):
-        v = str(i).rjust(11).encode("ascii")
-        records += b" " + v  # deletion flag ' ' (not deleted) + value
+        row = b" "  # deletion flag ' ' (not deleted)
+        for _name, type_char, width, _decimals, value in fields:
+            text = value(i) if callable(value) else value
+            cell = text.rjust(width) if type_char == "N" else text.ljust(width)
+            assert len(cell) == width, f"value {text!r} overflows width {width}"
+            row += cell.encode("ascii")
+        records += row
     eof = b"\x1A"
-    basename.with_suffix(".dbf").write_bytes(header + field + terminator
-                                             + records + eof)
+    basename.with_suffix(".dbf").write_bytes(header + field_descriptors
+                                             + terminator + records + eof)
 
 
 # ---- fixtures --------------------------------------------------------------
@@ -397,12 +432,35 @@ def gen_dos_nparts(root: Path):
                   [(SHPT_POLYGON, payload)])
 
 
+# One POINT each: a name that is no built-in, a built-in in another case, an
+# ISO alias, a built-in padded with a tab, a tab only, and a blank value.
+LTYPE_POINT_VALUES = ["VENDOR_TAB", "Dashed", "ACAD_ISO02W100", "DASHED\t",
+                      "\t", ""]
+
+
+def gen_ltype_point(root: Path):
+    """One POINT per LTYPE_POINT_VALUES entry, at x = 10, 20, ... and y = 20.
+
+    RS_FilterSHP puts a LINETYPE or LTYPE column on the entity pen.  shapelib
+    trims the spaces that pad a C field, but not tabs."""
+    xs = [10.0 * i for i in range(1, len(LTYPE_POINT_VALUES) + 1)]
+    y = 20.0
+    write_shp_shx(root / "ltype_point", SHPT_POINT,
+                  [(SHPT_POINT, build_point_payload(x, y)) for x in xs],
+                  bbox=(xs[0], y, xs[-1], y, 0.0, 0.0, 0.0, 0.0))
+    write_minimal_dbf(root / "ltype_point", n_records=len(xs),
+                      fields=[("FID", "N", 11, 0, lambda i: str(i)),
+                              ("LTYPE", "C", 32, 0,
+                               lambda i: LTYPE_POINT_VALUES[i - 1])])
+
+
 # ---- inventory update ------------------------------------------------------
 
 def update_inventory(root: Path):
     """Add the newly-generated fixtures to test_data/shp_inventory.json under
-    a new "generated_z_types" and "generated_hostile" bucket so their
-    expected sizes/types can be cross-checked programmatically."""
+    the "generated_z_types", "generated_hostile" and "generated_linetype"
+    buckets so their expected sizes/types can be cross-checked
+    programmatically."""
     inv_path = root.parent / "shp_inventory.json"
     if not inv_path.exists():
         print(f"[warn] {inv_path} not found — skipping inventory update",
@@ -439,6 +497,12 @@ def update_inventory(root: Path):
          "generator": "scripts/make_shp_fixtures.py",
          "expect": "SHPReadObject returns null (nParts=15M > 10M cap)"},
     ]
+    inv["generated_linetype"] = [
+        {"name": "ltype_point.shp", "shp_size": sz("ltype_point.shp"),
+         "has_shx": True, "has_prj": False,
+         "generator": "scripts/make_shp_fixtures.py",
+         "expect": "each DBF LTYPE value reaches its point's pen"},
+    ]
     with inv_path.open("w", encoding="utf-8") as f:
         json.dump(inv, f, indent=2)
         f.write("\n")
@@ -471,6 +535,7 @@ def main():
         "multipatch.shp", "multipatch.shx", "multipatch.dbf",
         "dos_npoints.shp", "dos_npoints.shx",
         "dos_nparts.shp", "dos_nparts.shx",
+        "ltype_point.shp", "ltype_point.shx", "ltype_point.dbf",
     ]
     existing = [f for f in generated if (root / f).exists()]
     if existing and not args.force:
@@ -484,6 +549,7 @@ def main():
     gen_multipatch(root)
     gen_dos_npoints(root)
     gen_dos_nparts(root)
+    gen_ltype_point(root)
     update_inventory(root)
     print(f"Wrote {len(generated)} fixture file(s) to {root}")
     return 0
