@@ -68,6 +68,7 @@
 #include "dxf_format.h"
 #include "intern/dwgbufferw.h"
 #include "intern/dwgsafety.h"
+#include "lc_colornumbers.h"
 #include "lc_containertraverser.h"
 #include "lc_defaults.h"
 #include "lc_dimarc.h"
@@ -8486,7 +8487,7 @@ void RS_FilterDXFRW::addDimStyleOverrideToExtendedData(
     // $DIMTFILLCLR
     int colorRgb;
     int colorNumber =
-        colorToNumber(text->explicitBackgroundFillColor(), &colorRgb);
+        LC_ColorNumbers::colorToNumber(text->explicitBackgroundFillColor(), &colorRgb);
     group->add(70, colorNumber);
   }
   if (tolerance->checkModifyState(LC_DimStyle::LatteralTolerance::$DIMTOL)) {
@@ -8559,19 +8560,19 @@ void RS_FilterDXFRW::addDimStyleOverrideToExtendedData(
   if (dimensionLine->checkModifyState(LC_DimStyle::DimensionLine::$DIMCLRD)) {
     // $DIMCLRD
     int colorRgb;
-    int colorNumber = colorToNumber(dimensionLine->color(), &colorRgb);
+    int colorNumber = LC_ColorNumbers::colorToNumber(dimensionLine->color(), &colorRgb);
     group->add(176, colorNumber);
   }
   if (extensionLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMCLRE)) {
     // $DIMCLRE
     int colorRgb;
-    int color = colorToNumber(extensionLine->color(), &colorRgb);
+    int color = LC_ColorNumbers::colorToNumber(extensionLine->color(), &colorRgb);
     group->add(177, color);
   }
   if (text->checkModifyState(LC_DimStyle::Text::$DIMCLRT)) {
     // $DIMCLRT
     int colorRgb;
-    int colorNumber = colorToNumber(text->color(), &colorRgb);
+    int colorNumber = LC_ColorNumbers::colorToNumber(text->color(), &colorRgb);
     group->add(178, colorNumber);
   }
   if (angularFormat->checkModifyState(LC_DimStyle::AngularFormat::$DIMADEC)) {
@@ -8897,7 +8898,7 @@ RS_FilterDXFRW::parseDimStyleOverride(
       break;
     case 70: {
       //"$DIMTFILLCLR"
-      RS_Color fillClr = numberToColor(var->getInt());
+      RS_Color fillClr = LC_ColorNumbers::numberToColor(var->getInt());
       text->setExplicitBackgroundFillColor(fillClr);
       break;
     }
@@ -8950,19 +8951,19 @@ RS_FilterDXFRW::parseDimStyleOverride(
       break;
     case 176: {
       //"$DIMCLRD"
-      RS_Color color = numberToColor(var->getInt());
+      RS_Color color = LC_ColorNumbers::numberToColor(var->getInt());
       dimensionLine->setColor(color);
       break;
     }
     case 177: {
       //"$DIMCLRE"
-      RS_Color color = numberToColor(var->getInt());
+      RS_Color color = LC_ColorNumbers::numberToColor(var->getInt());
       extensionLine->setColor(color);
       break;
     }
     case 178: {
       //"$DIMCLRT"
-      RS_Color color = numberToColor(var->getInt());
+      RS_Color color = LC_ColorNumbers::numberToColor(var->getInt());
       text->setColor(color);
       break;
     }
@@ -18455,7 +18456,7 @@ void RS_FilterDXFRW::writeLayers() {
     RS_Layer *l = ll->at(i);
     RS_Pen pen = l->getPen();
     lay.name = l->getName().toUtf8().data();
-    lay.color = colorToNumber(pen.getColor(), &exact_rgb);
+    lay.color = LC_ColorNumbers::colorToNumber(pen.getColor(), &exact_rgb);
     lay.color24 = exact_rgb;
     lay.lWeight = widthToNumber(pen.getWidth());
     lay.lineType =
@@ -19526,7 +19527,7 @@ void RS_FilterDXFRW::prepareDRWDimStyleExtLine(DRW_Dimstyle &d,
   if (extLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMCLRE)) {
     auto lineColor = extLine->color();
     int colRGB;
-    int colNum = colorToNumber(lineColor, &colRGB);
+    int colNum = LC_ColorNumbers::colorToNumber(lineColor, &colRGB);
     d.add("$DIMCLRE", 177, colNum);
   }
   if (extLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMSE1)) {
@@ -19575,7 +19576,7 @@ void RS_FilterDXFRW::prepareDRWDimStyleDimLine(DRW_Dimstyle &d,
   if (dimLine->checkModifyState(LC_DimStyle::DimensionLine::$DIMCLRD)) {
     auto lineColor = dimLine->color();
     int colRGB;
-    int colNum = colorToNumber(lineColor, &colRGB);
+    int colNum = LC_ColorNumbers::colorToNumber(lineColor, &colRGB);
     d.add("$DIMCLRD", 176, colNum);
   }
   if (dimLine->checkModifyState(LC_DimStyle::DimensionLine::$DIMSD1)) {
@@ -19650,7 +19651,7 @@ void RS_FilterDXFRW::prepareDRWDimStyleText(DRW_Dimstyle &d,
   if (text->checkModifyState(LC_DimStyle::Text::$DIMCLRT)) {
     auto lineColor = text->color();
     int colRGB;
-    int colNum = colorToNumber(lineColor, &colRGB);
+    int colNum = LC_ColorNumbers::colorToNumber(lineColor, &colRGB);
     d.add("$DIMCLRT", 178, colNum);
   }
   if (text->checkModifyState(LC_DimStyle::Text::$DIMTAD)) {
@@ -19665,7 +19666,7 @@ void RS_FilterDXFRW::prepareDRWDimStyleText(DRW_Dimstyle &d,
   if (text->checkModifyState(LC_DimStyle::Text::$DIMTFILLCLR)) {
     auto lineColor = text->explicitBackgroundFillColor();
     int colRGB;
-    int colNum = colorToNumber(lineColor, &colRGB);
+    int colNum = LC_ColorNumbers::colorToNumber(lineColor, &colRGB);
     d.add("$DIMTFILLCLR", 70, colNum);
   }
   if (dimStyleTargetVersion() >= DRW::AC1024 &&
@@ -31193,7 +31194,7 @@ void RS_FilterDXFRW::setEntityAttributes(RS_Entity *entity,
     col = RS_Color(attrib->color24 >> 16, attrib->color24 >> 8 & 0xFF,
                    attrib->color24 & 0xFF);
   } else {
-    col = numberToColor(attrib->color);
+    col = LC_ColorNumbers::numberToColor(attrib->color);
   }
   if (!attrib->colorName.empty()) {
     col.setColorName(QString::fromUtf8(attrib->colorName.c_str()));
@@ -31365,7 +31366,7 @@ void RS_FilterDXFRW::getEntityAttributes(DRW_Entity *ent,
 
   // Color:
   int exact_rgb;
-  int color = colorToNumber(pen.getColor(), &exact_rgb);
+  int color = LC_ColorNumbers::colorToNumber(pen.getColor(), &exact_rgb);
   // printf("Color is: %s -> %d\n", pen.getColor().name().toLatin1().data(),
   // color);
 
@@ -31496,7 +31497,7 @@ RS_Pen RS_FilterDXFRW::attributesToPen(const DRW_Layer *att) const {
     col = RS_Color(att->color24 >> 16, att->color24 >> 8 & 0xFF,
                    att->color24 & 0xFF);
   } else {
-    col = numberToColor(att->color);
+    col = LC_ColorNumbers::numberToColor(att->color);
   }
   if (!att->colorName.empty()) {
     col.setColorName(QString::fromUtf8(att->colorName.c_str()));
@@ -31506,89 +31507,6 @@ RS_Pen RS_FilterDXFRW::attributesToPen(const DRW_Layer *att) const {
              LC_LineTypeNames::nameToLineType(
                  QString::fromUtf8(att->lineType.c_str())));
   return pen;
-}
-
-/**
- * Converts a color index (num) into a RS_Color object.
- * Please refer to the dxflib documentation for details.
- *
- * @param num Color number.
- */
-RS_Color RS_FilterDXFRW::numberToColor(int num) {
-  if (num == 0) {
-    return RS_Color(RS2::FlagByBlock);
-  } else if (num == 256) {
-    return RS_Color(RS2::FlagByLayer);
-  } else if (num <= 255 && num >= 0) {
-    return RS_Color(DRW::dxfColors[num][0], DRW::dxfColors[num][1],
-                    DRW::dxfColors[num][2]);
-  } else {
-    RS_DEBUG->print(RS_Debug::D_WARNING,
-                    "RS_FilterDXF::numberToColor: Invalid color number given.");
-    return RS_Color(RS2::FlagByLayer);
-  }
-
-  return RS_Color();
-}
-
-/**
- * Converts a color into a color number in the DXF palette.
- * The color that fits best is chosen.
- */
-int RS_FilterDXFRW::colorToNumber(const RS_Color &col, int *rgb) {
-  // printf("Searching color for %s\n", col.name().toLatin1().data());
-  *rgb = -1;
-  // Special color BYBLOCK:
-  if (col.getFlag(RS2::FlagByBlock)) {
-    return 0;
-  }
-  // Special color BYLAYER
-  else if (col.getFlag(RS2::FlagByLayer)) {
-    return 256;
-  }
-  // Special color black is not in the table but white represents both
-  // black and white
-  else {
-    int red = col.red();
-    int green = col.green();
-    int blue = col.blue();
-    if (red == 0 && green == 0 && blue == 0) {
-      return 7;
-    }
-    // All other colors
-    else {
-      int num = 0;
-      int diff =
-          255 * 3; // smallest difference to a color in the table found so far
-
-      // Run through the whole table and compare
-      for (int i = 1; i <= 255; i++) {
-        int d = abs(red - DRW::dxfColors[i][0]) +
-                abs(green - DRW::dxfColors[i][1]) +
-                abs(blue - DRW::dxfColors[i][2]);
-
-        if (d < diff) {
-          /*
-              printf("color %f,%f,%f is closer\n",
-                     dxfColors[i][0],
-                     dxfColors[i][1],
-                     dxfColors[i][2]);
-              */
-          diff = d;
-          num = i;
-          if (d == 0) {
-            break;
-          }
-        }
-      }
-      // printf("  Found: %d, diff: %d\n", num, diff);
-      if (diff != 0) {
-        *rgb = 0;
-        *rgb = red << 16 | green << 8 | blue;
-      }
-      return num;
-    }
-  }
 }
 
 void RS_FilterDXFRW::add3dFace(const DRW_3Dface &data) {
@@ -32332,7 +32250,7 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
   }
   var = checkedDimStyleVariable(s, "$DIMCLRE");
   if (var != nullptr) {
-    extLineStyle->setColor(numberToColor(var->i_val()));
+    extLineStyle->setColor(LC_ColorNumbers::numberToColor(var->i_val()));
   }
   var = checkedDimStyleVariable(s, "$DIMSE1");
   if (var != nullptr) {
@@ -32376,7 +32294,7 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
   }
   var = checkedDimStyleVariable(s, "$DIMCLRD");
   if (var != nullptr) {
-    dimLineStyle->setColor(numberToColor(var->i_val()));
+    dimLineStyle->setColor(LC_ColorNumbers::numberToColor(var->i_val()));
   }
   var = checkedDimStyleVariable(s, "$DIMSD1");
   if (var != nullptr) {
@@ -32423,7 +32341,7 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
   }
   var = checkedDimStyleVariable(s, "$DIMCLRT");
   if (var != nullptr) {
-    textStyle->setColor(numberToColor(var->i_val()));
+    textStyle->setColor(LC_ColorNumbers::numberToColor(var->i_val()));
   }
   var = checkedDimStyleVariable(s, "$DIMTAD");
   if (var != nullptr) {
@@ -32439,7 +32357,7 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
   }
   var = checkedDimStyleVariable(s, "$DIMTFILLCLR");
   if (var != nullptr) {
-    textStyle->setExplicitBackgroundFillColor(numberToColor(var->i_val()));
+    textStyle->setExplicitBackgroundFillColor(LC_ColorNumbers::numberToColor(var->i_val()));
   }
   var = checkedDimStyleVariable(s, "$DIMTXTDIRECTION");
   if (var != nullptr) {

@@ -40,10 +40,10 @@
 
 #include "shapefil.h"
 
+#include "lc_colornumbers.h"
 #include "lc_linetypenames.h"
 #include "rs_color.h"
 #include "rs_debug.h"
-#include "rs_filterdxfrw.h"
 #include "rs_graphic.h"
 #include "rs_layer.h"
 #include "rs_mtext.h"
@@ -226,10 +226,10 @@ QString decodeDbfString(const char* raw, const QString& codepage) {
 // Field-value → RS_Pen fragments.
 // ---------------------------------------------------------------------------
 
-// Numeric COLOR field: 0-255 → ACI palette (reuse RS_FilterDXFRW::numberToColor),
+// Numeric COLOR field: 0-255 → ACI palette (reuse LC_ColorNumbers::numberToColor),
 // larger → 24-bit RGB (0xRRGGBB).
 RS_Color colorFromNumber(int v) {
-    if (v >= 0 && v <= 255) return RS_FilterDXFRW::numberToColor(v);
+    if (v >= 0 && v <= 255) return LC_ColorNumbers::numberToColor(v);
     return RS_Color((v >> 16) & 0xFF, (v >> 8) & 0xFF, v & 0xFF);
 }
 

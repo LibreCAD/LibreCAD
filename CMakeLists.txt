@@ -1006,6 +1006,8 @@ set (SHARED_SOURCES
      librecad/src/lib/engine/document/views/lc_view.h
      librecad/src/lib/engine/document/views/lc_viewslist.cpp
      librecad/src/lib/engine/document/views/lc_viewslist.h
+     librecad/src/lib/engine/lc_colornumbers.cpp
+     librecad/src/lib/engine/lc_colornumbers.h
      librecad/src/lib/engine/lc_defaults.h
      librecad/src/lib/engine/lc_drawable.h
      librecad/src/lib/engine/lc_linetypenames.cpp

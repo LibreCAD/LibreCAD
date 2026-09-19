@@ -2306,10 +2306,6 @@ public:
 public:
   RS_Pen attributesToPen(const DRW_Layer *att) const;
 
-  static RS_Color numberToColor(int num);
-  static int colorToNumber(const RS_Color &col, int *rgb);
-
-
   /// True when raw-preserved OBJECT bytes captured at DWG version `src` can
   /// replay verbatim into target `tgt`. Opaque object frames are only safe
   /// for the exact source version; all cross-version conversions are blocked.

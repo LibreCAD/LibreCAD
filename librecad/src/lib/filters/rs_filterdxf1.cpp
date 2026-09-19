@@ -25,11 +25,12 @@
 **********************************************************************/
 
 #include<cstdlib>
+#include<cstring>
 #include<QRegularExpression>
 #include<QStringDecoder>
 
+#include "lc_colornumbers.h"
 #include "lc_linetypenames.h"
-#include "rs_filterdxfrw.h"
 #include "rs_filterdxf1.h"
 
 #include "rs_arc.h"
@@ -572,7 +573,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     pen.setWidth(numberToWidth(dxfLine.toInt()));
                                     break;
                                 case 62:  // Color
-                                    pen.setColor(RS_FilterDXFRW::numberToColor(dxfLine.toInt()));
+                                    pen.setColor(LC_ColorNumbers::numberToColor(dxfLine.toInt()));
                                     //if(currentLayer) {
                                     //	currentLayer->setColor( graphic->numberToColor(dxfLine.toInt(), !oldColorNumbers));
                                     //}
@@ -627,7 +628,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     pen.setWidth(numberToWidth(dxfLine.toInt()));
                                     break;
                                 case 62:  // Color
-                                    pen.setColor(RS_FilterDXFRW::numberToColor(dxfLine.toInt()));
+                                    pen.setColor(LC_ColorNumbers::numberToColor(dxfLine.toInt()));
                                     break;
                                 default:
                                     break;
@@ -687,7 +688,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     pen.setWidth(numberToWidth(dxfLine.toInt()));
                                     break;
                                 case 62:  // Color
-                                    pen.setColor(RS_FilterDXFRW::numberToColor(dxfLine.toInt()));
+                                    pen.setColor(LC_ColorNumbers::numberToColor(dxfLine.toInt()));
                                     break;
                                 default:
                                     break;
@@ -753,7 +754,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     pen.setWidth(numberToWidth(dxfLine.toInt()));
                                     break;
                                 case 62:  // Color
-                                    pen.setColor(RS_FilterDXFRW::numberToColor(dxfLine.toInt()));
+                                    pen.setColor(LC_ColorNumbers::numberToColor(dxfLine.toInt()));
                                     break;
                                 default:
                                     break;
@@ -810,7 +811,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     pen.setWidth(numberToWidth(dxfLine.toInt()));
                                     break;
                                 case 62:  // Color
-                                    pen.setColor(RS_FilterDXFRW::numberToColor(dxfLine.toInt()));
+                                    pen.setColor(LC_ColorNumbers::numberToColor(dxfLine.toInt()));
                                     break;
                                 default:
                                     break;
@@ -1039,7 +1040,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     pen.setWidth(numberToWidth(dxfLine.toInt()));
                                     break;
                                 case 62:  // Color
-                                    pen.setColor(RS_FilterDXFRW::numberToColor(dxfLine.toInt()));
+                                    pen.setColor(LC_ColorNumbers::numberToColor(dxfLine.toInt()));
                                     break;
                                 default:
                                     break;
@@ -1169,7 +1170,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     pen.setWidth(numberToWidth(dxfLine.toInt()));
                                     break;
                                 case 62:  // Color
-                                    pen.setColor(RS_FilterDXFRW::numberToColor(dxfLine.toInt()));
+                                    pen.setColor(LC_ColorNumbers::numberToColor(dxfLine.toInt()));
                                     break;
 
                                 default:
