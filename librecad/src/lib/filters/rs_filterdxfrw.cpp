@@ -18332,7 +18332,15 @@ void RS_FilterDXFRW::writeLType(const UTF8STRING &lTypeName,
   if (const auto *source =
           m_graphic->dwgAdvancedMetadata().findLineTypeTableEntryByName(
               lTypeName)) {
-    ltype = *source;
+    if (source->path.empty() && source->segments.empty() && !ltPath.empty()) {
+      // A record that only names a built-in keeps its identity, not an empty
+      // pattern: copy the table entry part and leave the dashes to the literal.
+      static_cast<DRW_TableEntry &>(ltype) = *source;
+      if (!source->desc.empty())
+        ltype.desc = source->desc;
+    } else {
+      ltype = *source;
+    }
   }
   m_builtinLTypeNames.insert(normalizeDwgTableName(lTypeName));
   (void)writeLTypeRecord(ltype);
