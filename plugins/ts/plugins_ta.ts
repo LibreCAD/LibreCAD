@@ -103,7 +103,12 @@ Align will copy rather than move the selected objects.
 If &apos;Specify base points first&apos; is checked,
 Align will prompt for the alignment points in the order
 first base, second base, first target, second target.</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;அசல் பொருள்களை வைத்திருங்கள்&apos; சரிபார்க்கப்பட்டால்,
+ தேர்ந்தெடுக்கப்பட்ட பொருள்களை நகர்த்துவதை விட சீரமைப்பு நகலெடுக்கும்.
+
+ &apos;முதலில் அடிப்படை புள்ளிகளைக் குறிப்பிடினால்&apos; சரிபார்க்கப்பட்டால்,
+ வரிசையில் சீரமைப்பு புள்ளிகளுக்கு சீரமைத் தூண்டும்
+ முதல் அடிப்படை, இரண்டாவது அடிப்படை, முதல் இலக்கு, இரண்டாவது இலக்கு.</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="89"/>

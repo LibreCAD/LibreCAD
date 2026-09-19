@@ -42,6 +42,7 @@ set(PLUGIN_TS_FILES
     plugins_cs.ts
     plugins_en.ts
     plugins_en_au.ts
+    plugins_eo.ts
     plugins_da.ts
     plugins_de.ts
     plugins_el.ts
@@ -74,6 +75,7 @@ set(PLUGIN_TS_FILES
     plugins_hu.ts
     plugins_it.ts
     plugins_ja.ts
+    plugins_ka.ts
     plugins_ko.ts
     plugins_lo.ts
     plugins_lv.ts
@@ -95,6 +97,7 @@ set(PLUGIN_TS_FILES
     plugins_sr_rs.ts
     plugins_sv.ts
     plugins_ta.ts
+    plugins_th.ts
     plugins_tr.ts
     plugins_uk.ts
     plugins_zh_cn.ts

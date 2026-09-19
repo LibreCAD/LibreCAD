@@ -103,7 +103,12 @@ Align will copy rather than move the selected objects.
 If &apos;Specify base points first&apos; is checked,
 Align will prompt for the alignment points in the order
 first base, second base, first target, second target.</source>
-        <translation type="unfinished"></translation>
+        <translation>Se è selezionato &apos;Mantieni oggetti originali&apos;,
+Allinea copierà gli oggetti selezionati invece di spostarli.
+
+Se è selezionato &apos;Specifica prima i punti base&apos;,
+Allinea chiederà i punti di allineamento nell&apos;ordine
+primo iniziale, secondo iniziale, primo finale, secondo finale.</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="89"/>
