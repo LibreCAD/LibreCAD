@@ -265,7 +265,7 @@ void RS_Modification::doChangeEntityAttributes(RS_Entity* const en, RS_Entity*& 
         pen.setColor(data.pen.getColor());
     }
     if (data.changeLineType) {
-        pen.setLineType(data.pen.getLineType());
+        pen.setLineTypeFromPen(data.pen);
     }
     if (data.changeWidth) {
         pen.setWidth(data.pen.getWidth());
@@ -303,7 +303,7 @@ void RS_Modification::doChangeBlockAttributes(const RS_Block* block, RS_Attribut
                 pen.setColor(data.pen.getColor());
             }
             if (data.changeLineType) {
-                pen.setLineType(data.pen.getLineType());
+                pen.setLineTypeFromPen(data.pen);
             }
             if (data.changeWidth) {
                 pen.setWidth(data.pen.getWidth());
