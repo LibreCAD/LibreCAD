@@ -28,10 +28,10 @@ class LC_List : public QObject, QC_PluginInterface
     Q_PLUGIN_METADATA(IID LC_DocumentInterface_iid FILE  "list.json")
 
  public:
-    virtual PluginCapabilities getCapabilities() const Q_DECL_OVERRIDE;
-    virtual QString name() const Q_DECL_OVERRIDE;
-    virtual void execComm(Document_Interface *doc,
-                          QWidget *parent, QString cmd) Q_DECL_OVERRIDE;
+    PluginCapabilities getCapabilities() const override;
+    QString name() const override;
+    void init(Document_Interface *doc, QWidget *parent) override;
+    void execComm(QString cmd) override;
 
 private:
     QString getStrData(Plug_Entity *ent);

@@ -53,7 +53,6 @@ class LC_MenuFactory;
 class LC_NamedViewsListWidget;
 class LC_PenPaletteWidget;
 class LC_PenWizard;
-class LC_PluginInvoker;
 class LC_QTStatusbarManager;
 class LC_QuickInfoWidget;
 class LC_RelZeroCoordinatesWidget;
@@ -334,6 +333,24 @@ public:
         return m_namedViewsWidget;
     }
 
+    QList<QDockWidget*> getPluginDockWidgetList() const{
+        return m_pluginDockWidgetList;
+    }
+
+    QList<QToolBar*> getPluginToolbarList() const{
+        return m_pluginToolbarList;
+    }
+
+    QList<QC_PluginInterface*> getLoadedPluginList() const {
+        QList<QC_PluginInterface*> list = QList<QC_PluginInterface*>();
+        if (m_pluginInvoker != nullptr) {
+            list = m_pluginInvoker->getLoadedPluginList();
+        }
+        return list;
+    }
+
+    void populatePluginMenu() const;
+
     void commandMessage(const QString& msg) const;
     // If a freshly opened drawing has empty modelspace but at least one
     // user-named block (i.e. not a *Model_Space / *Paper_Space variant)
@@ -428,6 +445,7 @@ protected:
     LC_PenPaletteWidget* m_penPaletteWidget{nullptr};
     LC_NamedViewsListWidget* m_namedViewsWidget{nullptr};
     LC_UCSListWidget* m_ucsListWidget{nullptr};
+    QList<QDockWidget*> m_pluginDockWidgetList;
 
     // --- Statusbar ---
     QG_CoordinateWidget* m_coordinateWidget{nullptr};
@@ -444,6 +462,7 @@ protected:
     QG_SnapToolBar* m_snapToolBar{nullptr};
     QG_PenToolBar* m_penToolBar{nullptr}; //!< for selecting the current pen
     QToolBar* m_toolOptionsToolbar{nullptr}; //!< for individual tool options
+    QList<QToolBar*> m_pluginToolbarList;
 
     // --- Actions ---
     QAction* scriptOpenIDE{nullptr};
