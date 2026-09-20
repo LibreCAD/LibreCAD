@@ -211,11 +211,9 @@ void LC_ActionModifyRound::onMouseMoveEvent(const int status, const LC_MouseEven
 
                         const auto *arc = roundResult.round;
                         if (arc != nullptr){
-                            if (m_showRefEntitiesOnPreview) {
-                                if (!roundResult.isPolyline) {
-                                    previewEntity(arc);
-                                    previewOwnsArc = true;
-                                }
+                            if (!roundResult.isPolyline) {
+                                previewEntity(arc);
+                                previewOwnsArc = true;
                             }
                             if (isInfoCursorForModificationEnabled()){
                                 const RS_Vector arcEndPoint = arc->getEndpoint();
