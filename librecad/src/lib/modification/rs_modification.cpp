@@ -853,6 +853,12 @@ bool RS_Modification::splitPolyline(RS_Polyline& polyline,
                         "RS_Modification::splitPolyline: no valid container");
         return false;
     }
+    // the polyline is replaced by undoing it in the container
+    if (!RS_Information::isOwnedBy(&polyline, *m_container)) {
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_Modification::splitPolyline: polyline is not owned by the container");
+        return false;
+    }
 
     RS_Entity* firstEntity = polyline.firstEntity();
     RS_Vector firstPoint(false);
