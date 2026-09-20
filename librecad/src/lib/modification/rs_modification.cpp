@@ -57,6 +57,20 @@
 namespace {
 
 /**
+ * @brief ownsTrimTarget - whether bevel() and round() may replace what they trim
+ * @param container - the container the modification works in
+ * @param entity - one of the two entities to bevel or round
+ * @return true if the container lists the entity, or the polyline it is a segment
+ * of: that is what both functions replace by an edited clone in the container.
+ */
+bool ownsTrimTarget(const RS_EntityContainer& container, const RS_Entity* entity)
+{
+    const RS_EntityContainer* parent = entity->getParent();
+    const RS_Entity* target = (parent != nullptr && parent->rtti() == RS2::EntityPolyline) ? parent : entity;
+    return RS_Information::isOwnedBy(target, container);
+}
+
+/**
  * @brief getPasteScale - find scaling factor for pasting
  * @param const RS_PasteData& data - RS_PasteData
  * @param RS_Graphic *& source - source graphic. If source is nullptr, the graphic on the clipboard is used instead
@@ -837,6 +851,12 @@ bool RS_Modification::splitPolyline(RS_Polyline& polyline,
     if (!m_container) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Modification::splitPolyline: no valid container");
+        return false;
+    }
+    // the polyline is replaced by undoing it in the container
+    if (!RS_Information::isOwnedBy(&polyline, *m_container)) {
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_Modification::splitPolyline: polyline is not owned by the container");
         return false;
     }
 
@@ -2506,6 +2526,10 @@ bool RS_Modification::bevel(const RS_Vector& coord1, RS_AtomicEntity* entity1,
     }
     if(entity1->isLocked() || ! entity1->isVisible()) return false;
     if(entity2->isLocked() || ! entity2->isVisible()) return false;
+    // with trim off and no polyline nothing is replaced, only the bevel line is added
+    bool replaces = data.trim || (entity1->getParent() != nullptr
+                                  && entity1->getParent()->rtti() == RS2::EntityPolyline);
+    if (replaces && (!ownsTrimTarget(*m_container, entity1) || !ownsTrimTarget(*m_container, entity2))) return false;
 
     RS_EntityContainer* baseContainer = m_container;
     bool isPolyline = false;
@@ -2770,6 +2794,10 @@ bool RS_Modification::round(const RS_Vector& coord,
     }
     if(entity1->isLocked() || ! entity1->isVisible()) return false;
     if(entity2->isLocked() || ! entity2->isVisible()) return false;
+    // with trim off and no polyline nothing is replaced, only the arc is added
+    bool replaces = data.trim || (entity1->getParent() != nullptr
+                                  && entity1->getParent()->rtti() == RS2::EntityPolyline);
+    if (replaces && (!ownsTrimTarget(*m_container, entity1) || !ownsTrimTarget(*m_container, entity2))) return false;
 
     RS_EntityContainer* baseContainer = m_container;
     bool isPolyline = false;

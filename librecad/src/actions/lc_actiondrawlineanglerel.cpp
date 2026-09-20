@@ -29,6 +29,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_layer.h"
 #include "rs_math.h"
 #include "lc_linemath.h"
+#include "rs_information.h"
 #include "lc_lineanglereloptions.h"
 #include "lc_actiondrawlineanglerel.h"
 
@@ -168,7 +169,8 @@ void LC_ActionDrawLineAngleRel::doOnLeftMouseButtonRelease(QMouseEvent *e, int s
         switch (status) {
             case SetLine:{ // line selection state
                 RS_Entity* en = catchEntity(e, enTypeList, RS2::ResolveAll);
-                if (en != nullptr) {
+                // the line is held until the next click; a child another entity rebuilds may be freed meanwhile
+                if (en != nullptr && RS_Information::isEditable(en)) {
                     auto* line = dynamic_cast<RS_Line *>(en);
                     // determine where tick line should be snapped on original line
                     RS_Vector nearestPoint = LC_LineMath::getNearestPointOnLine(line, snapPoint, true);
@@ -221,7 +223,7 @@ void LC_ActionDrawLineAngleRel::doPreparePreviewEntities(QMouseEvent *e, RS_Vect
     switch (status) {
         case SetLine:{ // line select state
             RS_Entity* en = catchEntity(e, enTypeList, RS2::ResolveAll);
-            if (en != nullptr){
+            if (en != nullptr && RS_Information::isEditable(en)){
                 auto* line = dynamic_cast<RS_Line *>(en);
                 highlightEntity(line);
 

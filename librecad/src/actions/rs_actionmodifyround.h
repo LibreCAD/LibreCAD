@@ -79,7 +79,7 @@ public:
 
 private:
 
-    bool removeOldFillet(RS_Entity* e, const bool& isPolyline);
+    bool isOldFillet(RS_Entity* e) const;
 
     // update highlight status
     void unhighlightEntity();

@@ -21,6 +21,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
 #include "lc_linemath.h"
+#include "rs_information.h"
 #include "rs_point.h"
 #include "QMouseEvent"
 #include <QList>
@@ -446,6 +447,11 @@ bool LC_AbstractActionWithPreview::doCheckMayDrawPreview([[maybe_unused]]QMouseE
  * @param entity entity to delete
  */
 void LC_AbstractActionWithPreview::deleteEntityUndoable(RS_Entity *entity){
+    // Only an entity the container lists can be undone here. A child of another entity
+    // stays drawn inside its parent, which may later free it while undo still holds it.
+    if (!RS_Information::isOwnedBy(entity, *container)){
+        return;
+    }
     // delete and add this into undo
     graphicView->deleteEntity(entity);
     entity->changeUndoState();
@@ -832,32 +838,26 @@ void LC_AbstractActionWithPreview::updateMouseButtonHints(){
 }
 
 /**
- * utility method that checks that provided entity is not locked and is not part of polyline.
+ * utility method that checks that provided entity is not locked, is owned by the drawing and is not part of polyline.
  * Mostly used for operations that affects original entity and divide it to segments
  * @param e
  * @param entityName
  * @return
  */
 bool LC_AbstractActionWithPreview::checkMayExpandEntity(const RS_Entity *e, const QString &entityName) const{
-    bool mayDivide = false;
+    // The entity is replaced by its segments, so the container must list it: a
+    // polyline segment and a child of a block reference, dimension, hatch, ... are
+    // not divided, and neither is a locked entity.
     bool locked = e->isLocked();
-    if (locked){
-        if (!entityName.isEmpty()){
+    bool mayDivide = !locked && RS_Information::isEditable(e) && RS_Information::isOwnedBy(e, *container);
+    // A child of a block reference, dimension, hatch, ... is refused without a
+    // message rather than with a wrong one, as Break/Divide and Line Gap already
+    // refuse every pick silently.
+    if (!mayDivide && !entityName.isEmpty()){
+        if (locked){
             commandMessage(entityName + LC_ActionDrawSliceDivide::tr(" is not divided as it is locked."));
-        }
-    } else {
-        RS_EntityContainer *pContainer = e->getParent();
-        if (pContainer != nullptr){
-            if (pContainer->rtti() == RS2::EntityPolyline){
-                mayDivide = false;
-                if (!entityName.isEmpty()){
-                    commandMessage(entityName + LC_ActionDrawSliceDivide::tr(" is not divided as it is part of polyline. Expand polyline first."));
-                }
-            } else {
-                mayDivide = true;
-            }
-        } else {
-            mayDivide = true;
+        } else if (e->getParent() != nullptr && e->getParent()->rtti() == RS2::EntityPolyline){
+            commandMessage(entityName + LC_ActionDrawSliceDivide::tr(" is not divided as it is part of polyline. Expand polyline first."));
         }
     }
     return mayDivide;

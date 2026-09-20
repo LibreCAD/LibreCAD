@@ -30,6 +30,7 @@
 
 #include "rs_actionmodifyround.h"
 
+#include "lc_undosection.h"
 #include "rs_commandevent.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
@@ -38,6 +39,7 @@
 #include "rs_math.h"
 #include "rs_modification.h"
 #include "rs_preview.h"
+#include "rs_arc.h"
 
 namespace{
 // supported entity types for fillet
@@ -56,9 +58,26 @@ bool atEndPoint(RS_Entity &entity, const RS_Vector &point)
     return distance < RS_TOLERANCE;
 }
 
-bool atEndPoint(RS_Entity &entity1, RS_Entity &entity2, const RS_Vector &point)
+// Whether the arc meets the entity tangentially at the point, as a fillet does
+bool isTangentAt(RS_Entity &entity, const RS_Arc &arc, const RS_Vector &point)
 {
-    return atEndPoint(entity1, point) || atEndPoint(entity2, point);
+    constexpr double tolerance = 1e-3;
+    RS_Vector radial = (point - arc.getCenter()).normalized();
+    switch (entity.rtti()) {
+    case RS2::EntityLine: {
+        RS_Vector direction = (entity.getEndpoint() - entity.getStartpoint()).normalized();
+        return std::abs(RS_Vector::dotP(radial, direction)) < tolerance;
+    }
+    case RS2::EntityArc:
+    case RS2::EntityCircle: {
+        // tangent circles touch on the line through both centres
+        RS_Vector toCenter = (point - entity.getCenter()).normalized();
+        return std::abs(radial.x * toCenter.y - radial.y * toCenter.x) < tolerance;
+    }
+    default:
+        // ellipses and splines are not tested, so their old fillet is never replaced
+        return false;
+    }
 }
 }
 
@@ -94,28 +113,27 @@ void RS_ActionModifyRound::finish(bool updateTB)
 }
 
 /*
-    Removes the old fillet, if it exists.
+    Whether the entity is the old fillet between the two selected entities: a visible,
+    unlocked arc from an endpoint of one to an endpoint of the other, tangent to both
+    (so an arc that merely joins them, like a pie slice's, does not count).
 
     - by Melwyn Francis Carlo.
 */
-bool RS_ActionModifyRound::removeOldFillet(RS_Entity* e, const bool& isPolyline)
+bool RS_ActionModifyRound::isOldFillet(RS_Entity* e) const
 {
     if (e == nullptr || e->rtti() != RS2::EntityArc || entity1 == nullptr || entity2 == nullptr)
         return false;
-
-    auto isChained = [this](const RS_Vector &point) {
-        return atEndPoint(*entity1, *entity2, point);
-    };
-    std::vector<RS_Vector> endPoints = {e->getStartpoint(), e->getEndpoint()};
-
-    bool chained = std::all_of(endPoints.begin(), endPoints.end(), isChained);
-    if (!chained)
+    if (!e->isVisible() || e->isLocked())
         return false;
 
-    if (!isPolyline)
-        container->removeEntity(e);
-
-    return true;
+    const auto* arc = static_cast<RS_Arc*>(e);
+    const RS_Vector start = arc->getStartpoint();
+    const RS_Vector end = arc->getEndpoint();
+    auto joins = [arc, &start, &end](RS_Entity& atStart, RS_Entity& atEnd) {
+        return atEndPoint(atStart, start) && atEndPoint(atEnd, end)
+               && isTangentAt(atStart, *arc, start) && isTangentAt(atEnd, *arc, end);
+    };
+    return joins(*entity1, *entity2) || joins(*entity2, *entity1);
 }
 
 
@@ -129,48 +147,39 @@ void RS_ActionModifyRound::trigger() {
         unhighlightEntity();
         deletePreview();
 
-        bool foundPolyline = false;
-
-        if ((entity1->getParent() != nullptr) && (entity2->getParent() != nullptr))
-        {
-            if ((entity1->getParent()->rtti() == RS2::EntityPolyline)
-                    &&  (entity2->getParent()->rtti() == RS2::EntityPolyline)
-                    &&  (entity1->getParent() == entity2->getParent()))
-            {
-                foundPolyline = true;
-
-                for (auto* e : entity1->getParent()->getEntityList())
-                {
-                    if ((e != entity1) && (e != entity2))
-                    {
-                        if (removeOldFillet(e, foundPolyline))
-                        {
-                            entity1->getParent()->removeEntity(e);
-                            break;
-                        }
-                    }
-                }
-            }
-
-            if (!foundPolyline) {
-                for (auto* e : graphicView->getContainer()->getEntityList())
-                {
-                    if ((e != entity1) && (e != entity2))
-                    {
-                        if (removeOldFillet(e, foundPolyline))
-                            break;
-                    }
-                }
+        // A previous fillet at this corner is replaced by the new one. Only a
+        // top-level arc can be found here: a polyline keeps its fillet as one of its
+        // own segments, and round() rebuilds the polyline inside its own undo step.
+        RS_Entity* oldFillet = nullptr;
+        for (auto* e : graphicView->getContainer()->getEntityList()) {
+            if (e != entity1 && e != entity2 && isOldFillet(e)) {
+                oldFillet = e;
+                break;
             }
         }
 
+        // The old arc is still held by the undo cycle that created it, so undo it, never
+        // delete it, in the same step as the new fillet. Repeat round()'s visibility,
+        // lock and ownership checks before opening that step: opening a cycle drops the
+        // redo history, which could free an entity undone since it was picked.
+        bool replaceOldFillet = oldFillet != nullptr && document != nullptr
+                && entity1->isVisible() && !entity1->isLocked()
+                && entity2->isVisible() && !entity2->isLocked()
+                && RS_Information::isOwnedBy(entity1, *container)
+                && RS_Information::isOwnedBy(entity2, *container);
+        LC_UndoSection undo(document, replaceOldFillet);
         RS_Modification m(*container, graphicView);
-        m.round(pPoints->coord2,
-                pPoints->coord1,
-                (RS_AtomicEntity*)entity1,
-                pPoints->coord2,
-                (RS_AtomicEntity*)entity2,
-                pPoints->data);
+        bool rounded = m.round(pPoints->coord2,
+                               pPoints->coord1,
+                               (RS_AtomicEntity*)entity1,
+                               pPoints->coord2,
+                               (RS_AtomicEntity*)entity2,
+                               pPoints->data);
+        if (rounded && replaceOldFillet) {
+            graphicView->deleteEntity(oldFillet);
+            oldFillet->setUndoState(true);
+            undo.addUndoable(oldFillet);
+        }
 
         //coord = RS_Vector(false);
         pPoints->coord1 = RS_Vector(false);

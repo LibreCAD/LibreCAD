@@ -26,6 +26,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_linemath.h"
 #include "lc_linejoinoptions.h"
 #include "lc_actionmodifylinejoin.h"
+#include "rs_information.h"
 
 LC_ActionModifyLineJoin::LC_ActionModifyLineJoin(RS_EntityContainer &container, RS_GraphicView &graphicView):
     LC_AbstractActionWithPreview("ModifyLineJoin", container, graphicView),
@@ -47,7 +48,9 @@ void LC_ActionModifyLineJoin::init(int status){
 RS_Line *LC_ActionModifyLineJoin::catchLine(QMouseEvent *e){
     RS_Entity *en = catchEntity(e, lineType, RS2::ResolveAll);
     RS_Line *snappedLine = nullptr;
-    if (en && en->rtti() == RS2::EntityLine){
+    // The join undoes the original lines in the drawing and holds the pick until the
+    // next click, so a line another entity generates (and may free on undo) is refused.
+    if (en && en->rtti() == RS2::EntityLine && RS_Information::isEditable(en)){
         snappedLine = dynamic_cast<RS_Line *>(en);
     }
     return snappedLine;

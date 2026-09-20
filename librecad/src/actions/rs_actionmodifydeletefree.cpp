@@ -77,10 +77,15 @@ void RS_ActionModifyDeleteFree::trigger() {
                     RS_Polyline* pl1 = nullptr;
                     RS_Polyline* pl2 = nullptr;
                     RS_Modification m(*container);
-                    m.splitPolyline(*polyline,
-									*e1, pPoints->v1,
-									*e2, pPoints->v2,
-                                    &pl1, &pl2);
+                    if (!m.splitPolyline(*polyline,
+                                         *e1, pPoints->v1,
+                                         *e2, pPoints->v2,
+                                         &pl1, &pl2)) {
+                        // refused (e.g. inside a block): nothing changed, nothing to undo
+                        graphicView->redraw(RS2::RedrawDrawing);
+                        init();
+                        return;
+                    }
 
                     if (document) {
                         document->startUndoCycle();
