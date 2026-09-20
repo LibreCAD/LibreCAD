@@ -85,7 +85,7 @@ void LC_ActionModifyBreakDivide::doPreparePreviewEntities(QMouseEvent *e, RS_Vec
 void LC_ActionModifyBreakDivide::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint){
     if (status == SetLine){
         RS_Entity *en = catchEntity(e, enTypeList, RS2::ResolveAll);
-        if (en != nullptr){
+        if (en != nullptr && checkMayExpandEntity(en, "")){
             int rtti = en->rtti();
             switch (rtti) {
                 case RS2::EntityLine:

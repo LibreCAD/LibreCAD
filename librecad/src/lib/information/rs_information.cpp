@@ -25,6 +25,7 @@
 **
 **********************************************************************/
 
+#include <algorithm>
 #include <random>
 #include <vector>
 
@@ -345,6 +346,39 @@ bool RS_Information::isDimension(RS2::EntityType type) {
 }
 
 
+
+/**
+ * @retval true if only polylines and plain containers lie between the entity and
+ * its graphic or block. The children of any other container (block references,
+ * dimensions, hatches, splines, text, ...) are managed by their owner, which may
+ * rebuild them and free what the undo history still holds.
+ */
+bool RS_Information::isEditable(const RS_Entity* e) {
+    if (e == nullptr) {
+        return false;
+    }
+    for (const RS_EntityContainer* parent = e->getParent(); parent != nullptr; parent = parent->getParent()) {
+        switch (parent->rtti()) {
+        case RS2::EntityGraphic:
+        case RS2::EntityBlock:
+            return true;
+        case RS2::EntityPolyline:
+        case RS2::EntityContainer:
+            break;
+        default:
+            return false;
+        }
+    }
+    return true;
+}
+
+/**
+ * @retval true if @p container lists @p e directly. Parent pointers are no
+ * substitute: addEntity() does not reparent.
+ */
+bool RS_Information::isOwnedBy(const RS_Entity* e, const RS_EntityContainer& container) {
+    return e != nullptr && std::find(container.begin(), container.end(), e) != container.end();
+}
 
 /**
  * @retval true the entity can be trimmed.
