@@ -96,7 +96,7 @@ constexpr double zoomWheelDivisor = 200.;
  * @brief snapEntity find the closest entity
  * @param QG_GraphicView& view - the graphic view
  * @param const QMouseEvent* event - the mouse event
- * @return RS_Entity* - the closest entity within the range of CURSOR_SIZE
+ * @return RS_Entity* - the closest top-level entity within the range of CURSOR_SIZE
  *                      returns nullptr, if no entity is found in range
  */
 RS_Entity* snapEntity(const QG_GraphicView& view, const QMouseEvent* event)
@@ -108,7 +108,10 @@ RS_Entity* snapEntity(const QG_GraphicView& view, const QMouseEvent* event)
         return nullptr;
     const QPointF mapped = event->pos();
     double distance = RS_MAXDOUBLE;
-    RS_Entity* entity = container->getNearestEntity(view.toGraph(mapped), &distance);
+    // top-level entities only: Edit Properties replaces the pick by an edited clone,
+    // which is only sound for an entity the container lists (#2845)
+    RS_Entity* entity = container->getNearestEntity(view.toGraph(mapped), &distance,
+                                                    RS2::ResolveNone);
 
     return (view.toGuiDX(distance) <= CURSOR_SIZE) ? entity : nullptr;
 }
