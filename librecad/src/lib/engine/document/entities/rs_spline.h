@@ -346,11 +346,11 @@ protected:
     RS_Vector doGetNearestRef(const RS_Vector &coord, double *dist = nullptr) const override;
     /** Nearest center (invalid) */
     RS_Vector doGetNearestCenter(const RS_Vector &coord, double *dist, RS_Entity** centerEntity) const override;
-    /** Nearest middle point (invalid) */
+    /** Nearest of the points dividing an open spline into equal lengths; invalid if closed */
     RS_Vector doGetNearestMiddle(const RS_Vector &coord, double *dist, int middlePoints) const override;
     /** Nearest selected reference (overrides container method) */
     RS_Vector doGetNearestSelectedRef(const RS_Vector &coord, double *dist) const override;
-    /** Nearest point at distance (invalid) */
+    /** The point at a distance along an open spline from its nearer end; invalid if closed */
     RS_Vector doGetNearestDist(double distance, const RS_Vector& coord, double* dist) const override;
 private:
   /** Internal spline data */

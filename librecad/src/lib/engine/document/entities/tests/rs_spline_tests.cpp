@@ -635,3 +635,32 @@ TEST_CASE("RS_Spline::revertDirection keeps a valid curve, traversed backwards",
         CHECK(nearest < 0.05);
     }
 }
+
+TEST_CASE("RS_Spline snaps to middle points and distances along it", "[spline][jet][RS_Spline]") {
+    // Offsets of spline sources are RS_Splines; like the LC_SplinePoints they
+    // replace in Draw > Parallel, they must offer middle and distance snaps.
+    const RS_Spline line = makeSpline(1, {{0.0, 0.0}, {10.0, 0.0}}, {0, 0, 1, 1});
+    double dist = 0.0;
+    CHECK(compareVector(line.getNearestMiddle(RS_Vector{4.0, 1.0}, &dist, 1), RS_Vector{5.0, 0.0}, 1e-9));
+    CHECK(dist == Approx(std::hypot(1.0, 1.0)));
+    CHECK(compareVector(line.getNearestMiddle(RS_Vector{1.0, 0.0}, &dist, 3), RS_Vector{2.5, 0.0}, 1e-9));
+    CHECK(compareVector(line.getNearestDist(2.0, RS_Vector{1.0, 0.0}, &dist), RS_Vector{2.0, 0.0}, 1e-9));
+    CHECK(compareVector(line.getNearestDist(2.0, RS_Vector{9.0, 0.0}, &dist), RS_Vector{8.0, 0.0}, 1e-9));
+    CHECK_FALSE(line.getNearestDist(11.0, RS_Vector{1.0, 0.0}, &dist).valid);
+
+    // a rational arc is not parameterized by arc length: its middle is the true 45 degree point
+    const double w = std::sqrt(0.5);
+    const RS_Spline arc = makeSpline(2, {{10.0, 0.0}, {10.0, 10.0}, {0.0, 10.0}}, {0, 0, 0, 1, 1, 1}, {1.0, w, 1.0});
+    CHECK(compareVector(arc.getNearestMiddle(RS_Vector{8.0, 8.0}, &dist, 1), RS_Vector{10.0 * w, 10.0 * w}, 1e-6));
+    const double quarter = M_PI * 10.0 / 2.0;
+    const RS_Vector third = arc.getNearestDist(quarter / 3.0, RS_Vector{10.0, 0.0}, &dist);
+    CHECK(compareVector(third, RS_Vector{10.0 * std::cos(M_PI / 6.0), 10.0 * std::sin(M_PI / 6.0)}, 1e-6));
+
+    RS_Spline closed(nullptr, RS_SplineData(3, false));
+    for (const RS_Vector& p : {RS_Vector{0, 0}, RS_Vector{40, -10}, RS_Vector{60, 30}, RS_Vector{20, 50}}) {
+        closed.addControlPoint(p);
+    }
+    closed.setClosed(true);
+    CHECK_FALSE(closed.getNearestMiddle(RS_Vector{0, 0}, &dist, 1).valid);
+    CHECK_FALSE(closed.getNearestDist(1.0, RS_Vector{0, 0}, &dist).valid);
+}

@@ -173,6 +173,83 @@ bool isFinite(const RS_Vector &v) {
   return v.valid && std::isfinite(v.x) && std::isfinite(v.y) && std::isfinite(v.z);
 }
 
+/**
+ * Arc length of the curve from the start of its domain, tabulated at knots and
+ * at subdivisions of each knot span (5-point Gauss-Legendre per piece).
+ */
+struct ArcLengthTable {
+  std::vector<double> t;
+  std::vector<double> length;
+};
+
+double speedAt(const RS_Spline &spline, const double t) {
+  LC_CurveJet jet;
+  return spline.tryEvaluateJet(t, LC_CurveEvaluationSide::Interior, jet) ? jet.first.magnitude()
+                                                                          : std::numeric_limits<double>::quiet_NaN();
+}
+
+/** Arc length over [a, b] inside one knot span. */
+double pieceLength(const RS_Spline &spline, const double a, const double b) {
+  static constexpr double nodes[] = {-0.9061798459386640, -0.5384693101056831, 0.0, 0.5384693101056831,
+                                     0.9061798459386640};
+  static constexpr double weights[] = {0.2369268850561891, 0.4786286704993665, 0.5688888888888889,
+                                       0.4786286704993665, 0.2369268850561891};
+  const double half = 0.5 * (b - a);
+  const double middle = 0.5 * (a + b);
+  double sum = 0.0;
+  for (int i = 0; i < 5; ++i) {
+    sum += weights[i] * speedAt(spline, middle + half * nodes[i]);
+  }
+  return sum * half;
+}
+
+bool buildArcLengthTable(const RS_Spline &spline, ArcLengthTable &table) {
+  const std::vector<double> breaks = spline.getBreakParameters();
+  if (breaks.size() < 2) {
+    return false;
+  }
+  constexpr int piecesPerSpan = 8;
+  table.t = {breaks.front()};
+  table.length = {0.0};
+  for (size_t i = 0; i + 1 < breaks.size(); ++i) {
+    for (int k = 1; k <= piecesPerSpan; ++k) {
+      const double a = table.t.back();
+      const double b = (k == piecesPerSpan) ? breaks[i + 1] : breaks[i] + (breaks[i + 1] - breaks[i]) * k / piecesPerSpan;
+      const double length = pieceLength(spline, a, b);
+      if (!std::isfinite(length)) {
+        return false;
+      }
+      table.t.push_back(b);
+      table.length.push_back(table.length.back() + length);
+    }
+  }
+  return table.length.back() > 0.0;
+}
+
+/** The parameter at arc length s from the start, refined by Newton steps. */
+double parameterAtLength(const RS_Spline &spline, const ArcLengthTable &table, const double s) {
+  const auto upper = std::upper_bound(table.length.begin(), table.length.end(), s);
+  if (upper == table.length.begin()) {
+    return table.t.front();
+  }
+  if (upper == table.length.end()) {
+    return table.t.back();
+  }
+  const auto i = static_cast<size_t>(std::distance(table.length.begin(), upper)) - 1;
+  const double a = table.t[i];
+  const double b = table.t[i + 1];
+  const double span = table.length[i + 1] - table.length[i];
+  double t = (span > 0.0) ? a + (b - a) * (s - table.length[i]) / span : a;
+  for (int iteration = 0; iteration < 4; ++iteration) {
+    const double speed = speedAt(spline, t);
+    if (!(speed > 0.0)) {
+      break;
+    }
+    t = std::clamp(t - (table.length[i] + pieceLength(spline, a, t) - s) / speed, a, b);
+  }
+  return t;
+}
+
 /** A homogeneous point (w x, w y, w) as intervals. */
 struct HomogeneousBox {
   LC_Interval x;
@@ -579,11 +656,51 @@ RS_Vector RS_Spline::doGetNearestEndpoint(const RS_Vector &coord, double *dist, 
 RS_Vector RS_Spline::doGetNearestCenter(const RS_Vector &, double *, RS_Entity** centerEntity) const {
   return RS_Vector(false);
 }
-RS_Vector RS_Spline::doGetNearestMiddle(const RS_Vector &, double *, int) const {
-  return RS_Vector(false);
+RS_Vector RS_Spline::doGetNearestMiddle(const RS_Vector &coord, double *dist, const int middlePoints) const {
+  if (dist != nullptr) {
+    *dist = RS_MAXDOUBLE;
+  }
+  // the points dividing an open curve into middlePoints + 1 parts of equal length
+  ArcLengthTable table;
+  if (isClosed() || middlePoints < 1 || !buildArcLengthTable(*this, table)) {
+    return RS_Vector(false);
+  }
+  const double total = table.length.back();
+  RS_Vector best(false);
+  double bestDistance = RS_MAXDOUBLE;
+  for (int k = 1; k <= middlePoints; ++k) {
+    const RS_Vector p = getPointAt(parameterAtLength(*this, table, total * k / (middlePoints + 1)));
+    if (p.valid && coord.distanceTo(p) < bestDistance) {
+      bestDistance = coord.distanceTo(p);
+      best = p;
+    }
+  }
+  if (dist != nullptr && best.valid) {
+    *dist = bestDistance;
+  }
+  return best;
 }
-RS_Vector RS_Spline::doGetNearestDist(double, const RS_Vector &, double *) const {
-  return RS_Vector(false);
+RS_Vector RS_Spline::doGetNearestDist(const double distance, const RS_Vector &coord, double *dist) const {
+  if (dist != nullptr) {
+    *dist = RS_MAXDOUBLE;
+  }
+  // the point that far along the curve from the end nearer to coord
+  ArcLengthTable table;
+  const RS_Vector start = getStartpoint();
+  const RS_Vector end = getEndpoint();
+  if (!start.valid || !end.valid || !std::isfinite(distance) || !buildArcLengthTable(*this, table)) {
+    return RS_Vector(false);
+  }
+  const double total = table.length.back();
+  if (distance < 0.0 || distance > total) {
+    return RS_Vector(false);
+  }
+  const bool fromStart = coord.distanceTo(start) <= coord.distanceTo(end);
+  const RS_Vector p = getPointAt(parameterAtLength(*this, table, fromStart ? distance : total - distance));
+  if (dist != nullptr && p.valid) {
+    *dist = coord.distanceTo(p);
+  }
+  return p;
 }
 
 /** Transformations
