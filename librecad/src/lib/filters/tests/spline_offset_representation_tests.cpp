@@ -37,6 +37,11 @@
 //    survives a round trip. D1 therefore accepts closed sources, but only after
 //    checking that the source's ends really meet: a wrapped spline with a
 //    non-periodic knot vector passes validate() with a gap at its seam.
+//
+// The D1 persistence gate follows: what the offset engine produces comes back
+// from DXF and DWG as the curve it validated, and R12, which has no SPLINE,
+// gets a polyline within its own export tolerance instead of the 32 segments
+// a spline is drawn with.
 
 #include <catch2/catch_test_macros.hpp>
 
@@ -44,17 +49,23 @@
 #include <array>
 #include <cmath>
 #include <filesystem>
+#include <fstream>
 #include <functional>
+#include <iterator>
 #include <memory>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include <QCoreApplication>
 
+#include "lc_curveoffset.h"
 #include "lc_splinepoints.h"
 #include "rs_filterdxfrw.h"
 #include "rs_graphic.h"
+#include "rs_layer.h"
 #include "rs_line.h"
+#include "rs_polyline.h"
 #include "rs_settings.h"
 #include "rs_spline.h"
 
@@ -437,3 +448,422 @@ TEST_CASE("A closed source's offset is a chain of open pieces whose seam survive
     CHECK(ringStart.point.distanceTo(ringEnd.point) < 1e-12);
     CHECK(ringStart.first.distanceTo(ringEnd.first) < 1e-12);
 }
+
+// ---------------------------------------------------------------------------
+// D1 persistence gate
+
+namespace {
+
+/** The R12 writer's tolerance, relative to the diagonal of the control points' box. */
+constexpr double kR12RelativeTolerance = 1e-4;
+
+double controlBoxDiagonal(const RS_Spline& s) {
+    RS_Vector low{false};
+    RS_Vector high{false};
+    for (const RS_Vector& v : s.getUnwrappedControlPoints()) {
+        low = RS_Vector::minimum(low, v);
+        high = RS_Vector::maximum(high, v);
+    }
+    return low.distanceTo(high);
+}
+
+/** Distance from @p p to the curve: the nearest of 200 samples, refined by Newton steps. */
+double distanceToCurve(const RS_Spline& s, const RS_Vector& p) {
+    double t0 = 0.0;
+    double t1 = 0.0;
+    if (!s.getParameterDomain(t0, t1)) {
+        return RS_MAXDOUBLE;
+    }
+    const auto pointAt = [&s](const double t) {
+        LC_CurveJet j;
+        return s.tryEvaluateJet(t, LC_CurveEvaluationSide::Interior, j) ? j.point : RS_Vector{RS_MAXDOUBLE, RS_MAXDOUBLE};
+    };
+    double best = t0;
+    double bestDistance = RS_MAXDOUBLE;
+    for (int i = 0; i <= 200; ++i) {
+        const double t = t0 + (t1 - t0) * i / 200.0;
+        const double distance = pointAt(t).distanceTo(p);
+        if (distance < bestDistance) {
+            bestDistance = distance;
+            best = t;
+        }
+    }
+    for (int k = 0; k < 12; ++k) {
+        LC_CurveJet j;
+        if (!s.tryEvaluateJet(best, LC_CurveEvaluationSide::Interior, j)) {
+            break;
+        }
+        const RS_Vector r = j.point - p;
+        const double slope = RS_Vector::dotP(r, j.first);
+        const double curvature = j.first.squared() + RS_Vector::dotP(r, j.second);
+        if (!(curvature > 0.0)) {
+            break;
+        }
+        best = std::clamp(best - slope / curvature, t0, t1);
+    }
+    return std::min(bestDistance, pointAt(best).distanceTo(p));
+}
+
+std::string tempPath(const char* name) {
+    return (std::filesystem::temp_directory_path() / (std::string("spline_offset_persist_") + name)).string();
+}
+
+/** The vertices of a polyline read back, in order. */
+std::vector<RS_Vector> polylineVertices(const RS_Polyline& polyline) {
+    std::vector<RS_Vector> vertices;
+    for (const RS_Entity* e : polyline) {
+        if (vertices.empty()) {
+            vertices.push_back(e->getStartpoint());
+        }
+        vertices.push_back(e->getEndpoint());
+    }
+    return vertices;
+}
+
+/** The largest distance between @p spline and the polyline through @p vertices, both ways. */
+double polylineDeviation(const RS_Spline& spline, const std::vector<RS_Vector>& vertices, const bool closed) {
+    std::vector<std::pair<RS_Vector, RS_Vector>> segments;
+    for (size_t i = 1; i < vertices.size(); ++i) {
+        segments.emplace_back(vertices[i - 1], vertices[i]);
+    }
+    if (closed && vertices.size() > 2) {
+        segments.emplace_back(vertices.back(), vertices.front());
+    }
+    REQUIRE_FALSE(segments.empty());
+    double worst = 0.0;
+    double t0 = 0.0;
+    double t1 = 0.0;
+    REQUIRE(spline.getParameterDomain(t0, t1));
+    for (int i = 0; i <= 2000; ++i) {
+        LC_CurveJet j;
+        if (!spline.tryEvaluateJet(t0 + (t1 - t0) * i / 2000.0, LC_CurveEvaluationSide::Interior, j)) {
+            return RS_MAXDOUBLE;
+        }
+        double nearest = RS_MAXDOUBLE;
+        for (const auto& [a, b] : segments) {
+            nearest = std::min(nearest, distanceToSegment(j.point, a, b));
+        }
+        worst = std::max(worst, nearest);
+    }
+    // chord midpoints, where a chord strays farthest
+    for (const auto& [a, b] : segments) {
+        worst = std::max(worst, distanceToCurve(spline, (a + b) * 0.5));
+    }
+    return worst;
+}
+
+/** Writes @p splines to R12 and reads back what became of each, in order. */
+std::vector<RS_Polyline*> r12RoundTrip(RS_Graphic& reloaded, const std::vector<RS_SplineData>& splines,
+                                       const char* name, bool& exported, const bool updateFirst = false) {
+    ensureSettings();
+    const std::string path = tempPath(name);
+    {
+        RS_Graphic graphic;
+        for (const RS_SplineData& data : splines) {
+            auto* spline = new RS_Spline(&graphic, data);
+            graphic.addEntity(spline);
+            if (updateFirst) {
+                spline->update();
+            }
+        }
+        RS_FilterDXFRW filter;
+        exported = filter.fileExport(graphic, QString::fromStdString(path), RS2::FormatDXFRW12);
+    }
+    std::vector<RS_Polyline*> result;
+    if (exported) {
+        RS_FilterDXFRW filter;
+        REQUIRE(filter.fileImport(reloaded, QString::fromStdString(path), RS2::FormatDXFRW));
+        for (RS_Entity* e : reloaded) {
+            auto* polyline = dynamic_cast<RS_Polyline*>(e);
+            REQUIRE(polyline != nullptr);
+            result.push_back(polyline);
+        }
+    }
+    std::filesystem::remove(path);
+    return result;
+}
+
+RS_SplineData sCurveData() {
+    RS_SplineData d(3, false);
+    d.controlPoints = {{1234.5, -87.25}, {1238.5, -81.25}, {1242.5, -93.25}, {1246.5, -87.25}};
+    d.knotslist = {0, 0, 0, 0, 1, 1, 1, 1};
+    d.weights.assign(4, 1.0);
+    return d;
+}
+
+/** A cubic that swings through several bends: more than 32 segments need to follow it. */
+RS_SplineData wavyData() {
+    RS_SplineData d(3, false);
+    for (int i = 0; i < 14; ++i) {
+        d.controlPoints.emplace_back(500.0 + 30.0 * i, 200.0 + ((i % 2 == 0) ? -40.0 : 40.0));
+    }
+    d.knotslist = {0, 0, 0, 0};
+    for (int k = 1; k <= 10; ++k) {
+        d.knotslist.push_back(k);
+    }
+    d.knotslist.insert(d.knotslist.end(), 4, 11.0);
+    d.weights.assign(d.controlPoints.size(), 1.0);
+    return d;
+}
+
+} // namespace
+
+TEST_CASE("The offset engine's pieces come back from DXF and DWG as the curve it validated",
+          "[curve-offset][d1][persistence]") {
+    // Binary DXF is not covered: the filter only exports ASCII DXF.
+    ensureSettings();
+    const RS_Pen pen{RS_Color{255, 0, 0}, RS2::Width07, RS2::SolidLine};
+    struct Format {
+        RS2::FormatType type;
+        const char* file;
+    };
+    for (const Format& format : {Format{RS2::FormatDXFRW, "d1.dxf"}, Format{RS2::FormatDXFRW2000, "d1_2000.dxf"},
+                                 Format{RS2::FormatDWG, "d1_r2000.dwg"},
+                                 Format{RS2::FormatDWG2018, "d1_r2018.dwg"}}) {
+        DYNAMIC_SECTION("format " << format.file) {
+            const std::string path = tempPath(format.file);
+            std::vector<RS_SplineData> written;
+            double tolerance = 0.0;
+            constexpr double distance = 0.75;
+            bool exported = false;
+            {
+                RS_Graphic graphic;
+                auto* layer = new RS_Layer("Offsets");
+                graphic.addLayer(layer);
+                RS_SplineData sourceData = sCurveData();
+                sourceData.fitPoints = {{1234.5, -87.25}, {1246.5, -87.25}}; // not the offset's
+                auto* source = new RS_Spline(&graphic, sourceData);
+                graphic.addEntity(source);
+                source->setLayer(layer);
+                source->setPen(pen);
+                tolerance = LC_CurveOffset::makeDirectOptions(*source, distance).tolerance.requestedGeometry;
+                const std::vector<RS_Entity*> pieces = source->createOffset(RS_Vector{1240.5, -78.25}, distance);
+                REQUIRE(pieces.size() > 1);
+                for (RS_Entity* piece : pieces) {
+                    graphic.addEntity(piece);
+                    piece->reparent(&graphic);
+                    const auto* spline = dynamic_cast<const RS_Spline*>(piece);
+                    REQUIRE(spline != nullptr);
+                    CHECK(spline->getData().fitPoints.empty());
+                    written.push_back(spline->getData());
+                }
+                RS_FilterDXFRW filter;
+                exported = filter.fileExport(graphic, QString::fromStdString(path), format.type);
+            }
+            if (!exported) {
+                std::filesystem::remove(path);
+                SKIP("writing " << format.file << " is not supported in this build");
+            }
+            RS_Graphic reloaded;
+            {
+                RS_FilterDXFRW filter;
+                const bool isDwg = format.type >= RS2::FormatDWG && format.type <= RS2::FormatDWG2018;
+                REQUIRE(filter.fileImport(reloaded, QString::fromStdString(path),
+                                          isDwg ? RS2::FormatDWG : RS2::FormatDXFRW));
+            }
+            std::filesystem::remove(path);
+            std::vector<RS_Spline*> splines;
+            for (RS_Entity* e : reloaded) {
+                auto* spline = dynamic_cast<RS_Spline*>(e);
+                REQUIRE(spline != nullptr);
+                splines.push_back(spline);
+            }
+            REQUIRE(splines.size() == written.size() + 1);
+            const RS_Spline& source = *splines.front();
+            const double scale = 1246.5;
+            for (size_t i = 0; i < written.size(); ++i) {
+                const RS_Spline& piece = *splines[i + 1];
+                const RS_SplineData& b = piece.getData();
+                CHECK(b.degree == 3);
+                CHECK(b.type == RS_SplineData::SplineType::ClampedOpen);
+                CHECK_FALSE(piece.isClosed());
+                CHECK(b.knotslist == written[i].knotslist);
+                CHECK(b.weights == std::vector<double>(4, 1.0));
+                CHECK(b.fitPoints.empty());
+                REQUIRE(b.controlPoints.size() == 4);
+                for (size_t k = 0; k < 4; ++k) {
+                    CHECK(b.controlPoints[k].distanceTo(written[i].controlPoints[k]) <= 1e-12 * scale);
+                }
+                REQUIRE(piece.getLayer() != nullptr);
+                CHECK(piece.getLayer()->getName() == "Offsets");
+                CHECK(piece.getPen(false) == pen);
+                // still the offset, within the budget it was validated against
+                for (int k = 0; k <= 16; ++k) {
+                    const RS_Vector p = jetAt(piece, k / 16.0, LC_CurveEvaluationSide::Interior).point;
+                    CHECK(std::abs(distanceToCurve(source, p) - distance) <= tolerance);
+                }
+                if (i > 0) {
+                    CHECK(piece.getStartpoint().distanceTo(splines[i]->getEndpoint()) <= 1e-12 * scale);
+                }
+            }
+        }
+    }
+}
+
+TEST_CASE("A closed source's offset comes back as an open chain that closes", "[curve-offset][d1][persistence]") {
+    RS_Spline source(nullptr, RS_SplineData(3, false));
+    for (const RS_Vector& p : {RS_Vector{0, 0}, RS_Vector{40, -10}, RS_Vector{60, 30}, RS_Vector{20, 50},
+                               RS_Vector{-15, 25}}) {
+        source.addControlPoint(p);
+    }
+    source.setClosed(true);
+    const std::vector<RS_Entity*> pieces = source.createOffset(RS_Vector{25.0, 20.0}, 2.0); // inside
+    REQUIRE(pieces.size() > 1);
+    std::vector<RS_SplineData> chain;
+    for (RS_Entity* piece : pieces) {
+        chain.push_back(static_cast<RS_Spline*>(piece)->getData());
+        delete piece;
+    }
+    bool exported = false;
+    const std::vector<RS_SplineData> reloaded = roundTrip(chain, RS2::FormatDXFRW, "d1_closed.dxf", exported);
+    REQUIRE(exported);
+    REQUIRE(reloaded.size() == chain.size());
+    for (const RS_SplineData& piece : reloaded) {
+        CHECK_FALSE(RS_Spline(nullptr, piece).isClosed());
+    }
+    CHECK(RS_Spline(nullptr, reloaded.back()).getEndpoint().distanceTo(
+              RS_Spline(nullptr, reloaded.front()).getStartpoint()) < 1e-9);
+}
+
+TEST_CASE("R12 gets each offset piece as a polyline within the export tolerance", "[curve-offset][d1][persistence][r12]") {
+    RS_Spline source(nullptr, sCurveData());
+    const std::vector<RS_Entity*> pieces = source.createOffset(RS_Vector{1240.5, -78.25}, 0.75);
+    REQUIRE(pieces.size() > 1);
+    std::vector<RS_SplineData> stored;
+    for (RS_Entity* piece : pieces) {
+        stored.push_back(static_cast<RS_Spline*>(piece)->getData());
+        delete piece;
+    }
+    ensureSettings();
+    RS_Graphic reloaded;
+    bool exported = false;
+    const std::vector<RS_Polyline*> polylines = r12RoundTrip(reloaded, stored, "d1_r12.dxf", exported);
+    REQUIRE(exported);
+    REQUIRE(polylines.size() == stored.size());
+    for (size_t i = 0; i < stored.size(); ++i) {
+        const RS_Spline piece(nullptr, stored[i]);
+        const std::vector<RS_Vector> vertices = polylineVertices(*polylines[i]);
+        REQUIRE(vertices.size() >= 2);
+        CHECK_FALSE(polylines[i]->isClosed());
+        CHECK(vertices.front().distanceTo(piece.getStartpoint()) <= 1e-9);
+        CHECK(vertices.back().distanceTo(piece.getEndpoint()) <= 1e-9);
+        CHECK(polylineDeviation(piece, vertices, false) <= kR12RelativeTolerance * controlBoxDiagonal(piece));
+    }
+}
+
+TEST_CASE("R12 follows a spline more closely than the segments it is drawn with", "[curve-offset][d1][persistence][r12]") {
+    const RS_SplineData wavy = wavyData();
+    RS_Spline drawn(nullptr, wavy);
+    drawn.update();
+    const double tolerance = kR12RelativeTolerance * controlBoxDiagonal(drawn);
+    const auto exact = [&drawn](const double t) { return jetAt(drawn, t, LC_CurveEvaluationSide::Interior).point; };
+    REQUIRE(displayDeviation(drawn, exact, 0.0, 11.0) > 10.0 * tolerance);
+
+    ensureSettings();
+    RS_Graphic reloaded;
+    bool exported = false;
+    const std::vector<RS_Polyline*> polylines = r12RoundTrip(reloaded, {wavy}, "wavy_r12.dxf", exported, true);
+    REQUIRE(exported);
+    REQUIRE(polylines.size() == 1);
+    const std::vector<RS_Vector> vertices = polylineVertices(*polylines.front());
+    CHECK(vertices.size() > 33);
+    CHECK(polylineDeviation(drawn, vertices, false) <= tolerance);
+}
+
+TEST_CASE("R12 writes a spline that was never drawn, with no stray vertex", "[curve-offset][d1][persistence][r12]") {
+    // No update(): the spline has no drawn segments to enumerate.
+    ensureSettings();
+    RS_Graphic reloaded;
+    bool exported = false;
+    const std::vector<RS_Polyline*> polylines = r12RoundTrip(reloaded, {sCurveData()}, "undrawn_r12.dxf", exported);
+    REQUIRE(exported);
+    REQUIRE(polylines.size() == 1);
+    const RS_Spline spline(nullptr, sCurveData());
+    const std::vector<RS_Vector> vertices = polylineVertices(*polylines.front());
+    REQUIRE(vertices.size() > 2);
+    for (const RS_Vector& v : vertices) {
+        CHECK(v.distanceTo(RS_Vector{0.0, 0.0}) > 1000.0);
+        CHECK(distanceToCurve(spline, v) <= 1e-9);
+    }
+}
+
+TEST_CASE("R12 writes a closed or rational spline within the export tolerance", "[curve-offset][d1][persistence][r12]") {
+    // a circle as four rational quadratic arcs
+    RS_SplineData circle(2, false);
+    const RS_Vector c{-300.0, 75.0};
+    const double r = 40.0;
+    circle.controlPoints = {c + RS_Vector{r, 0},  c + RS_Vector{r, r},   c + RS_Vector{0, r},
+                            c + RS_Vector{-r, r}, c + RS_Vector{-r, 0},  c + RS_Vector{-r, -r},
+                            c + RS_Vector{0, -r}, c + RS_Vector{r, -r},  c + RS_Vector{r, 0}};
+    const double w = std::sqrt(0.5);
+    circle.weights = {1, w, 1, w, 1, w, 1, w, 1};
+    circle.knotslist = {0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 4};
+
+    RS_Spline closed(nullptr, RS_SplineData(3, false));
+    for (const RS_Vector& p : {RS_Vector{0, 0}, RS_Vector{40, -10}, RS_Vector{60, 30}, RS_Vector{20, 50},
+                               RS_Vector{-15, 25}}) {
+        closed.addControlPoint(p);
+    }
+    closed.setClosed(true);
+
+    ensureSettings();
+    RS_Graphic reloaded;
+    bool exported = false;
+    const std::vector<RS_Polyline*> polylines =
+        r12RoundTrip(reloaded, {circle, closed.getData()}, "closed_rational_r12.dxf", exported);
+    REQUIRE(exported);
+    REQUIRE(polylines.size() == 2);
+
+    const std::vector<RS_Vector> ring = polylineVertices(*polylines[0]);
+    const double circleTolerance = kR12RelativeTolerance * controlBoxDiagonal(RS_Spline(nullptr, circle));
+    for (size_t i = 0; i < ring.size(); ++i) {
+        CHECK(std::abs(ring[i].distanceTo(c) - r) <= 1e-9);
+        if (i > 0) {
+            // the sagitta of each chord
+            const double half = ring[i].distanceTo(ring[i - 1]) / 2.0;
+            CHECK(r - std::sqrt(r * r - half * half) <= circleTolerance);
+        }
+    }
+
+    CHECK(polylines[1]->isClosed());
+    const std::vector<RS_Vector> loop = polylineVertices(*polylines[1]);
+    CHECK(polylineDeviation(closed, loop, true) <= kR12RelativeTolerance * controlBoxDiagonal(closed));
+    // the closing segment is implied, not a repeated vertex
+    const std::vector<RS_Vector> distinct(loop.begin(), loop.end() - 1);
+    for (size_t i = 1; i < distinct.size(); ++i) {
+        CHECK(distinct[i].distanceTo(distinct.front()) > 1e-6);
+    }
+}
+
+TEST_CASE("A spline R12 cannot hold within its vertex limit fails the export, writing no part of it",
+          "[curve-offset][d1][persistence][r12]") {
+    RS_SplineData zigzag(3, false);
+    const int count = 1000;
+    for (int i = 0; i < count; ++i) {
+        zigzag.controlPoints.emplace_back(i / static_cast<double>(count), (i % 2 == 0) ? 0.0 : 1.0);
+    }
+    zigzag.knotslist = {0, 0, 0, 0};
+    for (int k = 1; k <= count - 4; ++k) {
+        zigzag.knotslist.push_back(k);
+    }
+    zigzag.knotslist.insert(zigzag.knotslist.end(), 4, count - 3.0);
+    zigzag.weights.assign(count, 1.0);
+    REQUIRE(RS_Spline(nullptr, zigzag).validate());
+
+    ensureSettings();
+    const std::string path = tempPath("over_limit_r12.dxf");
+    {
+        RS_Graphic graphic;
+        graphic.addEntity(new RS_Spline(&graphic, zigzag));
+        RS_FilterDXFRW filter;
+        CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(path), RS2::FormatDXFRW12));
+    }
+    if (std::filesystem::exists(path)) {
+        std::ifstream in(path);
+        const std::string text((std::istreambuf_iterator<char>(in)), std::istreambuf_iterator<char>());
+        CHECK(text.find("POLYLINE") == std::string::npos);
+        CHECK(text.find("VERTEX") == std::string::npos);
+    }
+    std::filesystem::remove(path);
+}
+

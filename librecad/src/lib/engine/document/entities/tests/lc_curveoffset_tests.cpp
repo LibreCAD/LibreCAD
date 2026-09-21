@@ -22,7 +22,9 @@
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 
+#include <algorithm>
 #include <array>
+#include <chrono>
 #include <cmath>
 #include <functional>
 #include <limits>
@@ -591,4 +593,46 @@ TEST_CASE("Closed sources materialize as a closed chain of open pieces", "[curve
         CHECK_FALSE(dynamic_cast<const RS_Spline&>(*entity).isClosed());
     }
     CHECK(result.entities.back()->getEndpoint() == result.entities.front()->getStartpoint());
+}
+
+TEST_CASE("Direct offset of 20-control-point cubics, timed", "[.benchmark][curve-offset]") {
+    // The D1 interactive target: below 50 ms for one regular, open cubic with 20
+    // control points at the default tolerance, measured without sanitizers.
+    struct Shape {
+        const char* name;
+        std::vector<RS_Vector> points;
+        double distance;
+    };
+    std::vector<Shape> shapes{{"wave", {}, 1.0}, {"spiral", {}, 2.0}, {"cubic", {}, 5.0}};
+    for (int i = 0; i < 20; ++i) {
+        shapes[0].points.emplace_back(10.0 * i, 15.0 * std::sin(0.7 * i));
+        const double angle = 0.35 * i;
+        shapes[1].points.emplace_back((40.0 + 4.0 * i) * std::cos(angle), (40.0 + 4.0 * i) * std::sin(angle));
+        shapes[2].points.emplace_back(10.0 * i, 0.02 * (i - 10.0) * (i - 10.0) * (i - 10.0));
+    }
+    for (const Shape& shape : shapes) {
+        RS_SplineData d(3, false);
+        d.controlPoints = shape.points;
+        d.knotslist = {0, 0, 0, 0};
+        for (int k = 1; k <= 16; ++k) {
+            d.knotslist.push_back(k);
+        }
+        d.knotslist.insert(d.knotslist.end(), 4, 17.0);
+        d.weights.assign(20, 1.0);
+        const RS_Spline source(nullptr, d);
+        std::vector<double> ms;
+        size_t pieces = 0;
+        for (int run = 0; run < 41; ++run) {
+            const auto start = std::chrono::steady_clock::now();
+            const LC_CurveOffsetMaterializationResult r = materialize(source, LC_CurveOffsetSide::Left, shape.distance);
+            ms.push_back(std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - start).count());
+            REQUIRE(r.status == LC_CurveOffsetStatus::Ok);
+            pieces = r.entities.size();
+        }
+        std::sort(ms.begin(), ms.end());
+        const double median = ms[ms.size() / 2];
+        const double p95 = ms[ms.size() * 95 / 100];
+        WARN(shape.name << ": " << pieces << " pieces, median " << median << " ms, p95 " << p95 << " ms");
+        CHECK(median < 50.0);
+    }
 }

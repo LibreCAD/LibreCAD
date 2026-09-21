@@ -664,3 +664,54 @@ TEST_CASE("RS_Spline snaps to middle points and distances along it", "[spline][j
     CHECK_FALSE(closed.getNearestMiddle(RS_Vector{0, 0}, &dist, 1).valid);
     CHECK_FALSE(closed.getNearestDist(1.0, RS_Vector{0, 0}, &dist).valid);
 }
+
+TEST_CASE("RS_Spline::tryStroke bounds each chord by the second derivative", "[spline][jet][RS_Spline]") {
+    // degree 1: no second derivative, so the vertices are the control points
+    RS_SplineData polygon(1, false);
+    polygon.controlPoints = {{0, 0}, {3, 1}, {5, -2}, {9, 4}};
+    polygon.knotslist = {0, 0, 1, 2, 3, 3};
+    polygon.weights.assign(4, 1.0);
+    std::vector<RS_Vector> vertices;
+    REQUIRE(RS_Spline(nullptr, polygon).tryStroke(1e-3, 100, vertices));
+    REQUIRE(vertices.size() == 4);
+    for (size_t i = 0; i < 4; ++i) {
+        CHECK(vertices[i].distanceTo(polygon.controlPoints[i]) < 1e-12);
+    }
+
+    // a parabola arc, x = t, y = t^2 on [0, 2]: |C''| = 2 everywhere, so each chord
+    // of parameter length h strays h^2 / 4; its vertices lie on the curve
+    RS_SplineData parabola(2, false);
+    parabola.controlPoints = {{0, 0}, {1, 0}, {2, 4}};
+    parabola.knotslist = {0, 0, 0, 1, 1, 1};
+    parabola.weights.assign(3, 1.0);
+    const RS_Spline arc(nullptr, parabola);
+    const double tolerance = 1e-3;
+    REQUIRE(arc.tryStroke(tolerance, 1000, vertices));
+    CHECK(vertices.size() > 2);
+    for (size_t i = 1; i < vertices.size(); ++i) {
+        CHECK(std::abs(vertices[i].y - vertices[i].x * vertices[i].x) < 1e-12);
+        const double h = (vertices[i].x - vertices[i - 1].x) / 2.0; // in parameter
+        CHECK(h * h / 4.0 * 2.0 <= tolerance);
+    }
+
+    // past the vertex limit, or with no usable tolerance: nothing
+    CHECK_FALSE(arc.tryStroke(tolerance, 3, vertices));
+    CHECK(vertices.empty());
+    CHECK_FALSE(arc.tryStroke(0.0, 1000, vertices));
+    CHECK_FALSE(arc.tryStroke(std::nan(""), 1000, vertices));
+}
+
+TEST_CASE("RS_Spline::tryStroke starts a span after a break at its own point", "[spline][jet][RS_Spline]") {
+    // a knot of multiplicity degree + 1 in the middle: two unconnected lines
+    RS_SplineData broken(1, false);
+    broken.controlPoints = {{0, 0}, {4, 0}, {4, 3}, {8, 3}};
+    broken.knotslist = {0, 0, 1, 1, 2, 2};
+    broken.weights.assign(4, 1.0);
+    const RS_Spline spline(nullptr, broken);
+    REQUIRE(spline.validate());
+    std::vector<RS_Vector> vertices;
+    REQUIRE(spline.tryStroke(1e-3, 100, vertices));
+    REQUIRE(vertices.size() == 4);
+    CHECK(vertices[1].distanceTo(RS_Vector{4, 0}) < 1e-12);
+    CHECK(vertices[2].distanceTo(RS_Vector{4, 3}) < 1e-12);
+}

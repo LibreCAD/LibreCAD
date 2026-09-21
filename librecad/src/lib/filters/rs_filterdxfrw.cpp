@@ -864,6 +864,44 @@ bool differsFromUnitWeight(double weight) {
   return std::fabs(weight - 1.0) > 1e-12;
 }
 
+// R12 has no SPLINE entity: an RS_Spline goes out as a POLYLINE within this
+// fraction of the diagonal of its control points' box, with at most
+// kMaxR12SplineVertices vertices. Unrelated to the drawn segments, to
+// $SPLINESEGS and to the offset engine's modeling tolerance. Over 637 splines
+// of the DXF/DWG test corpora the median needs 63 vertices, the largest 542.
+constexpr double kR12SplineRelativeTolerance = 1e-4;
+constexpr size_t kMaxR12SplineVertices = 32767;
+
+/** The vertices of the POLYLINE an R12 file stores for @p s; false if none fits. */
+bool r12SplineVertices(const RS_Spline &s, std::vector<RS_Vector> &vertices) {
+  vertices.clear();
+  RS_Vector low{false};
+  RS_Vector high{false};
+  double coordinate = 0.0;
+  for (const RS_Vector &v : s.getUnwrappedControlPoints()) {
+    if (!std::isfinite(v.x) || !std::isfinite(v.y)) {
+      return false;
+    }
+    low = RS_Vector::minimum(low, v);
+    high = RS_Vector::maximum(high, v);
+    coordinate = std::max({coordinate, std::abs(v.x), std::abs(v.y)});
+  }
+  const double size = low.valid ? low.distanceTo(high) : 0.0;
+  const double floor = 64.0 * std::numeric_limits<double>::epsilon() *
+                       std::max(coordinate, std::numeric_limits<double>::min());
+  const double tolerance = std::max(kR12SplineRelativeTolerance * size, floor);
+  if (!std::isfinite(tolerance) ||
+      !s.tryStroke(tolerance, kMaxR12SplineVertices, vertices)) {
+    return false;
+  }
+  // a closed POLYLINE repeats no vertex
+  if (s.isClosed() && vertices.size() > 2 &&
+      vertices.back().distanceTo(vertices.front()) <= tolerance) {
+    vertices.pop_back();
+  }
+  return true;
+}
+
 bool hasRationalSplineWeights(const DRW_Spline *data) {
   if (data == nullptr)
     return false;
@@ -29239,19 +29277,23 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
     return;
   }
 
-  // version 12 do not support Spline write as polyline
+  // R12 has no SPLINE: write a polyline within its export tolerance, or
+  // nothing and fail the export
   if (m_version == 1009) {
+    std::vector<RS_Vector> vertices;
+    if (!r12SplineVertices(*s, vertices)) {
+      RS_DEBUG->print(RS_Debug::D_ERROR,
+                      "RS_FilterDXFRW::writeSpline: no R12 polyline within "
+                      "tolerance and vertex limit");
+      m_writeFailed = true;
+      return;
+    }
     DRW_Polyline pol;
-    for (RS_Entity *e :
-         lc::LC_ContainerTraverser{*s, RS2::ResolveNone}.entities()) {
-      pol.addVertex(
-          DRW_Vertex(e->getStartpoint().x, e->getStartpoint().y, 0.0, 0.0));
+    for (const RS_Vector &v : vertices) {
+      pol.addVertex(DRW_Vertex(v.x, v.y, 0.0, 0.0));
     }
     if (s->isClosed()) {
       pol.flags = 1;
-    } else {
-      pol.addVertex(
-          DRW_Vertex(s->getEndpoint().x, s->getEndpoint().y, 0.0, 0.0));
     }
     getEntityAttributes(&pol, s);
     noteDxfWrite(m_dxfW->writePolyline(&pol));

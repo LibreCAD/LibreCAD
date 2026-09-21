@@ -1606,6 +1606,73 @@ bool RS_Spline::tryBoundJet(const double a, const double b, LC_CurveJetBounds &b
   return true;
 }
 
+bool RS_Spline::tryStroke(const double tolerance, const size_t maxVertices,
+                          std::vector<RS_Vector> &vertices) const {
+  vertices.clear();
+  const std::vector<double> breaks = getBreakParameters();
+  if (breaks.size() < 2 || !std::isfinite(tolerance) || tolerance <= 0.0 || maxVertices < 2) {
+    return false;
+  }
+  const auto fail = [&vertices] {
+    vertices.clear();
+    return false;
+  };
+  const auto append = [&](const double t, const LC_CurveEvaluationSide side) {
+    LC_CurveJet jet;
+    if (vertices.size() >= maxVertices || !tryEvaluateJet(t, side, jet)) {
+      return false;
+    }
+    vertices.push_back(jet.point);
+    return true;
+  };
+  if (!append(breaks.front(), LC_CurveEvaluationSide::Right)) {
+    return fail();
+  }
+  // A knot of full multiplicity may break the curve: a span starts at its own
+  // right limit when that is more than jumpSlack away. Chords get the rest.
+  const double jumpSlack = tolerance / 8.0;
+  const double chordTolerance = tolerance - jumpSlack;
+  std::vector<std::pair<double, double>> pending;
+  for (size_t i = 1; i < breaks.size(); ++i) {
+    if (i > 1) {
+      LC_CurveJet start;
+      if (!tryEvaluateJet(breaks[i - 1], LC_CurveEvaluationSide::Right, start)) {
+        return fail();
+      }
+      if (start.point.distanceTo(vertices.back()) > jumpSlack &&
+          !append(breaks[i - 1], LC_CurveEvaluationSide::Right)) {
+        return fail();
+      }
+    }
+    pending.assign(1, {breaks[i - 1], breaks[i]});
+    while (!pending.empty()) {
+      const auto [a, b] = pending.back();
+      pending.pop_back();
+      LC_CurveJetBounds bounds;
+      if (!tryBoundJet(a, b, bounds)) {
+        return fail();
+      }
+      const double ddx = std::max(std::abs(bounds.ddx.lo()), std::abs(bounds.ddx.hi()));
+      const double ddy = std::max(std::abs(bounds.ddy.lo()), std::abs(bounds.ddy.hi()));
+      const double h = b - a;
+      if (h * h / 8.0 * std::hypot(ddx, ddy) > chordTolerance) {
+        const double mid = a + 0.5 * h;
+        if (!(mid > a && mid < b)) {
+          return fail(); // no parameter left to split
+        }
+        pending.emplace_back(mid, b);
+        pending.emplace_back(a, mid);
+        continue;
+      }
+      const bool spanEnd = b == breaks[i];
+      if (!append(b, spanEnd ? LC_CurveEvaluationSide::Left : LC_CurveEvaluationSide::Interior)) {
+        return fail();
+      }
+    }
+  }
+  return true;
+}
+
 bool RS_Spline::tryEvaluateJet(double t, const LC_CurveEvaluationSide side, LC_CurveJet &jet) const {
   jet = LC_CurveJet{};
   double t0 = 0.0;

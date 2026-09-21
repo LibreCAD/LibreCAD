@@ -341,6 +341,16 @@ public:
    */
   bool tryBoundJet(double a, double b, LC_CurveJetBounds &bounds) const;
 
+  /**
+   * The vertices of a polyline within @p tolerance of the curve, independent
+   * of the segments it is drawn with. Each chord lies in one knot span, and a
+   * chord over a parameter interval of length h strays at most h^2 / 8 times
+   * the largest |C''| there, which tryBoundJet() bounds.
+   * @return false, with @p vertices empty, if the curve cannot be bounded or
+   *         needs more than @p maxVertices vertices.
+   */
+  bool tryStroke(double tolerance, size_t maxVertices, std::vector<RS_Vector> &vertices) const;
+
   friend class RS_FilterDXFRW;
 protected:
     /** Nearest endpoint or control point */
