@@ -263,6 +263,14 @@ LC_CurveOffsetMaterializationResult materializeBranches(const RS_Entity& source,
                                                         const LC_CurveOffsetOptions& options,
                                                         const LC_OffsetSourceBudget& budget);
 
+/**
+ * RS_Entity::createOffset() for splines: the Direct offset through @p coord at
+ * |@p distance| with default options and limits. The entities are released
+ * only when the whole result is valid; any failure gives an empty vector.
+ * Callers that must tell a failure from "not handled" use createEntities().
+ */
+std::vector<RS_Entity*> createLegacyOffset(const RS_Entity& source, const RS_Vector& coord, double distance);
+
 /** buildDirectBranches(), then materializeBranches(): the programmatic entry point. */
 LC_CurveOffsetMaterializationResult createEntities(const RS_Entity& source, const LC_CurveOffsetRequest& request,
                                                    const LC_CurveOffsetOptions& options,

@@ -1811,14 +1811,19 @@ LC_RoundResult RS_Modification::round(const RS_Vector& coord, const RS_Vector& c
         return result;
     }
 
-    // create 2 tmp parallels
-    QList<RS_Entity*> parallels;
-    RS_Creation::createParallel(coord, data.radius, 1, entity1, false, parallels);
-    std::unique_ptr<RS_Entity> par1{parallels.empty() ? nullptr : parallels.front()};
-    parallels.clear();
-
-    RS_Creation::createParallel(coord, data.radius, 1, entity2, false, parallels);
-    std::unique_ptr<RS_Entity> par2{parallels.empty() ? nullptr : parallels.front()};
+    // create 2 tmp parallels; the fillet needs each as one curve, so an offset
+    // made of several pieces (a spline's) counts as none
+    auto singleParallel = [&coord, &data](RS_AtomicEntity* entity) {
+        QList<RS_Entity*> parallels;
+        RS_Creation::createParallel(coord, data.radius, 1, entity, false, parallels);
+        if (parallels.size() != 1) {
+            qDeleteAll(parallels);
+            return std::unique_ptr<RS_Entity>{};
+        }
+        return std::unique_ptr<RS_Entity>{parallels.front()};
+    };
+    const std::unique_ptr<RS_Entity> par1 = singleParallel(entity1);
+    const std::unique_ptr<RS_Entity> par2 = singleParallel(entity2);
 
     if (par1 == nullptr || par2 == nullptr) {
         result.error = LC_RoundResult::NO_PARALLELS;

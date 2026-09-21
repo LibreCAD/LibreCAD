@@ -358,13 +358,18 @@ void RS_Creation::createParallelSplinePoints(const RS_Vector& coord, const doubl
                                              QList<RS_Entity*>& createdEntities) {
     Q_ASSERT(e != nullptr);
 
-    LC_SplinePoints* psp = nullptr;
+    // A spline's offset may change type and have several pieces, so each copy
+    // comes from createOffset(). A copy that fails ends the series instead of
+    // adding an unchanged clone: a larger distance on the same side fails too.
     for (int i = 1; i <= number; ++i) {
-        psp = static_cast<LC_SplinePoints*>(e->clone());
-        psp->offset(coord, i * distance);
-        psp->setParent(nullptr);
-
-        createdEntities.push_back(psp);
+        const std::vector<RS_Entity*> copy = e->createOffset(coord, i * distance);
+        if (copy.empty()) {
+            break;
+        }
+        for (RS_Entity* piece : copy) {
+            piece->setParent(nullptr);
+            createdEntities.push_back(piece);
+        }
     }
 }
 

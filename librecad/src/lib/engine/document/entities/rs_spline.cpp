@@ -33,6 +33,7 @@
 #include <iostream>
 #include <limits>
 
+#include "lc_curveoffset.h"
 #include "lc_splinehelper.h"
 #include "rs_debug.h"
 #include "rs_line.h"
@@ -810,6 +811,10 @@ void RS_Spline::revertDirection() {
   mirror(m_data.knotslist);
   mirror(m_data.savedOpenKnots);
   update();
+}
+
+std::vector<RS_Entity *> RS_Spline::createOffset(const RS_Vector &coord, const double &distance) const {
+  return LC_CurveOffset::createLegacyOffset(*this, coord, distance);
 }
 
 /** Draw */

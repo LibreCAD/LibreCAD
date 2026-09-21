@@ -1277,4 +1277,18 @@ LC_CurveOffsetMaterializationResult createEntities(const RS_Entity& source, cons
     return materializeBranches(source, geometry, options, budget);
 }
 
+std::vector<RS_Entity*> createLegacyOffset(const RS_Entity& source, const RS_Vector& coord, const double distance) {
+    const double magnitude = std::abs(distance);
+    LC_CurveOffsetMaterializationResult result =
+        createEntities(source, makeDirectionRequest(coord, magnitude), makeDirectOptions(source, magnitude),
+                       makeDirectSourceBudget());
+    std::vector<RS_Entity*> entities;
+    if (result.status == LC_CurveOffsetStatus::Ok) {
+        for (std::unique_ptr<RS_Entity>& entity : result.entities) {
+            entities.push_back(entity.release());
+        }
+    }
+    return entities;
+}
+
 } // namespace LC_CurveOffset

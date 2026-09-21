@@ -2484,6 +2484,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/entities/tests/lc_spline_d0_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_curveoffset_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_offsetoutputbudget_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_curveoffset_entity_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_circletests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_arctests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_dimarrowtests.cpp

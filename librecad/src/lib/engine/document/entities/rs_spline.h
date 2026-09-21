@@ -204,6 +204,9 @@ public:
 
   /** Revert direction by reversing points, weights, knots */
   void revertDirection() override;
+  /** The offset through @p coord at |@p distance|, from the offset engine:
+   *  several cubic RS_Spline pieces, or nothing on failure. */
+  std::vector<RS_Entity *> createOffset(const RS_Vector &coord, const double &distance) const override;
 
   /** Draw spline with painter */
   void draw(RS_Painter *painter) override;

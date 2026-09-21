@@ -201,7 +201,16 @@ public:
 
     void calculateBorders() override;
 
+    /**
+     * Offsets this spline in place, keeping its type. Kept for compatibility: an
+     * offset of a spline is generally not a spline of the same kind, so general
+     * callers use createOffset(). A failure leaves the spline unchanged.
+     */
     bool offset(const RS_Vector& coord, double distance) override;
+    /** The offset through @p coord at |@p distance|, from the offset engine:
+     *  several cubic RS_Spline pieces, or nothing on failure. */
+    std::vector<RS_Entity*> createOffset(const RS_Vector& coord, const double& distance) const override;
+    /** Both offsets at |@p distance|, or nothing unless both succeed. */
     std::vector<RS_Entity*> offsetTwoSides(double distance) const override;
 
     static RS_VectorSolutions getIntersection(const RS_Entity* e1, const RS_Entity* e2);
@@ -295,8 +304,6 @@ private:
 
     bool offsetCut(const RS_Vector& coord, const double& distance);
     bool offsetSpline(const RS_Vector& coord, const double& distance);
-    std::vector<RS_Entity*> offsetTwoSidesSpline(const double& distance) const;
-    std::vector<RS_Entity*> offsetTwoSidesCut(const double& distance) const;
     LC_SplinePointsData m_data;
 
 };
