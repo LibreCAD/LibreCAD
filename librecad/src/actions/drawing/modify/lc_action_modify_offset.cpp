@@ -27,6 +27,7 @@
 #include "lc_action_modify_offset.h"
 
 #include <cmath>
+#include <unordered_set>
 
 #include "lc_actioninfomessagebuilder.h"
 #include "lc_offset_options_filler.h"
@@ -104,22 +105,33 @@ bool LC_ActionModifyOffset::doTriggerModifications(LC_DocumentModificationBatch&
 void LC_ActionModifyOffset::doTriggerSelectionUpdate(const bool keepSelected, const LC_DocumentModificationBatch& ctx) {
     // Only sources that were offset change selection; a failed source stays
     // selected. A removed source is known by identity only and never touched.
-    if (ctx.success && m_pendingOutcome != nullptr) {
-        for (const LC_OffsetSourceOutcome& source : std::as_const(m_pendingOutcome->sources)) {
-            if (!source.succeeded()) {
-                continue;
-            }
-            if (m_offsetData->keepOriginals) {
-                for (RS_Entity* selected : std::as_const(m_selectedEntities)) {
-                    if (selected == source.source) {
-                        unselect(selected);
-                    }
-                }
-            }
-            if (keepSelected) {
-                select(source.createdEntities);
-            }
+    // One bulk call each way: without additive selection, select() clears
+    // whatever it was not given.
+    if (!ctx.success || m_pendingOutcome == nullptr) {
+        return;
+    }
+    std::unordered_set<const RS_Entity*> offsetSources;
+    QList<RS_Entity*> toSelect;
+    for (const LC_OffsetSourceOutcome& source : std::as_const(m_pendingOutcome->sources)) {
+        if (source.succeeded()) {
+            offsetSources.insert(source.source);
+            toSelect.append(source.createdEntities);
         }
+    }
+    QList<RS_Entity*> toUnselect;
+    for (RS_Entity* selected : std::as_const(m_selectedEntities)) {
+        if (offsetSources.count(selected) == 0) {
+            toSelect.append(selected); // not offset: stays selected
+        }
+        else if (m_offsetData->keepOriginals) {
+            toUnselect.append(selected);
+        }
+    }
+    if (!toUnselect.isEmpty()) {
+        unselect(toUnselect);
+    }
+    if (keepSelected) {
+        select(toSelect);
     }
 }
 

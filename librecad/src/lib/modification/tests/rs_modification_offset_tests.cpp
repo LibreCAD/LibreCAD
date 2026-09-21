@@ -380,6 +380,21 @@ TEST_CASE("Output limits count every copy of a source, and the request", "[modif
     CHECK(outcomeFor(shared, spline.get()).status == LC_OffsetSourceStatus::LimitExceeded);
     CHECK(outcomeFor(shared, &small).succeeded());
     CHECK(three.ctx.entitiesToAdd.size() == 1);
+
+    // other entities count their copies the same way: a circle's copy is one
+    // entity, so room for one fits the first copy and not the second
+    RS_Circle circle{nullptr, RS_CircleData{RS_Vector{0.0, 0.0}, 20.0}};
+    RS_OffsetData copies = towards(RS_Vector{0.0, 0.0}, 1.0);
+    copies.multipleCopies = true;
+    copies.number = 50;
+    LC_OffsetBatchLimits oneEntity;
+    oneEntity.perSource.maxOutputEntities = 1;
+    BatchGuard four;
+    const LC_OffsetBatchOutcome refused =
+        RS_Modification::offsetWithOutcome(copies, {&circle}, false, oneEntity, four.ctx);
+    CHECK(refused.sources.front().status == LC_OffsetSourceStatus::LimitExceeded);
+    CHECK(four.ctx.entitiesToAdd.isEmpty());
+    CHECK(four.ctx.entitiesToDelete.isEmpty());
 }
 
 TEST_CASE("A preview batch holds additions only", "[modification][offset]") {

@@ -28,10 +28,13 @@
 
 #include <QStringList>
 
+#include "lc_action_draw_line_parallel_through.h"
 #include "lc_action_modify_offset.h"
 #include "lc_actiontestsupport.h"
+#include "lc_parabola.h"
 #include "lc_splinepoints.h"
 #include "rs_circle.h"
+#include "rs_creation.h"
 #include "rs_line.h"
 #include "rs_modification.h"
 #include "rs_preview.h"
@@ -72,6 +75,16 @@ public:
     using RS_PreviewActionInterface::catchEntityByEvent;
     using RS_PreviewActionInterface::deletePreviewAndHighlights;
     using RS_PreviewActionInterface::drawPreviewAndHighlights;
+    using RS_PreviewActionInterface::m_preview;
+};
+
+class ParallelThroughProbe final : public LC_ActionDrawLineParallelThrough {
+public:
+    explicit ParallelThroughProbe(LC_ActionContext* context) : LC_ActionDrawLineParallelThrough(context) {}
+
+    using LC_ActionDrawLineParallelThrough::SetPos;
+    using LC_ActionDrawLineParallelThrough::m_entity;
+    using LC_ActionDrawLineParallelThrough::onMouseMoveEvent;
     using RS_PreviewActionInterface::m_preview;
 };
 
@@ -351,4 +364,54 @@ TEST_CASE("A failed preview request leaves no stale preview", "[curve-offset][ac
     REQUIRE(spline->tryEvaluateJet(0.3, LC_CurveEvaluationSide::Interior, jet));
     f.hoverAt(jet.point.x, jet.point.y);
     CHECK(f.previewCount(RS2::EntitySpline) == 0);
+}
+
+TEST_CASE("Without additive selection every offset, and every failed source, stays selected", "[curve-offset][action]") {
+    OffsetFixture f;
+    RS_Circle* inner = f.add(new RS_Circle(&f.m_graphic, RS_CircleData{RS_Vector{0.0, 3.0}, 20.0}));
+    RS_Circle* outer = f.add(new RS_Circle(&f.m_graphic, RS_CircleData{RS_Vector{0.0, 3.0}, 25.0}));
+    RS_Spline* parabola = f.addParabola(); // singular at 0.5 inside
+    f.select({inner, outer, parabola});
+    // one select() per source cleared the others' results when selection is not additive
+    struct Additivity {
+        Additivity() { LC_SET_ONE("Selection", "Additivity", false); }
+        ~Additivity() { LC_SET_ONE("Selection", "Additivity", true); }
+    } off;
+    f.start(0.5, true);
+    f.clickAt(0.0, 3.0);
+
+    CHECK_FALSE(inner->isSelected());
+    CHECK_FALSE(outer->isSelected());
+    CHECK(parabola->isSelected());
+    int selectedOffsets = 0;
+    for (const RS_Entity* e : f.m_graphic) {
+        if (e->rtti() == RS2::EntityCircle && e != inner && e != outer) {
+            selectedOffsets += e->isSelected() ? 1 : 0;
+        }
+    }
+    CHECK(selectedOffsets == 2);
+}
+
+TEST_CASE("Parallel Through previews every piece of a parabola's offset", "[curve-offset][action]") {
+    OffsetFixture f;
+    auto* parabola = f.add(new LC_Parabola(&f.m_graphic, LC_ParabolaData{std::array<RS_Vector, 3>{
+                                                             RS_Vector{-4.0, 4.0}, RS_Vector{0.0, -4.0},
+                                                             RS_Vector{4.0, 4.0}}}));
+    // what the command will create through (0, -1)
+    QList<RS_Entity*> created;
+    RS_Creation::createParallelThrough(RS_Vector{0.0, -1.0}, 1, parabola, false, false, created);
+    const qsizetype pieces = created.size();
+    qDeleteAll(created);
+    // more pieces than a list of 32-segment splines fits in the preview limit of 100
+    REQUIRE(pieces > 4);
+
+    ParallelThroughProbe action(&f.m_context);
+    action.m_entity = parabola;
+    const LC_MouseEvent e = eventAt(0.0, -1.0);
+    action.onMouseMoveEvent(ParallelThroughProbe::SetPos, &e);
+    int previewed = 0;
+    for (const RS_Entity* entity : *action.m_preview) {
+        previewed += entity->rtti() == RS2::EntitySpline ? 1 : 0;
+    }
+    CHECK(previewed == pieces);
 }

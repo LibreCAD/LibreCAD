@@ -1178,6 +1178,9 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcome(const RS_OffsetData& da
         }
         else {
             for (int num = 1; num <= numberOfCopies; ++num) {
+                if (!isValidOffsetBudget(remainingBudget(budget, usage))) {
+                    return LC_OffsetSourceStatus::LimitExceeded;
+                }
                 std::vector<std::unique_ptr<RS_Entity>> copy;
                 // First try the type-changing path (e.g. ellipse → spline).
                 for (RS_Entity* off : e.createOffset(data.coord, num * data.distance)) {
@@ -1195,9 +1198,12 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcome(const RS_OffsetData& da
                 for (const std::unique_ptr<RS_Entity>& entity : copy) {
                     copyRoots.push_back(entity.get());
                 }
-                const LC_OffsetTreeCost cost = measureOffsetOutput(copyRoots, budget.maxDeepEntities);
+                // against what the earlier copies left, as for splines
+                const LC_OffsetTreeCost cost =
+                    measureOffsetOutput(copyRoots, remainingBudget(budget, usage).maxDeepEntities);
                 if (cost.status != LC_OffsetTreeStatus::Ok ||
-                    !addUsage(usage, LC_OffsetOutputUsage{0, copy.size(), cost.deepEntities})) {
+                    !addUsage(usage, LC_OffsetOutputUsage{0, copy.size(), cost.deepEntities}) ||
+                    !withinBudget(usage, budget)) {
                     return LC_OffsetSourceStatus::LimitExceeded;
                 }
                 for (std::unique_ptr<RS_Entity>& entity : copy) {
