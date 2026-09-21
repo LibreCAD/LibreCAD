@@ -422,25 +422,87 @@ public:
           m_speedFloor{speedFloor} {
     }
 
-    LC_CurveOffsetStatus build(LC_OffsetBranch& branch) {
+    /**
+     * The offset as branches in source order. A cusp, inside a span or at a
+     * join marked in @p joinCusps (entry 0 for the seam of a closed source),
+     * ends one branch and starts the next at the same point. A closed source
+     * gives one closed branch without cusps; with them, the branch across its
+     * seam runs from the last cusp to the first.
+     */
+    LC_CurveOffsetStatus build(const std::vector<bool>& joinCusps, std::vector<LC_OffsetBranch>& branches) {
         const std::vector<double>& breaks = m_source.breaks();
+        std::vector<double> cusps;
+        LC_CurveOffsetStatus status = isolateCusps(joinCusps, cusps);
+        if (status != LC_CurveOffsetStatus::Ok) {
+            return status;
+        }
+        // a cusp that fell exactly on a break acts as a join cusp there
+        std::vector<bool> breakCusps = joinCusps;
+        for (size_t i = 0; i < breaks.size(); ++i) {
+            if (std::binary_search(cusps.begin(), cusps.end(), breaks[i])) {
+                breakCusps[(i + 1 == breaks.size()) ? 0 : i] = true;
+            }
+        }
+        branches.assign(1, LC_OffsetBranch{});
+        auto next = cusps.begin();
         for (size_t span = 0; span + 1 < breaks.size(); ++span) {
-            const LC_CurveOffsetStatus status = fitSpan(span, breaks[span], breaks[span + 1], branch);
+            const double a = breaks[span];
+            const double b = breaks[span + 1];
+            if (span > 0 && breakCusps[span]) {
+                branches.emplace_back();
+            }
+            double from = a;
+            for (; next != cusps.end() && *next < b; ++next) {
+                if (*next <= a) {
+                    continue;
+                }
+                status = fitSpan(span, from, *next, branches.back());
+                if (status != LC_CurveOffsetStatus::Ok) {
+                    return status;
+                }
+                branches.emplace_back();
+                from = *next;
+            }
+            status = fitSpan(span, from, b, branches.back());
             if (status != LC_CurveOffsetStatus::Ok) {
                 return status;
             }
         }
-        if (branch.cubicPieces.empty()) {
-            return LC_CurveOffsetStatus::InvalidSource;
+        for (size_t i = 0; i < branches.size(); ++i) {
+            if (branches[i].cubicPieces.empty()) {
+                return LC_CurveOffsetStatus::InvalidSource;
+            }
+            if (i > 0) {
+                // branches meet at their cusp exactly; across a join its two
+                // evaluations differ by rounding
+                const RS_Vector& end = branches[i - 1].cubicPieces.back().bezier[3];
+                RS_Vector& start = branches[i].cubicPieces.front().bezier[0];
+                if (start.distanceTo(end) > m_options.tolerance.nodeMerge) {
+                    return LC_CurveOffsetStatus::DiscontinuousNormal;
+                }
+                start = end;
+            }
         }
         if (m_source.closed()) {
-            auto& last = branch.cubicPieces.back().bezier[3];
-            const RS_Vector& first = branch.cubicPieces.front().bezier[0];
+            auto& last = branches.back().cubicPieces.back().bezier[3];
+            const RS_Vector& first = branches.front().cubicPieces.front().bezier[0];
             if (last.distanceTo(first) > m_options.tolerance.nodeMerge) {
                 return LC_CurveOffsetStatus::DiscontinuousNormal;
             }
             last = first;
-            branch.closed = true;
+            if (!breakCusps[0]) {
+                if (branches.size() == 1) {
+                    branches.front().closed = true;
+                }
+                else {
+                    // the last branch continues across the seam into the first
+                    std::vector<LC_OffsetCubicPiece>& wrapped = branches.back().cubicPieces;
+                    wrapped.insert(wrapped.end(), branches.front().cubicPieces.begin(),
+                                   branches.front().cubicPieces.end());
+                    branches.front().cubicPieces = std::move(wrapped);
+                    branches.pop_back();
+                }
+            }
         }
         return LC_CurveOffsetStatus::Ok;
     }
@@ -484,6 +546,155 @@ private:
     double speedAt(const double t, const LC_CurveEvaluationSide side) const {
         LC_CurveJet c;
         return m_source.jet(t, side, c) ? c.first.magnitude() : 0.0;
+    }
+
+    /** Boxes too small to split in which regularity could not be proved, consecutive in parameter. */
+    struct Run {
+        double t0;
+        double t1;
+        /** A bound on how far the offset moves over the run. */
+        double extent;
+        unsigned boxes;
+        /** The span of the run's last box, and that box, for a failure report. */
+        size_t span;
+        Leaf last;
+    };
+
+    /**
+     * The cusps of the offset away from the joins, in source order. Every span
+     * is proved box by box to have a nonvanishing tangent and 1 - d kappa away
+     * from zero, except for runs of boxes too small to split. A run continues
+     * across a join where 1 - d kappa keeps its sign, and across the seam of a
+     * closed source, since a root next to either leaves unproved boxes on both
+     * sides. A run across which 1 - d kappa changes sign, and over which the
+     * offset moves less than the fit tolerance, holds one cusp, found by
+     * bisection. Any other run is a singularity the offset is not split at: a
+     * vanishing tangent, a zero that touches without crossing, or roots too
+     * close to tell apart.
+     */
+    LC_CurveOffsetStatus isolateCusps(const std::vector<bool>& joinCusps, std::vector<double>& cusps) {
+        constexpr unsigned maxRunBoxes = 64;
+        const std::vector<double>& breaks = m_source.breaks();
+        std::vector<Run> runs;
+        for (size_t span = 0; span + 1 < breaks.size(); ++span) {
+            const double a = breaks[span];
+            const double b = breaks[span + 1];
+            std::vector<Leaf> stack{{a, b, 0}};
+            while (!stack.empty()) {
+                const Leaf leaf = stack.back();
+                stack.pop_back();
+                LC_CurveJetBounds bounds;
+                const bool bounded = m_source.boundJet(leaf.t0, leaf.t1, bounds);
+                const bool speedProved = bounded && bounds.speedSquared().isPositive();
+                const LC_Interval g = bounded ? bounds.offsetFactorNumerator(m_d) : LC_Interval{};
+                if (speedProved && g.excludesZero()) {
+                    continue;
+                }
+                const double mid = leaf.t0 + 0.5 * (leaf.t1 - leaf.t0);
+                if (leaf.depth < m_options.maxSubdivisionDepth && mid > leaf.t0 && mid < leaf.t1) {
+                    split(stack, leaf, 0.5);
+                    continue;
+                }
+                if (!speedProved) {
+                    return irregularity(leaf, false, a, b);
+                }
+                // the offset moves at |Q'| = |1 - d kappa| |C'| = |g| / |C'|^2
+                const double extent =
+                    std::max(std::abs(g.lo()), std::abs(g.hi())) / bounds.speedSquared().lo() * (leaf.t1 - leaf.t0);
+                const bool continues = !runs.empty() && runs.back().t1 == leaf.t0 && !(leaf.t0 == a && joinCusps[span]);
+                if (continues) {
+                    Run& run = runs.back();
+                    run.t1 = leaf.t1;
+                    run.extent += extent;
+                    ++run.boxes;
+                    run.span = span;
+                    run.last = leaf;
+                }
+                else {
+                    runs.push_back(Run{leaf.t0, leaf.t1, extent, 1, span, leaf});
+                }
+                const Run& run = runs.back();
+                if (run.boxes > maxRunBoxes || !(run.extent <= m_options.tolerance.fit)) {
+                    return irregularity(leaf, true, a, b);
+                }
+            }
+        }
+        // a run across the seam: from the last one, at the end, into the first
+        bool wraps = false;
+        if (m_source.closed() && !joinCusps[0] && runs.size() > 1 && runs.front().t0 == breaks.front() &&
+            runs.back().t1 == breaks.back()) {
+            wraps = true;
+            if (runs.front().boxes + runs.back().boxes > maxRunBoxes ||
+                !(runs.front().extent + runs.back().extent <= m_options.tolerance.fit)) {
+                const Run& run = runs.back();
+                return irregularity(run.last, true, breaks[run.span], breaks[run.span + 1]);
+            }
+        }
+        for (size_t i = wraps ? 1 : 0; i < runs.size(); ++i) {
+            const Run& run = runs[i];
+            if (wraps && i + 1 == runs.size()) {
+                // from the start of the last run to the end of the first
+                const LC_CurveOffsetStatus status =
+                    bisectCusp(run.t0, breaks.back(), runs.front().t0, runs.front().t1, run, cusps);
+                if (status != LC_CurveOffsetStatus::Ok) {
+                    return status;
+                }
+                continue;
+            }
+            const LC_CurveOffsetStatus status = bisectCusp(run.t0, run.t1, run.t1, run.t1, run, cusps);
+            if (status != LC_CurveOffsetStatus::Ok) {
+                return status;
+            }
+        }
+        std::sort(cusps.begin(), cusps.end());
+        return LC_CurveOffsetStatus::Ok;
+    }
+
+    /**
+     * The root of 1 - d kappa in the run [t0, t1], continued over [u0, u1]
+     * when the run wraps a closed source's seam (u0 is then the domain start;
+     * otherwise u0 == u1 == t1). It must change sign across the run.
+     */
+    LC_CurveOffsetStatus bisectCusp(double lo, double hi, const double u0, const double u1, const Run& run,
+                                    std::vector<double>& cusps) {
+        const std::vector<double>& breaks = m_source.breaks();
+        const bool wraps = u0 != u1;
+        const double g0 = factorNumeratorAt(lo, LC_CurveEvaluationSide::Right);
+        const double g1 = factorNumeratorAt(wraps ? u1 : hi, LC_CurveEvaluationSide::Left);
+        if (!(std::isfinite(g0) && std::isfinite(g1) && g0 != 0.0 && g1 != 0.0) ||
+            std::signbit(g0) == std::signbit(g1)) {
+            return irregularity(run.last, true, breaks[run.span], breaks[run.span + 1]);
+        }
+        if (wraps) {
+            // the sign changes before the seam or after it
+            const double atEnd = factorNumeratorAt(hi, LC_CurveEvaluationSide::Left);
+            if (!std::isfinite(atEnd) || atEnd == 0.0) {
+                return LC_CurveOffsetStatus::SingularOffset;
+            }
+            if (std::signbit(atEnd) == std::signbit(g0)) {
+                lo = u0;
+                hi = u1;
+            }
+        }
+        const double gLo = factorNumeratorAt(lo, LC_CurveEvaluationSide::Right);
+        while (true) {
+            const double mid = lo + 0.5 * (hi - lo);
+            if (!(mid > lo && mid < hi)) {
+                break;
+            }
+            // the right limit is the value inside a span and exists at a break too
+            const double g = factorNumeratorAt(mid, LC_CurveEvaluationSide::Right);
+            if (!std::isfinite(g)) {
+                return LC_CurveOffsetStatus::AmbiguousRegularity;
+            }
+            if (g == 0.0) {
+                lo = hi = mid;
+                break;
+            }
+            (std::signbit(g) == std::signbit(gLo) ? lo : hi) = mid;
+        }
+        cusps.push_back(lo + 0.5 * (hi - lo));
+        return LC_CurveOffsetStatus::Ok;
     }
 
     /**
@@ -610,19 +821,6 @@ private:
             const Leaf leaf = stack.back();
             stack.pop_back();
 
-            // regularity: the tangent and 1 - d kappa provably away from zero
-            LC_CurveJetBounds bounds;
-            const bool bounded = m_source.boundJet(leaf.t0, leaf.t1, bounds);
-            const bool speedProved = bounded && bounds.speedSquared().isPositive();
-            const bool factorProved = bounded && bounds.offsetFactorNumerator(m_d).excludesZero();
-            if (!speedProved || !factorProved) {
-                if (leaf.depth >= m_options.maxSubdivisionDepth) {
-                    return irregularity(leaf, speedProved, a, b);
-                }
-                split(stack, leaf, 0.5);
-                continue;
-            }
-
             OffsetJet q0;
             OffsetJet q1;
             LC_CurveOffsetStatus status = offsetJet(leaf.t0, LC_CurveEvaluationSide::Right, q0);
@@ -656,8 +854,7 @@ private:
                 continue;
             }
 
-            if (branch.cubicPieces.size() >= m_budget.maxCubicPieces ||
-                branch.cubicPieces.size() >= m_budget.maxOutputEntities) {
+            if (m_pieces >= m_budget.maxCubicPieces || m_pieces >= m_budget.maxOutputEntities) {
                 return LC_CurveOffsetStatus::LimitExceeded;
             }
             LC_OffsetCubicPiece cubic;
@@ -673,6 +870,7 @@ private:
                 cubic.bezier[0] = previous;
             }
             branch.cubicPieces.push_back(cubic);
+            ++m_pieces;
             m_maxError = std::max(m_maxError, fit.worstError);
         }
         return LC_CurveOffsetStatus::Ok;
@@ -694,16 +892,23 @@ private:
     const double m_speedFloor;
     double m_maxError{0.0};
     std::size_t m_samples{0};
+    std::size_t m_pieces{0};
 };
 
 /**
  * The source's joins, and for a closed source its seam, must have a single
  * normal: the curve continuous, its tangent direction continuous within the
  * angle tolerance, and the offset gap that angle opens within the merge budget.
+ * The curvature may jump at a join (quadratic segments meet only C1): where
+ * 1 - d kappa changes sign across it, the offset turns back there, a cusp no
+ * box inside either span can see. @p cusps marks those joins by break index,
+ * and the seam of a closed source at index 0.
  */
-LC_CurveOffsetStatus checkJoins(const OffsetSource& source, const double d, const LC_CurveOffsetOptions& options) {
+LC_CurveOffsetStatus checkJoins(const OffsetSource& source, const double d, const LC_CurveOffsetOptions& options,
+                                std::vector<bool>& cusps) {
     const std::vector<double>& breaks = source.breaks();
-    auto checkJoin = [&](const double left, const double right, const bool seam) {
+    cusps.assign(breaks.size(), false);
+    auto checkJoin = [&](const double left, const double right, const bool seam, const size_t index) {
         LC_CurveJet l;
         LC_CurveJet r;
         if (!source.jet(left, LC_CurveEvaluationSide::Left, l) || !source.jet(right, LC_CurveEvaluationSide::Right, r)) {
@@ -720,28 +925,26 @@ LC_CurveOffsetStatus checkJoins(const OffsetSource& source, const double d, cons
         if (angle > options.angleTolerance || std::abs(d) * angle > options.tolerance.nodeMerge) {
             return LC_CurveOffsetStatus::DiscontinuousNormal;
         }
-        // The curvature may jump at a join (quadratic segments meet only C1). If
-        // 1 - d kappa changes sign across it, the offset reverses direction there:
-        // a cusp that no box inside either span can see.
         auto factorNumerator = [d](const LC_CurveJet& jet) {
             const double s2 = dot(jet.first, jet.first);
             return s2 * std::sqrt(s2) - d * cross(jet.first, jet.second);
         };
         const double before = factorNumerator(l);
         const double after = factorNumerator(r);
-        if (!(before != 0.0 && after != 0.0) || std::signbit(before) != std::signbit(after)) {
-            return LC_CurveOffsetStatus::SingularOffset;
+        if (!(std::isfinite(before) && std::isfinite(after) && before != 0.0 && after != 0.0)) {
+            return LC_CurveOffsetStatus::SingularOffset; // a root at the join itself
         }
+        cusps[index] = std::signbit(before) != std::signbit(after);
         return LC_CurveOffsetStatus::Ok;
     };
     for (size_t i = 1; i + 1 < breaks.size(); ++i) {
-        const LC_CurveOffsetStatus status = checkJoin(breaks[i], breaks[i], false);
+        const LC_CurveOffsetStatus status = checkJoin(breaks[i], breaks[i], false, i);
         if (status != LC_CurveOffsetStatus::Ok) {
             return status;
         }
     }
     if (source.closed()) {
-        return checkJoin(breaks.back(), breaks.front(), true);
+        return checkJoin(breaks.back(), breaks.front(), true, 0);
     }
     return LC_CurveOffsetStatus::Ok;
 }
@@ -1143,7 +1346,7 @@ LC_CurveOffsetGeometryResult buildDirectBranches(const RS_Entity& source, const 
 
     const std::vector<double>& breaks = adapter->breaks();
     const double domain = breaks.back() - breaks.front();
-    LC_OffsetBranch branch;
+    std::vector<LC_OffsetBranch> branches;
 
     RS_Vector start;
     RS_Vector end;
@@ -1158,6 +1361,7 @@ LC_CurveOffsetGeometryResult buildDirectBranches(const RS_Entity& source, const 
         const RS_Vector shift = RS_Vector{-direction.y, direction.x} * (d / length);
         const RS_Vector a = start + shift;
         const RS_Vector b = end + shift;
+        LC_OffsetBranch branch;
         LC_OffsetCubicPiece piece;
         piece.provenance = {0, breaks.front(), breaks.back(), d, true};
         piece.bezier = {a, a + (b - a) / 3.0, b - (b - a) / 3.0, b};
@@ -1166,16 +1370,18 @@ LC_CurveOffsetGeometryResult buildDirectBranches(const RS_Entity& source, const 
         }
         branch.cubicPieces.push_back(piece);
         branch.straight = true;
+        branches.push_back(std::move(branch));
         result.maxObservedError = 0.0;
     }
     else {
-        const LC_CurveOffsetStatus joins = checkJoins(*adapter, d, options);
+        std::vector<bool> joinCusps;
+        const LC_CurveOffsetStatus joins = checkJoins(*adapter, d, options, joinCusps);
         if (joins != LC_CurveOffsetStatus::Ok) {
             result.status = joins;
             return result;
         }
         BranchBuilder builder{*adapter, d, options, budget, scale.numericFloor / domain};
-        const LC_CurveOffsetStatus status = builder.build(branch);
+        const LC_CurveOffsetStatus status = builder.build(joinCusps, branches);
         result.exactSamples = builder.samples();
         if (status != LC_CurveOffsetStatus::Ok) {
             result.status = status;
@@ -1183,11 +1389,11 @@ LC_CurveOffsetGeometryResult buildDirectBranches(const RS_Entity& source, const 
         }
         result.maxObservedError = builder.maxObservedError();
     }
-    if (branch.cubicPieces.size() > budget.maxCubicPieces) {
+    if (branches.size() > options.maxOutputBranches) {
         result.status = LC_CurveOffsetStatus::LimitExceeded;
         return result;
     }
-    result.branches.push_back(std::move(branch));
+    result.branches = std::move(branches);
     // the pieces were compared with the offset only at their own parameters;
     // materialization adds the independent, two-way check
     result.validationLevel = LC_OffsetValidationLevel::None;

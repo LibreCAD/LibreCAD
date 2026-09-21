@@ -98,15 +98,17 @@ RS_Vector bezierAt(const std::array<RS_Vector, 4>& b, const double s) {
 /**
  * The largest distance between the pieces and the exact offset C + d N at the
  * same source parameter, at samples the fitter never used; also checks the
- * pieces are contiguous and follow the source parameter.
+ * pieces are contiguous and follow the source parameter, and that each branch
+ * starts where the previous one ends (at a cusp).
  */
 double maxDeviation(const LC_CurveOffsetGeometryResult& result, const EvalFn& eval) {
     REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
-    REQUIRE(result.branches.size() == 1);
-    const LC_OffsetBranch& branch = result.branches.front();
-    REQUIRE_FALSE(branch.cubicPieces.empty());
+    REQUIRE_FALSE(result.branches.empty());
     double worst = 0.0;
-    double previousT1 = branch.cubicPieces.front().provenance.sourceT0;
+    double previousT1 = result.branches.front().cubicPieces.front().provenance.sourceT0;
+    const LC_OffsetCubicPiece* previous = nullptr;
+    for (const LC_OffsetBranch& branch : result.branches) {
+    REQUIRE_FALSE(branch.cubicPieces.empty());
     for (size_t i = 0; i < branch.cubicPieces.size(); ++i) {
         const LC_OffsetCubicPiece& piece = branch.cubicPieces[i];
         const auto& p = piece.provenance;
@@ -114,9 +116,10 @@ double maxDeviation(const LC_CurveOffsetGeometryResult& result, const EvalFn& ev
         CHECK(p.sourceT0 == previousT1);
         previousT1 = p.sourceT1;
         CHECK(p.signedDistance == result.signedDistance);
-        if (i > 0) {
-            CHECK(piece.bezier[0] == branch.cubicPieces[i - 1].bezier[3]);
+        if (previous != nullptr) {
+            CHECK(piece.bezier[0] == previous->bezier[3]);
         }
+        previous = &piece;
         for (int k = 0; k <= 37; ++k) {
             const double s = k / 37.0;
             const double t = p.sourceT0 + s * (p.sourceT1 - p.sourceT0);
@@ -129,6 +132,7 @@ double maxDeviation(const LC_CurveOffsetGeometryResult& result, const EvalFn& ev
             const RS_Vector exact = c.point + n * p.signedDistance;
             worst = std::max(worst, bezierAt(piece.bezier, s).distanceTo(exact));
         }
+    }
     }
     return worst;
 }
@@ -219,8 +223,10 @@ TEST_CASE("A parabola's offset follows its exact normals", "[curve-offset][direc
             CHECK(result.maxObservedError <= options.tolerance.fit);
         }
     }
-    // inside its apex, past the radius of curvature, the offset has cusps
-    CHECK(offsetToSide(parabola, LC_CurveOffsetSide::Right, 3.0).status == LC_CurveOffsetStatus::SingularOffset);
+    // inside its apex, at the radius of curvature, the offset stops dead there
+    const LC_CurveOffsetGeometryResult atRadius = offsetToSide(parabola, LC_CurveOffsetSide::Right, 2.5);
+    CHECK(atRadius.status == LC_CurveOffsetStatus::SingularOffset);
+    CHECK(atRadius.branches.empty());
     CHECK(offsetToSide(parabola, LC_CurveOffsetSide::Left, 3.0).status == LC_CurveOffsetStatus::Ok);
 }
 
@@ -267,12 +273,6 @@ TEST_CASE("The offset is regular or it is refused", "[curve-offset][direct][regu
     CHECK(offsetToSide(arc, LC_CurveOffsetSide::Left, 0.99).status == LC_CurveOffsetStatus::Ok);
     CHECK(offsetToSide(arc, LC_CurveOffsetSide::Left, 1.01).status == LC_CurveOffsetStatus::Ok);
 
-    // An S-curve's tighter bend: past its curvature radius the offset has a cusp.
-    const RS_Spline s = sCurve();
-    const LC_CurveOffsetGeometryResult cusped = offsetToSide(s, LC_CurveOffsetSide::Left, 6.0);
-    CHECK(cusped.status == LC_CurveOffsetStatus::SingularOffset);
-    CHECK(cusped.branches.empty());
-
     // A source whose tangent vanishes has no normal there.
     const RS_Spline cusp = makeSpline(3, {{0, 0}, {2, 1}, {0, 1}, {2, 0}}, {0, 0, 0, 0, 1, 1, 1, 1});
     const LC_CurveOffsetGeometryResult noTangent = offsetToSide(cusp, LC_CurveOffsetSide::Left, 0.1);
@@ -295,7 +295,8 @@ TEST_CASE("A kink in the source is refused, a smooth join is not", "[curve-offse
           LC_CurveOffset::makeDirectOptions(smooth, 0.2).tolerance.requestedGeometry);
 }
 
-TEST_CASE("A cusp hidden at a join where the curvature jumps is refused", "[curve-offset][direct][regularity]") {
+TEST_CASE("A cusp hidden at a join where the curvature jumps splits the offset there",
+          "[curve-offset][direct][cusp]") {
     // Two quadratic segments meet with a common tangent, turning right. The
     // first bends with radii between 1.4 and 11.3; the second, past the join,
     // with radii of 28 and more. At a distance between those, 1 - d kappa is
@@ -314,10 +315,15 @@ TEST_CASE("A cusp hidden at a join where the curvature jumps is refused", "[curv
     const double between = std::sqrt(firstMax * secondMin);
     REQUIRE(firstMax < between);
     REQUIRE(between < secondMin);
-    // the inside of the turn is the right side
-    CHECK(offsetToSide(joined, LC_CurveOffsetSide::Right, between).status == LC_CurveOffsetStatus::SingularOffset);
-    CHECK(offsetToSide(joined, LC_CurveOffsetSide::Right, 0.5).status == LC_CurveOffsetStatus::Ok);
-    CHECK(offsetToSide(joined, LC_CurveOffsetSide::Left, between).status == LC_CurveOffsetStatus::Ok);
+    // the inside of the turn is the right side: one branch per segment, meeting at the join
+    const LC_CurveOffsetGeometryResult split = offsetToSide(joined, LC_CurveOffsetSide::Right, between);
+    REQUIRE(split.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(split.branches.size() == 2);
+    CHECK(split.branches.front().cubicPieces.back().provenance.sourceT1 == 1.0);
+    CHECK(maxDeviation(split, evaluator(joined)) <=
+          LC_CurveOffset::makeDirectOptions(joined, between).tolerance.requestedGeometry);
+    CHECK(offsetToSide(joined, LC_CurveOffsetSide::Right, 0.5).branches.size() == 1);
+    CHECK(offsetToSide(joined, LC_CurveOffsetSide::Left, between).branches.size() == 1);
 }
 
 TEST_CASE("A direction point on the curve has no side", "[curve-offset][direct][side]") {
@@ -595,7 +601,7 @@ TEST_CASE("Closed sources materialize as a closed chain of open pieces", "[curve
     CHECK(result.entities.back()->getEndpoint() == result.entities.front()->getStartpoint());
 }
 
-TEST_CASE("Direct offset of 20-control-point cubics, timed", "[.benchmark][curve-offset]") {
+TEST_CASE("Direct offset of 20-control-point cubics, timed", "[.benchmark]") {
     // The D1 interactive target: below 50 ms for one regular, open cubic with 20
     // control points at the default tolerance, measured without sanitizers.
     struct Shape {
@@ -634,5 +640,145 @@ TEST_CASE("Direct offset of 20-control-point cubics, timed", "[.benchmark][curve
         const double p95 = ms[ms.size() * 95 / 100];
         WARN(shape.name << ": " << pieces << " pieces, median " << median << " ms, p95 " << p95 << " ms");
         CHECK(median < 50.0);
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Cusp branches (D2)
+// ---------------------------------------------------------------------------
+namespace {
+/** y = x^2 on [-2, 2], at x = 4t - 2: radius of curvature (1 + 4x^2)^(3/2) / 2, 0.5 at the vertex. */
+RS_Spline unitParabola() {
+    return makeSpline(2, {{-2, 4}, {0, -4}, {2, 4}}, {0, 0, 0, 1, 1, 1});
+}
+
+/** Where the radius of y = x^2 equals d, as parameters of unitParabola(): its cusps inside. */
+std::array<double, 2> parabolaCusps(const double d) {
+    const double x = std::sqrt((std::cbrt(4.0 * d * d) - 1.0) / 4.0);
+    return {(2.0 - x) / 4.0, (2.0 + x) / 4.0};
+}
+} // namespace
+
+TEST_CASE("Inside its radius of curvature the offset is one branch; past it, it splits at the cusps",
+          "[curve-offset][cusp]") {
+    const RS_Spline parabola = unitParabola();
+    // inside the vertex radius: regular
+    CHECK(offsetToSide(parabola, LC_CurveOffsetSide::Left, 0.4).branches.size() == 1);
+
+    for (const double d : {0.5 + 1e-6, 0.51, 0.75, 1.0, 1.5}) {
+        INFO("distance " << d);
+        const LC_CurveOffsetGeometryResult result = offsetToSide(parabola, LC_CurveOffsetSide::Left, d);
+        REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+        // before the first cusp, the swallowtail between them, after the second
+        REQUIRE(result.branches.size() == 3);
+        const LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(parabola, d);
+        CHECK(maxDeviation(result, evaluator(parabola)) <= options.tolerance.requestedGeometry);
+        const std::array<double, 2> cusps = parabolaCusps(d);
+        for (size_t k = 0; k < 2; ++k) {
+            const LC_OffsetCubicPiece& end = result.branches[k].cubicPieces.back();
+            CHECK(end.provenance.sourceT1 == Approx(cusps[k]).margin(1e-9));
+            // the cusp: the exact offset there, where its derivative vanishes
+            LC_CurveJet c;
+            REQUIRE(parabola.tryEvaluateJet(cusps[k], LC_CurveEvaluationSide::Interior, c));
+            const RS_Vector exact = c.point + RS_Vector{-c.first.y, c.first.x} / c.first.magnitude() * d;
+            CHECK(end.bezier[3].distanceTo(exact) <= options.tolerance.requestedGeometry);
+            CHECK(result.branches[k + 1].cubicPieces.front().bezier[0] == end.bezier[3]);
+        }
+        for (const LC_OffsetBranch& branch : result.branches) {
+            CHECK_FALSE(branch.closed);
+        }
+    }
+}
+
+TEST_CASE("An offset whose cusps cannot be told apart is refused, not guessed", "[curve-offset][cusp]") {
+    const RS_Spline parabola = unitParabola();
+    // At the vertex radius 1 - d kappa touches zero without changing sign; a
+    // hair past it the two cusps are closer than the finest box can separate.
+    for (const double d : {0.5, 0.5 + 1e-13}) {
+        INFO("distance " << d);
+        const LC_CurveOffsetGeometryResult result = offsetToSide(parabola, LC_CurveOffsetSide::Left, d);
+        CHECK((result.status == LC_CurveOffsetStatus::SingularOffset ||
+               result.status == LC_CurveOffsetStatus::AmbiguousRegularity));
+        CHECK(result.branches.empty());
+        // and the same way every time
+        CHECK(offsetToSide(parabola, LC_CurveOffsetSide::Left, d).status == result.status);
+    }
+    // a whole span of zeros: the arc's offset shrinks to its centre
+    const LC_CurveOffsetGeometryResult point = offsetToSide(quarterCircle(), LC_CurveOffsetSide::Left, 1.0);
+    CHECK(point.status != LC_CurveOffsetStatus::Ok);
+    CHECK(point.branches.empty());
+}
+
+TEST_CASE("Cusp branches materialize as entities meeting at the cusps", "[curve-offset][cusp][materialize]") {
+    const RS_Spline parabola = unitParabola();
+    const LC_CurveOffsetMaterializationResult result = materialize(parabola, LC_CurveOffsetSide::Left, 1.0);
+    REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(result.entities.size() >= 3);
+    for (size_t i = 1; i < result.entities.size(); ++i) {
+        CHECK(result.entities[i]->getStartpoint() == result.entities[i - 1]->getEndpoint());
+    }
+    // the swallowtail between the cusps runs against the source: its entities
+    // go right to left while the source goes left to right
+    size_t reversed = 0;
+    for (const std::unique_ptr<RS_Entity>& entity : result.entities) {
+        reversed += entity->getEndpoint().x < entity->getStartpoint().x ? 1 : 0;
+    }
+    CHECK(reversed > 0);
+    CHECK(reversed < result.entities.size());
+
+    // more branches than allowed
+    LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(parabola, 1.0);
+    options.maxOutputBranches = 2;
+    const LC_CurveOffsetGeometryResult capped = LC_CurveOffset::buildDirectBranches(
+        parabola, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 1.0), options,
+        LC_CurveOffset::makeDirectSourceBudget());
+    CHECK(capped.status == LC_CurveOffsetStatus::LimitExceeded);
+    CHECK(capped.branches.empty());
+}
+
+TEST_CASE("A closed source's cusped offset is a cycle of open branches", "[curve-offset][cusp]") {
+    RS_Spline ring(nullptr, RS_SplineData(3, false));
+    for (const RS_Vector& p : {RS_Vector{0, 0}, RS_Vector{40, -10}, RS_Vector{60, 30}, RS_Vector{20, 50},
+                               RS_Vector{-15, 25}}) {
+        ring.addControlPoint(p);
+    }
+    ring.setClosed(true);
+    double t0 = 0.0;
+    double t1 = 0.0;
+    REQUIRE(ring.getParameterDomain(t0, t1));
+    // its tightest bend, from samples
+    double tightest = RS_MAXDOUBLE;
+    for (int i = 0; i < 2000; ++i) {
+        LC_CurveJet j;
+        REQUIRE(ring.tryEvaluateJet(t0 + (t1 - t0) * i / 2000.0, LC_CurveEvaluationSide::Interior, j));
+        const double s = j.first.magnitude();
+        tightest = std::min(tightest, s * s * s / std::abs(j.first.x * j.second.y - j.first.y * j.second.x));
+    }
+    // inwards (the ring turns left), well past the tightest bend
+    const double d = 1.5 * tightest;
+    const LC_CurveOffsetGeometryResult result = offsetToSide(ring, LC_CurveOffsetSide::Left, d);
+    REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(result.branches.size() >= 2);
+    CHECK(result.branches.size() % 2 == 0); // 1 - d kappa changes sign an even number of times around
+    for (size_t i = 0; i < result.branches.size(); ++i) {
+        const LC_OffsetBranch& branch = result.branches[i];
+        const LC_OffsetBranch& next = result.branches[(i + 1) % result.branches.size()];
+        CHECK_FALSE(branch.closed);
+        CHECK(next.cubicPieces.front().bezier[0] == branch.cubicPieces.back().bezier[3]);
+    }
+    // every piece against the exact offset
+    const LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(ring, d);
+    for (const LC_OffsetBranch& branch : result.branches) {
+        for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
+            const auto& p = piece.provenance;
+            for (int k = 1; k < 16; ++k) {
+                const double s = k / 16.0;
+                LC_CurveJet c;
+                REQUIRE(ring.tryEvaluateJet(p.sourceT0 + s * (p.sourceT1 - p.sourceT0),
+                                            LC_CurveEvaluationSide::Interior, c));
+                const RS_Vector exact = c.point + RS_Vector{-c.first.y, c.first.x} / c.first.magnitude() * d;
+                CHECK(bezierAt(piece.bezier, s).distanceTo(exact) <= options.tolerance.requestedGeometry);
+            }
+        }
     }
 }

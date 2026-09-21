@@ -108,6 +108,15 @@ struct OffsetFixture {
         return add(new RS_Spline(&m_graphic, d));
     }
 
+    /** y = x^2 on [-2, 2]: an inward offset of 0.5, its vertex radius, is singular. */
+    RS_Spline* addParabola() {
+        RS_SplineData d(2, false);
+        d.controlPoints = {{-2, 4}, {0, -4}, {2, 4}};
+        d.knotslist = {0, 0, 0, 1, 1, 1};
+        d.weights.assign(3, 1.0);
+        return add(new RS_Spline(&m_graphic, d));
+    }
+
     LC_SplinePoints* addSplinePoints() {
         LC_SplinePointsData d(false, false);
         d.splinePoints = {{20, 0}, {23, 4}, {27, 3}, {30, 6}, {34, 2}};
@@ -241,10 +250,10 @@ TEST_CASE("Committing a spline offset replaces it with its offset, undoably", "[
 
 TEST_CASE("A trigger that offsets nothing keeps the action, its step and the selection", "[curve-offset][action]") {
     OffsetFixture f;
-    RS_Spline* spline = f.addSCurve();
+    RS_Spline* spline = f.addParabola();
     f.select({spline});
-    f.start(6.0, false); // past the curve's tighter radius of curvature on that side
-    f.clickAt(6.0, 9.0);
+    f.start(0.5, false); // inside, at the vertex radius: singular
+    f.clickAt(0.0, 3.0);
 
     CHECK_FALSE(spline->isDeleted());
     CHECK(spline->isSelected());
@@ -255,19 +264,19 @@ TEST_CASE("A trigger that offsets nothing keeps the action, its step and the sel
     REQUIRE(f.m_context.messages.size() == 1);
     CHECK(f.m_context.messages.front().contains("1 of 1"));
 
-    // another side works from where the user left off
-    f.m_action->setDistance(0.75);
-    f.clickAt(6.0, 9.0);
+    // another distance works from where the user left off
+    f.m_action->setDistance(0.4);
+    f.clickAt(0.0, 3.0);
     CHECK(spline->isDeleted());
 }
 
 TEST_CASE("Only sources that were offset leave the selection", "[curve-offset][action]") {
     OffsetFixture f;
-    RS_Spline* spline = f.addSCurve();
-    RS_Circle* circle = f.add(new RS_Circle(&f.m_graphic, RS_CircleData{RS_Vector{6.0, 9.0}, 20.0}));
+    RS_Spline* spline = f.addParabola();
+    RS_Circle* circle = f.add(new RS_Circle(&f.m_graphic, RS_CircleData{RS_Vector{0.0, 3.0}, 20.0}));
     f.select({spline, circle});
-    f.start(6.0, true);
-    f.clickAt(6.0, 9.0); // inside the circle: its inward offset works; the spline's does not
+    f.start(0.5, true);
+    f.clickAt(0.0, 3.0); // inside the circle: its inward offset works; the spline's does not
 
     CHECK_FALSE(circle->isSelected());
     CHECK(spline->isSelected());

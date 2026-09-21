@@ -42,10 +42,13 @@
  * interval (a branch), and checks each piece against Q itself.
  *
  * Direct mode, the only one implemented, returns the whole oriented offset. It
- * requires a regular offset: a nonzero source tangent and 1 - d * kappa away
- * from zero, both proved over every piece with interval bounds. It does not
- * remove loops or self-intersections, and its error check is sampled evidence,
- * never a proof of the maximum deviation.
+ * requires a nonzero source tangent and 1 - d * kappa away from zero, both
+ * proved with interval bounds everywhere except at cusps: isolated roots where
+ * 1 - d * kappa changes sign, inside a span or across a join. The offset turns
+ * back at a cusp, which ends one branch and starts the next. A root it cannot
+ * isolate, such as a zero that touches without crossing, fails the request. It
+ * does not remove loops or self-intersections, and its error check is sampled
+ * evidence, never a proof of the maximum deviation.
  */
 
 enum class LC_CurveOffsetStatus {
@@ -155,7 +158,10 @@ struct LC_OffsetCubicPiece {
 };
 
 struct LC_OffsetBranch {
-    /** In source parameter order; each piece starts where the previous one ends. */
+    /**
+     * In source parameter order, which for a closed source may wrap past its
+     * seam; each piece starts where the previous one ends.
+     */
     std::vector<LC_OffsetCubicPiece> cubicPieces;
     /** The last piece ends where the first begins. */
     bool closed{false};

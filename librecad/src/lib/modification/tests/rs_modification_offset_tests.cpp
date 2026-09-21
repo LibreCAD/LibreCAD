@@ -173,6 +173,20 @@ RS_Spline* sCurve(RS_EntityContainer* parent = nullptr) {
     return new RS_Spline(parent, d);
 }
 
+/**
+ * The parabola y = x^2 on [-2, 2]. Its radius of curvature is 0.5 at the vertex
+ * and larger elsewhere, so an inward offset of exactly 0.5 has 1 - d kappa
+ * touching zero there without changing sign: a singular point the offset is not
+ * split at, whereas it is regular inside that radius and has two cusps past it.
+ */
+RS_Spline* parabola(RS_EntityContainer* parent = nullptr) {
+    RS_SplineData d(2, false);
+    d.controlPoints = {{-2, 4}, {0, -4}, {2, 4}};
+    d.knotslist = {0, 0, 0, 1, 1, 1};
+    d.weights.assign(3, 1.0);
+    return new RS_Spline(parent, d);
+}
+
 RS_OffsetData towards(const RS_Vector& point, const double distance) {
     RS_OffsetData data;
     data.coord = point;
@@ -219,12 +233,11 @@ TEST_CASE("Offset copies are clamped for Offset only", "[modification][offset]")
 
 TEST_CASE("A spline source is offset by the engine and keeps its own outcome", "[modification][offset]") {
     std::unique_ptr<RS_Spline> spline{sCurve()};
-    std::unique_ptr<RS_Spline> cusped{sCurve()};
+    std::unique_ptr<RS_Spline> singular{parabola()};
     RS_Line line{nullptr, RS_LineData{{0.0, 20.0}, {10.0, 20.0}}};
     BatchGuard guard;
 
-    // Towards (6, 9): 0.75 is regular for the curve, and for the line a parallel;
-    // 6.0 is past the curve's tighter radius of curvature.
+    // Towards (6, 9): 0.75 is regular for the curve, and for the line a parallel.
     const LC_OffsetBatchOutcome outcome =
         RS_Modification::offsetWithOutcome(towards(RS_Vector{6.0, 9.0}, 0.75), {spline.get(), &line}, false,
                                            LC_OffsetBatchLimits{}, guard.ctx);
@@ -240,7 +253,7 @@ TEST_CASE("A spline source is offset by the engine and keeps its own outcome", "
 
     BatchGuard failing;
     const LC_OffsetBatchOutcome refused = RS_Modification::offsetWithOutcome(
-        towards(RS_Vector{6.0, 9.0}, 6.0), {cusped.get()}, false, LC_OffsetBatchLimits{}, failing.ctx);
+        towards(RS_Vector{0.0, 3.0}, 0.5), {singular.get()}, false, LC_OffsetBatchLimits{}, failing.ctx);
     // a spline the engine refuses is not retried by mutating a clone
     CHECK(refused.sources.front().status == LC_OffsetSourceStatus::OffsetFailed);
     CHECK(failing.ctx.entitiesToAdd.isEmpty());
@@ -249,13 +262,13 @@ TEST_CASE("A spline source is offset by the engine and keeps its own outcome", "
 }
 
 TEST_CASE("A mixed selection offsets and removes only the sources that succeed", "[modification][offset]") {
-    // From (6, 9): inside the circle, whose inward offset of 6 exists; above the
-    // S-curve, whose offset of 6 on that side bends past its radius of curvature.
-    RS_Circle circle{nullptr, RS_CircleData{RS_Vector{6.0, 9.0}, 20.0}};
-    std::unique_ptr<RS_Spline> spline{sCurve()};
+    // From (0, 3): inside the circle, whose inward offset of 0.5 exists; inside
+    // the parabola, whose offset of 0.5 is singular at its vertex.
+    RS_Circle circle{nullptr, RS_CircleData{RS_Vector{0.0, 3.0}, 20.0}};
+    std::unique_ptr<RS_Spline> spline{parabola()};
     BatchGuard guard;
     const LC_OffsetBatchOutcome outcome = RS_Modification::offsetWithOutcome(
-        towards(RS_Vector{6.0, 9.0}, 6.0), {spline.get(), &circle}, false, LC_OffsetBatchLimits{}, guard.ctx);
+        towards(RS_Vector{0.0, 3.0}, 0.5), {spline.get(), &circle}, false, LC_OffsetBatchLimits{}, guard.ctx);
     REQUIRE(outcome.sources.size() == 2);
     CHECK(outcome.sources[0].source == spline.get()); // incoming order is kept
     CHECK(outcome.sources[0].status == LC_OffsetSourceStatus::OffsetFailed);

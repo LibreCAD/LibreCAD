@@ -135,8 +135,12 @@ TEST_CASE("RS_Spline::createOffset returns the offset as cubic pieces", "[curve-
 
 TEST_CASE("createOffset returns nothing when the offset fails", "[curve-offset][entity]") {
     const RS_Spline source = sCurve();
-    // past the tighter bend's radius of curvature: a cusp
-    CHECK(source.createOffset(RS_Vector{6.0, 9.0}, 6.0).empty());
+    // a source whose tangent vanishes has no normal there
+    RS_SplineData cuspData(3, false);
+    cuspData.controlPoints = {{0, 0}, {6, 3}, {0, 3}, {6, 0}};
+    cuspData.knotslist = {0, 0, 0, 0, 1, 1, 1, 1};
+    cuspData.weights.assign(4, 1.0);
+    CHECK(RS_Spline(nullptr, cuspData).createOffset(RS_Vector{3.0, 5.0}, 0.5).empty());
     // on the curve: no side
     CHECK(source.createOffset(source.getPointAt(0.3), 1.0).empty());
     CHECK(source.createOffset(RS_Vector{6.0, 9.0}, 0.0).empty());
@@ -212,8 +216,14 @@ TEST_CASE("LC_SplinePoints::offsetTwoSides returns both sides or nothing", "[cur
     REQUIRE(both.entities.size() >= 2);
     CHECK(worstDistanceError(both.entities, curveOf(source), 0.0, static_cast<double>(source.getSegmentCount()),
                              0.4) < 1e-3);
-    // too far for the inner side of a bend: neither side is returned
-    CHECK(source.offsetTwoSides(50.0).empty());
+    // At the apex radius of a parabola its inner side is singular: neither side
+    // is returned, although the outer one exists.
+    LC_SplinePointsData arch(false, false);
+    arch.useControlPoints = true;
+    arch.controlPoints = {{0.0, 0.0}, {5.0, 10.0}, {10.0, 0.0}};
+    const LC_SplinePoints parabola(nullptr, arch);
+    REQUIRE_FALSE(parabola.createOffset(RS_Vector{5.0, 20.0}, 2.5).empty());
+    CHECK(parabola.offsetTwoSides(2.5).empty());
 }
 
 TEST_CASE("A fillet refuses a parallel made of several pieces", "[curve-offset][entity]") {
