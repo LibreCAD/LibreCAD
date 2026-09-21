@@ -53,7 +53,15 @@
  *
  * Trimmed mode, programmatic only, removes from the noded Direct offset the
  * parts provably nearer to the source than the distance, less the tolerance
- * budget, and fails where it cannot decide. RegionBoundary is not implemented.
+ * budget, and fails where it cannot decide.
+ *
+ * RegionBoundary mode, programmatic only, takes the region a closed source
+ * encloses under the fill rule and returns the boundary of that region grown
+ * or shrunk by the disk of the distance, as closed branches with the result on
+ * their left. A direction point outside the region grows it and one inside
+ * shrinks it; LC_CurveOffsetSide::Right grows and Left shrinks. The branch
+ * pieces are offsets of the region's boundary and, at its corners, arcs of
+ * the circles about them (LC_OffsetBranchProvenance::arcCentre).
  */
 
 enum class LC_CurveOffsetStatus {
@@ -156,6 +164,12 @@ struct LC_OffsetBranchProvenance {
     double sourceT1{0.0};
     double signedDistance{0.0};
     bool forward{true};
+    /**
+     * Set only for a vertex arc of a region boundary: the piece follows the
+     * circle of radius |signedDistance| about this point, over the angles
+     * sourceT0 to sourceT1, instead of the offset of a source interval.
+     */
+    RS_Vector arcCentre{false};
 };
 
 /**

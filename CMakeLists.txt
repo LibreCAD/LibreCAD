@@ -2487,6 +2487,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/entities/tests/lc_curveoffset_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_parametriccurveintersection_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_curveoffset_trim_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_curveoffset_region_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_offsetoutputbudget_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_curveoffset_entity_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_circletests.cpp

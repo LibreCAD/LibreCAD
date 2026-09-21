@@ -164,9 +164,9 @@ TEST_CASE("Default and partial requests are rejected before any evaluation",
     CHECK(LC_CurveOffset::buildDirectBranches(source, request, partial, budget).status ==
           LC_CurveOffsetStatus::InvalidRequest);
     partial = good;
-    partial.mode = LC_CurveOffsetMode::RegionBoundary; // not implemented: never run as Direct
+    partial.mode = LC_CurveOffsetMode::RegionBoundary; // an open curve encloses no region
     CHECK(LC_CurveOffset::buildDirectBranches(source, request, partial, budget).status ==
-          LC_CurveOffsetStatus::InvalidRequest);
+          LC_CurveOffsetStatus::InvalidSource);
 
     for (const double bad : {0.0, -1.0, std::nan(""), std::numeric_limits<double>::infinity()}) {
         CHECK(LC_CurveOffset::buildDirectBranches(source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, bad),
