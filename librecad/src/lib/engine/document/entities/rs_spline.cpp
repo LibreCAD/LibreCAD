@@ -263,31 +263,33 @@ HomogeneousBox combine(const LC_Interval &alpha, const HomogeneousBox &a, const 
   return {beta * a.x + alpha * b.x, beta * a.y + alpha * b.y, beta * a.w + alpha * b.w};
 }
 
+HomogeneousBox difference(const HomogeneousBox &a, const HomogeneousBox &b) {
+  return {a.x - b.x, a.y - b.y, a.w - b.w};
+}
+
+HomogeneousBox scaled(const LC_Interval &factor, const HomogeneousBox &a) {
+  return {factor * a.x, factor * a.y, factor * a.w};
+}
+
 /**
- * The blossom f(u[0], ..., u[p-1]) of the homogeneous B-spline segment on knot
- * span s, by de Boor's algorithm with a different parameter at each level. With
- * a repeated (p - m) times and b repeated m times it is Bezier control point m
- * of the segment restricted to [a, b].
+ * The blossom f(u[0], ..., u[q-1]) of a homogeneous B-spline segment of degree
+ * q on knot span s, from its q + 1 control points there, pts[0 .. q] (control
+ * points s - q .. s), by de Boor's algorithm with a different parameter at each
+ * level; knot(k) is the spline's knot k. With a repeated (q - m) times and b
+ * repeated m times it is Bezier control point m of the segment restricted to
+ * [a, b]. pts is overwritten.
  */
-HomogeneousBox blossom(const RS_SplineData &d, const size_t s, const double *u) {
-  const size_t p = d.degree;
-  const auto &U = d.knotslist;
-  HomogeneousBox pts[g_maxDegree + 1];
-  for (size_t j = 0; j <= p; ++j) {
-    const size_t i = s - p + j;
-    const LC_Interval w = LC_Interval::point(d.weights[i]);
-    pts[j] = {LC_Interval::point(d.controlPoints[i].x) * w,
-              LC_Interval::point(d.controlPoints[i].y) * w, w};
-  }
-  for (size_t r = 1; r <= p; ++r) {
-    for (size_t j = p; j >= r; --j) {
-      const LC_Interval lo = LC_Interval::point(U[s - p + j]);
-      const LC_Interval hi = LC_Interval::point(U[s + 1 + j - r]);
+template <typename Knot>
+HomogeneousBox blossom(HomogeneousBox *pts, const size_t q, const size_t s, const double *u, const Knot &knot) {
+  for (size_t r = 1; r <= q; ++r) {
+    for (size_t j = q; j >= r; --j) {
+      const LC_Interval lo = LC_Interval::point(knot(s - q + j));
+      const LC_Interval hi = LC_Interval::point(knot(s + 1 + j - r));
       const LC_Interval alpha = (LC_Interval::point(u[r - 1]) - lo) / (hi - lo);
       pts[j] = combine(alpha, pts[j - 1], pts[j]);
     }
   }
-  return pts[p];
+  return pts[q];
 }
 
 /** The hull of values[0 .. count-1]. */
@@ -300,32 +302,29 @@ LC_Interval hullOf(const LC_Interval *values, const size_t count) {
 }
 
 /**
- * Enclosures of a polynomial and its first two derivatives with respect to t
- * over [a, b], from its Bezier coefficients there (convex hull property).
+ * The hull of the Bezier net over [a, b] of a homogeneous B-spline segment of
+ * degree q on knot span s with control points pts[0 .. q]: it contains every
+ * value the segment takes there (convex hull property).
  */
-void boundPolynomial(const LC_Interval *coef, const size_t p, const LC_Interval &width,
-                     LC_Interval &value, LC_Interval &first, LC_Interval &second) {
-  value = hullOf(coef, p + 1);
-  if (p < 1) {
-    first = LC_Interval::point(0.0);
-    second = LC_Interval::point(0.0);
-    return;
+template <typename Knot>
+HomogeneousBox boundSegment(const HomogeneousBox *pts, const size_t q, const size_t s, const double a,
+                            const double b, const Knot &knot) {
+  LC_Interval xs[g_maxDegree + 1];
+  LC_Interval ys[g_maxDegree + 1];
+  LC_Interval ws[g_maxDegree + 1];
+  for (size_t m = 0; m <= q; ++m) {
+    double u[g_maxDegree];
+    for (size_t k = 0; k < q; ++k) {
+      u[k] = (k < q - m) ? a : b;
+    }
+    HomogeneousBox work[g_maxDegree + 1];
+    std::copy(pts, pts + q + 1, work);
+    const HomogeneousBox point = blossom(work, q, s, u, knot);
+    xs[m] = point.x;
+    ys[m] = point.y;
+    ws[m] = point.w;
   }
-  LC_Interval d1[g_maxDegree];
-  for (size_t m = 0; m < p; ++m) {
-    d1[m] = coef[m + 1] - coef[m];
-  }
-  first = LC_Interval::point(static_cast<double>(p)) * hullOf(d1, p) / width;
-  if (p < 2) {
-    second = LC_Interval::point(0.0);
-    return;
-  }
-  LC_Interval d2[g_maxDegree - 1];
-  for (size_t m = 0; m + 1 < p; ++m) {
-    d2[m] = d1[m + 1] - d1[m];
-  }
-  second = LC_Interval::point(static_cast<double>(p * (p - 1))) * hullOf(d2, p - 1) /
-           (width * width);
+  return {hullOf(xs, q + 1), hullOf(ys, q + 1), hullOf(ws, q + 1)};
 }
 } // namespace
 
@@ -1560,24 +1559,42 @@ bool RS_Spline::tryBoundJet(const double a, const double b, LC_CurveJetBounds &b
     equalWeights = equalWeights && w == m_data.weights[span - p];
   }
 
-  LC_Interval xs[g_maxDegree + 1];
-  LC_Interval ys[g_maxDegree + 1];
-  LC_Interval ws[g_maxDegree + 1];
-  for (size_t m = 0; m <= p; ++m) {
-    double u[g_maxDegree];
-    for (size_t k = 0; k < p; ++k) {
-      u[k] = (k < p - m) ? a : b;
-    }
-    const HomogeneousBox bezier = blossom(m_data, span, u);
-    xs[m] = bezier.x;
-    ys[m] = bezier.y;
-    ws[m] = bezier.w;
+  // The homogeneous control points of the span, and those of its first and
+  // second derivative splines. Bounding a derivative from its own control
+  // points, differences of the curve's, keeps a small box from dividing
+  // rounding in nearly equal Bezier points by its width.
+  // Relative to the span's first control point, so that the rational quotient
+  // bounds scale with the span's size rather than with its coordinates.
+  const RS_Vector origin = m_data.controlPoints[span - p];
+  HomogeneousBox h[g_maxDegree + 1];
+  for (size_t j = 0; j <= p; ++j) {
+    const size_t i = span - p + j;
+    const LC_Interval w = LC_Interval::point(m_data.weights[i]);
+    h[j] = {(LC_Interval::point(m_data.controlPoints[i].x) - LC_Interval::point(origin.x)) * w,
+            (LC_Interval::point(m_data.controlPoints[i].y) - LC_Interval::point(origin.y)) * w, w};
   }
-
-  const LC_Interval width = LC_Interval::point(b) - LC_Interval::point(a);
-  LC_Interval ax, ax1, ax2, ay, ay1, ay2;
-  boundPolynomial(xs, p, width, ax, ax1, ax2);
-  boundPolynomial(ys, p, width, ay, ay1, ay2);
+  HomogeneousBox h1[g_maxDegree];
+  for (size_t j = 0; j < p; ++j) {
+    const LC_Interval gap = LC_Interval::point(U[span + j + 1]) - LC_Interval::point(U[span - p + j + 1]);
+    h1[j] = scaled(LC_Interval::point(static_cast<double>(p)) / gap, difference(h[j + 1], h[j]));
+  }
+  HomogeneousBox h2[g_maxDegree];
+  for (size_t j = 0; j + 1 < p; ++j) {
+    const LC_Interval gap = LC_Interval::point(U[span + j + 1]) - LC_Interval::point(U[span - p + j + 2]);
+    h2[j] = scaled(LC_Interval::point(static_cast<double>(p - 1)) / gap, difference(h1[j + 1], h1[j]));
+  }
+  // a derivative spline's knots are the curve's without the first (and last)
+  const HomogeneousBox value = boundSegment(h, p, span, a, b, [&U](const size_t k) { return U[k]; });
+  const HomogeneousBox first = boundSegment(h1, p - 1, span - 1, a, b, [&U](const size_t k) { return U[k + 1]; });
+  const HomogeneousBox zero{LC_Interval::point(0.0), LC_Interval::point(0.0), LC_Interval::point(0.0)};
+  const HomogeneousBox second =
+      (p < 2) ? zero : boundSegment(h2, p - 2, span - 2, a, b, [&U](const size_t k) { return U[k + 2]; });
+  const LC_Interval &ax = value.x;
+  const LC_Interval &ay = value.y;
+  const LC_Interval &ax1 = first.x;
+  const LC_Interval &ay1 = first.y;
+  const LC_Interval &ax2 = second.x;
+  const LC_Interval &ay2 = second.y;
 
   LC_CurveJetBounds result;
   if (equalWeights) {
@@ -1585,8 +1602,9 @@ bool RS_Spline::tryBoundJet(const double a, const double b, LC_CurveJetBounds &b
     const LC_Interval w = LC_Interval::point(m_data.weights[span - p]);
     result = {ax / w, ay / w, ax1 / w, ay1 / w, ax2 / w, ay2 / w};
   } else {
-    LC_Interval w, w1, w2;
-    boundPolynomial(ws, p, width, w, w1, w2);
+    const LC_Interval &w = value.w;
+    const LC_Interval &w1 = first.w;
+    const LC_Interval &w2 = second.w;
     if (!w.isPositive()) {
       return false;
     }
@@ -1599,6 +1617,8 @@ bool RS_Spline::tryBoundJet(const double a, const double b, LC_CurveJetBounds &b
     result.ddx = (ax2 - two * w1 * result.dx - w2 * result.x) / w;
     result.ddy = (ay2 - two * w1 * result.dy - w2 * result.y) / w;
   }
+  result.x = result.x + LC_Interval::point(origin.x);
+  result.y = result.y + LC_Interval::point(origin.y);
   if (!result.isValid()) {
     return false;
   }

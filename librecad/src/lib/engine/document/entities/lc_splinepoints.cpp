@@ -838,7 +838,6 @@ bool LC_SplinePoints::tryBoundJet(const double a, const double b, LC_CurveJetBou
     // the segment's own Bezier parameter; exact, since a and b lie in [index, index + 1]
     const LC_Interval ua = LC_Interval::point(a - index);
     const LC_Interval ub = LC_Interval::point(b - index);
-    const LC_Interval width = ub - ua;
     const LC_Interval one = LC_Interval::point(1.0);
     const LC_Interval two = LC_Interval::point(2.0);
     auto px = [](const RS_Vector& v) { return LC_Interval::point(v.x); };
@@ -883,8 +882,12 @@ bool LC_SplinePoints::tryBoundJet(const double a, const double b, LC_CurveJetBou
             qy[2] = blossom(ub, ub, y0, y1, y2);
             result.x = LC_Interval::hull(LC_Interval::hull(qx[0], qx[1]), qx[2]);
             result.y = LC_Interval::hull(LC_Interval::hull(qy[0], qy[1]), qy[2]);
-            result.dx = two * LC_Interval::hull(qx[1] - qx[0], qx[2] - qx[1]) / width;
-            result.dy = two * LC_Interval::hull(qy[1] - qy[0], qy[2] - qy[1]) / width;
+            // the derivative is linear: its values at the ends, from differences of
+            // the control points rather than of nearly equal Bezier points
+            auto slope = [&](const LC_Interval& u, const LC_Interval& p0, const LC_Interval& p1,
+                             const LC_Interval& p2) { return two * ((one - u) * (p1 - p0) + u * (p2 - p1)); };
+            result.dx = LC_Interval::hull(slope(ua, x0, x1, x2), slope(ub, x0, x1, x2));
+            result.dy = LC_Interval::hull(slope(ua, y0, y1, y2), slope(ub, y0, y1, y2));
             result.ddx = two * (x2 - two * x1 + x0);
             result.ddy = two * (y2 - two * y1 + y0);
             break;

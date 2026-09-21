@@ -143,6 +143,31 @@ TEST_CASE("RS_Spline::tryBoundJet narrows as the box shrinks", "[curve-offset][d
     CHECK(narrow.ddy.width() < wide.ddy.width());
 }
 
+TEST_CASE("Derivative bounds stay tight on a tiny box far from the origin", "[curve-offset][d0][bound]") {
+    // Differencing nearly equal Bezier points of a 1e-7 box divides their
+    // rounding by 1e-7 for C' and by 1e-14 for C''; at coordinates near 1000
+    // that swamped the second derivative. The derivatives' own control points
+    // do not.
+    const RS_Vector o{1234.5, -987.25};
+    const RS_Spline cubic = makeSpline(3, {o, o + RS_Vector{1, 3}, o + RS_Vector{2, -3}, o + RS_Vector{3, 0}},
+                                       {0, 0, 0, 0, 1, 1, 1, 1});
+    const RS_Spline rational = makeSpline(2, {o + RS_Vector{1, 0}, o + RS_Vector{1, 1}, o + RS_Vector{0, 1}},
+                                          {0, 0, 0, 1, 1, 1}, {1.0, std::sqrt(0.5), 1.0});
+    for (const RS_Spline* s : {&cubic, &rational}) {
+        LC_CurveJetBounds b;
+        REQUIRE(s->tryBoundJet(0.3, 0.3 + 1e-7, b));
+        CHECK(b.dx.width() < 1e-5);
+        CHECK(b.dy.width() < 1e-5);
+        CHECK(b.ddx.width() < 1e-4);
+        CHECK(b.ddy.width() < 1e-4);
+    }
+    const LC_SplinePoints points = fromControlPoints({o, o + RS_Vector{5, 10}, o + RS_Vector{10, 0}});
+    LC_CurveJetBounds b;
+    REQUIRE(points.tryBoundJet(0.3, 0.3 + 1e-7, b));
+    CHECK(b.dx.width() < 1e-5);
+    CHECK(b.dy.width() < 1e-5);
+}
+
 TEST_CASE("RS_Spline::tryBoundJet refuses a box it cannot bound", "[curve-offset][d0][bound]") {
     LC_CurveJetBounds bounds;
     // across the repeated knot at t = 1, where the derivatives jump
