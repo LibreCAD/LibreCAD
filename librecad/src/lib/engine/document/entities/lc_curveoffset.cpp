@@ -720,6 +720,18 @@ LC_CurveOffsetStatus checkJoins(const OffsetSource& source, const double d, cons
         if (angle > options.angleTolerance || std::abs(d) * angle > options.tolerance.nodeMerge) {
             return LC_CurveOffsetStatus::DiscontinuousNormal;
         }
+        // The curvature may jump at a join (quadratic segments meet only C1). If
+        // 1 - d kappa changes sign across it, the offset reverses direction there:
+        // a cusp that no box inside either span can see.
+        auto factorNumerator = [d](const LC_CurveJet& jet) {
+            const double s2 = dot(jet.first, jet.first);
+            return s2 * std::sqrt(s2) - d * cross(jet.first, jet.second);
+        };
+        const double before = factorNumerator(l);
+        const double after = factorNumerator(r);
+        if (!(before != 0.0 && after != 0.0) || std::signbit(before) != std::signbit(after)) {
+            return LC_CurveOffsetStatus::SingularOffset;
+        }
         return LC_CurveOffsetStatus::Ok;
     };
     for (size_t i = 1; i + 1 < breaks.size(); ++i) {

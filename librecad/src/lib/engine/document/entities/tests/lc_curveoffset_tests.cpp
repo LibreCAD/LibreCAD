@@ -293,6 +293,31 @@ TEST_CASE("A kink in the source is refused, a smooth join is not", "[curve-offse
           LC_CurveOffset::makeDirectOptions(smooth, 0.2).tolerance.requestedGeometry);
 }
 
+TEST_CASE("A cusp hidden at a join where the curvature jumps is refused", "[curve-offset][direct][regularity]") {
+    // Two quadratic segments meet with a common tangent, turning right. The
+    // first bends with radii between 1.4 and 11.3; the second, past the join,
+    // with radii of 28 and more. At a distance between those, 1 - d kappa is
+    // negative throughout the first segment and positive throughout the second:
+    // no box inside either span contains a zero, yet the offset turns back at
+    // the join.
+    const LC_SplinePoints joined = fromControlPoints({{0, 0}, {2, 2}, {4, 0}, {24.9, -21.1}});
+    auto radiusAt = [&joined](const double t, const LC_CurveEvaluationSide side) {
+        LC_CurveJet j;
+        REQUIRE(joined.tryEvaluateJet(t, side, j));
+        const double s = j.first.magnitude();
+        return s * s * s / std::abs(j.first.x * j.second.y - j.first.y * j.second.x);
+    };
+    const double firstMax = radiusAt(0.0, LC_CurveEvaluationSide::Right);  // largest on the first segment
+    const double secondMin = radiusAt(1.0, LC_CurveEvaluationSide::Right); // smallest on the second
+    const double between = std::sqrt(firstMax * secondMin);
+    REQUIRE(firstMax < between);
+    REQUIRE(between < secondMin);
+    // the inside of the turn is the right side
+    CHECK(offsetToSide(joined, LC_CurveOffsetSide::Right, between).status == LC_CurveOffsetStatus::SingularOffset);
+    CHECK(offsetToSide(joined, LC_CurveOffsetSide::Right, 0.5).status == LC_CurveOffsetStatus::Ok);
+    CHECK(offsetToSide(joined, LC_CurveOffsetSide::Left, between).status == LC_CurveOffsetStatus::Ok);
+}
+
 TEST_CASE("A direction point on the curve has no side", "[curve-offset][direct][side]") {
     const RS_Spline s = sCurve();
     LC_CurveJet onCurve;
