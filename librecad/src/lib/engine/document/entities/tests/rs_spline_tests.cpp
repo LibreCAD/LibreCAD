@@ -27,6 +27,7 @@
 
 #include <cmath>
 #include <memory>
+#include <vector>
 
 #include "lc_splinehelper.h"
 #include "lc_splinepoints.h"
@@ -385,4 +386,147 @@ TEST_CASE("RS_Spline::setFitPoints fills interior CPs for num == p+1",
     REQUIRE(compareVector(cps.front(), fps.front()));
     REQUIRE(compareVector(cps.back(), fps.back()));
   }
+}
+
+// ---------------------------------------------------------------------------
+// Checked jet evaluation (tryEvaluateJet). Analytic fixtures are the oracle;
+// central differences are only a secondary check away from knots.
+// ---------------------------------------------------------------------------
+namespace {
+RS_Spline makeSpline(const size_t degree, const std::vector<RS_Vector>& controls,
+                     const std::vector<double>& knots, std::vector<double> weights = {}) {
+    RS_SplineData data(static_cast<int>(degree), false);
+    data.controlPoints = controls;
+    data.knotslist = knots;
+    data.weights = weights.empty() ? std::vector<double>(controls.size(), 1.0) : std::move(weights);
+    return RS_Spline(nullptr, data);
+}
+
+LC_CurveJet jetAt(const RS_Spline& spline, const double t,
+                  const LC_CurveEvaluationSide side = LC_CurveEvaluationSide::Interior) {
+    LC_CurveJet jet;
+    REQUIRE(spline.tryEvaluateJet(t, side, jet));
+    return jet;
+}
+
+// The cubic Bezier the review of the old evaluator used: it returned NaN
+// derivatives for it at every parameter.
+const std::vector<RS_Vector> g_bezier{{0.0, 0.0}, {1.0, 3.0}, {2.0, -3.0}, {3.0, 0.0}};
+
+RS_Vector bezierPoint(const double t) {
+    const double s = 1.0 - t;
+    return g_bezier[0] * (s * s * s) + g_bezier[1] * (3.0 * s * s * t) +
+           g_bezier[2] * (3.0 * s * t * t) + g_bezier[3] * (t * t * t);
+}
+RS_Vector bezierFirst(const double t) {
+    const double s = 1.0 - t;
+    return ((g_bezier[1] - g_bezier[0]) * (s * s) + (g_bezier[2] - g_bezier[1]) * (2.0 * s * t) +
+            (g_bezier[3] - g_bezier[2]) * (t * t)) * 3.0;
+}
+RS_Vector bezierSecond(const double t) {
+    return ((g_bezier[2] - g_bezier[1] * 2.0 + g_bezier[0]) * (1.0 - t) +
+            (g_bezier[3] - g_bezier[2] * 2.0 + g_bezier[1]) * t) * 6.0;
+}
+} // namespace
+
+TEST_CASE("RS_Spline::tryEvaluateJet matches a cubic Bezier exactly", "[spline][jet]") {
+    const RS_Spline spline = makeSpline(3, g_bezier, {0, 0, 0, 0, 1, 1, 1, 1});
+    for (const double t : {0.0, 0.25, 0.5, 0.75, 1.0}) {
+        const LC_CurveJet jet = jetAt(spline, t);
+        CHECK(compareVector(jet.point, bezierPoint(t), 1e-12));
+        CHECK(compareVector(jet.first, bezierFirst(t), 1e-12));
+        CHECK(compareVector(jet.second, bezierSecond(t), 1e-12));
+    }
+    // the values the old evaluator reported as NaN
+    const LC_CurveJet quarter = jetAt(spline, 0.25);
+    CHECK(compareVector(quarter.first, RS_Vector{3.0, -1.125}, 1e-12));
+    CHECK(compareVector(quarter.second, RS_Vector{0.0, -27.0}, 1e-12));
+}
+
+TEST_CASE("RS_Spline::tryEvaluateJet on a degree-1 line", "[spline][jet]") {
+    const RS_Spline line = makeSpline(1, {{1.0, 2.0}, {4.0, 6.0}}, {0, 0, 2, 2});
+    const LC_CurveJet jet = jetAt(line, 0.5);
+    CHECK(compareVector(jet.point, RS_Vector{1.75, 3.0}, 1e-12));
+    CHECK(compareVector(jet.first, RS_Vector{1.5, 2.0}, 1e-12)); // (P1 - P0) / knot span 2
+    CHECK(compareVector(jet.second, RS_Vector{0.0, 0.0}, 1e-12));
+}
+
+TEST_CASE("RS_Spline::tryEvaluateJet on a rational quarter circle", "[spline][jet]") {
+    const double w = std::sqrt(0.5);
+    const RS_Spline arc = makeSpline(2, {{1.0, 0.0}, {1.0, 1.0}, {0.0, 1.0}},
+                                     {0, 0, 0, 1, 1, 1}, {1.0, w, 1.0});
+    // End derivatives of a rational quadratic: C'(0) = 2 w1/w0 (P1 - P0).
+    CHECK(compareVector(jetAt(arc, 0.0).first, RS_Vector{0.0, 2.0 * w}, 1e-12));
+    CHECK(compareVector(jetAt(arc, 1.0).first, RS_Vector{-2.0 * w, 0.0}, 1e-12));
+    for (const double t : {0.0, 0.1, 0.37, 0.5, 0.81, 1.0}) {
+        const LC_CurveJet jet = jetAt(arc, t);
+        CHECK(jet.point.magnitude() == Approx(1.0).margin(1e-12));
+        // tangent perpendicular to the radius, curvature exactly 1 (counter-clockwise)
+        CHECK(RS_Vector::dotP(jet.point, jet.first) == Approx(0.0).margin(1e-12));
+        const double speed = jet.first.magnitude();
+        const double cross = jet.first.x * jet.second.y - jet.first.y * jet.second.x;
+        CHECK(cross / (speed * speed * speed) == Approx(1.0).margin(1e-10));
+    }
+}
+
+TEST_CASE("RS_Spline::tryEvaluateJet takes one-sided limits at a repeated knot", "[spline][jet]") {
+    // Two cubic Bezier pieces joined with a kink at t = 1 (knot multiplicity 3).
+    const std::vector<RS_Vector> controls{{0, 0}, {1, 1}, {2, 1}, {3, 0}, {4, 2}, {5, 2}, {6, 0}};
+    const RS_Spline spline = makeSpline(3, controls, {0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2});
+    const LC_CurveJet left = jetAt(spline, 1.0, LC_CurveEvaluationSide::Left);
+    const LC_CurveJet right = jetAt(spline, 1.0, LC_CurveEvaluationSide::Right);
+    CHECK(compareVector(left.point, controls[3], 1e-12));
+    CHECK(compareVector(right.point, controls[3], 1e-12));
+    CHECK(compareVector(left.first, (controls[3] - controls[2]) * 3.0, 1e-12));
+    CHECK(compareVector(right.first, (controls[4] - controls[3]) * 3.0, 1e-12));
+    CHECK(compareVector(left.second, (controls[3] - controls[2] * 2.0 + controls[1]) * 6.0, 1e-12));
+    CHECK(compareVector(right.second, (controls[5] - controls[4] * 2.0 + controls[3]) * 6.0, 1e-12));
+    // Interior at an interior knot is the right limit.
+    CHECK(compareVector(jetAt(spline, 1.0).first, right.first, 1e-12));
+    CHECK(spline.getBreakParameters() == std::vector<double>{0.0, 1.0, 2.0});
+}
+
+TEST_CASE("RS_Spline::tryEvaluateJet agrees with central differences on non-uniform knots",
+          "[spline][jet]") {
+    const RS_Spline spline = makeSpline(
+        3, {{0, 0}, {1, 2}, {3, 3}, {4, 1}, {6, 2}, {7, 0}}, {0, 0, 0, 0, 0.3, 1.2, 2, 2, 2, 2},
+        {1.0, 0.7, 1.4, 1.0, 0.9, 1.0});
+    const double h = 1e-5;
+    for (const double t : {0.1, 0.55, 0.9, 1.6, 1.9}) {
+        const LC_CurveJet jet = jetAt(spline, t);
+        const LC_CurveJet before = jetAt(spline, t - h);
+        const LC_CurveJet after = jetAt(spline, t + h);
+        CHECK(compareVector(jet.first, (after.point - before.point) / (2.0 * h), 1e-6));
+        CHECK(compareVector(jet.second, (after.first - before.first) / (2.0 * h), 1e-5));
+        CHECK(compareVector(jet.point, spline.getPointAt(t), 1e-9));
+    }
+}
+
+TEST_CASE("RS_Spline::tryEvaluateJet reports failure instead of a zero vector", "[spline][jet]") {
+    const RS_Spline spline = makeSpline(3, g_bezier, {0, 0, 0, 0, 1, 1, 1, 1});
+    LC_CurveJet jet;
+    double t0 = 0.0;
+    double t1 = 0.0;
+    REQUIRE(spline.getParameterDomain(t0, t1));
+    CHECK(t0 == 0.0);
+    CHECK(t1 == 1.0);
+
+    CHECK_FALSE(spline.tryEvaluateJet(-0.1, LC_CurveEvaluationSide::Interior, jet));
+    CHECK_FALSE(jet.point.valid);
+    CHECK_FALSE(spline.tryEvaluateJet(1.1, LC_CurveEvaluationSide::Interior, jet));
+    CHECK_FALSE(spline.tryEvaluateJet(std::nan(""), LC_CurveEvaluationSide::Interior, jet));
+    CHECK_FALSE(spline.tryEvaluateJet(0.0, LC_CurveEvaluationSide::Left, jet));
+    CHECK_FALSE(spline.tryEvaluateJet(1.0, LC_CurveEvaluationSide::Right, jet));
+    CHECK(spline.tryEvaluateJet(1.0, LC_CurveEvaluationSide::Left, jet));
+
+    RS_Spline zeroWeight = makeSpline(3, g_bezier, {0, 0, 0, 0, 1, 1, 1, 1}, {1.0, 0.0, 1.0, 1.0});
+    CHECK_FALSE(zeroWeight.tryEvaluateJet(0.5, LC_CurveEvaluationSide::Interior, jet));
+
+    RS_Spline shortKnots = makeSpline(3, g_bezier, {0, 0, 0, 1, 1, 1});
+    CHECK_FALSE(shortKnots.tryEvaluateJet(0.5, LC_CurveEvaluationSide::Interior, jet));
+    CHECK_FALSE(shortKnots.getParameterDomain(t0, t1));
+    CHECK(shortKnots.getBreakParameters().empty());
+
+    RS_Spline infinite = makeSpline(3, {{0, 0}, {1, 3}, {INFINITY, -3}, {3, 0}}, {0, 0, 0, 0, 1, 1, 1, 1});
+    CHECK_FALSE(infinite.tryEvaluateJet(0.5, LC_CurveEvaluationSide::Interior, jet));
 }

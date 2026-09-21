@@ -409,6 +409,7 @@ HEADERS += \
     lib/engine/document/entities/lc_textbidi.h \
     lib/engine/document/container/lc_containertraverser.h \
     lib/engine/document/entities/lc_mleader.h \
+    lib/engine/document/entities/lc_curvejet.h \
     lib/engine/document/entities/lc_splinehelper.h \
     lib/engine/document/entities/lc_tolerance.h \
     lib/engine/document/entities/support/lc_arrow_box.h \

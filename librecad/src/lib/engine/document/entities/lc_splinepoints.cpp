@@ -23,6 +23,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "lc_splinepoints.h"
 
+#include <algorithm>
+#include <cmath>
+#include <limits>
+
 #include <QPainterPath>
 
 #include "lc_quadratic.h"
@@ -746,6 +750,153 @@ int LC_SplinePoints::getQuadPoints(const int iSeg, RS_Vector* pvStart, RS_Vector
     }
 
     return 3;
+}
+
+size_t LC_SplinePoints::getSegmentCount() const {
+    const size_t n = m_data.controlPoints.size();
+    if (m_data.closed) {
+        return n >= 3 ? n : 0;
+    }
+    if (n == 0) {
+        return 0;
+    }
+    return n <= 3 ? 1 : n - 2;
+}
+
+bool LC_SplinePoints::tryGetSegment(const size_t index, LC_SplinePointsSegment& segment) const {
+    segment = LC_SplinePointsSegment{};
+    if (index >= getSegmentCount()) {
+        return false;
+    }
+    const std::vector<RS_Vector>& cp = m_data.controlPoints;
+    const size_t n = cp.size();
+    auto finite = [](const RS_Vector& v) {
+        return v.valid && std::isfinite(v.x) && std::isfinite(v.y) && std::isfinite(v.z);
+    };
+
+    LC_SplinePointsSegment result;
+    if (m_data.closed) {
+        const RS_Vector& previous = cp[(index + n - 1) % n];
+        const RS_Vector& current = cp[index];
+        const RS_Vector& next = cp[(index + 1) % n];
+        if (!finite(previous) || !finite(current) || !finite(next)) {
+            return false;
+        }
+        result.kind = LC_SplinePointsSegment::Kind::Quadratic;
+        result.start = (previous + current) * 0.5;
+        result.control = current;
+        result.end = (current + next) * 0.5;
+    }
+    else if (n == 1) {
+        if (!finite(cp[0])) {
+            return false;
+        }
+        result.kind = LC_SplinePointsSegment::Kind::Point;
+        result.start = cp[0];
+    }
+    else if (n == 2) {
+        if (!finite(cp[0]) || !finite(cp[1])) {
+            return false;
+        }
+        result.kind = LC_SplinePointsSegment::Kind::Line;
+        result.start = cp[0];
+        result.end = cp[1];
+    }
+    else {
+        // The ends of an open spline pass through its first and last control
+        // points; interior joins lie halfway between neighbouring control points.
+        const RS_Vector& a = cp[index];
+        const RS_Vector& b = cp[index + 1];
+        const RS_Vector& c = cp[index + 2];
+        if (!finite(a) || !finite(b) || !finite(c)) {
+            return false;
+        }
+        result.kind = LC_SplinePointsSegment::Kind::Quadratic;
+        result.start = (index == 0) ? a : (a + b) * 0.5;
+        result.control = b;
+        result.end = (index + 3 == n) ? c : (b + c) * 0.5;
+    }
+    segment = result;
+    return true;
+}
+
+bool LC_SplinePoints::tryEvaluateJet(double t, const LC_CurveEvaluationSide side, LC_CurveJet& jet) const {
+    jet = LC_CurveJet{};
+    const size_t count = getSegmentCount();
+    if (count == 0 || !std::isfinite(t)) {
+        return false;
+    }
+    const auto end = static_cast<double>(count);
+    // A parameter computed from the domain ends can miss them by a few ulps.
+    const double slack = 4.0 * std::numeric_limits<double>::epsilon() * end;
+    if (t < 0.0) {
+        if (t < -slack) {
+            return false;
+        }
+        t = 0.0;
+    }
+    else if (t > end) {
+        if (t > end + slack) {
+            return false;
+        }
+        t = end;
+    }
+
+    LC_CurveEvaluationSide limit = side;
+    if (limit == LC_CurveEvaluationSide::Interior) {
+        limit = (t < end) ? LC_CurveEvaluationSide::Right : LC_CurveEvaluationSide::Left;
+    }
+    double index = 0.0;
+    if (limit == LC_CurveEvaluationSide::Right) {
+        if (t >= end) {
+            return false;
+        }
+        index = std::floor(t);
+    }
+    else {
+        if (t <= 0.0) {
+            return false;
+        }
+        index = std::ceil(t) - 1.0;
+    }
+    const double u = t - index;
+
+    LC_SplinePointsSegment segment;
+    if (!tryGetSegment(static_cast<size_t>(index), segment)) {
+        return false;
+    }
+    RS_Vector point;
+    RS_Vector first;
+    RS_Vector second;
+    switch (segment.kind) {
+        case LC_SplinePointsSegment::Kind::Point:
+            point = segment.start;
+            first = RS_Vector{0.0, 0.0, 0.0};
+            second = RS_Vector{0.0, 0.0, 0.0};
+            break;
+        case LC_SplinePointsSegment::Kind::Line:
+            point = segment.start * (1.0 - u) + segment.end * u;
+            first = segment.end - segment.start;
+            second = RS_Vector{0.0, 0.0, 0.0};
+            break;
+        case LC_SplinePointsSegment::Kind::Quadratic: {
+            const double v = 1.0 - u;
+            point = segment.start * (v * v) + segment.control * (2.0 * u * v) + segment.end * (u * u);
+            first = ((segment.control - segment.start) * v + (segment.end - segment.control) * u) * 2.0;
+            second = (segment.end - segment.control * 2.0 + segment.start) * 2.0;
+            break;
+        }
+    }
+    auto finite = [](const RS_Vector& v) {
+        return std::isfinite(v.x) && std::isfinite(v.y) && std::isfinite(v.z);
+    };
+    if (!finite(point) || !finite(first) || !finite(second)) {
+        return false;
+    }
+    jet.point = point;
+    jet.first = first;
+    jet.second = second;
+    return true;
 }
 
 // returns the index to the nearest segment, dt holds the t parameter

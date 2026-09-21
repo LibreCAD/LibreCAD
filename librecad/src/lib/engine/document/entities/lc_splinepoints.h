@@ -27,6 +27,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <vector>
 
 #include "lc_cachedlengthentity.h"
+#include "lc_curvejet.h"
 #include "rs_atomicentity.h"
 
 class QPolygonF;
@@ -63,6 +64,25 @@ struct LC_SplinePointsData {
 };
 
 std::ostream& operator <<(std::ostream& os, const LC_SplinePointsData& ld);
+
+/**
+ * One piece of an LC_SplinePoints, as it is drawn: the spline is a chain of
+ * quadratic Bezier segments, except that one control point is a point and two
+ * are a line segment.
+ */
+struct LC_SplinePointsSegment {
+    enum class Kind {
+        Point,
+        Line,
+        Quadratic
+    };
+    Kind kind = Kind::Point;
+    RS_Vector start{false};
+    /** Quadratic segments only. */
+    RS_Vector control{false};
+    /** Line and quadratic segments only. */
+    RS_Vector end{false};
+};
 
 /**
  * Class for a spline entity.
@@ -217,6 +237,30 @@ public:
     LC_SecondMoment secondMomentLineIntegral() const override;
 
     int getQuadPoints(int iSeg, RS_Vector* pvStart, RS_Vector* pvControl, RS_Vector* pvEnd) const;
+
+    /**
+     * Number of segments the spline consists of, built from its control points:
+     * 0 without geometry, 1 for a single point, a line segment or one quadratic,
+     * and otherwise one quadratic per interior control point of an open spline
+     * or per control point of a closed one.
+     */
+    size_t getSegmentCount() const;
+    /**
+     * The segment with 0-based @p index, tagged with its kind.
+     * @return false, leaving @p segment a point with invalid coordinates, if the
+     *         index is out of range or a control point it uses is not finite.
+     */
+    bool tryGetSegment(size_t index, LC_SplinePointsSegment& segment) const;
+    /**
+     * Checked evaluation of the point and its first and second derivatives at
+     * parameter @p t in [0, getSegmentCount()]: segment k covers [k, k+1], with
+     * t = k + u for the segment's own Bezier parameter u. Segment joins take the
+     * limit chosen by @p side. A point segment has zero derivatives, which is its
+     * geometry rather than a failure. A closed spline is not wrapped around.
+     * @return false, leaving @p jet invalid, for a parameter outside the domain,
+     *         a limit that does not exist, or a result that is not finite.
+     */
+    bool tryEvaluateJet(double t, LC_CurveEvaluationSide side, LC_CurveJet& jet) const;
 protected:
     /**
 * @return The length of the line.

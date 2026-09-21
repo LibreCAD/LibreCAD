@@ -33,6 +33,7 @@
 #include <iosfwd>
 #include <vector>
 
+#include "lc_curvejet.h"
 #include "rs_entitycontainer.h"
 #include "rs_painter.h"
 #include "rs_vector.h"
@@ -296,6 +297,35 @@ public:
 
   /** Validate the spline data integrity */
   bool validate() const;
+
+  /**
+   * The parameter domain [t0, t1] the curve is defined on: the knots at indices
+   * degree and (number of control points, wrapping included).
+   * @return false if the degree, control points and knot vector do not form a
+   *         curve with a non-empty domain.
+   */
+  bool getParameterDomain(double &t0, double &t1) const;
+
+  /**
+   * The distinct knot values in the parameter domain, both ends included. The
+   * curve is one polynomial (rational) piece between consecutive values, so a
+   * derivative can jump only at an interior value. Empty if the spline has no
+   * valid domain.
+   */
+  std::vector<double> getBreakParameters() const;
+
+  /**
+   * Checked evaluation of the curve point and its first and second derivatives
+   * with respect to the knot parameter.
+   *
+   * At an interior break the caller chooses the one-sided limit; see
+   * LC_CurveEvaluationSide. Unlike getPointAt(), a failure is reported rather
+   * than returned as a zero vector: the result is false, and @p jet is left
+   * invalid, when the data do not describe a curve, @p t lies outside the
+   * domain, the requested limit does not exist, a weight or the rational
+   * denominator is not positive and finite, or any result is not finite.
+   */
+  bool tryEvaluateJet(double t, LC_CurveEvaluationSide side, LC_CurveJet &jet) const;
 
   friend class RS_FilterDXFRW;
 protected:

@@ -29,7 +29,9 @@
 #include "rs_spline.h"
 
 #include <algorithm>
+#include <cmath>
 #include <iostream>
+#include <limits>
 
 #include "lc_splinehelper.h"
 #include "rs_debug.h"
@@ -64,6 +66,111 @@ bool solveSystem(const std::vector<std::vector<double>> &coef,
   }
 
   return RS_Math::linearSolver(aug, sol);
+}
+
+constexpr size_t g_maxDegree = 3;
+
+/**
+ * Whether the degree, control points, weights and knot vector have the sizes a
+ * curve needs. Values are checked separately, where they are used.
+ */
+bool hasEvaluableLayout(const RS_SplineData &d) {
+  const size_t p = d.degree;
+  const size_t ncp = d.controlPoints.size();
+  return p >= 1 && p <= g_maxDegree && ncp >= p + 1 &&
+         d.knotslist.size() == ncp + p + 1 && d.weights.size() == ncp;
+}
+
+/**
+ * The non-zero B-spline basis functions of degree p on knot span s, and their
+ * first and second derivatives, at t (Piegl & Tiller, The NURBS Book, A2.3).
+ * ders[k][j] is the k-th derivative of N_{s-p+j,p}(t).
+ *
+ * The knot differences are kept in the lower triangle of ndu, because the
+ * derivative recurrence divides by them. On a span with U[s] < U[s+1] every one
+ * of them spans that interval and so is positive.
+ *
+ * @return false if a knot difference is not positive or a value is not finite.
+ */
+bool dersBasisFunctions(const size_t s, const double t, const size_t p,
+                        const std::vector<double> &U, double ders[3][g_maxDegree + 1]) {
+  double ndu[g_maxDegree + 1][g_maxDegree + 1] = {};
+  double left[g_maxDegree + 1] = {};
+  double right[g_maxDegree + 1] = {};
+  ndu[0][0] = 1.0;
+  for (size_t j = 1; j <= p; ++j) {
+    left[j] = t - U[s + 1 - j];
+    right[j] = U[s + j] - t;
+    double saved = 0.0;
+    for (size_t r = 0; r < j; ++r) {
+      ndu[j][r] = right[r + 1] + left[j - r];
+      if (!(ndu[j][r] > 0.0)) {
+        return false;
+      }
+      const double temp = ndu[r][j - 1] / ndu[j][r];
+      ndu[r][j] = saved + (right[r + 1] * temp);
+      saved = left[j - r] * temp;
+    }
+    ndu[j][j] = saved;
+  }
+
+  for (size_t j = 0; j <= p; ++j) {
+    ders[0][j] = ndu[j][p];
+    ders[1][j] = 0.0;
+    ders[2][j] = 0.0;
+  }
+
+  // derivatives above the degree vanish
+  const int nd = static_cast<int>(std::min<size_t>(2, p));
+  const int ip = static_cast<int>(p);
+  double a[2][g_maxDegree + 1] = {};
+  for (int r = 0; r <= ip; ++r) {
+    int s1 = 0;
+    int s2 = 1;
+    a[0][0] = 1.0;
+    for (int k = 1; k <= nd; ++k) {
+      double d = 0.0;
+      const int rk = r - k;
+      const int pk = ip - k;
+      if (r >= k) {
+        a[s2][0] = a[s1][0] / ndu[pk + 1][rk];
+        d = a[s2][0] * ndu[rk][pk];
+      }
+      const int j1 = (rk >= -1) ? 1 : -rk;
+      const int j2 = (r - 1 <= pk) ? k - 1 : ip - r;
+      for (int j = j1; j <= j2; ++j) {
+        a[s2][j] = (a[s1][j] - a[s1][j - 1]) / ndu[pk + 1][rk + j];
+        d += a[s2][j] * ndu[rk + j][pk];
+      }
+      if (r <= pk) {
+        a[s2][k] = -a[s1][k - 1] / ndu[pk + 1][r];
+        d += a[s2][k] * ndu[r][pk];
+      }
+      ders[k][r] = d;
+      std::swap(s1, s2);
+    }
+  }
+
+  double factor = static_cast<double>(p);
+  for (int k = 1; k <= nd; ++k) {
+    for (size_t j = 0; j <= p; ++j) {
+      ders[k][j] *= factor;
+    }
+    factor *= static_cast<double>(ip - k);
+  }
+
+  for (int k = 0; k <= 2; ++k) {
+    for (size_t j = 0; j <= p; ++j) {
+      if (!std::isfinite(ders[k][j])) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
+bool isFinite(const RS_Vector &v) {
+  return v.valid && std::isfinite(v.x) && std::isfinite(v.y) && std::isfinite(v.z);
 }
 } // namespace
 
@@ -1121,6 +1228,128 @@ bool RS_Spline::validate() const {
 
 RS_Vector RS_Spline::getPointAt(const double t) const {
   return evaluateWithDerivs(t).pos;
+}
+
+bool RS_Spline::getParameterDomain(double &t0, double &t1) const {
+  if (!hasEvaluableLayout(m_data)) {
+    return false;
+  }
+  const auto &U = m_data.knotslist;
+  const double lo = U[m_data.degree];
+  const double hi = U[m_data.controlPoints.size()];
+  if (!std::isfinite(lo) || !std::isfinite(hi) || !(lo < hi)) {
+    return false;
+  }
+  t0 = lo;
+  t1 = hi;
+  return true;
+}
+
+std::vector<double> RS_Spline::getBreakParameters() const {
+  double t0 = 0.0;
+  double t1 = 0.0;
+  if (!getParameterDomain(t0, t1)) {
+    return {};
+  }
+  const auto &U = m_data.knotslist;
+  std::vector<double> breaks{t0};
+  for (size_t i = m_data.degree + 1; i < m_data.controlPoints.size(); ++i) {
+    const double u = U[i];
+    if (!std::isfinite(u) || u < breaks.back()) {
+      return {}; // decreasing knots: not a curve
+    }
+    if (u > breaks.back() && u < t1) {
+      breaks.push_back(u);
+    }
+  }
+  breaks.push_back(t1);
+  return breaks;
+}
+
+bool RS_Spline::tryEvaluateJet(double t, const LC_CurveEvaluationSide side, LC_CurveJet &jet) const {
+  jet = LC_CurveJet{};
+  double t0 = 0.0;
+  double t1 = 0.0;
+  if (!std::isfinite(t) || !getParameterDomain(t0, t1)) {
+    return false;
+  }
+
+  // A parameter computed from the domain ends can miss them by a few ulps.
+  const double slack = 4.0 * std::numeric_limits<double>::epsilon() *
+                       std::max({std::abs(t0), std::abs(t1), t1 - t0});
+  if (t < t0) {
+    if (t < t0 - slack) {
+      return false;
+    }
+    t = t0;
+  } else if (t > t1) {
+    if (t > t1 + slack) {
+      return false;
+    }
+    t = t1;
+  }
+
+  LC_CurveEvaluationSide limit = side;
+  if (limit == LC_CurveEvaluationSide::Interior) {
+    limit = (t < t1) ? LC_CurveEvaluationSide::Right : LC_CurveEvaluationSide::Left;
+  }
+
+  // Knot span s with U[s] <= t < U[s+1] (right limit) or U[s] < t <= U[s+1]
+  // (left limit), searched among the spans of the domain.
+  const auto &U = m_data.knotslist;
+  const size_t p = m_data.degree;
+  const size_t ncp = m_data.controlPoints.size();
+  const auto domainBegin = U.begin() + static_cast<std::ptrdiff_t>(p);
+  const auto domainEnd = U.begin() + static_cast<std::ptrdiff_t>(ncp + 1);
+  const auto bound = (limit == LC_CurveEvaluationSide::Right)
+                         ? std::upper_bound(domainBegin, domainEnd, t)
+                         : std::lower_bound(domainBegin, domainEnd, t);
+  const std::ptrdiff_t index = std::distance(U.begin(), bound) - 1;
+  if (index < static_cast<std::ptrdiff_t>(p) || index > static_cast<std::ptrdiff_t>(ncp) - 1) {
+    return false; // left limit at t0 or right limit at t1
+  }
+  const auto span = static_cast<size_t>(index);
+  for (size_t i = span + 1 - p; i < span + p; ++i) {
+    if (!(U[i] <= U[i + 1])) {
+      return false;
+    }
+  }
+
+  double ders[3][g_maxDegree + 1];
+  if (!dersBasisFunctions(span, t, p, U, ders)) {
+    return false;
+  }
+
+  // Homogeneous numerator A and denominator W with their derivatives.
+  RS_Vector a[3]{RS_Vector{0.0, 0.0, 0.0}, RS_Vector{0.0, 0.0, 0.0}, RS_Vector{0.0, 0.0, 0.0}};
+  double w[3]{0.0, 0.0, 0.0};
+  for (size_t j = 0; j <= p; ++j) {
+    const size_t i = span - p + j;
+    const double wi = m_data.weights[i];
+    const RS_Vector &pi = m_data.controlPoints[i];
+    if (!std::isfinite(wi) || !(wi > 0.0) || !isFinite(pi)) {
+      return false;
+    }
+    for (int k = 0; k <= 2; ++k) {
+      a[k] += pi * (wi * ders[k][j]);
+      w[k] += wi * ders[k][j];
+    }
+  }
+  if (!std::isfinite(w[0]) || !(w[0] > 0.0)) {
+    return false;
+  }
+
+  // C = A/W, C' = (A' - W'C)/W, C'' = (A'' - 2W'C' - W''C)/W
+  const RS_Vector point = a[0] / w[0];
+  const RS_Vector first = (a[1] - point * w[1]) / w[0];
+  const RS_Vector second = (a[2] - first * (2.0 * w[1]) - point * w[2]) / w[0];
+  if (!isFinite(point) || !isFinite(first) || !isFinite(second)) {
+    return false;
+  }
+  jet.point = point;
+  jet.first = first;
+  jet.second = second;
+  return true;
 }
 
 double RS_Spline::getDerivative(const double t, const bool isX) const {
