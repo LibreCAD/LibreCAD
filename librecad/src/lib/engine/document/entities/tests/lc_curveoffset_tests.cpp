@@ -436,3 +436,134 @@ TEST_CASE("Piece counts at the default tolerance", "[curve-offset][direct][calib
         CHECK(sPieces < 200);
     }
 }
+
+// ---------------------------------------------------------------------------
+// Materialization (D1b)
+// ---------------------------------------------------------------------------
+namespace {
+LC_CurveOffsetMaterializationResult materialize(const RS_Entity& source, const LC_CurveOffsetSide side,
+                                                const double distance,
+                                                const LC_OffsetSourceBudget budget = LC_CurveOffset::makeDirectSourceBudget()) {
+    return LC_CurveOffset::createEntities(source, LC_CurveOffset::makeSideRequest(side, distance),
+                                          LC_CurveOffset::makeDirectOptions(source, distance), budget);
+}
+} // namespace
+
+TEST_CASE("A branch materializes as one validated clamped cubic per piece", "[curve-offset][direct][materialize]") {
+    const RS_Spline s = sCurve();
+    const LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(s, 0.75);
+    const LC_CurveOffsetRequest request = LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 0.75);
+    const LC_CurveOffsetGeometryResult geometry =
+        LC_CurveOffset::buildDirectBranches(s, request, options, LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(geometry.status == LC_CurveOffsetStatus::Ok);
+    const std::vector<LC_OffsetCubicPiece> before = geometry.branches.front().cubicPieces;
+
+    const LC_CurveOffsetMaterializationResult result =
+        LC_CurveOffset::materializeBranches(s, geometry, options, LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+    CHECK(result.validationLevel == LC_OffsetValidationLevel::SampledBidirectional);
+    CHECK(result.maxObservedError <= options.tolerance.requestedGeometry);
+    REQUIRE(result.entities.size() >= before.size());
+    CHECK(result.usage.outputEntities == result.entities.size());
+    CHECK(result.usage.cubicPieces == result.entities.size());
+
+    std::size_t deep = 0;
+    RS_Vector previousEnd{false};
+    for (const std::unique_ptr<RS_Entity>& entity : result.entities) {
+        const auto* piece = dynamic_cast<const RS_Spline*>(entity.get());
+        REQUIRE(piece != nullptr);
+        CHECK(piece->validate());
+        CHECK(piece->getDegree() == 3);
+        CHECK_FALSE(piece->isClosed());
+        CHECK(piece->count() == 32);
+        CHECK(piece->getParent() == nullptr);
+        CHECK_FALSE(piece->isSelected());
+        if (previousEnd.valid) {
+            CHECK(piece->getStartpoint() == previousEnd); // pieces share their ends exactly
+        }
+        previousEnd = piece->getEndpoint();
+        deep += piece->count();
+    }
+    CHECK(result.usage.deepEntities == deep);
+
+    // materializing reads the branch; it never changes it
+    const auto& after = geometry.branches.front().cubicPieces;
+    REQUIRE(after.size() == before.size());
+    for (size_t i = 0; i < before.size(); ++i) {
+        CHECK(after[i].bezier == before[i].bezier);
+    }
+}
+
+TEST_CASE("A straight source materializes as one exact line", "[curve-offset][direct][materialize]") {
+    const LC_SplinePoints line = fromControlPoints({{0.0, 0.0}, {10.0, 0.0}});
+    const LC_CurveOffsetMaterializationResult result = materialize(line, LC_CurveOffsetSide::Right, 2.0);
+    REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(result.entities.size() == 1);
+    const auto* offset = dynamic_cast<const RS_Line*>(result.entities.front().get());
+    REQUIRE(offset != nullptr);
+    CHECK(offset->getStartpoint() == RS_Vector(0.0, -2.0));
+    CHECK(offset->getEndpoint() == RS_Vector(10.0, -2.0));
+    CHECK(result.maxObservedError == 0.0);
+}
+
+TEST_CASE("Output copies only the source's layer and pen", "[curve-offset][direct][materialize]") {
+    RS_Spline s = sCurve();
+    const RS_Pen pen{RS_Color{200, 10, 30}, RS2::Width04, RS2::DashLine};
+    s.setPen(pen);
+    s.setSelectionFlag(true);
+    s.setHighlighted(true);
+    const LC_CurveOffsetMaterializationResult result = materialize(s, LC_CurveOffsetSide::Right, 0.5);
+    REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+    for (const std::unique_ptr<RS_Entity>& entity : result.entities) {
+        CHECK(entity->getPen(false) == pen);
+        CHECK_FALSE(entity->isSelected());
+        CHECK_FALSE(entity->isHighlighted());
+        CHECK(entity->getParent() == nullptr);
+    }
+}
+
+TEST_CASE("Limits and failures return no entity", "[curve-offset][direct][materialize][limits]") {
+    const RS_Spline s = sCurve();
+    const LC_CurveOffsetMaterializationResult full = materialize(s, LC_CurveOffsetSide::Left, 0.75);
+    REQUIRE(full.status == LC_CurveOffsetStatus::Ok);
+    const std::size_t pieces = full.entities.size();
+
+    LC_OffsetSourceBudget budget = LC_CurveOffset::makeDirectSourceBudget();
+    budget.maxOutputEntities = pieces - 1;
+    const LC_CurveOffsetMaterializationResult tooMany = materialize(s, LC_CurveOffsetSide::Left, 0.75, budget);
+    CHECK(tooMany.status == LC_CurveOffsetStatus::LimitExceeded);
+    CHECK(tooMany.entities.empty());
+
+    budget = LC_CurveOffset::makeDirectSourceBudget();
+    budget.maxDeepEntities = full.usage.deepEntities - 1;
+    const LC_CurveOffsetMaterializationResult tooDeep = materialize(s, LC_CurveOffsetSide::Left, 0.75, budget);
+    CHECK(tooDeep.status == LC_CurveOffsetStatus::LimitExceeded);
+    CHECK(tooDeep.entities.empty());
+
+    budget.maxDeepEntities = full.usage.deepEntities;
+    CHECK(materialize(s, LC_CurveOffsetSide::Left, 0.75, budget).status == LC_CurveOffsetStatus::Ok);
+
+    // a failed geometry never reaches an entity
+    const RS_Spline arc = quarterCircle();
+    const LC_CurveOffsetMaterializationResult singular = materialize(arc, LC_CurveOffsetSide::Left, 1.0);
+    CHECK(singular.status != LC_CurveOffsetStatus::Ok);
+    CHECK(singular.entities.empty());
+
+    // a failed geometry result handed to the materializer is refused as it is
+    LC_CurveOffsetGeometryResult failed;
+    failed.status = LC_CurveOffsetStatus::SingularOffset;
+    CHECK(LC_CurveOffset::materializeBranches(s, failed, LC_CurveOffset::makeDirectOptions(s, 1.0),
+                                              LC_CurveOffset::makeDirectSourceBudget())
+              .status == LC_CurveOffsetStatus::SingularOffset);
+}
+
+TEST_CASE("Closed sources materialize as a closed chain of open pieces", "[curve-offset][direct][materialize][closed]") {
+    const LC_SplinePoints ring = fromControlPoints({{0, 0}, {10, 0}, {12, 8}, {2, 9}}, true);
+    const LC_CurveOffsetMaterializationResult result = materialize(ring, LC_CurveOffsetSide::Right, 1.0);
+    REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(result.entities.size() > 1);
+    for (const std::unique_ptr<RS_Entity>& entity : result.entities) {
+        CHECK_FALSE(dynamic_cast<const RS_Spline&>(*entity).isClosed());
+    }
+    CHECK(result.entities.back()->getEndpoint() == result.entities.front()->getStartpoint());
+}

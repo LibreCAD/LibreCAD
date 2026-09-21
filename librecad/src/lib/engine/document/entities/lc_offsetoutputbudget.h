@@ -23,6 +23,9 @@
 #define LC_OFFSETOUTPUTBUDGET_H
 
 #include <cstddef>
+#include <vector>
+
+class RS_Entity;
 
 /**
  * Hard limits on what offsetting one source may produce, over all the copies
@@ -67,5 +70,27 @@ inline LC_OffsetSourceBudget makeDefaultOffsetSourceBudget() {
 inline bool isValidOffsetBudget(const LC_OffsetSourceBudget& budget) {
     return budget.maxCubicPieces > 0 && budget.maxOutputEntities > 0 && budget.maxDeepEntities > 0;
 }
+
+enum class LC_OffsetTreeStatus {
+    Ok,
+    LimitExceeded,
+    /** A null root, a root listed twice, a child shared between trees, or a cycle. */
+    InvalidTree
+};
+
+struct LC_OffsetTreeCost {
+    LC_OffsetTreeStatus status{LC_OffsetTreeStatus::InvalidTree};
+    std::size_t deepEntities{0};
+};
+
+/**
+ * Counts the leaf entities under @p roots, following child links only, and
+ * stops as soon as the count would exceed @p cap, so it cannot wrap. Every root
+ * and child is visited at most once: a malformed tree fails rather than being
+ * counted twice or forever. Nothing is modified, and the virtual
+ * RS_EntityContainer::countDeep(), which sums into an unchecked unsigned int,
+ * is not used.
+ */
+LC_OffsetTreeCost measureOffsetOutput(const std::vector<const RS_Entity*>& roots, std::size_t cap);
 
 #endif

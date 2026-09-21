@@ -247,6 +247,27 @@ LC_CurveOffsetGeometryResult buildDirectBranches(const RS_Entity& source, const 
                                                  const LC_CurveOffsetOptions& options,
                                                  const LC_OffsetSourceBudget& budget);
 
+/**
+ * Fresh, parentless entities for @p geometry, a successful result of
+ * buildDirectBranches() for the same source and options: one clamped cubic
+ * RS_Spline per piece, or one RS_Line for a straight branch. They copy only the
+ * source's pen and layer. Each entity is compared with the exact offset once
+ * more, through its own evaluator, at parameters the fitter never used and from
+ * both sides: paired at the same source parameter, and from the entity back to
+ * the nearest offset point. A piece that fails is split and refitted in a local
+ * copy; @p geometry is not changed. Output is counted against @p budget as it is
+ * made. On any failure no entity is returned.
+ */
+LC_CurveOffsetMaterializationResult materializeBranches(const RS_Entity& source,
+                                                        const LC_CurveOffsetGeometryResult& geometry,
+                                                        const LC_CurveOffsetOptions& options,
+                                                        const LC_OffsetSourceBudget& budget);
+
+/** buildDirectBranches(), then materializeBranches(): the programmatic entry point. */
+LC_CurveOffsetMaterializationResult createEntities(const RS_Entity& source, const LC_CurveOffsetRequest& request,
+                                                   const LC_CurveOffsetOptions& options,
+                                                   const LC_OffsetSourceBudget& budget);
+
 } // namespace LC_CurveOffset
 
 #endif
