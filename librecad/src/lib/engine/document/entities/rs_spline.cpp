@@ -457,12 +457,47 @@ void RS_Spline::fillStrokePoints(const int segments, std::vector<RS_Vector> &poi
 }
 
 /** Endpoints (invalid if closed) */
-RS_Vector RS_Spline::getStartpoint() const { return RS_Vector(false); }
-RS_Vector RS_Spline::getEndpoint() const { return RS_Vector(false); }
+RS_Vector RS_Spline::getStartpoint() const {
+  double t0 = 0.0;
+  double t1 = 0.0;
+  LC_CurveJet jet;
+  if (isClosed() || !getParameterDomain(t0, t1) ||
+      !tryEvaluateJet(t0, LC_CurveEvaluationSide::Right, jet)) {
+    return RS_Vector(false);
+  }
+  return jet.point;
+}
+
+RS_Vector RS_Spline::getEndpoint() const {
+  double t0 = 0.0;
+  double t1 = 0.0;
+  LC_CurveJet jet;
+  if (isClosed() || !getParameterDomain(t0, t1) ||
+      !tryEvaluateJet(t1, LC_CurveEvaluationSide::Left, jet)) {
+    return RS_Vector(false);
+  }
+  return jet.point;
+}
 
 /** Nearest (invalid overrides) */
-RS_Vector RS_Spline::doGetNearestEndpoint(const RS_Vector &, double *, RS_Entity** entity) const {
-  return RS_Vector(false);
+RS_Vector RS_Spline::doGetNearestEndpoint(const RS_Vector &coord, double *dist, RS_Entity** entity) const {
+  if (dist != nullptr) {
+    *dist = RS_MAXDOUBLE;
+  }
+  const RS_Vector start = getStartpoint();
+  const RS_Vector end = getEndpoint();
+  if (!start.valid || !end.valid) {
+    return RS_Vector(false); // closed or not a curve: no endpoints
+  }
+  const double toStart = coord.distanceTo(start);
+  const double toEnd = coord.distanceTo(end);
+  if (dist != nullptr) {
+    *dist = std::min(toStart, toEnd);
+  }
+  if (entity != nullptr) {
+    *entity = const_cast<RS_Spline *>(this);
+  }
+  return (toStart <= toEnd) ? start : end;
 }
 RS_Vector RS_Spline::doGetNearestCenter(const RS_Vector &, double *, RS_Entity** centerEntity) const {
   return RS_Vector(false);
@@ -792,42 +827,52 @@ std::ostream &operator<<(std::ostream &os, const RS_Spline &l) {
 }
 
 /** Derivative zeros */
-std::vector<double> RS_Spline::findDerivativeZeros(bool isX) const {
+std::vector<double> RS_Spline::findDerivativeZeros(const bool isX) const {
   std::vector<double> zeros;
-  const auto &U = m_data.knotslist;
-  const size_t p = m_data.degree;
-  const size_t n = m_data.controlPoints.size() - 1;
-  if (n < p) {
-      return zeros;
+  const std::vector<double> breaks = getBreakParameters();
+  if (breaks.size() < 2) {
+    return zeros;
   }
 
-  auto d = [this, isX](const double t) { return getDerivative(t, isX); };
-
-  auto funAddIf = [&](const double a, const double b, const double fa, const double fb) {
-    if ((fa * fb <= 0.0 || std::abs(fa) < 1e-9 || std::abs(fb) < 1e-9) &&
-        b - a > 1e-12) {
-        zeros.push_back(bisectDerivativeZero(a, b, fa, isX));
+  // The derivative component on the span being searched: at a break it takes the
+  // limit from inside that span, since it may jump there. NaN on failure.
+  auto derivative = [this, isX](const double t, const LC_CurveEvaluationSide side) {
+    LC_CurveJet jet;
+    if (!tryEvaluateJet(t, side, jet)) {
+      return std::numeric_limits<double>::quiet_NaN();
+    }
+    return isX ? jet.first.x : jet.first.y;
+  };
+  auto addIfBracketed = [&](const double a, const double b, const double fa, const double fb) {
+    if (fa == 0.0) {
+      zeros.push_back(a);
+    } else if (fb == 0.0) {
+      zeros.push_back(b);
+    } else {
+      const double root = bisectDerivativeZero(a, b, fa, fb, isX);
+      if (std::isfinite(root)) {
+        zeros.push_back(root);
+      }
     }
   };
 
-  double f0 = d(U[p]);
-  for (size_t i = p; i <= n; ++i) {
-    const double t1 = U[i + 1];
-    const double fm = d((U[i] + t1) * 0.5);
-    const double f1 = d(t1);
-
-    funAddIf(U[i], t1, f0, fm); // left half (f0 reused from previous)
-    funAddIf(t1, t1, fm, f1);   // right half
-
-    f0 = f1; // chain for next span
-  }
-
-  // endpoints if derivative ≈ 0
-  if (std::abs(d(U[p])) < 1e-9) {
-      zeros.push_back(U[p]);
-  }
-  if (std::abs(d(U[n + 1])) < 1e-9) {
-      zeros.push_back(U[n + 1]);
+  // A derivative component of a cubic span has up to two roots; sampling each
+  // span several times separates them unless they almost coincide.
+  constexpr int samplesPerSpan = 8;
+  for (size_t i = 0; i + 1 < breaks.size(); ++i) {
+    const double a = breaks[i];
+    const double b = breaks[i + 1];
+    double t0 = a;
+    double f0 = derivative(a, LC_CurveEvaluationSide::Right);
+    for (int k = 1; k <= samplesPerSpan; ++k) {
+      const bool last = (k == samplesPerSpan);
+      const double t1 = last ? b : a + (b - a) * k / samplesPerSpan;
+      const double f1 = derivative(t1, last ? LC_CurveEvaluationSide::Left
+                                            : LC_CurveEvaluationSide::Interior);
+      addIfBracketed(t0, t1, f0, f1);
+      t0 = t1;
+      f0 = f1;
+    }
   }
 
   std::sort(zeros.begin(), zeros.end());
@@ -1384,161 +1429,54 @@ double RS_Spline::getSignedCurvature(const double t) const {
   return (vx * ay - vy * ax) / (speed * speed * speed);
 }
 
-RS_Spline::SplineDerivs RS_Spline::evaluateWithDerivs(double t) const {
-  SplineDerivs res{};
-  size_t p = m_data.degree;
-  if (p == 0 || m_data.controlPoints.empty()) {
-      return res;
+RS_Spline::SplineDerivs RS_Spline::evaluateWithDerivs(const double t) const {
+  SplineDerivs res;
+  LC_CurveJet jet;
+  if (tryEvaluateJet(t, LC_CurveEvaluationSide::Interior, jet)) {
+    res.pos = jet.point;
+    res.der1 = jet.first;
+    res.der2 = jet.second;
+  } else {
+    // a failure is invalid, never a curve point at the origin
+    res.pos = RS_Vector(false);
+    res.der1 = RS_Vector(false);
+    res.der2 = RS_Vector(false);
   }
-
-  const auto &U = m_data.knotslist;
-  const auto &P = m_data.controlPoints;
-  const auto &W = m_data.weights;
-  int ncp = static_cast<int>(P.size());
-  int span = findSpan(ncp - 1, static_cast<int>(p), t, U);
-
-  double ndu[4][4] = {};
-  double left[4] = {};
-  double right[4] = {};
-
-  ndu[0][0] = 1.0;
-
-  for (int j = 1; j <= static_cast<int>(p); ++j) {
-    left[j] = t - U[span + 1 - j];
-    right[j] = U[span + j] - t;
-    double saved = 0.0;
-    for (int r = 0; r < j; ++r) {
-      double den = right[r + 1] + left[j - r];
-      double tmp = ndu[r][j - 1] / den;
-      ndu[r][j] = saved + (right[r + 1] * tmp);
-      saved = left[j - r] * tmp;
-    }
-    ndu[j][j] = saved;
-  }
-
-  double N0[4], N1[4], N2[4];
-  for (int j = 0; j <= static_cast<int>(p); ++j) {
-      N0[j] = ndu[j][p];
-  }
-
-  // Unrolled DersBasisFuns for order 1 & 2 only
-  double a0[4], a1[4];
-  for (int r = 0; r <= static_cast<int>(p); ++r) {
-    a0[0] = 1.0;
-
-    // k=1
-    double d1 = 0.0;
-    int rk = r - 1;
-    int pk = p - 1;
-    if (r >= 1) {
-      a1[0] = a0[0] / ndu[pk + 1][rk];
-      d1 = a1[0] * ndu[rk][pk];
-    }
-    int j1 = rk >= -1 ? 1 : -rk;
-    int j2 = r - 1 <= pk ? 0 : p - r;
-    for (int j = j1; j <= j2; ++j) {
-      a1[j] = (a0[j] - a0[j - 1]) / ndu[pk + 1][rk + j];
-      d1 += a1[j] * ndu[rk + j][pk];
-    }
-    if (r <= pk) {
-      a1[1] = -a0[0] / ndu[pk + 1][r];
-      d1 += a1[1] * ndu[r][pk];
-    }
-    N1[r] = d1 * p;
-
-    // k=2 (only if p >= 2)
-    if (p < 2) {
-      N2[r] = 0.0;
-      continue;
-    }
-    double d2 = 0.0;
-    rk = r - 2;
-    pk = p - 2;
-    if (r >= 2) {
-      a0[0] = a1[0] / ndu[pk + 1][rk];
-      d2 = a0[0] * ndu[rk][pk];
-    }
-    j1 = rk >= -1 ? 1 : -rk;
-    j2 = r - 1 <= pk ? 1 : p - r;
-    for (int j = j1; j <= j2; ++j) {
-      a0[j] = (a1[j] - a1[j - 1]) / ndu[pk + 1][rk + j];
-      d2 += a0[j] * ndu[rk + j][pk];
-    }
-    if (r <= pk) {
-      a0[2] = -a1[1] / ndu[pk + 1][r];
-      d2 += a0[2] * ndu[r][pk];
-    }
-    N2[r] = d2 * p * (p - 1);
-  }
-
-  double w = 0, wd = 0, wdd = 0;
-  double cx = 0, cy = 0, cxd = 0, cyd = 0, cxdd = 0, cydd = 0;
-
-  for (int j = 0; j <= static_cast<int>(p); ++j) {
-    size_t i = span - p + j;
-    double wi = W[i];
-    double wx = wi * P[i].x;
-    double wy = wi * P[i].y;
-
-    w += wi * N0[j];
-    wd += wi * N1[j];
-    wdd += wi * N2[j];
-    cx += wx * N0[j];
-    cy += wy * N0[j];
-    cxd += wx * N1[j];
-    cyd += wy * N1[j];
-    cxdd += wx * N2[j];
-    cydd += wy * N2[j];
-  }
-
-  if (w < 1e-12) {
-      return res;
-  }
-
-  double w2 = w * w, w3 = w2 * w;
-
-  res.pos = RS_Vector(cx / w, cy / w);
-  res.der1 = RS_Vector((cxd * w - cx * wd) / w2, (cyd * w - cy * wd) / w2);
-  res.der2 = RS_Vector((cxdd * w - 2 * wd * cxd + wdd * cx) / w3,
-                       (cydd * w - 2 * wd * cyd + wdd * cy) / w3);
-
   return res;
 }
 
-/** Bisection for zero */
-/** Robust bracketed root finding with bisection + safe midpoint (no overflow,
- * early exact-zero exit) */
-double RS_Spline::bisectDerivativeZero(double low, double high, double f_low, const bool isX) const {
-  const double f_high = getDerivative(high, isX);
-
-  // Ensure bracketing (caller guarantees sign change or near-zero, but be
-  // defensive)
-  if (f_low * f_high > 0.0 && std::abs(f_low) >= RS_TOLERANCE &&
-      std::abs(f_high) >= RS_TOLERANCE) {
-      return low + ((high - low) * 0.5); // no root → return midpoint
+/**
+ * Bisection for a root of one derivative component on [low, high], given its
+ * values at both ends. Returns NaN unless the ends have opposite signs, so a
+ * missing root is never reported as the midpoint.
+ */
+double RS_Spline::bisectDerivativeZero(double low, double high, double fLow, double fHigh,
+                                       const bool isX) const {
+  if (!std::isfinite(fLow) || !std::isfinite(fHigh) ||
+      std::signbit(fLow) == std::signbit(fHigh)) {
+    return std::numeric_limits<double>::quiet_NaN();
   }
-
-  while (high - low >
-         RS_TOLERANCE *
-             (1.0 + std::abs(low + high))) { // relative + absolute tolerance
+  for (int iteration = 0; iteration < 200; ++iteration) {
     const double mid = low + ((high - low) * 0.5);
-    const double f_mid = getDerivative(mid, isX);
-
-    if (f_mid == 0.0) {
-        return mid; // exact zero → instant win
+    if (!(mid > low && mid < high)) {
+      break; // the bracket cannot shrink further
     }
-
-    if (std::signbit(f_low) != std::signbit(f_mid)) {
-      high = mid;
-    } else {
+    const double fMid = getDerivative(mid, isX);
+    if (!std::isfinite(fMid)) {
+      return std::numeric_limits<double>::quiet_NaN();
+    }
+    if (fMid == 0.0) {
+      return mid;
+    }
+    if (std::signbit(fMid) == std::signbit(fLow)) {
       low = mid;
-      f_low = f_mid;
+      fLow = fMid;
+    } else {
+      high = mid;
+      fHigh = fMid;
     }
   }
-
-  // Return the endpoint with smaller |f| (best approximation when
-  // finite-difference noise exists)
-  return std::abs(f_low) < std::abs(f_high) ? low : high;
+  return std::abs(fLow) < std::abs(fHigh) ? low : high;
 }
 
 void RS_Spline::normalizeKnots() {

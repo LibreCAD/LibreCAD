@@ -172,10 +172,10 @@ public:
   /** Fill points for spline approximation */
   void fillStrokePoints(int splineSegments, std::vector<RS_Vector> &points) const;
 
-  /** Get start point (invalid if closed) */
+  /** Get start point: the curve at the start of its domain; invalid if closed */
   RS_Vector getStartpoint() const override;
 
-  /** Get end point (invalid if closed) */
+  /** Get end point: the curve at the end of its domain; invalid if closed */
   RS_Vector getEndpoint() const override;
 
 
@@ -377,8 +377,8 @@ private:
   /** Approximate derivative at t */
   double getDerivative(double t, bool isX) const;
 
-  /** Bisection to find zero of derivative */
-  double bisectDerivativeZero(double a, double b, double fa, bool isX) const;
+  /** Bisection for a zero of a derivative component bracketed by [a, b] */
+  double bisectDerivativeZero(double a, double b, double fa, double fb, bool isX) const;
   void normalizeKnots();
   double estimateParamAtIndex(size_t index) const;
   void insertKnot(double u);

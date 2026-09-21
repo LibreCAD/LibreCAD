@@ -180,3 +180,61 @@ TEST_CASE("LC_SplinePoints jets follow the fit points they were built from",
     }
     CHECK(passesMiddle);
 }
+
+// ---------------------------------------------------------------------------
+// Repaired legacy paths.
+// ---------------------------------------------------------------------------
+TEST_CASE("LC_SplinePoints reports the distance to a two-point spline, not its root",
+          "[spline][LC_SplinePoints]") {
+    // The two-point branch took the square root of an actual distance, so a
+    // cursor 4 units away was reported 2 units away.
+    const LC_SplinePoints line = fromControlPoints({{0.0, 0.0}, {10.0, 0.0}});
+    double dist = 0.0;
+    const RS_Vector nearest = line.getNearestPointOnEntity(RS_Vector{5.0, 4.0}, true, &dist);
+    CHECK(near(nearest, RS_Vector{5.0, 0.0}, 1e-9));
+    CHECK(dist == Approx(4.0));
+}
+
+TEST_CASE("LC_SplinePoints offsets a two-point spline to the requested side",
+          "[spline][LC_SplinePoints]") {
+    // The side test used to evaluate an unset control point for a line segment.
+    LC_SplinePointsData data(false, false);
+    data.splinePoints = {{0.0, 0.0}, {10.0, 0.0}};
+    LC_SplinePoints line(nullptr, data);
+    REQUIRE(line.getSegmentCount() == 1);
+    REQUIRE(line.offset(RS_Vector{5.0, 5.0}, 2.0));
+    CHECK(line.getStartpoint().y == Approx(2.0));
+    CHECK(line.getEndpoint().y == Approx(2.0));
+}
+
+TEST_CASE("LC_SplinePoints keeps its control points when fit points cannot be solved",
+          "[spline][LC_SplinePoints]") {
+    auto allFinite = [](const LC_SplinePoints& spline) {
+        for (const RS_Vector& v : spline.getControlPoints()) {
+            if (!v.valid || !std::isfinite(v.x) || !std::isfinite(v.y)) {
+                return false;
+            }
+        }
+        return true;
+    };
+
+    // Coincident consecutive fit points leave a chord ratio 0/0.
+    LC_SplinePointsData duplicate(false, false);
+    duplicate.splinePoints = {{0, 0}, {1, 1}, {1, 1}, {1, 1}, {3, 0}};
+    const LC_SplinePoints fromDuplicates(nullptr, duplicate);
+    CHECK(allFinite(fromDuplicates));
+
+    // A solvable spline keeps its control points when an edit makes it unsolvable.
+    LC_SplinePointsData good(false, false);
+    good.splinePoints = {{0, 0}, {1, 2}, {3, 2}, {4, 0}, {6, 1}};
+    LC_SplinePoints spline(nullptr, good);
+    const std::vector<RS_Vector> before = spline.getControlPoints();
+    REQUIRE(before.size() == 5);
+    REQUIRE(allFinite(spline));
+    spline.getData().splinePoints = {{0, 0}, {2, 2}, {2, 2}, {2, 2}, {6, 1}};
+    spline.update();
+    REQUIRE(spline.getControlPoints().size() == before.size());
+    for (size_t i = 0; i < before.size(); ++i) {
+        CHECK(near(spline.getControlPoints()[i], before[i]));
+    }
+}

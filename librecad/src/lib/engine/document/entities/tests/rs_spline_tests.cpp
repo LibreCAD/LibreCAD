@@ -530,3 +530,56 @@ TEST_CASE("RS_Spline::tryEvaluateJet reports failure instead of a zero vector", 
     RS_Spline infinite = makeSpline(3, {{0, 0}, {1, 3}, {INFINITY, -3}, {3, 0}}, {0, 0, 0, 0, 1, 1, 1, 1});
     CHECK_FALSE(infinite.tryEvaluateJet(0.5, LC_CurveEvaluationSide::Interior, jet));
 }
+
+// ---------------------------------------------------------------------------
+// Repaired legacy paths. These changed shipping behaviour: open splines now
+// report their endpoints (they reported none), and the derivative-based helpers
+// report values instead of NaN.
+// ---------------------------------------------------------------------------
+TEST_CASE("RS_Spline open endpoints are the curve ends; closed has none", "[spline][jet]") {
+    const RS_Spline open = makeSpline(3, g_bezier, {0, 0, 0, 0, 1, 1, 1, 1});
+    CHECK(compareVector(open.getStartpoint(), g_bezier.front(), 1e-12));
+    CHECK(compareVector(open.getEndpoint(), g_bezier.back(), 1e-12));
+
+    double dist = 0.0;
+    CHECK(compareVector(open.getNearestEndpoint(RS_Vector{2.9, 0.2}, nullptr, &dist), g_bezier.back(), 1e-12));
+    CHECK(dist == Approx(RS_Vector{2.9, 0.2}.distanceTo(g_bezier.back())));
+
+    RS_SplineData closedData(3, true);
+    closedData.controlPoints = {{0, 0}, {2, 0}, {2, 2}, {0, 2}};
+    closedData.weights = std::vector<double>(closedData.controlPoints.size(), 1.0);
+    RS_Spline closed(nullptr, closedData);
+    closed.changeType(RS_SplineData::SplineType::WrappedClosed);
+    CHECK_FALSE(closed.getStartpoint().valid);
+    CHECK_FALSE(closed.getEndpoint().valid);
+    CHECK_FALSE(closed.getNearestEndpoint(RS_Vector{0, 0}, nullptr, &dist).valid);
+}
+
+TEST_CASE("RS_Spline::findDerivativeZeros finds two roots in one knot span", "[spline][jet]") {
+    // y'(t) = 9 (6t^2 - 6t + 1): roots 1/2 -+ sqrt(3)/6. x'(t) = 3 has none.
+    const RS_Spline spline = makeSpline(3, g_bezier, {0, 0, 0, 0, 1, 1, 1, 1});
+    const std::vector<double> yZeros = spline.findDerivativeZeros(false);
+    REQUIRE(yZeros.size() == 2);
+    CHECK(yZeros[0] == Approx(0.5 - std::sqrt(3.0) / 6.0).margin(1e-10));
+    CHECK(yZeros[1] == Approx(0.5 + std::sqrt(3.0) / 6.0).margin(1e-10));
+    // A component without roots reports none, not a span midpoint.
+    CHECK(spline.findDerivativeZeros(true).empty());
+}
+
+TEST_CASE("RS_Spline::calculateTightBorders bounds the curve, not its control polygon",
+          "[spline][jet]") {
+    RS_Spline spline = makeSpline(3, g_bezier, {0, 0, 0, 0, 1, 1, 1, 1});
+    spline.calculateTightBorders();
+    // y(t) = 9 t (1-t) (1-2t) peaks at +-sqrt(3)/2 inside the control hull [-3, 3].
+    const double peak = std::sqrt(3.0) / 2.0;
+    CHECK(spline.getMin().x == Approx(0.0).margin(1e-10));
+    CHECK(spline.getMax().x == Approx(3.0).margin(1e-10));
+    CHECK(spline.getMin().y == Approx(-peak).margin(1e-9));
+    CHECK(spline.getMax().y == Approx(peak).margin(1e-9));
+}
+
+TEST_CASE("RS_Spline::getPointAt reports a failure as an invalid point", "[spline][jet]") {
+    const RS_Spline spline = makeSpline(3, g_bezier, {0, 0, 0, 0, 1, 1, 1, 1});
+    CHECK(compareVector(spline.getPointAt(0.25), bezierPoint(0.25), 1e-12));
+    CHECK_FALSE(spline.getPointAt(2.0).valid);
+}

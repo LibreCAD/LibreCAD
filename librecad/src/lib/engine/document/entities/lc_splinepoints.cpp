@@ -963,9 +963,10 @@ int LC_SplinePoints::getNearestQuad(const RS_Vector& coord, double* dist, double
         vEnd = m_data.controlPoints.at(1);
 
         if (n < 3) {
+            // getDistToLine() reports a distance, not its square
             *dt = getDistToLine(coord, vStart, vEnd, &dDist);
             if (dist != nullptr) {
-                *dist = std::sqrt(dDist);
+                *dist = dDist;
             }
             return 1;
         }
@@ -1463,83 +1464,97 @@ std::vector<double> getMatrix(const size_t iCount, const bool bClosed, const std
     return dRes;
 }
 
-void LC_SplinePoints::updateControlPointsUI() {
-    if (m_data.cut) {
-        return; // no update after trim operation
-    }
+namespace {
+/** a / (a + b) for chord lengths, or NaN when both vanish */
+double chordRatio(const double a, const double b) {
+    const double sum = a + b;
+    return (sum > 0.0) ? a / sum : std::numeric_limits<double>::quiet_NaN();
+}
 
-    if (!m_data.useControlPoints) {
-        m_data.controlPoints.clear();
-    }
+bool isFiniteValue(const double v) {
+    return std::isfinite(v);
+}
 
-    const size_t n = m_data.splinePoints.size();
+/**
+ * Appends to @p controls the control points of the quadratic spline through the
+ * fit points of @p data. On false @p controls may hold a partial result and must
+ * be discarded.
+ */
+bool fitControlPoints(const LC_SplinePointsData& data, std::vector<RS_Vector>& controls) {
 
-    if (m_data.closed && n < 3) {
+    const size_t n = data.splinePoints.size();
+
+    if (data.closed && n < 3) {
         if (n > 0) {
-            m_data.controlPoints.push_back(m_data.splinePoints.at(0));
+            controls.push_back(data.splinePoints.at(0));
         }
         if (n > 1) {
-            m_data.controlPoints.push_back(m_data.splinePoints.at(1));
+            controls.push_back(data.splinePoints.at(1));
         }
-        return;
+        return true;
     }
 
-    if (!m_data.closed && n < 4) {
+    if (!data.closed && n < 4) {
         // use control points directly, reserved for parabola
-        if (m_data.useControlPoints && m_data.controlPoints.size() == 3) {
-            return;
+        if (data.useControlPoints && controls.size() == 3) {
+            return true;
         }
         if (n > 0) {
-            m_data.controlPoints.push_back(m_data.splinePoints.at(0));
+            controls.push_back(data.splinePoints.at(0));
         }
         if (n > 2) {
-            const RS_Vector vControl = getThreePointsControl(m_data.splinePoints.at(0), m_data.splinePoints.at(1),
-                                                             m_data.splinePoints.at(2));
+            const RS_Vector vControl = getThreePointsControl(data.splinePoints.at(0), data.splinePoints.at(1),
+                                                             data.splinePoints.at(2));
             if (vControl.valid) {
-                m_data.controlPoints.push_back(vControl);
+                controls.push_back(vControl);
             }
         }
         if (n > 1) {
-            m_data.controlPoints.push_back(m_data.splinePoints.at(n - 1));
+            controls.push_back(data.splinePoints.at(n - 1));
         }
-        return;
+        return true;
     }
 
-    const int iDim = m_data.closed ? n : n - 2;
+    const int iDim = data.closed ? n : n - 2;
 
     std::vector<double> dt(iDim);
 
-    if (m_data.closed) {
-        double dl1 = (m_data.splinePoints.at(n - 1) - m_data.splinePoints.at(0)).magnitude();
-        double dl2 = (m_data.splinePoints.at(1) - m_data.splinePoints.at(0)).magnitude();
-        dt[0] = dl1 / (dl1 + dl2);
+    if (data.closed) {
+        double dl1 = (data.splinePoints.at(n - 1) - data.splinePoints.at(0)).magnitude();
+        double dl2 = (data.splinePoints.at(1) - data.splinePoints.at(0)).magnitude();
+        dt[0] = chordRatio(dl1, dl2);
         for (int i = 1; i < iDim - 1; i++) {
             dl1 = dl2;
-            dl2 = (m_data.splinePoints.at(i + 1) - m_data.splinePoints.at(i)).magnitude();
-            dt[i] = dl1 / (dl1 + dl2);
+            dl2 = (data.splinePoints.at(i + 1) - data.splinePoints.at(i)).magnitude();
+            dt[i] = chordRatio(dl1, dl2);
         }
-        dl1 = (m_data.splinePoints.at(n - 1) - m_data.splinePoints.at(n - 2)).magnitude();
-        dl2 = (m_data.splinePoints.at(0) - m_data.splinePoints.at(n - 1)).magnitude();
-        dt[iDim - 1] = dl1 / (dl1 + dl2);
+        dl1 = (data.splinePoints.at(n - 1) - data.splinePoints.at(n - 2)).magnitude();
+        dl2 = (data.splinePoints.at(0) - data.splinePoints.at(n - 1)).magnitude();
+        dt[iDim - 1] = chordRatio(dl1, dl2);
     }
     else {
-        double dl1 = (m_data.splinePoints.at(1) - m_data.splinePoints.at(0)).magnitude();
-        double dl2 = (m_data.splinePoints.at(2) - m_data.splinePoints.at(1)).magnitude();
-        dt[0] = dl1 / (dl1 + dl2 / 2.0);
+        double dl1 = (data.splinePoints.at(1) - data.splinePoints.at(0)).magnitude();
+        double dl2 = (data.splinePoints.at(2) - data.splinePoints.at(1)).magnitude();
+        dt[0] = chordRatio(dl1, dl2 / 2.0);
         for (int i = 1; i < iDim - 1; i++) {
             dl1 = dl2;
-            dl2 = (m_data.splinePoints.at(i + 2) - m_data.splinePoints.at(i + 1)).magnitude();
-            dt[i] = dl1 / (dl1 + dl2);
+            dl2 = (data.splinePoints.at(i + 2) - data.splinePoints.at(i + 1)).magnitude();
+            dt[i] = chordRatio(dl1, dl2);
         }
         dl1 = dl2;
-        dl2 = (m_data.splinePoints.at(iDim) - m_data.splinePoints.at(iDim + 1)).magnitude();
-        dt[iDim - 1] = dl1 / (dl1 + 2.0 * dl2);
+        dl2 = (data.splinePoints.at(iDim) - data.splinePoints.at(iDim + 1)).magnitude();
+        dt[iDim - 1] = chordRatio(dl1, 2.0 * dl2);
     }
 
-    const std::vector<double> pdMatrix = getMatrix(n, m_data.closed, dt);
+    // coincident consecutive fit points leave a chord ratio undefined
+    if (!std::all_of(dt.begin(), dt.end(), isFiniteValue)) {
+        return false;
+    }
 
-    if (pdMatrix.empty()) {
-        return;
+    const std::vector<double> pdMatrix = getMatrix(n, data.closed, dt);
+
+    if (pdMatrix.empty() || !std::all_of(pdMatrix.begin(), pdMatrix.end(), isFiniteValue)) {
+        return false; // a pivot vanished or went negative: the system is singular
     }
 
     std::vector<double> dx(iDim);
@@ -1547,22 +1562,22 @@ void LC_SplinePoints::updateControlPointsUI() {
     std::vector<double> dx2(iDim);
     std::vector<double> dy2(iDim);
 
-    if (m_data.closed) {
+    if (data.closed) {
         const double* pdDiag = pdMatrix.data();
         const double* pdDiag1 = &pdMatrix[n];
         const double* pdDiag2 = &pdMatrix[2 * n - 1];
         const double* pdLastCol1 = &pdMatrix[3 * n - 2];
         const double* pdLastCol2 = &pdMatrix[4 * n - 4];
 
-        dx[0] = m_data.splinePoints.at(0).x / pdDiag[0];
-        dy[0] = m_data.splinePoints.at(0).y / pdDiag[0];
+        dx[0] = data.splinePoints.at(0).x / pdDiag[0];
+        dy[0] = data.splinePoints.at(0).y / pdDiag[0];
         for (int i = 1; i < iDim - 1; i++) {
-            dx[i] = (m_data.splinePoints.at(i).x - pdDiag2[i - 1] * dx[i - 1]) / pdDiag[i];
-            dy[i] = (m_data.splinePoints.at(i).y - pdDiag2[i - 1] * dy[i - 1]) / pdDiag[i];
+            dx[i] = (data.splinePoints.at(i).x - pdDiag2[i - 1] * dx[i - 1]) / pdDiag[i];
+            dy[i] = (data.splinePoints.at(i).y - pdDiag2[i - 1] * dy[i - 1]) / pdDiag[i];
         }
 
-        dx[iDim - 1] = m_data.splinePoints.at(iDim - 1).x - pdDiag2[iDim - 2] * dx[iDim - 2];
-        dy[iDim - 1] = m_data.splinePoints.at(iDim - 1).y - pdDiag2[iDim - 2] * dy[iDim - 2];
+        dx[iDim - 1] = data.splinePoints.at(iDim - 1).x - pdDiag2[iDim - 2] * dx[iDim - 2];
+        dy[iDim - 1] = data.splinePoints.at(iDim - 1).y - pdDiag2[iDim - 2] * dy[iDim - 2];
         for (int i = 0; i < iDim - 2; i++) {
             dx[iDim - 1] -= dx[i] * pdLastCol2[i];
             dy[iDim - 1] -= dy[i] * pdLastCol2[i];
@@ -1581,7 +1596,7 @@ void LC_SplinePoints::updateControlPointsUI() {
         }
 
         for (int i = 0; i < iDim; i++) {
-            m_data.controlPoints.emplace_back(dx2[i], dy2[i]);
+            controls.emplace_back(dx2[i], dy2[i]);
         }
     }
     else {
@@ -1589,15 +1604,15 @@ void LC_SplinePoints::updateControlPointsUI() {
         const double* pdDiag1 = &pdMatrix[n - 2];
         const double* pdDiag2 = &pdMatrix[2 * n - 5];
 
-        dx[0] = (m_data.splinePoints.at(1).x - m_data.splinePoints.at(0).x * (1.0 - dt[0]) * (1.0 - dt[0])) / pdDiag[0];
-        dy[0] = (m_data.splinePoints.at(1).y - m_data.splinePoints.at(0).y * (1.0 - dt[0]) * (1.0 - dt[0])) / pdDiag[0];
+        dx[0] = (data.splinePoints.at(1).x - data.splinePoints.at(0).x * (1.0 - dt[0]) * (1.0 - dt[0])) / pdDiag[0];
+        dy[0] = (data.splinePoints.at(1).y - data.splinePoints.at(0).y * (1.0 - dt[0]) * (1.0 - dt[0])) / pdDiag[0];
         for (int i = 1; i < iDim - 1; i++) {
-            dx[i] = (m_data.splinePoints.at(i + 1).x - pdDiag2[i - 1] * dx[i - 1]) / pdDiag[i];
-            dy[i] = (m_data.splinePoints.at(i + 1).y - pdDiag2[i - 1] * dy[i - 1]) / pdDiag[i];
+            dx[i] = (data.splinePoints.at(i + 1).x - pdDiag2[i - 1] * dx[i - 1]) / pdDiag[i];
+            dy[i] = (data.splinePoints.at(i + 1).y - pdDiag2[i - 1] * dy[i - 1]) / pdDiag[i];
         }
-        dx[iDim - 1] = ((m_data.splinePoints.at(iDim).x - m_data.splinePoints.at(iDim + 1).x * dt[n - 3] * dt[n - 3]) - pdDiag2[iDim - 2] *
+        dx[iDim - 1] = ((data.splinePoints.at(iDim).x - data.splinePoints.at(iDim + 1).x * dt[n - 3] * dt[n - 3]) - pdDiag2[iDim - 2] *
             dx[iDim - 2]) / pdDiag[iDim - 1];
-        dy[iDim - 1] = ((m_data.splinePoints.at(iDim).y - m_data.splinePoints.at(iDim + 1).y * dt[n - 3] * dt[n - 3]) - pdDiag2[iDim - 2] *
+        dy[iDim - 1] = ((data.splinePoints.at(iDim).y - data.splinePoints.at(iDim + 1).y * dt[n - 3] * dt[n - 3]) - pdDiag2[iDim - 2] *
             dy[iDim - 2]) / pdDiag[iDim - 1];
 
         dx2[iDim - 1] = dx[iDim - 1] / pdDiag[iDim - 1];
@@ -1608,11 +1623,33 @@ void LC_SplinePoints::updateControlPointsUI() {
             dy2[i] = (dy[i] - pdDiag1[i] * dy2[i + 1]) / pdDiag[i];
         }
 
-        m_data.controlPoints.push_back(m_data.splinePoints.at(0));
+        controls.push_back(data.splinePoints.at(0));
         for (int i = 0; i < iDim; i++) {
-            m_data.controlPoints.emplace_back(dx2[i], dy2[i]);
+            controls.emplace_back(dx2[i], dy2[i]);
         }
-        m_data.controlPoints.push_back(m_data.splinePoints.at(n - 1));
+        controls.push_back(data.splinePoints.at(n - 1));
+    }
+
+    return std::all_of(controls.begin(), controls.end(), [](const RS_Vector& v) {
+        return v.valid && std::isfinite(v.x) && std::isfinite(v.y);
+    });
+}
+} // namespace
+
+void LC_SplinePoints::updateControlPointsUI() {
+    if (m_data.cut) {
+        return; // no update after trim operation
+    }
+
+    // Rebuild into a local vector and publish only a complete, finite result, so
+    // fit points the solver cannot handle (coincident neighbours, a singular
+    // system) keep the previous control points instead of NaN or a partial set.
+    std::vector<RS_Vector> controls;
+    if (m_data.useControlPoints) {
+        controls = m_data.controlPoints;
+    }
+    if (fitControlPoints(m_data, controls)) {
+        m_data.controlPoints = std::move(controls);
     }
 }
 
@@ -2059,13 +2096,19 @@ bool LC_SplinePoints::offsetCut(const RS_Vector& coord, const double& distance) 
     RS_Vector vStart(false), vEnd(false), vControl(false);
     RS_Vector vPoint(false), vTan(false);
 
-    if (getQuadPoints(iQuad, &vStart, &vControl, &vEnd)) {
+    // getQuadPoints() returns the number of points it set: 3 for a quadratic, 2
+    // for a line segment, which has no control point.
+    const int iPts = getQuadPoints(iQuad, &vStart, &vControl, &vEnd);
+    if (iPts > 2) {
         vPoint = getQuadAtPoint(vStart, vControl, vEnd, dt);
         vTan = getQuadDirAtPoint(vStart, vControl, vEnd, dt);
     }
-    else {
-        vPoint = vEnd * (1.0 - dt) - vStart * dt;
+    else if (iPts == 2) {
+        vPoint = vStart * (1.0 - dt) + vEnd * dt;
         vTan = vEnd - vStart;
+    }
+    else {
+        return false;
     }
 
     double dDist = distance;
@@ -2214,13 +2257,19 @@ bool LC_SplinePoints::offsetSpline(const RS_Vector& coord, const double& distanc
     RS_Vector vStart(false), vEnd(false), vControl(false);
     RS_Vector vPoint(false), vTan(false);
 
-    if (getQuadPoints(iQuad, &vStart, &vControl, &vEnd)) {
+    // getQuadPoints() returns the number of points it set: 3 for a quadratic, 2
+    // for a line segment, which has no control point.
+    const int iPts = getQuadPoints(iQuad, &vStart, &vControl, &vEnd);
+    if (iPts > 2) {
         vPoint = getQuadAtPoint(vStart, vControl, vEnd, dt);
         vTan = getQuadDirAtPoint(vStart, vControl, vEnd, dt);
     }
-    else {
-        vPoint = vEnd * (1.0 - dt) - vStart * dt;
+    else if (iPts == 2) {
+        vPoint = vStart * (1.0 - dt) + vEnd * dt;
         vTan = vEnd - vStart;
+    }
+    else {
+        return false;
     }
 
     double dDist = distance;
