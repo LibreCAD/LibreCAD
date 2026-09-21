@@ -29,6 +29,7 @@
 #include <vector>
 
 #include "lc_offsetoutputbudget.h"
+#include "lc_parametriccurveintersection.h"
 #include "rs_entity.h"
 #include "rs_vector.h"
 
@@ -131,10 +132,17 @@ struct LC_CurveOffsetOptions {
     /** Exact offset evaluations per source. */
     std::size_t maxSamples{0};
     std::size_t maxOutputBranches{0};
+    /** Box pairs an intersection query may examine. */
     std::size_t maxIntersectionPairs{0};
     std::size_t maxDistanceMapBoxes{0};
     std::size_t maxArrangementEdges{0};
     std::size_t maxArrangementFaces{0};
+    /**
+     * Topology mode for Direct: find where the offset meets itself and split
+     * its pieces there, so every crossing is a shared end of the pieces
+     * incident to it. The geometry is the same; only the pieces differ.
+     */
+    bool nodeIntersections{false};
 };
 
 /** Where a piece came from: an interval of one source span, and the distance. */
@@ -181,6 +189,11 @@ struct LC_CurveOffsetGeometryResult {
     std::size_t sourceIntersections{0};
     std::size_t offsetIntersections{0};
     std::size_t removedIntervals{0};
+    /**
+     * With nodeIntersections: where the exact offset meets itself, by branch and
+     * source parameter; each is a shared end of the pieces incident to it.
+     */
+    std::vector<LC_ParametricIntersection> intersections;
 };
 
 /** Fresh output entities, owned here until the caller releases them. Move-only. */
