@@ -337,3 +337,122 @@ TEST_CASE("Region cycles materialize, their corner arcs as circles", "[curve-off
         CHECK(entities.entities[i]->getStartpoint() == entities.entities[i - 1]->getEndpoint());
     }
 }
+
+TEST_CASE("A crossing inside the region gets no corner arc", "[curve-offset][region]") {
+    // A rosette winding three times: its inner crossing has windings 1, 2, 2
+    // and 3 around it, all in the NonZero region, some 8.6 inside its boundary.
+    std::vector<RS_Vector> controls;
+    for (int k = 0; k < 36; ++k) {
+        const double a = k * M_PI / 6.0;
+        const double r = 30.0 + 6.0 * std::cos(a / 3.0);
+        controls.emplace_back(r * std::cos(a), r * std::sin(a));
+    }
+    const RS_Spline rosette = closedSpline(controls);
+    const std::vector<RS_Vector> polygon = polygonOf(rosette);
+    // the node deeper than twice the distance, and between once and twice it
+    for (const double d : {2.0, 5.0}) {
+        INFO("distance " << d);
+        const LC_CurveOffsetGeometryResult result = region(rosette, d, false);
+        REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+        REQUIRE(result.branches.size() == 1);
+        const CycleCheck check = checkCycles(result, polygon, LC_CurveFillRule::NonZero, d, false);
+        CHECK(check.closed);
+        CHECK(check.worstDistance < 0.02);
+        CHECK(check.wrongSide == 0);
+        CHECK(check.areas.front() > 0.0);
+    }
+}
+
+TEST_CASE("A closed spline whose last span is straight grows and shrinks", "[curve-offset][region]") {
+    // The span ending at the seam is the segment (10, 0)-(20, 0): the offset's
+    // first and last pieces meet at the seam, a join rather than a contact.
+    const RS_Spline source = closedSpline({{10, 0}, {20, 0}, {30, 0}, {40, 15}, {20, 30}, {-10, 15}, {0, 0}});
+    const std::vector<RS_Vector> polygon = polygonOf(source);
+    for (const bool grow : {true, false}) {
+        INFO((grow ? "grow" : "shrink"));
+        const LC_CurveOffsetGeometryResult result = region(source, 2.0, grow);
+        REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+        REQUIRE(result.branches.size() == 1);
+        const CycleCheck check = checkCycles(result, polygon, LC_CurveFillRule::NonZero, 2.0, grow);
+        CHECK(check.closed);
+        CHECK(check.worstDistance < 0.02);
+        CHECK(check.wrongSide == 0);
+    }
+}
+
+TEST_CASE("Region pieces name the source span their parameters lie in", "[curve-offset][region]") {
+    const RS_Spline bowTie = closedSpline(g_bowTie);
+    const std::vector<double> breaks = bowTie.getBreakParameters();
+    for (const bool grow : {true, false}) {
+        const LC_CurveOffsetGeometryResult result = region(bowTie, 1.0, grow);
+        REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+        for (const LC_OffsetBranch& cycle : result.branches) {
+            for (const LC_OffsetCubicPiece& piece : cycle.cubicPieces) {
+                const LC_OffsetBranchProvenance& p = piece.provenance;
+                if (p.arcCentre.valid) {
+                    continue;
+                }
+                REQUIRE(p.sourceSpan + 1 < breaks.size());
+                CHECK(std::min(p.sourceT0, p.sourceT1) >= breaks[p.sourceSpan]);
+                CHECK(std::max(p.sourceT0, p.sourceT1) <= breaks[p.sourceSpan + 1]);
+            }
+        }
+    }
+}
+
+TEST_CASE("A direction point grows from outside, shrinks from inside, and on the curve has no side",
+          "[curve-offset][region]") {
+    const RS_Spline ring = closedSpline(g_ring);
+    double t0 = 0.0;
+    double t1 = 0.0;
+    REQUIRE(ring.getParameterDomain(t0, t1));
+    LC_CurveJet j;
+    REQUIRE(ring.tryEvaluateJet(t0 + 0.37 * (t1 - t0), LC_CurveEvaluationSide::Interior, j));
+    // the ring turns counter-clockwise: outside is to the right
+    const RS_Vector outward = RS_Vector{j.first.y, -j.first.x} / j.first.magnitude();
+    LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(ring, 2.0);
+    options.mode = LC_CurveOffsetMode::RegionBoundary;
+    const auto towards = [&](const RS_Vector& point) {
+        return LC_CurveOffset::buildDirectBranches(ring, LC_CurveOffset::makeDirectionRequest(point, 2.0), options,
+                                                   LC_CurveOffset::makeDirectSourceBudget());
+    };
+    const LC_CurveOffsetGeometryResult out = towards(j.point + outward * 1.0);
+    REQUIRE(out.status == LC_CurveOffsetStatus::Ok);
+    CHECK(out.signedDistance > 0.0);
+    const LC_CurveOffsetGeometryResult in = towards(j.point - outward * 1.0);
+    REQUIRE(in.status == LC_CurveOffsetStatus::Ok);
+    CHECK(in.signedDistance < 0.0);
+    CHECK(towards(j.point + outward * 1e-9).status == LC_CurveOffsetStatus::AmbiguousSide);
+}
+
+TEST_CASE("A boundary fragment across the seam is one stretch of the source", "[curve-offset][region]") {
+    // Knots in tenths: shifting a parameter past the seam by the domain's
+    // length must still land on the source's knots.
+    RS_SplineData tenths(3, true);
+    tenths.type = RS_SplineData::SplineType::WrappedClosed;
+    tenths.controlPoints = {{20, -10}, {-20, 10}, {-20, -10}, {20, 10}, {20, -10}, {-20, 10}, {-20, -10}};
+    tenths.weights.assign(tenths.controlPoints.size(), 1.0);
+    for (int k = 0; k <= 10; ++k) {
+        tenths.knotslist.push_back(k / 10.0);
+    }
+    const RS_Spline bowTie(nullptr, tenths);
+    REQUIRE(bowTie.validate());
+    // A bow tie whose span before the seam is straight: its seam fragment
+    // joins a straight stretch to a curved one.
+    const RS_Spline straightSeam =
+        closedSpline({{-20, 10.0 / 3.0}, {-20, -10.0 / 3.0}, {-20, -10}, {20, 10}, {20, -10}, {-20, 10}});
+    for (const RS_Spline* source : {&bowTie, &straightSeam}) {
+        const std::vector<RS_Vector> polygon = polygonOf(*source);
+        for (const bool grow : {true, false}) {
+            INFO((source == &bowTie ? "tenths" : "straight seam") << (grow ? " grow" : " shrink"));
+            const LC_CurveOffsetGeometryResult result = region(*source, 1.0, grow);
+            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+            CHECK(result.sourceIntersections == 1);
+            REQUIRE_FALSE(result.branches.empty());
+            const CycleCheck check = checkCycles(result, polygon, LC_CurveFillRule::NonZero, 1.0, grow);
+            CHECK(check.closed);
+            CHECK(check.worstDistance < 0.02);
+            CHECK(check.wrongSide == 0);
+        }
+    }
+}

@@ -25,6 +25,7 @@
 #include <cmath>
 #include <limits>
 #include <memory>
+#include <tuple>
 #include <utility>
 
 #include "lc_curvejet.h"
@@ -1999,14 +2000,18 @@ LC_CurveOffsetStatus trimBranches(const OffsetSource& source, const SourceScale&
     const OffsetCurves across{source, -d, speedFloor, opposite};
     const CircleCurves caps{ends, std::abs(d)};
     const CompositeCurves all{{&self, &across, &caps}};
+    const size_t own = branches.size();
     LC_IntersectionOptions query;
     query.tolerance = options.tolerance.nodeMerge;
     query.maxBoxPairs = options.maxIntersectionPairs;
+    // how the other side's offset and the circles meet each other is not asked:
+    // two arms' offsets on one line, or an open source whose ends coincide,
+    // would make that ambiguous without bearing on this offset
+    query.anchoredBranches = own;
     const LC_IntersectionResult found = findIntersections(all, query);
     if (found.status != LC_IntersectionStatus::Ok) {
         return fromIntersectionStatus(found.status);
     }
-    const size_t own = branches.size();
     std::vector<Occurrence> cuts;
     for (const LC_ParametricIntersection& x : found.intersections) {
         // one occurrence on this offset, the other elsewhere (its own crossings are nodes already)
@@ -2132,7 +2137,7 @@ LC_CurveOffsetStatus trimBranches(const OffsetSource& source, const SourceScale&
  * False where p lies on the curve, or past the box budget.
  */
 bool windingNumber(const OffsetSource& source, const RS_Vector& p, int& winding, std::size_t& boxes,
-                   const std::size_t maxBoxes) {
+                   const std::size_t maxBoxes, const double clearance = 0.0) {
     const std::vector<double>& breaks = source.breaks();
     double turn = 0.0;
     for (size_t span = 0; span + 1 < breaks.size(); ++span) {
@@ -2147,7 +2152,7 @@ bool windingNumber(const OffsetSource& source, const RS_Vector& p, int& winding,
             const double gx = std::max({0.0, c.x.lo() - p.x, p.x - c.x.hi()});
             const double gy = std::max({0.0, c.y.lo() - p.y, p.y - c.y.hi()});
             const double gap = std::hypot(gx, gy);
-            if (gap > 0.0 && std::hypot(c.x.width(), c.y.width()) < gap) {
+            if (gap > clearance && gap > 0.0 && std::hypot(c.x.width(), c.y.width()) < gap) {
                 LC_CurveJet ja;
                 LC_CurveJet jb;
                 if (!source.jet(a, LC_CurveEvaluationSide::Right, ja) ||
@@ -2159,8 +2164,11 @@ bool windingNumber(const OffsetSource& source, const RS_Vector& p, int& winding,
                 turn += std::atan2(cross(u, v), dot(u, v));
                 continue;
             }
+            // a piece wholly within the clearance: p is on the curve, to that tolerance
+            const double fx = std::max(std::abs(c.x.lo() - p.x), std::abs(c.x.hi() - p.x));
+            const double fy = std::max(std::abs(c.y.lo() - p.y), std::abs(c.y.hi() - p.y));
             const double mid = a + 0.5 * (b - a);
-            if (!(mid > a && mid < b)) {
+            if (!(mid > a && mid < b) || (clearance > 0.0 && std::hypot(fx, fy) <= clearance)) {
                 return false; // on the curve
             }
             stack.emplace_back(mid, b);
@@ -2172,21 +2180,74 @@ bool windingNumber(const OffsetSource& source, const RS_Vector& p, int& winding,
     return std::abs(turns - winding) < 0.25;
 }
 
-/** The part [t0, t1] of a source, as an open source of its own with the same parameter. */
+/**
+ * A part of a source as a source of its own, with the same parameter. For a
+ * part across a closed source's seam (t0 > t1) the parameter runs on past the
+ * domain end by the domain's length, so the part is one continuous stretch;
+ * sourceParameter() maps it back. The whole domain of a closed source stays
+ * closed.
+ */
 class RestrictedSource final : public OffsetSource {
 public:
     RestrictedSource(const OffsetSource& base, const double t0, const double t1) : m_base{base} {
-        m_breaks.push_back(t0);
-        for (const double t : base.breaks()) {
-            if (t > t0 && t < t1) {
-                m_breaks.push_back(t);
+        const std::vector<double>& breaks = base.breaks();
+        m_start = breaks.front();
+        m_end = breaks.back();
+        m_period = m_end - m_start;
+        m_closed = base.closed() && t0 == m_start && t1 == m_end;
+        m_wraps = t1 < t0;
+        add(t0, t0);
+        if (!m_wraps) {
+            for (const double t : breaks) {
+                if (t > t0 && t < t1) {
+                    add(t, t);
+                }
+            }
+            add(t1, t1);
+            return;
+        }
+        for (const double t : breaks) {
+            if (t > t0 && t < m_end) {
+                add(t, t);
             }
         }
-        m_breaks.push_back(t1);
+        add(m_end, m_end); // the seam, a break inside the part
+        for (const double t : breaks) {
+            if (t > m_start && t < t1) {
+                add(t + m_period, t);
+            }
+        }
+        add(t1 + m_period, t1);
+    }
+
+    /**
+     * The source's parameter for one of this part. Past the seam the part's
+     * parameter is shifted by the domain's length, which rounding can move off
+     * a knot: breaks map to the source's exact values, and parameters between
+     * them stay within their source span.
+     */
+    double sourceParameter(const double t) const {
+        if (!m_wraps || t <= m_end) {
+            return t;
+        }
+        size_t j = static_cast<size_t>(std::upper_bound(m_breaks.begin(), m_breaks.end(), t) - m_breaks.begin());
+        j = std::min(std::max<size_t>(j, 1), m_breaks.size() - 1) - 1;
+        if (t == m_breaks[j] || t == m_breaks[j + 1]) {
+            return m_sourceBreaks[t == m_breaks[j] ? j : j + 1];
+        }
+        const double lo = (m_breaks[j] == m_end) ? m_start : m_sourceBreaks[j];
+        return std::clamp(t - m_period, lo, m_sourceBreaks[j + 1]);
+    }
+
+    /** The source's parameters for the ends of a piece or box of this part: the seam starts one past it. */
+    std::pair<double, double> sourceInterval(const double a, const double b) const {
+        const bool past = std::max(a, b) > m_end;
+        const auto map = [&](const double t) { return (past && t == m_end) ? m_start : sourceParameter(t); };
+        return {map(a), map(b)};
     }
 
     bool closed() const override {
-        return false;
+        return m_closed;
     }
 
     const std::vector<double>& breaks() const override {
@@ -2194,11 +2255,15 @@ public:
     }
 
     bool jet(const double t, const LC_CurveEvaluationSide side, LC_CurveJet& out) const override {
-        return m_base.jet(t, side, out);
+        if (m_wraps && t == m_end && side == LC_CurveEvaluationSide::Right) {
+            return m_base.jet(m_start, side, out); // just past the seam
+        }
+        return m_base.jet(sourceParameter(t), side, out);
     }
 
     bool boundJet(const double a, const double b, LC_CurveJetBounds& out) const override {
-        return m_base.boundJet(a, b, out);
+        const auto [from, to] = sourceInterval(a, b);
+        return m_base.boundJet(from, to, out);
     }
 
     const std::vector<RS_Vector>& hull() const override {
@@ -2210,8 +2275,20 @@ public:
     }
 
 private:
+    void add(const double part, const double own) {
+        m_breaks.push_back(part);
+        m_sourceBreaks.push_back(own);
+    }
+
     const OffsetSource& m_base;
     std::vector<double> m_breaks;
+    /** The source's exact parameter for each of m_breaks. */
+    std::vector<double> m_sourceBreaks;
+    double m_start{0.0};
+    double m_end{0.0};
+    double m_period{0.0};
+    bool m_closed{false};
+    bool m_wraps{false};
 };
 
 bool included(const int winding, const LC_CurveFillRule rule) {
@@ -2260,16 +2337,9 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
     }
     result.sourceIntersections = crossings.intersections.size();
     std::vector<double> cuts;
-    std::vector<RS_Vector> nodes;
     for (const LC_ParametricIntersection& x : crossings.intersections) {
         cuts.push_back(x.parameterA);
         cuts.push_back(x.parameterB);
-        const bool known = std::any_of(nodes.begin(), nodes.end(), [&](const RS_Vector& n) {
-            return n.distanceTo(x.point) <= options.tolerance.nodeMerge;
-        });
-        if (!known) {
-            nodes.push_back(x.point);
-        }
     }
     std::sort(cuts.begin(), cuts.end());
 
@@ -2280,6 +2350,7 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
         bool boundary{false};
     };
     std::vector<SourceFragment> fragments;
+    size_t wrapFragment = std::numeric_limits<size_t>::max();
     if (cuts.empty()) {
         fragments.push_back({{{t0, t1}}});
     }
@@ -2299,6 +2370,7 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
         if (!wrap.intervals.empty()) {
             fragments.push_back(wrap);
         }
+        wrapFragment = wrap.intervals.empty() ? fragments.size() : fragments.size() - 1;
     }
 
     // 3. which side of each fragment is in the region
@@ -2339,6 +2411,22 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
     if (boundaryIntervals.empty()) {
         return LC_CurveOffsetStatus::Ok; // no region: nothing to grow or shrink
     }
+    // Corners of the region are nodes a boundary fragment ends at; a node with
+    // every sector on one side is inside or outside the region and needs no arc.
+    // Fragment ends are the crossing parameters themselves, compared exactly.
+    std::vector<RS_Vector> nodes;
+    for (const LC_ParametricIntersection& x : crossings.intersections) {
+        const bool corner = std::any_of(boundaryIntervals.begin(), boundaryIntervals.end(), [&](const auto& iv) {
+            return iv.first == x.parameterA || iv.second == x.parameterA || iv.first == x.parameterB ||
+                   iv.second == x.parameterB;
+        });
+        const bool known = std::any_of(nodes.begin(), nodes.end(), [&](const RS_Vector& n) {
+            return n.distanceTo(x.point) <= options.tolerance.nodeMerge;
+        });
+        if (corner && !known) {
+            nodes.push_back(x.point);
+        }
+    }
 
     // 4. candidates: the boundary fragments' offsets outwards or inwards, and circles about the nodes
     struct Candidate {
@@ -2348,11 +2436,17 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
         std::vector<LC_OffsetBranch> branches;
     };
     std::vector<Candidate> candidates;
-    for (const SourceFragment& fragment : fragments) {
+    for (size_t f = 0; f < fragments.size(); ++f) {
+        const SourceFragment& fragment = fragments[f];
         if (!fragment.boundary) {
             continue;
         }
-        for (const auto& [a, b] : fragment.intervals) {
+        // one stretch: a fragment across the seam runs on through it
+        std::vector<std::pair<double, double>> stretches = fragment.intervals;
+        if (f == wrapFragment && stretches.size() == 2) {
+            stretches = {{stretches[0].first, stretches[1].second}};
+        }
+        for (const auto& [a, b] : stretches) {
             Candidate candidate;
             candidate.part = std::make_unique<RestrictedSource>(source, a, b);
             // outward is right of a boundary with the region on its left
@@ -2454,6 +2548,14 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
                 piece.sample = samples[0];
                 piece.alternative[0] = samples[1];
                 piece.alternative[1] = samples[2];
+                // back to the source's own parameters and spans
+                for (LC_OffsetCubicPiece& p : run) {
+                    LC_OffsetBranchProvenance& v = p.provenance;
+                    std::tie(v.sourceT0, v.sourceT1) = candidate.part->sourceInterval(v.sourceT0, v.sourceT1);
+                    const double middle = 0.5 * (v.sourceT0 + v.sourceT1);
+                    v.sourceSpan = static_cast<size_t>(std::upper_bound(breaks.begin(), breaks.end(), middle) -
+                                                       breaks.begin()) - 1;
+                }
                 if (candidate.reverse) {
                     std::reverse(run.begin(), run.end());
                     for (LC_OffsetCubicPiece& p : run) {
@@ -2571,9 +2673,6 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
             cycle.cubicPieces.insert(cycle.cubicPieces.end(), pieces[current].pieces.begin(),
                                      pieces[current].pieces.end());
             const RS_Vector end = cycle.cubicPieces.back().bezier[3];
-            if (end == cycle.cubicPieces.front().bezier[0]) {
-                break;
-            }
             size_t next = pieces.size();
             for (const size_t k : kept) {
                 if (!used[k] && pieces[k].pieces.front().bezier[0] == end) {
@@ -2582,6 +2681,13 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
                     }
                     next = k;
                 }
+            }
+            const bool closes = end == cycle.cubicPieces.front().bezier[0];
+            if (closes && next != pieces.size()) {
+                return LC_CurveOffsetStatus::AmbiguousTopology; // another cycle touches it at its start
+            }
+            if (closes) {
+                break;
             }
             if (next == pieces.size()) {
                 return LC_CurveOffsetStatus::AmbiguousTopology; // a boundary that does not close
@@ -2715,7 +2821,9 @@ LC_CurveOffsetGeometryResult buildDirectBranches(const RS_Entity& source, const 
         if (request.side == LC_CurveOffsetSide::FromDirectionPoint) {
             int winding = 0;
             std::size_t boxes = 0;
-            if (!windingNumber(*adapter, request.directionPoint, winding, boxes, options.maxDistanceMapBoxes)) {
+            // as for the other modes, a point on the curve, to the tolerance, has no side
+            if (!windingNumber(*adapter, request.directionPoint, winding, boxes, options.maxDistanceMapBoxes,
+                               options.tolerance.classification)) {
                 result.status = LC_CurveOffsetStatus::AmbiguousSide;
                 return result;
             }

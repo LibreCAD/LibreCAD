@@ -260,7 +260,8 @@ private:
                 if (q.x.lo() > p.x.hi() + reach) {
                     break;
                 }
-                if (gap(p.x, p.y, q.x, q.y) <= reach && !adjacent(p, q)) {
+                const bool anchored = p.branch < m_options.anchoredBranches || q.branch < m_options.anchoredBranches;
+                if (anchored && gap(p.x, p.y, q.x, q.y) <= reach && !adjacent(p, q)) {
                     pairs.emplace_back(std::min(byX[k], byX[n]), std::max(byX[k], byX[n]));
                 }
             }

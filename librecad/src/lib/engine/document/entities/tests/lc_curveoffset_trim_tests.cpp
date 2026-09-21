@@ -240,6 +240,10 @@ TEST_CASE("Trimming fails where it cannot decide, rather than guessing", "[curve
     const LC_CurveOffsetGeometryResult retraced = trim(source, LC_CurveOffsetSide::Left, 5.0);
     CHECK(retraced.status == LC_CurveOffsetStatus::AmbiguousTopology);
     CHECK(retraced.branches.empty());
+    // the outer side is decidable: that the inner offsets retrace does not bear on it
+    const LC_CurveOffsetGeometryResult outer = trim(source, LC_CurveOffsetSide::Right, 5.0);
+    CHECK(outer.status == LC_CurveOffsetStatus::Ok);
+    CHECK(outer.removedIntervals == 0);
 
     // a distance budget too small to decide any point is an explicit failure
     const RS_Spline parabola = unitParabola();
@@ -264,5 +268,19 @@ TEST_CASE("A trimmed offset materializes as its kept pieces", "[curve-offset][tr
     REQUIRE_FALSE(result.entities.empty());
     for (size_t i = 1; i < result.entities.size(); ++i) {
         CHECK(result.entities[i]->getStartpoint() == result.entities[i - 1]->getEndpoint());
+    }
+}
+
+TEST_CASE("An open spline whose ends coincide trims like any other", "[curve-offset][trim]") {
+    // Its two end circles are the same circle: how they meet each other does
+    // not bear on the offset, which only needs where it meets them.
+    LC_SplinePointsData teardrop(false, false);
+    teardrop.useControlPoints = true;
+    teardrop.controlPoints = {{0, 0}, {20, 10}, {20, -10}, {0, 0}};
+    const LC_SplinePoints source(nullptr, teardrop);
+    for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+        INFO("side " << static_cast<int>(side));
+        const LC_CurveOffsetGeometryResult result = trim(source, side, 1.0);
+        CHECK(result.status == LC_CurveOffsetStatus::Ok);
     }
 }

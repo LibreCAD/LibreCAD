@@ -23,6 +23,7 @@
 #define LC_PARAMETRICCURVEINTERSECTION_H
 
 #include <cstddef>
+#include <limits>
 #include <vector>
 
 #include "lc_interval.h"
@@ -98,6 +99,8 @@ struct LC_IntersectionOptions {
     std::size_t maxLeaves{65536};
     /** Box pairs examined in all. */
     std::size_t maxBoxPairs{1u << 20};
+    /** Only pairs with a leaf on a branch below this index are examined: the rest meet as they may. */
+    std::size_t anchoredBranches{std::numeric_limits<std::size_t>::max()};
 };
 
 enum class LC_IntersectionStatus {
