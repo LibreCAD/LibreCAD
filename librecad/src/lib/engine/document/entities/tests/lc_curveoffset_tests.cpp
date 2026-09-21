@@ -164,7 +164,7 @@ TEST_CASE("Default and partial requests are rejected before any evaluation",
     CHECK(LC_CurveOffset::buildDirectBranches(source, request, partial, budget).status ==
           LC_CurveOffsetStatus::InvalidRequest);
     partial = good;
-    partial.mode = LC_CurveOffsetMode::Trimmed; // not implemented: never run as Direct
+    partial.mode = LC_CurveOffsetMode::RegionBoundary; // not implemented: never run as Direct
     CHECK(LC_CurveOffset::buildDirectBranches(source, request, partial, budget).status ==
           LC_CurveOffsetStatus::InvalidRequest);
 

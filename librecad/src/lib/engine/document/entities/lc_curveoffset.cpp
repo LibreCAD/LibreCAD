@@ -217,7 +217,8 @@ bool isPositiveFinite(const double v) {
 
 bool validDirectOptions(const LC_CurveOffsetOptions& o) {
     const LC_CurveOffsetTolerances& t = o.tolerance;
-    return o.mode == LC_CurveOffsetMode::Direct && isPositiveFinite(t.requestedGeometry) &&
+    return (o.mode == LC_CurveOffsetMode::Direct || o.mode == LC_CurveOffsetMode::Trimmed) &&
+           isPositiveFinite(t.requestedGeometry) &&
            isPositiveFinite(t.evaluation) && isPositiveFinite(t.fit) && isPositiveFinite(t.nodeMerge) &&
            isPositiveFinite(t.parameter) && isPositiveFinite(t.rootResidual) &&
            isPositiveFinite(t.classification) && isPositiveFinite(o.angleTolerance) && o.angleTolerance < M_PI &&
@@ -1086,10 +1087,15 @@ private:
  * already lies there is moved onto it. Both occurrences of a node share one
  * point.
  */
-LC_CurveOffsetStatus insertNodes(const OffsetSource& source, const double d, const double speedFloor,
-                                 const LC_CurveOffsetOptions& options,
-                                 const std::vector<LC_ParametricIntersection>& intersections,
-                                 std::vector<LC_OffsetBranch>& branches) {
+struct Occurrence {
+    size_t branch;
+    double t;
+    RS_Vector point;
+};
+
+LC_CurveOffsetStatus insertOccurrences(const OffsetSource& source, const double d, const double speedFloor,
+                                       const LC_CurveOffsetOptions& options, const std::vector<Occurrence>& occurrences,
+                                       std::vector<LC_OffsetBranch>& branches) {
     auto insert = [&](const size_t b, const double t, const RS_Vector& node) {
         std::vector<LC_OffsetCubicPiece>& pieces = branches[b].cubicPieces;
         for (size_t k = 0; k < pieces.size(); ++k) {
@@ -1145,18 +1151,28 @@ LC_CurveOffsetStatus insertNodes(const OffsetSource& source, const double d, con
         }
         return LC_CurveOffsetStatus::FitFailed; // no piece holds the parameter
     };
-    for (const LC_ParametricIntersection& x : intersections) {
-        for (const auto& [b, t] : {std::pair{x.branchA, x.parameterA}, std::pair{x.branchB, x.parameterB}}) {
-            if (b >= branches.size()) {
-                return LC_CurveOffsetStatus::FitFailed;
-            }
-            const LC_CurveOffsetStatus status = insert(b, t, x.point);
-            if (status != LC_CurveOffsetStatus::Ok) {
-                return status;
-            }
+    for (const Occurrence& o : occurrences) {
+        if (o.branch >= branches.size()) {
+            return LC_CurveOffsetStatus::FitFailed;
+        }
+        const LC_CurveOffsetStatus status = insert(o.branch, o.t, o.point);
+        if (status != LC_CurveOffsetStatus::Ok) {
+            return status;
         }
     }
     return LC_CurveOffsetStatus::Ok;
+}
+
+LC_CurveOffsetStatus insertNodes(const OffsetSource& source, const double d, const double speedFloor,
+                                 const LC_CurveOffsetOptions& options,
+                                 const std::vector<LC_ParametricIntersection>& intersections,
+                                 std::vector<LC_OffsetBranch>& branches) {
+    std::vector<Occurrence> occurrences;
+    for (const LC_ParametricIntersection& x : intersections) {
+        occurrences.push_back({x.branchA, x.parameterA, x.point});
+        occurrences.push_back({x.branchB, x.parameterB, x.point});
+    }
+    return insertOccurrences(source, d, speedFloor, options, occurrences, branches);
 }
 
 LC_CurveOffsetStatus fromIntersectionStatus(const LC_IntersectionStatus status) {
@@ -1538,6 +1554,468 @@ private:
     std::size_t m_deep{0};
 };
 
+// ---------------------------------------------------------------------------
+// Direct branches and their nodes
+// ---------------------------------------------------------------------------
+
+/** The Direct branches at signed distance @p d, before any noding. */
+LC_CurveOffsetStatus directBranches(const OffsetSource& source, const SourceScale& scale, const double d,
+                                    const LC_CurveOffsetOptions& options, const LC_OffsetSourceBudget& budget,
+                                    std::vector<LC_OffsetBranch>& branches, double& maxError, std::size_t& samples) {
+    const std::vector<double>& breaks = source.breaks();
+    const double domain = breaks.back() - breaks.front();
+    branches.clear();
+    RS_Vector start;
+    RS_Vector end;
+    if (source.straightSegment(start, end)) {
+        // exact: a straight segment moved along its constant normal
+        const RS_Vector direction = end - start;
+        const double length = direction.magnitude();
+        if (!(length > scale.numericFloor)) {
+            return LC_CurveOffsetStatus::UndefinedTangent;
+        }
+        const RS_Vector shift = RS_Vector{-direction.y, direction.x} * (d / length);
+        const RS_Vector a = start + shift;
+        const RS_Vector b = end + shift;
+        LC_OffsetBranch branch;
+        LC_OffsetCubicPiece piece;
+        piece.provenance = {0, breaks.front(), breaks.back(), d, true};
+        piece.bezier = {a, a + (b - a) / 3.0, b - (b - a) / 3.0, b};
+        for (RS_Vector& v : piece.bezier) {
+            v.z = 0.0;
+        }
+        branch.cubicPieces.push_back(piece);
+        branch.straight = true;
+        branches.push_back(std::move(branch));
+        maxError = 0.0;
+        return LC_CurveOffsetStatus::Ok;
+    }
+    std::vector<bool> joinCusps;
+    const LC_CurveOffsetStatus joins = checkJoins(source, d, options, joinCusps);
+    if (joins != LC_CurveOffsetStatus::Ok) {
+        return joins;
+    }
+    BranchBuilder builder{source, d, options, budget, scale.numericFloor / domain};
+    const LC_CurveOffsetStatus status = builder.build(joinCusps, branches);
+    samples = builder.samples();
+    maxError = builder.maxObservedError();
+    return status;
+}
+
+/**
+ * Nodes the branches where the offset meets itself, and counts the source's
+ * own crossings with the same engine at distance zero.
+ */
+LC_CurveOffsetStatus nodeBranches(const OffsetSource& source, const double d, const double speedFloor,
+                                  const LC_CurveOffsetOptions& options, std::vector<LC_OffsetBranch>& branches,
+                                  LC_CurveOffsetGeometryResult& result) {
+    LC_IntersectionOptions query;
+    query.tolerance = options.tolerance.nodeMerge;
+    query.maxBoxPairs = options.maxIntersectionPairs;
+    const LC_IntersectionResult found = findIntersections(OffsetCurves{source, d, speedFloor, branches}, query);
+    LC_CurveOffsetStatus status = fromIntersectionStatus(found.status);
+    if (status == LC_CurveOffsetStatus::Ok) {
+        status = insertNodes(source, d, speedFloor, options, found.intersections, branches);
+    }
+    if (status != LC_CurveOffsetStatus::Ok) {
+        return status;
+    }
+    result.intersections = found.intersections;
+    result.offsetIntersections = found.intersections.size();
+
+    const std::vector<double>& breaks = source.breaks();
+    LC_OffsetBranch whole;
+    whole.closed = source.closed();
+    for (size_t span = 0; span + 1 < breaks.size(); ++span) {
+        LC_OffsetCubicPiece piece;
+        piece.provenance = {span, breaks[span], breaks[span + 1], 0.0, true};
+        whole.cubicPieces.push_back(piece);
+    }
+    const LC_IntersectionResult crossings = findIntersections(OffsetCurves{source, 0.0, speedFloor, {whole}}, query);
+    if (crossings.status != LC_IntersectionStatus::Ok) {
+        return fromIntersectionStatus(crossings.status);
+    }
+    result.sourceIntersections = crossings.intersections.size();
+    return LC_CurveOffsetStatus::Ok;
+}
+
+// ---------------------------------------------------------------------------
+// Distance-map trimming (plan 5.12)
+// ---------------------------------------------------------------------------
+
+/** cos over [a, b], rounded outward. */
+LC_Interval boundCos(const double a, const double b) {
+    double lo = std::min(std::cos(a), std::cos(b));
+    double hi = std::max(std::cos(a), std::cos(b));
+    // the extremes at the multiples of pi inside
+    for (double k = std::ceil(a / M_PI); k * M_PI <= b; k += 1.0) {
+        if (std::fmod(std::abs(k), 2.0) == 0.0) {
+            hi = 1.0;
+        }
+        else {
+            lo = -1.0;
+        }
+    }
+    const double pad = 8.0 * g_eps;
+    return LC_Interval::hull(std::max(-1.0, lo - pad), std::min(1.0, hi + pad));
+}
+
+/** Circles, one closed branch each on [0, 2 pi]. */
+class CircleCurves final : public LC_ParametricCurves {
+public:
+    CircleCurves(std::vector<RS_Vector> centres, const double radius)
+        : m_centres{std::move(centres)},
+          m_radius{radius} {
+        for (size_t b = 0; b < m_centres.size(); ++b) {
+            m_segments.push_back({b, 0.0, 2.0 * M_PI});
+        }
+    }
+
+    const std::vector<LC_ParametricSegment>& segments() const override {
+        return m_segments;
+    }
+
+    std::size_t branchCount() const override {
+        return m_centres.size();
+    }
+
+    std::ptrdiff_t next(const std::size_t branch) const override {
+        return static_cast<std::ptrdiff_t>(branch);
+    }
+
+    bool evaluate(const std::size_t segment, const double t, RS_Vector& point, RS_Vector& derivative) const override {
+        point = m_centres[segment] + RS_Vector{std::cos(t), std::sin(t)} * m_radius;
+        derivative = RS_Vector{-std::sin(t), std::cos(t)} * m_radius;
+        return true;
+    }
+
+    bool bound(const std::size_t segment, const double a, const double b, LC_Interval& x, LC_Interval& y,
+               LC_Interval& dx, LC_Interval& dy) const override {
+        const LC_Interval r = LC_Interval::point(m_radius);
+        const LC_Interval c = boundCos(a, b);
+        const LC_Interval s = boundCos(a - 0.5 * M_PI, b - 0.5 * M_PI); // sin t = cos(t - pi/2)
+        const LC_Interval pad = LC_Interval::hull(-8.0 * g_eps, 8.0 * g_eps);
+        x = LC_Interval::point(m_centres[segment].x) + r * (c + pad);
+        y = LC_Interval::point(m_centres[segment].y) + r * (s + pad);
+        dx = -(r * (s + pad));
+        dy = r * (c + pad);
+        return true;
+    }
+
+private:
+    std::vector<RS_Vector> m_centres;
+    double m_radius;
+    std::vector<LC_ParametricSegment> m_segments;
+};
+
+/** Several curve sets as one, their branches numbered in the given order. */
+class CompositeCurves final : public LC_ParametricCurves {
+public:
+    explicit CompositeCurves(std::vector<const LC_ParametricCurves*> parts) : m_parts{std::move(parts)} {
+        size_t offset = 0;
+        for (size_t p = 0; p < m_parts.size(); ++p) {
+            m_offsets.push_back(offset);
+            const std::vector<LC_ParametricSegment>& segments = m_parts[p]->segments();
+            for (size_t s = 0; s < segments.size(); ++s) {
+                m_segments.push_back({segments[s].branch + offset, segments[s].t0, segments[s].t1});
+                m_origin.emplace_back(p, s);
+            }
+            offset += m_parts[p]->branchCount();
+        }
+        m_branches = offset;
+    }
+
+    const std::vector<LC_ParametricSegment>& segments() const override {
+        return m_segments;
+    }
+
+    std::size_t branchCount() const override {
+        return m_branches;
+    }
+
+    std::ptrdiff_t next(const std::size_t branch) const override {
+        size_t p = m_parts.size() - 1;
+        while (m_offsets[p] > branch) {
+            --p;
+        }
+        const std::ptrdiff_t local = m_parts[p]->next(branch - m_offsets[p]);
+        return local < 0 ? -1 : local + static_cast<std::ptrdiff_t>(m_offsets[p]);
+    }
+
+    bool evaluate(const std::size_t segment, const double t, RS_Vector& point, RS_Vector& derivative) const override {
+        const auto& [p, s] = m_origin[segment];
+        return m_parts[p]->evaluate(s, t, point, derivative);
+    }
+
+    bool bound(const std::size_t segment, const double a, const double b, LC_Interval& x, LC_Interval& y,
+               LC_Interval& dx, LC_Interval& dy) const override {
+        const auto& [p, s] = m_origin[segment];
+        return m_parts[p]->bound(s, a, b, x, y, dx, dy);
+    }
+
+private:
+    std::vector<const LC_ParametricCurves*> m_parts;
+    std::vector<size_t> m_offsets;
+    std::vector<LC_ParametricSegment> m_segments;
+    std::vector<std::pair<size_t, size_t>> m_origin;
+    size_t m_branches{0};
+};
+
+enum class Visibility {
+    Visible,
+    Hidden,
+    Undecided
+};
+
+/**
+ * Whether @p p is definitely farther than @p rho from the source, definitely
+ * nearer, or neither to within the box budget: branch and bound over the
+ * source's spans, with lower bounds from their boxes and upper bounds from
+ * exact points refined by projection.
+ */
+Visibility visibility(const OffsetSource& source, const RS_Vector& p, const double rho, std::size_t& boxes,
+                      const std::size_t maxBoxes) {
+    struct Box {
+        double lower;
+        size_t span;
+        double a;
+        double b;
+    };
+    const auto farther = [](const Box& l, const Box& r) {
+        return std::tie(l.lower, l.span, l.a) > std::tie(r.lower, r.span, r.a);
+    };
+    const auto lowerOf = [&p](const LC_CurveJetBounds& c) {
+        const double gx = std::max({0.0, c.x.lo() - p.x, p.x - c.x.hi()});
+        const double gy = std::max({0.0, c.y.lo() - p.y, p.y - c.y.hi()});
+        return std::hypot(gx, gy);
+    };
+    double upper = std::numeric_limits<double>::infinity();
+    // the nearest point of a box, from its middle by Newton steps within it
+    const auto project = [&](const double a, const double b) {
+        double t = a + 0.5 * (b - a);
+        for (int iteration = 0; iteration < 8; ++iteration) {
+            LC_CurveJet c;
+            if (!source.jet(t, LC_CurveEvaluationSide::Interior, c)) {
+                return;
+            }
+            upper = std::min(upper, c.point.distanceTo(p));
+            const RS_Vector r = c.point - p;
+            const double h = dot(c.first, c.first) + dot(r, c.second);
+            if (!(h > 0.0)) {
+                return;
+            }
+            const double next = std::clamp(t - dot(r, c.first) / h, a, b);
+            if (next == t) {
+                return;
+            }
+            t = next;
+        }
+    };
+    std::vector<Box> heap;
+    const std::vector<double>& breaks = source.breaks();
+    for (size_t span = 0; span + 1 < breaks.size(); ++span) {
+        LC_CurveJetBounds c;
+        if (!source.boundJet(breaks[span], breaks[span + 1], c)) {
+            return Visibility::Undecided;
+        }
+        heap.push_back({lowerOf(c), span, breaks[span], breaks[span + 1]});
+        project(breaks[span], breaks[span + 1]);
+    }
+    std::make_heap(heap.begin(), heap.end(), farther);
+    while (true) {
+        if (upper < rho) {
+            return Visibility::Hidden;
+        }
+        if (heap.empty() || heap.front().lower >= rho) {
+            return Visibility::Visible;
+        }
+        std::pop_heap(heap.begin(), heap.end(), farther);
+        const Box box = heap.back();
+        heap.pop_back();
+        const double mid = box.a + 0.5 * (box.b - box.a);
+        if (++boxes > maxBoxes || !(mid > box.a && mid < box.b)) {
+            return Visibility::Undecided;
+        }
+        for (const auto& [a, b] : {std::pair{box.a, mid}, std::pair{mid, box.b}}) {
+            LC_CurveJetBounds c;
+            if (!source.boundJet(a, b, c)) {
+                return Visibility::Undecided;
+            }
+            project(a, b);
+            const double lower = lowerOf(c);
+            if (lower < upper) {
+                heap.push_back({lower, box.span, a, b});
+                std::push_heap(heap.begin(), heap.end(), farther);
+            }
+        }
+    }
+}
+
+/**
+ * Removes the parts of the noded Direct offset nearer to the source than
+ * rho = |d| minus the approximation and classification budget, and chains
+ * what remains through its nodes. Visibility can change only at the offset's
+ * nodes and cusps, where it meets the offset on the other side, and, for an
+ * open source, where it crosses the circles of radius |d| about its ends; the
+ * branches are split there, and each fragment is classified by the distance
+ * of an interior point, certified by visibility(), or the request fails.
+ */
+LC_CurveOffsetStatus trimBranches(const OffsetSource& source, const SourceScale& scale, const double d,
+                                  const LC_CurveOffsetOptions& options, const LC_OffsetSourceBudget& budget,
+                                  std::vector<LC_OffsetBranch>& branches, LC_CurveOffsetGeometryResult& result) {
+    const double rho =
+        std::abs(d) - (options.tolerance.requestedGeometry + options.tolerance.classification);
+    if (!(rho > scale.numericFloor) || branches.front().straight) {
+        return LC_CurveOffsetStatus::Ok; // nothing can be resolved as hidden: the Direct offset stands
+    }
+    const std::vector<double>& breaks = source.breaks();
+    const double speedFloor = scale.numericFloor / (breaks.back() - breaks.front());
+
+    // where the offset meets the other side's offset and the circles about the ends
+    std::vector<LC_OffsetBranch> opposite;
+    double ignoredError = 0.0;
+    std::size_t ignoredSamples = 0;
+    const LC_CurveOffsetStatus other =
+        directBranches(source, scale, -d, options, budget, opposite, ignoredError, ignoredSamples);
+    if (other != LC_CurveOffsetStatus::Ok) {
+        return LC_CurveOffsetStatus::AmbiguousTopology; // transitions against it cannot be found
+    }
+    std::vector<RS_Vector> ends;
+    if (!source.closed()) {
+        LC_CurveJet first;
+        LC_CurveJet last;
+        if (!source.jet(breaks.front(), LC_CurveEvaluationSide::Right, first) ||
+            !source.jet(breaks.back(), LC_CurveEvaluationSide::Left, last)) {
+            return LC_CurveOffsetStatus::InvalidSource;
+        }
+        ends = {first.point, last.point};
+    }
+    const OffsetCurves self{source, d, speedFloor, branches};
+    const OffsetCurves across{source, -d, speedFloor, opposite};
+    const CircleCurves caps{ends, std::abs(d)};
+    const CompositeCurves all{{&self, &across, &caps}};
+    LC_IntersectionOptions query;
+    query.tolerance = options.tolerance.nodeMerge;
+    query.maxBoxPairs = options.maxIntersectionPairs;
+    const LC_IntersectionResult found = findIntersections(all, query);
+    if (found.status != LC_IntersectionStatus::Ok) {
+        return fromIntersectionStatus(found.status);
+    }
+    const size_t own = branches.size();
+    std::vector<Occurrence> cuts;
+    for (const LC_ParametricIntersection& x : found.intersections) {
+        // one occurrence on this offset, the other elsewhere (its own crossings are nodes already)
+        if (x.branchA < own && x.branchB >= own) {
+            cuts.push_back({x.branchA, x.parameterA, x.point});
+        }
+    }
+    LC_CurveOffsetStatus status = insertOccurrences(source, d, speedFloor, options, cuts, branches);
+    if (status != LC_CurveOffsetStatus::Ok) {
+        return status;
+    }
+    std::vector<RS_Vector> boundaries;
+    for (const LC_ParametricIntersection& x : result.intersections) {
+        boundaries.push_back(x.point);
+    }
+    for (const Occurrence& c : cuts) {
+        boundaries.push_back(c.point);
+    }
+    const auto isBoundary = [&boundaries](const RS_Vector& v) {
+        return std::find(boundaries.begin(), boundaries.end(), v) != boundaries.end();
+    };
+
+    // fragments: runs of pieces between boundaries, and the ends of branches
+    struct Fragment {
+        std::vector<LC_OffsetCubicPiece> pieces;
+        bool keep{false};
+    };
+    std::vector<Fragment> fragments;
+    for (const LC_OffsetBranch& branch : branches) {
+        const size_t first = fragments.size();
+        fragments.emplace_back();
+        for (size_t k = 0; k < branch.cubicPieces.size(); ++k) {
+            fragments.back().pieces.push_back(branch.cubicPieces[k]);
+            if (k + 1 < branch.cubicPieces.size() && isBoundary(branch.cubicPieces[k].bezier[3])) {
+                fragments.emplace_back();
+            }
+        }
+        // a closed branch's seam is not a boundary unless a node lies there
+        if (branch.closed && fragments.size() - first > 1 && !isBoundary(branch.cubicPieces.front().bezier[0])) {
+            std::vector<LC_OffsetCubicPiece>& wrapped = fragments.back().pieces;
+            wrapped.insert(wrapped.end(), fragments[first].pieces.begin(), fragments[first].pieces.end());
+            fragments[first].pieces = std::move(wrapped);
+            fragments.pop_back();
+        }
+    }
+
+    // each fragment by the distance of interior points
+    std::size_t boxes = 0;
+    for (Fragment& fragment : fragments) {
+        double size = 0.0;
+        for (const LC_OffsetCubicPiece& piece : fragment.pieces) {
+            for (const RS_Vector& v : piece.bezier) {
+                size = std::max(size, v.distanceTo(fragment.pieces.front().bezier[0]));
+            }
+        }
+        if (size <= options.tolerance.nodeMerge) {
+            continue; // below the resolution: dropped either way
+        }
+        Visibility seen = Visibility::Undecided;
+        for (const double where : {0.5, 0.25, 0.75}) {
+            const LC_OffsetCubicPiece& piece =
+                fragment.pieces[std::min(fragment.pieces.size() - 1,
+                                         static_cast<size_t>(where * static_cast<double>(fragment.pieces.size())))];
+            const double t = 0.5 * (piece.provenance.sourceT0 + piece.provenance.sourceT1);
+            OffsetJet q;
+            if (computeOffsetJet(source, d, speedFloor, t, LC_CurveEvaluationSide::Interior, q) !=
+                LC_CurveOffsetStatus::Ok) {
+                return LC_CurveOffsetStatus::FitFailed;
+            }
+            seen = visibility(source, q.point, rho, boxes, options.maxDistanceMapBoxes);
+            if (seen != Visibility::Undecided) {
+                break;
+            }
+            if (boxes > options.maxDistanceMapBoxes) {
+                return LC_CurveOffsetStatus::LimitExceeded;
+            }
+        }
+        if (seen == Visibility::Undecided) {
+            return LC_CurveOffsetStatus::AmbiguousTopology;
+        }
+        fragment.keep = seen == Visibility::Visible;
+    }
+
+    // what remains, chained where one fragment ends on the next one's start
+    std::vector<LC_OffsetBranch> kept;
+    size_t removed = 0;
+    for (Fragment& fragment : fragments) {
+        if (!fragment.keep) {
+            ++removed;
+            continue;
+        }
+        if (!kept.empty() && kept.back().cubicPieces.back().bezier[3] == fragment.pieces.front().bezier[0]) {
+            kept.back().cubicPieces.insert(kept.back().cubicPieces.end(), fragment.pieces.begin(),
+                                           fragment.pieces.end());
+            continue;
+        }
+        LC_OffsetBranch branch;
+        branch.cubicPieces = std::move(fragment.pieces);
+        kept.push_back(std::move(branch));
+    }
+    if (kept.size() > 1 && kept.back().cubicPieces.back().bezier[3] == kept.front().cubicPieces.front().bezier[0]) {
+        std::vector<LC_OffsetCubicPiece>& wrapped = kept.back().cubicPieces;
+        wrapped.insert(wrapped.end(), kept.front().cubicPieces.begin(), kept.front().cubicPieces.end());
+        kept.front().cubicPieces = std::move(wrapped);
+        kept.pop_back();
+    }
+    if (kept.size() == 1 && removed == 0 && branches.size() == 1 && branches.front().closed) {
+        kept.front().closed = true;
+    }
+    result.removedIntervals = removed;
+    branches = std::move(kept);
+    return LC_CurveOffsetStatus::Ok;
+}
+
 } // namespace
 
 namespace LC_CurveOffset {
@@ -1660,92 +2138,30 @@ LC_CurveOffsetGeometryResult buildDirectBranches(const RS_Entity& source, const 
     result.signedDistance = d;
 
     const std::vector<double>& breaks = adapter->breaks();
-    const double domain = breaks.back() - breaks.front();
+    const double speedFloor = scale.numericFloor / (breaks.back() - breaks.front());
     std::vector<LC_OffsetBranch> branches;
-
-    RS_Vector start;
-    RS_Vector end;
-    if (adapter->straightSegment(start, end)) {
-        // exact: a straight segment moved along its constant normal
-        const RS_Vector direction = end - start;
-        const double length = direction.magnitude();
-        if (!(length > scale.numericFloor)) {
-            result.status = LC_CurveOffsetStatus::UndefinedTangent;
-            return result;
-        }
-        const RS_Vector shift = RS_Vector{-direction.y, direction.x} * (d / length);
-        const RS_Vector a = start + shift;
-        const RS_Vector b = end + shift;
-        LC_OffsetBranch branch;
-        LC_OffsetCubicPiece piece;
-        piece.provenance = {0, breaks.front(), breaks.back(), d, true};
-        piece.bezier = {a, a + (b - a) / 3.0, b - (b - a) / 3.0, b};
-        for (RS_Vector& v : piece.bezier) {
-            v.z = 0.0;
-        }
-        branch.cubicPieces.push_back(piece);
-        branch.straight = true;
-        branches.push_back(std::move(branch));
-        result.maxObservedError = 0.0;
+    double maxError = 0.0;
+    LC_CurveOffsetStatus status =
+        directBranches(*adapter, scale, d, options, budget, branches, maxError, result.exactSamples);
+    const bool trimmed = options.mode == LC_CurveOffsetMode::Trimmed;
+    if (status == LC_CurveOffsetStatus::Ok && (options.nodeIntersections || trimmed) && !branches.front().straight) {
+        status = nodeBranches(*adapter, d, speedFloor, options, branches, result);
     }
-    else {
-        std::vector<bool> joinCusps;
-        const LC_CurveOffsetStatus joins = checkJoins(*adapter, d, options, joinCusps);
-        if (joins != LC_CurveOffsetStatus::Ok) {
-            result.status = joins;
-            return result;
-        }
-        BranchBuilder builder{*adapter, d, options, budget, scale.numericFloor / domain};
-        const LC_CurveOffsetStatus status = builder.build(joinCusps, branches);
-        result.exactSamples = builder.samples();
-        if (status != LC_CurveOffsetStatus::Ok) {
-            result.status = status;
-            return result;
-        }
-        result.maxObservedError = builder.maxObservedError();
-
-        if (options.nodeIntersections) {
-            const double speedFloor = scale.numericFloor / domain;
-            const OffsetCurves curves{*adapter, d, speedFloor, branches};
-            LC_IntersectionOptions query;
-            query.tolerance = options.tolerance.nodeMerge;
-            query.maxBoxPairs = options.maxIntersectionPairs;
-            const LC_IntersectionResult found = findIntersections(curves, query);
-            LC_CurveOffsetStatus noded = fromIntersectionStatus(found.status);
-            if (noded == LC_CurveOffsetStatus::Ok) {
-                noded = insertNodes(*adapter, d, speedFloor, options, found.intersections, branches);
-            }
-            if (noded != LC_CurveOffsetStatus::Ok) {
-                result.status = noded;
-                return result;
-            }
-            result.intersections = found.intersections;
-            result.offsetIntersections = found.intersections.size();
-
-            // the source's own crossings, with the same engine at distance zero
-            LC_OffsetBranch whole;
-            whole.closed = adapter->closed();
-            for (size_t span = 0; span + 1 < breaks.size(); ++span) {
-                LC_OffsetCubicPiece piece;
-                piece.provenance = {span, breaks[span], breaks[span + 1], 0.0, true};
-                whole.cubicPieces.push_back(piece);
-            }
-            const LC_IntersectionResult crossings =
-                findIntersections(OffsetCurves{*adapter, 0.0, speedFloor, {whole}}, query);
-            if (crossings.status != LC_IntersectionStatus::Ok) {
-                result.status = fromIntersectionStatus(crossings.status);
-                return result;
-            }
-            result.sourceIntersections = crossings.intersections.size();
-            size_t pieces = 0;
-            for (const LC_OffsetBranch& branch : branches) {
-                pieces += branch.cubicPieces.size();
-            }
-            if (pieces > budget.maxCubicPieces) {
-                result.status = LC_CurveOffsetStatus::LimitExceeded;
-                return result;
-            }
-        }
+    if (status == LC_CurveOffsetStatus::Ok && trimmed) {
+        status = trimBranches(*adapter, scale, d, options, budget, branches, result);
+    }
+    if (status != LC_CurveOffsetStatus::Ok) {
+        result.status = status;
+        return result;
+    }
+    result.maxObservedError = maxError;
+    size_t pieces = 0;
+    for (const LC_OffsetBranch& branch : branches) {
+        pieces += branch.cubicPieces.size();
+    }
+    if (pieces > budget.maxCubicPieces) {
+        result.status = LC_CurveOffsetStatus::LimitExceeded;
+        return result;
     }
     if (branches.size() > options.maxOutputBranches) {
         result.status = LC_CurveOffsetStatus::LimitExceeded;
@@ -1767,6 +2183,13 @@ LC_CurveOffsetMaterializationResult materializeBranches(const RS_Entity& source,
     LC_CurveOffsetMaterializationResult result;
     if (!validDirectOptions(options) || !isValidOffsetBudget(budget)) {
         result.status = LC_CurveOffsetStatus::InvalidRequest;
+        return result;
+    }
+    if (geometry.status == LC_CurveOffsetStatus::Ok && geometry.branches.empty() &&
+        options.mode == LC_CurveOffsetMode::Trimmed && std::isfinite(geometry.signedDistance)) {
+        result.status = LC_CurveOffsetStatus::Ok; // trimmed away entirely
+        result.validationLevel = LC_OffsetValidationLevel::SampledBidirectional;
+        result.maxObservedError = 0.0;
         return result;
     }
     if (geometry.status != LC_CurveOffsetStatus::Ok || geometry.branches.empty() ||
@@ -1818,7 +2241,7 @@ LC_CurveOffsetMaterializationResult materializeBranches(const RS_Entity& source,
         maxError = std::max(maxError, branchError);
     }
 
-    if (options.nodeIntersections) {
+    if (options.nodeIntersections || options.mode == LC_CurveOffsetMode::Trimmed) {
         // The fitted pieces, not only the exact offset, may cross only at its
         // nodes: a fit within tolerance can still add a crossing.
         std::vector<std::vector<std::array<RS_Vector, 4>>> pieces(geometry.branches.size());

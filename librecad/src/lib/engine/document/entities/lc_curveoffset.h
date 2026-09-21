@@ -42,7 +42,7 @@
  * approximates it by cubic Bezier pieces that keep their source parameter
  * interval (a branch), and checks each piece against Q itself.
  *
- * Direct mode, the only one implemented, returns the whole oriented offset. It
+ * Direct mode returns the whole oriented offset. It
  * requires a nonzero source tangent and 1 - d * kappa away from zero, both
  * proved with interval bounds everywhere except at cusps: isolated roots where
  * 1 - d * kappa changes sign, inside a span or across a join. The offset turns
@@ -50,6 +50,10 @@
  * isolate, such as a zero that touches without crossing, fails the request. It
  * does not remove loops or self-intersections, and its error check is sampled
  * evidence, never a proof of the maximum deviation.
+ *
+ * Trimmed mode, programmatic only, removes from the noded Direct offset the
+ * parts provably nearer to the source than the distance, less the tolerance
+ * budget, and fails where it cannot decide. RegionBoundary is not implemented.
  */
 
 enum class LC_CurveOffsetStatus {
