@@ -26,6 +26,9 @@
 **********************************************************************/
 #include "rs_modification.h"
 
+#include <memory>
+#include <vector>
+
 #include "lc_containertraverser.h"
 #include "lc_graphicviewport.h"
 #include "lc_linemath.h"
@@ -1051,38 +1054,49 @@ bool RS_Modification::alignRef(const LC_AlignRefData& data, const QList<RS_Entit
 bool RS_Modification::offset(const RS_OffsetData& data, const QList<RS_Entity*>& entitiesList, const bool forPreviewOnly,
                              LC_DocumentModificationBatch& ctx) {
     const int numberOfCopies = data.obtainNumberOfCopies();
-    // Create new entities
-    // too slow:
-    for(auto e: entitiesList){
-        for (int num=1; num<= numberOfCopies; num++) {
+    // Sources whose every copy was created: only these may be removed, since a
+    // source whose offset failed would otherwise vanish with nothing in its place.
+    QList<RS_Entity*> offsetOriginals;
+    for (auto e : entitiesList) {
+        // A source's copies are published together or not at all.
+        std::vector<std::unique_ptr<RS_Entity>> copies;
+        bool succeeded = true;
+        for (int num = 1; succeeded && num <= numberOfCopies; num++) {
             // First try the type-changing path (e.g. ellipse → spline).
-            auto offsetCopies = e->createOffset(data.coord, num*data.distance);
+            auto offsetCopies = e->createOffset(data.coord, num * data.distance);
             if (!offsetCopies.empty()) {
                 for (auto* off : offsetCopies) {
                     off->setHighlighted(false);
-                    ctx += off;
+                    copies.emplace_back(off);
                 }
                 continue;
             }
 
             // Fall back to the in-place clone+offset path.
-            const auto clone = getClone(forPreviewOnly, e);
+            std::unique_ptr<RS_Entity> clone{getClone(forPreviewOnly, e)};
             //highlight is used by trim actions. do not carry over flag
             clone->setHighlighted(false);
-
-            if (!clone->offset(data.coord, num * data.distance)) {
-                delete clone;
-                continue;
+            succeeded = clone->offset(data.coord, num * data.distance);
+            if (succeeded) {
+                copies.push_back(std::move(clone));
             }
-            ctx += clone;
         }
+        if (!succeeded) {
+            continue;
+        }
+        for (auto& copy : copies) {
+            ctx += copy.release();
+        }
+        offsetOriginals.append(e);
     }
 
     if (!data.keepOriginals) {
-        ctx -= entitiesList;
+        ctx -= offsetOriginals;
     }
-
-    return true;
+    ctx.setActiveLayer = data.useCurrentLayer;
+    ctx.setActivePen = data.useCurrentAttributes;
+    ctx.success = !offsetOriginals.isEmpty();
+    return ctx.success;
 }
 
 /**
