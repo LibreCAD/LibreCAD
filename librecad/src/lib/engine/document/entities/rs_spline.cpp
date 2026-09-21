@@ -673,10 +673,25 @@ void RS_Spline::moveRef(const RS_Vector &ref, const RS_Vector &offset) {
 
 /** Revert direction */
 void RS_Spline::revertDirection() {
+  // The reversed curve runs over the mirrored parameter t' = U[0] + U[m] - t.
+  // Reversing a knot vector alone leaves it decreasing, which no spline accepts.
+  auto mirror = [](std::vector<double> &knots) {
+    if (knots.empty()) {
+      return;
+    }
+    const double sum = knots.front() + knots.back();
+    std::reverse(knots.begin(), knots.end());
+    for (double &k : knots) {
+      k = sum - k;
+    }
+  };
+  // Reversing the whole control array keeps a wrapped closed spline wrapped:
+  // its first and last degree entries still repeat each other.
   std::reverse(m_data.controlPoints.begin(), m_data.controlPoints.end());
   std::reverse(m_data.weights.begin(), m_data.weights.end());
-  std::reverse(m_data.knotslist.begin(), m_data.knotslist.end());
-  normalizeKnots();
+  std::reverse(m_data.fitPoints.begin(), m_data.fitPoints.end());
+  mirror(m_data.knotslist);
+  mirror(m_data.savedOpenKnots);
   update();
 }
 

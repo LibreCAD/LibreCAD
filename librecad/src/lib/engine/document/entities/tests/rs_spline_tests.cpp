@@ -583,3 +583,55 @@ TEST_CASE("RS_Spline::getPointAt reports a failure as an invalid point", "[splin
     CHECK(compareVector(spline.getPointAt(0.25), bezierPoint(0.25), 1e-12));
     CHECK_FALSE(spline.getPointAt(2.0).valid);
 }
+
+TEST_CASE("RS_Spline::revertDirection keeps a valid curve, traversed backwards", "[spline][jet][RS_Spline]") {
+    // It used to reverse the knot vector and only shift it, leaving it
+    // decreasing: the reversed spline failed validation and was no longer drawn.
+    RS_Spline forward = makeSpline(3, {{0, 0}, {1, 2}, {3, 3}, {4, 1}, {6, 2}, {7, 0}},
+                                   {0, 0, 0, 0, 0.3, 1.2, 2, 2, 2, 2}, {1.0, 0.7, 1.4, 1.0, 0.9, 1.0});
+    RS_Spline reversed = makeSpline(3, {{0, 0}, {1, 2}, {3, 3}, {4, 1}, {6, 2}, {7, 0}},
+                                    {0, 0, 0, 0, 0.3, 1.2, 2, 2, 2, 2}, {1.0, 0.7, 1.4, 1.0, 0.9, 1.0});
+    reversed.revertDirection();
+    REQUIRE(reversed.validate());
+    CHECK(reversed.count() == forward.count());
+    CHECK(compareVector(reversed.getStartpoint(), forward.getEndpoint(), 1e-12));
+    CHECK(compareVector(reversed.getEndpoint(), forward.getStartpoint(), 1e-12));
+    double t0 = 0.0;
+    double t1 = 0.0;
+    REQUIRE(forward.getParameterDomain(t0, t1));
+    for (const double t : {0.1, 0.55, 1.2, 1.6}) {
+        const LC_CurveJet a = jetAt(forward, t);
+        const LC_CurveJet b = jetAt(reversed, t0 + t1 - t, LC_CurveEvaluationSide::Left);
+        CHECK(compareVector(a.point, b.point, 1e-12));
+        CHECK(compareVector(a.first, -b.first, 1e-10));
+        CHECK(compareVector(a.second, b.second, 1e-9));
+    }
+
+    // a closed spline stays closed and wrapped
+    RS_Spline closed(nullptr, RS_SplineData(3, false));
+    for (const RS_Vector& p : {RS_Vector{0, 0}, RS_Vector{40, -10}, RS_Vector{60, 30}, RS_Vector{20, 50},
+                               RS_Vector{-15, 25}}) {
+        closed.addControlPoint(p);
+    }
+    closed.setClosed(true);
+    REQUIRE(closed.validate());
+    REQUIRE(closed.getParameterDomain(t0, t1));
+    std::vector<RS_Vector> onCurve;
+    for (int i = 0; i < 8; ++i) {
+        onCurve.push_back(closed.getPointAt(t0 + (t1 - t0) * (i + 0.5) / 8.0));
+        REQUIRE(onCurve.back().valid);
+    }
+    closed.revertDirection();
+    REQUIRE(closed.validate());
+    CHECK(closed.isClosed());
+    CHECK(closed.hasWrappedControlPoints());
+    // still the same shape: every former curve point lies on the reversed curve
+    REQUIRE(closed.getParameterDomain(t0, t1));
+    for (const RS_Vector& p : onCurve) {
+        double nearest = RS_MAXDOUBLE;
+        for (int i = 0; i <= 4000; ++i) {
+            nearest = std::min(nearest, closed.getPointAt(t0 + (t1 - t0) * i / 4000.0).distanceTo(p));
+        }
+        CHECK(nearest < 0.05);
+    }
+}
