@@ -27,7 +27,13 @@
 #ifndef RS_MODIFICATION_H
 #define RS_MODIFICATION_H
 
+#include <algorithm>
+#include <cstddef>
+
+#include <QList>
+
 #include "lc_copyutils.h"
+#include "lc_offsetoutputbudget.h"
 #include "rs_pen.h"
 #include "rs_vector.h"
 
@@ -101,8 +107,61 @@ struct RS_BoundData {
  * Holds the data needed for offset modifications.
  */
 struct RS_OffsetData : LC_ModifyOperationFlags {
+    /**
+     * An execution bound, not only a widget limit: saved settings and the
+     * property sheet can ask for more copies than the options widget offers.
+     */
+    static constexpr int kMaximumOffsetCopies = 100;
+
+    /**
+     * The number of copies, clamped to [1, kMaximumOffsetCopies]. It hides the
+     * shared helper, which Move, Rotate and Scale keep unbounded.
+     */
+    int obtainNumberOfCopies() const {
+        return std::min(LC_ModifyOperationFlags::obtainNumberOfCopies(), kMaximumOffsetCopies);
+    }
+
     RS_Vector coord;
     double distance = 0.;
+};
+
+/**
+ * Hard output limits of one offset request. They belong to the modification
+ * layer; the geometry engine only sees the remaining budget of one source.
+ */
+struct LC_OffsetBatchLimits {
+    LC_OffsetSourceBudget perSource = makeDefaultOffsetSourceBudget();
+    std::size_t maxDeepEntitiesPerRequest = kDefaultOffsetDeepEntitiesPerRequest;
+};
+
+enum class LC_OffsetSourceStatus {
+    Succeeded,
+    InvalidSource,
+    NotVisibleOrLocked,
+    /** The current layer was asked for, but it is missing, frozen or locked. */
+    TargetLayerUnavailable,
+    OffsetFailed,
+    LimitExceeded
+};
+
+struct LC_OffsetSourceOutcome {
+    /** Identity only: a source removed by a destructive offset must not be dereferenced. */
+    const RS_Entity* source = nullptr;
+    LC_OffsetSourceStatus status = LC_OffsetSourceStatus::InvalidSource;
+    /** Owned by the batch once handed over. */
+    QList<RS_Entity*> createdEntities;
+    LC_OffsetOutputUsage usage{};
+
+    bool succeeded() const {
+        return status == LC_OffsetSourceStatus::Succeeded;
+    }
+};
+
+/** The result of an offset request per source, in the order the sources were given. */
+struct LC_OffsetBatchOutcome {
+    QList<LC_OffsetSourceOutcome> sources;
+
+    bool anySourceSucceeded() const;
 };
 
 /**
@@ -314,8 +373,24 @@ public:
     static RS_Entity* trimAmount(const RS_Vector& trimCoord, RS_AtomicEntity* entityToTrim, double dist, bool trimBoth, bool& trimStart,
                                  bool& trimEnd, LC_DocumentModificationBatch& ctx);
 
+    /** offsetWithOutcome() with default limits; true if any source was offset. */
     static bool offset(const RS_OffsetData& data, const QList<RS_Entity*>& entitiesList, bool forPreviewOnly,
                        LC_DocumentModificationBatch& ctx);
+
+    /**
+     * Offsets each source, once per identity in the order given, as one
+     * transaction per source: all of its copies are added or none is, and only
+     * a source whose copies were all added is queued for deletion when
+     * originals are not kept. Deleted, hidden and locked sources, and all
+     * sources when the requested current layer cannot take entities, fail
+     * before anything is built. Splines go to the offset engine directly, so a
+     * spline it refuses is never retried by mutating a clone. Output is counted
+     * against @p limits over all copies of a source and over the request; a
+     * preview batch holds additions only.
+     */
+    static LC_OffsetBatchOutcome offsetWithOutcome(const RS_OffsetData& data, const QList<RS_Entity*>& entitiesList,
+                                                   bool forPreviewOnly, const LC_OffsetBatchLimits& limits,
+                                                   LC_DocumentModificationBatch& ctx);
 
     static bool cut(const RS_Vector& cutCoord, RS_AtomicEntity* cutEntity, LC_DocumentModificationBatch& ctx);
 

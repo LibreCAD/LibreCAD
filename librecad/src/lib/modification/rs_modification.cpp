@@ -26,10 +26,14 @@
 **********************************************************************/
 #include "rs_modification.h"
 
+#include <cmath>
+#include <limits>
 #include <memory>
+#include <unordered_set>
 #include <vector>
 
 #include "lc_containertraverser.h"
+#include "lc_curveoffset.h"
 #include "lc_graphicviewport.h"
 #include "lc_linemath.h"
 #include "lc_splinepoints.h"
@@ -1046,6 +1050,43 @@ bool RS_Modification::alignRef(const LC_AlignRefData& data, const QList<RS_Entit
     return true;
 }
 
+bool LC_OffsetBatchOutcome::anySourceSucceeded() const {
+    return std::any_of(sources.begin(), sources.end(),
+                       [](const LC_OffsetSourceOutcome& source) { return source.succeeded(); });
+}
+
+namespace {
+/** total += more, unless a count would overflow. */
+bool addUsage(LC_OffsetOutputUsage& total, const LC_OffsetOutputUsage& more) {
+    constexpr std::size_t max = std::numeric_limits<std::size_t>::max();
+    if (more.cubicPieces > max - total.cubicPieces || more.outputEntities > max - total.outputEntities ||
+        more.deepEntities > max - total.deepEntities) {
+        return false;
+    }
+    total.cubicPieces += more.cubicPieces;
+    total.outputEntities += more.outputEntities;
+    total.deepEntities += more.deepEntities;
+    return true;
+}
+
+/** What is left of @p budget after @p used; a field exhausted to zero makes it invalid. */
+LC_OffsetSourceBudget remainingBudget(const LC_OffsetSourceBudget& budget, const LC_OffsetOutputUsage& used) {
+    auto left = [](const std::size_t cap, const std::size_t spent) { return cap > spent ? cap - spent : 0; };
+    return {left(budget.maxCubicPieces, used.cubicPieces), left(budget.maxOutputEntities, used.outputEntities),
+            left(budget.maxDeepEntities, used.deepEntities)};
+}
+
+bool withinBudget(const LC_OffsetOutputUsage& used, const LC_OffsetSourceBudget& budget) {
+    return used.cubicPieces <= budget.maxCubicPieces && used.outputEntities <= budget.maxOutputEntities &&
+           used.deepEntities <= budget.maxDeepEntities;
+}
+
+LC_OffsetSourceStatus engineFailure(const LC_CurveOffsetStatus status) {
+    return status == LC_CurveOffsetStatus::LimitExceeded ? LC_OffsetSourceStatus::LimitExceeded
+                                                         : LC_OffsetSourceStatus::OffsetFailed;
+}
+} // namespace
+
 /**
  * Offset all selected entities with the given mouse position and distance
  *
@@ -1053,50 +1094,170 @@ bool RS_Modification::alignRef(const LC_AlignRefData& data, const QList<RS_Entit
  */
 bool RS_Modification::offset(const RS_OffsetData& data, const QList<RS_Entity*>& entitiesList, const bool forPreviewOnly,
                              LC_DocumentModificationBatch& ctx) {
-    const int numberOfCopies = data.obtainNumberOfCopies();
-    // Sources whose every copy was created: only these may be removed, since a
-    // source whose offset failed would otherwise vanish with nothing in its place.
-    QList<RS_Entity*> offsetOriginals;
-    for (auto e : entitiesList) {
-        // A source's copies are published together or not at all.
-        std::vector<std::unique_ptr<RS_Entity>> copies;
-        bool succeeded = true;
-        for (int num = 1; succeeded && num <= numberOfCopies; num++) {
-            // First try the type-changing path (e.g. ellipse → spline).
-            auto offsetCopies = e->createOffset(data.coord, num * data.distance);
-            if (!offsetCopies.empty()) {
-                for (auto* off : offsetCopies) {
-                    off->setHighlighted(false);
-                    copies.emplace_back(off);
-                }
-                continue;
-            }
+    return offsetWithOutcome(data, entitiesList, forPreviewOnly, LC_OffsetBatchLimits{}, ctx).anySourceSucceeded();
+}
 
-            // Fall back to the in-place clone+offset path.
-            std::unique_ptr<RS_Entity> clone{getClone(forPreviewOnly, e)};
-            //highlight is used by trim actions. do not carry over flag
-            clone->setHighlighted(false);
-            succeeded = clone->offset(data.coord, num * data.distance);
-            if (succeeded) {
-                copies.push_back(std::move(clone));
-            }
-        }
-        if (!succeeded) {
-            continue;
-        }
-        for (auto& copy : copies) {
-            ctx += copy.release();
-        }
-        offsetOriginals.append(e);
-    }
-
-    if (!data.keepOriginals) {
-        ctx -= offsetOriginals;
-    }
+LC_OffsetBatchOutcome RS_Modification::offsetWithOutcome(const RS_OffsetData& data, const QList<RS_Entity*>& entitiesList,
+                                                         const bool forPreviewOnly, const LC_OffsetBatchLimits& limits,
+                                                         LC_DocumentModificationBatch& ctx) {
+    LC_OffsetBatchOutcome outcome;
     ctx.setActiveLayer = data.useCurrentLayer;
     ctx.setActivePen = data.useCurrentAttributes;
-    ctx.success = !offsetOriginals.isEmpty();
-    return ctx.success;
+
+    // each identity once, in the order given
+    QList<RS_Entity*> sources;
+    std::unordered_set<const RS_Entity*> seen;
+    for (RS_Entity* e : entitiesList) {
+        if (seen.insert(e).second) {
+            sources.append(e);
+        }
+    }
+
+    const int numberOfCopies = data.obtainNumberOfCopies();
+    bool distancesFinite = std::isfinite(data.distance);
+    for (int num = 1; distancesFinite && num <= numberOfCopies; ++num) {
+        distancesFinite = std::isfinite(num * data.distance);
+    }
+
+    // The current layer, when asked for, is resolved once: a missing, frozen or
+    // locked layer would receive entities the user cannot see or edit.
+    bool targetUsable = true;
+    if (data.useCurrentLayer) {
+        for (const RS_Entity* e : sources) {
+            if (e == nullptr) {
+                continue;
+            }
+            if (RS_Graphic* graphic = e->getGraphic()) {
+                const RS_Layer* layer = graphic->getActiveLayer();
+                targetUsable = layer != nullptr && !layer->isFrozen() && !layer->isLocked();
+            }
+            break;
+        }
+    }
+
+    // The copies of one source, built in local ownership: all or nothing.
+    auto offsetOneSource = [&](RS_Entity& e, const std::size_t requestDeepLeft,
+                               std::vector<std::unique_ptr<RS_Entity>>& roots,
+                               LC_OffsetOutputUsage& usage) -> LC_OffsetSourceStatus {
+        LC_OffsetSourceBudget budget = limits.perSource;
+        budget.maxDeepEntities = std::min(budget.maxDeepEntities, requestDeepLeft);
+        auto measureAll = [&roots, &budget]() {
+            std::vector<const RS_Entity*> all;
+            for (const std::unique_ptr<RS_Entity>& root : roots) {
+                all.push_back(root.get());
+            }
+            return measureOffsetOutput(all, budget.maxDeepEntities);
+        };
+
+        if (LC_CurveOffset::isSupportedSource(e)) {
+            // The side is resolved once, so no copy can land on another side.
+            const LC_CurveOffsetOptions sideOptions = LC_CurveOffset::makeDirectOptions(e, std::abs(data.distance));
+            const LC_OffsetSideResolution side = LC_CurveOffset::resolveSide(e, data.coord, sideOptions);
+            if (side.status != LC_CurveOffsetStatus::Ok) {
+                return engineFailure(side.status);
+            }
+            for (int num = 1; num <= numberOfCopies; ++num) {
+                const LC_OffsetSourceBudget left = remainingBudget(budget, usage);
+                if (!isValidOffsetBudget(left)) {
+                    return LC_OffsetSourceStatus::LimitExceeded;
+                }
+                const double magnitude = std::abs(num * data.distance);
+                LC_CurveOffsetMaterializationResult copy = LC_CurveOffset::createEntities(
+                    e, LC_CurveOffset::makeSideRequest(side.side, magnitude),
+                    LC_CurveOffset::makeDirectOptions(e, magnitude), left);
+                if (copy.status != LC_CurveOffsetStatus::Ok) {
+                    return engineFailure(copy.status);
+                }
+                if (!addUsage(usage, copy.usage)) {
+                    return LC_OffsetSourceStatus::LimitExceeded;
+                }
+                for (std::unique_ptr<RS_Entity>& entity : copy.entities) {
+                    roots.push_back(std::move(entity));
+                }
+            }
+        }
+        else {
+            for (int num = 1; num <= numberOfCopies; ++num) {
+                std::vector<std::unique_ptr<RS_Entity>> copy;
+                // First try the type-changing path (e.g. ellipse → spline).
+                for (RS_Entity* off : e.createOffset(data.coord, num * data.distance)) {
+                    copy.emplace_back(off);
+                }
+                if (copy.empty()) {
+                    // Fall back to the in-place clone+offset path.
+                    std::unique_ptr<RS_Entity> clone{getClone(forPreviewOnly, &e)};
+                    if (!clone->offset(data.coord, num * data.distance)) {
+                        return LC_OffsetSourceStatus::OffsetFailed;
+                    }
+                    copy.push_back(std::move(clone));
+                }
+                std::vector<const RS_Entity*> copyRoots;
+                for (const std::unique_ptr<RS_Entity>& entity : copy) {
+                    copyRoots.push_back(entity.get());
+                }
+                const LC_OffsetTreeCost cost = measureOffsetOutput(copyRoots, budget.maxDeepEntities);
+                if (cost.status != LC_OffsetTreeStatus::Ok ||
+                    !addUsage(usage, LC_OffsetOutputUsage{0, copy.size(), cost.deepEntities})) {
+                    return LC_OffsetSourceStatus::LimitExceeded;
+                }
+                for (std::unique_ptr<RS_Entity>& entity : copy) {
+                    roots.push_back(std::move(entity));
+                }
+            }
+        }
+        // the whole provisional set: within the source's limits, and no root
+        // or child shared between copies
+        const LC_OffsetTreeCost all = measureAll();
+        if (all.status != LC_OffsetTreeStatus::Ok || !withinBudget(usage, budget)) {
+            return LC_OffsetSourceStatus::LimitExceeded;
+        }
+        usage.deepEntities = all.deepEntities;
+        return LC_OffsetSourceStatus::Succeeded;
+    };
+
+    std::size_t requestDeepLeft = limits.maxDeepEntitiesPerRequest;
+    QList<RS_Entity*> offsetOriginals;
+    for (RS_Entity* e : sources) {
+        LC_OffsetSourceOutcome result;
+        result.source = e;
+        std::vector<std::unique_ptr<RS_Entity>> roots;
+        if (e == nullptr) {
+            result.status = LC_OffsetSourceStatus::InvalidSource;
+        }
+        else if (e->isDeleted() || !e->isVisible() || e->isLocked()) {
+            result.status = LC_OffsetSourceStatus::NotVisibleOrLocked;
+        }
+        else if (!targetUsable) {
+            result.status = LC_OffsetSourceStatus::TargetLayerUnavailable;
+        }
+        else if (!distancesFinite || !isValidOffsetBudget(limits.perSource)) {
+            result.status = LC_OffsetSourceStatus::OffsetFailed;
+        }
+        else if (requestDeepLeft == 0) {
+            result.status = LC_OffsetSourceStatus::LimitExceeded; // not evaluated
+        }
+        else {
+            result.status = offsetOneSource(*e, requestDeepLeft, roots, result.usage);
+        }
+        if (result.succeeded()) {
+            // only a complete source is handed over, and only then debits the request
+            requestDeepLeft -= std::min(requestDeepLeft, result.usage.deepEntities);
+            for (std::unique_ptr<RS_Entity>& root : roots) {
+                //highlight is used by trim actions. do not carry over flag
+                root->setHighlighted(false);
+                result.createdEntities.append(root.get());
+                ctx += root.release();
+            }
+            offsetOriginals.append(e);
+        }
+        outcome.sources.append(result);
+    }
+
+    if (!data.keepOriginals && !forPreviewOnly) {
+        ctx -= offsetOriginals;
+    }
+    ctx.success = outcome.anySourceSucceeded();
+    return outcome;
 }
 
 /**

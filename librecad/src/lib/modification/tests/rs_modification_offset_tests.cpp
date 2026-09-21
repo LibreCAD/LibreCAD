@@ -27,9 +27,20 @@
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 
+#include <limits>
+#include <memory>
+
+#include <QCoreApplication>
+
+#include "lc_splinepoints.h"
 #include "rs_circle.h"
 #include "rs_document.h"
+#include "rs_graphic.h"
+#include "rs_layer.h"
+#include "rs_line.h"
 #include "rs_modification.h"
+#include "rs_settings.h"
+#include "rs_spline.h"
 #include "rs_vector.h"
 
 namespace {
@@ -131,4 +142,250 @@ TEST_CASE("RS_Modification::offset honours the current layer and pen options",
     REQUIRE(RS_Modification::offset(data, {&circle}, false, second.ctx));
     CHECK(second.ctx.setActiveLayer);
     CHECK_FALSE(second.ctx.setActivePen);
+}
+
+// ---------------------------------------------------------------------------
+// The per-source transaction (offsetWithOutcome), with spline sources.
+// ---------------------------------------------------------------------------
+namespace {
+
+void ensureSettings() {
+    static int argc = 1;
+    static char arg0[] = "librecad_tests";
+    static char* argv[] = {arg0, nullptr};
+    static QCoreApplication* app =
+        QCoreApplication::instance() ? QCoreApplication::instance() : new QCoreApplication(argc, argv);
+    static bool ready = [] {
+        QCoreApplication::setOrganizationName("LibreCAD");
+        QCoreApplication::setApplicationName("LibreCAD-tests");
+        RS_Settings::init("LibreCAD", "LibreCAD-tests");
+        return true;
+    }();
+    (void)app;
+    (void)ready;
+}
+
+RS_Spline* sCurve(RS_EntityContainer* parent = nullptr) {
+    RS_SplineData d(3, false);
+    d.controlPoints = {{0, 0}, {4, 6}, {8, -6}, {12, 0}};
+    d.knotslist = {0, 0, 0, 0, 1, 1, 1, 1};
+    d.weights.assign(4, 1.0);
+    return new RS_Spline(parent, d);
+}
+
+RS_OffsetData towards(const RS_Vector& point, const double distance) {
+    RS_OffsetData data;
+    data.coord = point;
+    data.distance = distance;
+    data.keepOriginals = false;
+    data.useCurrentLayer = true;
+    data.useCurrentAttributes = true;
+    return data;
+}
+
+const LC_OffsetSourceOutcome& outcomeFor(const LC_OffsetBatchOutcome& outcome, const RS_Entity* source) {
+    for (const LC_OffsetSourceOutcome& s : outcome.sources) {
+        if (s.source == source) {
+            return s;
+        }
+    }
+    FAIL("no outcome for the source");
+    return outcome.sources.front();
+}
+
+} // namespace
+
+TEST_CASE("Offset copies are clamped for Offset only", "[modification][offset]") {
+    RS_OffsetData offset;
+    offset.multipleCopies = true;
+    offset.number = 250;
+    CHECK(offset.obtainNumberOfCopies() == RS_OffsetData::kMaximumOffsetCopies);
+    offset.number = 0;
+    CHECK(offset.obtainNumberOfCopies() == 1);
+    // Move, Rotate and Scale share the base helper and keep its range
+    RS_MoveData move;
+    move.multipleCopies = true;
+    move.number = 250;
+    CHECK(move.obtainNumberOfCopies() == 250);
+    RS_RotateData rotate;
+    rotate.multipleCopies = true;
+    rotate.number = 250;
+    CHECK(rotate.obtainNumberOfCopies() == 250);
+    RS_ScaleData scale;
+    scale.multipleCopies = true;
+    scale.number = 250;
+    CHECK(scale.obtainNumberOfCopies() == 250);
+}
+
+TEST_CASE("A spline source is offset by the engine and keeps its own outcome", "[modification][offset]") {
+    std::unique_ptr<RS_Spline> spline{sCurve()};
+    std::unique_ptr<RS_Spline> cusped{sCurve()};
+    RS_Line line{nullptr, RS_LineData{{0.0, 20.0}, {10.0, 20.0}}};
+    BatchGuard guard;
+
+    // Towards (6, 9): 0.75 is regular for the curve, and for the line a parallel;
+    // 6.0 is past the curve's tighter radius of curvature.
+    const LC_OffsetBatchOutcome outcome =
+        RS_Modification::offsetWithOutcome(towards(RS_Vector{6.0, 9.0}, 0.75), {spline.get(), &line}, false,
+                                           LC_OffsetBatchLimits{}, guard.ctx);
+    REQUIRE(outcome.sources.size() == 2);
+    const LC_OffsetSourceOutcome& fromSpline = outcomeFor(outcome, spline.get());
+    CHECK(fromSpline.succeeded());
+    CHECK(fromSpline.createdEntities.size() > 1);
+    CHECK(fromSpline.usage.outputEntities == static_cast<size_t>(fromSpline.createdEntities.size()));
+    for (const RS_Entity* piece : fromSpline.createdEntities) {
+        CHECK(piece->rtti() == RS2::EntitySpline);
+    }
+    CHECK(outcomeFor(outcome, &line).succeeded());
+
+    BatchGuard failing;
+    const LC_OffsetBatchOutcome refused = RS_Modification::offsetWithOutcome(
+        towards(RS_Vector{6.0, 9.0}, 6.0), {cusped.get()}, false, LC_OffsetBatchLimits{}, failing.ctx);
+    // a spline the engine refuses is not retried by mutating a clone
+    CHECK(refused.sources.front().status == LC_OffsetSourceStatus::OffsetFailed);
+    CHECK(failing.ctx.entitiesToAdd.isEmpty());
+    CHECK(failing.ctx.entitiesToDelete.isEmpty());
+    CHECK_FALSE(failing.ctx.success);
+}
+
+TEST_CASE("A mixed selection offsets and removes only the sources that succeed", "[modification][offset]") {
+    // From (6, 9): inside the circle, whose inward offset of 6 exists; above the
+    // S-curve, whose offset of 6 on that side bends past its radius of curvature.
+    RS_Circle circle{nullptr, RS_CircleData{RS_Vector{6.0, 9.0}, 20.0}};
+    std::unique_ptr<RS_Spline> spline{sCurve()};
+    BatchGuard guard;
+    const LC_OffsetBatchOutcome outcome = RS_Modification::offsetWithOutcome(
+        towards(RS_Vector{6.0, 9.0}, 6.0), {spline.get(), &circle}, false, LC_OffsetBatchLimits{}, guard.ctx);
+    REQUIRE(outcome.sources.size() == 2);
+    CHECK(outcome.sources[0].source == spline.get()); // incoming order is kept
+    CHECK(outcome.sources[0].status == LC_OffsetSourceStatus::OffsetFailed);
+    CHECK(outcome.sources[0].createdEntities.isEmpty());
+    CHECK(outcome.sources[1].succeeded());
+    REQUIRE(outcome.sources[1].createdEntities.size() == 1);
+    CHECK(guard.ctx.entitiesToAdd == outcome.sources[1].createdEntities);
+    REQUIRE(guard.ctx.entitiesToDelete.size() == 1);
+    CHECK(guard.ctx.entitiesToDelete.front() == &circle);
+    CHECK(guard.ctx.success);
+}
+
+TEST_CASE("Each source is offset once, in the order given", "[modification][offset]") {
+    RS_Circle first{nullptr, RS_CircleData{RS_Vector{0.0, 0.0}, 20.0}};
+    RS_Circle second{nullptr, RS_CircleData{RS_Vector{100.0, 0.0}, 20.0}};
+    BatchGuard guard;
+    const LC_OffsetBatchOutcome outcome = RS_Modification::offsetWithOutcome(
+        inwardOffset(5.0), {&second, &first, &second}, false, LC_OffsetBatchLimits{}, guard.ctx);
+    REQUIRE(outcome.sources.size() == 2);
+    CHECK(outcome.sources[0].source == &second);
+    CHECK(outcome.sources[1].source == &first);
+    CHECK(guard.ctx.entitiesToAdd.size() == 2);
+}
+
+TEST_CASE("Deleted, hidden and locked sources are left alone", "[modification][offset]") {
+    RS_Layer locked{"locked"};
+    locked.lock(true);
+    RS_Circle onLocked{nullptr, RS_CircleData{RS_Vector{0.0, 0.0}, 20.0}};
+    onLocked.setLayer(&locked);
+    RS_Circle hidden{nullptr, RS_CircleData{RS_Vector{0.0, 0.0}, 20.0}};
+    hidden.setVisible(false);
+    RS_Circle deleted{nullptr, RS_CircleData{RS_Vector{0.0, 0.0}, 20.0}};
+    deleted.setFlag(RS2::FlagDeleted);
+    BatchGuard guard;
+    const LC_OffsetBatchOutcome outcome = RS_Modification::offsetWithOutcome(
+        inwardOffset(5.0), {&onLocked, &hidden, &deleted, nullptr}, false, LC_OffsetBatchLimits{}, guard.ctx);
+    REQUIRE(outcome.sources.size() == 4);
+    CHECK(outcomeFor(outcome, &onLocked).status == LC_OffsetSourceStatus::NotVisibleOrLocked);
+    CHECK(outcomeFor(outcome, &hidden).status == LC_OffsetSourceStatus::NotVisibleOrLocked);
+    CHECK(outcomeFor(outcome, &deleted).status == LC_OffsetSourceStatus::NotVisibleOrLocked);
+    CHECK(outcomeFor(outcome, nullptr).status == LC_OffsetSourceStatus::InvalidSource);
+    CHECK(guard.ctx.entitiesToAdd.isEmpty());
+    CHECK(guard.ctx.entitiesToDelete.isEmpty());
+}
+
+TEST_CASE("An unusable current layer stops every source before anything is built", "[modification][offset]") {
+    ensureSettings();
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    auto* target = new RS_Layer("target");
+    graphic.addLayer(target);
+    graphic.activateLayer(target);
+    auto* circle = new RS_Circle(&graphic, RS_CircleData{RS_Vector{0.0, 0.0}, 20.0});
+    graphic.addEntity(circle);
+    circle->setLayer(graphic.findLayer("0")); // the source itself stays editable
+
+    for (const bool frozen : {false, true}) {
+        target->lock(!frozen);
+        target->freeze(frozen);
+        BatchGuard guard;
+        const LC_OffsetBatchOutcome outcome =
+            RS_Modification::offsetWithOutcome(inwardOffset(5.0), {circle}, false, LC_OffsetBatchLimits{}, guard.ctx);
+        CHECK(outcome.sources.front().status == LC_OffsetSourceStatus::TargetLayerUnavailable);
+        CHECK(guard.ctx.entitiesToAdd.isEmpty());
+        CHECK(guard.ctx.entitiesToDelete.isEmpty());
+    }
+    // with the option off, the source's own layer is kept and the offset proceeds
+    target->lock(false);
+    target->freeze(true);
+    RS_OffsetData data = inwardOffset(5.0);
+    data.useCurrentLayer = false;
+    BatchGuard guard;
+    CHECK(RS_Modification::offsetWithOutcome(data, {circle}, false, LC_OffsetBatchLimits{}, guard.ctx)
+              .anySourceSucceeded());
+}
+
+TEST_CASE("Output limits count every copy of a source, and the request", "[modification][offset][limits]") {
+    std::unique_ptr<RS_Spline> spline{sCurve()};
+    RS_OffsetData data = towards(RS_Vector{6.0, 9.0}, 0.5);
+    BatchGuard one;
+    const LC_OffsetBatchOutcome single =
+        RS_Modification::offsetWithOutcome(data, {spline.get()}, false, LC_OffsetBatchLimits{}, one.ctx);
+    REQUIRE(single.sources.front().succeeded());
+    const LC_OffsetOutputUsage perCopy = single.sources.front().usage;
+
+    // room for one copy's pieces: the first copy fits, the second does not, and
+    // neither is published nor the source removed
+    LC_OffsetBatchLimits tight;
+    tight.perSource.maxOutputEntities = perCopy.outputEntities + 1;
+    tight.perSource.maxCubicPieces = perCopy.outputEntities + 1;
+    data.multipleCopies = true;
+    data.number = 2;
+    BatchGuard two;
+    const LC_OffsetBatchOutcome capped =
+        RS_Modification::offsetWithOutcome(data, {spline.get()}, false, tight, two.ctx);
+    CHECK(capped.sources.front().status == LC_OffsetSourceStatus::LimitExceeded);
+    CHECK(two.ctx.entitiesToAdd.isEmpty());
+    CHECK(two.ctx.entitiesToDelete.isEmpty());
+
+    // a source too large for what is left of the request fails without using it,
+    // and a smaller later source still fits
+    RS_Circle small{nullptr, RS_CircleData{RS_Vector{50.0, 50.0}, 5.0}};
+    RS_OffsetData both = towards(RS_Vector{6.0, 9.0}, 0.5);
+    LC_OffsetBatchLimits request;
+    request.maxDeepEntitiesPerRequest = perCopy.deepEntities - 1;
+    BatchGuard three;
+    const LC_OffsetBatchOutcome shared =
+        RS_Modification::offsetWithOutcome(both, {spline.get(), &small}, false, request, three.ctx);
+    CHECK(outcomeFor(shared, spline.get()).status == LC_OffsetSourceStatus::LimitExceeded);
+    CHECK(outcomeFor(shared, &small).succeeded());
+    CHECK(three.ctx.entitiesToAdd.size() == 1);
+}
+
+TEST_CASE("A preview batch holds additions only", "[modification][offset]") {
+    RS_Circle circle{nullptr, RS_CircleData{RS_Vector{0.0, 0.0}, 20.0}};
+    BatchGuard guard;
+    CHECK(RS_Modification::offsetWithOutcome(inwardOffset(5.0), {&circle}, true, LC_OffsetBatchLimits{}, guard.ctx)
+              .anySourceSucceeded());
+    CHECK(guard.ctx.entitiesToAdd.size() == 1);
+    CHECK(guard.ctx.entitiesToDelete.isEmpty());
+}
+
+TEST_CASE("A distance that overflows over the copies is refused", "[modification][offset]") {
+    RS_Circle circle{nullptr, RS_CircleData{RS_Vector{0.0, 0.0}, 20.0}};
+    RS_OffsetData data = inwardOffset(std::numeric_limits<double>::max());
+    data.multipleCopies = true;
+    data.number = 3;
+    BatchGuard guard;
+    const LC_OffsetBatchOutcome outcome =
+        RS_Modification::offsetWithOutcome(data, {&circle}, false, LC_OffsetBatchLimits{}, guard.ctx);
+    CHECK(outcome.sources.front().status == LC_OffsetSourceStatus::OffsetFailed);
+    CHECK(guard.ctx.entitiesToAdd.isEmpty());
 }

@@ -209,6 +209,25 @@ TEST_CASE("a typed catch at ResolveNone returns a top-level polyline, not one of
     CHECK(f.m_action->catchEntity(RS_Vector{50.0, 1.0}, RS2::EntityLine, RS2::ResolveNone) == nullptr);
 }
 
+TEST_CASE("a typed catch at ResolveNone returns a spline, not a segment it is drawn with", "[snap][catch]") {
+    // Modify Offset lists both types; the spline must be the source, never a
+    // tessellation line that update() rebuilds.
+    ActionFixture<SnapperProbe> f;
+    RS_SplineData data(3, false);
+    data.controlPoints = {{0.0, 0.0}, {30.0, 60.0}, {70.0, 60.0}, {100.0, 0.0}};
+    data.knotslist = {0, 0, 0, 0, 1, 1, 1, 1};
+    data.weights.assign(4, 1.0);
+    auto* spline = new RS_Spline(&f.m_graphic, data);
+    f.m_graphic.addEntity(spline);
+    spline->update();
+    REQUIRE(spline->count() > 0);
+
+    const RS_Vector onCurve = spline->getPointAt(0.3);
+    CHECK(f.m_action->catchEntity(onCurve, EntityTypeList{RS2::EntityLine, RS2::EntitySpline}, RS2::ResolveNone) ==
+          spline);
+    CHECK(f.m_action->catchEntity(onCurve, RS2::EntityLine, RS2::ResolveNone) == nullptr);
+}
+
 TEST_CASE("a typed catch at ResolveAll still reaches polyline segments", "[snap][catch]") {
     ActionFixture<SnapperProbe> f;
     RS_Polyline* polyline = addPolyline(f.m_graphic);

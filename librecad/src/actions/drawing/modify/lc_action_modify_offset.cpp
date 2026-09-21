@@ -26,15 +26,19 @@
 
 #include "lc_action_modify_offset.h"
 
+#include <cmath>
+
 #include "lc_actioninfomessagebuilder.h"
 #include "lc_offset_options_filler.h"
 #include "lc_offset_options_widget.h"
 #include "rs_document.h"
 #include "rs_modification.h"
+#include "rs_settings.h"
 
 LC_ActionModifyOffset::LC_ActionModifyOffset(LC_ActionContext *actionContext)
     :LC_ActionModifyBase("ActionModifyOffset", actionContext,RS2::ActionModifyOffset,
-                         {RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse, RS2::EntityLine, RS2::EntityPolyline})
+                         {RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse, RS2::EntityLine, RS2::EntityPolyline,
+                          RS2::EntitySpline, RS2::EntitySplinePoints})
     , m_offsetData(new RS_OffsetData()){
 
     m_offsetData->distance = 0.;
@@ -92,27 +96,107 @@ bool LC_ActionModifyOffset::isInVisualSnapStatus(const int status) {
 }
 
 bool LC_ActionModifyOffset::doTriggerModifications(LC_DocumentModificationBatch& ctx) {
-    return RS_Modification::offset(*m_offsetData, m_selectedEntities, false, ctx);
+    m_pendingOutcome = std::make_unique<LC_OffsetBatchOutcome>(RS_Modification::offsetWithOutcome(
+        *m_offsetData, m_selectedEntities, false, LC_OffsetBatchLimits{}, ctx));
+    return m_pendingOutcome->anySourceSucceeded();
 }
 
 void LC_ActionModifyOffset::doTriggerSelectionUpdate(const bool keepSelected, const LC_DocumentModificationBatch& ctx) {
-    if (m_offsetData->keepOriginals) {
-        unselect(m_selectedEntities);
-    }
-    if (keepSelected) {
-        select(ctx.entitiesToAdd);
+    // Only sources that were offset change selection; a failed source stays
+    // selected. A removed source is known by identity only and never touched.
+    if (ctx.success && m_pendingOutcome != nullptr) {
+        for (const LC_OffsetSourceOutcome& source : std::as_const(m_pendingOutcome->sources)) {
+            if (!source.succeeded()) {
+                continue;
+            }
+            if (m_offsetData->keepOriginals) {
+                for (RS_Entity* selected : std::as_const(m_selectedEntities)) {
+                    if (selected == source.source) {
+                        unselect(selected);
+                    }
+                }
+            }
+            if (keepSelected) {
+                select(source.createdEntities);
+            }
+        }
     }
 }
 
-void LC_ActionModifyOffset::doTriggerCompletion([[maybe_unused]]bool success) {
-     finish();
-    // fixme - sand - review whethe we can stay in entity's selection mode and don't finish there...
-    // m_selectionComplete = false;
-    // if (!m_distanceIsFixed){
-    //     if (getStatus() == SetPosition){
-    //         setStatus(SetReferencePoint);
-    //     }
-    // }
+void LC_ActionModifyOffset::doTriggerCompletion(const bool success) {
+    int failed = 0;
+    int total = 0;
+    if (m_pendingOutcome != nullptr) {
+        for (const LC_OffsetSourceOutcome& source : std::as_const(m_pendingOutcome->sources)) {
+            ++total;
+            failed += source.succeeded() ? 0 : 1;
+        }
+    }
+    m_pendingOutcome.reset();
+    if (failed > 0) {
+        commandMessage(tr("%1 of %2 selected entities could not be offset").arg(failed).arg(total));
+    }
+    if (success) {
+        finish();
+        return;
+    }
+    // Nothing was offset: keep the selection and the current step, so another
+    // side or distance can be tried.
+    deletePreview();
+    updateActionPrompt();
+    redrawDrawing();
+}
+
+void LC_ActionModifyOffset::finish() {
+    m_pendingOutcome.reset();
+    LC_ActionModifyBase::finish();
+}
+
+std::size_t LC_ActionModifyOffset::maxPreviewDetail() {
+    const int configured = LC_GET_ONE_INT("Appearance", "MaxPreview", 100);
+    return configured > 0 ? static_cast<std::size_t>(configured) : 0;
+}
+
+void LC_ActionModifyOffset::previewOffset() {
+    LC_DocumentModificationBatch ctx;
+    RS_Modification::offsetWithOutcome(*m_offsetData, m_selectedEntities, true, LC_OffsetBatchLimits{}, ctx);
+    if (ctx.entitiesToAdd.isEmpty()) {
+        return; // no acceptable offset now: the preview stays empty
+    }
+    if (static_cast<std::size_t>(ctx.entitiesToAdd.size()) <= maxPreviewDetail()) {
+        if (ctx.setActivePen && m_document != nullptr) {
+            // the pen the commit will give them
+            const RS_Pen pen = m_document->getActivePen();
+            for (RS_Entity* e : std::as_const(ctx.entitiesToAdd)) {
+                e->setPen(pen);
+            }
+        }
+        previewEntitiesToAdd(ctx); // the preview adopts each entity once
+        return;
+    }
+    // More output than the preview may draw in detail: draw its bounding box
+    // instead, from entities the preview never adopts. The committed offset is
+    // the same either way.
+    RS_Vector lo{false};
+    RS_Vector hi{false};
+    for (RS_Entity* e : std::as_const(ctx.entitiesToAdd)) {
+        e->calculateBorders();
+        const RS_Vector a = e->getMin();
+        const RS_Vector b = e->getMax();
+        if (a.valid && b.valid && std::isfinite(a.x) && std::isfinite(a.y) && std::isfinite(b.x) &&
+            std::isfinite(b.y)) {
+            lo = lo.valid ? RS_Vector::minimum(lo, a) : a;
+            hi = hi.valid ? RS_Vector::maximum(hi, b) : b;
+        }
+    }
+    qDeleteAll(ctx.entitiesToAdd);
+    ctx.entitiesToAdd.clear();
+    if (lo.valid && hi.valid) {
+        previewRefLine({lo.x, lo.y}, {hi.x, lo.y});
+        previewRefLine({hi.x, lo.y}, {hi.x, hi.y});
+        previewRefLine({hi.x, hi.y}, {lo.x, hi.y});
+        previewRefLine({lo.x, hi.y}, {lo.x, lo.y});
+    }
 }
 
 void LC_ActionModifyOffset::onMouseMoveEventSelected(const int status, const LC_MouseEvent* e) {
@@ -120,9 +204,7 @@ void LC_ActionModifyOffset::onMouseMoveEventSelected(const int status, const LC_
     switch (status){
         case SetReferencePoint:{
             m_offsetData->coord = getRelZeroAwarePoint(e, mouse);
-            LC_DocumentModificationBatch ctx;
-            RS_Modification::offset(*m_offsetData, m_selectedEntities, true, ctx);
-            previewEntitiesToAdd(ctx);
+            previewOffset();
             break;
         }
         case SetPosition:{
@@ -131,9 +213,7 @@ void LC_ActionModifyOffset::onMouseMoveEventSelected(const int status, const LC_
             if (!m_distanceIsFixed){
                 m_offsetData->distance = offset.magnitude();
             }
-            LC_DocumentModificationBatch ctx;
-            RS_Modification::offset(*m_offsetData, m_selectedEntities, true, ctx);
-            previewEntitiesToAdd(ctx);
+            previewOffset();
             if (m_showRefEntitiesOnPreview) {
                 previewRefPoint(m_referencePoint);
                 previewRefSelectablePoint(mouse);
@@ -250,7 +330,7 @@ void LC_ActionModifyOffset::updateActionPromptForSelected(const int status) {
 }
 
 void LC_ActionModifyOffset::updateActionPromptForSelection() {
-    updatePromptTRCancel(tr("Select line, polyline, ellipse, circle or arc to create offset") + getSelectionCompletionHintMsg(),
+    updatePromptTRCancel(tr("Select line, polyline, ellipse, circle, arc, spline or spline through points to create offset") + getSelectionCompletionHintMsg(),
                               MOD_SHIFT_AND_CTRL(tr("Select contour"), tr("Offset immediately after selection")));
 }
 

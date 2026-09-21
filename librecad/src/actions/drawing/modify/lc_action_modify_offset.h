@@ -30,9 +30,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define RS_ACTIONMODIFYOFFSET_H
 
 
+#include <cstddef>
+#include <memory>
+
 #include "lc_action_modify_base.h"
 
 struct RS_OffsetData;
+struct LC_OffsetBatchOutcome;
 
 /**
  * This action class create entity by offset
@@ -60,6 +64,13 @@ protected:
     bool m_distanceIsFixed = true;
     RS_Vector m_referencePoint = RS_Vector(false);
     std::unique_ptr<RS_OffsetData> m_offsetData;
+    /** The committed outcome, kept only until its selection update has used it. */
+    std::unique_ptr<LC_OffsetBatchOutcome> m_pendingOutcome;
+
+    void previewOffset();
+    /** Appearance/MaxPreview, read signed: a non-positive value means none in detail. */
+    static std::size_t maxPreviewDetail();
+    void finish() override;
 
     LC_ActionOptionsWidget* createOptionsWidget() override;
     LC_ActionOptionsPropertiesFiller* createOptionsFiller() override;
