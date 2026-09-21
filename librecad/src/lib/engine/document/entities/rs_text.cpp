@@ -361,6 +361,9 @@ void RS_Text::update() {
         forcedCalculateBorders();
     }
     const RS_Vector textSize = getSize();
+    const RS_Vector textMin = getMin();
+    const RS_Vector textMax = getMax();
+    const bool hasTextBounds = textMin.valid && textMax.valid;
 
     RS_DEBUG->print("RS_Text::updateAddLine: width 2: %f", textSize.x);
 
@@ -373,7 +376,12 @@ void RS_Text::update() {
     RS_Vector offset(0.0, 0.0);
     switch (m_data.valign) {
         case RS_TextData::VAMiddle: {
-            offset.move(RS_Vector(0.0, vSize / 2.0));
+            // Fonts can have non-zero bearings and cap heights.  Align to
+            // the rendered bounds instead of the nominal 9-unit cell.
+            const double middleY = hasTextBounds
+                ? -0.5 * (textMin.y + textMax.y)
+                : vSize / 2.0;
+            offset.move(RS_Vector(0.0, middleY));
             break;
         }
         case RS_TextData::VABottom: {
@@ -395,8 +403,11 @@ void RS_Text::update() {
             break;
         }
         case RS_TextData::HACenter: {
-            RS_DEBUG->print("RS_Text::updateAddLine: move by: %f", -textSize.x / 2.0);
-            offset.move(RS_Vector(-textSize.x / 2.0, 0.0));
+            const double middleX = hasTextBounds
+                ? -0.5 * (textMin.x + textMax.x)
+                : -textSize.x / 2.0;
+            RS_DEBUG->print("RS_Text::updateAddLine: move by: %f", middleX);
+            offset.move(RS_Vector(middleX, 0.0));
             break;
         }
         case RS_TextData::HARight: {
