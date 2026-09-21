@@ -1,0 +1,252 @@
+/*******************************************************************************
+ *
+ This file is part of the LibreCAD project, a 2D CAD program
+
+ Copyright (C) 2026 LibreCAD.org
+
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License
+ as published by the Free Software Foundation; either version 2
+ of the License, or (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ ******************************************************************************/
+
+#ifndef LC_CURVEOFFSET_H
+#define LC_CURVEOFFSET_H
+
+#include <array>
+#include <cstddef>
+#include <limits>
+#include <memory>
+#include <vector>
+
+#include "lc_offsetoutputbudget.h"
+#include "rs_entity.h"
+#include "rs_vector.h"
+
+/**
+ * Offsets of RS_Spline and LC_SplinePoints curves.
+ *
+ * The offset of a curve C at signed distance d is Q(t) = C(t) + d N(t), with the
+ * left unit normal N = (-C'y, C'x) / |C'|: a positive d lies to the left of the
+ * curve's direction. Q is not a spline of the same kind, so the engine
+ * approximates it by cubic Bezier pieces that keep their source parameter
+ * interval (a branch), and checks each piece against Q itself.
+ *
+ * Direct mode, the only one implemented, returns the whole oriented offset. It
+ * requires a regular offset: a nonzero source tangent and 1 - d * kappa away
+ * from zero, both proved over every piece with interval bounds. It does not
+ * remove loops or self-intersections, and its error check is sampled evidence,
+ * never a proof of the maximum deviation.
+ */
+
+enum class LC_CurveOffsetStatus {
+    Ok,
+    /** Options, budget or request not filled by a factory, or a mode not implemented. */
+    InvalidRequest,
+    InvalidSource,
+    UnsupportedNonPlanar,
+    InvalidDistance,
+    UnsupportedClosedResult,
+    AmbiguousSide,
+    UndefinedTangent,
+    DiscontinuousNormal,
+    SingularOffset,
+    AmbiguousRegularity,
+    AmbiguousTopology,
+    FitFailed,
+    ToleranceNotMet,
+    LimitExceeded
+};
+
+enum class LC_CurveOffsetMode {
+    Direct,
+    Trimmed,
+    RegionBoundary
+};
+
+enum class LC_CurveFillRule {
+    NonZero,
+    EvenOdd
+};
+
+enum class LC_CurveOffsetSide {
+    /** The side the request's direction point lies on. */
+    FromDirectionPoint,
+    Left,
+    Right
+};
+
+enum class LC_OffsetValidationLevel {
+    None,
+    /** Checked at sample points: evidence, not a bound between them. */
+    SampledBidirectional,
+    IntervalCertified
+};
+
+/**
+ * Tolerances, all world lengths except parameter. The defaults are NaN, so an
+ * options object that was not filled by a factory fails validation.
+ */
+struct LC_CurveOffsetTolerances {
+    /** The geometric tolerance asked for: the sum of the three budgets below. */
+    double requestedGeometry{std::numeric_limits<double>::quiet_NaN()};
+    double evaluation{std::numeric_limits<double>::quiet_NaN()};
+    /** The share a fitted piece may deviate from the exact offset. */
+    double fit{std::numeric_limits<double>::quiet_NaN()};
+    /** The share spent pinning neighbouring pieces to a shared point. */
+    double nodeMerge{std::numeric_limits<double>::quiet_NaN()};
+    /** Parameter resolution for bisection and Newton steps; not a geometric claim. */
+    double parameter{std::numeric_limits<double>::quiet_NaN()};
+    double rootResidual{std::numeric_limits<double>::quiet_NaN()};
+    /** A direction point closer to the curve than this has no side. */
+    double classification{std::numeric_limits<double>::quiet_NaN()};
+};
+
+struct LC_CurveOffsetRequest {
+    /** Used only with LC_CurveOffsetSide::FromDirectionPoint. */
+    RS_Vector directionPoint{false};
+    double distanceMagnitude{std::numeric_limits<double>::quiet_NaN()};
+    LC_CurveOffsetSide side{LC_CurveOffsetSide::FromDirectionPoint};
+};
+
+struct LC_CurveOffsetOptions {
+    LC_CurveOffsetMode mode{LC_CurveOffsetMode::Direct};
+    LC_CurveFillRule fillRule{LC_CurveFillRule::NonZero};
+    LC_CurveOffsetTolerances tolerance{};
+    /** Tangent angle a fitted piece may deviate by, in radians; refinement only. */
+    double angleTolerance{std::numeric_limits<double>::quiet_NaN()};
+    unsigned maxSubdivisionDepth{0};
+    /** Exact offset evaluations per source. */
+    std::size_t maxSamples{0};
+    std::size_t maxOutputBranches{0};
+    std::size_t maxIntersectionPairs{0};
+    std::size_t maxDistanceMapBoxes{0};
+    std::size_t maxArrangementEdges{0};
+    std::size_t maxArrangementFaces{0};
+};
+
+/** Where a piece came from: an interval of one source span, and the distance. */
+struct LC_OffsetBranchProvenance {
+    std::size_t sourceSpan{0};
+    double sourceT0{0.0};
+    double sourceT1{0.0};
+    double signedDistance{0.0};
+    bool forward{true};
+};
+
+/**
+ * One cubic Bezier piece of an offset branch. Its own parameter u in
+ * [localU0, localU1] maps linearly onto [sourceT0, sourceT1].
+ */
+struct LC_OffsetCubicPiece {
+    LC_OffsetBranchProvenance provenance;
+    double localU0{0.0};
+    double localU1{1.0};
+    std::array<RS_Vector, 4> bezier;
+};
+
+struct LC_OffsetBranch {
+    /** In source parameter order; each piece starts where the previous one ends. */
+    std::vector<LC_OffsetCubicPiece> cubicPieces;
+    /** The last piece ends where the first begins. */
+    bool closed{false};
+    /** The branch is exactly the straight segment from its start to its end. */
+    bool straight{false};
+};
+
+struct LC_CurveOffsetGeometryResult {
+    LC_CurveOffsetStatus status{LC_CurveOffsetStatus::InvalidSource};
+    std::vector<LC_OffsetBranch> branches;
+    LC_OffsetValidationLevel validationLevel{LC_OffsetValidationLevel::None};
+    double maxObservedError{std::numeric_limits<double>::quiet_NaN()};
+    double maxCertifiedError{std::numeric_limits<double>::quiet_NaN()};
+    /** The signed distance the branches were built for. */
+    double signedDistance{std::numeric_limits<double>::quiet_NaN()};
+    std::size_t exactSamples{0};
+    std::size_t sourceIntersections{0};
+    std::size_t offsetIntersections{0};
+    std::size_t removedIntervals{0};
+};
+
+/** Fresh output entities, owned here until the caller releases them. Move-only. */
+struct LC_CurveOffsetMaterializationResult {
+    LC_CurveOffsetStatus status{LC_CurveOffsetStatus::InvalidSource};
+    std::vector<std::unique_ptr<RS_Entity>> entities;
+    LC_OffsetOutputUsage usage{};
+    LC_OffsetValidationLevel validationLevel{LC_OffsetValidationLevel::None};
+    double maxObservedError{std::numeric_limits<double>::quiet_NaN()};
+    double maxCertifiedError{std::numeric_limits<double>::quiet_NaN()};
+};
+
+/**
+ * The side of a source a direction point selects, computed once and reused for
+ * every copy distance of a multi-copy offset.
+ */
+struct LC_OffsetSideResolution {
+    LC_CurveOffsetStatus status{LC_CurveOffsetStatus::InvalidSource};
+    /** Left or Right when status is Ok. */
+    LC_CurveOffsetSide side{LC_CurveOffsetSide::FromDirectionPoint};
+    /** The source parameters nearest to the direction point. */
+    std::vector<double> occurrences;
+};
+
+namespace LC_CurveOffset {
+
+/**
+ * Relative geometric tolerance used when the caller gives none: a fraction of
+ * the larger of the source's extent and the offset distance.
+ */
+inline constexpr double kDefaultRelativeOffsetTolerance = 1e-6;
+inline constexpr double kDefaultOffsetAngleTolerance = 1e-3;
+inline constexpr unsigned kDefaultMaxSubdivisionDepth = 20;
+inline constexpr std::size_t kDefaultMaxSamples = 65536;
+inline constexpr std::size_t kDefaultMaxOutputBranches = 256;
+
+/** Whether the entity is a curve the engine can offset: an RS_Spline or an
+ *  LC_SplinePoints, subclasses included. */
+bool isSupportedSource(const RS_Entity& source);
+
+/**
+ * Direct-mode options with tolerances derived from the source's scale and the
+ * distance. @p requestedTolerance, if positive, replaces the default relative
+ * tolerance. Left unfilled (and so rejected by the engine) when the source or
+ * distance has no finite scale.
+ */
+LC_CurveOffsetOptions makeDirectOptions(const RS_Entity& source, double distanceMagnitude,
+                                        double requestedTolerance = 0.0);
+
+LC_CurveOffsetRequest makeDirectionRequest(const RS_Vector& directionPoint, double distanceMagnitude);
+LC_CurveOffsetRequest makeSideRequest(LC_CurveOffsetSide side, double distanceMagnitude);
+
+inline LC_OffsetSourceBudget makeDirectSourceBudget() {
+    return makeDefaultOffsetSourceBudget();
+}
+
+/**
+ * The side of @p source that @p directionPoint lies on, from the source
+ * parameters nearest to it. AmbiguousSide if the point is on the curve or
+ * equally near occurrences disagree.
+ */
+LC_OffsetSideResolution resolveSide(const RS_Entity& source, const RS_Vector& directionPoint,
+                                    const LC_CurveOffsetOptions& options);
+
+/**
+ * The Direct offset of @p source as cubic Bezier branches; no entity is made.
+ * Stops with LimitExceeded before exceeding @p budget's cubic pieces.
+ */
+LC_CurveOffsetGeometryResult buildDirectBranches(const RS_Entity& source, const LC_CurveOffsetRequest& request,
+                                                 const LC_CurveOffsetOptions& options,
+                                                 const LC_OffsetSourceBudget& budget);
+
+} // namespace LC_CurveOffset
+
+#endif

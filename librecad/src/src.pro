@@ -410,6 +410,8 @@ HEADERS += \
     lib/engine/document/container/lc_containertraverser.h \
     lib/engine/document/entities/lc_mleader.h \
     lib/engine/document/entities/lc_curvejet.h \
+    lib/engine/document/entities/lc_curveoffset.h \
+    lib/engine/document/entities/lc_offsetoutputbudget.h \
     lib/engine/document/entities/lc_splinehelper.h \
     lib/engine/document/entities/lc_tolerance.h \
     lib/engine/document/entities/support/lc_arrow_box.h \
@@ -967,6 +969,7 @@ SOURCES += \
     lib/engine/document/entities/lc_textbidi.cpp \
     lib/engine/document/container/lc_containertraverser.cpp \
     lib/engine/document/entities/lc_mleader.cpp \
+    lib/engine/document/entities/lc_curveoffset.cpp \
     lib/engine/document/entities/lc_splinehelper.cpp \
     lib/engine/document/entities/lc_tolerance.cpp \
     lib/engine/document/entities/support/lc_arrow_box.cpp \
