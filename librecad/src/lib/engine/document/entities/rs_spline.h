@@ -327,6 +327,17 @@ public:
    */
   bool tryEvaluateJet(double t, LC_CurveEvaluationSide side, LC_CurveJet &jet) const;
 
+  /**
+   * Conservative enclosures of the point and its first and second derivatives
+   * over the parameter box [a, b], which must lie inside one knot span (between
+   * consecutive break parameters). The span's homogeneous Bezier net over the
+   * box is formed exactly with outward-rounded arithmetic, so the result
+   * contains every value the curve takes there; it narrows as the box shrinks.
+   * @return false for a box outside the domain or across a knot, or invalid
+   *         weights or coordinates.
+   */
+  bool tryBoundJet(double a, double b, LC_CurveJetBounds &bounds) const;
+
   friend class RS_FilterDXFRW;
 protected:
     /** Nearest endpoint or control point */

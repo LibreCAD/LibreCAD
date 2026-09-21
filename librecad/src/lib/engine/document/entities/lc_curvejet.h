@@ -22,6 +22,7 @@
 #ifndef LC_CURVEJET_H
 #define LC_CURVEJET_H
 
+#include "lc_interval.h"
 #include "rs_vector.h"
 
 /**
@@ -49,6 +50,46 @@ struct LC_CurveJet {
     RS_Vector point{false};
     RS_Vector first{false};
     RS_Vector second{false};
+};
+
+/**
+ * Conservative enclosures of a curve's point and first two derivatives over a
+ * parameter box, component by component. Each interval contains every value the
+ * quantity takes on the box; it may be wider.
+ */
+struct LC_CurveJetBounds {
+    LC_Interval x;
+    LC_Interval y;
+    LC_Interval dx;
+    LC_Interval dy;
+    LC_Interval ddx;
+    LC_Interval ddy;
+
+    bool isValid() const {
+        return x.isValid() && y.isValid() && dx.isValid() && dy.isValid() && ddx.isValid() &&
+               ddy.isValid();
+    }
+
+    /** |C'|^2: excludes zero only where the tangent provably exists. */
+    LC_Interval speedSquared() const {
+        return sqr(dx) + sqr(dy);
+    }
+
+    /** C' x C'': signed, positive where the curve turns left. */
+    LC_Interval cross() const {
+        return dx * ddy - dy * ddx;
+    }
+
+    /**
+     * |C'|^3 - d (C' x C''), which has the sign of 1 - d * kappa wherever the
+     * speed is positive: kappa = (C' x C'') / |C'|^3 is the signed curvature and
+     * @p signedDistance is measured along the left normal. The offset
+     * C + d N is regular where the speed is positive and this excludes zero.
+     */
+    LC_Interval offsetFactorNumerator(const double signedDistance) const {
+        const LC_Interval s2 = speedSquared();
+        return s2 * sqrt(s2) - LC_Interval::point(signedDistance) * cross();
+    }
 };
 
 #endif

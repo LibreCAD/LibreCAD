@@ -771,6 +771,7 @@ HEADERS += \
     lib/selection/metaentity/entities/lc_matchdescriptor_point.h         \
     lib/selection/metaentity/entities/lc_matchdescriptor_splinepoints.h \
     lib/math/rs_math.h \
+    lib/math/lc_interval.h \
     lib/math/lc_quadratic.h \
     main/console_command_utils.h \
     main/console_dxf2png.h \

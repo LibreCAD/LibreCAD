@@ -1166,6 +1166,7 @@ set (SHARED_SOURCES
      librecad/src/lib/math/lc_linemath.h
      librecad/src/lib/math/lc_archparser.cpp
      librecad/src/lib/math/lc_archparser.h
+     librecad/src/lib/math/lc_interval.h
      librecad/src/lib/math/lc_quadratic.cpp
      librecad/src/lib/math/lc_quadratic.h
      librecad/src/lib/math/lc_quadraticutils.cpp
@@ -2476,6 +2477,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/entities/tests/rs_ellipse_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_spline_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_splinepoints_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_spline_d0_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_circletests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_arctests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_dimarrowtests.cpp
@@ -2496,6 +2498,7 @@ if (BUILD_TESTS)
         librecad/src/lib/math/tests/lc_archparser_tests.cpp
         librecad/src/lib/math/tests/rs_math_tests.cpp
         librecad/src/lib/math/tests/lc_quadratic_tests.cpp
+        librecad/src/lib/math/tests/lc_interval_tests.cpp
         librecad/src/lib/creation/tests/rs_creation_null_entity_tests.cpp
         librecad/src/actions/print_preview/tests/rs_actionprintpreview_tests.cpp
         librecad/src/lib/printing/tests/lc_printingtests.cpp
@@ -2503,6 +2506,7 @@ if (BUILD_TESTS)
         librecad/src/lib/modification/tests/rs_modification_trim_tests.cpp
         librecad/src/lib/modification/tests/rs_modification_offset_tests.cpp
         librecad/src/lib/filters/tests/dwg_buffer_round_trip_tests.cpp
+        librecad/src/lib/filters/tests/spline_offset_representation_tests.cpp
         librecad/src/lib/creation/tests/lc_action_draw_line_parallel_tests.cpp
         librecad/src/lib/creation/tests/lc_action_draw_fast_tests.cpp
         librecad/src/lib/creation/tests/lc_action_draw_polyline_tests.cpp

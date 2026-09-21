@@ -820,6 +820,82 @@ bool LC_SplinePoints::tryGetSegment(const size_t index, LC_SplinePointsSegment& 
     return true;
 }
 
+bool LC_SplinePoints::tryBoundJet(const double a, const double b, LC_CurveJetBounds& bounds) const {
+    bounds = LC_CurveJetBounds{};
+    const auto count = static_cast<double>(getSegmentCount());
+    if (!std::isfinite(a) || !std::isfinite(b) || !(a < b) || a < 0.0 || b > count) {
+        return false;
+    }
+    const double index = std::floor(a);
+    if (b > index + 1.0) {
+        return false; // the box crosses a join
+    }
+    LC_SplinePointsSegment segment;
+    if (!tryGetSegment(static_cast<size_t>(index), segment)) {
+        return false;
+    }
+    // the segment's own Bezier parameter; exact, since a and b lie in [index, index + 1]
+    const LC_Interval ua = LC_Interval::point(a - index);
+    const LC_Interval ub = LC_Interval::point(b - index);
+    const LC_Interval width = ub - ua;
+    const LC_Interval one = LC_Interval::point(1.0);
+    const LC_Interval two = LC_Interval::point(2.0);
+    auto px = [](const RS_Vector& v) { return LC_Interval::point(v.x); };
+    auto py = [](const RS_Vector& v) { return LC_Interval::point(v.y); };
+
+    LC_CurveJetBounds result;
+    switch (segment.kind) {
+        case LC_SplinePointsSegment::Kind::Point:
+            result = {px(segment.start), py(segment.start), LC_Interval::point(0.0), LC_Interval::point(0.0),
+                      LC_Interval::point(0.0), LC_Interval::point(0.0)};
+            break;
+        case LC_SplinePointsSegment::Kind::Line: {
+            auto at = [&](const LC_Interval& u, const LC_Interval& p0, const LC_Interval& p1) {
+                return (one - u) * p0 + u * p1;
+            };
+            const LC_Interval x0 = px(segment.start);
+            const LC_Interval x1 = px(segment.end);
+            const LC_Interval y0 = py(segment.start);
+            const LC_Interval y1 = py(segment.end);
+            result = {LC_Interval::hull(at(ua, x0, x1), at(ub, x0, x1)),
+                      LC_Interval::hull(at(ua, y0, y1), at(ub, y0, y1)), x1 - x0, y1 - y0,
+                      LC_Interval::point(0.0), LC_Interval::point(0.0)};
+            break;
+        }
+        case LC_SplinePointsSegment::Kind::Quadratic: {
+            // blossom f(u1, u2) of the quadratic; f(a,a), f(a,b), f(b,b) are the
+            // Bezier control points of the segment restricted to [a, b]
+            auto blossom = [&](const LC_Interval& u1, const LC_Interval& u2, const LC_Interval& p0,
+                               const LC_Interval& p1, const LC_Interval& p2) {
+                return (one - u1) * (one - u2) * p0 + ((one - u1) * u2 + u1 * (one - u2)) * p1 +
+                       u1 * u2 * p2;
+            };
+            LC_Interval qx[3];
+            LC_Interval qy[3];
+            const LC_Interval x0 = px(segment.start), x1 = px(segment.control), x2 = px(segment.end);
+            const LC_Interval y0 = py(segment.start), y1 = py(segment.control), y2 = py(segment.end);
+            qx[0] = blossom(ua, ua, x0, x1, x2);
+            qx[1] = blossom(ua, ub, x0, x1, x2);
+            qx[2] = blossom(ub, ub, x0, x1, x2);
+            qy[0] = blossom(ua, ua, y0, y1, y2);
+            qy[1] = blossom(ua, ub, y0, y1, y2);
+            qy[2] = blossom(ub, ub, y0, y1, y2);
+            result.x = LC_Interval::hull(LC_Interval::hull(qx[0], qx[1]), qx[2]);
+            result.y = LC_Interval::hull(LC_Interval::hull(qy[0], qy[1]), qy[2]);
+            result.dx = two * LC_Interval::hull(qx[1] - qx[0], qx[2] - qx[1]) / width;
+            result.dy = two * LC_Interval::hull(qy[1] - qy[0], qy[2] - qy[1]) / width;
+            result.ddx = two * (x2 - two * x1 + x0);
+            result.ddy = two * (y2 - two * y1 + y0);
+            break;
+        }
+    }
+    if (!result.isValid()) {
+        return false;
+    }
+    bounds = result;
+    return true;
+}
+
 bool LC_SplinePoints::tryEvaluateJet(double t, const LC_CurveEvaluationSide side, LC_CurveJet& jet) const {
     jet = LC_CurveJet{};
     const size_t count = getSegmentCount();

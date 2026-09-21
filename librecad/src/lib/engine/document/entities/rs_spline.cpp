@@ -172,6 +172,83 @@ bool dersBasisFunctions(const size_t s, const double t, const size_t p,
 bool isFinite(const RS_Vector &v) {
   return v.valid && std::isfinite(v.x) && std::isfinite(v.y) && std::isfinite(v.z);
 }
+
+/** A homogeneous point (w x, w y, w) as intervals. */
+struct HomogeneousBox {
+  LC_Interval x;
+  LC_Interval y;
+  LC_Interval w;
+};
+
+HomogeneousBox combine(const LC_Interval &alpha, const HomogeneousBox &a, const HomogeneousBox &b) {
+  const LC_Interval beta = LC_Interval::point(1.0) - alpha;
+  return {beta * a.x + alpha * b.x, beta * a.y + alpha * b.y, beta * a.w + alpha * b.w};
+}
+
+/**
+ * The blossom f(u[0], ..., u[p-1]) of the homogeneous B-spline segment on knot
+ * span s, by de Boor's algorithm with a different parameter at each level. With
+ * a repeated (p - m) times and b repeated m times it is Bezier control point m
+ * of the segment restricted to [a, b].
+ */
+HomogeneousBox blossom(const RS_SplineData &d, const size_t s, const double *u) {
+  const size_t p = d.degree;
+  const auto &U = d.knotslist;
+  HomogeneousBox pts[g_maxDegree + 1];
+  for (size_t j = 0; j <= p; ++j) {
+    const size_t i = s - p + j;
+    const LC_Interval w = LC_Interval::point(d.weights[i]);
+    pts[j] = {LC_Interval::point(d.controlPoints[i].x) * w,
+              LC_Interval::point(d.controlPoints[i].y) * w, w};
+  }
+  for (size_t r = 1; r <= p; ++r) {
+    for (size_t j = p; j >= r; --j) {
+      const LC_Interval lo = LC_Interval::point(U[s - p + j]);
+      const LC_Interval hi = LC_Interval::point(U[s + 1 + j - r]);
+      const LC_Interval alpha = (LC_Interval::point(u[r - 1]) - lo) / (hi - lo);
+      pts[j] = combine(alpha, pts[j - 1], pts[j]);
+    }
+  }
+  return pts[p];
+}
+
+/** The hull of values[0 .. count-1]. */
+LC_Interval hullOf(const LC_Interval *values, const size_t count) {
+  LC_Interval result = values[0];
+  for (size_t i = 1; i < count; ++i) {
+    result = LC_Interval::hull(result, values[i]);
+  }
+  return result;
+}
+
+/**
+ * Enclosures of a polynomial and its first two derivatives with respect to t
+ * over [a, b], from its Bezier coefficients there (convex hull property).
+ */
+void boundPolynomial(const LC_Interval *coef, const size_t p, const LC_Interval &width,
+                     LC_Interval &value, LC_Interval &first, LC_Interval &second) {
+  value = hullOf(coef, p + 1);
+  if (p < 1) {
+    first = LC_Interval::point(0.0);
+    second = LC_Interval::point(0.0);
+    return;
+  }
+  LC_Interval d1[g_maxDegree];
+  for (size_t m = 0; m < p; ++m) {
+    d1[m] = coef[m + 1] - coef[m];
+  }
+  first = LC_Interval::point(static_cast<double>(p)) * hullOf(d1, p) / width;
+  if (p < 2) {
+    second = LC_Interval::point(0.0);
+    return;
+  }
+  LC_Interval d2[g_maxDegree - 1];
+  for (size_t m = 0; m + 1 < p; ++m) {
+    d2[m] = d1[m + 1] - d1[m];
+  }
+  second = LC_Interval::point(static_cast<double>(p * (p - 1))) * hullOf(d2, p - 1) /
+           (width * width);
+}
 } // namespace
 
 /** Constructor for RS_SplineData */
@@ -1309,6 +1386,87 @@ std::vector<double> RS_Spline::getBreakParameters() const {
   }
   breaks.push_back(t1);
   return breaks;
+}
+
+bool RS_Spline::tryBoundJet(const double a, const double b, LC_CurveJetBounds &bounds) const {
+  bounds = LC_CurveJetBounds{};
+  double t0 = 0.0;
+  double t1 = 0.0;
+  if (!std::isfinite(a) || !std::isfinite(b) || !(a < b) || !getParameterDomain(t0, t1) ||
+      a < t0 || b > t1) {
+    return false;
+  }
+  const auto &U = m_data.knotslist;
+  const size_t p = m_data.degree;
+  const size_t ncp = m_data.controlPoints.size();
+  const auto domainBegin = U.begin() + static_cast<std::ptrdiff_t>(p);
+  const auto domainEnd = U.begin() + static_cast<std::ptrdiff_t>(ncp + 1);
+  const std::ptrdiff_t index = std::distance(U.begin(), std::upper_bound(domainBegin, domainEnd, a)) - 1;
+  if (index < static_cast<std::ptrdiff_t>(p) || index > static_cast<std::ptrdiff_t>(ncp) - 1) {
+    return false;
+  }
+  const auto span = static_cast<size_t>(index);
+  if (b > U[span + 1]) {
+    return false; // the box crosses a knot
+  }
+  bool equalWeights = true;
+  for (size_t i = span + 1 - p; i < span + p; ++i) {
+    if (!(U[i] <= U[i + 1]) || !std::isfinite(U[i]) || !std::isfinite(U[i + 1])) {
+      return false;
+    }
+  }
+  for (size_t i = span - p; i <= span; ++i) {
+    const double w = m_data.weights[i];
+    if (!std::isfinite(w) || !(w > 0.0) || !isFinite(m_data.controlPoints[i])) {
+      return false;
+    }
+    equalWeights = equalWeights && w == m_data.weights[span - p];
+  }
+
+  LC_Interval xs[g_maxDegree + 1];
+  LC_Interval ys[g_maxDegree + 1];
+  LC_Interval ws[g_maxDegree + 1];
+  for (size_t m = 0; m <= p; ++m) {
+    double u[g_maxDegree];
+    for (size_t k = 0; k < p; ++k) {
+      u[k] = (k < p - m) ? a : b;
+    }
+    const HomogeneousBox bezier = blossom(m_data, span, u);
+    xs[m] = bezier.x;
+    ys[m] = bezier.y;
+    ws[m] = bezier.w;
+  }
+
+  const LC_Interval width = LC_Interval::point(b) - LC_Interval::point(a);
+  LC_Interval ax, ax1, ax2, ay, ay1, ay2;
+  boundPolynomial(xs, p, width, ax, ax1, ax2);
+  boundPolynomial(ys, p, width, ay, ay1, ay2);
+
+  LC_CurveJetBounds result;
+  if (equalWeights) {
+    // a polynomial curve: C = A / w with constant w
+    const LC_Interval w = LC_Interval::point(m_data.weights[span - p]);
+    result = {ax / w, ay / w, ax1 / w, ay1 / w, ax2 / w, ay2 / w};
+  } else {
+    LC_Interval w, w1, w2;
+    boundPolynomial(ws, p, width, w, w1, w2);
+    if (!w.isPositive()) {
+      return false;
+    }
+    // C = A/W, C' = (A' - W'C)/W, C'' = (A'' - 2W'C' - W''C)/W
+    const LC_Interval two = LC_Interval::point(2.0);
+    result.x = ax / w;
+    result.y = ay / w;
+    result.dx = (ax1 - w1 * result.x) / w;
+    result.dy = (ay1 - w1 * result.y) / w;
+    result.ddx = (ax2 - two * w1 * result.dx - w2 * result.x) / w;
+    result.ddy = (ay2 - two * w1 * result.dy - w2 * result.y) / w;
+  }
+  if (!result.isValid()) {
+    return false;
+  }
+  bounds = result;
+  return true;
 }
 
 bool RS_Spline::tryEvaluateJet(double t, const LC_CurveEvaluationSide side, LC_CurveJet &jet) const {
