@@ -326,6 +326,63 @@ TEST_CASE("A cusp hidden at a join where the curvature jumps splits the offset t
     CHECK(offsetToSide(joined, LC_CurveOffsetSide::Left, between).branches.size() == 1);
 }
 
+TEST_CASE("The nearest point just before a closed curve's seam decides the side", "[curve-offset][direct][side]") {
+    // A thin closed strip, counter-clockwise, its seam on the top edge at
+    // (10, 0.05). The point is 0.01 above the top edge, just before the seam,
+    // and 0.06 above the bottom edge: the top edge, seen from outside, is nearer.
+    const LC_SplinePoints strip = fromControlPoints({{0, 0.05}, {0, 0}, {20, 0}, {20, 0.05}}, true);
+    const RS_Vector point{10.2, 0.06};
+    const LC_OffsetSideResolution side =
+        LC_CurveOffset::resolveSide(strip, point, LC_CurveOffset::makeDirectOptions(strip, 1.0));
+    REQUIRE(side.status == LC_CurveOffsetStatus::Ok);
+    CHECK(side.side == LC_CurveOffsetSide::Right);
+}
+
+TEST_CASE("A click outside a sharp turn at a closed curve's seam still has a side", "[curve-offset][direct][side]") {
+    // The seam sits in a turn of 135 degrees within 1e-4 of parameter. The
+    // nearest point lies just after the seam; refined from before it, the seam
+    // itself, no minimum, is as near to the tolerance but on the incoming tangent.
+    const LC_SplinePoints corner = fromControlPoints({{0, 0}, {10, 0}, {10, 10}, {0.001, 0.001}}, true);
+    const LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(corner, 1.0);
+    for (const RS_Vector& point : {RS_Vector{-0.5, -1.0}, RS_Vector{-1.0, -1.0}}) {
+        INFO("point " << point.x << ", " << point.y);
+        const LC_OffsetSideResolution side = LC_CurveOffset::resolveSide(corner, point, options);
+        REQUIRE(side.status == LC_CurveOffsetStatus::Ok);
+        CHECK(side.side == LC_CurveOffsetSide::Right); // outside of a counter-clockwise curve
+    }
+}
+
+TEST_CASE("The sample limit counts every branch of a cusped offset", "[curve-offset][direct][cusp]") {
+    const RS_Spline parabola = makeSpline(2, {{-2, 4}, {0, -4}, {2, 4}}, {0, 0, 0, 1, 1, 1});
+    const LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(parabola, 1.0);
+    const LC_CurveOffsetGeometryResult geometry = LC_CurveOffset::buildDirectBranches(
+        parabola, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 1.0), options,
+        LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(geometry.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(geometry.branches.size() == 3);
+    // the least sample limit that materializes a geometry
+    auto least = [&](const LC_CurveOffsetGeometryResult& g) {
+        std::size_t lo = g.exactSamples;
+        std::size_t hi = options.maxSamples;
+        while (lo < hi) {
+            LC_CurveOffsetOptions limited = options;
+            limited.maxSamples = lo + (hi - lo) / 2;
+            const bool ok = LC_CurveOffset::materializeBranches(parabola, g, limited,
+                                                                LC_CurveOffset::makeDirectSourceBudget())
+                                .status == LC_CurveOffsetStatus::Ok;
+            (ok ? hi : lo) = ok ? limited.maxSamples : limited.maxSamples + 1;
+        }
+        return lo;
+    };
+    std::size_t perBranch = 0;
+    for (const LC_OffsetBranch& branch : geometry.branches) {
+        LC_CurveOffsetGeometryResult one = geometry;
+        one.branches = {branch};
+        perBranch += least(one) - geometry.exactSamples;
+    }
+    CHECK(least(geometry) == geometry.exactSamples + perBranch);
+}
+
 TEST_CASE("A direction point on the curve has no side", "[curve-offset][direct][side]") {
     const RS_Spline s = sCurve();
     LC_CurveJet onCurve;

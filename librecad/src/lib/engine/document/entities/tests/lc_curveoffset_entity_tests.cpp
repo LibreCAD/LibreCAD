@@ -183,14 +183,46 @@ TEST_CASE("RS_Creation adds no failed copy of a spline", "[curve-offset][entity]
         CHECK(e->rtti() == RS2::EntitySpline);
     }
 
-    // a copy that fails ends the series: nothing unchanged is appended
+    // a copy that fails adds nothing: the old code appended an unmoved clone per copy
+    LC_SplinePoints single = fitSpline({{2.0, 3.0}}); // no tangent anywhere
     QList<RS_Entity*> failing;
-    const RS_Spline s = sCurve();
-    RS_Creation::createParallel(RS_Vector{6.0, 9.0}, 3.0, 4, const_cast<RS_Spline*>(&s), false, failing);
+    RS_Creation::createParallel(RS_Vector{5.0, 5.0}, 1.0, 4, &single, false, failing);
     Owned ownedFailing;
     ownedFailing.entities.assign(failing.begin(), failing.end());
-    for (const RS_Entity* e : ownedFailing.entities) {
-        CHECK(e != &s);
+    CHECK(ownedFailing.entities.empty());
+
+    // and ends the series: inside a parabola whose apex radius is 2.5, the copy
+    // at 1.25 exists, the one at 2.5 is singular, and the one at 3.75 is not made
+    LC_SplinePointsData arch(false, false);
+    arch.useControlPoints = true;
+    arch.controlPoints = {{0.0, 0.0}, {5.0, 10.0}, {10.0, 0.0}};
+    LC_SplinePoints parabola(nullptr, arch);
+    const RS_Vector inside{5.0, 2.0};
+    Owned first;
+    first.entities = parabola.createOffset(inside, 1.25);
+    REQUIRE_FALSE(first.entities.empty());
+    REQUIRE(parabola.createOffset(inside, 2.5).empty());
+    QList<RS_Entity*> series;
+    RS_Creation::createParallel(inside, 1.25, 3, &parabola, false, series);
+    Owned ownedSeries;
+    ownedSeries.entities.assign(series.begin(), series.end());
+    CHECK(ownedSeries.entities.size() == first.entities.size());
+}
+
+TEST_CASE("A straight spline with unequal weights still offsets", "[curve-offset][entity]") {
+    // Degree 1 with weights 1 and 2 is the segment (0,0)-(10,0) at a nonlinear
+    // parameter: not the exact straight branch, whose provenance is linear.
+    RS_SplineData data(1, false);
+    data.controlPoints = {{0, 0}, {10, 0}};
+    data.knotslist = {0, 0, 1, 1};
+    data.weights = {1.0, 2.0};
+    const RS_Spline source(nullptr, data);
+    Owned offset;
+    offset.entities = source.createOffset(RS_Vector{5.0, 3.0}, 0.5);
+    REQUIRE_FALSE(offset.entities.empty());
+    for (const RS_Entity* piece : offset.entities) {
+        CHECK(piece->getStartpoint().y == Approx(0.5).margin(1e-9));
+        CHECK(piece->getEndpoint().y == Approx(0.5).margin(1e-9));
     }
 }
 

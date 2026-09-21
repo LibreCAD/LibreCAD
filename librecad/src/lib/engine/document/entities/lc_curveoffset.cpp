@@ -101,11 +101,15 @@ public:
     }
 
     bool straightSegment(RS_Vector& start, RS_Vector& end) const override {
-        if (m_spline.getDegree() != 1 || m_spline.isClosed() || m_spline.getData().controlPoints.size() != 2) {
+        // equal weights: unequal ones keep the line but not its linear parameter,
+        // which the exact straight branch's provenance assumes
+        const RS_SplineData& data = m_spline.getData();
+        if (m_spline.getDegree() != 1 || m_spline.isClosed() || data.controlPoints.size() != 2 ||
+            data.weights.size() != 2 || data.weights[0] != data.weights[1]) {
             return false;
         }
-        start = m_spline.getData().controlPoints[0];
-        end = m_spline.getData().controlPoints[1];
+        start = data.controlPoints[0];
+        end = data.controlPoints[1];
         return true;
     }
 
@@ -302,17 +306,31 @@ LC_OffsetSideResolution resolveSideImpl(const OffsetSource& source, const RS_Vec
     const size_t n = ts.size();
     std::vector<NearestCandidate> candidates;
     for (size_t k = 0; k < n; ++k) {
-        // a closed curve's first and last samples are the same point: its neighbours wrap
+        // A closed curve's first and last samples are the same point, the seam:
+        // its neighbours wrap, and it is refined on both sides, after the seam
+        // from the first sample and before it from the last.
         const bool first = (k == 0);
         const bool last = (k + 1 == n);
         const double before = first ? (closed ? ds[n - 2] : RS_MAXDOUBLE) : ds[k - 1];
         const double after = last ? (closed ? ds[1] : RS_MAXDOUBLE) : ds[k + 1];
-        if (ds[k] > before || ds[k] > after || (closed && last)) {
+        if (ds[k] > before || ds[k] > after) {
             continue;
         }
         const double lo = first ? ts.front() : ts[k - 1];
         const double hi = last ? ts.back() : ts[k + 1];
         const double t = refineNearest(source, p, ts[k], lo, hi, tolerance.parameter);
+        // Refined from one side, a closed seam stops exactly at the seam when the
+        // minimum lies across it, which the other side's refinement finds; a seam
+        // point that is no minimum can carry the tangent of a sharp turn there.
+        if (closed && (first || last) && t == (first ? ts.front() : ts.back())) {
+            LC_CurveJet across;
+            if (source.jet(first ? ts.back() : ts.front(), LC_CurveEvaluationSide::Interior, across)) {
+                const double g = dot(across.point - p, across.first);
+                if (first ? g > 0.0 : g < 0.0) {
+                    continue;
+                }
+            }
+        }
         LC_CurveJet jet;
         if (source.jet(t, LC_CurveEvaluationSide::Interior, jet)) {
             candidates.push_back({t, jet.point.distanceTo(p)});
@@ -1316,6 +1334,11 @@ public:
           m_budget{budget},
           m_speedFloor{speedFloor},
           m_samples{samplesUsed} {
+    }
+
+    /** Exact evaluations so far, those it started from included. */
+    std::size_t samples() const {
+        return m_samples;
     }
 
     LC_CurveOffsetStatus run(const LC_OffsetBranch& branch, std::vector<std::unique_ptr<RS_Entity>>& entities,
@@ -2809,6 +2832,7 @@ LC_CurveOffsetMaterializationResult materializeBranches(const RS_Entity& source,
     std::vector<size_t> branchStarts;
     LC_OffsetOutputUsage usage;
     double maxError = 0.0;
+    std::size_t samples = geometry.exactSamples; // the limit is per source, over all branches
     for (const LC_OffsetBranch& branch : geometry.branches) {
         branchStarts.push_back(entities.size());
         LC_OffsetSourceBudget remaining = budget;
@@ -2820,7 +2844,7 @@ LC_CurveOffsetMaterializationResult materializeBranches(const RS_Entity& source,
             return result;
         }
         Materializer materializer{*adapter, geometry.signedDistance, options, remaining,
-                                  scale.numericFloor / domain, geometry.exactSamples};
+                                  scale.numericFloor / domain, samples};
         LC_OffsetOutputUsage branchUsage;
         double branchError = 0.0;
         const LC_CurveOffsetStatus status = materializer.run(branch, entities, branchUsage, branchError);
@@ -2828,6 +2852,7 @@ LC_CurveOffsetMaterializationResult materializeBranches(const RS_Entity& source,
             result.status = status;
             return result; // entities destroyed with this scope
         }
+        samples = materializer.samples();
         usage.cubicPieces += branchUsage.cubicPieces;
         usage.outputEntities += branchUsage.outputEntities;
         usage.deepEntities += branchUsage.deepEntities;
