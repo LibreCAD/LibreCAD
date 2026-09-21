@@ -578,6 +578,36 @@ TEST_CASE("RS_Spline::calculateTightBorders bounds the curve, not its control po
     CHECK(spline.getMax().y == Approx(peak).margin(1e-9));
 }
 
+TEST_CASE("RS_Spline::calculateTightBorders finds an extreme at a closed spline's seam", "[spline][jet]") {
+    // The seam is the highest point, y = 7/3, but y' there is a rounding error
+    // either side of zero rather than zero, so no end interval brackets it.
+    RS_SplineData data(3, true);
+    data.type = RS_SplineData::SplineType::WrappedClosed;
+    data.controlPoints = {{-4, 1}, {-4, 3}, {3, 1}, {4, -1}, {-5, -3}, {-2, 1}, {3, -3}, {-4, 1}, {-4, 3}, {3, 1}};
+    data.weights.assign(data.controlPoints.size(), 1.0);
+    for (int k = 0; k < 14; ++k) {
+        data.knotslist.push_back(0.1 * k);
+    }
+    RS_Spline spline(nullptr, data);
+    REQUIRE(spline.validate());
+    spline.calculateTightBorders();
+    CHECK(spline.getMax().y == Approx(7.0 / 3.0).margin(1e-9));
+}
+
+TEST_CASE("RS_Spline evaluates uniformly tiny weights as the same curve", "[spline][jet]") {
+    // Scaling every weight leaves a rational curve unchanged; a denominator below
+    // RS_TOLERANCE used to be skipped, shrinking the curve onto the origin.
+    RS_SplineData data(3, false);
+    data.controlPoints = g_bezier;
+    data.knotslist = {0, 0, 0, 0, 1, 1, 1, 1};
+    data.weights.assign(4, 1e-11);
+    const RS_Spline spline(nullptr, data);
+    LC_CurveJet jet;
+    REQUIRE(spline.tryEvaluateJet(0.5, LC_CurveEvaluationSide::Interior, jet));
+    CHECK(jet.point.distanceTo(RS_Vector{1.5, 0.0}) < 1e-12);
+    CHECK(spline.getEndpoint().distanceTo(RS_Vector{3.0, 0.0}) < 1e-12);
+}
+
 TEST_CASE("RS_Spline::getPointAt reports a failure as an invalid point", "[spline][jet]") {
     const RS_Spline spline = makeSpline(3, g_bezier, {0, 0, 0, 0, 1, 1, 1, 1});
     CHECK(compareVector(spline.getPointAt(0.25), bezierPoint(0.25), 1e-12));
@@ -678,8 +708,9 @@ TEST_CASE("RS_Spline::tryStroke bounds each chord by the second derivative", "[s
         CHECK(vertices[i].distanceTo(polygon.controlPoints[i]) < 1e-12);
     }
 
-    // a parabola arc, x = t, y = t^2 on [0, 2]: |C''| = 2 everywhere, so each chord
-    // of parameter length h strays h^2 / 4; its vertices lie on the curve
+    // a parabola arc, C(t) = (2t, 4t^2) on [0, 1], that is y = x^2: |C''| = 8
+    // everywhere, so a chord of parameter length h strays at most h^2 / 8 * 8 = h^2;
+    // its vertices lie on the curve
     RS_SplineData parabola(2, false);
     parabola.controlPoints = {{0, 0}, {1, 0}, {2, 4}};
     parabola.knotslist = {0, 0, 0, 1, 1, 1};
@@ -691,7 +722,7 @@ TEST_CASE("RS_Spline::tryStroke bounds each chord by the second derivative", "[s
     for (size_t i = 1; i < vertices.size(); ++i) {
         CHECK(std::abs(vertices[i].y - vertices[i].x * vertices[i].x) < 1e-12);
         const double h = (vertices[i].x - vertices[i - 1].x) / 2.0; // in parameter
-        CHECK(h * h / 4.0 * 2.0 <= tolerance);
+        CHECK(h * h <= tolerance);
     }
 
     // past the vertex limit, or with no usable tolerance: nothing

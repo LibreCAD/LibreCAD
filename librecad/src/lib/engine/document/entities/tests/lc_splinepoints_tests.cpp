@@ -197,14 +197,16 @@ TEST_CASE("LC_SplinePoints reports the distance to a two-point spline, not its r
 
 TEST_CASE("LC_SplinePoints offsets a two-point spline to the requested side",
           "[spline][LC_SplinePoints]") {
-    // The side test used to evaluate an unset control point for a line segment.
+    // The side test used to evaluate an unset control point, (0, 0), for a line
+    // segment: away from the origin that pointed the wrong way.
     LC_SplinePointsData data(false, false);
-    data.splinePoints = {{0.0, 0.0}, {10.0, 0.0}};
+    data.splinePoints = {{10.0, 10.0}, {20.0, 10.0}};
     LC_SplinePoints line(nullptr, data);
     REQUIRE(line.getSegmentCount() == 1);
-    REQUIRE(line.offset(RS_Vector{5.0, 5.0}, 2.0));
-    CHECK(line.getStartpoint().y == Approx(2.0));
-    CHECK(line.getEndpoint().y == Approx(2.0));
+    // the cursor below the line: the offset goes below it
+    REQUIRE(line.offset(RS_Vector{15.0, 7.0}, 2.0));
+    CHECK(line.getStartpoint().y == Approx(8.0));
+    CHECK(line.getEndpoint().y == Approx(8.0));
 }
 
 TEST_CASE("LC_SplinePoints keeps its control points when fit points cannot be solved",

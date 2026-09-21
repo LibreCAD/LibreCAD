@@ -1087,6 +1087,16 @@ std::vector<double> RS_Spline::findDerivativeZeros(const bool isX) const {
       f0 = f1;
     }
   }
+  // A closed spline's component can change sign across the seam itself, which
+  // neither end interval brackets unless it evaluates to exactly zero.
+  if (isClosed()) {
+    const double first = derivative(breaks.front(), LC_CurveEvaluationSide::Right);
+    const double last = derivative(breaks.back(), LC_CurveEvaluationSide::Left);
+    if (std::isfinite(first) && std::isfinite(last) && first != 0.0 && last != 0.0 &&
+        std::signbit(first) != std::signbit(last)) {
+      zeros.push_back(breaks.front());
+    }
+  }
 
   std::sort(zeros.begin(), zeros.end());
   zeros.erase(
@@ -1767,9 +1777,12 @@ bool RS_Spline::tryEvaluateJet(double t, const LC_CurveEvaluationSide side, LC_C
   }
 
   // C = A/W, C' = (A' - W'C)/W, C'' = (A'' - 2W'C' - W''C)/W
-  const RS_Vector point = a[0] / w[0];
-  const RS_Vector first = (a[1] - point * w[1]) / w[0];
-  const RS_Vector second = (a[2] - first * (2.0 * w[1]) - point * w[2]) / w[0];
+  // by the reciprocal: RS_Vector's operator/ leaves a vector undivided by
+  // anything below RS_TOLERANCE, and uniform tiny weights are a valid curve
+  const double inverse = 1.0 / w[0];
+  const RS_Vector point = a[0] * inverse;
+  const RS_Vector first = (a[1] - point * w[1]) * inverse;
+  const RS_Vector second = (a[2] - first * (2.0 * w[1]) - point * w[2]) * inverse;
   if (!isFinite(point) || !isFinite(first) || !isFinite(second)) {
     return false;
   }
