@@ -29286,6 +29286,7 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
                       "RS_FilterDXFRW::writeSpline: no R12 polyline within "
                       "tolerance and vertex limit");
       m_writeFailed = true;
+      m_dxfW->markWriteFailure(); // keep the target file as it was
       return;
     }
     DRW_Polyline pol;

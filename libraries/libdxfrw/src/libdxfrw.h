@@ -109,6 +109,11 @@ public:
     void setBinary(bool b) {binFile = b;}
 
     [[nodiscard]] bool write(DRW_Interface *interface_, DRW::Version ver, bool bin);
+    /**
+     * Fails the write() in progress, which then discards its output instead of
+     * replacing the target: for a caller that cannot write an entity.
+     */
+    void markWriteFailure() noexcept { m_writeError = true; }
     bool writeLineType(DRW_LType *ent);
     bool writeLayer(DRW_Layer *ent);
     bool writeDimstyle(DRW_Dimstyle *ent);

@@ -190,6 +190,7 @@ std::vector<RS_SplineData> roundTrip(const std::vector<RS_SplineData>& pieces, c
     }
     std::vector<RS_SplineData> result;
     if (!exported) {
+        std::filesystem::remove(path);
         return result;
     }
     RS_Graphic reloaded;
@@ -328,9 +329,7 @@ TEST_CASE("Single cubic pieces survive DXF and DWG unchanged", "[curve-offset][d
         DYNAMIC_SECTION("format " << format.file) {
             bool exported = false;
             const std::vector<RS_SplineData> reloaded = roundTrip(stored, format.type, format.file, exported);
-            if (!exported) {
-                SKIP("writing " << format.file << " is not supported in this build");
-            }
+            REQUIRE(exported); // every format here is written by this build
             REQUIRE(reloaded.size() == stored.size());
             for (size_t i = 0; i < stored.size(); ++i) {
                 const RS_SplineData& a = stored[i];
@@ -554,7 +553,7 @@ double polylineDeviation(const RS_Spline& spline, const std::vector<RS_Vector>& 
 
 /** Writes @p splines to R12 and reads back what became of each, in order. */
 std::vector<RS_Polyline*> r12RoundTrip(RS_Graphic& reloaded, const std::vector<RS_SplineData>& splines,
-                                       const char* name, bool& exported, const bool updateFirst = false) {
+                                       const char* name, bool& exported, const bool dropDisplay = false) {
     ensureSettings();
     const std::string path = tempPath(name);
     {
@@ -562,8 +561,9 @@ std::vector<RS_Polyline*> r12RoundTrip(RS_Graphic& reloaded, const std::vector<R
         for (const RS_SplineData& data : splines) {
             auto* spline = new RS_Spline(&graphic, data);
             graphic.addEntity(spline);
-            if (updateFirst) {
-                spline->update();
+            if (dropDisplay) {
+                spline->clear(); // the segments it is drawn with
+                REQUIRE(spline->count() == 0);
             }
         }
         RS_FilterDXFRW filter;
@@ -652,8 +652,8 @@ TEST_CASE("The offset engine's pieces come back from DXF and DWG as the curve it
             }
             if (!exported) {
                 std::filesystem::remove(path);
-                SKIP("writing " << format.file << " is not supported in this build");
             }
+            REQUIRE(exported); // every format here is written by this build
             RS_Graphic reloaded;
             {
                 RS_FilterDXFRW filter;
@@ -762,7 +762,7 @@ TEST_CASE("R12 follows a spline more closely than the segments it is drawn with"
     ensureSettings();
     RS_Graphic reloaded;
     bool exported = false;
-    const std::vector<RS_Polyline*> polylines = r12RoundTrip(reloaded, {wavy}, "wavy_r12.dxf", exported, true);
+    const std::vector<RS_Polyline*> polylines = r12RoundTrip(reloaded, {wavy}, "wavy_r12.dxf", exported);
     REQUIRE(exported);
     REQUIRE(polylines.size() == 1);
     const std::vector<RS_Vector> vertices = polylineVertices(*polylines.front());
@@ -771,11 +771,13 @@ TEST_CASE("R12 follows a spline more closely than the segments it is drawn with"
 }
 
 TEST_CASE("R12 writes a spline that was never drawn, with no stray vertex", "[curve-offset][d1][persistence][r12]") {
-    // No update(): the spline has no drawn segments to enumerate.
+    // Without its drawn segments, which the old writer enumerated, adding only
+    // the end point after them.
     ensureSettings();
     RS_Graphic reloaded;
     bool exported = false;
-    const std::vector<RS_Polyline*> polylines = r12RoundTrip(reloaded, {sCurveData()}, "undrawn_r12.dxf", exported);
+    const std::vector<RS_Polyline*> polylines =
+        r12RoundTrip(reloaded, {sCurveData()}, "undrawn_r12.dxf", exported, true);
     REQUIRE(exported);
     REQUIRE(polylines.size() == 1);
     const RS_Spline spline(nullptr, sCurveData());
@@ -853,17 +855,20 @@ TEST_CASE("A spline R12 cannot hold within its vertex limit fails the export, wr
     ensureSettings();
     const std::string path = tempPath("over_limit_r12.dxf");
     {
+        std::ofstream previous(path);
+        previous << "an earlier file";
+    }
+    {
         RS_Graphic graphic;
         graphic.addEntity(new RS_Spline(&graphic, zigzag));
         RS_FilterDXFRW filter;
         CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(path), RS2::FormatDXFRW12));
     }
-    if (std::filesystem::exists(path)) {
-        std::ifstream in(path);
-        const std::string text((std::istreambuf_iterator<char>(in)), std::istreambuf_iterator<char>());
-        CHECK(text.find("POLYLINE") == std::string::npos);
-        CHECK(text.find("VERTEX") == std::string::npos);
-    }
+    // the failed export leaves the file it would have replaced as it was
+    std::ifstream in(path);
+    const std::string text((std::istreambuf_iterator<char>(in)), std::istreambuf_iterator<char>());
+    CHECK(text == "an earlier file");
+    in.close();
     std::filesystem::remove(path);
 }
 
