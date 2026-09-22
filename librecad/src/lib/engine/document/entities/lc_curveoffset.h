@@ -186,6 +186,14 @@ struct LC_OffsetCubicPiece {
     std::array<RS_Vector, 4> bezier;
 };
 
+/** How an end of an open branch meets the rest of the offset. */
+enum class LC_OffsetBranchEnd {
+    /** A free end: the offset of an open source's end, or where trimming cut it. */
+    Free,
+    /** The offset turns back into the neighbouring branch, which shares the point. */
+    Cusp
+};
+
 struct LC_OffsetBranch {
     /**
      * In source parameter order, which for a closed source may wrap past its
@@ -196,6 +204,13 @@ struct LC_OffsetBranch {
     bool closed{false};
     /** The branch is exactly the straight segment from its start to its end. */
     bool straight{false};
+    /**
+     * The offset runs against its source here, where 1 - d * kappa < 0: every
+     * point of it is nearer to the source than the distance.
+     */
+    bool reversed{false};
+    LC_OffsetBranchEnd startEnd{LC_OffsetBranchEnd::Free};
+    LC_OffsetBranchEnd endEnd{LC_OffsetBranchEnd::Free};
 };
 
 struct LC_CurveOffsetGeometryResult {

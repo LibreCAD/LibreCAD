@@ -740,12 +740,18 @@ TEST_CASE("Inside its radius of curvature the offset is one branch; past it, it 
     // inside the vertex radius: regular
     CHECK(offsetToSide(parabola, LC_CurveOffsetSide::Left, 0.4).branches.size() == 1);
 
-    for (const double d : {0.5 + 1e-6, 0.51, 0.75, 1.0, 1.5}) {
+    for (const double d : {0.501, 0.51, 0.75, 1.0, 1.5}) {
         INFO("distance " << d);
         const LC_CurveOffsetGeometryResult result = offsetToSide(parabola, LC_CurveOffsetSide::Left, d);
         REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
         // before the first cusp, the swallowtail between them, after the second
         REQUIRE(result.branches.size() == 3);
+        CHECK_FALSE(result.branches[0].reversed);
+        CHECK(result.branches[1].reversed);
+        CHECK_FALSE(result.branches[2].reversed);
+        CHECK(result.branches[0].startEnd == LC_OffsetBranchEnd::Free);
+        CHECK(result.branches[0].endEnd == LC_OffsetBranchEnd::Cusp);
+        CHECK(result.branches[2].endEnd == LC_OffsetBranchEnd::Free);
         const LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(parabola, d);
         CHECK(maxDeviation(result, evaluator(parabola)) <= options.tolerance.requestedGeometry);
         const std::array<double, 2> cusps = parabolaCusps(d);
@@ -762,6 +768,23 @@ TEST_CASE("Inside its radius of curvature the offset is one branch; past it, it 
         for (const LC_OffsetBranch& branch : result.branches) {
             CHECK_FALSE(branch.closed);
         }
+    }
+}
+
+TEST_CASE("A swallowtail within twice the merge tolerance is collapsed before anything else", "[curve-offset][cusp]") {
+    // A hair past the vertex radius the cusps are resolved but the swallowtail
+    // between them spans less than twice the merge tolerance: the branches
+    // either side meet at its middle as one branch.
+    const RS_Spline parabola = unitParabola();
+    for (const double d : {0.5 + 1e-6, 0.5 + 1e-7}) {
+        INFO("distance " << d);
+        const LC_CurveOffsetGeometryResult result = offsetToSide(parabola, LC_CurveOffsetSide::Left, d);
+        REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+        REQUIRE(result.branches.size() == 1);
+        CHECK_FALSE(result.branches.front().reversed);
+        const LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(parabola, d);
+        CHECK(maxDeviation(result, evaluator(parabola), 2.0 * options.tolerance.nodeMerge) <=
+              options.tolerance.requestedGeometry);
     }
 }
 

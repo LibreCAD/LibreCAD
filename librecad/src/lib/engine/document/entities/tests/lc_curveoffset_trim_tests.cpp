@@ -28,6 +28,7 @@
 #include <array>
 #include <cmath>
 #include <functional>
+#include <iomanip>
 #include <vector>
 
 #include "lc_curveoffset.h"
@@ -92,19 +93,24 @@ struct Checked {
  * Two-way check of a Trimmed result against the source: every kept point lies
  * at least about d from the source, and every point of the exact offset whose
  * distance to the source is d (it is its own nearest) lies near a kept piece.
+ * Points nearer than @p visibleFrom (by default d less a ten-thousandth) count
+ * as hidden, or at a transition.
  */
 Checked check(const LC_CurveOffsetGeometryResult& trimmed, const Curve& source, const double t0, const double t1,
-              const double d) {
+              const double d, double visibleFrom = -1.0) {
+    if (visibleFrom < 0.0) {
+        visibleFrom = d * (1.0 - 1e-4);
+    }
     Checked result;
     std::vector<std::pair<RS_Vector, RS_Vector>> chords;
     for (const LC_OffsetBranch& branch : trimmed.branches) {
         for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
             RS_Vector previous = piece.bezier[0];
-            for (int k = 1; k <= 24; ++k) {
-                const RS_Vector p = bezierAt(piece.bezier, k / 24.0);
+            for (int k = 1; k <= 96; ++k) {
+                const RS_Vector p = bezierAt(piece.bezier, k / 96.0);
                 chords.emplace_back(previous, p);
                 previous = p;
-                if (k % 8 == 0) {
+                if (k % 32 == 0) {
                     result.nearestKept = std::min(result.nearestKept, distanceTo(source, t0, t1, p));
                 }
             }
@@ -118,7 +124,7 @@ Checked check(const LC_CurveOffsetGeometryResult& trimmed, const Curve& source, 
             continue;
         }
         const RS_Vector q = c.point + RS_Vector{-c.first.y, c.first.x} / c.first.magnitude() * trimmed.signedDistance;
-        if (distanceTo(source, t0, t1, q) < d * (1.0 - 1e-4)) {
+        if (distanceTo(source, t0, t1, q) < visibleFrom) {
             continue; // hidden, or at a transition
         }
         double nearest = RS_MAXDOUBLE;
@@ -142,6 +148,16 @@ RS_Spline unitParabola() {
     data.controlPoints = {{-2, 4}, {0, -4}, {2, 4}};
     data.knotslist = {0, 0, 0, 1, 1, 1};
     data.weights.assign(3, 1.0);
+    return RS_Spline(nullptr, data);
+}
+
+// A cubic with an inflection.
+RS_Spline sCurve(const RS_Vector& shift = RS_Vector{0.0, 0.0}) {
+    RS_SplineData data(3, false);
+    data.controlPoints = {shift + RS_Vector{0, 0}, shift + RS_Vector{4, 6}, shift + RS_Vector{8, -6},
+                          shift + RS_Vector{12, 0}};
+    data.knotslist = {0, 0, 0, 0, 1, 1, 1, 1};
+    data.weights.assign(4, 1.0);
     return RS_Spline(nullptr, data);
 }
 
@@ -298,4 +314,86 @@ TEST_CASE("An outer offset trims although the inner side stalls at the same dist
         CHECK(result.status == LC_CurveOffsetStatus::Ok);
         CHECK(result.branches.size() == 1);
     }
+}
+
+TEST_CASE("An offset with nothing to trim keeps its exact ends, anywhere in the plane", "[curve-offset][trim]") {
+    // The half circles ahead of an open curve's ends meet its offset only at
+    // the offset's own ends, tangentially; they cut nothing there.
+    for (const RS_Vector& shift : {RS_Vector{0.0, 0.0}, RS_Vector{1.0e3, -2.0e3}, RS_Vector{1.0e6, -2.0e6}}) {
+        INFO("shift " << shift.x << ", " << shift.y);
+        const RS_Spline source = sCurve(shift);
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+            const LC_CurveOffsetGeometryResult trimmed = trim(source, side, 0.5);
+            REQUIRE(trimmed.status == LC_CurveOffsetStatus::Ok);
+            REQUIRE(trimmed.branches.size() == 1);
+            CHECK(trimmed.removedIntervals == 0);
+            const LC_CurveOffsetGeometryResult direct = LC_CurveOffset::buildDirectBranches(
+                source, LC_CurveOffset::makeSideRequest(side, 0.5), LC_CurveOffset::makeDirectOptions(source, 0.5),
+                LC_CurveOffset::makeDirectSourceBudget());
+            REQUIRE(direct.status == LC_CurveOffsetStatus::Ok);
+            CHECK(trimmed.branches.front().cubicPieces.front().bezier[0] ==
+                  direct.branches.front().cubicPieces.front().bezier[0]);
+            CHECK(trimmed.branches.front().cubicPieces.back().bezier[3] ==
+                  direct.branches.front().cubicPieces.back().bezier[3]);
+        }
+    }
+}
+
+TEST_CASE("Near the radius of curvature the trimmed offset is one clean curve", "[curve-offset][trim]") {
+    // Around the vertex radius 0.5 the swallowtail shrinks to nothing: stalled,
+    // collapsed, or kept only where it crosses itself, and its wings, nearer
+    // than the distance by less than the tolerance can show, are removed.
+    for (const double angle : {0.0, M_PI / 6.0}) {
+        RS_Spline parabola = unitParabola();
+        parabola.rotate(RS_Vector{0.0, 0.0}, angle);
+        for (const double d : {0.5 * (1.0 - 1e-9), 0.5, 0.5 * (1.0 + 1e-9), 0.5 * (1.0 + 1e-7),
+                               0.5 * (1.0 + 1e-5), 0.5 * (1.0 + 1e-3), 0.51}) {
+            INFO("angle " << angle << " distance " << d);
+            const LC_CurveOffsetGeometryResult result = trim(parabola, LC_CurveOffsetSide::Left, d);
+            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+            CHECK(result.branches.size() == 1);
+            const double tolerance = LC_CurveOffset::makeDirectOptions(parabola, d).tolerance.requestedGeometry;
+            const Checked checked = check(result, curveOf(parabola), 0.0, 1.0, d);
+            CHECK(checked.nearestKept >= d - 2.0 * tolerance);
+            CHECK(checked.worstMissing <= 2.0 * tolerance);
+        }
+    }
+}
+
+TEST_CASE("A cusp near an open end does not take the offset before it along", "[curve-offset][trim]") {
+    // The left half of y = x^2 ends at its vertex, just past which the offset
+    // at 0.501 has a cusp: the reversed tail from it to the offset's end is
+    // hidden, and so is the stretch before the cusp back to where the offset
+    // enters the half circle ahead of the end. The rest stays.
+    RS_SplineData half(2, false);
+    half.controlPoints = {{-2, 4}, {-1, 0}, {0, 0}};
+    half.knotslist = {0, 0, 0, 1, 1, 1};
+    half.weights.assign(3, 1.0);
+    const RS_Spline source(nullptr, half);
+    for (const double d : {0.501, 0.5 * (1.0 + 1e-7), 0.51}) {
+        INFO("distance " << d);
+        const LC_CurveOffsetGeometryResult result = trim(source, LC_CurveOffsetSide::Left, d);
+        REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+        REQUIRE(result.branches.size() == 1);
+        const double tolerance = LC_CurveOffset::makeDirectOptions(source, d).tolerance.requestedGeometry;
+        // between the cut and the cusp the offset is hidden by less than the
+        // default band, some 3e-7: only points at the distance must be kept
+        const Checked checked = check(result, curveOf(source), 0.0, 1.0, d, d * (1.0 - 1e-9));
+        CHECK(checked.nearestKept >= d - 2.0 * tolerance);
+        CHECK(checked.worstMissing <= 2.0 * tolerance);
+    }
+}
+
+TEST_CASE("A closed curve shrunk past its largest radius of curvature leaves nothing", "[curve-offset][trim]") {
+    // Inside a circle-like closed curve, deeper than any radius of curvature:
+    // the offset runs against the curve everywhere, so all of it is hidden.
+    RS_Spline ring(nullptr, RS_SplineData(3, false));
+    for (int k = 0; k < 8; ++k) {
+        const double a = k * M_PI / 4.0;
+        ring.addControlPoint(RS_Vector{10.0 * std::cos(a), 10.0 * std::sin(a)});
+    }
+    ring.setClosed(true);
+    const LC_CurveOffsetGeometryResult result = trim(ring, LC_CurveOffsetSide::Left, 20.0);
+    REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+    CHECK(result.branches.empty());
 }
