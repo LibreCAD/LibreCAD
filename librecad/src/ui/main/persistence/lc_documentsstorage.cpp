@@ -213,8 +213,11 @@ bool LC_DocumentsStorage::doSave(RS_Graphic* graphic, const bool sameFile) {
     if (!actualName.isEmpty()) {
         graphic->prepareForSave();
         result = RS_FileIO::instance()->fileExport(*graphic, actualName, actualType);
-        const QFileInfo actualFileInfo(actualName);
-        graphic->markSaved(actualFileInfo.lastModified());
+        // a drawing that failed to save still has changes to lose
+        if (result) {
+            const QFileInfo actualFileInfo(actualName);
+            graphic->markSaved(actualFileInfo.lastModified());
+        }
     }
 
     /*	Remove AutoSave file after user has successfully saved file.*/
