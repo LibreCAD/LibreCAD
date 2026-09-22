@@ -86,6 +86,16 @@ struct RS_SplineData {
 
   /** Saved open knots for round-trip */
   std::vector<double> savedOpenKnots;
+
+  /**
+   * The closed (DXF group 70 bit 0) and periodic (bit 1) flags of a spline read
+   * from a file but kept with open ends, as AutoCAD writes closed splines with a
+   * clamped knot vector and the last control point on the first. The export
+   * writes them back while the ends meet; a WrappedClosed spline is always
+   * written closed and periodic.
+   */
+  bool m_closedFlag = false;
+  bool m_periodicFlag = false;
 };
 
 /**

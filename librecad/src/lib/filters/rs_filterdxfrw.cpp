@@ -83,6 +83,7 @@
 #include "lc_mleader.h"
 #include "lc_parabola.h"
 #include "lc_parabolaspline.h"
+#include "lc_splinehelper.h"
 #include "lc_splinepoints.h"
 #include "lc_tolerance.h"
 #include "lc_wipeout.h"
@@ -910,6 +911,144 @@ bool buildSplineDataFromDrw(const DRW_Spline *source, RS_SplineData &target) {
   }
 
   return true;
+}
+
+// Whether the curve a B-spline's control points, weights and knots draw over
+// [knots[degree], knots[count]] ends where it starts.
+bool splineCurveCloses(const RS_SplineData &data) {
+  const size_t degree = data.degree;
+  const size_t count = data.controlPoints.size();
+  if (degree < 1 || count < degree + 1 || data.weights.size() != count ||
+      data.knotslist.size() != count + degree + 1)
+    return false;
+  double scale = 1.0;
+  for (const RS_Vector &p : data.controlPoints)
+    scale = std::max({scale, std::abs(p.x), std::abs(p.y)});
+  const RS_Vector start = RS_Spline::evaluateNURBS(data, data.knotslist[degree]);
+  const RS_Vector end = RS_Spline::evaluateNURBS(data, data.knotslist[count]);
+  return start.valid && end.valid && start.distanceTo(end) <= 1e-9 * scale;
+}
+
+// Whether the knot spacing repeats with the period of the count - degree
+// distinct control points of a spline whose first degree control points are
+// repeated at the end, which makes its curve a periodic one.
+bool hasPeriodicKnots(const RS_SplineData &data, double tolerance) {
+  const std::vector<double> &knots = data.knotslist;
+  const size_t period = data.controlPoints.size() - data.degree;
+  for (size_t i = 0; i + period + 1 < knots.size(); ++i) {
+    const double spacing = knots[i + 1] - knots[i];
+    const double repeated = knots[i + period + 1] - knots[i + period];
+    if (std::abs(spacing - repeated) > tolerance)
+      return false;
+  }
+  return true;
+}
+
+// The RS_Spline of a SPLINE entity, or of a spline edge of a hatch boundary:
+// its control points with weights (weights[i] belongs to controllist[i]) and
+// knots, control points + degree + 1 of them, or none for a clamped uniform
+// knot vector.
+//
+// Whatever its closed (DXF group 70 bit 0) and periodic (bit 1) flags say, the
+// spline is the curve that data draws over [knots[degree], knots[count]], and
+// AutoCAD writes closed and periodic splines with a clamped knot vector and the
+// last control point on the first. So the data is kept exactly, in the spline
+// type that draws it:
+//  - a closed or periodic spline with its first degree control points repeated
+//    at the end and a periodic knot vector: WrappedClosed, which is that data;
+//  - clamped knots: ClampedOpen, with the file's flags kept for the export while
+//    the ends meet;
+//  - other unclamped knots: Standard;
+//  - anything else, such as knots clamped at one end only: clamped by knot
+//    insertion, which keeps the curve.
+// The exception is a closed or periodic spline whose curve does not close:
+// one LibreCAD wrote closed without the repeated control points. Up to 2.2.0
+// it wrote such a spline with clamped knots (uniform ones for a spline drawn
+// in LibreCAD), which it ignored when drawing a closed spline: it drew the
+// uniform periodic spline of the control points, so that is what the spline
+// is read as. Since 75c48f9ac (not in 2.2.1, which writes the control points
+// wrapped) it writes the first knots of the periodic knot vector, which are
+// kept. Either way the spline is wrapped, as before.
+//
+// Closing every flagged spline with setClosed() instead wrapped the clamped
+// control points of AutoCAD's closed splines into a periodic spline: another
+// curve, and mostly one validate() rejects, so that update() drew nothing.
+std::unique_ptr<RS_Spline> makeSplineFromDrw(RS_EntityContainer *parent,
+                                             const DRW_Spline &source,
+                                             const std::vector<double> &weights) {
+  using SplineType = RS_SplineData::SplineType;
+  const bool closedFlag = (source.flags & 0x1) != 0;
+  const bool periodicFlag = (source.flags & 0x2) != 0;
+
+  RS_SplineData data(source.degree, false);
+  const double knotTolerance = (source.tolknot > 0.0) ? source.tolknot : 1e-7;
+  for (const double k : source.knotslist)
+    data.knotslist.push_back(RS_Math::round(k, knotTolerance));
+  for (size_t i = 0; i < source.controllist.size(); ++i) {
+    if (const auto &control = source.controllist[i]) {
+      data.controlPoints.emplace_back(control->x, control->y);
+      data.weights.push_back(i < weights.size() ? weights[i] : 1.0);
+    }
+  }
+  const size_t count = data.controlPoints.size();
+  if (data.knotslist.empty() && count > data.degree)
+    data.knotslist = LC_SplineHelper::knot(count, data.degree + 1);
+  // whether the file's curve closes, from its knots before rounding: rounding
+  // moves the ends of a periodic curve apart
+  RS_SplineData unrounded = data;
+  if (!source.knotslist.empty())
+    unrounded.knotslist = source.knotslist;
+  const bool closes = splineCurveCloses(unrounded);
+
+  auto spline =
+      std::make_unique<RS_Spline>(parent, RS_SplineData(source.degree, false));
+  RS_SplineData &kept = spline->getData();
+  kept = data;
+  const bool wrapped = spline->hasWrappedControlPoints();
+  const auto keepAs = [&](SplineType type) {
+    kept = data;
+    kept.type = type;
+    return spline->validate();
+  };
+  const auto finish = [&]() {
+    if (!spline->isClosed() && closes) {
+      kept.m_closedFlag = closedFlag;
+      kept.m_periodicFlag = periodicFlag;
+    }
+    spline->calculateBorders();
+    spline->update();
+    return std::move(spline);
+  };
+
+  if ((closedFlag || periodicFlag) && closes && wrapped &&
+      count > 2 * data.degree && hasPeriodicKnots(data, 2 * knotTolerance) &&
+      keepAs(SplineType::WrappedClosed))
+    return finish();
+  if ((closedFlag || periodicFlag) && !closes) {
+    // a spline LibreCAD wrote closed; clamped knots give way to uniform ones
+    kept = data;
+    kept.type = SplineType::Standard;
+    if (count > data.degree &&
+        data.knotslist[data.degree] - data.knotslist.front() <= knotTolerance)
+      kept.knotslist =
+          LC_SplineHelper::generateOpenUniformKnotVector(count, data.degree + 1);
+    spline->setClosed(true);
+    if (spline->isClosed() && spline->validate())
+      return finish();
+  }
+  if (keepAs(SplineType::ClampedOpen))
+    return finish();
+  if (keepAs(SplineType::Standard))
+    return finish();
+  kept = data;
+  if (!LC_SplineHelper::clampPreservingShape(kept) || !spline->validate()) {
+    RS_DEBUG->print(RS_Debug::D_WARNING,
+                    "makeSplineFromDrw: no spline type accepts the data "
+                    "(degree %zu, %zu control points, %zu knots)",
+                    data.degree, count, data.knotslist.size());
+    kept = data;
+  }
+  return finish();
 }
 
 constexpr double kTableFallbackDimension = 1.0;
@@ -7435,23 +7574,6 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
     return;
   }
 
-  const bool isClosed = (data->flags & 0x1) == 0x1;
-
-  RS_SplineData d(data->degree, isClosed);
-  if (!data->knotslist.empty()) {
-    const double tolknot = (data->tolknot > 0.0) ? data->tolknot : 1e-7;
-    for (const double k : data->knotslist) {
-      d.knotslist.push_back(RS_Math::round(k, tolknot));
-    }
-  }
-
-  d.type = isClosed ? RS_SplineData::SplineType::Standard
-                    : RS_SplineData::SplineType::ClampedOpen;
-
-  const auto spline = new RS_Spline(m_currentContainer, d);
-  setEntityAttributes(spline, data);
-  m_currentContainer->addEntity(spline);
-
   // Control points and weights. Non-rational B-splines have no weight array
   // (weight=1.0 implied); only warn for rational splines (flag bit 2).
   size_t numCtrl = data->controllist.size();
@@ -7463,17 +7585,25 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
                     numCtrl, data->weightlist.size());
   }
 
-  for (size_t i = 0; i < numCtrl; ++i) {
-    const auto &vert = data->controllist[i];
-    const double weight =
-        (i < data->weightlist.size()) ? data->weightlist[i] : 1.0;
-    if (vert) {
-      spline->addControlPointRaw({vert->x, vert->y}, weight);
-    }
+  if (numCtrl != 0) {
+    std::unique_ptr<RS_Spline> spline =
+        makeSplineFromDrw(m_currentContainer, *data, data->weightlist);
+    setEntityAttributes(spline.get(), data);
+    m_currentContainer->addEntity(spline.release());
+    return;
   }
 
   // Fit points fallback
-  if (numCtrl == 0 && data->degree != 2) {
+  const bool isClosed = (data->flags & 0x1) == 0x1;
+  RS_SplineData d(data->degree, false);
+  d.type = isClosed ? RS_SplineData::SplineType::Standard
+                    : RS_SplineData::SplineType::ClampedOpen;
+
+  const auto spline = new RS_Spline(m_currentContainer, d);
+  setEntityAttributes(spline, data);
+  m_currentContainer->addEntity(spline);
+
+  if (data->degree != 2) {
     std::vector<RS_Vector> fitPoints;
     std::transform(data->fitlist.begin(), data->fitlist.end(),
                    std::back_inserter(fitPoints),
@@ -9471,39 +9601,42 @@ RS_FilterDXFRW::buildHatchSplineEdge(RS_EntityContainer *hatchLoop,
           sd.splinePoints.push_back(RS_Vector{cp->x, cp->y});
       }
     } else {
-      RS_SplineData td(s->degree, closed);
-      td.type = closed ? RS_SplineData::SplineType::Standard
-                       : RS_SplineData::SplineType::ClampedOpen;
-      const double tolknot = (s->tolknot > 0.0) ? s->tolknot : 1e-7;
-      for (double k : s->knotslist) {
-        td.knotslist.push_back(RS_Math::round(k, tolknot));
-      }
-
-      auto tmp = std::make_unique<RS_Spline>(nullptr, td);
       const bool isRational = (s->flags & 0x4) != 0;
+      std::vector<double> weights;
       for (size_t i = 0; i < s->controllist.size(); ++i) {
         const auto &cp = s->controllist[i];
-        if (!cp)
-          continue;
         // DXF stores rational weights in weightlist; DWG hatch-
         // boundary stream stores them on controllist[i]->z. Check
         // both. See plan §C.3.
         double w = 1.0;
-        if (isRational) {
+        if (isRational && cp) {
           if (i < s->weightlist.size())
             w = s->weightlist[i];
           else
             w = cp->z;
         }
-        tmp->addControlPointRaw({cp->x, cp->y}, w);
+        weights.push_back(w);
       }
-      if (closed)
-        tmp->setClosed(true);
-      tmp->update();
+      const std::unique_ptr<RS_Spline> tmp =
+          makeSplineFromDrw(nullptr, *s, weights);
 
       sd.useControlPoints = false;
-      sd.splinePoints.reserve(kHatchSplineSamples);
-      tmp->fillStrokePoints(kHatchSplineSamples - 1, sd.splinePoints);
+      if (s->controllist.size() >= size_t(s->degree) + 1) {
+        // sampled even when no spline type accepts the data, such as a knot
+        // vector longer than needed: the evaluation stays within its arrays
+        sd.splinePoints.reserve(kHatchSplineSamples);
+        tmp->fillStrokePoints(kHatchSplineSamples - 1, sd.splinePoints);
+      } else {
+        // with fewer than degree + 1 control points the evaluation would read
+        // outside its arrays: the edge passes through its control points
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "buildHatchSplineEdge: too few control points for "
+                        "the degree; passing through the control points");
+        for (const auto &cp : s->controllist) {
+          if (cp)
+            sd.splinePoints.push_back(RS_Vector{cp->x, cp->y});
+        }
+      }
     }
   }
 
@@ -9520,20 +9653,19 @@ RS_FilterDXFRW::buildHatchSplineEdge(RS_EntityContainer *hatchLoop,
   // flip the closed flag so LoopExtractor treats it as a single closed
   // loop instead of an open edge whose start==end. Closed LC_SplinePoints
   // expects a periodic point list without an explicit closing repeat —
-  // drop the duplicate tail when present.
-  if (!sd.closed) {
-    if (!sd.splinePoints.empty() &&
-        sd.splinePoints.front().distanceTo(sd.splinePoints.back()) <= 1e-8) {
-      sd.closed = true;
-      if (sd.splinePoints.size() > 2)
-        sd.splinePoints.pop_back();
-    } else if (!sd.controlPoints.empty() &&
-               sd.controlPoints.front().distanceTo(sd.controlPoints.back()) <=
-                   1e-8) {
-      sd.closed = true;
-      if (sd.controlPoints.size() > 2)
-        sd.controlPoints.pop_back();
-    }
+  // drop the duplicate tail when present, also from the points sampled from
+  // a flagged closed spline, whose curve AutoCAD ends where it starts.
+  if (!sd.splinePoints.empty() &&
+      sd.splinePoints.front().distanceTo(sd.splinePoints.back()) <= 1e-8) {
+    sd.closed = true;
+    if (sd.splinePoints.size() > 2)
+      sd.splinePoints.pop_back();
+  } else if (!sd.closed && !sd.controlPoints.empty() &&
+             sd.controlPoints.front().distanceTo(sd.controlPoints.back()) <=
+                 1e-8) {
+    sd.closed = true;
+    if (sd.controlPoints.size() > 2)
+      sd.controlPoints.pop_back();
   }
 
   return new LC_SplinePoints(hatchLoop, std::move(sd));
@@ -29248,7 +29380,11 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
       pol.addVertex(
           DRW_Vertex(e->getStartpoint().x, e->getStartpoint().y, 0.0, 0.0));
     }
-    if (s->isClosed()) {
+    // a spline read closed but kept with open ends is closed too, while its
+    // ends meet: the last line ends on the first vertex
+    const RS_SplineData &splineData = s->getData();
+    if (s->isClosed() ||
+        ((splineData.m_closedFlag || splineData.m_periodicFlag) && splineCurveCloses(splineData))) {
       pol.flags = 1;
     } else if (!lines.empty()) {
       // the end of the last line: RS_Spline has no end point of its own, and
@@ -29265,7 +29401,16 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
 
   // dxf spline group code=70
   // bit coded: 1: closed; 2: periodic; 4: rational; 8: planar; 16:linear
+  // A spline read closed or periodic but kept with open ends, as AutoCAD
+  // writes those with a clamped knot vector, gets its flags back while its
+  // ends still meet.
   sp.flags = (s->isClosed()) ? 0b1011 : 0b1000;
+  const RS_SplineData &splineData = s->getData();
+  if (!s->isClosed() && (splineData.m_closedFlag || splineData.m_periodicFlag) &&
+      splineCurveCloses(splineData)) {
+    sp.flags |= (splineData.m_closedFlag ? 0x1 : 0) |
+                (splineData.m_periodicFlag ? 0x2 : 0);
+  }
 
   // write spline control points:
   for (const RS_Vector &v : s->getUnwrappedControlPoints()) {
