@@ -130,8 +130,8 @@ public:
     RS_Insert* getInsert() const;
     RS_Entity* getBlockOrInsert() const;
     RS_Document* getDocument() const;
-    void setLayer(const QString& name);
-    void setLayer(RS_Layer* l);
+    virtual void setLayer(const QString& name);
+    virtual void setLayer(RS_Layer* l);
     void setLayerToActive();
     void setPenAndLayerToActive();
     RS_Layer* getLayer(bool resolve = true) const;
