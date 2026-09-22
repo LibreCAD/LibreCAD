@@ -868,8 +868,8 @@ typedef	CDataType* PCDataType;
 //
 class	JWWBlockList
 {
-	vector<PCDataBlock> FBlockList;
-	vector<PCDataList> FDataList;
+	vector<PCDataList> FBlockList;
+	vector<CData*> FDataList;	//each record has the type FDataType names
 	vector<CDataType> FDataType;
 public:
 	JWWBlockList();
@@ -877,7 +877,7 @@ public:
 	CDataList GetBlockList(unsigned int i) const;
 	int getBlockListCount() const;
     int GetDataListCount(unsigned int i) const;
-    void* GetData(unsigned int i, int j ) const;
+    CData* GetData(unsigned int i, int j ) const;
     CDataType GetDataType(unsigned int i, int j ) const;
 
 	CDataEnko GetCDataEnko(int i, int j );

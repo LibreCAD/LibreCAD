@@ -31,6 +31,7 @@
 #include <cstdio>
 #include <cassert>
 #include <cmath>
+#include <memory>
 
 #include "dl_creationinterface.h"
 
@@ -670,7 +671,8 @@ void DL_Jww::CreateBlock(DL_CreationInterface* /*creationInterface*/, CDataBlock
 bool DL_Jww::in(const string& file, DL_CreationInterface* creationInterface) {
 	//JWWファイル読み取り
 	string ofile("");
-	auto jwdoc = new JWWDocument((std::string&)file, ofile);
+	// the document closes the file when it goes, also when Read() fails
+	auto jwdoc = std::make_unique<JWWDocument>((std::string&)file, ofile);
 	if(!jwdoc->Read())
 		return false;
 	//DXF変数設定
@@ -697,7 +699,6 @@ bool DL_Jww::in(const string& file, DL_CreationInterface* creationInterface) {
 	//部品
     for(unsigned int i=0 ; i < jwdoc->vBlock.size(); i++)
 		CreateBlock(creationInterface, jwdoc->vBlock[i]);
-	delete jwdoc;
 
 	return true;
 }

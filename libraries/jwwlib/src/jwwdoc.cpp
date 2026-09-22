@@ -1569,32 +1569,13 @@ JWWBlockList::JWWBlockList() {
 }
 
 JWWBlockList::~JWWBlockList() {
-    int sz = FBlockList.size();
-    for (int i = 0; i < sz; i++) {
-        if (FBlockList[i]) {
-            delete FBlockList[i];
-        }
-    }
-    FBlockList.clear();
-
-    /*
-        //2010-02-09  不要な削除
-        sz = FDataList.size();
-        for(int i=0; i < sz; i++)
-        {
-            if(FDataList[i])
-                delete FDataList[i];
-        }
-        FDataList.clear();
-
-        FDataType.clear();
-    */
+    Init();
 }
 
 CDataList JWWBlockList::GetBlockList(unsigned int i) const {
     for (unsigned int k = 0; k < FBlockList.size(); k++) {
-        if (i == FBlockList[k]->m_n_Number) {
-            return *(PCDataList)FBlockList[k];
+        if (i == FBlockList[k]->m_nNumber) {
+            return *FBlockList[k];
         }
     }
     return {};
@@ -1650,7 +1631,7 @@ CDataType JWWBlockList::GetCDataType(int i, int j) {
     return GetDataType(i, j);
 }
 
-void* JWWBlockList::GetData(unsigned int i, int j) const {
+CData* JWWBlockList::GetData(unsigned int i, int j) const {
     int l = 0;
     for (unsigned int k = 0; k < FBlockList.size(); k++) {
         if (i == PCDataList(FBlockList[k])->m_nNumber) {
@@ -1658,7 +1639,7 @@ void* JWWBlockList::GetData(unsigned int i, int j) const {
         }
         l = l + PCDataList(FBlockList[k])->Count;
     }
-    return (void*)NULL;
+    return nullptr;
 }
 
 int JWWBlockList::GetDataListCount(unsigned int i) const {
@@ -1684,62 +1665,83 @@ CDataType JWWBlockList::GetDataType(unsigned int i, int j) const {
 void JWWBlockList::AddBlockList(CDataList& CData) {
     auto data = new CDataList;
     *data = CData;
-    FBlockList.push_back((PCDataBlock)data);
+    FBlockList.push_back(data);
 }
 
 void JWWBlockList::AddDataListEnko(CDataEnko& D) {
     auto data = new CDataEnko;
     *data = D;
     FDataType.push_back(Enko);
-    FDataList.push_back((PCDataList)data);
+    FDataList.push_back(data);
 }
 
 void JWWBlockList::AddDataListMoji(CDataMoji& D) {
     auto data = new CDataMoji;
     *data = D;
     FDataType.push_back(Moji);
-    FDataList.push_back((PCDataList)data);
+    FDataList.push_back(data);
 }
 
 void JWWBlockList::AddDataListSen(CDataSen& D) {
     auto data = new CDataSen;
     *data = D;
     FDataType.push_back(Sen);
-    FDataList.push_back((PCDataList)data);
+    FDataList.push_back(data);
 }
 
 void JWWBlockList::AddDataListSolid(CDataSolid& D) {
     auto data = new CDataSolid;
     *data = D;
     FDataType.push_back(Solid);
-    FDataList.push_back((PCDataList)data);
+    FDataList.push_back(data);
 }
 
 void JWWBlockList::AddDataListSunpou(CDataSunpou& D) {
     auto data = new CDataSunpou;
     *data = D;
     FDataType.push_back(Sunpou);
-    FDataList.push_back((PCDataList)data);
+    FDataList.push_back(data);
 }
 
 void JWWBlockList::AddDataListTen(CDataTen& D) {
     auto data = new CDataTen;
     *data = D;
     FDataType.push_back(Ten);
-    FDataList.push_back((PCDataList)data);
+    FDataList.push_back(data);
 }
 
 void JWWBlockList::Init() {
-    for (unsigned int i = 0; i < FBlockList.size(); i++) {
-        if (FBlockList[i]) {
-            delete FBlockList[i];
-        }
+    for (PCDataList block : FBlockList) {
+        delete block;
     }
     FBlockList.clear();
 
-    for (unsigned int i = 0; i < FDataList.size(); i++) {
-        if (FDataList[i]) {
-            delete FDataList[i];
+    // CData has no virtual destructor, so each record is deleted as the type
+    // it was created as, which FDataType holds
+    for (size_t i = 0; i < FDataList.size(); i++) {
+        CData* data = FDataList[i];
+        switch (FDataType[i]) {
+            case Sen:
+                delete static_cast<PCDataSen>(data);
+                break;
+            case Enko:
+                delete static_cast<PCDataEnko>(data);
+                break;
+            case Ten:
+                delete static_cast<PCDataTen>(data);
+                break;
+            case Moji:
+                delete static_cast<PCDataMoji>(data);
+                break;
+            case Solid:
+                delete static_cast<PCDataSolid>(data);
+                break;
+            case Sunpou:
+                delete static_cast<PCDataSunpou>(data);
+                break;
+            case Block:
+                delete static_cast<PCDataBlock>(data);
+                break;
         }
     }
     FDataList.clear();
@@ -1750,7 +1752,7 @@ void JWWBlockList::AddDataListBlock(CDataBlock& D) {
     auto data = new CDataBlock;
     *data = D;
     FDataType.push_back(Block);
-    FDataList.push_back((PCDataList)data);
+    FDataList.push_back(data);
 }
 
 CDataBlock JWWBlockList::GetCDataBlock(int i, int j) {
