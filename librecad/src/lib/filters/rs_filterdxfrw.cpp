@@ -68,6 +68,7 @@
 #include "dxf_format.h"
 #include "intern/dwgbufferw.h"
 #include "intern/dwgsafety.h"
+#include "lc_colornumbers.h"
 #include "lc_containertraverser.h"
 #include "lc_defaults.h"
 #include "lc_dimarc.h"
@@ -78,9 +79,11 @@
 #include "lc_extentitydata.h"
 #include "lc_hyperbola.h"
 #include "lc_hyperbolaspline.h"
+#include "lc_linetypenames.h"
 #include "lc_mleader.h"
 #include "lc_parabola.h"
 #include "lc_parabolaspline.h"
+#include "lc_splinehelper.h"
 #include "lc_splinepoints.h"
 #include "lc_tolerance.h"
 #include "lc_wipeout.h"
@@ -908,6 +911,144 @@ bool buildSplineDataFromDrw(const DRW_Spline *source, RS_SplineData &target) {
   }
 
   return true;
+}
+
+// Whether the curve a B-spline's control points, weights and knots draw over
+// [knots[degree], knots[count]] ends where it starts.
+bool splineCurveCloses(const RS_SplineData &data) {
+  const size_t degree = data.degree;
+  const size_t count = data.controlPoints.size();
+  if (degree < 1 || count < degree + 1 || data.weights.size() != count ||
+      data.knotslist.size() != count + degree + 1)
+    return false;
+  double scale = 1.0;
+  for (const RS_Vector &p : data.controlPoints)
+    scale = std::max({scale, std::abs(p.x), std::abs(p.y)});
+  const RS_Vector start = RS_Spline::evaluateNURBS(data, data.knotslist[degree]);
+  const RS_Vector end = RS_Spline::evaluateNURBS(data, data.knotslist[count]);
+  return start.valid && end.valid && start.distanceTo(end) <= 1e-9 * scale;
+}
+
+// Whether the knot spacing repeats with the period of the count - degree
+// distinct control points of a spline whose first degree control points are
+// repeated at the end, which makes its curve a periodic one.
+bool hasPeriodicKnots(const RS_SplineData &data, double tolerance) {
+  const std::vector<double> &knots = data.knotslist;
+  const size_t period = data.controlPoints.size() - data.degree;
+  for (size_t i = 0; i + period + 1 < knots.size(); ++i) {
+    const double spacing = knots[i + 1] - knots[i];
+    const double repeated = knots[i + period + 1] - knots[i + period];
+    if (std::abs(spacing - repeated) > tolerance)
+      return false;
+  }
+  return true;
+}
+
+// The RS_Spline of a SPLINE entity, or of a spline edge of a hatch boundary:
+// its control points with weights (weights[i] belongs to controllist[i]) and
+// knots, control points + degree + 1 of them, or none for a clamped uniform
+// knot vector.
+//
+// Whatever its closed (DXF group 70 bit 0) and periodic (bit 1) flags say, the
+// spline is the curve that data draws over [knots[degree], knots[count]], and
+// AutoCAD writes closed and periodic splines with a clamped knot vector and the
+// last control point on the first. So the data is kept exactly, in the spline
+// type that draws it:
+//  - a closed or periodic spline with its first degree control points repeated
+//    at the end and a periodic knot vector: WrappedClosed, which is that data;
+//  - clamped knots: ClampedOpen, with the file's flags kept for the export while
+//    the ends meet;
+//  - other unclamped knots: Standard;
+//  - anything else, such as knots clamped at one end only: clamped by knot
+//    insertion, which keeps the curve.
+// The exception is a closed or periodic spline whose curve does not close:
+// one LibreCAD wrote closed without the repeated control points. Up to 2.2.0
+// it wrote such a spline with clamped knots (uniform ones for a spline drawn
+// in LibreCAD), which it ignored when drawing a closed spline: it drew the
+// uniform periodic spline of the control points, so that is what the spline
+// is read as. Since 75c48f9ac (not in 2.2.1, which writes the control points
+// wrapped) it writes the first knots of the periodic knot vector, which are
+// kept. Either way the spline is wrapped, as before.
+//
+// Closing every flagged spline with setClosed() instead wrapped the clamped
+// control points of AutoCAD's closed splines into a periodic spline: another
+// curve, and mostly one validate() rejects, so that update() drew nothing.
+std::unique_ptr<RS_Spline> makeSplineFromDrw(RS_EntityContainer *parent,
+                                             const DRW_Spline &source,
+                                             const std::vector<double> &weights) {
+  using SplineType = RS_SplineData::SplineType;
+  const bool closedFlag = (source.flags & 0x1) != 0;
+  const bool periodicFlag = (source.flags & 0x2) != 0;
+
+  RS_SplineData data(source.degree, false);
+  const double knotTolerance = (source.tolknot > 0.0) ? source.tolknot : 1e-7;
+  for (const double k : source.knotslist)
+    data.knotslist.push_back(RS_Math::round(k, knotTolerance));
+  for (size_t i = 0; i < source.controllist.size(); ++i) {
+    if (const auto &control = source.controllist[i]) {
+      data.controlPoints.emplace_back(control->x, control->y);
+      data.weights.push_back(i < weights.size() ? weights[i] : 1.0);
+    }
+  }
+  const size_t count = data.controlPoints.size();
+  if (data.knotslist.empty() && count > data.degree)
+    data.knotslist = LC_SplineHelper::knot(count, data.degree + 1);
+  // whether the file's curve closes, from its knots before rounding: rounding
+  // moves the ends of a periodic curve apart
+  RS_SplineData unrounded = data;
+  if (!source.knotslist.empty())
+    unrounded.knotslist = source.knotslist;
+  const bool closes = splineCurveCloses(unrounded);
+
+  auto spline =
+      std::make_unique<RS_Spline>(parent, RS_SplineData(source.degree, false));
+  RS_SplineData &kept = spline->getData();
+  kept = data;
+  const bool wrapped = spline->hasWrappedControlPoints();
+  const auto keepAs = [&](SplineType type) {
+    kept = data;
+    kept.type = type;
+    return spline->validate();
+  };
+  const auto finish = [&]() {
+    if (!spline->isClosed() && closes) {
+      kept.m_closedFlag = closedFlag;
+      kept.m_periodicFlag = periodicFlag;
+    }
+    spline->calculateBorders();
+    spline->update();
+    return std::move(spline);
+  };
+
+  if ((closedFlag || periodicFlag) && closes && wrapped &&
+      count > 2 * data.degree && hasPeriodicKnots(data, 2 * knotTolerance) &&
+      keepAs(SplineType::WrappedClosed))
+    return finish();
+  if ((closedFlag || periodicFlag) && !closes) {
+    // a spline LibreCAD wrote closed; clamped knots give way to uniform ones
+    kept = data;
+    kept.type = SplineType::Standard;
+    if (count > data.degree &&
+        data.knotslist[data.degree] - data.knotslist.front() <= knotTolerance)
+      kept.knotslist =
+          LC_SplineHelper::generateOpenUniformKnotVector(count, data.degree + 1);
+    spline->setClosed(true);
+    if (spline->isClosed() && spline->validate())
+      return finish();
+  }
+  if (keepAs(SplineType::ClampedOpen))
+    return finish();
+  if (keepAs(SplineType::Standard))
+    return finish();
+  kept = data;
+  if (!LC_SplineHelper::clampPreservingShape(kept) || !spline->validate()) {
+    RS_DEBUG->print(RS_Debug::D_WARNING,
+                    "makeSplineFromDrw: no spline type accepts the data "
+                    "(degree %zu, %zu control points, %zu knots)",
+                    data.degree, count, data.knotslist.size());
+    kept = data;
+  }
+  return finish();
 }
 
 constexpr double kTableFallbackDimension = 1.0;
@@ -7433,23 +7574,6 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
     return;
   }
 
-  const bool isClosed = (data->flags & 0x1) == 0x1;
-
-  RS_SplineData d(data->degree, isClosed);
-  if (!data->knotslist.empty()) {
-    const double tolknot = (data->tolknot > 0.0) ? data->tolknot : 1e-7;
-    for (const double k : data->knotslist) {
-      d.knotslist.push_back(RS_Math::round(k, tolknot));
-    }
-  }
-
-  d.type = isClosed ? RS_SplineData::SplineType::Standard
-                    : RS_SplineData::SplineType::ClampedOpen;
-
-  const auto spline = new RS_Spline(m_currentContainer, d);
-  setEntityAttributes(spline, data);
-  m_currentContainer->addEntity(spline);
-
   // Control points and weights. Non-rational B-splines have no weight array
   // (weight=1.0 implied); only warn for rational splines (flag bit 2).
   size_t numCtrl = data->controllist.size();
@@ -7461,17 +7585,25 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
                     numCtrl, data->weightlist.size());
   }
 
-  for (size_t i = 0; i < numCtrl; ++i) {
-    const auto &vert = data->controllist[i];
-    const double weight =
-        (i < data->weightlist.size()) ? data->weightlist[i] : 1.0;
-    if (vert) {
-      spline->addControlPointRaw({vert->x, vert->y}, weight);
-    }
+  if (numCtrl != 0) {
+    std::unique_ptr<RS_Spline> spline =
+        makeSplineFromDrw(m_currentContainer, *data, data->weightlist);
+    setEntityAttributes(spline.get(), data);
+    m_currentContainer->addEntity(spline.release());
+    return;
   }
 
   // Fit points fallback
-  if (numCtrl == 0 && data->degree != 2) {
+  const bool isClosed = (data->flags & 0x1) == 0x1;
+  RS_SplineData d(data->degree, false);
+  d.type = isClosed ? RS_SplineData::SplineType::Standard
+                    : RS_SplineData::SplineType::ClampedOpen;
+
+  const auto spline = new RS_Spline(m_currentContainer, d);
+  setEntityAttributes(spline, data);
+  m_currentContainer->addEntity(spline);
+
+  if (data->degree != 2) {
     std::vector<RS_Vector> fitPoints;
     std::transform(data->fitlist.begin(), data->fitlist.end(),
                    std::back_inserter(fitPoints),
@@ -8485,7 +8617,7 @@ void RS_FilterDXFRW::addDimStyleOverrideToExtendedData(
     // $DIMTFILLCLR
     int colorRgb;
     int colorNumber =
-        colorToNumber(text->explicitBackgroundFillColor(), &colorRgb);
+        LC_ColorNumbers::colorToNumber(text->explicitBackgroundFillColor(), &colorRgb);
     group->add(70, colorNumber);
   }
   if (tolerance->checkModifyState(LC_DimStyle::LatteralTolerance::$DIMTOL)) {
@@ -8558,19 +8690,19 @@ void RS_FilterDXFRW::addDimStyleOverrideToExtendedData(
   if (dimensionLine->checkModifyState(LC_DimStyle::DimensionLine::$DIMCLRD)) {
     // $DIMCLRD
     int colorRgb;
-    int colorNumber = colorToNumber(dimensionLine->color(), &colorRgb);
+    int colorNumber = LC_ColorNumbers::colorToNumber(dimensionLine->color(), &colorRgb);
     group->add(176, colorNumber);
   }
   if (extensionLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMCLRE)) {
     // $DIMCLRE
     int colorRgb;
-    int color = colorToNumber(extensionLine->color(), &colorRgb);
+    int color = LC_ColorNumbers::colorToNumber(extensionLine->color(), &colorRgb);
     group->add(177, color);
   }
   if (text->checkModifyState(LC_DimStyle::Text::$DIMCLRT)) {
     // $DIMCLRT
     int colorRgb;
-    int colorNumber = colorToNumber(text->color(), &colorRgb);
+    int colorNumber = LC_ColorNumbers::colorToNumber(text->color(), &colorRgb);
     group->add(178, colorNumber);
   }
   if (angularFormat->checkModifyState(LC_DimStyle::AngularFormat::$DIMADEC)) {
@@ -8896,7 +9028,7 @@ RS_FilterDXFRW::parseDimStyleOverride(
       break;
     case 70: {
       //"$DIMTFILLCLR"
-      RS_Color fillClr = numberToColor(var->getInt());
+      RS_Color fillClr = LC_ColorNumbers::numberToColor(var->getInt());
       text->setExplicitBackgroundFillColor(fillClr);
       break;
     }
@@ -8949,19 +9081,19 @@ RS_FilterDXFRW::parseDimStyleOverride(
       break;
     case 176: {
       //"$DIMCLRD"
-      RS_Color color = numberToColor(var->getInt());
+      RS_Color color = LC_ColorNumbers::numberToColor(var->getInt());
       dimensionLine->setColor(color);
       break;
     }
     case 177: {
       //"$DIMCLRE"
-      RS_Color color = numberToColor(var->getInt());
+      RS_Color color = LC_ColorNumbers::numberToColor(var->getInt());
       extensionLine->setColor(color);
       break;
     }
     case 178: {
       //"$DIMCLRT"
-      RS_Color color = numberToColor(var->getInt());
+      RS_Color color = LC_ColorNumbers::numberToColor(var->getInt());
       text->setColor(color);
       break;
     }
@@ -9469,39 +9601,42 @@ RS_FilterDXFRW::buildHatchSplineEdge(RS_EntityContainer *hatchLoop,
           sd.splinePoints.push_back(RS_Vector{cp->x, cp->y});
       }
     } else {
-      RS_SplineData td(s->degree, closed);
-      td.type = closed ? RS_SplineData::SplineType::Standard
-                       : RS_SplineData::SplineType::ClampedOpen;
-      const double tolknot = (s->tolknot > 0.0) ? s->tolknot : 1e-7;
-      for (double k : s->knotslist) {
-        td.knotslist.push_back(RS_Math::round(k, tolknot));
-      }
-
-      auto tmp = std::make_unique<RS_Spline>(nullptr, td);
       const bool isRational = (s->flags & 0x4) != 0;
+      std::vector<double> weights;
       for (size_t i = 0; i < s->controllist.size(); ++i) {
         const auto &cp = s->controllist[i];
-        if (!cp)
-          continue;
         // DXF stores rational weights in weightlist; DWG hatch-
         // boundary stream stores them on controllist[i]->z. Check
         // both. See plan §C.3.
         double w = 1.0;
-        if (isRational) {
+        if (isRational && cp) {
           if (i < s->weightlist.size())
             w = s->weightlist[i];
           else
             w = cp->z;
         }
-        tmp->addControlPointRaw({cp->x, cp->y}, w);
+        weights.push_back(w);
       }
-      if (closed)
-        tmp->setClosed(true);
-      tmp->update();
+      const std::unique_ptr<RS_Spline> tmp =
+          makeSplineFromDrw(nullptr, *s, weights);
 
       sd.useControlPoints = false;
-      sd.splinePoints.reserve(kHatchSplineSamples);
-      tmp->fillStrokePoints(kHatchSplineSamples - 1, sd.splinePoints);
+      if (s->controllist.size() >= size_t(s->degree) + 1) {
+        // sampled even when no spline type accepts the data, such as a knot
+        // vector longer than needed: the evaluation stays within its arrays
+        sd.splinePoints.reserve(kHatchSplineSamples);
+        tmp->fillStrokePoints(kHatchSplineSamples - 1, sd.splinePoints);
+      } else {
+        // with fewer than degree + 1 control points the evaluation would read
+        // outside its arrays: the edge passes through its control points
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "buildHatchSplineEdge: too few control points for "
+                        "the degree; passing through the control points");
+        for (const auto &cp : s->controllist) {
+          if (cp)
+            sd.splinePoints.push_back(RS_Vector{cp->x, cp->y});
+        }
+      }
     }
   }
 
@@ -9518,20 +9653,19 @@ RS_FilterDXFRW::buildHatchSplineEdge(RS_EntityContainer *hatchLoop,
   // flip the closed flag so LoopExtractor treats it as a single closed
   // loop instead of an open edge whose start==end. Closed LC_SplinePoints
   // expects a periodic point list without an explicit closing repeat —
-  // drop the duplicate tail when present.
-  if (!sd.closed) {
-    if (!sd.splinePoints.empty() &&
-        sd.splinePoints.front().distanceTo(sd.splinePoints.back()) <= 1e-8) {
-      sd.closed = true;
-      if (sd.splinePoints.size() > 2)
-        sd.splinePoints.pop_back();
-    } else if (!sd.controlPoints.empty() &&
-               sd.controlPoints.front().distanceTo(sd.controlPoints.back()) <=
-                   1e-8) {
-      sd.closed = true;
-      if (sd.controlPoints.size() > 2)
-        sd.controlPoints.pop_back();
-    }
+  // drop the duplicate tail when present, also from the points sampled from
+  // a flagged closed spline, whose curve AutoCAD ends where it starts.
+  if (!sd.splinePoints.empty() &&
+      sd.splinePoints.front().distanceTo(sd.splinePoints.back()) <= 1e-8) {
+    sd.closed = true;
+    if (sd.splinePoints.size() > 2)
+      sd.splinePoints.pop_back();
+  } else if (!sd.closed && !sd.controlPoints.empty() &&
+             sd.controlPoints.front().distanceTo(sd.controlPoints.back()) <=
+                 1e-8) {
+    sd.closed = true;
+    if (sd.controlPoints.size() > 2)
+      sd.controlPoints.pop_back();
   }
 
   return new LC_SplinePoints(hatchLoop, std::move(sd));
@@ -18330,7 +18464,15 @@ void RS_FilterDXFRW::writeLType(const UTF8STRING &lTypeName,
   if (const auto *source =
           m_graphic->dwgAdvancedMetadata().findLineTypeTableEntryByName(
               lTypeName)) {
-    ltype = *source;
+    if (source->path.empty() && source->segments.empty() && !ltPath.empty()) {
+      // A record that only names a built-in keeps its identity, not an empty
+      // pattern: copy the table entry part and leave the dashes to the literal.
+      static_cast<DRW_TableEntry &>(ltype) = *source;
+      if (!source->desc.empty())
+        ltype.desc = source->desc;
+    } else {
+      ltype = *source;
+    }
   }
   m_builtinLTypeNames.insert(normalizeDwgTableName(lTypeName));
   (void)writeLTypeRecord(ltype);
@@ -18454,10 +18596,11 @@ void RS_FilterDXFRW::writeLayers() {
     RS_Layer *l = ll->at(i);
     RS_Pen pen = l->getPen();
     lay.name = l->getName().toUtf8().data();
-    lay.color = colorToNumber(pen.getColor(), &exact_rgb);
+    lay.color = LC_ColorNumbers::colorToNumber(pen.getColor(), &exact_rgb);
     lay.color24 = exact_rgb;
     lay.lWeight = widthToNumber(pen.getWidth());
-    lay.lineType = lineTypeToName(pen.getLineType()).toStdString();
+    lay.lineType =
+        LC_LineTypeNames::lineTypeToName(pen.getLineType()).toStdString();
     lay.flags = l->isFrozen() ? 0x01 : 0x00;
     if (l->isLocked()) {
       lay.flags |= 0x04;
@@ -19524,7 +19667,7 @@ void RS_FilterDXFRW::prepareDRWDimStyleExtLine(DRW_Dimstyle &d,
   if (extLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMCLRE)) {
     auto lineColor = extLine->color();
     int colRGB;
-    int colNum = colorToNumber(lineColor, &colRGB);
+    int colNum = LC_ColorNumbers::colorToNumber(lineColor, &colRGB);
     d.add("$DIMCLRE", 177, colNum);
   }
   if (extLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMSE1)) {
@@ -19573,7 +19716,7 @@ void RS_FilterDXFRW::prepareDRWDimStyleDimLine(DRW_Dimstyle &d,
   if (dimLine->checkModifyState(LC_DimStyle::DimensionLine::$DIMCLRD)) {
     auto lineColor = dimLine->color();
     int colRGB;
-    int colNum = colorToNumber(lineColor, &colRGB);
+    int colNum = LC_ColorNumbers::colorToNumber(lineColor, &colRGB);
     d.add("$DIMCLRD", 176, colNum);
   }
   if (dimLine->checkModifyState(LC_DimStyle::DimensionLine::$DIMSD1)) {
@@ -19601,7 +19744,9 @@ RS_FilterDXFRW::findLineTypeHandleToWrite(const QString &name) const {
   if (m_dxfW == nullptr) {
     return DRW::NoHandle;
   }
-  std::string lineName = name.toUpper().toStdString();
+  // lineTypesMap is keyed by a byte-wise fold of the UTF-8 name, which a Qt
+  // case mapping does not reproduce for a name holding lower-case non-ASCII.
+  std::string lineName = normalizeDwgTableName(name.toStdString());
   for (auto p : m_dxfW->getWritingContext()->lineTypesMap) {
     if (p.first.compare(lineName) == 0) {
       return p.second;
@@ -19646,7 +19791,7 @@ void RS_FilterDXFRW::prepareDRWDimStyleText(DRW_Dimstyle &d,
   if (text->checkModifyState(LC_DimStyle::Text::$DIMCLRT)) {
     auto lineColor = text->color();
     int colRGB;
-    int colNum = colorToNumber(lineColor, &colRGB);
+    int colNum = LC_ColorNumbers::colorToNumber(lineColor, &colRGB);
     d.add("$DIMCLRT", 178, colNum);
   }
   if (text->checkModifyState(LC_DimStyle::Text::$DIMTAD)) {
@@ -19661,7 +19806,7 @@ void RS_FilterDXFRW::prepareDRWDimStyleText(DRW_Dimstyle &d,
   if (text->checkModifyState(LC_DimStyle::Text::$DIMTFILLCLR)) {
     auto lineColor = text->explicitBackgroundFillColor();
     int colRGB;
-    int colNum = colorToNumber(lineColor, &colRGB);
+    int colNum = LC_ColorNumbers::colorToNumber(lineColor, &colRGB);
     d.add("$DIMTFILLCLR", 70, colNum);
   }
   if (dimStyleTargetVersion() >= DRW::AC1024 &&
@@ -29229,16 +29374,23 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
   // version 12 do not support Spline write as polyline
   if (m_version == 1009) {
     DRW_Polyline pol;
-    for (RS_Entity *e :
-         lc::LC_ContainerTraverser{*s, RS2::ResolveNone}.entities()) {
+    const auto lines =
+        lc::LC_ContainerTraverser{*s, RS2::ResolveNone}.entities();
+    for (RS_Entity *e : lines) {
       pol.addVertex(
           DRW_Vertex(e->getStartpoint().x, e->getStartpoint().y, 0.0, 0.0));
     }
-    if (s->isClosed()) {
+    // a spline read closed but kept with open ends is closed too, while its
+    // ends meet: the last line ends on the first vertex
+    const RS_SplineData &splineData = s->getData();
+    if (s->isClosed() ||
+        ((splineData.m_closedFlag || splineData.m_periodicFlag) && splineCurveCloses(splineData))) {
       pol.flags = 1;
-    } else {
-      pol.addVertex(
-          DRW_Vertex(s->getEndpoint().x, s->getEndpoint().y, 0.0, 0.0));
+    } else if (!lines.empty()) {
+      // the end of the last line: RS_Spline has no end point of its own, and
+      // its invalid one added a vertex at the origin
+      const RS_Vector end = lines.back()->getEndpoint();
+      pol.addVertex(DRW_Vertex(end.x, end.y, 0.0, 0.0));
     }
     getEntityAttributes(&pol, s);
     noteDxfWrite(m_dxfW->writePolyline(&pol));
@@ -29249,7 +29401,16 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
 
   // dxf spline group code=70
   // bit coded: 1: closed; 2: periodic; 4: rational; 8: planar; 16:linear
+  // A spline read closed or periodic but kept with open ends, as AutoCAD
+  // writes those with a clamped knot vector, gets its flags back while its
+  // ends still meet.
   sp.flags = (s->isClosed()) ? 0b1011 : 0b1000;
+  const RS_SplineData &splineData = s->getData();
+  if (!s->isClosed() && (splineData.m_closedFlag || splineData.m_periodicFlag) &&
+      splineCurveCloses(splineData)) {
+    sp.flags |= (splineData.m_closedFlag ? 0x1 : 0) |
+                (splineData.m_periodicFlag ? 0x2 : 0);
+  }
 
   // write spline control points:
   for (const RS_Vector &v : s->getUnwrappedControlPoints()) {
@@ -30362,8 +30523,19 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch *h) {
       auto loop = static_cast<RS_EntityContainer *>(l);
       std::shared_ptr<DRW_HatchLoop> lData = std::make_shared<DRW_HatchLoop>(0);
 
+      // a container other than a spline, such as a polyline, is written as its edges
+      std::vector<RS_Entity *> edges;
       for (RS_Entity *ed :
            lc::LC_ContainerTraverser{*loop, RS2::ResolveNone}.entities()) {
+        if (ed->isContainer() && ed->rtti() != RS2::EntitySpline) {
+          const auto parts = lc::LC_ContainerTraverser{
+              *static_cast<RS_EntityContainer *>(ed), RS2::ResolveAll}.entities();
+          edges.insert(edges.end(), parts.begin(), parts.end());
+        } else {
+          edges.push_back(ed);
+        }
+      }
+      for (RS_Entity *ed : edges) {
         // Write hatch loop edges:
         if (ed->rtti() == RS2::EntityLine) {
           auto *ln = static_cast<RS_Line *>(ed);
@@ -31178,7 +31350,7 @@ void RS_FilterDXFRW::setEntityAttributes(RS_Entity *entity,
     col = RS_Color(attrib->color24 >> 16, attrib->color24 >> 8 & 0xFF,
                    attrib->color24 & 0xFF);
   } else {
-    col = numberToColor(attrib->color);
+    col = LC_ColorNumbers::numberToColor(attrib->color);
   }
   if (!attrib->colorName.empty()) {
     col.setColorName(QString::fromUtf8(attrib->colorName.c_str()));
@@ -31186,7 +31358,8 @@ void RS_FilterDXFRW::setEntityAttributes(RS_Entity *entity,
   pen.setColor(col);
 
   // Linetype:
-  pen.setLineType(nameToLineType(QString::fromUtf8(attrib->lineType.c_str())));
+  pen.setLineType(LC_LineTypeNames::nameToLineType(
+      QString::fromUtf8(attrib->lineType.c_str())));
 
   // Width:
   pen.setWidth(numberToWidth(attrib->lWeight));
@@ -31349,12 +31522,12 @@ void RS_FilterDXFRW::getEntityAttributes(DRW_Entity *ent,
 
   // Color:
   int exact_rgb;
-  int color = colorToNumber(pen.getColor(), &exact_rgb);
+  int color = LC_ColorNumbers::colorToNumber(pen.getColor(), &exact_rgb);
   // printf("Color is: %s -> %d\n", pen.getColor().name().toLatin1().data(),
   // color);
 
   // Linetype:
-  QString lineType = lineTypeToName(pen.getLineType());
+  QString lineType = LC_LineTypeNames::lineTypeToName(pen.getLineType());
 
   // Width:
   DRW_LW_Conv::lineWidth width = widthToNumber(pen.getWidth());
@@ -31480,98 +31653,16 @@ RS_Pen RS_FilterDXFRW::attributesToPen(const DRW_Layer *att) const {
     col = RS_Color(att->color24 >> 16, att->color24 >> 8 & 0xFF,
                    att->color24 & 0xFF);
   } else {
-    col = numberToColor(att->color);
+    col = LC_ColorNumbers::numberToColor(att->color);
   }
   if (!att->colorName.empty()) {
     col.setColorName(QString::fromUtf8(att->colorName.c_str()));
   }
 
   RS_Pen pen(col, numberToWidth(att->lWeight),
-             nameToLineType(QString::fromUtf8(att->lineType.c_str())));
+             LC_LineTypeNames::nameToLineType(
+                 QString::fromUtf8(att->lineType.c_str())));
   return pen;
-}
-
-/**
- * Converts a color index (num) into a RS_Color object.
- * Please refer to the dxflib documentation for details.
- *
- * @param num Color number.
- */
-RS_Color RS_FilterDXFRW::numberToColor(int num) {
-  if (num == 0) {
-    return RS_Color(RS2::FlagByBlock);
-  } else if (num == 256) {
-    return RS_Color(RS2::FlagByLayer);
-  } else if (num <= 255 && num >= 0) {
-    return RS_Color(DRW::dxfColors[num][0], DRW::dxfColors[num][1],
-                    DRW::dxfColors[num][2]);
-  } else {
-    RS_DEBUG->print(RS_Debug::D_WARNING,
-                    "RS_FilterDXF::numberToColor: Invalid color number given.");
-    return RS_Color(RS2::FlagByLayer);
-  }
-
-  return RS_Color();
-}
-
-/**
- * Converts a color into a color number in the DXF palette.
- * The color that fits best is chosen.
- */
-int RS_FilterDXFRW::colorToNumber(const RS_Color &col, int *rgb) {
-  // printf("Searching color for %s\n", col.name().toLatin1().data());
-  *rgb = -1;
-  // Special color BYBLOCK:
-  if (col.getFlag(RS2::FlagByBlock)) {
-    return 0;
-  }
-  // Special color BYLAYER
-  else if (col.getFlag(RS2::FlagByLayer)) {
-    return 256;
-  }
-  // Special color black is not in the table but white represents both
-  // black and white
-  else {
-    int red = col.red();
-    int green = col.green();
-    int blue = col.blue();
-    if (red == 0 && green == 0 && blue == 0) {
-      return 7;
-    }
-    // All other colors
-    else {
-      int num = 0;
-      int diff =
-          255 * 3; // smallest difference to a color in the table found so far
-
-      // Run through the whole table and compare
-      for (int i = 1; i <= 255; i++) {
-        int d = abs(red - DRW::dxfColors[i][0]) +
-                abs(green - DRW::dxfColors[i][1]) +
-                abs(blue - DRW::dxfColors[i][2]);
-
-        if (d < diff) {
-          /*
-              printf("color %f,%f,%f is closer\n",
-                     dxfColors[i][0],
-                     dxfColors[i][1],
-                     dxfColors[i][2]);
-              */
-          diff = d;
-          num = i;
-          if (d == 0) {
-            break;
-          }
-        }
-      }
-      // printf("  Found: %d, diff: %d\n", num, diff);
-      if (diff != 0) {
-        *rgb = 0;
-        *rgb = red << 16 | green << 8 | blue;
-      }
-      return num;
-    }
-  }
 }
 
 void RS_FilterDXFRW::add3dFace(const DRW_3Dface &data) {
@@ -31677,237 +31768,6 @@ void RS_FilterDXFRW::addPlotSettings(const DRW_PlotSettings *data) {
   ps->setPaperSizeName(QString::fromStdString(data->paperSize));
   ps->setCurrentStyleName(QString::fromStdString(data->currentStyleSheet));
 }
-
-/**
- * Converts a line type name (e.g. "CONTINUOUS") into a RS2::LineType
- * object.
- */
-RS2::LineType RS_FilterDXFRW::nameToLineType(const QString &name) {
-
-  QString uName = name.toUpper();
-
-  // Standard linetypes for QCad II / AutoCAD
-  if (uName.isEmpty() || uName == "BYLAYER") {
-    return RS2::LineByLayer;
-  }
-  if (uName == "BYBLOCK") {
-    return RS2::LineByBlock;
-  }
-  if (uName == "CONTINUOUS" || uName == "ACAD_ISO01W100") {
-    return RS2::SolidLine;
-  }
-  if (uName == "ACAD_ISO07W100" || uName == "DOT") {
-    return RS2::DotLine;
-  }
-  if (uName == "DOTTINY") {
-    return RS2::DotLineTiny;
-  }
-  if (uName == "DOT2") {
-    return RS2::DotLine2;
-  }
-  if (uName == "DOTX2") {
-    return RS2::DotLineX2;
-  }
-  if (uName == "ACAD_ISO02W100" || uName == "ACAD_ISO03W100" ||
-      uName == "DASHED") {
-    return RS2::DashLine;
-  }
-  if (uName == "DASHEDTINY") {
-    return RS2::DashLineTiny;
-  }
-  if (uName == "DASHED2") {
-    return RS2::DashLine2;
-  }
-  if (uName == "DASHEDX2") {
-    return RS2::DashLineX2;
-  }
-  if (uName == "HIDDEN") {
-    return RS2::HiddenLine;
-  }
-  if (uName == "HIDDENTINY") {
-    return RS2::HiddenLineTiny;
-  }
-  if (uName == "HIDDEN2") {
-    return RS2::HiddenLine2;
-  }
-  if (uName == "HIDDENX2") {
-    return RS2::HiddenLineX2;
-  }
-  if (uName == "ACAD_ISO10W100" || uName == "DASHDOT") {
-    return RS2::DashDotLine;
-  }
-  if (uName == "DASHDOTTINY") {
-    return RS2::DashDotLineTiny;
-  }
-  if (uName == "DASHDOT2") {
-    return RS2::DashDotLine2;
-  }
-  if (uName == "ACAD_ISO04W100" || uName == "DASHDOTX2") {
-    return RS2::DashDotLineX2;
-  }
-  if (uName == "ACAD_ISO12W100" || uName == "DIVIDE") {
-    return RS2::DivideLine;
-  }
-  if (uName == "DIVIDETINY") {
-    return RS2::DivideLineTiny;
-  }
-  if (uName == "DIVIDE2") {
-    return RS2::DivideLine2;
-  }
-  if (uName == "ACAD_ISO05W100" || uName == "DIVIDEX2") {
-    return RS2::DivideLineX2;
-  }
-  if (uName == "CENTER") {
-    return RS2::CenterLine;
-  }
-  if (uName == "CENTERTINY") {
-    return RS2::CenterLineTiny;
-  }
-  if (uName == "CENTER2") {
-    return RS2::CenterLine2;
-  }
-  if (uName == "CENTERX2") {
-    return RS2::CenterLineX2;
-  }
-  // ISO 128-20 type 09 "long-dashed double-short-dashed" (24,-3,6,-3,6,-3)
-  // is PHANTOM's shape at PHANTOM's scale, like the ISO04/ISO05 aliases.
-  if (uName == "ACAD_ISO09W100" || uName == "PHANTOM") {
-    return RS2::PhantomLine;
-  }
-  if (uName == "PHANTOMTINY") {
-    return RS2::PhantomLineTiny;
-  }
-  if (uName == "PHANTOM2") {
-    return RS2::PhantomLine2;
-  }
-  if (uName == "PHANTOMX2") {
-    return RS2::PhantomLineX2;
-  }
-  if (uName == "BORDER") {
-    return RS2::BorderLine;
-  }
-  if (uName == "BORDERTINY") {
-    return RS2::BorderLineTiny;
-  }
-  if (uName == "BORDER2") {
-    return RS2::BorderLine2;
-  }
-  if (uName == "BORDERX2") {
-    return RS2::BorderLineX2;
-  }
-
-  return RS2::SolidLine;
-}
-
-/**
- * Converts a RS_LineType into a name for a line type.
- */
-QString RS_FilterDXFRW::lineTypeToName(RS2::LineType lineType) {
-  // Standard linetypes for QCad II / AutoCAD
-  switch (lineType) {
-  case RS2::SolidLine:
-    return "CONTINUOUS";
-  case RS2::DotLine:
-    return "DOT";
-  case RS2::DotLineTiny:
-    return "DOTTINY";
-  case RS2::DotLine2:
-    return "DOT2";
-  case RS2::DotLineX2:
-    return "DOTX2";
-  case RS2::DashLine:
-    return "DASHED";
-  case RS2::DashLineTiny:
-    return "DASHEDTINY";
-  case RS2::DashLine2:
-    return "DASHED2";
-  case RS2::DashLineX2:
-    return "DASHEDX2";
-  case RS2::HiddenLine:
-    return "HIDDEN";
-  case RS2::HiddenLineTiny:
-    return "HIDDENTINY";
-  case RS2::HiddenLine2:
-    return "HIDDEN2";
-  case RS2::HiddenLineX2:
-    return "HIDDENX2";
-  case RS2::DashDotLine:
-    return "DASHDOT";
-  case RS2::DashDotLineTiny:
-    return "DASHDOTTINY";
-  case RS2::DashDotLine2:
-    return "DASHDOT2";
-  case RS2::DashDotLineX2:
-    return "DASHDOTX2";
-  case RS2::DivideLine:
-    return "DIVIDE";
-  case RS2::DivideLineTiny:
-    return "DIVIDETINY";
-  case RS2::DivideLine2:
-    return "DIVIDE2";
-  case RS2::DivideLineX2:
-    return "DIVIDEX2";
-  case RS2::CenterLine:
-    return "CENTER";
-  case RS2::CenterLineTiny:
-    return "CENTERTINY";
-  case RS2::CenterLine2:
-    return "CENTER2";
-  case RS2::CenterLineX2:
-    return "CENTERX2";
-  case RS2::PhantomLine:
-    return "PHANTOM";
-  case RS2::PhantomLineTiny:
-    return "PHANTOMTINY";
-  case RS2::PhantomLine2:
-    return "PHANTOM2";
-  case RS2::PhantomLineX2:
-    return "PHANTOMX2";
-  case RS2::BorderLine:
-    return "BORDER";
-  case RS2::BorderLineTiny:
-    return "BORDERTINY";
-  case RS2::BorderLine2:
-    return "BORDER2";
-  case RS2::BorderLineX2:
-    return "BORDERX2";
-  case RS2::LineByLayer:
-    return "ByLayer";
-  case RS2::LineByBlock:
-    return "ByBlock";
-  default:
-    break;
-  }
-  return "CONTINUOUS";
-}
-
-/**
- * Converts a RS_LineType into a name for a line type.
- */
-/*QString RS_FilterDXFRW::lineTypeToDescription(RS2::LineType lineType) {
-
-    // Standard linetypes for QCad II / AutoCAD
-    switch (lineType) {
-    case RS2::SolidLine:
-        return "Solid line";
-    case RS2::DotLine:
-        return "ISO Dashed __ __ __ __ __ __ __ __ __ __ _";
-    case RS2::DashLine:
-        return "ISO Dashed with Distance __    __    __    _";
-    case RS2::DashDotLine:
-        return "ISO Long Dashed Dotted ____ . ____ . __";
-    case RS2::DashDotDotLine:
-        return "ISO Long Dashed Double Dotted ____ .. __";
-    case RS2::LineByLayer:
-        return "";
-    case RS2::LineByBlock:
-        return "";
-    default:
-        break;
-    }
-
-    return "CONTINUOUS";
-}*/
 
 namespace {
 // The DXF/DWG line-weight encoding and LibreCAD's RS2::LineWidth are a
@@ -32546,7 +32406,7 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
   }
   var = checkedDimStyleVariable(s, "$DIMCLRE");
   if (var != nullptr) {
-    extLineStyle->setColor(numberToColor(var->i_val()));
+    extLineStyle->setColor(LC_ColorNumbers::numberToColor(var->i_val()));
   }
   var = checkedDimStyleVariable(s, "$DIMSE1");
   if (var != nullptr) {
@@ -32590,7 +32450,7 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
   }
   var = checkedDimStyleVariable(s, "$DIMCLRD");
   if (var != nullptr) {
-    dimLineStyle->setColor(numberToColor(var->i_val()));
+    dimLineStyle->setColor(LC_ColorNumbers::numberToColor(var->i_val()));
   }
   var = checkedDimStyleVariable(s, "$DIMSD1");
   if (var != nullptr) {
@@ -32637,7 +32497,7 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
   }
   var = checkedDimStyleVariable(s, "$DIMCLRT");
   if (var != nullptr) {
-    textStyle->setColor(numberToColor(var->i_val()));
+    textStyle->setColor(LC_ColorNumbers::numberToColor(var->i_val()));
   }
   var = checkedDimStyleVariable(s, "$DIMTAD");
   if (var != nullptr) {
@@ -32653,7 +32513,7 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
   }
   var = checkedDimStyleVariable(s, "$DIMTFILLCLR");
   if (var != nullptr) {
-    textStyle->setExplicitBackgroundFillColor(numberToColor(var->i_val()));
+    textStyle->setExplicitBackgroundFillColor(LC_ColorNumbers::numberToColor(var->i_val()));
   }
   var = checkedDimStyleVariable(s, "$DIMTXTDIRECTION");
   if (var != nullptr) {

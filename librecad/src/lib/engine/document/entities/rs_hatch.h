@@ -123,16 +123,17 @@ public:
 
     /** @return true if solid hatch (either flag set or pattern name is "SOLID"). */
     bool isSolid() const { return m_data.solid || m_data.pattern.compare("SOLID", Qt::CaseInsensitive) == 0; }
-    void setSolid(const bool solid) { m_data.solid = solid; }
+    // validate() turns the loops of a pattern hatch by its angle: these need the loops again
+    void setSolid(const bool solid) { m_data.solid = solid; m_needOptimization = true; }
 
     QString getPattern() const { return m_data.pattern; }
-    void setPattern(const QString& patternName) { m_data.pattern = patternName; }
+    void setPattern(const QString& patternName) { m_data.pattern = patternName; m_needOptimization = true; }
 
     double getScale() const { return m_data.scale; }
     void setScale(const double scale) { m_data.scale = scale; }
 
     double getAngle() const { return m_data.angle; }
-    void setAngle(const double angle) { m_data.angle = angle; }
+    void setAngle(const double angle) { m_data.angle = angle; m_needOptimization = true; }
 
     /**
      * @return Total enclosed area (0th moment) of loops.

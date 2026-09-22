@@ -33,7 +33,6 @@
 #include "lc_linemath.h"
 #include "muParser.h"
 #include "rs_arc.h"
-#include "rs_filterdxfrw.h"
 #include "rs_graphicview.h"
 #include "rs_information.h"
 #include "rs_line.h"
@@ -1030,7 +1029,7 @@ RS_Color RS_Dimension::getDimensionLineColor() const {
     // fixme - sand - temporary debug code
     return m_dimStyleTransient->dimensionLine()->color();
 
-    // return RS_FilterDXFRW::numberToColor(getGraphicVariableInt("$DIMCLRD", 0));
+    // return LC_ColorNumbers::numberToColor(getGraphicVariableInt("$DIMCLRD", 0));
 }
 
 /**
@@ -1039,7 +1038,7 @@ RS_Color RS_Dimension::getDimensionLineColor() const {
 RS_Color RS_Dimension::getExtensionLineColor() const {
     // fixme - sand - temporary debug code
     return m_dimStyleTransient->extensionLine()->color();
-    // return RS_FilterDXFRW::numberToColor(getGraphicVariableInt("$DIMCLRE", 0));
+    // return LC_ColorNumbers::numberToColor(getGraphicVariableInt("$DIMCLRE", 0));
 }
 
 /**
@@ -1047,7 +1046,7 @@ RS_Color RS_Dimension::getExtensionLineColor() const {
  */
 RS_Color RS_Dimension::getTextColor() const {
     return m_dimStyleTransient->text()->color();
-    // return RS_FilterDXFRW::numberToColor(getGraphicVariableInt("$DIMCLRT", 0));
+    // return LC_ColorNumbers::numberToColor(getGraphicVariableInt("$DIMCLRT", 0));
 }
 
 /**

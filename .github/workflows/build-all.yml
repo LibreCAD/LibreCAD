@@ -3,9 +3,22 @@ on:
   push:
     branches:
       - master
+  # The macOS packaging scripts only run here, so check them before they
+  # reach master. Only BuildMacOS runs for a pull request.
+  pull_request:
+    paths:
+      - '.github/workflows/build-all.yml'
+      - 'scripts/*osx*'
+      - 'scripts/*macos*'
+
+# A newer push supersedes a build that is still running.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   BuildLinux:
+    if: github.event_name == 'push'
     runs-on: ubuntu-24.04
     outputs:
       output1: ${{ steps.artifact-upload-step.outputs.artifact-id }}
@@ -66,6 +79,7 @@ jobs:
           retention-days: 2
 
   BuildLinuxAarch64:
+    if: github.event_name == 'push'
     runs-on: ubuntu-24.04-arm
     outputs:
       output1: ${{ steps.artifact-upload-step.outputs.artifact-id }}
@@ -131,6 +145,7 @@ jobs:
           retention-days: 2
 
   BuildSnap:
+    if: github.event_name == 'push'
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
@@ -208,21 +223,39 @@ jobs:
         env:
           QMAKE_OPTS: QMAKE_APPLE_DEVICE_ARCHS=arm64 QMAKE_APPLE_DEVICE_ARCHS+=x86_64
         run: |
-          scripts/build-osx.sh
-          # fail loudly if the "universal" DMG is silently thin
-          lipo -archs LibreCAD.app/Contents/MacOS/LibreCAD | tee /dev/stderr | grep -qw arm64
-          lipo -archs LibreCAD.app/Contents/MacOS/LibreCAD | grep -qw x86_64
-          mv LibreCAD.dmg LibreCAD-`git describe --always`-universal.dmg
+          DMG_NAME="LibreCAD-$(git describe --always)-universal.dmg"
+          scripts/build-osx.sh \
+            --sign-mode=adhoc \
+            --architectures=arm64,x86_64 \
+            --output="$DMG_NAME"
+
+          scripts/test-osx-package.sh \
+            --app LibreCAD.app \
+            --architectures arm64,x86_64
+
+          # Exercise the fallback image backend from the same finalized app.
+          # This validates both image paths without compiling LibreCAD twice.
+          scripts/create-osx-dmg.sh \
+            --app LibreCAD.app \
+            --output "$RUNNER_TEMP/LibreCAD-convert.dmg" \
+            --backend convert \
+            --mode adhoc \
+            --architectures arm64,x86_64
 
       - name: Upload artifact
         id: artifact-upload-step
         uses: actions/upload-artifact@main
         with:
           name: macOSAssets
-          path: LibreCAD*.dmg
+          path: |
+            LibreCAD*.dmg
+            LibreCAD*.dmg.sha256
+            LibreCAD*.dmg.verification.txt
+            LibreCAD*.dmg.app.manifest
           retention-days: 2
 
   BuildWindows64:
+    if: github.event_name == 'push'
     runs-on: windows-2022
     outputs:
       output1: ${{ steps.artifact-upload-step.outputs.artifact-id }}
@@ -263,11 +296,12 @@ jobs:
         env:
           BUILD_TYPE: release
           MSVC_VER_NUMBER: "Visual Studio 17 2022"
-          CMAKE_CXX_FLAGS: " /MP8"
+          # CMake reads CXXFLAGS from the environment; /MP compiles a project's files in parallel.
+          CXXFLAGS: "/MP"
 
       - name: Build
         run: |
-          cmake --build generated --config Release
+          cmake --build generated --config Release --parallel
         shell: cmd
 
       - name: listFile
@@ -339,6 +373,7 @@ jobs:
           retention-days: 2
 
   BuildWindowsARM64:
+    if: github.event_name == 'push'
     runs-on: windows-11-arm
     outputs:
       output1: ${{ steps.artifact-upload-step.outputs.artifact-id }}
@@ -381,11 +416,12 @@ jobs:
         env:
           BUILD_TYPE: release
           MSVC_VER_NUMBER: "Visual Studio 17 2022"
-          CMAKE_CXX_FLAGS: " /MP8"
+          # CMake reads CXXFLAGS from the environment; /MP compiles a project's files in parallel.
+          CXXFLAGS: "/MP"
 
       - name: Build
         run: |
-          cmake --build generated --config Release
+          cmake --build generated --config Release --parallel
         shell: cmd
 
       - name: listFile
@@ -466,6 +502,21 @@ jobs:
         with:
           fetch-depth: 0
 
+      # The workflow token cannot tag a commit whose workflow files differ
+      # from the head of master (it lacks the workflows permission), so a
+      # run for an older commit would delete the release and then fail to
+      # recreate it. Leave the current release alone in that case.
+      - name: Check that this commit is still the head of master
+        id: head
+        run: |
+          head=$(git ls-remote --heads origin master | cut -f1)
+          if [[ "$head" == "${GITHUB_SHA}" ]]; then
+            echo "publish=true" >> "${GITHUB_OUTPUT}"
+          else
+            echo "::notice::master moved on to ${head}; keeping the current release"
+            echo "publish=false" >> "${GITHUB_OUTPUT}"
+          fi
+
       - name: Prepare release metadata
         id: release_metadata
         run: |
@@ -520,14 +571,17 @@ jobs:
       - name: Fetch artifacts
         uses: actions/download-artifact@main
 
-      - name: Delete existing
+      # Publishing never deletes before it uploads: the tag is moved, the
+      # release is updated in place, and only then are the assets of older
+      # builds removed. A run that dies part way leaves the current release
+      # serving the previous build instead of nothing at all.
+      - name: Point the release tag at this commit
+        if: steps.head.outputs.publish == 'true'
         run: |
-          gh release delete "${{ steps.release_metadata.outputs.release_tag }}" --cleanup-tag -y || true
-          git push origin ":refs/tags/${{ steps.release_metadata.outputs.release_tag }}" || true
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          git push --force origin "${GITHUB_SHA}:refs/tags/${{ steps.release_metadata.outputs.release_tag }}"
 
       - name: Upload latest pre-release
+        if: steps.head.outputs.publish == 'true'
         uses: softprops/action-gh-release@v2
         with:
           name: ${{ steps.release_metadata.outputs.release_name }}
@@ -543,19 +597,61 @@ jobs:
             linuxAssetsAarch64/LibreCAD*.AppImage
             linuxAssetsAarch64/LibreCAD*.AppImage.zsync
             macOSAssets/LibreCAD*.dmg
+            macOSAssets/LibreCAD*.dmg.sha256
+            macOSAssets/LibreCAD*.dmg.verification.txt
+            macOSAssets/LibreCAD*.dmg.app.manifest
             win64Assets/LibreCAD*.exe
             winARM64Assets/LibreCAD*.exe
             snapAssets/LibreCAD*.snap
             LICENSE
 
-      - name: Refresh top download links
+      - name: Remove assets of older builds
+        if: steps.head.outputs.publish == 'true'
         run: |
-          gh release delete "downloads-latest" --cleanup-tag -y || true
-          git push origin ":refs/tags/downloads-latest" || true
-          gh release create "downloads-latest" \
-            --title "Download LibreCAD" \
-            --notes-file downloads-latest.md \
-            --prerelease \
-            --target "${GITHUB_SHA}"
+          set -euo pipefail
+          tag="${{ steps.release_metadata.outputs.release_tag }}"
+          # Everything this run downloaded from the build jobs, plus LICENSE:
+          # whatever the release holds beyond that came from an older build.
+          : > uploaded.txt
+          for dir in linuxAssets linuxAssetsAarch64 macOSAssets win64Assets winARM64Assets snapAssets; do
+            [ -d "$dir" ] || continue
+            find "$dir" -maxdepth 1 -type f -exec basename {} ';' >> uploaded.txt
+          done
+          sort -u -o uploaded.txt uploaded.txt
+          # Never prune against an empty or partial download: that would empty
+          # the release, which is the failure this job exists to avoid.
+          if [ "$(wc -l < uploaded.txt)" -lt 6 ]; then
+            echo "::warning::only $(wc -l < uploaded.txt) build files present; keeping every asset"
+            exit 0
+          fi
+          echo "LICENSE" >> uploaded.txt
+          gh release view "$tag" --json assets --jq '.assets[].name' > assets.txt
+          while IFS= read -r asset; do
+            [ -n "$asset" ] || continue
+            if ! grep -Fxq "$asset" uploaded.txt; then
+              echo "removing asset of an older build: $asset"
+              gh release delete-asset "$tag" "$asset" -y
+            fi
+          done < assets.txt
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Refresh top download links
+        if: steps.head.outputs.publish == 'true'
+        run: |
+          set -euo pipefail
+          git push --force origin "${GITHUB_SHA}:refs/tags/downloads-latest"
+          if gh release view "downloads-latest" >/dev/null 2>&1; then
+            gh release edit "downloads-latest" \
+              --title "Download LibreCAD" \
+              --notes-file downloads-latest.md \
+              --prerelease
+          else
+            gh release create "downloads-latest" \
+              --title "Download LibreCAD" \
+              --notes-file downloads-latest.md \
+              --prerelease \
+              --target "${GITHUB_SHA}"
+          fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

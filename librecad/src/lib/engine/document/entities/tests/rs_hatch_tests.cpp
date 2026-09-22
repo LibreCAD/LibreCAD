@@ -61,6 +61,7 @@
 #include "rs_hatch.h"
 #include "rs_line.h"
 #include "rs_painter.h"
+#include "rs_polyline.h"
 #include "rs_settings.h"
 #include "rs_vector.h"
 
@@ -1273,6 +1274,61 @@ TEST_CASE("RS_FilterDXFRW: DXF round-trip preserves spline-bordered hatch",
   std::filesystem::remove(tmpPath);
 }
 
+// A hatch whose loop holds a polyline, as Draw Hatch copies a selected one, was
+// saved with no boundary edges and dropped when the file was opened again.
+TEST_CASE("RS_FilterDXFRW: DXF round-trip preserves polyline-bordered hatch",
+          "[rs_hatch][filter][polyline][roundtrip]") {
+  static int qargc = 1;
+  static char qarg0[] = "librecad_tests";
+  static char *qargv[] = {qarg0, nullptr};
+  static QCoreApplication *qapp = QCoreApplication::instance()
+                                      ? QCoreApplication::instance()
+                                      : new QCoreApplication(qargc, qargv);
+  static bool settingsReady = [] {
+    QCoreApplication::setOrganizationName("LibreCAD");
+    QCoreApplication::setApplicationName("LibreCAD-tests");
+    RS_Settings::init("LibreCAD", "LibreCAD-tests");
+    return true;
+  }();
+  (void)qapp;
+  (void)settingsReady;
+
+  // a 20 x 10 rectangle with a half circle for one side: line and arc edges
+  RS_Graphic g;
+  auto *hatch = new RS_Hatch(&g, RS_HatchData(true, 1.0, 0.0, "SOLID"));
+  auto *loop = new RS_EntityContainer(hatch);
+  hatch->addEntity(loop);
+  auto *polyline = new RS_Polyline(loop, RS_PolylineData(RS_Vector(0.0, 0.0), RS_Vector(0.0, 0.0), true));
+  polyline->addVertex(RS_Vector(0.0, 0.0));
+  polyline->addVertex(RS_Vector(20.0, 0.0), 1.0);
+  polyline->addVertex(RS_Vector(20.0, 10.0));
+  polyline->addVertex(RS_Vector(0.0, 10.0));
+  polyline->setClosed(true);
+  loop->addEntity(polyline);
+  g.addEntity(hatch);
+  hatch->update();
+  const double areaBefore = hatch->getTotalArea();
+  REQUIRE(std::abs(std::abs(areaBefore - 200.0) - 12.5 * M_PI) < 1e-6);
+
+  const auto tmpPath =
+      std::filesystem::temp_directory_path() / "rs_hatch_polyline_roundtrip.dxf";
+  REQUIRE(RS_FilterDXFRW{}.fileExport(g, QString::fromStdString(tmpPath.string()),
+                                      RS2::FormatDXFRW));
+  RS_Graphic g2;
+  REQUIRE(RS_FilterDXFRW{}.fileImport(g2, QString::fromStdString(tmpPath.string()),
+                                      RS2::FormatDXFRW));
+  std::filesystem::remove(tmpPath);
+
+  RS_Hatch *reloaded = nullptr;
+  for (RS_Entity *e : g2) {
+    if (e->rtti() == RS2::EntityHatch) {
+      reloaded = static_cast<RS_Hatch *>(e);
+    }
+  }
+  REQUIRE(reloaded != nullptr);
+  CHECK_THAT(reloaded->getTotalArea(), Catch::Matchers::WithinRel(areaBefore, 1e-9));
+}
+
 // snapSplineEdgeEndpoints: a tiny float drift (5e-9) at the seam between a
 // spline and a neighboring line must be snapped before LoopExtractor sees
 // it; otherwise the chain breaks at ENDPOINT_TOLERANCE = 1e-8. Plan §C.1.
@@ -1474,4 +1530,87 @@ TEST_CASE("LC_HatchPropertiesEditingWidget shows 8 significant digits, fully vis
     const QFontMetrics bigFm = widest->fontMetrics();
     const int bigOverhead = widest->sizeHint().width() - 17 * bigFm.horizontalAdvance(QLatin1Char('x'));
     CHECK(widest->minimumWidth() - bigOverhead >= bigFm.horizontalAdvance(widest->text()));
+}
+
+// ============================================================
+// Pattern lines across updates: another update() replaces them, and an edit
+// of a clone, as the hatch dialog makes, reaches them.
+// ============================================================
+
+namespace {
+
+// Points the pattern search at the source tree's patterns while it lives.
+class SourcePatterns {
+public:
+    SourcePatterns() {
+        static int qargc = 1;
+        static char qarg0[] = "librecad_tests";
+        static char* qargv[] = {qarg0, nullptr};
+        static QCoreApplication* qapp = QCoreApplication::instance()
+                                            ? QCoreApplication::instance()
+                                            : new QCoreApplication(qargc, qargv);
+        static bool settingsReady = [] {
+            QCoreApplication::setOrganizationName("LibreCAD");
+            QCoreApplication::setApplicationName("LibreCAD-tests");
+            RS_Settings::init("LibreCAD", "LibreCAD-tests");
+            return true;
+        }();
+        (void)qapp;
+        (void)settingsReady;
+        LC_GROUP_GUARD("Paths");
+        m_previous = LC_GET_STR("Patterns", "");
+        LC_SET("Patterns", QStringLiteral(LIBRECAD_SOURCE_DIR "/librecad/support/patterns"));
+    }
+    ~SourcePatterns() {
+        LC_GROUP_GUARD("Paths");
+        LC_SET("Patterns", m_previous);
+    }
+private:
+    QString m_previous;
+};
+
+// Directions of the pattern lines, in whole degrees from 0 to 179, and how many there are.
+std::map<long, int> patternLineDirections(const RS_Hatch& hatch) {
+    std::map<long, int> directions;
+    for (const RS_Entity* en : hatch) {
+        if (en->getFlag(RS2::FlagHatchChild) && en->rtti() == RS2::EntityLine) {
+            const double degrees = static_cast<const RS_Line*>(en)->getAngle1() * 180.0 / M_PI;
+            ++directions[std::lround(std::fmod(degrees + 360.0, 180.0)) % 180];
+        }
+    }
+    return directions;
+}
+
+} // namespace
+
+TEST_CASE("RS_Hatch keeps one set of pattern lines across updates and edits", "[rs_hatch][pattern]") {
+    SourcePatterns patterns;
+    RS_Hatch hatch(nullptr, RS_HatchData(false, 1.0, 0.0, "ANSI31"));
+    auto* loop = new RS_EntityContainer(&hatch);
+    hatch.addEntity(loop);
+    loop->addEntity(new RS_Line(loop, RS_Vector(0, 0), RS_Vector(20, 0)));
+    loop->addEntity(new RS_Line(loop, RS_Vector(20, 0), RS_Vector(20, 10)));
+    loop->addEntity(new RS_Line(loop, RS_Vector(20, 10), RS_Vector(0, 10)));
+    loop->addEntity(new RS_Line(loop, RS_Vector(0, 10), RS_Vector(0, 0)));
+    hatch.update();
+    const auto directions = patternLineDirections(hatch);
+    REQUIRE(directions.size() == 1);
+    REQUIRE(directions.count(45) == 1);
+    const int lines = directions.at(45);
+
+    hatch.update();
+    CHECK(patternLineDirections(hatch).at(45) == lines);
+
+    // the hatch dialog edits a clone, which clone() has updated, and updates it again
+    const std::unique_ptr<RS_Entity> copy{hatch.clone()};
+    auto* edited = static_cast<RS_Hatch*>(copy.get());
+    edited->setAngle(M_PI / 2.0);
+    edited->update();
+    const auto turned = patternLineDirections(*edited);
+    CHECK(turned.size() == 1);
+    CHECK(turned.count(135) == 1);
+
+    edited->setSolid(true);
+    edited->update();
+    CHECK(patternLineDirections(*edited).empty());
 }

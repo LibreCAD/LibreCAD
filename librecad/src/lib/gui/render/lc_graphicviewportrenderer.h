@@ -83,7 +83,11 @@ class LC_GraphicViewportRenderer{
     /** foreground color (black or white) */
     RS_Color m_colorForeground;
 
+    // The resolved pen last installed for an entity; its dash offset is the
+    // painter's running offset at that time.
     RS_Pen m_lastPaintEntityPen;
+    // Whether that installed pen had a dash pattern, so the offset matters.
+    bool m_lastPaintedPattern = false;
 
     LC_Rect prepareBoundingClipRect() const;
     virtual void doRender() = 0;

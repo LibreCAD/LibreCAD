@@ -238,6 +238,11 @@ void RS_Spline::setClosed(const bool c) {
                   : RS_SplineData::SplineType::ClampedOpen;
     return;
   }
+  // LC_SplineHelper can accept a conversion that validate() rejects, such as the periodic knots it
+  // makes from a clamped knot vector whose first inner knot is repeated; keep such a spline as it was
+  // rather than one that update() draws nothing for.
+  const RS_SplineData previous = m_data;
+  const bool wasValid = validate();
   if (c) {
     if (m_data.type == RS_SplineData::SplineType::ClampedOpen) {
         LC_SplineHelper::toWrappedClosedFromClampedOpen(m_data);
@@ -259,6 +264,10 @@ void RS_Spline::setClosed(const bool c) {
         assert(false && "unknown spline type for closing");
     }
   }
+  if (wasValid && !validate()) {
+    RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Spline::setClosed: conversion gives an invalid spline");
+    m_data = previous;
+  }
   update();
 }
 
@@ -274,6 +283,8 @@ void RS_Spline::changeType(const RS_SplineData::SplineType newType) {
     m_data.type = newType;
     return;
   }
+  const RS_SplineData previous = m_data;
+  const bool wasValid = validate();
 
   if (newType == RS_SplineData::SplineType::Standard) {
     if (oldType == RS_SplineData::SplineType::ClampedOpen) {
@@ -298,8 +309,17 @@ void RS_Spline::changeType(const RS_SplineData::SplineType newType) {
     }
   }
 
-  // even if LC_SplineHelper fails to change the type, still change the enum
-  m_data.type = newType;
+  // LC_SplineHelper keeps the data and the type when it cannot convert them. Setting the type anyway
+  // gave data of another type, such as control points that are not wrapped for WrappedClosed, which
+  // validate() rejects, so that update() drew nothing; so does a conversion LC_SplineHelper accepts
+  // but validate() does not.
+  if (wasValid && !validate()) {
+    m_data = previous;
+  }
+  if (m_data.type != newType) {
+    RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Spline::changeType: cannot convert the spline to type %d",
+                    static_cast<int>(newType));
+  }
 }
 
 /** Clamped knot adjustment */

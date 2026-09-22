@@ -42,6 +42,11 @@ on:
       - 'scripts/dwg-fast-check.sh'
   workflow_dispatch:
 
+# A newer push to the same branch or pull request supersedes a run still in progress.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   VerifyDwgDxfFast:
     runs-on: ubuntu-24.04

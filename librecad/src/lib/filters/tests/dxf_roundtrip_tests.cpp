@@ -51,6 +51,8 @@
 #include "drw_base.h"
 #include "lc_dimstyle.h"
 #include "lc_dwgadvancedmetadata.h"
+#include "lc_linetypenames.h"
+#include "lc_mleader.h"
 #include "rs_dimaligned.h"
 #include "rs_dimension.h"
 #include "rs_filterdxfrw.h"
@@ -63,7 +65,9 @@
 #include "rs_linetypepattern.h"
 #include "rs_pen.h"
 #include "rs_point.h"
+#include "rs_polyline.h"
 #include "rs_settings.h"
+#include "rs_spline.h"
 
 namespace {
 
@@ -4490,6 +4494,68 @@ TEST_CASE("DXF R2010 DSTYLE text direction survives a dimension round trip",
   std::filesystem::remove(legacyOut);
 }
 
+TEST_CASE("DXF DSTYLE line type reference survives a non-ASCII linetype name",
+          "[dxf][roundtrip][filter][dimension][dimstyle][ltype]") {
+  ensureSettings();
+
+  // The writer keys its LTYPE handle table by folding the raw UTF-8 bytes, so
+  // the dimension style query has to fold the same way. An ASCII name folds
+  // identically under either rule and is the control.
+  const auto checkDimLineTypeRef = [](const char *fileStem,
+                                      const char *lineTypeName) {
+    const std::string out = tmpFile(fileStem);
+    std::filesystem::remove(out);
+
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    DRW_LType imported;
+    imported.updateValues(lineTypeName, "Imported dashed", 2, 12.7,
+                          {6.35, -6.35});
+    graphic.dwgAdvancedMetadata().addLineTypeName(imported);
+
+    RS_DimensionData data;
+    data.definitionPoint = RS_Vector(5.0, 3.0);
+    data.middleOfText = RS_Vector(5.0, 3.0);
+    data.style = "Standard";
+    auto *dimension = new RS_DimAligned(
+        &graphic, data,
+        RS_DimAlignedData(RS_Vector(0.0, 0.0), RS_Vector(10.0, 0.0)));
+    LC_DimStyle override;
+    override.dimensionLine()->setLineType(QString::fromUtf8(lineTypeName));
+    dimension->setDimStyleOverride(&override);
+    graphic.addEntity(dimension);
+
+    {
+      RS_FilterDXFRW filter;
+      REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                                RS2::FormatDXFRW2018));
+    }
+    CHECK(recordGroupValues(out, "DIMENSION", "1070")
+          == std::vector<std::string>{"345"});
+    CHECK(recordGroupValues(out, "DIMENSION", "1005").size() == 1);
+
+    RS_Graphic reloaded;
+    {
+      RS_FilterDXFRW filter;
+      REQUIRE(filter.fileImport(reloaded, QString::fromStdString(out),
+                                RS2::FormatDXFRW));
+    }
+    auto *reloadedDimension =
+        dynamic_cast<RS_Dimension *>(reloaded.firstEntity());
+    REQUIRE(reloadedDimension != nullptr);
+    LC_DimStyle *reloadedOverride = reloadedDimension->getDimStyleOverride();
+    CHECK(reloadedOverride != nullptr);
+    if (reloadedOverride != nullptr)
+      CHECK(reloadedOverride->dimensionLine()->lineTypeName()
+            == QString::fromUtf8(lineTypeName));
+
+    std::filesystem::remove(out);
+  };
+
+  checkDimLineTypeRef("dimension_dstyle_ltype_ascii.dxf", "vendor_dash");
+  checkDimLineTypeRef("dimension_dstyle_ltype_utf8.dxf", "\xC3\xB6lfarbe");
+}
+
 TEST_CASE("DXF unused LTYPE and STYLE application groups survive filter round trip",
           "[dxf][roundtrip][filter][ltype][style][application-groups]") {
   ensureSettings();
@@ -4789,38 +4855,39 @@ TEST_CASE("Every DXF linetype name LibreCAD writes maps back to the same RS2::Li
            RS2::BorderLine, RS2::BorderLineTiny, RS2::BorderLine2,
            RS2::BorderLineX2,
            RS2::LineByLayer, RS2::LineByBlock}) {
-    const QString name = RS_FilterDXFRW::lineTypeToName(type);
+    const QString name = LC_LineTypeNames::lineTypeToName(type);
     INFO("linetype " << static_cast<int>(type) << " -> " << name.toStdString());
-    CHECK(RS_FilterDXFRW::nameToLineType(name) == type);
+    CHECK(LC_LineTypeNames::nameToLineType(name) == type);
   }
 
   // The hidden family keeps its acad.lin names, distinct from DASHED*.
-  CHECK(RS_FilterDXFRW::lineTypeToName(RS2::HiddenLine) == "HIDDEN");
-  CHECK(RS_FilterDXFRW::lineTypeToName(RS2::HiddenLineTiny) == "HIDDENTINY");
-  CHECK(RS_FilterDXFRW::lineTypeToName(RS2::HiddenLine2) == "HIDDEN2");
-  CHECK(RS_FilterDXFRW::lineTypeToName(RS2::HiddenLineX2) == "HIDDENX2");
+  CHECK(LC_LineTypeNames::lineTypeToName(RS2::HiddenLine) == "HIDDEN");
+  CHECK(LC_LineTypeNames::lineTypeToName(RS2::HiddenLineTiny) == "HIDDENTINY");
+  CHECK(LC_LineTypeNames::lineTypeToName(RS2::HiddenLine2) == "HIDDEN2");
+  CHECK(LC_LineTypeNames::lineTypeToName(RS2::HiddenLineX2) == "HIDDENX2");
 
   // The phantom family keeps its acad.lin names (PHANTOM* used to fall
   // through to CONTINUOUS).
-  CHECK(RS_FilterDXFRW::lineTypeToName(RS2::PhantomLine) == "PHANTOM");
-  CHECK(RS_FilterDXFRW::lineTypeToName(RS2::PhantomLineTiny) == "PHANTOMTINY");
-  CHECK(RS_FilterDXFRW::lineTypeToName(RS2::PhantomLine2) == "PHANTOM2");
-  CHECK(RS_FilterDXFRW::lineTypeToName(RS2::PhantomLineX2) == "PHANTOMX2");
+  CHECK(LC_LineTypeNames::lineTypeToName(RS2::PhantomLine) == "PHANTOM");
+  CHECK(LC_LineTypeNames::lineTypeToName(RS2::PhantomLineTiny) ==
+        "PHANTOMTINY");
+  CHECK(LC_LineTypeNames::lineTypeToName(RS2::PhantomLine2) == "PHANTOM2");
+  CHECK(LC_LineTypeNames::lineTypeToName(RS2::PhantomLineX2) == "PHANTOMX2");
   // ISO 128-20 type 09 (long-dashed double-short-dashed) imports as PHANTOM,
   // the way ACAD_ISO04W100 / ACAD_ISO05W100 already alias DASHDOTX2 / DIVIDEX2.
-  CHECK(RS_FilterDXFRW::nameToLineType(QStringLiteral("ACAD_ISO09W100")) ==
+  CHECK(LC_LineTypeNames::nameToLineType(QStringLiteral("ACAD_ISO09W100")) ==
         RS2::PhantomLine);
-  CHECK(RS_FilterDXFRW::nameToLineType(QStringLiteral("acad_iso09w100")) ==
+  CHECK(LC_LineTypeNames::nameToLineType(QStringLiteral("acad_iso09w100")) ==
         RS2::PhantomLine);
 
   // The JWW filter carries its own name tables (without tiny variants); they
-  // must agree with the DXF ones.
+  // must agree with the engine ones.
   for (const RS2::LineType type : {RS2::HiddenLine, RS2::HiddenLine2,
                                    RS2::HiddenLineX2, RS2::PhantomLine,
                                    RS2::PhantomLine2, RS2::PhantomLineX2}) {
     INFO("linetype " << static_cast<int>(type));
     const QString name = RS_FilterJWW::lineTypeToName(type);
-    CHECK(name == RS_FilterDXFRW::lineTypeToName(type));
+    CHECK(name == LC_LineTypeNames::lineTypeToName(type));
     CHECK(RS_FilterJWW::nameToLineType(name) == type);
   }
 
@@ -5011,6 +5078,207 @@ TEST_CASE("DXF round-trip preserves the PHANTOM linetype on an entity",
   std::filesystem::remove(dwg);
 }
 
+namespace {
+// An R12 file whose HIDDEN record has its own dashes and whose DASHED record
+// has the groups in `dashed`, with a LINE drawn in each.
+std::string builtinLTypeFixture(const char *dashed) {
+  return std::string(
+             "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1009\n0\nENDSEC\n"
+             "0\nSECTION\n2\nTABLES\n"
+             "0\nTABLE\n2\nLTYPE\n70\n2\n"
+             "0\nLTYPE\n2\nHIDDEN\n70\n0\n3\nFile hidden\n72\n65\n73\n2\n"
+             "40\n96.0\n49\n64.0\n49\n-32.0\n"
+             "0\nLTYPE\n2\nDASHED\n") +
+         dashed +
+         "0\nENDTAB\n0\nENDSEC\n"
+         "0\nSECTION\n2\nENTITIES\n"
+         "0\nLINE\n8\n0\n6\nHIDDEN\n10\n0.0\n20\n0.0\n11\n10.0\n21\n0.0\n"
+         "0\nLINE\n8\n0\n6\nDASHED\n10\n0.0\n20\n5.0\n11\n10.0\n21\n5.0\n"
+         "0\nENDSEC\n0\nEOF\n";
+}
+
+void importBuiltinLTypeFixture(RS_Graphic &graphic, const char *suffix,
+                               const char *dashed) {
+  const std::string src = tmpFile(suffix);
+  writeText(src, builtinLTypeFixture(dashed));
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                            RS2::FormatDXFRW));
+  std::filesystem::remove(src);
+}
+
+void checkBuiltinDashed(const std::string &out) {
+  CHECK(ltypeRecordGroupValues(out, "DASHED", "73") ==
+        std::vector<std::string>{"2"});
+  const auto dashes = ltypeRecordGroupValues(out, "DASHED", "49");
+  REQUIRE(dashes.size() == 2);
+  CHECK(std::stod(dashes[0]) == Catch::Approx(12.7));
+  CHECK(std::stod(dashes[1]) == Catch::Approx(-6.35));
+}
+} // namespace
+
+TEST_CASE("DXF export keeps a built-in's dashes when the file's record has none",
+          "[dxf][roundtrip][filter][linetype][ltype]") {
+  ensureSettings();
+  const std::string out = tmpFile("name_only_ltype_out.dxf");
+
+  // Early dxflib wrote records like this one, with neither a description nor
+  // dashes, as in the shipped empty.dxf template.
+  RS_Graphic graphic;
+  importBuiltinLTypeFixture(graphic, "name_only_ltype_src.dxf", "70\n64\n");
+  for (const RS2::FormatType format :
+       {RS2::FormatDXFRW12, RS2::FormatDXFRW2000, RS2::FormatDXFRW}) {
+    INFO("format " << static_cast<int>(format));
+    std::filesystem::remove(out);
+    {
+      RS_FilterDXFRW filter;
+      REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), format));
+    }
+
+    // A record with a pattern still replaces the built-in, once.
+    CHECK(ltypeRecordGroupValues(out, "HIDDEN", "73") ==
+          std::vector<std::string>{"2"});
+    const auto hidden = ltypeRecordGroupValues(out, "HIDDEN", "49");
+    REQUIRE(hidden.size() == 2);
+    CHECK(std::stod(hidden[0]) == Catch::Approx(64.0));
+    CHECK(std::stod(hidden[1]) == Catch::Approx(-32.0));
+
+    // A record with none keeps its flags, and takes the built-in's
+    // description and dashes.
+    CHECK(ltypeRecordGroupValues(out, "DASHED", "70") ==
+          std::vector<std::string>{"64"});
+    CHECK(ltypeRecordGroupValues(out, "DASHED", "3") ==
+          std::vector<std::string>{"Dashed _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _"});
+    checkBuiltinDashed(out);
+  }
+
+  std::filesystem::remove(out);
+}
+
+TEST_CASE("DXF export keeps a built-in's dashes when the file's record says 73 0",
+          "[dxf][roundtrip][filter][linetype][ltype]") {
+  ensureSettings();
+  const std::string out = tmpFile("zero_dash_ltype_out.dxf");
+  std::filesystem::remove(out);
+
+  RS_Graphic graphic;
+  importBuiltinLTypeFixture(graphic, "zero_dash_ltype_src.dxf",
+                            "70\n0\n3\nFile dashes\n72\n65\n73\n0\n40\n0.0\n");
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+
+  // The file's own description is kept.
+  CHECK(ltypeRecordGroupValues(out, "DASHED", "3") ==
+        std::vector<std::string>{"File dashes"});
+  checkBuiltinDashed(out);
+
+  std::filesystem::remove(out);
+}
+
+#ifdef DWGSUPPORT
+TEST_CASE("DWG export keeps a built-in's dashes when the file's record has none",
+          "[dwg][roundtrip][filter][linetype][ltype]") {
+  ensureSettings();
+  const std::string dwg = tmpFile("name_only_ltype.dwg");
+  std::filesystem::remove(dwg);
+
+  RS_Graphic graphic;
+  importBuiltinLTypeFixture(graphic, "name_only_ltype_dwg_src.dxf", "70\n0\n");
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(dwg),
+                              RS2::FormatDWG2004));
+  }
+  RS_Graphic fromDwg;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(fromDwg, QString::fromStdString(dwg),
+                              RS2::FormatDWG));
+  }
+  const DRW_LType *dashed =
+      fromDwg.dwgAdvancedMetadata().findLineTypeTableEntryByName("DASHED");
+  REQUIRE(dashed != nullptr);
+  CHECK(dashed->path.size() == 2);
+
+  std::filesystem::remove(dwg);
+}
+
+// A native MLEADER resolves its linetype through the DWG source handle of the
+// archived record. A name without dashes of its own takes that record whole,
+// description included; DASHED takes only its table entry part.
+TEST_CASE("DWG export keeps the linetype record a native MLEADER refers to",
+          "[dwg][filter][linetype][ltype][mleader]") {
+  ensureSettings();
+  const std::string dwg = tmpFile("ltype_mleader.dwg");
+
+  struct Expected {
+    const char *name;
+    std::size_t dashes;
+    const char *desc;
+  };
+  for (const Expected &expected :
+       {Expected{"ByBlock", 0, ""}, Expected{"CONTINUOUS", 0, ""},
+        Expected{"DASHED", 2, "Dashed _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _"}}) {
+    INFO("LTYPE " << expected.name);
+    std::filesystem::remove(dwg);
+
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    DRW_LType record;
+    record.handle = 0xBA0u;
+    record.name = expected.name;
+    graphic.dwgAdvancedMetadata().addLineTypeName(record);
+
+    LC_MLeaderData data;
+    data.hasTextContents = true;
+    data.textLabel = QStringLiteral("Leader");
+    data.textLocation = RS_Vector(20.0, 5.0, 0.0);
+    data.contentBasePoint = data.textLocation;
+    data.textHeight = 2.0;
+    data.dwgLeaderLineTypeHandle = record.handle;
+    LC_MLeaderRoot root;
+    root.connectionPoint = data.textLocation;
+    root.direction = RS_Vector(1.0, 0.0, 0.0);
+    LC_MLeaderLine line;
+    line.points = {RS_Vector(0.0, 0.0, 0.0), RS_Vector(10.0, 5.0, 0.0)};
+    root.leaderLines.push_back(std::move(line));
+    data.roots.push_back(std::move(root));
+    auto *leader = new LC_MLeader(&graphic, std::move(data));
+    leader->setSourceHandle(0xBA1u);
+    graphic.addEntity(leader);
+    {
+      RS_FilterDXFRW filter;
+      REQUIRE(filter.fileExport(graphic, QString::fromStdString(dwg),
+                                RS2::FormatDWG2013));
+    }
+
+    RS_Graphic fromDwg;
+    {
+      RS_FilterDXFRW filter;
+      REQUIRE(filter.fileImport(fromDwg, QString::fromStdString(dwg),
+                                RS2::FormatDWG));
+    }
+    const auto &metadata = fromDwg.dwgAdvancedMetadata();
+    const auto *imported = dynamic_cast<LC_MLeader *>(fromDwg.firstEntity());
+    REQUIRE(imported != nullptr);
+    const std::string leaderLType = metadata.lineTypeNameForHandle(
+        imported->getData().dwgLeaderLineTypeHandle);
+    CHECK(QString::fromStdString(leaderLType)
+              .compare(QLatin1String(expected.name), Qt::CaseInsensitive) == 0);
+    const DRW_LType *written =
+        metadata.findLineTypeTableEntryByName(expected.name);
+    REQUIRE(written != nullptr);
+    CHECK(written->path.size() == expected.dashes);
+    CHECK(written->desc == expected.desc);
+  }
+
+  std::filesystem::remove(dwg);
+}
+#endif
+
 TEST_CASE("DXF import maps ACAD_ISO09W100 to PHANTOM and writes it back as PHANTOM",
           "[dxf][roundtrip][filter][linetype]") {
   ensureSettings();
@@ -5070,4 +5338,50 @@ TEST_CASE("DXF import maps ACAD_ISO09W100 to PHANTOM and writes it back as PHANT
 
   std::filesystem::remove(src);
   std::filesystem::remove(out);
+}
+
+TEST_CASE("An open spline written to R12 ends its polyline at the spline's end",
+          "[dxf][filter][spline][r12]") {
+  ensureSettings();
+
+  // away from the origin, where the polyline used to end
+  RS_Graphic graphic;
+  RS_SplineData data(3, false);
+  data.controlPoints = {{100., 50.}, {110., 70.}, {130., 40.}, {140., 60.}};
+  data.knotslist = {0., 0., 0., 0., 1., 1., 1., 1.};
+  data.weights.assign(4, 1.);
+  auto *spline = new RS_Spline(&graphic, data);
+  graphic.addEntity(spline);
+  spline->update();
+  REQUIRE(spline->count() > 0);
+
+  const std::string path = tmpFile("open_spline_r12.dxf");
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(path), RS2::FormatDXFRW12));
+  }
+  RS_Graphic reloaded;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(reloaded, QString::fromStdString(path), RS2::FormatDXFRW));
+  }
+  std::filesystem::remove(path);
+
+  std::vector<RS_Vector> vertices;
+  for (RS_Entity *e : reloaded) {
+    REQUIRE(e->rtti() == RS2::EntityPolyline);
+    CHECK_FALSE(static_cast<RS_Polyline *>(e)->isClosed());
+    for (RS_Entity *segment : *static_cast<RS_EntityContainer *>(e)) {
+      if (vertices.empty())
+        vertices.push_back(segment->getStartpoint());
+      vertices.push_back(segment->getEndpoint());
+    }
+  }
+  REQUIRE(vertices.size() > 2);
+  CHECK(vertices.front().distanceTo(RS_Vector(100., 50.)) < 1e-9);
+  CHECK(vertices.back().distanceTo(RS_Vector(140., 60.)) < 1e-9);
+  for (const RS_Vector &v : vertices) {
+    INFO("vertex " << v);
+    CHECK(v.distanceTo(RS_Vector(0., 0.)) > 1.);
+  }
 }

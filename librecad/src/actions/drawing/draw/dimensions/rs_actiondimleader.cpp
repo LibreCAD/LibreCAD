@@ -131,10 +131,16 @@ void RS_ActionDimLeader::onMouseRightButtonRelease(const int status, [[maybe_unu
 }
 
 void RS_ActionDimLeader::keyPressEvent(QKeyEvent* e) {
-    if (getStatus() == SetEndpoint && e->key() == Qt::Key_Enter) {
+    // The main keyboard sends Return; only the keypad sends Enter. Both end
+    // the leader, as they do everywhere else a step finishes on Enter.
+    const bool finishKey = e->key() == Qt::Key_Return || e->key() == Qt::Key_Enter;
+    if (getStatus() == SetEndpoint && finishKey) {
         trigger();
         reset();
         setStatus(SetStartpoint);
+    }
+    else {
+        RS_PreviewActionInterface::keyPressEvent(e);
     }
 }
 

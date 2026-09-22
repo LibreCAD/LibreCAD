@@ -23,13 +23,20 @@
 // RS_Pen, and when it may keep the pen it already holds instead.
 
 #include <cmath>
+#include <filesystem>
 
 #include <catch2/catch_test_macros.hpp>
 
 #include <QApplication>
 #include <QImage>
+#include <QPixmap>
 
+#include "lc_graphicviewport.h"
+#include "lc_imageexporter.h"
+#include "lc_printviewportrenderer.h"
 #include "rs_color.h"
+#include "rs_graphic.h"
+#include "rs_line.h"
 #include "rs_painter.h"
 #include "rs_pen.h"
 #include "rs_settings.h"
@@ -268,4 +275,89 @@ TEST_CASE("RS_Painter re-installs a pen that setPen(RS_Color) replaced", "[gui][
     CHECK(painter.pen().widthF() == 1.0);
     CHECK(painter.pen().capStyle() == Qt::RoundCap);
     CHECK(painter.pen().joinStyle() == Qt::RoundJoin);
+}
+
+// Black and white entities print in contrast to the paper. A Qt::white passed as an
+// RS_Color became flags on an invalid black colour, so dxf2png took its white paper
+// for black and drew them white.
+namespace {
+
+// a black line and a white line
+void addBlackAndWhiteLines(RS_Graphic& graphic) {
+    for (const int y : {0, 100}) {
+        auto* line = new RS_Line(&graphic, RS_Vector(0, y), RS_Vector(100, y));
+        const int shade = y == 0 ? 0 : 255;
+        line->setPen(RS_Pen(RS_Color(shade, shade, shade), RS2::Width00, RS2::SolidLine));
+        graphic.addEntity(line);
+    }
+}
+
+int countPixels(const QImage& image, const QRgb rgb) {
+    int n = 0;
+    for (int y = 0; y < image.height(); ++y) {
+        for (int x = 0; x < image.width(); ++x) {
+            n += (image.pixel(x, y) & 0xffffff) == (rgb & 0xffffff) ? 1 : 0;
+        }
+    }
+    return n;
+}
+
+} // namespace
+
+TEST_CASE("RS_Color from a Qt::GlobalColor is that colour", "[gui][color]") {
+    for (const Qt::GlobalColor qt : {Qt::black, Qt::white, Qt::red, Qt::gray}) {
+        const RS_Color color = [](const RS_Color& c) { return c; }(qt);
+        CHECK(color.isValid());
+        CHECK(color.rgba() == QColor(qt).rgba());
+        CHECK(color.getFlags() == 0);
+    }
+}
+
+TEST_CASE("dxf2png draws black and white entities in black on white paper", "[gui][print]") {
+    (void)application();
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    addBlackAndWhiteLines(graphic);
+
+    // as console_dxf2png.cpp renders
+    QPixmap picture(200, 200);
+    RS_Painter painter(&picture);
+    painter.setBackground(Qt::white);
+    painter.eraseRect(0, 0, 200, 200);
+    LC_GraphicViewport viewport;
+    viewport.setSize(200, 200);
+    viewport.setBorders(10, 10, 10, 10);
+    viewport.setDocument(&graphic);
+    viewport.loadSettings();
+    viewport.zoomAuto(false);
+    LC_PrintViewportRenderer renderer(&viewport, &painter);
+    renderer.loadSettings();
+    renderer.setBackground(Qt::white);
+    renderer.render();
+    painter.end();
+
+    CHECK(countPixels(picture.toImage(), qRgb(0, 0, 0)) > 300);
+}
+
+TEST_CASE("image export draws black and white entities in white on a black background", "[gui][print]") {
+    (void)application();
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    addBlackAndWhiteLines(graphic);
+
+    const auto file = std::filesystem::temp_directory_path() / "lc_imageexport_black.png";
+    LC_ImageExporter::ExportOptions options;
+    options.fileName = QString::fromStdString(file.string());
+    options.format = QStringLiteral("png");
+    options.size = QSize(200, 200);
+    options.borders = QSize(10, 10);
+    options.backgroundBlack = true;
+    options.blackAndWhite = false;
+    REQUIRE(LC_ImageExporter{}.exportToImage(&graphic, options));
+    const QImage image(options.fileName);
+    std::filesystem::remove(file);
+
+    REQUIRE_FALSE(image.isNull());
+    CHECK((image.pixel(0, 0) & 0xffffff) == 0);
+    CHECK(countPixels(image, qRgb(255, 255, 255)) > 300);
 }

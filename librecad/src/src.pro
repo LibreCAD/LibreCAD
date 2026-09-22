@@ -528,6 +528,8 @@ HEADERS += \
     lib/engine/overlays/overlay_box/rs_overlaybox.h \
     lib/engine/document/patterns/rs_pattern.h \
     lib/engine/document/patterns/rs_patternlist.h \
+    lib/engine/lc_colornumbers.h \
+    lib/engine/lc_linetypenames.h \
     lib/engine/rs_pen.h \
     lib/engine/document/entities/rs_point.h \
     lib/engine/document/entities/rs_polyline.h \
@@ -1291,6 +1293,8 @@ SOURCES += \
     lib/properties/lc_property_multi.cpp \
     lib/properties/lc_property_utils.cpp \
     lib/properties/lc_property_view_descriptor.cpp \
+    lib/engine/lc_colornumbers.cpp \
+    lib/engine/lc_linetypenames.cpp \
     lib/engine/rs_color.cpp \
     lib/engine/rs_pen.cpp \
     main/console_command_utils.cpp \

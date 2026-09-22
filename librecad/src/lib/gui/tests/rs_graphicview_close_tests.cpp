@@ -21,6 +21,8 @@
 **
 ****************************************************************************/
 
+#include <memory>
+
 #include <catch2/catch_test_macros.hpp>
 
 #include <QApplication>
@@ -30,6 +32,8 @@
 #include "lc_actioncontext.h"
 #include "lc_eventhandler.h"
 #include "rs_actioninterface.h"
+#include "rs_commandevent.h"
+#include "rs_coordinateevent.h"
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
 #include "rs_settings.h"
@@ -104,6 +108,28 @@ public:
 
 private:
     ActionState& m_state;
+};
+
+// Records the coordinates it gets; a one-shot action finishes on the first, as Set Relative Zero does.
+class CoordinateAction final : public RS_ActionInterface {
+public:
+    CoordinateAction(LC_ActionContext* context, const RS2::ActionType type, const bool oneShot)
+        : RS_ActionInterface("CoordinateAction", context, type)
+        , m_oneShot(oneShot) {
+    }
+    bool isSupportsPredecessorAction() const override { return m_oneShot; }
+    void init(const int status) override { setStatus(status); }
+    void suspendRelativeInputWidget() override {}
+    void resumeRelativeInputWidget() override {}
+    void coordinateEvent(RS_CoordinateEvent*) override {
+        ++coordinates;
+        if (m_oneShot) {
+            setFinished(); // as finish() does, without the widgets the test view lacks
+        }
+    }
+    int coordinates = 0;
+private:
+    bool m_oneShot;
 };
 
 } // namespace
@@ -226,4 +252,37 @@ TEST_CASE("close during mouse move then killAllActions is safe",
     CHECK_NOTHROW(eventHandler->killAllActions());
     view.beginClose(); // double-close
     CHECK(defaultActionState.finishCount == 1);
+}
+
+TEST_CASE("a typed coordinate that finishes an action returns to the action it interrupted",
+          "[gui][eventhandler]") {
+    (void)application();
+
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    TestGraphicView view;
+    view.setDocument(&graphic);
+    LC_ActionContext context;
+    context.setDocumentAndView(&graphic, &view);
+    LC_EventHandler* eventHandler = view.eventHandler();
+    REQUIRE(eventHandler != nullptr);
+
+    const auto line = std::make_shared<CoordinateAction>(&context, RS2::ActionDrawLine, false);
+    eventHandler->setCurrentAction(line);
+    const auto setZero = std::make_shared<CoordinateAction>(&context, RS2::ActionSetRelativeZero, true);
+    eventHandler->setCurrentAction(setZero);
+    QAction setZeroButton;
+    setZeroButton.setCheckable(true);
+    eventHandler->setQAction(&setZeroButton);
+
+    RS_CommandEvent zero(QStringLiteral("400,400"));
+    eventHandler->commandEvent(&zero);
+    CHECK(setZero->coordinates == 1);
+    CHECK_FALSE(setZeroButton.isChecked());
+
+    // the next coordinate is the line's, with no mouse move in between
+    RS_CommandEvent point(QStringLiteral("6,6"));
+    eventHandler->commandEvent(&point);
+    CHECK(setZero->coordinates == 1);
+    CHECK(line->coordinates == 1);
 }

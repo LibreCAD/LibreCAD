@@ -205,6 +205,8 @@ void LC_EventHandler::commandEvent(RS_CommandEvent* e) {
                 if (commandContainsCoordinate) {
                     if (coordinateEvent.isValid()) {
                         current->coordinateEvent(&coordinateEvent);
+                        current.reset(); // release before the finished-check to preserve teardown order
+                        checkLastActionFinishedAndUncheckQAction();
                     }
                     else {
                         RS_DIALOGFACTORY->commandMessage("Expression Syntax Error"); // fixme - sand - remove static

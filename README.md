@@ -47,14 +47,28 @@ $ librecad dxf2svg foo.dxf
 ### Releases
 - [Releases and Prereleases](https://github.com/LibreCAD/LibreCAD/releases)
 
-The macOS build is a universal (Apple Silicon + Intel) app. It is ad-hoc signed
-rather than signed with an Apple Developer ID, so it is not notarized: macOS
-still shows an unidentified-developer warning on first launch. Open it once via
-right-click &rarr; Open, or clear the quarantine attribute
-([#2162](https://github.com/LibreCAD/LibreCAD/issues/2162)):
+The macOS build is a universal (Apple Silicon + Intel) app. CI verifies the app's
+ad-hoc code signature both before packaging and from the mounted DMG, and release
+assets include a `.sha256` file that can be checked with:
 ```bash
-xattr -rc LibreCAD.app
+shasum -a 256 -c LibreCAD-*.dmg.sha256
 ```
+
+Ad-hoc signing does not provide an Apple Developer ID or notarization, so macOS
+blocks the first launch with "Apple could not verify LibreCAD is free of malware".
+Drag LibreCAD to Applications, open it once and dismiss that dialog, then open
+System Settings &rarr; Privacy &amp; Security, scroll to the Security section and
+click "Open Anyway" next to LibreCAD. On macOS 14 and earlier, right-click &rarr;
+Open on the app is enough. If macOS still refuses, clear the download quarantine
+attribute only ([#2162](https://github.com/LibreCAD/LibreCAD/issues/2162)):
+```bash
+xattr -dr com.apple.quarantine /Applications/LibreCAD.app
+```
+
+A different message, "LibreCAD is damaged and can't be opened", means the app's
+code signature is invalid. The v2.2.1.5 Apple Silicon build had that problem
+([#2574](https://github.com/LibreCAD/LibreCAD/issues/2574)); later builds from
+both branches are signed correctly.
 
 
 ## Built with libdxfrw

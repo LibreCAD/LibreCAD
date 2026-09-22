@@ -1,36 +1,31 @@
-#!/bin/bash -x
+#!/bin/bash
 
-# Build dmg installers for OS/X
+# ********************************************************************************
+# This file is part of the LibreCAD project, a 2D CAD program
 #
-# Qt came from a external installation and can be found using the default path
-# You have to make sure it will find that version of qmake, and not the version of macports
-# Compilation will happen with clang, make sure it's your default compiler set : sudo port select gcc none and test with gcc --version
-# This will possible work without macports but I didn't test it (if you have boost installed somewhere)
+# Copyright (C) 2026 LibreCAD.org
+# Copyright (C) 2026 Dongxu Li (github.com/dxli)
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+# USA.
+# ********************************************************************************
 
+set -euo pipefail
 
-OSNAME[7]="Lion"
-OSNAME[8]="MountainLion"
-OSNAME[9]="Mavericks"
-OSNAME[10]="Yosemite"
-OSNAME[11]="ElCapitan"
-OSNAME[12]="Sierra"
+SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd -P)
 
-OSSDK[7]="macosx10.7"
-OSSDK[8]="macosx10.8"
-OSSDK[9]="macosx10.9"
-OSSDK[10]="macosx10.10"
-OSSDK[11]="macosx10.11"
-OSSDK[12]="macosx10.12"
-
-#path of this script file
-SCRIPTPATH="$(dirname "$0")"
-
-for v in $(xcodebuild -showsdks | grep macosx | sed -e 's/.*macosx10\.//g')
-do
-	for t in $(seq 7 $v)
-	do
-		"${SCRIPTPATH}"/build-osx.sh --no-qtpath -qmake_opts="QMAKE_MAC_SDK=${OSSDK[$v]} QMAKE_MACOSX_DEPLOYMENT_TARGET=10.$t"
-		mv -v ${SCRIPTPATH}/../LibreCAD.dmg ${SCRIPTPATH}/../LibreCAD-${OSNAME[$t]}-${OSSDK[$v]}.dmg
-	done
-done
-
+# Compatibility entry point for developers whose Qt installation is found
+# through PATH instead of MacPorts or another fixed prefix.
+exec "$SCRIPT_DIR/build-dmg.sh" --no-qtpath "$@"

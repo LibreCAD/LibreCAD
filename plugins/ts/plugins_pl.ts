@@ -103,7 +103,12 @@ Align will copy rather than move the selected objects.
 If &apos;Specify base points first&apos; is checked,
 Align will prompt for the alignment points in the order
 first base, second base, first target, second target.</source>
-        <translation type="unfinished"></translation>
+        <translation>Jeśli zaznaczono opcję "Zachowaj oryginalne obiekty"
+Polecenie Wyrównanie będzie raczej tworzyć kopie zaznaczonych obiektów, niż je przesuwać .
+
+Jeśli zaznaczono opcję "Określ wpierw punkty bazowe",
+Polecenie Wyrównanie wyświetli monit o wskazanie punktów wyrównania w kolejności
+pierwszy punkt bazowy, drugi punku bazowy, pierwszy punkt docelowy, drugi punkt docelowy.</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="89"/>

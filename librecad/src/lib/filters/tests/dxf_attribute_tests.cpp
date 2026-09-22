@@ -1369,6 +1369,54 @@ TEST_CASE("DXF surface subtypes preserve text ACIS payloads",
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DXF surface keeps AcDbEntity proxy graphics out of the ACIS body",
+          "[dxf][surface][proxy][acis]") {
+  // Group 92 (160 for R2010+) announces proxy graphics that arrive as group 310
+  // before the AcDbModelerGeometry subclass; only the later 310 is ACIS.
+  for (const char *countCode : {"92", "160"}) {
+    const std::string dxf =
+        "0\nSECTION\n2\nENTITIES\n"
+        "0\nPLANESURFACE\n5\n700\n330\n1F\n100\nAcDbEntity\n8\n0\n"
+        + std::string(countCode) + "\n2\n310\nAABB\n"
+        "100\nAcDbModelerGeometry\n70\n1\n310\n41434953\n"
+        "100\nAcDbSurface\n71\n4\n72\n5\n"
+        "0\nENDSEC\n0\nEOF\n";
+
+    SurfaceCapture cap;
+    readDxf(dxf, cap, "lc_surface_proxy_graphics.dxf");
+    REQUIRE(cap.m_callCount == 1);
+    CHECK(cap.m_captured.rawAcisData
+          == std::vector<std::uint8_t>{0x41, 0x43, 0x49, 0x53});
+    CHECK(cap.m_captured.proxyGraphics == std::string("\xAA\xBB", 2));
+    CHECK(cap.m_captured.numProxyGraph == 2);
+    CHECK(cap.m_captured.modelerFormatVersion == 1);
+    CHECK(cap.m_captured.uIsolines == 4);
+    CHECK(cap.m_captured.vIsolines == 5);
+  }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DXF modeler geometry keeps AcDbEntity proxy graphics out of the ACIS body",
+          "[dxf][solid][proxy][acis]") {
+  for (const char *name : {"3DSOLID", "REGION", "BODY"}) {
+    const std::string dxf =
+        std::string("0\nSECTION\n2\nENTITIES\n0\n") + name
+        + "\n5\n710\n330\n1F\n100\nAcDbEntity\n8\n0\n"
+          "92\n2\n310\nAABB\n"
+          "100\nAcDbModelerGeometry\n70\n1\n310\n41434953\n"
+          "0\nENDSEC\n0\nEOF\n";
+
+    ModelerGeometryCapture cap;
+    readDxf(dxf, cap, "lc_modeler_proxy_graphics.dxf");
+    REQUIRE(cap.m_items.size() == 1);
+    CHECK(cap.m_items[0].m_rawBytes
+          == std::vector<std::uint8_t>{0x41, 0x43, 0x49, 0x53});
+    CHECK(cap.m_items[0].proxyGraphics == std::string("\xAA\xBB", 2));
+    CHECK(cap.m_items[0].numProxyGraph == 2);
+  }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("DXF surface writer emits modeler and subtype subclasses",
           "[dxf][surface][subtypes][dxf_roundtrip]") {
   const auto path = std::filesystem::temp_directory_path() /

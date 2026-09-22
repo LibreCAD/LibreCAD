@@ -167,9 +167,13 @@ public:
         return m_lineType==p.m_lineType && m_width==p.m_width && m_color==p.m_color;
     }
 
-    bool isSameAs(const RS_Pen& p, const double patternOffset) const {
+    /**
+     * Whether p matches this pen. patternOffset is compared with this pen's dash
+     * offset only if comparePatternOffset is set.
+     */
+    bool isSameAs(const RS_Pen& p, const double patternOffset, const bool comparePatternOffset) const {
         return m_lineType == p.m_lineType && m_width == p.m_width && m_color == p.m_color && LC_LineMath::isSameLength(m_alpha, p.m_alpha) &&
-            LC_LineMath::isSameLength(m_dashOffset, patternOffset) && !getFlag(RS2::FlagInvalid);
+            (!comparePatternOffset || LC_LineMath::isSameLength(m_dashOffset, patternOffset)) && !getFlag(RS2::FlagInvalid);
     }
 
     void updateBy(const RS_Pen & p){

@@ -32,6 +32,7 @@
 #include <QPoint>
 #include <QPointingDevice>
 #include <QTimer>
+#include <cmath>
 #include <cstdlib>
 #include <iostream>
 
@@ -1040,7 +1041,8 @@ void QG_GraphicView::wheelEvent(QWheelEvent* e) {
             // todo - are we REALLY need it there? alternatively, zoom may be part of this class)
             auto zoomAction = std::make_unique<RS_ActionZoomIn>(m_actionContext, zoomDirection, RS2::Both, &zoomCenter,m_scrollZoomFactor);
             zoomAction->trigger();*/
-            doZoom(zoomDirection, zoomCenter, m_scrollZoomFactor);
+            const double zoomFactor = std::pow(m_scrollZoomFactor, std::abs(angleDeltaY) / 120.0);
+            doZoom(zoomDirection, zoomCenter, zoomFactor);
         }
     }
     redraw();

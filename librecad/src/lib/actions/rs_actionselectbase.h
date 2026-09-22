@@ -34,7 +34,6 @@
 class RS_ActionSelectBase:public LC_OverlayBoxAction {
     Q_OBJECT
 public:
-    void keyReleaseEvent(QKeyEvent *e) override;
     void keyPressEvent(QKeyEvent *e) override;
 protected:
     const QList<RS2::EntityType> m_catchForSelectionEntityTypes;

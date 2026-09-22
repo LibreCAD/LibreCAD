@@ -1006,8 +1006,12 @@ set (SHARED_SOURCES
      librecad/src/lib/engine/document/views/lc_view.h
      librecad/src/lib/engine/document/views/lc_viewslist.cpp
      librecad/src/lib/engine/document/views/lc_viewslist.h
+     librecad/src/lib/engine/lc_colornumbers.cpp
+     librecad/src/lib/engine/lc_colornumbers.h
      librecad/src/lib/engine/lc_defaults.h
      librecad/src/lib/engine/lc_drawable.h
+     librecad/src/lib/engine/lc_linetypenames.cpp
+     librecad/src/lib/engine/lc_linetypenames.h
      librecad/src/lib/engine/overlays/angles_base/lc_overlayanglesbasemark.cpp
      librecad/src/lib/engine/overlays/angles_base/lc_overlayanglesbasemark.h
      librecad/src/lib/engine/overlays/crosshair/lc_crosshair.cpp
@@ -2478,6 +2482,8 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/entities/tests/lc_textbidi_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_mtext_bidi_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_text_bidi_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/rs_text_alignment_tests.cpp
+        librecad/src/lib/engine/tests/rs_pen_tests.cpp
         librecad/src/lib/actions/tests/lc_snappercatchtests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_round_tests.cpp
         librecad/src/lib/filters/tests/dwg_pre_r13_codepage_tests.cpp
@@ -2498,6 +2504,7 @@ if (BUILD_TESTS)
         librecad/src/lib/creation/tests/lc_action_draw_fast_tests.cpp
         librecad/src/lib/creation/tests/lc_action_draw_polyline_tests.cpp
         librecad/src/lib/creation/tests/lc_action_draw_spline_tests.cpp
+        librecad/src/cmd/tests/rs_commands_tests.cpp
         librecad/src/lib/engine/undo/tests/rs_undo_tests.cpp
         librecad/src/lib/filters/tests/dwg_entity_encode_round_trip_tests.cpp
         librecad/src/lib/filters/tests/dwg_header_encode_round_trip_tests.cpp
@@ -2553,6 +2560,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/dxf_line_width_mapping_tests.cpp
         librecad/src/lib/filters/tests/dxf_layer0_declared_tests.cpp
         librecad/src/lib/filters/tests/dxf_unknown_version_tests.cpp
+        librecad/src/lib/filters/tests/dxf_closed_spline_tests.cpp
         librecad/src/lib/filters/tests/byte_identity_harness.cpp
         librecad/src/lib/filters/tests/dxf_corpus_tests.cpp
         librecad/src/lib/filters/tests/i18n_codec_tests.cpp
@@ -2565,6 +2573,10 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/settings/tests/rs_settings_migration_tests.cpp
         librecad/src/lib/gui/tests/rs_graphicview_close_tests.cpp
         librecad/src/lib/gui/tests/rs_painter_tests.cpp
+        librecad/src/actions/drawing/draw/dimensions/tests/rs_actiondimleader_tests.cpp
+        librecad/src/ui/dock_widgets/command_line/tests/qg_commandwidget_tests.cpp
+        librecad/src/plugins/tests/qc_actiongetselect_tests.cpp
+        librecad/src/lib/gui/tests/lc_graphicviewrenderer_tests.cpp
         librecad/src/ui/view/tests/qg_graphicview_cursor_tests.cpp
         librecad/src/main/tests/console_command_utils_tests.cpp
         librecad/src/main/tests/lc_pdfprintlooptests.cpp
