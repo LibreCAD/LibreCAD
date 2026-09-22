@@ -722,13 +722,40 @@ RS_Vector RS_Spline::doGetNearestEndpoint(const RS_Vector &coord, double *dist, 
   }
   const double toStart = coord.distanceTo(start);
   const double toEnd = coord.distanceTo(end);
+  RS_Vector nearest = (toStart <= toEnd) ? start : end;
+  double nearestDistance = std::min(toStart, toEnd);
+  // and its corners: where a knot of full multiplicity breaks the tangent, as
+  // at the vertices of an offset polyline
+  const std::vector<double> breaks = getBreakParameters();
+  const std::vector<double> &knots = m_data.knotslist;
+  for (size_t k = 1; k + 1 < breaks.size(); ++k) {
+    if (static_cast<size_t>(std::count(knots.begin(), knots.end(), breaks[k])) < m_data.degree) {
+      continue;
+    }
+    LC_CurveJet before;
+    LC_CurveJet after;
+    if (!tryEvaluateJet(breaks[k], LC_CurveEvaluationSide::Left, before) ||
+        !tryEvaluateJet(breaks[k], LC_CurveEvaluationSide::Right, after)) {
+      continue;
+    }
+    const double turn = std::atan2(std::abs(before.first.x * after.first.y - before.first.y * after.first.x),
+                                   RS_Vector::dotP(before.first, after.first));
+    if (!(turn > RS_TOLERANCE_ANGLE)) {
+      continue; // smooth, or no tangent to compare
+    }
+    const double distance = coord.distanceTo(before.point);
+    if (distance < nearestDistance) {
+      nearest = before.point;
+      nearestDistance = distance;
+    }
+  }
   if (dist != nullptr) {
-    *dist = std::min(toStart, toEnd);
+    *dist = nearestDistance;
   }
   if (entity != nullptr) {
     *entity = const_cast<RS_Spline *>(this);
   }
-  return (toStart <= toEnd) ? start : end;
+  return nearest;
 }
 RS_Vector RS_Spline::doGetNearestCenter(const RS_Vector &, double *, RS_Entity** centerEntity) const {
   return RS_Vector(false);

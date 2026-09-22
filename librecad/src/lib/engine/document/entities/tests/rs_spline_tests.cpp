@@ -555,6 +555,28 @@ TEST_CASE("RS_Spline open endpoints are the curve ends; closed has none", "[spli
     CHECK_FALSE(closed.getNearestEndpoint(RS_Vector{0, 0}, nullptr, &dist).valid);
 }
 
+TEST_CASE("RS_Spline endpoints include its corners, not its smooth joints", "[spline][jet][RS_Spline]") {
+    // a polyline as a degree-1 spline: every vertex where it turns is a corner
+    const RS_Spline polyline = makeSpline(1, {{0, 0}, {4, 0}, {4, 3}, {6, 3}}, {0, 0, 1, 2, 3, 3});
+    double dist = 0.0;
+    CHECK(compareVector(polyline.getNearestEndpoint(RS_Vector{3.8, 0.3}, nullptr, &dist), RS_Vector{4, 0}, 1e-12));
+    CHECK(dist == Approx(RS_Vector{3.8, 0.3}.distanceTo(RS_Vector{4, 0})));
+    CHECK(compareVector(polyline.getNearestEndpoint(RS_Vector{4.1, 2.8}), RS_Vector{4, 3}, 1e-12));
+    CHECK(compareVector(polyline.getNearestEndpoint(RS_Vector{5.9, 3.2}), RS_Vector{6, 3}, 1e-12));
+    // a vertex on a straight run is no corner
+    const RS_Spline straight = makeSpline(1, {{0, 0}, {2, 0}, {5, 0}}, {0, 0, 1, 2, 2});
+    CHECK(compareVector(straight.getNearestEndpoint(RS_Vector{2, 0.1}), RS_Vector{0, 0}, 1e-12));
+
+    // two cubic pieces at a knot of multiplicity 3: a corner where the tangent turns
+    const RS_Spline cornered =
+        makeSpline(3, {{0, 0}, {1, 1}, {2, 1}, {3, 0}, {4, 1}, {5, 1}, {6, 0}}, {0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2});
+    CHECK(compareVector(cornered.getNearestEndpoint(RS_Vector{3.1, 0.2}), RS_Vector{3, 0}, 1e-12));
+    // and none where the handles line up
+    const RS_Spline smooth =
+        makeSpline(3, {{0, 0}, {1, 1}, {2, 1}, {3, 1}, {4, 1}, {5, 1}, {6, 0}}, {0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2});
+    CHECK(compareVector(smooth.getNearestEndpoint(RS_Vector{3.0, 1.1}), RS_Vector{0, 0}, 1e-12));
+}
+
 TEST_CASE("RS_Spline::findDerivativeZeros finds two roots in one knot span", "[spline][jet]") {
     // y'(t) = 9 (6t^2 - 6t + 1): roots 1/2 -+ sqrt(3)/6. x'(t) = 3 has none.
     const RS_Spline spline = makeSpline(3, g_bezier, {0, 0, 0, 0, 1, 1, 1, 1});
