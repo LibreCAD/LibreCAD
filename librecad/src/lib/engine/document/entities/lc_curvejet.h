@@ -64,6 +64,15 @@ struct LC_CurveJetBounds {
     LC_Interval dy;
     LC_Interval ddx;
     LC_Interval ddy;
+    /**
+     * Optional enclosures of |C'|^2 and C' x C'' from the Bezier coefficients
+     * of the products themselves, which the curve may fill in; invalid when
+     * it does not. Next to a point where the tangent vanishes C' and C'' are
+     * all but parallel, and the products of the component intervals cannot
+     * resolve the sign of the curvature, however small the box.
+     */
+    LC_Interval speedSquaredProduct;
+    LC_Interval crossProduct;
 
     bool isValid() const {
         return x.isValid() && y.isValid() && dx.isValid() && dy.isValid() && ddx.isValid() &&
@@ -72,12 +81,12 @@ struct LC_CurveJetBounds {
 
     /** |C'|^2: excludes zero only where the tangent provably exists. */
     LC_Interval speedSquared() const {
-        return sqr(dx) + sqr(dy);
+        return narrowest(sqr(dx) + sqr(dy), speedSquaredProduct);
     }
 
     /** C' x C'': signed, positive where the curve turns left. */
     LC_Interval cross() const {
-        return dx * ddy - dy * ddx;
+        return narrowest(dx * ddy - dy * ddx, crossProduct);
     }
 
     /**
@@ -89,6 +98,15 @@ struct LC_CurveJetBounds {
     LC_Interval offsetFactorNumerator(const double signedDistance) const {
         const LC_Interval s2 = speedSquared();
         return s2 * sqrt(s2) - LC_Interval::point(signedDistance) * cross();
+    }
+
+private:
+    /** The common part of two enclosures of one quantity, or @p a alone without a valid @p b. */
+    static LC_Interval narrowest(const LC_Interval& a, const LC_Interval& b) {
+        if (!b.isValid() || !a.isValid() || b.hi() < a.lo() || a.hi() < b.lo()) {
+            return a;
+        }
+        return LC_Interval::hull(std::max(a.lo(), b.lo()), std::min(a.hi(), b.hi()));
     }
 };
 

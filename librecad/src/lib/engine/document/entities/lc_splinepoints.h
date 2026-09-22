@@ -274,7 +274,8 @@ public:
      * Conservative enclosures of the point and its first and second derivatives
      * over the parameter box [a, b], which must lie inside one segment. They are
      * formed exactly from the segment's Bezier control points over the box, with
-     * outward-rounded arithmetic.
+     * outward-rounded arithmetic; so are |C'|^2 and C' x C'', from the Bezier
+     * coefficients of the products (speedSquaredProduct, crossProduct).
      * @return false for a box outside the domain or across a join.
      */
     bool tryBoundJet(double a, double b, LC_CurveJetBounds& bounds) const;

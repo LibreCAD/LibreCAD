@@ -66,7 +66,20 @@ public:
     /** The domain is [front, back]; the curve is smooth between consecutive values. */
     virtual const std::vector<double>& breaks() const = 0;
     virtual bool jet(double t, LC_CurveEvaluationSide side, LC_CurveJet& out) const = 0;
+    /** Conservative bounds over [a, b], inside one span; see boundJetWithProducts(). */
     virtual bool boundJet(double a, double b, LC_CurveJetBounds& out) const = 0;
+    /**
+     * boundJet() with the curve's enclosures of |C'|^2 and C' x C'' from the
+     * products' Bezier coefficients, where it has them; the entities'
+     * adapters leave those out of boundJet(). Only next to a vanishing tangent
+     * do the components fail to resolve the curvature's sign; elsewhere the
+     * products change which near-tangent contacts the intersection query
+     * resolves, and so how a regular source is trimmed, without proving
+     * anything the components cannot.
+     */
+    virtual bool boundJetWithProducts(const double a, const double b, LC_CurveJetBounds& out) const {
+        return boundJet(a, b, out);
+    }
     /** Points whose convex hull contains the curve. */
     virtual const std::vector<RS_Vector>& hull() const = 0;
     /** True, with its ends, when the curve is exactly one straight segment. */
@@ -79,6 +92,13 @@ public:
         return false;
     }
 };
+
+/** @p bounded, with @p out's product enclosures dropped (see OffsetSource::boundJetWithProducts()). */
+bool withoutProducts(const bool bounded, LC_CurveJetBounds& out) {
+    out.speedSquaredProduct = LC_Interval{};
+    out.crossProduct = LC_Interval{};
+    return bounded;
+}
 
 class SplineSource final : public OffsetSource {
 public:
@@ -101,6 +121,10 @@ public:
     }
 
     bool boundJet(const double a, const double b, LC_CurveJetBounds& out) const override {
+        return withoutProducts(m_spline.tryBoundJet(a, b, out), out);
+    }
+
+    bool boundJetWithProducts(const double a, const double b, LC_CurveJetBounds& out) const override {
         return m_spline.tryBoundJet(a, b, out);
     }
 
@@ -159,6 +183,10 @@ public:
     }
 
     bool boundJet(const double a, const double b, LC_CurveJetBounds& out) const override {
+        return withoutProducts(m_spline.tryBoundJet(a, b, out), out);
+    }
+
+    bool boundJetWithProducts(const double a, const double b, LC_CurveJetBounds& out) const override {
         return m_spline.tryBoundJet(a, b, out);
     }
 

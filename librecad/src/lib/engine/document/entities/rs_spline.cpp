@@ -308,16 +308,12 @@ LC_Interval hullOf(const LC_Interval *values, const size_t count) {
 }
 
 /**
- * The hull of the Bezier net over [a, b] of a homogeneous B-spline segment of
- * degree q on knot span s with control points pts[0 .. q]: it contains every
- * value the segment takes there (convex hull property).
+ * The Bezier net over [a, b], net[0 .. q], of a homogeneous B-spline segment of
+ * degree q on knot span s with control points pts[0 .. q].
  */
 template <typename Knot>
-HomogeneousBox boundSegment(const HomogeneousBox *pts, const size_t q, const size_t s, const double a,
-                            const double b, const Knot &knot) {
-  LC_Interval xs[g_maxDegree + 1];
-  LC_Interval ys[g_maxDegree + 1];
-  LC_Interval ws[g_maxDegree + 1];
+void segmentNet(const HomogeneousBox *pts, const size_t q, const size_t s, const double a, const double b,
+                const Knot &knot, HomogeneousBox *net) {
   for (size_t m = 0; m <= q; ++m) {
     double u[g_maxDegree];
     for (size_t k = 0; k < q; ++k) {
@@ -325,12 +321,50 @@ HomogeneousBox boundSegment(const HomogeneousBox *pts, const size_t q, const siz
     }
     HomogeneousBox work[g_maxDegree + 1];
     std::copy(pts, pts + q + 1, work);
-    const HomogeneousBox point = blossom(work, q, s, u, knot);
-    xs[m] = point.x;
-    ys[m] = point.y;
-    ws[m] = point.w;
+    net[m] = blossom(work, q, s, u, knot);
+  }
+}
+
+/** The hull of a Bezier net: it contains every value the segment takes (convex hull property). */
+HomogeneousBox hullOfNet(const HomogeneousBox *net, const size_t q) {
+  LC_Interval xs[g_maxDegree + 1];
+  LC_Interval ys[g_maxDegree + 1];
+  LC_Interval ws[g_maxDegree + 1];
+  for (size_t m = 0; m <= q; ++m) {
+    xs[m] = net[m].x;
+    ys[m] = net[m].y;
+    ws[m] = net[m].w;
   }
   return {hullOf(xs, q + 1), hullOf(ys, q + 1), hullOf(ws, q + 1)};
+}
+
+double binomial(const size_t n, const size_t k) {
+  double c = 1.0;
+  for (size_t i = 1; i <= k; ++i) {
+    c = c * static_cast<double>(n + 1 - i) / static_cast<double>(i); // exact for the small n here
+  }
+  return c;
+}
+
+/**
+ * The hull of the Bezier coefficients over a box of the product of two
+ * polynomials given by their nets there, f[0 .. n] and g[0 .. m]:
+ * B_i^n B_j^m = C(n, i) C(m, j) / C(n + m, i + j) B_(i+j)^(n+m).
+ * @p product(i, j) is the product of f[i] and g[j].
+ */
+template <typename Product>
+LC_Interval productHull(const size_t n, const size_t m, const Product &product) {
+  LC_Interval coefficients[2 * g_maxDegree + 1];
+  for (size_t k = 0; k <= n + m; ++k) {
+    LC_Interval sum = LC_Interval::point(0.0);
+    for (size_t i = (k > m) ? k - m : 0; i <= std::min(k, n); ++i) {
+      const LC_Interval weight = LC_Interval::point(binomial(n, i) * binomial(m, k - i)) /
+                                 LC_Interval::point(binomial(n + m, k));
+      sum = sum + weight * product(i, k - i);
+    }
+    coefficients[k] = sum;
+  }
+  return hullOf(coefficients, n + m + 1);
 }
 } // namespace
 
@@ -1698,11 +1732,20 @@ bool RS_Spline::tryBoundJet(const double a, const double b, LC_CurveJetBounds &b
     h2[j] = scaled(LC_Interval::point(static_cast<double>(p - 1)) / gap, difference(h1[j + 1], h1[j]));
   }
   // a derivative spline's knots are the curve's without the first (and last)
-  const HomogeneousBox value = boundSegment(h, p, span, a, b, [&U](const size_t k) { return U[k]; });
-  const HomogeneousBox first = boundSegment(h1, p - 1, span - 1, a, b, [&U](const size_t k) { return U[k + 1]; });
+  HomogeneousBox valueNet[g_maxDegree + 1];
+  HomogeneousBox firstNet[g_maxDegree];
+  HomogeneousBox secondNet[g_maxDegree];
+  segmentNet(h, p, span, a, b, [&U](const size_t k) { return U[k]; }, valueNet);
+  segmentNet(h1, p - 1, span - 1, a, b, [&U](const size_t k) { return U[k + 1]; }, firstNet);
   const HomogeneousBox zero{LC_Interval::point(0.0), LC_Interval::point(0.0), LC_Interval::point(0.0)};
-  const HomogeneousBox second =
-      (p < 2) ? zero : boundSegment(h2, p - 2, span - 2, a, b, [&U](const size_t k) { return U[k + 2]; });
+  if (p < 2) {
+    secondNet[0] = zero;
+  } else {
+    segmentNet(h2, p - 2, span - 2, a, b, [&U](const size_t k) { return U[k + 2]; }, secondNet);
+  }
+  const HomogeneousBox value = hullOfNet(valueNet, p);
+  const HomogeneousBox first = hullOfNet(firstNet, p - 1);
+  const HomogeneousBox second = hullOfNet(secondNet, (p < 2) ? 0 : p - 2);
   const LC_Interval &ax = value.x;
   const LC_Interval &ay = value.y;
   const LC_Interval &ax1 = first.x;
@@ -1715,6 +1758,16 @@ bool RS_Spline::tryBoundJet(const double a, const double b, LC_CurveJetBounds &b
     // a polynomial curve: C = A / w with constant w
     const LC_Interval w = LC_Interval::point(m_data.weights[span - p]);
     result = {ax / w, ay / w, ax1 / w, ay1 / w, ax2 / w, ay2 / w};
+    // |C'|^2 and C' x C'' from the products of the derivatives' nets, which
+    // cancel only by rounding where C' and C'' are parallel
+    const LC_Interval w2 = w * w;
+    const size_t q2 = (p < 2) ? 0 : p - 2;
+    result.speedSquaredProduct = productHull(p - 1, p - 1, [&](const size_t i, const size_t j) {
+      return (firstNet[i].x * firstNet[j].x + firstNet[i].y * firstNet[j].y) / w2;
+    });
+    result.crossProduct = productHull(p - 1, q2, [&](const size_t i, const size_t j) {
+      return (firstNet[i].x * secondNet[j].y - firstNet[i].y * secondNet[j].x) / w2;
+    });
   } else {
     const LC_Interval &w = value.w;
     const LC_Interval &w1 = first.w;
