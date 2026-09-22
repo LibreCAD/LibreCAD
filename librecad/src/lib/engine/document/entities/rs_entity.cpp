@@ -895,22 +895,11 @@ void RS_Entity::setLayer(RS_Layer* l) {
  */
 void RS_Entity::setLayerToActive() {
     const RS_Graphic* graphic = getGraphic();
-    if (graphic != nullptr) {
-        m_layer = graphic->getActiveLayer();
-    }
-    else {
-        m_layer = nullptr;
-    }
+    setLayer(graphic != nullptr ? graphic->getActiveLayer() : nullptr);
 }
 
 void RS_Entity::setPenAndLayerToActive() {
-    const auto graphic = getGraphic();
-    if (graphic != nullptr) {
-        m_layer = graphic->getActiveLayer();
-    }
-    else {
-        m_layer = nullptr;
-    }
+    setLayerToActive();
     const auto doc = getDocument();
     if (doc != nullptr) {
         m_pImpl->pen = doc->getActivePen();

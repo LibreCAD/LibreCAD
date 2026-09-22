@@ -76,6 +76,20 @@ RS_Entity* RS_Polyline::clone() const {
     return p;
 }
 
+void RS_Polyline::setLayer(const QString& name) {
+    RS_Entity::setLayer(name);
+    setLayer(getLayer(false));
+}
+
+void RS_Polyline::setLayer(RS_Layer* layer) {
+    RS_Entity::setLayer(layer);
+    for (RS_Entity* entity : *this) {
+        if (entity != nullptr) {
+            entity->setLayer(nullptr);
+        }
+    }
+}
+
 /**
  * Removes the last vertex of this polyline.
  */
@@ -229,7 +243,7 @@ std::unique_ptr<RS_Entity> RS_Polyline::createVertex(const RS_Vector& v, const d
     }
     // entity->setSelectionFlag(isSelected());  // fixme - what for? entity is part of the polyline, selected status is from polyline..
     // entity->setPen(RS_Pen(RS2::FlagInvalid));
-    // entity->setLayer(nullptr);
+    entity->setLayer(nullptr);
     return entity;
 }
 
