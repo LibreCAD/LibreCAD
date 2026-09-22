@@ -82,6 +82,7 @@ class ParallelThroughProbe final : public LC_ActionDrawLineParallelThrough {
 public:
     explicit ParallelThroughProbe(LC_ActionContext* context) : LC_ActionDrawLineParallelThrough(context) {}
 
+    using LC_ActionDrawLineParallelThrough::SetEntity;
     using LC_ActionDrawLineParallelThrough::SetPos;
     using LC_ActionDrawLineParallelThrough::m_entity;
     using LC_ActionDrawLineParallelThrough::onMouseMoveEvent;
@@ -414,4 +415,35 @@ TEST_CASE("Parallel Through previews every piece of a parabola's offset", "[curv
         previewed += entity->rtti() == RS2::EntitySpline ? 1 : 0;
     }
     CHECK(previewed == pieces);
+}
+
+TEST_CASE("Parallel Through takes a spline, not a line it is drawn with, and passes through the point",
+          "[curve-offset][action]") {
+    OffsetFixture f;
+    RS_Spline* spline = f.addSCurve();
+    ParallelThroughProbe action(&f.m_context);
+    const LC_MouseEvent hover = eventAt(0.2, 0.1); // beside its first drawn line
+    action.onMouseMoveEvent(ParallelThroughProbe::SetEntity, &hover);
+    CHECK(action.m_entity == spline);
+
+    // through (6, 0.5), measured from the curve: the parallel passes through it
+    const RS_Vector through{6.0, 0.5};
+    QList<RS_Entity*> created;
+    RS_Creation::createParallelThrough(through, 1, spline, false, false, created);
+    REQUIRE_FALSE(created.empty());
+    double nearest = RS_MAXDOUBLE;
+    for (const RS_Entity* e : created) {
+        REQUIRE(e->rtti() == RS2::EntitySpline);
+        const auto* piece = static_cast<const RS_Spline*>(e);
+        double t0 = 0.0;
+        double t1 = 0.0;
+        REQUIRE(piece->getParameterDomain(t0, t1));
+        for (int k = 0; k <= 4000; ++k) {
+            LC_CurveJet jet;
+            REQUIRE(piece->tryEvaluateJet(t0 + (t1 - t0) * k / 4000.0, LC_CurveEvaluationSide::Interior, jet));
+            nearest = std::min(nearest, jet.point.distanceTo(through));
+        }
+    }
+    qDeleteAll(created);
+    CHECK(nearest < 1e-4);
 }

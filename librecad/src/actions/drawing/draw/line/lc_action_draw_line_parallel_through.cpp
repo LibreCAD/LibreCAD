@@ -35,9 +35,17 @@
 // fixme - sand - consider relaxing existing restrictions, if any - and use no-restrictions mode for this action.
 
 namespace {
+    /** A spline is drawn as lines, one of which ResolveAll catches: the parallel is the spline's. */
+    RS_Entity* splineOrSelf(RS_Entity* entity) {
+        if (entity != nullptr && entity->getParent() != nullptr && entity->getParent()->rtti() == RS2::EntitySpline) {
+            return entity->getParent();
+        }
+        return entity;
+    }
+
     //this holds a list of entity types which supports tangent
     const auto g_supportedEntityTypes = EntityTypeList{
-                {RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine,  RS2::EntityParabola/*, RS2::EntitySplinePoints*/}
+                {RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine,  RS2::EntityParabola, RS2::EntitySpline/*, RS2::EntitySplinePoints*/}
     };
 }
 
@@ -98,7 +106,10 @@ void LC_ActionDrawLineParallelThrough::onMouseMoveEvent([[maybe_unused]] const i
     const RS_Vector& snap = e->snapPoint;
     switch (status) {
         case SetEntity: {
-            const auto entity = catchAndDescribe(e, RS2::ResolveAll);
+            const auto entity = splineOrSelf(catchEntityByEvent(e, RS2::ResolveAll));
+            if (entity != nullptr) {
+                prepareEntityDescription(entity, RS2::EntityDescriptionLevel::DescriptionCatched);
+            }
             if (entity != nullptr && g_supportedEntityTypes.contains(entity->rtti())) {
                 m_entity = entity;
                 highlightHover(m_entity);
@@ -153,7 +164,7 @@ void LC_ActionDrawLineParallelThrough::onMouseMoveEvent([[maybe_unused]] const i
 void LC_ActionDrawLineParallelThrough::onMouseLeftButtonRelease(const int status, const LC_MouseEvent* e) {
     switch (status) {
         case SetEntity: {
-            const auto entity = catchEntityByEvent(e, RS2::ResolveAll);
+            const auto entity = splineOrSelf(catchEntityByEvent(e, RS2::ResolveAll));
             if (entity != nullptr && g_supportedEntityTypes.contains(entity->rtti())) {
                 m_entity = entity;
                 setStatus(SetPos);

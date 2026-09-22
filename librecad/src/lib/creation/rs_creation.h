@@ -63,7 +63,7 @@ namespace RS_Creation {
     void createParallelLine(const RS_Vector& coord, double distance, int number, const RS_Line* e, bool symmetric, QList<RS_Entity*>& createdEntities);
     void createParallelArc(const RS_Vector& coord, double distance, int number, RS_Arc* e, QList<RS_Entity*>& createdEntities);
     void createParallelCircle(const RS_Vector& coord, double distance, int number, const RS_Circle* e, QList<RS_Entity*>& createdEntities);
-    void createParallelSplinePoints(const RS_Vector& coord, double distance, int number, const LC_SplinePoints* e, QList<RS_Entity*>& createdEntities);
+    void createParallelCurve(const RS_Vector& coord, double distance, int number, const RS_Entity* e, QList<RS_Entity*>& createdEntities);
     bool createBisector(const RS_Vector& coord1, const RS_Vector& coord2, double length, int num, const RS_Line* l1, const RS_Line* l2, QList<RS_Entity*>& createdLines);
     RS_Line* createTangent1(const RS_Vector& coord, const RS_Vector& point, const RS_Entity* circle, RS_Vector& tangentPoint, RS_Vector& altTangentPoint);
     /**

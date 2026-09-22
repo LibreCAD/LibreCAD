@@ -386,6 +386,7 @@ LC_OffsetSideResolution resolveSideImpl(const OffsetSource& source, const RS_Vec
     }
     result.status = LC_CurveOffsetStatus::Ok;
     result.side = sign > 0 ? LC_CurveOffsetSide::Left : LC_CurveOffsetSide::Right;
+    result.distance = best;
     return result;
 }
 

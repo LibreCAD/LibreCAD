@@ -113,7 +113,16 @@ bool LC_ActionDrawLineParallel::doTriggerModifications(LC_DocumentModificationBa
 void LC_ActionDrawLineParallel::onMouseMoveEvent(const int status, const LC_MouseEvent* e) {
     *m_coord = {e->graphPoint}; // copy is needed there!
 
-    m_entity = catchAndDescribe(e, RS2::ResolveAll);
+    // A spline is drawn as lines, one of which ResolveAll catches: the
+    // parallel is the spline's, not that line's.
+    m_entity = catchEntityByEvent(e, RS2::ResolveAll);
+    if (m_entity != nullptr && m_entity->getParent() != nullptr &&
+        m_entity->getParent()->rtti() == RS2::EntitySpline) {
+        m_entity = m_entity->getParent();
+    }
+    if (m_entity != nullptr) {
+        prepareEntityDescription(m_entity, RS2::EntityDescriptionLevel::DescriptionCatched);
+    }
 
     switch (status) {
         case SetEntity: {

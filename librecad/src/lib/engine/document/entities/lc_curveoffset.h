@@ -234,6 +234,8 @@ struct LC_OffsetSideResolution {
     LC_CurveOffsetSide side{LC_CurveOffsetSide::FromDirectionPoint};
     /** The source parameters nearest to the direction point. */
     std::vector<double> occurrences;
+    /** How far the direction point is from the source, when status is Ok. */
+    double distance{std::numeric_limits<double>::quiet_NaN()};
 };
 
 namespace LC_CurveOffset {
