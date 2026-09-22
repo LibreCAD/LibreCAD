@@ -127,7 +127,7 @@ void DL_Jww::CreateSen(DL_CreationInterface* creationInterface, CDataSen& DSen)
 	else
 		width = DSen.m_nPenWidth;
 	int color = colTable[DSen.m_nPenColor > ArraySize(colTable)-1 ? ArraySize(colTable)-1 : DSen.m_nPenColor];
-	attrib = DL_Attributes(values[8],	  // layer
+	attrib = DL_Attributes("",	  // layer
 			       color,	      // color
 			       width,	      // width
 			       lTable[DSen.m_nPenStyle > ArraySize(lTable)-1 ? ArraySize(lTable)-1 : DSen.m_nPenStyle]);	  // linetype
@@ -211,7 +211,7 @@ void DL_Jww::CreateEnko(DL_CreationInterface* creationInterface, CDataEnko& DEnk
 	else
 		width = DEnko.m_nPenWidth;
 	int color = colTable[DEnko.m_nPenColor > ArraySize(colTable)-1 ? ArraySize(colTable)-1 : DEnko.m_nPenColor];
-	attrib = DL_Attributes(values[8],	  // layer
+	attrib = DL_Attributes("",	  // layer
 			       color,	      // color
 			       width,	      // width
 			       lTable[DEnko.m_nPenStyle > ArraySize(lTable)-1 ? ArraySize(lTable)-1 : DEnko.m_nPenStyle]);	  // linetype
@@ -405,7 +405,7 @@ void DL_Jww::CreateTen(DL_CreationInterface* creationInterface, CDataTen& DTen)
 	else
 		width = DTen.m_nPenWidth;
 	int color = colTable[DTen.m_nPenColor > ArraySize(colTable)-1 ? ArraySize(colTable)-1 : DTen.m_nPenColor];
-	attrib = DL_Attributes(values[8],	  // layer
+	attrib = DL_Attributes("",	  // layer
 			       color,	      // color
 			       width,	      // width
 			       lTable[DTen.m_nPenStyle > ArraySize(lTable)-1 ? ArraySize(lTable)-1 : DTen.m_nPenStyle]);	  // linetype
@@ -458,7 +458,7 @@ void DL_Jww::CreateMoji(DL_CreationInterface* creationInterface, CDataMoji& DMoj
 	else
 		width = DMoji.m_nPenWidth;
 	int color = colTable[DMoji.m_nPenColor > ArraySize(colTable)-1 ? ArraySize(colTable)-1 : DMoji.m_nPenColor];
-	attrib = DL_Attributes(values[8],	  // layer
+	attrib = DL_Attributes("",	  // layer
 			       color,	      // color
 			       width,	      // width
 			       lTable[DMoji.m_nPenStyle > ArraySize(lTable)-1 ? ArraySize(lTable)-1 : DMoji.m_nPenStyle]);	  // linetype
@@ -593,7 +593,7 @@ void DL_Jww::CreateSunpou(DL_CreationInterface* creationInterface, CDataSunpou& 
 	else
 		width = DSunpou.m_nPenWidth;
 	int color = colTable[DSunpou.m_nPenColor > ArraySize(colTable)-1 ? ArraySize(colTable)-1 : DSunpou.m_nPenColor];
-	attrib = DL_Attributes(values[8],	  // layer
+	attrib = DL_Attributes("",	  // layer
 			       color,	      // color
 			       width,	      // width
 			       lTable[DSunpou.m_nPenStyle > ArraySize(lTable)-1 ? ArraySize(lTable)-1 : DSunpou.m_nPenStyle]);	  // linetype
