@@ -1026,6 +1026,27 @@ TEST_CASE("A cubic with a doubled control point trims through it along the tange
     }
 }
 
+TEST_CASE("Where the tangent vanishes on both sides of a corner, the curl before it is trimmed at its arc",
+          "[curve-offset][trim][singular][kink]") {
+    // The curve runs into (0, 0) with both handles there, and on along the x
+    // axis: its tangent vanishes on both sides of the corner, a left turn.
+    // Just before it the curve curls into the corner, too tightly for its
+    // offset outside, which turns back short of the corner's arc; the arc
+    // passes the end of the offset before the curl within 4e-8, touching
+    // rather than crossing it, and the two are joined there.
+    const RS_Spline curled(nullptr, splineData(3, {{-6, 0}, {-3, 7}, {0, 0}, {0, 0}, {0, 0}, {1, 0}, {6, 0}},
+                                               {0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2}));
+    const LC_CurveOffsetGeometryResult result = checkedTrim(curled, LC_CurveOffsetSide::Right, 0.5);
+    REQUIRE(result.branches.size() == 1);
+    bool arcs = false;
+    corners(result.branches.front(), arcs);
+    CHECK(arcs);
+    CHECK(LC_CurveOffset::materializeBranches(curled, result, LC_CurveOffset::makeOffsetOptions(curled, 0.5),
+                                              LC_CurveOffset::makeDirectSourceBudget())
+              .status == LC_CurveOffsetStatus::Ok);
+    checkedTrim(curled, LC_CurveOffsetSide::Left, 0.5);
+}
+
 TEST_CASE("A repeated vertex of a polyline spline trims like the polyline", "[curve-offset][trim][singular]") {
     const RS_Spline repeated(nullptr, splineData(1, {{0, 0}, {5, 0}, {5, 0}, {5, 5}}, {0, 0, 1, 2, 3, 3}));
     const RS_Spline plain = polylineSpline({{0, 0}, {5, 0}, {5, 5}});

@@ -3276,7 +3276,12 @@ Visibility visibility(const OffsetSource& source, const std::vector<std::pair<do
  * point lies on: the side changes sign where they cross, however shallow the
  * crossing, where intersection boxes could not tell the two apart. Only the
  * neighbours' offset pieces next to the cusps are walked; one that ends first,
- * or turns a corner, leaves the loop to noding and trimming.
+ * or turns a corner, leaves the loop to noding and trimming. A loop next to a
+ * round corner is a curl of the source into the corner, as where its tangent
+ * vanishes there: the arc about the corner passes the other neighbour's cusp,
+ * to within the square of the curl's size over d, and the two neighbours join
+ * there, the arc cut where it passes; they touch rather than cross, which
+ * noding cannot resolve.
  */
 LC_CurveOffsetStatus removeLocalLoops(const OffsetSource& source, const double d, const double speedFloor,
                                       const LC_CurveOffsetOptions& options, std::vector<LC_OffsetBranch>& branches,
@@ -3335,6 +3340,103 @@ LC_CurveOffsetStatus removeLocalLoops(const OffsetSource& source, const double d
         return offsetAt(t, at) ? t : std::numeric_limits<double>::quiet_NaN();
     };
 
+    // The arc pieces at the front (or back) of a branch, about one corner: the
+    // point of them nearest to p, as the piece and the angle there.
+    const auto nearestOnArc = [&](const std::vector<LC_OffsetCubicPiece>& pieces, const bool atFront,
+                                  const RS_Vector& p, size_t& index, double& angle) {
+        double best = std::numeric_limits<double>::infinity();
+        const size_t n = pieces.size();
+        for (size_t j = 0; j < n; ++j) {
+            const size_t i = atFront ? j : n - 1 - j;
+            const LC_OffsetBranchProvenance& v = pieces[i].provenance;
+            if (!v.arcCentre.valid || v.arcCentre != pieces[atFront ? 0 : n - 1].provenance.arcCentre) {
+                break;
+            }
+            const double lo = std::min(v.sourceT0, v.sourceT1);
+            const double hi = std::max(v.sourceT0, v.sourceT1);
+            const double middle = 0.5 * (lo + hi);
+            const double phi = std::clamp(
+                middle + std::remainder(std::atan2(p.y - v.arcCentre.y, p.x - v.arcCentre.x) - middle, 2.0 * M_PI),
+                lo, hi);
+            const double distance =
+                p.distanceTo(v.arcCentre + RS_Vector{std::cos(phi), std::sin(phi)} * std::abs(v.signedDistance));
+            if (distance < best) {
+                best = distance;
+                index = i;
+                angle = phi;
+            }
+        }
+        return best;
+    };
+    // Joins the branch before a loop to the one after it where the end of one
+    // touches the other's round corner arc next to the loop, cutting the arc
+    // there; false, changing nothing, where it does not.
+    const auto joinAtCornerArc = [&](const size_t before, const size_t after) {
+        LC_OffsetBranch a = branches[before];
+        LC_OffsetBranch b = (before == after) ? a : branches[after];
+        size_t index = 0;
+        double angle = 0.0;
+        // the arc after the loop, which a's end touches
+        const bool arcAfter = b.cubicPieces.front().provenance.arcCentre.valid;
+        const RS_Vector touch = arcAfter ? a.cubicPieces.back().bezier[3] : b.cubicPieces.front().bezier[0];
+        std::vector<LC_OffsetCubicPiece>& arc = arcAfter ? b.cubicPieces : a.cubicPieces;
+        if (!(nearestOnArc(arc, arcAfter, touch, index, angle) <= options.tolerance.nodeMerge)) {
+            return false;
+        }
+        LC_OffsetCubicPiece& piece = arc[index];
+        LC_OffsetBranchProvenance& v = piece.provenance;
+        const double radius = std::abs(v.signedDistance);
+        if (arcAfter) {
+            // what is left of the arc runs from the touch on
+            if (angle == v.sourceT1) {
+                arc.erase(arc.begin(), arc.begin() + static_cast<std::ptrdiff_t>(index + 1));
+            }
+            else {
+                const std::array<RS_Vector, 4> kept = arcPiece(v.arcCentre, radius, angle, v.sourceT1);
+                piece.bezier = {kept[0], kept[1], kept[2], piece.bezier[3]};
+                v.sourceT0 = angle;
+                arc.erase(arc.begin(), arc.begin() + static_cast<std::ptrdiff_t>(index));
+            }
+            if (arc.empty()) {
+                return false;
+            }
+            arc.front().bezier[0] = touch;
+        }
+        else {
+            if (angle == v.sourceT0) {
+                arc.erase(arc.begin() + static_cast<std::ptrdiff_t>(index), arc.end());
+            }
+            else {
+                const std::array<RS_Vector, 4> kept = arcPiece(v.arcCentre, radius, v.sourceT0, angle);
+                piece.bezier = {piece.bezier[0], kept[1], kept[2], kept[3]};
+                v.sourceT1 = angle;
+                arc.erase(arc.begin() + static_cast<std::ptrdiff_t>(index + 1), arc.end());
+            }
+            if (arc.empty()) {
+                return false;
+            }
+            arc.back().bezier[3] = touch;
+        }
+        if (before == after) {
+            // the only other branch runs out of the loop and back into it: a ring
+            LC_OffsetBranch& ring = arcAfter ? b : a;
+            ring.closed = true;
+            ring.startEnd = LC_OffsetBranchEnd::Free;
+            ring.endEnd = LC_OffsetBranchEnd::Free;
+            LC_OffsetBranch closed = std::move(ring);
+            branches.assign(1, std::move(closed));
+            return true;
+        }
+        a.cubicPieces.insert(a.cubicPieces.end(), b.cubicPieces.begin(), b.cubicPieces.end());
+        a.endEnd = b.endEnd;
+        const size_t loop = (before + 1) % branches.size();
+        branches[before] = std::move(a);
+        for (const size_t gone : {std::max(loop, after), std::min(loop, after)}) {
+            branches.erase(branches.begin() + static_cast<std::ptrdiff_t>(gone));
+        }
+        return true;
+    };
+
     for (size_t k = 0; k < branches.size() && branches.size() > 1; ++k) {
         const size_t n = branches.size();
         const LC_OffsetBranch& loop = branches[k];
@@ -3350,6 +3452,18 @@ LC_CurveOffsetStatus removeLocalLoops(const OffsetSource& source, const double d
         double a1 = 0.0;
         double b0 = 0.0;
         double b1 = 0.0;
+        if (!a.reversed && !b.reversed &&
+            (a.cubicPieces.back().provenance.arcCentre.valid || b.cubicPieces.front().provenance.arcCentre.valid)) {
+            if (joinAtCornerArc(before, after)) {
+                ++removed; // the loop; with the stretch of the arc it cut, which a fragment would count
+                ++removed;
+                if (before == after) {
+                    return LC_CurveOffsetStatus::Ok; // a ring
+                }
+                k = static_cast<size_t>(-1); // indices moved: start over
+            }
+            continue;
+        }
         if (a.reversed || b.reversed || !stretch(a, true, a0, a1) || !stretch(b, false, b0, b1)) {
             continue;
         }
