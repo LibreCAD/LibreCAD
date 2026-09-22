@@ -59,9 +59,14 @@
 #include <vector>
 
 #include <QCoreApplication>
+#include <QRegularExpression>
+#include <QString>
+#include <QStringList>
 
 #include "lc_curveoffset.h"
+#include "lc_makercamsvg.h"
 #include "lc_splinepoints.h"
+#include "lc_xmlwriterqxmlstreamwriter.h"
 #include "rs_filterdxfrw.h"
 #include "rs_graphic.h"
 #include "rs_layer.h"
@@ -323,12 +328,12 @@ TEST_CASE("Cubic pieces, and composites of them, survive DXF and DWG unchanged",
         stored.push_back(pieceData(piece));
     }
     stored.push_back(pieceData(g_piece));
+    stored.push_back(compositeData(pieces));
 
     struct Format {
         RS2::FormatType type;
         const char* file;
     };
-    stored.push_back(compositeData(pieces));
     for (const Format& format : {Format{RS2::FormatDXFRW, "pieces.dxf"}, Format{RS2::FormatDXFRW2000, "pieces_2000.dxf"},
                                  Format{RS2::FormatDWG, "pieces_r2000.dwg"},
                                  Format{RS2::FormatDWG2018, "pieces_r2018.dwg"}}) {
@@ -877,3 +882,109 @@ TEST_CASE("A spline R12 cannot hold within its vertex limit fails the export, wr
     std::filesystem::remove(path);
 }
 
+// ---------------------------------------------------------------------------
+// MakerCAM SVG
+
+namespace {
+
+/** The 'd' attribute of every path in @p svg, in order. */
+std::vector<QString> svgPaths(const std::string& svg) {
+    std::vector<QString> paths;
+    const QRegularExpression pathData{QStringLiteral(" d=\"([^\"]*)\"")};
+    auto it = pathData.globalMatch(QString::fromStdString(svg));
+    while (it.hasNext()) {
+        paths.push_back(it.next().captured(1));
+    }
+    return paths;
+}
+
+/** The commands of path data @p d: each a letter and the points after it, back in drawing coordinates. */
+std::vector<std::pair<QChar, std::vector<RS_Vector>>> svgCommands(const QString& d, const RS_Vector& min,
+                                                                  const RS_Vector& max) {
+    std::vector<std::pair<QChar, std::vector<RS_Vector>>> commands;
+    for (const QString& token : d.split(QLatin1Char(' '), Qt::SkipEmptyParts)) {
+        QString coordinates = token;
+        if (token.front().isLetter()) {
+            commands.emplace_back(token.front(), std::vector<RS_Vector>{});
+            coordinates = token.mid(1);
+        }
+        if (coordinates.isEmpty()) {
+            continue;
+        }
+        const QStringList xy = coordinates.split(QLatin1Char(','));
+        REQUIRE(xy.size() == 2);
+        REQUIRE_FALSE(commands.empty());
+        // the writer's x - min.x, max.y - y
+        commands.back().second.emplace_back(xy[0].toDouble() + min.x, max.y - xy[1].toDouble());
+    }
+    return commands;
+}
+
+} // namespace
+
+TEST_CASE("MakerCAM SVG writes an offset spline's pieces where they are", "[curve-offset][persistence][svg]") {
+    ensureSettings();
+    RS_Graphic graphic;
+    graphic.setUnit(RS2::Millimeter);
+    RS_Spline source(nullptr, sCurveData());
+    const std::vector<RS_Entity*> offset = source.createOffset(RS_Vector{1240.5, -78.25}, 0.75);
+    REQUIRE(offset.size() == 1);
+    auto* spline = static_cast<RS_Spline*>(offset.front());
+    graphic.addEntity(spline);
+    spline->reparent(&graphic);
+    const size_t spans = (spline->getData().controlPoints.size() - 1) / 3;
+    REQUIRE(spans > 1);
+    // and a degree-1 spline, drawn as the polyline through its control points
+    RS_SplineData corners(1, false);
+    corners.controlPoints = {{1230.0, -95.0}, {1236.0, -90.0}, {1240.0, -96.0}, {1250.0, -94.0}};
+    corners.knotslist = {0.0, 0.0, 1.0, 2.0, 3.0, 3.0};
+    corners.weights.assign(4, 1.0);
+    auto* polyline = new RS_Spline(&graphic, corners);
+    graphic.addEntity(polyline);
+    REQUIRE(polyline->validate());
+    // the writer goes layer by layer
+    auto* layer = new RS_Layer("Offsets");
+    graphic.addLayer(layer);
+    spline->setLayer(layer);
+    polyline->setLayer(layer);
+
+    LC_MakerCamSVG svg(std::make_unique<LC_XMLWriterQXmlStreamWriter>());
+    REQUIRE(svg.generate(&graphic));
+    const RS_Vector min = graphic.getMin();
+    const RS_Vector max = graphic.getMax();
+    const std::vector<QString> paths = svgPaths(svg.resultAsString());
+    REQUIRE(paths.size() == 2);
+
+    // one cubic per span, each the span: its ends and its middle are the spline's
+    const auto curve = svgCommands(paths[0], min, max);
+    REQUIRE(curve.size() == 1 + spans);
+    REQUIRE(curve[0].first == QLatin1Char('M'));
+    REQUIRE(curve[0].second.size() == 1);
+    const double scale = 1250.0;
+    const double written = 1e-7 * scale; // eight decimals
+    CHECK(curve[0].second[0].distanceTo(spline->getStartpoint()) <= written);
+    RS_Vector start = curve[0].second[0];
+    for (size_t k = 0; k < spans; ++k) {
+        const auto& [letter, points] = curve[k + 1];
+        REQUIRE(letter == QLatin1Char('C'));
+        REQUIRE(points.size() == 3);
+        const Bezier piece{start, points[0], points[1], points[2]};
+        for (const double u : {0.25, 0.5, 0.75, 1.0}) {
+            const RS_Vector expected =
+                jetAt(*spline, static_cast<double>(k) + u,
+                      u < 1.0 ? LC_CurveEvaluationSide::Interior : LC_CurveEvaluationSide::Left)
+                    .point;
+            CHECK(bezierAt(piece, u).distanceTo(expected) <= written);
+        }
+        start = points[2];
+    }
+
+    const auto lines = svgCommands(paths[1], min, max);
+    REQUIRE(lines.size() == corners.controlPoints.size());
+    CHECK(lines[0].first == QLatin1Char('M'));
+    for (size_t i = 0; i < lines.size(); ++i) {
+        CHECK(lines[i].first == (i == 0 ? QLatin1Char('M') : QLatin1Char('L')));
+        REQUIRE(lines[i].second.size() == 1);
+        CHECK(lines[i].second[0].distanceTo(corners.controlPoints[i]) <= written);
+    }
+}
