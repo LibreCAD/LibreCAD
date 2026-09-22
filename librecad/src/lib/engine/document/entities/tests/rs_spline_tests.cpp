@@ -768,3 +768,57 @@ TEST_CASE("RS_Spline::tryStroke starts a span after a break at its own point", "
     CHECK(vertices[1].distanceTo(RS_Vector{4, 0}) < 1e-12);
     CHECK(vertices[2].distanceTo(RS_Vector{4, 3}) < 1e-12);
 }
+
+namespace {
+    // A Standard spline with a repeated inner knot where the periodic knot vector made from its knots
+    // ends: closing it gives two equal last knots, which validate() rejects.
+    RS_SplineData repeatedKnotSpline() {
+        RS_SplineData data(3, false);
+        data.type = RS_SplineData::SplineType::Standard;
+        data.controlPoints = {{0., 0.}, {10., 20.}, {20., -20.}, {30., 0.}, {40., 15.}, {50., -5.}};
+        data.weights.assign(data.controlPoints.size(), 1.);
+        data.knotslist = {0., 1., 2., 3., 4., 5., 5., 6., 7., 8.};
+        return data;
+    }
+}
+
+TEST_CASE("RS_Spline stays drawn when a type change would make it invalid", "[RS_Spline]")
+{
+    const RS_SplineData data = repeatedKnotSpline();
+
+    SECTION("setClosed")
+    {
+        RS_Spline spline(nullptr, data);
+        REQUIRE(spline.validate());
+        REQUIRE(spline.count() > 0);
+        spline.setClosed(true);
+        CHECK(spline.validate());
+        CHECK(spline.count() > 0);
+        CHECK_FALSE(spline.isClosed());
+        CHECK(spline.getData().knotslist == data.knotslist);
+        CHECK(spline.getData().controlPoints.size() == data.controlPoints.size());
+    }
+
+    SECTION("changeType")
+    {
+        RS_Spline spline(nullptr, data);
+        spline.changeType(RS_SplineData::SplineType::WrappedClosed);
+        spline.update();
+        CHECK(spline.getData().type == RS_SplineData::SplineType::Standard);
+        CHECK(spline.validate());
+        CHECK(spline.count() > 0);
+    }
+}
+
+TEST_CASE("RS_Spline keeps its type when the data cannot be converted", "[RS_Spline]")
+{
+    // no knot vector, which LC_SplineHelper refuses to convert: setting WrappedClosed anyway gave
+    // control points that are not wrapped
+    RS_SplineData data = repeatedKnotSpline();
+    data.knotslist.clear();
+    RS_Spline spline(nullptr, data);
+    spline.changeType(RS_SplineData::SplineType::WrappedClosed);
+    CHECK(spline.getData().type == RS_SplineData::SplineType::Standard);
+    CHECK_FALSE(spline.isClosed());
+    CHECK(spline.getData().controlPoints.size() == data.controlPoints.size());
+}

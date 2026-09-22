@@ -72,6 +72,9 @@ public:
         return m_data;
     }
 
+    void setLayer(const QString& name) override;
+    void setLayer(RS_Layer* layer) override;
+
     /** sets a new start point of the polyline */
     void setStartpoint(const RS_Vector& v);
     /** @return Start point of the entity */

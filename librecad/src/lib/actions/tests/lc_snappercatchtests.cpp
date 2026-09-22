@@ -39,6 +39,7 @@
 #include "rs_block.h"
 #include "rs_circle.h"
 #include "rs_constructionline.h"
+#include "rs_dimlinear.h"
 #include "rs_ellipse.h"
 #include "rs_hatch.h"
 #include "rs_information.h"
@@ -516,6 +517,45 @@ TEST_CASE("polylines and splines drawn on a construction layer are caught along 
     }
     CHECK(f.m_action->catchEntity(RS_Vector{1000.0, 0.5}, RS2::ResolveNone) == polyline);
     CHECK(f.m_action->catchEntity(RS_Vector{1000.0, 500.5}, RS2::ResolveNone) == spline);
+}
+
+TEST_CASE("the parts a dimension or a text is made of are not construction lines",
+          "[snap][catch][dimension][text]") {
+    // A dimension gives each part it builds no layer of its own, so that the part follows the
+    // dimension, and RS_Font does the same with glyph geometry; a polyline does it with its
+    // segments. Only a polyline's segments are its own geometry: a dimension or a text drawn on a
+    // construction layer keeps its lines as they are, where an infinite line each would fill the
+    // drawing and be caught anywhere along it.
+    ActionFixture<SnapperProbe> f;
+    REQUIRE(f.m_graphic.getActiveLayer()->setConstruction(true));
+
+    RS_DimensionData dimensionData;
+    dimensionData.definitionPoint = RS_Vector{50.0, 20.0};
+    dimensionData.middleOfText = RS_Vector{50.0, 22.0};
+    dimensionData.autoText = true;
+    auto* dimension = new RS_DimLinear(&f.m_graphic, dimensionData,
+                                       RS_DimLinearData{RS_Vector{0.0, 0.0}, RS_Vector{100.0, 0.0}, 0.0, 0.0});
+    f.m_graphic.addEntity(dimension);
+    dimension->update();
+
+    REQUIRE(dimension->count() > 0);
+    CHECK(dimension->isConstruction()); // it is on a construction layer, as its own layer says
+    for (RS_Entity* part : lc::LC_ContainerTraverser{*dimension, RS2::ResolveAll}.entities()) {
+        INFO("part " << part->rtti());
+        CHECK_FALSE(part->isConstruction());
+    }
+    // the same for the geometry of a glyph, which RS_Font leaves without a layer
+    auto* text = new RS_MText(&f.m_graphic, RS_MTextData{});
+    auto* glyph = new RS_Line(text, RS_Vector{0.0, 500.0}, RS_Vector{10.0, 500.0});
+    glyph->setLayer(nullptr); // stands in for glyph geometry, as RS_Font leaves it
+    text->addEntity(glyph);
+    text->forcedCalculateBorders();
+    f.m_graphic.addEntity(text);
+    CHECK_FALSE(glyph->isConstruction());
+
+    // and neither is caught a long way off
+    CHECK(f.m_action->catchEntity(RS_Vector{1000.0, 0.5}, RS2::ResolveNone) == nullptr);
+    CHECK(f.m_action->catchEntity(RS_Vector{1000.0, 500.5}, RS2::ResolveNone) == nullptr);
 }
 
 TEST_CASE("a block reference holding a construction line is caught along it", "[snap][catch]") {
