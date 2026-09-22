@@ -299,10 +299,34 @@ TEST_CASE("The offset is regular or it is refused", "[curve-offset][direct][regu
     CHECK(noTangent.branches.empty());
 }
 
-TEST_CASE("A kink in the source is refused, a smooth join is not", "[curve-offset][direct]") {
+TEST_CASE("A kink is rounded where it turns away from the offset, its sides overlap where it turns towards it",
+          "[curve-offset][direct][kink]") {
+    // At (3, 0) the cubic turns left, from (1, -1) to (1, 2): the right side
+    // leaves a gap, rounded by an arc of radius 0.2 about the kink; on the left
+    // the two sides' offsets overlap, and each branch ends there.
     const RS_Spline kinked = makeSpline(3, {{0, 0}, {1, 1}, {2, 1}, {3, 0}, {4, 2}, {5, 2}, {6, 0}},
                                         {0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2});
-    CHECK(offsetToSide(kinked, LC_CurveOffsetSide::Left, 0.2).status == LC_CurveOffsetStatus::DiscontinuousNormal);
+    const LC_CurveOffsetGeometryResult right = offsetToSide(kinked, LC_CurveOffsetSide::Right, 0.2);
+    REQUIRE(right.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(right.branches.size() == 1);
+    int arcPieces = 0;
+    for (const LC_OffsetCubicPiece& piece : right.branches.front().cubicPieces) {
+        if (piece.provenance.arcCentre.valid) {
+            ++arcPieces;
+            CHECK(piece.provenance.arcCentre.distanceTo(RS_Vector{3.0, 0.0}) < 1e-12);
+            CHECK(piece.bezier[0].distanceTo(RS_Vector{3.0, 0.0}) == Approx(0.2).epsilon(1e-12));
+            CHECK(piece.bezier[3].distanceTo(RS_Vector{3.0, 0.0}) == Approx(0.2).epsilon(1e-12));
+        }
+    }
+    CHECK(arcPieces > 0);
+
+    const LC_CurveOffsetGeometryResult left = offsetToSide(kinked, LC_CurveOffsetSide::Left, 0.2);
+    REQUIRE(left.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(left.branches.size() == 2);
+    CHECK(left.branches[0].endEnd == LC_OffsetBranchEnd::Kink);
+    CHECK(left.branches[1].startEnd == LC_OffsetBranchEnd::Kink);
+    CHECK(left.branches[0].cubicPieces.back().bezier[3].distanceTo(left.branches[1].cubicPieces.front().bezier[0]) >
+          0.1);
 
     // the same knot multiplicity with collinear handles is G1
     const RS_Spline smooth = makeSpline(3, {{0, 0}, {1, 1}, {2, 1}, {3, 1}, {4, 1}, {5, 2}, {6, 0}},

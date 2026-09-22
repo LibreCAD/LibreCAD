@@ -51,8 +51,12 @@
  * tolerance without turning back: 1 - d * kappa touches zero, where the
  * distance equals a radius of curvature, or two cusps lie closer than that.
  * A stall is not fitted; the pieces on either side meet. Any other root fails
- * the request. Direct mode does not remove loops or self-intersections, and
- * its error check is sampled evidence, never a proof of the maximum deviation.
+ * the request. At a tangent break of the source, a kink, the offset rounds a
+ * corner that turns away from it by an arc of radius |d| about the kink; where
+ * the corner turns towards it, the offsets of its two sides overlap, and the
+ * branch of each ends there (LC_OffsetBranchEnd::Kink). Direct mode does not
+ * remove loops or self-intersections, and its error check is sampled
+ * evidence, never a proof of the maximum deviation.
  *
  * Trimmed mode, programmatic only, removes from the noded Direct offset the
  * parts provably nearer to the source than the distance, less the tolerance
@@ -168,9 +172,10 @@ struct LC_OffsetBranchProvenance {
     double signedDistance{0.0};
     bool forward{true};
     /**
-     * Set only for a vertex arc of a region boundary: the piece follows the
-     * circle of radius |signedDistance| about this point, over the angles
-     * sourceT0 to sourceT1, instead of the offset of a source interval.
+     * Set only for an arc about a corner of the source, a kink or a vertex of a
+     * region boundary: the piece follows the circle of radius |signedDistance|
+     * about this point, over the angles sourceT0 to sourceT1 (which may run
+     * down), instead of the offset of a source interval.
      */
     RS_Vector arcCentre{false};
 };
@@ -191,7 +196,13 @@ enum class LC_OffsetBranchEnd {
     /** A free end: the offset of an open source's end, or where trimming cut it. */
     Free,
     /** The offset turns back into the neighbouring branch, which shares the point. */
-    Cusp
+    Cusp,
+    /**
+     * The offset of one side of a corner that turns towards it: the branch
+     * runs on past its neighbour, which does not share the point, until
+     * trimming cuts both where they cross.
+     */
+    Kink
 };
 
 struct LC_OffsetBranch {

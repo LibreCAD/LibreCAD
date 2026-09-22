@@ -22,6 +22,7 @@
 // Trimmed offsets (T2): the parts of the Direct offset nearer to the source
 // than the distance are removed, the rest kept, and what cannot be decided fails.
 
+#include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 
 #include <algorithm>
@@ -29,11 +30,14 @@
 #include <cmath>
 #include <functional>
 #include <iomanip>
+#include <sstream>
 #include <vector>
 
 #include "lc_curveoffset.h"
 #include "lc_splinepoints.h"
 #include "rs_spline.h"
+
+using Catch::Approx;
 
 namespace {
 
@@ -395,5 +399,202 @@ TEST_CASE("A closed curve shrunk past its largest radius of curvature leaves not
     ring.setClosed(true);
     const LC_CurveOffsetGeometryResult result = trim(ring, LC_CurveOffsetSide::Left, 20.0);
     REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+    CHECK(result.branches.empty());
+}
+
+namespace {
+
+/** A degree-1 spline through the points: a polyline, open or closed. */
+RS_Spline polylineSpline(const std::vector<RS_Vector>& points, const bool closed = false) {
+    if (closed) {
+        RS_Spline spline(nullptr, RS_SplineData(1, false));
+        for (const RS_Vector& p : points) {
+            spline.addControlPoint(p);
+        }
+        spline.setClosed(true);
+        return spline;
+    }
+    RS_SplineData data(1, false);
+    data.controlPoints = points;
+    data.knotslist = {0.0};
+    for (size_t i = 0; i < points.size(); ++i) {
+        data.knotslist.push_back(static_cast<double>(i));
+    }
+    data.knotslist.push_back(static_cast<double>(points.size() - 1));
+    data.weights.assign(points.size(), 1.0);
+    return RS_Spline(nullptr, data);
+}
+
+/** The chain of a one-branch result as its piece ends, and whether any piece is an arc. */
+std::vector<RS_Vector> corners(const LC_OffsetBranch& branch, bool& arcs) {
+    std::vector<RS_Vector> points{branch.cubicPieces.front().bezier[0]};
+    arcs = false;
+    for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
+        points.push_back(piece.bezier[3]);
+        arcs = arcs || piece.provenance.arcCentre.valid;
+    }
+    return points;
+}
+
+bool passesThrough(const std::vector<RS_Vector>& points, const RS_Vector& p, const double tolerance) {
+    return std::any_of(points.begin(), points.end(), [&](const RS_Vector& v) { return v.distanceTo(p) <= tolerance; });
+}
+
+double domainEnd(const RS_Spline& spline) {
+    double t0 = 0.0;
+    double t1 = 0.0;
+    REQUIRE(spline.getParameterDomain(t0, t1));
+    return t1;
+}
+
+} // namespace
+
+TEST_CASE("A polyline spline offsets like a polyline: trimmed where it turns in, rounded where it turns out",
+          "[curve-offset][trim][kink]") {
+    // The research's reference cases (§6.2); a corner that turns away from the
+    // offset gets an arc of radius d about it, as a round-joined buffer does.
+    struct Case {
+        const char* name;
+        std::vector<RS_Vector> points;
+        LC_CurveOffsetSide side;
+        double d;
+        RS_Vector first;
+        RS_Vector last;
+        std::vector<RS_Vector> through;
+        bool rounded;
+    };
+    const std::vector<Case> cases{
+        {"convex L", {{0, 0}, {10, 0}, {10, 10}}, LC_CurveOffsetSide::Right, 1.0, {0, -1}, {11, 10},
+         {{10, -1}, {11, 0}}, true},
+        {"concave L", {{0, 0}, {10, 0}, {10, 10}}, LC_CurveOffsetSide::Left, 1.0, {0, 1}, {9, 10}, {{9, 1}}, false},
+        {"acute inside", {{0, 0}, {10, 0}, {5, 10}}, LC_CurveOffsetSide::Left, 1.0, {0, 1}, {4.105572809, 9.552786405},
+         {{8.381966011, 1}}, false},
+        {"chamfer vanishes", {{0, 0}, {10, 0}, {11, 1}, {11, 10}}, LC_CurveOffsetSide::Left, 2.0, {0, 2}, {9, 10},
+         {{9, 2}}, false},
+        {"hairpin", {{0, 0}, {10, 0}, {0, 0.5}}, LC_CurveOffsetSide::Right, 1.0, {0, -1}, {0.049937695, 1.498752},
+         {{10, -1}}, true},
+    };
+    for (const Case& c : cases) {
+        INFO(c.name);
+        const RS_Spline source = polylineSpline(c.points);
+        const LC_CurveOffsetGeometryResult result = trim(source, c.side, c.d);
+        REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+        REQUIRE(result.branches.size() == 1);
+        const double tolerance = LC_CurveOffset::makeDirectOptions(source, c.d).tolerance.requestedGeometry;
+        bool arcs = false;
+        const std::vector<RS_Vector> points = corners(result.branches.front(), arcs);
+        CHECK(points.front().distanceTo(c.first) <= 1e-6);
+        CHECK(points.back().distanceTo(c.last) <= 1e-6);
+        for (const RS_Vector& p : c.through) {
+            CHECK(passesThrough(points, p, 2.0 * tolerance));
+        }
+        CHECK(arcs == c.rounded);
+        const Checked checked = check(result, curveOf(source), 0.0, domainEnd(source), c.d);
+        CHECK(checked.nearestKept >= c.d - 2.0 * tolerance);
+        CHECK(checked.worstMissing <= 2.0 * tolerance);
+    }
+}
+
+TEST_CASE("The overlap at a slight inward corner is cut, although by less than the tolerance can see",
+          "[curve-offset][trim][kink]") {
+    // Turning 0.005 rad towards the offset: the two sides' offsets overlap by
+    // about 0.0025, nearer to the source than the distance by some 3e-6 at most,
+    // but they end at the corner, which the offset cannot run on through.
+    const RS_Spline source = polylineSpline({{0, 0}, {10, 0}, {20, 0.05}});
+    const LC_CurveOffsetGeometryResult result = trim(source, LC_CurveOffsetSide::Left, 1.0);
+    REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(result.branches.size() == 1);
+    const double tolerance = LC_CurveOffset::makeDirectOptions(source, 1.0).tolerance.requestedGeometry;
+    const Checked checked = check(result, curveOf(source), 0.0, domainEnd(source), 1.0);
+    CHECK(checked.nearestKept >= 1.0 - 2.0 * tolerance);
+    CHECK(checked.worstMissing <= 2.0 * tolerance);
+}
+
+TEST_CASE("A polyline spline shrunk past its width leaves nothing", "[curve-offset][trim][kink]") {
+    // an open U inwards by twice its width, and a 10 x 4 rectangle by 3 or 2 and a hair
+    const LC_CurveOffsetGeometryResult u =
+        trim(polylineSpline({{0, 0}, {10, 0}, {10, 1}, {0, 1}}), LC_CurveOffsetSide::Left, 2.0);
+    REQUIRE(u.status == LC_CurveOffsetStatus::Ok);
+    CHECK(u.branches.empty());
+    const RS_Spline rectangle = polylineSpline({{0, 0}, {10, 0}, {10, 4}, {0, 4}}, true);
+    for (const double d : {3.0, 2.5}) {
+        INFO("distance " << d);
+        const LC_CurveOffsetGeometryResult shrunk = trim(rectangle, LC_CurveOffsetSide::Left, d);
+        REQUIRE(shrunk.status == LC_CurveOffsetStatus::Ok);
+        CHECK(shrunk.branches.empty());
+    }
+}
+
+TEST_CASE("A closed polyline spline shrinks with sharp corners and grows with round ones", "[curve-offset][trim][kink]") {
+    const RS_Spline rectangle = polylineSpline({{0, 0}, {10, 0}, {10, 4}, {0, 4}}, true);
+    const LC_CurveOffsetGeometryResult shrunk = trim(rectangle, LC_CurveOffsetSide::Left, 1.0);
+    REQUIRE(shrunk.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(shrunk.branches.size() == 1);
+    CHECK(shrunk.branches.front().closed);
+    const double tolerance = LC_CurveOffset::makeDirectOptions(rectangle, 1.0).tolerance.requestedGeometry;
+    bool arcs = false;
+    const std::vector<RS_Vector> inner = corners(shrunk.branches.front(), arcs);
+    CHECK_FALSE(arcs);
+    for (const RS_Vector& p : {RS_Vector{1, 1}, RS_Vector{9, 1}, RS_Vector{9, 3}, RS_Vector{1, 3}}) {
+        CHECK(passesThrough(inner, p, 2.0 * tolerance));
+    }
+
+    const LC_CurveOffsetGeometryResult grown = trim(rectangle, LC_CurveOffsetSide::Right, 1.0);
+    REQUIRE(grown.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(grown.branches.size() == 1);
+    CHECK(grown.branches.front().closed);
+    const std::vector<RS_Vector> outer = corners(grown.branches.front(), arcs);
+    CHECK(arcs);
+    for (const RS_Vector& p : {RS_Vector{0, -1}, RS_Vector{10, -1}, RS_Vector{11, 0}, RS_Vector{11, 4},
+                               RS_Vector{10, 5}, RS_Vector{0, 5}, RS_Vector{-1, 4}, RS_Vector{-1, 0}}) {
+        CHECK(passesThrough(outer, p, 2.0 * tolerance));
+    }
+    const Checked checked = check(grown, curveOf(rectangle), 0.0, domainEnd(rectangle), 1.0);
+    CHECK(checked.nearestKept >= 1.0 - 2.0 * tolerance);
+}
+
+TEST_CASE("A slot narrower than twice the distance is bridged by the grown outline", "[curve-offset][trim][kink]") {
+    // Round corners about the notch's top corners meet above it.
+    const RS_Spline slot =
+        polylineSpline({{0, 0}, {20, 0}, {20, 10}, {11, 10}, {11, 4}, {9, 4}, {9, 10}, {0, 10}}, true);
+    const LC_CurveOffsetGeometryResult grown = trim(slot, LC_CurveOffsetSide::Right, 2.0);
+    REQUIRE(grown.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(grown.branches.size() == 1);
+    CHECK(grown.branches.front().closed);
+    const double tolerance = LC_CurveOffset::makeDirectOptions(slot, 2.0).tolerance.requestedGeometry;
+    bool arcs = false;
+    const std::vector<RS_Vector> outline = corners(grown.branches.front(), arcs);
+    // the two arcs about (9, 10) and (11, 10) cross above the notch's middle
+    CHECK(passesThrough(outline, RS_Vector{10.0, 10.0 + std::sqrt(3.0)}, 2.0 * tolerance));
+    for (const RS_Vector& p : outline) {
+        CHECK(p.x >= -2.0 - tolerance);
+        CHECK(p.x <= 22.0 + tolerance);
+        CHECK(p.y >= -2.0 - tolerance);
+        CHECK(p.y <= 12.0 + tolerance);
+    }
+    const Checked checked = check(grown, curveOf(slot), 0.0, domainEnd(slot), 2.0);
+    CHECK(checked.nearestKept >= 2.0 - 2.0 * tolerance);
+}
+
+TEST_CASE("A point in a wide corner's wedge takes the corner's outer side", "[curve-offset][side][kink]") {
+    // The polyline turns left by about 153 degrees at (10, 0). (11, 1) is nearest
+    // to the corner, on its outside: the right, whichever one tangent says.
+    const RS_Spline turn = polylineSpline({{0, 0}, {10, 0}, {0, 5}});
+    const LC_OffsetSideResolution side =
+        LC_CurveOffset::resolveSide(turn, RS_Vector{11.0, 1.0}, LC_CurveOffset::makeDirectOptions(turn, 1.0));
+    REQUIRE(side.status == LC_CurveOffsetStatus::Ok);
+    CHECK(side.side == LC_CurveOffsetSide::Right);
+    CHECK(side.distance == Approx(std::sqrt(2.0)).epsilon(1e-9));
+}
+
+TEST_CASE("A region still refuses a source with a corner", "[curve-offset][region][kink]") {
+    const RS_Spline square = polylineSpline({{0, 0}, {10, 0}, {10, 10}, {0, 10}}, true);
+    LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(square, 1.0);
+    options.mode = LC_CurveOffsetMode::RegionBoundary;
+    const LC_CurveOffsetGeometryResult result = LC_CurveOffset::buildDirectBranches(
+        square, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Right, 1.0), options,
+        LC_CurveOffset::makeDirectSourceBudget());
+    // it rounds no corner of its own: refused, whichever step finds the corner first
+    CHECK(result.status != LC_CurveOffsetStatus::Ok);
     CHECK(result.branches.empty());
 }
