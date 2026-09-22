@@ -1672,7 +1672,7 @@ std::vector<double> RS_Spline::getBreakParameters() const {
   return breaks;
 }
 
-bool RS_Spline::tryBoundJet(const double a, const double b, LC_CurveJetBounds &bounds) const {
+bool RS_Spline::tryBoundJet(const double a, const double b, LC_CurveJetBounds &bounds, const bool products) const {
   bounds = LC_CurveJetBounds{};
   double t0 = 0.0;
   double t1 = 0.0;
@@ -1758,16 +1758,18 @@ bool RS_Spline::tryBoundJet(const double a, const double b, LC_CurveJetBounds &b
     // a polynomial curve: C = A / w with constant w
     const LC_Interval w = LC_Interval::point(m_data.weights[span - p]);
     result = {ax / w, ay / w, ax1 / w, ay1 / w, ax2 / w, ay2 / w};
-    // |C'|^2 and C' x C'' from the products of the derivatives' nets, which
-    // cancel only by rounding where C' and C'' are parallel
-    const LC_Interval w2 = w * w;
-    const size_t q2 = (p < 2) ? 0 : p - 2;
-    result.speedSquaredProduct = productHull(p - 1, p - 1, [&](const size_t i, const size_t j) {
-      return (firstNet[i].x * firstNet[j].x + firstNet[i].y * firstNet[j].y) / w2;
-    });
-    result.crossProduct = productHull(p - 1, q2, [&](const size_t i, const size_t j) {
-      return (firstNet[i].x * secondNet[j].y - firstNet[i].y * secondNet[j].x) / w2;
-    });
+    if (products) {
+      // |C'|^2 and C' x C'' from the products of the derivatives' nets, which
+      // cancel only by rounding where C' and C'' are parallel
+      const LC_Interval w2 = w * w;
+      const size_t q2 = (p < 2) ? 0 : p - 2;
+      result.speedSquaredProduct = productHull(p - 1, p - 1, [&](const size_t i, const size_t j) {
+        return (firstNet[i].x * firstNet[j].x + firstNet[i].y * firstNet[j].y) / w2;
+      });
+      result.crossProduct = productHull(p - 1, q2, [&](const size_t i, const size_t j) {
+        return (firstNet[i].x * secondNet[j].y - firstNet[i].y * secondNet[j].x) / w2;
+      });
+    }
   } else {
     const LC_Interval &w = value.w;
     const LC_Interval &w1 = first.w;

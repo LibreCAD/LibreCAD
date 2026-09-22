@@ -821,7 +821,8 @@ bool LC_SplinePoints::tryGetSegment(const size_t index, LC_SplinePointsSegment& 
     return true;
 }
 
-bool LC_SplinePoints::tryBoundJet(const double a, const double b, LC_CurveJetBounds& bounds) const {
+bool LC_SplinePoints::tryBoundJet(const double a, const double b, LC_CurveJetBounds& bounds,
+                                  const bool products) const {
     bounds = LC_CurveJetBounds{};
     const auto count = static_cast<double>(getSegmentCount());
     if (!std::isfinite(a) || !std::isfinite(b) || !(a < b) || a < 0.0 || b > count) {
@@ -909,6 +910,10 @@ bool LC_SplinePoints::tryBoundJet(const double a, const double b, LC_CurveJetBou
     }
     if (!result.isValid()) {
         return false;
+    }
+    if (!products) {
+        result.speedSquaredProduct = LC_Interval{};
+        result.crossProduct = LC_Interval{};
     }
     bounds = result;
     return true;

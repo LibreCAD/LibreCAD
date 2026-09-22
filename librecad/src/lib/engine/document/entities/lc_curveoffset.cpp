@@ -94,13 +94,6 @@ public:
     }
 };
 
-/** @p bounded, with @p out's product enclosures dropped (see OffsetSource::boundJetWithProducts()). */
-bool withoutProducts(const bool bounded, LC_CurveJetBounds& out) {
-    out.speedSquaredProduct = LC_Interval{};
-    out.crossProduct = LC_Interval{};
-    return bounded;
-}
-
 class SplineSource final : public OffsetSource {
 public:
     explicit SplineSource(const RS_Spline& spline)
@@ -122,11 +115,11 @@ public:
     }
 
     bool boundJet(const double a, const double b, LC_CurveJetBounds& out) const override {
-        return withoutProducts(m_spline.tryBoundJet(a, b, out), out);
+        return m_spline.tryBoundJet(a, b, out);
     }
 
     bool boundJetWithProducts(const double a, const double b, LC_CurveJetBounds& out) const override {
-        return m_spline.tryBoundJet(a, b, out);
+        return m_spline.tryBoundJet(a, b, out, true);
     }
 
     const std::vector<RS_Vector>& hull() const override {
@@ -184,11 +177,11 @@ public:
     }
 
     bool boundJet(const double a, const double b, LC_CurveJetBounds& out) const override {
-        return withoutProducts(m_spline.tryBoundJet(a, b, out), out);
+        return m_spline.tryBoundJet(a, b, out);
     }
 
     bool boundJetWithProducts(const double a, const double b, LC_CurveJetBounds& out) const override {
-        return m_spline.tryBoundJet(a, b, out);
+        return m_spline.tryBoundJet(a, b, out, true);
     }
 
     const std::vector<RS_Vector>& hull() const override {
@@ -378,11 +371,18 @@ public:
         for (size_t span = 0; span + 1 < breaks.size(); ++span) {
             const double a = breaks[span];
             const double b = breaks[span + 1];
-            if (motion(a, b) <= still) {
+            LC_CurveJetBounds box;
+            if (!base.boundJetWithProducts(a, b, box)) {
+                return LC_CurveOffsetStatus::InvalidSource;
+            }
+            if (std::hypot(box.x.width(), box.y.width()) <= still) {
                 cuts.emplace_back(a, b); // stationary throughout
                 continue;
             }
             const double zero = vanishing(span);
+            if (box.speedSquared().lo() > zero * zero) {
+                continue; // a tangent throughout, as most spans prove at once
+            }
             const auto vanishes = [&](const double v) {
                 return !(v > zero);
             };

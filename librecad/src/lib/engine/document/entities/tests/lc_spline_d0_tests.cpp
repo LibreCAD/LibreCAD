@@ -120,7 +120,7 @@ TEST_CASE("RS_Spline::tryBoundJet encloses the curve on the box", "[curve-offset
                                           {0, 0, 0, 0, 0.3, 1.2, 2, 2, 2, 2}, {1.0, 0.7, 1.4, 1.0, 0.9, 1.0});
     for (const RS_Spline* spline : {&bezier, &rational}) {
         const BoundFn bound = [spline](double a, double b, LC_CurveJetBounds& out) {
-            return spline->tryBoundJet(a, b, out);
+            return spline->tryBoundJet(a, b, out, true);
         };
         const EvalFn eval = [spline](double t, LC_CurveEvaluationSide side, LC_CurveJet& out) {
             return spline->tryEvaluateJet(t, side, out);
@@ -133,7 +133,7 @@ TEST_CASE("RS_Spline::tryBoundJet encloses the curve on the box", "[curve-offset
         }
     }
     const RS_Spline arc = quarterCircle();
-    checkEncloses([&arc](double a, double b, LC_CurveJetBounds& out) { return arc.tryBoundJet(a, b, out); },
+    checkEncloses([&arc](double a, double b, LC_CurveJetBounds& out) { return arc.tryBoundJet(a, b, out, true); },
                   [&arc](double t, LC_CurveEvaluationSide side, LC_CurveJet& out) {
                       return arc.tryEvaluateJet(t, side, out);
                   },
@@ -185,16 +185,19 @@ TEST_CASE("Next to a vanishing tangent the products' own bounds keep the sign of
     const RS_Spline doubled = makeSpline(3, {{3, 1}, {3, 1}, {4, 1}, {5, 0}}, {0, 0, 0, 0, 1, 1, 1, 1});
     for (const double h : {1e-2, 1e-4, 1e-6}) {
         LC_CurveJetBounds b;
-        REQUIRE(doubled.tryBoundJet(h, 2.0 * h, b));
+        REQUIRE(doubled.tryBoundJet(h, 2.0 * h, b, true));
         CHECK((b.dx * b.ddy - b.dy * b.ddx).containsZero());
         CHECK(b.crossProduct.isNegative());
         CHECK(b.cross().isNegative());
         CHECK(b.speedSquared().isPositive());
     }
-    // at a rational span there are none: the components alone bound it
+    // unless asked for, and at a rational span, there are none: the components alone bound it
+    LC_CurveJetBounds plain;
+    REQUIRE(doubled.tryBoundJet(1e-2, 2e-2, plain));
+    CHECK_FALSE(plain.crossProduct.isValid());
     const RS_Spline arc = quarterCircle();
     LC_CurveJetBounds b;
-    REQUIRE(arc.tryBoundJet(0.2, 0.4, b));
+    REQUIRE(arc.tryBoundJet(0.2, 0.4, b, true));
     CHECK_FALSE(b.crossProduct.isValid());
     CHECK_FALSE(b.speedSquaredProduct.isValid());
     CHECK(b.cross().isValid());
@@ -221,7 +224,7 @@ TEST_CASE("RS_Spline::tryBoundJet refuses a box it cannot bound", "[curve-offset
 TEST_CASE("LC_SplinePoints::tryBoundJet encloses its segments", "[curve-offset][d0][bound]") {
     const LC_SplinePoints spline = fromControlPoints({{0, 0}, {1, 2}, {3, 2}, {4, 3}, {6, 1}});
     const BoundFn bound = [&spline](double a, double b, LC_CurveJetBounds& out) {
-        return spline.tryBoundJet(a, b, out);
+        return spline.tryBoundJet(a, b, out, true);
     };
     const EvalFn eval = [&spline](double t, LC_CurveEvaluationSide side, LC_CurveJet& out) {
         return spline.tryEvaluateJet(t, side, out);
@@ -233,7 +236,7 @@ TEST_CASE("LC_SplinePoints::tryBoundJet encloses its segments", "[curve-offset][
     CHECK_FALSE(spline.tryBoundJet(0.5, 1.5, bounds)); // across a join
 
     const LC_SplinePoints line = fromControlPoints({{0, 0}, {4, 2}});
-    checkEncloses([&line](double a, double b, LC_CurveJetBounds& out) { return line.tryBoundJet(a, b, out); },
+    checkEncloses([&line](double a, double b, LC_CurveJetBounds& out) { return line.tryBoundJet(a, b, out, true); },
                   [&line](double t, LC_CurveEvaluationSide side, LC_CurveJet& out) {
                       return line.tryEvaluateJet(t, side, out);
                   },
