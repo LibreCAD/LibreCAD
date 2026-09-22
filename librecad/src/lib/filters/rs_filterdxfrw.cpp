@@ -3940,6 +3940,8 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
     // Persist the source version on the document so the export filter can
     // gate raw-replay (emit + CLASSES registration) on source==target.
     m_graphic->dwgAdvancedMetadata().setSourceDwgVersion(m_dwgVersion);
+    // Save writes the drawing back in the version it was read in, if it can
+    m_graphic->setFormatType(formatForDwgVersion(m_dwgVersion));
     RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading DWG file: OK");
     RS_DIALOGFACTORY->commandMessage(
         QObject::tr("Opened DWG file version %1.")
@@ -15714,6 +15716,25 @@ RS_FilterDXFRW::dwgOpaqueTableFailureKindName(DwgOpaqueTableFailureKind kind) {
     return "table-record-receipt";
   }
   return "unknown";
+}
+
+RS2::FormatType RS_FilterDXFRW::formatForDwgVersion(const DRW::Version version) {
+  switch (version) {
+  case DRW::AC1015:
+    return RS2::FormatDWG;
+  case DRW::AC1018:
+    return RS2::FormatDWG2004;
+  case DRW::AC1021:
+    return RS2::FormatDWG2007;
+  case DRW::AC1024:
+    return RS2::FormatDWG2010;
+  case DRW::AC1027:
+    return RS2::FormatDWG2013;
+  case DRW::AC1032:
+    return RS2::FormatDWG2018;
+  default: // R14 and older
+    return RS2::FormatUnknown;
+  }
 }
 
 QString RS_FilterDXFRW::dwgExportAdmissionReport() const {
