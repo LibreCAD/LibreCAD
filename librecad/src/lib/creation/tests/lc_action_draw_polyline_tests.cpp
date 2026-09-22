@@ -36,6 +36,8 @@
 #include "rs_commands.h"
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
+#include "rs_layer.h"
+#include "rs_polyline.h"
 #include "rs_settings.h"
 
 namespace {
@@ -195,4 +197,32 @@ TEST_CASE("explicit polyline mode changes update the tool preference", "[polylin
     const auto* toolPolyline = dynamic_cast<const LC_ActionDrawPolyline*>(toolAction.get());
     REQUIRE(toolPolyline != nullptr);
     CHECK(toolPolyline->getMode() == LC_ActionDrawPolyline::TangentalArcFixedAngle);
+}
+
+TEST_CASE("polyline segments inherit the parent layer", "[polyline][layer][issue2904]") {
+    PolylineActionFixture fixture;
+    auto* sourceLayer = new RS_Layer(QStringLiteral("SOURCE"));
+    auto* targetLayer = new RS_Layer(QStringLiteral("TARGET"));
+    fixture.m_graphic.addLayer(sourceLayer);
+    fixture.m_graphic.addLayer(targetLayer);
+
+    RS_Polyline polyline(&fixture.m_graphic);
+    polyline.addVertex(RS_Vector(0.0, 0.0));
+    auto* firstSegment = polyline.addVertex(RS_Vector(10.0, 0.0));
+    REQUIRE(firstSegment != nullptr);
+    firstSegment->setLayer(sourceLayer);
+
+    RS_Entity* entity = &polyline;
+    entity->setLayer(targetLayer);
+    sourceLayer->freeze(true);
+
+    CHECK(firstSegment->getLayer(false) == nullptr);
+    CHECK(firstSegment->getLayer() == targetLayer);
+    CHECK(firstSegment->isVisible());
+
+    auto* secondSegment = polyline.addVertex(RS_Vector(10.0, 10.0));
+    REQUIRE(secondSegment != nullptr);
+    CHECK(secondSegment->getLayer(false) == nullptr);
+    CHECK(secondSegment->getLayer() == targetLayer);
+    CHECK(secondSegment->isVisible());
 }

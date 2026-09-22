@@ -65,7 +65,9 @@
 #include "rs_linetypepattern.h"
 #include "rs_pen.h"
 #include "rs_point.h"
+#include "rs_polyline.h"
 #include "rs_settings.h"
+#include "rs_spline.h"
 
 namespace {
 
@@ -5336,4 +5338,50 @@ TEST_CASE("DXF import maps ACAD_ISO09W100 to PHANTOM and writes it back as PHANT
 
   std::filesystem::remove(src);
   std::filesystem::remove(out);
+}
+
+TEST_CASE("An open spline written to R12 ends its polyline at the spline's end",
+          "[dxf][filter][spline][r12]") {
+  ensureSettings();
+
+  // away from the origin, where the polyline used to end
+  RS_Graphic graphic;
+  RS_SplineData data(3, false);
+  data.controlPoints = {{100., 50.}, {110., 70.}, {130., 40.}, {140., 60.}};
+  data.knotslist = {0., 0., 0., 0., 1., 1., 1., 1.};
+  data.weights.assign(4, 1.);
+  auto *spline = new RS_Spline(&graphic, data);
+  graphic.addEntity(spline);
+  spline->update();
+  REQUIRE(spline->count() > 0);
+
+  const std::string path = tmpFile("open_spline_r12.dxf");
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(path), RS2::FormatDXFRW12));
+  }
+  RS_Graphic reloaded;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(reloaded, QString::fromStdString(path), RS2::FormatDXFRW));
+  }
+  std::filesystem::remove(path);
+
+  std::vector<RS_Vector> vertices;
+  for (RS_Entity *e : reloaded) {
+    REQUIRE(e->rtti() == RS2::EntityPolyline);
+    CHECK_FALSE(static_cast<RS_Polyline *>(e)->isClosed());
+    for (RS_Entity *segment : *static_cast<RS_EntityContainer *>(e)) {
+      if (vertices.empty())
+        vertices.push_back(segment->getStartpoint());
+      vertices.push_back(segment->getEndpoint());
+    }
+  }
+  REQUIRE(vertices.size() > 2);
+  CHECK(vertices.front().distanceTo(RS_Vector(100., 50.)) < 1e-9);
+  CHECK(vertices.back().distanceTo(RS_Vector(140., 60.)) < 1e-9);
+  for (const RS_Vector &v : vertices) {
+    INFO("vertex " << v);
+    CHECK(v.distanceTo(RS_Vector(0., 0.)) > 1.);
+  }
 }
