@@ -3132,6 +3132,39 @@ QString RS_FilterJWW::toDxfString(const QString& string) {
 
 
 
+namespace {
+/**
+ * Replaces each code in @p text, @p prefix followed by @p digits digits in
+ * @p base, by the character it stands for. Each replacement shortens the text
+ * and the scan starts again, so a code that decoding spells, such as \U+005C
+ * before U+0041, is decoded in turn, and the loop ends. The text is scanned
+ * directly: QRegularExpression stops matching once decoding has put half of a
+ * surrogate pair, written as two codes, into it.
+ */
+void decodeCharacterCodes(QString& text, const QLatin1StringView prefix, const int digits, const int base) {
+    const auto isDigit = [base](const QChar c) {
+        const char16_t u = c.unicode();
+        return (u >= u'0' && u <= u'9') ||
+               (base == 16 && ((u >= u'a' && u <= u'f') || (u >= u'A' && u <= u'F')));
+    };
+    qsizetype from = 0;
+    while ((from = text.indexOf(prefix, from)) >= 0) {
+        const qsizetype start = from + prefix.size();
+        bool isCode = start + digits <= text.size();
+        for (int i = 0; isCode && i < digits; ++i) {
+            isCode = isDigit(text.at(start + i));
+        }
+        if (!isCode) {
+            ++from;
+            continue;
+        }
+        const auto code = static_cast<char16_t>(text.mid(start, digits).toUShort(nullptr, base));
+        text.replace(from, prefix.size() + digits, QChar(code));
+        from = 0;
+    }
+}
+} // namespace
+
 /**
  * Converts a DXF encoded string into a native Unicode string.
  */
@@ -3156,39 +3189,9 @@ QString RS_FilterJWW::toNativeString(const char* data, const QString& encoding) 
     // plus/minus
     res = res.replace(QRegularExpression("%%p"), QChar(0x00B1));
 
-    // Unicode characters:
-    QString cap = "";
-    int uCode = 0;
-    bool ok = false;
-    do {
-        QRegularExpression regexp("\\\\U\\+[0-9A-Fa-f]{4,4}");
-        QRegularExpressionMatch match=regexp.match(res);
-        if (match.hasMatch()) {
-            uCode = match.captured(0).right(4).toInt(&ok, 16);
-            // workaround for Qt 3.0.x:
-            res.replace(QRegularExpression("\\\\U\\+" + cap.right(4)), QChar(uCode));
-            // for Qt 3.1:
-            //res.replace(cap, QChar(uCode));
-        }
-    }
-    while (!cap.isNull());
-
-    // ASCII code:
-    cap = "";
-//    uCode = 0;
-    ok = false;
-    do {
-        QRegularExpression regexp("%%[0-9]{3,3}");
-        QRegularExpressionMatch match = regexp.match(res);
-        if (match.hasMatch()) {
-            uCode = match.captured(0).right(3).toInt(&ok, 10);
-            // workaround for Qt 3.0.x:
-            res.replace(QRegularExpression("%%" + cap.right(3)), QChar(uCode));
-            // for Qt 3.1:
-            //res.replace(cap, QChar(uCode));
-        }
-    }
-    while (!cap.isNull());
+    // Unicode characters, \U+XXXX, then ASCII codes, %%nnn
+    decodeCharacterCodes(res, QLatin1StringView("\\U+"), 4, 16);
+    decodeCharacterCodes(res, QLatin1StringView("%%"), 3, 10);
 
     // Ignore font tags:
     res = res.replace(QRegularExpression("\\\\f[0-9A-Za-z| ]{0,};"), "");
