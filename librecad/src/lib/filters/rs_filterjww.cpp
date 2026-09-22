@@ -195,8 +195,9 @@ void RS_FilterJWW::addLayer(const DL_LayerData& data) {
 ////////////////////2006/06/05
         RS_Layer* layer = new RS_Layer(toNativeString(data.name.c_str(),getDXFEncoding()));
 ////////////////////
-        RS_DEBUG->print("RS_FilterJWW::addLayer: set pen");
-        layer->setPen(attributesToPen(attributes));
+        // A Jw_cad layer has no pen, so the layer keeps RS_Layer's default.
+        // DL_Jww adds the layer before it sets the attributes of the record,
+        // so `attributes` still holds the previous record's pen here.
         //layer->setFlags(data.flags&0x07);
 
         RS_DEBUG->print("RS_FilterJWW::addLayer: flags");

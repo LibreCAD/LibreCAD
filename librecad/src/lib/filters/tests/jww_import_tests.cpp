@@ -30,6 +30,7 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include <functional>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -38,6 +39,7 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QString>
+#include <QStringList>
 
 #ifdef Q_OS_UNIX
 #include <fcntl.h>
@@ -84,6 +86,14 @@ void setCommon(Data& data, jwDWORD version = 600) {
     data.m_nLayer = 1;
     data.m_nGLayer = 0;
     data.m_sFlg = 0;
+}
+
+/** @p data on layer @p layer of layer group @p gLayer, which LibreCAD names "G-L" in hex. */
+template <typename Data>
+Data onLayer(Data data, jwWORD gLayer, jwWORD layer) {
+    data.m_nGLayer = gLayer;
+    data.m_nLayer = layer;
+    return data;
 }
 
 CDataSen makeLine(jwDWORD version, DPoint start, DPoint end) {
@@ -664,4 +674,112 @@ TEST_CASE("A JWW file that ends with its header is refused", "[jww][import]") {
         CHECK_FALSE(filter.fileImport(graphic, path, RS2::FormatJWW));
         CHECK(QFile::remove(path));
     }
+}
+
+TEST_CASE("JWW records are imported on the layer their numbers name", "[jww][import]") {
+    ensureSettings();
+    // DL_Jww gave every record the layer name in values[8], a DXF parser
+    // buffer that nothing fills, so the entities landed on layer "0" (or on
+    // a layer named after whatever that memory held) and the layers the file
+    // names stayed empty.
+    const QString path = writeJwwFile(QStringLiteral("jww_import_layers.jww"), 600, [](JWWDocument& doc) {
+        doc.vSen.push_back(onLayer(makeLine(600, {0.0, 0.0}, {10.0, 5.0}), 0x0, 0x1));
+        doc.vEnko.push_back(onLayer(makeArc(600, true), 0x2, 0xA));      // circle
+        doc.vEnko.push_back(onLayer(makeArc(600), 0x2, 0xB));            // arc
+        doc.vEnko.push_back(onLayer(makeArc(600, true, 0.5), 0x2, 0xC)); // ellipse
+        doc.vTen.push_back(onLayer(makePoint(600, {1.0, 1.0}), 0xF, 0xF));
+        doc.vMoji.push_back(onLayer(makeText(600, "T"), 0x3, 0x4));
+    });
+    RS_Graphic graphic;
+    graphic.initForNewDocument(); // layer "0", as when LibreCAD opens a file
+    RS_FilterJWW filter;
+    REQUIRE(filter.fileImport(graphic, path, RS2::FormatJWW));
+    QFile::remove(path);
+
+    const std::map<RS2::EntityType, QString> expected{
+        {RS2::EntityLine, QStringLiteral("0-1")},  {RS2::EntityCircle, QStringLiteral("2-A")},
+        {RS2::EntityArc, QStringLiteral("2-B")},   {RS2::EntityEllipse, QStringLiteral("2-C")},
+        {RS2::EntityPoint, QStringLiteral("F-F")}, {RS2::EntityMText, QStringLiteral("3-4")}};
+    std::map<RS2::EntityType, int> found;
+    for (const RS_Entity* e : graphic) {
+        INFO("entity type " << e->rtti());
+        const auto it = expected.find(e->rtti());
+        REQUIRE(it != expected.end());
+        ++found[e->rtti()];
+        REQUIRE(e->getLayer() != nullptr);
+        CHECK(e->getLayer()->getName().toStdString() == it->second.toStdString());
+        CHECK(e->getLayer() == graphic.findLayer(it->second));
+    }
+    CHECK(found.size() == expected.size());
+    for (const auto& typeCount : found) {
+        CHECK(typeCount.second == 1);
+    }
+
+    // the layers the file names, and the new document's "0", which is empty
+    QStringList layers;
+    for (const RS_Layer* layer : *graphic.getLayerList()) {
+        layers << layer->getName();
+    }
+    layers.sort();
+    CHECK(layers == QStringList{"0", "0-1", "2-A", "2-B", "2-C", "3-4", "F-F"});
+}
+
+TEST_CASE("A JWW layer's pen does not come from the record imported before it", "[jww][import]") {
+    ensureSettings();
+    // Pen colour 2 is ByLayer. RS_FilterJWW::addLayer() gave the layer the
+    // pen of the record imported before, so once the records are on their
+    // layers the second line took the first line's colour.
+    const QString path = writeJwwFile(QStringLiteral("jww_import_layer_pen.jww"), 600, [](JWWDocument& doc) {
+        doc.vSen.push_back(makeLine(600, {0.0, 0.0}, {10.0, 5.0})); // pen colour 1
+        CDataSen byLayer = makeLine(600, {0.0, 10.0}, {10.0, 15.0});
+        byLayer.m_nPenColor = 2;
+        doc.vSen.push_back(byLayer);
+    });
+    RS_Graphic graphic;
+    RS_FilterJWW filter;
+    REQUIRE(filter.fileImport(graphic, path, RS2::FormatJWW));
+    QFile::remove(path);
+
+    // the filter makes no layer "0" of its own: the file names only "0-1"
+    CHECK(graphic.getLayerList()->count() == 1);
+    const RS_Layer* layer = graphic.findLayer("0-1");
+    REQUIRE(layer != nullptr);
+    CHECK(layer->getPen() == RS_Layer("0-1").getPen());
+    int byLayerLines = 0;
+    for (const RS_Entity* e : graphic) {
+        if (e->rtti() == RS2::EntityLine && e->getPen(false).getColor().isByLayer()) {
+            ++byLayerLines;
+            CHECK(e->getPen(true).getColor() == RS_Color(Qt::black));
+        }
+    }
+    CHECK(byLayerLines == 1);
+}
+
+TEST_CASE("A JWW dimension's line and text are imported on its layers", "[jww][import]") {
+    ensureSettings();
+    const QString path = writeJwwFile(QStringLiteral("jww_import_dimension_layers.jww"), 600, [](JWWDocument& doc) {
+        CDataSunpou dimension = onLayer(makeDimension(600), 0x5, 0x6);
+        dimension.m_Sen = onLayer(dimension.m_Sen, 0x5, 0x6);
+        dimension.m_Moji = onLayer(dimension.m_Moji, 0x5, 0x6);
+        doc.vSunpou.push_back(dimension);
+    });
+    RS_Graphic graphic;
+    RS_FilterJWW filter;
+    REQUIRE(filter.fileImport(graphic, path, RS2::FormatJWW));
+    QFile::remove(path);
+
+    int lines = 0;
+    int texts = 0;
+    for (const RS_Entity* e : graphic) {
+        REQUIRE(e->getLayer() != nullptr);
+        CHECK(e->getLayer()->getName().toStdString() == "5-6");
+        if (e->rtti() == RS2::EntityLine) {
+            ++lines;
+        } else if (e->rtti() == RS2::EntityMText) {
+            ++texts;
+            CHECK(static_cast<const RS_MText*>(e)->getText().toStdString() == "100");
+        }
+    }
+    CHECK(lines == 1);
+    CHECK(texts == 1);
 }
