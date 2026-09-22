@@ -52,7 +52,6 @@ class RS_Hatch;
 class RS_Image;
 class RS_Leader;
 class RS_Polyline;
-class DL_WriterA;
 
 /**
  * This format filter class imports JWW files. It depends on the jwwlib
@@ -78,15 +77,6 @@ public:
     //RS2::FormatType rtti() const{
     // return RS2::FormatJWW;
     //}
-
-    /*
-    virtual bool canImport(RS2::FormatType t) {
-  return (t==RS2::FormatJWW);
- }
- 
-    virtual bool canExport(RS2::FormatType t) {
-  return (t==RS2::FormatJWW || t==RS2::FormatJWW12);
- }*/
 
     // Import:
     bool fileImport(RS_Graphic& g, const QString& file, RS2::FormatType /*type*/) override;
@@ -154,35 +144,7 @@ public:
         return false;
     }
 
-    void writeVariables(DL_WriterA& dw);
-    void writeLayer(DL_WriterA& dw, RS_Layer* l);
-    void writeLineType(DL_WriterA& dw, RS2::LineType t);
-    void writeAppid(DL_WriterA& dw, const char* appid);
-    void writeBlock(DL_WriterA& dw, RS_Block* blk);
-    void writeEntity(DL_WriterA& dw, RS_Entity* e);
-    void writeEntity(DL_WriterA& dw, RS_Entity* e, const DL_Attributes& attrib);
-    void writePoint(DL_WriterA& dw, RS_Point* p, const DL_Attributes& attrib);
-    void writeLine(DL_WriterA& dw, RS_Line* l, const DL_Attributes& attrib);
-    void writePolyline(DL_WriterA& dw, RS_Polyline* l, const DL_Attributes& attrib);
-    void writeSpline(DL_WriterA& dw, RS_Spline* s, const DL_Attributes& attrib);
-    void writeSplinePoints(DL_WriterA& dw, LC_SplinePoints* s, const DL_Attributes& attrib);
-    void writeCircle(DL_WriterA& dw, RS_Circle* c, const DL_Attributes& attrib);
-    void writeArc(DL_WriterA& dw, RS_Arc* a, const DL_Attributes& attrib);
-    void writeEllipse(DL_WriterA& dw, RS_Ellipse* s, const DL_Attributes& attrib);
-    void writeInsert(DL_WriterA& dw, RS_Insert* i, const DL_Attributes& attrib);
-    void writeText(DL_WriterA& dw, RS_MText* t, const DL_Attributes& attrib);
-    void writeDimension(DL_WriterA& dw, RS_Dimension* d, const DL_Attributes& attrib);
-    void writeLeader(DL_WriterA& dw, RS_Leader* l, const DL_Attributes& attrib);
-    void writeHatch(DL_WriterA& dw, RS_Hatch* h, const DL_Attributes& attrib);
-    void writeSolid(DL_WriterA& dw, RS_Solid* s, const DL_Attributes& attrib);
-    void writeImage(DL_WriterA& dw, RS_Image* i, const DL_Attributes& attrib);
-    void writeEntityContainer(DL_WriterA& dw, RS_EntityContainer* con, const DL_Attributes& attrib);
-    void writeAtomicEntities(DL_WriterA& dw, RS_EntityContainer* c, const DL_Attributes& attrib, RS2::ResolveLevel level);
-
-    void writeImageDef(DL_WriterA& dw, RS_Image* i);
-
     void setEntityAttributes(RS_Entity* entity, const DL_Attributes& attrib);
-    DL_Attributes getEntityAttributes(RS_Entity* entity);
 
     static QString toDxfString(const QString& string);
     QString toNativeString(const char* data, const QString& encoding);

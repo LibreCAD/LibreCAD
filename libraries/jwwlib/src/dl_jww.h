@@ -77,19 +77,11 @@ class DL_WriterA;
 #define DL_ENTITY_SEQEND       122
 
 /**
- * Reading and writing of DXF files.
+ * Reading of JWW files.
  *
- * This class can read in a DXF file and calls methods from the 
- * interface DL_EntityContainer to add the entities to the
- * contianer provided by the user of the library.
- *
- * It can also be used to write DXF files to a certain extent.
- *
- * When saving entities, special values for colors and linetypes 
- * can be used:
- *
- * Special colors are 0 (=BYBLOCK) and 256 (=BYLAYER).
- * Special linetypes are "BYLAYER" and "BYBLOCK".
+ * in() reads a JWW file through JWWDocument (jwwdoc.h) and calls methods
+ * from the interface DL_CreationInterface to add the entities to the
+ * container provided by the user of the library. There is no writer.
  *
  * @author Andrew Mustun
  */
@@ -157,121 +149,6 @@ public:
 
 	int  stringToInt(const char* s, bool* ok= nullptr) ;
 
-    DL_WriterA* out(const char* file,
-                    DL_Codes::version version=VER_2000);
-
-    void writeHeader(DL_WriterA& dw) ;
-
-    void writePoint(DL_WriterA& dw,
-                    const DL_PointData& data,
-                    const DL_Attributes& attrib) ;
-    void writeLine(DL_WriterA& dw,
-                   const DL_LineData& data,
-                   const DL_Attributes& attrib) ;
-    void writePolyline(DL_WriterA& dw,
-                       const DL_PolylineData& data,
-                       const DL_Attributes& attrib);
-    void writeVertex(DL_WriterA& dw,
-                     const DL_VertexData& data) ;
-    void writePolylineEnd(DL_WriterA& dw) ;
-    void writeSpline(DL_WriterA& dw,
-                       const DL_SplineData& data,
-                       const DL_Attributes& attrib) ;
-    void writeControlPoint(DL_WriterA& dw,
-                     const DL_ControlPointData& data);
-    void writeKnot(DL_WriterA& dw,
-                     const DL_KnotData& data);
-    void writeCircle(DL_WriterA& dw,
-                     const DL_CircleData& data,
-                     const DL_Attributes& attrib) ;
-    void writeArc(DL_WriterA& dw,
-                  const DL_ArcData& data,
-                  const DL_Attributes& attrib) ;
-    void writeEllipse(DL_WriterA& dw,
-                      const DL_EllipseData& data,
-                      const DL_Attributes& attrib) ;
-    void writeInsert(DL_WriterA& dw,
-                     const DL_InsertData& data,
-                     const DL_Attributes& attrib) ;
-    void writeMText(DL_WriterA& dw,
-                    const DL_MTextData& data,
-                    const DL_Attributes& attrib) ;
-    void writeText(DL_WriterA& dw,
-                    const DL_TextData& data,
-                    const DL_Attributes& attrib) ;
-    void writeDimAligned(DL_WriterA& dw,
-                         const DL_DimensionData& data,
-                         const DL_DimAlignedData& edata,
-                         const DL_Attributes& attrib) ;
-    void writeDimLinear(DL_WriterA& dw,
-                        const DL_DimensionData& data,
-                        const DL_DimLinearData& edata,
-                        const DL_Attributes& attrib) ;
-    void writeDimRadial(DL_WriterA& dw,
-                        const DL_DimensionData& data,
-                        const DL_DimRadialData& edata,
-                        const DL_Attributes& attrib) ;
-    void writeDimDiametric(DL_WriterA& dw,
-                           const DL_DimensionData& data,
-                           const DL_DimDiametricData& edata,
-                           const DL_Attributes& attrib) ;
-    void writeDimAngular(DL_WriterA& dw,
-                         const DL_DimensionData& data,
-                         const DL_DimAngularData& edata,
-                         const DL_Attributes& attrib) ;
-    void writeDimAngular3P(DL_WriterA& dw,
-                           const DL_DimensionData& data,
-                           const DL_DimAngular3PData& edata,
-                           const DL_Attributes& attrib) ;
-    void writeLeader(DL_WriterA& dw,
-                     const DL_LeaderData& data,
-                     const DL_Attributes& attrib) ;
-    void writeLeaderVertex(DL_WriterA& dw,
-                           const DL_LeaderVertexData& data) ;
-    void writeHatch1(DL_WriterA& dw,
-                     const DL_HatchData& data,
-                     const DL_Attributes& attrib) ;
-    void writeHatch2(DL_WriterA& dw,
-                     const DL_HatchData& data,
-                     const DL_Attributes& attrib);
-    void writeHatchLoop1(DL_WriterA& dw,
-                         const DL_HatchLoopData& data);
-    void writeHatchLoop2(DL_WriterA& dw,
-                         const DL_HatchLoopData& data);
-    void writeHatchEdge(DL_WriterA& dw,
-                        const DL_HatchEdgeData& data);
-
-    int writeImage(DL_WriterA& dw,
-                   const DL_ImageData& data,
-                   const DL_Attributes& attrib) ;
-
-    void writeImageDef(DL_WriterA& dw, int handle,
-                       const DL_ImageData& data) ;
-
-    void writeLayer(DL_WriterA& dw,
-                    const DL_LayerData& data,
-                    const DL_Attributes& attrib) ;
-
-    void writeLineType(DL_WriterA& dw,
-                       const DL_LineTypeData& data) ;
-
-    void writeAppid(DL_WriterA& dw, const string& name);
-
-    void writeBlock(DL_WriterA& dw,
-                    const DL_BlockData& data);
-    void writeEndBlock(DL_WriterA& dw, const string& name);
-
-    void writeVPort(DL_WriterA& dw) ;
-    void writeStyle(DL_WriterA& dw) ;
-    void writeView(DL_WriterA& dw) ;
-    void writeUcs(DL_WriterA& dw) ;
-    void writeDimStyle(DL_WriterA& dw,
-	                   double dimasz, double dimexe, double dimexo,
-					   double dimgap, double dimtxt) ;
-    void writeBlockRecord(DL_WriterA& dw) ;
-    void writeBlockRecord(DL_WriterA& dw, const string& name) ;
-    void writeObjects(DL_WriterA& dw);
-    void writeObjectsEnd(DL_WriterA& dw);
 
     /**
      * Converts the given string into a double or returns the given
@@ -315,12 +192,6 @@ public:
         return def;
     }
 
-	static bool checkVariable(const char* var, DL_Codes::version version);
-
-	DL_Codes::version getVersion() const {
-		return version;
-	}
-
 	int getLibVersion(const char* str);
 
 	void CreateSen(DL_CreationInterface* creationInterface, CDataSen& DSen);
@@ -332,7 +203,6 @@ public:
 	void CreateBlock(DL_CreationInterface* creationInterface, CDataBlock& DBlock);
 
 private:
-    DL_Codes::version version;
     unsigned long styleHandleStd;
 
 	string polylineLayer;
