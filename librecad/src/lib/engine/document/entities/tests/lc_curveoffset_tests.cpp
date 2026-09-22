@@ -725,8 +725,8 @@ TEST_CASE("A closed source materializes as one open spline whose ends meet in a 
 
 TEST_CASE("Offsets of 20-control-point cubics, timed", "[.benchmark]") {
     // The interactive target: below 50 ms for one regular, open cubic with 20
-    // control points at the default tolerance, Direct and Trimmed, measured
-    // without sanitizers.
+    // control points at the default tolerance, Direct and Trimmed (what the
+    // tools use, on every preview mouse move), measured without sanitizers.
     struct Shape {
         const char* name;
         std::vector<RS_Vector> points;
@@ -761,13 +761,13 @@ TEST_CASE("Offsets of 20-control-point cubics, timed", "[.benchmark]") {
                     LC_CurveOffset::makeDirectSourceBudget());
                 ms.push_back(std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - start).count());
                 REQUIRE(r.status == LC_CurveOffsetStatus::Ok);
-                pieces = r.entities.size();
+                pieces = r.usage.cubicPieces;
             }
             std::sort(ms.begin(), ms.end());
             const double median = ms[ms.size() / 2];
             const double p95 = ms[ms.size() * 95 / 100];
             WARN(shape.name << (mode == LC_CurveOffsetMode::Direct ? " direct: " : " trimmed: ") << pieces
-                            << " entities, median " << median << " ms, p95 " << p95 << " ms");
+                            << " pieces, median " << median << " ms, p95 " << p95 << " ms");
             CHECK(median < 50.0);
         }
     }

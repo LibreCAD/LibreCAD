@@ -37,6 +37,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 struct RS_OffsetData;
 struct LC_OffsetBatchOutcome;
+struct LC_OffsetSourceOutcome;
+class LC_OffsetPreviewCache;
 
 /**
  * This action class create entity by offset
@@ -66,8 +68,13 @@ protected:
     std::unique_ptr<RS_OffsetData> m_offsetData;
     /** The committed outcome, kept only until its selection update has used it. */
     std::unique_ptr<LC_OffsetBatchOutcome> m_pendingOutcome;
+    /** Offsets the preview made, for the sources it made them for. */
+    std::unique_ptr<LC_OffsetPreviewCache> m_previewCache;
+    QList<RS_Entity*> m_previewSources;
 
     void previewOffset();
+    /** Why a source was not offset, for the command line and the info cursor. */
+    static QString failureReason(const LC_OffsetSourceOutcome& source, bool preview);
     /** Appearance/MaxPreview, read signed: a non-positive value means none in detail. */
     static std::size_t maxPreviewDetail();
     void finish() override;

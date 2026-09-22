@@ -58,9 +58,10 @@
  * remove loops or self-intersections, and its error check is sampled
  * evidence, never a proof of the maximum deviation.
  *
- * Trimmed mode, programmatic only, removes from the noded Direct offset the
- * parts provably nearer to the source than the distance, less the tolerance
- * budget, and fails where it cannot decide.
+ * Trimmed mode, the drawing tools' mode (makeOffsetOptions()), removes from
+ * the noded Direct offset the parts provably nearer to the source than the
+ * distance, less the tolerance budget, and fails where it cannot decide. It
+ * may leave nothing: Ok with no branches.
  *
  * RegionBoundary mode, programmatic only, takes the region a closed source
  * encloses under the fill rule and returns the boundary of that region grown
@@ -278,6 +279,7 @@ inline constexpr double kDefaultOffsetAngleTolerance = 1e-3;
 inline constexpr unsigned kDefaultMaxSubdivisionDepth = 20;
 inline constexpr std::size_t kDefaultMaxSamples = 65536;
 inline constexpr std::size_t kDefaultMaxOutputBranches = 256;
+inline constexpr std::size_t kDefaultMaxIntersectionPairs = std::size_t{1} << 20;
 
 /** Whether the entity is a curve the engine can offset: an RS_Spline or an
  *  LC_SplinePoints, subclasses included. */
@@ -290,6 +292,15 @@ bool isSupportedSource(const RS_Entity& source);
  * distance has no finite scale.
  */
 LC_CurveOffsetOptions makeDirectOptions(const RS_Entity& source, double distanceMagnitude,
+                                        double requestedTolerance = 0.0);
+
+/**
+ * The options the drawing tools offset with: makeDirectOptions() in Trimmed
+ * mode, so that what lies nearer to the source than the distance (the loop
+ * past a tight bend, the overlap at an inward corner) is cut away, as the
+ * trimmed offset of connected segments is.
+ */
+LC_CurveOffsetOptions makeOffsetOptions(const RS_Entity& source, double distanceMagnitude,
                                         double requestedTolerance = 0.0);
 
 LC_CurveOffsetRequest makeDirectionRequest(const RS_Vector& directionPoint, double distanceMagnitude);
@@ -336,10 +347,11 @@ LC_CurveOffsetMaterializationResult materializeBranches(const RS_Entity& source,
                                                         const LC_OffsetSourceBudget& budget);
 
 /**
- * RS_Entity::createOffset() for splines: the Direct offset through @p coord at
- * |@p distance| with default options and limits. The entities are released
- * only when the whole result is valid; any failure gives an empty vector.
- * Callers that must tell a failure from "not handled" use createEntities().
+ * RS_Entity::createOffset() for splines: the Trimmed offset (makeOffsetOptions())
+ * through @p coord at |@p distance| with default limits. The entities are
+ * released only when the whole result is valid; a failure, and an offset
+ * trimmed away entirely, give an empty vector. Callers that must tell those
+ * apart use createEntities().
  */
 std::vector<RS_Entity*> createLegacyOffset(const RS_Entity& source, const RS_Vector& coord, double distance);
 

@@ -29,7 +29,10 @@
 #include <cmath>
 #include <unordered_set>
 
+#include <QStringList>
+
 #include "lc_actioninfomessagebuilder.h"
+#include "lc_curveoffset.h"
 #include "lc_offset_options_filler.h"
 #include "lc_offset_options_widget.h"
 #include "rs_document.h"
@@ -40,7 +43,8 @@ LC_ActionModifyOffset::LC_ActionModifyOffset(LC_ActionContext *actionContext)
     :LC_ActionModifyBase("ActionModifyOffset", actionContext,RS2::ActionModifyOffset,
                          {RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse, RS2::EntityLine, RS2::EntityPolyline,
                           RS2::EntitySpline, RS2::EntitySplinePoints})
-    , m_offsetData(new RS_OffsetData()){
+    , m_offsetData(new RS_OffsetData())
+    , m_previewCache(std::make_unique<LC_OffsetPreviewCache>()){
 
     m_offsetData->distance = 0.;
     m_offsetData->number = 1;
@@ -97,9 +101,51 @@ bool LC_ActionModifyOffset::isInVisualSnapStatus(const int status) {
 }
 
 bool LC_ActionModifyOffset::doTriggerModifications(LC_DocumentModificationBatch& ctx) {
+    // the sources may be replaced: what the preview kept for them is dropped
+    m_previewCache->clear();
+    m_previewSources.clear();
     m_pendingOutcome = std::make_unique<LC_OffsetBatchOutcome>(RS_Modification::offsetWithOutcome(
         *m_offsetData, m_selectedEntities, false, LC_OffsetBatchLimits{}, ctx));
     return m_pendingOutcome->anySourceSucceeded();
+}
+
+QString LC_ActionModifyOffset::failureReason(const LC_OffsetSourceOutcome& source, const bool preview) {
+    switch (source.status) {
+        case LC_OffsetSourceStatus::Succeeded:
+            return {};
+        case LC_OffsetSourceStatus::NotVisibleOrLocked:
+            return tr("hidden or locked");
+        case LC_OffsetSourceStatus::TargetLayerUnavailable:
+            return tr("the current layer is missing, frozen or locked");
+        case LC_OffsetSourceStatus::Vanished:
+            return tr("nothing is left at this distance");
+        case LC_OffsetSourceStatus::LimitExceeded:
+            return preview ? tr("too complex to preview; a click offsets it in full") : tr("the offset is too complex");
+        case LC_OffsetSourceStatus::InvalidSource:
+            return tr("it cannot be offset");
+        case LC_OffsetSourceStatus::OffsetFailed:
+            break;
+    }
+    switch (source.engineStatus) {
+        case LC_CurveOffsetStatus::AmbiguousSide:
+            return tr("the point is on the curve, so it gives no side");
+        case LC_CurveOffsetStatus::UndefinedTangent:
+            return tr("the curve has a point with no direction, as at repeated control points");
+        case LC_CurveOffsetStatus::DiscontinuousNormal:
+            return tr("the curve has a gap or a corner the offset cannot join");
+        case LC_CurveOffsetStatus::SingularOffset:
+        case LC_CurveOffsetStatus::AmbiguousRegularity:
+            return tr("the distance meets the curve's radius of curvature where that cannot be resolved");
+        case LC_CurveOffsetStatus::AmbiguousTopology:
+            return tr("the offset touches itself where it cannot be trimmed reliably");
+        case LC_CurveOffsetStatus::FitFailed:
+        case LC_CurveOffsetStatus::ToleranceNotMet:
+            return tr("the offset cannot be fitted within the tolerance");
+        case LC_CurveOffsetStatus::InvalidDistance:
+            return tr("the distance is not valid");
+        default:
+            return tr("the offset could not be made");
+    }
 }
 
 void LC_ActionModifyOffset::doTriggerSelectionUpdate(const bool keepSelected, const LC_DocumentModificationBatch& ctx) {
@@ -138,15 +184,45 @@ void LC_ActionModifyOffset::doTriggerSelectionUpdate(const bool keepSelected, co
 void LC_ActionModifyOffset::doTriggerCompletion(const bool success) {
     int failed = 0;
     int total = 0;
+    QStringList reasons;
+    // sources that got fewer copies than asked for, and the copies of the last of them
+    int shortOfCopies = 0;
+    int made = 0;
+    int requested = 0;
     if (m_pendingOutcome != nullptr) {
         for (const LC_OffsetSourceOutcome& source : std::as_const(m_pendingOutcome->sources)) {
             ++total;
-            failed += source.succeeded() ? 0 : 1;
+            if (!source.succeeded()) {
+                ++failed;
+                const QString reason = failureReason(source, false);
+                if (!reasons.contains(reason)) {
+                    reasons.append(reason);
+                }
+            }
+            else if (!source.complete()) {
+                ++shortOfCopies;
+                made = source.copiesMade;
+                requested = source.copiesRequested;
+            }
         }
     }
     m_pendingOutcome.reset();
     if (failed > 0) {
-        commandMessage(tr("%1 of %2 selected entities could not be offset").arg(failed).arg(total));
+        commandMessage(tr("%1 of %2 selected entities could not be offset: %3")
+                           .arg(failed)
+                           .arg(total)
+                           .arg(reasons.join(QStringLiteral("; "))));
+    }
+    if (shortOfCopies == 1) {
+        commandMessage(tr("Only %1 of %2 copies fit, since nothing is left at a larger distance; the original was kept")
+                           .arg(made)
+                           .arg(requested));
+    }
+    else if (shortOfCopies > 1) {
+        commandMessage(tr("%1 selected entities got fewer than %2 copies, since nothing is left at a larger distance; "
+                          "their originals were kept")
+                           .arg(shortOfCopies)
+                           .arg(requested));
     }
     if (success) {
         finish();
@@ -161,6 +237,8 @@ void LC_ActionModifyOffset::doTriggerCompletion(const bool success) {
 
 void LC_ActionModifyOffset::finish() {
     m_pendingOutcome.reset();
+    m_previewCache->clear();
+    m_previewSources.clear();
     LC_ActionModifyBase::finish();
 }
 
@@ -170,10 +248,26 @@ std::size_t LC_ActionModifyOffset::maxPreviewDetail() {
 }
 
 void LC_ActionModifyOffset::previewOffset() {
+    // made on every mouse move: with preview limits, and from what was made
+    // before for the same sources, side and distance
+    if (m_previewSources != m_selectedEntities) {
+        m_previewCache->clear();
+        m_previewSources = m_selectedEntities;
+    }
     LC_DocumentModificationBatch ctx;
-    RS_Modification::offsetWithOutcome(*m_offsetData, m_selectedEntities, true, LC_OffsetBatchLimits{}, ctx);
+    const LC_OffsetBatchOutcome outcome = RS_Modification::offsetWithOutcome(
+        *m_offsetData, m_selectedEntities, true, LC_OffsetBatchLimits::preview(), ctx, m_previewCache.get());
     if (ctx.entitiesToAdd.isEmpty()) {
-        return; // no acceptable offset now: the preview stays empty
+        // no acceptable offset now: the preview stays empty, and says why
+        if (isInfoCursorForModificationEnabled()) {
+            for (const LC_OffsetSourceOutcome& source : outcome.sources) {
+                if (!source.succeeded()) {
+                    appendInfoCursorZoneMessage(failureReason(source, true), 2, false);
+                    break;
+                }
+            }
+        }
+        return;
     }
     if (static_cast<std::size_t>(ctx.entitiesToAdd.size()) <= maxPreviewDetail()) {
         if (ctx.setActivePen && m_document != nullptr) {

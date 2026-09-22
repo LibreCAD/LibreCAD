@@ -24,6 +24,7 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+#include <cmath>
 #include <memory>
 
 #include <QStringList>
@@ -136,6 +137,17 @@ struct OffsetFixture {
         d.knotslist = {0, 0, 0, 1, 1, 1};
         d.weights = {1.0, M_SQRT1_2, 1.0};
         return add(new RS_Spline(&m_graphic, d));
+    }
+
+    /** A closed cubic through 8 points of a circle of radius 10: its radius of curvature is 8.5 to 9.3. */
+    RS_Spline* addRing() {
+        auto* spline = add(new RS_Spline(&m_graphic, RS_SplineData(3, false)));
+        for (int k = 0; k < 8; ++k) {
+            const double a = k * M_PI / 4.0;
+            spline->addControlPoint(RS_Vector{10.0 * std::cos(a), 10.0 * std::sin(a)});
+        }
+        spline->setClosed(true);
+        return spline;
     }
 
     LC_SplinePoints* addSplinePoints() {
@@ -479,4 +491,47 @@ TEST_CASE("Parallel Through takes a spline, not a line it is drawn with, and pas
     }
     qDeleteAll(created);
     CHECK(nearest < 1e-4);
+}
+
+TEST_CASE("A spline shrunk away keeps its source, and the message says why", "[curve-offset][action]") {
+    OffsetFixture f;
+    RS_Spline* ring = f.addRing();
+    f.select({ring});
+    f.start(20.0, false);
+    f.clickAt(0.0, 0.0);
+
+    CHECK_FALSE(ring->isDeleted());
+    CHECK(f.liveCount(RS2::EntitySpline) == 1);
+    REQUIRE(f.m_context.messages.size() == 1);
+    CHECK(f.m_context.messages.front().contains("1 of 1"));
+    CHECK(f.m_context.messages.front().contains("nothing is left at this distance"));
+}
+
+TEST_CASE("Copies that stop short keep the source, and the message says how many fit", "[curve-offset][action]") {
+    OffsetFixture f;
+    RS_Spline* ring = f.addRing();
+    f.select({ring});
+    f.start(4.0, false);
+    f.m_action->setUseMultipleCopies(true);
+    f.m_action->setCopiesNumber(3);
+    f.clickAt(0.0, 0.0); // 4 and 8 inwards exist; 12 is past every radius of curvature
+
+    CHECK_FALSE(ring->isDeleted());
+    CHECK(f.liveCount(RS2::EntitySpline) == 3);
+    REQUIRE(f.m_context.messages.size() == 1);
+    CHECK(f.m_context.messages.front().contains("Only 2 of 3 copies fit"));
+}
+
+TEST_CASE("A spline refused by the engine is reported with the reason", "[curve-offset][action]") {
+    OffsetFixture f;
+    RS_Spline* spline = f.addSCurve();
+    f.select({spline});
+    f.start(0.5, false);
+    LC_CurveJet jet;
+    REQUIRE(spline->tryEvaluateJet(0.3, LC_CurveEvaluationSide::Interior, jet));
+    f.clickAt(jet.point.x, jet.point.y); // on the curve: no side
+
+    CHECK_FALSE(spline->isDeleted());
+    REQUIRE(f.m_context.messages.size() == 1);
+    CHECK(f.m_context.messages.front().contains("no side"));
 }

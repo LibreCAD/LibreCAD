@@ -2552,6 +2552,9 @@ std::vector<RS_Entity*> LC_SplinePoints::createOffset(const RS_Vector& coord, co
 
 std::vector<RS_Entity*> LC_SplinePoints::offsetTwoSides(const double distance) const {
     // Both sides from the offset engine; neither is returned unless both succeed.
+    // Direct, not trimmed: the tangent-circle construction needs every centre
+    // at the distance along a normal, including those of circles that touch
+    // the curve at one point and cross it elsewhere.
     const double magnitude = std::abs(distance);
     const LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(*this, magnitude);
     const LC_OffsetSourceBudget budget = LC_CurveOffset::makeDirectSourceBudget();

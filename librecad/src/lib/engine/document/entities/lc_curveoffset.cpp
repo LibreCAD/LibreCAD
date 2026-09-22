@@ -4062,10 +4062,17 @@ LC_CurveOffsetOptions makeDirectOptions(const RS_Entity& source, const double di
     options.maxSamples = kDefaultMaxSamples;
     options.maxOutputBranches = kDefaultMaxOutputBranches;
     // not used by Direct, but part of a complete options object
-    options.maxIntersectionPairs = std::size_t{1} << 20;
+    options.maxIntersectionPairs = kDefaultMaxIntersectionPairs;
     options.maxDistanceMapBoxes = 65536;
     options.maxArrangementEdges = 65536;
     options.maxArrangementFaces = 65536;
+    return options;
+}
+
+LC_CurveOffsetOptions makeOffsetOptions(const RS_Entity& source, const double distanceMagnitude,
+                                        const double requestedTolerance) {
+    LC_CurveOffsetOptions options = makeDirectOptions(source, distanceMagnitude, requestedTolerance);
+    options.mode = LC_CurveOffsetMode::Trimmed;
     return options;
 }
 
@@ -4378,7 +4385,7 @@ LC_CurveOffsetMaterializationResult createEntities(const RS_Entity& source, cons
 std::vector<RS_Entity*> createLegacyOffset(const RS_Entity& source, const RS_Vector& coord, const double distance) {
     const double magnitude = std::abs(distance);
     LC_CurveOffsetMaterializationResult result =
-        createEntities(source, makeDirectionRequest(coord, magnitude), makeDirectOptions(source, magnitude),
+        createEntities(source, makeDirectionRequest(coord, magnitude), makeOffsetOptions(source, magnitude),
                        makeDirectSourceBudget());
     std::vector<RS_Entity*> entities;
     if (result.status == LC_CurveOffsetStatus::Ok) {

@@ -27,11 +27,15 @@
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 
+#include <algorithm>
+#include <cmath>
 #include <limits>
 #include <memory>
+#include <vector>
 
 #include <QCoreApplication>
 
+#include "lc_curveoffset.h"
 #include "lc_splinepoints.h"
 #include "rs_circle.h"
 #include "rs_document.h"
@@ -94,7 +98,7 @@ TEST_CASE("RS_Modification::offset removes only the sources it offset",
     CHECK(guard.ctx.entitiesToDelete.front() == &large);
 }
 
-TEST_CASE("RS_Modification::offset publishes a source's copies together or not at all",
+TEST_CASE("RS_Modification::offset ends a series at a copy with nothing left, and keeps the source",
           "[modification][offset]") {
     // Radius 5, three inward copies 2 apart: radii 3 and 1 exist, the third does not.
     RS_Circle circle{nullptr, RS_CircleData{RS_Vector{0.0, 0.0}, 5.0}};
@@ -103,14 +107,33 @@ TEST_CASE("RS_Modification::offset publishes a source's copies together or not a
     data.number = 3;
     BatchGuard guard;
 
-    CHECK_FALSE(RS_Modification::offset(data, {&circle}, false, guard.ctx));
-    CHECK(guard.ctx.entitiesToAdd.isEmpty());
-    CHECK(guard.ctx.entitiesToDelete.isEmpty());
-
-    data.number = 2;
-    CHECK(RS_Modification::offset(data, {&circle}, false, guard.ctx));
+    const LC_OffsetBatchOutcome outcome =
+        RS_Modification::offsetWithOutcome(data, {&circle}, false, LC_OffsetBatchLimits{}, guard.ctx);
+    REQUIRE(outcome.sources.size() == 1);
+    const LC_OffsetSourceOutcome& source = outcome.sources.front();
+    CHECK(source.succeeded());
+    CHECK_FALSE(source.complete());
+    CHECK(source.copiesMade == 2);
+    CHECK(source.copiesRequested == 3);
     CHECK(guard.ctx.entitiesToAdd.size() == 2);
-    CHECK(guard.ctx.entitiesToDelete.size() == 1);
+    CHECK(guard.ctx.entitiesToDelete.isEmpty()); // short of a copy: the source stays
+
+    // every copy made: the source goes
+    BatchGuard all;
+    data.number = 2;
+    CHECK(RS_Modification::offset(data, {&circle}, false, all.ctx));
+    CHECK(all.ctx.entitiesToAdd.size() == 2);
+    CHECK(all.ctx.entitiesToDelete.size() == 1);
+
+    // nothing left at the first copy
+    BatchGuard none;
+    const LC_OffsetBatchOutcome vanished =
+        RS_Modification::offsetWithOutcome(inwardOffset(6.0), {&circle}, false, LC_OffsetBatchLimits{}, none.ctx);
+    CHECK(vanished.sources.front().status == LC_OffsetSourceStatus::Vanished);
+    CHECK(vanished.sources.front().copiesMade == 0);
+    CHECK(none.ctx.entitiesToAdd.isEmpty());
+    CHECK(none.ctx.entitiesToDelete.isEmpty());
+    CHECK_FALSE(none.ctx.success);
 }
 
 TEST_CASE("RS_Modification::offset keeps the originals when asked to",
@@ -419,4 +442,174 @@ TEST_CASE("A distance that overflows over the copies is refused", "[modification
         RS_Modification::offsetWithOutcome(data, {&circle}, false, LC_OffsetBatchLimits{}, guard.ctx);
     CHECK(outcome.sources.front().status == LC_OffsetSourceStatus::OffsetFailed);
     CHECK(guard.ctx.entitiesToAdd.isEmpty());
+}
+
+namespace {
+/** A closed cubic through 8 points of a circle of radius 10: its radius of curvature is 8.5 to 9.3. */
+RS_Spline* ring() {
+    auto* spline = new RS_Spline(nullptr, RS_SplineData(3, false));
+    for (int k = 0; k < 8; ++k) {
+        const double a = k * M_PI / 4.0;
+        spline->addControlPoint(RS_Vector{10.0 * std::cos(a), 10.0 * std::sin(a)});
+    }
+    spline->setClosed(true);
+    return spline;
+}
+} // namespace
+
+TEST_CASE("A spline shrunk away is kept, and its copies stop where nothing is left", "[modification][offset]") {
+    std::unique_ptr<RS_Spline> source{ring()};
+    BatchGuard none;
+    const LC_OffsetBatchOutcome vanished = RS_Modification::offsetWithOutcome(
+        towards(RS_Vector{0.0, 0.0}, 20.0), {source.get()}, false, LC_OffsetBatchLimits{}, none.ctx);
+    REQUIRE(vanished.sources.size() == 1);
+    CHECK(vanished.sources.front().status == LC_OffsetSourceStatus::Vanished);
+    CHECK(none.ctx.entitiesToAdd.isEmpty());
+    CHECK(none.ctx.entitiesToDelete.isEmpty());
+
+    // 4 and 8 inwards exist; 12 is past every radius of curvature
+    RS_OffsetData data = towards(RS_Vector{0.0, 0.0}, 4.0);
+    data.multipleCopies = true;
+    data.number = 3;
+    BatchGuard some;
+    const LC_OffsetBatchOutcome outcome =
+        RS_Modification::offsetWithOutcome(data, {source.get()}, false, LC_OffsetBatchLimits{}, some.ctx);
+    const LC_OffsetSourceOutcome& result = outcome.sources.front();
+    CHECK(result.succeeded());
+    CHECK(result.copiesMade == 2);
+    CHECK(result.copiesRequested == 3);
+    CHECK(some.ctx.entitiesToAdd.size() == 2);
+    CHECK(some.ctx.entitiesToDelete.isEmpty());
+}
+
+TEST_CASE("Offsetting a spline cuts the loop past a tight bend", "[modification][offset]") {
+    // Inside y = x^2, whose smallest radius of curvature is 0.5, at 1: the Direct
+    // offset has two cusps and a loop between them; what the tools make does not.
+    RS_SplineData d(2, false);
+    d.controlPoints = {{-2, 4}, {0, -4}, {2, 4}};
+    d.knotslist = {0, 0, 0, 1, 1, 1};
+    d.weights.assign(3, 1.0);
+    const RS_Spline parabola(nullptr, d);
+    BatchGuard guard;
+    const LC_OffsetBatchOutcome outcome = RS_Modification::offsetWithOutcome(
+        towards(RS_Vector{0.0, 3.0}, 1.0), {const_cast<RS_Spline*>(&parabola)}, false, LC_OffsetBatchLimits{},
+        guard.ctx);
+    REQUIRE(outcome.sources.front().succeeded());
+    REQUIRE_FALSE(guard.ctx.entitiesToAdd.isEmpty());
+    const LC_CurveOffsetOptions options = LC_CurveOffset::makeOffsetOptions(parabola, 1.0);
+    // the least distance from the source over dense samples of the entities
+    const auto nearestApproach = [&](const auto& entities) {
+        double least = RS_MAXDOUBLE;
+        for (const auto& e : entities) {
+            const auto* spline = dynamic_cast<const RS_Spline*>(&*e);
+            REQUIRE(spline != nullptr);
+            double t0 = 0.0;
+            double t1 = 0.0;
+            REQUIRE(spline->getParameterDomain(t0, t1));
+            for (int k = 0; k <= 200; ++k) {
+                LC_CurveJet jet;
+                REQUIRE(spline->tryEvaluateJet(t0 + (t1 - t0) * k / 200.0, LC_CurveEvaluationSide::Interior, jet));
+                const LC_OffsetSideResolution nearest = LC_CurveOffset::resolveSide(parabola, jet.point, options);
+                REQUIRE(nearest.status == LC_CurveOffsetStatus::Ok);
+                least = std::min(least, nearest.distance);
+            }
+        }
+        return least;
+    };
+    CHECK(nearestApproach(guard.ctx.entitiesToAdd) >= 1.0 - 2.0 * options.tolerance.requestedGeometry);
+    const LC_CurveOffsetMaterializationResult direct = LC_CurveOffset::createEntities(
+        parabola, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 1.0),
+        LC_CurveOffset::makeDirectOptions(parabola, 1.0), LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(direct.status == LC_CurveOffsetStatus::Ok);
+    CHECK(nearestApproach(direct.entities) < 0.9);
+}
+
+TEST_CASE("The engine's reason for refusing a spline is kept", "[modification][offset]") {
+    std::unique_ptr<RS_Spline> spline{sCurve()};
+    LC_CurveJet onCurve;
+    REQUIRE(spline->tryEvaluateJet(0.3, LC_CurveEvaluationSide::Interior, onCurve));
+    BatchGuard guard;
+    const LC_OffsetBatchOutcome outcome = RS_Modification::offsetWithOutcome(
+        towards(onCurve.point, 0.5), {spline.get()}, false, LC_OffsetBatchLimits{}, guard.ctx);
+    CHECK(outcome.sources.front().status == LC_OffsetSourceStatus::OffsetFailed);
+    CHECK(outcome.sources.front().engineStatus == LC_CurveOffsetStatus::AmbiguousSide);
+
+    std::unique_ptr<RS_Spline> singular{collapsingArc()};
+    BatchGuard failing;
+    const LC_OffsetBatchOutcome refused = RS_Modification::offsetWithOutcome(
+        towards(RS_Vector{0.0, 3.0}, 0.5), {singular.get()}, false, LC_OffsetBatchLimits{}, failing.ctx);
+    CHECK(refused.sources.front().status == LC_OffsetSourceStatus::OffsetFailed);
+    CHECK(refused.sources.front().engineStatus != LC_CurveOffsetStatus::Ok);
+}
+
+TEST_CASE("Preview limits are an eighth of the commit's", "[modification][offset][limits]") {
+    const LC_OffsetBatchLimits full;
+    const LC_OffsetBatchLimits preview = LC_OffsetBatchLimits::preview();
+    CHECK(preview.perSource.maxCubicPieces * 8 == full.perSource.maxCubicPieces);
+    CHECK(preview.perSource.maxOutputEntities * 8 == full.perSource.maxOutputEntities);
+    CHECK(preview.perSource.maxDeepEntities * 8 == full.perSource.maxDeepEntities);
+    CHECK(preview.maxDeepEntitiesPerRequest * 8 == full.maxDeepEntitiesPerRequest);
+    CHECK(preview.maxSamples * 8 == LC_CurveOffset::kDefaultMaxSamples);
+    CHECK(preview.maxIntersectionPairs * 8 == LC_CurveOffset::kDefaultMaxIntersectionPairs);
+    CHECK(isValidOffsetBudget(preview.perSource));
+}
+
+TEST_CASE("A preview cache hands back copies of what fits the budget left", "[modification][offset]") {
+    std::unique_ptr<RS_Spline> spline{sCurve()};
+    LC_OffsetPreviewCache cache;
+    const LC_OffsetSourceBudget budget = makeDefaultOffsetSourceBudget();
+
+    // a success is reused while its output fits
+    LC_CurveOffsetMaterializationResult made;
+    made.status = LC_CurveOffsetStatus::Ok;
+    made.entities.emplace_back(new RS_Line(nullptr, RS_LineData{{0, 0}, {1, 1}}));
+    made.usage = {1, 1, 1};
+    cache.keep(spline.get(), LC_CurveOffsetSide::Left, 0.5, budget, made);
+    LC_CurveOffsetMaterializationResult found;
+    REQUIRE(cache.find(spline.get(), LC_CurveOffsetSide::Left, 0.5, budget, found));
+    CHECK(found.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(found.entities.size() == 1);
+    CHECK(found.entities.front().get() != made.entities.front().get()); // a copy
+    CHECK(found.entities.front()->getEndpoint() == RS_Vector(1, 1));
+    CHECK_FALSE(cache.find(spline.get(), LC_CurveOffsetSide::Right, 0.5, budget, found));
+    CHECK_FALSE(cache.find(spline.get(), LC_CurveOffsetSide::Left, 0.75, budget, found));
+    CHECK_FALSE(cache.find(spline.get(), LC_CurveOffsetSide::Left, 0.5, LC_OffsetSourceBudget{0, 0, 0}, found));
+
+    // a refusal for want of budget holds for no larger a budget
+    LC_CurveOffsetMaterializationResult tooMuch;
+    tooMuch.status = LC_CurveOffsetStatus::LimitExceeded;
+    const LC_OffsetSourceBudget small{8, 8, 8};
+    cache.keep(spline.get(), LC_CurveOffsetSide::Left, 2.0, small, tooMuch);
+    CHECK(cache.find(spline.get(), LC_CurveOffsetSide::Left, 2.0, LC_OffsetSourceBudget{4, 8, 8}, found));
+    CHECK(found.status == LC_CurveOffsetStatus::LimitExceeded);
+    CHECK_FALSE(cache.find(spline.get(), LC_CurveOffsetSide::Left, 2.0, budget, found));
+
+    // any other refusal always
+    LC_CurveOffsetMaterializationResult singular;
+    singular.status = LC_CurveOffsetStatus::SingularOffset;
+    cache.keep(spline.get(), LC_CurveOffsetSide::Left, 3.0, small, singular);
+    CHECK(cache.find(spline.get(), LC_CurveOffsetSide::Left, 3.0, budget, found));
+    CHECK(found.status == LC_CurveOffsetStatus::SingularOffset);
+
+    cache.clear();
+    CHECK_FALSE(cache.find(spline.get(), LC_CurveOffsetSide::Left, 0.5, budget, found));
+}
+
+TEST_CASE("A preview made through the cache is the preview made without it", "[modification][offset]") {
+    std::unique_ptr<RS_Spline> spline{sCurve()};
+    LC_OffsetPreviewCache cache;
+    const RS_OffsetData data = towards(RS_Vector{6.0, 9.0}, 0.75);
+    std::vector<std::vector<RS_Vector>> runs;
+    for (int run = 0; run < 3; ++run) {
+        LC_DocumentModificationBatch ctx;
+        RS_Modification::offsetWithOutcome(data, {spline.get()}, true, LC_OffsetBatchLimits::preview(), ctx,
+                                           run == 0 ? nullptr : &cache);
+        REQUIRE(ctx.entitiesToAdd.size() == 1);
+        const auto* offset = dynamic_cast<const RS_Spline*>(ctx.entitiesToAdd.front());
+        REQUIRE(offset != nullptr);
+        runs.push_back(offset->getData().controlPoints);
+        qDeleteAll(ctx.entitiesToAdd);
+    }
+    CHECK(runs[1] == runs[0]); // filled the cache
+    CHECK(runs[2] == runs[0]); // from the cache
 }
