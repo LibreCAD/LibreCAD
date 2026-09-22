@@ -29242,16 +29242,19 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
   // version 12 do not support Spline write as polyline
   if (m_version == 1009) {
     DRW_Polyline pol;
-    for (RS_Entity *e :
-         lc::LC_ContainerTraverser{*s, RS2::ResolveNone}.entities()) {
+    const auto lines =
+        lc::LC_ContainerTraverser{*s, RS2::ResolveNone}.entities();
+    for (RS_Entity *e : lines) {
       pol.addVertex(
           DRW_Vertex(e->getStartpoint().x, e->getStartpoint().y, 0.0, 0.0));
     }
     if (s->isClosed()) {
       pol.flags = 1;
-    } else {
-      pol.addVertex(
-          DRW_Vertex(s->getEndpoint().x, s->getEndpoint().y, 0.0, 0.0));
+    } else if (!lines.empty()) {
+      // the end of the last line: RS_Spline has no end point of its own, and
+      // its invalid one added a vertex at the origin
+      const RS_Vector end = lines.back()->getEndpoint();
+      pol.addVertex(DRW_Vertex(end.x, end.y, 0.0, 0.0));
     }
     getEntityAttributes(&pol, s);
     noteDxfWrite(m_dxfW->writePolyline(&pol));
