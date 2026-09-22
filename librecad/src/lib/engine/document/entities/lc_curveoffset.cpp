@@ -71,6 +71,13 @@ public:
     virtual const std::vector<RS_Vector>& hull() const = 0;
     /** True, with its ends, when the curve is exactly one straight segment. */
     virtual bool straightSegment(RS_Vector& start, RS_Vector& end) const = 0;
+    /**
+     * True when every span is a polynomial of degree at most 3, so that its
+     * cubic Bezier net follows from the jets at its ends.
+     */
+    virtual bool cubicSpans() const {
+        return false;
+    }
 };
 
 class SplineSource final : public OffsetSource {
@@ -112,6 +119,12 @@ public:
         start = data.controlPoints[0];
         end = data.controlPoints[1];
         return true;
+    }
+
+    bool cubicSpans() const override {
+        const std::vector<double>& weights = m_spline.getData().weights;
+        return m_spline.getDegree() <= 3 &&
+               std::all_of(weights.begin(), weights.end(), [&](const double w) { return w == weights.front(); });
     }
 
 private:
@@ -162,6 +175,10 @@ public:
         start = segment.start;
         end = segment.end;
         return true;
+    }
+
+    bool cubicSpans() const override {
+        return true; // quadratic segments
     }
 
 private:
@@ -556,19 +573,37 @@ enum class KinkPolicy {
  * before it to its @p start after it, as pieces of at most a quarter turn; or
  * false, and no pieces, where the corner turns towards the offset, whose two
  * sides then overlap. A reversal turns away from either side.
+ *
+ * The pieces are close enough to the circle that offsetting the result again,
+ * back by d, shrinks each of them to a stall at its corner: a coarser arc's
+ * curvature swings about 1/|d|, and its offset by |d| would be a tangle, not a
+ * point.
  */
 bool cornerArc(const SourceJoin& join, const RS_Vector& end, const RS_Vector& start, const double d,
-               const double angleTolerance, std::vector<LC_OffsetCubicPiece>& arc) {
+               const LC_CurveOffsetOptions& options, std::vector<LC_OffsetCubicPiece>& arc) {
     arc.clear();
     double turn = std::atan2(cross(join.before, join.after), dot(join.before, join.after));
-    if (std::abs(std::abs(turn) - M_PI) <= angleTolerance) {
+    if (std::abs(std::abs(turn) - M_PI) <= options.angleTolerance) {
         turn = (d > 0.0) ? -M_PI : M_PI;
     }
     if (turn * d >= 0.0) {
         return false;
     }
     const double a0 = std::atan2(end.y - join.point.y, end.x - join.point.x);
-    const size_t count = std::max<size_t>(1, static_cast<size_t>(std::ceil(std::abs(turn) / (0.5 * M_PI) - 1e-9)));
+    // A cubic arc of sweep s lies within e = 2/27 r sin^6(s/4) / cos^2(s/4) of
+    // its circle, and its own offset by r within 7.45 e / s of the centre:
+    // a sixteenth of what BranchBuilder::arcStall() allows.
+    const auto strays = [&](const size_t pieces) {
+        const double sweep = std::abs(turn) / static_cast<double>(pieces);
+        const double quarter = 0.25 * sweep;
+        return 8.0 * (2.0 / 27.0) * std::abs(d) * std::pow(std::sin(quarter), 6) / std::pow(std::cos(quarter), 2) /
+               sweep;
+    };
+    constexpr size_t maxPieces = 64;
+    size_t count = std::max<size_t>(1, static_cast<size_t>(std::ceil(std::abs(turn) / (0.5 * M_PI) - 1e-9)));
+    while (count < maxPieces && strays(count) > options.tolerance.nodeMerge / 32.0) {
+        ++count;
+    }
     for (size_t k = 0; k < count; ++k) {
         const double from = a0 + turn * static_cast<double>(k) / static_cast<double>(count);
         const double to = (k + 1 == count) ? a0 + turn : a0 + turn * static_cast<double>(k + 1) / static_cast<double>(count);
@@ -606,17 +641,18 @@ public:
      * without turning back, it is not fitted: the piece after starts where the
      * piece before ends.
      */
-    LC_CurveOffsetStatus build(const std::vector<bool>& joinCusps, const std::vector<SourceJoin>& joins,
+    LC_CurveOffsetStatus build(std::vector<bool> joinCusps, const std::vector<SourceJoin>& joins,
                                std::vector<LC_OffsetBranch>& branches) {
         const std::vector<double>& breaks = m_source.breaks();
         std::vector<double> cusps;
         std::vector<std::pair<double, double>> stalls;
+        const std::vector<bool> arcStalls = findArcStalls(joinCusps);
         // no unproved run continues across a cusp or a corner at a join
         std::vector<bool> barrier = joinCusps;
         for (size_t i = 0; i < barrier.size(); ++i) {
             barrier[i] = barrier[i] || joins[i].kind != SourceJoin::Kind::Smooth;
         }
-        LC_CurveOffsetStatus status = isolateCusps(barrier, cusps, stalls);
+        LC_CurveOffsetStatus status = isolateCusps(barrier, arcStalls, cusps, stalls);
         if (status != LC_CurveOffsetStatus::Ok) {
             return status;
         }
@@ -819,7 +855,7 @@ private:
                 continue;
             }
             LC_OffsetBranch arc;
-            if (!cornerArc(join, end, start, m_d, m_options.angleTolerance, arc.cubicPieces)) {
+            if (!cornerArc(join, end, start, m_d, m_options, arc.cubicPieces)) {
                 between.push_back(Link::Kind::Overlap);
                 continue;
             }
@@ -893,6 +929,118 @@ private:
         return m_source.jet(t, side, c) ? c.first.magnitude() : 0.0;
     }
 
+    /**
+     * True if the offset stalls over the whole span [a, b] because the span is
+     * a circular arc of radius |d| on the offset's side, within a distance that
+     * keeps its offset within half the merge tolerance of the arc's centre.
+     * Proving that box by box would take millions of boxes: 1 - d kappa is all
+     * but zero throughout. Instead the span's cubic net, from the jets at its
+     * ends, is compared with the cubic that approximates the arc. Their nets
+     * eta apart bound the points eta apart and the tangents 6 eta / h apart,
+     * against an arc tangent of at least 0.97 r |sweep| / h; the approximating
+     * cubic's own offset strays from the centre by 7.45 e / |sweep| at most
+     * (measured for sweeps up to a quarter turn; 8 is used), where e is its
+     * distance from the circle.
+     */
+    bool arcStall(const double a, const double b) const {
+        if (!m_source.cubicSpans()) {
+            return false;
+        }
+        LC_CurveJet start;
+        LC_CurveJet end;
+        if (!m_source.jet(a, LC_CurveEvaluationSide::Right, start) ||
+            !m_source.jet(b, LC_CurveEvaluationSide::Left, end)) {
+            return false;
+        }
+        const double startSpeed = start.first.magnitude();
+        const double endSpeed = end.first.magnitude();
+        if (!(startSpeed > m_speedFloor) || !(endSpeed > m_speedFloor)) {
+            return false;
+        }
+        const double merge = m_options.tolerance.nodeMerge;
+        const RS_Vector c0 = start.point + RS_Vector{-start.first.y, start.first.x} * (m_d / startSpeed);
+        const RS_Vector c1 = end.point + RS_Vector{-end.first.y, end.first.x} * (m_d / endSpeed);
+        if (!(c0.distanceTo(c1) <= 0.25 * merge)) {
+            return false;
+        }
+        const RS_Vector centre = (c0 + c1) * 0.5;
+        const double r = std::abs(m_d);
+        const double a0 = std::atan2(start.point.y - centre.y, start.point.x - centre.x);
+        // around the centre the way the curve turns: anticlockwise for an offset to the left
+        double sweep = std::remainder(std::atan2(end.point.y - centre.y, end.point.x - centre.x) - a0, 2.0 * M_PI);
+        if ((m_d > 0.0) != (sweep > 0.0) || std::abs(sweep) > 0.5 * M_PI) {
+            return false;
+        }
+        const double h = b - a;
+        const std::array<RS_Vector, 4> net{start.point, start.point + start.first * (h / 3.0),
+                                           end.point - end.first * (h / 3.0), end.point};
+        const std::array<RS_Vector, 4> ideal = arcPiece(centre, r, a0, a0 + sweep);
+        double eta = 0.0;
+        for (size_t k = 0; k < net.size(); ++k) {
+            eta = std::max(eta, net[k].distanceTo(ideal[k]));
+        }
+        const double slowest = 0.97 * r * std::abs(sweep);
+        if (!(6.0 * eta < slowest)) {
+            return false;
+        }
+        const double normals = 0.5 * M_PI * 6.0 * eta / slowest; // the largest angle between them
+        const double quarter = 0.25 * std::abs(sweep);
+        const double own = 8.0 * (2.0 / 27.0) * r * std::pow(std::sin(quarter), 6) / std::pow(std::cos(quarter), 2) /
+                           std::abs(sweep);
+        return eta + r * normals + own <= 0.5 * merge;
+    }
+
+    /**
+     * The spans over which the offset stalls on an arc (arcStall()), by span
+     * index. The join cusps inside a run of them are dropped: the offset turns
+     * back within it, if at all, by what the signs of 1 - d kappa on either
+     * side say, and then at the run's start. A run at the seam of a closed
+     * source, or one that is all of it, is left to the boxes.
+     */
+    std::vector<bool> findArcStalls(std::vector<bool>& joinCusps) const {
+        const std::vector<double>& breaks = m_source.breaks();
+        const size_t spans = breaks.size() - 1;
+        std::vector<bool> stalled(spans, false);
+        for (size_t span = 0; span < spans; ++span) {
+            stalled[span] = arcStall(breaks[span], breaks[span + 1]);
+        }
+        for (size_t first = 0; first < spans;) {
+            if (!stalled[first]) {
+                ++first;
+                continue;
+            }
+            size_t last = first;
+            while (last + 1 < spans && stalled[last + 1]) {
+                ++last;
+            }
+            const bool atSeam = m_source.closed() && (first == 0 || last + 1 == spans);
+            if (atSeam || (first == 0 && last + 1 == spans)) {
+                std::fill(stalled.begin() + static_cast<std::ptrdiff_t>(first),
+                          stalled.begin() + static_cast<std::ptrdiff_t>(last + 1), false);
+                first = last + 1;
+                continue;
+            }
+            for (size_t join = first + 1; join <= last; ++join) {
+                joinCusps[join] = false;
+            }
+            bool turnsBack = false;
+            if (first > 0 && last + 1 < spans) {
+                const double before = factorNumeratorAt(breaks[first], LC_CurveEvaluationSide::Left);
+                const double after = factorNumeratorAt(breaks[last + 1], LC_CurveEvaluationSide::Right);
+                turnsBack = std::isfinite(before) && std::isfinite(after) && before != 0.0 && after != 0.0 &&
+                            std::signbit(before) != std::signbit(after);
+            }
+            if (first > 0) {
+                joinCusps[first] = turnsBack;
+            }
+            if (last + 1 < spans) {
+                joinCusps[last + 1] = false;
+            }
+            first = last + 1;
+        }
+        return stalled;
+    }
+
     /** Boxes too small to split in which regularity could not be proved, consecutive in parameter. */
     struct Run {
         double t0;
@@ -919,9 +1067,11 @@ private:
      * offset moves less than the merge tolerance over it: 1 - d kappa touches
      * zero there (the distance equals a radius of curvature), or two cusps lie
      * closer than the tolerance. Any other run is a singularity: a vanishing
-     * tangent, or roots the samples cannot tell apart.
+     * tangent, or roots the samples cannot tell apart. The spans marked in
+     * @p arcStalls are stalls as they are.
      */
-    LC_CurveOffsetStatus isolateCusps(const std::vector<bool>& joinCusps, std::vector<double>& cusps,
+    LC_CurveOffsetStatus isolateCusps(const std::vector<bool>& joinCusps, const std::vector<bool>& arcStalls,
+                                      std::vector<double>& cusps,
                                       std::vector<std::pair<double, double>>& stalls) {
         // Interval bounds of 1 - d kappa widen with the box, so near a double
         // root, where the distance equals a radius of curvature, the unproved
@@ -934,6 +1084,10 @@ private:
         for (size_t span = 0; span + 1 < breaks.size(); ++span) {
             const double a = breaks[span];
             const double b = breaks[span + 1];
+            if (arcStalls[span]) {
+                stalls.emplace_back(a, b);
+                continue;
+            }
             std::vector<Leaf> stack{{a, b, 0}};
             while (!stack.empty()) {
                 const Leaf leaf = stack.back();
@@ -2055,19 +2209,32 @@ private:
         return LC_CurveOffsetStatus::Ok;
     }
 
-    /** A vertex arc against its circle: paired at the same angle, and radially. */
+    /**
+     * An arc piece against its circle: radially, and within the arc's angles.
+     * Its parameter maps to no source parameter, and a cubic arc's parameter is
+     * not proportional to its angle, so nothing is paired.
+     */
     LC_CurveOffsetStatus validateArc(Work& w) {
         const LC_OffsetBranchProvenance& p = w.piece.provenance;
         const double radius = std::abs(p.signedDistance);
+        const double half = 0.5 * std::abs(p.sourceT1 - p.sourceT0);
+        const double middle = 0.5 * (p.sourceT0 + p.sourceT1);
+        const auto onCircle = [&](const double angle) {
+            return p.arcCentre + RS_Vector{std::cos(angle), std::sin(angle)} * radius;
+        };
         w.error = 0.0;
         w.worstU = 0.5;
         for (int k = 0; k <= 16; ++k) {
             const double u = k / 16.0;
             const RS_Vector candidate = bezierAt(w.piece.bezier, u);
-            const double angle = p.sourceT0 + u * (p.sourceT1 - p.sourceT0);
-            const RS_Vector exact = p.arcCentre + RS_Vector{std::cos(angle), std::sin(angle)} * radius;
-            const double error =
-                std::max(candidate.distanceTo(exact), std::abs(candidate.distanceTo(p.arcCentre) - radius));
+            const RS_Vector r = candidate - p.arcCentre;
+            double error = std::abs(r.magnitude() - radius);
+            // past either end of the arc: as far as from that end
+            const double off = std::remainder(std::atan2(r.y, r.x) - middle, 2.0 * M_PI);
+            if (std::abs(off) > half) {
+                error = std::max(error, std::min(candidate.distanceTo(onCircle(p.sourceT0)),
+                                                 candidate.distanceTo(onCircle(p.sourceT1))));
+            }
             if (error > w.error) {
                 w.error = error;
                 w.worstU = u;
@@ -2987,7 +3154,7 @@ LC_CurveOffsetStatus cutterBranches(const OffsetSource& source, const double d, 
         if (join.kind != SourceJoin::Kind::Kink) {
             return true; // smooth, or closed within the merge tolerance
         }
-        if (!cornerArc(join, into.cubicPieces.back().bezier[3], next.bezier[0], d, options.angleTolerance, arc)) {
+        if (!cornerArc(join, into.cubicPieces.back().bezier[3], next.bezier[0], d, options, arc)) {
             return false;
         }
         into.cubicPieces.insert(into.cubicPieces.end(), arc.begin(), arc.end());
@@ -3416,6 +3583,10 @@ public:
 
     bool straightSegment(RS_Vector&, RS_Vector&) const override {
         return false;
+    }
+
+    bool cubicSpans() const override {
+        return m_base.cubicSpans(); // its spans are parts of the base's, at the same speed
     }
 
 private:
