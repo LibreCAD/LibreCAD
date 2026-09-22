@@ -55,8 +55,15 @@ class RS_Polyline;
 class DL_WriterA;
 
 /**
- * This format filter class can import and export JWW files.
- * It depends on the jwwlib library.
+ * This format filter class imports JWW files. It depends on the jwwlib
+ * library.
+ *
+ * JWW is import-only: canExport() is always false and fileExport() writes
+ * nothing. The export code this class carried was a dxflib DXF writer whose
+ * jwwlib backend (DL_Jww::out() and the DL_Jww::write* members) never wrote
+ * a byte; completing it would have produced DXF text in a .jww file, which
+ * a JWW reader rejects. A real writer would have to build the binary JWW
+ * records through JWWDocument (jwwdoc.h).
  *
  * @author Andrew Mustun
  */
@@ -141,8 +148,11 @@ public:
     void setVariableInt(const char* key, int value, int code) override;
     void setVariableDouble(const char* key, double value, int code) override;
 
-    // Export:
-    bool fileExport(RS_Graphic& g, const QString& file, RS2::FormatType type) override;
+    /** JWW export is not supported. Always false; writes nothing. */
+    bool fileExport(RS_Graphic& /*g*/, const QString& /*file*/,
+                    RS2::FormatType /*type*/) override {
+        return false;
+    }
 
     void writeVariables(DL_WriterA& dw);
     void writeLayer(DL_WriterA& dw, RS_Layer* l);
@@ -203,8 +213,10 @@ public:
         return (t==RS2::FormatJWW);
     }
 
-    bool canExport(const QString& /*fileName*/, RS2::FormatType t) const override {
-        return (t==RS2::FormatJWW);
+    /** JWW export is not supported. Always false. */
+    bool canExport(const QString& /*fileName*/,
+                   RS2::FormatType /*t*/) const override {
+        return false;
     }
 
     static RS_FilterInterface *createFilter() {return new RS_FilterJWW();}

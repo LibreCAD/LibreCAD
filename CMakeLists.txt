@@ -2584,6 +2584,7 @@ if (BUILD_TESTS)
         # only needs the test file itself.
         librecad/src/lib/filters/tests/shp_shapelib_tests.cpp
         librecad/src/lib/filters/tests/shp_import_filter_tests.cpp
+        librecad/src/lib/filters/tests/jww_export_tests.cpp
     )
 
     # Include directories for rs_math.h and other dependencies

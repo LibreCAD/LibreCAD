@@ -54,10 +54,6 @@ namespace {
 
         "LFF Font (*.lff)",
         "QCAD Font (*.cxf)"
-
-#ifdef JWW_WRITE_SUPPORT
-        , "JWW Drawing (*.jww)"
-#endif
     };
 
     const QList<RS2::FormatType> FILTERS_TYPE_LIST =
@@ -75,10 +71,6 @@ namespace {
 
         RS2::FormatLFF,
         RS2::FormatCXF
-
-#ifdef JWW_WRITE_SUPPORT
-            , RS2::FormatJWW
-#endif
     };
 
     /*
