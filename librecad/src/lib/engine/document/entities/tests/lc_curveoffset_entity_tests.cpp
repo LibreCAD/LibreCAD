@@ -191,19 +191,21 @@ TEST_CASE("RS_Creation adds no failed copy of a spline", "[curve-offset][entity]
     ownedFailing.entities.assign(failing.begin(), failing.end());
     CHECK(ownedFailing.entities.empty());
 
-    // and ends the series: inside a parabola whose apex radius is 2.5, the copy
-    // at 1.25 exists, the one at 2.5 is singular, and the one at 3.75 is not made
-    LC_SplinePointsData arch(false, false);
-    arch.useControlPoints = true;
-    arch.controlPoints = {{0.0, 0.0}, {5.0, 10.0}, {10.0, 0.0}};
-    LC_SplinePoints parabola(nullptr, arch);
-    const RS_Vector inside{5.0, 2.0};
+    // and ends the series: inside a quarter circle of radius 2.5, the copy at
+    // 1.25 exists, the one at 2.5 shrinks to the centre, and the one at 3.75 is
+    // not made
+    RS_SplineData quarter(2, false);
+    quarter.controlPoints = {{2.5, 0.0}, {2.5, 2.5}, {0.0, 2.5}};
+    quarter.knotslist = {0, 0, 0, 1, 1, 1};
+    quarter.weights = {1.0, M_SQRT1_2, 1.0};
+    RS_Spline arc(nullptr, quarter);
+    const RS_Vector inside{1.0, 1.0};
     Owned first;
-    first.entities = parabola.createOffset(inside, 1.25);
+    first.entities = arc.createOffset(inside, 1.25);
     REQUIRE_FALSE(first.entities.empty());
-    REQUIRE(parabola.createOffset(inside, 2.5).empty());
+    REQUIRE(arc.createOffset(inside, 2.5).empty());
     QList<RS_Entity*> series;
-    RS_Creation::createParallel(inside, 1.25, 3, &parabola, false, series);
+    RS_Creation::createParallel(inside, 1.25, 3, &arc, false, series);
     Owned ownedSeries;
     ownedSeries.entities.assign(series.begin(), series.end());
     CHECK(ownedSeries.entities.size() == first.entities.size());
@@ -248,14 +250,16 @@ TEST_CASE("LC_SplinePoints::offsetTwoSides returns both sides or nothing", "[cur
     REQUIRE(both.entities.size() >= 2);
     CHECK(worstDistanceError(both.entities, curveOf(source), 0.0, static_cast<double>(source.getSegmentCount()),
                              0.4) < 1e-3);
-    // At the apex radius of a parabola its inner side is singular: neither side
-    // is returned, although the outer one exists.
+    // At the apex radius of a parabola its inner side stalls at the centre of
+    // curvature and runs on: both sides are returned.
     LC_SplinePointsData arch(false, false);
     arch.useControlPoints = true;
     arch.controlPoints = {{0.0, 0.0}, {5.0, 10.0}, {10.0, 0.0}};
     const LC_SplinePoints parabola(nullptr, arch);
     REQUIRE_FALSE(parabola.createOffset(RS_Vector{5.0, 20.0}, 2.5).empty());
-    CHECK(parabola.offsetTwoSides(2.5).empty());
+    Owned apex;
+    apex.entities = parabola.offsetTwoSides(2.5);
+    CHECK(apex.entities.size() >= 2);
 }
 
 TEST_CASE("A fillet refuses a parallel made of several pieces", "[curve-offset][entity]") {

@@ -174,16 +174,18 @@ RS_Spline* sCurve(RS_EntityContainer* parent = nullptr) {
 }
 
 /**
- * The parabola y = x^2 on [-2, 2]. Its radius of curvature is 0.5 at the vertex
- * and larger elsewhere, so an inward offset of exactly 0.5 has 1 - d kappa
- * touching zero there without changing sign: a singular point the offset is not
- * split at, whereas it is regular inside that radius and has two cusps past it.
+ * An arc of radius 0.5 about (0, 2.6), from 45 to 135 degrees, as a rational
+ * quadratic. Offset inwards by its radius it shrinks to the centre, which the
+ * engine refuses; (0, 3) lies inside it, nearest to its apex (0, 3.1).
  */
-RS_Spline* parabola(RS_EntityContainer* parent = nullptr) {
+RS_Spline* collapsingArc(RS_EntityContainer* parent = nullptr) {
     RS_SplineData d(2, false);
-    d.controlPoints = {{-2, 4}, {0, -4}, {2, 4}};
+    const double r = 0.5;
+    const RS_Vector c{0.0, 2.6};
+    d.controlPoints = {c + RS_Vector{r * M_SQRT1_2, r * M_SQRT1_2}, c + RS_Vector{0.0, r * M_SQRT2},
+                       c + RS_Vector{-r * M_SQRT1_2, r * M_SQRT1_2}};
     d.knotslist = {0, 0, 0, 1, 1, 1};
-    d.weights.assign(3, 1.0);
+    d.weights = {1.0, M_SQRT1_2, 1.0};
     return new RS_Spline(parent, d);
 }
 
@@ -233,7 +235,7 @@ TEST_CASE("Offset copies are clamped for Offset only", "[modification][offset]")
 
 TEST_CASE("A spline source is offset by the engine and keeps its own outcome", "[modification][offset]") {
     std::unique_ptr<RS_Spline> spline{sCurve()};
-    std::unique_ptr<RS_Spline> singular{parabola()};
+    std::unique_ptr<RS_Spline> singular{collapsingArc()};
     RS_Line line{nullptr, RS_LineData{{0.0, 20.0}, {10.0, 20.0}}};
     BatchGuard guard;
 
@@ -263,9 +265,9 @@ TEST_CASE("A spline source is offset by the engine and keeps its own outcome", "
 
 TEST_CASE("A mixed selection offsets and removes only the sources that succeed", "[modification][offset]") {
     // From (0, 3): inside the circle, whose inward offset of 0.5 exists; inside
-    // the parabola, whose offset of 0.5 is singular at its vertex.
+    // the arc of radius 0.5, whose inward offset of 0.5 shrinks to a point.
     RS_Circle circle{nullptr, RS_CircleData{RS_Vector{0.0, 3.0}, 20.0}};
-    std::unique_ptr<RS_Spline> spline{parabola()};
+    std::unique_ptr<RS_Spline> spline{collapsingArc()};
     BatchGuard guard;
     const LC_OffsetBatchOutcome outcome = RS_Modification::offsetWithOutcome(
         towards(RS_Vector{0.0, 3.0}, 0.5), {spline.get(), &circle}, false, LC_OffsetBatchLimits{}, guard.ctx);

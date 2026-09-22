@@ -284,3 +284,18 @@ TEST_CASE("An open spline whose ends coincide trims like any other", "[curve-off
         CHECK(result.status == LC_CurveOffsetStatus::Ok);
     }
 }
+
+TEST_CASE("An outer offset trims although the inner side stalls at the same distance", "[curve-offset][trim]") {
+    // The inner offset at the apex radius is the cutter the outer side is
+    // trimmed against; it stalls at the centre of curvature instead of failing.
+    LC_SplinePointsData arch(false, false);
+    arch.useControlPoints = true;
+    arch.controlPoints = {{0.0, 0.0}, {5.0, 10.0}, {10.0, 0.0}};
+    const LC_SplinePoints parabola(nullptr, arch);
+    for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+        INFO("side " << static_cast<int>(side));
+        const LC_CurveOffsetGeometryResult result = trim(parabola, side, 2.5);
+        CHECK(result.status == LC_CurveOffsetStatus::Ok);
+        CHECK(result.branches.size() == 1);
+    }
+}

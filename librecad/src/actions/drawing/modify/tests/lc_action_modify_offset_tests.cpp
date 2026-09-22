@@ -122,12 +122,19 @@ struct OffsetFixture {
         return add(new RS_Spline(&m_graphic, d));
     }
 
-    /** y = x^2 on [-2, 2]: an inward offset of 0.5, its vertex radius, is singular. */
-    RS_Spline* addParabola() {
+    /**
+     * An arc of radius 0.5 about (0, 2.6), from 45 to 135 degrees: offset inwards
+     * by 0.5 it shrinks to its centre, which the engine refuses. (0, 3) lies
+     * inside it.
+     */
+    RS_Spline* addCollapsingArc() {
         RS_SplineData d(2, false);
-        d.controlPoints = {{-2, 4}, {0, -4}, {2, 4}};
+        const double r = 0.5;
+        const RS_Vector c{0.0, 2.6};
+        d.controlPoints = {c + RS_Vector{r * M_SQRT1_2, r * M_SQRT1_2}, c + RS_Vector{0.0, r * M_SQRT2},
+                           c + RS_Vector{-r * M_SQRT1_2, r * M_SQRT1_2}};
         d.knotslist = {0, 0, 0, 1, 1, 1};
-        d.weights.assign(3, 1.0);
+        d.weights = {1.0, M_SQRT1_2, 1.0};
         return add(new RS_Spline(&m_graphic, d));
     }
 
@@ -264,9 +271,9 @@ TEST_CASE("Committing a spline offset replaces it with its offset, undoably", "[
 
 TEST_CASE("A trigger that offsets nothing keeps the action, its step and the selection", "[curve-offset][action]") {
     OffsetFixture f;
-    RS_Spline* spline = f.addParabola();
+    RS_Spline* spline = f.addCollapsingArc();
     f.select({spline});
-    f.start(0.5, false); // inside, at the vertex radius: singular
+    f.start(0.5, false); // inside, by its radius: shrinks to a point
     f.clickAt(0.0, 3.0);
 
     CHECK_FALSE(spline->isDeleted());
@@ -286,7 +293,7 @@ TEST_CASE("A trigger that offsets nothing keeps the action, its step and the sel
 
 TEST_CASE("Only sources that were offset leave the selection", "[curve-offset][action]") {
     OffsetFixture f;
-    RS_Spline* spline = f.addParabola();
+    RS_Spline* spline = f.addCollapsingArc();
     RS_Circle* circle = f.add(new RS_Circle(&f.m_graphic, RS_CircleData{RS_Vector{0.0, 3.0}, 20.0}));
     f.select({spline, circle});
     f.start(0.5, true);
@@ -371,8 +378,8 @@ TEST_CASE("Without additive selection every offset, and every failed source, sta
     OffsetFixture f;
     RS_Circle* inner = f.add(new RS_Circle(&f.m_graphic, RS_CircleData{RS_Vector{0.0, 3.0}, 20.0}));
     RS_Circle* outer = f.add(new RS_Circle(&f.m_graphic, RS_CircleData{RS_Vector{0.0, 3.0}, 25.0}));
-    RS_Spline* parabola = f.addParabola(); // singular at 0.5 inside
-    f.select({inner, outer, parabola});
+    RS_Spline* arc = f.addCollapsingArc(); // shrinks to a point at 0.5 inside
+    f.select({inner, outer, arc});
     // one select() per source cleared the others' results when selection is not additive
     struct Additivity {
         Additivity() { LC_SET_ONE("Selection", "Additivity", false); }
@@ -383,7 +390,7 @@ TEST_CASE("Without additive selection every offset, and every failed source, sta
 
     CHECK_FALSE(inner->isSelected());
     CHECK_FALSE(outer->isSelected());
-    CHECK(parabola->isSelected());
+    CHECK(arc->isSelected());
     int selectedOffsets = 0;
     for (const RS_Entity* e : f.m_graphic) {
         if (e->rtti() == RS2::EntityCircle && e != inner && e != outer) {

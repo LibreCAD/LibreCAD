@@ -44,12 +44,15 @@
  *
  * Direct mode returns the whole oriented offset. It
  * requires a nonzero source tangent and 1 - d * kappa away from zero, both
- * proved with interval bounds everywhere except at cusps: isolated roots where
- * 1 - d * kappa changes sign, inside a span or across a join. The offset turns
- * back at a cusp, which ends one branch and starts the next. A root it cannot
- * isolate, such as a zero that touches without crossing, fails the request. It
- * does not remove loops or self-intersections, and its error check is sampled
- * evidence, never a proof of the maximum deviation.
+ * proved with interval bounds everywhere except at cusps and stalls. A cusp is
+ * an isolated root where 1 - d * kappa changes sign, inside a span or across a
+ * join; the offset turns back there, which ends one branch and starts the
+ * next. A stall is a stretch over which the offset moves less than the merge
+ * tolerance without turning back: 1 - d * kappa touches zero, where the
+ * distance equals a radius of curvature, or two cusps lie closer than that.
+ * A stall is not fitted; the pieces on either side meet. Any other root fails
+ * the request. Direct mode does not remove loops or self-intersections, and
+ * its error check is sampled evidence, never a proof of the maximum deviation.
  *
  * Trimmed mode, programmatic only, removes from the noded Direct offset the
  * parts provably nearer to the source than the distance, less the tolerance
