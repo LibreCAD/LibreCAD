@@ -50,6 +50,28 @@ RS_Spline line(const RS_Vector& a, const RS_Vector& b) {
     return makeSpline(1, {a, b}, {0, 0, 1, 1});
 }
 
+/**
+ * How many piece ends of the output lie at @p p: an entity's own ends, and
+ * twice every joint inside a spline that is one chain of pieces, where one
+ * piece ends and the next starts (every control point of a degree-1 spline,
+ * every third of a cubic one with triple knots).
+ */
+size_t endsAt(const std::vector<std::unique_ptr<RS_Entity>>& entities, const RS_Vector& p) {
+    size_t ends = 0;
+    for (const std::unique_ptr<RS_Entity>& e : entities) {
+        ends += (e->getStartpoint() == p) ? 1 : 0;
+        ends += (e->getEndpoint() == p) ? 1 : 0;
+        if (const auto* spline = dynamic_cast<const RS_Spline*>(e.get())) {
+            const std::vector<RS_Vector>& c = spline->getData().controlPoints;
+            const size_t step = static_cast<size_t>(spline->getDegree());
+            for (size_t k = step; k + step < c.size(); k += step) {
+                ends += (c[k] == p) ? 2 : 0;
+            }
+        }
+    }
+    return ends;
+}
+
 /** Each spline one branch, each of its knot spans one segment. */
 class SplineCurves final : public LC_ParametricCurves {
 public:
@@ -307,16 +329,11 @@ TEST_CASE("A noded offset ends pieces at its crossing", "[curve-offset][topology
         CHECK(ends == 1);
     }
 
-    // The entities pass the check that their fits add no crossing: four meet at the node.
+    // The entities pass the check that their fits add no crossing: four piece ends meet at the node.
     const LC_CurveOffsetMaterializationResult entities = LC_CurveOffset::materializeBranches(
         parabola, noded, options, LC_CurveOffset::makeDirectSourceBudget());
     REQUIRE(entities.status == LC_CurveOffsetStatus::Ok);
-    size_t atNode = 0;
-    for (const std::unique_ptr<RS_Entity>& e : entities.entities) {
-        atNode += (e->getStartpoint() == x.point) ? 1 : 0;
-        atNode += (e->getEndpoint() == x.point) ? 1 : 0;
-    }
-    CHECK(atNode == 4);
+    CHECK(endsAt(entities.entities, x.point) == 4);
 }
 
 TEST_CASE("A noded offset of a crossing source keeps every crossing", "[curve-offset][topology]") {
@@ -335,12 +352,7 @@ TEST_CASE("A noded offset of a crossing source keeps every crossing", "[curve-of
         CHECK(geometry.intersections.size() >= 1);
         CHECK(geometry.sourceIntersections == 1);
         for (const LC_ParametricIntersection& x : geometry.intersections) {
-            size_t ends = 0;
-            for (const std::unique_ptr<RS_Entity>& e : result.entities) {
-                ends += (e->getStartpoint() == x.point) ? 1 : 0;
-                ends += (e->getEndpoint() == x.point) ? 1 : 0;
-            }
-            CHECK(ends == 4);
+            CHECK(endsAt(result.entities, x.point) == 4);
         }
     }
 }
@@ -374,12 +386,7 @@ TEST_CASE("A closed source's cusped offset is noded across its branch joins", "[
         LC_CurveOffset::materializeBranches(ring, geometry, options, LC_CurveOffset::makeDirectSourceBudget());
     REQUIRE(entities.status == LC_CurveOffsetStatus::Ok);
     for (const LC_ParametricIntersection& x : geometry.intersections) {
-        size_t ends = 0;
-        for (const std::unique_ptr<RS_Entity>& e : entities.entities) {
-            ends += (e->getStartpoint() == x.point) ? 1 : 0;
-            ends += (e->getEndpoint() == x.point) ? 1 : 0;
-        }
-        CHECK(ends == 4);
+        CHECK(endsAt(entities.entities, x.point) == 4);
     }
     // the swallowtail between each pair of cusps crosses the rest of the offset
     CHECK(geometry.intersections.size() >= geometry.branches.size() / 2);

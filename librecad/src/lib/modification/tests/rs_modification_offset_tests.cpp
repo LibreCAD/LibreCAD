@@ -246,8 +246,9 @@ TEST_CASE("A spline source is offset by the engine and keeps its own outcome", "
     REQUIRE(outcome.sources.size() == 2);
     const LC_OffsetSourceOutcome& fromSpline = outcomeFor(outcome, spline.get());
     CHECK(fromSpline.succeeded());
-    CHECK(fromSpline.createdEntities.size() > 1);
+    CHECK(fromSpline.createdEntities.size() == 1); // one spline, its pieces its spans
     CHECK(fromSpline.usage.outputEntities == static_cast<size_t>(fromSpline.createdEntities.size()));
+    CHECK(fromSpline.usage.cubicPieces > 1);
     for (const RS_Entity* piece : fromSpline.createdEntities) {
         CHECK(piece->rtti() == RS2::EntitySpline);
     }
@@ -359,8 +360,8 @@ TEST_CASE("Output limits count every copy of a source, and the request", "[modif
     // room for one copy's pieces: the first copy fits, the second does not, and
     // neither is published nor the source removed
     LC_OffsetBatchLimits tight;
-    tight.perSource.maxOutputEntities = perCopy.outputEntities + 1;
-    tight.perSource.maxCubicPieces = perCopy.outputEntities + 1;
+    REQUIRE(perCopy.cubicPieces > 1);
+    tight.perSource.maxCubicPieces = perCopy.cubicPieces + 1;
     data.multipleCopies = true;
     data.number = 2;
     BatchGuard two;

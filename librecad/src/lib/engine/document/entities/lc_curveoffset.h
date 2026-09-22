@@ -317,12 +317,16 @@ LC_CurveOffsetGeometryResult buildDirectBranches(const RS_Entity& source, const 
 
 /**
  * Fresh, parentless entities for @p geometry, a successful result of
- * buildDirectBranches() for the same source and options: one clamped cubic
- * RS_Spline per piece, or one RS_Line for a straight branch. They copy only the
- * source's pen and layer. Each entity is compared with the exact offset once
- * more, through its own evaluator, at parameters the fitter never used and from
- * both sides: paired at the same source parameter, and from the entity back to
- * the nearest offset point. A piece that fails is split and refitted in a local
+ * buildDirectBranches() (or of a trimmed build) for the same source and
+ * options: one entity per branch. That is an RS_Line for a single straight
+ * piece, a degree-1 RS_Spline through the corners of an all-straight branch,
+ * and otherwise a clamped cubic RS_Spline whose knots are the integers, each of
+ * multiplicity 3, so span i holds piece i exactly. A closed branch is an open
+ * spline whose ends meet, starting inside a piece rather than at a corner. The
+ * entities copy only the source's pen and layer. Each piece is compared with
+ * the exact offset once more at parameters the fitter never used and from both
+ * sides: paired at the same source parameter, and from the piece back to the
+ * nearest offset point. A piece that fails is split and refitted in a local
  * copy; @p geometry is not changed. Output is counted against @p budget as it is
  * made. On any failure no entity is returned.
  */

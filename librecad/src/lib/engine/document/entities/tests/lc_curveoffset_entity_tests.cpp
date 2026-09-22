@@ -70,17 +70,22 @@ double distanceToCurve(const RS_Vector& p, const Curve& curve, const double t0, 
     return best;
 }
 
-/** The largest error |distance to the source - d| over the pieces' points. */
+/** The largest error |distance to the source - d| over the entities' points, eight per knot span. */
 double worstDistanceError(const std::vector<RS_Entity*>& pieces, const Curve& source, const double t0,
                           const double t1, const double d) {
     double worst = 0.0;
     for (const RS_Entity* piece : pieces) {
         const auto* spline = dynamic_cast<const RS_Spline*>(piece);
         REQUIRE(spline != nullptr);
-        for (int k = 0; k <= 8; ++k) {
-            LC_CurveJet jet;
-            REQUIRE(spline->tryEvaluateJet(k / 8.0, LC_CurveEvaluationSide::Interior, jet));
-            worst = std::max(worst, std::abs(distanceToCurve(jet.point, source, t0, t1) - d));
+        const std::vector<double> breaks = spline->getBreakParameters();
+        REQUIRE(breaks.size() >= 2);
+        for (size_t span = 0; span + 1 < breaks.size(); ++span) {
+            for (int k = 0; k <= 8; ++k) {
+                LC_CurveJet jet;
+                REQUIRE(spline->tryEvaluateJet(breaks[span] + (breaks[span + 1] - breaks[span]) * k / 8.0,
+                                               LC_CurveEvaluationSide::Interior, jet));
+                worst = std::max(worst, std::abs(distanceToCurve(jet.point, source, t0, t1) - d));
+            }
         }
     }
     return worst;
@@ -109,7 +114,7 @@ struct Owned {
 
 } // namespace
 
-TEST_CASE("RS_Spline::createOffset returns the offset as cubic pieces", "[curve-offset][entity]") {
+TEST_CASE("RS_Spline::createOffset returns the offset as one cubic spline", "[curve-offset][entity]") {
     RS_Spline source = sCurve();
     const RS_Pen pen{RS_Color{10, 120, 200}, RS2::Width04, RS2::DotLine};
     source.setPen(pen);
@@ -117,7 +122,8 @@ TEST_CASE("RS_Spline::createOffset returns the offset as cubic pieces", "[curve-
 
     Owned offset;
     offset.entities = source.createOffset(RS_Vector{6.0, 9.0}, 0.75);
-    REQUIRE(offset.entities.size() > 1);
+    REQUIRE(offset.entities.size() == 1);
+    CHECK(offset.entities.front()->rtti() == RS2::EntitySpline);
     CHECK(worstDistanceError(offset.entities, curveOf(source), 0.0, 1.0, 0.75) < 1e-3);
     for (const RS_Entity* piece : offset.entities) {
         CHECK(piece->getPen(false) == pen);
@@ -146,11 +152,11 @@ TEST_CASE("createOffset returns nothing when the offset fails", "[curve-offset][
     CHECK(source.createOffset(RS_Vector{6.0, 9.0}, 0.0).empty());
 }
 
-TEST_CASE("LC_SplinePoints::createOffset returns the offset as cubic pieces", "[curve-offset][entity]") {
+TEST_CASE("LC_SplinePoints::createOffset returns the offset as one cubic spline", "[curve-offset][entity]") {
     const LC_SplinePoints source = fitSpline({{0, 0}, {3, 4}, {7, 3}, {10, 6}, {14, 2}});
     Owned offset;
     offset.entities = source.createOffset(RS_Vector{7.0, -5.0}, 0.5);
-    REQUIRE_FALSE(offset.entities.empty());
+    REQUIRE(offset.entities.size() == 1);
     CHECK(worstDistanceError(offset.entities, curveOf(source), 0.0,
                              static_cast<double>(source.getSegmentCount()), 0.5) < 1e-3);
 }
@@ -262,10 +268,10 @@ TEST_CASE("LC_SplinePoints::offsetTwoSides returns both sides or nothing", "[cur
     CHECK(apex.entities.size() >= 2);
 }
 
-TEST_CASE("A fillet refuses a parallel made of several pieces", "[curve-offset][entity]") {
-    // RS_Modification::round() builds one parallel per entity and intersects
-    // them; a multi-piece spline offset is not one curve, so it is refused
-    // rather than filleted against its first piece.
+TEST_CASE("A fillet refuses a spline's parallel", "[curve-offset][entity]") {
+    // RS_Modification::round() builds one parallel per entity, intersects them
+    // and trims the sources; a spline's offset is an RS_Spline, drawn as lines,
+    // not an atomic curve it can do that with, so it is refused.
     LC_SplinePoints spline = fitSpline({{0, 0}, {3, 4}, {7, 3}, {10, 6}, {14, 2}});
     RS_Line line{nullptr, RS_LineData{{14.0, 2.0}, {20.0, -4.0}}};
     RS_RoundData data;

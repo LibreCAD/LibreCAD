@@ -581,42 +581,52 @@ LC_CurveOffsetMaterializationResult materialize(const RS_Entity& source, const L
 }
 } // namespace
 
-TEST_CASE("A branch materializes as one validated clamped cubic per piece", "[curve-offset][direct][materialize]") {
+TEST_CASE("A branch materializes as one cubic spline whose spans are its validated pieces",
+          "[curve-offset][direct][materialize]") {
     const RS_Spline s = sCurve();
     const LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(s, 0.75);
     const LC_CurveOffsetRequest request = LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 0.75);
     const LC_CurveOffsetGeometryResult geometry =
         LC_CurveOffset::buildDirectBranches(s, request, options, LC_CurveOffset::makeDirectSourceBudget());
     REQUIRE(geometry.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(geometry.branches.size() == 1);
     const std::vector<LC_OffsetCubicPiece> before = geometry.branches.front().cubicPieces;
+    REQUIRE(before.size() > 1);
 
     const LC_CurveOffsetMaterializationResult result =
         LC_CurveOffset::materializeBranches(s, geometry, options, LC_CurveOffset::makeDirectSourceBudget());
     REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
     CHECK(result.validationLevel == LC_OffsetValidationLevel::SampledBidirectional);
     CHECK(result.maxObservedError <= options.tolerance.requestedGeometry);
-    REQUIRE(result.entities.size() >= before.size());
-    CHECK(result.usage.outputEntities == result.entities.size());
-    CHECK(result.usage.cubicPieces == result.entities.size());
+    REQUIRE(result.entities.size() == 1);
+    CHECK(result.usage.outputEntities == 1);
+    CHECK(result.usage.cubicPieces >= before.size());
 
-    std::size_t deep = 0;
-    RS_Vector previousEnd{false};
-    for (const std::unique_ptr<RS_Entity>& entity : result.entities) {
-        const auto* piece = dynamic_cast<const RS_Spline*>(entity.get());
-        REQUIRE(piece != nullptr);
-        CHECK(piece->validate());
-        CHECK(piece->getDegree() == 3);
-        CHECK_FALSE(piece->isClosed());
-        CHECK(piece->count() == 32);
-        CHECK(piece->getParent() == nullptr);
-        CHECK_FALSE(piece->isSelected());
-        if (previousEnd.valid) {
-            CHECK(piece->getStartpoint() == previousEnd); // pieces share their ends exactly
-        }
-        previousEnd = piece->getEndpoint();
-        deep += piece->count();
+    const auto* spline = dynamic_cast<const RS_Spline*>(result.entities.front().get());
+    REQUIRE(spline != nullptr);
+    CHECK(spline->validate());
+    CHECK(spline->getDegree() == 3);
+    CHECK_FALSE(spline->isClosed());
+    CHECK(spline->getParent() == nullptr);
+    CHECK_FALSE(spline->isSelected());
+    CHECK(result.usage.deepEntities == spline->count());
+    // integer knots, of multiplicity 3 inside: each span is one piece's Bezier net
+    const RS_SplineData& data = spline->getData();
+    const size_t spans = result.usage.cubicPieces;
+    REQUIRE(data.controlPoints.size() == 3 * spans + 1);
+    REQUIRE(data.knotslist.size() == data.controlPoints.size() + 4);
+    for (size_t k = 0; k < data.knotslist.size(); ++k) {
+        const double expected = (k < 4) ? 0.0 : std::min(static_cast<double>((k - 1) / 3), static_cast<double>(spans));
+        CHECK(data.knotslist[k] == expected);
     }
-    CHECK(result.usage.deepEntities == deep);
+    // it follows the exact offset like the pieces did
+    double t0 = 0.0;
+    double t1 = 0.0;
+    REQUIRE(spline->getParameterDomain(t0, t1));
+    CHECK(t0 == 0.0);
+    CHECK(t1 == static_cast<double>(spans));
+    CHECK(spline->getStartpoint() == before.front().bezier[0]);
+    CHECK(spline->getEndpoint() == before.back().bezier[3]);
 
     // materializing reads the branch; it never changes it
     const auto& after = geometry.branches.front().cubicPieces;
@@ -635,7 +645,7 @@ TEST_CASE("A straight source materializes as one exact line", "[curve-offset][di
     REQUIRE(offset != nullptr);
     CHECK(offset->getStartpoint() == RS_Vector(0.0, -2.0));
     CHECK(offset->getEndpoint() == RS_Vector(10.0, -2.0));
-    CHECK(result.maxObservedError == 0.0);
+    CHECK(result.maxObservedError <= 1e-12);
 }
 
 TEST_CASE("Output copies only the source's layer and pen", "[curve-offset][direct][materialize]") {
@@ -658,10 +668,11 @@ TEST_CASE("Limits and failures return no entity", "[curve-offset][direct][materi
     const RS_Spline s = sCurve();
     const LC_CurveOffsetMaterializationResult full = materialize(s, LC_CurveOffsetSide::Left, 0.75);
     REQUIRE(full.status == LC_CurveOffsetStatus::Ok);
-    const std::size_t pieces = full.entities.size();
+    const std::size_t pieces = full.usage.cubicPieces;
+    REQUIRE(pieces > 1);
 
     LC_OffsetSourceBudget budget = LC_CurveOffset::makeDirectSourceBudget();
-    budget.maxOutputEntities = pieces - 1;
+    budget.maxCubicPieces = pieces - 1;
     const LC_CurveOffsetMaterializationResult tooMany = materialize(s, LC_CurveOffsetSide::Left, 0.75, budget);
     CHECK(tooMany.status == LC_CurveOffsetStatus::LimitExceeded);
     CHECK(tooMany.entities.empty());
@@ -689,15 +700,27 @@ TEST_CASE("Limits and failures return no entity", "[curve-offset][direct][materi
               .status == LC_CurveOffsetStatus::SingularOffset);
 }
 
-TEST_CASE("Closed sources materialize as a closed chain of open pieces", "[curve-offset][direct][materialize][closed]") {
+TEST_CASE("A closed source materializes as one open spline whose ends meet in a smooth stretch",
+          "[curve-offset][direct][materialize][closed]") {
+    // LibreCAD's closed spline is a wrapped one, which a chain of cubic pieces is
+    // not: the chain is an open spline whose ends coincide, starting in the
+    // middle of a piece so that the seam is no corner.
     const LC_SplinePoints ring = fromControlPoints({{0, 0}, {10, 0}, {12, 8}, {2, 9}}, true);
     const LC_CurveOffsetMaterializationResult result = materialize(ring, LC_CurveOffsetSide::Right, 1.0);
     REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
-    REQUIRE(result.entities.size() > 1);
-    for (const std::unique_ptr<RS_Entity>& entity : result.entities) {
-        CHECK_FALSE(dynamic_cast<const RS_Spline&>(*entity).isClosed());
-    }
-    CHECK(result.entities.back()->getEndpoint() == result.entities.front()->getStartpoint());
+    REQUIRE(result.entities.size() == 1);
+    const auto& spline = dynamic_cast<const RS_Spline&>(*result.entities.front());
+    CHECK_FALSE(spline.isClosed());
+    CHECK(spline.getEndpoint() == spline.getStartpoint());
+    double t0 = 0.0;
+    double t1 = 0.0;
+    REQUIRE(spline.getParameterDomain(t0, t1));
+    LC_CurveJet start;
+    LC_CurveJet end;
+    REQUIRE(spline.tryEvaluateJet(t0, LC_CurveEvaluationSide::Right, start));
+    REQUIRE(spline.tryEvaluateJet(t1, LC_CurveEvaluationSide::Left, end));
+    CHECK(std::abs(RS_Vector::crossP(start.first, end.first).z) <=
+          1e-9 * start.first.magnitude() * end.first.magnitude());
 }
 
 TEST_CASE("Offsets of 20-control-point cubics, timed", "[.benchmark]") {

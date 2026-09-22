@@ -19,29 +19,30 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-// D0 representation spike for spline offsets: which entity form stores a
-// validated cubic offset branch so that what is written, drawn and read back is
-// still that branch. Each experiment below is evidence for the D1 decision:
+// Representation of spline offsets: which entity form stores a validated cubic
+// offset branch so that what is written, drawn and read back is still that
+// branch. The experiments below are the evidence:
 //
 //  - One clamped cubic RS_Spline per Bezier piece, with knots {0,0,0,0,1,1,1,1},
-//    stores the piece exactly, draws it with 32 segments of its own, and
-//    survives DXF and DWG unchanged. This is the D1 output form.
-//  - A C1 composite of several pieces is exact too, but RS_Spline draws (and
-//    hit-tests) any entity with 32 segments in all, which cannot follow many
-//    pieces; the importer also rounds knots, so knots at source parameters
-//    would move. Not used in D1.
+//    stores the piece exactly and survives DXF and DWG unchanged.
+//  - Consecutive pieces join exactly into one clamped cubic RS_Spline whose
+//    interior knots are the integers, each of multiplicity 3: piece i is the
+//    span [i, i+1], and the control net is the pieces' nets with shared ends.
+//    Integer knots survive the importer, which rounds knots, and RS_Spline
+//    draws (and hit-tests) such a spline span by span within a display
+//    tolerance, so many pieces draw as well as one. This is the output form:
+//    one spline per offset chain.
 //  - LC_SplinePoints is quadratic: it cannot hold a cubic piece, and its fit
 //    mode has no parameter correspondence with the branch. Not an output form.
-//  - A closed source's offset is a chain of open pieces whose last point is the
-//    first; it has no closed or periodic flag to get wrong, and the seam
-//    survives a round trip. D1 therefore accepts closed sources, but only after
-//    checking that the source's ends really meet: a wrapped spline with a
-//    non-periodic knot vector passes validate() with a gap at its seam.
+//  - A closed source's offset is one open spline whose last point is its first;
+//    it has no closed or periodic flag to get wrong, and the seam survives a
+//    round trip. Closed sources are therefore accepted, but only after checking
+//    that their ends really meet: a wrapped spline with a non-periodic knot
+//    vector passes validate() with a gap at its seam.
 //
-// The D1 persistence gate follows: what the offset engine produces comes back
+// The persistence gate follows: what the offset engine produces comes back
 // from DXF and DWG as the curve it validated, and R12, which has no SPLINE,
-// gets a polyline within its own export tolerance instead of the 32 segments
-// a spline is drawn with.
+// gets a polyline within its own export tolerance.
 
 #include <catch2/catch_test_macros.hpp>
 
@@ -315,7 +316,7 @@ TEST_CASE("A composite of many pieces is drawn span by span, within the display 
     CHECK(pieceDeviation < 1e-4);
 }
 
-TEST_CASE("Single cubic pieces survive DXF and DWG unchanged", "[curve-offset][d0][representation]") {
+TEST_CASE("Cubic pieces, and composites of them, survive DXF and DWG unchanged", "[curve-offset][d0][representation]") {
     const std::vector<Bezier> pieces = arcPieces(RS_Vector{1234.5, -87.25}, 321.0, -0.4, 2.2, 5);
     std::vector<RS_SplineData> stored;
     for (const Bezier& piece : pieces) {
@@ -327,6 +328,7 @@ TEST_CASE("Single cubic pieces survive DXF and DWG unchanged", "[curve-offset][d
         RS2::FormatType type;
         const char* file;
     };
+    stored.push_back(compositeData(pieces));
     for (const Format& format : {Format{RS2::FormatDXFRW, "pieces.dxf"}, Format{RS2::FormatDXFRW2000, "pieces_2000.dxf"},
                                  Format{RS2::FormatDWG, "pieces_r2000.dwg"},
                                  Format{RS2::FormatDWG2018, "pieces_r2018.dwg"}}) {
@@ -340,18 +342,20 @@ TEST_CASE("Single cubic pieces survive DXF and DWG unchanged", "[curve-offset][d
                 const RS_SplineData& b = reloaded[i];
                 CHECK(b.degree == 3);
                 CHECK(b.type == RS_SplineData::SplineType::ClampedOpen);
-                REQUIRE(b.controlPoints.size() == 4);
+                REQUIRE(b.controlPoints.size() == a.controlPoints.size());
                 CHECK(b.knotslist == a.knotslist);
                 CHECK(b.weights == a.weights);
                 const RS_Spline before(nullptr, a);
                 const RS_Spline after(nullptr, b);
                 const double scale = std::max(std::abs(a.controlPoints[0].x), std::abs(a.controlPoints[0].y));
-                for (size_t k = 0; k < 4; ++k) {
+                for (size_t k = 0; k < a.controlPoints.size(); ++k) {
                     CHECK(b.controlPoints[k].distanceTo(a.controlPoints[k]) <= 1e-12 * scale);
                     CHECK(b.controlPoints[k].z == 0.0);
                 }
-                for (int s = 0; s <= 20; ++s) {
-                    const double t = s / 20.0;
+                const double domainEnd = a.knotslist.back();
+                const int samples = 20 * static_cast<int>(domainEnd);
+                for (int s = 0; s <= samples; ++s) {
+                    const double t = domainEnd * s / samples;
                     const LC_CurveJet x = jetAt(before, t, LC_CurveEvaluationSide::Interior);
                     const LC_CurveJet y = jetAt(after, t, LC_CurveEvaluationSide::Interior);
                     CHECK(y.point.distanceTo(x.point) <= 1e-12 * scale);
@@ -386,7 +390,7 @@ TEST_CASE("An LC_SplinePoints cannot hold a cubic offset piece", "[curve-offset]
     CHECK(jet.point.distanceTo(bezierAt(g_piece, 0.5)) > 1e-3);
 }
 
-TEST_CASE("A closed source's offset is a chain of open pieces whose seam survives a round trip",
+TEST_CASE("A closed source's offset is one open spline whose seam survives a round trip",
           "[curve-offset][d0][representation]") {
     // A closed cubic built the way the drawing tools build one has uniform
     // knots: its curve and tangent meet across the seam, so its offset closes.
@@ -420,23 +424,17 @@ TEST_CASE("A closed source's offset is a chain of open pieces whose seam survive
     CHECK(jetAt(nonPeriodic, t0, LC_CurveEvaluationSide::Right)
               .point.distanceTo(jetAt(nonPeriodic, t1, LC_CurveEvaluationSide::Left).point) > 1.0);
 
-    // A closed chain of open pieces: the last piece ends at the first piece's start.
+    // A closed chain in one open spline: its last piece ends at its first piece's start.
     std::vector<Bezier> pieces = arcPieces(RS_Vector{500.0, 250.0}, 75.0, 0.0, 2.0 * M_PI, 7);
     pieces.back()[3] = pieces.front()[0];
-    std::vector<RS_SplineData> chain;
-    for (const Bezier& piece : pieces) {
-        chain.push_back(pieceData(piece));
-    }
     bool exported = false;
-    const std::vector<RS_SplineData> reloaded = roundTrip(chain, RS2::FormatDXFRW, "closed_chain.dxf", exported);
+    const std::vector<RS_SplineData> reloaded =
+        roundTrip({compositeData(pieces)}, RS2::FormatDXFRW, "closed_chain.dxf", exported);
     REQUIRE(exported);
-    REQUIRE(reloaded.size() == chain.size());
-    for (const RS_SplineData& piece : reloaded) {
-        CHECK_FALSE(RS_Spline(nullptr, piece).isClosed()); // no closed or periodic flag on a piece
-    }
-    const RS_Spline first(nullptr, reloaded.front());
-    const RS_Spline last(nullptr, reloaded.back());
-    CHECK(last.getEndpoint().distanceTo(first.getStartpoint()) < 1e-9);
+    REQUIRE(reloaded.size() == 1);
+    const RS_Spline chain(nullptr, reloaded.front());
+    CHECK_FALSE(chain.isClosed()); // no closed or periodic flag
+    CHECK(chain.getEndpoint().distanceTo(chain.getStartpoint()) < 1e-9);
 
     // A closed LC_SplinePoints source joins its last segment to its first with C1 continuity.
     LC_SplinePointsData ring(true, false);
@@ -612,7 +610,7 @@ RS_SplineData wavyData() {
 
 } // namespace
 
-TEST_CASE("The offset engine's pieces come back from DXF and DWG as the curve it validated",
+TEST_CASE("The offset engine's spline comes back from DXF and DWG as the curve it validated",
           "[curve-offset][d1][persistence]") {
     // Binary DXF is not covered: the filter only exports ASCII DXF.
     ensureSettings();
@@ -642,7 +640,7 @@ TEST_CASE("The offset engine's pieces come back from DXF and DWG as the curve it
                 source->setPen(pen);
                 tolerance = LC_CurveOffset::makeDirectOptions(*source, distance).tolerance.requestedGeometry;
                 const std::vector<RS_Entity*> pieces = source->createOffset(RS_Vector{1240.5, -78.25}, distance);
-                REQUIRE(pieces.size() > 1);
+                REQUIRE(pieces.size() == 1); // one spline for the whole offset
                 for (RS_Entity* piece : pieces) {
                     graphic.addEntity(piece);
                     piece->reparent(&graphic);
@@ -682,29 +680,33 @@ TEST_CASE("The offset engine's pieces come back from DXF and DWG as the curve it
                 CHECK(b.type == RS_SplineData::SplineType::ClampedOpen);
                 CHECK_FALSE(piece.isClosed());
                 CHECK(b.knotslist == written[i].knotslist);
-                CHECK(b.weights == std::vector<double>(4, 1.0));
+                const size_t n = written[i].controlPoints.size();
+                CHECK(n > 4); // several spans
+                CHECK(b.weights == std::vector<double>(n, 1.0));
                 CHECK(b.fitPoints.empty());
-                REQUIRE(b.controlPoints.size() == 4);
-                for (size_t k = 0; k < 4; ++k) {
+                REQUIRE(b.controlPoints.size() == n);
+                for (size_t k = 0; k < n; ++k) {
                     CHECK(b.controlPoints[k].distanceTo(written[i].controlPoints[k]) <= 1e-12 * scale);
                 }
                 REQUIRE(piece.getLayer() != nullptr);
                 CHECK(piece.getLayer()->getName() == "Offsets");
                 CHECK(piece.getPen(false) == pen);
                 // still the offset, within the budget it was validated against
-                for (int k = 0; k <= 16; ++k) {
-                    const RS_Vector p = jetAt(piece, k / 16.0, LC_CurveEvaluationSide::Interior).point;
+                double t0 = 0.0;
+                double t1 = 0.0;
+                REQUIRE(piece.getParameterDomain(t0, t1));
+                const int samples = 16 * static_cast<int>(std::lround(t1 - t0));
+                for (int k = 0; k <= samples; ++k) {
+                    const RS_Vector p =
+                        jetAt(piece, t0 + (t1 - t0) * k / samples, LC_CurveEvaluationSide::Interior).point;
                     CHECK(std::abs(distanceToCurve(source, p) - distance) <= tolerance);
-                }
-                if (i > 0) {
-                    CHECK(piece.getStartpoint().distanceTo(splines[i]->getEndpoint()) <= 1e-12 * scale);
                 }
             }
         }
     }
 }
 
-TEST_CASE("A closed source's offset comes back as an open chain that closes", "[curve-offset][d1][persistence]") {
+TEST_CASE("A closed source's offset comes back as an open spline that closes", "[curve-offset][d1][persistence]") {
     RS_Spline source(nullptr, RS_SplineData(3, false));
     for (const RS_Vector& p : {RS_Vector{0, 0}, RS_Vector{40, -10}, RS_Vector{60, 30}, RS_Vector{20, 50},
                                RS_Vector{-15, 25}}) {
@@ -712,7 +714,7 @@ TEST_CASE("A closed source's offset comes back as an open chain that closes", "[
     }
     source.setClosed(true);
     const std::vector<RS_Entity*> pieces = source.createOffset(RS_Vector{25.0, 20.0}, 2.0); // inside
-    REQUIRE(pieces.size() > 1);
+    REQUIRE(pieces.size() == 1);
     std::vector<RS_SplineData> chain;
     for (RS_Entity* piece : pieces) {
         chain.push_back(static_cast<RS_Spline*>(piece)->getData());
@@ -721,18 +723,16 @@ TEST_CASE("A closed source's offset comes back as an open chain that closes", "[
     bool exported = false;
     const std::vector<RS_SplineData> reloaded = roundTrip(chain, RS2::FormatDXFRW, "d1_closed.dxf", exported);
     REQUIRE(exported);
-    REQUIRE(reloaded.size() == chain.size());
-    for (const RS_SplineData& piece : reloaded) {
-        CHECK_FALSE(RS_Spline(nullptr, piece).isClosed());
-    }
-    CHECK(RS_Spline(nullptr, reloaded.back()).getEndpoint().distanceTo(
-              RS_Spline(nullptr, reloaded.front()).getStartpoint()) < 1e-9);
+    REQUIRE(reloaded.size() == 1);
+    const RS_Spline offset(nullptr, reloaded.front());
+    CHECK_FALSE(offset.isClosed());
+    CHECK(offset.getEndpoint().distanceTo(offset.getStartpoint()) < 1e-9);
 }
 
-TEST_CASE("R12 gets each offset piece as a polyline within the export tolerance", "[curve-offset][d1][persistence][r12]") {
+TEST_CASE("R12 gets an offset as a polyline within the export tolerance", "[curve-offset][d1][persistence][r12]") {
     RS_Spline source(nullptr, sCurveData());
     const std::vector<RS_Entity*> pieces = source.createOffset(RS_Vector{1240.5, -78.25}, 0.75);
-    REQUIRE(pieces.size() > 1);
+    REQUIRE(pieces.size() == 1);
     std::vector<RS_SplineData> stored;
     for (RS_Entity* piece : pieces) {
         stored.push_back(static_cast<RS_Spline*>(piece)->getData());

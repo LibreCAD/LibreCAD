@@ -1978,12 +1978,12 @@ LC_RoundResult RS_Modification::round(const RS_Vector& coord, const RS_Vector& c
         return result;
     }
 
-    // create 2 tmp parallels; the fillet needs each as one curve, so an offset
-    // made of several pieces (a spline's) counts as none
+    // create 2 tmp parallels; the fillet intersects and trims each as one
+    // atomic curve, so a spline's offset, an RS_Spline drawn as lines, counts as none
     auto singleParallel = [&coord, &data](RS_AtomicEntity* entity) {
         QList<RS_Entity*> parallels;
         RS_Creation::createParallel(coord, data.radius, 1, entity, false, parallels);
-        if (parallels.size() != 1) {
+        if (parallels.size() != 1 || parallels.front()->isContainer()) {
             qDeleteAll(parallels);
             return std::unique_ptr<RS_Entity>{};
         }

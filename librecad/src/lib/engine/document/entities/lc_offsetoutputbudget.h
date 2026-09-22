@@ -35,7 +35,7 @@ class RS_Entity;
  */
 struct LC_OffsetSourceBudget {
     std::size_t maxCubicPieces{0};
-    /** Entities handed to the document: one per cubic piece, or one exact line. */
+    /** Entities handed to the document: one spline per offset chain, or one exact line. */
     std::size_t maxOutputEntities{0};
     /** Leaf entities in the output trees, the display segments of each spline included. */
     std::size_t maxDeepEntities{0};
@@ -50,8 +50,10 @@ struct LC_OffsetOutputUsage {
 
 /**
  * Every output spline carries the line segments RS_Spline::update() draws it
- * with: 32 for an open spline. Deep limits are multiples of this, so the piece,
- * entity and deep limits bind together instead of one making the others moot.
+ * with: 32 or more, at least one per cubic piece, and more where it bends; a
+ * spline of one fitted piece takes about 32. Deep limits are multiples of this,
+ * so the piece, entity and deep limits bind together instead of one making the
+ * others moot.
  */
 inline constexpr std::size_t kOffsetDeepEntitiesPerOutputSpline = 33;
 

@@ -258,7 +258,7 @@ TEST_CASE("Committing a spline offset replaces it with its offset, undoably", "[
 
     CHECK(spline->isDeleted());
     const int pieces = f.liveCount(RS2::EntitySpline);
-    CHECK(pieces > 1);
+    CHECK(pieces == 1); // one spline for the whole offset
     CHECK(f.m_context.messages.isEmpty());
 
     f.m_graphic.undo();
@@ -314,15 +314,15 @@ TEST_CASE("The preview shows the committed geometry, or its box past MaxPreview"
 
     f.hoverAt(6.0, 9.0);
     const int detailed = f.previewCount(RS2::EntitySpline);
-    CHECK(detailed > 1);
+    CHECK(detailed == 1);
 
     // the same request commits the same pieces
     f.clickAt(6.0, 9.0);
     CHECK(f.liveCount(RS2::EntitySpline) == 1 + detailed);
 
-    // More output than MaxPreview allows in detail, zero, or a malformed negative
-    // value: a box, from entities the preview never adopts.
-    for (const int maxPreview : {detailed - 1, 0, -5}) {
+    // A MaxPreview of zero, or a malformed negative value: a box, from entities
+    // the preview never adopts.
+    for (const int maxPreview : {0, -5}) {
         OffsetFixture g;
         RS_Spline* s = g.addSCurve();
         g.select({s});
@@ -350,7 +350,7 @@ TEST_CASE("With current attributes, the preview has the pen the commit gives", "
         CHECK(e->getPen(false) == active);
         ++previewed;
     }
-    CHECK(previewed > 1);
+    CHECK(previewed == 1);
 
     f.clickAt(6.0, 9.0);
     for (const RS_Entity* e : f.m_graphic) {
@@ -366,7 +366,7 @@ TEST_CASE("A failed preview request leaves no stale preview", "[curve-offset][ac
     f.select({spline});
     f.start(0.75, true);
     f.hoverAt(6.0, 9.0);
-    REQUIRE(f.previewCount(RS2::EntitySpline) > 1);
+    REQUIRE(f.previewCount(RS2::EntitySpline) == 1);
     // on the curve: no side, so no offset now
     LC_CurveJet jet;
     REQUIRE(spline->tryEvaluateJet(0.3, LC_CurveEvaluationSide::Interior, jet));
@@ -400,7 +400,7 @@ TEST_CASE("Without additive selection every offset, and every failed source, sta
     CHECK(selectedOffsets == 2);
 }
 
-TEST_CASE("Parallel Through previews every piece of a parabola's offset", "[curve-offset][action]") {
+TEST_CASE("Parallel Through previews the whole offset of a parabola", "[curve-offset][action]") {
     OffsetFixture f;
     auto* parabola = f.add(new LC_Parabola(&f.m_graphic, LC_ParabolaData{std::array<RS_Vector, 3>{
                                                              RS_Vector{-4.0, 4.0}, RS_Vector{0.0, -4.0},
@@ -409,9 +409,12 @@ TEST_CASE("Parallel Through previews every piece of a parabola's offset", "[curv
     QList<RS_Entity*> created;
     RS_Creation::createParallelThrough(RS_Vector{0.0, -1.0}, 1, parabola, false, false, created);
     const qsizetype pieces = created.size();
+    REQUIRE(pieces == 1);
+    const auto* offset = static_cast<const RS_Spline*>(created.front());
+    // more spans than a list of 32-segment splines fits in the preview limit of 100
+    REQUIRE(offset->getNumberOfControlPoints() > 4 * 3);
+    const size_t points = offset->getNumberOfControlPoints();
     qDeleteAll(created);
-    // more pieces than a list of 32-segment splines fits in the preview limit of 100
-    REQUIRE(pieces > 4);
 
     ParallelThroughProbe action(&f.m_context);
     action.m_entity = parabola;
@@ -419,7 +422,10 @@ TEST_CASE("Parallel Through previews every piece of a parabola's offset", "[curv
     action.onMouseMoveEvent(ParallelThroughProbe::SetPos, &e);
     int previewed = 0;
     for (const RS_Entity* entity : *action.m_preview) {
-        previewed += entity->rtti() == RS2::EntitySpline ? 1 : 0;
+        if (entity->rtti() == RS2::EntitySpline) {
+            ++previewed;
+            CHECK(static_cast<const RS_Spline*>(entity)->getNumberOfControlPoints() == points);
+        }
     }
     CHECK(previewed == pieces);
 }
@@ -445,11 +451,31 @@ TEST_CASE("Parallel Through takes a spline, not a line it is drawn with, and pas
         double t0 = 0.0;
         double t1 = 0.0;
         REQUIRE(piece->getParameterDomain(t0, t1));
-        for (int k = 0; k <= 4000; ++k) {
+        const auto distanceAt = [&](const double t) {
             LC_CurveJet jet;
-            REQUIRE(piece->tryEvaluateJet(t0 + (t1 - t0) * k / 4000.0, LC_CurveEvaluationSide::Interior, jet));
-            nearest = std::min(nearest, jet.point.distanceTo(through));
+            REQUIRE(piece->tryEvaluateJet(t, LC_CurveEvaluationSide::Interior, jet));
+            return jet.point.distanceTo(through);
+        };
+        // sample, then narrow down around the nearest sample
+        constexpr int samples = 4000;
+        int best = 0;
+        for (int k = 1; k <= samples; ++k) {
+            if (distanceAt(t0 + (t1 - t0) * k / samples) < distanceAt(t0 + (t1 - t0) * best / samples)) {
+                best = k;
+            }
         }
+        double lo = t0 + (t1 - t0) * std::max(best - 1, 0) / samples;
+        double hi = t0 + (t1 - t0) * std::min(best + 1, samples) / samples;
+        for (int i = 0; i < 200; ++i) {
+            const double a = lo + (hi - lo) / 3.0;
+            const double b = hi - (hi - lo) / 3.0;
+            if (distanceAt(a) < distanceAt(b)) {
+                hi = b;
+            } else {
+                lo = a;
+            }
+        }
+        nearest = std::min(nearest, distanceAt(0.5 * (lo + hi)));
     }
     qDeleteAll(created);
     CHECK(nearest < 1e-4);

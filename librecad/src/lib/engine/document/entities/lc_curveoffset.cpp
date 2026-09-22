@@ -1894,27 +1894,19 @@ private:
 // Materialization and independent validation (plan 5.7)
 // ---------------------------------------------------------------------------
 
-/** One clamped cubic spline holding exactly this Bezier piece, on the knot domain [0, 1]. */
-RS_SplineData cubicPieceData(const std::array<RS_Vector, 4>& bezier) {
-    RS_SplineData data(3, false);
-    data.type = RS_SplineData::SplineType::ClampedOpen;
-    data.controlPoints.assign(bezier.begin(), bezier.end());
-    for (RS_Vector& v : data.controlPoints) {
-        v.z = 0.0;
-    }
-    data.knotslist = {0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0};
-    data.weights.assign(4, 1.0);
-    return data;
-}
-
+/**
+ * Validates the pieces of a branch against the exact offset, refitting those
+ * that stray: each piece is compared through its own Bezier, at parameters the
+ * fitter never used, from both sides.
+ */
 class Materializer {
 public:
     Materializer(const OffsetSource& source, const double d, const LC_CurveOffsetOptions& options,
-                 const LC_OffsetSourceBudget& budget, const double speedFloor, const std::size_t samplesUsed)
+                 const std::size_t maxPieces, const double speedFloor, const std::size_t samplesUsed)
         : m_source{source},
           m_d{d},
           m_options{options},
-          m_budget{budget},
+          m_maxPieces{maxPieces},
           m_speedFloor{speedFloor},
           m_samples{samplesUsed} {
     }
@@ -1924,26 +1916,27 @@ public:
         return m_samples;
     }
 
-    LC_CurveOffsetStatus run(const LC_OffsetBranch& branch, std::vector<std::unique_ptr<RS_Entity>>& entities,
-                             LC_OffsetOutputUsage& usage, double& maxError) {
+    /** The branch's pieces, validated and refitted, into @p pieces. */
+    LC_CurveOffsetStatus run(const LC_OffsetBranch& branch, std::vector<LC_OffsetCubicPiece>& pieces,
+                             double& maxError) {
         if (branch.cubicPieces.empty()) {
             return LC_CurveOffsetStatus::FitFailed;
         }
         std::vector<Work> work;
         for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
-            work.push_back(Work{piece, nullptr, false, false, 0.0, 0.5, 0});
+            work.push_back(Work{piece, false, false, 0.0, 0.5});
         }
         constexpr int maxRounds = 4;
         for (int round = 0;; ++round) {
+            if (work.size() > m_maxPieces) {
+                return LC_CurveOffsetStatus::LimitExceeded;
+            }
             bool anyFailed = false;
             for (Work& w : work) {
                 if (w.checked) {
                     continue;
                 }
-                LC_CurveOffsetStatus status = makeEntity(w, branch.straight);
-                if (status == LC_CurveOffsetStatus::Ok) {
-                    status = validate(w);
-                }
+                const LC_CurveOffsetStatus status = validate(w);
                 if (status != LC_CurveOffsetStatus::Ok) {
                     return status;
                 }
@@ -1964,25 +1957,11 @@ public:
                 }
             }
         }
-
-        // The whole output once more: no duplicate root or shared child, and
-        // within the deep limit.
-        std::vector<const RS_Entity*> roots;
-        for (const Work& w : work) {
-            roots.push_back(w.entity.get());
-        }
-        const LC_OffsetTreeCost cost = measureOffsetOutput(roots, m_budget.maxDeepEntities);
-        if (cost.status != LC_OffsetTreeStatus::Ok) {
-            return cost.status == LC_OffsetTreeStatus::LimitExceeded ? LC_CurveOffsetStatus::LimitExceeded
-                                                                     : LC_CurveOffsetStatus::FitFailed;
-        }
-        usage.cubicPieces = work.size();
-        usage.outputEntities = work.size();
-        usage.deepEntities = cost.deepEntities;
+        pieces.clear();
         maxError = 0.0;
-        for (Work& w : work) {
+        for (const Work& w : work) {
             maxError = std::max(maxError, w.error);
-            entities.push_back(std::move(w.entity));
+            pieces.push_back(w.piece);
         }
         return LC_CurveOffsetStatus::Ok;
     }
@@ -1990,13 +1969,11 @@ public:
 private:
     struct Work {
         LC_OffsetCubicPiece piece;
-        std::unique_ptr<RS_Entity> entity;
         bool checked;
         bool passed;
         double error;
         /** Local parameter of the worst sample: where a failed piece is split. */
         double worstU;
-        std::size_t deepCost;
     };
 
     /** The exact offset at t, at the piece's own signed distance. */
@@ -2007,67 +1984,16 @@ private:
         return computeOffsetJet(m_source, d, m_speedFloor, t, side, out);
     }
 
-    /**
-     * The entity for a piece, counted against the output limits before it is
-     * kept: every piece becomes one entity, whose display segments count as its
-     * deep cost.
-     */
-    LC_CurveOffsetStatus makeEntity(Work& w, const bool straight) {
-        if (m_pieces >= m_budget.maxCubicPieces || m_pieces >= m_budget.maxOutputEntities) {
-            return LC_CurveOffsetStatus::LimitExceeded;
-        }
-        std::unique_ptr<RS_Entity> entity;
-        const std::array<RS_Vector, 4>& b = w.piece.bezier;
-        if (straight) {
-            entity = std::make_unique<RS_Line>(nullptr, RS_LineData{b[0], b[3]});
-        }
-        else {
-            auto spline = std::make_unique<RS_Spline>(nullptr, cubicPieceData(b));
-            // a spline without the segments it is drawn by would be an
-            // invisible success
-            if (!spline->validate() || spline->count() == 0) {
-                return LC_CurveOffsetStatus::FitFailed;
-            }
-            entity = std::move(spline);
-        }
-        entity->calculateBorders();
-        if (!isFinite(entity->getMin()) || !isFinite(entity->getMax())) {
-            return LC_CurveOffsetStatus::FitFailed;
-        }
-        const LC_OffsetTreeCost cost = measureOffsetOutput({entity.get()}, m_budget.maxDeepEntities - m_deep);
-        if (cost.status != LC_OffsetTreeStatus::Ok) {
-            return cost.status == LC_OffsetTreeStatus::LimitExceeded ? LC_CurveOffsetStatus::LimitExceeded
-                                                                     : LC_CurveOffsetStatus::FitFailed;
-        }
-        m_deep += cost.deepEntities;
-        ++m_pieces;
-        w.deepCost = cost.deepEntities;
-        w.entity = std::move(entity);
-        return LC_CurveOffsetStatus::Ok;
-    }
-
-    static bool evaluateEntity(const RS_Entity& entity, const double u, const LC_CurveEvaluationSide side,
-                               RS_Vector& point) {
-        if (const auto* spline = dynamic_cast<const RS_Spline*>(&entity)) {
-            LC_CurveJet jet;
-            if (!spline->tryEvaluateJet(u, side, jet)) {
-                return false;
-            }
-            point = jet.point;
-            return true;
-        }
-        if (const auto* line = dynamic_cast<const RS_Line*>(&entity)) {
-            point = line->getStartpoint() + (line->getEndpoint() - line->getStartpoint()) * u;
-            return true;
-        }
-        return false;
+    static RS_Vector bezierAt(const std::array<RS_Vector, 4>& b, const double s) {
+        const double r = 1.0 - s;
+        return b[0] * (r * r * r) + b[1] * (3.0 * r * r * s) + b[2] * (3.0 * r * s * s) + b[3] * (s * s * s);
     }
 
     /**
-     * The entity against the exact offset at fresh parameters, with a seed of
-     * its own: paired at the same source parameter, which catches a wrong
-     * parameter map, and from the entity to the nearest offset point on the
-     * piece's interval, which catches an overshoot.
+     * The piece against the exact offset at fresh parameters: paired at the
+     * same source parameter, which catches a wrong parameter map, and from the
+     * piece to the nearest offset point on its interval, which catches an
+     * overshoot.
      */
     LC_CurveOffsetStatus validate(Work& w) {
         const LC_OffsetBranchProvenance& p = w.piece.provenance;
@@ -2086,13 +2012,7 @@ private:
         const double lo = std::min(p.sourceT0, p.sourceT1);
         const double hi = std::max(p.sourceT0, p.sourceT1);
         for (const double u : nodes) {
-            const LC_CurveEvaluationSide side = (u == 0.0)   ? LC_CurveEvaluationSide::Right
-                                                : (u == 1.0) ? LC_CurveEvaluationSide::Left
-                                                             : LC_CurveEvaluationSide::Interior;
-            RS_Vector candidate;
-            if (!evaluateEntity(*w.entity, u, side, candidate)) {
-                return LC_CurveOffsetStatus::FitFailed;
-            }
+            const RS_Vector candidate = bezierAt(w.piece.bezier, u);
             const double t = (u == 0.0) ? p.sourceT0 : (u == 1.0) ? p.sourceT1 : p.sourceT0 + u * h;
             const LC_CurveEvaluationSide sourceSide = (t == lo)   ? LC_CurveEvaluationSide::Right
                                                       : (t == hi) ? LC_CurveEvaluationSide::Left
@@ -2143,13 +2063,7 @@ private:
         w.worstU = 0.5;
         for (int k = 0; k <= 16; ++k) {
             const double u = k / 16.0;
-            RS_Vector candidate;
-            if (!evaluateEntity(*w.entity, u, (k == 0)    ? LC_CurveEvaluationSide::Right
-                                              : (k == 16) ? LC_CurveEvaluationSide::Left
-                                                          : LC_CurveEvaluationSide::Interior,
-                                candidate)) {
-                return LC_CurveOffsetStatus::FitFailed;
-            }
+            const RS_Vector candidate = bezierAt(w.piece.bezier, u);
             const double angle = p.sourceT0 + u * (p.sourceT1 - p.sourceT0);
             const RS_Vector exact = p.arcCentre + RS_Vector{std::cos(angle), std::sin(angle)} * radius;
             const double error =
@@ -2171,47 +2085,39 @@ private:
         const LC_OffsetBranchProvenance& p = w.piece.provenance;
         const double s = std::clamp(w.worstU, 0.125, 0.875);
         const double tm = p.sourceT0 + s * (p.sourceT1 - p.sourceT0);
+        Work left{w.piece, false, false, 0.0, 0.5};
+        Work right{w.piece, false, false, 0.0, 0.5};
+        left.piece.provenance.sourceT1 = tm;
+        right.piece.provenance.sourceT0 = tm;
         if (p.arcCentre.valid) {
-            Work left{w.piece, nullptr, false, false, 0.0, 0.5, 0};
-            Work right{w.piece, nullptr, false, false, 0.0, 0.5, 0};
-            left.piece.provenance.sourceT1 = tm;
-            right.piece.provenance.sourceT0 = tm;
             left.piece.bezier = arcPiece(p.arcCentre, std::abs(p.signedDistance), p.sourceT0, tm);
             right.piece.bezier = arcPiece(p.arcCentre, std::abs(p.signedDistance), tm, p.sourceT1);
             left.piece.bezier[0] = w.piece.bezier[0];
             right.piece.bezier[0] = left.piece.bezier[3];
             right.piece.bezier[3] = w.piece.bezier[3];
-            m_deep -= w.deepCost;
-            --m_pieces;
-            work.erase(work.begin() + static_cast<std::ptrdiff_t>(index));
-            work.insert(work.begin() + static_cast<std::ptrdiff_t>(index), std::move(right));
-            work.insert(work.begin() + static_cast<std::ptrdiff_t>(index), std::move(left));
-            return LC_CurveOffsetStatus::Ok;
         }
-        OffsetJet q0;
-        OffsetJet qm;
-        OffsetJet q1;
-        const bool forwards = p.sourceT0 < p.sourceT1;
-        const LC_CurveEvaluationSide inward0 = forwards ? LC_CurveEvaluationSide::Right : LC_CurveEvaluationSide::Left;
-        const LC_CurveEvaluationSide inward1 = forwards ? LC_CurveEvaluationSide::Left : LC_CurveEvaluationSide::Right;
-        LC_CurveOffsetStatus status = jet(p.sourceT0, inward0, p.signedDistance, q0);
-        if (status == LC_CurveOffsetStatus::Ok) {
-            status = jet(tm, LC_CurveEvaluationSide::Interior, p.signedDistance, qm);
+        else {
+            OffsetJet q0;
+            OffsetJet qm;
+            OffsetJet q1;
+            const bool forwards = p.sourceT0 < p.sourceT1;
+            const LC_CurveEvaluationSide inward0 =
+                forwards ? LC_CurveEvaluationSide::Right : LC_CurveEvaluationSide::Left;
+            const LC_CurveEvaluationSide inward1 =
+                forwards ? LC_CurveEvaluationSide::Left : LC_CurveEvaluationSide::Right;
+            LC_CurveOffsetStatus status = jet(p.sourceT0, inward0, p.signedDistance, q0);
+            if (status == LC_CurveOffsetStatus::Ok) {
+                status = jet(tm, LC_CurveEvaluationSide::Interior, p.signedDistance, qm);
+            }
+            if (status == LC_CurveOffsetStatus::Ok) {
+                status = jet(p.sourceT1, inward1, p.signedDistance, q1);
+            }
+            if (status != LC_CurveOffsetStatus::Ok) {
+                return status;
+            }
+            left.piece.bezier = hermitePiece(w.piece.bezier[0], q0.first, qm.point, qm.first, tm - p.sourceT0);
+            right.piece.bezier = hermitePiece(qm.point, qm.first, w.piece.bezier[3], q1.first, p.sourceT1 - tm);
         }
-        if (status == LC_CurveOffsetStatus::Ok) {
-            status = jet(p.sourceT1, inward1, p.signedDistance, q1);
-        }
-        if (status != LC_CurveOffsetStatus::Ok) {
-            return status;
-        }
-        Work left{w.piece, nullptr, false, false, 0.0, 0.5, 0};
-        Work right{w.piece, nullptr, false, false, 0.0, 0.5, 0};
-        left.piece.provenance.sourceT1 = tm;
-        right.piece.provenance.sourceT0 = tm;
-        left.piece.bezier = hermitePiece(w.piece.bezier[0], q0.first, qm.point, qm.first, tm - p.sourceT0);
-        right.piece.bezier = hermitePiece(qm.point, qm.first, w.piece.bezier[3], q1.first, p.sourceT1 - tm);
-        m_deep -= w.deepCost;
-        --m_pieces;
         work.erase(work.begin() + static_cast<std::ptrdiff_t>(index));
         work.insert(work.begin() + static_cast<std::ptrdiff_t>(index), std::move(right));
         work.insert(work.begin() + static_cast<std::ptrdiff_t>(index), std::move(left));
@@ -2221,12 +2127,185 @@ private:
     const OffsetSource& m_source;
     const double m_d;
     const LC_CurveOffsetOptions& m_options;
-    const LC_OffsetSourceBudget& m_budget;
+    const std::size_t m_maxPieces;
     const double m_speedFloor;
     std::size_t m_samples;
-    std::size_t m_pieces{0};
-    std::size_t m_deep{0};
 };
+
+/** The piece split at s by de Casteljau, exactly: its two halves. */
+std::pair<std::array<RS_Vector, 4>, std::array<RS_Vector, 4>> splitBezier(const std::array<RS_Vector, 4>& b,
+                                                                           const double s) {
+    const RS_Vector p01 = b[0] + (b[1] - b[0]) * s;
+    const RS_Vector p12 = b[1] + (b[2] - b[1]) * s;
+    const RS_Vector p23 = b[2] + (b[3] - b[2]) * s;
+    const RS_Vector p012 = p01 + (p12 - p01) * s;
+    const RS_Vector p123 = p12 + (p23 - p12) * s;
+    const RS_Vector mid = p012 + (p123 - p012) * s;
+    return {{b[0], p01, p012, mid}, {mid, p123, p23, b[3]}};
+}
+
+/**
+ * One entity for a validated chain of pieces: an RS_Line for one straight
+ * piece; a degree-1 RS_Spline through the corners when every piece is
+ * straight; otherwise a clamped cubic RS_Spline whose knots are the integers,
+ * each of multiplicity 3 at a joint, so each span's control points are its
+ * piece's Bezier net. Pieces within the merge tolerance of a point are folded
+ * into a neighbour; at a joint that is no corner the handles are made exactly
+ * collinear; a closed chain starts in the middle of its longest piece, never
+ * at a corner. Null if the result does not validate or draw.
+ */
+std::unique_ptr<RS_Entity> chainEntity(std::vector<LC_OffsetCubicPiece> chain, const bool closed,
+                                       const LC_CurveOffsetOptions& options, const double numericFloor) {
+    const double merge = options.tolerance.nodeMerge;
+    const auto extent = [](const std::array<RS_Vector, 4>& b) {
+        double e = 0.0;
+        for (const RS_Vector& v : b) {
+            e = std::max(e, v.distanceTo(b[0]));
+        }
+        return e;
+    };
+    for (size_t k = 0; k < chain.size() && chain.size() > 1;) {
+        if (extent(chain[k].bezier) > merge) {
+            ++k;
+            continue;
+        }
+        if (k > 0) {
+            chain[k - 1].bezier[3] = chain[k].bezier[3];
+        }
+        else {
+            chain[1].bezier[0] = chain[0].bezier[0];
+        }
+        chain.erase(chain.begin() + static_cast<std::ptrdiff_t>(k));
+    }
+    const auto straight = [numericFloor](const std::array<RS_Vector, 4>& b) {
+        const RS_Vector axis = b[3] - b[0];
+        const double length = axis.magnitude();
+        if (!(length > numericFloor)) {
+            return false;
+        }
+        const auto off = [&](const RS_Vector& v) { return std::abs(cross(axis, v - b[0])) / length; };
+        return off(b[1]) <= 16.0 * numericFloor && off(b[2]) <= 16.0 * numericFloor;
+    };
+    if (closed && !chain.empty()) {
+        size_t longest = 0;
+        for (size_t k = 1; k < chain.size(); ++k) {
+            if (chain[k].bezier[0].distanceTo(chain[k].bezier[3]) >
+                chain[longest].bezier[0].distanceTo(chain[longest].bezier[3])) {
+                longest = k;
+            }
+        }
+        const auto [first, second] = splitBezier(chain[longest].bezier, 0.5);
+        LC_OffsetCubicPiece head = chain[longest];
+        LC_OffsetCubicPiece tail = chain[longest];
+        head.bezier = second;
+        tail.bezier = first;
+        std::vector<LC_OffsetCubicPiece> rotated{head};
+        for (size_t k = 1; k < chain.size(); ++k) {
+            rotated.push_back(chain[(longest + k) % chain.size()]);
+        }
+        rotated.push_back(tail);
+        chain = std::move(rotated);
+    }
+    // exact collinear handles where the joint is no corner
+    for (size_t k = 0; k + 1 < chain.size(); ++k) {
+        RS_Vector& before = chain[k].bezier[2];
+        RS_Vector& after = chain[k + 1].bezier[1];
+        const RS_Vector& joint = chain[k].bezier[3];
+        const RS_Vector in = joint - before;
+        const RS_Vector out = after - joint;
+        const double lengthIn = in.magnitude();
+        const double lengthOut = out.magnitude();
+        if (!(lengthIn > 0.0) || !(lengthOut > 0.0) || angleBetweenVectors(in, out) > options.angleTolerance) {
+            continue;
+        }
+        const RS_Vector direction = (in / lengthIn + out / lengthOut).normalized();
+        const RS_Vector movedBefore = joint - direction * lengthIn;
+        const RS_Vector movedAfter = joint + direction * lengthOut;
+        // a handle moved by h moves its piece by at most 4/9 h: within the pinning share
+        if (4.0 / 9.0 * std::max(movedBefore.distanceTo(before), movedAfter.distanceTo(after)) > merge) {
+            continue;
+        }
+        before = movedBefore;
+        after = movedAfter;
+    }
+    if (chain.empty()) {
+        return nullptr;
+    }
+    const bool allStraight = std::all_of(chain.begin(), chain.end(),
+                                         [&](const LC_OffsetCubicPiece& piece) { return straight(piece.bezier); });
+    std::unique_ptr<RS_Entity> entity;
+    if (allStraight && chain.size() == 1 && !closed) {
+        entity = std::make_unique<RS_Line>(nullptr, RS_LineData{chain.front().bezier[0], chain.front().bezier[3]});
+    }
+    else {
+        RS_SplineData data(allStraight ? 1 : 3, false);
+        data.type = RS_SplineData::SplineType::ClampedOpen;
+        data.controlPoints.push_back(chain.front().bezier[0]);
+        if (allStraight) {
+            for (size_t k = 0; k < chain.size(); ++k) {
+                // a corner only where the direction changes: a vertex within the
+                // pinning share of the line past it, going on the same way, is dropped
+                bool collinear = false;
+                if (k + 1 < chain.size()) {
+                    const RS_Vector& from = data.controlPoints.back();
+                    const RS_Vector& vertex = chain[k].bezier[3];
+                    const RS_Vector& to = chain[k + 1].bezier[3];
+                    const RS_Vector axis = to - from;
+                    const double length = axis.magnitude();
+                    collinear = length > numericFloor &&
+                                angleBetweenVectors(vertex - from, to - vertex) <= options.angleTolerance &&
+                                std::abs(cross(axis, vertex - from)) / length <= merge;
+                }
+                if (!collinear) {
+                    data.controlPoints.push_back(chain[k].bezier[3]);
+                }
+            }
+            const size_t spans = data.controlPoints.size() - 1;
+            data.knotslist = {0.0};
+            for (size_t k = 0; k <= spans; ++k) {
+                data.knotslist.push_back(static_cast<double>(k));
+            }
+            data.knotslist.push_back(static_cast<double>(spans));
+        }
+        else {
+            data.knotslist.assign(4, 0.0);
+            for (size_t k = 0; k < chain.size(); ++k) {
+                data.controlPoints.push_back(chain[k].bezier[1]);
+                data.controlPoints.push_back(chain[k].bezier[2]);
+                data.controlPoints.push_back(chain[k].bezier[3]);
+                const double knot = static_cast<double>(k + 1);
+                data.knotslist.insert(data.knotslist.end(), (k + 1 == chain.size()) ? 4 : 3, knot);
+            }
+        }
+        for (RS_Vector& v : data.controlPoints) {
+            v.z = 0.0;
+        }
+        data.weights.assign(data.controlPoints.size(), 1.0);
+        auto spline = std::make_unique<RS_Spline>(nullptr, data);
+        // a spline without the segments it is drawn by would be an invisible success
+        if (!spline->validate() || spline->count() == 0) {
+            return nullptr;
+        }
+        // each span is its piece: checked through the spline's own evaluator
+        if (!allStraight) {
+            for (size_t k = 0; k < chain.size(); ++k) {
+                LC_CurveJet jet;
+                const auto [first, second] = splitBezier(chain[k].bezier, 0.5);
+                if (!spline->tryEvaluateJet(static_cast<double>(k) + 0.5, LC_CurveEvaluationSide::Interior, jet) ||
+                    jet.point.distanceTo(first[3]) > options.tolerance.evaluation) {
+                    return nullptr;
+                }
+                (void)second;
+            }
+        }
+        entity = std::move(spline);
+    }
+    entity->calculateBorders();
+    if (!isFinite(entity->getMin()) || !isFinite(entity->getMax())) {
+        return nullptr;
+    }
+    return entity;
+}
 
 // ---------------------------------------------------------------------------
 // Direct branches and their nodes
@@ -4020,56 +4099,37 @@ LC_CurveOffsetMaterializationResult materializeBranches(const RS_Entity& source,
     const double domain = adapter->breaks().back() - adapter->breaks().front();
 
     // Everything is built in local ownership and handed over only complete.
-    std::vector<std::unique_ptr<RS_Entity>> entities;
-    std::vector<size_t> branchStarts;
-    LC_OffsetOutputUsage usage;
+    std::vector<std::vector<LC_OffsetCubicPiece>> validated;
     double maxError = 0.0;
+    std::size_t pieceCount = 0;
     std::size_t samples = geometry.exactSamples; // the limit is per source, over all branches
     for (const LC_OffsetBranch& branch : geometry.branches) {
-        branchStarts.push_back(entities.size());
-        LC_OffsetSourceBudget remaining = budget;
-        remaining.maxCubicPieces -= std::min(remaining.maxCubicPieces, usage.cubicPieces);
-        remaining.maxOutputEntities -= std::min(remaining.maxOutputEntities, usage.outputEntities);
-        remaining.maxDeepEntities -= std::min(remaining.maxDeepEntities, usage.deepEntities);
-        if (!isValidOffsetBudget(remaining)) {
-            result.status = LC_CurveOffsetStatus::LimitExceeded;
-            return result;
-        }
-        Materializer materializer{*adapter, geometry.signedDistance, options, remaining,
-                                  scale.numericFloor / domain, samples};
-        LC_OffsetOutputUsage branchUsage;
+        const std::size_t left = budget.maxCubicPieces - std::min(budget.maxCubicPieces, pieceCount);
+        Materializer materializer{*adapter, geometry.signedDistance, options, left, scale.numericFloor / domain,
+                                  samples};
+        std::vector<LC_OffsetCubicPiece> pieces;
         double branchError = 0.0;
-        const LC_CurveOffsetStatus status = materializer.run(branch, entities, branchUsage, branchError);
+        const LC_CurveOffsetStatus status = materializer.run(branch, pieces, branchError);
         if (status != LC_CurveOffsetStatus::Ok) {
             result.status = status;
-            return result; // entities destroyed with this scope
+            return result;
         }
         samples = materializer.samples();
-        usage.cubicPieces += branchUsage.cubicPieces;
-        usage.outputEntities += branchUsage.outputEntities;
-        usage.deepEntities += branchUsage.deepEntities;
+        pieceCount += pieces.size();
         maxError = std::max(maxError, branchError);
+        validated.push_back(std::move(pieces));
     }
 
     if (options.nodeIntersections || options.mode != LC_CurveOffsetMode::Direct) {
         // The fitted pieces, not only the exact offset, may cross only at its
         // nodes: a fit within tolerance can still add a crossing.
-        std::vector<std::vector<std::array<RS_Vector, 4>>> pieces(geometry.branches.size());
-        for (size_t i = 0; i < entities.size(); ++i) {
-            const size_t branch =
-                static_cast<size_t>(std::upper_bound(branchStarts.begin(), branchStarts.end(), i) -
-                                    branchStarts.begin()) - 1;
-            if (const auto* spline = dynamic_cast<const RS_Spline*>(entities[i].get())) {
-                const std::vector<RS_Vector>& c = spline->getData().controlPoints;
-                pieces[branch].push_back({c[0], c[1], c[2], c[3]});
-            }
-            else {
-                const RS_Vector a = entities[i]->getStartpoint();
-                const RS_Vector b = entities[i]->getEndpoint();
-                pieces[branch].push_back({a, a + (b - a) / 3.0, b - (b - a) / 3.0, b});
+        std::vector<std::vector<std::array<RS_Vector, 4>>> nets(validated.size());
+        for (size_t b = 0; b < validated.size(); ++b) {
+            for (const LC_OffsetCubicPiece& piece : validated[b]) {
+                nets[b].push_back(piece.bezier);
             }
         }
-        const PieceCurves curves{pieces, branchSuccessors(geometry.branches)};
+        const PieceCurves curves{nets, branchSuccessors(geometry.branches)};
         LC_IntersectionOptions query;
         query.tolerance = options.tolerance.nodeMerge;
         query.maxBoxPairs = options.maxIntersectionPairs;
@@ -4089,6 +4149,34 @@ LC_CurveOffsetMaterializationResult materializeBranches(const RS_Entity& source,
                 return result;
             }
         }
+    }
+
+    // one entity for each branch
+    std::vector<std::unique_ptr<RS_Entity>> entities;
+    LC_OffsetOutputUsage usage;
+    usage.cubicPieces = pieceCount;
+    for (size_t b = 0; b < validated.size(); ++b) {
+        if (usage.outputEntities >= budget.maxOutputEntities) {
+            result.status = LC_CurveOffsetStatus::LimitExceeded;
+            return result;
+        }
+        std::unique_ptr<RS_Entity> entity =
+            chainEntity(validated[b], geometry.branches[b].closed, options, scale.numericFloor);
+        if (entity == nullptr) {
+            result.status = LC_CurveOffsetStatus::FitFailed;
+            return result;
+        }
+        const LC_OffsetTreeCost cost =
+            measureOffsetOutput({entity.get()}, budget.maxDeepEntities - std::min(budget.maxDeepEntities,
+                                                                                usage.deepEntities));
+        if (cost.status != LC_OffsetTreeStatus::Ok) {
+            result.status = cost.status == LC_OffsetTreeStatus::LimitExceeded ? LC_CurveOffsetStatus::LimitExceeded
+                                                                              : LC_CurveOffsetStatus::FitFailed;
+            return result;
+        }
+        usage.deepEntities += cost.deepEntities;
+        ++usage.outputEntities;
+        entities.push_back(std::move(entity));
     }
 
     // a new entity, not a clone: only the drawing attributes come from the source
