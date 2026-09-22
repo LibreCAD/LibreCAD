@@ -19,13 +19,22 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-// JWW import hung on every file. RS_FilterJWW::toNativeString() decodes \U+XXXX
+// JWW import hung on every file. RS_FilterJWW::toNativeString() decoded \U+XXXX
 // and %%nnn escapes in loops that ran "while (!cap.isNull())"; the Qt 6 port
 // dropped the line that assigned the match to cap, so cap stayed "" (empty but
-// not null) and neither loop ever ended. Every entity passes its layer name
-// through toNativeString(), so a file with a single line was enough.
+// not null) and neither loop ever ended. Every entity passed its layer name
+// through toNativeString(), so a file with a single line was enough. Before the
+// hang fix these tests do not fail: they hang.
 //
-// On the unfixed code these tests do not fail: they hang.
+// JWW text is Shift-JIS plain text. toNativeString() decoded it as UTF-8, so
+// every Japanese character was lost, and then as DXF MTEXT, so braces, \P,
+// %%c and the like were lost or changed. The texts below are written as
+// Shift-JIS bytes, as Jw_cad writes them.
+//
+// The files are written with jwwlib's own writer, JWWDocument::Save(), which
+// writes the header and the drawing. What Jw_cad writes after the drawing
+// (the block definitions and, from Ver.7.00, the images a drawing embeds) is
+// written on after it, as jwdatafmt.txt describes.
 
 #include <catch2/catch_test_macros.hpp>
 
@@ -47,6 +56,7 @@
 
 #include "jwwdoc.h"
 #include "rs_filterjww.h"
+#include "rs_font.h"
 #include "rs_graphic.h"
 #include "rs_layer.h"
 #include "rs_line.h"
@@ -283,6 +293,25 @@ std::unique_ptr<JWWDocument> readJwwFile(const QString& path) {
     return doc;
 }
 
+/** Imports a JWW file with a line and the text @p text, and returns the text. */
+const RS_MText* importText(RS_Graphic& graphic, const QString& name, const std::string& text) {
+    const QString path = writeJww(name, text);
+    RS_FilterJWW filter;
+    REQUIRE(filter.fileImport(graphic, path, RS2::FormatJWW));
+    QFile::remove(path);
+
+    const RS_MText* found = nullptr;
+    int texts = 0;
+    for (const RS_Entity* e : graphic) {
+        if (e->rtti() == RS2::EntityMText) { // JWW text comes in as MText
+            ++texts;
+            found = static_cast<const RS_MText*>(e);
+        }
+    }
+    REQUIRE(texts == 1);
+    return found;
+}
+
 #ifdef Q_OS_UNIX
 /** How many file descriptors below 1024 this process has open. */
 int openDescriptors() {
@@ -306,8 +335,7 @@ TEST_CASE("A JWW file with a line imports", "[jww][import]") {
     REQUIRE(filter.fileImport(graphic, path, RS2::FormatJWW));
     QFile::remove(path);
 
-    // the layer the file names, layer group 0 and layer 1, went through
-    // toNativeString() on its way in
+    // the layer DL_Jww names after layer group 0 and layer 1
     CHECK(graphic.findLayer("0-1") != nullptr);
     int lines = 0;
     for (const RS_Entity* e : graphic) {
@@ -319,40 +347,6 @@ TEST_CASE("A JWW file with a line imports", "[jww][import]") {
         }
     }
     CHECK(lines == 1);
-}
-
-TEST_CASE("A JWW text's unicode and ASCII code escapes are decoded", "[jww][import]") {
-    ensureSettings();
-    // \U+00B0 is a degree sign, %%065 an A, and %%c a diameter sign; a code
-    // that spells another escape once decoded is decoded in turn: \U+005C
-    // before U+0041 makes \U+0041, and \U+0025 before %065 makes %%065.
-    const QString path = writeJww(QStringLiteral("jww_import_text.jww"),
-                                  "x\\U+00B0y %%065%%066 %%c \\U+005CU+0041 \\U+0025%065");
-    RS_Graphic graphic;
-    RS_FilterJWW filter;
-    REQUIRE(filter.fileImport(graphic, path, RS2::FormatJWW));
-    QFile::remove(path);
-
-    QStringList texts;
-    for (const RS_Entity* e : graphic) {
-        if (e->rtti() == RS2::EntityMText) { // JWW text comes in as MText
-            texts << static_cast<const RS_MText*>(e)->getText();
-        }
-    }
-    REQUIRE(texts.size() == 1);
-    CHECK(texts.front() == QString::fromUtf8("x\u00B0y AB \u2205 A A"));
-}
-
-TEST_CASE("A surrogate pair written as two unicode codes decodes to one character", "[jww][import]") {
-    ensureSettings();
-    RS_FilterJWW filter;
-    // toDxfString() writes a character outside the BMP as one code per half:
-    // U+20B9F, a kanji, as \U+D842\U+DF9F. Escapes after it are still decoded.
-    CHECK(filter.toNativeString("a\\U+D842\\U+DF9Fb %%065 \\U+00B0", QStringLiteral("ANSI_1252")) ==
-          QString::fromUcs4(U"a\U00020B9Fb A \u00B0"));
-    // a half on its own stays as it is, and does not stop the decoding after it
-    CHECK(filter.toNativeString("\\U+D800 %%065 \\U+00B0", QStringLiteral("ANSI_1252")) ==
-          QString(QChar(0xD800)) + QString::fromUtf8(" A \u00B0"));
 }
 
 TEST_CASE("A file that is not a JWW file is refused and closed", "[jww][import]") {
@@ -782,4 +776,71 @@ TEST_CASE("A JWW dimension's line and text are imported on its layers", "[jww][i
     }
     CHECK(lines == 1);
     CHECK(texts == 1);
+}
+
+TEST_CASE("A JWW text in Shift-JIS imports as Japanese", "[jww][import]") {
+    ensureSettings();
+    RS_Graphic graphic;
+    // four kanji, two of them with the trail bytes 7B '{' and 5C '\', two
+    // half-width katakana, 1~3 with the wave dash (81 60), and a circled
+    // digit one (87 40, U+2460)
+    const RS_MText* text = importText(graphic, QStringLiteral("jww_import_sjis.jww"),
+                                      "\x93\xFA\x96\x7B\x95\x5C\x8E\xA6 \xB1\xB2 1\x81\x60"
+                                      "3 \x87\x40");
+    CHECK(text->getText() ==
+          QString::fromUtf8(u8"\u65E5\u672C\u8868\u793A \uFF71\uFF72 1\u301C3 \u2460"));
+    // drawn with a font that has kana and kanji, not the standard.lff that
+    // the style "japanese", which names no font, fell back to
+    CHECK(text->getStyle() == QStringLiteral("kst32b"));
+    CHECK(graphic.getVariableString("$TEXTSTYLE", "") == QStringLiteral("kst32b"));
+}
+
+TEST_CASE("JWW symbols import at the code points their font has them at", "[jww][import]") {
+    ensureSettings();
+    RS_Graphic graphic;
+    // Code page 932 maps six symbols of JIS X 0208 to code points of
+    // Microsoft's own, which the fonts these drawings are drawn with do not
+    // have: the wave dash 81 60, the double vertical line 81 61, the minus
+    // sign 81 7C, and the cent, pound and not signs 81 91, 81 92, 81 CA.
+    const RS_MText* text = importText(graphic, QStringLiteral("jww_import_symbols.jww"),
+                                      "\x81\x60\x81\x61\x81\x7C\x81\x91\x81\x92\x81\xCA");
+    const QString expected = QString::fromUtf8(u8"\u301C\u2016\u2212\u00A2\u00A3\u00AC");
+    CHECK(text->getText() == expected);
+
+    // and kst32b, the font they are drawn with, has a glyph for each of them
+    RS_Font font(QStringLiteral(LIBRECAD_SOURCE_DIR "/librecad/support/fonts/kst32b.lff"), false);
+    REQUIRE(font.loadFont());
+    for (const QChar c : expected) {
+        INFO("letter U+" << QString::number(c.unicode(), 16).toStdString());
+        CHECK(font.findLetter(QString(c)) != nullptr);
+    }
+    // a letter no font has, so that the checks above mean something
+    CHECK(font.findLetter(QString(QChar(0xE000))) == nullptr);
+}
+
+TEST_CASE("A JWW text keeps DXF codes as written", "[jww][import]") {
+    ensureSettings();
+    RS_Graphic graphic;
+    // Jw_cad text has no codes: braces, \P, %%nnn, %%c, \U+, \f and \~ are
+    // just characters. An MText would read a backslash as the start of a
+    // code, so the text holds each one doubled. The trail byte 5C of U+8868
+    // (95 5C) is not a backslash: it is not doubled and does not start \U+0041.
+    const RS_MText* text = importText(
+        graphic, QStringLiteral("jww_import_codes.jww"),
+        "{A} C:\\Pa 50%%100 %%c \\U+00B0 \\fArial; \\~s \x95\x5C" "U+0041");
+    CHECK(text->getText() ==
+          QString::fromUtf8(u8"{A} C:\\\\Pa 50%%100 %%c \\\\U+00B0 \\\\fArial; \\\\~s \u8868U+0041"));
+}
+
+TEST_CASE("A long JWW text keeps every 5C trail byte", "[jww][import]") {
+    ensureSettings();
+    RS_Graphic graphic;
+    // 300 bytes, which jwwlib writes with the 0xFF and 16-bit length prefix;
+    // every other byte is 5C, the trail byte of U+8868 (95 5C)
+    std::string bytes;
+    for (int i = 0; i < 150; ++i) {
+        bytes += "\x95\x5C";
+    }
+    const RS_MText* text = importText(graphic, QStringLiteral("jww_import_long.jww"), bytes);
+    CHECK(text->getText() == QString(150, QChar(0x8868)));
 }

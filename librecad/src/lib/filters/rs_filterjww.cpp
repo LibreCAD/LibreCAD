@@ -24,13 +24,7 @@
 **
 **********************************************************************/
 
-#include <QRegularExpression>
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-#include <QByteArray>
-#include <QStringConverter>
-#else
-#include <QTextCodec>
-#endif
+#include <string_view>
 
 #include <QFile>
 #include <QFileInfo>
@@ -38,6 +32,7 @@
 #include "dl_attributes.h"
 #include "dl_codes.h"
 #include "dl_writer_ascii.h"
+#include "intern/drw_textcodec.h"
 #include "lc_containertraverser.h"
 #include "rs_arc.h"
 #include "rs_block.h"
@@ -60,42 +55,73 @@
 #include "rs_solid.h"
 #include "rs_spline.h"
 #include "lc_splinepoints.h"
-#include "rs_system.h"
 #include "rs_math.h"
 #include "rs_debug.h"
 
 namespace {
-QString decodeWithCodePage(const std::string& text, const QString& encoding)
-{
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-    const auto qEncoding = QStringConverter::encodingForName(encoding.toLatin1());
-    if (qEncoding) {
-        QStringDecoder decoder{*qEncoding};
-        return decoder(QByteArray::fromRawData(text.data(), qsizetype(text.size())));
+/**
+ * Gives a character decoded from code page 932 the code point JIS X 0208
+ * gives it. Microsoft maps six of its symbols to code points of its own, and
+ * the fonts these drawings are written with, kst32b among them, have those
+ * symbols where the standard puts them. Without this they would draw as the
+ * character a font has no glyph for.
+ */
+QChar toJisSymbol(QChar c) {
+    switch (c.unicode()) {
+        case 0xFF5E: return QChar{0x301C}; // wave dash
+        case 0x2225: return QChar{0x2016}; // double vertical line
+        case 0xFF0D: return QChar{0x2212}; // minus sign
+        case 0xFFE0: return QChar{0x00A2}; // cent sign
+        case 0xFFE1: return QChar{0x00A3}; // pound sign
+        case 0xFFE2: return QChar{0x00AC}; // not sign
+        default: return c;
     }
-#else
-    QTextCodec* codec = QTextCodec::codecForName(encoding.toLatin1());
-    if (codec != nullptr) {
-        return codec->toUnicode(text.c_str());
-    }
-#endif
-    // The requested codec is unavailable. JWW is a Japanese format whose
-    // file bytes are Shift-JIS — falling through to `fromStdString` (which
-    // is `fromUtf8` on Qt 6) would mojibake any non-ASCII content. Try
-    // Shift-JIS explicitly before giving up.
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-    if (auto sjis = QStringConverter::encodingForName("Shift-JIS")) {
-        QStringDecoder dec{*sjis};
-        return dec(QByteArray::fromRawData(text.data(), qsizetype(text.size())));
-    }
-#else
-    if (QTextCodec* sjis = QTextCodec::codecForName("Shift-JIS")) {
-        return sjis->toUnicode(text.c_str());
-    }
-#endif
-    return QString::fromUtf8(text.data(), qsizetype(text.size()));
 }
+
+/**
+ * Decodes a string from a JWW file. Jw_cad writes its strings as Shift-JIS,
+ * code page 932, whatever the locale, and they have no escape codes: every
+ * character stands for itself. DRW_Conv932Table decodes code page 932 with
+ * libdxfrw's own tables, so this needs neither ICU nor a Qt codec, but it
+ * also decodes the DXF codes \U+XXXX and \M+nXXXX. It is therefore never
+ * given a backslash: the string is decoded in runs between them. A byte from
+ * 0x80 up, other than a half-width katakana (A1 to DF), starts a two-byte
+ * character, as DRW_Conv932Table reads it, and the second byte of one can be
+ * 0x5C (95 5C is U+8868): that byte is not a backslash.
+ */
+QString fromJwwString(const std::string& text) {
+    DRW_Conv932Table shiftJis;
+    const auto decode = [&shiftJis](const std::string_view run) {
+        return QString::fromStdString(shiftJis.toUtf8(run));
+    };
+    QString res;
+    std::size_t runStart = 0;
+    for (std::size_t i = 0; i < text.size(); ++i) {
+        const auto c = static_cast<unsigned char>(text[i]);
+        if (c >= 0x80 && (c < 0xA1 || c > 0xDF)) {
+            ++i; // the first byte of a pair: the next byte is its second
+        } else if (c == '\\') {
+            res += decode(std::string_view{text}.substr(runStart, i - runStart));
+            res += QLatin1Char('\\');
+            runStart = i + 1;
+        }
+    }
+    res += decode(std::string_view{text}.substr(runStart));
+    for (QChar& c : res) {
+        c = toJisSymbol(c);
+    }
+    return res;
 }
+
+/**
+ * Decodes Jw_cad text for an MText. The text is plain, but an MText reads a
+ * backslash as the start of a code (\P, \S, \f, and \A0; to \A2; at the
+ * start), so each one is doubled to stay a backslash.
+ */
+QString fromJwwText(const std::string& text) {
+    return fromJwwString(text).replace(QLatin1Char('\\'), QStringLiteral("\\\\"));
+}
+} // namespace
 
 /**
  * Default constructor.
@@ -192,9 +218,7 @@ void RS_FilterJWW::addLayer(const DL_LayerData& data) {
         RS_DEBUG->print("  adding layer: %s", data.name.c_str());
 
         RS_DEBUG->print("RS_FilterJWW::addLayer: creating layer");
-////////////////////2006/06/05
-        RS_Layer* layer = new RS_Layer(toNativeString(data.name.c_str(),getDXFEncoding()));
-////////////////////
+        RS_Layer* layer = new RS_Layer(fromJwwString(data.name));
         // A Jw_cad layer has no pen, so the layer keeps RS_Layer's default.
         // DL_Jww adds the layer before it sets the attributes of the record,
         // so `attributes` still holds the previous record's pen here.
@@ -246,12 +270,7 @@ void RS_FilterJWW::addBlock(const DL_BlockData& data) {
                 else {
 #endif
                         RS_Vector bp(data.bpx, data.bpy);
-//////////////////////////////2006/06/05
-                        QString enc = RS_System::getEncoding(
-                                                                variables.getString("$DWGCODEPAGE", "ANSI_1252"));
-                        // get the codec for Japanese
-                        QString blName = decodeWithCodePage(data.name, enc);
-//////////////////////////////
+                        QString blName = fromJwwString(data.name);
                         RS_Block* block =
                                 new RS_Block(graphic,
                                                          RS_BlockData(blName, bp, false));
@@ -491,7 +510,7 @@ void RS_FilterJWW::addInsert(const DL_InsertData& data) {
 
         //cout << "Insert: " << name << " " << ip << " " << cols << "/" << rows << endl;
 
-        RS_InsertData d(data.name.c_str(),
+        RS_InsertData d(fromJwwString(data.name),
 										ip, sc, RS_Math::deg2rad(data.angle),
                                         data.cols, data.rows,
                                         sp,
@@ -517,27 +536,6 @@ void RS_FilterJWW::addInsert(const DL_InsertData& data) {
 void RS_FilterJWW::addMTextChunk(const char* text) {
     RS_DEBUG->print("RS_FilterJWW::addMTextChunk: %s", text);
     mtext+=text;
-}
-
-/*
- * get the encoding of the DXF files,
- * Acad versions >= 2007 are UTF-8, others in ANSI_1252
- */
-QString RS_FilterJWW::getDXFEncoding() {
-
-    QString acadver=variables.getString("$ACADVER", "");
-    acadver.replace(QRegularExpression("[a-zA-Z]"), "");
-    bool ok;
-    int version=acadver.toInt(&ok);
-
-    // >= ACAD2007
-    if (ok && version >= 1021) {
-        return RS_System::getEncoding("UTF-8");
-    }
-
-    // < ACAD2007
-    QString codePage=variables.getString("$DWGCODEPAGE", "ANSI_1252");
-    return RS_System::getEncoding(codePage);
 }
 
 /**
@@ -584,8 +582,7 @@ void RS_FilterJWW::addMText(const DL_MTextData& data) {
                 lss = RS_MTextData::Exact;
         }
 
-    mtext+=data.text.c_str();
-    mtext = toNativeString(mtext.toLocal8Bit().data(), getDXFEncoding());
+    mtext += fromJwwText(data.text);
 
         // use default style for the drawing:
         if (sty.isEmpty()) {
@@ -751,7 +748,7 @@ RS_DimensionData RS_FilterJWW::convDimensionData(
                 lss = RS_MTextData::Exact;
         }
 
-        t = toNativeString(data.text.c_str(), getDXFEncoding());
+        t = fromJwwText(data.text);
 
         if (sty.isEmpty()) {
                 sty = variables.getString("$DIMSTYLE", "Standard");
@@ -2507,11 +2504,7 @@ void RS_FilterJWW::setEntityAttributes(RS_Entity* entity,
                 entity->setLayer("0");
         } else {
 //-------------------------
-                //2007-02-24 added
-                QString enc = RS_System::getEncoding(
-                                                        variables.getString("$DWGCODEPAGE", "ANSI_1252"));
-                // get the codec for Japanese
-                QString lName = decodeWithCodePage(attrib.getLayer(), enc);
+                QString lName = fromJwwString(attrib.getLayer());
 				if (!graphic->findLayer(lName)) {
                         addLayer(DL_LayerData(attrib.getLayer(), 0));
                 }
@@ -3129,86 +3122,6 @@ QString RS_FilterJWW::toDxfString(const QString& string) {
         }
 
         return res;
-}
-
-
-
-namespace {
-/**
- * Replaces each code in @p text, @p prefix followed by @p digits digits in
- * @p base, by the character it stands for. Each replacement shortens the text
- * and the scan starts again, so a code that decoding spells, such as \U+005C
- * before U+0041, is decoded in turn, and the loop ends. The text is scanned
- * directly: QRegularExpression stops matching once decoding has put half of a
- * surrogate pair, written as two codes, into it.
- */
-void decodeCharacterCodes(QString& text, const QLatin1StringView prefix, const int digits, const int base) {
-    const auto isDigit = [base](const QChar c) {
-        const char16_t u = c.unicode();
-        return (u >= u'0' && u <= u'9') ||
-               (base == 16 && ((u >= u'a' && u <= u'f') || (u >= u'A' && u <= u'F')));
-    };
-    qsizetype from = 0;
-    while ((from = text.indexOf(prefix, from)) >= 0) {
-        const qsizetype start = from + prefix.size();
-        bool isCode = start + digits <= text.size();
-        for (int i = 0; isCode && i < digits; ++i) {
-            isCode = isDigit(text.at(start + i));
-        }
-        if (!isCode) {
-            ++from;
-            continue;
-        }
-        const auto code = static_cast<char16_t>(text.mid(start, digits).toUShort(nullptr, base));
-        text.replace(from, prefix.size() + digits, QChar(code));
-        from = 0;
-    }
-}
-} // namespace
-
-/**
- * Converts a DXF encoded string into a native Unicode string.
- */
-QString RS_FilterJWW::toNativeString(const char* data, const QString& encoding) {
-    QString res = QString(data);
-
-    /*	- If the given string doesn't contain any unicode characters, we pass
-     *	  the string through a textcoder.
-     *	--------------------------------------------------------------------- */
-    if (!res.contains("\\U+")) {
-        res = decodeWithCodePage(data, encoding);
-    }
-
-    // Line feed:
-    res = res.replace(QRegularExpression("\\\\P"), "\n");
-    // Space:
-    res = res.replace(QRegularExpression("\\\\~"), " ");
-    // diameter:
-    res = res.replace(QRegularExpression("%%c"), QChar(0x2205));
-    // degree:
-    res = res.replace(QRegularExpression("%%d"), QChar(0x00B0));
-    // plus/minus
-    res = res.replace(QRegularExpression("%%p"), QChar(0x00B1));
-
-    // Unicode characters, \U+XXXX, then ASCII codes, %%nnn
-    decodeCharacterCodes(res, QLatin1StringView("\\U+"), 4, 16);
-    decodeCharacterCodes(res, QLatin1StringView("%%"), 3, 10);
-
-    // Ignore font tags:
-    res = res.replace(QRegularExpression("\\\\f[0-9A-Za-z| ]{0,};"), "");
-
-    // Ignore {}
-    res = res.replace("\\{", "#curly#");
-    res = res.replace("{", "");
-    res = res.replace("#curly#", "{");
-
-    res = res.replace("\\}", "#curly#");
-    res = res.replace("}", "");
-    res = res.replace("#curly#", "}");
-
-    RS_DEBUG->print("RS_FilterDXF::toNativeString:");
-    RS_DEBUG->printUnicode(res);
-    return res;
 }
 
 

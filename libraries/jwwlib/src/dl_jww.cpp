@@ -89,6 +89,13 @@ static	string	lTable[] = {
 
 static	string HEX[] = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"};
 
+// The text style, which is the font, of every JWW text. Jw_cad text is
+// Japanese, and there is no font called "japanese", the style this used to
+// name, so all of it was drawn with standard.lff, which has no kana or kanji.
+// kst32b.lff has the kana, all JIS level 1 kanji, most of level 2 and the
+// NEC symbols such as circled digits.
+static const char* const jwwTextStyle = "kst32b";
+
 static double Deg(double ang)
 {
 	return ang / M_PI * 180.0;
@@ -485,7 +492,7 @@ void DL_Jww::CreateMoji(DL_CreationInterface* creationInterface, CDataMoji& DMoj
 		// text
 		DMoji.m_string,
 		// style
-		string("japanese"),
+		string(jwwTextStyle),
 		// angle
 		DMoji.m_degKakudo / 180.0 * M_PI);
 
@@ -677,7 +684,7 @@ bool DL_Jww::in(const string& file, DL_CreationInterface* creationInterface) {
 		return false;
 	//DXF変数設定
 	creationInterface->setVariableString("$DWGCODEPAGE", "SJIS", 7);
-	creationInterface->setVariableString("$TEXTSTYLE", "japanese", 7);
+	creationInterface->setVariableString("$TEXTSTYLE", jwwTextStyle, 7);
 	//線分データ
 	for( unsigned int i = 0; i < jwdoc->vSen.size(); i++ )
 		CreateSen(creationInterface, jwdoc->vSen[i]);
