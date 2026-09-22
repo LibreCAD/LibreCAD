@@ -43,6 +43,12 @@
 namespace {
 constexpr double g_knotTolerance = 5e-6;
 
+// update() draws a spline with at least this many segments, more where it bends
+// by more than the relative tolerance, and never more than the cap.
+constexpr int g_minimumDisplaySegments = 32;
+constexpr size_t g_maximumDisplaySegments = 4096;
+constexpr double g_displayRelativeTolerance = 1e-3;
+
     // fixme - sand - function is not used!
 bool compareVector(const RS_Vector &va, const RS_Vector &vb, const double tol = RS_TOLERANCE) {
   return va.distanceTo(vb) <= tol;
@@ -589,12 +595,83 @@ void RS_Spline::update() {
       return;
   }
   std::vector<RS_Vector> points;
-  fillStrokePoints(32, points);
+  fillDisplayPoints(points);
   for (size_t i = 0; i + 1 < points.size(); ++i) {
       addEntity(new RS_Line(this, points[i], points[i + 1]));
   }
   if (isClosed() && points.size() > 1) {
       addEntity(new RS_Line(this, points.back(), points.front()));
+  }
+}
+
+void RS_Spline::fillDisplayPoints(std::vector<RS_Vector> &points) const {
+  points.clear();
+  double t0 = 0.0;
+  double t1 = 0.0;
+  const std::vector<double> breaks = getBreakParameters();
+  RS_Vector lo = m_data.controlPoints.empty() ? RS_Vector{} : m_data.controlPoints.front();
+  RS_Vector hi = lo;
+  for (const RS_Vector &v : m_data.controlPoints) {
+    lo = RS_Vector::minimum(lo, v);
+    hi = RS_Vector::maximum(hi, v);
+  }
+  const double tolerance = g_displayRelativeTolerance * lo.distanceTo(hi);
+  const auto uniform = [&] {
+    points.clear();
+    fillStrokePoints(g_minimumDisplaySegments, points);
+  };
+  if (!getParameterDomain(t0, t1) || breaks.size() < 2 || !std::isfinite(tolerance) || !(tolerance > 0.0)) {
+    uniform();
+    return;
+  }
+  const auto append = [&](const double t, const LC_CurveEvaluationSide side) {
+    LC_CurveJet jet;
+    if (!tryEvaluateJet(t, side, jet)) {
+      return false;
+    }
+    points.push_back(jet.point);
+    return true;
+  };
+  if (!append(t0, LC_CurveEvaluationSide::Right)) {
+    uniform();
+    return;
+  }
+  // Span by span, uniformly: a share of the minimum count, or more where a
+  // chord, within h^2/8 |C''| of its arc, would stray past the tolerance.
+  const auto &U = m_data.knotslist;
+  for (size_t k = 0; k + 1 < breaks.size(); ++k) {
+    const double a = breaks[k];
+    const double b = breaks[k + 1];
+    if (k > 0 && static_cast<size_t>(std::count(U.begin(), U.end(), a)) >= m_data.degree) {
+      // a knot of full multiplicity may break the curve: start at its right limit
+      LC_CurveJet start;
+      if (!tryEvaluateJet(a, LC_CurveEvaluationSide::Right, start)) {
+        uniform();
+        return;
+      }
+      if (start.point != points.back()) {
+        points.push_back(start.point);
+      }
+    }
+    LC_CurveJetBounds bounds;
+    if (!tryBoundJet(a, b, bounds)) {
+      uniform();
+      return;
+    }
+    const double bend = std::hypot(std::max(std::abs(bounds.ddx.lo()), std::abs(bounds.ddx.hi())),
+                                   std::max(std::abs(bounds.ddy.lo()), std::abs(bounds.ddy.hi())));
+    const double share = std::ceil(g_minimumDisplaySegments * (b - a) / (t1 - t0));
+    const double needed = std::ceil((b - a) * std::sqrt(bend / (8.0 * tolerance)));
+    const double left = static_cast<double>(g_maximumDisplaySegments) - static_cast<double>(points.size());
+    const int count = static_cast<int>(std::clamp(std::max({1.0, share, needed}), 1.0, std::max(1.0, left)));
+    for (int i = 1; i <= count; ++i) {
+      const bool end = i == count;
+      if (!append(end ? b : a + (b - a) * i / count,
+                  end ? LC_CurveEvaluationSide::Left : LC_CurveEvaluationSide::Interior)) {
+        uniform();
+        return;
+      }
+    }
   }
 }
 

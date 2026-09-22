@@ -244,11 +244,11 @@ TEST_CASE("A cubic Bezier piece is stored exactly as a clamped cubic RS_Spline",
     CHECK(spline->getStartpoint().distanceTo(g_piece[0]) < 1e-12);
     CHECK(spline->getEndpoint().distanceTo(g_piece[3]) < 1e-12);
 
-    // drawn with 32 segments of its own; even this sharply inflected piece,
-    // about 216 units wide, is drawn within 1e-3 of its extent, and a fitted
-    // offset piece turns far less
+    // drawn with at least 32 segments of its own, more where it bends: even this
+    // sharply inflected piece, about 216 units wide, is drawn within 1e-3 of its
+    // extent, and a fitted offset piece turns far less
     const double extent = 216.0;
-    CHECK(spline->count() == 32);
+    CHECK(spline->count() >= 32);
     CHECK(displayDeviation(*spline, [](double t) { return bezierAt(g_piece, t); }, 0.0, 1.0) < 1e-3 * extent);
     // its borders enclose the curve
     for (int i = 0; i <= 50; ++i) {
@@ -282,7 +282,7 @@ TEST_CASE("Two C1 pieces join exactly into one composite spline", "[curve-offset
     CHECK(left.distanceTo(bezierDerivative(pieces[0], 1.0)) < 1e-9);
 }
 
-TEST_CASE("A composite's 32 drawn segments cannot follow many pieces; single pieces can",
+TEST_CASE("A composite of many pieces is drawn span by span, within the display tolerance",
           "[curve-offset][d0][representation]") {
     // A half circle of radius 100 in 40 pieces, the order of an offset fitted to a
     // tight tolerance.
@@ -305,9 +305,13 @@ TEST_CASE("A composite's 32 drawn segments cannot follow many pieces; single pie
             pieceDeviation, displayDeviation(single, [&piece](double t) { return bezierAt(piece, t); }, 0.0, 1.0));
     }
     INFO("composite deviation " << compositeDeviation << ", per-piece deviation " << pieceDeviation);
-    // 32 chords over the half circle deviate by r (1 - cos(pi / 64)), about 0.12;
-    // one piece per entity keeps every chord short.
-    CHECK(compositeDeviation > 0.1);
+    // at least a chord per piece, where 32 chords over the whole half circle
+    // would deviate by r (1 - cos(pi / 64)), about 0.12
+    CHECK(composite.count() >= static_cast<unsigned>(pieces.size()));
+    CHECK(compositeDeviation < 0.1);
+    // within the display tolerance, 1e-3 of the control points' extent, which
+    // is more than the diameter here
+    CHECK(compositeDeviation <= 1e-3 * 2.0 * radius);
     CHECK(pieceDeviation < 1e-4);
 }
 
@@ -757,7 +761,8 @@ TEST_CASE("R12 follows a spline more closely than the segments it is drawn with"
     drawn.update();
     const double tolerance = kR12RelativeTolerance * controlBoxDiagonal(drawn);
     const auto exact = [&drawn](const double t) { return jetAt(drawn, t, LC_CurveEvaluationSide::Interior).point; };
-    REQUIRE(displayDeviation(drawn, exact, 0.0, 11.0) > 10.0 * tolerance);
+    // drawn within 1e-3 of its extent, ten times the R12 tolerance
+    REQUIRE(displayDeviation(drawn, exact, 0.0, 11.0) > 2.0 * tolerance);
 
     ensureSettings();
     RS_Graphic reloaded;
@@ -766,7 +771,7 @@ TEST_CASE("R12 follows a spline more closely than the segments it is drawn with"
     REQUIRE(exported);
     REQUIRE(polylines.size() == 1);
     const std::vector<RS_Vector> vertices = polylineVertices(*polylines.front());
-    CHECK(vertices.size() > 33);
+    CHECK(vertices.size() > drawn.count() + 1);
     CHECK(polylineDeviation(drawn, vertices, false) <= tolerance);
 }
 

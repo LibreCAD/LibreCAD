@@ -366,6 +366,15 @@ protected:
     /** The point at a distance along an open spline from its nearer end; invalid if closed */
     RS_Vector doGetNearestDist(double distance, const RS_Vector& coord, double* dist) const override;
 private:
+  /**
+   * The vertices update() draws the spline with: every knot span a share of
+   * 32 segments over the domain and at least one, more where its chords would
+   * stray from it by more than a thousandth of its control points' extent,
+   * never more than 4096 in all. 32 uniform samples when the curve cannot be
+   * bounded.
+   */
+  void fillDisplayPoints(std::vector<RS_Vector> &points) const;
+
   /** Internal spline data */
   RS_SplineData m_data;
 
