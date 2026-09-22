@@ -29,6 +29,7 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+#include <functional>
 #include <memory>
 #include <string>
 
@@ -169,33 +170,107 @@ CDataList makeDefinition(jwDWORD version, jwDWORD number, const std::string& nam
     return definition;
 }
 
-/** Saves a JWW document to @p output: a line and, if @p text is not empty, a text. */
-void saveJww(const std::string& output, const std::string& text) {
-    std::string noInput;
-    std::string out = output;
-    JWWDocument doc(noInput, out); // closes the file when it goes
-    doc.Header = JWWHead();        // no constructor of its own: every field zero
-    doc.Header.JW_DATA_VERSION = 600;
-    doc.objCode = 600;
-    doc.vSen.push_back(makeLine(600, {0.0, 0.0}, {10.0, 5.0}));
-    if (!text.empty()) {
-        doc.vMoji.push_back(makeText(600, text));
-    }
-    REQUIRE(doc.Save());
+/** A dimension of 100 along y = -5, with the parts Ver.4.20 added. */
+CDataSunpou makeDimension(jwDWORD version) {
+    CDataSunpou dimension;
+    setCommon(dimension, version);
+    dimension.m_Sen = makeLine(version, {0.0, -5.0}, {100.0, -5.0});
+    dimension.m_Moji = makeText(version, "100");
+    dimension.m_bSxfMode = 2;
+    dimension.m_SenHo1 = makeLine(version, {0.0, 0.0}, {0.0, -6.0});
+    dimension.m_SenHo2 = makeLine(version, {100.0, 0.0}, {100.0, -6.0});
+    dimension.m_Ten1 = makePoint(version, {0.0, -5.0});
+    dimension.m_Ten2 = makePoint(version, {100.0, -5.0});
+    dimension.m_TenHo1 = makePoint(version, {0.0, 0.0});
+    dimension.m_TenHo2 = makePoint(version, {100.0, 0.0});
+    return dimension;
 }
 
+using JwwWriter = std::function<void(JWWDocument&)>;
+
 /**
- * Writes a JWW file in the temporary directory and returns its path. The name
- * goes through QFile::encodeName(), as it does when RS_FilterJWW::fileImport()
- * reads the file.
+ * Writes a JWW file of @p version in the temporary directory with jwwlib's
+ * writer and returns its path: Save() writes the header and the records
+ * @p drawing puts in the document, then @p tail, if given, writes on. The
+ * name goes through QFile::encodeName(), as it does when
+ * RS_FilterJWW::fileImport() reads the file.
  */
-QString writeJww(const QString& name, const std::string& text) {
+QString writeJwwFile(const QString& name, jwDWORD version, const JwwWriter& drawing,
+                     const JwwWriter& tail = {}) {
     const QString path = QDir::temp().filePath(
         QStringLiteral("librecad_%1_%2").arg(QCoreApplication::applicationPid()).arg(name));
     QFile::remove(path);
-    saveJww(QFile::encodeName(path).toStdString(), text);
-    REQUIRE(QFileInfo(path).size() > 0); // Save() cannot tell a failed write
+    {
+        std::string noInput;
+        std::string out = QFile::encodeName(path).toStdString();
+        JWWDocument doc(noInput, out); // closes the file when it goes
+        doc.Header = JWWHead();        // no constructor of its own: every field zero
+        doc.Header.JW_DATA_VERSION = version;
+        doc.objCode = version;
+        drawing(doc);
+        REQUIRE(doc.Save());
+        if (tail) {
+            tail(doc);
+        }
+        REQUIRE(doc.ofs->good()); // Save() cannot tell a failed write
+    }
+    REQUIRE(QFileInfo(path).size() > 0);
     return path;
+}
+
+/** Writes a JWW file with a line and, if @p text is not empty, a text. */
+QString writeJww(const QString& name, const std::string& text) {
+    return writeJwwFile(name, 600, [&text](JWWDocument& doc) {
+        doc.vSen.push_back(makeLine(600, {0.0, 0.0}, {10.0, 5.0}));
+        if (!text.empty()) {
+            doc.vMoji.push_back(makeText(600, text));
+        }
+    });
+}
+
+/**
+ * Save() ends the file with the number of block definitions as a DWORD, 0.
+ * Jw_cad writes MFC's count, a WORD: this writes over it that @p count
+ * definitions follow.
+ */
+void beginBlockDefinitions(JWWDocument& doc, jwWORD count) {
+    doc.ofs->seekp(-4, std::ios::end);
+    *doc.ofs << count;
+}
+
+/** Writes a block definition and the number of members the caller writes next. */
+void writeBlockDefinition(JWWDocument& doc, const CDataList& definition, jwWORD members) {
+    REQUIRE(doc.SaveDataList(definition));
+    *doc.ofs << members;
+}
+
+/** The size of the header jwwlib writes for a file of @p version. */
+qint64 jwwHeaderSize(jwDWORD version) {
+    const QString path = QDir::temp().filePath(
+        QStringLiteral("librecad_%1_jww_header.jww").arg(QCoreApplication::applicationPid()));
+    QFile::remove(path);
+    {
+        std::string noInput;
+        std::string out = QFile::encodeName(path).toStdString();
+        JWWDocument doc(noInput, out);
+        doc.Header = JWWHead();
+        doc.Header.JW_DATA_VERSION = version;
+        doc.objCode = version;
+        REQUIRE(doc.WriteHeader());
+    }
+    const qint64 size = QFileInfo(path).size();
+    QFile::remove(path);
+    return size;
+}
+
+/** Reads a JWW file with jwwlib's reader. */
+std::unique_ptr<JWWDocument> readJwwFile(const QString& path) {
+    std::string input = QFile::encodeName(path).toStdString();
+    std::string noOutput;
+    auto doc = std::make_unique<JWWDocument>(input, noOutput);
+    REQUIRE(doc->Read());
+    doc->ifs->close(); // the records are read: on Windows an open file cannot be removed
+    return doc;
 }
 
 #ifdef Q_OS_UNIX
@@ -336,4 +411,257 @@ TEST_CASE("A JWW block list deletes its records as the types they were made as",
 
     addBlock();
     blocks.reset();
+}
+
+TEST_CASE("JWW block definitions stay out of the drawing", "[jww][import]") {
+    // Each block definition (CDataList) is followed by the number of its
+    // members, then the members. The reader took that number from a field
+    // nothing set, so members were read into the drawing. The last member
+    // ends the file, as in a Jw_cad 6 file, and refers to its class by
+    // number: the reader also read it a second time at the end of the file.
+    const jwDWORD version = 600;
+    const QString path = writeJwwFile(
+        QStringLiteral("jww_blocks.jww"), version,
+        [&](JWWDocument& doc) {
+            doc.vSen.push_back(makeLine(version, {0.0, 0.0}, {10.0, 5.0}));
+            doc.vMoji.push_back(makeText(version, "MODEL"));
+            doc.vBlock.push_back(makeInsert(version, 2, {50.0, 50.0}));
+        },
+        [&](JWWDocument& doc) {
+            beginBlockDefinitions(doc, 2);
+            writeBlockDefinition(doc, makeDefinition(version, 1, "BLK1"), 3);
+            doc.SaveSen(makeLine(version, {100.0, 100.0}, {200.0, 200.0}));
+            doc.SaveTen(makePoint(version, {150.0, 150.0})); // a class the drawing does not use
+            doc.SaveSen(makeLine(version, {111.0, 111.0}, {222.0, 222.0}));
+            writeBlockDefinition(doc, makeDefinition(version, 2, "BLK2"), 3);
+            doc.SaveMoji(makeText(version, "INBLOCK"));
+            doc.SaveBlock(makeInsert(version, 1, {5.0, 5.0}));
+            doc.SaveSen(makeLine(version, {300.0, 300.0}, {400.0, 400.0}));
+        });
+
+    auto doc = readJwwFile(path);
+    CHECK(doc->vSen.size() == 1);
+    CHECK(doc->vTen.empty());
+    REQUIRE(doc->vMoji.size() == 1);
+    CHECK(doc->vMoji.front().m_string == "MODEL");
+    REQUIRE(doc->vBlock.size() == 1);
+    CHECK(doc->vBlock.front().m_n_Number == 2);
+
+    JWWBlockList& blocks = *doc->pBlockList;
+    CHECK(blocks.getBlockListCount() == 2);
+    // looked up by the definition's number, which reads right only when the
+    // definition is read by the file's version
+    REQUIRE(blocks.GetDataListCount(1) == 3);
+    REQUIRE(blocks.GetDataListCount(2) == 3);
+    CHECK(blocks.GetBlockList(2).m_strName == "BLK2");
+    CHECK(blocks.GetDataType(1, 0) == Sen);
+    REQUIRE(blocks.GetDataType(1, 1) == Ten);
+    CHECK(blocks.GetCDataTen(1, 1).m_start.x == 150.0);
+    REQUIRE(blocks.GetDataType(1, 2) == Sen);
+    CHECK(blocks.GetCDataSen(1, 2).m_start.x == 111.0);
+    REQUIRE(blocks.GetDataType(2, 0) == Moji);
+    CHECK(blocks.GetCDataMoji(2, 0).m_string == "INBLOCK");
+    REQUIRE(blocks.GetDataType(2, 1) == Block);
+    CHECK(blocks.GetCDataBlock(2, 1).m_n_Number == 1);
+    REQUIRE(blocks.GetDataType(2, 2) == Sen);
+    CHECK(blocks.GetCDataSen(2, 2).m_end.y == 400.0);
+    doc.reset();
+
+    // and none of the members reaches the drawing LibreCAD imports
+    ensureSettings();
+    RS_Graphic graphic;
+    RS_FilterJWW filter;
+    REQUIRE(filter.fileImport(graphic, path, RS2::FormatJWW));
+    QFile::remove(path);
+    int lines = 0;
+    int texts = 0;
+    for (const RS_Entity* e : graphic) {
+        if (e->rtti() == RS2::EntityLine) {
+            ++lines;
+            const auto* line = static_cast<const RS_Line*>(e);
+            CHECK(line->getStartpoint() == RS_Vector(0.0, 0.0));
+            CHECK(line->getEndpoint() == RS_Vector(10.0, 5.0));
+        }
+        else if (e->rtti() == RS2::EntityMText) {
+            ++texts;
+        }
+    }
+    CHECK(lines == 1);
+    CHECK(texts == 1);
+}
+
+TEST_CASE("Images a Jw_cad 7 file embeds are not read as JWW records", "[jww][import]") {
+    // From Ver.7.00 the block definitions are followed by the number of
+    // images and, for each, its name, its size and its bytes. The reader went
+    // on reading those bytes as records. These bytes are a line record.
+    const jwDWORD version = 700;
+    const QString path = writeJwwFile(
+        QStringLiteral("jww_image.jww"), version,
+        [&](JWWDocument& doc) { doc.vSen.push_back(makeLine(version, {0.0, 0.0}, {10.0, 5.0})); },
+        [&](JWWDocument& doc) {
+            beginBlockDefinitions(doc, 0);
+            *doc.ofs << (jwDWORD)1; // one image
+            // 1 + 13 bytes, so the old reader, which read two bytes at a
+            // time, met the record's class tag where it looked for one
+            doc.WriteString("image1.bmp.gz");
+            const std::streampos sizeAt = doc.ofs->tellp();
+            *doc.ofs << (jwDWORD)0;
+            const std::streampos start = doc.ofs->tellp();
+            doc.SaveSen(makeLine(version, {8e42, 1e-167}, {-3e232, 4.0}));
+            const std::streampos end = doc.ofs->tellp();
+            doc.ofs->seekp(sizeAt);
+            *doc.ofs << (jwDWORD)(end - start);
+            doc.ofs->seekp(0, std::ios::end);
+        });
+    auto doc = readJwwFile(path);
+    CHECK(QFile::remove(path));
+    REQUIRE(doc->vSen.size() == 1);
+    CHECK(doc->vSen.front().m_end.x == 10.0);
+}
+
+TEST_CASE("A JWW record is read once, and not when the file ends inside it", "[jww][import]") {
+    const jwDWORD version = 600;
+    const QString path = writeJwwFile(QStringLiteral("jww_cut.jww"), version, [&](JWWDocument& doc) {
+        doc.vSen.push_back(makeLine(version, {0.0, 0.0}, {10.0, 5.0}));
+        doc.vSen.push_back(makeLine(version, {1.0, 1.0}, {2.0, 2.0}));
+        doc.vSen.push_back(makeLine(version, {3.0, 3.0}, {4.0, 4.0}));
+    });
+    const qint64 size = QFileInfo(path).size();
+
+    // without the block definition count, the file ends with the last line,
+    // whose tag refers to its class: it was read twice
+    REQUIRE(QFile::resize(path, size - 4));
+    {
+        auto doc = readJwwFile(path);
+        REQUIRE(doc->vSen.size() == 3);
+        CHECK(doc->vSen.back().m_end.y == 4.0);
+    }
+    // cut inside the last line: it was read, with the end point of the one
+    // before it
+    REQUIRE(QFile::resize(path, size - 4 - 8));
+    {
+        auto doc = readJwwFile(path);
+        CHECK(doc->vSen.size() == 2);
+    }
+    CHECK(QFile::remove(path));
+}
+
+TEST_CASE("JWW dimensions and block definitions are read by the file's version", "[jww][import]") {
+    // The reader gave the version to the dimension but not to the lines,
+    // text and points inside it, nor to block definitions: their pen width,
+    // written from Ver.3.51, was read or skipped by whatever the memory held.
+    for (const jwDWORD version : {230u, 252u, 300u, 351u, 420u, 600u, 700u}) {
+        INFO("version " << version);
+        const QString path = writeJwwFile(
+            QStringLiteral("jww_v%1.jww").arg(version), version,
+            [&](JWWDocument& doc) {
+                doc.vSen.push_back(makeLine(version, {0.0, 0.0}, {10.0, 5.0}));
+                doc.vEnko.push_back(makeArc(version));
+                doc.vMoji.push_back(makeText(version, "OLD"));
+                doc.vSunpou.push_back(makeDimension(version));
+                doc.vSolid.push_back(makeSolid(version)); // after the dimension
+            },
+            [&](JWWDocument& doc) {
+                beginBlockDefinitions(doc, 1);
+                writeBlockDefinition(doc, makeDefinition(version, 3, "OLDBLK"), 1);
+                doc.SaveEnko(makeArc(version));
+                if (version >= 700) {
+                    *doc.ofs << (jwDWORD)0; // no images
+                }
+            });
+        auto doc = readJwwFile(path);
+        CHECK(QFile::remove(path));
+
+        CHECK(doc->vSen.size() == 1);
+        CHECK(doc->vEnko.size() == 1);
+        REQUIRE(doc->vMoji.size() == 1);
+        CHECK(doc->vMoji.front().m_string == "OLD");
+        REQUIRE(doc->vSunpou.size() == 1);
+        const CDataSunpou& dimension = doc->vSunpou.front();
+        CHECK(dimension.m_Sen.m_end.x == 100.0);
+        CHECK(dimension.m_Moji.m_string == "100");
+        if (version >= 420) {
+            CHECK(dimension.m_bSxfMode == 2);
+            CHECK(dimension.m_SenHo2.m_start.x == 100.0);
+            CHECK(dimension.m_TenHo2.m_start.x == 100.0);
+        }
+        REQUIRE(doc->vSolid.size() == 1);
+        CHECK(doc->vSolid.front().m_DPoint3.x == 30.0);
+        REQUIRE(doc->pBlockList->GetDataListCount(3) == 1);
+        CHECK(doc->pBlockList->GetCDataEnko(3, 0).m_dHankei == 3.0);
+    }
+}
+
+TEST_CASE("JWW class tags past number 0x7F7F are read as MFC writes them", "[jww][import]") {
+    // MFC's CArchive numbers classes and objects together. A class numbered
+    // n below 0x7FFF is tagged 0x8000 | n, so class 0x7F7F is tagged 0xFF7F,
+    // which the reader took for the 0x7FFF tag and read a DWORD after it. A
+    // class numbered 0x7FFF or more is tagged 0x7FFF and a DWORD, and a count
+    // of 0x8000 or more (as jwwlib writes it) is 0xFFFF and a DWORD.
+    const jwDWORD version = 600;
+    const QString path = writeJwwFile(QStringLiteral("jww_tags.jww"), version, [&](JWWDocument& doc) {
+        // class CDataSen is 1 and its lines 2 to 32638, so CDataEnko is 0x7F7F
+        for (int k = 0; k < 32637; ++k) {
+            doc.vSen.push_back(makeLine(version, {double(k), 0.0}, {double(k), 1.0}));
+        }
+        doc.vEnko.push_back(makeArc(version));
+        doc.vEnko.push_back(makeArc(version)); // tagged 0xFF7F
+        // CDataTen is 32642 and its points 32643 to 32842, so CDataMoji is 32843
+        for (int k = 0; k < 200; ++k) {
+            doc.vTen.push_back(makePoint(version, {double(k), 2.0}));
+        }
+        doc.vMoji.push_back(makeText(version, "FIRST"));
+        doc.vMoji.push_back(makeText(version, "SECOND")); // tagged 0x7FFF, 0x8000804B
+    });
+    auto doc = readJwwFile(path);
+    CHECK(QFile::remove(path));
+    CHECK(doc->vSen.size() == 32637);
+    CHECK(doc->vEnko.size() == 2);
+    REQUIRE(doc->vTen.size() == 200);
+    CHECK(doc->vTen.back().m_start.x == 199.0);
+    REQUIRE(doc->vMoji.size() == 2);
+    CHECK(doc->vMoji.back().m_string == "SECOND");
+}
+
+TEST_CASE("A JWW file older than Ver.2.30 is refused", "[jww][import]") {
+    ensureSettings();
+    // ReadHeader() read the rest of the header only from Ver.2.30 on, but
+    // returned true for an older version too, and the records were then read
+    // from the middle of the header. The header of Ver.2.29 and older is
+    // shorter: it is refused instead. Ver.2.31 to 2.99 have the header of
+    // Ver.2.30, and the version test above reads a Ver.2.52 file.
+    const QString path = writeJww(QStringLiteral("jww_import_v225.jww"), "");
+    {
+        QFile file(path);
+        REQUIRE(file.open(QIODevice::ReadWrite));
+        REQUIRE(file.seek(8)); // after "JwwData."
+        const jwDWORD version = 225;
+        REQUIRE(file.write(reinterpret_cast<const char*>(&version), sizeof version) == sizeof version);
+    }
+    RS_Graphic graphic;
+    RS_FilterJWW filter;
+    CHECK_FALSE(filter.fileImport(graphic, path, RS2::FormatJWW));
+    CHECK(QFile::remove(path));
+}
+
+TEST_CASE("A JWW file that ends with its header is refused", "[jww][import]") {
+    ensureSettings();
+    // ReadHeader() read its fields without ever looking at the stream, so a
+    // file cut off inside its header, by a partial download or copy, was read
+    // as a drawing with no records and opened as an empty drawing. A file
+    // that ends where the drawing begins (the last cut) has no drawing
+    // either: a file with an empty drawing still has its count.
+    const jwDWORD version = 600;
+    const qint64 header = jwwHeaderSize(version);
+    // a whole file each time: resizing one up again would fill it with zeros
+    for (const qint64 cut : {qint64(8), qint64(12), header / 2, header - 1, header}) {
+        INFO("cut at " << cut);
+        const QString path = writeJww(QStringLiteral("jww_import_cut_header.jww"), "");
+        REQUIRE(QFileInfo(path).size() > header);
+        REQUIRE(QFile::resize(path, cut));
+        RS_Graphic graphic;
+        RS_FilterJWW filter;
+        CHECK_FALSE(filter.fileImport(graphic, path, RS2::FormatJWW));
+        CHECK(QFile::remove(path));
+    }
 }
