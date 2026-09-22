@@ -391,6 +391,12 @@ TEST_CASE("Save asks for a new name for a drawing read from JWW", "[documentssto
     CHECK(graphic.isModified());
 }
 
+TEST_CASE("JWW remains registered as an export format", "[documentsstorage][save][jww]") {
+    ensureApp();
+    CHECK(RS_FileIO::instance()->canExport(RS2::FormatJWW));
+    CHECK(RS_FileIO::instance()->getExportFilter("drawing.jww", RS2::FormatJWW) != nullptr);
+}
+
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("Save asks for a new name for a drawing opened as a QCad 1 file", "[documentsstorage][save]") {
     ensureApp();
@@ -594,4 +600,3 @@ TEST_CASE("Save still refuses a file changed on disk since it was opened", "[doc
     CHECK(contents(path) == changed);
     CHECK(graphic.isModified());
 }
-
