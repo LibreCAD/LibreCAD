@@ -344,18 +344,39 @@ private:
     }
 
     /**
-     * Two boxes of one segment with the piece between them monotone, or within
-     * the tolerance: nothing there crosses, beyond a loop too small to resolve.
+     * Two boxes of one branch with the stretch between them monotone, or within
+     * the tolerance, across its segments too: nothing there crosses, beyond a
+     * loop too small to resolve, as where the branch all but stops.
      */
     bool bridged(const Leaf& p, const Leaf& q, const Pair& box) const {
-        if (p.segment != q.segment) {
+        if (p.branch != q.branch) {
             return false;
         }
-        Bounds b;
-        if (!bound(p.segment, std::min(box.a0, box.b0), std::max(box.a1, box.b1), b)) {
-            return false;
+        const double lo = std::min(box.a0, box.b0);
+        const double hi = std::max(box.a1, box.b1);
+        Bounds all;
+        bool any = false;
+        for (std::size_t k = 0; k < m_segments.size(); ++k) {
+            const LC_ParametricSegment& seg = m_segments[k];
+            if (seg.branch != p.branch || seg.t1 < lo || seg.t0 > hi) {
+                continue;
+            }
+            Bounds b;
+            if (!bound(k, std::max(lo, seg.t0), std::min(hi, seg.t1), b)) {
+                return false;
+            }
+            if (!any) {
+                all = b;
+                any = true;
+                continue;
+            }
+            all.x = LC_Interval::hull(all.x, b.x);
+            all.y = LC_Interval::hull(all.y, b.y);
+            all.dx = LC_Interval::hull(all.dx, b.dx);
+            all.dy = LC_Interval::hull(all.dy, b.dy);
         }
-        return isMonotone(b.dx, b.dy) || std::hypot(b.x.width(), b.y.width()) <= m_options.tolerance;
+        return any &&
+               (isMonotone(all.dx, all.dy) || std::hypot(all.x.width(), all.y.width()) <= m_options.tolerance);
     }
 
     enum class Krawczyk {
@@ -478,16 +499,30 @@ private:
      * the second branch changes sides of the first's tangent across it and a
      * tangency when it does not; a branch that stays within the tolerance on
      * both sides retraces the other, which is ambiguous, and so is a box whose
-     * branches do not come that close.
+     * branches do not come that close. Two branch ends that meet are an end
+     * contact.
      */
     LC_IntersectionStatus classifyContact(const Leaf& p, const Leaf& q, const Pair& box) {
         const LC_ParametricSegment& sq = m_segments[q.segment];
-        double t = 0.5 * (box.a0 + box.a1);
-        double u = 0.5 * (box.b0 + box.b1);
         RS_Vector a;
         RS_Vector da;
         RS_Vector b;
         RS_Vector db;
+        // Two branch ends that meet, as the ends of an open curve that looks
+        // closed, are an end contact however they meet: where they are
+        // tangent the nearest pair below is not found, nor a side.
+        for (const double endA : {box.a0, box.a1}) {
+            for (const double endB : {box.b0, box.b1}) {
+                if (m_curves.evaluate(p.segment, endA, a, da) && m_curves.evaluate(q.segment, endB, b, db) &&
+                    a.distanceTo(b) <= m_options.tolerance && atBranchEnd(p.segment, endA) &&
+                    atBranchEnd(q.segment, endB)) {
+                    record(p, endA, q, endB, (a + b) * 0.5, LC_ParametricIntersection::Kind::Endpoint);
+                    return LC_IntersectionStatus::Ok;
+                }
+            }
+        }
+        double t = 0.5 * (box.a0 + box.a1);
+        double u = 0.5 * (box.b0 + box.b1);
         // Gauss-Newton towards the nearest pair within the two leaves
         for (int iteration = 0; iteration < 40; ++iteration) {
             if (!m_curves.evaluate(p.segment, t, a, da) || !m_curves.evaluate(q.segment, u, b, db)) {
@@ -520,15 +555,20 @@ private:
         }
         // Which side of the first branch the second is on, on either side of
         // the contact: stepping away along it until they are more than the
-        // tolerance apart. Staying that close over the whole leaf is retracing.
+        // tolerance apart, beyond the leaf if need be. Branches that meet at a
+        // shallow angle part slowly: if they stay within the tolerance over the
+        // whole segment, the side furthest from the first above rounding noise
+        // decides. Staying within the noise is retracing.
+        const double noise = 1024.0 * g_eps * (std::abs(a.x) + std::abs(a.y) + std::abs(b.x) + std::abs(b.y));
         int sides[2] = {0, 0};
+        double farthest[2] = {0.0, 0.0};
         // how far along the second branch the contact reaches, on each side
         double reach[2] = {q.a, q.b};
         for (int k = 0; k < 2; ++k) {
             const double direction = (k == 0) ? -1.0 : 1.0;
             for (double step = 8.0 * tolerance / db.magnitude();; step *= 2.0) {
                 const double s = u + direction * step;
-                if (s < q.a || s > q.b) {
+                if (s < sq.t0 || s > sq.t1) {
                     break;
                 }
                 reach[k] = s;
@@ -536,10 +576,16 @@ private:
                 if (!sideOf(p, t, q.segment, s, side)) {
                     return LC_IntersectionStatus::AmbiguousTopology;
                 }
+                if (std::abs(side) > std::abs(farthest[k])) {
+                    farthest[k] = side;
+                }
                 if (std::abs(side) > tolerance) {
                     sides[k] = side > 0.0 ? 1 : -1;
                     break;
                 }
+            }
+            if (sides[k] == 0 && std::abs(farthest[k]) > noise) {
+                sides[k] = farthest[k] > 0.0 ? 1 : -1;
             }
         }
         if (sides[0] == 0 && sides[1] == 0) {
@@ -554,10 +600,11 @@ private:
 
     /**
      * The signed distance of the second branch's point at @p s from the first
-     * branch, found by Newton steps from @p t within leaf @p p: positive on the
-     * first branch's left.
+     * branch, found by Newton steps from @p t within the segment of leaf @p p:
+     * positive on the first branch's left.
      */
     bool sideOf(const Leaf& p, double t, const std::size_t segment, const double s, double& side) const {
+        const LC_ParametricSegment& sp = m_segments[p.segment];
         RS_Vector c;
         RS_Vector dc;
         if (!m_curves.evaluate(segment, s, c, dc)) {
@@ -569,7 +616,7 @@ private:
             if (!m_curves.evaluate(p.segment, t, a, da) || !(da.squared() > 0.0)) {
                 return false;
             }
-            const double next = std::clamp(t + RS_Vector::dotP(c - a, da) / da.squared(), p.a, p.b);
+            const double next = std::clamp(t + RS_Vector::dotP(c - a, da) / da.squared(), sp.t0, sp.t1);
             if (next == t) {
                 break;
             }
@@ -580,6 +627,14 @@ private:
         }
         side = (da.x * (c.y - a.y) - da.y * (c.x - a.x)) / da.magnitude();
         return std::isfinite(side);
+    }
+
+    /** The start of a branch's first segment, or the end of its last. */
+    bool atBranchEnd(const std::size_t segment, const double t) const {
+        const LC_ParametricSegment& s = m_segments[segment];
+        const bool firstOfBranch = segment == 0 || m_segments[segment - 1].branch != s.branch;
+        const bool lastOfBranch = segment + 1 == m_segments.size() || m_segments[segment + 1].branch != s.branch;
+        return (firstOfBranch && t == s.t0) || (lastOfBranch && t == s.t1);
     }
 
     /** A free end of a branch: its start with no branch running into it, or its end running into none. */

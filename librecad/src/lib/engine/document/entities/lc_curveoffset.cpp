@@ -477,11 +477,114 @@ struct SourceJoin {
     RS_Vector after{false};
 };
 
+/**
+ * Removes reversed branches too small to keep: a swallowtail between two
+ * cusps within twice the merge tolerance, whose neighbours then meet at its
+ * middle and run on as one branch; or a tail at an open end within the
+ * merge tolerance, whose neighbour then ends where the offset does. Done
+ * before noding, so that a crossing of the neighbours inside it is their
+ * join, not a node.
+ */
+void collapseTinyReversals(std::vector<LC_OffsetBranch>& branches, const double merge) {
+    const auto extent = [](const LC_OffsetBranch& branch) {
+        double e = 0.0;
+        const RS_Vector& origin = branch.cubicPieces.front().bezier[0];
+        for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
+            for (const RS_Vector& v : piece.bezier) {
+                e = std::max(e, v.distanceTo(origin));
+            }
+        }
+        return e;
+    };
+    for (size_t k = 0; k < branches.size() && branches.size() > 1; ++k) {
+        const LC_OffsetBranch& r = branches[k];
+        if (!r.reversed || r.closed) {
+            continue;
+        }
+        const size_t n = branches.size();
+        const bool cuspBefore = r.startEnd == LC_OffsetBranchEnd::Cusp;
+        const bool cuspAfter = r.endEnd == LC_OffsetBranchEnd::Cusp;
+        const double size = extent(r);
+        if (cuspBefore && cuspAfter && size <= 2.0 * merge) {
+            const size_t before = (k + n - 1) % n;
+            const size_t after = (k + 1) % n;
+            const RS_Vector middle = (r.cubicPieces.front().bezier[0] + r.cubicPieces.back().bezier[3]) * 0.5;
+            LC_OffsetBranch& a = branches[before];
+            if (before == after) {
+                // the only other branch closes on itself
+                a.cubicPieces.back().bezier[3] = middle;
+                a.cubicPieces.front().bezier[0] = middle;
+                a.closed = true;
+                a.startEnd = LC_OffsetBranchEnd::Free;
+                a.endEnd = LC_OffsetBranchEnd::Free;
+                branches.erase(branches.begin() + static_cast<std::ptrdiff_t>(k));
+                return;
+            }
+            LC_OffsetBranch& b = branches[after];
+            a.cubicPieces.back().bezier[3] = middle;
+            b.cubicPieces.front().bezier[0] = middle;
+            a.cubicPieces.insert(a.cubicPieces.end(), b.cubicPieces.begin(), b.cubicPieces.end());
+            a.endEnd = b.endEnd;
+            for (const size_t gone : {std::max(k, after), std::min(k, after)}) {
+                branches.erase(branches.begin() + static_cast<std::ptrdiff_t>(gone));
+            }
+            k = static_cast<size_t>(-1); // indices moved: start over
+        }
+        else if (!cuspBefore && cuspAfter && size <= merge) {
+            branches[k + 1].cubicPieces.front().bezier[0] = r.cubicPieces.front().bezier[0];
+            branches[k + 1].startEnd = LC_OffsetBranchEnd::Free;
+            branches.erase(branches.begin() + static_cast<std::ptrdiff_t>(k));
+            k = static_cast<size_t>(-1);
+        }
+        else if (cuspBefore && !cuspAfter && size <= merge) {
+            branches[k - 1].cubicPieces.back().bezier[3] = r.cubicPieces.back().bezier[3];
+            branches[k - 1].endEnd = LC_OffsetBranchEnd::Free;
+            branches.erase(branches.begin() + static_cast<std::ptrdiff_t>(k));
+            k = static_cast<size_t>(-1);
+        }
+    }
+}
+
 /** How the joins are handled: a kink fails the request, or its corner is rounded. */
 enum class KinkPolicy {
     Refuse,
     Round
 };
+
+/**
+ * The arc of radius |d| about a corner of the source from the offset's @p end
+ * before it to its @p start after it, as pieces of at most a quarter turn; or
+ * false, and no pieces, where the corner turns towards the offset, whose two
+ * sides then overlap. A reversal turns away from either side.
+ */
+bool cornerArc(const SourceJoin& join, const RS_Vector& end, const RS_Vector& start, const double d,
+               const double angleTolerance, std::vector<LC_OffsetCubicPiece>& arc) {
+    arc.clear();
+    double turn = std::atan2(cross(join.before, join.after), dot(join.before, join.after));
+    if (std::abs(std::abs(turn) - M_PI) <= angleTolerance) {
+        turn = (d > 0.0) ? -M_PI : M_PI;
+    }
+    if (turn * d >= 0.0) {
+        return false;
+    }
+    const double a0 = std::atan2(end.y - join.point.y, end.x - join.point.x);
+    const size_t count = std::max<size_t>(1, static_cast<size_t>(std::ceil(std::abs(turn) / (0.5 * M_PI) - 1e-9)));
+    for (size_t k = 0; k < count; ++k) {
+        const double from = a0 + turn * static_cast<double>(k) / static_cast<double>(count);
+        const double to = (k + 1 == count) ? a0 + turn : a0 + turn * static_cast<double>(k + 1) / static_cast<double>(count);
+        LC_OffsetCubicPiece piece;
+        piece.provenance = {0, from, to, d, true};
+        piece.provenance.arcCentre = join.point;
+        piece.bezier = arcPiece(join.point, std::abs(d), from, to);
+        if (!arc.empty()) {
+            piece.bezier[0] = arc.back().bezier[3];
+        }
+        arc.push_back(piece);
+    }
+    arc.front().bezier[0] = end;
+    arc.back().bezier[3] = start;
+    return true;
+}
 
 class BranchBuilder {
 public:
@@ -617,9 +720,16 @@ public:
                 }
             }
         }
-        // 1 - d kappa keeps its sign between cusps, which the middle of a branch decides
+        // 1 - d kappa keeps its sign between cusps: its widest piece decides,
+        // away from the cusps and stalls where it is all but zero
         for (LC_OffsetBranch& branch : branches) {
-            const LC_OffsetBranchProvenance& middle = branch.cubicPieces[branch.cubicPieces.size() / 2].provenance;
+            const LC_OffsetBranchProvenance& middle =
+                std::max_element(branch.cubicPieces.begin(), branch.cubicPieces.end(),
+                                 [](const LC_OffsetCubicPiece& l, const LC_OffsetCubicPiece& r) {
+                                     return l.provenance.sourceT1 - l.provenance.sourceT0 <
+                                            r.provenance.sourceT1 - r.provenance.sourceT0;
+                                 })
+                    ->provenance;
             const double g =
                 factorNumeratorAt(0.5 * (middle.sourceT0 + middle.sourceT1), LC_CurveEvaluationSide::Interior);
             if (!std::isfinite(g) || g == 0.0) {
@@ -632,7 +742,10 @@ public:
             links.push_back(join == cusp ? Link{Link::Kind::Cusp, nullptr} : Link{Link::Kind::Join, &joins[join]});
         }
         joinCorners(branches, links);
-        collapseTinyReversals(branches);
+        // trimming first cuts every swallowtail it can where its neighbours cross
+        if (m_options.mode != LC_CurveOffsetMode::Trimmed) {
+            collapseTinyReversals(branches, m_options.tolerance.nodeMerge);
+        }
         return LC_CurveOffsetStatus::Ok;
     }
 
@@ -690,7 +803,9 @@ private:
             // a closed source's last link runs into the first branch, already a part
             LC_OffsetBranch& nextBranch = (i + 1 < branches.size()) ? branches[i + 1] : parts.front();
             if (link.kind == Link::Kind::Cusp) {
-                between.push_back(Link::Kind::Cusp);
+                // the offset turns back at a cusp: one between two branches running
+                // the same way was rounding, and they run on as one
+                between.push_back(through(parts.back().reversed, nextBranch.reversed));
                 continue;
             }
             const SourceJoin& join = *link.join;
@@ -703,33 +818,11 @@ private:
                 between.push_back(through(parts.back().reversed, nextBranch.reversed));
                 continue;
             }
-            // the signed turn of the corner; a reversal turns away from either side
-            double turn = std::atan2(cross(join.before, join.after), dot(join.before, join.after));
-            if (std::abs(std::abs(turn) - M_PI) <= m_options.angleTolerance) {
-                turn = (m_d > 0.0) ? -M_PI : M_PI;
-            }
-            if (turn * m_d >= 0.0) {
+            LC_OffsetBranch arc;
+            if (!cornerArc(join, end, start, m_d, m_options.angleTolerance, arc.cubicPieces)) {
                 between.push_back(Link::Kind::Overlap);
                 continue;
             }
-            LC_OffsetBranch arc;
-            const double a0 = std::atan2(end.y - join.point.y, end.x - join.point.x);
-            const size_t count = static_cast<size_t>(std::ceil(std::abs(turn) / (0.5 * M_PI) - 1e-9));
-            for (size_t k = 0; k < std::max<size_t>(count, 1); ++k) {
-                const size_t n = std::max<size_t>(count, 1);
-                const double from = a0 + turn * static_cast<double>(k) / static_cast<double>(n);
-                const double to = (k + 1 == n) ? a0 + turn : a0 + turn * static_cast<double>(k + 1) / static_cast<double>(n);
-                LC_OffsetCubicPiece piece;
-                piece.provenance = {0, from, to, m_d, true};
-                piece.provenance.arcCentre = join.point;
-                piece.bezier = arcPiece(join.point, std::abs(m_d), from, to);
-                if (!arc.cubicPieces.empty()) {
-                    piece.bezier[0] = arc.cubicPieces.back().bezier[3];
-                }
-                arc.cubicPieces.push_back(piece);
-            }
-            arc.cubicPieces.front().bezier[0] = end;
-            arc.cubicPieces.back().bezier[3] = start;
             between.push_back(through(parts.back().reversed, false));
             parts.push_back(std::move(arc));
             between.push_back(through(false, nextBranch.reversed));
@@ -771,75 +864,6 @@ private:
             }
             const bool last = step + 1 == n;
             branches.back().endEnd = (last && !cyclic) ? LC_OffsetBranchEnd::Free : endOf(between[i]);
-        }
-    }
-
-    /**
-     * Removes reversed branches too small to keep: a swallowtail between two
-     * cusps within twice the merge tolerance, whose neighbours then meet at its
-     * middle and run on as one branch; or a tail at an open end within the
-     * merge tolerance, whose neighbour then ends where the offset does. Done
-     * before noding, so that a crossing of the neighbours inside it is their
-     * join, not a node.
-     */
-    void collapseTinyReversals(std::vector<LC_OffsetBranch>& branches) const {
-        const double merge = m_options.tolerance.nodeMerge;
-        const auto extent = [](const LC_OffsetBranch& branch) {
-            double e = 0.0;
-            const RS_Vector& origin = branch.cubicPieces.front().bezier[0];
-            for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
-                for (const RS_Vector& v : piece.bezier) {
-                    e = std::max(e, v.distanceTo(origin));
-                }
-            }
-            return e;
-        };
-        for (size_t k = 0; k < branches.size() && branches.size() > 1; ++k) {
-            const LC_OffsetBranch& r = branches[k];
-            if (!r.reversed || r.closed) {
-                continue;
-            }
-            const size_t n = branches.size();
-            const bool cuspBefore = r.startEnd == LC_OffsetBranchEnd::Cusp;
-            const bool cuspAfter = r.endEnd == LC_OffsetBranchEnd::Cusp;
-            const double size = extent(r);
-            if (cuspBefore && cuspAfter && size <= 2.0 * merge) {
-                const size_t before = (k + n - 1) % n;
-                const size_t after = (k + 1) % n;
-                const RS_Vector middle = (r.cubicPieces.front().bezier[0] + r.cubicPieces.back().bezier[3]) * 0.5;
-                LC_OffsetBranch& a = branches[before];
-                if (before == after) {
-                    // the only other branch closes on itself
-                    a.cubicPieces.back().bezier[3] = middle;
-                    a.cubicPieces.front().bezier[0] = middle;
-                    a.closed = true;
-                    a.startEnd = LC_OffsetBranchEnd::Free;
-                    a.endEnd = LC_OffsetBranchEnd::Free;
-                    branches.erase(branches.begin() + static_cast<std::ptrdiff_t>(k));
-                    return;
-                }
-                LC_OffsetBranch& b = branches[after];
-                a.cubicPieces.back().bezier[3] = middle;
-                b.cubicPieces.front().bezier[0] = middle;
-                a.cubicPieces.insert(a.cubicPieces.end(), b.cubicPieces.begin(), b.cubicPieces.end());
-                a.endEnd = b.endEnd;
-                for (const size_t gone : {std::max(k, after), std::min(k, after)}) {
-                    branches.erase(branches.begin() + static_cast<std::ptrdiff_t>(gone));
-                }
-                k = static_cast<size_t>(-1); // indices moved: start over
-            }
-            else if (!cuspBefore && cuspAfter && size <= merge) {
-                branches[k + 1].cubicPieces.front().bezier[0] = r.cubicPieces.front().bezier[0];
-                branches[k + 1].startEnd = LC_OffsetBranchEnd::Free;
-                branches.erase(branches.begin() + static_cast<std::ptrdiff_t>(k));
-                k = static_cast<size_t>(-1);
-            }
-            else if (cuspBefore && !cuspAfter && size <= merge) {
-                branches[k - 1].cubicPieces.back().bezier[3] = r.cubicPieces.back().bezier[3];
-                branches[k - 1].endEnd = LC_OffsetBranchEnd::Free;
-                branches.erase(branches.begin() + static_cast<std::ptrdiff_t>(k));
-                k = static_cast<size_t>(-1);
-            }
         }
     }
 
@@ -1153,8 +1177,10 @@ private:
      * Compares the piece with the exact offset at local parameters @p nodes, in
      * coordinates relative to @p origin to keep a small offset from drowning in
      * large world coordinates. Its tangent is compared too, unless
-     * @p positionOnly: a piece shorter than the fit tolerance, where the offset
-     * all but stops, has a tangent no finer subdivision can resolve.
+     * @p positionOnly, weighted by how far the offset moves over the piece at
+     * that rate against the fit tolerance: where the offset all but stops, near
+     * a cusp or a stall, the exact tangent is mostly cancellation, and a piece
+     * shorter than the fit tolerance has a tangent no subdivision can resolve.
      */
     Check check(const Leaf& leaf, const std::array<RS_Vector, 4>& local, const RS_Vector& origin,
                 const double* nodes, const size_t count, const bool positionOnly) {
@@ -1169,8 +1195,10 @@ private:
                 return result;
             }
             const double error = bezierAt(local, s).distanceTo(exact.point - origin);
-            const double angle =
-                positionOnly ? 0.0 : angleBetweenVectors(bezierDerivative(local, s), exact.first);
+            const double motion = exact.first.magnitude() * h / m_options.tolerance.fit;
+            const double angle = positionOnly ? 0.0
+                                              : angleBetweenVectors(bezierDerivative(local, s), exact.first) *
+                                                    std::min(1.0, motion);
             const double excess = std::max(error / m_options.tolerance.fit, angle / m_options.angleTolerance);
             result.worstError = std::max(result.worstError, error);
             if (excess > worstExcess) {
@@ -1321,18 +1349,25 @@ LC_CurveOffsetStatus checkJoins(const OffsetSource& source, const double d, cons
                             : SourceJoin::Kind::Kink;
             return LC_CurveOffsetStatus::Ok;
         }
-        auto factorNumerator = [d](const LC_CurveJet& jet) {
+        // 1 - d kappa's numerator, and a bound on its rounding error: within
+        // it the sign is noise, as at a curvature maximum on a knot at d = rho
+        auto factorNumerator = [d](const LC_CurveJet& jet, double& noise) {
             const double s2 = dot(jet.first, jet.first);
-            return s2 * std::sqrt(s2) - d * cross(jet.first, jet.second);
+            const double s = std::sqrt(s2);
+            noise = 64.0 * g_eps * (s2 * s + std::abs(d) * s * jet.second.magnitude());
+            return s2 * s - d * cross(jet.first, jet.second);
         };
-        const double before = factorNumerator(l);
-        const double after = factorNumerator(r);
+        double noiseBefore = 0.0;
+        double noiseAfter = 0.0;
+        const double before = factorNumerator(l, noiseBefore);
+        const double after = factorNumerator(r, noiseAfter);
         if (!(std::isfinite(before) && std::isfinite(after))) {
             return LC_CurveOffsetStatus::AmbiguousRegularity;
         }
-        // A zero on one side is a root at the join itself: the boxes next to it
-        // stay unproved and are resolved as a cusp or a stall there.
-        cusps[index] = before != 0.0 && after != 0.0 && std::signbit(before) != std::signbit(after);
+        // A root at the join itself, a value within its noise on one side, is
+        // left to the boxes next to it, resolved as a cusp or a stall there.
+        cusps[index] = std::abs(before) > noiseBefore && std::abs(after) > noiseAfter &&
+                       std::signbit(before) != std::signbit(after);
         return LC_CurveOffsetStatus::Ok;
     };
     for (size_t i = 1; i + 1 < breaks.size(); ++i) {
@@ -1353,16 +1388,22 @@ LC_CurveOffsetStatus checkJoins(const OffsetSource& source, const double d, cons
 
 /**
  * Where each branch runs on into another: itself when closed; across a cusp
- * the next one, and for a closed source the last into the first.
+ * the next one, which starts where it ends, and for a closed source the last
+ * into the first.
  */
 std::vector<std::ptrdiff_t> branchSuccessors(const std::vector<LC_OffsetBranch>& branches) {
     std::vector<std::ptrdiff_t> next(branches.size(), -1);
     for (size_t b = 0; b < branches.size(); ++b) {
         if (branches[b].closed) {
             next[b] = static_cast<std::ptrdiff_t>(b);
+            continue;
         }
-        else if (branches[b].endEnd == LC_OffsetBranchEnd::Cusp) {
-            next[b] = (b + 1 < branches.size()) ? static_cast<std::ptrdiff_t>(b + 1) : 0;
+        // across a cusp the next branch starts where this one ends; once a
+        // reversed branch is dropped, its neighbours' cusp ends are free
+        const size_t n = (b + 1 < branches.size()) ? b + 1 : 0;
+        if (branches[b].endEnd == LC_OffsetBranchEnd::Cusp && branches[n].startEnd == LC_OffsetBranchEnd::Cusp &&
+            n != b && branches[b].cubicPieces.back().bezier[3] == branches[n].cubicPieces.front().bezier[0]) {
+            next[b] = static_cast<std::ptrdiff_t>(n);
         }
     }
     return next;
@@ -2273,6 +2314,9 @@ LC_CurveOffsetStatus nodeBranches(const OffsetSource& source, const double d, co
     }
     result.offsetIntersections = found.intersections.size();
 
+    if (options.mode == LC_CurveOffsetMode::Trimmed) {
+        return LC_CurveOffsetStatus::Ok; // the count below is for noding alone
+    }
     const std::vector<double>& breaks = source.breaks();
     LC_OffsetBranch whole;
     whole.closed = source.closed();
@@ -2577,6 +2621,330 @@ Visibility visibility(const OffsetSource& source, const std::vector<std::pair<do
 }
 
 /**
+ * Removes the offset's local loops, for trimming: each reversed branch between
+ * two cusps, with the stretches of its neighbours from where they cross to the
+ * cusps, the swallowtail's wings. The crossing is found by walking along the
+ * neighbour after it and tracking which side of the neighbour before it that
+ * point lies on: the side changes sign where they cross, however shallow the
+ * crossing, where intersection boxes could not tell the two apart. Only the
+ * neighbours' offset pieces next to the cusps are walked; one that ends first,
+ * or turns a corner, leaves the loop to noding and trimming.
+ */
+LC_CurveOffsetStatus removeLocalLoops(const OffsetSource& source, const double d, const double speedFloor,
+                                      const LC_CurveOffsetOptions& options, std::vector<LC_OffsetBranch>& branches,
+                                      std::size_t& removed) {
+    // the source parameters of a branch's offset pieces next to one end, as long
+    // as they run on without a gap or a corner
+    const auto stretch = [](const LC_OffsetBranch& branch, const bool atEnd, double& from, double& to) {
+        const std::vector<LC_OffsetCubicPiece>& pieces = branch.cubicPieces;
+        const size_t n = pieces.size();
+        const LC_OffsetCubicPiece& first = atEnd ? pieces[n - 1] : pieces[0];
+        if (first.provenance.arcCentre.valid) {
+            return false;
+        }
+        from = first.provenance.sourceT0;
+        to = first.provenance.sourceT1;
+        for (size_t k = 1; k < n; ++k) {
+            const LC_OffsetBranchProvenance& p = pieces[atEnd ? n - 1 - k : k].provenance;
+            if (p.arcCentre.valid || (atEnd ? p.sourceT1 != from : p.sourceT0 != to)) {
+                break;
+            }
+            (atEnd ? from : to) = atEnd ? p.sourceT0 : p.sourceT1;
+        }
+        return true;
+    };
+    const auto offsetAt = [&](const double t, OffsetJet& q) {
+        return computeOffsetJet(source, d, speedFloor, t, LC_CurveEvaluationSide::Interior, q) ==
+               LC_CurveOffsetStatus::Ok;
+    };
+    // the nearest point of the stretch [lo, hi] to p: the nearest of samples
+    // from its end back, in doubling steps, and of t, then projection steps;
+    // next to the cusp at hi the offset all but stops, too slow to step from
+    const auto project = [&](const RS_Vector& p, double t, const double lo, const double hi, OffsetJet& at) {
+        double best = std::numeric_limits<double>::infinity();
+        for (double back = std::ldexp(hi - lo, -40); back <= 2.0 * (hi - lo); back *= 2.0) {
+            const double candidate = std::max(lo, hi - back);
+            if (offsetAt(candidate, at) && at.point.distanceTo(p) < best) {
+                best = at.point.distanceTo(p);
+                t = candidate;
+            }
+        }
+        for (int iteration = 0; iteration < 40; ++iteration) {
+            if (!offsetAt(t, at)) {
+                return std::numeric_limits<double>::quiet_NaN();
+            }
+            const double speed2 = dot(at.first, at.first);
+            if (!(speed2 > 0.0)) {
+                break;
+            }
+            const double next = std::clamp(t + dot(p - at.point, at.first) / speed2, lo, hi);
+            if (std::abs(next - t) <= options.tolerance.parameter) {
+                t = next;
+                break;
+            }
+            t = next;
+        }
+        return offsetAt(t, at) ? t : std::numeric_limits<double>::quiet_NaN();
+    };
+
+    for (size_t k = 0; k < branches.size() && branches.size() > 1; ++k) {
+        const size_t n = branches.size();
+        const LC_OffsetBranch& loop = branches[k];
+        if (!loop.reversed || loop.closed || loop.startEnd != LC_OffsetBranchEnd::Cusp ||
+            loop.endEnd != LC_OffsetBranchEnd::Cusp) {
+            continue;
+        }
+        const size_t before = (k + n - 1) % n;
+        const size_t after = (k + 1) % n;
+        LC_OffsetBranch& a = branches[before];
+        LC_OffsetBranch& b = branches[after];
+        double a0 = 0.0;
+        double a1 = 0.0;
+        double b0 = 0.0;
+        double b1 = 0.0;
+        if (a.reversed || b.reversed || !stretch(a, true, a0, a1) || !stretch(b, false, b0, b1)) {
+            continue;
+        }
+        // walk along b away from its cusp; the side is unreliable where a all but stops
+        const auto sideAt = [&](const double u, double& t, RS_Vector& point) {
+            OffsetJet qb;
+            OffsetJet qa;
+            if (!offsetAt(u, qb) || std::isnan(t = project(qb.point, t, a0, a1, qa))) {
+                return std::numeric_limits<double>::quiet_NaN();
+            }
+            point = qb.point;
+            const double speed = qa.first.magnitude();
+            if (!(speed > 0.0) || t <= a0) {
+                return std::numeric_limits<double>::quiet_NaN(); // a ended before b crossed it
+            }
+            return cross(qa.first, qb.point - qa.point) / speed;
+        };
+        double t = a1;
+        double sign = 0.0;
+        double lo = b0;
+        double hi = b0;
+        double loT = a1;
+        bool found = false;
+        // the last point before any reliable side, still within the evaluation
+        // tolerance of a: a crossing there is as good as anywhere nearer
+        double nearU = std::numeric_limits<double>::quiet_NaN();
+        double nearT = a1;
+        // from the cusp outwards, in doubling steps: a small loop's crossing is near it
+        const double first = std::max(std::ldexp(b1 - b0, -40), 4.0 * options.tolerance.parameter);
+        for (double reach = first; !found && reach < 2.0 * (b1 - b0); reach *= 2.0) {
+            const double u = std::min(b1, b0 + reach);
+            RS_Vector point;
+            const double side = sideAt(u, t, point);
+            if (std::isnan(side)) {
+                break;
+            }
+            if (std::abs(side) <= options.tolerance.evaluation) {
+                if (sign == 0.0) {
+                    nearU = u;
+                    nearT = t;
+                }
+                continue; // too near a to tell
+            }
+            if (sign == 0.0) {
+                sign = side;
+                lo = u;
+                loT = t;
+                continue;
+            }
+            if (std::signbit(side) != std::signbit(sign)) {
+                hi = u;
+                found = true;
+            }
+            else {
+                lo = u;
+                loT = t;
+            }
+        }
+        const bool below = !found && !std::isnan(nearU) && sign != 0.0;
+        if (!found && !below) {
+            continue;
+        }
+        if (below) {
+            // the loop is below the evaluation tolerance: cut where b last was
+            lo = nearU;
+            hi = nearU;
+        }
+        t = below ? nearT : loT;
+        RS_Vector point;
+        for (int iteration = 0; iteration < 80 && hi - lo > options.tolerance.parameter; ++iteration) {
+            const double mid = lo + 0.5 * (hi - lo);
+            double tm = t;
+            const double side = sideAt(mid, tm, point);
+            if (std::isnan(side)) {
+                break;
+            }
+            if (side != 0.0 && std::signbit(side) == std::signbit(sign)) {
+                lo = mid;
+                t = tm;
+            }
+            else {
+                hi = mid;
+            }
+        }
+        OffsetJet qb;
+        OffsetJet qa;
+        const double u = hi;
+        if (!offsetAt(u, qb) || std::isnan(t = project(qb.point, t, a0, a1, qa)) ||
+            qa.point.distanceTo(qb.point) > (below ? options.tolerance.evaluation : options.tolerance.nodeMerge)) {
+            continue;
+        }
+        const RS_Vector meet = (qa.point + qb.point) * 0.5;
+        // a branch up to the crossing (keepFront), or from it
+        const auto cut = [&](LC_OffsetBranch& branch, const double at, const OffsetJet& q, const bool keepFront) {
+            std::vector<LC_OffsetCubicPiece>& pieces = branch.cubicPieces;
+            for (size_t j = 0; j < pieces.size(); ++j) {
+                LC_OffsetCubicPiece& piece = pieces[j];
+                const LC_OffsetBranchProvenance p = piece.provenance;
+                if (p.arcCentre.valid || at < p.sourceT0 || at > p.sourceT1) {
+                    continue;
+                }
+                OffsetJet end;
+                if (keepFront) {
+                    if (at > p.sourceT0 && computeOffsetJet(source, d, speedFloor, p.sourceT0,
+                                                            LC_CurveEvaluationSide::Right, end) ==
+                                               LC_CurveOffsetStatus::Ok) {
+                        piece.bezier = hermitePiece(piece.bezier[0], end.first, meet, q.first, at - p.sourceT0);
+                        piece.provenance.sourceT1 = at;
+                        pieces.resize(j + 1);
+                    }
+                    else {
+                        pieces.resize(j); // the crossing is this piece's start
+                        if (pieces.empty()) {
+                            return false;
+                        }
+                    }
+                    pieces.back().bezier[3] = meet;
+                }
+                else {
+                    if (at < p.sourceT1 && computeOffsetJet(source, d, speedFloor, p.sourceT1,
+                                                            LC_CurveEvaluationSide::Left, end) ==
+                                               LC_CurveOffsetStatus::Ok) {
+                        piece.bezier = hermitePiece(meet, q.first, piece.bezier[3], end.first, p.sourceT1 - at);
+                        piece.provenance.sourceT0 = at;
+                        pieces.erase(pieces.begin(), pieces.begin() + static_cast<std::ptrdiff_t>(j));
+                    }
+                    else {
+                        pieces.erase(pieces.begin(), pieces.begin() + static_cast<std::ptrdiff_t>(j + 1));
+                        if (pieces.empty()) {
+                            return false;
+                        }
+                    }
+                    pieces.front().bezier[0] = meet;
+                }
+                return true;
+            }
+            return false;
+        };
+        if (before == after) {
+            // the only other branch runs out of the loop and back into it: a ring
+            LC_OffsetBranch ring = a;
+            if (!cut(ring, t, qa, true) || !cut(ring, u, qb, false)) {
+                continue;
+            }
+            ring.closed = true;
+            ring.startEnd = LC_OffsetBranchEnd::Free;
+            ring.endEnd = LC_OffsetBranchEnd::Free;
+            removed += 3; // the loop and its two wings
+            branches.assign(1, std::move(ring));
+            return LC_CurveOffsetStatus::Ok;
+        }
+        LC_OffsetBranch front = a;
+        LC_OffsetBranch back = b;
+        if (!cut(front, t, qa, true) || !cut(back, u, qb, false)) {
+            continue;
+        }
+        removed += 3; // the loop and its two wings
+        front.cubicPieces.insert(front.cubicPieces.end(), back.cubicPieces.begin(), back.cubicPieces.end());
+        front.endEnd = back.endEnd;
+        branches[before] = std::move(front);
+        for (const size_t gone : {std::max(k, after), std::min(k, after)}) {
+            branches.erase(branches.begin() + static_cast<std::ptrdiff_t>(gone));
+        }
+        k = static_cast<size_t>(-1); // indices moved: start over
+    }
+    return LC_CurveOffsetStatus::Ok;
+}
+
+/**
+ * The offset at @p d as a cutter for trimming: only where it runs matters,
+ * which OffsetCurves evaluates exactly, so each span is one piece, not fitted,
+ * and cusps and stalls are no concern, since a cutter's pieces are never noded
+ * with each other. A corner that turns away from it is rounded as a branch's
+ * would be; where one turns towards it, a new branch starts.
+ */
+LC_CurveOffsetStatus cutterBranches(const OffsetSource& source, const double d, const LC_CurveOffsetOptions& options,
+                                    const double speedFloor, std::vector<LC_OffsetBranch>& branches) {
+    const std::vector<double>& breaks = source.breaks();
+    std::vector<bool> cusps;
+    std::vector<SourceJoin> joins;
+    const LC_CurveOffsetStatus joined = checkJoins(source, d, options, KinkPolicy::Round, cusps, joins);
+    if (joined != LC_CurveOffsetStatus::Ok) {
+        return joined;
+    }
+    std::vector<LC_OffsetCubicPiece> spans;
+    for (size_t span = 0; span + 1 < breaks.size(); ++span) {
+        OffsetJet q0;
+        OffsetJet q1;
+        if (computeOffsetJet(source, d, speedFloor, breaks[span], LC_CurveEvaluationSide::Right, q0) !=
+                LC_CurveOffsetStatus::Ok ||
+            computeOffsetJet(source, d, speedFloor, breaks[span + 1], LC_CurveEvaluationSide::Left, q1) !=
+                LC_CurveOffsetStatus::Ok) {
+            return LC_CurveOffsetStatus::UndefinedTangent;
+        }
+        LC_OffsetCubicPiece piece;
+        piece.provenance = {span, breaks[span], breaks[span + 1], d, true};
+        piece.bezier = {q0.point, q0.point, q1.point, q1.point};
+        spans.push_back(piece);
+    }
+    // the corner before span k, the seam's for a closed source at 0
+    const auto corner = [&](const size_t k, LC_OffsetBranch& into, const LC_OffsetCubicPiece& next) {
+        std::vector<LC_OffsetCubicPiece> arc;
+        const SourceJoin& join = joins[k];
+        if (join.kind != SourceJoin::Kind::Kink) {
+            return true; // smooth, or closed within the merge tolerance
+        }
+        if (!cornerArc(join, into.cubicPieces.back().bezier[3], next.bezier[0], d, options.angleTolerance, arc)) {
+            return false;
+        }
+        into.cubicPieces.insert(into.cubicPieces.end(), arc.begin(), arc.end());
+        return true;
+    };
+    branches.assign(1, LC_OffsetBranch{});
+    branches.back().cubicPieces.push_back(spans.front());
+    for (size_t k = 1; k < spans.size(); ++k) {
+        if (!corner(k, branches.back(), spans[k])) {
+            branches.back().endEnd = LC_OffsetBranchEnd::Kink;
+            branches.emplace_back();
+            branches.back().startEnd = LC_OffsetBranchEnd::Kink;
+        }
+        branches.back().cubicPieces.push_back(spans[k]);
+    }
+    if (source.closed()) {
+        if (!corner(0, branches.back(), spans.front())) {
+            branches.back().endEnd = LC_OffsetBranchEnd::Kink;
+            branches.front().startEnd = LC_OffsetBranchEnd::Kink;
+        }
+        else if (branches.size() == 1) {
+            branches.front().closed = true;
+        }
+        else {
+            // the last branch runs on across the seam into the first
+            std::vector<LC_OffsetCubicPiece>& wrapped = branches.back().cubicPieces;
+            wrapped.insert(wrapped.end(), branches.front().cubicPieces.begin(), branches.front().cubicPieces.end());
+            branches.front().cubicPieces = std::move(wrapped);
+            branches.front().startEnd = branches.back().startEnd;
+            branches.pop_back();
+        }
+    }
+    return LC_CurveOffsetStatus::Ok;
+}
+
+/**
  * Removes the parts of the noded Direct offset nearer to the source than
  * rho = |d| minus the approximation and classification budget, and chains
  * what remains through its nodes. Visibility can change only at the offset's
@@ -2589,8 +2957,8 @@ Visibility visibility(const OffsetSource& source, const std::vector<std::pair<do
  * since that end is and visibility cannot change on the way to it.
  */
 LC_CurveOffsetStatus trimBranches(const OffsetSource& source, const SourceScale& scale, const double d,
-                                  const LC_CurveOffsetOptions& options, const LC_OffsetSourceBudget& budget,
-                                  std::vector<LC_OffsetBranch>& branches, LC_CurveOffsetGeometryResult& result) {
+                                  const LC_CurveOffsetOptions& options, std::vector<LC_OffsetBranch>& branches,
+                                  LC_CurveOffsetGeometryResult& result) {
     const double rho =
         std::abs(d) - (options.tolerance.requestedGeometry + options.tolerance.classification);
     if (!(rho > scale.numericFloor) || branches.front().straight) {
@@ -2599,14 +2967,11 @@ LC_CurveOffsetStatus trimBranches(const OffsetSource& source, const SourceScale&
     const std::vector<double>& breaks = source.breaks();
     const double speedFloor = scale.numericFloor / (breaks.back() - breaks.front());
 
-    // where the offset meets the other side's offset and the circles about the ends
+    // where the offset meets the other side's offset and the half circles ahead of the ends
     std::vector<LC_OffsetBranch> opposite;
-    double ignoredError = 0.0;
-    std::size_t ignoredSamples = 0;
-    const LC_CurveOffsetStatus other =
-        directBranches(source, scale, -d, options, budget, KinkPolicy::Round, opposite, ignoredError, ignoredSamples);
+    const LC_CurveOffsetStatus other = cutterBranches(source, -d, options, speedFloor, opposite);
     if (other != LC_CurveOffsetStatus::Ok) {
-        return LC_CurveOffsetStatus::AmbiguousTopology; // transitions against it cannot be found
+        return other;
     }
     // Past an open end E only the half plane ahead of it has E as its nearest
     // source point, so only the half circle there bounds what E hides. Its ends
@@ -2683,6 +3048,8 @@ LC_CurveOffsetStatus trimBranches(const OffsetSource& source, const SourceScale&
         bool reversed{false};
         /** Ends at a cusp or a corner's overlapping end, on no boundary. */
         bool dangling{false};
+        /** Within the merge tolerance of a point: its neighbours meet in its middle. */
+        bool tiny{false};
         bool keep{false};
     };
     std::vector<Fragment> fragments;
@@ -2717,8 +3084,8 @@ LC_CurveOffsetStatus trimBranches(const OffsetSource& source, const SourceScale&
     }
 
     // each fragment by the distance of interior points
-    const double clear =
-        std::abs(d) + (options.tolerance.requestedGeometry + options.tolerance.classification);
+    const double marginal =
+        16.0 * std::sqrt(2.0 * std::abs(d) * (options.tolerance.requestedGeometry + options.tolerance.classification));
     std::size_t boxes = 0;
     for (Fragment& fragment : fragments) {
         if (fragment.reversed) {
@@ -2731,7 +3098,8 @@ LC_CurveOffsetStatus trimBranches(const OffsetSource& source, const SourceScale&
             }
         }
         if (size <= options.tolerance.nodeMerge) {
-            continue; // below the resolution: dropped either way
+            fragment.tiny = true; // below the resolution: dropped either way
+            continue;
         }
         Visibility seen = Visibility::Undecided;
         RS_Vector probe;
@@ -2760,19 +3128,34 @@ LC_CurveOffsetStatus trimBranches(const OffsetSource& source, const SourceScale&
                 return LC_CurveOffsetStatus::LimitExceeded;
             }
         }
-        if (seen == Visibility::Undecided) {
+        if (seen == Visibility::Undecided && !fragment.dangling) {
             return LC_CurveOffsetStatus::AmbiguousTopology;
         }
-        if (seen == Visibility::Visible && fragment.dangling) {
+        if (seen != Visibility::Hidden && fragment.dangling) {
             // A cusp is nearer than the distance, and visibility changes only
             // at boundaries: this fragment is hidden, though by less than the
-            // tolerance can show, unless a boundary was missed.
-            if (visibility(source, {}, probe, clear, boxes, options.maxDistanceMapBoxes) == Visibility::Visible) {
+            // tolerance can show. A stretch hidden by less than tolerance h
+            // spans about sqrt(2 |d| h); one much longer means a missed boundary.
+            if (size > marginal) {
                 return LC_CurveOffsetStatus::AmbiguousTopology;
             }
             seen = Visibility::Hidden;
         }
         fragment.keep = seen == Visibility::Visible;
+    }
+
+    // a fragment too small to keep closes up: its neighbours meet in its middle
+    for (size_t f = 0; f < fragments.size(); ++f) {
+        if (!fragments[f].tiny || f == 0 || f + 1 == fragments.size()) {
+            continue;
+        }
+        RS_Vector& end = fragments[f - 1].pieces.back().bezier[3];
+        RS_Vector& start = fragments[f + 1].pieces.front().bezier[0];
+        if (end == fragments[f].pieces.front().bezier[0] && start == fragments[f].pieces.back().bezier[3]) {
+            const RS_Vector middle = (end + start) * 0.5;
+            end = middle;
+            start = middle;
+        }
     }
 
     // what remains, chained where one fragment ends on the next one's start
@@ -2798,11 +3181,12 @@ LC_CurveOffsetStatus trimBranches(const OffsetSource& source, const SourceScale&
         kept.front().cubicPieces = std::move(wrapped);
         kept.pop_back();
     }
+    result.removedIntervals += removed;
+    // a loop that trimming closed, or a closed offset trimming left whole
     if (kept.size() == 1 && kept.front().cubicPieces.back().bezier[3] == kept.front().cubicPieces.front().bezier[0] &&
-        (removed > 0 || branches.front().closed)) {
+        (result.removedIntervals > 0 || branches.front().closed)) {
         kept.front().closed = true;
     }
-    result.removedIntervals = removed;
     branches = std::move(kept);
     return LC_CurveOffsetStatus::Ok;
 }
@@ -3551,11 +3935,28 @@ LC_CurveOffsetGeometryResult buildDirectBranches(const RS_Entity& source, const 
         directBranches(*adapter, scale, d, options, budget, KinkPolicy::Round, branches, maxError,
                        result.exactSamples);
     const bool trimmed = options.mode == LC_CurveOffsetMode::Trimmed;
+    if (status == LC_CurveOffsetStatus::Ok && trimmed) {
+        std::size_t removed = 0;
+        status = removeLocalLoops(*adapter, d, speedFloor, options, branches, removed);
+        collapseTinyReversals(branches, options.tolerance.nodeMerge);
+        // any reversed branch left is hidden throughout, and dropped before
+        // noding: next to a cusp the offset's two arms are too close to tell
+        // apart, far from the origin in particular
+        const std::size_t before = branches.size();
+        branches.erase(std::remove_if(branches.begin(), branches.end(),
+                                      [](const LC_OffsetBranch& b) { return b.reversed; }),
+                       branches.end());
+        result.removedIntervals = removed + before - branches.size();
+        if (branches.empty()) {
+            result.status = LC_CurveOffsetStatus::Ok;
+            return result;
+        }
+    }
     if (status == LC_CurveOffsetStatus::Ok && (options.nodeIntersections || trimmed) && !branches.front().straight) {
         status = nodeBranches(*adapter, d, speedFloor, options, branches, result);
     }
     if (status == LC_CurveOffsetStatus::Ok && trimmed) {
-        status = trimBranches(*adapter, scale, d, options, budget, branches, result);
+        status = trimBranches(*adapter, scale, d, options, branches, result);
     }
     if (status != LC_CurveOffsetStatus::Ok) {
         result.status = status;

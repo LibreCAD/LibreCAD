@@ -700,9 +700,10 @@ TEST_CASE("Closed sources materialize as a closed chain of open pieces", "[curve
     CHECK(result.entities.back()->getEndpoint() == result.entities.front()->getStartpoint());
 }
 
-TEST_CASE("Direct offset of 20-control-point cubics, timed", "[.benchmark]") {
-    // The D1 interactive target: below 50 ms for one regular, open cubic with 20
-    // control points at the default tolerance, measured without sanitizers.
+TEST_CASE("Offsets of 20-control-point cubics, timed", "[.benchmark]") {
+    // The interactive target: below 50 ms for one regular, open cubic with 20
+    // control points at the default tolerance, Direct and Trimmed, measured
+    // without sanitizers.
     struct Shape {
         const char* name;
         std::vector<RS_Vector> points;
@@ -725,20 +726,27 @@ TEST_CASE("Direct offset of 20-control-point cubics, timed", "[.benchmark]") {
         d.knotslist.insert(d.knotslist.end(), 4, 17.0);
         d.weights.assign(20, 1.0);
         const RS_Spline source(nullptr, d);
-        std::vector<double> ms;
-        size_t pieces = 0;
-        for (int run = 0; run < 41; ++run) {
-            const auto start = std::chrono::steady_clock::now();
-            const LC_CurveOffsetMaterializationResult r = materialize(source, LC_CurveOffsetSide::Left, shape.distance);
-            ms.push_back(std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - start).count());
-            REQUIRE(r.status == LC_CurveOffsetStatus::Ok);
-            pieces = r.entities.size();
+        for (const LC_CurveOffsetMode mode : {LC_CurveOffsetMode::Direct, LC_CurveOffsetMode::Trimmed}) {
+            std::vector<double> ms;
+            size_t pieces = 0;
+            for (int run = 0; run < 41; ++run) {
+                LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(source, shape.distance);
+                options.mode = mode;
+                const auto start = std::chrono::steady_clock::now();
+                const LC_CurveOffsetMaterializationResult r = LC_CurveOffset::createEntities(
+                    source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, shape.distance), options,
+                    LC_CurveOffset::makeDirectSourceBudget());
+                ms.push_back(std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - start).count());
+                REQUIRE(r.status == LC_CurveOffsetStatus::Ok);
+                pieces = r.entities.size();
+            }
+            std::sort(ms.begin(), ms.end());
+            const double median = ms[ms.size() / 2];
+            const double p95 = ms[ms.size() * 95 / 100];
+            WARN(shape.name << (mode == LC_CurveOffsetMode::Direct ? " direct: " : " trimmed: ") << pieces
+                            << " entities, median " << median << " ms, p95 " << p95 << " ms");
+            CHECK(median < 50.0);
         }
-        std::sort(ms.begin(), ms.end());
-        const double median = ms[ms.size() / 2];
-        const double p95 = ms[ms.size() * 95 / 100];
-        WARN(shape.name << ": " << pieces << " pieces, median " << median << " ms, p95 " << p95 << " ms");
-        CHECK(median < 50.0);
     }
 }
 
@@ -854,6 +862,23 @@ TEST_CASE("A stall is found whatever the curve's orientation", "[curve-offset][c
             REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
             const LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(parabola, d);
             CHECK(maxDeviation(result, evaluator(parabola), options.tolerance.nodeMerge) <=
+                  options.tolerance.requestedGeometry);
+        }
+    }
+}
+
+TEST_CASE("Near the radius of curvature the offset fits far from the origin too", "[curve-offset][cusp][stall]") {
+    // Where the offset all but stops its exact tangent is mostly cancellation;
+    // the fit weighs a tangent error by how far the offset moves.
+    for (const RS_Vector& shift : {RS_Vector{1.0e4, -2.0e4}, RS_Vector{1.0e6, -2.0e6}}) {
+        RS_Spline parabola = unitParabola();
+        parabola.move(shift);
+        for (const double d : {0.49999, 0.499999, 0.5, 0.5 * (1.0 + 1e-6)}) {
+            INFO("shift " << shift.x << " distance " << std::setprecision(17) << d);
+            const LC_CurveOffsetGeometryResult result = offsetToSide(parabola, LC_CurveOffsetSide::Left, d);
+            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+            const LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(parabola, d);
+            CHECK(maxDeviation(result, evaluator(parabola), 2.0 * options.tolerance.nodeMerge) <=
                   options.tolerance.requestedGeometry);
         }
     }

@@ -27,6 +27,7 @@
 
 #include <algorithm>
 #include <array>
+#include <chrono>
 #include <cmath>
 #include <functional>
 #include <iomanip>
@@ -291,6 +292,26 @@ TEST_CASE("A trimmed offset materializes as its kept pieces", "[curve-offset][tr
     }
 }
 
+TEST_CASE("An open spline that looks closed and smooth trims far from the origin too", "[curve-offset][trim]") {
+    // Its offset's two free ends meet tangentially: an end contact, not one
+    // whose sides can be told apart at these coordinates.
+    for (const RS_Vector& shift : {RS_Vector{0.0, 0.0}, RS_Vector{1.0e4, -2.0e4}, RS_Vector{1.0e5, -2.0e5}}) {
+        LC_SplinePointsData loop(false, false);
+        loop.useControlPoints = true;
+        for (const RS_Vector& p : {RS_Vector{0, 0}, RS_Vector{10, 0}, RS_Vector{10, 10}, RS_Vector{-10, 10},
+                                   RS_Vector{-10, 0}, RS_Vector{0, 0}}) {
+            loop.controlPoints.push_back(p + shift);
+        }
+        const LC_SplinePoints source(nullptr, loop);
+        for (const double d : {0.5, 1.0, 2.0}) {
+            for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+                INFO("shift " << shift.x << " distance " << d << " side " << static_cast<int>(side));
+                CHECK(trim(source, side, d).status == LC_CurveOffsetStatus::Ok);
+            }
+        }
+    }
+}
+
 TEST_CASE("An open spline whose ends coincide trims like any other", "[curve-offset][trim]") {
     // Its two end circles are the same circle: how they meet each other does
     // not bear on the offset, which only needs where it meets them.
@@ -339,6 +360,22 @@ TEST_CASE("An offset with nothing to trim keeps its exact ends, anywhere in the 
                   direct.branches.front().cubicPieces.front().bezier[0]);
             CHECK(trimmed.branches.front().cubicPieces.back().bezier[3] ==
                   direct.branches.front().cubicPieces.back().bezier[3]);
+        }
+    }
+}
+
+TEST_CASE("The outer offset trims whatever the inner side does at the same distance", "[curve-offset][trim]") {
+    // The inner offset is only the cutter: where it runs is evaluated exactly,
+    // and its cusps and stalls near the vertex radius are no concern.
+    for (const double angle : {0.0, 7.0 * M_PI / 180.0, M_PI / 6.0}) {
+        RS_Spline parabola = unitParabola();
+        parabola.rotate(RS_Vector{0.0, 0.0}, angle);
+        for (const double d : {0.5 - 1e-9, 0.5, 0.5 + 1e-6, 0.5 + 1e-4}) {
+            INFO("angle " << angle << " distance " << d);
+            const LC_CurveOffsetGeometryResult result = trim(parabola, LC_CurveOffsetSide::Right, d);
+            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+            CHECK(result.branches.size() == 1);
+            CHECK(result.removedIntervals == 0);
         }
     }
 }
@@ -510,6 +547,29 @@ TEST_CASE("The overlap at a slight inward corner is cut, although by less than t
     CHECK(checked.worstMissing <= 2.0 * tolerance);
 }
 
+TEST_CASE("A polyline spline that turns back on itself is refused, at once", "[curve-offset][trim][kink]") {
+    // (0,0) -> (10,0) -> (5,0): its two sides' offsets run along each other,
+    // exactly the distance from both, which trimming cannot resolve; AutoCAD
+    // refuses such a source too. Its Direct offset is rounded at the turn.
+    const RS_Spline source = polylineSpline({{0, 0}, {10, 0}, {5, 0}});
+    const auto started = std::chrono::steady_clock::now();
+    const LC_CurveOffsetGeometryResult result = trim(source, LC_CurveOffsetSide::Left, 1.0);
+    const double seconds = std::chrono::duration<double>(std::chrono::steady_clock::now() - started).count();
+    CHECK(result.status == LC_CurveOffsetStatus::AmbiguousTopology);
+    CHECK(seconds < 1.0);
+
+    const LC_CurveOffsetGeometryResult direct = LC_CurveOffset::buildDirectBranches(
+        source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 1.0),
+        LC_CurveOffset::makeDirectOptions(source, 1.0), LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(direct.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(direct.branches.size() == 1);
+    bool arcs = false;
+    const std::vector<RS_Vector> points = corners(direct.branches.front(), arcs);
+    CHECK(arcs);
+    CHECK(points.front().distanceTo(RS_Vector{0, 1}) <= 1e-9);
+    CHECK(points.back().distanceTo(RS_Vector{5, -1}) <= 1e-9);
+}
+
 TEST_CASE("A polyline spline shrunk past its width leaves nothing", "[curve-offset][trim][kink]") {
     // an open U inwards by twice its width, and a 10 x 4 rectangle by 3 or 2 and a hair
     const LC_CurveOffsetGeometryResult u =
@@ -598,3 +658,129 @@ TEST_CASE("A region still refuses a source with a corner", "[curve-offset][regio
     CHECK(result.status != LC_CurveOffsetStatus::Ok);
     CHECK(result.branches.empty());
 }
+
+namespace {
+
+/** The largest curvature of a spline over its domain, sampled and refined. */
+double largestCurvature(const RS_Spline& spline) {
+    double t0 = 0.0;
+    double t1 = 0.0;
+    REQUIRE(spline.getParameterDomain(t0, t1));
+    const auto curvature = [&spline](const double t) {
+        LC_CurveJet j;
+        REQUIRE(spline.tryEvaluateJet(t, LC_CurveEvaluationSide::Interior, j));
+        return std::abs(RS_Vector::crossP(j.first, j.second).z) / std::pow(j.first.magnitude(), 3.0);
+    };
+    double best = t0;
+    for (int i = 0; i <= 4000; ++i) {
+        const double t = t0 + (t1 - t0) * i / 4000.0;
+        if (curvature(t) > curvature(best)) {
+            best = t;
+        }
+    }
+    // golden-section refinement around the best sample
+    double lo = std::max(t0, best - (t1 - t0) / 4000.0);
+    double hi = std::min(t1, best + (t1 - t0) / 4000.0);
+    for (int k = 0; k < 100; ++k) {
+        const double a = hi - 0.6180339887498949 * (hi - lo);
+        const double b = lo + 0.6180339887498949 * (hi - lo);
+        (curvature(a) > curvature(b) ? hi : lo) = (curvature(a) > curvature(b)) ? b : a;
+    }
+    return std::max(curvature(lo), curvature(best));
+}
+
+} // namespace
+
+TEST_CASE("Around a curvature maximum on a knot the trimmed offset is one clean curve", "[curve-offset][trim]") {
+    // Two parabola pieces meeting at their common vertex, the largest curvature
+    // exactly on the knot, where the rounded sign of 1 - d kappa is noise.
+    RS_SplineData data(2, false);
+    data.controlPoints = {{-2, 4}, {-1, 0}, {1, 0}, {2, 4}};
+    data.knotslist = {0, 0, 0, 1, 2, 2, 2};
+    data.weights.assign(4, 1.0);
+    for (const double angle : {0.0, 10.0, 20.0, 30.0, 60.0}) {
+        RS_Spline source(nullptr, data);
+        source.rotate(RS_Vector{0.0, 0.0}, angle * M_PI / 180.0);
+        const double rho = 1.0 / largestCurvature(source);
+        for (const double factor : {1.0 - 1e-9, 1.0, 1.0 + 1e-9, 1.0 + 1e-6}) {
+            const double d = rho * factor;
+            INFO("angle " << angle << " distance " << std::setprecision(17) << d);
+            const LC_CurveOffsetGeometryResult result = trim(source, LC_CurveOffsetSide::Left, d);
+            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+            CHECK(result.branches.size() == 1);
+            const double tolerance = LC_CurveOffset::makeDirectOptions(source, d).tolerance.requestedGeometry;
+            const Checked checked = check(result, curveOf(source), 0.0, 2.0, d, d * (1.0 - 1e-9));
+            CHECK(checked.nearestKept >= d - 2.0 * tolerance);
+            CHECK(checked.worstMissing <= 2.0 * tolerance);
+        }
+    }
+}
+
+TEST_CASE("Near an asymmetric curvature maximum the trimmed offset is one clean curve", "[curve-offset][trim]") {
+    // A cubic whose curvature rises and falls at different rates: the crossing
+    // of the swallowtail's outer arms lies far from the middle of its cusps.
+    RS_SplineData data(3, false);
+    data.controlPoints = {{0, 0}, {6, 1}, {7, 3}, {6.5, 6}, {2, 9}};
+    data.knotslist = {0, 0, 0, 0, 0.3, 1, 1, 1, 1};
+    data.weights.assign(5, 1.0);
+    const RS_Spline source(nullptr, data);
+    const double rho = 1.0 / largestCurvature(source);
+    for (const double factor : {1.0 - 1e-9, 1.0, 1.0 + 1e-9, 1.0 + 1e-6, 1.0 + 1e-4, 1.01}) {
+        const double d = rho * factor;
+        INFO("distance " << std::setprecision(17) << d << " factor " << factor);
+        const LC_CurveOffsetGeometryResult result = trim(source, LC_CurveOffsetSide::Left, d);
+        REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+        CHECK(result.branches.size() == 1);
+        const double tolerance = LC_CurveOffset::makeDirectOptions(source, d).tolerance.requestedGeometry;
+        const Checked checked = check(result, curveOf(source), 0.0, 1.0, d, d * (1.0 - 1e-9));
+        CHECK(checked.nearestKept >= d - 2.0 * tolerance);
+        CHECK(checked.worstMissing <= 2.0 * tolerance);
+    }
+}
+
+TEST_CASE("A trimmed offset with loops stays fast and whole far from the origin", "[curve-offset][trim]") {
+    // Next to a cusp the offset's arms are closer than coordinates this large
+    // can tell apart; with the reversed branches dropped first, nothing asks.
+    for (const RS_Vector& shift : {RS_Vector{1.0e4, -2.0e4}, RS_Vector{1.0e5, -2.0e5}, RS_Vector{1.0e6, -2.0e6}}) {
+        const RS_Spline source = sCurve(shift);
+        for (const double d : {1.0, 3.0, 5.0}) {
+            INFO("shift " << shift.x << " distance " << d);
+            const auto started = std::chrono::steady_clock::now();
+            const LC_CurveOffsetGeometryResult result = trim(source, LC_CurveOffsetSide::Left, d);
+            const double seconds = std::chrono::duration<double>(std::chrono::steady_clock::now() - started).count();
+            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+            CHECK_FALSE(result.branches.empty());
+            CHECK(seconds < 1.0);
+            const LC_CurveOffsetGeometryResult near = trim(sCurve(), LC_CurveOffsetSide::Left, d);
+            REQUIRE(near.status == LC_CurveOffsetStatus::Ok);
+            CHECK(result.branches.size() == near.branches.size());
+        }
+    }
+}
+
+TEST_CASE("A corner after a reversed stretch is rounded, and what the reversal hides is cut",
+          "[curve-offset][trim][kink]") {
+    // A line to (9, 0), a quarter circle of radius 1 about (9, 1) to (10, 1),
+    // then a line to (15, 1); on the left at 3 the arc's offset runs backwards
+    // (radius 1 - 3), and the corner at (10, 1) turns away: rounded about it.
+    RS_SplineData data(2, false);
+    data.controlPoints = {{0, 0}, {4.5, 0}, {9, 0}, {10, 0}, {10, 1}, {12.5, 1}, {15, 1}};
+    data.knotslist = {0, 0, 0, 1, 1, 2, 2, 3, 3, 3};
+    data.weights = {1.0, 1.0, 1.0, M_SQRT1_2, 1.0, 1.0, 1.0};
+    const RS_Spline source(nullptr, data);
+    const LC_CurveOffsetGeometryResult result = trim(source, LC_CurveOffsetSide::Left, 3.0);
+    REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(result.branches.size() == 1);
+    const double tolerance = LC_CurveOffset::makeDirectOptions(source, 3.0).tolerance.requestedGeometry;
+    bool arcs = false;
+    const std::vector<RS_Vector> points = corners(result.branches.front(), arcs);
+    CHECK(arcs);
+    CHECK(points.front().distanceTo(RS_Vector{0, 3}) <= 1e-9);
+    CHECK(points.back().distanceTo(RS_Vector{15, 4}) <= 1e-9);
+    // y = 3 meets the round corner's circle, radius 3 about (10, 1), at x = 10 - sqrt(5)
+    CHECK(passesThrough(points, RS_Vector{10.0 - std::sqrt(5.0), 3.0}, 2.0 * tolerance));
+    CHECK(passesThrough(points, RS_Vector{10.0, 4.0}, 2.0 * tolerance));
+    const Checked checked = check(result, curveOf(source), 0.0, 3.0, 3.0, 3.0 * (1.0 - 1e-9));
+    CHECK(checked.nearestKept >= 3.0 - 2.0 * tolerance);
+}
+
