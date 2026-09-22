@@ -21,9 +21,9 @@
  * JWW is an import-only format.
  *
  * RS_FilterJWW used to report canExport(FormatJWW) == true although its
- * writer never produced a file: DL_Jww::out() returned NULL (it has since
- * jwwlib was added in 2011), so fileExport() gave up before writing a byte,
- * and every DL_Jww::write* was an empty stub.  The writer was also the wrong
+ * writer never produced a file: DL_Jww::out() returned NULL (since late 2011;
+ * before that it had no return statement at all), so fileExport() gave up
+ * before writing a byte, and every DL_Jww::write* was an empty stub.  The writer was also the wrong
  * kind: a dxflib DXF writer, so completing it would have put DXF text into a
  * .jww file, which a JWW reader rejects (a real .jww is a binary archive
  * that starts with "JwwData.").
