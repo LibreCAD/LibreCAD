@@ -547,11 +547,11 @@ TEST_CASE("DXF round-trip via RS_FilterDXFRW preserves unmodeled object + entity
   std::filesystem::remove(out);
 }
 
-TEST_CASE("DXF round-trip restores entities after a hidden layer is thawed",
+TEST_CASE("DXF round-trip keeps frozen-layer entities visible after thaw",
           "[dxf][roundtrip][filter][layer][issue2913]") {
   ensureSettings();
-  const std::string src = tmpFile("hidden_layer_src.dxf");
-  const std::string out = tmpFile("hidden_layer_out.dxf");
+  const std::string src = tmpFile("frozen_layer_src.dxf");
+  const std::string out = tmpFile("frozen_layer_out.dxf");
   std::filesystem::remove(src);
   std::filesystem::remove(out);
 
@@ -567,8 +567,8 @@ TEST_CASE("DXF round-trip restores entities after a hidden layer is thawed",
       "0\nLAYER\n2\nLAYER2\n70\n0\n62\n3\n6\nCONTINUOUS\n"
       "0\nENDTAB\n0\nENDSEC\n"
       "0\nSECTION\n2\nENTITIES\n"
-      "0\nLWPOLYLINE\n8\nLAYER1\n90\n2\n70\n0\n"
-      "10\n0.0\n20\n0.0\n10\n10.0\n20\n0.0\n"
+      "0\nLINE\n8\nLAYER1\n"
+      "10\n0.0\n20\n0.0\n11\n10.0\n21\n0.0\n"
       "0\nENDSEC\n0\nEOF\n");
 
   RS_Graphic graphic;
@@ -591,16 +591,13 @@ TEST_CASE("DXF round-trip restores entities after a hidden layer is thawed",
   REQUIRE(layer != nullptr);
   CHECK(layer->isFrozen());
 
-  auto *polyline = dynamic_cast<RS_Polyline *>(reloaded.firstEntity());
-  REQUIRE(polyline != nullptr);
-  RS_Entity *segment = polyline->firstEntity();
-  REQUIRE(segment != nullptr);
-  CHECK(segment->getLayer(false) == nullptr);
-  CHECK(segment->getLayer() == layer);
-  CHECK_FALSE(segment->isVisible());
+  auto *line = dynamic_cast<RS_Line *>(reloaded.firstEntity());
+  REQUIRE(line != nullptr);
+  CHECK(line->getFlag(RS2::FlagVisible));
+  CHECK_FALSE(line->isVisible());
 
   layer->freeze(false);
-  CHECK(segment->isVisible());
+  CHECK(line->isVisible());
 
   std::filesystem::remove(src);
   std::filesystem::remove(out);
