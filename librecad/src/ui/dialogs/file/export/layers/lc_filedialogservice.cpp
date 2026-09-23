@@ -149,10 +149,15 @@ namespace {
 */
 // fixme - sand - decide what to do with this method, whether it's possible to have truly reusable generic file dialogs service?
 LC_FileDialogService::FileDialogResult LC_FileDialogService::getFileDetails (const FileDialogMode fileDialogMode,
-                                                                             const QString &currentFileName){
+                                                                             const QString &currentFileName,
+                                                                             const RS2::FormatType preferredType){
     RS_DEBUG->print("LC_FileDialogService::getFileName");
 
     auto [initialDir, nameFilter] = readDefaultDirFilter();
+    const int preferredFilter = FILTERS_TYPE_LIST.indexOf(preferredType);
+    if (preferredFilter >= 0) {
+        nameFilter = FILTERS_STRING_LIST.at(preferredFilter);
+    }
 
     // If the caller passes the current file path, use its directory as the
     // starting location and pre-select its base name (without extension).
@@ -162,7 +167,7 @@ LC_FileDialogService::FileDialogResult LC_FileDialogService::getFileDetails (con
         if (fi.dir().exists()) {
             initialDir = fi.absolutePath();
         }
-        preselectName = fi.baseName();
+        preselectName = fi.completeBaseName();
     }
 
     auto saveFileDialog = std::make_unique<QFileDialog>( nullptr,

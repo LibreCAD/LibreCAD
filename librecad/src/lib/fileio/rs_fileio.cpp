@@ -79,6 +79,9 @@ bool RS_FileIO::fileImport(RS_Graphic& graphic, const QString& file,
 #ifdef DWGSUPPORT
             const bool isDwg{file.endsWith(".dwg", Qt::CaseInsensitive)};
 #endif
+            // Save writes the drawing back in the format it was read from. A
+            // filter that reads several versions of a format narrows it down.
+            graphic.setFormatType(t);
             const bool bImported{filter->fileImport(graphic, file, t)};
             if (!bImported) {
                 if (errorCallback != nullptr) {
@@ -113,6 +116,8 @@ bool RS_FileIO::fileImport(RS_Graphic& graphic, const QString& file,
                                                                                         QMessageBox::Yes | QMessageBox::No,
                                                                                         QMessageBox::NoButton);
                         if (QMessageBox::Yes == answer) {
+                            // Save must not write over a file that was not read completely
+                            graphic.setFormatType(RS2::FormatUnknown);
                             return true; // open the file anyhow
                         }
                     }
@@ -213,6 +218,10 @@ bool RS_FileIO::fileExport(RS_Graphic& graphic, const QString& file, RS2::Format
     RS_DEBUG->print("RS_FileIO::fileExport: no filter found");
 
     return false;
+}
+
+bool RS_FileIO::canExport(const RS2::FormatType type) const {
+    return type != RS2::FormatUnknown && getExportFilter(QString(), type) != nullptr;
 }
 
 RS_FileIO* RS_FileIO::instance() {

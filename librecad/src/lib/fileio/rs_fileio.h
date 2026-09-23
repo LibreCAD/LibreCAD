@@ -60,6 +60,11 @@ public:
         std::function<bool(bool /*partial*/, const QString& /*errorMsg*/)> errorCallback = nullptr) const;
 
     bool fileExport(RS_Graphic& graphic, const QString& file, RS2::FormatType type = RS2::FormatUnknown) const;
+    /**
+     * @return true if LibreCAD can write files in format @p type;
+     *         false for RS2::FormatUnknown.
+     */
+    bool canExport(RS2::FormatType type) const;
     /** \brief detectFormat detect file format type
      * \param file type
      * \param forRead read the file to verify dxf/dxfrw type, default to true
