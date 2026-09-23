@@ -7708,6 +7708,8 @@ void RS_FilterDXFRW::addInsert(const DRW_Insert &data) {
   for (const auto &att : data.attlist) {
     if (!att)
       continue;
+    const bool attributeVisible =
+        att->visible && (att->attribFlags & 0x1) == 0;
 
     // Multi-line ATTRIB (R2018+, ODA spec §20.4.4 Attribute type 2/4):
     // libdxfrw saw the `100 / Embedded Object` DXF subclass marker on the
@@ -7718,7 +7720,7 @@ void RS_FilterDXFRW::addInsert(const DRW_Insert &data) {
       auto *mt = mtextEntityFromDRW(*att->mtext);
       mt->setParent(m_currentContainer);
       setEntityAttributes(mt, att.get());
-      mt->setVisible((att->attribFlags & 0x1) == 0);
+      mt->setVisible(attributeVisible && att->mtext->visible);
       appendInsertAttribSidecar(mt, *att, entity->getId(), ordinal++);
       mt->update();
       m_currentContainer->addEntity(mt);
@@ -7754,7 +7756,7 @@ void RS_FilterDXFRW::addInsert(const DRW_Insert &data) {
                    RS2::NoUpdate);
     auto textEntity = std::make_unique<RS_Text>(m_currentContainer, td);
     setEntityAttributes(textEntity.get(), att.get());
-    textEntity->setVisible((att->attribFlags & 0x1) == 0);
+    textEntity->setVisible(attributeVisible);
     appendInsertAttribSidecar(textEntity.get(), *att, entity->getId(),
                               ordinal++);
     textEntity->update();

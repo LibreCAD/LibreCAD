@@ -13573,7 +13573,7 @@ void applyProxyDxfCommon(DRW_ProxyEntity& entity,
         break;
     case 60:
         if (value.type() == DRW_Variant::INTEGER)
-            entity.visible = (value.i_val() & 1) == 0;
+            entity.visible = value.i_val() == 0;
         break;
     case 67:
         if (value.type() == DRW_Variant::INTEGER)

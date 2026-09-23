@@ -569,6 +569,8 @@ TEST_CASE("DXF round-trip keeps frozen-layer entities visible after thaw",
       "0\nSECTION\n2\nENTITIES\n"
       "0\nLINE\n8\nLAYER1\n"
       "10\n0.0\n20\n0.0\n11\n10.0\n21\n0.0\n"
+      "0\nLINE\n8\nLAYER2\n60\n1\n"
+      "10\n20.0\n20\n0.0\n11\n30.0\n21\n0.0\n"
       "0\nENDSEC\n0\nEOF\n");
 
   RS_Graphic graphic;
@@ -596,8 +598,85 @@ TEST_CASE("DXF round-trip keeps frozen-layer entities visible after thaw",
   CHECK(line->getFlag(RS2::FlagVisible));
   CHECK_FALSE(line->isVisible());
 
+  auto *hiddenLine = dynamic_cast<RS_Line *>(reloaded.nextEntity());
+  REQUIRE(hiddenLine != nullptr);
+  CHECK_FALSE(hiddenLine->getFlag(RS2::FlagVisible));
+  CHECK_FALSE(hiddenLine->isVisible());
+
   layer->freeze(false);
   CHECK(line->isVisible());
+  CHECK_FALSE(hiddenLine->isVisible());
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
+TEST_CASE("DXF INSERT attribute visibility combines common and attribute flags",
+          "[dxf][roundtrip][filter][attrib][visibility]") {
+  ensureSettings();
+  const std::string src = tmpFile("attrib_visibility_src.dxf");
+  const std::string out = tmpFile("attrib_visibility_out.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  writeText(
+      src,
+      "0\nSECTION\n2\nBLOCKS\n"
+      "0\nBLOCK\n8\n0\n2\nTITLEBLK\n70\n0\n10\n0\n20\n0\n3\nTITLEBLK\n"
+      "0\nENDBLK\n8\n0\n0\nENDSEC\n"
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nINSERT\n8\n0\n2\nTITLEBLK\n10\n0\n20\n0\n66\n1\n"
+      "0\nATTRIB\n8\n0\n10\n1\n20\n1\n40\n1\n1\nCommonHidden\n"
+      "2\nCOMMON_HIDDEN\n60\n1\n70\n0\n"
+      "0\nATTRIB\n8\n0\n10\n1\n20\n2\n40\n1\n1\nFlagHidden\n"
+      "2\nFLAG_HIDDEN\n70\n1\n"
+      "0\nATTRIB\n8\n0\n10\n1\n20\n3\n40\n1\n1\nVisible\n"
+      "2\nVISIBLE\n70\n0\n"
+      "0\nATTRIB\n8\n0\n100\nAcDbText\n10\n1\n20\n4\n40\n1\n"
+      "100\nAcDbAttribute\n2\nMTEXT_HIDDEN\n70\n0\n"
+      "100\nEmbedded Object\n10\n1\n20\n4\n40\n1\n71\n1\n72\n1\n"
+      "1\nEmbedded\n60\n1\n"
+      "0\nSEQEND\n8\n0\n0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+
+  const auto checkVisibility = [](RS_Graphic &drawing) {
+    int visibleAttributes = 0;
+    int hiddenAttributes = 0;
+    for (int index = 0; index < drawing.count(); ++index) {
+      RS_Entity *entity = drawing.entityAt(index);
+      if (entity == nullptr ||
+          (entity->rtti() != RS2::EntityText &&
+           entity->rtti() != RS2::EntityMText))
+        continue;
+      if (entity->getFlag(RS2::FlagVisible))
+        ++visibleAttributes;
+      else
+        ++hiddenAttributes;
+    }
+    CHECK(visibleAttributes == 1);
+    CHECK(hiddenAttributes == 3);
+  };
+  checkVisibility(graphic);
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+
+  RS_Graphic reloaded;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(reloaded, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+  checkVisibility(reloaded);
 
   std::filesystem::remove(src);
   std::filesystem::remove(out);

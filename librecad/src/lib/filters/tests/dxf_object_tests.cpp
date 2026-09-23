@@ -7252,6 +7252,20 @@ TEST_CASE("DXF ACAD_PROXY_ENTITY exposes typed payloads and references",
   CHECK(cap.m_raw.front().parentHandle == 0x1Fu);
 }
 
+TEST_CASE("DXF proxy entity group 60 is not parsed as a bit field",
+          "[dxf][proxy-entity][visibility]") {
+  ProxyEntityCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nACAD_PROXY_ENTITY\n5\n25\n60\n2\n"
+      "90\n501\n91\n600\n92\n1\n310\nAB\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_proxy_entity_visibility_scalar.dxf");
+
+  REQUIRE(cap.m_entities.size() == 1);
+  CHECK_FALSE(cap.m_entities.front().visible);
+}
+
 TEST_CASE("DXF ACAD_PROXY_OBJECT separates binary and object payloads",
           "[dxf][proxy-object]") {
   ProxyObjectCapture cap;
