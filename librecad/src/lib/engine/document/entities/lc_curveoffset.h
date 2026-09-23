@@ -58,6 +58,16 @@
  * remove loops or self-intersections, and its error check is sampled
  * evidence, never a proof of the maximum deviation.
  *
+ * Every mode first cuts out where the source stands still, as at repeated
+ * control points: a span over which it does not move, and about each point
+ * where its tangent vanishes, the stretch over which it moves less than a
+ * sixteenth of the merge tolerance. Its two sides then meet as at a join:
+ * smoothly where the tangent tends to the same direction from both sides, so
+ * that the offset runs through the point along the limit's normal, and at a
+ * corner, rounded or overlapping as above, where it does not (a cusp of the
+ * source is a half turn). No piece's provenance lies inside a cut, and a
+ * piece next to one starts or ends where the cut does.
+ *
  * Trimmed mode, the drawing tools' mode (makeOffsetOptions()), removes from
  * the noded Direct offset the parts provably nearer to the source than the
  * distance, less the tolerance budget, and fails where it cannot decide. It
@@ -81,6 +91,11 @@ enum class LC_CurveOffsetStatus {
     InvalidDistance,
     UnsupportedClosedResult,
     AmbiguousSide,
+    /**
+     * The source has no direction to offset along: it stands still
+     * throughout, or its tangent vanishes and has not recovered by the end of
+     * the stretch that may be cut out about the point (see above).
+     */
     UndefinedTangent,
     DiscontinuousNormal,
     SingularOffset,

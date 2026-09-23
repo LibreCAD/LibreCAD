@@ -105,10 +105,14 @@ RS_Vector exactOffset(const EvalFn& eval, const double t, const LC_CurveEvaluati
 
 /**
  * The largest distance between the pieces and the exact offset C + d N at the
- * same source parameter, at samples the fitter never used; also checks the
+ * same source parameter, at samples the fitter never used, and between a round
+ * corner's arc and its circle of radius |d| about the corner; also checks the
  * pieces are contiguous and follow the source parameter, and that each branch
- * starts where the previous one ends (at a cusp). A stall may leave a gap in
- * the parameter, over which the exact offset moves no more than @p stall.
+ * starts where the previous one ends (at a cusp), unless that one ends at a
+ * corner that turns towards the offset. A stall, or a stretch of the source
+ * that stands still, may leave a gap in the parameter, over which the exact
+ * offset, from either side of the gap, moves no more than @p stall; a round
+ * corner may span a gap of any size.
  */
 double maxDeviation(const LC_CurveOffsetGeometryResult& result, const EvalFn& eval, const double stall = 0.0) {
     REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
@@ -116,24 +120,39 @@ double maxDeviation(const LC_CurveOffsetGeometryResult& result, const EvalFn& ev
     double worst = 0.0;
     double previousT1 = result.branches.front().cubicPieces.front().provenance.sourceT0;
     const LC_OffsetCubicPiece* previous = nullptr;
+    const LC_OffsetBranch* before = nullptr;
+    bool corner = false; // since the last piece that follows the source
     for (const LC_OffsetBranch& branch : result.branches) {
     REQUIRE_FALSE(branch.cubicPieces.empty());
+    const bool overlap = before != nullptr && before->endEnd == LC_OffsetBranchEnd::Kink;
+    corner = corner || overlap;
     for (size_t i = 0; i < branch.cubicPieces.size(); ++i) {
         const LC_OffsetCubicPiece& piece = branch.cubicPieces[i];
         const auto& p = piece.provenance;
-        CHECK(p.sourceT0 < p.sourceT1);
-        if (p.sourceT0 != previousT1) {
-            CHECK(p.sourceT0 > previousT1);
-            CHECK(exactOffset(eval, previousT1, LC_CurveEvaluationSide::Interior, p.signedDistance)
-                      .distanceTo(exactOffset(eval, p.sourceT0, LC_CurveEvaluationSide::Interior,
-                                              p.signedDistance)) <= stall);
-        }
-        previousT1 = p.sourceT1;
         CHECK(p.signedDistance == result.signedDistance);
-        if (previous != nullptr) {
+        if (previous != nullptr && !(overlap && i == 0)) {
             CHECK(piece.bezier[0] == previous->bezier[3]);
         }
         previous = &piece;
+        if (p.arcCentre.valid) {
+            for (int k = 0; k <= 37; ++k) {
+                const double r = bezierAt(piece.bezier, k / 37.0).distanceTo(p.arcCentre);
+                worst = std::max(worst, std::abs(r - std::abs(p.signedDistance)));
+            }
+            corner = true;
+            continue;
+        }
+        CHECK(p.sourceT0 < p.sourceT1);
+        if (p.sourceT0 != previousT1) {
+            CHECK(p.sourceT0 > previousT1);
+            if (!corner) {
+                CHECK(exactOffset(eval, previousT1, LC_CurveEvaluationSide::Left, p.signedDistance)
+                          .distanceTo(exactOffset(eval, p.sourceT0, LC_CurveEvaluationSide::Right,
+                                                  p.signedDistance)) <= stall);
+            }
+        }
+        corner = false;
+        previousT1 = p.sourceT1;
         for (int k = 0; k <= 37; ++k) {
             const double s = k / 37.0;
             const double t = p.sourceT0 + s * (p.sourceT1 - p.sourceT0);
@@ -147,6 +166,7 @@ double maxDeviation(const LC_CurveOffsetGeometryResult& result, const EvalFn& ev
             worst = std::max(worst, bezierAt(piece.bezier, s).distanceTo(exact));
         }
     }
+    before = &branch;
     }
     return worst;
 }
@@ -291,11 +311,11 @@ TEST_CASE("The offset is regular or it is refused", "[curve-offset][direct][regu
     CHECK(offsetToSide(arc, LC_CurveOffsetSide::Left, 0.99).status == LC_CurveOffsetStatus::Ok);
     CHECK(offsetToSide(arc, LC_CurveOffsetSide::Left, 1.01).status == LC_CurveOffsetStatus::Ok);
 
-    // A source whose tangent vanishes has no normal there.
-    const RS_Spline cusp = makeSpline(3, {{0, 0}, {2, 1}, {0, 1}, {2, 0}}, {0, 0, 0, 0, 1, 1, 1, 1});
-    const LC_CurveOffsetGeometryResult noTangent = offsetToSide(cusp, LC_CurveOffsetSide::Left, 0.1);
-    CHECK((noTangent.status == LC_CurveOffsetStatus::UndefinedTangent ||
-           noTangent.status == LC_CurveOffsetStatus::AmbiguousRegularity));
+    // A source that never moves has no direction anywhere (see also the
+    // tests of repeated control points below).
+    const RS_Spline point = makeSpline(3, {{1, 2}, {1, 2}, {1, 2}, {1, 2}}, {0, 0, 0, 0, 1, 1, 1, 1});
+    const LC_CurveOffsetGeometryResult noTangent = offsetToSide(point, LC_CurveOffsetSide::Left, 0.1);
+    CHECK(noTangent.status == LC_CurveOffsetStatus::UndefinedTangent);
     CHECK(noTangent.branches.empty());
 }
 
@@ -1008,4 +1028,229 @@ TEST_CASE("A closed source's cusped offset is a cycle of open branches", "[curve
             }
         }
     }
+}
+
+// ---------------------------------------------------------------------------
+// Repeated control points: stretches that stand still, tangents that vanish
+// ---------------------------------------------------------------------------
+namespace {
+
+/** Whether a piece of the result ends within @p tolerance of @p p, and whether any piece is a round corner. */
+bool endsNear(const LC_CurveOffsetGeometryResult& result, const RS_Vector& p, const double tolerance, bool& arcs) {
+    bool near = false;
+    arcs = false;
+    for (const LC_OffsetBranch& branch : result.branches) {
+        near = near || branch.cubicPieces.front().bezier[0].distanceTo(p) <= tolerance;
+        for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
+            near = near || piece.bezier[3].distanceTo(p) <= tolerance;
+            arcs = arcs || piece.provenance.arcCentre.valid;
+        }
+    }
+    return near;
+}
+
+/** No piece follows the source inside (@p t0, @p t1), where it stands still. */
+bool skips(const LC_CurveOffsetGeometryResult& result, const double t0, const double t1) {
+    for (const LC_OffsetBranch& branch : result.branches) {
+        for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
+            const LC_OffsetBranchProvenance& p = piece.provenance;
+            if (!p.arcCentre.valid && std::max(p.sourceT0, p.sourceT1) > t0 && std::min(p.sourceT0, p.sourceT1) < t1) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+} // namespace
+
+TEST_CASE("A cubic with a doubled control point offsets through it along the tangent's limit",
+          "[curve-offset][direct][singular]") {
+    // Two Bezier pieces meet at (3, 1), and the second one's first handle is
+    // doubled onto the join: the tangent vanishes there, but tends to (1, 0)
+    // from both sides, so the curve is smooth. Past the join it bends right
+    // ever more sharply, and on the right the offset turns back at the join.
+    const RS_Spline doubled = makeSpline(3, {{0, 0}, {1, 1}, {2, 1}, {3, 1}, {3, 1}, {4, 1}, {5, 0}},
+                                         {0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2});
+    for (const double d : {0.25, 1.0}) {
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+            INFO("distance " << d << " side " << static_cast<int>(side));
+            const LC_CurveOffsetGeometryResult result = offsetToSide(doubled, side, d);
+            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+            const LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(doubled, d);
+            CHECK(maxDeviation(result, evaluator(doubled), options.tolerance.nodeMerge) <=
+                  options.tolerance.requestedGeometry);
+            // through the join's offset along the limit's normal (0, 1), with no corner
+            const double offset = (side == LC_CurveOffsetSide::Left) ? d : -d;
+            bool arcs = false;
+            CHECK(endsNear(result, RS_Vector{3.0, 1.0 + offset}, options.tolerance.requestedGeometry, arcs));
+            CHECK_FALSE(arcs);
+            CHECK(result.branches.size() == (side == LC_CurveOffsetSide::Left ? 1u : 3u));
+        }
+    }
+    CHECK(materialize(doubled, LC_CurveOffsetSide::Right, 0.25).status == LC_CurveOffsetStatus::Ok);
+
+    // With simple knots a doubled control point only slows the curve down: its
+    // tangent never vanishes.
+    const RS_Spline slowed = makeSpline(3, {{0, 0}, {2, 2}, {4, 0}, {4, 0}, {6, 2}, {8, 0}},
+                                        {0, 0, 0, 0, 1, 2, 3, 3, 3, 3});
+    for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+        const LC_CurveOffsetGeometryResult result = offsetToSide(slowed, side, 0.5);
+        REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+        CHECK(maxDeviation(result, evaluator(slowed)) <=
+              LC_CurveOffset::makeDirectOptions(slowed, 0.5).tolerance.requestedGeometry);
+    }
+}
+
+TEST_CASE("Where a vanishing tangent tends to different directions, the source turns a corner there",
+          "[curve-offset][direct][singular][kink]") {
+    // The doubled handle leaves (3, 1) towards (4, 2): the curve arrives along
+    // (1, 0) and leaves along (1, 1), turning left by 45 degrees. As at any
+    // corner, an arc of radius d about it rounds the right side, and the two
+    // sides' offsets overlap on the left.
+    const RS_Spline cornered = makeSpline(3, {{0, 0}, {1, 1}, {2, 1}, {3, 1}, {3, 1}, {4, 2}, {5, 1}},
+                                          {0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2});
+    const double d = 0.25;
+    const LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(cornered, d);
+    const LC_CurveOffsetGeometryResult right = offsetToSide(cornered, LC_CurveOffsetSide::Right, d);
+    REQUIRE(right.status == LC_CurveOffsetStatus::Ok);
+    CHECK(maxDeviation(right, evaluator(cornered), options.tolerance.nodeMerge) <=
+          options.tolerance.requestedGeometry);
+    int arcPieces = 0;
+    for (const LC_OffsetBranch& branch : right.branches) {
+        for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
+            if (piece.provenance.arcCentre.valid) {
+                ++arcPieces;
+                CHECK(piece.provenance.arcCentre.distanceTo(RS_Vector{3.0, 1.0}) <= options.tolerance.nodeMerge);
+            }
+        }
+    }
+    CHECK(arcPieces > 0);
+    bool arcs = false;
+    CHECK(endsNear(right, RS_Vector{3.0, 1.0 - d}, options.tolerance.requestedGeometry, arcs));
+    CHECK(endsNear(right, RS_Vector{3.0, 1.0} + RS_Vector{1.0, -1.0} * (d / std::sqrt(2.0)),
+                   options.tolerance.requestedGeometry, arcs));
+
+    const LC_CurveOffsetGeometryResult left = offsetToSide(cornered, LC_CurveOffsetSide::Left, d);
+    REQUIRE(left.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(left.branches.size() == 2);
+    CHECK(left.branches[0].endEnd == LC_OffsetBranchEnd::Kink);
+    CHECK(left.branches[1].startEnd == LC_OffsetBranchEnd::Kink);
+    CHECK(maxDeviation(left, evaluator(cornered), options.tolerance.nodeMerge) <= options.tolerance.requestedGeometry);
+    CHECK(materialize(cornered, LC_CurveOffsetSide::Right, d).status == LC_CurveOffsetStatus::Ok);
+
+    // A cusp, where the tangent vanishes inside a span and turns back: a
+    // half turn, which turns away from either side, as a polyline's does.
+    const RS_Spline cusp = makeSpline(3, {{0, 0}, {2, 1}, {0, 1}, {2, 0}}, {0, 0, 0, 0, 1, 1, 1, 1});
+    for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+        INFO("side " << static_cast<int>(side));
+        const LC_CurveOffsetGeometryResult result = offsetToSide(cusp, side, 0.1);
+        REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+        const LC_CurveOffsetOptions cuspOptions = LC_CurveOffset::makeDirectOptions(cusp, 0.1);
+        CHECK(maxDeviation(result, evaluator(cusp), cuspOptions.tolerance.nodeMerge) <=
+              cuspOptions.tolerance.requestedGeometry);
+        // over the top of the cusp at (1, 0.75)
+        CHECK(endsNear(result, RS_Vector{1.0, 0.85}, 1e-3, arcs) == false);
+        CHECK(arcs);
+    }
+}
+
+TEST_CASE("A repeated vertex of a polyline spline changes nothing", "[curve-offset][direct][singular]") {
+    // Between the two copies of (5, 0) the spline stands still. Without that
+    // span it is the polyline through the three points, which turns left.
+    const RS_Spline repeated = makeSpline(1, {{0, 0}, {5, 0}, {5, 0}, {5, 5}}, {0, 0, 1, 2, 3, 3});
+    const RS_Spline plain = makeSpline(1, {{0, 0}, {5, 0}, {5, 5}}, {0, 0, 1, 2, 2});
+    for (const double d : {0.25, 1.0}) {
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+            INFO("distance " << d << " side " << static_cast<int>(side));
+            const LC_CurveOffsetGeometryResult a = offsetToSide(repeated, side, d);
+            const LC_CurveOffsetGeometryResult b = offsetToSide(plain, side, d);
+            REQUIRE(a.status == LC_CurveOffsetStatus::Ok);
+            REQUIRE(b.status == LC_CurveOffsetStatus::Ok);
+            const LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(repeated, d);
+            CHECK(maxDeviation(a, evaluator(repeated)) <= options.tolerance.requestedGeometry);
+            CHECK(skips(a, 1.0, 2.0));
+            // the same branches, corners and ends
+            REQUIRE(a.branches.size() == b.branches.size());
+            for (size_t i = 0; i < a.branches.size(); ++i) {
+                const std::vector<LC_OffsetCubicPiece>& pa = a.branches[i].cubicPieces;
+                const std::vector<LC_OffsetCubicPiece>& pb = b.branches[i].cubicPieces;
+                CHECK(a.branches[i].startEnd == b.branches[i].startEnd);
+                CHECK(a.branches[i].endEnd == b.branches[i].endEnd);
+                REQUIRE(pa.size() == pb.size());
+                for (size_t k = 0; k < pa.size(); ++k) {
+                    for (size_t j = 0; j < 4; ++j) {
+                        CHECK(pa[k].bezier[j].distanceTo(pb[k].bezier[j]) <= 1e-12);
+                    }
+                }
+            }
+        }
+    }
+    // a point just outside the corner, nearest to it, is on its right
+    const LC_OffsetSideResolution side =
+        LC_CurveOffset::resolveSide(repeated, RS_Vector{6.0, -1.0}, LC_CurveOffset::makeDirectOptions(repeated, 1.0));
+    REQUIRE(side.status == LC_CurveOffsetStatus::Ok);
+    CHECK(side.side == LC_CurveOffsetSide::Right);
+    CHECK(materialize(repeated, LC_CurveOffsetSide::Right, 1.0).status == LC_CurveOffsetStatus::Ok);
+
+    // along a straight line, the repeated vertex leaves one straight offset
+    const RS_Spline straight = makeSpline(1, {{0, 0}, {5, 0}, {5, 0}, {10, 0}}, {0, 0, 1, 2, 3, 3});
+    const LC_CurveOffsetGeometryResult line = offsetToSide(straight, LC_CurveOffsetSide::Left, 1.0);
+    REQUIRE(line.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(line.branches.size() == 1);
+    CHECK(line.branches.front().cubicPieces.front().bezier[0] == RS_Vector(0.0, 1.0));
+    CHECK(line.branches.front().cubicPieces.back().bezier[3] == RS_Vector(10.0, 1.0));
+    CHECK(maxDeviation(line, evaluator(straight)) <= 1e-12);
+}
+
+TEST_CASE("A knot interval over which a spline stands still is skipped", "[curve-offset][direct][singular]") {
+    // Three Bezier pieces, the middle one the point (3, 0): its four control
+    // points coincide. The curve leaves it along (1, -1), the direction it
+    // arrives in, just as it passes (3, 0) without the middle piece.
+    const RS_Spline still =
+        makeSpline(3, {{0, 0}, {1, 1}, {2, 1}, {3, 0}, {3, 0}, {3, 0}, {3, 0}, {4, -1}, {5, -1}, {6, 0}},
+                   {0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 3});
+    const RS_Spline without = makeSpline(3, {{0, 0}, {1, 1}, {2, 1}, {3, 0}, {4, -1}, {5, -1}, {6, 0}},
+                                         {0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2});
+    for (const double d : {0.25, 1.0}) {
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+            INFO("distance " << d << " side " << static_cast<int>(side));
+            const LC_CurveOffsetGeometryResult a = offsetToSide(still, side, d);
+            const LC_CurveOffsetGeometryResult b = offsetToSide(without, side, d);
+            REQUIRE(a.status == LC_CurveOffsetStatus::Ok);
+            REQUIRE(b.status == LC_CurveOffsetStatus::Ok);
+            const LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(still, d);
+            CHECK(maxDeviation(a, evaluator(still), options.tolerance.nodeMerge) <=
+                  options.tolerance.requestedGeometry);
+            CHECK(skips(a, 1.0, 2.0));
+            REQUIRE(a.branches.size() == b.branches.size());
+            CHECK(a.branches.front().cubicPieces.front().bezier[0] == b.branches.front().cubicPieces.front().bezier[0]);
+            CHECK(a.branches.back().cubicPieces.back().bezier[3] == b.branches.back().cubicPieces.back().bezier[3]);
+            bool arcs = false;
+            CHECK(endsNear(a, RS_Vector{3.0, 0.0} + RS_Vector{1.0, 1.0} * ((side == LC_CurveOffsetSide::Left ? d : -d) /
+                                                                          std::sqrt(2.0)),
+                           options.tolerance.requestedGeometry, arcs));
+            CHECK_FALSE(arcs);
+        }
+    }
+
+    // A uniform cubic whose middle four control points coincide stands still
+    // over the knot interval [2, 3], and runs straight into it along (1, -1)
+    // and out of it along (1, 1), its tangent vanishing either side: a corner.
+    const RS_Spline uniform = makeSpline(3, {{0, 0}, {2, 2}, {4, 0}, {4, 0}, {4, 0}, {4, 0}, {6, 2}, {8, 0}},
+                                         {0, 0, 0, 0, 1, 2, 3, 4, 5, 5, 5, 5});
+    for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+        INFO("side " << static_cast<int>(side));
+        const LC_CurveOffsetGeometryResult result = offsetToSide(uniform, side, 0.5);
+        REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+        const LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(uniform, 0.5);
+        CHECK(maxDeviation(result, evaluator(uniform), options.tolerance.nodeMerge) <=
+              options.tolerance.requestedGeometry);
+        CHECK(skips(result, 2.0, 3.0));
+        bool arcs = false;
+        endsNear(result, RS_Vector{}, 0.0, arcs);
+        CHECK(arcs == (side == LC_CurveOffsetSide::Right)); // rounded outside the left turn
+        CHECK(result.branches.size() == (side == LC_CurveOffsetSide::Right ? 1u : 2u));
+    }
+    CHECK(materialize(uniform, LC_CurveOffsetSide::Right, 0.5).status == LC_CurveOffsetStatus::Ok);
 }

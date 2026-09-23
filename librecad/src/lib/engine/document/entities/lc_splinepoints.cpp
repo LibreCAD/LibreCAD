@@ -821,7 +821,8 @@ bool LC_SplinePoints::tryGetSegment(const size_t index, LC_SplinePointsSegment& 
     return true;
 }
 
-bool LC_SplinePoints::tryBoundJet(const double a, const double b, LC_CurveJetBounds& bounds) const {
+bool LC_SplinePoints::tryBoundJet(const double a, const double b, LC_CurveJetBounds& bounds,
+                                  const bool products) const {
     bounds = LC_CurveJetBounds{};
     const auto count = static_cast<double>(getSegmentCount());
     if (!std::isfinite(a) || !std::isfinite(b) || !(a < b) || a < 0.0 || b > count) {
@@ -848,6 +849,8 @@ bool LC_SplinePoints::tryBoundJet(const double a, const double b, LC_CurveJetBou
         case LC_SplinePointsSegment::Kind::Point:
             result = {px(segment.start), py(segment.start), LC_Interval::point(0.0), LC_Interval::point(0.0),
                       LC_Interval::point(0.0), LC_Interval::point(0.0)};
+            result.speedSquaredProduct = LC_Interval::point(0.0);
+            result.crossProduct = LC_Interval::point(0.0);
             break;
         case LC_SplinePointsSegment::Kind::Line: {
             auto at = [&](const LC_Interval& u, const LC_Interval& p0, const LC_Interval& p1) {
@@ -860,6 +863,8 @@ bool LC_SplinePoints::tryBoundJet(const double a, const double b, LC_CurveJetBou
             result = {LC_Interval::hull(at(ua, x0, x1), at(ub, x0, x1)),
                       LC_Interval::hull(at(ua, y0, y1), at(ub, y0, y1)), x1 - x0, y1 - y0,
                       LC_Interval::point(0.0), LC_Interval::point(0.0)};
+            result.speedSquaredProduct = sqr(x1 - x0) + sqr(y1 - y0);
+            result.crossProduct = LC_Interval::point(0.0);
             break;
         }
         case LC_SplinePointsSegment::Kind::Quadratic: {
@@ -886,15 +891,29 @@ bool LC_SplinePoints::tryBoundJet(const double a, const double b, LC_CurveJetBou
             // the control points rather than of nearly equal Bezier points
             auto slope = [&](const LC_Interval& u, const LC_Interval& p0, const LC_Interval& p1,
                              const LC_Interval& p2) { return two * ((one - u) * (p1 - p0) + u * (p2 - p1)); };
-            result.dx = LC_Interval::hull(slope(ua, x0, x1, x2), slope(ub, x0, x1, x2));
-            result.dy = LC_Interval::hull(slope(ua, y0, y1, y2), slope(ub, y0, y1, y2));
+            const LC_Interval dx[2] = {slope(ua, x0, x1, x2), slope(ub, x0, x1, x2)};
+            const LC_Interval dy[2] = {slope(ua, y0, y1, y2), slope(ub, y0, y1, y2)};
+            result.dx = LC_Interval::hull(dx[0], dx[1]);
+            result.dy = LC_Interval::hull(dy[0], dy[1]);
             result.ddx = two * (x2 - two * x1 + x0);
             result.ddy = two * (y2 - two * y1 + y0);
+            // |C'|^2 and C' x C'' from the Bezier coefficients of the products,
+            // which cancel only by rounding where C' and C'' are parallel
+            const LC_Interval s0 = sqr(dx[0]) + sqr(dy[0]);
+            const LC_Interval s1 = dx[0] * dx[1] + dy[0] * dy[1];
+            const LC_Interval s2 = sqr(dx[1]) + sqr(dy[1]);
+            result.speedSquaredProduct = LC_Interval::hull(LC_Interval::hull(s0, s1), s2);
+            result.crossProduct = LC_Interval::hull(dx[0] * result.ddy - dy[0] * result.ddx,
+                                                    dx[1] * result.ddy - dy[1] * result.ddx);
             break;
         }
     }
     if (!result.isValid()) {
         return false;
+    }
+    if (!products) {
+        result.speedSquaredProduct = LC_Interval{};
+        result.crossProduct = LC_Interval{};
     }
     bounds = result;
     return true;

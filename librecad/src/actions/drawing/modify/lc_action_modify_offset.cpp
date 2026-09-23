@@ -130,7 +130,7 @@ QString LC_ActionModifyOffset::failureReason(const LC_OffsetSourceOutcome& sourc
         case LC_CurveOffsetStatus::AmbiguousSide:
             return tr("the point is on the curve, so it gives no side");
         case LC_CurveOffsetStatus::UndefinedTangent:
-            return tr("the curve has a point with no direction, as at repeated control points");
+            return tr("the curve does not move, or has a point where its direction cannot be found");
         case LC_CurveOffsetStatus::DiscontinuousNormal:
             return tr("the curve has a gap or a corner the offset cannot join");
         case LC_CurveOffsetStatus::SingularOffset:

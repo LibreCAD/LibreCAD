@@ -22,6 +22,7 @@
 #include "lc_curveoffset.h"
 
 #include <algorithm>
+#include <array>
 #include <cmath>
 #include <limits>
 #include <memory>
@@ -66,7 +67,20 @@ public:
     /** The domain is [front, back]; the curve is smooth between consecutive values. */
     virtual const std::vector<double>& breaks() const = 0;
     virtual bool jet(double t, LC_CurveEvaluationSide side, LC_CurveJet& out) const = 0;
+    /** Conservative bounds over [a, b], inside one span; see boundJetWithProducts(). */
     virtual bool boundJet(double a, double b, LC_CurveJetBounds& out) const = 0;
+    /**
+     * boundJet() with the curve's enclosures of |C'|^2 and C' x C'' from the
+     * products' Bezier coefficients, where it has them; the entities'
+     * adapters leave those out of boundJet(). Only next to a vanishing tangent
+     * do the components fail to resolve the curvature's sign; elsewhere the
+     * products change which near-tangent contacts the intersection query
+     * resolves, and so how a regular source is trimmed, without proving
+     * anything the components cannot.
+     */
+    virtual bool boundJetWithProducts(const double a, const double b, LC_CurveJetBounds& out) const {
+        return boundJet(a, b, out);
+    }
     /** Points whose convex hull contains the curve. */
     virtual const std::vector<RS_Vector>& hull() const = 0;
     /** True, with its ends, when the curve is exactly one straight segment. */
@@ -102,6 +116,10 @@ public:
 
     bool boundJet(const double a, const double b, LC_CurveJetBounds& out) const override {
         return m_spline.tryBoundJet(a, b, out);
+    }
+
+    bool boundJetWithProducts(const double a, const double b, LC_CurveJetBounds& out) const override {
+        return m_spline.tryBoundJet(a, b, out, true);
     }
 
     const std::vector<RS_Vector>& hull() const override {
@@ -160,6 +178,10 @@ public:
 
     bool boundJet(const double a, const double b, LC_CurveJetBounds& out) const override {
         return m_spline.tryBoundJet(a, b, out);
+    }
+
+    bool boundJetWithProducts(const double a, const double b, LC_CurveJetBounds& out) const override {
+        return m_spline.tryBoundJet(a, b, out, true);
     }
 
     const std::vector<RS_Vector>& hull() const override {
@@ -248,6 +270,379 @@ bool validDirectOptions(const LC_CurveOffsetOptions& o) {
            o.maxSubdivisionDepth > 0 && o.maxSamples > 0 && o.maxOutputBranches > 0 && o.maxIntersectionPairs > 0 &&
            o.maxDistanceMapBoxes > 0 && o.maxArrangementEdges > 0 && o.maxArrangementFaces > 0;
 }
+
+// ---------------------------------------------------------------------------
+// Stationary stretches: repeated control points
+// ---------------------------------------------------------------------------
+/**
+ * The source without its stationary stretches: the spans over which it does
+ * not move, as between repeated control points, and about each point where
+ * its tangent vanishes, the stretch from it over which the curve moves less
+ * than a sixteenth of the merge tolerance. What is left keeps its parameter,
+ * shifted down past each cut, so that the engine sees a curve with a tangent
+ * everywhere and a cut as a break, where the tangents on either side meet as
+ * at a join of spans: smoothly where the vanishing tangent's limit is the
+ * same from both sides, at a corner where it is not. Either way what was cut
+ * is a point to within the tolerance, and its offset the arc of radius |d|
+ * about it that such a corner gets, or a gap below the merge tolerance.
+ * sourceParameter() maps the engine's parameters back.
+ */
+class RegularSource final : public OffsetSource {
+public:
+    /**
+     * The regular part of @p base into @p out, or nothing (@p out empty) when
+     * no stretch needs cutting. A cut is also kept short enough that the
+     * offset at @p radius (zero if unknown) turns about it by less than a
+     * quarter of the merge tolerance, so that a vanishing tangent whose limit
+     * is the same from both sides leaves a smooth join, where rounding allows
+     * the tangent next to it to be known that well. UndefinedTangent
+     * where no direction can be found: the source is stationary throughout,
+     * or a vanishing tangent has not recovered by the end of a cut.
+     */
+    static LC_CurveOffsetStatus make(const OffsetSource& base, const SourceScale& scale,
+                                     const LC_CurveOffsetTolerances& tolerance, const double radius,
+                                     std::unique_ptr<RegularSource>& out) {
+        out.reset();
+        const std::vector<double>& breaks = base.breaks();
+        const double still = tolerance.nodeMerge / 16.0;
+        // how far the curve moves over [a, b] inside one span, at most: its box's diagonal
+        const auto motion = [&base](const double a, const double b) {
+            LC_CurveJetBounds c;
+            if (!(a < b) || !base.boundJet(a, b, c)) {
+                return std::numeric_limits<double>::infinity();
+            }
+            return std::hypot(c.x.width(), c.y.width());
+        };
+        const auto speed = [&base](const double t, const LC_CurveEvaluationSide side) {
+            LC_CurveJet c;
+            return base.jet(t, side, c) ? c.first.magnitude() : std::numeric_limits<double>::quiet_NaN();
+        };
+        // The longest stretch from u towards `other`, in one span, over which
+        // the curve moves less than still, and its offset, as far as the
+        // tangent is known, turns about it by less than a quarter of the merge
+        // tolerance: the tangent turns about as much over the stretch's first
+        // half as over its second.
+        const auto reach = [&](const double u, const double other) {
+            const double width = std::abs(other - u);
+            const auto at = [&](const double h) {
+                return (h >= width) ? other : (other > u) ? u + h : u - h;
+            };
+            // from inside the stretch
+            const LC_CurveEvaluationSide inward =
+                (other > u) ? LC_CurveEvaluationSide::Left : LC_CurveEvaluationSide::Right;
+            const auto moves = [&](const double h) {
+                return motion(std::min(u, at(h)), std::max(u, at(h))) <= still;
+            };
+            const auto turns = [&](const double h) {
+                LC_CurveJet half;
+                LC_CurveJet end;
+                return base.jet(at(0.5 * h), LC_CurveEvaluationSide::Interior, half) &&
+                       base.jet(at(h), inward, end) && dot(half.first, half.first) > 0.0 &&
+                       dot(end.first, end.first) > 0.0 &&
+                       radius * 2.0 * angleBetweenVectors(half.first, end.first) <= 0.25 * tolerance.nodeMerge;
+            };
+            const auto longest = [&](const auto& keeps) {
+                double lo = 0.0;
+                double hi = width;
+                if (keeps(hi)) {
+                    return hi;
+                }
+                for (int iteration = 0; iteration < 80 && hi - lo > tolerance.parameter; ++iteration) {
+                    const double mid = lo + 0.5 * (hi - lo);
+                    (keeps(mid) ? lo : hi) = mid;
+                }
+                return lo;
+            };
+            const double h = longest([&](const double v) { return moves(v) && (radius == 0.0 || turns(v)); });
+            // Rounding of an eighth of numericFloor / width in a tangent turns it
+            // by that over its length, and the offset by radius times that: the
+            // tangent must be long enough for that to stay within an eighth of the
+            // merge tolerance. Where it is not yet, the cut runs on as far as the
+            // curve moves little, and the offset rounds its turn as a corner.
+            const double precise = radius * scale.numericFloor / (width * tolerance.nodeMerge);
+            return (speed(at(h), inward) >= precise) ? h : longest(moves);
+        };
+
+        std::vector<std::pair<double, double>> cuts;
+        // a tangent no longer than rounding can make it in the span vanishes
+        const auto vanishing = [&](const size_t span) {
+            return 16.0 * scale.numericFloor / (breaks[span + 1] - breaks[span]);
+        };
+        for (size_t span = 0; span + 1 < breaks.size(); ++span) {
+            const double a = breaks[span];
+            const double b = breaks[span + 1];
+            LC_CurveJetBounds box;
+            if (!base.boundJetWithProducts(a, b, box)) {
+                return LC_CurveOffsetStatus::InvalidSource;
+            }
+            if (std::hypot(box.x.width(), box.y.width()) <= still) {
+                cuts.emplace_back(a, b); // stationary throughout
+                continue;
+            }
+            const double zero = vanishing(span);
+            if (box.speedSquared().lo() > zero * zero) {
+                continue; // a tangent throughout, as most spans prove at once
+            }
+            const auto vanishes = [&](const double v) {
+                return !(v > zero);
+            };
+            if (vanishes(speed(a, LC_CurveEvaluationSide::Right))) {
+                cuts.emplace_back(a, a + reach(a, b));
+            }
+            if (vanishes(speed(b, LC_CurveEvaluationSide::Left))) {
+                cuts.emplace_back(b - reach(b, a), b);
+            }
+            // inside the span, at a minimum of the speed: bracketed by samples, found by golden sections
+            constexpr int samples = 64;
+            std::array<double, samples + 1> ts{};
+            std::array<double, samples + 1> vs{};
+            double fastest = 0.0;
+            for (int k = 0; k <= samples; ++k) {
+                ts[k] = (k == samples) ? b : a + (b - a) * k / samples;
+                vs[k] = speed(ts[k], (k == 0)         ? LC_CurveEvaluationSide::Right
+                                     : (k == samples) ? LC_CurveEvaluationSide::Left
+                                                      : LC_CurveEvaluationSide::Interior);
+                if (!std::isfinite(vs[k])) {
+                    return LC_CurveOffsetStatus::InvalidSource;
+                }
+                fastest = std::max(fastest, vs[k]);
+            }
+            for (int k = 0; k <= samples; ++k) {
+                // A polynomial span's speed that dips to zero between samples
+                // 1/64 of the span apart is below an eighth of its largest there.
+                const bool minimum = (k == 0 || vs[k] < vs[k - 1]) && (k == samples || vs[k] <= vs[k + 1]);
+                if (!minimum || vs[k] > fastest / 8.0) {
+                    continue;
+                }
+                double lo = ts[std::max(k, 1) - 1];
+                double hi = ts[std::min(k + 1, samples)];
+                constexpr double golden = 0.3819660112501051;
+                double x1 = lo + golden * (hi - lo);
+                double x2 = hi - golden * (hi - lo);
+                double f1 = speed(x1, LC_CurveEvaluationSide::Interior);
+                double f2 = speed(x2, LC_CurveEvaluationSide::Interior);
+                for (int iteration = 0; iteration < 100 && x1 < x2; ++iteration) {
+                    if (f1 <= f2) {
+                        hi = x2;
+                        x2 = x1;
+                        f2 = f1;
+                        x1 = lo + golden * (hi - lo);
+                        f1 = speed(x1, LC_CurveEvaluationSide::Interior);
+                    }
+                    else {
+                        lo = x1;
+                        x1 = x2;
+                        f1 = f2;
+                        x2 = hi - golden * (hi - lo);
+                        f2 = speed(x2, LC_CurveEvaluationSide::Interior);
+                    }
+                }
+                const double t = (f1 <= f2) ? x1 : x2;
+                if (t > a && t < b && vanishes(std::min(f1, f2))) {
+                    cuts.emplace_back(t - reach(t, a), t + reach(t, b));
+                }
+            }
+        }
+        if (cuts.empty()) {
+            return LC_CurveOffsetStatus::Ok;
+        }
+
+        // the stretches left between the cuts, each inside one span
+        std::sort(cuts.begin(), cuts.end());
+        std::vector<Part> parts;
+        size_t next = 0;
+        double cutTo = -std::numeric_limits<double>::infinity();
+        for (size_t span = 0; span + 1 < breaks.size(); ++span) {
+            double from = breaks[span];
+            const double to = breaks[span + 1];
+            while (true) {
+                from = std::max(from, cutTo);
+                if (next < cuts.size() && cuts[next].first < to) {
+                    if (cuts[next].first > from) {
+                        parts.push_back({from, cuts[next].first, span});
+                    }
+                    cutTo = std::max(cutTo, cuts[next].second);
+                    ++next;
+                    continue;
+                }
+                break;
+            }
+            if (from < to) {
+                parts.push_back({from, to, span});
+            }
+        }
+        // a stretch that moves no more than a cut is cut too
+        parts.erase(std::remove_if(parts.begin(), parts.end(),
+                                   [&](const Part& p) { return motion(p.lo, p.hi) <= still; }),
+                    parts.end());
+        if (parts.empty()) {
+            return LC_CurveOffsetStatus::UndefinedTangent; // it never moves: no direction anywhere
+        }
+        for (const Part& p : parts) {
+            // where a cut ends, the tangent must have recovered
+            const double zero = vanishing(p.span);
+            if (!(speed(p.lo, LC_CurveEvaluationSide::Right) > zero) ||
+                !(speed(p.hi, LC_CurveEvaluationSide::Left) > zero)) {
+                return LC_CurveOffsetStatus::UndefinedTangent;
+            }
+        }
+
+        // the engine's parameter: the source's up to the first cut, shifted down past each
+        std::unique_ptr<RegularSource> regular{new RegularSource{base}};
+        regular->m_parts = std::move(parts);
+        regular->m_breaks.push_back(regular->m_parts.front().lo);
+        for (size_t k = 0; k < regular->m_parts.size(); ++k) {
+            const Part& p = regular->m_parts[k];
+            const double s0 = regular->m_breaks.back();
+            const double shift = p.lo - s0;
+            const double s1 = (shift == 0.0) ? p.hi : p.hi - shift;
+            if (!(s1 > s0)) {
+                return LC_CurveOffsetStatus::UndefinedTangent;
+            }
+            regular->m_shift.push_back(shift);
+            regular->m_breaks.push_back(s1);
+        }
+        out = std::move(regular);
+        return LC_CurveOffsetStatus::Ok;
+    }
+
+    bool closed() const override {
+        return m_base.closed();
+    }
+
+    const std::vector<double>& breaks() const override {
+        return m_breaks;
+    }
+
+    bool jet(const double s, const LC_CurveEvaluationSide side, LC_CurveJet& out) const override {
+        out = LC_CurveJet{};
+        size_t part = 0;
+        LC_CurveEvaluationSide sourceSide = side;
+        double t = 0.0;
+        return locate(s, side, part, t, sourceSide) && m_base.jet(t, sourceSide, out);
+    }
+
+    bool boundJet(const double a, const double b, LC_CurveJetBounds& out) const override {
+        out = LC_CurveJetBounds{};
+        if (!(a < b) || a < m_breaks.front() || b > m_breaks.back()) {
+            return false;
+        }
+        const size_t part = partOf(a);
+        if (b > m_breaks[part + 1]) {
+            return false; // across a break
+        }
+        LC_CurveEvaluationSide ignored;
+        const double ta = sourceParameter(part, a, ignored);
+        const double tb = sourceParameter(part, b, ignored);
+        // next to a cut the tangent all but vanishes: the products resolve the curvature there
+        return ta < tb && m_base.boundJetWithProducts(ta, tb, out);
+    }
+
+    const std::vector<RS_Vector>& hull() const override {
+        return m_base.hull();
+    }
+
+    bool straightSegment(RS_Vector&, RS_Vector&) const override {
+        return false;
+    }
+
+    bool cubicSpans() const override {
+        return m_base.cubicSpans(); // its spans are parts of the base's, at the same speed
+    }
+
+    /** The source's parameter for @p s, a parameter of span @p part; exact at the span's ends. */
+    double sourceParameter(const size_t part, const double s) const {
+        LC_CurveEvaluationSide ignored;
+        return sourceParameter(part, s, ignored);
+    }
+
+    /** The source's parameter for @p s, taken at a break as the start of the span after it. */
+    double sourceParameter(const double s) const {
+        size_t part = 0;
+        LC_CurveEvaluationSide ignored = LC_CurveEvaluationSide::Interior;
+        double t = s;
+        return locate(s, LC_CurveEvaluationSide::Interior, part, t, ignored) ? t : s;
+    }
+
+    /** The source's span that holds span @p part. */
+    size_t sourceSpan(const size_t part) const {
+        return m_parts[std::min(part, m_parts.size() - 1)].span;
+    }
+
+private:
+    /** A stretch of the source kept, inside its span. */
+    struct Part {
+        double lo;
+        double hi;
+        size_t span;
+    };
+
+    explicit RegularSource(const OffsetSource& base)
+        : m_base{base} {
+    }
+
+    /** The span holding @p s, the later one at a break. */
+    size_t partOf(const double s) const {
+        const auto at = std::upper_bound(m_breaks.begin(), m_breaks.end(), s);
+        const auto index = static_cast<size_t>(std::max<std::ptrdiff_t>(1, at - m_breaks.begin())) - 1;
+        return std::min(index, m_parts.size() - 1);
+    }
+
+    /**
+     * The source's parameter for @p s in span @p part, exact at the span's
+     * ends, and the side to evaluate it from so as to stay inside the span.
+     */
+    double sourceParameter(const size_t part, const double s, LC_CurveEvaluationSide& side) const {
+        const Part& p = m_parts[part];
+        double t = 0.0;
+        if (s <= m_breaks[part]) {
+            t = p.lo;
+        }
+        else if (s >= m_breaks[part + 1]) {
+            t = p.hi;
+        }
+        else {
+            t = std::clamp(s + m_shift[part], p.lo, p.hi);
+        }
+        side = (t == p.lo) ? LC_CurveEvaluationSide::Right
+               : (t == p.hi) ? LC_CurveEvaluationSide::Left
+                             : LC_CurveEvaluationSide::Interior;
+        return t;
+    }
+
+    /** Where the engine's @p s, from @p side, lies in the source: its span, parameter and side there. */
+    bool locate(double s, LC_CurveEvaluationSide side, size_t& part, double& t,
+                LC_CurveEvaluationSide& sourceSide) const {
+        const double front = m_breaks.front();
+        const double back = m_breaks.back();
+        // a parameter computed from the domain ends can miss them by a few ulps
+        const double slack = 4.0 * g_eps * std::max({std::abs(front), std::abs(back), back - front});
+        if (!std::isfinite(s) || s < front - slack || s > back + slack) {
+            return false;
+        }
+        s = std::clamp(s, front, back);
+        if (side == LC_CurveEvaluationSide::Interior) {
+            side = (s < back) ? LC_CurveEvaluationSide::Right : LC_CurveEvaluationSide::Left;
+        }
+        if ((side == LC_CurveEvaluationSide::Right && s == back) ||
+            (side == LC_CurveEvaluationSide::Left && s == front)) {
+            return false;
+        }
+        part = partOf(s);
+        if (side == LC_CurveEvaluationSide::Left && s == m_breaks[part]) {
+            --part; // the end of the span before
+        }
+        t = sourceParameter(part, s, sourceSide);
+        return true;
+    }
+
+    const OffsetSource& m_base;
+    std::vector<Part> m_parts;
+    /** The engine's breaks: span k runs from m_breaks[k] to m_breaks[k + 1] and is m_parts[k]. */
+    std::vector<double> m_breaks;
+    /** The source's parameter less the engine's, in each span. */
+    std::vector<double> m_shift;
+};
 
 // ---------------------------------------------------------------------------
 // Side selection (plan 5.3)
@@ -1481,7 +1876,9 @@ LC_CurveOffsetStatus checkJoins(const OffsetSource& source, const double d, cons
         if (!source.jet(left, LC_CurveEvaluationSide::Left, l) || !source.jet(right, LC_CurveEvaluationSide::Right, r)) {
             return LC_CurveOffsetStatus::InvalidSource;
         }
-        if (l.point.distanceTo(r.point) > options.tolerance.nodeMerge) {
+        // apart by rounding, or across a stationary stretch cut out of the source (RegularSource)
+        const double gap = l.point.distanceTo(r.point);
+        if (gap > options.tolerance.nodeMerge) {
             // only a closed flag can claim a join whose ends are apart
             return seam ? LC_CurveOffsetStatus::InvalidSource : LC_CurveOffsetStatus::DiscontinuousNormal;
         }
@@ -1489,7 +1886,7 @@ LC_CurveOffsetStatus checkJoins(const OffsetSource& source, const double d, cons
             return LC_CurveOffsetStatus::UndefinedTangent;
         }
         const double angle = angleBetweenVectors(l.first, r.first);
-        if (angle > options.angleTolerance || std::abs(d) * angle > options.tolerance.nodeMerge) {
+        if (angle > options.angleTolerance || gap + std::abs(d) * angle > options.tolerance.nodeMerge) {
             if (policy == KinkPolicy::Refuse) {
                 return LC_CurveOffsetStatus::DiscontinuousNormal;
             }
@@ -1498,7 +1895,7 @@ LC_CurveOffsetStatus checkJoins(const OffsetSource& source, const double d, cons
             join.before = l.first / l.first.magnitude();
             join.after = r.first / r.first.magnitude();
             // the two offsets' ends, d N apart on either side, 2 |d| sin(angle / 2) apart
-            join.kind = (2.0 * std::abs(d) * std::sin(0.5 * angle) <= 2.0 * options.tolerance.nodeMerge)
+            join.kind = (gap + 2.0 * std::abs(d) * std::sin(0.5 * angle) <= 2.0 * options.tolerance.nodeMerge)
                             ? SourceJoin::Kind::Snap
                             : SourceJoin::Kind::Kink;
             return LC_CurveOffsetStatus::Ok;
@@ -2192,7 +2589,12 @@ private:
                     break;
                 }
                 tr = next;
-                status = jet(tr, LC_CurveEvaluationSide::Interior, p.signedDistance, q);
+                // clamped to an end of the piece, from its side: past it may lie a
+                // corner, or a stretch cut out where the source stands still
+                const LC_CurveEvaluationSide side = (tr == lo)   ? LC_CurveEvaluationSide::Right
+                                                    : (tr == hi) ? LC_CurveEvaluationSide::Left
+                                                                 : LC_CurveEvaluationSide::Interior;
+                status = jet(tr, side, p.signedDistance, q);
                 if (status != LC_CurveOffsetStatus::Ok) {
                     return status;
                 }
@@ -2874,7 +3276,12 @@ Visibility visibility(const OffsetSource& source, const std::vector<std::pair<do
  * point lies on: the side changes sign where they cross, however shallow the
  * crossing, where intersection boxes could not tell the two apart. Only the
  * neighbours' offset pieces next to the cusps are walked; one that ends first,
- * or turns a corner, leaves the loop to noding and trimming.
+ * or turns a corner, leaves the loop to noding and trimming. A loop next to a
+ * round corner is a curl of the source into the corner, as where its tangent
+ * vanishes there: the arc about the corner passes the other neighbour's cusp,
+ * to within the square of the curl's size over d, and the two neighbours join
+ * there, the arc cut where it passes; they touch rather than cross, which
+ * noding cannot resolve.
  */
 LC_CurveOffsetStatus removeLocalLoops(const OffsetSource& source, const double d, const double speedFloor,
                                       const LC_CurveOffsetOptions& options, std::vector<LC_OffsetBranch>& branches,
@@ -2933,6 +3340,103 @@ LC_CurveOffsetStatus removeLocalLoops(const OffsetSource& source, const double d
         return offsetAt(t, at) ? t : std::numeric_limits<double>::quiet_NaN();
     };
 
+    // The arc pieces at the front (or back) of a branch, about one corner: the
+    // point of them nearest to p, as the piece and the angle there.
+    const auto nearestOnArc = [&](const std::vector<LC_OffsetCubicPiece>& pieces, const bool atFront,
+                                  const RS_Vector& p, size_t& index, double& angle) {
+        double best = std::numeric_limits<double>::infinity();
+        const size_t n = pieces.size();
+        for (size_t j = 0; j < n; ++j) {
+            const size_t i = atFront ? j : n - 1 - j;
+            const LC_OffsetBranchProvenance& v = pieces[i].provenance;
+            if (!v.arcCentre.valid || v.arcCentre != pieces[atFront ? 0 : n - 1].provenance.arcCentre) {
+                break;
+            }
+            const double lo = std::min(v.sourceT0, v.sourceT1);
+            const double hi = std::max(v.sourceT0, v.sourceT1);
+            const double middle = 0.5 * (lo + hi);
+            const double phi = std::clamp(
+                middle + std::remainder(std::atan2(p.y - v.arcCentre.y, p.x - v.arcCentre.x) - middle, 2.0 * M_PI),
+                lo, hi);
+            const double distance =
+                p.distanceTo(v.arcCentre + RS_Vector{std::cos(phi), std::sin(phi)} * std::abs(v.signedDistance));
+            if (distance < best) {
+                best = distance;
+                index = i;
+                angle = phi;
+            }
+        }
+        return best;
+    };
+    // Joins the branch before a loop to the one after it where the end of one
+    // touches the other's round corner arc next to the loop, cutting the arc
+    // there; false, changing nothing, where it does not.
+    const auto joinAtCornerArc = [&](const size_t before, const size_t after) {
+        LC_OffsetBranch a = branches[before];
+        LC_OffsetBranch b = (before == after) ? a : branches[after];
+        size_t index = 0;
+        double angle = 0.0;
+        // the arc after the loop, which a's end touches
+        const bool arcAfter = b.cubicPieces.front().provenance.arcCentre.valid;
+        const RS_Vector touch = arcAfter ? a.cubicPieces.back().bezier[3] : b.cubicPieces.front().bezier[0];
+        std::vector<LC_OffsetCubicPiece>& arc = arcAfter ? b.cubicPieces : a.cubicPieces;
+        if (!(nearestOnArc(arc, arcAfter, touch, index, angle) <= options.tolerance.nodeMerge)) {
+            return false;
+        }
+        LC_OffsetCubicPiece& piece = arc[index];
+        LC_OffsetBranchProvenance& v = piece.provenance;
+        const double radius = std::abs(v.signedDistance);
+        if (arcAfter) {
+            // what is left of the arc runs from the touch on
+            if (angle == v.sourceT1) {
+                arc.erase(arc.begin(), arc.begin() + static_cast<std::ptrdiff_t>(index + 1));
+            }
+            else {
+                const std::array<RS_Vector, 4> kept = arcPiece(v.arcCentre, radius, angle, v.sourceT1);
+                piece.bezier = {kept[0], kept[1], kept[2], piece.bezier[3]};
+                v.sourceT0 = angle;
+                arc.erase(arc.begin(), arc.begin() + static_cast<std::ptrdiff_t>(index));
+            }
+            if (arc.empty()) {
+                return false;
+            }
+            arc.front().bezier[0] = touch;
+        }
+        else {
+            if (angle == v.sourceT0) {
+                arc.erase(arc.begin() + static_cast<std::ptrdiff_t>(index), arc.end());
+            }
+            else {
+                const std::array<RS_Vector, 4> kept = arcPiece(v.arcCentre, radius, v.sourceT0, angle);
+                piece.bezier = {piece.bezier[0], kept[1], kept[2], kept[3]};
+                v.sourceT1 = angle;
+                arc.erase(arc.begin() + static_cast<std::ptrdiff_t>(index + 1), arc.end());
+            }
+            if (arc.empty()) {
+                return false;
+            }
+            arc.back().bezier[3] = touch;
+        }
+        if (before == after) {
+            // the only other branch runs out of the loop and back into it: a ring
+            LC_OffsetBranch& ring = arcAfter ? b : a;
+            ring.closed = true;
+            ring.startEnd = LC_OffsetBranchEnd::Free;
+            ring.endEnd = LC_OffsetBranchEnd::Free;
+            LC_OffsetBranch closed = std::move(ring);
+            branches.assign(1, std::move(closed));
+            return true;
+        }
+        a.cubicPieces.insert(a.cubicPieces.end(), b.cubicPieces.begin(), b.cubicPieces.end());
+        a.endEnd = b.endEnd;
+        const size_t loop = (before + 1) % branches.size();
+        branches[before] = std::move(a);
+        for (const size_t gone : {std::max(loop, after), std::min(loop, after)}) {
+            branches.erase(branches.begin() + static_cast<std::ptrdiff_t>(gone));
+        }
+        return true;
+    };
+
     for (size_t k = 0; k < branches.size() && branches.size() > 1; ++k) {
         const size_t n = branches.size();
         const LC_OffsetBranch& loop = branches[k];
@@ -2948,6 +3452,18 @@ LC_CurveOffsetStatus removeLocalLoops(const OffsetSource& source, const double d
         double a1 = 0.0;
         double b0 = 0.0;
         double b1 = 0.0;
+        if (!a.reversed && !b.reversed &&
+            (a.cubicPieces.back().provenance.arcCentre.valid || b.cubicPieces.front().provenance.arcCentre.valid)) {
+            if (joinAtCornerArc(before, after)) {
+                ++removed; // the loop; with the stretch of the arc it cut, which a fragment would count
+                ++removed;
+                if (before == after) {
+                    return LC_CurveOffsetStatus::Ok; // a ring
+                }
+                k = static_cast<size_t>(-1); // indices moved: start over
+            }
+            continue;
+        }
         if (a.reversed || b.reversed || !stretch(a, true, a0, a1) || !stretch(b, false, b0, b1)) {
             continue;
         }
@@ -4021,6 +4537,34 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
 
 } // namespace
 
+namespace {
+
+/**
+ * The branches' pieces and the offset's nodes in the source's own parameters
+ * and spans, from those of its regular part; a round corner's arcs keep their
+ * angles.
+ */
+void toSourceParameters(const RegularSource& regular, std::vector<LC_OffsetBranch>& branches,
+                        std::vector<LC_ParametricIntersection>& intersections) {
+    for (LC_OffsetBranch& branch : branches) {
+        for (LC_OffsetCubicPiece& piece : branch.cubicPieces) {
+            LC_OffsetBranchProvenance& p = piece.provenance;
+            if (p.arcCentre.valid) {
+                continue;
+            }
+            p.sourceT0 = regular.sourceParameter(p.sourceSpan, p.sourceT0);
+            p.sourceT1 = regular.sourceParameter(p.sourceSpan, p.sourceT1);
+            p.sourceSpan = regular.sourceSpan(p.sourceSpan);
+        }
+    }
+    for (LC_ParametricIntersection& x : intersections) {
+        x.parameterA = regular.sourceParameter(x.parameterA);
+        x.parameterB = regular.sourceParameter(x.parameterB);
+    }
+}
+
+} // namespace
+
 namespace LC_CurveOffset {
 
 bool isSupportedSource(const RS_Entity& source) {
@@ -4099,10 +4643,24 @@ LC_OffsetSideResolution resolveSide(const RS_Entity& source, const RS_Vector& di
         return result;
     }
     const std::unique_ptr<OffsetSource> adapter = makeSource(source);
-    if (adapter == nullptr) {
+    SourceScale scale;
+    if (adapter == nullptr || adapter->breaks().size() < 2 || !computeScale(*adapter, 0.0, scale)) {
         return result;
     }
-    return resolveSideImpl(*adapter, directionPoint, options.tolerance);
+    std::unique_ptr<RegularSource> regular;
+    const LC_CurveOffsetStatus cut = RegularSource::make(*adapter, scale, options.tolerance, 0.0, regular);
+    if (cut != LC_CurveOffsetStatus::Ok) {
+        result.status = cut;
+        return result;
+    }
+    if (regular == nullptr) {
+        return resolveSideImpl(*adapter, directionPoint, options.tolerance);
+    }
+    result = resolveSideImpl(*regular, directionPoint, options.tolerance);
+    for (double& t : result.occurrences) {
+        t = regular->sourceParameter(t);
+    }
+    return result;
 }
 
 LC_CurveOffsetGeometryResult buildDirectBranches(const RS_Entity& source, const LC_CurveOffsetRequest& request,
@@ -4133,9 +4691,18 @@ LC_CurveOffsetGeometryResult buildDirectBranches(const RS_Entity& source, const 
         result.status = LC_CurveOffsetStatus::UnsupportedNonPlanar;
         return result;
     }
+    // the engine offsets the source without its stationary stretches, if it has any
+    std::unique_ptr<RegularSource> regular;
+    const LC_CurveOffsetStatus cut =
+        RegularSource::make(*adapter, scale, options.tolerance, request.distanceMagnitude, regular);
+    if (cut != LC_CurveOffsetStatus::Ok) {
+        result.status = cut;
+        return result;
+    }
+    const OffsetSource& curve = (regular != nullptr) ? static_cast<const OffsetSource&>(*regular) : *adapter;
 
     if (options.mode == LC_CurveOffsetMode::RegionBoundary) {
-        if (!adapter->closed()) {
+        if (!curve.closed()) {
             result.status = LC_CurveOffsetStatus::InvalidSource;
             return result;
         }
@@ -4145,7 +4712,7 @@ LC_CurveOffsetGeometryResult buildDirectBranches(const RS_Entity& source, const 
             int winding = 0;
             std::size_t boxes = 0;
             // as for the other modes, a point on the curve, to the tolerance, has no side
-            if (!windingNumber(*adapter, request.directionPoint, winding, boxes, options.maxDistanceMapBoxes,
+            if (!windingNumber(curve, request.directionPoint, winding, boxes, options.maxDistanceMapBoxes,
                                options.tolerance.classification)) {
                 result.status = LC_CurveOffsetStatus::AmbiguousSide;
                 return result;
@@ -4154,7 +4721,7 @@ LC_CurveOffsetGeometryResult buildDirectBranches(const RS_Entity& source, const 
         }
         result.signedDistance = dilate ? request.distanceMagnitude : -request.distanceMagnitude;
         std::vector<LC_OffsetBranch> cycles;
-        const LC_CurveOffsetStatus status = regionBoundary(*adapter, scale, request.distanceMagnitude, dilate,
+        const LC_CurveOffsetStatus status = regionBoundary(curve, scale, request.distanceMagnitude, dilate,
                                                            options, budget, cycles, result);
         size_t pieces = 0;
         for (const LC_OffsetBranch& cycle : cycles) {
@@ -4166,6 +4733,9 @@ LC_CurveOffsetGeometryResult buildDirectBranches(const RS_Entity& source, const 
             return result;
         }
         result.branches = std::move(cycles);
+        if (regular != nullptr) {
+            toSourceParameters(*regular, result.branches, result.intersections);
+        }
         result.validationLevel = LC_OffsetValidationLevel::None;
         result.status = LC_CurveOffsetStatus::Ok;
         return result;
@@ -4174,7 +4744,7 @@ LC_CurveOffsetGeometryResult buildDirectBranches(const RS_Entity& source, const 
     LC_CurveOffsetSide side = request.side;
     if (side == LC_CurveOffsetSide::FromDirectionPoint) {
         const LC_OffsetSideResolution resolution =
-            resolveSideImpl(*adapter, request.directionPoint, options.tolerance);
+            resolveSideImpl(curve, request.directionPoint, options.tolerance);
         if (resolution.status != LC_CurveOffsetStatus::Ok) {
             result.status = resolution.status;
             return result;
@@ -4184,17 +4754,17 @@ LC_CurveOffsetGeometryResult buildDirectBranches(const RS_Entity& source, const 
     const double d = (side == LC_CurveOffsetSide::Left) ? request.distanceMagnitude : -request.distanceMagnitude;
     result.signedDistance = d;
 
-    const std::vector<double>& breaks = adapter->breaks();
+    const std::vector<double>& breaks = curve.breaks();
     const double speedFloor = scale.numericFloor / (breaks.back() - breaks.front());
     std::vector<LC_OffsetBranch> branches;
     double maxError = 0.0;
     LC_CurveOffsetStatus status =
-        directBranches(*adapter, scale, d, options, budget, KinkPolicy::Round, branches, maxError,
+        directBranches(curve, scale, d, options, budget, KinkPolicy::Round, branches, maxError,
                        result.exactSamples);
     const bool trimmed = options.mode == LC_CurveOffsetMode::Trimmed;
     if (status == LC_CurveOffsetStatus::Ok && trimmed) {
         std::size_t removed = 0;
-        status = removeLocalLoops(*adapter, d, speedFloor, options, branches, removed);
+        status = removeLocalLoops(curve, d, speedFloor, options, branches, removed);
         collapseTinyReversals(branches, options.tolerance.nodeMerge);
         // any reversed branch left is hidden throughout, and dropped before
         // noding: next to a cusp the offset's two arms are too close to tell
@@ -4210,10 +4780,10 @@ LC_CurveOffsetGeometryResult buildDirectBranches(const RS_Entity& source, const 
         }
     }
     if (status == LC_CurveOffsetStatus::Ok && (options.nodeIntersections || trimmed) && !branches.front().straight) {
-        status = nodeBranches(*adapter, d, speedFloor, options, branches, result);
+        status = nodeBranches(curve, d, speedFloor, options, branches, result);
     }
     if (status == LC_CurveOffsetStatus::Ok && trimmed) {
-        status = trimBranches(*adapter, scale, d, options, branches, result);
+        status = trimBranches(curve, scale, d, options, branches, result);
     }
     if (status != LC_CurveOffsetStatus::Ok) {
         result.status = status;
@@ -4233,6 +4803,9 @@ LC_CurveOffsetGeometryResult buildDirectBranches(const RS_Entity& source, const 
         return result;
     }
     result.branches = std::move(branches);
+    if (regular != nullptr) {
+        toSourceParameters(*regular, result.branches, result.intersections);
+    }
     // the pieces were compared with the offset only at their own parameters;
     // materialization adds the independent, two-way check
     result.validationLevel = LC_OffsetValidationLevel::None;

@@ -346,10 +346,14 @@ public:
    * consecutive break parameters). The span's homogeneous Bezier net over the
    * box is formed exactly with outward-rounded arithmetic, so the result
    * contains every value the curve takes there; it narrows as the box shrinks.
+   * With @p products, where the weights are equal, |C'|^2 and C' x C'' are
+   * also enclosed from the Bezier coefficients of the products
+   * (speedSquaredProduct, crossProduct), which stay tight where C' and C''
+   * are nearly parallel.
    * @return false for a box outside the domain or across a knot, or invalid
    *         weights or coordinates.
    */
-  bool tryBoundJet(double a, double b, LC_CurveJetBounds &bounds) const;
+  bool tryBoundJet(double a, double b, LC_CurveJetBounds &bounds, bool products = false) const;
 
   /**
    * The vertices of a polyline within @p tolerance of the curve, independent

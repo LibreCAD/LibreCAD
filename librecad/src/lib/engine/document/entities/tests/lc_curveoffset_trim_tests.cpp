@@ -126,8 +126,8 @@ Checked check(const LC_CurveOffsetGeometryResult& trimmed, const Curve& source, 
     for (int i = 0; i <= samples; ++i) {
         const double t = t0 + (t1 - t0) * i / samples;
         LC_CurveJet c;
-        if (!source(t, c)) {
-            continue;
+        if (!source(t, c) || !(c.first.magnitude() > 0.0)) {
+            continue; // no normal, where the source stands still
         }
         const RS_Vector q = c.point + RS_Vector{-c.first.y, c.first.x} / c.first.magnitude() * trimmed.signedDistance;
         if (distanceTo(source, t0, t1, q) < visibleFrom) {
@@ -935,5 +935,227 @@ TEST_CASE("A corner only roughly an arc of radius d is trimmed at d, not taken f
     }
     else {
         CHECK(result.status == LC_CurveOffsetStatus::SingularOffset);
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Repeated control points: stretches that stand still, tangents that vanish
+// ---------------------------------------------------------------------------
+namespace {
+
+RS_SplineData splineData(const int degree, const std::vector<RS_Vector>& points, const std::vector<double>& knots) {
+    RS_SplineData data(degree, false);
+    data.controlPoints = points;
+    data.knotslist = knots;
+    data.weights.assign(points.size(), 1.0);
+    return data;
+}
+
+/**
+ * Trims @p source at @p d on @p side and checks what is kept against the exact
+ * offset, both ways. A point hidden by less than the tolerance counts as
+ * visible: where the offset crosses itself at a shallow angle, one hidden by
+ * a ten-thousandth of d can lie far from the crossing.
+ */
+LC_CurveOffsetGeometryResult checkedTrim(const RS_Spline& source, const LC_CurveOffsetSide side, const double d) {
+    const LC_CurveOffsetGeometryResult result = trim(source, side, d);
+    REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE_FALSE(result.branches.empty());
+    const double tolerance = LC_CurveOffset::makeDirectOptions(source, d).tolerance.requestedGeometry;
+    const Checked checked = check(result, curveOf(source), 0.0, domainEnd(source), d, d - tolerance);
+    CHECK(checked.nearestKept >= d - 2.0 * tolerance);
+    CHECK(checked.worstMissing <= 2.0 * tolerance);
+    return result;
+}
+
+/** Whether two results pass through the same corners, each within @p tolerance of the other's. */
+bool sameCorners(const LC_CurveOffsetGeometryResult& a, const LC_CurveOffsetGeometryResult& b, const double tolerance) {
+    if (a.branches.size() != b.branches.size()) {
+        return false;
+    }
+    for (size_t i = 0; i < a.branches.size(); ++i) {
+        bool arcsA = false;
+        bool arcsB = false;
+        const std::vector<RS_Vector> pa = corners(a.branches[i], arcsA);
+        const std::vector<RS_Vector> pb = corners(b.branches[i], arcsB);
+        if (arcsA != arcsB || a.branches[i].closed != b.branches[i].closed) {
+            return false;
+        }
+        for (const auto& [from, to] : {std::pair{&pa, &pb}, std::pair{&pb, &pa}}) {
+            for (const RS_Vector& p : *from) {
+                if (!passesThrough(*to, p, tolerance)) {
+                    return false;
+                }
+            }
+        }
+    }
+    return true;
+}
+
+} // namespace
+
+TEST_CASE("A cubic with a doubled control point trims through it along the tangent's limit",
+          "[curve-offset][trim][singular]") {
+    // Bezier pieces meeting at (3, 1), the second one's first handle doubled
+    // onto the join: the tangent vanishes there and tends to (1, 0) from both
+    // sides. Past the join the curve bends right ever more sharply: inside
+    // that bend the offset turns back at the join and again past it, and the
+    // loop between is trimmed away.
+    const RS_Spline doubled(nullptr, splineData(3, {{0, 0}, {1, 1}, {2, 1}, {3, 1}, {3, 1}, {4, 1}, {5, 0}},
+                                                {0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2}));
+    for (const double d : {0.25, 1.0}) {
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+            INFO("distance " << d << " side " << static_cast<int>(side));
+            const LC_CurveOffsetGeometryResult result = checkedTrim(doubled, side, d);
+            CHECK(result.branches.size() == 1);
+            CHECK(result.removedIntervals == (side == LC_CurveOffsetSide::Left ? 0u : 3u));
+        }
+    }
+
+    // turning left by 45 degrees where the doubled handle leaves towards (4, 2):
+    // a corner, rounded outside and cut inside
+    const RS_Spline cornered(nullptr, splineData(3, {{0, 0}, {1, 1}, {2, 1}, {3, 1}, {3, 1}, {4, 2}, {5, 1}},
+                                                 {0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2}));
+    for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+        INFO("side " << static_cast<int>(side));
+        const LC_CurveOffsetGeometryResult result = checkedTrim(cornered, side, 0.25);
+        REQUIRE(result.branches.size() == 1);
+        bool arcs = false;
+        corners(result.branches.front(), arcs);
+        CHECK(arcs == (side == LC_CurveOffsetSide::Right));
+    }
+}
+
+TEST_CASE("Where the tangent vanishes on both sides of a corner, the curl before it is trimmed at its arc",
+          "[curve-offset][trim][singular][kink]") {
+    // The curve runs into (0, 0) with both handles there, and on along the x
+    // axis: its tangent vanishes on both sides of the corner, a left turn.
+    // Just before it the curve curls into the corner, too tightly for its
+    // offset outside, which turns back short of the corner's arc; the arc
+    // passes the end of the offset before the curl within 4e-8, touching
+    // rather than crossing it, and the two are joined there.
+    const RS_Spline curled(nullptr, splineData(3, {{-6, 0}, {-3, 7}, {0, 0}, {0, 0}, {0, 0}, {1, 0}, {6, 0}},
+                                               {0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2}));
+    const LC_CurveOffsetGeometryResult result = checkedTrim(curled, LC_CurveOffsetSide::Right, 0.5);
+    REQUIRE(result.branches.size() == 1);
+    bool arcs = false;
+    corners(result.branches.front(), arcs);
+    CHECK(arcs);
+    CHECK(LC_CurveOffset::materializeBranches(curled, result, LC_CurveOffset::makeOffsetOptions(curled, 0.5),
+                                              LC_CurveOffset::makeDirectSourceBudget())
+              .status == LC_CurveOffsetStatus::Ok);
+    checkedTrim(curled, LC_CurveOffsetSide::Left, 0.5);
+}
+
+TEST_CASE("A repeated vertex of a polyline spline trims like the polyline", "[curve-offset][trim][singular]") {
+    const RS_Spline repeated(nullptr, splineData(1, {{0, 0}, {5, 0}, {5, 0}, {5, 5}}, {0, 0, 1, 2, 3, 3}));
+    const RS_Spline plain = polylineSpline({{0, 0}, {5, 0}, {5, 5}});
+    for (const double d : {0.25, 1.0}) {
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+            INFO("distance " << d << " side " << static_cast<int>(side));
+            const LC_CurveOffsetGeometryResult a = checkedTrim(repeated, side, d);
+            const LC_CurveOffsetGeometryResult b = trim(plain, side, d);
+            REQUIRE(b.status == LC_CurveOffsetStatus::Ok);
+            CHECK(sameCorners(a, b, 1e-9));
+        }
+    }
+    // inside the corner the two sides meet at (5 - d, d)
+    bool arcs = false;
+    CHECK(passesThrough(corners(trim(repeated, LC_CurveOffsetSide::Left, 1.0).branches.front(), arcs),
+                        RS_Vector{4.0, 1.0}, 1e-6));
+
+    // A closed polyline spline whose corner (10, 0) is repeated, and one that
+    // repeats its first point at its end, grow and shrink like the rectangle.
+    const RS_Spline rectangle = polylineSpline({{0, 0}, {10, 0}, {10, 4}, {0, 4}}, true);
+    const RS_Spline twice = polylineSpline({{0, 0}, {10, 0}, {10, 0}, {10, 4}, {0, 4}}, true);
+    const RS_Spline back = polylineSpline({{0, 0}, {10, 0}, {10, 4}, {0, 4}, {0, 0}}, true);
+    for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+        INFO("side " << static_cast<int>(side));
+        const LC_CurveOffsetGeometryResult expected = trim(rectangle, side, 1.0);
+        REQUIRE(expected.status == LC_CurveOffsetStatus::Ok);
+        for (const RS_Spline* source : {&twice, &back}) {
+            const LC_CurveOffsetGeometryResult result = checkedTrim(*source, side, 1.0);
+            REQUIRE(result.branches.size() == 1);
+            CHECK(result.branches.front().closed);
+            CHECK(sameCorners(result, expected, 1e-9));
+        }
+    }
+}
+
+TEST_CASE("A knot interval over which a spline stands still trims as if it were not there",
+          "[curve-offset][trim][singular]") {
+    // The middle Bezier piece is the point (3, 0), through which the curve
+    // runs on along (1, -1) as it does without that piece.
+    const RS_Spline still(nullptr,
+                          splineData(3, {{0, 0}, {1, 1}, {2, 1}, {3, 0}, {3, 0}, {3, 0}, {3, 0}, {4, -1}, {5, -1}, {6, 0}},
+                                     {0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 3}));
+    const RS_Spline without(nullptr, splineData(3, {{0, 0}, {1, 1}, {2, 1}, {3, 0}, {4, -1}, {5, -1}, {6, 0}},
+                                                {0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2}));
+    for (const double d : {0.25, 1.0}) {
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+            INFO("distance " << d << " side " << static_cast<int>(side));
+            const LC_CurveOffsetGeometryResult a = checkedTrim(still, side, d);
+            const LC_CurveOffsetGeometryResult b = trim(without, side, d);
+            REQUIRE(b.status == LC_CurveOffsetStatus::Ok);
+            REQUIRE(a.branches.size() == b.branches.size());
+            CHECK(a.removedIntervals == b.removedIntervals);
+            CHECK(a.branches.front().cubicPieces.front().bezier[0] == b.branches.front().cubicPieces.front().bezier[0]);
+            CHECK(a.branches.back().cubicPieces.back().bezier[3] == b.branches.back().cubicPieces.back().bezier[3]);
+        }
+    }
+
+    // A uniform cubic whose middle four control points coincide: it stands
+    // still over [2, 3], and runs straight into (4, 0) and out of it, turning
+    // left by 90 degrees; outside it is rounded, inside the sides are cut
+    // where they meet, at (4, 0) + (0, d sqrt 2).
+    const RS_Spline uniform(nullptr, splineData(3, {{0, 0}, {2, 2}, {4, 0}, {4, 0}, {4, 0}, {4, 0}, {6, 2}, {8, 0}},
+                                                {0, 0, 0, 0, 1, 2, 3, 4, 5, 5, 5, 5}));
+    for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+        INFO("side " << static_cast<int>(side));
+        const LC_CurveOffsetGeometryResult result = checkedTrim(uniform, side, 0.5);
+        REQUIRE(result.branches.size() == 1);
+        bool arcs = false;
+        const std::vector<RS_Vector> points = corners(result.branches.front(), arcs);
+        CHECK(arcs == (side == LC_CurveOffsetSide::Right));
+        if (side == LC_CurveOffsetSide::Left) {
+            CHECK(passesThrough(points, RS_Vector{4.0, 0.5 * std::sqrt(2.0)}, 1e-6));
+        }
+    }
+
+    // A quadratic spline through doubled control point (2, 2): its segments
+    // either side are straight, their tangents vanishing at (2, 2), where the
+    // curve turns right by 90 degrees.
+    LC_SplinePointsData points(false, false);
+    points.useControlPoints = true;
+    points.controlPoints = {{0, 0}, {2, 2}, {2, 2}, {4, 0}, {6, 2}};
+    const LC_SplinePoints quadratic(nullptr, points);
+    for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+        INFO("quadratic, side " << static_cast<int>(side));
+        const LC_CurveOffsetGeometryResult result = trim(quadratic, side, 0.25);
+        REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+        const double tolerance = LC_CurveOffset::makeDirectOptions(quadratic, 0.25).tolerance.requestedGeometry;
+        const Checked checked = check(result, curveOf(quadratic), 0.0, 3.0, 0.25);
+        CHECK(checked.nearestKept >= 0.25 - 2.0 * tolerance);
+        CHECK(checked.worstMissing <= 2.0 * tolerance);
+    }
+}
+TEST_CASE("The drawing tools offset splines with repeated control points", "[curve-offset][trim][singular]") {
+    // createOffset(), what Modify Offset and the parallels call: Trimmed, then materialized
+    const std::vector<RS_SplineData> sources{
+        splineData(3, {{0, 0}, {1, 1}, {2, 1}, {3, 1}, {3, 1}, {4, 1}, {5, 0}}, {0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2}),
+        splineData(1, {{0, 0}, {5, 0}, {5, 0}, {5, 5}}, {0, 0, 1, 2, 3, 3}),
+        splineData(3, {{0, 0}, {2, 2}, {4, 0}, {4, 0}, {4, 0}, {4, 0}, {6, 2}, {8, 0}},
+                   {0, 0, 0, 0, 1, 2, 3, 4, 5, 5, 5, 5}),
+    };
+    for (const RS_SplineData& data : sources) {
+        const RS_Spline source(nullptr, data);
+        for (const RS_Vector& side : {RS_Vector{2.0, 3.0}, RS_Vector{2.0, -3.0}}) {
+            INFO("degree " << data.degree << " towards " << side.x << ", " << side.y);
+            const std::vector<RS_Entity*> offset = source.createOffset(side, 0.5);
+            CHECK_FALSE(offset.empty());
+            for (RS_Entity* entity : offset) {
+                delete entity;
+            }
+        }
     }
 }
