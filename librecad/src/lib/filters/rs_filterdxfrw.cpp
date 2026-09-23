@@ -29434,8 +29434,8 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
     return;
   }
 
-  // R12 has no SPLINE: write a polyline within its export tolerance, or
-  // nothing and fail the export
+  // R12 has no SPLINE: a polyline within its export tolerance, or the
+  // segments the spline is drawn with
   if (m_version == 1009) {
     // a spline read closed but kept with open ends is closed too, while its
     // ends meet: the polyline is closed and repeats no vertex
@@ -29445,12 +29445,24 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
                          splineCurveCloses(splineData));
     std::vector<RS_Vector> vertices;
     if (!r12SplineVertices(*s, closed, vertices)) {
-      RS_DEBUG->print(RS_Debug::D_ERROR,
+      // A curve the evaluator cannot bound, as a spline whose knots do not
+      // match its control points is. The file keeps what the screen shows
+      // rather than failing over one entity; a spline that draws nothing
+      // writes nothing, as it did before R12 export had a tolerance.
+      RS_DEBUG->print(RS_Debug::D_WARNING,
                       "RS_FilterDXFRW::writeSpline: no R12 polyline within "
-                      "tolerance and vertex limit");
-      m_writeFailed = true;
-      m_dxfW->markWriteFailure(); // keep the target file as it was
-      return;
+                      "tolerance and vertex limit; writing the drawn segments");
+      vertices.clear();
+      for (const RS_Entity *e : lc::LC_ContainerTraverser{*s, RS2::ResolveNone}.entities()) {
+        vertices.push_back(e->getStartpoint());
+      }
+      if (vertices.empty()) {
+        return;
+      }
+      if (!closed) {
+        vertices.push_back(
+            lc::LC_ContainerTraverser{*s, RS2::ResolveNone}.entities().back()->getEndpoint());
+      }
     }
     DRW_Polyline pol;
     for (const RS_Vector &v : vertices) {

@@ -847,7 +847,7 @@ TEST_CASE("R12 writes a closed or rational spline within the export tolerance", 
     }
 }
 
-TEST_CASE("A spline R12 cannot hold within its vertex limit fails the export, writing no part of it",
+TEST_CASE("A spline R12 cannot hold within its vertex limit is written as it is drawn",
           "[curve-offset][d1][persistence][r12]") {
     RS_SplineData zigzag(3, false);
     const int count = 1000;
@@ -863,23 +863,22 @@ TEST_CASE("A spline R12 cannot hold within its vertex limit fails the export, wr
     REQUIRE(RS_Spline(nullptr, zigzag).validate());
 
     ensureSettings();
-    const std::string path = tempPath("over_limit_r12.dxf");
-    {
-        std::ofstream previous(path);
-        previous << "an earlier file";
-    }
-    {
-        RS_Graphic graphic;
-        graphic.addEntity(new RS_Spline(&graphic, zigzag));
-        RS_FilterDXFRW filter;
-        CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(path), RS2::FormatDXFRW12));
-    }
-    // the failed export leaves the file it would have replaced as it was
-    std::ifstream in(path);
-    const std::string text((std::istreambuf_iterator<char>(in)), std::istreambuf_iterator<char>());
-    CHECK(text == "an earlier file");
-    in.close();
-    std::filesystem::remove(path);
+    // No polyline of at most 32767 vertices is within the export tolerance of
+    // this curve, so the file keeps the segments the spline is drawn with
+    // rather than losing the whole drawing over one entity.
+    RS_Graphic reloaded;
+    bool exported = false;
+    const std::vector<RS_Polyline*> polylines =
+        r12RoundTrip(reloaded, {zigzag}, "over_limit_r12.dxf", exported);
+    REQUIRE(exported);
+    REQUIRE(polylines.size() == 1);
+
+    RS_Spline drawn(nullptr, zigzag);
+    const size_t segments = static_cast<size_t>(drawn.count());
+    REQUIRE(segments > 1);
+    const std::vector<RS_Vector> vertices = polylineVertices(*polylines[0]);
+    CHECK(vertices.size() == segments + 1); // the ends of the drawn segments
+    CHECK(vertices.front().distanceTo(zigzag.controlPoints.front()) < 1e-9);
 }
 
 // ---------------------------------------------------------------------------
