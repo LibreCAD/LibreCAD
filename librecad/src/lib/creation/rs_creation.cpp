@@ -166,6 +166,7 @@ void RS_Creation::createParallel(const RS_Vector& coord, const double distance, 
             createParallelCircle(coord, distance, number, static_cast<RS_Circle*>(e), createdEntities);
             break;
         case RS2::EntityParabola:
+        case RS2::EntityHyperbola:
         case RS2::EntitySplinePoints:
         case RS2::EntitySpline:
             createParallelCurve(coord, distance, number, e, createdEntities, forPreview);

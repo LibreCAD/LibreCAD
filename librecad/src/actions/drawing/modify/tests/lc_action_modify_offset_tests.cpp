@@ -33,6 +33,7 @@
 #include "lc_action_modify_offset.h"
 #include "lc_actiontestsupport.h"
 #include "lc_curveoffset.h"
+#include "lc_hyperbola.h"
 #include "lc_parabola.h"
 #include "lc_splinepoints.h"
 #include "rs_circle.h"
@@ -233,6 +234,45 @@ TEST_CASE("Modify Offset admits both spline types and names them", "[curve-offse
     f.m_action->updateActionPromptForSelection();
     CHECK(f.m_context.prompt.contains("spline"));
     CHECK(f.m_context.prompt.contains("spline through points"));
+}
+
+TEST_CASE("Modify Offset takes a parabola and a hyperbola, and offsets them", "[curve-offset][action]") {
+    OffsetFixture f;
+    auto* parabola = f.add(new LC_Parabola(&f.m_graphic, LC_ParabolaData{std::array<RS_Vector, 3>{
+                                                             RS_Vector{-4.0, 4.0}, RS_Vector{0.0, -4.0},
+                                                             RS_Vector{4.0, 4.0}}}));
+    // the right branch of x^2/9 - y^2/4 = 1, moved to (30, 0), from y = -4 to y = 4
+    auto* hyperbola = f.add(new LC_Hyperbola(
+        &f.m_graphic, LC_HyperbolaData{RS_Vector{30.0, 0.0}, RS_Vector{3.0, 0.0}, 2.0 / 3.0, -1.4, 1.4, false}));
+    REQUIRE(hyperbola->isValid());
+
+    const auto& types = OffsetProbe(&f.m_context).m_catchForSelectionEntityTypes;
+    CHECK(types.contains(RS2::EntityParabola));
+    CHECK(types.contains(RS2::EntityHyperbola));
+
+    SECTION("a parabola") {
+        f.select({parabola});
+        f.start(0.5, false);
+        REQUIRE(f.m_action->m_selectionComplete);
+        f.clickAt(0.0, -6.0); // below its vertex, outside it
+        CHECK(f.m_context.messages.isEmpty());
+        CHECK(parabola->isDeleted());
+        CHECK(f.liveCount(RS2::EntitySpline) == 1);
+    }
+
+    SECTION("a hyperbola") {
+        f.select({hyperbola});
+        f.start(0.5, false);
+        REQUIRE(f.m_action->m_selectionComplete);
+        f.clickAt(40.0, 0.0); // beyond its vertex (33, 0), towards the focus
+        CHECK(f.m_context.messages.isEmpty());
+        CHECK(hyperbola->isDeleted());
+        CHECK(f.liveCount(RS2::EntitySpline) == 1);
+    }
+
+    f.m_action->updateActionPromptForSelection();
+    CHECK(f.m_context.prompt.contains("parabola"));
+    CHECK(f.m_context.prompt.contains("hyperbola"));
 }
 
 TEST_CASE("A selection window takes the spline, not the segments it is drawn with", "[curve-offset][action]") {

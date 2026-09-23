@@ -32,6 +32,7 @@
 #include <vector>
 
 #include "lc_curveoffset.h"
+#include "lc_hyperbola.h"
 #include "lc_splinepoints.h"
 #include "rs_line.h"
 #include "rs_spline.h"
@@ -1155,6 +1156,133 @@ TEST_CASE("A closed source's branches are joined and collapsed around their ring
             }
         }
     }
+}
+
+// ---------------------------------------------------------------------------
+// Hyperbolas
+// ---------------------------------------------------------------------------
+namespace {
+/**
+ * A hyperbola's exact jet, written here from its definition rather than taken
+ * from the engine's adapter: centre + R (s a cosh t, b sinh t), R the rotation
+ * onto the major axis, s = -1 on the left branch.
+ */
+EvalFn hyperbolaEvaluator(const LC_HyperbolaData& d) {
+    return [d](const double t, LC_CurveEvaluationSide, LC_CurveJet& jet) {
+        const double a = d.majorP.magnitude();
+        const double b = a * d.ratio;
+        const double s = d.reversed ? -1.0 : 1.0;
+        const double angle = d.majorP.angle();
+        const auto world = [&](const double x, const double y) { return RS_Vector{x, y}.rotated(angle); };
+        jet.point = d.center + world(s * a * std::cosh(t), b * std::sinh(t));
+        jet.first = world(s * a * std::sinh(t), b * std::cosh(t));
+        jet.second = world(s * a * std::cosh(t), b * std::sinh(t));
+        return true;
+    };
+}
+} // namespace
+
+TEST_CASE("A hyperbola is offset along its exact curve on either branch and either side",
+          "[curve-offset][hyperbola]") {
+    // a = |(4, 2)| = 4.47, b = 0.6 a = 2.68: the radius of curvature is smallest
+    // at the vertex, b^2 / a = 1.61, so both distances stay short of it
+    for (const bool reversed : {false, true}) {
+        const LC_HyperbolaData data{RS_Vector{5.0, -3.0}, RS_Vector{4.0, 2.0}, 0.6, -1.2, 1.5, reversed};
+        const LC_Hyperbola hyperbola(nullptr, data);
+        REQUIRE(hyperbola.isValid());
+        REQUIRE(LC_CurveOffset::isSupportedSource(hyperbola));
+        // the evaluator above is the entity's own curve
+        LC_CurveJet jet;
+        REQUIRE(hyperbolaEvaluator(data)(0.4, LC_CurveEvaluationSide::Interior, jet));
+        CHECK(jet.point.distanceTo(hyperbola.getPoint(0.4, reversed)) < 1e-12);
+
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+            for (const double distance : {0.3, 1.0}) {
+                INFO("reversed " << reversed << " side " << static_cast<int>(side) << " distance " << distance);
+                const LC_CurveOffsetGeometryResult result = offsetToSide(hyperbola, side, distance);
+                REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+                const LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(hyperbola, distance);
+                CHECK(maxDeviation(result, hyperbolaEvaluator(data)) <= options.tolerance.requestedGeometry);
+                // one branch from end to end: a smooth, convex source has no corners or cusps
+                CHECK(result.branches.size() == 1);
+            }
+        }
+    }
+}
+
+TEST_CASE("A hyperbola whose ends run backwards is offset all the same", "[curve-offset][hyperbola]") {
+    // grip edits, DXF imports and reversing a hyperbola all leave angle1 > angle2
+    const LC_HyperbolaData forwards{RS_Vector{5.0, -3.0}, RS_Vector{4.0, 2.0}, 0.6, -1.2, 1.5, false};
+    LC_HyperbolaData backwards = forwards;
+    std::swap(backwards.angle1, backwards.angle2);
+    const LC_Hyperbola hyperbola(nullptr, backwards);
+    REQUIRE(hyperbola.isValid());
+    REQUIRE(LC_CurveOffset::isSupportedSource(hyperbola));
+    for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+        INFO("side " << static_cast<int>(side));
+        const LC_CurveOffsetGeometryResult result = offsetToSide(hyperbola, side, 1.0);
+        REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+        const LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(hyperbola, 1.0);
+        CHECK(maxDeviation(result, hyperbolaEvaluator(forwards)) <= options.tolerance.requestedGeometry);
+        REQUIRE(result.branches.size() == 1);
+        // it runs from end to end: the offsets of both ends are on it
+        const LC_OffsetBranch& branch = result.branches.front();
+        const RS_Vector first = branch.cubicPieces.front().bezier[0];
+        const RS_Vector last = branch.cubicPieces.back().bezier[3];
+        for (const double t : {-1.2, 1.5}) {
+            const RS_Vector end = hyperbola.getPoint(t, false);
+            CHECK(std::min(first.distanceTo(end), last.distanceTo(end)) == Catch::Approx(1.0).margin(1e-6));
+        }
+    }
+}
+
+TEST_CASE("A hyperbola past its vertex's radius of curvature is trimmed", "[curve-offset][hyperbola]") {
+    const LC_HyperbolaData data{RS_Vector{0.0, 0.0}, RS_Vector{3.0, 0.0}, 1.0, -1.5, 1.5, false};
+    const LC_Hyperbola hyperbola(nullptr, data);
+    // a = b = 3: radius of curvature 3 at the vertex (3, 0); towards the focus at
+    // (4.24, 0) an offset by 4 folds back there, and trimming cuts the fold away
+    std::vector<RS_Entity*> towardsFocus = hyperbola.createOffset(RS_Vector{10.0, 0.0}, 4.0);
+    std::vector<RS_Entity*> away = hyperbola.createOffset(RS_Vector{0.0, 0.0}, 4.0);
+    CHECK_FALSE(towardsFocus.empty());
+    CHECK_FALSE(away.empty());
+    // nothing of the trimmed offset lies nearer the hyperbola than the distance
+    for (RS_Entity* e : towardsFocus) {
+        for (int k = 0; k <= 50; ++k) {
+            RS_Vector p;
+            if (auto* spline = dynamic_cast<RS_Spline*>(e)) {
+                double t0 = 0.0;
+                double t1 = 0.0;
+                REQUIRE(spline->getParameterDomain(t0, t1));
+                LC_CurveJet j;
+                REQUIRE(spline->tryEvaluateJet(t0 + (t1 - t0) * k / 50.0, LC_CurveEvaluationSide::Interior, j));
+                p = j.point;
+            }
+            else {
+                p = e->getStartpoint() + (e->getEndpoint() - e->getStartpoint()) * (k / 50.0);
+            }
+            // the nearest point of the hyperbola, by a fine search over its parameter
+            double nearest = RS_MAXDOUBLE;
+            for (int i = 0; i <= 3000; ++i) {
+                nearest = std::min(nearest, p.distanceTo(hyperbola.getPoint(-1.5 + 3.0 * i / 3000.0, false)));
+            }
+            CHECK(nearest > 4.0 - 1e-3);
+        }
+    }
+    for (RS_Entity* e : towardsFocus) {
+        delete e;
+    }
+    for (RS_Entity* e : away) {
+        delete e;
+    }
+}
+
+TEST_CASE("An unbounded hyperbola is not offset", "[curve-offset][hyperbola]") {
+    // both angles zero: the whole of both branches, with no ends to offset between
+    const LC_Hyperbola hyperbola(nullptr, LC_HyperbolaData{RS_Vector{0.0, 0.0}, RS_Vector{3.0, 0.0}, 1.0});
+    REQUIRE(hyperbola.isInfinite());
+    CHECK(hyperbola.createOffset(RS_Vector{10.0, 0.0}, 1.0).empty());
+    const LC_CurveOffsetGeometryResult result = offsetToSide(hyperbola, LC_CurveOffsetSide::Left, 1.0);
+    CHECK(result.status != LC_CurveOffsetStatus::Ok);
 }
 
 // ---------------------------------------------------------------------------

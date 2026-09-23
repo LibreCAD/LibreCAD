@@ -30,6 +30,7 @@
 #include <utility>
 
 #include "lc_curvejet.h"
+#include "lc_hyperbola.h"
 #include "lc_splinepoints.h"
 #include "rs_line.h"
 #include "rs_spline.h"
@@ -209,12 +210,138 @@ private:
     std::vector<RS_Vector> m_hull;
 };
 
+/**
+ * A bounded arc of one branch of a hyperbola, in the entity's own parameter
+ * phi in [angle1, angle2]:
+ *   P(phi) = centre + u (s a cosh phi) + v (b sinh phi),
+ * with u the unit major axis, v the minor axis a quarter turn from it, and
+ * s = -1 on the left (reversed) branch, as LC_Hyperbola::getPoint() has it.
+ * Its derivatives are exact, and cosh and sinh are monotone or convex on any
+ * interval, so the bounds come from the ends of the interval (and cosh's
+ * minimum at 0), widened for the rounding of the library functions. An
+ * unbounded hyperbola has no ends and is not a source.
+ */
+class HyperbolaSource final : public OffsetSource {
+public:
+    static std::unique_ptr<OffsetSource> make(const LC_Hyperbola& hyperbola) {
+        const LC_HyperbolaData& d = hyperbola.getData();
+        const double a = hyperbola.getMajorRadius();
+        const double b = hyperbola.getMinorRadius();
+        // grip edits, imports and reversal leave the ends either way round
+        const double lo = std::min(d.angle1, d.angle2);
+        const double hi = std::max(d.angle1, d.angle2);
+        if (!hyperbola.isValid() || hyperbola.isInfinite() || !std::isfinite(a) || !std::isfinite(b) || !(a > 0.0) ||
+            !(b > 0.0) || !std::isfinite(lo) || !std::isfinite(hi) || !(lo < hi) || !d.center.valid ||
+            !std::isfinite(d.center.x) || !std::isfinite(d.center.y)) {
+            return nullptr;
+        }
+        return std::unique_ptr<OffsetSource>(new HyperbolaSource(d, a, b, lo, hi));
+    }
+
+    bool closed() const override {
+        return false;
+    }
+
+    const std::vector<double>& breaks() const override {
+        return m_breaks;
+    }
+
+    bool jet(const double t, const LC_CurveEvaluationSide, LC_CurveJet& out) const override {
+        out = LC_CurveJet{};
+        if (!(t >= m_breaks.front() && t <= m_breaks.back())) {
+            return false;
+        }
+        const double ch = std::cosh(t);
+        const double sh = std::sinh(t);
+        out.point = m_centre + m_u * (m_sa * ch) + m_v * (m_b * sh);
+        out.first = m_u * (m_sa * sh) + m_v * (m_b * ch);
+        out.second = m_u * (m_sa * ch) + m_v * (m_b * sh);
+        return std::isfinite(out.point.x) && std::isfinite(out.point.y) && std::isfinite(out.first.x) &&
+               std::isfinite(out.first.y);
+    }
+
+    bool boundJet(const double a, const double b, LC_CurveJetBounds& out) const override {
+        out = LC_CurveJetBounds{};
+        if (!(a < b) || a < m_breaks.front() || b > m_breaks.back()) {
+            return false;
+        }
+        const LC_Interval sh = widened(std::sinh(a), std::sinh(b)); // increasing
+        const double cha = std::cosh(a);
+        const double chb = std::cosh(b);
+        const LC_Interval ch = (a <= 0.0 && b >= 0.0) ? widened(1.0, std::max(cha, chb))
+                                                     : widened(std::min(cha, chb), std::max(cha, chb));
+        // along u and v: s a cosh, b sinh for the point and the second derivative,
+        // s a sinh, b cosh for the first
+        const LC_Interval alongU = LC_Interval::point(m_sa) * ch;
+        const LC_Interval alongV = LC_Interval::point(m_b) * sh;
+        const LC_Interval firstU = LC_Interval::point(m_sa) * sh;
+        const LC_Interval firstV = LC_Interval::point(m_b) * ch;
+        const auto x = [&](const LC_Interval& su, const LC_Interval& sv) {
+            return LC_Interval::point(m_u.x) * su + LC_Interval::point(m_v.x) * sv;
+        };
+        const auto y = [&](const LC_Interval& su, const LC_Interval& sv) {
+            return LC_Interval::point(m_u.y) * su + LC_Interval::point(m_v.y) * sv;
+        };
+        out.x = LC_Interval::point(m_centre.x) + x(alongU, alongV);
+        out.y = LC_Interval::point(m_centre.y) + y(alongU, alongV);
+        out.dx = x(firstU, firstV);
+        out.dy = y(firstU, firstV);
+        out.ddx = x(alongU, alongV);
+        out.ddy = y(alongU, alongV);
+        return out.isValid();
+    }
+
+    const std::vector<RS_Vector>& hull() const override {
+        return m_hull;
+    }
+
+    bool straightSegment(RS_Vector&, RS_Vector&) const override {
+        return false;
+    }
+
+private:
+    HyperbolaSource(const LC_HyperbolaData& d, const double a, const double b, const double lo, const double hi)
+        : m_centre{d.center},
+          m_u{d.majorP / a},
+          m_v{-d.majorP.y / a, d.majorP.x / a},
+          m_sa{d.reversed ? -a : a},
+          m_b{b},
+          m_breaks{lo, hi} {
+        // the corners of the box its bounds give: a convex set holding the arc
+        LC_CurveJetBounds box;
+        if (boundJet(lo, hi, box)) {
+            m_hull = {{box.x.lo(), box.y.lo()}, {box.x.hi(), box.y.lo()}, {box.x.hi(), box.y.hi()},
+                      {box.x.lo(), box.y.hi()}};
+        }
+    }
+
+    /** [lo, hi] widened a few ulps: std::cosh and std::sinh are not correctly rounded. */
+    static LC_Interval widened(double lo, double hi) {
+        for (int i = 0; i < 4; ++i) {
+            lo = std::nextafter(lo, -std::numeric_limits<double>::infinity());
+            hi = std::nextafter(hi, std::numeric_limits<double>::infinity());
+        }
+        return LC_Interval::hull(lo, hi);
+    }
+
+    RS_Vector m_centre;
+    RS_Vector m_u;
+    RS_Vector m_v;
+    double m_sa{0.0};
+    double m_b{0.0};
+    std::vector<double> m_breaks;
+    std::vector<RS_Vector> m_hull;
+};
+
 std::unique_ptr<OffsetSource> makeSource(const RS_Entity& entity) {
     if (const auto* spline = dynamic_cast<const RS_Spline*>(&entity)) {
         return std::make_unique<SplineSource>(*spline);
     }
     if (const auto* points = dynamic_cast<const LC_SplinePoints*>(&entity)) {
         return std::make_unique<SplinePointsSource>(*points);
+    }
+    if (const auto* hyperbola = dynamic_cast<const LC_Hyperbola*>(&entity)) {
+        return HyperbolaSource::make(*hyperbola);
     }
     return nullptr;
 }
@@ -4505,7 +4632,8 @@ namespace LC_CurveOffset {
 
 bool isSupportedSource(const RS_Entity& source) {
     return dynamic_cast<const RS_Spline*>(&source) != nullptr ||
-           dynamic_cast<const LC_SplinePoints*>(&source) != nullptr;
+           dynamic_cast<const LC_SplinePoints*>(&source) != nullptr ||
+           dynamic_cast<const LC_Hyperbola*>(&source) != nullptr;
 }
 
 LC_CurveOffsetOptions makeDirectOptions(const RS_Entity& source, const double distanceMagnitude,

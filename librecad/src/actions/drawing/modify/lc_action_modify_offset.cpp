@@ -42,7 +42,7 @@
 LC_ActionModifyOffset::LC_ActionModifyOffset(LC_ActionContext *actionContext)
     :LC_ActionModifyBase("ActionModifyOffset", actionContext,RS2::ActionModifyOffset,
                          {RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse, RS2::EntityLine, RS2::EntityPolyline,
-                          RS2::EntitySpline, RS2::EntitySplinePoints})
+                          RS2::EntitySpline, RS2::EntitySplinePoints, RS2::EntityParabola, RS2::EntityHyperbola})
     , m_offsetData(new RS_OffsetData())
     , m_previewCache(std::make_unique<LC_OffsetPreviewCache>()){
 
@@ -440,7 +440,7 @@ void LC_ActionModifyOffset::updateActionPromptForSelected(const int status) {
 }
 
 void LC_ActionModifyOffset::updateActionPromptForSelection() {
-    updatePromptTRCancel(tr("Select line, polyline, ellipse, circle, arc, spline or spline through points to create offset") + getSelectionCompletionHintMsg(),
+    updatePromptTRCancel(tr("Select line, polyline, ellipse, circle, arc, spline, spline through points, parabola or hyperbola to create offset") + getSelectionCompletionHintMsg(),
                               MOD_SHIFT_AND_CTRL(tr("Select contour"), tr("Offset immediately after selection")));
 }
 

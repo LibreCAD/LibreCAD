@@ -45,7 +45,7 @@ namespace {
 
     //this holds a list of entity types which supports tangent
     const auto g_supportedEntityTypes = EntityTypeList{
-                {RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine,  RS2::EntityParabola, RS2::EntitySpline/*, RS2::EntitySplinePoints*/}
+                {RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine,  RS2::EntityParabola, RS2::EntityHyperbola, RS2::EntitySpline/*, RS2::EntitySplinePoints*/}
     };
 }
 
