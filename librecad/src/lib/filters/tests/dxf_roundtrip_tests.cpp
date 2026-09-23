@@ -547,6 +547,65 @@ TEST_CASE("DXF round-trip via RS_FilterDXFRW preserves unmodeled object + entity
   std::filesystem::remove(out);
 }
 
+TEST_CASE("DXF round-trip restores entities after a hidden layer is thawed",
+          "[dxf][roundtrip][filter][layer][issue2913]") {
+  ensureSettings();
+  const std::string src = tmpFile("hidden_layer_src.dxf");
+  const std::string out = tmpFile("hidden_layer_out.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  writeText(
+      src,
+      "0\nSECTION\n2\nHEADER\n"
+      "9\n$CLAYER\n2\nLAYER2\n"
+      "0\nENDSEC\n"
+      "0\nSECTION\n2\nTABLES\n"
+      "0\nTABLE\n2\nLAYER\n70\n3\n"
+      "0\nLAYER\n2\n0\n70\n0\n62\n7\n6\nCONTINUOUS\n"
+      "0\nLAYER\n2\nLAYER1\n70\n1\n62\n1\n6\nCONTINUOUS\n"
+      "0\nLAYER\n2\nLAYER2\n70\n0\n62\n3\n6\nCONTINUOUS\n"
+      "0\nENDTAB\n0\nENDSEC\n"
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nLWPOLYLINE\n8\nLAYER1\n90\n2\n70\n0\n"
+      "10\n0.0\n20\n0.0\n10\n10.0\n20\n0.0\n"
+      "0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+
+  RS_Graphic reloaded;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(reloaded, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+
+  RS_Layer *layer = reloaded.findLayer(QStringLiteral("LAYER1"));
+  REQUIRE(layer != nullptr);
+  CHECK(layer->isFrozen());
+
+  auto *polyline = dynamic_cast<RS_Polyline *>(reloaded.firstEntity());
+  REQUIRE(polyline != nullptr);
+  RS_Entity *segment = polyline->firstEntity();
+  REQUIRE(segment != nullptr);
+  CHECK(segment->getLayer(false) == nullptr);
+  CHECK(segment->getLayer() == layer);
+  CHECK_FALSE(segment->isVisible());
+
+  layer->freeze(false);
+  CHECK(segment->isVisible());
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
 TEST_CASE("DXF entity common reference groups round-trip",
           "[dxf][roundtrip][filter][common-references]") {
   ensureSettings();
