@@ -94,12 +94,14 @@ jobs:
             qt_arch: win64_msvc2022_64
             cmake_arch: x64
             msbuild_arch: x64
+            vcvars_arch: x64
             qt_modules: qt3d qt5compat qtimageformats qtshadertools
           - os: windows-11-arm
             qt_host: windows_arm64
             qt_arch: win64_msvc2022_arm64
             cmake_arch: ARM64
             msbuild_arch: arm64
+            vcvars_arch: arm64
             qt_modules: qt5compat qtimageformats qtshadertools
     runs-on: ${{ matrix.os }}
     steps:
@@ -139,19 +141,23 @@ jobs:
           "%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products * -property installationVersion
         shell: cmd
 
-      # No -G: the generator is whichever Visual Studio the image has. It was
-      # "Visual Studio 17 2022" until the windows-11-arm image moved on, and
-      # naming a version that is not installed fails the configure outright.
-      - name: Configure bounded DWG/DXF test lanes
+      # Ninja inside the Visual Studio environment, not a "Visual Studio NN"
+      # generator: the windows-11-arm image now carries Visual Studio 18, and
+      # the CMake on PATH (Qt's, 3.30) knows no generator by that name - it
+      # fell back to NMake Makefiles, which takes no -A. vcvarsall puts the
+      # compiler of whatever Visual Studio is installed on PATH, so no version
+      # is named anywhere. The Linux lanes above already build with Ninja.
+      - name: Configure and build the bounded DWG/DXF test lanes
         run: |
-          cmake.exe -S . -B generated-tests -A "${{ matrix.cmake_arch }}" -DBOOST_ROOT="%CD%\boost" -DCMAKE_CXX_FLAGS="/MP8 /EHsc" -DBUILD_TESTS=ON -DLIBRECAD_REGISTER_INTEGRATION_TESTS=ON -DLIBRECAD_REGISTER_FULL_TESTS=OFF -DLIBRECAD_REGISTER_FORMAT_TESTS=OFF -DLIBRECAD_REGISTER_CROSS_READ_SMOKE=OFF
-        shell: cmd
-
-      - name: Build bounded DWG/DXF test lanes
-        run: |
-          cmake --build generated-tests --config Release --parallel --target librecad_dwg_fast_tests librecad_dxf_fast_tests
+          for /f "usebackq delims=" %%i in (`"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products * -property installationPath`) do set "VSPATH=%%i"
+          if not defined VSPATH exit /b 1
+          call "%VSPATH%\VC\Auxiliary\Build\vcvarsall.bat" ${{ matrix.vcvars_arch }} || exit /b 1
+          set "PATH=%VSPATH%\Common7\IDE\CommonExtensions\Microsoft\CMake\Ninja;%PATH%"
+          ninja --version || exit /b 1
+          cmake.exe -S . -B generated-tests -G Ninja -DCMAKE_BUILD_TYPE=Release -DBOOST_ROOT="%CD%\boost" -DCMAKE_CXX_FLAGS="/EHsc" -DBUILD_TESTS=ON -DLIBRECAD_REGISTER_INTEGRATION_TESTS=ON -DLIBRECAD_REGISTER_FULL_TESTS=OFF -DLIBRECAD_REGISTER_FORMAT_TESTS=OFF -DLIBRECAD_REGISTER_CROSS_READ_SMOKE=OFF || exit /b 1
+          cmake --build generated-tests --parallel --target librecad_dwg_fast_tests librecad_dxf_fast_tests || exit /b 1
         shell: cmd
 
       - name: Run bounded DWG/DXF test lanes
-        run: ctest --test-dir generated-tests -C Release --output-on-failure
+        run: ctest --test-dir generated-tests --output-on-failure
         shell: cmd
