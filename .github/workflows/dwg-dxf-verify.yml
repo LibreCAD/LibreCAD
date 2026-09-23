@@ -133,9 +133,18 @@ jobs:
           rm boost.7z
         shell: bash
 
+      - name: Report the toolchain the runner has
+        run: |
+          cmake --version
+          "%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products * -property installationVersion
+        shell: cmd
+
+      # No -G: the generator is whichever Visual Studio the image has. It was
+      # "Visual Studio 17 2022" until the windows-11-arm image moved on, and
+      # naming a version that is not installed fails the configure outright.
       - name: Configure bounded DWG/DXF test lanes
         run: |
-          cmake.exe -S . -B generated-tests -G "Visual Studio 17 2022" -A "${{ matrix.cmake_arch }}" -DBOOST_ROOT="%CD%\boost" -DCMAKE_CXX_FLAGS="/MP8 /EHsc" -DBUILD_TESTS=ON -DLIBRECAD_REGISTER_INTEGRATION_TESTS=ON -DLIBRECAD_REGISTER_FULL_TESTS=OFF -DLIBRECAD_REGISTER_FORMAT_TESTS=OFF -DLIBRECAD_REGISTER_CROSS_READ_SMOKE=OFF
+          cmake.exe -S . -B generated-tests -A "${{ matrix.cmake_arch }}" -DBOOST_ROOT="%CD%\boost" -DCMAKE_CXX_FLAGS="/MP8 /EHsc" -DBUILD_TESTS=ON -DLIBRECAD_REGISTER_INTEGRATION_TESTS=ON -DLIBRECAD_REGISTER_FULL_TESTS=OFF -DLIBRECAD_REGISTER_FORMAT_TESTS=OFF -DLIBRECAD_REGISTER_CROSS_READ_SMOKE=OFF
         shell: cmd
 
       - name: Build bounded DWG/DXF test lanes
