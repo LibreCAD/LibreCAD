@@ -41,8 +41,8 @@ string JWWDocument::ReadData(int n) const {
 }
 
 string JWWDocument::ReadString() {
-    jwBYTE bt;
-    jwWORD wd;
+    jwBYTE bt = 0;
+    jwWORD wd = 0;
     string Result("");
     *ifs >> bt;
     if (bt == 0) {
@@ -61,7 +61,7 @@ string JWWDocument::ReadString() {
 //ヘッダー部読みだし(JWW形式とバージョンチェック)
 jwBOOL JWWDocument::ReadHeader() {
     int i;
-    jwDWORD dw;
+    jwDWORD dw = 0;
     jwDOUBLE db;
     string s;
 
@@ -73,7 +73,10 @@ jwBOOL JWWDocument::ReadHeader() {
             //バージョンNo.
             *ifs >> dw;
             Header.JW_DATA_VERSION = dw;
-            if (Header.JW_DATA_VERSION == 230 || Header.JW_DATA_VERSION >= 300) {
+            // The header changed with Ver.2.23, 2.25, 2.30, 3.00 and 4.20,
+            // and the fields of the last two are read where they belong. The
+            // versions before 2.30 are not read: their header is shorter.
+            if (Header.JW_DATA_VERSION >= 230) {
                 //ファイルメモ
                 Header.m_strMemo = ReadString();
                 //図面サイズ
@@ -507,6 +510,10 @@ jwBOOL JWWDocument::ReadHeader() {
                 *ifs >> db;
                 Header.m_adMojiKijunZureY[2] = db;
             }
+            else {
+                // a version this reader does not know the header of
+                return false;
+            }
         }
         else {
             return false;
@@ -515,7 +522,8 @@ jwBOOL JWWDocument::ReadHeader() {
     else {
         return false;
     }
-    return true;
+    // false when the file ends inside the header
+    return ifs->good();
 }
 
 //ヘッダー部書き出し
@@ -946,20 +954,80 @@ jwBOOL JWWDocument::WriteHeader() {
     return true;
 }
 
+// the number of objects in a list, as MFC's CArchive::ReadCount() reads it:
+// a WORD, or 0xFFFF and then a DWORD
+jwDWORD JWWDocument::ReadCount() {
+    jwWORD wd = 0;
+    *ifs >> wd;
+    if (wd != 0xFFFF) {
+        return wd;
+    }
+    jwDWORD dw = 0;
+    *ifs >> dw;
+    return dw;
+}
+
+// Reads the tag in front of an object of a list, as MFC's CArchive::ReadObject()
+// does, and returns the object's class name in s. Classes and objects share
+// one numbering, from 1 (0 is the null object): a new class takes the next
+// number, and so does every object read, before its own members. pList
+// keeps the numbers of the classes.
+//   0x0000           the null object: no data follows, s is ""
+//   0xFFFF           a new class: schema WORD, name length WORD, the name
+//   0x8000 | n       an object of class n (n < 0x7FFF)
+//   0x7FFF, DWORD d  an object of class d & 0x7FFFFFFF if d has its high bit
+//                    set; otherwise object d, as below
+//   n < 0x7FFF       object n, already read: no data follows, s is ""
+// Returns false when the stream fails or the tag names a class or an object
+// that has not been read.
+jwBOOL JWWDocument::ReadObjectTag(int& index, string& s) {
+    jwWORD wd = 0;
+    jwDWORD dw = 0;
+    s = "";
+    *ifs >> wd;
+    if (!ifs->good()) {
+        return false;
+    }
+    if (wd == 0xFFFF) {
+        *ifs >> wd;
+        objCode = wd;
+        *ifs >> wd;
+        s = ReadData(wd);
+        if (!ifs->good() || s.empty()) {
+            return false;
+        }
+        pList->AddItem(index, s);
+        index++;
+    }
+    else {
+        if (wd == 0x7FFF) {
+            *ifs >> dw;
+            if (!ifs->good()) {
+                return false;
+            }
+        }
+        else {
+            dw = (wd & 0x8000) ? (0x80000000 | (wd & 0x7FFF)) : wd;
+        }
+        if (!(dw & 0x80000000)) {
+            return dw < (jwDWORD)index;
+        }
+        s = pList->GetNoByItem(dw & 0x7FFFFFFF).CDataString;
+        if (s.empty()) {
+            return false;
+        }
+    }
+    index++;
+    return true;
+}
+
 //データファイル読み込み
 jwBOOL JWWDocument::Read() {
     if (!ifs) {
         return false;
     }
 
-    jwDWORD dw;
-    string s, t;
-    jwWORD wd;
-    int i, j;
-
-    jwBOOL ListFlag;
-    int ListCount;
-    int ListLength;
+    int ListCount = 0;
     CDataSen DSen;
     CDataEnko DEnko;
     CDataTen DTen;
@@ -970,9 +1038,6 @@ jwBOOL JWWDocument::Read() {
     CDataList DList;
 
     pBlockList->Init();
-    ListFlag = false;
-    ListLength = 0;
-    ListCount = 0;
     if (!ReadHeader()) {
         return false;
     }
@@ -992,70 +1057,30 @@ jwBOOL JWWDocument::Read() {
     DSolid.SetVersion(Header.JW_DATA_VERSION);
     DSunpou.SetVersion(Header.JW_DATA_VERSION);
     DBlock.SetVersion(Header.JW_DATA_VERSION);
+    DList.SetVersion(Header.JW_DATA_VERSION);
 
-    *ifs >> wd;
-    if (wd == 0xFFFF) {
-        *ifs >> dw;
-        //        j = dw;
-    }
-    //	else j = wd;
+    // the number the next class or object takes (see ReadObjectTag)
+    int i = 1;
 
-    i = 1;
-
-    while (!ifs->eof()) {
-        *ifs >> wd;
-        switch (wd) {
-            case 0x0000:
-                continue; //goto exitloop;
-                break;
-            case 0xFFFF: {
-                *ifs >> wd;
-                objCode = wd;
-                *ifs >> wd;
-                s = ReadData(wd);
-                pList->AddItem(i, s);
-                j = i;
-                i++;
-            }
-            break;
-            case 0xFF7F: {
-                *ifs >> dw;
-                j = dw & 0x7FFFFFFF;
-            }
-            break;
-            case 0x7FFF: {
-                *ifs >> dw;
-                j = dw & 0x7FFFFFFF;
-            }
-            break;
-            default: {
-                if (wd & 0x8000) {
-                    j = wd & 0x7FFF;
-                }
-                else {
-                    j = 0;
-                }
-            }
+    // Reads one object of a list and adds it to the drawing, or to the block
+    // definitions when ListFlag is set (counting it in ListCount). Returns
+    // false, and adds nothing, when the object cannot be read.
+    auto readObject = [&](jwBOOL ListFlag) -> jwBOOL {
+        string s;
+        if (!ReadObjectTag(i, s)) {
+            return false;
         }
-        s = pList->GetNoByItem(j).CDataString;
 #ifdef	DATA_DUMP
         cout << s << endl;
 #endif
-        if (ListCount == ListLength) {
-            ListFlag = false;
-        }
-        if (s == "CDataList") {
-            ListFlag = true;
-            ListCount = 0;
-            DList.Serialize(*ifs);
-#ifdef	DATA_DUMP
-            cout << DList;
-#endif
-            pBlockList->AddBlockList(DList);
-            ListLength = DList.Count;
+        if (s.empty()) {
+            return true;
         }
         if (s == "CDataSen") {
             DSen.Serialize(*ifs);
+            if (!ifs->good()) {
+                return false;
+            }
 #ifdef	DATA_DUMP
             cout << DSen;
 #endif
@@ -1068,8 +1093,11 @@ jwBOOL JWWDocument::Read() {
                 SenCount++;
             }
         }
-        if (s == "CDataEnko") {
+        else if (s == "CDataEnko") {
             DEnko.Serialize(*ifs);
+            if (!ifs->good()) {
+                return false;
+            }
 #ifdef	DATA_DUMP
             cout << DEnko;
 #endif
@@ -1082,8 +1110,11 @@ jwBOOL JWWDocument::Read() {
                 EnkoCount++;
             }
         }
-        if (s == "CDataTen") {
+        else if (s == "CDataTen") {
             DTen.Serialize(*ifs);
+            if (!ifs->good()) {
+                return false;
+            }
 #ifdef	DATA_DUMP
             cout << DTen;
 #endif
@@ -1096,8 +1127,11 @@ jwBOOL JWWDocument::Read() {
                 TenCount++;
             }
         }
-        if (s == "CDataMoji") {
+        else if (s == "CDataMoji") {
             DMoji.Serialize(*ifs);
+            if (!ifs->good()) {
+                return false;
+            }
 #ifdef	DATA_DUMP
             cout << DMoji;
 #endif
@@ -1110,8 +1144,11 @@ jwBOOL JWWDocument::Read() {
                 MojiCount++;
             }
         }
-        if (s == "CDataSolid") {
+        else if (s == "CDataSolid") {
             DSolid.Serialize(*ifs);
+            if (!ifs->good()) {
+                return false;
+            }
 #ifdef	DATA_DUMP
             cout << DSolid;
 #endif
@@ -1124,8 +1161,11 @@ jwBOOL JWWDocument::Read() {
                 SolidCount++;
             }
         }
-        if (s == "CDataBlock") {
+        else if (s == "CDataBlock") {
             DBlock.Serialize(*ifs);
+            if (!ifs->good()) {
+                return false;
+            }
 #ifdef	DATA_DUMP
             cout << DBlock;
 #endif
@@ -1138,8 +1178,11 @@ jwBOOL JWWDocument::Read() {
                 BlockCount++;
             }
         }
-        if (s == "CDataSunpou") {
+        else if (s == "CDataSunpou") {
             DSunpou.Serialize(*ifs);
+            if (!ifs->good()) {
+                return false;
+            }
 #ifdef	DATA_DUMP
             cout << DSunpou;
 #endif
@@ -1152,12 +1195,62 @@ jwBOOL JWWDocument::Read() {
                 SunpouCount++;
             }
         }
-        if (!s.empty()) {
-            i++;
+        else {
+            // a block definition among the drawing data or the members of
+            // one, or a class jwwlib does not know: its size is unknown
+            return false;
         }
-        s = "";
+        return true;
+    };
+
+    // The data are two lists, each a count and that many objects: the
+    // drawing (m_DataList), then the block definitions (m_DataListList). Each
+    // block definition (CDataList) ends with its members, a list of the same
+    // kind. From Ver.7.00 the images the drawing embeds follow; they are not
+    // drawing data, and reading stops before them. Reading also stops at an
+    // object it cannot read, as nothing after it can be found; what was read
+    // before it is kept.
+    jwDWORD count = ReadCount();
+    if (!ifs->good()) {
+        return false; // the file ends with its header: it has no drawing
     }
-    //exitloop:
+    for (jwDWORD n = 0; n < count; n++) {
+        if (!readObject(false)) {
+            return true;
+        }
+    }
+    count = ReadCount();
+    for (jwDWORD n = 0; n < count; n++) {
+        string s;
+        if (!ReadObjectTag(i, s)) {
+            return true;
+        }
+        if (s.empty()) {
+            continue;
+        }
+        if (s != "CDataList") {
+            return true;
+        }
+        DList.Serialize(*ifs);
+#ifdef	DATA_DUMP
+        cout << DList;
+#endif
+        jwDWORD members = ReadCount();
+        if (!ifs->good()) {
+            return true;
+        }
+        ListCount = 0;
+        jwBOOL complete = true;
+        for (jwDWORD m = 0; complete && m < members; m++) {
+            complete = readObject(true);
+        }
+        // the members this definition has in pBlockList
+        DList.Count = ListCount;
+        pBlockList->AddBlockList(DList);
+        if (!complete) {
+            return true;
+        }
+    }
     return true;
 }
 
@@ -1459,7 +1552,8 @@ jwBOOL JWWDocument::Save() {
     //データ出力
     dw = vSen.size() + vEnko.size() + vTen.size() + vMoji.size() + vSunpou.size() + vSolid.size() + vBlock.size(); // + 7;
     if (SaveBich16(dw)) {
-        ofs->write((char*)&dw, 2);
+        wd = (jwWORD)dw; // a WORD, in the order every other field is written in
+        *ofs << wd;
     }
     else {
         wd = 0xFFFF;
@@ -1529,6 +1623,7 @@ void JWWList::AddItem(int No, string& str) {
     nList->CDataString = str;
     nList->No = No;
     FList.push_back(nList);
+    FByNo.insert({No, nList}); // the first item of a number, as a scan found it
 }
 
 JWWList::JWWList() {
@@ -1555,46 +1650,21 @@ NoList& JWWList::GetItem(int i) const {
 }
 
 NoList& JWWList::GetNoByItem(int No) const {
-    //	vector<PNoList>::iterator   itr    = vect.begin();
-    //	vector<PNoList>::iterator   itrEnd = vect.end();
-    for (unsigned int i = 0; i < FList.size(); i++) {
-        if (FList[i]->No == No) {
-            return *FList[i];
-        }
-    }
-    return *FList[0];
+    const auto it = FByNo.find(No);
+    return it != FByNo.end() ? *it->second : *FList[0];
 }
 
 JWWBlockList::JWWBlockList() {
 }
 
 JWWBlockList::~JWWBlockList() {
-    int sz = FBlockList.size();
-    for (int i = 0; i < sz; i++) {
-        if (FBlockList[i]) {
-            delete FBlockList[i];
-        }
-    }
-    FBlockList.clear();
-
-    /*
-        //2010-02-09  不要な削除
-        sz = FDataList.size();
-        for(int i=0; i < sz; i++)
-        {
-            if(FDataList[i])
-                delete FDataList[i];
-        }
-        FDataList.clear();
-
-        FDataType.clear();
-    */
+    Init();
 }
 
 CDataList JWWBlockList::GetBlockList(unsigned int i) const {
     for (unsigned int k = 0; k < FBlockList.size(); k++) {
-        if (i == FBlockList[k]->m_n_Number) {
-            return *(PCDataList)FBlockList[k];
+        if (i == FBlockList[k]->m_nNumber) {
+            return *FBlockList[k];
         }
     }
     return {};
@@ -1650,7 +1720,7 @@ CDataType JWWBlockList::GetCDataType(int i, int j) {
     return GetDataType(i, j);
 }
 
-void* JWWBlockList::GetData(unsigned int i, int j) const {
+CData* JWWBlockList::GetData(unsigned int i, int j) const {
     int l = 0;
     for (unsigned int k = 0; k < FBlockList.size(); k++) {
         if (i == PCDataList(FBlockList[k])->m_nNumber) {
@@ -1658,7 +1728,7 @@ void* JWWBlockList::GetData(unsigned int i, int j) const {
         }
         l = l + PCDataList(FBlockList[k])->Count;
     }
-    return (void*)NULL;
+    return nullptr;
 }
 
 int JWWBlockList::GetDataListCount(unsigned int i) const {
@@ -1684,62 +1754,83 @@ CDataType JWWBlockList::GetDataType(unsigned int i, int j) const {
 void JWWBlockList::AddBlockList(CDataList& CData) {
     auto data = new CDataList;
     *data = CData;
-    FBlockList.push_back((PCDataBlock)data);
+    FBlockList.push_back(data);
 }
 
 void JWWBlockList::AddDataListEnko(CDataEnko& D) {
     auto data = new CDataEnko;
     *data = D;
     FDataType.push_back(Enko);
-    FDataList.push_back((PCDataList)data);
+    FDataList.push_back(data);
 }
 
 void JWWBlockList::AddDataListMoji(CDataMoji& D) {
     auto data = new CDataMoji;
     *data = D;
     FDataType.push_back(Moji);
-    FDataList.push_back((PCDataList)data);
+    FDataList.push_back(data);
 }
 
 void JWWBlockList::AddDataListSen(CDataSen& D) {
     auto data = new CDataSen;
     *data = D;
     FDataType.push_back(Sen);
-    FDataList.push_back((PCDataList)data);
+    FDataList.push_back(data);
 }
 
 void JWWBlockList::AddDataListSolid(CDataSolid& D) {
     auto data = new CDataSolid;
     *data = D;
     FDataType.push_back(Solid);
-    FDataList.push_back((PCDataList)data);
+    FDataList.push_back(data);
 }
 
 void JWWBlockList::AddDataListSunpou(CDataSunpou& D) {
     auto data = new CDataSunpou;
     *data = D;
     FDataType.push_back(Sunpou);
-    FDataList.push_back((PCDataList)data);
+    FDataList.push_back(data);
 }
 
 void JWWBlockList::AddDataListTen(CDataTen& D) {
     auto data = new CDataTen;
     *data = D;
     FDataType.push_back(Ten);
-    FDataList.push_back((PCDataList)data);
+    FDataList.push_back(data);
 }
 
 void JWWBlockList::Init() {
-    for (unsigned int i = 0; i < FBlockList.size(); i++) {
-        if (FBlockList[i]) {
-            delete FBlockList[i];
-        }
+    for (PCDataList block : FBlockList) {
+        delete block;
     }
     FBlockList.clear();
 
-    for (unsigned int i = 0; i < FDataList.size(); i++) {
-        if (FDataList[i]) {
-            delete FDataList[i];
+    // CData has no virtual destructor, so each record is deleted as the type
+    // it was created as, which FDataType holds
+    for (size_t i = 0; i < FDataList.size(); i++) {
+        CData* data = FDataList[i];
+        switch (FDataType[i]) {
+            case Sen:
+                delete static_cast<PCDataSen>(data);
+                break;
+            case Enko:
+                delete static_cast<PCDataEnko>(data);
+                break;
+            case Ten:
+                delete static_cast<PCDataTen>(data);
+                break;
+            case Moji:
+                delete static_cast<PCDataMoji>(data);
+                break;
+            case Solid:
+                delete static_cast<PCDataSolid>(data);
+                break;
+            case Sunpou:
+                delete static_cast<PCDataSunpou>(data);
+                break;
+            case Block:
+                delete static_cast<PCDataBlock>(data);
+                break;
         }
     }
     FDataList.clear();
@@ -1750,7 +1841,7 @@ void JWWBlockList::AddDataListBlock(CDataBlock& D) {
     auto data = new CDataBlock;
     *data = D;
     FDataType.push_back(Block);
-    FDataList.push_back((PCDataList)data);
+    FDataList.push_back(data);
 }
 
 CDataBlock JWWBlockList::GetCDataBlock(int i, int j) {

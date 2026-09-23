@@ -1989,6 +1989,10 @@ public:
   // Snapshot of the current DWG admission attempt for the explicit-path
   // developer diagnostic command. It is read-only and never discovers files.
   QString dwgExportAdmissionReport() const;
+
+  // The format that writes DWG files of @p version, or RS2::FormatUnknown
+  // for a version LibreCAD cannot write.
+  static RS2::FormatType formatForDwgVersion(DRW::Version version);
 #endif
 
   // Import:

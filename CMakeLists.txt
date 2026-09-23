@@ -2582,6 +2582,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/dxf_layer0_declared_tests.cpp
         librecad/src/lib/filters/tests/dxf_unknown_version_tests.cpp
         librecad/src/lib/filters/tests/dxf_closed_spline_tests.cpp
+        librecad/src/lib/filters/tests/jww_import_tests.cpp
         librecad/src/lib/filters/tests/byte_identity_harness.cpp
         librecad/src/lib/filters/tests/dxf_corpus_tests.cpp
         librecad/src/lib/filters/tests/i18n_codec_tests.cpp
@@ -2596,6 +2597,7 @@ if (BUILD_TESTS)
         librecad/src/lib/gui/tests/rs_painter_tests.cpp
         librecad/src/actions/drawing/draw/dimensions/tests/rs_actiondimleader_tests.cpp
         librecad/src/ui/dock_widgets/command_line/tests/qg_commandwidget_tests.cpp
+        librecad/src/ui/main/persistence/tests/lc_documentsstorage_tests.cpp
         librecad/src/plugins/tests/qc_actiongetselect_tests.cpp
         librecad/src/lib/gui/tests/lc_graphicviewrenderer_tests.cpp
         librecad/src/main/tests/console_command_utils_tests.cpp
