@@ -318,7 +318,8 @@ void QC_MDIWindow::slotFileNew() const {
  * Creates a new document, loading template, in this MDI window.
  */
 bool QC_MDIWindow::loadDocumentFromTemplate(const QString& fileName, const RS2::FormatType type) const {
-    return m_documentsStorage->loadDocumentFromTemplate(m_document, m_graphicView, fileName, type);
+    LC_DocumentsStorage storage;
+    return storage.loadDocumentFromTemplate(m_document, m_graphicView, fileName, type);
 }
 
 /**
@@ -326,7 +327,8 @@ bool QC_MDIWindow::loadDocumentFromTemplate(const QString& fileName, const RS2::
  */
 bool QC_MDIWindow::loadDocument(const QString& fileName, const RS2::FormatType type) {
     removeWidgetsListeners();
-    const bool loaded = m_documentsStorage->loadDocument(m_document, fileName, type);
+    LC_DocumentsStorage storage;
+    const bool loaded = storage.loadDocument(m_document, fileName, type);
     if (loaded) {
         const RS_Graphic* graphic = m_document->getGraphic();
         if (graphic != nullptr) {
@@ -371,13 +373,15 @@ bool QC_MDIWindow::loadDocument(const QString& fileName, const RS2::FormatType t
  *         is invalid.
  */
 bool QC_MDIWindow::saveDocument(bool& cancelled, [[maybe_unused]] bool isAutoSave) {
-    const bool result = m_documentsStorage->saveDocument(m_document, m_graphicView, cancelled);
+    LC_DocumentsStorage storage;
+    const bool result = storage.saveDocument(m_document, m_graphicView, cancelled);
     setWindowModified(m_document->isModified());
     return result;
 }
 
 bool QC_MDIWindow::autoSaveDocument(QString& autosaveFileName) const {
-    const bool result = m_documentsStorage->autoSaveDocument(m_document, m_graphicView, autosaveFileName);
+    LC_DocumentsStorage storage;
+    const bool result = storage.autoSaveDocument(m_document, m_graphicView, autosaveFileName);
     return result;
 }
 
@@ -390,7 +394,8 @@ bool QC_MDIWindow::autoSaveDocument(QString& autosaveFileName) const {
  *         is invalid.
  */
 bool QC_MDIWindow::saveDocumentAs(bool& cancelled) {
-    const bool result = m_documentsStorage->saveDocumentAs(m_document, m_graphicView, cancelled);
+    LC_DocumentsStorage storage;
+    const bool result = storage.saveDocumentAs(m_document, m_graphicView, cancelled);
     setWindowModified(m_document->isModified());
     return result;
 }
