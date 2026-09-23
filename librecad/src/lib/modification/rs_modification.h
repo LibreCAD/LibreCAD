@@ -189,6 +189,12 @@ struct LC_OffsetSourceOutcome {
      */
     int copiesMade = 0;
     int copiesRequested = 0;
+    /**
+     * The source goes from the drawing with this offset. One that succeeded
+     * and stays (originals kept, copies short, a polyline's segment) is left
+     * for the caller to unselect.
+     */
+    bool sourceRemoved = false;
 
     bool succeeded() const {
         return status == LC_OffsetSourceStatus::Succeeded;

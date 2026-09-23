@@ -26,9 +26,11 @@
 **********************************************************************/
 #include "rs_modification.h"
 
+#include <algorithm>
 #include <cmath>
 #include <limits>
 #include <memory>
+#include <unordered_map>
 #include <unordered_set>
 #include <vector>
 
@@ -1076,6 +1078,178 @@ double drawnCurveTolerance(const RS_Entity& source) {
     return (lo.valid && hi.valid) ? 1e-3 * lo.distanceTo(hi) : 0.0;
 }
 
+/**
+ * Selected segments of polylines, grouped: each run of consecutive selected
+ * segments of one polyline, in the polyline's order and, on a closed one,
+ * across its seam. A run is offset as one chain, as its polyline would be,
+ * so that its segments stay joined; a lone segment is offset on its own.
+ */
+struct LC_SegmentRun {
+    std::vector<RS_Entity*> members;
+    /** The chain offset for a run of two or more segments; null for one. */
+    std::unique_ptr<RS_Entity> chain;
+};
+
+/** The polyline that holds @p e as one of its segments, or null. */
+RS_Polyline* holdingPolyline(const RS_Entity* e) {
+    RS_EntityContainer* parent = e != nullptr ? e->getParent() : nullptr;
+    return (parent != nullptr && parent->rtti() == RS2::EntityPolyline) ? static_cast<RS_Polyline*>(parent) : nullptr;
+}
+
+/** Whether @p a and @p b are the same point, to the tolerance a polyline's vertices meet to. */
+bool meet(const RS_Vector& a, const RS_Vector& b) {
+    return a.distanceTo(b) <= RS_TOLERANCE * std::max(1.0, a.magnitude());
+}
+
+/** Whether segment @p next shares an end with segment @p previous. */
+bool touches(const RS_Entity* previous, const RS_Entity* next) {
+    for (const RS_Vector& p : {previous->getStartpoint(), previous->getEndpoint()}) {
+        if (meet(p, next->getStartpoint()) || meet(p, next->getEndpoint())) {
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * Whether a polyline offsets @p segment with the others: a line or an arc.
+ * RS_Polyline::offset() leaves an elliptic segment where it is, so one is
+ * offset on its own.
+ */
+bool chainable(const RS_Entity* segment) {
+    return segment->rtti() == RS2::EntityLine || segment->rtti() == RS2::EntityArc;
+}
+
+/** A copy of @p e that is neither selected nor highlighted, nor are its children. */
+RS_Entity* plainCopy(const RS_Entity& e) {
+    RS_Entity* copy = e.clone();
+    copy->setSelectionFlag(false);
+    copy->setHighlighted(false);
+    if (copy->isContainer()) {
+        for (RS_Entity* child : *static_cast<RS_EntityContainer*>(copy)) {
+            child->setSelectionFlag(false);
+            child->setHighlighted(false);
+        }
+    }
+    return copy;
+}
+
+/**
+ * An open polyline through copies of @p segments, in order, with the layer
+ * and pen of @p polyline; a segment stored the other way round is turned.
+ */
+std::unique_ptr<RS_Entity> chainThrough(const RS_Polyline& polyline, const std::vector<RS_Entity*>& segments) {
+    auto chain = std::make_unique<RS_Polyline>(polyline.getParent());
+    chain->setLayer(polyline.getLayer(false));
+    chain->setPen(polyline.getPen(false));
+    RS_Entity* previous = nullptr;
+    for (size_t i = 0; i < segments.size(); ++i) {
+        RS_Entity* piece = plainCopy(*segments[i]);
+        bool turned = false;
+        if (previous != nullptr) {
+            turned = !meet(previous->getEndpoint(), piece->getStartpoint()) &&
+                     meet(previous->getEndpoint(), piece->getEndpoint());
+        }
+        else if (i + 1 < segments.size()) {
+            // the first turns when it starts, rather than ends, where the second one is
+            const RS_Entity* next = segments[i + 1];
+            const auto atNext = [next](const RS_Vector& p) {
+                return meet(p, next->getStartpoint()) || meet(p, next->getEndpoint());
+            };
+            turned = !atNext(piece->getEndpoint()) && atNext(piece->getStartpoint());
+        }
+        if (turned) {
+            piece->revertDirection();
+        }
+        piece->setParent(chain.get());
+        chain->RS_EntityContainer::addEntity(piece);
+        previous = piece;
+    }
+    chain->setStartpoint(chain->firstEntity()->getStartpoint());
+    chain->setEndpoint(previous->getEndpoint());
+    chain->calculateBorders();
+    return chain;
+}
+
+/**
+ * The runs of the selected segments among @p sources, by the segments they
+ * hold. A polyline that is itself among the sources takes its segments with
+ * it, so they are not offset twice. A deleted segment, or a gap between two
+ * segments, ends a run; an elliptic segment is a run of its own.
+ */
+std::vector<std::unique_ptr<LC_SegmentRun>> segmentRuns(const QList<RS_Entity*>& sources,
+                                                        std::unordered_map<const RS_Entity*, LC_SegmentRun*>& runOf) {
+    std::unordered_set<const RS_Entity*> selected{sources.cbegin(), sources.cend()};
+    std::vector<RS_Polyline*> polylines;
+    std::unordered_set<const RS_Polyline*> known;
+    for (const RS_Entity* e : sources) {
+        RS_Polyline* polyline = holdingPolyline(e);
+        if (polyline != nullptr && selected.count(polyline) == 0 && known.insert(polyline).second) {
+            polylines.push_back(polyline);
+        }
+    }
+    std::vector<std::unique_ptr<LC_SegmentRun>> runs;
+    for (RS_Polyline* polyline : polylines) {
+        std::vector<RS_Entity*> segments;
+        for (RS_Entity* segment : *polyline) {
+            segments.push_back(segment);
+        }
+        const size_t n = segments.size();
+        std::vector<bool> chosen(n);
+        size_t count = 0;
+        for (size_t i = 0; i < n; ++i) {
+            chosen[i] = selected.count(segments[i]) != 0 && !segments[i]->isDeleted();
+            count += chosen[i] ? 1 : 0;
+        }
+        if (count == 0) {
+            continue;
+        }
+        // whether a run through segment a goes on into segment b
+        const auto continues = [&](const size_t a, const size_t b) {
+            return chosen[a] && chosen[b] && chainable(segments[a]) && chainable(segments[b]) &&
+                   touches(segments[a], segments[b]);
+        };
+        // on a closed polyline, start where a run cannot come in from the
+        // segment before, so that a run across the seam is one run
+        size_t first = 0;
+        if (polyline->isClosed()) {
+            for (size_t i = 0; i < n; ++i) {
+                if (!continues((i + n - 1) % n, i)) {
+                    first = i;
+                    break;
+                }
+            }
+        }
+        std::vector<std::vector<RS_Entity*>> found;
+        for (size_t step = 0; step < n; ++step) {
+            const size_t i = (first + step) % n;
+            if (!chosen[i]) {
+                continue;
+            }
+            if (step == 0 || !continues((i + n - 1) % n, i)) {
+                found.emplace_back();
+            }
+            found.back().push_back(segments[i]);
+        }
+        for (std::vector<RS_Entity*>& members : found) {
+            auto run = std::make_unique<LC_SegmentRun>();
+            if (members.size() == n && n > 1) {
+                run->chain.reset(plainCopy(*polyline)); // every segment: the polyline, closed if it is
+                run->chain->setParent(polyline->getParent());
+            }
+            else if (members.size() > 1) {
+                run->chain = chainThrough(*polyline, members);
+            }
+            run->members = std::move(members);
+            for (const RS_Entity* member : run->members) {
+                runOf[member] = run.get();
+            }
+            runs.push_back(std::move(run));
+        }
+    }
+    return runs;
+}
+
 /** total += more, unless a count would overflow. */
 bool addUsage(LC_OffsetOutputUsage& total, const LC_OffsetOutputUsage& more) {
     constexpr std::size_t max = std::numeric_limits<std::size_t>::max();
@@ -1353,9 +1527,42 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcome(const RS_OffsetData& da
         return LC_OffsetSourceStatus::Succeeded;
     };
 
+    // Selected segments of a polyline: each run of consecutive ones is offset
+    // once, as a chain; its other segments report the same outcome. A
+    // segment is never removed, whatever the options say: that would cut
+    // its polyline.
+    std::unordered_map<const RS_Entity*, LC_SegmentRun*> runOf;
+    const std::vector<std::unique_ptr<LC_SegmentRun>> runs = segmentRuns(sources, runOf);
+    std::unordered_map<const LC_SegmentRun*, LC_OffsetSourceOutcome> runOutcome;
+    // a segment whose polyline is a source too, and that polyline
+    std::unordered_map<const RS_Entity*, const RS_Polyline*> coveredByPolyline;
+    for (RS_Entity* e : sources) {
+        const RS_Polyline* polyline = holdingPolyline(e);
+        if (polyline != nullptr && seen.count(polyline) != 0) {
+            coveredByPolyline.emplace(e, polyline);
+        }
+    }
+
     std::size_t requestDeepLeft = limits.maxDeepEntitiesPerRequest;
     QList<RS_Entity*> offsetOriginals;
     for (RS_Entity* e : sources) {
+        if (coveredByPolyline.count(e) != 0) {
+            continue; // offset with its polyline, and reported after it
+        }
+        const auto run = runOf.find(e);
+        LC_SegmentRun* const segmentRun = run != runOf.end() ? run->second : nullptr;
+        if (segmentRun != nullptr) {
+            const auto done = runOutcome.find(segmentRun);
+            if (done != runOutcome.end()) {
+                LC_OffsetSourceOutcome member = done->second;
+                member.source = e;
+                member.createdEntities.clear(); // handed over once, with the run's first segment
+                outcome.sources.append(member);
+                continue;
+            }
+        }
+        RS_Entity* const target =
+            (segmentRun != nullptr && segmentRun->chain != nullptr) ? segmentRun->chain.get() : e;
         LC_OffsetSourceOutcome result;
         result.source = e;
         result.copiesRequested = numberOfCopies;
@@ -1376,7 +1583,7 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcome(const RS_OffsetData& da
             result.status = LC_OffsetSourceStatus::LimitExceeded; // not evaluated
         }
         else {
-            result.status = offsetOneSource(*e, requestDeepLeft, roots, result);
+            result.status = offsetOneSource(*target, requestDeepLeft, roots, result);
             if (!result.succeeded()) {
                 result.copiesMade = 0; // none is handed over
             }
@@ -1390,11 +1597,30 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcome(const RS_OffsetData& da
                 result.createdEntities.append(root.get());
                 ctx += root.release();
             }
-            if (result.complete()) {
+            if (result.complete() && segmentRun == nullptr) {
                 offsetOriginals.append(e); // a source short of copies is kept
+                result.sourceRemoved = !data.keepOriginals && !forPreviewOnly;
             }
         }
+        if (segmentRun != nullptr) {
+            runOutcome[segmentRun] = result;
+        }
         outcome.sources.append(result);
+    }
+    // a segment offset with its polyline fares as the polyline does
+    for (RS_Entity* e : sources) {
+        const auto covered = coveredByPolyline.find(e);
+        if (covered == coveredByPolyline.end()) {
+            continue;
+        }
+        const auto done = std::find_if(outcome.sources.cbegin(), outcome.sources.cend(),
+                                       [&covered](const LC_OffsetSourceOutcome& o) { return o.source == covered->second; });
+        if (done != outcome.sources.cend()) {
+            LC_OffsetSourceOutcome member = *done;
+            member.source = e;
+            member.createdEntities.clear(); // handed over once, with the polyline
+            outcome.sources.append(member);
+        }
     }
 
     if (!data.keepOriginals && !forPreviewOnly) {

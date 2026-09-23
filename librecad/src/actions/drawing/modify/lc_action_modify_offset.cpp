@@ -157,11 +157,15 @@ void LC_ActionModifyOffset::doTriggerSelectionUpdate(const bool keepSelected, co
         return;
     }
     std::unordered_set<const RS_Entity*> offsetSources;
+    std::unordered_set<const RS_Entity*> removedSources;
     QList<RS_Entity*> toSelect;
     for (const LC_OffsetSourceOutcome& source : std::as_const(m_pendingOutcome->sources)) {
         if (source.succeeded()) {
             offsetSources.insert(source.source);
             toSelect.append(source.createdEntities);
+            if (source.sourceRemoved) {
+                removedSources.insert(source.source);
+            }
         }
     }
     QList<RS_Entity*> toUnselect;
@@ -169,8 +173,8 @@ void LC_ActionModifyOffset::doTriggerSelectionUpdate(const bool keepSelected, co
         if (offsetSources.count(selected) == 0) {
             toSelect.append(selected); // not offset: stays selected
         }
-        else if (m_offsetData->keepOriginals) {
-            toUnselect.append(selected);
+        else if (removedSources.count(selected) == 0) {
+            toUnselect.append(selected); // offset, and still in the drawing
         }
     }
     if (!toUnselect.isEmpty()) {

@@ -22,6 +22,7 @@
 // Modify Offset with spline sources: admission, commit, per-source selection,
 // a failed trigger that keeps the action and selection, and preview detail.
 
+#include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 
 #include <cmath>
@@ -36,8 +37,10 @@
 #include "lc_hyperbola.h"
 #include "lc_parabola.h"
 #include "lc_splinepoints.h"
+#include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_creation.h"
+#include "rs_ellipse.h"
 #include "rs_layer.h"
 #include "rs_line.h"
 #include "rs_modification.h"
@@ -776,7 +779,7 @@ TEST_CASE("A reference point on a spline through points takes the side from the 
 }
 
 // ---------------------------------------------------------------------------
-// Polylines
+// Selected segments of a polyline
 // ---------------------------------------------------------------------------
 namespace {
 RS_Polyline* addPolyline(OffsetFixture& f, const std::vector<RS_Vector>& vertices, const bool closed = false) {
@@ -791,7 +794,269 @@ RS_Polyline* addPolyline(OffsetFixture& f, const std::vector<RS_Vector>& vertice
     return polyline;
 }
 
+/** The live entities of the drawing other than @p source. */
+std::vector<RS_Entity*> made(OffsetFixture& f, const RS_Entity* source) {
+    std::vector<RS_Entity*> result;
+    for (RS_Entity* e : f.m_graphic) {
+        if (!e->isDeleted() && e != source) {
+            result.push_back(e);
+        }
+    }
+    return result;
+}
+
+/** The vertices of a polyline, in order, the last as well. */
+std::vector<RS_Vector> verticesOf(const RS_Polyline& polyline) {
+    std::vector<RS_Vector> result{polyline.getStartpoint()};
+    for (const RS_Entity* segment : polyline) {
+        result.push_back(segment->getEndpoint());
+    }
+    return result;
+}
+
+void checkIntact(const RS_Polyline& polyline, const int segments) {
+    CHECK_FALSE(polyline.isDeleted());
+    CHECK(polyline.count() == static_cast<unsigned>(segments));
+    for (const RS_Entity* segment : polyline) {
+        CHECK_FALSE(segment->isDeleted());
+    }
+}
 } // namespace
+
+TEST_CASE("Selected segments of a polyline are offset as one chain, and the polyline is kept",
+          "[offset][action][polyline]") {
+    // Two segments meeting at (10, 10) came out as two separate lines that
+    // cross near the corner, and without "keep originals" the segments were
+    // deleted from the polyline, cutting it.
+    OffsetFixture f;
+    RS_Polyline* polyline = addPolyline(f, {{0, 0}, {10, 0}, {10, 10}, {20, 10}, {20, 20}});
+    f.select({polyline->entityAt(1), polyline->entityAt(2)});
+    f.start(1.0, false);
+    REQUIRE(f.m_action->m_selectedEntities.size() == 2);
+    f.clickAt(12.0, 5.0); // right of the first, below the second
+
+    CHECK(f.m_context.messages.isEmpty());
+    checkIntact(*polyline, 4);
+    const std::vector<RS_Entity*> offsets = made(f, polyline);
+    REQUIRE(offsets.size() == 1);
+    REQUIRE(offsets.front()->rtti() == RS2::EntityPolyline);
+    const std::vector<RS_Vector> vertices = verticesOf(*static_cast<RS_Polyline*>(offsets.front()));
+    REQUIRE(vertices.size() == 3);
+    CHECK(vertices[0].distanceTo(RS_Vector{11, 0}) < 1e-9);
+    CHECK(vertices[1].distanceTo(RS_Vector{11, 9}) < 1e-9); // joined at the corner
+    CHECK(vertices[2].distanceTo(RS_Vector{20, 9}) < 1e-9);
+}
+
+TEST_CASE("A lone selected segment of a polyline is offset on its own", "[offset][action][polyline]") {
+    OffsetFixture f;
+    RS_Polyline* polyline = addPolyline(f, {{0, 0}, {10, 0}, {10, 10}, {20, 10}, {20, 20}});
+    f.select({polyline->entityAt(1), polyline->entityAt(3)}); // not next to each other
+    f.start(1.0, false);
+    f.clickAt(12.0, 5.0);
+
+    checkIntact(*polyline, 4);
+    const std::vector<RS_Entity*> offsets = made(f, polyline);
+    REQUIRE(offsets.size() == 2);
+    for (const RS_Entity* e : offsets) {
+        CHECK(e->rtti() == RS2::EntityLine);
+    }
+}
+
+TEST_CASE("Selected segments across a closed polyline's seam are one chain", "[offset][action][polyline]") {
+    OffsetFixture f;
+    RS_Polyline* square = addPolyline(f, {{0, 0}, {10, 0}, {10, 10}, {0, 10}}, true);
+    REQUIRE(square->count() == 4);
+    // the closing segment, (0, 10) to (0, 0), and the first, (0, 0) to (10, 0)
+    f.select({square->entityAt(3), square->entityAt(0)});
+    f.start(1.0, false);
+    f.clickAt(-5.0, -5.0); // outside the corner at the seam
+
+    checkIntact(*square, 4);
+    const std::vector<RS_Entity*> offsets = made(f, square);
+    REQUIRE(offsets.size() == 1);
+    REQUIRE(offsets.front()->rtti() == RS2::EntityPolyline);
+    const auto* chain = static_cast<RS_Polyline*>(offsets.front());
+    CHECK_FALSE(chain->isClosed());
+    const std::vector<RS_Vector> vertices = verticesOf(*chain);
+    REQUIRE(vertices.size() == 3);
+    CHECK(vertices[0].distanceTo(RS_Vector{-1, 10}) < 1e-9);
+    CHECK(vertices[1].distanceTo(RS_Vector{-1, -1}) < 1e-9);
+    CHECK(vertices[2].distanceTo(RS_Vector{10, -1}) < 1e-9);
+}
+
+TEST_CASE("Every segment of a closed polyline selected gives its closed offset", "[offset][action][polyline]") {
+    OffsetFixture f;
+    RS_Polyline* square = addPolyline(f, {{0, 0}, {10, 0}, {10, 10}, {0, 10}}, true);
+    f.select({square->entityAt(0), square->entityAt(1), square->entityAt(2), square->entityAt(3)});
+    f.start(1.0, false);
+    f.clickAt(-5.0, 5.0);
+
+    checkIntact(*square, 4); // a selection of segments never removes them
+    const std::vector<RS_Entity*> offsets = made(f, square);
+    REQUIRE(offsets.size() == 1);
+    REQUIRE(offsets.front()->rtti() == RS2::EntityPolyline);
+    const auto* ring = static_cast<RS_Polyline*>(offsets.front());
+    CHECK(ring->isClosed());
+    CHECK(ring->getMin().distanceTo(RS_Vector{-1, -1}) < 1e-9);
+    CHECK(ring->getMax().distanceTo(RS_Vector{11, 11}) < 1e-9);
+}
+
+TEST_CASE("A chain of selected segments keeps an arc segment an arc", "[offset][action][polyline]") {
+    OffsetFixture f;
+    // a line, then a half circle of radius 5 about (15, 0) bulging below, then a line
+    auto* polyline = f.add(new RS_Polyline(&f.m_graphic));
+    polyline->addVertex(RS_Vector{0, 0});
+    polyline->addVertex(RS_Vector{10, 0}, 1.0);
+    polyline->addVertex(RS_Vector{20, 0});
+    polyline->addVertex(RS_Vector{30, 0});
+    REQUIRE(polyline->count() == 3);
+    REQUIRE(polyline->entityAt(1)->rtti() == RS2::EntityArc);
+    const auto* source = static_cast<const RS_Arc*>(polyline->entityAt(1));
+    f.select({polyline->entityAt(0), polyline->entityAt(1)});
+    f.start(1.0, false);
+    // outside the half circle: 1 beyond it, straight below its centre
+    const RS_Vector outside = source->getCenter() + (source->getMiddlePoint() - source->getCenter()) * 1.4;
+    f.clickAt(outside.x, outside.y);
+
+    checkIntact(*polyline, 3);
+    const std::vector<RS_Entity*> offsets = made(f, polyline);
+    REQUIRE(offsets.size() == 1);
+    REQUIRE(offsets.front()->rtti() == RS2::EntityPolyline);
+    const auto* chain = static_cast<RS_Polyline*>(offsets.front());
+    REQUIRE(chain->count() == 2);
+    REQUIRE(chain->entityAt(1)->rtti() == RS2::EntityArc);
+    const auto* arc = static_cast<const RS_Arc*>(chain->entityAt(1));
+    CHECK(arc->getCenter().distanceTo(source->getCenter()) < 1e-9);
+    CHECK(std::abs(arc->getRadius() - 6.0) < 1e-9);
+}
+
+
+TEST_CASE("A deleted segment between two selected ones ends the chain", "[offset][action][polyline]") {
+    // the segments either side of a deleted one were taken as neighbours and
+    // joined by a chain straight across the gap
+    OffsetFixture f;
+    RS_Polyline* polyline = addPolyline(f, {{0, 0}, {10, 0}, {10, 10}, {20, 10}, {20, 20}});
+    f.select({polyline->entityAt(1), polyline->entityAt(3)});
+    polyline->entityAt(2)->setFlag(RS2::FlagDeleted);
+    f.start(1.0, false);
+    f.clickAt(12.0, 5.0);
+
+    const std::vector<RS_Entity*> offsets = made(f, polyline);
+    REQUIRE(offsets.size() == 2);
+    for (const RS_Entity* e : offsets) {
+        CHECK(e->rtti() == RS2::EntityLine);
+    }
+}
+
+TEST_CASE("An elliptic segment is offset on its own, along its curve", "[offset][action][polyline]") {
+    // A polyline scaled unevenly holds elliptic segments. A chain offset left
+    // one where it was: RS_Polyline::offset() moves lines and arcs only.
+    OffsetFixture f;
+    auto* polyline = f.add(new RS_Polyline(&f.m_graphic));
+    polyline->addVertex(RS_Vector{0, 0});
+    polyline->addVertex(RS_Vector{10, 0});
+    // the lower half of an ellipse about (15, 0), 5 by 2.5, from (10, 0) to (20, 0)
+    auto* ellipse = new RS_Ellipse(polyline, RS_EllipseData{RS_Vector{15, 0}, RS_Vector{5, 0}, 0.5, M_PI, 2.0 * M_PI, false});
+    polyline->RS_EntityContainer::addEntity(ellipse);
+    polyline->setEndpoint(RS_Vector{20, 0});
+    polyline->addVertex(RS_Vector{30, 0});
+    REQUIRE(polyline->count() == 3);
+    f.select({polyline->entityAt(0), polyline->entityAt(1)});
+    f.start(1.0, false);
+    f.clickAt(15.0, -6.0); // below both
+
+    checkIntact(*polyline, 3);
+    const std::vector<RS_Entity*> offsets = made(f, polyline);
+    REQUIRE(offsets.size() >= 2);
+    int lines = 0;
+    for (RS_Entity* e : offsets) {
+        CHECK(e->rtti() != RS2::EntityPolyline);
+        if (e->rtti() == RS2::EntityLine) {
+            ++lines;
+            CHECK(e->getStartpoint().y == Catch::Approx(-1.0));
+            CHECK(e->getEndpoint().y == Catch::Approx(-1.0));
+            continue;
+        }
+        // the ellipse's offset: 1 from it all along
+        for (const RS_Vector& p : {e->getStartpoint(), e->getMiddlePoint(), e->getEndpoint()}) {
+            if (!p.valid) {
+                continue;
+            }
+            double distance = RS_MAXDOUBLE;
+            ellipse->getNearestPointOnEntity(p, true, &distance);
+            CHECK(distance == Catch::Approx(1.0).margin(1e-3));
+        }
+    }
+    CHECK(lines == 1);
+}
+
+TEST_CASE("Offset segments leave the selection, and their polyline stays", "[offset][action][polyline]") {
+    // a segment is never removed, so it was left selected unless originals were
+    // kept; and the offset copied the selected segments' selection
+    struct KeepModifiedSelected {
+        ~KeepModifiedSelected() { LC_SET_ONE("Modify", "KeepModifiedSelected", true); }
+    } restore;
+    for (const bool keepOriginals : {false, true}) {
+      for (const bool keepModifiedSelected : {false, true}) {
+        INFO("keep originals " << keepOriginals << ", keep modified selected " << keepModifiedSelected);
+        LC_SET_ONE("Modify", "KeepModifiedSelected", keepModifiedSelected);
+        OffsetFixture f;
+        RS_Polyline* polyline = addPolyline(f, {{0, 0}, {10, 0}, {10, 10}, {20, 10}, {20, 20}});
+        RS_Entity* first = polyline->entityAt(1);
+        RS_Entity* second = polyline->entityAt(2);
+        f.select({first, second});
+        REQUIRE(first->isSelected());
+        f.start(1.0, keepOriginals);
+        f.clickAt(12.0, 5.0);
+
+        checkIntact(*polyline, 4);
+        CHECK_FALSE(first->isSelected());
+        CHECK_FALSE(second->isSelected());
+        const std::vector<RS_Entity*> offsets = made(f, polyline);
+        REQUIRE(offsets.size() == 1);
+        CHECK(offsets.front()->isSelected() == keepModifiedSelected);
+        for (const RS_Entity* segment : *static_cast<RS_Polyline*>(offsets.front())) {
+            CHECK(segment->isSelected() == keepModifiedSelected); // with the offset, not the segments it came from
+        }
+      }
+    }
+}
+
+TEST_CASE("A segment selected with its polyline fares as the polyline does", "[offset][polyline]") {
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    auto* polyline = new RS_Polyline(&graphic);
+    graphic.addEntity(polyline);
+    for (const RS_Vector& v : {RS_Vector{0, 0}, RS_Vector{10, 0}, RS_Vector{10, 10}}) {
+        polyline->addVertex(v);
+    }
+    RS_Entity* segment = polyline->entityAt(1);
+    RS_OffsetData data;
+    data.coord = RS_Vector{12.0, 5.0};
+    data.distance = 1.0;
+    data.keepOriginals = false;
+    LC_DocumentModificationBatch ctx;
+    // the segment first: it was reported before the polyline had been offset
+    const LC_OffsetBatchOutcome outcome =
+        RS_Modification::offsetWithOutcome(data, {segment, polyline}, false, LC_OffsetBatchLimits{}, ctx);
+    REQUIRE(outcome.sources.size() == 2);
+    const LC_OffsetSourceOutcome* ofPolyline = nullptr;
+    const LC_OffsetSourceOutcome* ofSegment = nullptr;
+    for (const LC_OffsetSourceOutcome& o : outcome.sources) {
+        (o.source == polyline ? ofPolyline : ofSegment) = &o;
+    }
+    REQUIRE(ofPolyline != nullptr);
+    REQUIRE(ofSegment != nullptr);
+    CHECK(ofSegment->source == segment);
+    CHECK(ofPolyline->succeeded());
+    CHECK(ofSegment->status == ofPolyline->status);
+    CHECK(ofPolyline->sourceRemoved);
+    CHECK(ofSegment->sourceRemoved); // it goes with the polyline
+    CHECK(ofPolyline->createdEntities.size() == 1);
+    CHECK(ofSegment->createdEntities.isEmpty()); // one offset, handed over once
+    REQUIRE(ctx.entitiesToAdd.size() == 1);
+    qDeleteAll(ctx.entitiesToAdd);
+}
 
 TEST_CASE("An offset polyline starts and ends where its segments do", "[offset][polyline]") {
     // RS_Polyline::offset() copied the start and end of a clone taken before
