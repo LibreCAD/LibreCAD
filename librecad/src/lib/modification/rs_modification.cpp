@@ -1229,7 +1229,10 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcome(const RS_OffsetData& da
         if (LC_CurveOffset::isSupportedSource(e)) {
             // The side is resolved once, so no copy can land on another side.
             const LC_CurveOffsetOptions sideOptions = LC_CurveOffset::makeOffsetOptions(e, std::abs(data.distance));
-            const LC_OffsetSideResolution side = LC_CurveOffset::resolveSide(e, data.coord, sideOptions);
+            LC_OffsetSideResolution side = LC_CurveOffset::resolveSide(e, data.coord, sideOptions);
+            if (side.status == LC_CurveOffsetStatus::AmbiguousSide && data.sideFallback.valid) {
+                side = LC_CurveOffset::resolveSide(e, data.sideFallback, sideOptions);
+            }
             if (side.status != LC_CurveOffsetStatus::Ok) {
                 result.engineStatus = side.status;
                 return engineFailure(side.status);

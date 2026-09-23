@@ -535,3 +535,148 @@ TEST_CASE("A spline refused by the engine is reported with the reason", "[curve-
     REQUIRE(f.m_context.messages.size() == 1);
     CHECK(f.m_context.messages.front().contains("no side"));
 }
+
+
+namespace {
+/** A spline as Draw > Spline makes it: degree 3, a control point per click. */
+RS_Spline* addDrawnSpline(OffsetFixture& f) {
+    auto* spline = f.add(new RS_Spline(&f.m_graphic, RS_SplineData(3, false)));
+    for (const RS_Vector& p : {RS_Vector{0, 0}, RS_Vector{10, 15}, RS_Vector{25, -5}, RS_Vector{40, 10},
+                               RS_Vector{55, 0}}) {
+        spline->addControlPoint(p);
+    }
+    spline->update();
+    return spline;
+}
+
+/** The two-click Offset, as the options the tool saves by default have it. */
+void startTwoClick(OffsetFixture& f) {
+    f.m_action = std::make_unique<OffsetProbe>(&f.m_context);
+    f.m_action->setDistanceFixed(false);
+    f.m_action->setDistance(10.0);
+    f.m_action->setKeepOriginals(false);
+    f.m_action->setUseMultipleCopies(false);
+    f.m_action->init(OffsetProbe::SetReferencePoint);
+}
+
+/** The only live spline of the drawing that is not @p source, drawn. */
+RS_Spline* offsetOf(OffsetFixture& f, const RS_Spline* source) {
+    RS_Spline* found = nullptr;
+    int count = 0;
+    for (RS_Entity* e : f.m_graphic) {
+        if (!e->isDeleted() && e->rtti() == RS2::EntitySpline && e != source) {
+            found = static_cast<RS_Spline*>(e);
+            ++count;
+        }
+    }
+    REQUIRE(count == 1);
+    REQUIRE(found->count() > 0); // drawn
+    return found;
+}
+} // namespace
+
+TEST_CASE("A reference point on the spline takes the offset's side from the second click",
+          "[curve-offset][action]") {
+    // With the distance taken from two clicks, the side comes from the first,
+    // the reference point, and the natural first click is on the spline, where
+    // snapping puts it. A point on the curve gives no side, so nothing was
+    // offset, the preview stayed empty and one line in the command widget said
+    // why: the tool looked as if it did nothing. The second click shows the
+    // side, and decides it then.
+    OffsetFixture f;
+    RS_Spline* spline = addDrawnSpline(f);
+    f.select({spline});
+    startTwoClick(f);
+
+    double t0 = 0.0;
+    double t1 = 0.0;
+    REQUIRE(spline->getParameterDomain(t0, t1));
+    LC_CurveJet middle;
+    REQUIRE(spline->tryEvaluateJet(0.5 * (t0 + t1), LC_CurveEvaluationSide::Interior, middle));
+    const RS_Vector normal = RS_Vector{-middle.first.y, middle.first.x} / middle.first.magnitude();
+
+    for (const double side : {1.0, -1.0}) {
+        DYNAMIC_SECTION("towards " << (side > 0 ? "the left" : "the right")) {
+            const RS_Vector reference = middle.point; // on the curve
+            const RS_Vector position = middle.point + normal * (5.0 * side);
+            const LC_MouseEvent first = eventAt(reference.x, reference.y);
+            f.m_action->onMouseLeftButtonReleaseSelected(OffsetProbe::SetReferencePoint, &first);
+            REQUIRE(f.m_action->getStatus() != OffsetProbe::SetReferencePoint);
+
+            // the preview follows the pointer
+            f.m_action->deletePreviewAndHighlights();
+            const LC_MouseEvent move = eventAt(position.x, position.y);
+            f.m_action->onMouseMoveEventSelected(f.m_action->getStatus(), &move);
+            CHECK(f.previewCount(RS2::EntitySpline) > 0);
+
+            const LC_MouseEvent second = eventAt(position.x, position.y);
+            f.m_action->onMouseLeftButtonReleaseSelected(f.m_action->getStatus(), &second);
+
+            CHECK(f.m_context.messages.isEmpty());
+            CHECK(spline->isDeleted()); // replaced, as the tool keeps no originals by default
+            const RS_Spline* offset = offsetOf(f, spline);
+            // 5 from the curve, on the side of the second click
+            double toWanted = 0.0;
+            double toOther = 0.0;
+            offset->getNearestPointOnEntity(middle.point + normal * (5.0 * side), true, &toWanted);
+            offset->getNearestPointOnEntity(middle.point - normal * (5.0 * side), true, &toOther);
+            CHECK(toWanted < 1e-3);
+            CHECK(toOther > 9.0);
+        }
+    }
+}
+
+TEST_CASE("A reference point off the spline still decides the offset's side", "[curve-offset][action]") {
+    // Only a reference point on the curve gives up its say: one beside it
+    // keeps the side, wherever the second click is.
+    OffsetFixture f;
+    RS_Spline* spline = addDrawnSpline(f);
+    f.select({spline});
+    startTwoClick(f);
+
+    double t0 = 0.0;
+    double t1 = 0.0;
+    REQUIRE(spline->getParameterDomain(t0, t1));
+    LC_CurveJet middle;
+    REQUIRE(spline->tryEvaluateJet(0.5 * (t0 + t1), LC_CurveEvaluationSide::Interior, middle));
+    const RS_Vector normal = RS_Vector{-middle.first.y, middle.first.x} / middle.first.magnitude();
+
+    const RS_Vector reference = middle.point + normal * 1.0;  // left of the curve
+    const RS_Vector position = middle.point - normal * 4.0;   // across it, 5 away
+    const LC_MouseEvent first = eventAt(reference.x, reference.y);
+    f.m_action->onMouseLeftButtonReleaseSelected(OffsetProbe::SetReferencePoint, &first);
+    const LC_MouseEvent move = eventAt(position.x, position.y);
+    f.m_action->onMouseMoveEventSelected(f.m_action->getStatus(), &move);
+    const LC_MouseEvent second = eventAt(position.x, position.y);
+    f.m_action->onMouseLeftButtonReleaseSelected(f.m_action->getStatus(), &second);
+
+    const RS_Spline* offset = offsetOf(f, spline);
+    double toLeft = 0.0;
+    offset->getNearestPointOnEntity(middle.point + normal * 5.0, true, &toLeft);
+    CHECK(toLeft < 1e-3);
+}
+
+
+TEST_CASE("A reference point on a spline through points takes the side from the second click",
+          "[curve-offset][action]") {
+    OffsetFixture f;
+    LC_SplinePoints* spline = f.addSplinePoints();
+    f.select({spline});
+    startTwoClick(f);
+
+    // (27, 3) is one of its points, so on the curve; (27, -2) is 5 below it
+    const LC_MouseEvent first = eventAt(27.0, 3.0);
+    f.m_action->onMouseLeftButtonReleaseSelected(OffsetProbe::SetReferencePoint, &first);
+    const LC_MouseEvent move = eventAt(27.0, -2.0);
+    f.m_action->onMouseMoveEventSelected(f.m_action->getStatus(), &move);
+    const LC_MouseEvent second = eventAt(27.0, -2.0);
+    f.m_action->onMouseLeftButtonReleaseSelected(f.m_action->getStatus(), &second);
+
+    CHECK(f.m_context.messages.isEmpty());
+    CHECK(spline->isDeleted());
+    int offsets = 0;
+    for (const RS_Entity* e : f.m_graphic) {
+        offsets += !e->isDeleted() && e != spline ? 1 : 0;
+    }
+    CHECK(offsets > 0);
+}

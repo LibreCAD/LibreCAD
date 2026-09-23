@@ -310,11 +310,13 @@ void LC_ActionModifyOffset::onMouseMoveEventSelected(const int status, const LC_
     switch (status){
         case SetReferencePoint:{
             m_offsetData->coord = getRelZeroAwarePoint(e, mouse);
+            m_offsetData->sideFallback = RS_Vector(false);
             previewOffset();
             break;
         }
         case SetPosition:{
             m_offsetData->coord = m_referencePoint;
+            m_offsetData->sideFallback = mouse; // for a reference point on the curve
             const RS_Vector offset = mouse - m_referencePoint;
             if (!m_distanceIsFixed){
                 m_offsetData->distance = offset.magnitude();
@@ -351,6 +353,7 @@ void LC_ActionModifyOffset::onMouseLeftButtonReleaseSelected(const int status, c
         case SetReferencePoint:{
             m_referencePoint = getRelZeroAwarePoint(e, e->snapPoint);
             m_offsetData->coord = m_referencePoint;
+            m_offsetData->sideFallback = RS_Vector(false);
             if (!m_distanceIsFixed){
                 addSnappedPointToVisualSnap(m_referencePoint);
                 moveRelativeZero(m_referencePoint);
@@ -364,6 +367,7 @@ void LC_ActionModifyOffset::onMouseLeftButtonReleaseSelected(const int status, c
             break;
         }
         case SetPosition:{
+           m_offsetData->sideFallback = e->snapPoint; // where the last move put it, unless there was none
            trigger();
            break;
         }
