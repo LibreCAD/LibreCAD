@@ -30,7 +30,6 @@
 #include "rs_graphic.h"
 
 class QG_GraphicView;
-class LC_DocumentsStorage;
 class LC_ActionContext;
 class LC_LayoutTabBar;
 class RS_EventHandler;
@@ -101,7 +100,6 @@ public:
     }
 
 protected:
-    LC_DocumentsStorage *m_documentsStorage;
     // window ID
     unsigned m_id = 0;
     // Graphic view
