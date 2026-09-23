@@ -352,6 +352,33 @@ bool LC_ActionModifyOffset::doUpdateDistanceByInteractiveInput(const QString& ta
     return false;
 }
 
+bool LC_ActionModifyOffset::doProcessCommand(const int status, const QString& command) {
+    bool accept = false;
+    switch (status) {
+        // a typed distance fixes it, as clicking the field in the options widget
+        // would: it stops the second click of the reference-point flow (or the
+        // mouse's own distance from the reference point) from overriding it
+        case SetReferencePoint:
+        case SetPosition: {
+            bool ok = false;
+            const double distance = RS_Math::eval(command, &ok);
+            if (ok && distance > RS_TOLERANCE) {
+                accept = true;
+                setDistance(distance);
+                setDistanceFixed(true);
+            }
+            else {
+                commandMessage(tr("Not a valid expression"));
+            }
+            updateOptions();
+            break;
+        }
+        default:
+            break;
+    }
+    return accept;
+}
+
 void LC_ActionModifyOffset::onMouseLeftButtonReleaseSelected(const int status, const LC_MouseEvent* e) {
     switch (status){
         case SetReferencePoint:{
@@ -428,14 +455,15 @@ void LC_ActionModifyOffset::updateActionPromptForSelected(const int status) {
     switch (status) {
         case SetReferencePoint:
             if (m_distanceIsFixed){
-                updatePromptTRBack(tr("Specify direction of offset"));
+                updatePromptTRBack(tr("Specify direction of offset, or enter distance <%1>").arg(getDistance()));
             }
             else {
-                updatePromptTRBack(tr("Specify reference point for direction of offset"));
+                updatePromptTRBack(
+                    tr("Specify reference point for direction of offset, or enter distance <%1>").arg(getDistance()));
             }
             break;
         case SetPosition:
-            updatePromptTRBack(tr("Specify direction of offset"));
+            updatePromptTRBack(tr("Specify direction of offset, or enter distance <%1>").arg(getDistance()));
             break;
         default:
             updatePrompt();

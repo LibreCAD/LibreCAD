@@ -89,6 +89,8 @@ protected:
     LC_ModifyOperationFlags *getModifyOperationFlags() override;
     void onMouseMoveEventSelected(int status, const LC_MouseEvent* e) override;
     bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
+    /** A typed distance fixes it, as clicking the options widget's field would. */
+    bool doProcessCommand(int status, const QString& command) override;
     void doTriggerCompletion(bool success) override;
     void doTriggerSelectionUpdate(bool keepSelected, const LC_DocumentModificationBatch& ctx) override;
     bool doTriggerModifications(LC_DocumentModificationBatch& ctx) override;

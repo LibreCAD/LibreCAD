@@ -74,8 +74,10 @@ public:
     explicit OffsetProbe(LC_ActionContext* context) : LC_ActionModifyOffset(context) {}
 
     using LC_ActionModifyOffset::SetReferencePoint;
+    using LC_ActionModifyOffset::doProcessCommand;
     using LC_ActionModifyOffset::onMouseLeftButtonReleaseSelected;
     using LC_ActionModifyOffset::onMouseMoveEventSelected;
+    using LC_ActionModifyOffset::updateActionPromptForSelected;
     using LC_ActionModifyOffset::updateActionPromptForSelection;
     using LC_ActionPreSelectionAwareBase::m_selectedEntities;
     using LC_ActionPreSelectionAwareBase::m_selectionComplete;
@@ -801,6 +803,105 @@ TEST_CASE("A reference point on a spline through points takes the side from the 
     f.m_action->onMouseMoveEventSelected(f.m_action->getStatus(), &move);
     const LC_MouseEvent second = eventAt(27.0, -2.0);
     f.m_action->onMouseLeftButtonReleaseSelected(f.m_action->getStatus(), &second);
+
+    CHECK(f.m_context.messages.isEmpty());
+    CHECK(spline->isDeleted());
+    int offsets = 0;
+    for (const RS_Entity* e : f.m_graphic) {
+        offsets += !e->isDeleted() && e != spline ? 1 : 0;
+    }
+    CHECK(offsets > 0);
+}
+
+TEST_CASE("The prompt says a distance can be typed, fixed or not, at either click",
+          "[curve-offset][action]") {
+    OffsetFixture f;
+    RS_Spline* spline = addDrawnSpline(f);
+    f.select({spline});
+
+    f.start(5.0, false); // fixed
+    f.m_action->updateActionPromptForSelected(OffsetProbe::SetReferencePoint);
+    CHECK(f.m_context.prompt.contains("enter distance"));
+    CHECK(f.m_context.prompt.contains("5"));
+
+    startTwoClick(f); // not fixed, distance 10
+    f.m_action->updateActionPromptForSelected(OffsetProbe::SetReferencePoint);
+    CHECK(f.m_context.prompt.contains("enter distance"));
+    CHECK(f.m_context.prompt.contains("10"));
+
+    const LC_MouseEvent first = eventAt(0.0, 0.0);
+    f.m_action->onMouseLeftButtonReleaseSelected(OffsetProbe::SetReferencePoint, &first);
+    const int atPosition = f.m_action->getStatus();
+    REQUIRE(atPosition != OffsetProbe::SetReferencePoint);
+    f.m_action->updateActionPromptForSelected(atPosition);
+    CHECK(f.m_context.prompt.contains("enter distance"));
+}
+
+TEST_CASE("A typed distance fixes it, and the next click offsets by it", "[curve-offset][action]") {
+    // Issue #2893: distance could only be set by clicking the small field in
+    // the tool options, unlike Fillet's radius. Typing it, as if the field's
+    // "fixed distance" checkbox had just been ticked, lets one click decide
+    // the side and trigger, no second click needed.
+    OffsetFixture f;
+    RS_Spline* spline = addDrawnSpline(f);
+    f.select({spline});
+    startTwoClick(f); // distance 10, not fixed
+    REQUIRE_FALSE(f.m_action->isFixedDistance());
+
+    CHECK_FALSE(f.m_action->doProcessCommand(OffsetProbe::SetReferencePoint, QStringLiteral("not a number")));
+    CHECK(f.m_context.messages.size() == 1);
+    CHECK(f.m_context.messages.front().contains("Not a valid expression"));
+    CHECK_FALSE(f.m_action->isFixedDistance()); // unchanged by the failed attempt
+    CHECK(f.m_action->getDistance() == 10.0);
+    f.m_context.messages.clear();
+
+    REQUIRE(f.m_action->doProcessCommand(OffsetProbe::SetReferencePoint, QStringLiteral("7")));
+    CHECK(f.m_action->isFixedDistance());
+    CHECK(f.m_action->getDistance() == 7.0);
+    CHECK(f.m_action->getStatus() == OffsetProbe::SetReferencePoint); // no click yet: still here
+
+    double t0 = 0.0;
+    double t1 = 0.0;
+    REQUIRE(spline->getParameterDomain(t0, t1));
+    LC_CurveJet middle;
+    REQUIRE(spline->tryEvaluateJet(0.5 * (t0 + t1), LC_CurveEvaluationSide::Interior, middle));
+    const RS_Vector normal = RS_Vector{-middle.first.y, middle.first.x} / middle.first.magnitude();
+    const RS_Vector click = middle.point + normal * 5.0; // off the curve: a side, at less than the typed distance
+
+    const LC_MouseEvent e = eventAt(click.x, click.y);
+    f.m_action->onMouseLeftButtonReleaseSelected(OffsetProbe::SetReferencePoint, &e); // fixed: triggers at once
+
+    CHECK(f.m_context.messages.isEmpty());
+    CHECK(spline->isDeleted());
+    const RS_Spline* offset = offsetOf(f, spline);
+    double toWanted = 0.0;
+    offset->getNearestPointOnEntity(middle.point + normal * 7.0, true, &toWanted); // the typed distance, not 10 or 5
+    CHECK(toWanted < 1e-3);
+}
+
+TEST_CASE("A typed distance in the two-click flow overrides the second click's own", "[curve-offset][action]") {
+    OffsetFixture f;
+    LC_SplinePoints* spline = f.addSplinePoints();
+    f.select({spline});
+    startTwoClick(f); // distance 10, not fixed
+
+    // (27, 3) is one of its points, so on the curve
+    const LC_MouseEvent first = eventAt(27.0, 3.0);
+    f.m_action->onMouseLeftButtonReleaseSelected(OffsetProbe::SetReferencePoint, &first);
+    REQUIRE(f.m_action->getStatus() != OffsetProbe::SetReferencePoint);
+    const int atPosition = f.m_action->getStatus();
+
+    REQUIRE(f.m_action->doProcessCommand(atPosition, QStringLiteral("3")));
+    CHECK(f.m_action->isFixedDistance());
+    CHECK(f.m_action->getDistance() == 3.0);
+
+    // a move 20 below would set the distance to 20, were it not now fixed
+    const LC_MouseEvent move = eventAt(27.0, -17.0);
+    f.m_action->onMouseMoveEventSelected(atPosition, &move);
+    CHECK(f.m_action->getDistance() == 3.0);
+
+    const LC_MouseEvent second = eventAt(27.0, -17.0);
+    f.m_action->onMouseLeftButtonReleaseSelected(atPosition, &second);
 
     CHECK(f.m_context.messages.isEmpty());
     CHECK(spline->isDeleted());
