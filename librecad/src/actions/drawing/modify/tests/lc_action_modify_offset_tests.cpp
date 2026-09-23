@@ -488,6 +488,39 @@ TEST_CASE("Parallel Through previews the whole offset of a parabola", "[curve-of
     CHECK(previewed == pieces);
 }
 
+TEST_CASE("Parallel Through previews the whole offset of a hyperbola", "[curve-offset][action]") {
+    // g_supportedEntityTypes admits EntityHyperbola (like the parabola above);
+    // this exercises it, which nothing did before.
+    OffsetFixture f;
+    // the right branch of x^2/9 - y^2/4 = 1, moved to (30, 0), from y = -4 to y = 4
+    auto* hyperbola = f.add(new LC_Hyperbola(
+        &f.m_graphic, LC_HyperbolaData{RS_Vector{30.0, 0.0}, RS_Vector{3.0, 0.0}, 2.0 / 3.0, -1.4, 1.4, false}));
+    REQUIRE(hyperbola->isValid());
+
+    // what the command will create through (35, 0), beyond its vertex (33, 0)
+    QList<RS_Entity*> created;
+    RS_Creation::createParallelThrough(RS_Vector{35.0, 0.0}, 1, hyperbola, false, false, created);
+    const qsizetype pieces = created.size();
+    REQUIRE(pieces == 1);
+    const auto* offset = static_cast<const RS_Spline*>(created.front());
+    REQUIRE(offset->getNumberOfControlPoints() > 4 * 3);
+    const size_t points = offset->getNumberOfControlPoints();
+    qDeleteAll(created);
+
+    ParallelThroughProbe action(&f.m_context);
+    action.m_entity = hyperbola;
+    const LC_MouseEvent e = eventAt(35.0, 0.0);
+    action.onMouseMoveEvent(ParallelThroughProbe::SetPos, &e);
+    int previewed = 0;
+    for (const RS_Entity* entity : *action.m_preview) {
+        if (entity->rtti() == RS2::EntitySpline) {
+            ++previewed;
+            CHECK(static_cast<const RS_Spline*>(entity)->getNumberOfControlPoints() == points);
+        }
+    }
+    CHECK(previewed == pieces);
+}
+
 TEST_CASE("Parallel Through takes a spline, not a line it is drawn with, and passes through the point",
           "[curve-offset][action]") {
     OffsetFixture f;
