@@ -1,6 +1,8 @@
 #ifndef	JWWDOC_H
 #define	JWWDOC_H
 
+#include <map>
+
 #include "jwtype.h"
 
 typedef struct	_DPoint{
@@ -507,8 +509,8 @@ public:
            >> m_dSizeX >> m_dSizeY
            >> m_dKankaku
            >> m_degKakudo;
-		jwBYTE bt;
-		jwWORD wd;
+		jwBYTE bt = 0;
+		jwWORD wd = 0;
          char buf[512];
 			ifstr >> bt;
 			if( bt != 0xFF ){
@@ -604,6 +606,18 @@ public:
 	CDataTen m_TenHo1;	//基準点1
 	CDataTen m_TenHo2;	//基準点2
 	const char* className(){return "CDataSunpou";}
+	// the members are serialized with the dimension, and read by the version too
+	void SetVersion(jwDWORD ver){
+		CData::SetVersion(ver);
+		m_Sen.SetVersion(ver);
+		m_Moji.SetVersion(ver);
+		m_SenHo1.SetVersion(ver);
+		m_SenHo2.SetVersion(ver);
+		m_Ten1.SetVersion(ver);
+		m_Ten2.SetVersion(ver);
+		m_TenHo1.SetVersion(ver);
+		m_TenHo2.SetVersion(ver);
+	}
 	friend inline std::ostream& operator<<(std::ostream&, const CDataSunpou&); 
 	friend inline std::istream& operator>>(std::istream&, CDataSunpou&); 
 	void Serialize(std::ofstream& ofstr) const {
@@ -766,7 +780,7 @@ public:
                         //1:部分図(数学座標系)、2: 部分図(測地座標系)、
                         //3:作図グループ、4:作図部品
 	vector<CData*> m_DataList;	//定義データの実体のリスト
-	jwWORD Count;	//テスト用
+	jwDWORD Count = 0;	//JWWBlockListに読み込んだ定義データの数
 	const char* className(){return "CDataList";}
 	friend inline std::ostream& operator<<(std::ostream&, const CDataList&); 
 	friend inline std::istream& operator>>(std::istream&, CDataList&); 
@@ -803,8 +817,8 @@ public:
 		//"@@SfigorgFlag@@"に続けて、複合図形種別フラグを付加
 		//1:部分図(数学座標系)、2: 部分図(測地座標系)、
 		//3:作図グループ、4:作図部品
-		jwBYTE bt;
-		jwWORD wd;
+		jwBYTE bt = 0;
+		jwWORD wd = 0;
 		char buf[512];
 		ifstr >> bt;
 		if( bt != 0xFF ){
@@ -868,8 +882,8 @@ typedef	CDataType* PCDataType;
 //
 class	JWWBlockList
 {
-	vector<PCDataBlock> FBlockList;
-	vector<PCDataList> FDataList;
+	vector<PCDataList> FBlockList;
+	vector<CData*> FDataList;	//each record has the type FDataType names
 	vector<CDataType> FDataType;
 public:
 	JWWBlockList();
@@ -877,7 +891,7 @@ public:
 	CDataList GetBlockList(unsigned int i) const;
 	int getBlockListCount() const;
     int GetDataListCount(unsigned int i) const;
-    void* GetData(unsigned int i, int j ) const;
+    CData* GetData(unsigned int i, int j ) const;
     CDataType GetDataType(unsigned int i, int j ) const;
 
 	CDataEnko GetCDataEnko(int i, int j );
@@ -911,6 +925,7 @@ typedef	NoList*	PNoList;
 class	JWWList
 {
 	vector<PNoList> FList;
+	std::map<int, PNoList> FByNo;	//the number of each item of FList
 
 public:
 	JWWList();
@@ -1001,6 +1016,8 @@ public:
 	void WriteString(string s) const;
 	string ReadData(int n) const;
 	string ReadString();
+	jwDWORD ReadCount();
+	jwBOOL ReadObjectTag(int& index, string& s);
 	jwBOOL ReadHeader();
 	jwBOOL WriteHeader();
 	jwBOOL Read();

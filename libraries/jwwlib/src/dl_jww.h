@@ -377,8 +377,6 @@ private:
     char settingValue[DL_DXF_MAXLINE+1];
     // Key of the current setting (e.g. "$ACADVER")
     char settingKey[DL_DXF_MAXLINE+1];
-    // Stores the group codes
-    char values[DL_DXF_MAXGROUPCODE][DL_DXF_MAXLINE+1];
     // First call of this method. We initialize all group values in
     //  the first call.
     bool firstCall;

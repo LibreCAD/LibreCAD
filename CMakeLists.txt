@@ -2561,6 +2561,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/dxf_layer0_declared_tests.cpp
         librecad/src/lib/filters/tests/dxf_unknown_version_tests.cpp
         librecad/src/lib/filters/tests/dxf_closed_spline_tests.cpp
+        librecad/src/lib/filters/tests/jww_import_tests.cpp
         librecad/src/lib/filters/tests/byte_identity_harness.cpp
         librecad/src/lib/filters/tests/dxf_corpus_tests.cpp
         librecad/src/lib/filters/tests/i18n_codec_tests.cpp

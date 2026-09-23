@@ -31,6 +31,7 @@
 #include <cstdio>
 #include <cassert>
 #include <cmath>
+#include <memory>
 
 #include "dl_creationinterface.h"
 
@@ -88,6 +89,13 @@ static	string	lTable[] = {
 
 static	string HEX[] = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"};
 
+// The text style, which is the font, of every JWW text. Jw_cad text is
+// Japanese, and there is no font called "japanese", the style this used to
+// name, so all of it was drawn with standard.lff, which has no kana or kanji.
+// kst32b.lff has the kana, all JIS level 1 kanji, most of level 2 and the
+// NEC symbols such as circled digits.
+static const char* const jwwTextStyle = "kst32b";
+
 static double Deg(double ang)
 {
 	return ang / M_PI * 180.0;
@@ -127,7 +135,7 @@ void DL_Jww::CreateSen(DL_CreationInterface* creationInterface, CDataSen& DSen)
 	else
 		width = DSen.m_nPenWidth;
 	int color = colTable[DSen.m_nPenColor > ArraySize(colTable)-1 ? ArraySize(colTable)-1 : DSen.m_nPenColor];
-	attrib = DL_Attributes(values[8],	  // layer
+	attrib = DL_Attributes(lName,	  // layer
 			       color,	      // color
 			       width,	      // width
 			       lTable[DSen.m_nPenStyle > ArraySize(lTable)-1 ? ArraySize(lTable)-1 : DSen.m_nPenStyle]);	  // linetype
@@ -211,7 +219,7 @@ void DL_Jww::CreateEnko(DL_CreationInterface* creationInterface, CDataEnko& DEnk
 	else
 		width = DEnko.m_nPenWidth;
 	int color = colTable[DEnko.m_nPenColor > ArraySize(colTable)-1 ? ArraySize(colTable)-1 : DEnko.m_nPenColor];
-	attrib = DL_Attributes(values[8],	  // layer
+	attrib = DL_Attributes(lName,	  // layer
 			       color,	      // color
 			       width,	      // width
 			       lTable[DEnko.m_nPenStyle > ArraySize(lTable)-1 ? ArraySize(lTable)-1 : DEnko.m_nPenStyle]);	  // linetype
@@ -405,7 +413,7 @@ void DL_Jww::CreateTen(DL_CreationInterface* creationInterface, CDataTen& DTen)
 	else
 		width = DTen.m_nPenWidth;
 	int color = colTable[DTen.m_nPenColor > ArraySize(colTable)-1 ? ArraySize(colTable)-1 : DTen.m_nPenColor];
-	attrib = DL_Attributes(values[8],	  // layer
+	attrib = DL_Attributes(lName,	  // layer
 			       color,	      // color
 			       width,	      // width
 			       lTable[DTen.m_nPenStyle > ArraySize(lTable)-1 ? ArraySize(lTable)-1 : DTen.m_nPenStyle]);	  // linetype
@@ -458,7 +466,7 @@ void DL_Jww::CreateMoji(DL_CreationInterface* creationInterface, CDataMoji& DMoj
 	else
 		width = DMoji.m_nPenWidth;
 	int color = colTable[DMoji.m_nPenColor > ArraySize(colTable)-1 ? ArraySize(colTable)-1 : DMoji.m_nPenColor];
-	attrib = DL_Attributes(values[8],	  // layer
+	attrib = DL_Attributes(lName,	  // layer
 			       color,	      // color
 			       width,	      // width
 			       lTable[DMoji.m_nPenStyle > ArraySize(lTable)-1 ? ArraySize(lTable)-1 : DMoji.m_nPenStyle]);	  // linetype
@@ -484,7 +492,7 @@ void DL_Jww::CreateMoji(DL_CreationInterface* creationInterface, CDataMoji& DMoj
 		// text
 		DMoji.m_string,
 		// style
-		string("japanese"),
+		string(jwwTextStyle),
 		// angle
 		DMoji.m_degKakudo / 180.0 * M_PI);
 
@@ -593,7 +601,7 @@ void DL_Jww::CreateSunpou(DL_CreationInterface* creationInterface, CDataSunpou& 
 	else
 		width = DSunpou.m_nPenWidth;
 	int color = colTable[DSunpou.m_nPenColor > ArraySize(colTable)-1 ? ArraySize(colTable)-1 : DSunpou.m_nPenColor];
-	attrib = DL_Attributes(values[8],	  // layer
+	attrib = DL_Attributes(lName,	  // layer
 			       color,	      // color
 			       width,	      // width
 			       lTable[DSunpou.m_nPenStyle > ArraySize(lTable)-1 ? ArraySize(lTable)-1 : DSunpou.m_nPenStyle]);	  // linetype
@@ -670,12 +678,13 @@ void DL_Jww::CreateBlock(DL_CreationInterface* /*creationInterface*/, CDataBlock
 bool DL_Jww::in(const string& file, DL_CreationInterface* creationInterface) {
 	//JWWファイル読み取り
 	string ofile("");
-	auto jwdoc = new JWWDocument((std::string&)file, ofile);
+	// the document closes the file when it goes, also when Read() fails
+	auto jwdoc = std::make_unique<JWWDocument>((std::string&)file, ofile);
 	if(!jwdoc->Read())
 		return false;
 	//DXF変数設定
 	creationInterface->setVariableString("$DWGCODEPAGE", "SJIS", 7);
-	creationInterface->setVariableString("$TEXTSTYLE", "japanese", 7);
+	creationInterface->setVariableString("$TEXTSTYLE", jwwTextStyle, 7);
 	//線分データ
 	for( unsigned int i = 0; i < jwdoc->vSen.size(); i++ )
 		CreateSen(creationInterface, jwdoc->vSen[i]);
@@ -697,7 +706,6 @@ bool DL_Jww::in(const string& file, DL_CreationInterface* creationInterface) {
 	//部品
     for(unsigned int i=0 ; i < jwdoc->vBlock.size(); i++)
 		CreateBlock(creationInterface, jwdoc->vBlock[i]);
-	delete jwdoc;
 
 	return true;
 }
