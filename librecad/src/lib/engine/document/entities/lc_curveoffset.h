@@ -368,7 +368,19 @@ LC_CurveOffsetMaterializationResult materializeBranches(const RS_Entity& source,
  * trimmed away entirely, give an empty vector. Callers that must tell those
  * apart use createEntities().
  */
+/**
+ * Removes the reversed branches of @p branches too small to keep: a
+ * swallowtail between two cusps within twice @p merge, whose neighbours then
+ * meet at its middle and run on as one branch, or a tail whose only cusp is
+ * at one end, within @p merge, which its neighbour then absorbs. The chain of
+ * a closed source is a ring, so a branch at either end of the vector takes
+ * its neighbour across the seam. Exposed for the tests: an offset request
+ * cannot put a chosen branch at a chosen place in the ring.
+ */
+void collapseTinyReversals(std::vector<LC_OffsetBranch>& branches, double merge);
+
 std::vector<RS_Entity*> createLegacyOffset(const RS_Entity& source, const RS_Vector& coord, double distance);
+
 
 /** buildDirectBranches(), then materializeBranches(): the programmatic entry point. */
 LC_CurveOffsetMaterializationResult createEntities(const RS_Entity& source, const LC_CurveOffsetRequest& request,

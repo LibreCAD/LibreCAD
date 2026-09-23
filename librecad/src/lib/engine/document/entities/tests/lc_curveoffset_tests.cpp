@@ -1030,6 +1030,133 @@ TEST_CASE("A closed source's cusped offset is a cycle of open branches", "[curve
     }
 }
 
+namespace {
+/** A branch of one straight cubic piece from @p from to @p to. */
+LC_OffsetBranch straightBranch(const RS_Vector& from, const RS_Vector& to, const bool reversed,
+                               const LC_OffsetBranchEnd startEnd, const LC_OffsetBranchEnd endEnd) {
+    LC_OffsetCubicPiece piece;
+    piece.bezier = {from, from + (to - from) / 3.0, from + (to - from) * (2.0 / 3.0), to};
+    LC_OffsetBranch branch;
+    branch.cubicPieces.push_back(piece);
+    branch.reversed = reversed;
+    branch.startEnd = startEnd;
+    branch.endEnd = endEnd;
+    return branch;
+}
+} // namespace
+
+TEST_CASE("A tiny reversed branch at an end of a closed chain collapses across the seam",
+          "[curve-offset][cusp][closed]") {
+    // The branches of a closed source's offset are a ring: the one after the
+    // last is the first. Collapsing a tiny reversed branch took its neighbour
+    // at k + 1 or k - 1 without wrapping, which at either end of the ring read
+    // (and wrote) outside the vector.
+    const double merge = 1.0;
+
+    SECTION("the last branch takes the first as its neighbour") {
+        std::vector<LC_OffsetBranch> branches{
+            straightBranch({0, 0}, {100, 0}, false, LC_OffsetBranchEnd::Cusp, LC_OffsetBranchEnd::Kink),
+            straightBranch({100, 10}, {0, 10}, false, LC_OffsetBranchEnd::Kink, LC_OffsetBranchEnd::Cusp),
+            // reversed, shorter than the merge tolerance, kink before it and cusp after
+            straightBranch({0, 10}, {0.1, 10}, true, LC_OffsetBranchEnd::Kink, LC_OffsetBranchEnd::Cusp)};
+
+        LC_CurveOffset::collapseTinyReversals(branches, merge);
+
+        REQUIRE(branches.size() == 2);
+        // the first branch now starts where the collapsed one did
+        CHECK(branches.front().cubicPieces.front().bezier[0] == RS_Vector{0, 10});
+        CHECK(branches.front().startEnd == LC_OffsetBranchEnd::Free);
+    }
+
+    SECTION("the first branch takes the last as its neighbour") {
+        std::vector<LC_OffsetBranch> branches{
+            // reversed, tiny, cusp before it and kink after
+            straightBranch({0.1, 10}, {0, 10}, true, LC_OffsetBranchEnd::Cusp, LC_OffsetBranchEnd::Kink),
+            straightBranch({0, 0}, {100, 0}, false, LC_OffsetBranchEnd::Kink, LC_OffsetBranchEnd::Cusp),
+            straightBranch({100, 10}, {0.1, 10}, false, LC_OffsetBranchEnd::Cusp, LC_OffsetBranchEnd::Cusp)};
+
+        LC_CurveOffset::collapseTinyReversals(branches, merge);
+
+        REQUIRE(branches.size() == 2);
+        // the last branch now ends where the collapsed one did
+        CHECK(branches.back().cubicPieces.back().bezier[3] == RS_Vector{0, 10});
+        CHECK(branches.back().endEnd == LC_OffsetBranchEnd::Free);
+    }
+}
+
+TEST_CASE("A closed source's branches are joined and collapsed around their ring",
+          "[curve-offset][cusp][closed]") {
+    // The branches of a closed source's offset form a ring: the last one runs
+    // into the first. Two steps used to step off the ends of that ring -
+    // collapsing a tiny reversed branch took the neighbour at k + 1 or k - 1
+    // without wrapping, and joining the corners read the first branch again
+    // after a push had moved it. Both need a closed source with a corner and a
+    // distance near a bend as tight as it, so the sweep below walks distances
+    // through and past the tightest bend of three closed sources. It checks
+    // that nothing is read outside the ring (under a sanitizer) and that what
+    // comes back is a ring.
+    RS_Spline wrapped(nullptr, RS_SplineData(3, false));
+    for (const RS_Vector& p : {RS_Vector{0, 0}, RS_Vector{40, -10}, RS_Vector{60, 30}, RS_Vector{20, 50},
+                               RS_Vector{-15, 25}}) {
+        wrapped.addControlPoint(p);
+    }
+    wrapped.setClosed(true);
+
+    // a corner at the seam and another opposite it: a repeated point stands still
+    const LC_SplinePoints cornered = fromControlPoints(
+        {{0, 0}, {50, 0}, {50, 0}, {70, 35}, {30, 60}, {30, 60}, {-10, 30}}, true);
+    const LC_SplinePoints squarish = fromControlPoints(
+        {{0, 0}, {40, 0}, {40, 40}, {0, 40}}, true);
+
+    const std::vector<const RS_Entity*> sources{&wrapped, &cornered, &squarish};
+    for (const RS_Entity* source : sources) {
+        double tightest = RS_MAXDOUBLE;
+        double t0 = 0.0;
+        double t1 = 0.0;
+        const RS_Vector extent = source->getMax() - source->getMin();
+        const double size = std::max(extent.x, extent.y);
+        if (const auto* spline = dynamic_cast<const RS_Spline*>(source); spline != nullptr) {
+            REQUIRE(spline->getParameterDomain(t0, t1));
+            for (int i = 0; i < 400; ++i) {
+                LC_CurveJet j;
+                if (!spline->tryEvaluateJet(t0 + (t1 - t0) * i / 400.0, LC_CurveEvaluationSide::Interior, j)) {
+                    continue;
+                }
+                const double speed = j.first.magnitude();
+                const double turn = std::abs(j.first.x * j.second.y - j.first.y * j.second.x);
+                if (turn > 0.0) {
+                    tightest = std::min(tightest, speed * speed * speed / turn);
+                }
+            }
+        }
+        const double largest = std::isfinite(tightest) ? std::min(2.0 * tightest, size) : 0.4 * size;
+        for (int step = 1; step <= 60; ++step) {
+            const double distance = largest * step / 60.0;
+            for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+                INFO("distance " << distance << " side " << static_cast<int>(side));
+                const LC_CurveOffsetGeometryResult result = offsetToSide(*source, side, distance);
+                if (result.status != LC_CurveOffsetStatus::Ok) {
+                    continue; // a distance the engine refuses is not this test's business
+                }
+                REQUIRE_FALSE(result.branches.empty());
+                for (size_t i = 0; i < result.branches.size(); ++i) {
+                    const LC_OffsetBranch& branch = result.branches[i];
+                    REQUIRE_FALSE(branch.cubicPieces.empty());
+                    if (branch.closed) {
+                        CHECK(result.branches.size() == 1);
+                        continue;
+                    }
+                    // every branch of a ring ends where the next one begins
+                    const LC_OffsetBranch& next = result.branches[(i + 1) % result.branches.size()];
+                    if (branch.endEnd == LC_OffsetBranchEnd::Cusp) {
+                        CHECK(next.cubicPieces.front().bezier[0] == branch.cubicPieces.back().bezier[3]);
+                    }
+                }
+            }
+        }
+    }
+}
+
 // ---------------------------------------------------------------------------
 // Repeated control points: stretches that stand still, tangents that vanish
 // ---------------------------------------------------------------------------
