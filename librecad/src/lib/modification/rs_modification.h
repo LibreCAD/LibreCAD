@@ -130,10 +130,11 @@ struct RS_OffsetData : LC_ModifyOperationFlags {
 
     RS_Vector coord;
     /**
-     * Where coord lies on a curve it gives no side, and this point's side
-     * decides instead. Modify > Offset with a distance taken from two clicks
-     * sets it to the second one: its first click, the reference point, is
-     * where snapping puts it, on the curve, and the second shows the side.
+     * Where coord lies on a curve, or on the segments it is drawn with, it
+     * gives no side the user chose, and this point's side decides instead.
+     * Modify > Offset with a distance taken from two clicks sets it to the
+     * second one: its first click, the reference point, is where snapping
+     * puts it, on the curve or on its drawing, and the second shows the side.
      */
     RS_Vector sideFallback{false};
     double distance = 0.;

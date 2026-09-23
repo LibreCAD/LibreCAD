@@ -37,6 +37,7 @@
 #include "lc_graphicviewport.h"
 #include "lc_linemath.h"
 #include "lc_splinepoints.h"
+#include "rs_spline.h"
 #include "lc_undosection.h"
 #include "rs_arc.h"
 #include "rs_atomicentity.h"
@@ -1056,6 +1057,25 @@ bool LC_OffsetBatchOutcome::anySourceSucceeded() const {
 }
 
 namespace {
+/**
+ * How far from its curve a point on @p source can be and still be on it as
+ * the user sees it: an RS_Spline is drawn with chords within a thousandth of
+ * its control points' extent (RS_Spline::fillDisplayPoints()), so a point
+ * snapped onto its drawing lies that near the curve and gives no side the
+ * user chose.
+ */
+double drawnCurveTolerance(const RS_Entity& source) {
+    RS_Vector lo = source.getMin();
+    RS_Vector hi = source.getMax();
+    if (const auto* spline = dynamic_cast<const RS_Spline*>(&source)) {
+        for (const RS_Vector& p : spline->getData().controlPoints) {
+            lo = RS_Vector::minimum(lo, p);
+            hi = RS_Vector::maximum(hi, p);
+        }
+    }
+    return (lo.valid && hi.valid) ? 1e-3 * lo.distanceTo(hi) : 0.0;
+}
+
 /** total += more, unless a count would overflow. */
 bool addUsage(LC_OffsetOutputUsage& total, const LC_OffsetOutputUsage& more) {
     constexpr std::size_t max = std::numeric_limits<std::size_t>::max();
@@ -1230,8 +1250,15 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcome(const RS_OffsetData& da
             // The side is resolved once, so no copy can land on another side.
             const LC_CurveOffsetOptions sideOptions = LC_CurveOffset::makeOffsetOptions(e, std::abs(data.distance));
             LC_OffsetSideResolution side = LC_CurveOffset::resolveSide(e, data.coord, sideOptions);
-            if (side.status == LC_CurveOffsetStatus::AmbiguousSide && data.sideFallback.valid) {
-                side = LC_CurveOffset::resolveSide(e, data.sideFallback, sideOptions);
+            // a point on the curve, or on the segments it is drawn with, gives no
+            // side the user chose: the fallback point decides, when it can
+            const bool onCurve = side.status == LC_CurveOffsetStatus::AmbiguousSide ||
+                                 (side.status == LC_CurveOffsetStatus::Ok && side.distance <= drawnCurveTolerance(e));
+            if (onCurve && data.sideFallback.valid) {
+                const LC_OffsetSideResolution fallback = LC_CurveOffset::resolveSide(e, data.sideFallback, sideOptions);
+                if (fallback.status == LC_CurveOffsetStatus::Ok) {
+                    side = fallback;
+                }
             }
             if (side.status != LC_CurveOffsetStatus::Ok) {
                 result.engineStatus = side.status;

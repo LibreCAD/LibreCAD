@@ -32,6 +32,7 @@
 #include "lc_action_draw_line_parallel_through.h"
 #include "lc_action_modify_offset.h"
 #include "lc_actiontestsupport.h"
+#include "lc_curveoffset.h"
 #include "lc_parabola.h"
 #include "lc_splinepoints.h"
 #include "rs_circle.h"
@@ -624,6 +625,57 @@ TEST_CASE("A reference point on the spline takes the offset's side from the seco
             CHECK(toOther > 9.0);
         }
     }
+}
+
+TEST_CASE("A reference point snapped onto a drawn segment takes the side from the second click",
+          "[curve-offset][action]") {
+    // Snap on Entity puts the reference point on one of the chords the spline
+    // is drawn with, which lies a little off the curve on its inner side: a
+    // side the user did not choose, and that side won whichever way they
+    // dragged. Within the drawing's own tolerance of the curve, the second
+    // click decides.
+    OffsetFixture f;
+    RS_Spline* spline = addDrawnSpline(f);
+    f.select({spline});
+    startTwoClick(f);
+
+    // the midpoint of the chord that strays furthest from the exact curve
+    // (getNearestPointOnEntity() measures to the chords themselves)
+    const LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(*spline, 5.0);
+    RS_Vector chordPoint{false};
+    RS_Vector curvePoint{false};
+    double sagitta = 0.0;
+    for (const RS_Entity* segment : *spline) {
+        const RS_Vector middle = (segment->getStartpoint() + segment->getEndpoint()) * 0.5;
+        const LC_OffsetSideResolution nearest = LC_CurveOffset::resolveSide(*spline, middle, options);
+        if (nearest.status != LC_CurveOffsetStatus::Ok || nearest.occurrences.empty() || !(nearest.distance > sagitta)) {
+            continue;
+        }
+        LC_CurveJet jet;
+        REQUIRE(spline->tryEvaluateJet(nearest.occurrences.front(), LC_CurveEvaluationSide::Interior, jet));
+        sagitta = nearest.distance;
+        chordPoint = middle;
+        curvePoint = jet.point;
+    }
+    REQUIRE(chordPoint.valid);
+    REQUIRE(sagitta > 1e-3); // off the curve, as far as the side it gives goes
+    const RS_Vector chordSide = (chordPoint - curvePoint).normalized();
+    const RS_Vector position = curvePoint - chordSide * 5.0; // the other side
+
+    const LC_MouseEvent first = eventAt(chordPoint.x, chordPoint.y);
+    f.m_action->onMouseLeftButtonReleaseSelected(OffsetProbe::SetReferencePoint, &first);
+    const LC_MouseEvent move = eventAt(position.x, position.y);
+    f.m_action->onMouseMoveEventSelected(f.m_action->getStatus(), &move);
+    const LC_MouseEvent second = eventAt(position.x, position.y);
+    f.m_action->onMouseLeftButtonReleaseSelected(f.m_action->getStatus(), &second);
+
+    const RS_Spline* offset = offsetOf(f, spline);
+    double toWanted = 0.0;
+    double toOther = 0.0;
+    offset->getNearestPointOnEntity(curvePoint - chordSide * 5.0, true, &toWanted);
+    offset->getNearestPointOnEntity(curvePoint + chordSide * 5.0, true, &toOther);
+    CHECK(toWanted < 0.05); // |pointer - reference| = 5 + sagitta
+    CHECK(toOther > 9.0);
 }
 
 TEST_CASE("A reference point off the spline still decides the offset's side", "[curve-offset][action]") {
