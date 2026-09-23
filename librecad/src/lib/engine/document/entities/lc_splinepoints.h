@@ -27,6 +27,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <vector>
 
 #include "lc_cachedlengthentity.h"
+#include "lc_curvejet.h"
 #include "rs_atomicentity.h"
 
 class QPolygonF;
@@ -63,6 +64,25 @@ struct LC_SplinePointsData {
 };
 
 std::ostream& operator <<(std::ostream& os, const LC_SplinePointsData& ld);
+
+/**
+ * One piece of an LC_SplinePoints, as it is drawn: the spline is a chain of
+ * quadratic Bezier segments, except that one control point is a point and two
+ * are a line segment.
+ */
+struct LC_SplinePointsSegment {
+    enum class Kind {
+        Point,
+        Line,
+        Quadratic
+    };
+    Kind kind = Kind::Point;
+    RS_Vector start{false};
+    /** Quadratic segments only. */
+    RS_Vector control{false};
+    /** Line and quadratic segments only. */
+    RS_Vector end{false};
+};
 
 /**
  * Class for a spline entity.
@@ -181,7 +201,16 @@ public:
 
     void calculateBorders() override;
 
+    /**
+     * Offsets this spline in place, keeping its type. Kept for compatibility: an
+     * offset of a spline is generally not a spline of the same kind, so general
+     * callers use createOffset(). A failure leaves the spline unchanged.
+     */
     bool offset(const RS_Vector& coord, double distance) override;
+    /** The offset through @p coord at |@p distance|, from the offset engine:
+     *  several cubic RS_Spline pieces, or nothing on failure. */
+    std::vector<RS_Entity*> createOffset(const RS_Vector& coord, const double& distance) const override;
+    /** Both offsets at |@p distance|, or nothing unless both succeed. */
     std::vector<RS_Entity*> offsetTwoSides(double distance) const override;
 
     static RS_VectorSolutions getIntersection(const RS_Entity* e1, const RS_Entity* e2);
@@ -217,6 +246,40 @@ public:
     LC_SecondMoment secondMomentLineIntegral() const override;
 
     int getQuadPoints(int iSeg, RS_Vector* pvStart, RS_Vector* pvControl, RS_Vector* pvEnd) const;
+
+    /**
+     * Number of segments the spline consists of, built from its control points:
+     * 0 without geometry, 1 for a single point, a line segment or one quadratic,
+     * and otherwise one quadratic per interior control point of an open spline
+     * or per control point of a closed one.
+     */
+    size_t getSegmentCount() const;
+    /**
+     * The segment with 0-based @p index, tagged with its kind.
+     * @return false, leaving @p segment a point with invalid coordinates, if the
+     *         index is out of range or a control point it uses is not finite.
+     */
+    bool tryGetSegment(size_t index, LC_SplinePointsSegment& segment) const;
+    /**
+     * Checked evaluation of the point and its first and second derivatives at
+     * parameter @p t in [0, getSegmentCount()]: segment k covers [k, k+1], with
+     * t = k + u for the segment's own Bezier parameter u. Segment joins take the
+     * limit chosen by @p side. A point segment has zero derivatives, which is its
+     * geometry rather than a failure. A closed spline is not wrapped around.
+     * @return false, leaving @p jet invalid, for a parameter outside the domain,
+     *         a limit that does not exist, or a result that is not finite.
+     */
+    bool tryEvaluateJet(double t, LC_CurveEvaluationSide side, LC_CurveJet& jet) const;
+    /**
+     * Conservative enclosures of the point and its first and second derivatives
+     * over the parameter box [a, b], which must lie inside one segment. They are
+     * formed exactly from the segment's Bezier control points over the box, with
+     * outward-rounded arithmetic; so, with @p products, are |C'|^2 and
+     * C' x C'', from the Bezier coefficients of the products
+     * (speedSquaredProduct, crossProduct).
+     * @return false for a box outside the domain or across a join.
+     */
+    bool tryBoundJet(double a, double b, LC_CurveJetBounds& bounds, bool products = false) const;
 protected:
     /**
 * @return The length of the line.
@@ -243,8 +306,6 @@ private:
 
     bool offsetCut(const RS_Vector& coord, const double& distance);
     bool offsetSpline(const RS_Vector& coord, const double& distance);
-    std::vector<RS_Entity*> offsetTwoSidesSpline(const double& distance) const;
-    std::vector<RS_Entity*> offsetTwoSidesCut(const double& distance) const;
     LC_SplinePointsData m_data;
 
 };

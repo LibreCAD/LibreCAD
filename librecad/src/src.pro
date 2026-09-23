@@ -409,6 +409,10 @@ HEADERS += \
     lib/engine/document/entities/lc_textbidi.h \
     lib/engine/document/container/lc_containertraverser.h \
     lib/engine/document/entities/lc_mleader.h \
+    lib/engine/document/entities/lc_curvejet.h \
+    lib/engine/document/entities/lc_curveoffset.h \
+    lib/engine/document/entities/lc_parametriccurveintersection.h \
+    lib/engine/document/entities/lc_offsetoutputbudget.h \
     lib/engine/document/entities/lc_splinehelper.h \
     lib/engine/document/entities/lc_tolerance.h \
     lib/engine/document/entities/support/lc_arrow_box.h \
@@ -770,6 +774,7 @@ HEADERS += \
     lib/selection/metaentity/entities/lc_matchdescriptor_point.h         \
     lib/selection/metaentity/entities/lc_matchdescriptor_splinepoints.h \
     lib/math/rs_math.h \
+    lib/math/lc_interval.h \
     lib/math/lc_quadratic.h \
     main/console_command_utils.h \
     main/console_dxf2png.h \
@@ -965,6 +970,9 @@ SOURCES += \
     lib/engine/document/entities/lc_textbidi.cpp \
     lib/engine/document/container/lc_containertraverser.cpp \
     lib/engine/document/entities/lc_mleader.cpp \
+    lib/engine/document/entities/lc_curveoffset.cpp \
+    lib/engine/document/entities/lc_parametriccurveintersection.cpp \
+    lib/engine/document/entities/lc_offsetoutputbudget.cpp \
     lib/engine/document/entities/lc_splinehelper.cpp \
     lib/engine/document/entities/lc_tolerance.cpp \
     lib/engine/document/entities/support/lc_arrow_box.cpp \

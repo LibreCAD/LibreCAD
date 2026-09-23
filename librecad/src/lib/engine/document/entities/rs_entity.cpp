@@ -1186,7 +1186,19 @@ bool RS_Entity::isConstruction(const bool typeCheck) const {
     /*if (isHatchMember(this))
         return false;*/
 
-    return (m_layer != nullptr) && m_layer->isConstruction();
+    // A polyline's segments carry no layer of their own, so that they follow
+    // the polyline's; they are its own geometry and are drawn and caught as
+    // construction lines with it. The parts a dimension, a leader or a glyph
+    // is built from carry none either, and are not drawn as construction
+    // lines, so only a polyline is looked through. The layer is walked to
+    // rather than resolved with getLayer(): this is called for every entity
+    // of a frame, and no name is read from the layer.
+    const RS_Entity* entity = this;
+    while (entity->m_layer == nullptr && entity->m_parent != nullptr &&
+           entity->m_parent->rtti() == RS2::EntityPolyline) {
+        entity = entity->m_parent;
+    }
+    return (entity->m_layer != nullptr) && entity->m_layer->isConstruction();
 }
 
 //! whether printing is enabled or disabled for the entity's layer

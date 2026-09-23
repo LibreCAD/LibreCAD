@@ -113,22 +113,37 @@ bool LC_ActionDrawLineParallel::doTriggerModifications(LC_DocumentModificationBa
 void LC_ActionDrawLineParallel::onMouseMoveEvent(const int status, const LC_MouseEvent* e) {
     *m_coord = {e->graphPoint}; // copy is needed there!
 
-    m_entity = catchAndDescribe(e, RS2::ResolveAll);
+    // A spline is drawn as lines, one of which ResolveAll catches: the
+    // parallel is the spline's, not that line's.
+    m_entity = catchEntityByEvent(e, RS2::ResolveAll);
+    if (m_entity != nullptr && m_entity->getParent() != nullptr &&
+        m_entity->getParent()->rtti() == RS2::EntitySpline) {
+        m_entity = m_entity->getParent();
+    }
+    if (m_entity != nullptr) {
+        prepareEntityDescription(m_entity, RS2::EntityDescriptionLevel::DescriptionCatched);
+    }
 
     switch (status) {
         case SetEntity: {
             if (m_entity != nullptr) {
                 QList<RS_Entity*> parallels;
-                RS_Creation::createParallel(*m_coord, m_distance, m_numberToCreate, m_entity, false, parallels);
+                RS_Creation::createParallel(*m_coord, m_distance, m_numberToCreate, m_entity, false, parallels, true);
                 if (!parallels.empty()) {
-                    m_preview->addAllFromList(parallels);
-                    highlightHover(m_entity);
-                    if (m_numberToCreate == 1) {
+                    // Described before the preview adopts them. A spline's offset can be
+                    // several entities, so the count is what was created, not copies.
+                    if (parallels.size() == 1) {
                         prepareEntityDescription(parallels.front(), RS2::EntityDescriptionLevel::DescriptionCreating);
                     }
                     else {
-                        appendInfoCursorZoneMessage(QString::number(m_numberToCreate) + tr(" entities will be created"), 2, false);
+                        appendInfoCursorZoneMessage(QString::number(parallels.size()) + tr(" entities will be created"), 2, false);
                     }
+                    // one by one, as the preview limit applies per entity: a spline offset
+                    // counts its display segments, so a list would show only its first pieces
+                    for (RS_Entity* parallel : parallels) {
+                        m_preview->addEntity(parallel);
+                    }
+                    highlightHover(m_entity);
                     if (m_showRefEntitiesOnPreview) {
                         const RS_Vector nearest = m_entity->getNearestPointOnEntity(*m_coord, false);
                         previewRefPoint(nearest);

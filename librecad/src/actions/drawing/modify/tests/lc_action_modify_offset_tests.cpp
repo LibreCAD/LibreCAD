@@ -1,0 +1,1228 @@
+/*******************************************************************************
+ *
+ This file is part of the LibreCAD project, a 2D CAD program
+
+ Copyright (C) 2026 LibreCAD.org
+
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License
+ as published by the Free Software Foundation; either version 2
+ of the License, or (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ ******************************************************************************/
+
+// Modify Offset with spline sources: admission, commit, per-source selection,
+// a failed trigger that keeps the action and selection, and preview detail.
+
+#include <catch2/catch_approx.hpp>
+#include <catch2/catch_test_macros.hpp>
+
+#include <cmath>
+#include <memory>
+
+#include <QStringList>
+
+#include "lc_action_draw_line_parallel_through.h"
+#include "lc_action_modify_offset.h"
+#include "lc_actiontestsupport.h"
+#include "lc_curveoffset.h"
+#include "lc_hyperbola.h"
+#include "lc_parabola.h"
+#include "lc_splinepoints.h"
+#include "rs_arc.h"
+#include "rs_circle.h"
+#include "rs_creation.h"
+#include "rs_ellipse.h"
+#include "rs_layer.h"
+#include "rs_line.h"
+#include "rs_modification.h"
+#include "rs_polyline.h"
+#include "rs_preview.h"
+#include "rs_selection.h"
+#include "rs_settings.h"
+#include "rs_spline.h"
+
+namespace {
+
+using lc::test::eventAt;
+
+class CapturingContext final : public LC_ActionContext {
+public:
+    QString prompt;
+    QStringList messages;
+
+    void updateActionPrompt(const QString& left, [[maybe_unused]] const QString& right,
+                            [[maybe_unused]] const LC_ModifiersInfo& modifiers) override {
+        prompt = left;
+    }
+
+    void commandMessage(const QString& message) override {
+        messages << message;
+    }
+};
+
+class OffsetProbe final : public LC_ActionModifyOffset {
+public:
+    explicit OffsetProbe(LC_ActionContext* context) : LC_ActionModifyOffset(context) {}
+
+    using LC_ActionModifyOffset::SetReferencePoint;
+    using LC_ActionModifyOffset::doProcessCommand;
+    using LC_ActionModifyOffset::onMouseLeftButtonReleaseSelected;
+    using LC_ActionModifyOffset::onMouseMoveEventSelected;
+    using LC_ActionModifyOffset::updateActionPromptForSelected;
+    using LC_ActionModifyOffset::updateActionPromptForSelection;
+    using LC_ActionPreSelectionAwareBase::m_selectedEntities;
+    using LC_ActionPreSelectionAwareBase::m_selectionComplete;
+    using RS_ActionSelectBase::m_catchForSelectionEntityTypes;
+    using RS_PreviewActionInterface::catchEntityByEvent;
+    using RS_PreviewActionInterface::deletePreviewAndHighlights;
+    using RS_PreviewActionInterface::drawPreviewAndHighlights;
+    using RS_PreviewActionInterface::m_preview;
+};
+
+class ParallelThroughProbe final : public LC_ActionDrawLineParallelThrough {
+public:
+    explicit ParallelThroughProbe(LC_ActionContext* context) : LC_ActionDrawLineParallelThrough(context) {}
+
+    using LC_ActionDrawLineParallelThrough::SetEntity;
+    using LC_ActionDrawLineParallelThrough::SetPos;
+    using LC_ActionDrawLineParallelThrough::m_entity;
+    using LC_ActionDrawLineParallelThrough::onMouseMoveEvent;
+    using RS_PreviewActionInterface::m_preview;
+};
+
+struct OffsetFixture {
+    const bool m_qtReady{lc::test::application() != nullptr};
+    RS_Graphic m_graphic;
+    lc::test::TestGraphicView m_view;
+    CapturingContext m_context;
+    std::unique_ptr<OffsetProbe> m_action;
+
+    OffsetFixture() {
+        m_graphic.initForNewDocument();
+        m_view.setDocument(&m_graphic);
+        m_context.setDocumentAndView(&m_graphic, &m_view);
+        LC_SET_ONE("Appearance", "MaxPreview", 100);
+    }
+
+    ~OffsetFixture() {
+        m_action.reset();
+        LC_SET_ONE("Appearance", "MaxPreview", 100);
+    }
+
+    template <typename Entity>
+    Entity* add(Entity* entity) {
+        m_graphic.addEntity(entity);
+        return entity;
+    }
+
+    RS_Spline* addSCurve() {
+        RS_SplineData d(3, false);
+        d.controlPoints = {{0, 0}, {4, 6}, {8, -6}, {12, 0}};
+        d.knotslist = {0, 0, 0, 0, 1, 1, 1, 1};
+        d.weights.assign(4, 1.0);
+        return add(new RS_Spline(&m_graphic, d));
+    }
+
+    /**
+     * An arc of radius 0.5 about (0, 2.6), from 45 to 135 degrees: offset inwards
+     * by 0.5 it shrinks to its centre, which the engine refuses. (0, 3) lies
+     * inside it.
+     */
+    RS_Spline* addCollapsingArc() {
+        RS_SplineData d(2, false);
+        const double r = 0.5;
+        const RS_Vector c{0.0, 2.6};
+        d.controlPoints = {c + RS_Vector{r * M_SQRT1_2, r * M_SQRT1_2}, c + RS_Vector{0.0, r * M_SQRT2},
+                           c + RS_Vector{-r * M_SQRT1_2, r * M_SQRT1_2}};
+        d.knotslist = {0, 0, 0, 1, 1, 1};
+        d.weights = {1.0, M_SQRT1_2, 1.0};
+        return add(new RS_Spline(&m_graphic, d));
+    }
+
+    /** A closed cubic through 8 points of a circle of radius 10: its radius of curvature is 8.5 to 9.3. */
+    RS_Spline* addRing() {
+        auto* spline = add(new RS_Spline(&m_graphic, RS_SplineData(3, false)));
+        for (int k = 0; k < 8; ++k) {
+            const double a = k * M_PI / 4.0;
+            spline->addControlPoint(RS_Vector{10.0 * std::cos(a), 10.0 * std::sin(a)});
+        }
+        spline->setClosed(true);
+        return spline;
+    }
+
+    LC_SplinePoints* addSplinePoints() {
+        LC_SplinePointsData d(false, false);
+        d.splinePoints = {{20, 0}, {23, 4}, {27, 3}, {30, 6}, {34, 2}};
+        return add(new LC_SplinePoints(&m_graphic, d));
+    }
+
+    void select(const std::initializer_list<RS_Entity*> entities) {
+        const RS_Selection selection(&m_graphic, m_view.getViewPort());
+        for (RS_Entity* e : entities) {
+            selection.selectSingle(e);
+        }
+    }
+
+    /** Starts the action on the current selection, with a fixed distance. */
+    void start(const double distance, const bool keepOriginals) {
+        m_action = std::make_unique<OffsetProbe>(&m_context);
+        m_action->setDistanceFixed(true);
+        m_action->setDistance(distance);
+        m_action->setKeepOriginals(keepOriginals);
+        m_action->setUseMultipleCopies(false);
+        m_action->init(OffsetProbe::SetReferencePoint);
+    }
+
+    void clickAt(const double x, const double y) const {
+        const LC_MouseEvent e = eventAt(x, y);
+        m_action->onMouseLeftButtonReleaseSelected(OffsetProbe::SetReferencePoint, &e);
+    }
+
+    /** A mouse move, as RS_PreviewActionInterface::mouseMoveEvent() runs it. */
+    void hoverAt(const double x, const double y) const {
+        m_action->deletePreviewAndHighlights();
+        const LC_MouseEvent e = eventAt(x, y);
+        m_action->onMouseMoveEventSelected(OffsetProbe::SetReferencePoint, &e);
+        m_action->drawPreviewAndHighlights();
+    }
+
+    /** Live entities of the drawing with this type. */
+    int liveCount(const RS2::EntityType type) const {
+        int count = 0;
+        for (const RS_Entity* e : m_graphic) {
+            count += (e->rtti() == type && !e->isDeleted()) ? 1 : 0;
+        }
+        return count;
+    }
+
+    /** Preview entities with this type, counting the reference entities RS_Preview keeps apart. */
+    int previewCount(const RS2::EntityType type) const {
+        RS_EntityContainer references(nullptr, false);
+        m_action->m_preview->addReferenceEntitiesToContainer(&references);
+        int count = 0;
+        for (const RS_EntityContainer* container : {static_cast<RS_EntityContainer*>(m_action->m_preview.get()),
+                                                    &references}) {
+            for (const RS_Entity* e : *container) {
+                count += (e->rtti() == type) ? 1 : 0;
+            }
+        }
+        return count;
+    }
+};
+
+} // namespace
+
+TEST_CASE("Modify Offset admits both spline types and names them", "[curve-offset][action]") {
+    OffsetFixture f;
+    RS_Spline* spline = f.addSCurve();
+    LC_SplinePoints* points = f.addSplinePoints();
+    RS_Line* line = f.add(new RS_Line(&f.m_graphic, RS_LineData{{0, 20}, {10, 20}}));
+    f.select({spline, points, line});
+    f.start(0.5, true);
+    CHECK(f.m_action->m_selectionComplete);
+    CHECK(f.m_action->m_selectedEntities.size() == 3);
+    CHECK(f.m_action->m_selectedEntities.contains(spline));
+    CHECK(f.m_action->m_selectedEntities.contains(points));
+
+    // the pre-existing types keep their order; the spline types come after them
+    const auto& types = f.m_action->m_catchForSelectionEntityTypes;
+    CHECK(types.indexOf(RS2::EntitySpline) > types.indexOf(RS2::EntityPolyline));
+    CHECK(types.indexOf(RS2::EntitySplinePoints) > types.indexOf(RS2::EntityPolyline));
+
+    f.m_action->updateActionPromptForSelection();
+    CHECK(f.m_context.prompt.contains("spline"));
+    CHECK(f.m_context.prompt.contains("spline through points"));
+}
+
+TEST_CASE("Modify Offset takes a parabola and a hyperbola, and offsets them", "[curve-offset][action]") {
+    OffsetFixture f;
+    auto* parabola = f.add(new LC_Parabola(&f.m_graphic, LC_ParabolaData{std::array<RS_Vector, 3>{
+                                                             RS_Vector{-4.0, 4.0}, RS_Vector{0.0, -4.0},
+                                                             RS_Vector{4.0, 4.0}}}));
+    // the right branch of x^2/9 - y^2/4 = 1, moved to (30, 0), from y = -4 to y = 4
+    auto* hyperbola = f.add(new LC_Hyperbola(
+        &f.m_graphic, LC_HyperbolaData{RS_Vector{30.0, 0.0}, RS_Vector{3.0, 0.0}, 2.0 / 3.0, -1.4, 1.4, false}));
+    REQUIRE(hyperbola->isValid());
+
+    const auto& types = OffsetProbe(&f.m_context).m_catchForSelectionEntityTypes;
+    CHECK(types.contains(RS2::EntityParabola));
+    CHECK(types.contains(RS2::EntityHyperbola));
+
+    SECTION("a parabola") {
+        f.select({parabola});
+        f.start(0.5, false);
+        REQUIRE(f.m_action->m_selectionComplete);
+        f.clickAt(0.0, -6.0); // below its vertex, outside it
+        CHECK(f.m_context.messages.isEmpty());
+        CHECK(parabola->isDeleted());
+        CHECK(f.liveCount(RS2::EntitySpline) == 1);
+    }
+
+    SECTION("a hyperbola") {
+        f.select({hyperbola});
+        f.start(0.5, false);
+        REQUIRE(f.m_action->m_selectionComplete);
+        f.clickAt(40.0, 0.0); // beyond its vertex (33, 0), towards the focus
+        CHECK(f.m_context.messages.isEmpty());
+        CHECK(hyperbola->isDeleted());
+        CHECK(f.liveCount(RS2::EntitySpline) == 1);
+    }
+
+    f.m_action->updateActionPromptForSelection();
+    CHECK(f.m_context.prompt.contains("parabola"));
+    CHECK(f.m_context.prompt.contains("hyperbola"));
+}
+
+TEST_CASE("A selection window takes the spline, not the segments it is drawn with", "[curve-offset][action]") {
+    OffsetFixture f;
+    RS_Spline* spline = f.addSCurve();
+    spline->update();
+    REQUIRE(spline->count() > 0);
+    f.start(0.5, true);
+    RS_Selection selection(&f.m_graphic, f.m_view.getViewPort());
+    selection.selectWindow(f.m_action->m_catchForSelectionEntityTypes, RS_Vector{-1.0, -3.0}, RS_Vector{13.0, 3.0},
+                           true, false);
+    CHECK(spline->isSelected());
+
+    f.start(0.5, true); // picks the preselection up, as it does for the other types
+    CHECK(f.m_action->m_selectionComplete);
+    REQUIRE(f.m_action->m_selectedEntities.size() == 1);
+    CHECK(f.m_action->m_selectedEntities.front() == spline);
+}
+
+TEST_CASE("A click selects the spline itself, not a segment it is drawn with", "[curve-offset][action]") {
+    OffsetFixture f;
+    RS_Spline* spline = f.addSCurve();
+    f.start(0.5, true);
+    LC_CurveJet jet;
+    REQUIRE(spline->tryEvaluateJet(0.3, LC_CurveEvaluationSide::Interior, jet));
+    const LC_MouseEvent e = eventAt(jet.point.x, jet.point.y);
+    CHECK(f.m_action->catchEntityByEvent(&e, f.m_action->m_catchForSelectionEntityTypes) == spline);
+}
+
+TEST_CASE("Committing a spline offset replaces it with its offset, undoably", "[curve-offset][action]") {
+    OffsetFixture f;
+    RS_Spline* spline = f.addSCurve();
+    f.select({spline});
+    f.start(0.75, false);
+    f.clickAt(6.0, 9.0);
+
+    CHECK(spline->isDeleted());
+    const int pieces = f.liveCount(RS2::EntitySpline);
+    CHECK(pieces == 1); // one spline for the whole offset
+    CHECK(f.m_context.messages.isEmpty());
+
+    f.m_graphic.undo();
+    CHECK_FALSE(spline->isDeleted());
+    CHECK(f.liveCount(RS2::EntitySpline) == 1);
+    f.m_graphic.redo();
+    CHECK(spline->isDeleted());
+    CHECK(f.liveCount(RS2::EntitySpline) == pieces);
+}
+
+TEST_CASE("A trigger that offsets nothing keeps the action, its step and the selection", "[curve-offset][action]") {
+    OffsetFixture f;
+    RS_Spline* spline = f.addCollapsingArc();
+    f.select({spline});
+    f.start(0.5, false); // inside, by its radius: shrinks to a point
+    f.clickAt(0.0, 3.0);
+
+    CHECK_FALSE(spline->isDeleted());
+    CHECK(spline->isSelected());
+    CHECK(f.liveCount(RS2::EntitySpline) == 1);
+    CHECK(f.m_action->getStatus() == OffsetProbe::SetReferencePoint);
+    CHECK(f.m_action->m_selectionComplete);
+    CHECK(f.m_action->m_selectedEntities.contains(spline));
+    REQUIRE(f.m_context.messages.size() == 1);
+    CHECK(f.m_context.messages.front().contains("1 of 1"));
+
+    // another distance works from where the user left off
+    f.m_action->setDistance(0.4);
+    f.clickAt(0.0, 3.0);
+    CHECK(spline->isDeleted());
+}
+
+TEST_CASE("Only sources that were offset leave the selection", "[curve-offset][action]") {
+    OffsetFixture f;
+    RS_Spline* spline = f.addCollapsingArc();
+    RS_Circle* circle = f.add(new RS_Circle(&f.m_graphic, RS_CircleData{RS_Vector{0.0, 3.0}, 20.0}));
+    f.select({spline, circle});
+    f.start(0.5, true);
+    f.clickAt(0.0, 3.0); // inside the circle: its inward offset works; the spline's does not
+
+    CHECK_FALSE(circle->isSelected());
+    CHECK(spline->isSelected());
+    CHECK(f.liveCount(RS2::EntityCircle) == 2);
+    REQUIRE(f.m_context.messages.size() == 1);
+    CHECK(f.m_context.messages.front().contains("1 of 2"));
+}
+
+TEST_CASE("The preview shows the committed geometry, or its box past MaxPreview", "[curve-offset][action]") {
+    OffsetFixture f;
+    RS_Spline* spline = f.addSCurve();
+    f.select({spline});
+    f.start(0.75, true);
+
+    f.hoverAt(6.0, 9.0);
+    const int detailed = f.previewCount(RS2::EntitySpline);
+    CHECK(detailed == 1);
+
+    // the same request commits the same pieces
+    f.clickAt(6.0, 9.0);
+    CHECK(f.liveCount(RS2::EntitySpline) == 1 + detailed);
+
+    // A MaxPreview of zero, or a malformed negative value: a box, from entities
+    // the preview never adopts.
+    for (const int maxPreview : {0, -5}) {
+        OffsetFixture g;
+        RS_Spline* s = g.addSCurve();
+        g.select({s});
+        LC_SET_ONE("Appearance", "MaxPreview", maxPreview);
+        g.start(0.75, true);
+        g.hoverAt(6.0, 9.0);
+        INFO("MaxPreview " << maxPreview);
+        CHECK(g.previewCount(RS2::EntitySpline) == 0);
+        CHECK(g.previewCount(RS2::EntityRefLine) == 4);
+    }
+}
+
+TEST_CASE("With current attributes, the preview has the pen the commit gives", "[curve-offset][action]") {
+    OffsetFixture f;
+    RS_Spline* spline = f.addSCurve();
+    spline->setPen(RS_Pen{RS_Color{10, 120, 200}, RS2::Width04, RS2::DotLine});
+    const RS_Pen active{RS_Color{200, 20, 20}, RS2::Width13, RS2::DashLine};
+    f.m_graphic.setActivePen(active);
+    f.select({spline});
+    f.start(0.75, true);
+    f.m_action->setUseCurrentAttributes(true);
+    f.hoverAt(6.0, 9.0);
+    int previewed = 0;
+    for (const RS_Entity* e : *f.m_action->m_preview) {
+        CHECK(e->getPen(false) == active);
+        ++previewed;
+    }
+    CHECK(previewed == 1);
+
+    f.clickAt(6.0, 9.0);
+    for (const RS_Entity* e : f.m_graphic) {
+        if (e != spline && !e->isDeleted()) {
+            CHECK(e->getPen(false) == active);
+        }
+    }
+}
+
+TEST_CASE("A failed preview request leaves no stale preview", "[curve-offset][action]") {
+    OffsetFixture f;
+    RS_Spline* spline = f.addSCurve();
+    f.select({spline});
+    f.start(0.75, true);
+    f.hoverAt(6.0, 9.0);
+    REQUIRE(f.previewCount(RS2::EntitySpline) == 1);
+    // on the curve: no side, so no offset now
+    LC_CurveJet jet;
+    REQUIRE(spline->tryEvaluateJet(0.3, LC_CurveEvaluationSide::Interior, jet));
+    f.hoverAt(jet.point.x, jet.point.y);
+    CHECK(f.previewCount(RS2::EntitySpline) == 0);
+}
+
+TEST_CASE("Without additive selection every offset, and every failed source, stays selected", "[curve-offset][action]") {
+    OffsetFixture f;
+    RS_Circle* inner = f.add(new RS_Circle(&f.m_graphic, RS_CircleData{RS_Vector{0.0, 3.0}, 20.0}));
+    RS_Circle* outer = f.add(new RS_Circle(&f.m_graphic, RS_CircleData{RS_Vector{0.0, 3.0}, 25.0}));
+    RS_Spline* arc = f.addCollapsingArc(); // shrinks to a point at 0.5 inside
+    f.select({inner, outer, arc});
+    // one select() per source cleared the others' results when selection is not additive
+    struct Additivity {
+        Additivity() { LC_SET_ONE("Selection", "Additivity", false); }
+        ~Additivity() { LC_SET_ONE("Selection", "Additivity", true); }
+    } off;
+    f.start(0.5, true);
+    f.clickAt(0.0, 3.0);
+
+    CHECK_FALSE(inner->isSelected());
+    CHECK_FALSE(outer->isSelected());
+    CHECK(arc->isSelected());
+    int selectedOffsets = 0;
+    for (const RS_Entity* e : f.m_graphic) {
+        if (e->rtti() == RS2::EntityCircle && e != inner && e != outer) {
+            selectedOffsets += e->isSelected() ? 1 : 0;
+        }
+    }
+    CHECK(selectedOffsets == 2);
+}
+
+TEST_CASE("Parallel Through previews the whole offset of a parabola", "[curve-offset][action]") {
+    OffsetFixture f;
+    auto* parabola = f.add(new LC_Parabola(&f.m_graphic, LC_ParabolaData{std::array<RS_Vector, 3>{
+                                                             RS_Vector{-4.0, 4.0}, RS_Vector{0.0, -4.0},
+                                                             RS_Vector{4.0, 4.0}}}));
+    // what the command will create through (0, -1)
+    QList<RS_Entity*> created;
+    RS_Creation::createParallelThrough(RS_Vector{0.0, -1.0}, 1, parabola, false, false, created);
+    const qsizetype pieces = created.size();
+    REQUIRE(pieces == 1);
+    const auto* offset = static_cast<const RS_Spline*>(created.front());
+    // more spans than a list of 32-segment splines fits in the preview limit of 100
+    REQUIRE(offset->getNumberOfControlPoints() > 4 * 3);
+    const size_t points = offset->getNumberOfControlPoints();
+    qDeleteAll(created);
+
+    ParallelThroughProbe action(&f.m_context);
+    action.m_entity = parabola;
+    const LC_MouseEvent e = eventAt(0.0, -1.0);
+    action.onMouseMoveEvent(ParallelThroughProbe::SetPos, &e);
+    int previewed = 0;
+    for (const RS_Entity* entity : *action.m_preview) {
+        if (entity->rtti() == RS2::EntitySpline) {
+            ++previewed;
+            CHECK(static_cast<const RS_Spline*>(entity)->getNumberOfControlPoints() == points);
+        }
+    }
+    CHECK(previewed == pieces);
+}
+
+TEST_CASE("Parallel Through previews the whole offset of a hyperbola", "[curve-offset][action]") {
+    // g_supportedEntityTypes admits EntityHyperbola (like the parabola above);
+    // this exercises it, which nothing did before.
+    OffsetFixture f;
+    // the right branch of x^2/9 - y^2/4 = 1, moved to (30, 0), from y = -4 to y = 4
+    auto* hyperbola = f.add(new LC_Hyperbola(
+        &f.m_graphic, LC_HyperbolaData{RS_Vector{30.0, 0.0}, RS_Vector{3.0, 0.0}, 2.0 / 3.0, -1.4, 1.4, false}));
+    REQUIRE(hyperbola->isValid());
+
+    // what the command will create through (35, 0), beyond its vertex (33, 0)
+    QList<RS_Entity*> created;
+    RS_Creation::createParallelThrough(RS_Vector{35.0, 0.0}, 1, hyperbola, false, false, created);
+    const qsizetype pieces = created.size();
+    REQUIRE(pieces == 1);
+    const auto* offset = static_cast<const RS_Spline*>(created.front());
+    REQUIRE(offset->getNumberOfControlPoints() > 4 * 3);
+    const size_t points = offset->getNumberOfControlPoints();
+    qDeleteAll(created);
+
+    ParallelThroughProbe action(&f.m_context);
+    action.m_entity = hyperbola;
+    const LC_MouseEvent e = eventAt(35.0, 0.0);
+    action.onMouseMoveEvent(ParallelThroughProbe::SetPos, &e);
+    int previewed = 0;
+    for (const RS_Entity* entity : *action.m_preview) {
+        if (entity->rtti() == RS2::EntitySpline) {
+            ++previewed;
+            CHECK(static_cast<const RS_Spline*>(entity)->getNumberOfControlPoints() == points);
+        }
+    }
+    CHECK(previewed == pieces);
+}
+
+TEST_CASE("Parallel Through takes a spline, not a line it is drawn with, and passes through the point",
+          "[curve-offset][action]") {
+    OffsetFixture f;
+    RS_Spline* spline = f.addSCurve();
+    ParallelThroughProbe action(&f.m_context);
+    const LC_MouseEvent hover = eventAt(0.2, 0.1); // beside its first drawn line
+    action.onMouseMoveEvent(ParallelThroughProbe::SetEntity, &hover);
+    CHECK(action.m_entity == spline);
+
+    // through (6, 0.5), measured from the curve: the parallel passes through it
+    const RS_Vector through{6.0, 0.5};
+    QList<RS_Entity*> created;
+    RS_Creation::createParallelThrough(through, 1, spline, false, false, created);
+    REQUIRE_FALSE(created.empty());
+    double nearest = RS_MAXDOUBLE;
+    for (const RS_Entity* e : created) {
+        REQUIRE(e->rtti() == RS2::EntitySpline);
+        const auto* piece = static_cast<const RS_Spline*>(e);
+        double t0 = 0.0;
+        double t1 = 0.0;
+        REQUIRE(piece->getParameterDomain(t0, t1));
+        const auto distanceAt = [&](const double t) {
+            LC_CurveJet jet;
+            REQUIRE(piece->tryEvaluateJet(t, LC_CurveEvaluationSide::Interior, jet));
+            return jet.point.distanceTo(through);
+        };
+        // sample, then narrow down around the nearest sample
+        constexpr int samples = 4000;
+        int best = 0;
+        for (int k = 1; k <= samples; ++k) {
+            if (distanceAt(t0 + (t1 - t0) * k / samples) < distanceAt(t0 + (t1 - t0) * best / samples)) {
+                best = k;
+            }
+        }
+        double lo = t0 + (t1 - t0) * std::max(best - 1, 0) / samples;
+        double hi = t0 + (t1 - t0) * std::min(best + 1, samples) / samples;
+        for (int i = 0; i < 200; ++i) {
+            const double a = lo + (hi - lo) / 3.0;
+            const double b = hi - (hi - lo) / 3.0;
+            if (distanceAt(a) < distanceAt(b)) {
+                hi = b;
+            } else {
+                lo = a;
+            }
+        }
+        nearest = std::min(nearest, distanceAt(0.5 * (lo + hi)));
+    }
+    qDeleteAll(created);
+    CHECK(nearest < 1e-4);
+}
+
+TEST_CASE("A spline shrunk away keeps its source, and the message says why", "[curve-offset][action]") {
+    OffsetFixture f;
+    RS_Spline* ring = f.addRing();
+    f.select({ring});
+    f.start(20.0, false);
+    f.clickAt(0.0, 0.0);
+
+    CHECK_FALSE(ring->isDeleted());
+    CHECK(f.liveCount(RS2::EntitySpline) == 1);
+    REQUIRE(f.m_context.messages.size() == 1);
+    CHECK(f.m_context.messages.front().contains("1 of 1"));
+    CHECK(f.m_context.messages.front().contains("nothing is left at this distance"));
+}
+
+TEST_CASE("Copies that stop short keep the source, and the message says how many fit", "[curve-offset][action]") {
+    OffsetFixture f;
+    RS_Spline* ring = f.addRing();
+    f.select({ring});
+    f.start(4.0, false);
+    f.m_action->setUseMultipleCopies(true);
+    f.m_action->setCopiesNumber(3);
+    f.clickAt(0.0, 0.0); // 4 and 8 inwards exist; 12 is past every radius of curvature
+
+    CHECK_FALSE(ring->isDeleted());
+    CHECK(f.liveCount(RS2::EntitySpline) == 3);
+    REQUIRE(f.m_context.messages.size() == 1);
+    CHECK(f.m_context.messages.front().contains("Only 2 of 3 copies fit"));
+}
+
+TEST_CASE("A spline refused by the engine is reported with the reason", "[curve-offset][action]") {
+    OffsetFixture f;
+    RS_Spline* spline = f.addSCurve();
+    f.select({spline});
+    f.start(0.5, false);
+    LC_CurveJet jet;
+    REQUIRE(spline->tryEvaluateJet(0.3, LC_CurveEvaluationSide::Interior, jet));
+    f.clickAt(jet.point.x, jet.point.y); // on the curve: no side
+
+    CHECK_FALSE(spline->isDeleted());
+    REQUIRE(f.m_context.messages.size() == 1);
+    CHECK(f.m_context.messages.front().contains("no side"));
+}
+
+
+namespace {
+/** A spline as Draw > Spline makes it: degree 3, a control point per click. */
+RS_Spline* addDrawnSpline(OffsetFixture& f) {
+    auto* spline = f.add(new RS_Spline(&f.m_graphic, RS_SplineData(3, false)));
+    for (const RS_Vector& p : {RS_Vector{0, 0}, RS_Vector{10, 15}, RS_Vector{25, -5}, RS_Vector{40, 10},
+                               RS_Vector{55, 0}}) {
+        spline->addControlPoint(p);
+    }
+    spline->update();
+    return spline;
+}
+
+/** The two-click Offset, as the options the tool saves by default have it. */
+void startTwoClick(OffsetFixture& f) {
+    f.m_action = std::make_unique<OffsetProbe>(&f.m_context);
+    f.m_action->setDistanceFixed(false);
+    f.m_action->setDistance(10.0);
+    f.m_action->setKeepOriginals(false);
+    f.m_action->setUseMultipleCopies(false);
+    f.m_action->init(OffsetProbe::SetReferencePoint);
+}
+
+/** The only live spline of the drawing that is not @p source, drawn. */
+RS_Spline* offsetOf(OffsetFixture& f, const RS_Spline* source) {
+    RS_Spline* found = nullptr;
+    int count = 0;
+    for (RS_Entity* e : f.m_graphic) {
+        if (!e->isDeleted() && e->rtti() == RS2::EntitySpline && e != source) {
+            found = static_cast<RS_Spline*>(e);
+            ++count;
+        }
+    }
+    REQUIRE(count == 1);
+    REQUIRE(found->count() > 0); // drawn
+    return found;
+}
+} // namespace
+
+TEST_CASE("A reference point on the spline takes the offset's side from the second click",
+          "[curve-offset][action]") {
+    // With the distance taken from two clicks, the side comes from the first,
+    // the reference point, and the natural first click is on the spline, where
+    // snapping puts it. A point on the curve gives no side, so nothing was
+    // offset, the preview stayed empty and one line in the command widget said
+    // why: the tool looked as if it did nothing. The second click shows the
+    // side, and decides it then.
+    OffsetFixture f;
+    RS_Spline* spline = addDrawnSpline(f);
+    f.select({spline});
+    startTwoClick(f);
+
+    double t0 = 0.0;
+    double t1 = 0.0;
+    REQUIRE(spline->getParameterDomain(t0, t1));
+    LC_CurveJet middle;
+    REQUIRE(spline->tryEvaluateJet(0.5 * (t0 + t1), LC_CurveEvaluationSide::Interior, middle));
+    const RS_Vector normal = RS_Vector{-middle.first.y, middle.first.x} / middle.first.magnitude();
+
+    for (const double side : {1.0, -1.0}) {
+        DYNAMIC_SECTION("towards " << (side > 0 ? "the left" : "the right")) {
+            const RS_Vector reference = middle.point; // on the curve
+            const RS_Vector position = middle.point + normal * (5.0 * side);
+            const LC_MouseEvent first = eventAt(reference.x, reference.y);
+            f.m_action->onMouseLeftButtonReleaseSelected(OffsetProbe::SetReferencePoint, &first);
+            REQUIRE(f.m_action->getStatus() != OffsetProbe::SetReferencePoint);
+
+            // the preview follows the pointer
+            f.m_action->deletePreviewAndHighlights();
+            const LC_MouseEvent move = eventAt(position.x, position.y);
+            f.m_action->onMouseMoveEventSelected(f.m_action->getStatus(), &move);
+            CHECK(f.previewCount(RS2::EntitySpline) > 0);
+
+            const LC_MouseEvent second = eventAt(position.x, position.y);
+            f.m_action->onMouseLeftButtonReleaseSelected(f.m_action->getStatus(), &second);
+
+            CHECK(f.m_context.messages.isEmpty());
+            CHECK(spline->isDeleted()); // replaced, as the tool keeps no originals by default
+            const RS_Spline* offset = offsetOf(f, spline);
+            // 5 from the curve, on the side of the second click
+            double toWanted = 0.0;
+            double toOther = 0.0;
+            offset->getNearestPointOnEntity(middle.point + normal * (5.0 * side), true, &toWanted);
+            offset->getNearestPointOnEntity(middle.point - normal * (5.0 * side), true, &toOther);
+            CHECK(toWanted < 1e-3);
+            CHECK(toOther > 9.0);
+        }
+    }
+}
+
+TEST_CASE("A reference point snapped onto a drawn segment takes the side from the second click",
+          "[curve-offset][action]") {
+    // Snap on Entity puts the reference point on one of the chords the spline
+    // is drawn with, which lies a little off the curve on its inner side: a
+    // side the user did not choose, and that side won whichever way they
+    // dragged. Within the drawing's own tolerance of the curve, the second
+    // click decides.
+    OffsetFixture f;
+    RS_Spline* spline = addDrawnSpline(f);
+    f.select({spline});
+    startTwoClick(f);
+
+    // the midpoint of the chord that strays furthest from the exact curve
+    // (getNearestPointOnEntity() measures to the chords themselves)
+    const LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(*spline, 5.0);
+    RS_Vector chordPoint{false};
+    RS_Vector curvePoint{false};
+    double sagitta = 0.0;
+    for (const RS_Entity* segment : *spline) {
+        const RS_Vector middle = (segment->getStartpoint() + segment->getEndpoint()) * 0.5;
+        const LC_OffsetSideResolution nearest = LC_CurveOffset::resolveSide(*spline, middle, options);
+        if (nearest.status != LC_CurveOffsetStatus::Ok || nearest.occurrences.empty() || !(nearest.distance > sagitta)) {
+            continue;
+        }
+        LC_CurveJet jet;
+        REQUIRE(spline->tryEvaluateJet(nearest.occurrences.front(), LC_CurveEvaluationSide::Interior, jet));
+        sagitta = nearest.distance;
+        chordPoint = middle;
+        curvePoint = jet.point;
+    }
+    REQUIRE(chordPoint.valid);
+    REQUIRE(sagitta > 1e-3); // off the curve, as far as the side it gives goes
+    const RS_Vector chordSide = (chordPoint - curvePoint).normalized();
+    const RS_Vector position = curvePoint - chordSide * 5.0; // the other side
+
+    const LC_MouseEvent first = eventAt(chordPoint.x, chordPoint.y);
+    f.m_action->onMouseLeftButtonReleaseSelected(OffsetProbe::SetReferencePoint, &first);
+    const LC_MouseEvent move = eventAt(position.x, position.y);
+    f.m_action->onMouseMoveEventSelected(f.m_action->getStatus(), &move);
+    const LC_MouseEvent second = eventAt(position.x, position.y);
+    f.m_action->onMouseLeftButtonReleaseSelected(f.m_action->getStatus(), &second);
+
+    const RS_Spline* offset = offsetOf(f, spline);
+    double toWanted = 0.0;
+    double toOther = 0.0;
+    offset->getNearestPointOnEntity(curvePoint - chordSide * 5.0, true, &toWanted);
+    offset->getNearestPointOnEntity(curvePoint + chordSide * 5.0, true, &toOther);
+    CHECK(toWanted < 0.05); // |pointer - reference| = 5 + sagitta
+    CHECK(toOther > 9.0);
+}
+
+TEST_CASE("A reference point off the spline still decides the offset's side", "[curve-offset][action]") {
+    // Only a reference point on the curve gives up its say: one beside it
+    // keeps the side, wherever the second click is.
+    OffsetFixture f;
+    RS_Spline* spline = addDrawnSpline(f);
+    f.select({spline});
+    startTwoClick(f);
+
+    double t0 = 0.0;
+    double t1 = 0.0;
+    REQUIRE(spline->getParameterDomain(t0, t1));
+    LC_CurveJet middle;
+    REQUIRE(spline->tryEvaluateJet(0.5 * (t0 + t1), LC_CurveEvaluationSide::Interior, middle));
+    const RS_Vector normal = RS_Vector{-middle.first.y, middle.first.x} / middle.first.magnitude();
+
+    const RS_Vector reference = middle.point + normal * 1.0;  // left of the curve
+    const RS_Vector position = middle.point - normal * 4.0;   // across it, 5 away
+    const LC_MouseEvent first = eventAt(reference.x, reference.y);
+    f.m_action->onMouseLeftButtonReleaseSelected(OffsetProbe::SetReferencePoint, &first);
+    const LC_MouseEvent move = eventAt(position.x, position.y);
+    f.m_action->onMouseMoveEventSelected(f.m_action->getStatus(), &move);
+    const LC_MouseEvent second = eventAt(position.x, position.y);
+    f.m_action->onMouseLeftButtonReleaseSelected(f.m_action->getStatus(), &second);
+
+    const RS_Spline* offset = offsetOf(f, spline);
+    double toLeft = 0.0;
+    offset->getNearestPointOnEntity(middle.point + normal * 5.0, true, &toLeft);
+    CHECK(toLeft < 1e-3);
+}
+
+
+TEST_CASE("A reference point on a spline through points takes the side from the second click",
+          "[curve-offset][action]") {
+    OffsetFixture f;
+    LC_SplinePoints* spline = f.addSplinePoints();
+    f.select({spline});
+    startTwoClick(f);
+
+    // (27, 3) is one of its points, so on the curve; (27, -2) is 5 below it
+    const LC_MouseEvent first = eventAt(27.0, 3.0);
+    f.m_action->onMouseLeftButtonReleaseSelected(OffsetProbe::SetReferencePoint, &first);
+    const LC_MouseEvent move = eventAt(27.0, -2.0);
+    f.m_action->onMouseMoveEventSelected(f.m_action->getStatus(), &move);
+    const LC_MouseEvent second = eventAt(27.0, -2.0);
+    f.m_action->onMouseLeftButtonReleaseSelected(f.m_action->getStatus(), &second);
+
+    CHECK(f.m_context.messages.isEmpty());
+    CHECK(spline->isDeleted());
+    int offsets = 0;
+    for (const RS_Entity* e : f.m_graphic) {
+        offsets += !e->isDeleted() && e != spline ? 1 : 0;
+    }
+    CHECK(offsets > 0);
+}
+
+TEST_CASE("The prompt says a distance can be typed, fixed or not, at either click",
+          "[curve-offset][action]") {
+    OffsetFixture f;
+    RS_Spline* spline = addDrawnSpline(f);
+    f.select({spline});
+
+    f.start(5.0, false); // fixed
+    f.m_action->updateActionPromptForSelected(OffsetProbe::SetReferencePoint);
+    CHECK(f.m_context.prompt.contains("enter distance"));
+    CHECK(f.m_context.prompt.contains("5"));
+
+    startTwoClick(f); // not fixed, distance 10
+    f.m_action->updateActionPromptForSelected(OffsetProbe::SetReferencePoint);
+    CHECK(f.m_context.prompt.contains("enter distance"));
+    CHECK(f.m_context.prompt.contains("10"));
+
+    const LC_MouseEvent first = eventAt(0.0, 0.0);
+    f.m_action->onMouseLeftButtonReleaseSelected(OffsetProbe::SetReferencePoint, &first);
+    const int atPosition = f.m_action->getStatus();
+    REQUIRE(atPosition != OffsetProbe::SetReferencePoint);
+    f.m_action->updateActionPromptForSelected(atPosition);
+    CHECK(f.m_context.prompt.contains("enter distance"));
+}
+
+TEST_CASE("A typed distance fixes it, and the next click offsets by it", "[curve-offset][action]") {
+    // Issue #2893: distance could only be set by clicking the small field in
+    // the tool options, unlike Fillet's radius. Typing it, as if the field's
+    // "fixed distance" checkbox had just been ticked, lets one click decide
+    // the side and trigger, no second click needed.
+    OffsetFixture f;
+    RS_Spline* spline = addDrawnSpline(f);
+    f.select({spline});
+    startTwoClick(f); // distance 10, not fixed
+    REQUIRE_FALSE(f.m_action->isFixedDistance());
+
+    CHECK_FALSE(f.m_action->doProcessCommand(OffsetProbe::SetReferencePoint, QStringLiteral("not a number")));
+    CHECK(f.m_context.messages.size() == 1);
+    CHECK(f.m_context.messages.front().contains("Not a valid expression"));
+    CHECK_FALSE(f.m_action->isFixedDistance()); // unchanged by the failed attempt
+    CHECK(f.m_action->getDistance() == 10.0);
+    f.m_context.messages.clear();
+
+    REQUIRE(f.m_action->doProcessCommand(OffsetProbe::SetReferencePoint, QStringLiteral("7")));
+    CHECK(f.m_action->isFixedDistance());
+    CHECK(f.m_action->getDistance() == 7.0);
+    CHECK(f.m_action->getStatus() == OffsetProbe::SetReferencePoint); // no click yet: still here
+
+    double t0 = 0.0;
+    double t1 = 0.0;
+    REQUIRE(spline->getParameterDomain(t0, t1));
+    LC_CurveJet middle;
+    REQUIRE(spline->tryEvaluateJet(0.5 * (t0 + t1), LC_CurveEvaluationSide::Interior, middle));
+    const RS_Vector normal = RS_Vector{-middle.first.y, middle.first.x} / middle.first.magnitude();
+    const RS_Vector click = middle.point + normal * 5.0; // off the curve: a side, at less than the typed distance
+
+    const LC_MouseEvent e = eventAt(click.x, click.y);
+    f.m_action->onMouseLeftButtonReleaseSelected(OffsetProbe::SetReferencePoint, &e); // fixed: triggers at once
+
+    CHECK(f.m_context.messages.isEmpty());
+    CHECK(spline->isDeleted());
+    const RS_Spline* offset = offsetOf(f, spline);
+    double toWanted = 0.0;
+    offset->getNearestPointOnEntity(middle.point + normal * 7.0, true, &toWanted); // the typed distance, not 10 or 5
+    CHECK(toWanted < 1e-3);
+}
+
+TEST_CASE("A typed distance in the two-click flow overrides the second click's own", "[curve-offset][action]") {
+    OffsetFixture f;
+    LC_SplinePoints* spline = f.addSplinePoints();
+    f.select({spline});
+    startTwoClick(f); // distance 10, not fixed
+
+    // (27, 3) is one of its points, so on the curve
+    const LC_MouseEvent first = eventAt(27.0, 3.0);
+    f.m_action->onMouseLeftButtonReleaseSelected(OffsetProbe::SetReferencePoint, &first);
+    REQUIRE(f.m_action->getStatus() != OffsetProbe::SetReferencePoint);
+    const int atPosition = f.m_action->getStatus();
+
+    REQUIRE(f.m_action->doProcessCommand(atPosition, QStringLiteral("3")));
+    CHECK(f.m_action->isFixedDistance());
+    CHECK(f.m_action->getDistance() == 3.0);
+
+    // a move 20 below would set the distance to 20, were it not now fixed
+    const LC_MouseEvent move = eventAt(27.0, -17.0);
+    f.m_action->onMouseMoveEventSelected(atPosition, &move);
+    CHECK(f.m_action->getDistance() == 3.0);
+
+    const LC_MouseEvent second = eventAt(27.0, -17.0);
+    f.m_action->onMouseLeftButtonReleaseSelected(atPosition, &second);
+
+    CHECK(f.m_context.messages.isEmpty());
+    CHECK(spline->isDeleted());
+    int offsets = 0;
+    for (const RS_Entity* e : f.m_graphic) {
+        offsets += !e->isDeleted() && e != spline ? 1 : 0;
+    }
+    CHECK(offsets > 0);
+}
+
+// ---------------------------------------------------------------------------
+// Selected segments of a polyline
+// ---------------------------------------------------------------------------
+namespace {
+RS_Polyline* addPolyline(OffsetFixture& f, const std::vector<RS_Vector>& vertices, const bool closed = false) {
+    auto* polyline = f.add(new RS_Polyline(&f.m_graphic));
+    for (const RS_Vector& v : vertices) {
+        polyline->addVertex(v);
+    }
+    if (closed) {
+        polyline->setClosed(true);
+        polyline->endPolyline(); // adds the closing segment
+    }
+    return polyline;
+}
+
+/** The live entities of the drawing other than @p source. */
+std::vector<RS_Entity*> made(OffsetFixture& f, const RS_Entity* source) {
+    std::vector<RS_Entity*> result;
+    for (RS_Entity* e : f.m_graphic) {
+        if (!e->isDeleted() && e != source) {
+            result.push_back(e);
+        }
+    }
+    return result;
+}
+
+/** The vertices of a polyline, in order, the last as well. */
+std::vector<RS_Vector> verticesOf(const RS_Polyline& polyline) {
+    std::vector<RS_Vector> result{polyline.getStartpoint()};
+    for (const RS_Entity* segment : polyline) {
+        result.push_back(segment->getEndpoint());
+    }
+    return result;
+}
+
+void checkIntact(const RS_Polyline& polyline, const int segments) {
+    CHECK_FALSE(polyline.isDeleted());
+    CHECK(polyline.count() == static_cast<unsigned>(segments));
+    for (const RS_Entity* segment : polyline) {
+        CHECK_FALSE(segment->isDeleted());
+    }
+}
+} // namespace
+
+TEST_CASE("Selected segments of a polyline are offset as one chain, and the polyline is kept",
+          "[offset][action][polyline]") {
+    // Two segments meeting at (10, 10) came out as two separate lines that
+    // cross near the corner, and without "keep originals" the segments were
+    // deleted from the polyline, cutting it.
+    OffsetFixture f;
+    RS_Polyline* polyline = addPolyline(f, {{0, 0}, {10, 0}, {10, 10}, {20, 10}, {20, 20}});
+    f.select({polyline->entityAt(1), polyline->entityAt(2)});
+    f.start(1.0, false);
+    REQUIRE(f.m_action->m_selectedEntities.size() == 2);
+    f.clickAt(12.0, 5.0); // right of the first, below the second
+
+    CHECK(f.m_context.messages.isEmpty());
+    checkIntact(*polyline, 4);
+    const std::vector<RS_Entity*> offsets = made(f, polyline);
+    REQUIRE(offsets.size() == 1);
+    REQUIRE(offsets.front()->rtti() == RS2::EntityPolyline);
+    const std::vector<RS_Vector> vertices = verticesOf(*static_cast<RS_Polyline*>(offsets.front()));
+    REQUIRE(vertices.size() == 3);
+    CHECK(vertices[0].distanceTo(RS_Vector{11, 0}) < 1e-9);
+    CHECK(vertices[1].distanceTo(RS_Vector{11, 9}) < 1e-9); // joined at the corner
+    CHECK(vertices[2].distanceTo(RS_Vector{20, 9}) < 1e-9);
+}
+
+TEST_CASE("A lone selected segment of a polyline is offset on its own", "[offset][action][polyline]") {
+    OffsetFixture f;
+    RS_Polyline* polyline = addPolyline(f, {{0, 0}, {10, 0}, {10, 10}, {20, 10}, {20, 20}});
+    f.select({polyline->entityAt(1), polyline->entityAt(3)}); // not next to each other
+    f.start(1.0, false);
+    f.clickAt(12.0, 5.0);
+
+    checkIntact(*polyline, 4);
+    const std::vector<RS_Entity*> offsets = made(f, polyline);
+    REQUIRE(offsets.size() == 2);
+    for (const RS_Entity* e : offsets) {
+        CHECK(e->rtti() == RS2::EntityLine);
+    }
+}
+
+TEST_CASE("Selected segments across a closed polyline's seam are one chain", "[offset][action][polyline]") {
+    OffsetFixture f;
+    RS_Polyline* square = addPolyline(f, {{0, 0}, {10, 0}, {10, 10}, {0, 10}}, true);
+    REQUIRE(square->count() == 4);
+    // the closing segment, (0, 10) to (0, 0), and the first, (0, 0) to (10, 0)
+    f.select({square->entityAt(3), square->entityAt(0)});
+    f.start(1.0, false);
+    f.clickAt(-5.0, -5.0); // outside the corner at the seam
+
+    checkIntact(*square, 4);
+    const std::vector<RS_Entity*> offsets = made(f, square);
+    REQUIRE(offsets.size() == 1);
+    REQUIRE(offsets.front()->rtti() == RS2::EntityPolyline);
+    const auto* chain = static_cast<RS_Polyline*>(offsets.front());
+    CHECK_FALSE(chain->isClosed());
+    const std::vector<RS_Vector> vertices = verticesOf(*chain);
+    REQUIRE(vertices.size() == 3);
+    CHECK(vertices[0].distanceTo(RS_Vector{-1, 10}) < 1e-9);
+    CHECK(vertices[1].distanceTo(RS_Vector{-1, -1}) < 1e-9);
+    CHECK(vertices[2].distanceTo(RS_Vector{10, -1}) < 1e-9);
+}
+
+TEST_CASE("Every segment of a closed polyline selected gives its closed offset", "[offset][action][polyline]") {
+    OffsetFixture f;
+    RS_Polyline* square = addPolyline(f, {{0, 0}, {10, 0}, {10, 10}, {0, 10}}, true);
+    f.select({square->entityAt(0), square->entityAt(1), square->entityAt(2), square->entityAt(3)});
+    f.start(1.0, false);
+    f.clickAt(-5.0, 5.0);
+
+    checkIntact(*square, 4); // a selection of segments never removes them
+    const std::vector<RS_Entity*> offsets = made(f, square);
+    REQUIRE(offsets.size() == 1);
+    REQUIRE(offsets.front()->rtti() == RS2::EntityPolyline);
+    const auto* ring = static_cast<RS_Polyline*>(offsets.front());
+    CHECK(ring->isClosed());
+    CHECK(ring->getMin().distanceTo(RS_Vector{-1, -1}) < 1e-9);
+    CHECK(ring->getMax().distanceTo(RS_Vector{11, 11}) < 1e-9);
+}
+
+TEST_CASE("A chain of selected segments keeps an arc segment an arc", "[offset][action][polyline]") {
+    OffsetFixture f;
+    // a line, then a half circle of radius 5 about (15, 0) bulging below, then a line
+    auto* polyline = f.add(new RS_Polyline(&f.m_graphic));
+    polyline->addVertex(RS_Vector{0, 0});
+    polyline->addVertex(RS_Vector{10, 0}, 1.0);
+    polyline->addVertex(RS_Vector{20, 0});
+    polyline->addVertex(RS_Vector{30, 0});
+    REQUIRE(polyline->count() == 3);
+    REQUIRE(polyline->entityAt(1)->rtti() == RS2::EntityArc);
+    const auto* source = static_cast<const RS_Arc*>(polyline->entityAt(1));
+    f.select({polyline->entityAt(0), polyline->entityAt(1)});
+    f.start(1.0, false);
+    // outside the half circle: 1 beyond it, straight below its centre
+    const RS_Vector outside = source->getCenter() + (source->getMiddlePoint() - source->getCenter()) * 1.4;
+    f.clickAt(outside.x, outside.y);
+
+    checkIntact(*polyline, 3);
+    const std::vector<RS_Entity*> offsets = made(f, polyline);
+    REQUIRE(offsets.size() == 1);
+    REQUIRE(offsets.front()->rtti() == RS2::EntityPolyline);
+    const auto* chain = static_cast<RS_Polyline*>(offsets.front());
+    REQUIRE(chain->count() == 2);
+    REQUIRE(chain->entityAt(1)->rtti() == RS2::EntityArc);
+    const auto* arc = static_cast<const RS_Arc*>(chain->entityAt(1));
+    CHECK(arc->getCenter().distanceTo(source->getCenter()) < 1e-9);
+    CHECK(std::abs(arc->getRadius() - 6.0) < 1e-9);
+}
+
+
+TEST_CASE("A deleted segment between two selected ones ends the chain", "[offset][action][polyline]") {
+    // the segments either side of a deleted one were taken as neighbours and
+    // joined by a chain straight across the gap
+    OffsetFixture f;
+    RS_Polyline* polyline = addPolyline(f, {{0, 0}, {10, 0}, {10, 10}, {20, 10}, {20, 20}});
+    f.select({polyline->entityAt(1), polyline->entityAt(3)});
+    polyline->entityAt(2)->setFlag(RS2::FlagDeleted);
+    f.start(1.0, false);
+    f.clickAt(12.0, 5.0);
+
+    const std::vector<RS_Entity*> offsets = made(f, polyline);
+    REQUIRE(offsets.size() == 2);
+    for (const RS_Entity* e : offsets) {
+        CHECK(e->rtti() == RS2::EntityLine);
+    }
+}
+
+TEST_CASE("An elliptic segment is offset on its own, along its curve", "[offset][action][polyline]") {
+    // A polyline scaled unevenly holds elliptic segments. A chain offset left
+    // one where it was: RS_Polyline::offset() moves lines and arcs only.
+    OffsetFixture f;
+    auto* polyline = f.add(new RS_Polyline(&f.m_graphic));
+    polyline->addVertex(RS_Vector{0, 0});
+    polyline->addVertex(RS_Vector{10, 0});
+    // the lower half of an ellipse about (15, 0), 5 by 2.5, from (10, 0) to (20, 0)
+    auto* ellipse = new RS_Ellipse(polyline, RS_EllipseData{RS_Vector{15, 0}, RS_Vector{5, 0}, 0.5, M_PI, 2.0 * M_PI, false});
+    polyline->RS_EntityContainer::addEntity(ellipse);
+    polyline->setEndpoint(RS_Vector{20, 0});
+    polyline->addVertex(RS_Vector{30, 0});
+    REQUIRE(polyline->count() == 3);
+    f.select({polyline->entityAt(0), polyline->entityAt(1)});
+    f.start(1.0, false);
+    f.clickAt(15.0, -6.0); // below both
+
+    checkIntact(*polyline, 3);
+    const std::vector<RS_Entity*> offsets = made(f, polyline);
+    REQUIRE(offsets.size() >= 2);
+    int lines = 0;
+    for (RS_Entity* e : offsets) {
+        CHECK(e->rtti() != RS2::EntityPolyline);
+        if (e->rtti() == RS2::EntityLine) {
+            ++lines;
+            CHECK(e->getStartpoint().y == Catch::Approx(-1.0));
+            CHECK(e->getEndpoint().y == Catch::Approx(-1.0));
+            continue;
+        }
+        // the ellipse's offset: 1 from it all along
+        for (const RS_Vector& p : {e->getStartpoint(), e->getMiddlePoint(), e->getEndpoint()}) {
+            if (!p.valid) {
+                continue;
+            }
+            double distance = RS_MAXDOUBLE;
+            ellipse->getNearestPointOnEntity(p, true, &distance);
+            CHECK(distance == Catch::Approx(1.0).margin(1e-3));
+        }
+    }
+    CHECK(lines == 1);
+}
+
+TEST_CASE("Offset segments leave the selection, and their polyline stays", "[offset][action][polyline]") {
+    // a segment is never removed, so it was left selected unless originals were
+    // kept; and the offset copied the selected segments' selection
+    struct KeepModifiedSelected {
+        ~KeepModifiedSelected() { LC_SET_ONE("Modify", "KeepModifiedSelected", true); }
+    } restore;
+    for (const bool keepOriginals : {false, true}) {
+      for (const bool keepModifiedSelected : {false, true}) {
+        INFO("keep originals " << keepOriginals << ", keep modified selected " << keepModifiedSelected);
+        LC_SET_ONE("Modify", "KeepModifiedSelected", keepModifiedSelected);
+        OffsetFixture f;
+        RS_Polyline* polyline = addPolyline(f, {{0, 0}, {10, 0}, {10, 10}, {20, 10}, {20, 20}});
+        RS_Entity* first = polyline->entityAt(1);
+        RS_Entity* second = polyline->entityAt(2);
+        f.select({first, second});
+        REQUIRE(first->isSelected());
+        f.start(1.0, keepOriginals);
+        f.clickAt(12.0, 5.0);
+
+        checkIntact(*polyline, 4);
+        CHECK_FALSE(first->isSelected());
+        CHECK_FALSE(second->isSelected());
+        const std::vector<RS_Entity*> offsets = made(f, polyline);
+        REQUIRE(offsets.size() == 1);
+        CHECK(offsets.front()->isSelected() == keepModifiedSelected);
+        for (const RS_Entity* segment : *static_cast<RS_Polyline*>(offsets.front())) {
+            CHECK(segment->isSelected() == keepModifiedSelected); // with the offset, not the segments it came from
+        }
+      }
+    }
+}
+
+TEST_CASE("A segment selected with its polyline fares as the polyline does", "[offset][polyline]") {
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    auto* polyline = new RS_Polyline(&graphic);
+    graphic.addEntity(polyline);
+    for (const RS_Vector& v : {RS_Vector{0, 0}, RS_Vector{10, 0}, RS_Vector{10, 10}}) {
+        polyline->addVertex(v);
+    }
+    RS_Entity* segment = polyline->entityAt(1);
+    RS_OffsetData data;
+    data.coord = RS_Vector{12.0, 5.0};
+    data.distance = 1.0;
+    data.keepOriginals = false;
+    LC_DocumentModificationBatch ctx;
+    // the segment first: it was reported before the polyline had been offset
+    const LC_OffsetBatchOutcome outcome =
+        RS_Modification::offsetWithOutcome(data, {segment, polyline}, false, LC_OffsetBatchLimits{}, ctx);
+    REQUIRE(outcome.sources.size() == 2);
+    const LC_OffsetSourceOutcome* ofPolyline = nullptr;
+    const LC_OffsetSourceOutcome* ofSegment = nullptr;
+    for (const LC_OffsetSourceOutcome& o : outcome.sources) {
+        (o.source == polyline ? ofPolyline : ofSegment) = &o;
+    }
+    REQUIRE(ofPolyline != nullptr);
+    REQUIRE(ofSegment != nullptr);
+    CHECK(ofSegment->source == segment);
+    CHECK(ofPolyline->succeeded());
+    CHECK(ofSegment->status == ofPolyline->status);
+    CHECK(ofPolyline->sourceRemoved);
+    CHECK(ofSegment->sourceRemoved); // it goes with the polyline
+    CHECK(ofPolyline->createdEntities.size() == 1);
+    CHECK(ofSegment->createdEntities.isEmpty()); // one offset, handed over once
+    REQUIRE(ctx.entitiesToAdd.size() == 1);
+    qDeleteAll(ctx.entitiesToAdd);
+}
+
+TEST_CASE("An offset polyline starts and ends where its segments do", "[offset][polyline]") {
+    // RS_Polyline::offset() copied the start and end of a clone taken before
+    // its segments moved, so an offset polyline kept its source's
+    OffsetFixture f;
+    RS_Polyline* polyline = addPolyline(f, {{0, 0}, {10, 0}, {10, 10}, {20, 10}, {20, 20}});
+    std::unique_ptr<RS_Entity> copy{polyline->clone()};
+    REQUIRE(copy->offset(RS_Vector{12.0, 5.0}, 1.0));
+    const auto* offset = static_cast<RS_Polyline*>(copy.get());
+    CHECK(offset->getStartpoint() == offset->entityAt(0)->getStartpoint());
+    CHECK(offset->getEndpoint() == offset->entityAt(offset->count() - 1)->getEndpoint());
+    CHECK(offset->getStartpoint().distanceTo(RS_Vector{0, -1}) < 1e-9);
+    CHECK(offset->getEndpoint().distanceTo(RS_Vector{21, 20}) < 1e-9);
+}
+
+TEST_CASE("An offset polyline holds its segments", "[offset][polyline]") {
+    // RS_Polyline::offset() assigned a clone to itself, which copied the
+    // pointers to the clone's segments: they still named the clone, never
+    // freed, as their parent, so they took the source's layer whatever the
+    // offset polyline was put on
+    OffsetFixture f;
+    RS_Polyline* polyline = addPolyline(f, {{0, 0}, {10, 0}, {10, 10}, {20, 10}});
+    std::unique_ptr<RS_Entity> copy{polyline->clone()};
+    REQUIRE(copy->offset(RS_Vector{12.0, 5.0}, 1.0));
+    auto* offset = static_cast<RS_Polyline*>(copy.get());
+    for (const RS_Entity* segment : *offset) {
+        CHECK(segment->getParent() == offset);
+    }
+    auto* layer = new RS_Layer(QStringLiteral("offsets"));
+    f.m_graphic.addLayer(layer);
+    offset->setLayer(layer);
+    for (const RS_Entity* segment : *offset) {
+        CHECK(segment->getLayer() == layer);
+    }
+}

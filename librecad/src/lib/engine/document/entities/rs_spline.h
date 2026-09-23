@@ -31,8 +31,10 @@
 #define RS_SPLINE_H
 
 #include <iosfwd>
+#include <cstdint>
 #include <vector>
 
+#include "lc_curvejet.h"
 #include "rs_entitycontainer.h"
 #include "rs_painter.h"
 #include "rs_vector.h"
@@ -181,10 +183,10 @@ public:
   /** Fill points for spline approximation */
   void fillStrokePoints(int splineSegments, std::vector<RS_Vector> &points) const;
 
-  /** Get start point (invalid if closed) */
+  /** Get start point: the curve at the start of its domain; invalid if closed */
   RS_Vector getStartpoint() const override;
 
-  /** Get end point (invalid if closed) */
+  /** Get end point: the curve at the end of its domain; invalid if closed */
   RS_Vector getEndpoint() const override;
 
 
@@ -213,6 +215,9 @@ public:
 
   /** Revert direction by reversing points, weights, knots */
   void revertDirection() override;
+  /** The offset through @p coord at |@p distance|, from the offset engine:
+   *  several cubic RS_Spline pieces, or nothing on failure. */
+  std::vector<RS_Entity *> createOffset(const RS_Vector &coord, const double &distance) const override;
 
   /** Draw spline with painter */
   void draw(RS_Painter *painter) override;
@@ -307,6 +312,60 @@ public:
   /** Validate the spline data integrity */
   bool validate() const;
 
+  /**
+   * The parameter domain [t0, t1] the curve is defined on: the knots at indices
+   * degree and (number of control points, wrapping included).
+   * @return false if the degree, control points and knot vector do not form a
+   *         curve with a non-empty domain.
+   */
+  bool getParameterDomain(double &t0, double &t1) const;
+
+  /**
+   * The distinct knot values in the parameter domain, both ends included. The
+   * curve is one polynomial (rational) piece between consecutive values, so a
+   * derivative can jump only at an interior value. Empty if the spline has no
+   * valid domain.
+   */
+  std::vector<double> getBreakParameters() const;
+
+  /**
+   * Checked evaluation of the curve point and its first and second derivatives
+   * with respect to the knot parameter.
+   *
+   * At an interior break the caller chooses the one-sided limit; see
+   * LC_CurveEvaluationSide. Unlike getPointAt(), a failure is reported rather
+   * than returned as a zero vector: the result is false, and @p jet is left
+   * invalid, when the data do not describe a curve, @p t lies outside the
+   * domain, the requested limit does not exist, a weight or the rational
+   * denominator is not positive and finite, or any result is not finite.
+   */
+  bool tryEvaluateJet(double t, LC_CurveEvaluationSide side, LC_CurveJet &jet) const;
+
+  /**
+   * Conservative enclosures of the point and its first and second derivatives
+   * over the parameter box [a, b], which must lie inside one knot span (between
+   * consecutive break parameters). The span's homogeneous Bezier net over the
+   * box is formed exactly with outward-rounded arithmetic, so the result
+   * contains every value the curve takes there; it narrows as the box shrinks.
+   * With @p products, where the weights are equal, |C'|^2 and C' x C'' are
+   * also enclosed from the Bezier coefficients of the products
+   * (speedSquaredProduct, crossProduct), which stay tight where C' and C''
+   * are nearly parallel.
+   * @return false for a box outside the domain or across a knot, or invalid
+   *         weights or coordinates.
+   */
+  bool tryBoundJet(double a, double b, LC_CurveJetBounds &bounds, bool products = false) const;
+
+  /**
+   * The vertices of a polyline within @p tolerance of the curve, independent
+   * of the segments it is drawn with. Each chord lies in one knot span, and a
+   * chord over a parameter interval of length h strays at most h^2 / 8 times
+   * the largest |C''| there, which tryBoundJet() bounds.
+   * @return false, with @p vertices empty, if the curve cannot be bounded or
+   *         needs more than @p maxVertices vertices.
+   */
+  bool tryStroke(double tolerance, size_t maxVertices, std::vector<RS_Vector> &vertices) const;
+
   friend class RS_FilterDXFRW;
 protected:
     /** Nearest endpoint or control point */
@@ -315,13 +374,48 @@ protected:
     RS_Vector doGetNearestRef(const RS_Vector &coord, double *dist = nullptr) const override;
     /** Nearest center (invalid) */
     RS_Vector doGetNearestCenter(const RS_Vector &coord, double *dist, RS_Entity** centerEntity) const override;
-    /** Nearest middle point (invalid) */
+    /** Nearest of the points dividing an open spline into equal lengths; invalid if closed */
     RS_Vector doGetNearestMiddle(const RS_Vector &coord, double *dist, int middlePoints) const override;
     /** Nearest selected reference (overrides container method) */
     RS_Vector doGetNearestSelectedRef(const RS_Vector &coord, double *dist) const override;
-    /** Nearest point at distance (invalid) */
+    /** The point at a distance along an open spline from its nearer end; invalid if closed */
     RS_Vector doGetNearestDist(double distance, const RS_Vector& coord, double* dist) const override;
+public:
+  /**
+   * Arc length of the curve from the start of its domain, tabulated at the
+   * knots and at subdivisions of each knot span.
+   */
+  struct ArcLengthTable {
+    std::vector<double> t;
+    std::vector<double> length;
+  };
+
 private:
+  /**
+   * The table above for the spline's current data, tabulated on the first
+   * call and kept until the data change: it costs 40 evaluations of the
+   * curve per knot span, and every spline of a drawing is asked for a middle
+   * or distance snap on every mouse move. Empty t when the curve has none.
+   */
+  const ArcLengthTable &arcLengthTable() const;
+
+  mutable ArcLengthTable m_arcLength;
+  /** The data m_arcLength was tabulated for; getData() hands out a mutable reference. */
+  mutable std::uint64_t m_arcLengthFor{0};
+  mutable bool m_arcLengthBuilt{false};
+
+  /**
+   * The vertices update() draws the spline with: every knot span a share of
+   * 32 segments over the domain and at least one, more where its chords would
+   * stray from it by more than a thousandth of its control points' extent.
+   * Refinement stops at 4096 vertices, after which each remaining span still
+   * gets the one vertex the curve cannot be drawn without, and one more where
+   * a knot of full multiplicity breaks it. A spline with more knot spans than
+   * that budget is drawn with 4096 uniform samples instead, and one that
+   * cannot be bounded with 32.
+   */
+  void fillDisplayPoints(std::vector<RS_Vector> &points) const;
+
   /** Internal spline data */
   RS_SplineData m_data;
 
@@ -357,8 +451,8 @@ private:
   /** Approximate derivative at t */
   double getDerivative(double t, bool isX) const;
 
-  /** Bisection to find zero of derivative */
-  double bisectDerivativeZero(double a, double b, double fa, bool isX) const;
+  /** Bisection for a zero of a derivative component bracketed by [a, b] */
+  double bisectDerivativeZero(double a, double b, double fa, double fb, bool isX) const;
   void normalizeKnots();
   double estimateParamAtIndex(size_t index) const;
   void insertKnot(double u);

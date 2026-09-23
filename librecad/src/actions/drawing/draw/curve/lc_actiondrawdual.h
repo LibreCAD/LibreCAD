@@ -46,7 +46,7 @@ public:
   void init(int status) override;
 
   void onCoordinateEvent(int status, bool isZero, const RS_Vector& coord) override;
-  void doTriggerSelectionUpdate(bool keepSelected, const LC_DocumentModificationBatch& ctx);
+  void doTriggerSelectionUpdate(bool keepSelected, const LC_DocumentModificationBatch& ctx) override;
 
 
 protected:

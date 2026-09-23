@@ -27,7 +27,17 @@
 #ifndef RS_MODIFICATION_H
 #define RS_MODIFICATION_H
 
+#include <algorithm>
+#include <cstddef>
+#include <map>
+#include <memory>
+#include <tuple>
+#include <vector>
+
+#include <QList>
+
 #include "lc_copyutils.h"
+#include "lc_offsetoutputbudget.h"
 #include "rs_pen.h"
 #include "rs_vector.h"
 
@@ -48,6 +58,9 @@ class LC_GraphicViewport;
 class LC_SelectedSet;
 class LC_UndoSection;
 struct LC_DocumentModificationBatch;
+struct LC_CurveOffsetMaterializationResult;
+enum class LC_CurveOffsetSide;
+enum class LC_CurveOffsetStatus;
 
 struct LC_ModifyOperationFlags {
     int number = 0;
@@ -101,8 +114,131 @@ struct RS_BoundData {
  * Holds the data needed for offset modifications.
  */
 struct RS_OffsetData : LC_ModifyOperationFlags {
+    /**
+     * An execution bound, not only a widget limit: saved settings and the
+     * property sheet can ask for more copies than the options widget offers.
+     */
+    static constexpr int kMaximumOffsetCopies = 100;
+
+    /**
+     * The number of copies, clamped to [1, kMaximumOffsetCopies]. It hides the
+     * shared helper, which Move, Rotate and Scale keep unbounded.
+     */
+    int obtainNumberOfCopies() const {
+        return std::min(LC_ModifyOperationFlags::obtainNumberOfCopies(), kMaximumOffsetCopies);
+    }
+
     RS_Vector coord;
+    /**
+     * Where coord lies on a curve, or on the segments it is drawn with, it
+     * gives no side the user chose, and this point's side decides instead.
+     * Modify > Offset with a distance taken from two clicks sets it to the
+     * second one: its first click, the reference point, is where snapping
+     * puts it, on the curve or on its drawing, and the second shows the side.
+     */
+    RS_Vector sideFallback{false};
     double distance = 0.;
+};
+
+/**
+ * Hard output limits of one offset request. They belong to the modification
+ * layer; the geometry engine only sees the remaining budget of one source.
+ */
+struct LC_OffsetBatchLimits {
+    LC_OffsetSourceBudget perSource = makeDefaultOffsetSourceBudget();
+    std::size_t maxDeepEntitiesPerRequest = kDefaultOffsetDeepEntitiesPerRequest;
+    /**
+     * The offset engine's effort per copy of a spline: exact offset
+     * evaluations and intersection box pairs. Zero keeps its defaults.
+     */
+    std::size_t maxSamples = 0;
+    std::size_t maxIntersectionPairs = 0;
+
+    /**
+     * Limits for a preview, which is made again on every mouse move: an eighth
+     * of the output and of the engine's effort. What does not fit is not
+     * previewed; the commit uses the full limits.
+     */
+    static LC_OffsetBatchLimits preview();
+};
+
+enum class LC_OffsetSourceStatus {
+    Succeeded,
+    InvalidSource,
+    NotVisibleOrLocked,
+    /** The current layer was asked for, but it is missing, frozen or locked. */
+    TargetLayerUnavailable,
+    /** Nothing is left at the first distance: the source shrinks away, or a circle's radius would. */
+    Vanished,
+    OffsetFailed,
+    LimitExceeded
+};
+
+struct LC_OffsetSourceOutcome {
+    /** Identity only: a source removed by a destructive offset must not be dereferenced. */
+    const RS_Entity* source = nullptr;
+    LC_OffsetSourceStatus status = LC_OffsetSourceStatus::InvalidSource;
+    /** Why the offset engine refused a spline, for OffsetFailed and LimitExceeded; Ok otherwise. */
+    LC_CurveOffsetStatus engineStatus{};
+    /** Owned by the batch once handed over. */
+    QList<RS_Entity*> createdEntities;
+    LC_OffsetOutputUsage usage{};
+    /**
+     * Copies made and asked for. A copy with nothing left ends the series, so
+     * fewer may be made; the earlier copies are kept, and so is the source.
+     */
+    int copiesMade = 0;
+    int copiesRequested = 0;
+    /**
+     * The source goes from the drawing with this offset. One that succeeded
+     * and stays (originals kept, copies short, a polyline's segment) is left
+     * for the caller to unselect.
+     */
+    bool sourceRemoved = false;
+
+    bool succeeded() const {
+        return status == LC_OffsetSourceStatus::Succeeded;
+    }
+
+    /** Every copy asked for was made. */
+    bool complete() const {
+        return succeeded() && copiesMade == copiesRequested;
+    }
+};
+
+/**
+ * Spline offsets a preview made, by source, side and distance, so that moving
+ * the mouse without changing them draws copies instead of offsetting again.
+ * A result is only reused under a budget it fits: a success whose output fits
+ * what is left, a refusal for want of budget under no larger a budget, and
+ * any other refusal always. The sources must stay unchanged while it is used:
+ * an action clears it when its selection or preview ends.
+ */
+class LC_OffsetPreviewCache {
+public:
+    LC_OffsetPreviewCache();
+    ~LC_OffsetPreviewCache();
+    LC_OffsetPreviewCache(const LC_OffsetPreviewCache&) = delete;
+    LC_OffsetPreviewCache& operator=(const LC_OffsetPreviewCache&) = delete;
+
+    /** A copy of a reusable result into @p out, if there is one. */
+    bool find(const RS_Entity* source, LC_CurveOffsetSide side, double magnitude, const LC_OffsetSourceBudget& budget,
+              LC_CurveOffsetMaterializationResult& out) const;
+    /** Keeps a copy of @p result, made under @p budget. */
+    void keep(const RS_Entity* source, LC_CurveOffsetSide side, double magnitude, const LC_OffsetSourceBudget& budget,
+              const LC_CurveOffsetMaterializationResult& result);
+    void clear();
+
+private:
+    struct Entry;
+    std::map<std::tuple<const RS_Entity*, int, double>, std::unique_ptr<Entry>> m_entries;
+};
+
+/** The result of an offset request per source, in the order the sources were given. */
+struct LC_OffsetBatchOutcome {
+    QList<LC_OffsetSourceOutcome> sources;
+
+    bool anySourceSucceeded() const;
 };
 
 /**
@@ -314,8 +450,30 @@ public:
     static RS_Entity* trimAmount(const RS_Vector& trimCoord, RS_AtomicEntity* entityToTrim, double dist, bool trimBoth, bool& trimStart,
                                  bool& trimEnd, LC_DocumentModificationBatch& ctx);
 
+    /** offsetWithOutcome() with default limits; true if any source was offset. */
     static bool offset(const RS_OffsetData& data, const QList<RS_Entity*>& entitiesList, bool forPreviewOnly,
                        LC_DocumentModificationBatch& ctx);
+
+    /**
+     * Offsets each source, once per identity in the order given, as one
+     * transaction per source: all of its copies are added or none is, and only
+     * a source whose copies were all added is queued for deletion when
+     * originals are not kept. The one exception is a copy with nothing left, a
+     * spline shrunk away or a circle or arc whose radius would vanish: it ends
+     * the series, the copies before it are added, and the source is kept
+     * (Vanished if that was the first copy). Deleted, hidden and locked
+     * sources, and all sources when the requested current layer cannot take
+     * entities, fail before anything is built. Splines go to the offset engine
+     * directly, trimmed of what lies nearer to them than the distance, so a
+     * spline it refuses is never retried by mutating a clone. Output is counted
+     * against @p limits over all copies of a source and over the request; a
+     * preview batch holds additions only. @p cache, if given, is consulted and
+     * filled for splines.
+     */
+    static LC_OffsetBatchOutcome offsetWithOutcome(const RS_OffsetData& data, const QList<RS_Entity*>& entitiesList,
+                                                   bool forPreviewOnly, const LC_OffsetBatchLimits& limits,
+                                                   LC_DocumentModificationBatch& ctx,
+                                                   LC_OffsetPreviewCache* cache = nullptr);
 
     static bool cut(const RS_Vector& cutCoord, RS_AtomicEntity* cutEntity, LC_DocumentModificationBatch& ctx);
 

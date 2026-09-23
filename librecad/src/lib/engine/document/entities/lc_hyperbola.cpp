@@ -28,6 +28,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <boost/math/quadrature/gauss_kronrod.hpp>
 
 #include "lc_hyperbola.h"
+#include "lc_curveoffset.h"
 #include "lc_quadratic.h"
 #include "rs_debug.h"
 #include "rs_line.h"
@@ -947,6 +948,11 @@ RS_Vector LC_Hyperbola::getNearestOrthTan(const RS_Vector& /*coord*/,
   }
 
   return getPoint(phi, m_data.reversed);
+}
+
+std::vector<RS_Entity *> LC_Hyperbola::createOffset(const RS_Vector &coord,
+                                                   const double &distance) const {
+  return LC_CurveOffset::createLegacyOffset(*this, coord, distance);
 }
 
 bool LC_Hyperbola::isInfinite() const

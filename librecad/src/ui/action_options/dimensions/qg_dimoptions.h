@@ -71,7 +71,7 @@ protected:
     void updateAngle( const QString& a );
     void doSaveSettings() ;
     void doUpdateByAction(RS_ActionInterface *a) override;
-    bool checkActionRttiValid(RS2::ActionType actionType);
+    bool checkActionRttiValid(RS2::ActionType actionType) override;
 };
 
 #endif

@@ -30,9 +30,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define RS_ACTIONMODIFYOFFSET_H
 
 
+#include <cstddef>
+#include <memory>
+
 #include "lc_action_modify_base.h"
 
 struct RS_OffsetData;
+struct LC_OffsetBatchOutcome;
+struct LC_OffsetSourceOutcome;
+class LC_OffsetPreviewCache;
 
 /**
  * This action class create entity by offset
@@ -60,6 +66,18 @@ protected:
     bool m_distanceIsFixed = true;
     RS_Vector m_referencePoint = RS_Vector(false);
     std::unique_ptr<RS_OffsetData> m_offsetData;
+    /** The committed outcome, kept only until its selection update has used it. */
+    std::unique_ptr<LC_OffsetBatchOutcome> m_pendingOutcome;
+    /** Offsets the preview made, for the sources it made them for. */
+    std::unique_ptr<LC_OffsetPreviewCache> m_previewCache;
+    QList<RS_Entity*> m_previewSources;
+
+    void previewOffset();
+    /** Why a source was not offset, for the command line and the info cursor. */
+    static QString failureReason(const LC_OffsetSourceOutcome& source, bool preview);
+    /** Appearance/MaxPreview, read signed: a non-positive value means none in detail. */
+    static std::size_t maxPreviewDetail();
+    void finish() override;
 
     LC_ActionOptionsWidget* createOptionsWidget() override;
     LC_ActionOptionsPropertiesFiller* createOptionsFiller() override;
@@ -71,6 +89,8 @@ protected:
     LC_ModifyOperationFlags *getModifyOperationFlags() override;
     void onMouseMoveEventSelected(int status, const LC_MouseEvent* e) override;
     bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
+    /** A typed distance fixes it, as clicking the options widget's field would. */
+    bool doProcessCommand(int status, const QString& command) override;
     void doTriggerCompletion(bool success) override;
     void doTriggerSelectionUpdate(bool keepSelected, const LC_DocumentModificationBatch& ctx) override;
     bool doTriggerModifications(LC_DocumentModificationBatch& ctx) override;

@@ -27,6 +27,7 @@
 
 #include <cmath>
 #include <memory>
+#include <vector>
 
 #include "lc_splinehelper.h"
 #include "lc_splinepoints.h"
@@ -385,6 +386,387 @@ TEST_CASE("RS_Spline::setFitPoints fills interior CPs for num == p+1",
     REQUIRE(compareVector(cps.front(), fps.front()));
     REQUIRE(compareVector(cps.back(), fps.back()));
   }
+}
+
+// ---------------------------------------------------------------------------
+// Checked jet evaluation (tryEvaluateJet). Analytic fixtures are the oracle;
+// central differences are only a secondary check away from knots.
+// ---------------------------------------------------------------------------
+namespace {
+RS_Spline makeSpline(const size_t degree, const std::vector<RS_Vector>& controls,
+                     const std::vector<double>& knots, std::vector<double> weights = {}) {
+    RS_SplineData data(static_cast<int>(degree), false);
+    data.controlPoints = controls;
+    data.knotslist = knots;
+    data.weights = weights.empty() ? std::vector<double>(controls.size(), 1.0) : std::move(weights);
+    return RS_Spline(nullptr, data);
+}
+
+LC_CurveJet jetAt(const RS_Spline& spline, const double t,
+                  const LC_CurveEvaluationSide side = LC_CurveEvaluationSide::Interior) {
+    LC_CurveJet jet;
+    REQUIRE(spline.tryEvaluateJet(t, side, jet));
+    return jet;
+}
+
+// The cubic Bezier the review of the old evaluator used: it returned NaN
+// derivatives for it at every parameter.
+const std::vector<RS_Vector> g_bezier{{0.0, 0.0}, {1.0, 3.0}, {2.0, -3.0}, {3.0, 0.0}};
+
+RS_Vector bezierPoint(const double t) {
+    const double s = 1.0 - t;
+    return g_bezier[0] * (s * s * s) + g_bezier[1] * (3.0 * s * s * t) +
+           g_bezier[2] * (3.0 * s * t * t) + g_bezier[3] * (t * t * t);
+}
+RS_Vector bezierFirst(const double t) {
+    const double s = 1.0 - t;
+    return ((g_bezier[1] - g_bezier[0]) * (s * s) + (g_bezier[2] - g_bezier[1]) * (2.0 * s * t) +
+            (g_bezier[3] - g_bezier[2]) * (t * t)) * 3.0;
+}
+RS_Vector bezierSecond(const double t) {
+    return ((g_bezier[2] - g_bezier[1] * 2.0 + g_bezier[0]) * (1.0 - t) +
+            (g_bezier[3] - g_bezier[2] * 2.0 + g_bezier[1]) * t) * 6.0;
+}
+} // namespace
+
+TEST_CASE("RS_Spline::tryEvaluateJet matches a cubic Bezier exactly", "[spline][jet]") {
+    const RS_Spline spline = makeSpline(3, g_bezier, {0, 0, 0, 0, 1, 1, 1, 1});
+    for (const double t : {0.0, 0.25, 0.5, 0.75, 1.0}) {
+        const LC_CurveJet jet = jetAt(spline, t);
+        CHECK(compareVector(jet.point, bezierPoint(t), 1e-12));
+        CHECK(compareVector(jet.first, bezierFirst(t), 1e-12));
+        CHECK(compareVector(jet.second, bezierSecond(t), 1e-12));
+    }
+    // the values the old evaluator reported as NaN
+    const LC_CurveJet quarter = jetAt(spline, 0.25);
+    CHECK(compareVector(quarter.first, RS_Vector{3.0, -1.125}, 1e-12));
+    CHECK(compareVector(quarter.second, RS_Vector{0.0, -27.0}, 1e-12));
+}
+
+TEST_CASE("RS_Spline::tryEvaluateJet on a degree-1 line", "[spline][jet]") {
+    const RS_Spline line = makeSpline(1, {{1.0, 2.0}, {4.0, 6.0}}, {0, 0, 2, 2});
+    const LC_CurveJet jet = jetAt(line, 0.5);
+    CHECK(compareVector(jet.point, RS_Vector{1.75, 3.0}, 1e-12));
+    CHECK(compareVector(jet.first, RS_Vector{1.5, 2.0}, 1e-12)); // (P1 - P0) / knot span 2
+    CHECK(compareVector(jet.second, RS_Vector{0.0, 0.0}, 1e-12));
+}
+
+TEST_CASE("RS_Spline::tryEvaluateJet on a rational quarter circle", "[spline][jet]") {
+    const double w = std::sqrt(0.5);
+    const RS_Spline arc = makeSpline(2, {{1.0, 0.0}, {1.0, 1.0}, {0.0, 1.0}},
+                                     {0, 0, 0, 1, 1, 1}, {1.0, w, 1.0});
+    // End derivatives of a rational quadratic: C'(0) = 2 w1/w0 (P1 - P0).
+    CHECK(compareVector(jetAt(arc, 0.0).first, RS_Vector{0.0, 2.0 * w}, 1e-12));
+    CHECK(compareVector(jetAt(arc, 1.0).first, RS_Vector{-2.0 * w, 0.0}, 1e-12));
+    for (const double t : {0.0, 0.1, 0.37, 0.5, 0.81, 1.0}) {
+        const LC_CurveJet jet = jetAt(arc, t);
+        CHECK(jet.point.magnitude() == Approx(1.0).margin(1e-12));
+        // tangent perpendicular to the radius, curvature exactly 1 (counter-clockwise)
+        CHECK(RS_Vector::dotP(jet.point, jet.first) == Approx(0.0).margin(1e-12));
+        const double speed = jet.first.magnitude();
+        const double cross = jet.first.x * jet.second.y - jet.first.y * jet.second.x;
+        CHECK(cross / (speed * speed * speed) == Approx(1.0).margin(1e-10));
+    }
+}
+
+TEST_CASE("RS_Spline::tryEvaluateJet takes one-sided limits at a repeated knot", "[spline][jet]") {
+    // Two cubic Bezier pieces joined with a kink at t = 1 (knot multiplicity 3).
+    const std::vector<RS_Vector> controls{{0, 0}, {1, 1}, {2, 1}, {3, 0}, {4, 2}, {5, 2}, {6, 0}};
+    const RS_Spline spline = makeSpline(3, controls, {0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2});
+    const LC_CurveJet left = jetAt(spline, 1.0, LC_CurveEvaluationSide::Left);
+    const LC_CurveJet right = jetAt(spline, 1.0, LC_CurveEvaluationSide::Right);
+    CHECK(compareVector(left.point, controls[3], 1e-12));
+    CHECK(compareVector(right.point, controls[3], 1e-12));
+    CHECK(compareVector(left.first, (controls[3] - controls[2]) * 3.0, 1e-12));
+    CHECK(compareVector(right.first, (controls[4] - controls[3]) * 3.0, 1e-12));
+    CHECK(compareVector(left.second, (controls[3] - controls[2] * 2.0 + controls[1]) * 6.0, 1e-12));
+    CHECK(compareVector(right.second, (controls[5] - controls[4] * 2.0 + controls[3]) * 6.0, 1e-12));
+    // Interior at an interior knot is the right limit.
+    CHECK(compareVector(jetAt(spline, 1.0).first, right.first, 1e-12));
+    CHECK(spline.getBreakParameters() == std::vector<double>{0.0, 1.0, 2.0});
+}
+
+TEST_CASE("RS_Spline::tryEvaluateJet agrees with central differences on non-uniform knots",
+          "[spline][jet]") {
+    const RS_Spline spline = makeSpline(
+        3, {{0, 0}, {1, 2}, {3, 3}, {4, 1}, {6, 2}, {7, 0}}, {0, 0, 0, 0, 0.3, 1.2, 2, 2, 2, 2},
+        {1.0, 0.7, 1.4, 1.0, 0.9, 1.0});
+    const double h = 1e-5;
+    for (const double t : {0.1, 0.55, 0.9, 1.6, 1.9}) {
+        const LC_CurveJet jet = jetAt(spline, t);
+        const LC_CurveJet before = jetAt(spline, t - h);
+        const LC_CurveJet after = jetAt(spline, t + h);
+        CHECK(compareVector(jet.first, (after.point - before.point) / (2.0 * h), 1e-6));
+        CHECK(compareVector(jet.second, (after.first - before.first) / (2.0 * h), 1e-5));
+        CHECK(compareVector(jet.point, spline.getPointAt(t), 1e-9));
+    }
+}
+
+TEST_CASE("RS_Spline::tryEvaluateJet reports failure instead of a zero vector", "[spline][jet]") {
+    const RS_Spline spline = makeSpline(3, g_bezier, {0, 0, 0, 0, 1, 1, 1, 1});
+    LC_CurveJet jet;
+    double t0 = 0.0;
+    double t1 = 0.0;
+    REQUIRE(spline.getParameterDomain(t0, t1));
+    CHECK(t0 == 0.0);
+    CHECK(t1 == 1.0);
+
+    CHECK_FALSE(spline.tryEvaluateJet(-0.1, LC_CurveEvaluationSide::Interior, jet));
+    CHECK_FALSE(jet.point.valid);
+    CHECK_FALSE(spline.tryEvaluateJet(1.1, LC_CurveEvaluationSide::Interior, jet));
+    CHECK_FALSE(spline.tryEvaluateJet(std::nan(""), LC_CurveEvaluationSide::Interior, jet));
+    CHECK_FALSE(spline.tryEvaluateJet(0.0, LC_CurveEvaluationSide::Left, jet));
+    CHECK_FALSE(spline.tryEvaluateJet(1.0, LC_CurveEvaluationSide::Right, jet));
+    CHECK(spline.tryEvaluateJet(1.0, LC_CurveEvaluationSide::Left, jet));
+
+    RS_Spline zeroWeight = makeSpline(3, g_bezier, {0, 0, 0, 0, 1, 1, 1, 1}, {1.0, 0.0, 1.0, 1.0});
+    CHECK_FALSE(zeroWeight.tryEvaluateJet(0.5, LC_CurveEvaluationSide::Interior, jet));
+
+    RS_Spline shortKnots = makeSpline(3, g_bezier, {0, 0, 0, 1, 1, 1});
+    CHECK_FALSE(shortKnots.tryEvaluateJet(0.5, LC_CurveEvaluationSide::Interior, jet));
+    CHECK_FALSE(shortKnots.getParameterDomain(t0, t1));
+    CHECK(shortKnots.getBreakParameters().empty());
+
+    RS_Spline infinite = makeSpline(3, {{0, 0}, {1, 3}, {INFINITY, -3}, {3, 0}}, {0, 0, 0, 0, 1, 1, 1, 1});
+    CHECK_FALSE(infinite.tryEvaluateJet(0.5, LC_CurveEvaluationSide::Interior, jet));
+}
+
+// ---------------------------------------------------------------------------
+// Repaired legacy paths. These changed shipping behaviour: open splines now
+// report their endpoints (they reported none), and the derivative-based helpers
+// report values instead of NaN.
+// ---------------------------------------------------------------------------
+TEST_CASE("RS_Spline open endpoints are the curve ends; closed has none", "[spline][jet]") {
+    const RS_Spline open = makeSpline(3, g_bezier, {0, 0, 0, 0, 1, 1, 1, 1});
+    CHECK(compareVector(open.getStartpoint(), g_bezier.front(), 1e-12));
+    CHECK(compareVector(open.getEndpoint(), g_bezier.back(), 1e-12));
+
+    double dist = 0.0;
+    CHECK(compareVector(open.getNearestEndpoint(RS_Vector{2.9, 0.2}, nullptr, &dist), g_bezier.back(), 1e-12));
+    CHECK(dist == Approx(RS_Vector{2.9, 0.2}.distanceTo(g_bezier.back())));
+
+    RS_SplineData closedData(3, true);
+    closedData.controlPoints = {{0, 0}, {2, 0}, {2, 2}, {0, 2}};
+    closedData.weights = std::vector<double>(closedData.controlPoints.size(), 1.0);
+    RS_Spline closed(nullptr, closedData);
+    closed.changeType(RS_SplineData::SplineType::WrappedClosed);
+    CHECK_FALSE(closed.getStartpoint().valid);
+    CHECK_FALSE(closed.getEndpoint().valid);
+    CHECK_FALSE(closed.getNearestEndpoint(RS_Vector{0, 0}, nullptr, &dist).valid);
+}
+
+TEST_CASE("RS_Spline endpoints include its corners, not its smooth joints", "[spline][jet][RS_Spline]") {
+    // a polyline as a degree-1 spline: every vertex where it turns is a corner
+    const RS_Spline polyline = makeSpline(1, {{0, 0}, {4, 0}, {4, 3}, {6, 3}}, {0, 0, 1, 2, 3, 3});
+    double dist = 0.0;
+    CHECK(compareVector(polyline.getNearestEndpoint(RS_Vector{3.8, 0.3}, nullptr, &dist), RS_Vector{4, 0}, 1e-12));
+    CHECK(dist == Approx(RS_Vector{3.8, 0.3}.distanceTo(RS_Vector{4, 0})));
+    CHECK(compareVector(polyline.getNearestEndpoint(RS_Vector{4.1, 2.8}), RS_Vector{4, 3}, 1e-12));
+    CHECK(compareVector(polyline.getNearestEndpoint(RS_Vector{5.9, 3.2}), RS_Vector{6, 3}, 1e-12));
+    // a vertex on a straight run is no corner
+    const RS_Spline straight = makeSpline(1, {{0, 0}, {2, 0}, {5, 0}}, {0, 0, 1, 2, 2});
+    CHECK(compareVector(straight.getNearestEndpoint(RS_Vector{2, 0.1}), RS_Vector{0, 0}, 1e-12));
+
+    // two cubic pieces at a knot of multiplicity 3: a corner where the tangent turns
+    const RS_Spline cornered =
+        makeSpline(3, {{0, 0}, {1, 1}, {2, 1}, {3, 0}, {4, 1}, {5, 1}, {6, 0}}, {0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2});
+    CHECK(compareVector(cornered.getNearestEndpoint(RS_Vector{3.1, 0.2}), RS_Vector{3, 0}, 1e-12));
+    // and none where the handles line up
+    const RS_Spline smooth =
+        makeSpline(3, {{0, 0}, {1, 1}, {2, 1}, {3, 1}, {4, 1}, {5, 1}, {6, 0}}, {0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2});
+    CHECK(compareVector(smooth.getNearestEndpoint(RS_Vector{3.0, 1.1}), RS_Vector{0, 0}, 1e-12));
+}
+
+TEST_CASE("RS_Spline::findDerivativeZeros finds two roots in one knot span", "[spline][jet]") {
+    // y'(t) = 9 (6t^2 - 6t + 1): roots 1/2 -+ sqrt(3)/6. x'(t) = 3 has none.
+    const RS_Spline spline = makeSpline(3, g_bezier, {0, 0, 0, 0, 1, 1, 1, 1});
+    const std::vector<double> yZeros = spline.findDerivativeZeros(false);
+    REQUIRE(yZeros.size() == 2);
+    CHECK(yZeros[0] == Approx(0.5 - std::sqrt(3.0) / 6.0).margin(1e-10));
+    CHECK(yZeros[1] == Approx(0.5 + std::sqrt(3.0) / 6.0).margin(1e-10));
+    // A component without roots reports none, not a span midpoint.
+    CHECK(spline.findDerivativeZeros(true).empty());
+}
+
+TEST_CASE("RS_Spline::calculateTightBorders bounds the curve, not its control polygon",
+          "[spline][jet]") {
+    RS_Spline spline = makeSpline(3, g_bezier, {0, 0, 0, 0, 1, 1, 1, 1});
+    spline.calculateTightBorders();
+    // y(t) = 9 t (1-t) (1-2t) peaks at +-sqrt(3)/2 inside the control hull [-3, 3].
+    const double peak = std::sqrt(3.0) / 2.0;
+    CHECK(spline.getMin().x == Approx(0.0).margin(1e-10));
+    CHECK(spline.getMax().x == Approx(3.0).margin(1e-10));
+    CHECK(spline.getMin().y == Approx(-peak).margin(1e-9));
+    CHECK(spline.getMax().y == Approx(peak).margin(1e-9));
+}
+
+TEST_CASE("RS_Spline::calculateTightBorders finds an extreme at a closed spline's seam", "[spline][jet]") {
+    // The seam is the highest point, y = 7/3, but y' there is a rounding error
+    // either side of zero rather than zero, so no end interval brackets it.
+    RS_SplineData data(3, true);
+    data.type = RS_SplineData::SplineType::WrappedClosed;
+    data.controlPoints = {{-4, 1}, {-4, 3}, {3, 1}, {4, -1}, {-5, -3}, {-2, 1}, {3, -3}, {-4, 1}, {-4, 3}, {3, 1}};
+    data.weights.assign(data.controlPoints.size(), 1.0);
+    for (int k = 0; k < 14; ++k) {
+        data.knotslist.push_back(0.1 * k);
+    }
+    RS_Spline spline(nullptr, data);
+    REQUIRE(spline.validate());
+    spline.calculateTightBorders();
+    CHECK(spline.getMax().y == Approx(7.0 / 3.0).margin(1e-9));
+}
+
+TEST_CASE("RS_Spline evaluates uniformly tiny weights as the same curve", "[spline][jet]") {
+    // Scaling every weight leaves a rational curve unchanged; a denominator below
+    // RS_TOLERANCE used to be skipped, shrinking the curve onto the origin.
+    RS_SplineData data(3, false);
+    data.controlPoints = g_bezier;
+    data.knotslist = {0, 0, 0, 0, 1, 1, 1, 1};
+    data.weights.assign(4, 1e-11);
+    const RS_Spline spline(nullptr, data);
+    LC_CurveJet jet;
+    REQUIRE(spline.tryEvaluateJet(0.5, LC_CurveEvaluationSide::Interior, jet));
+    CHECK(jet.point.distanceTo(RS_Vector{1.5, 0.0}) < 1e-12);
+    CHECK(spline.getEndpoint().distanceTo(RS_Vector{3.0, 0.0}) < 1e-12);
+}
+
+TEST_CASE("RS_Spline::getPointAt reports a failure as an invalid point", "[spline][jet]") {
+    const RS_Spline spline = makeSpline(3, g_bezier, {0, 0, 0, 0, 1, 1, 1, 1});
+    CHECK(compareVector(spline.getPointAt(0.25), bezierPoint(0.25), 1e-12));
+    CHECK_FALSE(spline.getPointAt(2.0).valid);
+}
+
+TEST_CASE("RS_Spline::revertDirection keeps a valid curve, traversed backwards", "[spline][jet][RS_Spline]") {
+    // It used to reverse the knot vector and only shift it, leaving it
+    // decreasing: the reversed spline failed validation and was no longer drawn.
+    RS_Spline forward = makeSpline(3, {{0, 0}, {1, 2}, {3, 3}, {4, 1}, {6, 2}, {7, 0}},
+                                   {0, 0, 0, 0, 0.3, 1.2, 2, 2, 2, 2}, {1.0, 0.7, 1.4, 1.0, 0.9, 1.0});
+    RS_Spline reversed = makeSpline(3, {{0, 0}, {1, 2}, {3, 3}, {4, 1}, {6, 2}, {7, 0}},
+                                    {0, 0, 0, 0, 0.3, 1.2, 2, 2, 2, 2}, {1.0, 0.7, 1.4, 1.0, 0.9, 1.0});
+    reversed.revertDirection();
+    REQUIRE(reversed.validate());
+    CHECK(reversed.count() > 0); // drawn
+    CHECK(compareVector(reversed.getStartpoint(), forward.getEndpoint(), 1e-12));
+    CHECK(compareVector(reversed.getEndpoint(), forward.getStartpoint(), 1e-12));
+    double t0 = 0.0;
+    double t1 = 0.0;
+    REQUIRE(forward.getParameterDomain(t0, t1));
+    for (const double t : {0.1, 0.55, 1.2, 1.6}) {
+        const LC_CurveJet a = jetAt(forward, t);
+        const LC_CurveJet b = jetAt(reversed, t0 + t1 - t, LC_CurveEvaluationSide::Left);
+        CHECK(compareVector(a.point, b.point, 1e-12));
+        CHECK(compareVector(a.first, -b.first, 1e-10));
+        CHECK(compareVector(a.second, b.second, 1e-9));
+    }
+
+    // a closed spline stays closed and wrapped
+    RS_Spline closed(nullptr, RS_SplineData(3, false));
+    for (const RS_Vector& p : {RS_Vector{0, 0}, RS_Vector{40, -10}, RS_Vector{60, 30}, RS_Vector{20, 50},
+                               RS_Vector{-15, 25}}) {
+        closed.addControlPoint(p);
+    }
+    closed.setClosed(true);
+    REQUIRE(closed.validate());
+    REQUIRE(closed.getParameterDomain(t0, t1));
+    std::vector<RS_Vector> onCurve;
+    for (int i = 0; i < 8; ++i) {
+        onCurve.push_back(closed.getPointAt(t0 + (t1 - t0) * (i + 0.5) / 8.0));
+        REQUIRE(onCurve.back().valid);
+    }
+    closed.revertDirection();
+    REQUIRE(closed.validate());
+    CHECK(closed.isClosed());
+    CHECK(closed.hasWrappedControlPoints());
+    // still the same shape: every former curve point lies on the reversed curve
+    REQUIRE(closed.getParameterDomain(t0, t1));
+    for (const RS_Vector& p : onCurve) {
+        double nearest = RS_MAXDOUBLE;
+        for (int i = 0; i <= 4000; ++i) {
+            nearest = std::min(nearest, closed.getPointAt(t0 + (t1 - t0) * i / 4000.0).distanceTo(p));
+        }
+        CHECK(nearest < 0.05);
+    }
+}
+
+TEST_CASE("RS_Spline snaps to middle points and distances along it", "[spline][jet][RS_Spline]") {
+    // Offsets of spline sources are RS_Splines; like the LC_SplinePoints they
+    // replace in Draw > Parallel, they must offer middle and distance snaps.
+    const RS_Spline line = makeSpline(1, {{0.0, 0.0}, {10.0, 0.0}}, {0, 0, 1, 1});
+    double dist = 0.0;
+    CHECK(compareVector(line.getNearestMiddle(RS_Vector{4.0, 1.0}, &dist, 1), RS_Vector{5.0, 0.0}, 1e-9));
+    CHECK(dist == Approx(std::hypot(1.0, 1.0)));
+    CHECK(compareVector(line.getNearestMiddle(RS_Vector{1.0, 0.0}, &dist, 3), RS_Vector{2.5, 0.0}, 1e-9));
+    CHECK(compareVector(line.getNearestDist(2.0, RS_Vector{1.0, 0.0}, &dist), RS_Vector{2.0, 0.0}, 1e-9));
+    CHECK(compareVector(line.getNearestDist(2.0, RS_Vector{9.0, 0.0}, &dist), RS_Vector{8.0, 0.0}, 1e-9));
+    CHECK_FALSE(line.getNearestDist(11.0, RS_Vector{1.0, 0.0}, &dist).valid);
+
+    // a rational arc is not parameterized by arc length: its middle is the true 45 degree point
+    const double w = std::sqrt(0.5);
+    const RS_Spline arc = makeSpline(2, {{10.0, 0.0}, {10.0, 10.0}, {0.0, 10.0}}, {0, 0, 0, 1, 1, 1}, {1.0, w, 1.0});
+    CHECK(compareVector(arc.getNearestMiddle(RS_Vector{8.0, 8.0}, &dist, 1), RS_Vector{10.0 * w, 10.0 * w}, 1e-6));
+    const double quarter = M_PI * 10.0 / 2.0;
+    const RS_Vector third = arc.getNearestDist(quarter / 3.0, RS_Vector{10.0, 0.0}, &dist);
+    CHECK(compareVector(third, RS_Vector{10.0 * std::cos(M_PI / 6.0), 10.0 * std::sin(M_PI / 6.0)}, 1e-6));
+
+    RS_Spline closed(nullptr, RS_SplineData(3, false));
+    for (const RS_Vector& p : {RS_Vector{0, 0}, RS_Vector{40, -10}, RS_Vector{60, 30}, RS_Vector{20, 50}}) {
+        closed.addControlPoint(p);
+    }
+    closed.setClosed(true);
+    CHECK_FALSE(closed.getNearestMiddle(RS_Vector{0, 0}, &dist, 1).valid);
+    CHECK_FALSE(closed.getNearestDist(1.0, RS_Vector{0, 0}, &dist).valid);
+}
+
+TEST_CASE("RS_Spline::tryStroke bounds each chord by the second derivative", "[spline][jet][RS_Spline]") {
+    // degree 1: no second derivative, so the vertices are the control points
+    RS_SplineData polygon(1, false);
+    polygon.controlPoints = {{0, 0}, {3, 1}, {5, -2}, {9, 4}};
+    polygon.knotslist = {0, 0, 1, 2, 3, 3};
+    polygon.weights.assign(4, 1.0);
+    std::vector<RS_Vector> vertices;
+    REQUIRE(RS_Spline(nullptr, polygon).tryStroke(1e-3, 100, vertices));
+    REQUIRE(vertices.size() == 4);
+    for (size_t i = 0; i < 4; ++i) {
+        CHECK(vertices[i].distanceTo(polygon.controlPoints[i]) < 1e-12);
+    }
+
+    // a parabola arc, C(t) = (2t, 4t^2) on [0, 1], that is y = x^2: |C''| = 8
+    // everywhere, so a chord of parameter length h strays at most h^2 / 8 * 8 = h^2;
+    // its vertices lie on the curve
+    RS_SplineData parabola(2, false);
+    parabola.controlPoints = {{0, 0}, {1, 0}, {2, 4}};
+    parabola.knotslist = {0, 0, 0, 1, 1, 1};
+    parabola.weights.assign(3, 1.0);
+    const RS_Spline arc(nullptr, parabola);
+    const double tolerance = 1e-3;
+    REQUIRE(arc.tryStroke(tolerance, 1000, vertices));
+    CHECK(vertices.size() > 2);
+    for (size_t i = 1; i < vertices.size(); ++i) {
+        CHECK(std::abs(vertices[i].y - vertices[i].x * vertices[i].x) < 1e-12);
+        const double h = (vertices[i].x - vertices[i - 1].x) / 2.0; // in parameter
+        CHECK(h * h <= tolerance);
+    }
+
+    // past the vertex limit, or with no usable tolerance: nothing
+    CHECK_FALSE(arc.tryStroke(tolerance, 3, vertices));
+    CHECK(vertices.empty());
+    CHECK_FALSE(arc.tryStroke(0.0, 1000, vertices));
+    CHECK_FALSE(arc.tryStroke(std::nan(""), 1000, vertices));
+}
+
+TEST_CASE("RS_Spline::tryStroke starts a span after a break at its own point", "[spline][jet][RS_Spline]") {
+    // a knot of multiplicity degree + 1 in the middle: two unconnected lines
+    RS_SplineData broken(1, false);
+    broken.controlPoints = {{0, 0}, {4, 0}, {4, 3}, {8, 3}};
+    broken.knotslist = {0, 0, 1, 1, 2, 2};
+    broken.weights.assign(4, 1.0);
+    const RS_Spline spline(nullptr, broken);
+    REQUIRE(spline.validate());
+    std::vector<RS_Vector> vertices;
+    REQUIRE(spline.tryStroke(1e-3, 100, vertices));
+    REQUIRE(vertices.size() == 4);
+    CHECK(vertices[1].distanceTo(RS_Vector{4, 0}) < 1e-12);
+    CHECK(vertices[2].distanceTo(RS_Vector{4, 3}) < 1e-12);
 }
 
 namespace {

@@ -26,6 +26,7 @@
 
 #include "rs_creation.h"
 
+#include "lc_curveoffset.h"
 #include "lc_quadratic.h"
 #include "lc_splinepoints.h"
 #include "rs_arc.h"
@@ -98,7 +99,7 @@ namespace {
  */
 void RS_Creation::createParallelThrough(const RS_Vector& coord, const int number, RS_Entity* e, const bool symmetric,
                                         bool distributeWithin,
-                                        QList<RS_Entity*>& createdEntities) {
+                                        QList<RS_Entity*>& createdEntities, const bool forPreview) {
     // check given entity:
     if (e == nullptr) {
         return;
@@ -110,6 +111,15 @@ void RS_Creation::createParallelThrough(const RS_Vector& coord, const int number
         const RS_ConstructionLine cl(nullptr, RS_ConstructionLineData(l->getStartpoint(), l->getEndpoint()));
         dist = cl.getDistanceToPoint(coord);
     }
+    else if (LC_CurveOffset::isSupportedSource(*e)) {
+        // from the curve itself: an RS_Spline's distance would be to the lines it is drawn with
+        const LC_OffsetSideResolution nearest =
+            LC_CurveOffset::resolveSide(*e, coord, LC_CurveOffset::makeDirectOptions(*e, 1.0));
+        if (nearest.status != LC_CurveOffsetStatus::Ok) {
+            return; // on the curve, or no side to offset to
+        }
+        dist = nearest.distance;
+    }
     else {
         dist = e->getDistanceToPoint(coord);
     }
@@ -119,7 +129,7 @@ void RS_Creation::createParallelThrough(const RS_Vector& coord, const int number
     }
 
     if (dist < RS_MAXDOUBLE) {
-        return createParallel(coord, dist, number, e, symmetric,  createdEntities);
+        return createParallel(coord, dist, number, e, symmetric, createdEntities, forPreview);
     }
 }
 
@@ -127,7 +137,7 @@ void RS_Creation::createParallelThrough(const RS_Vector& coord, const int number
  * Creates an entity parallel to the given entity e.
  * Out of the 2 possible parallels, the one closest to
  * the given coordinate is returned.
- * Lines, Arcs and Circles can have parallels.
+ * Lines, arcs, circles and splines can have parallels.
  *
  * @param coord Coordinate to define which parallel we want (typically a
  *              mouse coordinate).
@@ -139,7 +149,7 @@ void RS_Creation::createParallelThrough(const RS_Vector& coord, const int number
  *
  */
 void RS_Creation::createParallel(const RS_Vector& coord, const double distance, const int number, RS_Entity* e, const bool symmetric,
-                                 QList<RS_Entity*>& createdEntities) {
+                                 QList<RS_Entity*>& createdEntities, const bool forPreview) {
     // check given entity:
     if (e == nullptr) {
         return;
@@ -156,8 +166,10 @@ void RS_Creation::createParallel(const RS_Vector& coord, const double distance, 
             createParallelCircle(coord, distance, number, static_cast<RS_Circle*>(e), createdEntities);
             break;
         case RS2::EntityParabola:
+        case RS2::EntityHyperbola:
         case RS2::EntitySplinePoints:
-            createParallelSplinePoints(coord, distance, number, static_cast<LC_SplinePoints*>(e), createdEntities);
+        case RS2::EntitySpline:
+            createParallelCurve(coord, distance, number, e, createdEntities, forPreview);
             break;
         default:
             break;
@@ -340,31 +352,36 @@ void RS_Creation::createParallelCircle(const RS_Vector& coord, double distance, 
 }
 
 /**
- * Creates a spline pseudo-parallel to the given circle e.
- * Out of the 2 possible parallels, the one closest to
- * the given coordinate is returned.
+ * Creates curves parallel to the spline e, through its offset engine.
  *
  * @param coord Coordinate to define which parallel we want (typically a
  *              mouse coordinate).
  * @param distance Distance of the parallel.
  * @param number Number of parallels.
- * @param e Original entity.
+ * @param e Original entity: an RS_Spline or an LC_SplinePoints.
  * @param createdEntities
- *
- * @return Pointer to the first created parallel or nullptr if no
- *    parallel has been created.
  */
-void RS_Creation::createParallelSplinePoints(const RS_Vector& coord, const double distance, const int number, const LC_SplinePoints* e,
-                                             QList<RS_Entity*>& createdEntities) {
+void RS_Creation::createParallelCurve(const RS_Vector& coord, const double distance, const int number, const RS_Entity* e,
+                                      QList<RS_Entity*>& createdEntities, const bool forPreview) {
     Q_ASSERT(e != nullptr);
 
-    LC_SplinePoints* psp = nullptr;
+    // A spline's offset may change type and have several pieces, so each copy
+    // comes from createOffset(). A copy that fails ends the series instead of
+    // adding an unchanged clone: a larger distance on the same side fails too.
     for (int i = 1; i <= number; ++i) {
-        psp = static_cast<LC_SplinePoints*>(e->clone());
-        psp->offset(coord, i * distance);
-        psp->setParent(nullptr);
-
-        createdEntities.push_back(psp);
+        // the pointer asks for every copy again on every move: a preview is
+        // offset within the smaller limits it can afford
+        const std::vector<RS_Entity*> copy =
+            (forPreview && LC_CurveOffset::isSupportedSource(*e))
+                ? LC_CurveOffset::createPreviewOffset(*e, coord, i * distance)
+                : e->createOffset(coord, i * distance);
+        if (copy.empty()) {
+            break;
+        }
+        for (RS_Entity* piece : copy) {
+            piece->setParent(nullptr);
+            createdEntities.push_back(piece);
+        }
     }
 }
 

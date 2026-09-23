@@ -29,8 +29,12 @@
 #include "rs_spline.h"
 
 #include <algorithm>
+#include <cstring>
+#include <cmath>
 #include <iostream>
+#include <limits>
 
+#include "lc_curveoffset.h"
 #include "lc_splinehelper.h"
 #include "rs_debug.h"
 #include "rs_line.h"
@@ -39,6 +43,15 @@
 
 namespace {
 constexpr double g_knotTolerance = 5e-6;
+
+// update() draws a spline with at least this many segments, more where it bends
+// by more than the relative tolerance. The cap stops the refinement: past it
+// each remaining knot span still gets the vertex it cannot be drawn without,
+// and a spline with more spans than the cap is drawn with that many uniform
+// samples instead.
+constexpr int g_minimumDisplaySegments = 32;
+constexpr size_t g_maximumDisplaySegments = 4096;
+constexpr double g_displayRelativeTolerance = 1e-3;
 
     // fixme - sand - function is not used!
 bool compareVector(const RS_Vector &va, const RS_Vector &vb, const double tol = RS_TOLERANCE) {
@@ -64,6 +77,355 @@ bool solveSystem(const std::vector<std::vector<double>> &coef,
   }
 
   return RS_Math::linearSolver(aug, sol);
+}
+
+constexpr size_t g_maxDegree = 3;
+
+/**
+ * Whether the degree, control points, weights and knot vector have the sizes a
+ * curve needs. Values are checked separately, where they are used.
+ */
+bool hasEvaluableLayout(const RS_SplineData &d) {
+  const size_t p = d.degree;
+  const size_t ncp = d.controlPoints.size();
+  return p >= 1 && p <= g_maxDegree && ncp >= p + 1 &&
+         d.knotslist.size() == ncp + p + 1 && d.weights.size() == ncp;
+}
+
+/**
+ * The non-zero B-spline basis functions of degree p on knot span s, and their
+ * first and second derivatives, at t (Piegl & Tiller, The NURBS Book, A2.3).
+ * ders[k][j] is the k-th derivative of N_{s-p+j,p}(t).
+ *
+ * The knot differences are kept in the lower triangle of ndu, because the
+ * derivative recurrence divides by them. On a span with U[s] < U[s+1] every one
+ * of them spans that interval and so is positive.
+ *
+ * @return false if a knot difference is not positive or a value is not finite.
+ */
+bool dersBasisFunctions(const size_t s, const double t, const size_t p,
+                        const std::vector<double> &U, double ders[3][g_maxDegree + 1]) {
+  double ndu[g_maxDegree + 1][g_maxDegree + 1] = {};
+  double left[g_maxDegree + 1] = {};
+  double right[g_maxDegree + 1] = {};
+  ndu[0][0] = 1.0;
+  for (size_t j = 1; j <= p; ++j) {
+    left[j] = t - U[s + 1 - j];
+    right[j] = U[s + j] - t;
+    double saved = 0.0;
+    for (size_t r = 0; r < j; ++r) {
+      ndu[j][r] = right[r + 1] + left[j - r];
+      if (!(ndu[j][r] > 0.0)) {
+        return false;
+      }
+      const double temp = ndu[r][j - 1] / ndu[j][r];
+      ndu[r][j] = saved + (right[r + 1] * temp);
+      saved = left[j - r] * temp;
+    }
+    ndu[j][j] = saved;
+  }
+
+  for (size_t j = 0; j <= p; ++j) {
+    ders[0][j] = ndu[j][p];
+    ders[1][j] = 0.0;
+    ders[2][j] = 0.0;
+  }
+
+  // derivatives above the degree vanish
+  const int nd = static_cast<int>(std::min<size_t>(2, p));
+  const int ip = static_cast<int>(p);
+  double a[2][g_maxDegree + 1] = {};
+  for (int r = 0; r <= ip; ++r) {
+    int s1 = 0;
+    int s2 = 1;
+    a[0][0] = 1.0;
+    for (int k = 1; k <= nd; ++k) {
+      double d = 0.0;
+      const int rk = r - k;
+      const int pk = ip - k;
+      if (r >= k) {
+        a[s2][0] = a[s1][0] / ndu[pk + 1][rk];
+        d = a[s2][0] * ndu[rk][pk];
+      }
+      const int j1 = (rk >= -1) ? 1 : -rk;
+      const int j2 = (r - 1 <= pk) ? k - 1 : ip - r;
+      for (int j = j1; j <= j2; ++j) {
+        a[s2][j] = (a[s1][j] - a[s1][j - 1]) / ndu[pk + 1][rk + j];
+        d += a[s2][j] * ndu[rk + j][pk];
+      }
+      if (r <= pk) {
+        a[s2][k] = -a[s1][k - 1] / ndu[pk + 1][r];
+        d += a[s2][k] * ndu[r][pk];
+      }
+      ders[k][r] = d;
+      std::swap(s1, s2);
+    }
+  }
+
+  double factor = static_cast<double>(p);
+  for (int k = 1; k <= nd; ++k) {
+    for (size_t j = 0; j <= p; ++j) {
+      ders[k][j] *= factor;
+    }
+    factor *= static_cast<double>(ip - k);
+  }
+
+  for (int k = 0; k <= 2; ++k) {
+    for (size_t j = 0; j <= p; ++j) {
+      if (!std::isfinite(ders[k][j])) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
+bool isFinite(const RS_Vector &v) {
+  return v.valid && std::isfinite(v.x) && std::isfinite(v.y) && std::isfinite(v.z);
+}
+
+/**
+ * Arc length of the curve from the start of its domain, tabulated at knots and
+ * at subdivisions of each knot span (5-point Gauss-Legendre per piece).
+ */
+using ArcLengthTable = RS_Spline::ArcLengthTable;
+
+/**
+ * A fingerprint of the data a table is built for. RS_Spline::getData() hands
+ * out a mutable reference, so a cache cannot rely on being told about a
+ * change; this walk over the data is a thousandth of the cost of the table.
+ */
+std::uint64_t geometryFingerprint(const RS_SplineData &data) {
+  std::uint64_t hash = 1469598103934665603ULL;
+  const auto mix = [&hash](const double value) {
+    std::uint64_t bits = 0;
+    static_assert(sizeof bits == sizeof value);
+    std::memcpy(&bits, &value, sizeof bits);
+    hash = (hash ^ bits) * 1099511628211ULL;
+  };
+  mix(static_cast<double>(data.degree));
+  mix(static_cast<double>(data.controlPoints.size()));
+  mix(static_cast<double>(data.knotslist.size()));
+  mix(static_cast<double>(data.weights.size()));
+  for (const RS_Vector &point : data.controlPoints) {
+    mix(point.x);
+    mix(point.y);
+  }
+  for (const double knot : data.knotslist) {
+    mix(knot);
+  }
+  for (const double weight : data.weights) {
+    mix(weight);
+  }
+  return hash;
+}
+
+double speedAt(const RS_Spline &spline, const double t) {
+  LC_CurveJet jet;
+  return spline.tryEvaluateJet(t, LC_CurveEvaluationSide::Interior, jet) ? jet.first.magnitude()
+                                                                          : std::numeric_limits<double>::quiet_NaN();
+}
+
+/** Arc length over [a, b] inside one knot span. */
+double pieceLength(const RS_Spline &spline, const double a, const double b) {
+  static constexpr double nodes[] = {-0.9061798459386640, -0.5384693101056831, 0.0, 0.5384693101056831,
+                                     0.9061798459386640};
+  static constexpr double weights[] = {0.2369268850561891, 0.4786286704993665, 0.5688888888888889,
+                                       0.4786286704993665, 0.2369268850561891};
+  const double half = 0.5 * (b - a);
+  const double middle = 0.5 * (a + b);
+  double sum = 0.0;
+  for (int i = 0; i < 5; ++i) {
+    sum += weights[i] * speedAt(spline, middle + half * nodes[i]);
+  }
+  return sum * half;
+}
+
+/**
+ * The multiplicity of each of @p breaks among @p knots, which are
+ * non-decreasing and in the same order, in one walk over both. A count over
+ * the whole knot vector for every break is quadratic in the control points,
+ * and this runs for every spline of a drawing on every mouse move.
+ */
+std::vector<size_t> breakMultiplicities(const std::vector<double> &knots,
+                                        const std::vector<double> &breaks) {
+  std::vector<size_t> multiplicity(breaks.size(), 0);
+  if (!std::is_sorted(knots.begin(), knots.end())) {
+    // not a curve; counted the slow way rather than silently wrongly
+    for (size_t k = 0; k < breaks.size(); ++k) {
+      multiplicity[k] = static_cast<size_t>(std::count(knots.begin(), knots.end(), breaks[k]));
+    }
+    return multiplicity;
+  }
+  size_t i = 0;
+  for (size_t k = 0; k < breaks.size(); ++k) {
+    while (i < knots.size() && knots[i] < breaks[k]) {
+      ++i;
+    }
+    size_t j = i;
+    while (j < knots.size() && knots[j] == breaks[k]) {
+      ++j;
+    }
+    multiplicity[k] = j - i;
+  }
+  return multiplicity;
+}
+
+bool buildArcLengthTable(const RS_Spline &spline, ArcLengthTable &table) { // uncached
+  const std::vector<double> breaks = spline.getBreakParameters();
+  if (breaks.size() < 2) {
+    return false;
+  }
+  constexpr int piecesPerSpan = 8;
+  table.t = {breaks.front()};
+  table.length = {0.0};
+  for (size_t i = 0; i + 1 < breaks.size(); ++i) {
+    for (int k = 1; k <= piecesPerSpan; ++k) {
+      const double a = table.t.back();
+      const double b = (k == piecesPerSpan) ? breaks[i + 1] : breaks[i] + (breaks[i + 1] - breaks[i]) * k / piecesPerSpan;
+      const double length = pieceLength(spline, a, b);
+      if (!std::isfinite(length)) {
+        return false;
+      }
+      table.t.push_back(b);
+      table.length.push_back(table.length.back() + length);
+    }
+  }
+  return table.length.back() > 0.0;
+}
+
+/** The parameter at arc length s from the start, refined by Newton steps. */
+double parameterAtLength(const RS_Spline &spline, const ArcLengthTable &table, const double s) {
+  const auto upper = std::upper_bound(table.length.begin(), table.length.end(), s);
+  if (upper == table.length.begin()) {
+    return table.t.front();
+  }
+  if (upper == table.length.end()) {
+    return table.t.back();
+  }
+  const auto i = static_cast<size_t>(std::distance(table.length.begin(), upper)) - 1;
+  const double a = table.t[i];
+  const double b = table.t[i + 1];
+  const double span = table.length[i + 1] - table.length[i];
+  double t = (span > 0.0) ? a + (b - a) * (s - table.length[i]) / span : a;
+  for (int iteration = 0; iteration < 4; ++iteration) {
+    const double speed = speedAt(spline, t);
+    if (!(speed > 0.0)) {
+      break;
+    }
+    t = std::clamp(t - (table.length[i] + pieceLength(spline, a, t) - s) / speed, a, b);
+  }
+  return t;
+}
+
+/** A homogeneous point (w x, w y, w) as intervals. */
+struct HomogeneousBox {
+  LC_Interval x;
+  LC_Interval y;
+  LC_Interval w;
+};
+
+HomogeneousBox combine(const LC_Interval &alpha, const HomogeneousBox &a, const HomogeneousBox &b) {
+  const LC_Interval beta = LC_Interval::point(1.0) - alpha;
+  return {beta * a.x + alpha * b.x, beta * a.y + alpha * b.y, beta * a.w + alpha * b.w};
+}
+
+HomogeneousBox difference(const HomogeneousBox &a, const HomogeneousBox &b) {
+  return {a.x - b.x, a.y - b.y, a.w - b.w};
+}
+
+HomogeneousBox scaled(const LC_Interval &factor, const HomogeneousBox &a) {
+  return {factor * a.x, factor * a.y, factor * a.w};
+}
+
+/**
+ * The blossom f(u[0], ..., u[q-1]) of a homogeneous B-spline segment of degree
+ * q on knot span s, from its q + 1 control points there, pts[0 .. q] (control
+ * points s - q .. s), by de Boor's algorithm with a different parameter at each
+ * level; knot(k) is the spline's knot k. With a repeated (q - m) times and b
+ * repeated m times it is Bezier control point m of the segment restricted to
+ * [a, b]. pts is overwritten.
+ */
+template <typename Knot>
+HomogeneousBox blossom(HomogeneousBox *pts, const size_t q, const size_t s, const double *u, const Knot &knot) {
+  for (size_t r = 1; r <= q; ++r) {
+    for (size_t j = q; j >= r; --j) {
+      const LC_Interval lo = LC_Interval::point(knot(s - q + j));
+      const LC_Interval hi = LC_Interval::point(knot(s + 1 + j - r));
+      const LC_Interval alpha = (LC_Interval::point(u[r - 1]) - lo) / (hi - lo);
+      pts[j] = combine(alpha, pts[j - 1], pts[j]);
+    }
+  }
+  return pts[q];
+}
+
+/** The hull of values[0 .. count-1]. */
+LC_Interval hullOf(const LC_Interval *values, const size_t count) {
+  LC_Interval result = values[0];
+  for (size_t i = 1; i < count; ++i) {
+    result = LC_Interval::hull(result, values[i]);
+  }
+  return result;
+}
+
+/**
+ * The Bezier net over [a, b], net[0 .. q], of a homogeneous B-spline segment of
+ * degree q on knot span s with control points pts[0 .. q].
+ */
+template <typename Knot>
+void segmentNet(const HomogeneousBox *pts, const size_t q, const size_t s, const double a, const double b,
+                const Knot &knot, HomogeneousBox *net) {
+  for (size_t m = 0; m <= q; ++m) {
+    double u[g_maxDegree];
+    for (size_t k = 0; k < q; ++k) {
+      u[k] = (k < q - m) ? a : b;
+    }
+    HomogeneousBox work[g_maxDegree + 1];
+    std::copy(pts, pts + q + 1, work);
+    net[m] = blossom(work, q, s, u, knot);
+  }
+}
+
+/** The hull of a Bezier net: it contains every value the segment takes (convex hull property). */
+HomogeneousBox hullOfNet(const HomogeneousBox *net, const size_t q) {
+  LC_Interval xs[g_maxDegree + 1];
+  LC_Interval ys[g_maxDegree + 1];
+  LC_Interval ws[g_maxDegree + 1];
+  for (size_t m = 0; m <= q; ++m) {
+    xs[m] = net[m].x;
+    ys[m] = net[m].y;
+    ws[m] = net[m].w;
+  }
+  return {hullOf(xs, q + 1), hullOf(ys, q + 1), hullOf(ws, q + 1)};
+}
+
+double binomial(const size_t n, const size_t k) {
+  double c = 1.0;
+  for (size_t i = 1; i <= k; ++i) {
+    c = c * static_cast<double>(n + 1 - i) / static_cast<double>(i); // exact for the small n here
+  }
+  return c;
+}
+
+/**
+ * The hull of the Bezier coefficients over a box of the product of two
+ * polynomials given by their nets there, f[0 .. n] and g[0 .. m]:
+ * B_i^n B_j^m = C(n, i) C(m, j) / C(n + m, i + j) B_(i+j)^(n+m).
+ * @p product(i, j) is the product of f[i] and g[j].
+ */
+template <typename Product>
+LC_Interval productHull(const size_t n, const size_t m, const Product &product) {
+  LC_Interval coefficients[2 * g_maxDegree + 1];
+  for (size_t k = 0; k <= n + m; ++k) {
+    LC_Interval sum = LC_Interval::point(0.0);
+    for (size_t i = (k > m) ? k - m : 0; i <= std::min(k, n); ++i) {
+      const LC_Interval weight = LC_Interval::point(binomial(n, i) * binomial(m, k - i)) /
+                                 LC_Interval::point(binomial(n + m, k));
+      sum = sum + weight * product(i, k - i);
+    }
+    coefficients[k] = sum;
+  }
+  return hullOf(coefficients, n + m + 1);
 }
 } // namespace
 
@@ -348,12 +710,91 @@ void RS_Spline::update() {
       return;
   }
   std::vector<RS_Vector> points;
-  fillStrokePoints(32, points);
+  fillDisplayPoints(points);
   for (size_t i = 0; i + 1 < points.size(); ++i) {
       addEntity(new RS_Line(this, points[i], points[i + 1]));
   }
   if (isClosed() && points.size() > 1) {
       addEntity(new RS_Line(this, points.back(), points.front()));
+  }
+}
+
+void RS_Spline::fillDisplayPoints(std::vector<RS_Vector> &points) const {
+  points.clear();
+  double t0 = 0.0;
+  double t1 = 0.0;
+  const std::vector<double> breaks = getBreakParameters();
+  RS_Vector lo = m_data.controlPoints.empty() ? RS_Vector{} : m_data.controlPoints.front();
+  RS_Vector hi = lo;
+  for (const RS_Vector &v : m_data.controlPoints) {
+    lo = RS_Vector::minimum(lo, v);
+    hi = RS_Vector::maximum(hi, v);
+  }
+  const double tolerance = g_displayRelativeTolerance * lo.distanceTo(hi);
+  const auto uniform = [&] {
+    points.clear();
+    fillStrokePoints(g_minimumDisplaySegments, points);
+  };
+  if (!getParameterDomain(t0, t1) || breaks.size() < 2 || !std::isfinite(tolerance) || !(tolerance > 0.0)) {
+    uniform();
+    return;
+  }
+  if (breaks.size() - 1 > g_maximumDisplaySegments) {
+    // more spans than the whole budget: a segment each would be tens of
+    // thousands of lines, so the curve is drawn with the budget, uniformly
+    points.clear();
+    fillStrokePoints(static_cast<int>(g_maximumDisplaySegments), points);
+    return;
+  }
+  const auto append = [&](const double t, const LC_CurveEvaluationSide side) {
+    LC_CurveJet jet;
+    if (!tryEvaluateJet(t, side, jet)) {
+      return false;
+    }
+    points.push_back(jet.point);
+    return true;
+  };
+  if (!append(t0, LC_CurveEvaluationSide::Right)) {
+    uniform();
+    return;
+  }
+  // Span by span, uniformly: a share of the minimum count, or more where a
+  // chord, within h^2/8 |C''| of its arc, would stray past the tolerance.
+  const auto &U = m_data.knotslist;
+  const std::vector<size_t> multiplicity = breakMultiplicities(U, breaks);
+  for (size_t k = 0; k + 1 < breaks.size(); ++k) {
+    const double a = breaks[k];
+    const double b = breaks[k + 1];
+    if (k > 0 && multiplicity[k] >= m_data.degree) {
+      // a knot of full multiplicity may break the curve: start at its right limit
+      LC_CurveJet start;
+      if (!tryEvaluateJet(a, LC_CurveEvaluationSide::Right, start)) {
+        uniform();
+        return;
+      }
+      if (start.point != points.back()) {
+        points.push_back(start.point);
+      }
+    }
+    LC_CurveJetBounds bounds;
+    if (!tryBoundJet(a, b, bounds)) {
+      uniform();
+      return;
+    }
+    const double bend = std::hypot(std::max(std::abs(bounds.ddx.lo()), std::abs(bounds.ddx.hi())),
+                                   std::max(std::abs(bounds.ddy.lo()), std::abs(bounds.ddy.hi())));
+    const double share = std::ceil(g_minimumDisplaySegments * (b - a) / (t1 - t0));
+    const double needed = std::ceil((b - a) * std::sqrt(bend / (8.0 * tolerance)));
+    const double left = static_cast<double>(g_maximumDisplaySegments) - static_cast<double>(points.size());
+    const int count = static_cast<int>(std::clamp(std::max({1.0, share, needed}), 1.0, std::max(1.0, left)));
+    for (int i = 1; i <= count; ++i) {
+      const bool end = i == count;
+      if (!append(end ? b : a + (b - a) * i / count,
+                  end ? LC_CurveEvaluationSide::Left : LC_CurveEvaluationSide::Interior)) {
+        uniform();
+        return;
+      }
+    }
   }
 }
 
@@ -370,21 +811,142 @@ void RS_Spline::fillStrokePoints(const int segments, std::vector<RS_Vector> &poi
 }
 
 /** Endpoints (invalid if closed) */
-RS_Vector RS_Spline::getStartpoint() const { return RS_Vector(false); }
-RS_Vector RS_Spline::getEndpoint() const { return RS_Vector(false); }
+RS_Vector RS_Spline::getStartpoint() const {
+  double t0 = 0.0;
+  double t1 = 0.0;
+  LC_CurveJet jet;
+  if (isClosed() || !getParameterDomain(t0, t1) ||
+      !tryEvaluateJet(t0, LC_CurveEvaluationSide::Right, jet)) {
+    return RS_Vector(false);
+  }
+  return jet.point;
+}
+
+RS_Vector RS_Spline::getEndpoint() const {
+  double t0 = 0.0;
+  double t1 = 0.0;
+  LC_CurveJet jet;
+  if (isClosed() || !getParameterDomain(t0, t1) ||
+      !tryEvaluateJet(t1, LC_CurveEvaluationSide::Left, jet)) {
+    return RS_Vector(false);
+  }
+  return jet.point;
+}
 
 /** Nearest (invalid overrides) */
-RS_Vector RS_Spline::doGetNearestEndpoint(const RS_Vector &, double *, RS_Entity** entity) const {
-  return RS_Vector(false);
+RS_Vector RS_Spline::doGetNearestEndpoint(const RS_Vector &coord, double *dist, RS_Entity** entity) const {
+  if (dist != nullptr) {
+    *dist = RS_MAXDOUBLE;
+  }
+  const RS_Vector start = getStartpoint();
+  const RS_Vector end = getEndpoint();
+  if (!start.valid || !end.valid) {
+    return RS_Vector(false); // closed or not a curve: no endpoints
+  }
+  const double toStart = coord.distanceTo(start);
+  const double toEnd = coord.distanceTo(end);
+  RS_Vector nearest = (toStart <= toEnd) ? start : end;
+  double nearestDistance = std::min(toStart, toEnd);
+  // and its corners: where a knot of full multiplicity breaks the tangent, as
+  // at the vertices of an offset polyline
+  const std::vector<double> breaks = getBreakParameters();
+  const std::vector<size_t> multiplicity = breakMultiplicities(m_data.knotslist, breaks);
+  for (size_t k = 1; k + 1 < breaks.size(); ++k) {
+    if (multiplicity[k] < m_data.degree) {
+      continue;
+    }
+    LC_CurveJet before;
+    LC_CurveJet after;
+    if (!tryEvaluateJet(breaks[k], LC_CurveEvaluationSide::Left, before) ||
+        !tryEvaluateJet(breaks[k], LC_CurveEvaluationSide::Right, after)) {
+      continue;
+    }
+    const double turn = std::atan2(std::abs(before.first.x * after.first.y - before.first.y * after.first.x),
+                                   RS_Vector::dotP(before.first, after.first));
+    if (!(turn > RS_TOLERANCE_ANGLE)) {
+      continue; // smooth, or no tangent to compare
+    }
+    const double distance = coord.distanceTo(before.point);
+    if (distance < nearestDistance) {
+      nearest = before.point;
+      nearestDistance = distance;
+    }
+  }
+  if (dist != nullptr) {
+    *dist = nearestDistance;
+  }
+  if (entity != nullptr) {
+    *entity = const_cast<RS_Spline *>(this);
+  }
+  return nearest;
 }
 RS_Vector RS_Spline::doGetNearestCenter(const RS_Vector &, double *, RS_Entity** centerEntity) const {
   return RS_Vector(false);
 }
-RS_Vector RS_Spline::doGetNearestMiddle(const RS_Vector &, double *, int) const {
-  return RS_Vector(false);
+const RS_Spline::ArcLengthTable &RS_Spline::arcLengthTable() const {
+  const std::uint64_t fingerprint = geometryFingerprint(m_data);
+  if (!m_arcLengthBuilt || fingerprint != m_arcLengthFor) {
+    m_arcLength = ArcLengthTable{};
+    if (!buildArcLengthTable(*this, m_arcLength)) {
+      m_arcLength = ArcLengthTable{}; // no table: t stays empty
+    }
+    m_arcLengthFor = fingerprint;
+    m_arcLengthBuilt = true;
+  }
+  return m_arcLength;
 }
-RS_Vector RS_Spline::doGetNearestDist(double, const RS_Vector &, double *) const {
-  return RS_Vector(false);
+
+RS_Vector RS_Spline::doGetNearestMiddle(const RS_Vector &coord, double *dist, const int middlePoints) const {
+  if (dist != nullptr) {
+    *dist = RS_MAXDOUBLE;
+  }
+  // the points dividing an open curve into middlePoints + 1 parts of equal length
+  if (isClosed() || middlePoints < 1) {
+    return RS_Vector(false);
+  }
+  const ArcLengthTable &table = arcLengthTable();
+  if (table.t.size() < 2) {
+    return RS_Vector(false);
+  }
+  const double total = table.length.back();
+  RS_Vector best(false);
+  double bestDistance = RS_MAXDOUBLE;
+  for (int k = 1; k <= middlePoints; ++k) {
+    const RS_Vector p = getPointAt(parameterAtLength(*this, table, total * k / (middlePoints + 1)));
+    if (p.valid && coord.distanceTo(p) < bestDistance) {
+      bestDistance = coord.distanceTo(p);
+      best = p;
+    }
+  }
+  if (dist != nullptr && best.valid) {
+    *dist = bestDistance;
+  }
+  return best;
+}
+RS_Vector RS_Spline::doGetNearestDist(const double distance, const RS_Vector &coord, double *dist) const {
+  if (dist != nullptr) {
+    *dist = RS_MAXDOUBLE;
+  }
+  // the point that far along the curve from the end nearer to coord
+  const RS_Vector start = getStartpoint();
+  const RS_Vector end = getEndpoint();
+  if (!start.valid || !end.valid || !std::isfinite(distance)) {
+    return RS_Vector(false);
+  }
+  const ArcLengthTable &table = arcLengthTable();
+  if (table.t.size() < 2) {
+    return RS_Vector(false);
+  }
+  const double total = table.length.back();
+  if (distance < 0.0 || distance > total) {
+    return RS_Vector(false);
+  }
+  const bool fromStart = coord.distanceTo(start) <= coord.distanceTo(end);
+  const RS_Vector p = getPointAt(parameterAtLength(*this, table, fromStart ? distance : total - distance));
+  if (dist != nullptr && p.valid) {
+    *dist = coord.distanceTo(p);
+  }
+  return p;
 }
 
 /** Transformations
@@ -474,11 +1036,30 @@ void RS_Spline::moveRef(const RS_Vector &ref, const RS_Vector &offset) {
 
 /** Revert direction */
 void RS_Spline::revertDirection() {
+  // The reversed curve runs over the mirrored parameter t' = U[0] + U[m] - t.
+  // Reversing a knot vector alone leaves it decreasing, which no spline accepts.
+  auto mirror = [](std::vector<double> &knots) {
+    if (knots.empty()) {
+      return;
+    }
+    const double sum = knots.front() + knots.back();
+    std::reverse(knots.begin(), knots.end());
+    for (double &k : knots) {
+      k = sum - k;
+    }
+  };
+  // Reversing the whole control array keeps a wrapped closed spline wrapped:
+  // its first and last degree entries still repeat each other.
   std::reverse(m_data.controlPoints.begin(), m_data.controlPoints.end());
   std::reverse(m_data.weights.begin(), m_data.weights.end());
-  std::reverse(m_data.knotslist.begin(), m_data.knotslist.end());
-  normalizeKnots();
+  std::reverse(m_data.fitPoints.begin(), m_data.fitPoints.end());
+  mirror(m_data.knotslist);
+  mirror(m_data.savedOpenKnots);
   update();
+}
+
+std::vector<RS_Entity *> RS_Spline::createOffset(const RS_Vector &coord, const double &distance) const {
+  return LC_CurveOffset::createLegacyOffset(*this, coord, distance);
 }
 
 /** Draw */
@@ -705,42 +1286,62 @@ std::ostream &operator<<(std::ostream &os, const RS_Spline &l) {
 }
 
 /** Derivative zeros */
-std::vector<double> RS_Spline::findDerivativeZeros(bool isX) const {
+std::vector<double> RS_Spline::findDerivativeZeros(const bool isX) const {
   std::vector<double> zeros;
-  const auto &U = m_data.knotslist;
-  const size_t p = m_data.degree;
-  const size_t n = m_data.controlPoints.size() - 1;
-  if (n < p) {
-      return zeros;
+  const std::vector<double> breaks = getBreakParameters();
+  if (breaks.size() < 2) {
+    return zeros;
   }
 
-  auto d = [this, isX](const double t) { return getDerivative(t, isX); };
-
-  auto funAddIf = [&](const double a, const double b, const double fa, const double fb) {
-    if ((fa * fb <= 0.0 || std::abs(fa) < 1e-9 || std::abs(fb) < 1e-9) &&
-        b - a > 1e-12) {
-        zeros.push_back(bisectDerivativeZero(a, b, fa, isX));
+  // The derivative component on the span being searched: at a break it takes the
+  // limit from inside that span, since it may jump there. NaN on failure.
+  auto derivative = [this, isX](const double t, const LC_CurveEvaluationSide side) {
+    LC_CurveJet jet;
+    if (!tryEvaluateJet(t, side, jet)) {
+      return std::numeric_limits<double>::quiet_NaN();
+    }
+    return isX ? jet.first.x : jet.first.y;
+  };
+  auto addIfBracketed = [&](const double a, const double b, const double fa, const double fb) {
+    if (fa == 0.0) {
+      zeros.push_back(a);
+    } else if (fb == 0.0) {
+      zeros.push_back(b);
+    } else {
+      const double root = bisectDerivativeZero(a, b, fa, fb, isX);
+      if (std::isfinite(root)) {
+        zeros.push_back(root);
+      }
     }
   };
 
-  double f0 = d(U[p]);
-  for (size_t i = p; i <= n; ++i) {
-    const double t1 = U[i + 1];
-    const double fm = d((U[i] + t1) * 0.5);
-    const double f1 = d(t1);
-
-    funAddIf(U[i], t1, f0, fm); // left half (f0 reused from previous)
-    funAddIf(t1, t1, fm, f1);   // right half
-
-    f0 = f1; // chain for next span
+  // A derivative component of a cubic span has up to two roots; sampling each
+  // span several times separates them unless they almost coincide.
+  constexpr int samplesPerSpan = 8;
+  for (size_t i = 0; i + 1 < breaks.size(); ++i) {
+    const double a = breaks[i];
+    const double b = breaks[i + 1];
+    double t0 = a;
+    double f0 = derivative(a, LC_CurveEvaluationSide::Right);
+    for (int k = 1; k <= samplesPerSpan; ++k) {
+      const bool last = (k == samplesPerSpan);
+      const double t1 = last ? b : a + (b - a) * k / samplesPerSpan;
+      const double f1 = derivative(t1, last ? LC_CurveEvaluationSide::Left
+                                            : LC_CurveEvaluationSide::Interior);
+      addIfBracketed(t0, t1, f0, f1);
+      t0 = t1;
+      f0 = f1;
+    }
   }
-
-  // endpoints if derivative ≈ 0
-  if (std::abs(d(U[p])) < 1e-9) {
-      zeros.push_back(U[p]);
-  }
-  if (std::abs(d(U[n + 1])) < 1e-9) {
-      zeros.push_back(U[n + 1]);
+  // A closed spline's component can change sign across the seam itself, which
+  // neither end interval brackets unless it evaluates to exactly zero.
+  if (isClosed()) {
+    const double first = derivative(breaks.front(), LC_CurveEvaluationSide::Right);
+    const double last = derivative(breaks.back(), LC_CurveEvaluationSide::Left);
+    if (std::isfinite(first) && std::isfinite(last) && first != 0.0 && last != 0.0 &&
+        std::signbit(first) != std::signbit(last)) {
+      zeros.push_back(breaks.front());
+    }
   }
 
   std::sort(zeros.begin(), zeros.end());
@@ -1143,6 +1744,321 @@ RS_Vector RS_Spline::getPointAt(const double t) const {
   return evaluateWithDerivs(t).pos;
 }
 
+bool RS_Spline::getParameterDomain(double &t0, double &t1) const {
+  if (!hasEvaluableLayout(m_data)) {
+    return false;
+  }
+  const auto &U = m_data.knotslist;
+  const double lo = U[m_data.degree];
+  const double hi = U[m_data.controlPoints.size()];
+  if (!std::isfinite(lo) || !std::isfinite(hi) || !(lo < hi)) {
+    return false;
+  }
+  t0 = lo;
+  t1 = hi;
+  return true;
+}
+
+std::vector<double> RS_Spline::getBreakParameters() const {
+  double t0 = 0.0;
+  double t1 = 0.0;
+  if (!getParameterDomain(t0, t1)) {
+    return {};
+  }
+  const auto &U = m_data.knotslist;
+  std::vector<double> breaks{t0};
+  for (size_t i = m_data.degree + 1; i < m_data.controlPoints.size(); ++i) {
+    const double u = U[i];
+    if (!std::isfinite(u) || u < breaks.back()) {
+      return {}; // decreasing knots: not a curve
+    }
+    if (u > breaks.back() && u < t1) {
+      breaks.push_back(u);
+    }
+  }
+  breaks.push_back(t1);
+  return breaks;
+}
+
+bool RS_Spline::tryBoundJet(const double a, const double b, LC_CurveJetBounds &bounds, const bool products) const {
+  bounds = LC_CurveJetBounds{};
+  double t0 = 0.0;
+  double t1 = 0.0;
+  if (!std::isfinite(a) || !std::isfinite(b) || !(a < b) || !getParameterDomain(t0, t1) ||
+      a < t0 || b > t1) {
+    return false;
+  }
+  const auto &U = m_data.knotslist;
+  const size_t p = m_data.degree;
+  const size_t ncp = m_data.controlPoints.size();
+  const auto domainBegin = U.begin() + static_cast<std::ptrdiff_t>(p);
+  const auto domainEnd = U.begin() + static_cast<std::ptrdiff_t>(ncp + 1);
+  const std::ptrdiff_t index = std::distance(U.begin(), std::upper_bound(domainBegin, domainEnd, a)) - 1;
+  if (index < static_cast<std::ptrdiff_t>(p) || index > static_cast<std::ptrdiff_t>(ncp) - 1) {
+    return false;
+  }
+  const auto span = static_cast<size_t>(index);
+  if (b > U[span + 1]) {
+    return false; // the box crosses a knot
+  }
+  bool equalWeights = true;
+  for (size_t i = span + 1 - p; i < span + p; ++i) {
+    if (!(U[i] <= U[i + 1]) || !std::isfinite(U[i]) || !std::isfinite(U[i + 1])) {
+      return false;
+    }
+  }
+  for (size_t i = span - p; i <= span; ++i) {
+    const double w = m_data.weights[i];
+    if (!std::isfinite(w) || !(w > 0.0) || !isFinite(m_data.controlPoints[i])) {
+      return false;
+    }
+    equalWeights = equalWeights && w == m_data.weights[span - p];
+  }
+
+  // The homogeneous control points of the span, and those of its first and
+  // second derivative splines. Bounding a derivative from its own control
+  // points, differences of the curve's, keeps a small box from dividing
+  // rounding in nearly equal Bezier points by its width.
+  // Relative to the span's first control point, so that the rational quotient
+  // bounds scale with the span's size rather than with its coordinates.
+  const RS_Vector origin = m_data.controlPoints[span - p];
+  HomogeneousBox h[g_maxDegree + 1];
+  for (size_t j = 0; j <= p; ++j) {
+    const size_t i = span - p + j;
+    const LC_Interval w = LC_Interval::point(m_data.weights[i]);
+    h[j] = {(LC_Interval::point(m_data.controlPoints[i].x) - LC_Interval::point(origin.x)) * w,
+            (LC_Interval::point(m_data.controlPoints[i].y) - LC_Interval::point(origin.y)) * w, w};
+  }
+  HomogeneousBox h1[g_maxDegree];
+  for (size_t j = 0; j < p; ++j) {
+    const LC_Interval gap = LC_Interval::point(U[span + j + 1]) - LC_Interval::point(U[span - p + j + 1]);
+    h1[j] = scaled(LC_Interval::point(static_cast<double>(p)) / gap, difference(h[j + 1], h[j]));
+  }
+  HomogeneousBox h2[g_maxDegree];
+  for (size_t j = 0; j + 1 < p; ++j) {
+    const LC_Interval gap = LC_Interval::point(U[span + j + 1]) - LC_Interval::point(U[span - p + j + 2]);
+    h2[j] = scaled(LC_Interval::point(static_cast<double>(p - 1)) / gap, difference(h1[j + 1], h1[j]));
+  }
+  // a derivative spline's knots are the curve's without the first (and last)
+  HomogeneousBox valueNet[g_maxDegree + 1];
+  HomogeneousBox firstNet[g_maxDegree];
+  HomogeneousBox secondNet[g_maxDegree];
+  segmentNet(h, p, span, a, b, [&U](const size_t k) { return U[k]; }, valueNet);
+  segmentNet(h1, p - 1, span - 1, a, b, [&U](const size_t k) { return U[k + 1]; }, firstNet);
+  const HomogeneousBox zero{LC_Interval::point(0.0), LC_Interval::point(0.0), LC_Interval::point(0.0)};
+  if (p < 2) {
+    secondNet[0] = zero;
+  } else {
+    segmentNet(h2, p - 2, span - 2, a, b, [&U](const size_t k) { return U[k + 2]; }, secondNet);
+  }
+  const HomogeneousBox value = hullOfNet(valueNet, p);
+  const HomogeneousBox first = hullOfNet(firstNet, p - 1);
+  const HomogeneousBox second = hullOfNet(secondNet, (p < 2) ? 0 : p - 2);
+  const LC_Interval &ax = value.x;
+  const LC_Interval &ay = value.y;
+  const LC_Interval &ax1 = first.x;
+  const LC_Interval &ay1 = first.y;
+  const LC_Interval &ax2 = second.x;
+  const LC_Interval &ay2 = second.y;
+
+  LC_CurveJetBounds result;
+  if (equalWeights) {
+    // a polynomial curve: C = A / w with constant w
+    const LC_Interval w = LC_Interval::point(m_data.weights[span - p]);
+    result = {ax / w, ay / w, ax1 / w, ay1 / w, ax2 / w, ay2 / w};
+    if (products) {
+      // |C'|^2 and C' x C'' from the products of the derivatives' nets, which
+      // cancel only by rounding where C' and C'' are parallel
+      const LC_Interval w2 = w * w;
+      const size_t q2 = (p < 2) ? 0 : p - 2;
+      result.speedSquaredProduct = productHull(p - 1, p - 1, [&](const size_t i, const size_t j) {
+        return (firstNet[i].x * firstNet[j].x + firstNet[i].y * firstNet[j].y) / w2;
+      });
+      result.crossProduct = productHull(p - 1, q2, [&](const size_t i, const size_t j) {
+        return (firstNet[i].x * secondNet[j].y - firstNet[i].y * secondNet[j].x) / w2;
+      });
+    }
+  } else {
+    const LC_Interval &w = value.w;
+    const LC_Interval &w1 = first.w;
+    const LC_Interval &w2 = second.w;
+    if (!w.isPositive()) {
+      return false;
+    }
+    // C = A/W, C' = (A' - W'C)/W, C'' = (A'' - 2W'C' - W''C)/W
+    const LC_Interval two = LC_Interval::point(2.0);
+    result.x = ax / w;
+    result.y = ay / w;
+    result.dx = (ax1 - w1 * result.x) / w;
+    result.dy = (ay1 - w1 * result.y) / w;
+    result.ddx = (ax2 - two * w1 * result.dx - w2 * result.x) / w;
+    result.ddy = (ay2 - two * w1 * result.dy - w2 * result.y) / w;
+  }
+  result.x = result.x + LC_Interval::point(origin.x);
+  result.y = result.y + LC_Interval::point(origin.y);
+  if (!result.isValid()) {
+    return false;
+  }
+  bounds = result;
+  return true;
+}
+
+bool RS_Spline::tryStroke(const double tolerance, const size_t maxVertices,
+                          std::vector<RS_Vector> &vertices) const {
+  vertices.clear();
+  const std::vector<double> breaks = getBreakParameters();
+  if (breaks.size() < 2 || !std::isfinite(tolerance) || tolerance <= 0.0 || maxVertices < 2) {
+    return false;
+  }
+  const auto fail = [&vertices] {
+    vertices.clear();
+    return false;
+  };
+  const auto append = [&](const double t, const LC_CurveEvaluationSide side) {
+    LC_CurveJet jet;
+    if (vertices.size() >= maxVertices || !tryEvaluateJet(t, side, jet)) {
+      return false;
+    }
+    vertices.push_back(jet.point);
+    return true;
+  };
+  if (!append(breaks.front(), LC_CurveEvaluationSide::Right)) {
+    return fail();
+  }
+  // A knot of full multiplicity may break the curve: a span starts at its own
+  // right limit when that is more than jumpSlack away. Chords get the rest.
+  const double jumpSlack = tolerance / 8.0;
+  const double chordTolerance = tolerance - jumpSlack;
+  std::vector<std::pair<double, double>> pending;
+  for (size_t i = 1; i < breaks.size(); ++i) {
+    if (i > 1) {
+      LC_CurveJet start;
+      if (!tryEvaluateJet(breaks[i - 1], LC_CurveEvaluationSide::Right, start)) {
+        return fail();
+      }
+      if (start.point.distanceTo(vertices.back()) > jumpSlack &&
+          !append(breaks[i - 1], LC_CurveEvaluationSide::Right)) {
+        return fail();
+      }
+    }
+    pending.assign(1, {breaks[i - 1], breaks[i]});
+    while (!pending.empty()) {
+      const auto [a, b] = pending.back();
+      pending.pop_back();
+      LC_CurveJetBounds bounds;
+      if (!tryBoundJet(a, b, bounds)) {
+        return fail();
+      }
+      const double ddx = std::max(std::abs(bounds.ddx.lo()), std::abs(bounds.ddx.hi()));
+      const double ddy = std::max(std::abs(bounds.ddy.lo()), std::abs(bounds.ddy.hi()));
+      const double h = b - a;
+      if (h * h / 8.0 * std::hypot(ddx, ddy) > chordTolerance) {
+        const double mid = a + 0.5 * h;
+        if (!(mid > a && mid < b)) {
+          return fail(); // no parameter left to split
+        }
+        pending.emplace_back(mid, b);
+        pending.emplace_back(a, mid);
+        continue;
+      }
+      const bool spanEnd = b == breaks[i];
+      if (!append(b, spanEnd ? LC_CurveEvaluationSide::Left : LC_CurveEvaluationSide::Interior)) {
+        return fail();
+      }
+    }
+  }
+  return true;
+}
+
+bool RS_Spline::tryEvaluateJet(double t, const LC_CurveEvaluationSide side, LC_CurveJet &jet) const {
+  jet = LC_CurveJet{};
+  double t0 = 0.0;
+  double t1 = 0.0;
+  if (!std::isfinite(t) || !getParameterDomain(t0, t1)) {
+    return false;
+  }
+
+  // A parameter computed from the domain ends can miss them by a few ulps.
+  const double slack = 4.0 * std::numeric_limits<double>::epsilon() *
+                       std::max({std::abs(t0), std::abs(t1), t1 - t0});
+  if (t < t0) {
+    if (t < t0 - slack) {
+      return false;
+    }
+    t = t0;
+  } else if (t > t1) {
+    if (t > t1 + slack) {
+      return false;
+    }
+    t = t1;
+  }
+
+  LC_CurveEvaluationSide limit = side;
+  if (limit == LC_CurveEvaluationSide::Interior) {
+    limit = (t < t1) ? LC_CurveEvaluationSide::Right : LC_CurveEvaluationSide::Left;
+  }
+
+  // Knot span s with U[s] <= t < U[s+1] (right limit) or U[s] < t <= U[s+1]
+  // (left limit), searched among the spans of the domain.
+  const auto &U = m_data.knotslist;
+  const size_t p = m_data.degree;
+  const size_t ncp = m_data.controlPoints.size();
+  const auto domainBegin = U.begin() + static_cast<std::ptrdiff_t>(p);
+  const auto domainEnd = U.begin() + static_cast<std::ptrdiff_t>(ncp + 1);
+  const auto bound = (limit == LC_CurveEvaluationSide::Right)
+                         ? std::upper_bound(domainBegin, domainEnd, t)
+                         : std::lower_bound(domainBegin, domainEnd, t);
+  const std::ptrdiff_t index = std::distance(U.begin(), bound) - 1;
+  if (index < static_cast<std::ptrdiff_t>(p) || index > static_cast<std::ptrdiff_t>(ncp) - 1) {
+    return false; // left limit at t0 or right limit at t1
+  }
+  const auto span = static_cast<size_t>(index);
+  for (size_t i = span + 1 - p; i < span + p; ++i) {
+    if (!(U[i] <= U[i + 1])) {
+      return false;
+    }
+  }
+
+  double ders[3][g_maxDegree + 1];
+  if (!dersBasisFunctions(span, t, p, U, ders)) {
+    return false;
+  }
+
+  // Homogeneous numerator A and denominator W with their derivatives.
+  RS_Vector a[3]{RS_Vector{0.0, 0.0, 0.0}, RS_Vector{0.0, 0.0, 0.0}, RS_Vector{0.0, 0.0, 0.0}};
+  double w[3]{0.0, 0.0, 0.0};
+  for (size_t j = 0; j <= p; ++j) {
+    const size_t i = span - p + j;
+    const double wi = m_data.weights[i];
+    const RS_Vector &pi = m_data.controlPoints[i];
+    if (!std::isfinite(wi) || !(wi > 0.0) || !isFinite(pi)) {
+      return false;
+    }
+    for (int k = 0; k <= 2; ++k) {
+      a[k] += pi * (wi * ders[k][j]);
+      w[k] += wi * ders[k][j];
+    }
+  }
+  if (!std::isfinite(w[0]) || !(w[0] > 0.0)) {
+    return false;
+  }
+
+  // C = A/W, C' = (A' - W'C)/W, C'' = (A'' - 2W'C' - W''C)/W
+  // by the reciprocal: RS_Vector's operator/ leaves a vector undivided by
+  // anything below RS_TOLERANCE, and uniform tiny weights are a valid curve
+  const double inverse = 1.0 / w[0];
+  const RS_Vector point = a[0] * inverse;
+  const RS_Vector first = (a[1] - point * w[1]) * inverse;
+  const RS_Vector second = (a[2] - first * (2.0 * w[1]) - point * w[2]) * inverse;
+  if (!isFinite(point) || !isFinite(first) || !isFinite(second)) {
+    return false;
+  }
+  jet.point = point;
+  jet.first = first;
+  jet.second = second;
+  return true;
+}
+
 double RS_Spline::getDerivative(const double t, const bool isX) const {
   const auto d = evaluateWithDerivs(t);
   return isX ? d.der1.x : d.der1.y;
@@ -1175,161 +2091,54 @@ double RS_Spline::getSignedCurvature(const double t) const {
   return (vx * ay - vy * ax) / (speed * speed * speed);
 }
 
-RS_Spline::SplineDerivs RS_Spline::evaluateWithDerivs(double t) const {
-  SplineDerivs res{};
-  size_t p = m_data.degree;
-  if (p == 0 || m_data.controlPoints.empty()) {
-      return res;
+RS_Spline::SplineDerivs RS_Spline::evaluateWithDerivs(const double t) const {
+  SplineDerivs res;
+  LC_CurveJet jet;
+  if (tryEvaluateJet(t, LC_CurveEvaluationSide::Interior, jet)) {
+    res.pos = jet.point;
+    res.der1 = jet.first;
+    res.der2 = jet.second;
+  } else {
+    // a failure is invalid, never a curve point at the origin
+    res.pos = RS_Vector(false);
+    res.der1 = RS_Vector(false);
+    res.der2 = RS_Vector(false);
   }
-
-  const auto &U = m_data.knotslist;
-  const auto &P = m_data.controlPoints;
-  const auto &W = m_data.weights;
-  int ncp = static_cast<int>(P.size());
-  int span = findSpan(ncp - 1, static_cast<int>(p), t, U);
-
-  double ndu[4][4] = {};
-  double left[4] = {};
-  double right[4] = {};
-
-  ndu[0][0] = 1.0;
-
-  for (int j = 1; j <= static_cast<int>(p); ++j) {
-    left[j] = t - U[span + 1 - j];
-    right[j] = U[span + j] - t;
-    double saved = 0.0;
-    for (int r = 0; r < j; ++r) {
-      double den = right[r + 1] + left[j - r];
-      double tmp = ndu[r][j - 1] / den;
-      ndu[r][j] = saved + (right[r + 1] * tmp);
-      saved = left[j - r] * tmp;
-    }
-    ndu[j][j] = saved;
-  }
-
-  double N0[4], N1[4], N2[4];
-  for (int j = 0; j <= static_cast<int>(p); ++j) {
-      N0[j] = ndu[j][p];
-  }
-
-  // Unrolled DersBasisFuns for order 1 & 2 only
-  double a0[4], a1[4];
-  for (int r = 0; r <= static_cast<int>(p); ++r) {
-    a0[0] = 1.0;
-
-    // k=1
-    double d1 = 0.0;
-    int rk = r - 1;
-    int pk = p - 1;
-    if (r >= 1) {
-      a1[0] = a0[0] / ndu[pk + 1][rk];
-      d1 = a1[0] * ndu[rk][pk];
-    }
-    int j1 = rk >= -1 ? 1 : -rk;
-    int j2 = r - 1 <= pk ? 0 : p - r;
-    for (int j = j1; j <= j2; ++j) {
-      a1[j] = (a0[j] - a0[j - 1]) / ndu[pk + 1][rk + j];
-      d1 += a1[j] * ndu[rk + j][pk];
-    }
-    if (r <= pk) {
-      a1[1] = -a0[0] / ndu[pk + 1][r];
-      d1 += a1[1] * ndu[r][pk];
-    }
-    N1[r] = d1 * p;
-
-    // k=2 (only if p >= 2)
-    if (p < 2) {
-      N2[r] = 0.0;
-      continue;
-    }
-    double d2 = 0.0;
-    rk = r - 2;
-    pk = p - 2;
-    if (r >= 2) {
-      a0[0] = a1[0] / ndu[pk + 1][rk];
-      d2 = a0[0] * ndu[rk][pk];
-    }
-    j1 = rk >= -1 ? 1 : -rk;
-    j2 = r - 1 <= pk ? 1 : p - r;
-    for (int j = j1; j <= j2; ++j) {
-      a0[j] = (a1[j] - a1[j - 1]) / ndu[pk + 1][rk + j];
-      d2 += a0[j] * ndu[rk + j][pk];
-    }
-    if (r <= pk) {
-      a0[2] = -a1[1] / ndu[pk + 1][r];
-      d2 += a0[2] * ndu[r][pk];
-    }
-    N2[r] = d2 * p * (p - 1);
-  }
-
-  double w = 0, wd = 0, wdd = 0;
-  double cx = 0, cy = 0, cxd = 0, cyd = 0, cxdd = 0, cydd = 0;
-
-  for (int j = 0; j <= static_cast<int>(p); ++j) {
-    size_t i = span - p + j;
-    double wi = W[i];
-    double wx = wi * P[i].x;
-    double wy = wi * P[i].y;
-
-    w += wi * N0[j];
-    wd += wi * N1[j];
-    wdd += wi * N2[j];
-    cx += wx * N0[j];
-    cy += wy * N0[j];
-    cxd += wx * N1[j];
-    cyd += wy * N1[j];
-    cxdd += wx * N2[j];
-    cydd += wy * N2[j];
-  }
-
-  if (w < 1e-12) {
-      return res;
-  }
-
-  double w2 = w * w, w3 = w2 * w;
-
-  res.pos = RS_Vector(cx / w, cy / w);
-  res.der1 = RS_Vector((cxd * w - cx * wd) / w2, (cyd * w - cy * wd) / w2);
-  res.der2 = RS_Vector((cxdd * w - 2 * wd * cxd + wdd * cx) / w3,
-                       (cydd * w - 2 * wd * cyd + wdd * cy) / w3);
-
   return res;
 }
 
-/** Bisection for zero */
-/** Robust bracketed root finding with bisection + safe midpoint (no overflow,
- * early exact-zero exit) */
-double RS_Spline::bisectDerivativeZero(double low, double high, double f_low, const bool isX) const {
-  const double f_high = getDerivative(high, isX);
-
-  // Ensure bracketing (caller guarantees sign change or near-zero, but be
-  // defensive)
-  if (f_low * f_high > 0.0 && std::abs(f_low) >= RS_TOLERANCE &&
-      std::abs(f_high) >= RS_TOLERANCE) {
-      return low + ((high - low) * 0.5); // no root → return midpoint
+/**
+ * Bisection for a root of one derivative component on [low, high], given its
+ * values at both ends. Returns NaN unless the ends have opposite signs, so a
+ * missing root is never reported as the midpoint.
+ */
+double RS_Spline::bisectDerivativeZero(double low, double high, double fLow, double fHigh,
+                                       const bool isX) const {
+  if (!std::isfinite(fLow) || !std::isfinite(fHigh) ||
+      std::signbit(fLow) == std::signbit(fHigh)) {
+    return std::numeric_limits<double>::quiet_NaN();
   }
-
-  while (high - low >
-         RS_TOLERANCE *
-             (1.0 + std::abs(low + high))) { // relative + absolute tolerance
+  for (int iteration = 0; iteration < 200; ++iteration) {
     const double mid = low + ((high - low) * 0.5);
-    const double f_mid = getDerivative(mid, isX);
-
-    if (f_mid == 0.0) {
-        return mid; // exact zero → instant win
+    if (!(mid > low && mid < high)) {
+      break; // the bracket cannot shrink further
     }
-
-    if (std::signbit(f_low) != std::signbit(f_mid)) {
-      high = mid;
-    } else {
+    const double fMid = getDerivative(mid, isX);
+    if (!std::isfinite(fMid)) {
+      return std::numeric_limits<double>::quiet_NaN();
+    }
+    if (fMid == 0.0) {
+      return mid;
+    }
+    if (std::signbit(fMid) == std::signbit(fLow)) {
       low = mid;
-      f_low = f_mid;
+      fLow = fMid;
+    } else {
+      high = mid;
+      fHigh = fMid;
     }
   }
-
-  // Return the endpoint with smaller |f| (best approximation when
-  // finite-difference noise exists)
-  return std::abs(f_low) < std::abs(f_high) ? low : high;
+  return std::abs(fLow) < std::abs(fHigh) ? low : high;
 }
 
 void RS_Spline::normalizeKnots() {
