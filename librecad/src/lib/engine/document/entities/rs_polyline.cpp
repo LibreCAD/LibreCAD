@@ -27,6 +27,8 @@
 
 #include "rs_polyline.h"
 
+#include <memory>
+
 #include <iostream>
 
 #include "lc_containertraverser.h"
@@ -577,7 +579,23 @@ bool RS_Polyline::offset(const RS_Vector& coord, double distance) {
         }
     }
 
-    *this = *pnew;
+    // Take pnew's segments rather than assigning pnew: an assignment copies
+    // the pointers to its plain segments, which still name pnew as their
+    // parent (so they resolve their layer and pen through it), and leaks both
+    // pnew and this polyline's own segments.
+    const std::unique_ptr<RS_Polyline> result{pnew};
+    clear(); // this polyline's own segments
+    for (RS_Entity* segment : *result) {
+        segment->setParent(this);
+        RS_EntityContainer::addEntity(segment);
+    }
+    m_closingEntity = result->m_closingEntity;
+    result->setOwner(false);
+    result->clear(); // hands the segments over without deleting them
+    // pnew was cloned before its segments moved: the start and end are read
+    // back from the segments
+    updateEndpoints();
+    calculateBorders();
     return true;
 }
 

@@ -38,8 +38,10 @@
 #include "lc_splinepoints.h"
 #include "rs_circle.h"
 #include "rs_creation.h"
+#include "rs_layer.h"
 #include "rs_line.h"
 #include "rs_modification.h"
+#include "rs_polyline.h"
 #include "rs_preview.h"
 #include "rs_selection.h"
 #include "rs_settings.h"
@@ -771,4 +773,57 @@ TEST_CASE("A reference point on a spline through points takes the side from the 
         offsets += !e->isDeleted() && e != spline ? 1 : 0;
     }
     CHECK(offsets > 0);
+}
+
+// ---------------------------------------------------------------------------
+// Polylines
+// ---------------------------------------------------------------------------
+namespace {
+RS_Polyline* addPolyline(OffsetFixture& f, const std::vector<RS_Vector>& vertices, const bool closed = false) {
+    auto* polyline = f.add(new RS_Polyline(&f.m_graphic));
+    for (const RS_Vector& v : vertices) {
+        polyline->addVertex(v);
+    }
+    if (closed) {
+        polyline->setClosed(true);
+        polyline->endPolyline(); // adds the closing segment
+    }
+    return polyline;
+}
+
+} // namespace
+
+TEST_CASE("An offset polyline starts and ends where its segments do", "[offset][polyline]") {
+    // RS_Polyline::offset() copied the start and end of a clone taken before
+    // its segments moved, so an offset polyline kept its source's
+    OffsetFixture f;
+    RS_Polyline* polyline = addPolyline(f, {{0, 0}, {10, 0}, {10, 10}, {20, 10}, {20, 20}});
+    std::unique_ptr<RS_Entity> copy{polyline->clone()};
+    REQUIRE(copy->offset(RS_Vector{12.0, 5.0}, 1.0));
+    const auto* offset = static_cast<RS_Polyline*>(copy.get());
+    CHECK(offset->getStartpoint() == offset->entityAt(0)->getStartpoint());
+    CHECK(offset->getEndpoint() == offset->entityAt(offset->count() - 1)->getEndpoint());
+    CHECK(offset->getStartpoint().distanceTo(RS_Vector{0, -1}) < 1e-9);
+    CHECK(offset->getEndpoint().distanceTo(RS_Vector{21, 20}) < 1e-9);
+}
+
+TEST_CASE("An offset polyline holds its segments", "[offset][polyline]") {
+    // RS_Polyline::offset() assigned a clone to itself, which copied the
+    // pointers to the clone's segments: they still named the clone, never
+    // freed, as their parent, so they took the source's layer whatever the
+    // offset polyline was put on
+    OffsetFixture f;
+    RS_Polyline* polyline = addPolyline(f, {{0, 0}, {10, 0}, {10, 10}, {20, 10}});
+    std::unique_ptr<RS_Entity> copy{polyline->clone()};
+    REQUIRE(copy->offset(RS_Vector{12.0, 5.0}, 1.0));
+    auto* offset = static_cast<RS_Polyline*>(copy.get());
+    for (const RS_Entity* segment : *offset) {
+        CHECK(segment->getParent() == offset);
+    }
+    auto* layer = new RS_Layer(QStringLiteral("offsets"));
+    f.m_graphic.addLayer(layer);
+    offset->setLayer(layer);
+    for (const RS_Entity* segment : *offset) {
+        CHECK(segment->getLayer() == layer);
+    }
 }
