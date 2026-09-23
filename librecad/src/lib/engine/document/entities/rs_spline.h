@@ -31,6 +31,7 @@
 #define RS_SPLINE_H
 
 #include <iosfwd>
+#include <cstdint>
 #include <vector>
 
 #include "lc_curvejet.h"
@@ -379,13 +380,39 @@ protected:
     RS_Vector doGetNearestSelectedRef(const RS_Vector &coord, double *dist) const override;
     /** The point at a distance along an open spline from its nearer end; invalid if closed */
     RS_Vector doGetNearestDist(double distance, const RS_Vector& coord, double* dist) const override;
+public:
+  /**
+   * Arc length of the curve from the start of its domain, tabulated at the
+   * knots and at subdivisions of each knot span.
+   */
+  struct ArcLengthTable {
+    std::vector<double> t;
+    std::vector<double> length;
+  };
+
 private:
+  /**
+   * The table above for the spline's current data, tabulated on the first
+   * call and kept until the data change: it costs 40 evaluations of the
+   * curve per knot span, and every spline of a drawing is asked for a middle
+   * or distance snap on every mouse move. Empty t when the curve has none.
+   */
+  const ArcLengthTable &arcLengthTable() const;
+
+  mutable ArcLengthTable m_arcLength;
+  /** The data m_arcLength was tabulated for; getData() hands out a mutable reference. */
+  mutable std::uint64_t m_arcLengthFor{0};
+  mutable bool m_arcLengthBuilt{false};
+
   /**
    * The vertices update() draws the spline with: every knot span a share of
    * 32 segments over the domain and at least one, more where its chords would
-   * stray from it by more than a thousandth of its control points' extent,
-   * never more than 4096 in all. 32 uniform samples when the curve cannot be
-   * bounded.
+   * stray from it by more than a thousandth of its control points' extent.
+   * Refinement stops at 4096 vertices, after which each remaining span still
+   * gets the one vertex the curve cannot be drawn without, and one more where
+   * a knot of full multiplicity breaks it. A spline with more knot spans than
+   * that budget is drawn with 4096 uniform samples instead, and one that
+   * cannot be bounded with 32.
    */
   void fillDisplayPoints(std::vector<RS_Vector> &points) const;
 

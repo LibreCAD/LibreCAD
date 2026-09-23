@@ -29,6 +29,7 @@
 #include "rs_spline.h"
 
 #include <algorithm>
+#include <cstring>
 #include <cmath>
 #include <iostream>
 #include <limits>
@@ -44,7 +45,10 @@ namespace {
 constexpr double g_knotTolerance = 5e-6;
 
 // update() draws a spline with at least this many segments, more where it bends
-// by more than the relative tolerance, and never more than the cap.
+// by more than the relative tolerance. The cap stops the refinement: past it
+// each remaining knot span still gets the vertex it cannot be drawn without,
+// and a spline with more spans than the cap is drawn with that many uniform
+// samples instead.
 constexpr int g_minimumDisplaySegments = 32;
 constexpr size_t g_maximumDisplaySegments = 4096;
 constexpr double g_displayRelativeTolerance = 1e-3;
@@ -184,10 +188,37 @@ bool isFinite(const RS_Vector &v) {
  * Arc length of the curve from the start of its domain, tabulated at knots and
  * at subdivisions of each knot span (5-point Gauss-Legendre per piece).
  */
-struct ArcLengthTable {
-  std::vector<double> t;
-  std::vector<double> length;
-};
+using ArcLengthTable = RS_Spline::ArcLengthTable;
+
+/**
+ * A fingerprint of the data a table is built for. RS_Spline::getData() hands
+ * out a mutable reference, so a cache cannot rely on being told about a
+ * change; this walk over the data is a thousandth of the cost of the table.
+ */
+std::uint64_t geometryFingerprint(const RS_SplineData &data) {
+  std::uint64_t hash = 1469598103934665603ULL;
+  const auto mix = [&hash](const double value) {
+    std::uint64_t bits = 0;
+    static_assert(sizeof bits == sizeof value);
+    std::memcpy(&bits, &value, sizeof bits);
+    hash = (hash ^ bits) * 1099511628211ULL;
+  };
+  mix(static_cast<double>(data.degree));
+  mix(static_cast<double>(data.controlPoints.size()));
+  mix(static_cast<double>(data.knotslist.size()));
+  mix(static_cast<double>(data.weights.size()));
+  for (const RS_Vector &point : data.controlPoints) {
+    mix(point.x);
+    mix(point.y);
+  }
+  for (const double knot : data.knotslist) {
+    mix(knot);
+  }
+  for (const double weight : data.weights) {
+    mix(weight);
+  }
+  return hash;
+}
 
 double speedAt(const RS_Spline &spline, const double t) {
   LC_CurveJet jet;
@@ -210,7 +241,37 @@ double pieceLength(const RS_Spline &spline, const double a, const double b) {
   return sum * half;
 }
 
-bool buildArcLengthTable(const RS_Spline &spline, ArcLengthTable &table) {
+/**
+ * The multiplicity of each of @p breaks among @p knots, which are
+ * non-decreasing and in the same order, in one walk over both. A count over
+ * the whole knot vector for every break is quadratic in the control points,
+ * and this runs for every spline of a drawing on every mouse move.
+ */
+std::vector<size_t> breakMultiplicities(const std::vector<double> &knots,
+                                        const std::vector<double> &breaks) {
+  std::vector<size_t> multiplicity(breaks.size(), 0);
+  if (!std::is_sorted(knots.begin(), knots.end())) {
+    // not a curve; counted the slow way rather than silently wrongly
+    for (size_t k = 0; k < breaks.size(); ++k) {
+      multiplicity[k] = static_cast<size_t>(std::count(knots.begin(), knots.end(), breaks[k]));
+    }
+    return multiplicity;
+  }
+  size_t i = 0;
+  for (size_t k = 0; k < breaks.size(); ++k) {
+    while (i < knots.size() && knots[i] < breaks[k]) {
+      ++i;
+    }
+    size_t j = i;
+    while (j < knots.size() && knots[j] == breaks[k]) {
+      ++j;
+    }
+    multiplicity[k] = j - i;
+  }
+  return multiplicity;
+}
+
+bool buildArcLengthTable(const RS_Spline &spline, ArcLengthTable &table) { // uncached
   const std::vector<double> breaks = spline.getBreakParameters();
   if (breaks.size() < 2) {
     return false;
@@ -678,6 +739,13 @@ void RS_Spline::fillDisplayPoints(std::vector<RS_Vector> &points) const {
     uniform();
     return;
   }
+  if (breaks.size() - 1 > g_maximumDisplaySegments) {
+    // more spans than the whole budget: a segment each would be tens of
+    // thousands of lines, so the curve is drawn with the budget, uniformly
+    points.clear();
+    fillStrokePoints(static_cast<int>(g_maximumDisplaySegments), points);
+    return;
+  }
   const auto append = [&](const double t, const LC_CurveEvaluationSide side) {
     LC_CurveJet jet;
     if (!tryEvaluateJet(t, side, jet)) {
@@ -693,10 +761,11 @@ void RS_Spline::fillDisplayPoints(std::vector<RS_Vector> &points) const {
   // Span by span, uniformly: a share of the minimum count, or more where a
   // chord, within h^2/8 |C''| of its arc, would stray past the tolerance.
   const auto &U = m_data.knotslist;
+  const std::vector<size_t> multiplicity = breakMultiplicities(U, breaks);
   for (size_t k = 0; k + 1 < breaks.size(); ++k) {
     const double a = breaks[k];
     const double b = breaks[k + 1];
-    if (k > 0 && static_cast<size_t>(std::count(U.begin(), U.end(), a)) >= m_data.degree) {
+    if (k > 0 && multiplicity[k] >= m_data.degree) {
       // a knot of full multiplicity may break the curve: start at its right limit
       LC_CurveJet start;
       if (!tryEvaluateJet(a, LC_CurveEvaluationSide::Right, start)) {
@@ -781,9 +850,9 @@ RS_Vector RS_Spline::doGetNearestEndpoint(const RS_Vector &coord, double *dist, 
   // and its corners: where a knot of full multiplicity breaks the tangent, as
   // at the vertices of an offset polyline
   const std::vector<double> breaks = getBreakParameters();
-  const std::vector<double> &knots = m_data.knotslist;
+  const std::vector<size_t> multiplicity = breakMultiplicities(m_data.knotslist, breaks);
   for (size_t k = 1; k + 1 < breaks.size(); ++k) {
-    if (static_cast<size_t>(std::count(knots.begin(), knots.end(), breaks[k])) < m_data.degree) {
+    if (multiplicity[k] < m_data.degree) {
       continue;
     }
     LC_CurveJet before;
@@ -814,13 +883,29 @@ RS_Vector RS_Spline::doGetNearestEndpoint(const RS_Vector &coord, double *dist, 
 RS_Vector RS_Spline::doGetNearestCenter(const RS_Vector &, double *, RS_Entity** centerEntity) const {
   return RS_Vector(false);
 }
+const RS_Spline::ArcLengthTable &RS_Spline::arcLengthTable() const {
+  const std::uint64_t fingerprint = geometryFingerprint(m_data);
+  if (!m_arcLengthBuilt || fingerprint != m_arcLengthFor) {
+    m_arcLength = ArcLengthTable{};
+    if (!buildArcLengthTable(*this, m_arcLength)) {
+      m_arcLength = ArcLengthTable{}; // no table: t stays empty
+    }
+    m_arcLengthFor = fingerprint;
+    m_arcLengthBuilt = true;
+  }
+  return m_arcLength;
+}
+
 RS_Vector RS_Spline::doGetNearestMiddle(const RS_Vector &coord, double *dist, const int middlePoints) const {
   if (dist != nullptr) {
     *dist = RS_MAXDOUBLE;
   }
   // the points dividing an open curve into middlePoints + 1 parts of equal length
-  ArcLengthTable table;
-  if (isClosed() || middlePoints < 1 || !buildArcLengthTable(*this, table)) {
+  if (isClosed() || middlePoints < 1) {
+    return RS_Vector(false);
+  }
+  const ArcLengthTable &table = arcLengthTable();
+  if (table.t.size() < 2) {
     return RS_Vector(false);
   }
   const double total = table.length.back();
@@ -843,10 +928,13 @@ RS_Vector RS_Spline::doGetNearestDist(const double distance, const RS_Vector &co
     *dist = RS_MAXDOUBLE;
   }
   // the point that far along the curve from the end nearer to coord
-  ArcLengthTable table;
   const RS_Vector start = getStartpoint();
   const RS_Vector end = getEndpoint();
-  if (!start.valid || !end.valid || !std::isfinite(distance) || !buildArcLengthTable(*this, table)) {
+  if (!start.valid || !end.valid || !std::isfinite(distance)) {
+    return RS_Vector(false);
+  }
+  const ArcLengthTable &table = arcLengthTable();
+  if (table.t.size() < 2) {
     return RS_Vector(false);
   }
   const double total = table.length.back();
