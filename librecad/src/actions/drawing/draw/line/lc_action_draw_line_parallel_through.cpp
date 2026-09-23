@@ -124,7 +124,7 @@ void LC_ActionDrawLineParallelThrough::onMouseMoveEvent([[maybe_unused]] const i
             *m_coord = getFreeSnapAwarePoint(e, snap);
             highlightSelected(m_entity);
             QList<RS_Entity*> parallels;
-            RS_Creation::createParallelThrough(*m_coord, m_numberToCreate, m_entity, m_symmetric, m_distributeWithin, parallels);
+            RS_Creation::createParallelThrough(*m_coord, m_numberToCreate, m_entity, m_symmetric, m_distributeWithin, parallels, true);
             if (!parallels.empty()) {
                 // Described before the preview adopts them. A spline's offset can be
                 // several entities, so the count is what was created, not copies.

@@ -128,7 +128,7 @@ void LC_ActionDrawLineParallel::onMouseMoveEvent(const int status, const LC_Mous
         case SetEntity: {
             if (m_entity != nullptr) {
                 QList<RS_Entity*> parallels;
-                RS_Creation::createParallel(*m_coord, m_distance, m_numberToCreate, m_entity, false, parallels);
+                RS_Creation::createParallel(*m_coord, m_distance, m_numberToCreate, m_entity, false, parallels, true);
                 if (!parallels.empty()) {
                     // Described before the preview adopts them. A spline's offset can be
                     // several entities, so the count is what was created, not copies.

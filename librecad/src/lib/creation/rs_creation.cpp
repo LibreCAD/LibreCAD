@@ -99,7 +99,7 @@ namespace {
  */
 void RS_Creation::createParallelThrough(const RS_Vector& coord, const int number, RS_Entity* e, const bool symmetric,
                                         bool distributeWithin,
-                                        QList<RS_Entity*>& createdEntities) {
+                                        QList<RS_Entity*>& createdEntities, const bool forPreview) {
     // check given entity:
     if (e == nullptr) {
         return;
@@ -129,7 +129,7 @@ void RS_Creation::createParallelThrough(const RS_Vector& coord, const int number
     }
 
     if (dist < RS_MAXDOUBLE) {
-        return createParallel(coord, dist, number, e, symmetric,  createdEntities);
+        return createParallel(coord, dist, number, e, symmetric, createdEntities, forPreview);
     }
 }
 
@@ -149,7 +149,7 @@ void RS_Creation::createParallelThrough(const RS_Vector& coord, const int number
  *
  */
 void RS_Creation::createParallel(const RS_Vector& coord, const double distance, const int number, RS_Entity* e, const bool symmetric,
-                                 QList<RS_Entity*>& createdEntities) {
+                                 QList<RS_Entity*>& createdEntities, const bool forPreview) {
     // check given entity:
     if (e == nullptr) {
         return;
@@ -168,7 +168,7 @@ void RS_Creation::createParallel(const RS_Vector& coord, const double distance, 
         case RS2::EntityParabola:
         case RS2::EntitySplinePoints:
         case RS2::EntitySpline:
-            createParallelCurve(coord, distance, number, e, createdEntities);
+            createParallelCurve(coord, distance, number, e, createdEntities, forPreview);
             break;
         default:
             break;
@@ -361,14 +361,19 @@ void RS_Creation::createParallelCircle(const RS_Vector& coord, double distance, 
  * @param createdEntities
  */
 void RS_Creation::createParallelCurve(const RS_Vector& coord, const double distance, const int number, const RS_Entity* e,
-                                      QList<RS_Entity*>& createdEntities) {
+                                      QList<RS_Entity*>& createdEntities, const bool forPreview) {
     Q_ASSERT(e != nullptr);
 
     // A spline's offset may change type and have several pieces, so each copy
     // comes from createOffset(). A copy that fails ends the series instead of
     // adding an unchanged clone: a larger distance on the same side fails too.
     for (int i = 1; i <= number; ++i) {
-        const std::vector<RS_Entity*> copy = e->createOffset(coord, i * distance);
+        // the pointer asks for every copy again on every move: a preview is
+        // offset within the smaller limits it can afford
+        const std::vector<RS_Entity*> copy =
+            (forPreview && LC_CurveOffset::isSupportedSource(*e))
+                ? LC_CurveOffset::createPreviewOffset(*e, coord, i * distance)
+                : e->createOffset(coord, i * distance);
         if (copy.empty()) {
             break;
         }

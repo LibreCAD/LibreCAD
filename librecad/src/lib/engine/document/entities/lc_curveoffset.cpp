@@ -4977,4 +4977,24 @@ std::vector<RS_Entity*> createLegacyOffset(const RS_Entity& source, const RS_Vec
     return entities;
 }
 
+std::vector<RS_Entity*> createPreviewOffset(const RS_Entity& source, const RS_Vector& coord, const double distance) {
+    const double magnitude = std::abs(distance);
+    LC_CurveOffsetOptions options = makeOffsetOptions(source, magnitude);
+    options.maxSamples = std::max<std::size_t>(1, options.maxSamples / 8);
+    options.maxIntersectionPairs = std::max<std::size_t>(1, options.maxIntersectionPairs / 8);
+    LC_OffsetSourceBudget budget = makeDirectSourceBudget();
+    budget.maxCubicPieces = std::max<std::size_t>(1, budget.maxCubicPieces / 8);
+    budget.maxOutputEntities = std::max<std::size_t>(1, budget.maxOutputEntities / 8);
+    budget.maxDeepEntities = std::max<std::size_t>(1, budget.maxDeepEntities / 8);
+    LC_CurveOffsetMaterializationResult result =
+        createEntities(source, makeDirectionRequest(coord, magnitude), options, budget);
+    std::vector<RS_Entity*> entities;
+    if (result.status == LC_CurveOffsetStatus::Ok) {
+        for (std::unique_ptr<RS_Entity>& entity : result.entities) {
+            entities.push_back(entity.release());
+        }
+    }
+    return entities;
+}
+
 } // namespace LC_CurveOffset

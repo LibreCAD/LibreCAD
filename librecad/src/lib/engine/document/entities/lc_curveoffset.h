@@ -381,6 +381,14 @@ void collapseTinyReversals(std::vector<LC_OffsetBranch>& branches, double merge)
 
 std::vector<RS_Entity*> createLegacyOffset(const RS_Entity& source, const RS_Vector& coord, double distance);
 
+/**
+ * createLegacyOffset() with the limits a hover preview can afford: an eighth
+ * of the samples, intersection pairs and output pieces, as
+ * LC_OffsetBatchLimits::preview() gives Modify > Offset. A preview is redrawn
+ * for every mouse position, and the drawing tools ask for several offsets at
+ * once, so the full limits are a cost the pointer cannot carry.
+ */
+std::vector<RS_Entity*> createPreviewOffset(const RS_Entity& source, const RS_Vector& coord, double distance);
 
 /** buildDirectBranches(), then materializeBranches(): the programmatic entry point. */
 LC_CurveOffsetMaterializationResult createEntities(const RS_Entity& source, const LC_CurveOffsetRequest& request,
