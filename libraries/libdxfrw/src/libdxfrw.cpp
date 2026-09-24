@@ -1170,6 +1170,7 @@ void dxfRW::setDebug(DRW::DebugLevel lvl){
 bool dxfRW::read(DRW_Interface *interface_, bool ext){
     drw_assert(fileName.empty() == false);
     version = DRW::UNKNOWNV;
+    m_sourceVersion = DRW::UNKNOWNV;
     error = DRW::BAD_NONE;
     nextentity.clear();
     m_hasPendingEntityBoundary = false;
@@ -1231,6 +1232,7 @@ bool dxfRW::read(DRW_Interface *interface_, bool ext){
     bool isOk {processDxf()};
     filestr.close();
     version = (DRW::Version) reader->getVersion();
+    m_sourceVersion = reader->getSourceVersion();
     reader.reset();
     return isOk;
 }
@@ -1241,6 +1243,7 @@ bool dxfRW::readAscii(DRW_Interface *interface_, bool ext, std::string& content)
         return setError(DRW::BAD_UNKNOWN);
     }
     version = DRW::UNKNOWNV;
+    m_sourceVersion = DRW::UNKNOWNV;
     error = DRW::BAD_NONE;
     nextentity.clear();
     m_hasPendingEntityBoundary = false;
@@ -1254,6 +1257,7 @@ bool dxfRW::readAscii(DRW_Interface *interface_, bool ext, std::string& content)
     reader = std::make_unique<dxfReaderAscii>(&strstream);
     bool isOk {processDxf()};
     version = (DRW::Version) reader->getVersion();
+    m_sourceVersion = reader->getSourceVersion();
     reader.reset();
     return isOk;
 }
@@ -15935,6 +15939,10 @@ std::string dxfRW::toHexStr(int n){
 
 DRW::Version dxfRW::getVersion() const {
     return version;
+}
+
+DRW::Version dxfRW::getSourceVersion() const {
+    return m_sourceVersion;
 }
 
 DRW::error dxfRW::getError() const{

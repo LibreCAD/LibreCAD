@@ -4234,7 +4234,9 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
     RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading file: OK");
     if (success) {
       std::cout << "DXF file version: "
-                << printDwgVersion(m_dxfR->getVersion()).toStdString() << "\n";
+                << printDwgVersion(m_dxfR->getSourceVersion()).toStdString() << "\n";
+      // Save writes the drawing back in the version it was read in, if it can
+      m_graphic->setFormatType(formatForDxfVersion(m_dxfR->getSourceVersion()));
     }
     // graphic->setAutoUpdateBorders(true);
 
@@ -16016,6 +16018,27 @@ RS2::FormatType RS_FilterDXFRW::formatForDwgVersion(const DRW::Version version) 
     return RS2::FormatDWG2018;
   default: // R14 and older
     return RS2::FormatUnknown;
+  }
+}
+
+RS2::FormatType RS_FilterDXFRW::formatForDxfVersion(const DRW::Version version) {
+  switch (version) {
+  case DRW::AC1012:
+  case DRW::AC1014:
+    return RS2::FormatDXFRW14;
+  case DRW::AC1015:
+    return RS2::FormatDXFRW2000;
+  case DRW::AC1018:
+    return RS2::FormatDXFRW2004;
+  case DRW::AC1021:
+  case DRW::AC1024: // no R2010/R2013 DXF export yet: R2007
+  case DRW::AC1027:
+  case DRW::UNKNOWNV:
+    return RS2::FormatDXFRW;
+  case DRW::AC1032:
+    return RS2::FormatDXFRW2018;
+  default: // R12 and older
+    return RS2::FormatDXFRW12;
   }
 }
 

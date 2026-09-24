@@ -2005,6 +2005,7 @@ public:
   // The format that writes DWG files of @p version, or RS2::FormatUnknown
   // for a version LibreCAD cannot write.
   static RS2::FormatType formatForDwgVersion(DRW::Version version);
+  static RS2::FormatType formatForDxfVersion(DRW::Version version);
 #endif
 
   // Import:

@@ -348,6 +348,10 @@ public:
     void markSourceHandleAmbiguous(std::uint32_t sourceHandle);
 
     DRW::Version getVersion() const;
+    //! The version a read file declares in $ACADVER. getVersion() gives the
+    //! version it was decoded as, which is one for R13-R2004 and one for
+    //! R2007 and later.
+    DRW::Version getSourceVersion() const;
     DRW::error getError() const;
 
     std::uint32_t getBlockRecordHandleToWrite(const std::string& blockName) const;
@@ -610,6 +614,7 @@ private:
 
 private:
     DRW::Version version { DRW::UNKNOWNV };
+    DRW::Version m_sourceVersion { DRW::UNKNOWNV };
     DRW::error error {DRW::BAD_NONE};
     bool m_writeError {false};
     std::string fileName;

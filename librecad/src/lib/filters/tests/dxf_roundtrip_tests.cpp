@@ -30,6 +30,7 @@
 
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/generators/catch_generators.hpp>
 
 #include <algorithm>
 #include <cmath>
@@ -37,6 +38,7 @@
 #include <cstdlib>
 #include <filesystem>
 #include <fstream>
+#include <iterator>
 #include <limits>
 #include <map>
 #include <memory>
@@ -44,6 +46,7 @@
 #include <set>
 #include <string>
 #include <tuple>
+#include <utility>
 #include <vector>
 
 #include <QCoreApplication>
@@ -3719,6 +3722,77 @@ TEST_CASE("DXF export follows an extension dictionary moved off a structural han
                                   [](const auto &group) { return group.first == "330"; });
   REQUIRE(owner != dictionary.cend());
   CHECK(owner->second == recordGroupValues(out, "LINE", "5").front());
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
+namespace {
+// An R2000 drawing with an object LibreCAD keeps only as raw DXF.
+const char *const kR2000WithRawMaterial =
+    "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1015\n0\nENDSEC\n"
+    "0\nSECTION\n2\nENTITIES\n"
+    "0\nLINE\n5\nA1\n100\nAcDbEntity\n8\n0\n100\nAcDbLine\n"
+    "10\n0\n20\n0\n30\n0\n11\n10\n21\n0\n31\n0\n"
+    "0\nENDSEC\n"
+    "0\nSECTION\n2\nOBJECTS\n"
+    "0\nDICTIONARY\n5\nC\n330\n0\n100\nAcDbDictionary\n281\n1\n"
+    "3\nACAD_MATERIAL\n350\n80\n"
+    "0\nDICTIONARY\n5\n80\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+    "3\nMINE\n350\n90\n"
+    "0\nMATERIAL\n5\n90\n330\n80\n100\nAcDbMaterial\n1\nMINE\n"
+    "0\nENDSEC\n0\nEOF\n";
+} // namespace
+
+TEST_CASE("DXF import records its version and saves back in it",
+          "[dxf][roundtrip][filter][version]") {
+  ensureSettings();
+  // The version the file declares, not the one it is decoded as (R2000 for
+  // R13 to R2004, R2007 for R2007 and later).
+  const auto [acadVer, format] = GENERATE(
+      std::pair<std::string, RS2::FormatType>{"AC1014", RS2::FormatDXFRW14},
+      std::pair<std::string, RS2::FormatType>{"AC1015", RS2::FormatDXFRW2000},
+      std::pair<std::string, RS2::FormatType>{"AC1018", RS2::FormatDXFRW2004},
+      std::pair<std::string, RS2::FormatType>{"AC1021", RS2::FormatDXFRW},
+      std::pair<std::string, RS2::FormatType>{"AC1032", RS2::FormatDXFRW2018});
+  CAPTURE(acadVer);
+  const std::string src = tmpFile(("version-" + acadVer + "-src.dxf").c_str());
+  const std::string out = tmpFile(("version-" + acadVer + "-out.dxf").c_str());
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+  std::string text = kR2000WithRawMaterial;
+  const std::string r2000 = "AC1015";
+  text.replace(text.find(r2000), r2000.size(), acadVer);
+  writeText(src, text);
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  REQUIRE(graphic.getFormatType() == format);
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              graphic.getFormatType()));
+  }
+  CHECK(recordGroupValues(out, "MATERIAL", "5") == std::vector<std::string>{"90"});
+  {
+    // closed before the file is removed below (Windows keeps open files)
+    std::ifstream written(out);
+    const std::string saved((std::istreambuf_iterator<char>(written)),
+                            std::istreambuf_iterator<char>());
+    CHECK(saved.find("$ACADVER\n  1\n" + acadVer) != std::string::npos);
+  }
+
+  RS_Graphic reread;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(reread, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+  CHECK(reread.getFormatType() == format);
 
   std::filesystem::remove(src);
   std::filesystem::remove(out);
