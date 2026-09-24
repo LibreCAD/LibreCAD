@@ -353,7 +353,7 @@ void RS_Dimension::createHorizontalTextDimensionLine(const RS_Vector& p1, const 
     RS_Pen dimensionLinePen = getPenDimensionLine();
 
     // Create dimension line:
-    auto dimensionLine{new RS_Line{this, p1, p2}};
+    auto dimensionLine = std::make_unique<RS_Line>(this, p1, p2);
     RS_Line* dimensionLineInside1{nullptr};
     RS_Line* dimensionLineInside2{nullptr};
     RS_Line* dimensionLineOutside1{nullptr};
@@ -393,7 +393,7 @@ void RS_Dimension::createHorizontalTextDimensionLine(const RS_Vector& p1, const 
     c.addRectangle(textCorner1, textCorner2);
 
     // treat line as infinitely long in both directions
-    RS_VectorSolutions sol1 = getIntersectionsLineContainer(dimensionLine, &c, true);
+    RS_VectorSolutions sol1 = getIntersectionsLineContainer(dimensionLine.get(), &c, true);
     textIntersectionLength = sol1.get(0).distanceTo(sol1.get(1));
 
     // determine if we should use outside arrows
@@ -514,9 +514,9 @@ void RS_Dimension::createHorizontalTextDimensionLine(const RS_Vector& p1, const 
     h = (text->getUsedTextHeight() / 2) + dimgap;
     RS_Vector s1 = text->getInsertionPoint() - RS_Vector{w, h};
     RS_Vector s2 = text->getInsertionPoint() + RS_Vector{w, h};
-    c = RS_EntityContainer();
+    c.clear();
     c.addRectangle(s1, s2);
-    sol1 = getIntersectionsLineContainer(dimensionLine, &c);
+    sol1 = getIntersectionsLineContainer(dimensionLine.get(), &c);
     if (sol1.size() > 1) {
         // the text bounding box intersects dimensionLine on two sides
         splitDimensionLine = true;
@@ -591,7 +591,7 @@ void RS_Dimension::createHorizontalTextDimensionLine(const RS_Vector& p1, const 
         }
     }
     else {
-        addDimComponentEntity(dimensionLine, dimensionLinePen);
+        addDimComponentEntity(dimensionLine.release(), dimensionLinePen);
     }
 }
 

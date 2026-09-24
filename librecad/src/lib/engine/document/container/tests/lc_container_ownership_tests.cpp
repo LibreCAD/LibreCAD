@@ -28,9 +28,19 @@
 #include "doc_plugin_interface.h"
 #include "lc_actiondrawdual.h"
 #include "lc_actiontestsupport.h"
+#include "lc_dimstyle.h"
+#include "lc_dimstyleslist.h"
 #include "lc_hyperbola.h"
 #include "rs_circle.h"
+#include "rs_dimlinear.h"
 #include "rs_line.h"
+
+#if defined(__has_feature)
+#if __has_feature(address_sanitizer)
+#include <sanitizer/allocator_interface.h>
+#define LC_TEST_HAS_ALLOCATOR_STATS 1
+#endif
+#endif
 
 namespace {
 
@@ -118,4 +128,29 @@ TEST_CASE("A plugin edit adds the edited entity once", "[plugins][ownership]") {
         CHECK(line->isDeleted() == (how == DPI::DELETE_ORIGINAL));
         f.reset(); // closing the drawing frees each entity once
     }
+}
+
+TEST_CASE("Updating a dimension with inside-horizontal text leaves nothing behind", "[dimension][ownership]") {
+    DrawingFixture f;
+    std::unique_ptr<LC_DimStyle> style{f.m_graphic.getDimStyleList()->getFallbackDimStyleFromVars()->getCopy()};
+    style->text()->setOrientationInside(LC_DimStyle::Text::TextOrientationPolicy::DRAW_HORIZONTALLY);
+    // RS_DimensionData takes ownership of the override.
+    const RS_DimensionData data(RS_Vector{0, 10}, RS_Vector{5, 10}, RS_MTextData::VAMiddle, RS_MTextData::HACenter,
+                                RS_MTextData::Exact, 1.0, "", "Standard", 0.0, 0.0, true, style.release(), false,
+                                false);
+    auto* dimension = new RS_DimLinear(&f.m_graphic, data, RS_DimLinearData(RS_Vector{0, 0}, RS_Vector{10, 0}, 0.0, 0.0));
+    f.m_graphic.addEntity(dimension);
+    dimension->update();
+    REQUIRE(dimension->count() > 0);
+
+#ifdef LC_TEST_HAS_ALLOCATOR_STATS
+    const std::size_t before = __sanitizer_get_current_allocated_bytes();
+#endif
+    for (int i = 0; i < 50; ++i) {
+        dimension->update();
+    }
+#ifdef LC_TEST_HAS_ALLOCATOR_STATS
+    CHECK(__sanitizer_get_current_allocated_bytes() <= before);
+#endif
+    CHECK(dimension->count() > 0);
 }
