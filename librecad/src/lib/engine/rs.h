@@ -140,6 +140,9 @@ namespace RS2 {
            stable for settings and plugins. */
         , FormatDWG2007 /**< DWG format (R2007, AC1021). */
 #endif
+        /* Also at the end, for the same reason. */
+        , FormatDXFRW2010 /**< DXF format. v2010. */
+        , FormatDXFRW2013 /**< DXF format. v2013. */
     };
 
     /*

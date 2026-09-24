@@ -42,6 +42,9 @@ namespace {
 /* Constant variables initialization - START */
     const QStringList FILTERS_STRING_LIST = {
         /* Drawing filters */
+        "Drawing Exchange DXF 2018 (*.dxf)",
+        "Drawing Exchange DXF 2013 (*.dxf)",
+        "Drawing Exchange DXF 2010 (*.dxf)",
         "Drawing Exchange DXF 2007 (*.dxf)",
         "Drawing Exchange DXF 2004 (*.dxf)",
         "Drawing Exchange DXF 2000 (*.dxf)",
@@ -63,6 +66,9 @@ namespace {
     const QList<RS2::FormatType> FILTERS_TYPE_LIST =
     {
         /* Drawing filters */
+        RS2::FormatDXFRW2018,
+        RS2::FormatDXFRW2013,
+        RS2::FormatDXFRW2010,
         RS2::FormatDXFRW,
         RS2::FormatDXFRW2004,
         RS2::FormatDXFRW2000,
@@ -138,7 +144,8 @@ namespace {
         LC_GROUP_GUARD("Paths");
         {
             QString defaultDir = LC_GET_STR("Save", QDir::toNativeSeparators(QDir::homePath()));
-            QString defaultFilter = LC_GET_STR("SaveDrawingFilter", FILTERS_STRING_LIST.at(0));
+            // DXF 2007 stays the default, as before the newer versions were listed.
+            QString defaultFilter = LC_GET_STR("SaveDrawingFilter", FILTERS_STRING_LIST.at(FILTERS_TYPE_LIST.indexOf(RS2::FormatDXFRW)));
             return {defaultDir, defaultFilter};
         }
     }
