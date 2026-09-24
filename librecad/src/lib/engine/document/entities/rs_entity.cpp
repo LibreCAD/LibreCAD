@@ -135,9 +135,10 @@ RS_Entity::RS_Entity(RS_EntityContainer* parent)
 //     init(setPenToActive);
 // }
 
-RS_Entity::RS_Entity(const RS_Entity& other) : m_parent{other.m_parent}, m_minV{other.m_minV}, m_maxV{other.m_maxV}, m_layer{other.m_layer},
-                                               m_updateEnabled{other.m_updateEnabled}, m_pImpl{std::make_unique<Impl>(*other.m_pImpl)} {
-    setFlag(RS2::FlagVisible);
+RS_Entity::RS_Entity(const RS_Entity& other) : RS_Undoable{other}, m_parent{other.m_parent}, m_minV{other.m_minV}, m_maxV{other.m_maxV},
+                                               m_layer{other.m_layer}, m_updateEnabled{other.m_updateEnabled},
+                                               m_pImpl{std::make_unique<Impl>(*other.m_pImpl)} {
+    delFlag(RS2::FlagsTransient);
     initId();
 }
 
@@ -149,7 +150,7 @@ RS_Entity& RS_Entity::operator =(const RS_Entity& other) {
         m_layer = other.m_layer;
         m_updateEnabled = other.m_updateEnabled;
         m_pImpl = std::make_unique<Impl>(*other.m_pImpl);
-        setFlag(RS2::FlagVisible);
+        setFlags((getFlags() & RS2::FlagsTransient) | (other.getFlags() & ~RS2::FlagsTransient));
         initId();
     }
     return *this;

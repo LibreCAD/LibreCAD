@@ -17,11 +17,13 @@
 **
 **********************************************************************/
 
-// What a copy of a container is: a value copy or clone shares nothing with
-// the original and owns its own children.
+// What a copy of an entity is: a value copy or clone shares nothing with the
+// original, owns its own children, keeps the original's visible state, and
+// drops its selection and deletion state.
 
 #include <catch2/catch_test_macros.hpp>
 
+#include <filesystem>
 #include <functional>
 #include <memory>
 #include <set>
@@ -30,10 +32,12 @@
 #include "lc_actiontestsupport.h"
 #include "lc_documentinvariants.h"
 #include "rs_block.h"
+#include "rs_filterdxfrw.h"
 #include "rs_fontlist.h"
 #include "rs_hatch.h"
 #include "rs_insert.h"
 #include "rs_line.h"
+#include "rs_modification.h"
 #include "rs_mtext.h"
 #include "rs_polyline.h"
 #include "rs_settings.h"
@@ -290,4 +294,58 @@ TEST_CASE("Adding a plain container to a drawing adds only the container", "[cop
     CHECK(d->m_graphic.count() == 1);
     CHECK(line->getParent() == container);
     d.reset(); // each entity is freed once
+}
+
+TEST_CASE("A copy drops the document state and keeps the rest of the flags", "[copy][flags]") {
+    lc::test::application();
+    RS_Line line(nullptr, RS_LineData(RS_Vector{0, 0}, RS_Vector{1, 1}));
+    line.setFlag(RS2::FlagSelected | RS2::FlagSelected1 | RS2::FlagSelected2 | RS2::FlagHighlighted |
+                 RS2::FlagProcessed | RS2::FlagInVisualSnap | RS2::FlagDeleted);
+    line.setFlag(RS2::FlagHatchChild | RS2::FlagTransparent);
+    line.setVisible(false);
+    const std::unique_ptr<RS_Entity> clone{line.clone()};
+    CHECK((clone->getFlags() & RS2::FlagsTransient) == 0);
+    CHECK(clone->getFlag(RS2::FlagHatchChild));
+    CHECK(clone->getFlag(RS2::FlagTransparent));
+    CHECK_FALSE(clone->isVisible());
+    CHECK(clone->getId() != line.getId());
+}
+
+TEST_CASE("An invisible entity stays invisible when moved and saved", "[copy][flags][dxf]") {
+    Drawing d;
+    auto* line = new RS_Line(&d.m_graphic, RS_LineData(RS_Vector{0, 0}, RS_Vector{10, 0}));
+    d.m_graphic.addEntity(line);
+    line->setVisible(false);
+    d.m_graphic.undoableModify(d.m_view.getViewPort(), [&](LC_DocumentModificationBatch& ctx) -> bool {
+        RS_MoveData data;
+        data.offset = RS_Vector{0, 5};
+        RS_Modification::move(data, {line}, false, ctx);
+        return true;
+    });
+    int live = 0;
+    for (const RS_Entity* e : d.m_graphic) {
+        if (!e->isDeleted()) {
+            ++live;
+            CHECK_FALSE(e->isVisible());
+        }
+    }
+    REQUIRE(live == 1);
+
+    const auto path = std::filesystem::temp_directory_path() / "lc_copy_semantics_invisible.dxf";
+    {
+        RS_FilterDXFRW filter;
+        REQUIRE(filter.fileExport(d.m_graphic, QString::fromStdString(path.string()), RS2::FormatDXFRW));
+    }
+    RS_Graphic reread;
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(reread, QString::fromStdString(path.string()), RS2::FormatDXFRW));
+    int lines = 0;
+    for (const RS_Entity* e : reread) {
+        if (e->rtti() == RS2::EntityLine) {
+            ++lines;
+            CHECK_FALSE(e->isVisible());
+        }
+    }
+    CHECK(lines == 1);
+    std::filesystem::remove(path);
 }
