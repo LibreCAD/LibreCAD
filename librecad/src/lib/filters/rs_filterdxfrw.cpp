@@ -14864,43 +14864,115 @@ bool RS_FilterDXFRW::commitDwgGeneratedEntityWrite(std::uint32_t outputHandle) {
 void RS_FilterDXFRW::prepareDwgEntityHandleMap() {
   if (m_dwgW == nullptr || !m_dwgWriteEntityHandleByEntity.empty())
     return;
+  m_dwgWriteGeneratedEntityHandleByEntity.clear();
+  m_dwgWriteInsertChildHandlesByEntity.clear();
 
-  auto reserveContainerEntities = [this](RS_EntityContainer *container) {
+  // R2000 entities are written with nolinks=1: an owner's entity chain is
+  // implied by consecutive handles, so the writer refuses an owner whose
+  // entity handles leave a gap (dwgWriter15::emitDeferredBlockControl).
+  // Source-backed entities get their handles here, before the table and
+  // control objects are written; everything else would get its handle only
+  // when it is encoded, after those objects. In an R2000 container that
+  // holds a source-backed entity, therefore take every handle the container
+  // will own here: the ATTRIB..SEQEND handles right after each INSERT, and,
+  // after all source-backed entities, those of entities without a source
+  // handle. The latter go last so that one the writers drop (an empty
+  // polyline, say) leaves its unused handle after the chain, not inside it.
+  const bool contiguousOwnerChains = m_dwgW->getVersion() <= DRW::AC1015;
+  auto reserveContainerEntities = [this, contiguousOwnerChains](
+                                      RS_EntityContainer *container) {
     if (container == nullptr)
       return;
-    for (RS_Entity *entity :
-         lc::LC_ContainerTraverser{*container, RS2::ResolveNone}.entities()) {
-      if (entity == nullptr || entity->getFlag(RS2::FlagDeleted))
-        continue;
-      // INSERT attributes are encoded inside the parent INSERT frame;
-      // they do not own independent output handles.
-      if (isGeneratedInsertAttrib(entity))
-        continue;
+    // INSERT attributes are encoded inside the parent INSERT frame; they do
+    // not own independent output handles.
+    const auto hasOwnFrame = [](const RS_Entity *entity) {
+      return entity != nullptr && !entity->getFlag(RS2::FlagDeleted) &&
+             !isGeneratedInsertAttrib(entity);
+    };
+    const std::vector<RS_Entity *> entities =
+        lc::LC_ContainerTraverser{*container, RS2::ResolveNone}.entities();
+    const bool reserveAll =
+        contiguousOwnerChains &&
+        std::any_of(entities.cbegin(), entities.cend(),
+                    [&hasOwnFrame](const RS_Entity *entity) {
+                      return hasOwnFrame(entity) && entity->sourceHandle() != 0;
+                    });
+    // Count the ATTRIBs writeInsert() will gather for each INSERT: sibling
+    // texts tagged with the INSERT's id.
+    std::map<unsigned long long, std::size_t> attributeCounts;
+    if (reserveAll) {
+      for (const RS_Entity *candidate : *container) {
+        if (candidate == nullptr ||
+            (candidate->rtti() != RS2::EntityText &&
+             candidate->rtti() != RS2::EntityMText))
+          continue;
+        const auto sidecar = extractInsertAttribSidecar(candidate);
+        if (sidecar)
+          ++attributeCounts[sidecar->ownerId];
+      }
+    }
+
+    const auto reserve = [&](RS_Entity *entity) {
       const std::uint32_t sourceHandle = entity->sourceHandle();
-      if (sourceHandle == 0)
-        continue;
-      noteDwgWriteSourceKind(
-          sourceHandle,
-          RS_FilterDXFRW_DwgWriteIdentityRegistry::DwgWriteSourceKind::Entity);
+      if (sourceHandle != 0)
+        noteDwgWriteSourceKind(sourceHandle,
+                               RS_FilterDXFRW_DwgWriteIdentityRegistry::
+                                   DwgWriteSourceKind::Entity);
 
       const std::uint32_t emittedHandle = m_dwgW->allocNextHandle();
       if (emittedHandle == 0) {
         m_writeFailed = true;
-        continue;
+        return;
       }
-      if (!selectDwgWriteIdentity(RS_FilterDXFRW_DwgWriteIdentityRegistry::
-                                      DwgWriteSourceKind::Entity,
-                                  sourceHandle, emittedHandle)) {
-        m_writeFailed = true;
-        continue;
+      if (sourceHandle == 0) {
+        // No identity is selected here: the entity is still committed as a
+        // generated entity when it is written. Only its handle is taken.
+        m_dwgWriteGeneratedEntityHandleByEntity.emplace(entity, emittedHandle);
+      } else {
+        if (!selectDwgWriteIdentity(RS_FilterDXFRW_DwgWriteIdentityRegistry::
+                                        DwgWriteSourceKind::Entity,
+                                    sourceHandle, emittedHandle)) {
+          m_writeFailed = true;
+          return;
+        }
+        m_dwgWriteEntityHandleByEntity.emplace(entity, emittedHandle);
+        const bool inserted =
+            m_dwgWriteEntityHandleRemap.emplace(sourceHandle, emittedHandle)
+                .second;
+        if (!inserted) {
+          m_dwgWriteDuplicateEntityHandles.insert(sourceHandle);
+        }
       }
-      m_dwgWriteEntityHandleByEntity.emplace(entity, emittedHandle);
-      const bool inserted =
-          m_dwgWriteEntityHandleRemap.emplace(sourceHandle, emittedHandle)
-              .second;
-      if (!inserted) {
-        m_dwgWriteDuplicateEntityHandles.insert(sourceHandle);
+
+      if (!reserveAll || entity->rtti() != RS2::EntityInsert)
+        return;
+      const auto count = attributeCounts.find(entity->getId());
+      if (count == attributeCounts.end())
+        return;
+      // One handle per ATTRIB, then the SEQEND.
+      std::vector<std::uint32_t> childHandles;
+      childHandles.reserve(count->second + 1);
+      for (std::size_t index = 0; index <= count->second; ++index) {
+        const std::uint32_t childHandle = m_dwgW->allocNextHandle();
+        if (childHandle == 0) {
+          m_writeFailed = true;
+          break;
+        }
+        childHandles.push_back(childHandle);
       }
+      m_dwgWriteInsertChildHandlesByEntity.emplace(entity,
+                                                   std::move(childHandles));
+    };
+
+    for (RS_Entity *entity : entities) {
+      if (hasOwnFrame(entity) && entity->sourceHandle() != 0)
+        reserve(entity);
+    }
+    if (!reserveAll)
+      return;
+    for (RS_Entity *entity : entities) {
+      if (hasOwnFrame(entity) && entity->sourceHandle() == 0)
+        reserve(entity);
     }
   };
 
@@ -29938,6 +30010,21 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
     }
   }
   if (m_dwgW) {
+#ifdef DWGSUPPORT
+    // Keep the ATTRIB..SEQEND handles taken in prepareDwgEntityHandleMap()
+    // next to this INSERT's own handle in an R2000 owner chain.
+    const auto childIt = m_dwgWriteInsertChildHandlesByEntity.find(i);
+    if (childIt != m_dwgWriteInsertChildHandlesByEntity.end() &&
+        childIt->second.size() == in.attlist.size() + 1 &&
+        std::all_of(in.attlist.cbegin(), in.attlist.cend(),
+                    [](const auto &attrib) {
+                      return attrib != nullptr && attrib->handle == 0;
+                    })) {
+      for (std::size_t index = 0; index < in.attlist.size(); ++index)
+        in.attlist[index]->handle = childIt->second[index];
+      in.seqendH.ref = childIt->second.back();
+    }
+#endif
     if (!m_dwgW->writeInsert(&in)) {
       m_writeFailed = true;
       return;
@@ -31515,6 +31602,14 @@ void RS_FilterDXFRW::getEntityAttributes(DRW_Entity *ent,
   if (m_dwgW != nullptr) {
     ent->handle = 0;
     auto entityIt = m_dwgWriteEntityHandleByEntity.find(entity);
+    // An entity without a source handle may have had its output handle
+    // taken early to keep an R2000 owner chain contiguous.
+    const auto generatedIt =
+        m_dwgWriteGeneratedEntityHandleByEntity.find(entity);
+    const std::uint32_t generatedHandle =
+        generatedIt != m_dwgWriteGeneratedEntityHandleByEntity.end()
+            ? generatedIt->second
+            : 0;
     const bool hasCommonReferences =
         entity->materialHandle() != 0 || entity->plotStyleHandle() != 0 ||
         entity->shadowHandle() != 0 || entity->fullVisualStyleHandle() != 0 ||
@@ -31524,7 +31619,8 @@ void RS_FilterDXFRW::getEntityAttributes(DRW_Entity *ent,
     if (entityIt == m_dwgWriteEntityHandleByEntity.end() &&
         hasCommonReferences) {
       const std::uint32_t sourceHandle = entity->sourceHandle();
-      const std::uint32_t emittedHandle = m_dwgW->allocNextHandle();
+      const std::uint32_t emittedHandle =
+          generatedHandle != 0 ? generatedHandle : m_dwgW->allocNextHandle();
       if (emittedHandle == 0 ||
           !selectDwgWriteIdentity(DwgWriteSourceKind::Entity, sourceHandle,
                                   emittedHandle)) {
@@ -31543,6 +31639,8 @@ void RS_FilterDXFRW::getEntityAttributes(DRW_Entity *ent,
     }
     if (entityIt != m_dwgWriteEntityHandleByEntity.end()) {
       ent->handle = entityIt->second;
+    } else {
+      ent->handle = generatedHandle;
     }
   } else
 #endif

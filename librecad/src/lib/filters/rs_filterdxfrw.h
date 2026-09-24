@@ -415,6 +415,8 @@ protected:
     m_dwgWriteHandleRemap.clear();
     m_dwgWriteKnownHandles.clear();
     m_dwgWriteEntityHandleByEntity.clear();
+    m_dwgWriteGeneratedEntityHandleByEntity.clear();
+    m_dwgWriteInsertChildHandlesByEntity.clear();
     m_dwgWriteEntityHandleRemap.clear();
     m_dwgWriteEntityHandlesEmitted.clear();
     m_dwgWriteDuplicateEntityHandles.clear();
@@ -1873,6 +1875,16 @@ protected:
 
   // Entity source identity and commit state.
   std::map<const RS_Entity *, std::uint32_t> m_dwgWriteEntityHandleByEntity;
+  // R2000 owners that hold source-backed entities take every entity handle
+  // before the entity sweep so the owner's handles stay consecutive
+  // (prepareDwgEntityHandleMap). These are the output handles of entities
+  // without a source handle, whose identities are still committed as
+  // generated entities on write, and the ATTRIB..SEQEND handles that follow
+  // each INSERT. Filled once per write, read-only afterwards.
+  std::map<const RS_Entity *, std::uint32_t>
+      m_dwgWriteGeneratedEntityHandleByEntity;
+  std::map<const RS_Entity *, std::vector<std::uint32_t>>
+      m_dwgWriteInsertChildHandlesByEntity;
   std::map<std::uint32_t, std::uint32_t> m_dwgWriteEntityHandleRemap;
   std::set<std::uint32_t> m_dwgWriteEntityHandlesEmitted;
   std::set<std::uint32_t> m_dwgWriteDuplicateEntityHandles;
