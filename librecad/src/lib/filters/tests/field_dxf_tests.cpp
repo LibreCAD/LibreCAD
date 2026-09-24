@@ -604,13 +604,21 @@ TEST_CASE("DXF FIELD writers reject unsupported and oversized payloads",
     verifyRejected(false);
   }
 
-  SECTION("FIELD child zero and pre-R2000 output are rejected") {
+  SECTION("FIELD child zero is rejected") {
     emitter.m_field = DRW_Field();
     emitter.m_field.m_childHandles = {0};
     verifyRejected(true);
+  }
 
+  SECTION("pre-R2000 output leaves FIELD out") {
+    std::filesystem::remove(path);
     emitter.m_field = DRW_Field();
-    verifyRejected(true, DRW::AC1014);
+    emitter.m_writeField = true;
+    dxfRW writer(path.string().c_str());
+    emitter.m_rw = &writer;
+    CHECK(writer.write(&emitter, DRW::AC1014, false));
+    CHECK(emitter.m_fieldResult);
+    CHECK(writer.leftOut().count("FIELD (not in this DXF version)") == 1);
   }
 
   std::filesystem::remove(path);

@@ -4780,9 +4780,12 @@ TEST_CASE("DXF table-entry application groups round trip typed records",
     auto &group = emitter.m_layer.appData.emplace_back();
     group.emplace_back(102, std::string{"CUSTOM_TABLE_APP"});
     group.emplace_back(102, std::string{"}"});
-    CHECK_FALSE(writer.write(&emitter, DRW::AC1009, false));
-    CHECK_FALSE(emitter.m_writeResult);
+    // R12 has no application data: left out, not refused
+    CHECK(writer.write(&emitter, DRW::AC1009, false));
+    CHECK(emitter.m_writeResult);
+    CHECK(writer.leftOut().count("application data of a table record (R12)") == 1);
   }
+  CHECK(slurp(legacyPath).find("CUSTOM_TABLE_APP") == std::string::npos);
   std::filesystem::remove(legacyPath);
 }
 
@@ -9862,6 +9865,56 @@ TEST_CASE("DXF IMAGE and WIPEOUT reject non-finite payload fields",
   }
 }
 
+TEST_CASE("DXF objects a version has no place for are left out",
+          "[dxf][writer][unsupported]") {
+  // FIELD needs R2000, an evaluation graph R2007: older targets leave them
+  // out instead of failing the save.
+  class OldVersionEmitter : public StubInterface {
+  public:
+    dxfRW *m_rw = nullptr;
+    bool m_result = false;
+    void writeObjects() override {
+      DRW_Field field;
+      DRW_EvaluationGraph graph;
+      m_result = m_rw->writeField(&field) && m_rw->writeEvaluationGraph(&graph);
+    }
+  };
+  const auto path = std::filesystem::temp_directory_path() /
+                    "lc_dxf_old_version_objects.dxf";
+  std::filesystem::remove(path);
+  OldVersionEmitter emitter;
+  dxfRW writer(path.string().c_str());
+  emitter.m_rw = &writer;
+  CHECK(writer.write(&emitter, DRW::AC1014, false));
+  CHECK(emitter.m_result);
+  CHECK(writer.leftOut().count("FIELD (not in this DXF version)") == 1);
+  CHECK(writer.leftOut().count("EVALUATION_GRAPH (not in this DXF version)") == 1);
+  std::filesystem::remove(path);
+}
+
+TEST_CASE("DXF raw strings with line breaks become caret codes in ASCII",
+          "[dxf][writer][raw]") {
+  // A binary DXF can hold a line break inside a string; an ASCII one cannot.
+  RawObjectEmitter emitter;
+  emitter.m_obj.name = "ACME_THING";
+  emitter.m_obj.handle = 0x91u;
+  emitter.m_obj.groups = {DRW_Variant(5, std::string("91")),
+                          DRW_Variant(100, std::string("AcmeThing")),
+                          DRW_Variant(1, std::string("line one\nline two"))};
+  const auto path = std::filesystem::temp_directory_path() /
+                    "lc_dxf_raw_line_break.dxf";
+  std::filesystem::remove(path);
+  {
+    dxfRW writer(path.string().c_str());
+    emitter.m_rw = &writer;
+    REQUIRE(writer.reserveHandle(0x91u));
+    CHECK(writer.write(&emitter, DRW::AC1021, false));
+    CHECK(emitter.m_writeResult);
+  }
+  CHECK(slurp(path).find("\nline one^Jline two\n") != std::string::npos);
+  std::filesystem::remove(path);
+}
+
 TEST_CASE("DXF built-in linetypes leave out application data",
           "[dxf][ltype][writer]") {
   // BYLAYER, BYBLOCK and CONTINUOUS are written by the codec itself; the
@@ -11648,8 +11701,16 @@ TEST_CASE("DXF EVALUATION_GRAPH writer enforces native limits",
     CHECK_FALSE(emitter.m_writeResult);
   };
 
-  SECTION("unsupported DXF version") {
-    verifyRejected(DRW::AC1018, makeGraph());
+  SECTION("a version without evaluation graphs leaves the graph out") {
+    std::filesystem::remove(path);
+    EvaluationGraphEmitter emitter;
+    emitter.m_graph = makeGraph();
+    emitter.m_recordName = "EVALUATION_GRAPH";
+    dxfRW writer(path.string().c_str());
+    emitter.m_rw = &writer;
+    CHECK(writer.write(&emitter, DRW::AC1018, false));
+    CHECK(emitter.m_writeResult);
+    CHECK(writer.leftOut().count("EVALUATION_GRAPH (not in this DXF version)") == 1);
   }
 
   SECTION("node count exceeds the DWG-native limit") {

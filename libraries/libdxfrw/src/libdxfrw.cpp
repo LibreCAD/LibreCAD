@@ -1851,13 +1851,8 @@ bool dxfRW::preflightTableEntry(const DRW_TableEntry *ent) {
         m_writeError = true;
         return false;
     }
-    if (version < DRW::AC1014) {
-        if (!ent->appData.empty() || !ent->reactorHandles.empty()
-            || ent->xDictHandle != 0) {
-            m_writeError = true;
-            return false;
-        }
-    } else if (!isValidDxfAppData(ent->appData)) {
+    // R12 has no application data: writeTableEntryAppData leaves it out.
+    if (version >= DRW::AC1014 && !isValidDxfAppData(ent->appData)) {
         m_writeError = true;
         return false;
     }
@@ -14219,7 +14214,10 @@ bool dxfRW::writeRawDxfGroups(
     }
 
     auto writeString = [this](int code, const std::string &value) {
-        if (!writer->writeString(code, value)) {
+        // A string read from binary DXF may hold a line break, which an ASCII
+        // value cannot: caret-encode it there, as XDATA strings are.
+        if (!writer->writeString(
+                code, binFile ? value : dxfCaretEncodedControls(value))) {
             m_writeError = true;
             return false;
         }
@@ -15191,9 +15189,11 @@ bool dxfRW::writeSortEntsTable(DRW_SortEntsTable *ent) {
 // references, cached value string, and child value records preserved by the
 // typed FIELD model.
 bool dxfRW::writeField(DRW_Field *ent) {
+    if (version < DRW::AC1015)
+        return leaveOutUnsupported("FIELD");
     if (!preflightTableEntry(ent))
         return false;
-    if (version < DRW::AC1015 || ent == nullptr || writer == nullptr
+    if (ent == nullptr || writer == nullptr
         || !canWriteDxfField(version, *ent)) {
         m_writeError = true;
         return false;
@@ -15261,9 +15261,11 @@ bool dxfRW::writeField(DRW_Field *ent) {
 
 // FIELDLIST (AcDbIdSet / AcDbFieldList, custom class).
 bool dxfRW::writeFieldList(DRW_FieldList *ent) {
+    if (version < DRW::AC1015)
+        return leaveOutUnsupported("FIELDLIST");
     if (!preflightTableEntry(ent))
         return false;
-    if (version < DRW::AC1015 || ent == nullptr || writer == nullptr
+    if (ent == nullptr || writer == nullptr
         || !canWriteDxfFieldList(*ent)) {
         m_writeError = true;
         return false;
@@ -15892,6 +15894,8 @@ bool dxfRW::writeDimensionAssociation(DRW_DimensionAssociation *ent) {
 
 bool dxfRW::writeEvaluationGraph(DRW_EvaluationGraph *ent,
                                  const char *recordName) {
+    if (version < DRW::AC1021)
+        return leaveOutUnsupported("EVALUATION_GRAPH");
     if (!preflightTableEntry(ent)
         || ent == nullptr || writer == nullptr || recordName == nullptr
         || *recordName == '\0'
