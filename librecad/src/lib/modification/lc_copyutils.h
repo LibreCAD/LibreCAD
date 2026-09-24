@@ -29,6 +29,7 @@
 #include "rs_vector.h"
 
 struct LC_DocumentModificationBatch;
+class RS_Block;
 class RS_Graphic;
 class RS_Entity;
 
@@ -49,6 +50,13 @@ namespace LC_CopyUtils {
     RS_Vector getInterGraphicsScaleFactor(double userFactor, const RS_Graphic *source, const RS_Graphic* destination);
     void copy(const RS_Vector& ref, QList<RS_Entity*>& entities, const RS_Graphic* graphic);
     void paste(const RS_PasteData& data, RS_Graphic* graphic, LC_DocumentModificationBatch& ctx);
+    /** Puts the entity and its owned descendants on the graphic's layers of the same names, adding missing ones. */
+    void doCopyEntityLayer(RS_Entity* entity, RS_Graphic* graphic);
+    /**
+     * Copies the block, and the blocks it inserts, into the graphic unless it has one of the same name,
+     * and clears the given RS_Entity::DwgProvenance bits of each copy.
+     */
+    void doCopyBlock(const RS_Block* block, RS_Graphic* graphic, unsigned provenance);
 }
 
 #endif

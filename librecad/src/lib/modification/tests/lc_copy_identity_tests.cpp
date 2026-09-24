@@ -19,7 +19,9 @@
 
 // A DXF/DWG identity (source handle, extension dictionary, reactors) has one
 // live holder: an operation hands it from what it deletes to the first entity
-// it adds in its place, and every other copy is new.
+// it adds in its place, and every other copy is new. Paste puts entities on
+// the destination's own layers and blocks, and keeps table handles only in
+// the drawing that defines them.
 
 #include <catch2/catch_test_macros.hpp>
 
@@ -30,10 +32,17 @@
 #include <functional>
 #include <memory>
 
+#include <QDir>
+#include <QDirIterator>
+#include <QFileInfo>
+
 #include "doc_plugin_interface.h"
 #include "lc_actiontestsupport.h"
+#include "lc_copyutils.h"
 #include "lc_documentinvariants.h"
 #include "rs_block.h"
+#include "rs_circle.h"
+#include "rs_clipboard.h"
 #include "rs_filterdxfrw.h"
 #include "rs_insert.h"
 #include "rs_layer.h"
@@ -102,6 +111,19 @@ struct Drawing {
             }
         }
         return entities;
+    }
+
+    void copy(QList<RS_Entity*> entities) {
+        m_graphic.select(entities, true);
+        LC_CopyUtils::copy(RS_Vector{0, 0}, entities, &m_graphic);
+        m_graphic.select(entities, false);
+    }
+
+    void paste(const RS_Vector& at) {
+        modify([&](LC_DocumentModificationBatch& ctx) {
+            LC_CopyUtils::paste(LC_CopyUtils::RS_PasteData(at), &m_graphic, ctx);
+            ctx.dontSetActiveLayerAndPen();
+        });
     }
 };
 
@@ -448,4 +470,217 @@ TEST_CASE("A copy that keeps its original joins no GROUP and owns no dictionary"
     CHECK(values(path, "LINE", "360").size() == 1);
     CHECK(addedDangling(path).isEmpty());
     std::filesystem::remove(path);
+}
+
+TEST_CASE("Pasting into the same drawing uses its layers and blocks and keeps its table handles", "[copy][paste]") {
+    Drawing d;
+    RS_Layer* walls = d.addLayer("WALLS");
+    d.addBlock("DOOR", [](RS_Block& b) {
+        b.addEntity(new RS_Line(&b, RS_LineData(RS_Vector{0, 0}, RS_Vector{1, 0})));
+    });
+    RS_Line* line = d.addLine(0, 0x40);
+    line->setLayer(walls);
+    line->setMaterialHandle(0xC0);
+    RS_Insert* insert = d.addInsert("DOOR", RS_Vector{5, 5}, 0x300);
+    insert->setLayer(walls);
+    const unsigned layers = d.m_graphic.countLayers();
+    const unsigned blocks = d.m_graphic.countBlocks();
+
+    d.copy({line, insert});
+    d.paste(RS_Vector{0, 100});
+
+    CHECK(d.m_graphic.countLayers() == layers);
+    CHECK(d.m_graphic.countBlocks() == blocks);
+    const auto pastedLines = d.live(RS2::EntityLine);
+    REQUIRE(pastedLines.size() == 2);
+    const RS_Entity* pastedLine = at(pastedLines, 100);
+    REQUIRE(pastedLine != nullptr);
+    CHECK(pastedLine->getLayer(false) == walls);
+    CHECK(pastedLine->sourceHandle() == 0);
+    CHECK(pastedLine->materialHandle() == 0xC0);
+    const auto inserts = d.live(RS2::EntityInsert);
+    REQUIRE(inserts.size() == 2);
+    const auto* pastedInsert = static_cast<RS_Insert*>(inserts.back());
+    CHECK(pastedInsert->sourceHandle() == 0);
+    CHECK(pastedInsert->getLayer(false) == walls);
+    CHECK(pastedInsert->getBlockForInsert() == d.m_graphic.findBlock("DOOR"));
+    CHECK(pastedInsert->count() == 1);
+    CHECK(lc::test::documentProblems(d.m_graphic).isEmpty());
+}
+
+TEST_CASE("Pasting into another drawing brings the layers and blocks it lacks", "[copy][paste]") {
+    auto source = std::make_unique<Drawing>();
+    RS_Layer* walls = source->addLayer("WALLS");
+    source->addBlock("KNOB", [](RS_Block& b) {
+        b.addEntity(new RS_Circle(&b, RS_CircleData(RS_Vector{0, 0}, 0.1)));
+    });
+    source->addBlock("DOOR", [&](RS_Block& b) {
+        auto* edge = new RS_Line(&b, RS_LineData(RS_Vector{0, 0}, RS_Vector{1, 0}));
+        edge->setLayer(walls);
+        edge->setSourceHandle(0x210);
+        edge->setMaterialHandle(0xC0);
+        b.addEntity(edge);
+        auto* knob = new RS_Insert(&b, RS_InsertData("KNOB", RS_Vector{1, 0}, RS_Vector{1, 1}, 0, 1, 1, RS_Vector{0, 0}));
+        b.addEntity(knob);
+    });
+    RS_Line* line = source->addLine(0, 0x40);
+    line->setLayer(walls);
+    line->setMaterialHandle(0xC0);
+    RS_Insert* insert = source->addInsert("DOOR", RS_Vector{5, 5}, 0x300);
+    insert->setLayer(walls);
+    source->copy({line, insert});
+
+    Drawing destination;
+    destination.paste(RS_Vector{0, 100});
+    source.reset(); // nothing pasted or on the clipboard may depend on the source drawing
+    CHECK(RS_CLIPBOARD->hasBlock("DOOR"));
+
+    RS_Layer* pastedWalls = destination.m_graphic.findLayer("WALLS");
+    REQUIRE(pastedWalls != nullptr);
+    CHECK(pastedWalls->getPen().getColor() == RS_Color(255, 0, 0));
+    const RS_Block* door = destination.m_graphic.findBlock("DOOR");
+    REQUIRE(door != nullptr);
+    REQUIRE(destination.m_graphic.findBlock("KNOB") != nullptr);
+    const RS_Entity* edge = door->firstEntity();
+    CHECK(edge->getLayer(false) == pastedWalls);
+    CHECK(edge->sourceHandle() == 0);
+    CHECK(edge->materialHandle() == 0);
+
+    const auto lines = destination.live(RS2::EntityLine);
+    REQUIRE(lines.size() == 1);
+    CHECK(lines.front()->getLayer(false) == pastedWalls);
+    CHECK(lines.front()->sourceHandle() == 0);
+    CHECK(lines.front()->materialHandle() == 0);
+    const auto inserts = destination.live(RS2::EntityInsert);
+    REQUIRE(inserts.size() == 1);
+    auto* pastedInsert = static_cast<RS_Insert*>(inserts.front());
+    CHECK(pastedInsert->getBlockForInsert() == door);
+    RS_CLIPBOARD->clear(); // nor on the clipboard
+    pastedInsert->update();
+    CHECK(pastedInsert->count() == 2);
+    CHECK(lc::test::documentProblems(destination.m_graphic).isEmpty());
+}
+
+TEST_CASE("Pasting keeps the destination's block of the same name", "[copy][paste]") {
+    Drawing source;
+    source.addBlock("DOOR", [](RS_Block& b) {
+        b.addEntity(new RS_Line(&b, RS_LineData(RS_Vector{0, 0}, RS_Vector{1, 0})));
+    });
+    source.copy({source.addInsert("DOOR", RS_Vector{0, 0})});
+
+    Drawing destination;
+    const RS_Block* door = destination.addBlock("DOOR", [](RS_Block& b) {
+        b.addEntity(new RS_Circle(&b, RS_CircleData(RS_Vector{0, 0}, 1)));
+        b.addEntity(new RS_Circle(&b, RS_CircleData(RS_Vector{0, 0}, 2)));
+    });
+    destination.paste(RS_Vector{0, 0});
+
+    CHECK(destination.m_graphic.findBlock("DOOR") == door);
+    CHECK(door->count() == 2);
+    CHECK(door->firstEntity()->rtti() == RS2::EntityCircle);
+    const auto inserts = destination.live(RS2::EntityInsert);
+    REQUIRE(inserts.size() == 1);
+    CHECK(static_cast<RS_Insert*>(inserts.front())->getBlockForInsert() == door);
+}
+
+TEST_CASE("Pasting a drawing into itself leaves its GROUP and dictionary with the originals", "[copy][paste][dxf]") {
+    Drawing d;
+    importGroupedLines(d.m_graphic);
+    d.copy(d.live());
+    d.paste(RS_Vector{0, 50});
+    d.paste(RS_Vector{0, 100});
+
+    CHECK(d.live().size() == 6);
+    CHECK(lc::test::documentProblems(d.m_graphic).isEmpty());
+    const auto path = tempFile("pasted.dxf");
+    REQUIRE(save(d.m_graphic, path, RS2::FormatDXFRW));
+    CHECK(values(path, "LINE", "5").size() == 6);
+    CHECK(values(path, "GROUP", "340").size() == 2);
+    CHECK(values(path, "LINE", "360").size() == 1);
+    CHECK(addedDangling(path).isEmpty());
+    std::filesystem::remove(path);
+}
+
+TEST_CASE("A drawing pasted twice into a new one saves as DWG", "[copy][paste][dwg]") {
+    auto source = std::make_unique<Drawing>();
+    importGroupedLines(source->m_graphic);
+    source->copy(source->live());
+    source.reset();
+    Drawing d;
+    d.paste(RS_Vector{0, 0});
+    d.paste(RS_Vector{0, 50});
+
+    CHECK(d.live().size() == 4);
+    CHECK(lc::test::documentProblems(d.m_graphic).isEmpty());
+    const auto dxf = tempFile("new.dxf");
+    REQUIRE(save(d.m_graphic, dxf, RS2::FormatDXFRW));
+    CHECK(lc::test::danglingReferences(QString::fromStdString(dxf.string())).isEmpty());
+    std::filesystem::remove(dxf);
+    const auto dwg = tempFile("new.dwg");
+    CHECK(save(d.m_graphic, dwg, RS2::FormatDWG));
+    std::filesystem::remove(dwg);
+}
+
+TEST_CASE("Copy and paste across the sample corpus keep every drawing consistent", "[.slow][copy][paste][corpus]") {
+    QStringList files;
+    for (const QString& dir : {QStringLiteral("dev/dwg_samples"), QStringLiteral("doc/dwg"), QStringLiteral("doc/dwg2")}) {
+        QDirIterator it(QDir::home().filePath(dir), {QStringLiteral("*.dwg"), QStringLiteral("*.dxf")}, QDir::Files,
+                        QDirIterator::Subdirectories);
+        while (it.hasNext()) {
+            const QString file = it.next();
+            if (QFileInfo(file).size() < 5 * 1024 * 1024) {
+                files << file;
+            }
+        }
+    }
+    files.sort();
+    if (files.isEmpty()) {
+        SKIP("no sample drawings under ~/dev/dwg_samples, ~/doc/dwg or ~/doc/dwg2");
+    }
+    // Inserts of blocks the source file lacks are the file's problem, not the copy's.
+    auto structural = [](RS_Graphic& graphic) {
+        QStringList problems = lc::test::documentProblems(graphic);
+        problems.erase(std::remove_if(problems.begin(), problems.end(), [](const QString& problem) {
+            return problem.contains(QStringLiteral("which the drawing does not have"));
+        }), problems.end());
+        return problems;
+    };
+    int pasted = 0;
+    for (const QString& file : files) {
+        CAPTURE(file.toStdString());
+        auto source = std::make_unique<Drawing>();
+        RS_FilterDXFRW filter;
+        const RS2::FormatType format = file.endsWith(QStringLiteral(".dwg"), Qt::CaseInsensitive) ? RS2::FormatDWG
+                                                                                                    : RS2::FormatDXFRW;
+        if (!filter.fileImport(source->m_graphic, file, format) || source->live().isEmpty()) {
+            continue;
+        }
+        const qsizetype before = structural(source->m_graphic).size();
+        source->copy(source->live());
+        source->paste(RS_Vector{0, 0});
+        CHECK(structural(source->m_graphic).size() == before);
+
+        Drawing destination;
+        destination.paste(RS_Vector{0, 0});
+        for (const RS_Entity* e : destination.live(RS2::EntityInsert)) {
+            const QString name = static_cast<const RS_Insert*>(e)->getName();
+            if (destination.m_graphic.findBlock(name) == nullptr) {
+                CHECK(source->m_graphic.findBlock(name) == nullptr);
+            }
+        }
+        source.reset();
+        for (int i = 0; i < RS_CLIPBOARD->countBlocks(); ++i) {
+            CHECK(RS_CLIPBOARD->hasBlock(RS_CLIPBOARD->blockAt(i)->getName()));
+        }
+        destination.m_graphic.updateInserts();
+        CHECK(structural(destination.m_graphic).isEmpty());
+        const auto dxf = tempFile("corpus.dxf");
+        if (save(destination.m_graphic, dxf, RS2::FormatDXFRW)) {
+            CHECK(lc::test::danglingReferences(QString::fromStdString(dxf.string())).isEmpty());
+        }
+        std::filesystem::remove(dxf);
+        ++pasted;
+    }
+    RS_CLIPBOARD->clear();
+    CHECK(pasted > 0);
 }
