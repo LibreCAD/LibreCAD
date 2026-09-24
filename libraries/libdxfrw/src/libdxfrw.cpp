@@ -1934,16 +1934,18 @@ bool dxfRW::writeEntity(DRW_Entity *ent, bool captureSourceHandle,
         }
         writer->writeString(330, toHexStr(ownerHandle));
     }
-    if (!ent->reactorHandles.empty() && !hasReactorsAppGroup) {
+    const std::vector<std::uint32_t> reactors = resolveReferences(ent->reactorHandles);
+    if (!reactors.empty() && !hasReactorsAppGroup) {
         writer->writeString(102, "{ACAD_REACTORS");
-        for (const std::uint32_t reactor : ent->reactorHandles) {
+        for (const std::uint32_t reactor : reactors) {
             writer->writeString(330, toHexStr(reactor));
         }
         writer->writeString(102, "}");
     }
-    if (ent->xDictHandle != 0 && !hasXDictionaryAppGroup) {
+    const std::uint32_t xDictHandle = resolveReference(ent->xDictHandle);
+    if (xDictHandle != 0 && !hasXDictionaryAppGroup) {
         writer->writeString(102, "{ACAD_XDICTIONARY");
-        writer->writeString(360, toHexStr(ent->xDictHandle));
+        writer->writeString(360, toHexStr(xDictHandle));
         writer->writeString(102, "}");
     }
     if (version > DRW::AC1009) {
@@ -2218,12 +2220,13 @@ bool dxfRW::writeTableEntryAppData(const DRW_TableEntry& entry) {
         return false;
     };
 
-    if (!entry.reactorHandles.empty() && !hasAppGroup("ACAD_REACTORS")) {
+    const std::vector<std::uint32_t> reactors = resolveReferences(entry.reactorHandles);
+    if (!reactors.empty() && !hasAppGroup("ACAD_REACTORS")) {
         if (!writer->writeString(102, "{ACAD_REACTORS")) {
             m_writeError = true;
             return false;
         }
-        for (const std::uint32_t reactor : entry.reactorHandles) {
+        for (const std::uint32_t reactor : reactors) {
             if (!writer->writeString(330, toHexStr(reactor))) {
                 m_writeError = true;
                 return false;
@@ -2234,9 +2237,10 @@ bool dxfRW::writeTableEntryAppData(const DRW_TableEntry& entry) {
             return false;
         }
     }
-    if (entry.xDictHandle != 0 && !hasAppGroup("ACAD_XDICTIONARY")) {
+    const std::uint32_t xDictHandle = resolveReference(entry.xDictHandle);
+    if (xDictHandle != 0 && !hasAppGroup("ACAD_XDICTIONARY")) {
         if (!writer->writeString(102, "{ACAD_XDICTIONARY")
-            || !writer->writeString(360, toHexStr(entry.xDictHandle))
+            || !writer->writeString(360, toHexStr(xDictHandle))
             || !writer->writeString(102, "}")) {
             m_writeError = true;
             return false;
@@ -3045,6 +3049,18 @@ bool dxfRW::writeAppId(DRW_AppId *ent){
     }
     state.commit();
     return true;
+}
+
+std::vector<std::uint32_t> dxfRW::resolveReferences(
+    const std::vector<std::uint32_t> &handles) const {
+    std::vector<std::uint32_t> resolved;
+    resolved.reserve(handles.size());
+    for (const std::uint32_t handle : handles) {
+        const std::uint32_t written = resolveReference(handle);
+        if (written != 0)
+            resolved.push_back(written);
+    }
+    return resolved;
 }
 
 std::uint32_t dxfRW::remapEntityHandle(std::uint32_t sourceHandle) const {
@@ -7413,10 +7429,16 @@ bool dxfRW::writeObjects() {
             imgDictH = toHexStr(imageDictionaryHandle);
         }
         groupHandles.reserve(m_groups.size());
-        for (std::size_t i = 0; i < m_groups.size(); ++i) {
-            std::uint32_t groupHandle = 0;
-            if (!allocateDxfHandle(groupHandle))
-                return false;
+        std::set<std::uint32_t> keptGroupHandles;
+        for (const DRW_Group &group : m_groups) {
+            // A reserved source handle is kept: the members' reactors, written
+            // with the entities, already name it.
+            auto groupHandle = static_cast<std::uint32_t>(group.handle);
+            if (groupHandle == 0 || !m_handleAllocator.isExplicitlyReserved(groupHandle)
+                || !keptGroupHandles.insert(groupHandle).second) {
+                if (!allocateDxfHandle(groupHandle))
+                    return false;
+            }
             groupHandles.push_back(groupHandle);
         }
     } catch (...) {

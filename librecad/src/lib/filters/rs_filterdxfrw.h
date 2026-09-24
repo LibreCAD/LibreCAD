@@ -2303,6 +2303,7 @@ public:
 
   void setEntityAttributes(RS_Entity *entity, const DRW_Entity *attrib);
   void getEntityAttributes(DRW_Entity *ent, const RS_Entity *entity);
+  std::uint32_t dxfReference(std::uint32_t source) const;
 
   static QString toDxfString(const QString &str);
   static QString toNativeString(const QString &data);
@@ -3030,6 +3031,9 @@ private:
    *  colliding with the fixed root/group handles C/D). Computed in fileExport
    *  before write(), consumed by the rawDxfObjects re-emit in writeObjects. */
   std::set<std::uint32_t> m_dxfSuppressedObjectHandles;
+  // Objects entity references may name that the DXF being written lacks:
+  // GROUPs not written, or whose handle is structural.
+  std::set<std::uint32_t> m_dxfDroppedReferenceHandles;
   // Normalised names of the built-in LTYPE records written by writeLType()
   // during writeLTypes(); imported raw records with these names are skipped.
   std::set<std::string> m_builtinLTypeNames;

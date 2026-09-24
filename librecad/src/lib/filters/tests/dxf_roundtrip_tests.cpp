@@ -324,6 +324,31 @@ std::vector<std::string> collectHandles(const std::string &path) {
   return handles;
 }
 
+// The 330 values inside the {ACAD_REACTORS groups of every `recordName`
+// record, one list per record, in file order.
+std::vector<std::vector<std::string>> recordReactors(const std::string &path,
+                                                     const std::string &recordName) {
+  std::ifstream in(path);
+  std::string codeLine, valueLine;
+  std::vector<std::vector<std::string>> reactors;
+  bool inRecord = false;
+  bool inReactors = false;
+  while (std::getline(in, codeLine) && std::getline(in, valueLine)) {
+    const std::string c = trimDxfToken(codeLine), v = trimDxfToken(valueLine);
+    if (c == "0") {
+      inRecord = v == recordName;
+      inReactors = false;
+      if (inRecord)
+        reactors.emplace_back();
+    } else if (inRecord && c == "102") {
+      inReactors = v == "{ACAD_REACTORS";
+    } else if (inRecord && inReactors && c == "330") {
+      reactors.back().push_back(v);
+    }
+  }
+  return reactors;
+}
+
 // True if a record named `recordName` (0/<name>) contains group `code` before
 // the next 0-record begins.
 bool recordHasCode(const std::string &path, const std::string &recordName,
@@ -3455,6 +3480,156 @@ TEST_CASE("DXF raw ENTITY remap updates typed GROUP members",
   CHECK(entityHandles.front() != "1F");
   CHECK(recordGroupValues(out, "GROUP", "340")
         == entityHandles);
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
+TEST_CASE("DXF export keeps a GROUP's handle for its members' reactors",
+          "[dxf][roundtrip][filter][handles][groups]") {
+  ensureSettings();
+  const std::string src = tmpFile("group-reactors-src.dxf");
+  const std::string out = tmpFile("group-reactors-out.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  // The members' reactors are written with the entities, before OBJECTS; the
+  // GROUP used to get a new handle there, so they named nothing.
+  writeText(src,
+            "0\nSECTION\n2\nENTITIES\n"
+            "0\nLINE\n5\nA1\n330\n1F\n102\n{ACAD_REACTORS\n330\n90\n102\n}\n"
+            "100\nAcDbEntity\n8\n0\n100\nAcDbLine\n10\n0\n20\n0\n30\n0\n"
+            "11\n10\n21\n0\n31\n0\n"
+            "0\nLINE\n5\nA2\n330\n1F\n102\n{ACAD_REACTORS\n330\n90\n102\n}\n"
+            "100\nAcDbEntity\n8\n0\n100\nAcDbLine\n10\n0\n20\n5\n30\n0\n"
+            "11\n10\n21\n5\n31\n0\n"
+            "0\nENDSEC\n"
+            "0\nSECTION\n2\nOBJECTS\n"
+            "0\nDICTIONARY\n5\nC\n330\n0\n100\nAcDbDictionary\n281\n1\n"
+            "3\nACAD_GROUP\n350\nD\n"
+            "0\nDICTIONARY\n5\nD\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+            "3\nPAIR\n350\n90\n"
+            "0\nGROUP\n5\n90\n330\nD\n100\nAcDbGroup\n300\npair\n70\n0\n71\n1\n"
+            "340\nA1\n340\nA2\n"
+            "0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+
+  CHECK(recordGroupValues(out, "GROUP", "5") == std::vector<std::string>{"90"});
+  CHECK(recordGroupValues(out, "GROUP", "340")
+        == recordGroupValues(out, "LINE", "5"));
+  CHECK(recordReactors(out, "LINE")
+        == std::vector<std::vector<std::string>>{{"90"}, {"90"}});
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
+TEST_CASE("DXF export drops reactors to a GROUP whose handle it cannot keep",
+          "[dxf][roundtrip][filter][handles][groups]") {
+  ensureSettings();
+  const std::string src = tmpFile("group-structural-src.dxf");
+  const std::string out = tmpFile("group-structural-out.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  // 1F is the Model_Space BLOCK_RECORD the codec writes: the GROUP must move,
+  // and a reactor naming 1F would name that record instead.
+  writeText(src,
+            "0\nSECTION\n2\nENTITIES\n"
+            "0\nLINE\n5\nA1\n102\n{ACAD_REACTORS\n330\n1F\n102\n}\n"
+            "100\nAcDbEntity\n8\n0\n100\nAcDbLine\n10\n0\n20\n0\n30\n0\n"
+            "11\n10\n21\n0\n31\n0\n"
+            "0\nENDSEC\n"
+            "0\nSECTION\n2\nOBJECTS\n"
+            "0\nDICTIONARY\n5\nC\n330\n0\n100\nAcDbDictionary\n281\n1\n"
+            "3\nACAD_GROUP\n350\nD\n"
+            "0\nDICTIONARY\n5\nD\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+            "3\nONE\n350\n1F\n"
+            "0\nGROUP\n5\n1F\n330\nD\n100\nAcDbGroup\n300\none\n70\n0\n71\n1\n"
+            "340\nA1\n"
+            "0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  REQUIRE(graphic.dwgAdvancedMetadata().groups().size() == 1);
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+
+  const auto groupHandles = recordGroupValues(out, "GROUP", "5");
+  REQUIRE(groupHandles.size() == 1);
+  CHECK(groupHandles.front() != "1F");
+  CHECK(recordGroupValues(out, "GROUP", "340")
+        == recordGroupValues(out, "LINE", "5"));
+  CHECK(recordReactors(out, "LINE")
+        == std::vector<std::vector<std::string>>{{}});
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
+TEST_CASE("DXF export follows an extension dictionary moved off a structural handle",
+          "[dxf][roundtrip][filter][handles]") {
+  ensureSettings();
+  const std::string src = tmpFile("xdict-structural-src.dxf");
+  const std::string out = tmpFile("xdict-structural-out.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  // 1C is a BLOCK_RECORD handle the codec writes, so the dictionary is
+  // re-emitted under a fresh handle; the LINE's 360 must follow it.
+  writeText(src,
+            "0\nSECTION\n2\nENTITIES\n"
+            "0\nLINE\n5\nA1\n102\n{ACAD_XDICTIONARY\n360\n1C\n102\n}\n"
+            "100\nAcDbEntity\n8\n0\n100\nAcDbLine\n10\n0\n20\n0\n30\n0\n"
+            "11\n10\n21\n0\n31\n0\n"
+            "0\nENDSEC\n"
+            "0\nSECTION\n2\nOBJECTS\n"
+            "0\nDICTIONARY\n5\nC\n330\n0\n100\nAcDbDictionary\n281\n1\n"
+            "0\nDICTIONARY\n5\n1C\n330\nA1\n100\nAcDbDictionary\n281\n1\n"
+            "3\nMYDATA\n350\nA6\n"
+            "0\nXRECORD\n5\nA6\n330\n1C\n100\nAcDbXrecord\n280\n1\n1\nhello\n"
+            "0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+
+  const auto xdict = recordGroupValues(out, "LINE", "360");
+  REQUIRE(xdict.size() == 1);
+  CHECK(xdict.front() != "1C");
+  const DxfRecordGroups dictionary =
+      recordGroupsWithValue(out, "DICTIONARY", "5", xdict.front());
+  REQUIRE_FALSE(dictionary.empty());
+  const auto owner = std::find_if(dictionary.cbegin(), dictionary.cend(),
+                                  [](const auto &group) { return group.first == "330"; });
+  REQUIRE(owner != dictionary.cend());
+  CHECK(owner->second == recordGroupValues(out, "LINE", "5").front());
 
   std::filesystem::remove(src);
   std::filesystem::remove(out);

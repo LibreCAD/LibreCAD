@@ -11803,6 +11803,35 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     static const std::set<std::uint32_t> kFixedStructural = {
         0x1,  0x2,  0x3,  0x5,  0x6,  0x7,  0x8,  0x9,  0xA,  0x10,
         0x12, 0x14, 0x15, 0x16, 0x1C, 0x1D, 0x1E, 0x1F, 0x20, 0x21};
+
+    // A GROUP keeps its source handle, like the typed objects reserved above:
+    // its members' reactors are written with the entities, before OBJECTS,
+    // and must still name it. The reactors drop a GROUP that is not written or
+    // whose handle is structural (the codec gives it a fresh one); a GROUP
+    // whose handle another object holds gets a fresh one too, and references
+    // to the handle stay with that object. Reserved before the remap below
+    // allocates any handle.
+    m_dxfDroppedReferenceHandles.clear();
+    std::vector<bool> groupKeepsHandle;
+    groupKeepsHandle.reserve(metadata.groups().size());
+    std::set<std::uint32_t> keptGroupHandles;
+    for (const auto &record : metadata.groups()) {
+      const std::uint32_t h = record.handle;
+      const bool written = record.replayState ==
+                           LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed;
+      const bool structural =
+          kFixedStructural.count(h) != 0 || h == 0xCu || h == 0xDu;
+      const bool keep = written && h != 0 && !structural &&
+                        !m_dxfW->isReservedHandle(h) &&
+                        m_dxfW->reserveHandle(h);
+      groupKeepsHandle.push_back(keep);
+      if (keep)
+        keptGroupHandles.insert(h);
+      else if (h != 0 && (!written || structural))
+        m_dxfDroppedReferenceHandles.insert(h);
+    }
+    for (const std::uint32_t h : keptGroupHandles)
+      m_dxfDroppedReferenceHandles.erase(h);
     for (const DRW_PlotSettings &settings : metadata.plotSettings()) {
       if (settings.handle != 0 &&
           kFixedStructural.count(settings.handle) != 0) {
@@ -12046,11 +12075,14 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     std::vector<DRW_Group> groupsToWrite;
     groupsToWrite.reserve(metadata.groups().size());
     int unnamedSeq = 0;
-    for (const auto &record : metadata.groups()) {
+    for (std::size_t i = 0; i < metadata.groups().size(); ++i) {
+      const auto &record = metadata.groups()[i];
       if (record.replayState !=
           LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed)
         continue;
       DRW_Group group = groupFromMetadata(record);
+      if (!groupKeepsHandle[i])
+        group.handle = 0; // the codec mints one
       auto nameIt = groupHandleToName.find(record.handle);
       if (nameIt != groupHandleToName.end() && !nameIt->second.empty())
         group.name = nameIt->second;
@@ -12060,6 +12092,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     }
     if (!groupsToWrite.empty())
       m_dxfW->setGroups(groupsToWrite);
+    m_dxfW->setReferenceResolver(
+        [this](std::uint32_t source) { return dxfReference(source); });
 
     if (!handleRemap.empty())
       m_dxfW->setHandleRemap(handleRemap);
@@ -31821,6 +31855,21 @@ void RS_FilterDXFRW::getEntityAttributes(DRW_Entity *ent,
   if (entity->hasDrwExtData() && ent->extData.empty()) {
     ent->extData = entity->getDrwExtData();
   }
+}
+
+/**
+ * @return The handle an entity or table record names @p source by in the DXF
+ * being written: the handle the object is written under, or 0 if it is not
+ * written. Outside a DXF write, @p source itself.
+ */
+std::uint32_t RS_FilterDXFRW::dxfReference(std::uint32_t source) const {
+  if (m_dxfW == nullptr || source == 0)
+    return source;
+  const bool codecWritesIt = source == 0xCu || source == 0xDu;
+  if (m_dxfDroppedReferenceHandles.count(source) != 0 ||
+      (m_dxfSuppressedObjectHandles.count(source) != 0 && !codecWritesIt))
+    return 0;
+  return m_dxfW->remapHandle(source);
 }
 
 /**
