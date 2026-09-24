@@ -723,7 +723,10 @@ TEST_CASE("A library insert brings its nested blocks onto the destination's laye
         CHECK(e->sourceHandle() == 0);
         CHECK(e->materialHandle() == 0);
     }
-    CHECK(destination.live(RS2::EntityInsert).size() == 1);
+    const auto inserts = destination.live(RS2::EntityInsert);
+    REQUIRE(inserts.size() == 1);
+    inserts.front()->update();
+    CHECK(static_cast<RS_Insert*>(inserts.front())->count() == 2);
     CHECK(lc::test::documentProblems(destination.m_graphic).isEmpty());
 }
 

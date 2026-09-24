@@ -399,7 +399,7 @@ void RS_Modification::libraryInsert(const LC_LibraryInsertData& data, RS_Graphic
     }
 
     // fixme - blocks - outer Insert carries all transformations (scale + angle)
-    const RS_InsertData idata(bname, data.insertionPoint, scaleV, data.angle, 1, 1, {});
+    const RS_InsertData idata(bname, data.insertionPoint, scaleV, data.angle, 1, 1, RS_Vector{0.0, 0.0});
     auto* insert = new RS_Insert(nullptr, idata);
 
     ctx += insert;
