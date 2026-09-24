@@ -374,7 +374,7 @@ jobs:
 
   BuildWindowsARM64:
     if: github.event_name == 'push'
-    runs-on: windows-11-arm
+    runs-on: windows-11-vs2026-arm
     outputs:
       output1: ${{ steps.artifact-upload-step.outputs.artifact-id }}
     steps:
@@ -392,7 +392,6 @@ jobs:
           target: 'desktop'
           tools-only: 'false'
           modules: 'qt5compat qtimageformats qtshadertools'
-          tools: 'tools_cmake'
 
       - name: (3) Add MSBuild to PATH
         uses: microsoft/setup-msbuild@v2
@@ -411,7 +410,7 @@ jobs:
 
       - name: Configure CMake
         run: |
-          cmake.exe -S . -B generated -G "Visual Studio 17 2022" -A ARM64 -DBOOST_ROOT="%CD%\boost"
+          cmake.exe -S . -B generated -G "Visual Studio 18 2026" -A ARM64 -T v143 -DBOOST_ROOT="%CD%\boost"
         shell: cmd
         env:
           BUILD_TYPE: release
