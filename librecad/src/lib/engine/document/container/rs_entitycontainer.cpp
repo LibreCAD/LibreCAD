@@ -536,6 +536,20 @@ void RS_EntityContainer::clear() {
     resetBorders();
 }
 
+std::vector<std::unique_ptr<RS_Entity>> RS_EntityContainer::takeEntities() {
+    std::vector<std::unique_ptr<RS_Entity>> taken;
+    taken.reserve(static_cast<std::size_t>(m_entities.size()));
+    for (RS_Entity* entity : std::as_const(m_entities)) {
+        if (entity != nullptr) {
+            entity->setParent(nullptr);
+            taken.emplace_back(entity);
+        }
+    }
+    m_entities.clear();
+    resetBorders();
+    return taken;
+}
+
 unsigned int RS_EntityContainer::count() const {
     return m_entities.size();
 }
