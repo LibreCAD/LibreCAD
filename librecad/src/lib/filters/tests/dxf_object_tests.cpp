@@ -9858,6 +9858,34 @@ TEST_CASE("DXF IMAGE and WIPEOUT reject non-finite payload fields",
   }
 }
 
+TEST_CASE("DXF built-in linetypes leave out application data",
+          "[dxf][ltype][writer]") {
+  // BYLAYER, BYBLOCK and CONTINUOUS are written by the codec itself; the
+  // payload a source file attaches to them (R14 DWG) cannot follow.
+  class LTypeEmitter : public StubInterface {
+  public:
+    dxfRW *m_rw = nullptr;
+    bool m_result = false;
+    void writeLTypes() override {
+      DRW_LType continuous;
+      continuous.name = "Continuous";
+      continuous.reactorHandles = {0x40u};
+      m_result = m_rw->writeLineType(&continuous);
+    }
+  };
+
+  const auto path = std::filesystem::temp_directory_path() /
+                    "lc_dxf_builtin_ltype_payload.dxf";
+  std::filesystem::remove(path);
+  LTypeEmitter emitter;
+  dxfRW writer(path.string().c_str());
+  emitter.m_rw = &writer;
+  CHECK(writer.write(&emitter, DRW::AC1021, false));
+  CHECK(emitter.m_result);
+  CHECK(writer.leftOut().count("application data of a built-in linetype") == 1);
+  std::filesystem::remove(path);
+}
+
 TEST_CASE("DXF UNDERLAY rejects invalid writer payloads",
           "[dxf][underlay][writer][safety]") {
   class UnderlayEmitter : public StubInterface {
@@ -9882,17 +9910,26 @@ TEST_CASE("DXF UNDERLAY rejects invalid writer payloads",
     std::filesystem::remove(path);
   }
 
-  SECTION("inverse clipping before R2010") {
+  SECTION("inverse clipping before R2010 is left out") {
     UnderlayEmitter emitter;
     emitter.m_underlay.inverseClipBoundary = {
         DRW_Coord{0.0, 0.0, 0.0}, DRW_Coord{1.0, 1.0, 0.0}};
+    emitter.m_underlay.flags = 0x10;
     const auto path = std::filesystem::temp_directory_path() /
                       "lc_dxf_underlay_old_inverse.dxf";
     std::filesystem::remove(path);
     dxfRW writer(path.string().c_str());
     emitter.m_rw = &writer;
-    CHECK_FALSE(writer.write(&emitter, DRW::AC1021, false));
-    CHECK_FALSE(emitter.m_result);
+    CHECK(writer.write(&emitter, DRW::AC1021, false));
+    CHECK(emitter.m_result);
+    const std::string written = slurp(path);
+    const auto start = written.find("PDFUNDERLAY");
+    REQUIRE(start != std::string::npos);
+    const std::string record = written.substr(start, written.find("\n  0\n", start) - start);
+    CHECK(record.find("\n170\n") == std::string::npos);
+    CHECK(record.find("\n280\n") != std::string::npos);
+    CHECK(record.find("\n280\n    16\n") == std::string::npos);
+    CHECK(writer.leftOut().count("inverted clip of an underlay (R2007 and older)") == 1);
     std::filesystem::remove(path);
   }
 }
@@ -11449,7 +11486,7 @@ TEST_CASE("DXF OBJECTS helper failures latch the enclosing write",
   }
 }
 
-TEST_CASE("DXF SORTENTSTABLE rejects unresolved remapped entity handles",
+TEST_CASE("DXF SORTENTSTABLE leaves out entries for entities it does not write",
           "[dxf][sortents][writer][safety]") {
   class SortEntsFailureEmitter : public StubInterface {
   public:
@@ -11483,10 +11520,13 @@ TEST_CASE("DXF SORTENTSTABLE rejects unresolved remapped entity handles",
   SortEntsFailureEmitter emitter;
   dxfRW writer(path.string().c_str());
   emitter.m_rw = &writer;
-  CHECK_FALSE(writer.write(&emitter, DRW::AC1027, false));
+  CHECK(writer.write(&emitter, DRW::AC1027, false));
   CHECK(emitter.m_entityResult);
-  CHECK_FALSE(emitter.m_sortResult);
-  CHECK(slurp(path) == "previous output\n");
+  CHECK(emitter.m_sortResult);
+  const std::string written = slurp(path);
+  CHECK(written.find("SORTENTSTABLE") != std::string::npos);
+  CHECK(written.find("\n331\n") == std::string::npos);
+  CHECK(writer.leftOut().count("draw-order entry of an entity not written") == 1);
   std::error_code ignored;
   std::filesystem::remove(path, ignored);
 }

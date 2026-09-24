@@ -334,6 +334,9 @@ public:
     void setReferenceResolver(std::function<std::uint32_t(std::uint32_t)> resolver) {
         m_referenceResolver = std::move(resolver);
     }
+    /*!< What the last write left out or simplified because the target version
+     * cannot hold it, by description, with a count. */
+    const std::map<std::string, std::size_t> &leftOut() const { return m_leftOut; }
     //! Resolve a source entity handle after writeEntity() minted its DXF handle.
     std::uint32_t remapEntityHandle(std::uint32_t sourceHandle) const;
     //! Reserve the future code-5 handle for a source entity before table
@@ -659,6 +662,8 @@ private:
     /// literal. Empty by default (raw handles emitted verbatim).
     std::map<std::uint32_t, std::uint32_t> m_handleRemap;
     std::function<std::uint32_t(std::uint32_t)> m_referenceResolver;
+    std::map<std::string, std::size_t> m_leftOut;
+    void noteLeftOut(const char *what) { ++m_leftOut[what]; }
     std::uint32_t resolveReference(std::uint32_t handle) const {
         return handle == 0 || !m_referenceResolver ? handle : m_referenceResolver(handle);
     }

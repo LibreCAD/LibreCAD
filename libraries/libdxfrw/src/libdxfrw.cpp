@@ -1440,6 +1440,7 @@ void dxfRW::resetDxfWriteSession() {
     m_writingContext.sourceHandleToMintedMap.clear();
     m_writingContext.ambiguousSourceHandles.clear();
     m_dxfClassesFrozen = false;
+    m_leftOut.clear();
 }
 
 bool dxfRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin) try {
@@ -2217,8 +2218,7 @@ bool dxfRW::writeTableEntryAppData(const DRW_TableEntry& entry) {
     if (version < DRW::AC1014) {
         if (!entry.appData.empty() || !entry.reactorHandles.empty()
             || entry.xDictHandle != 0) {
-            m_writeError = true;
-            return false;
+            noteLeftOut("application data of a table record (R12)");
         }
         return true;
     }
@@ -2288,13 +2288,11 @@ bool dxfRW::writeLineType(DRW_LType *ent){
               });
     //do not write linetypes handled by library
     if (strname == "BYLAYER" || strname == "BYBLOCK" || strname == "CONTINUOUS") {
-        // These mandatory records are emitted before the interface callback.
-        // Replaying application data here would otherwise report success while
-        // silently dropping the payload.
+        // These mandatory records are emitted before the interface callback,
+        // without the application data a source file may attach to them.
         if (!ent->appData.empty() || !ent->extData.empty()
             || !ent->reactorHandles.empty() || ent->xDictHandle != 0) {
-            m_writeError = true;
-            return false;
+            noteLeftOut("application data of a built-in linetype");
         }
         return true;
     }
@@ -5135,17 +5133,22 @@ bool dxfRW::writeUnderlay(DRW_Underlay *ent) {
     if (version <= DRW::AC1009) return rejectUnsupportedDxfWrite();
     if (ent == nullptr || writer == nullptr || !ent->validatePayloadFields()
         || ent->clipBoundary.size() > DRW_Underlay::kMaxClipVertices
-        || ent->inverseClipBoundary.size() > DRW_Underlay::kMaxClipVertices
-        || (version <= DRW::AC1021
-            && (!ent->inverseClipBoundary.empty() || (ent->flags & 0x10) != 0))) {
+        || ent->inverseClipBoundary.size() > DRW_Underlay::kMaxClipVertices) {
         m_writeError = true;
         return false;
     }
     EntityRecordScope scope(*this, ent);
-    const bool hasInverseClip = !ent->inverseClipBoundary.empty()
-                                || (ent->flags & 0x10) != 0;
-    const std::uint8_t wireFlags =
-        hasInverseClip ? static_cast<std::uint8_t>(ent->flags | 0x10) : ent->flags;
+    bool hasInverseClip = !ent->inverseClipBoundary.empty()
+                          || (ent->flags & 0x10) != 0;
+    if (hasInverseClip && version <= DRW::AC1021) {
+        // R2007 and older have no inverted clip: the underlay is clipped by its
+        // boundary alone.
+        noteLeftOut("inverted clip of an underlay (R2007 and older)");
+        hasInverseClip = false;
+    }
+    const std::uint8_t wireFlags = hasInverseClip
+        ? static_cast<std::uint8_t>(ent->flags | 0x10)
+        : static_cast<std::uint8_t>(ent->flags & ~0x10);
     const char* tag = (ent->kind == DRW_Underlay::DGN) ? "DGNUNDERLAY"
                     : (ent->kind == DRW_Underlay::DWF) ? "DWFUNDERLAY"
                     : "PDFUNDERLAY";
@@ -15162,12 +15165,14 @@ bool dxfRW::writeSortEntsTable(DRW_SortEntsTable *ent) {
     for (std::size_t i = 0; i < entryCount; ++i) {
         const std::uint32_t entitySource = ent->m_entityHandles[i];
         std::uint32_t entityHandle = 0;
-        if (!resolveEntity(entitySource, entityHandle))
-            return failDxfWrite();
         const std::uint32_t sortSource = ent->m_sortHandles[i];
         std::uint32_t sortHandle = 0;
-        if (!resolveSort(sortSource, sortHandle))
-            return failDxfWrite();
+        if (!resolveEntity(entitySource, entityHandle)
+            || !resolveSort(sortSource, sortHandle)) {
+            // The entity is not written, or several share its source handle.
+            noteLeftOut("draw-order entry of an entity not written");
+            continue;
+        }
         writer->writeString(331, toHexStr(entityHandle));
         writer->writeString(5, toHexStr(sortHandle));
     }
