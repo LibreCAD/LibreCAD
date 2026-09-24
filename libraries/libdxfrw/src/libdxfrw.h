@@ -658,6 +658,8 @@ private:
         return handle == 0 || !m_referenceResolver ? handle : m_referenceResolver(handle);
     }
     std::vector<std::uint32_t> resolveReferences(const std::vector<std::uint32_t> &handles) const;
+    std::list<std::list<DRW_Variant>> resolveAppDataReferences(
+        const std::list<std::list<DRW_Variant>> &appData);
     bool wlayer0 {false};
     bool dimstyleStd {false};
     bool applyExt {false};

@@ -2041,7 +2041,12 @@ bool dxfRW::writeSequenceEnd(std::uint32_t ownerHandle) {
     return !writer->hasWriteError();
 }
 
-bool dxfRW::writeAppData(const std::list<std::list<DRW_Variant>>& appData) {
+bool dxfRW::writeAppData(const std::list<std::list<DRW_Variant>>& sourceAppData) {
+    // Reactors and extension dictionaries kept as application data (a table
+    // record's, say) name their targets like the typed ones do.
+    const std::list<std::list<DRW_Variant>> appData = m_referenceResolver
+        ? resolveAppDataReferences(sourceAppData)
+        : sourceAppData;
     // Validate every application-data group before writing its opener.  This
     // keeps malformed nesting or union storage from producing a partial 102
     // group in the containing record.
@@ -3059,6 +3064,60 @@ std::vector<std::uint32_t> dxfRW::resolveReferences(
         const std::uint32_t written = resolveReference(handle);
         if (written != 0)
             resolved.push_back(written);
+    }
+    return resolved;
+}
+
+std::list<std::list<DRW_Variant>> dxfRW::resolveAppDataReferences(
+    const std::list<std::list<DRW_Variant>> &appData) {
+    const auto handleOf = [](const DRW_Variant &value, std::uint32_t &handle) {
+        if (value.type() == DRW_Variant::INTEGER) {
+            handle = static_cast<std::uint32_t>(value.i_val());
+            return true;
+        }
+        if (value.type() != DRW_Variant::STRING || value.content.s == nullptr
+            || value.content.s->empty())
+            return false;
+        char *end = nullptr;
+        const unsigned long long parsed =
+            std::strtoull(value.content.s->c_str(), &end, 16);
+        if (end == nullptr || *end != '\0'
+            || parsed > std::numeric_limits<std::uint32_t>::max())
+            return false;
+        handle = static_cast<std::uint32_t>(parsed);
+        return true;
+    };
+    std::list<std::list<DRW_Variant>> resolved;
+    for (const auto &group : appData) {
+        const DRW_Variant *opener = group.empty() ? nullptr : &group.front();
+        const std::string marker = opener != nullptr && opener->code() == 102
+                && opener->type() == DRW_Variant::STRING && opener->content.s != nullptr
+            ? *opener->content.s : std::string{};
+        const std::string name =
+            !marker.empty() && marker.front() == '{' ? marker.substr(1) : marker;
+        const int referenceCode = name == "ACAD_REACTORS" ? 330
+                                : name == "ACAD_XDICTIONARY" ? 360 : 0;
+        if (referenceCode == 0) {
+            resolved.push_back(group);
+            continue;
+        }
+        std::list<DRW_Variant> kept;
+        bool namesSomething = false;
+        for (const DRW_Variant &value : group) {
+            std::uint32_t handle = 0;
+            if (value.code() != referenceCode || !handleOf(value, handle)) {
+                kept.push_back(value);
+                namesSomething = namesSomething || value.code() == referenceCode;
+                continue;
+            }
+            const std::uint32_t written = resolveReference(handle);
+            if (written == 0)
+                continue; // names nothing written
+            kept.emplace_back(referenceCode, toHexStr(written));
+            namesSomething = true;
+        }
+        if (namesSomething)
+            resolved.push_back(std::move(kept));
     }
     return resolved;
 }

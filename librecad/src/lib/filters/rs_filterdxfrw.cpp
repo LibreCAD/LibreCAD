@@ -31869,6 +31869,14 @@ std::uint32_t RS_FilterDXFRW::dxfReference(std::uint32_t source) const {
   if (m_dxfDroppedReferenceHandles.count(source) != 0 ||
       (m_dxfSuppressedObjectHandles.count(source) != 0 && !codecWritesIt))
     return 0;
+  // Entities are written under fresh handles, all taken before the first
+  // entity is written; a handle several entities share names none of them.
+  const DRW_WritingContext *context = m_dxfW->getWritingContext();
+  if (context->ambiguousSourceHandles.count(source) != 0)
+    return 0;
+  const auto entity = context->sourceHandleToMintedMap.find(source);
+  if (entity != context->sourceHandleToMintedMap.end())
+    return entity->second;
   return m_dxfW->remapHandle(source);
 }
 

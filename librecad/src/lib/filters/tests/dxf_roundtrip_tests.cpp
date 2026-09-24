@@ -3535,6 +3535,95 @@ TEST_CASE("DXF export keeps a GROUP's handle for its members' reactors",
   std::filesystem::remove(out);
 }
 
+TEST_CASE("DXF export points an entity's reactors at the entities they name",
+          "[dxf][roundtrip][filter][handles]") {
+  ensureSettings();
+  const std::string src = tmpFile("entity-reactors-src.dxf");
+  const std::string out = tmpFile("entity-reactors-out.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  // An associative HATCH is a reactor of its boundary; both entities are
+  // written under fresh handles, the HATCH after the polyline.
+  writeText(src,
+            "0\nSECTION\n2\nENTITIES\n"
+            "0\nLWPOLYLINE\n5\nB0\n102\n{ACAD_REACTORS\n330\nB1\n102\n}\n"
+            "100\nAcDbEntity\n8\n0\n100\nAcDbPolyline\n90\n4\n70\n1\n"
+            "10\n0\n20\n0\n10\n10\n20\n0\n10\n10\n20\n10\n10\n0\n20\n10\n"
+            "0\nHATCH\n5\nB1\n100\nAcDbEntity\n8\n0\n100\nAcDbHatch\n"
+            "10\n0\n20\n0\n30\n0\n210\n0\n220\n0\n230\n1\n2\nSOLID\n70\n1\n71\n1\n"
+            "91\n1\n92\n3\n72\n0\n73\n1\n93\n4\n"
+            "10\n0\n20\n0\n10\n10\n20\n0\n10\n10\n20\n10\n10\n0\n20\n10\n"
+            "97\n1\n330\nB0\n75\n0\n76\n1\n98\n0\n"
+            "0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+
+  const auto hatch = recordGroupValues(out, "HATCH", "5");
+  REQUIRE(hatch.size() == 1);
+  CHECK(hatch.front() != "B1");
+  CHECK(recordReactors(out, "LWPOLYLINE")
+        == std::vector<std::vector<std::string>>{{hatch.front()}});
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
+TEST_CASE("DXF export resolves reactors a table record keeps as application data",
+          "[dxf][roundtrip][filter][handles]") {
+  ensureSettings();
+  const std::string src = tmpFile("dimstyle-reactors-src.dxf");
+  const std::string out = tmpFile("dimstyle-reactors-out.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  // A DIMSTYLE lists the dimensions using it as reactors, kept verbatim as
+  // an application-data group; any entity serves as the target here.
+  writeText(src,
+            "0\nSECTION\n2\nTABLES\n"
+            "0\nTABLE\n2\nDIMSTYLE\n5\nA\n70\n1\n"
+            "0\nDIMSTYLE\n105\n30\n102\n{ACAD_REACTORS\n330\nA1\n102\n}\n330\nA\n"
+            "100\nAcDbSymbolTableRecord\n100\nAcDbDimStyleTableRecord\n2\nCUSTOM\n70\n0\n"
+            "0\nENDTAB\n0\nENDSEC\n"
+            "0\nSECTION\n2\nENTITIES\n"
+            "0\nLINE\n5\nA1\n100\nAcDbEntity\n8\n0\n100\nAcDbLine\n"
+            "10\n0\n20\n0\n30\n0\n11\n10\n21\n0\n31\n0\n"
+            "0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+
+  const auto line = recordGroupValues(out, "LINE", "5");
+  REQUIRE(line.size() == 1);
+  const auto dimStyles = recordReactors(out, "DIMSTYLE");
+  const auto custom = std::find_if(dimStyles.cbegin(), dimStyles.cend(),
+                                   [](const auto &reactors) { return !reactors.empty(); });
+  REQUIRE(custom != dimStyles.cend());
+  CHECK(*custom == std::vector<std::string>{line.front()});
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
 TEST_CASE("DXF export drops reactors to a GROUP whose handle it cannot keep",
           "[dxf][roundtrip][filter][handles][groups]") {
   ensureSettings();
