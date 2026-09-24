@@ -71,11 +71,19 @@ RS_Polyline::RS_Polyline(RS_EntityContainer* parent, const RS_PolylineData& d)
     RS_Polyline::calculateBorders();
 }
 
+/**
+ * The copy's closing segment is its own, at the same place in its list.
+ */
+RS_Polyline::RS_Polyline(const RS_Polyline& other)
+    : RS_EntityContainer(other), m_data(other.m_data), m_nextBulge(other.m_nextBulge) {
+    if (other.m_closingEntity != nullptr) {
+        const int index = other.findEntityIndex(other.m_closingEntity);
+        m_closingEntity = index >= 0 ? entityAt(index) : nullptr;
+    }
+}
+
 RS_Entity* RS_Polyline::clone() const {
-    auto* p = new RS_Polyline(*this);
-    p->setOwner(isOwner());
-    p->detach();
-    return p;
+    return new RS_Polyline(*this);
 }
 
 void RS_Polyline::setLayer(const QString& name) {
@@ -579,19 +587,15 @@ bool RS_Polyline::offset(const RS_Vector& coord, double distance) {
         }
     }
 
-    // Take pnew's segments rather than assigning pnew: an assignment copies
-    // the pointers to its plain segments, which still name pnew as their
-    // parent (so they resolve their layer and pen through it), and leaks both
-    // pnew and this polyline's own segments.
+    // pnew's segments replace this polyline's own
     const std::unique_ptr<RS_Polyline> result{pnew};
-    clear(); // this polyline's own segments
-    for (RS_Entity* segment : *result) {
+    RS_Entity* const closing = result->m_closingEntity;
+    clear();
+    for (auto& segment : result->takeEntities()) {
         segment->setParent(this);
-        RS_EntityContainer::addEntity(segment);
+        RS_EntityContainer::addEntity(segment.release());
     }
-    m_closingEntity = result->m_closingEntity;
-    result->setOwner(false);
-    result->clear(); // hands the segments over without deleting them
+    m_closingEntity = closing;
     // pnew was cloned before its segments moved: the start and end are read
     // back from the segments
     updateEndpoints();

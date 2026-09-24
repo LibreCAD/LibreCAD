@@ -56,6 +56,7 @@ class RS_Polyline : public RS_EntityContainer {
 public:
     explicit RS_Polyline(RS_EntityContainer* parent = nullptr);
     RS_Polyline(RS_EntityContainer* parent, const RS_PolylineData& d);
+    RS_Polyline(const RS_Polyline& other);
     RS_Entity* clone() const override;
 
     /**	@return RS2::EntityPolyline */

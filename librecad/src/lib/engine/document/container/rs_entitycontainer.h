@@ -47,17 +47,18 @@ public:
     };
 
     explicit RS_EntityContainer(RS_EntityContainer* parent = nullptr, bool owner = true);
+    /** A deep copy: an owner clones its children, a non-owner shares them. */
     RS_EntityContainer(const RS_EntityContainer& other);
     RS_EntityContainer(const RS_EntityContainer& other, bool copyChildren);
-    RS_EntityContainer& operator =(const RS_EntityContainer& other);
-    RS_EntityContainer(RS_EntityContainer&& other) noexcept;
-    RS_EntityContainer& operator =(RS_EntityContainer&& other) noexcept;
-    //RS_EntityContainer(const RS_EntityContainer& ec);
+    // Containers own their children: an assigned or moved-from container could
+    // neither keep nor share them safely.
+    RS_EntityContainer& operator =(const RS_EntityContainer& other) = delete;
+    RS_EntityContainer(RS_EntityContainer&& other) = delete;
+    RS_EntityContainer& operator =(RS_EntityContainer&& other) = delete;
 
     ~RS_EntityContainer() override;
 
     RS_Entity* clone() const override;
-    virtual void detach();
 
     /** @return RS2::EntityContainer */
     RS2::EntityType rtti() const override {

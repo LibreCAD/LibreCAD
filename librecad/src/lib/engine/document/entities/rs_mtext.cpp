@@ -288,24 +288,7 @@ RS_MText::computeBidiVisualOrder(const QString &text,
 }
 
 RS_MText::LC_TextLine* RS_MText::LC_TextLine::clone() const {
-    auto* ec = new LC_TextLine(getParent(), isOwner());
-    if (isOwner()) {
-        for (const RS_Entity* entity : *this) {
-            if (entity != nullptr) {
-                ec->push_back(entity->clone());
-            }
-        }
-    }
-    else {
-        ec->clear();
-        std::copy(cbegin(), cend(), std::back_inserter(*ec));
-    }
-    ec->detach();
-    ec->setTextSize(m_textSize);
-    ec->setLeftBottomCorner(m_leftBottomCorner);
-    ec->setBaselineStart(m_baselineStart);
-    ec->setBaselineEnd(m_baselineEnd);
-    return ec;
+    return new LC_TextLine(*this);
 }
 
 const RS_Vector& RS_MText::LC_TextLine::getTextSize() const {
@@ -371,10 +354,7 @@ RS_MText::RS_MText(RS_EntityContainer* parent, const RS_MTextData& d)
 }
 
 RS_Entity* RS_MText::clone() const {
-    auto* t = new RS_MText(*this);
-    t->setOwner(isOwner());
-    t->detach();
-    return t;
+    return new RS_MText(*this);
 }
 
 // fixme - test concept for using UI proxies for heavy entities on modification operation (rotate, scale etc).

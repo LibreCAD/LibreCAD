@@ -467,10 +467,7 @@ RS_Spline::RS_Spline(RS_EntityContainer *parent, const RS_SplineData &d)
 
 /** Clone */
 RS_Entity *RS_Spline::clone() const {
-  auto *l = new RS_Spline(*this);
-  l->setOwner(isOwner());
-  l->detach();
-  return l;
+  return new RS_Spline(*this);
 }
 
 /** M_Data access */

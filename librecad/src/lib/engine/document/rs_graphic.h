@@ -155,7 +155,6 @@ public:
     void activateLayer(RS_Layer* layer, const bool notify = false) {m_layerList.activate(layer, notify);}
     RS_Layer* getActiveLayer() const {return m_layerList.getActive();}
     virtual void addLayer(RS_Layer* layer) {m_layerList.add(layer);}
-    void addEntity(const RS_Entity* entity) override;
     void removeLayer(RS_Layer* layer);
     void editLayer(RS_Layer* layer, const RS_Layer& source) {m_layerList.edit(layer, source);}
     RS_Layer* findLayer(const QString& name) {return m_layerList.find(name);}

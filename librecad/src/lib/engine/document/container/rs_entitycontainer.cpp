@@ -108,81 +108,28 @@ RS_EntityContainer::RS_EntityContainer(RS_EntityContainer* parent, const bool ow
 }
 
 /**
- * Copy constructor. Makes a deep copy of all entities.
+ * Copy constructor: a deep copy.
  */
+RS_EntityContainer::RS_EntityContainer(const RS_EntityContainer& other) : RS_EntityContainer(other, true) {
+}
 
-RS_EntityContainer::RS_EntityContainer(const RS_EntityContainer& other) : RS_Entity{other}, m_subContainer{other.m_subContainer},
-                                                                          m_entities{other.m_entities},
-                                                                          m_autoUpdateBorders{other.m_autoUpdateBorders},
-                                                                          m_entIdx{other.m_entIdx}, m_autoDelete{other.m_autoDelete} {
-    if (m_autoDelete) {
-        // fixme - sand - check this logic, looks suspicious!
-        for (auto& it : *this) {
-            if (it == nullptr) {
-                continue;
-            }
-            if (it->isContainer()) {
-                it = it->clone();
-            }
-        }
+/**
+ * Copies the container and, with copyChildren, its children: an owner clones
+ * each child for the copy to own, a non-owner shares them.
+ */
+RS_EntityContainer::RS_EntityContainer(const RS_EntityContainer& other, const bool copyChildren)
+    : RS_Entity{other}, m_autoUpdateBorders{other.m_autoUpdateBorders}, m_entIdx{-1}, m_autoDelete{other.m_autoDelete} {
+    if (!copyChildren) {
+        return;
     }
-}
-
-RS_EntityContainer::RS_EntityContainer(const RS_EntityContainer& other, const bool copyChildren) : RS_Entity{other} {
-    m_subContainer = nullptr;
-    m_autoUpdateBorders = other.m_autoUpdateBorders;
-    m_entIdx = other.m_entIdx;
-    m_autoDelete = other.m_autoDelete;
-    if (copyChildren) {
-        m_entities = other.m_entities;
-        if (m_autoDelete) {
-            // fixme - sand - check this logic, looks suspicious!
-            for (auto& it : *this) {
-                if (it == nullptr) {
-                    continue;
-                }
-                if (it->isContainer()) {
-                    it = it->clone();
-                }
-            }
+    m_entities.reserve(other.m_entities.size());
+    for (RS_Entity* entity : std::as_const(other.m_entities)) {
+        if (entity != nullptr && m_autoDelete) {
+            entity = entity->clone();
+            entity->setParent(this);
         }
+        m_entities.append(entity); // same positions as the original's
     }
-}
-
-RS_EntityContainer& RS_EntityContainer::operator =(const RS_EntityContainer& other) {
-    this->RS_Entity::operator =(other);
-    m_subContainer = other.m_subContainer;
-    m_entities = other.m_entities;
-    m_autoUpdateBorders = other.m_autoUpdateBorders;
-    m_entIdx = other.m_entIdx;
-    m_autoDelete = other.m_autoDelete;
-    if (m_autoDelete) {
-        for (auto& it : *this) {
-            if (it == nullptr) {
-                continue;
-            }
-            if (it->isContainer()) {
-                it = it->clone();
-            }
-        }
-    }
-    return *this;
-}
-
-RS_EntityContainer::RS_EntityContainer(RS_EntityContainer&& other) noexcept : RS_Entity{other}, m_subContainer{other.m_subContainer},
-                                                                              m_entities{std::move(other.m_entities)},
-                                                                              m_autoUpdateBorders{other.m_autoUpdateBorders},
-                                                                              m_entIdx{other.m_entIdx}, m_autoDelete{other.m_autoDelete} {
-}
-
-RS_EntityContainer& RS_EntityContainer::operator =(RS_EntityContainer&& other) noexcept {
-    this->RS_Entity::operator =(other);
-    m_subContainer = other.m_subContainer;
-    m_entities = std::move(other.m_entities);
-    m_autoUpdateBorders = other.m_autoUpdateBorders;
-    m_entIdx = other.m_entIdx;
-    m_autoDelete = other.m_autoDelete;
-    return *this;
 }
 
 /**
@@ -200,87 +147,30 @@ RS_EntityContainer::~RS_EntityContainer() {
 }
 
 RS_Entity* RS_EntityContainer::clone() const {
-    RS_DEBUG->print("RS_EntityContainer::clone: ori autoDel: %d", m_autoDelete);
-
-    auto* ec = new RS_EntityContainer(getParent(), isOwner());
-    if (isOwner()) {
-        for (const RS_Entity* entity : std::as_const(m_entities)) {
-            if (entity != nullptr) {
-                ec->m_entities.push_back(entity->clone());
-            }
-        }
-    }
-    else {
-        ec->m_entities = m_entities;
-    }
-
-    RS_DEBUG->print("RS_EntityContainer::clone: clone autoDel: %d", ec->isOwner());
-
-    ec->detach();
-    return ec;
+    return new RS_EntityContainer(*this);
 }
 
 RS_Entity* RS_EntityContainer::cloneProxy() const {
-    RS_DEBUG->print("RS_EntityContainer::cloneproxy: ori autoDel: %d", m_autoDelete);
-
-    auto* ec = new RS_EntityContainer(getParent(), isOwner());
-    if (isOwner()) {
-        for (const RS_Entity* entity : std::as_const(m_entities)) {
-            if (entity != nullptr) {
-                ec->m_entities.push_back(entity->cloneProxy());
-            }
+    auto* ec = new RS_EntityContainer(*this, false);
+    for (RS_Entity* entity : std::as_const(m_entities)) {
+        if (entity != nullptr && m_autoDelete) {
+            entity = entity->cloneProxy();
+            entity->setParent(ec);
         }
+        ec->m_entities.append(entity);
     }
-    else {
-        ec->m_entities = m_entities;
-    }
-
-    RS_DEBUG->print("RS_EntityContainer::cloneproxy: clone autoDel: %d", ec->isOwner());
-
-    ec->detach(); // fixme - review whether detach is always need... looks like a double clone() ??
     return ec;
-}
-
-/**
- * Detaches shallow copies and creates deep copies of all subentities.
- * This is called after cloning entity containers.
- */
-void RS_EntityContainer::detach() {
-    QList<RS_Entity*> clonesList;
-    const bool autoDel = isOwner();
-    RS_DEBUG->print("RS_EntityContainer::detach: autoDel: %d", autoDel);
-    setOwner(false);
-
-    // make deep copies of all entities:
-    for (const RS_Entity* e : *this) {
-        if (e == nullptr) {
-            continue;
-        }
-        if (!e->getFlag(RS2::FlagTemp)) {
-            clonesList.append(e->clone());
-        }
-    }
-
-    // clear shared pointers:
-    clear();
-    setOwner(autoDel);
-
-    // point to new deep copies:
-    for (RS_Entity* e : clonesList) {
-        push_back(e);
-        e->reparent(this);
-    }
 }
 
 void RS_EntityContainer::reparent(RS_EntityContainer* newParent) {
     RS_Entity::reparent(newParent);
-
-    // All sub-entities:
-    for (RS_Entity* e : *this) {
-        if (e == nullptr) {
-            continue;
+    // Owned children stay children of this container, wherever it goes.
+    if (m_autoDelete) {
+        for (RS_Entity* e : std::as_const(m_entities)) {
+            if (e != nullptr) {
+                e->setParent(this);
+            }
         }
-        e->reparent(newParent);
     }
 }
 

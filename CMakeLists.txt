@@ -2501,6 +2501,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/entities/tests/rs_text_bidi_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_text_alignment_tests.cpp
         librecad/src/lib/engine/document/container/tests/lc_container_ownership_tests.cpp
+        librecad/src/lib/engine/document/container/tests/lc_copy_semantics_tests.cpp
         librecad/src/lib/engine/tests/rs_pen_tests.cpp
         librecad/src/lib/actions/tests/lc_snappercatchtests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_round_tests.cpp
