@@ -7708,6 +7708,8 @@ void RS_FilterDXFRW::addInsert(const DRW_Insert &data) {
   for (const auto &att : data.attlist) {
     if (!att)
       continue;
+    const bool attributeVisible =
+        att->visible && (att->attribFlags & 0x1) == 0;
 
     // Multi-line ATTRIB (R2018+, ODA spec §20.4.4 Attribute type 2/4):
     // libdxfrw saw the `100 / Embedded Object` DXF subclass marker on the
@@ -7718,7 +7720,7 @@ void RS_FilterDXFRW::addInsert(const DRW_Insert &data) {
       auto *mt = mtextEntityFromDRW(*att->mtext);
       mt->setParent(m_currentContainer);
       setEntityAttributes(mt, att.get());
-      mt->setVisible((att->attribFlags & 0x1) == 0);
+      mt->setVisible(attributeVisible && att->mtext->visible);
       appendInsertAttribSidecar(mt, *att, entity->getId(), ordinal++);
       mt->update();
       m_currentContainer->addEntity(mt);
@@ -7754,7 +7756,7 @@ void RS_FilterDXFRW::addInsert(const DRW_Insert &data) {
                    RS2::NoUpdate);
     auto textEntity = std::make_unique<RS_Text>(m_currentContainer, td);
     setEntityAttributes(textEntity.get(), att.get());
-    textEntity->setVisible((att->attribFlags & 0x1) == 0);
+    textEntity->setVisible(attributeVisible);
     appendInsertAttribSidecar(textEntity.get(), *att, entity->getId(),
                               ordinal++);
     textEntity->update();
@@ -31628,11 +31630,11 @@ void RS_FilterDXFRW::getEntityAttributes(DRW_Entity *ent,
     ent->transparency = (0x03 << 24) | (alphaByte & 0xFF);
   }
 
-  // Visibility (DXF code 60 / DWG invisible bit). The writer honors
-  // ent->visible (writeEntity emits 60 when invisible; encodeDwgCommon sets
-  // the DWG bit), but this boundary never populated it, so an invisible
-  // entity round-tripped as visible. (write-review P3 #11)
-  ent->visible = entity->isVisible();
+  // Store entity visibility independently of its layer's frozen state.
+  // Effective visibility is also false when the layer is frozen, but that
+  // must remain a layer property rather than becoming DXF code 60 / the DWG
+  // invisible bit on the entity.
+  ent->visible = entity->getFlag(RS2::FlagVisible);
 
   // Passive metadata sidecars — emit only when overridden. DWG references
   // must be remapped after the writer reserves its final handle graph;

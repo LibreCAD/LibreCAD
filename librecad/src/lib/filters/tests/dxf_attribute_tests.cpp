@@ -2670,6 +2670,18 @@ TEST_CASE("DXF entity visibility(60) round-trip (write-review pass-2 #11)",
   std::filesystem::remove(path);
 }
 
+TEST_CASE("DXF group 60 is not parsed as a bit field", "[dxf][line][visibility]") {
+  LineCapture cap;
+  readDxf("0\nSECTION\n2\nENTITIES\n"
+          "0\nLINE\n8\n0\n60\n2\n"
+          "10\n0\n20\n0\n11\n1\n21\n1\n"
+          "0\nENDSEC\n0\nEOF\n",
+          cap, "lc_line_visibility_scalar.dxf");
+
+  REQUIRE(cap.m_callCount == 1);
+  CHECK_FALSE(cap.m_captured.visible);
+}
+
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("DXF TOLERANCE is read into a DRW_Tolerance (slice E1)", "[dxf][tolerance]") {
   ToleranceCapture cap;

@@ -3052,7 +3052,8 @@ bool DRW_Entity::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
         ltypeScale = reader->getDouble();
         break;
     case DRW::dxfCode::INVISIBLE:
-        visible = (reader->getInt32() & 1) == 0;
+        // DXF 60 is a scalar visibility value, not a DWG bit field.
+        visible = reader->getInt32() == 0;
         break;
     case 420:
         color24 = reader->getInt32();
