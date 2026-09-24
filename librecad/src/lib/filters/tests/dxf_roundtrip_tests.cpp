@@ -3826,6 +3826,8 @@ TEST_CASE("DXF import records its version and saves back in it",
       std::pair<std::string, RS2::FormatType>{"AC1015", RS2::FormatDXFRW2000},
       std::pair<std::string, RS2::FormatType>{"AC1018", RS2::FormatDXFRW2004},
       std::pair<std::string, RS2::FormatType>{"AC1021", RS2::FormatDXFRW},
+      std::pair<std::string, RS2::FormatType>{"AC1024", RS2::FormatDXFRW2010},
+      std::pair<std::string, RS2::FormatType>{"AC1027", RS2::FormatDXFRW2013},
       std::pair<std::string, RS2::FormatType>{"AC1032", RS2::FormatDXFRW2018});
   CAPTURE(acadVer);
   const std::string src = tmpFile(("version-" + acadVer + "-src.dxf").c_str());

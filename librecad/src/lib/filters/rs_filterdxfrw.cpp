@@ -11511,6 +11511,14 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     exportVersion = DRW::AC1021;
     m_version = 1021;
     m_exactColor = true;
+  } else if (type == RS2::FormatDXFRW2010) {
+    exportVersion = DRW::AC1024;
+    m_version = 1024;
+    m_exactColor = true;
+  } else if (type == RS2::FormatDXFRW2013) {
+    exportVersion = DRW::AC1027;
+    m_version = 1027;
+    m_exactColor = true;
   } else {
     exportVersion = DRW::AC1032;
     m_version = 1032;
@@ -16111,10 +16119,12 @@ RS2::FormatType RS_FilterDXFRW::formatForDxfVersion(const DRW::Version version) 
   case DRW::AC1018:
     return RS2::FormatDXFRW2004;
   case DRW::AC1021:
-  case DRW::AC1024: // no R2010/R2013 DXF export yet: R2007
-  case DRW::AC1027:
   case DRW::UNKNOWNV:
     return RS2::FormatDXFRW;
+  case DRW::AC1024:
+    return RS2::FormatDXFRW2010;
+  case DRW::AC1027:
+    return RS2::FormatDXFRW2013;
   case DRW::AC1032:
     return RS2::FormatDXFRW2018;
   default: // R12 and older
