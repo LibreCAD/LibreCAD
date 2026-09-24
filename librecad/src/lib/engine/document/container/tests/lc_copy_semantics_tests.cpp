@@ -18,8 +18,8 @@
 **********************************************************************/
 
 // What a copy of an entity is: a value copy or clone shares nothing with the
-// original, owns its own children, keeps the original's visible state, and
-// drops its selection and deletion state.
+// original, owns its own children, keeps the original's value and visible
+// state, and drops its selection and deletion state.
 
 #include <catch2/catch_test_macros.hpp>
 
@@ -29,8 +29,10 @@
 #include <set>
 #include <type_traits>
 
+#include "drw_base.h"
 #include "lc_actiontestsupport.h"
 #include "lc_documentinvariants.h"
+#include "rs_arc.h"
 #include "rs_block.h"
 #include "rs_filterdxfrw.h"
 #include "rs_fontlist.h"
@@ -309,6 +311,25 @@ TEST_CASE("A copy drops the document state and keeps the rest of the flags", "[c
     CHECK(clone->getFlag(RS2::FlagTransparent));
     CHECK_FALSE(clone->isVisible());
     CHECK(clone->getId() != line.getId());
+}
+
+TEST_CASE("A copy keeps the original's XDATA", "[copy][xdata]") {
+    lc::test::application();
+    RS_Line line(nullptr, RS_LineData(RS_Vector{0, 0}, RS_Vector{1, 1}));
+    line.setDrwExtData({std::make_shared<DRW_Variant>(1001, std::string("APP")),
+                        std::make_shared<DRW_Variant>(1000, std::string("hello"))});
+    const std::unique_ptr<RS_Entity> clone{line.clone()};
+    REQUIRE(clone->getDrwExtData().size() == 2);
+    CHECK(clone->getDrwExtData()[1]->code() == 1000);
+    CHECK(*clone->getDrwExtData()[1]->content.s == "hello");
+}
+
+TEST_CASE("A moved-from entity is still usable", "[copy][move]") {
+    lc::test::application();
+    RS_Arc a(nullptr, RS_ArcData(RS_Vector{0, 0}, 1.0, 0.0, 1.0, false));
+    const RS_Arc b(std::move(a));
+    CHECK(a.getPen(false).getWidth() == b.getPen(false).getWidth());
+    CHECK(b.getRadius() == 1.0);
 }
 
 TEST_CASE("An invisible entity stays invisible when moved and saved", "[copy][flags][dxf]") {
