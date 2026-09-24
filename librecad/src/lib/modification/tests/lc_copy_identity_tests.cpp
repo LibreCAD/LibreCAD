@@ -684,3 +684,68 @@ TEST_CASE("Copy and paste across the sample corpus keep every drawing consistent
     RS_CLIPBOARD->clear();
     CHECK(pasted > 0);
 }
+
+TEST_CASE("A library insert brings its nested blocks onto the destination's layers as new objects", "[copy][library]") {
+    auto source = std::make_unique<Drawing>();
+    RS_Layer* walls = source->addLayer("WALLS");
+    source->addBlock("KNOB", [&](RS_Block& b) {
+        auto* circle = new RS_Circle(&b, RS_CircleData(RS_Vector{0, 0}, 0.1));
+        circle->setLayer(walls);
+        circle->setSourceHandle(0x220);
+        b.addEntity(circle);
+    });
+    source->addBlock("DOOR", [](RS_Block& b) {
+        b.addEntity(new RS_Insert(&b, RS_InsertData("KNOB", RS_Vector{1, 0}, RS_Vector{1, 1}, 0, 1, 1, RS_Vector{0, 0})));
+    });
+    source->addInsert("DOOR", RS_Vector{5, 5}, 0x300)->setLayer(walls);
+    RS_Line* line = source->addLine(0, 0x40);
+    line->setLayer(walls);
+    line->setMaterialHandle(0xC0);
+
+    Drawing destination;
+    destination.modify([&](LC_DocumentModificationBatch& ctx) {
+        RS_Modification::libraryInsert(LC_LibraryInsertData(RS_Vector{0, 0}, 1, 0, "PART", &source->m_graphic),
+                                       &destination.m_graphic, ctx);
+    });
+    source.reset(); // nothing inserted may depend on the library drawing
+
+    RS_Layer* ownWalls = destination.m_graphic.findLayer("WALLS");
+    REQUIRE(ownWalls != nullptr);
+    const RS_Block* knob = destination.m_graphic.findBlock("KNOB");
+    REQUIRE(knob != nullptr);
+    CHECK(knob->firstEntity()->getLayer(false) == ownWalls);
+    CHECK(knob->firstEntity()->sourceHandle() == 0);
+    REQUIRE(destination.m_graphic.findBlock("DOOR") != nullptr);
+    const RS_Block* part = destination.m_graphic.findBlock("PART");
+    REQUIRE(part != nullptr);
+    for (const RS_Entity* e : *part) {
+        CHECK(e->getLayer(false) == ownWalls);
+        CHECK(e->sourceHandle() == 0);
+        CHECK(e->materialHandle() == 0);
+    }
+    CHECK(destination.live(RS2::EntityInsert).size() == 1);
+    CHECK(lc::test::documentProblems(destination.m_graphic).isEmpty());
+}
+
+TEST_CASE("A plugin's block from disk comes onto the drawing's layers as new objects", "[copy][plugins]") {
+    const auto path = tempFile("from_disk.dxf");
+    std::ofstream(path) << groupedLinesDxf;
+    Drawing d;
+    const unsigned layers = d.m_graphic.countLayers();
+
+    Doc_plugin_interface plugin(&d.m_context, nullptr);
+    const QString name = plugin.addBlockfromFromdisk(QString::fromStdString(path.string()));
+    std::filesystem::remove(path);
+
+    const RS_Block* block = d.m_graphic.findBlock(name);
+    REQUIRE(block != nullptr);
+    CHECK(block->count() == 2);
+    for (const RS_Entity* e : *block) {
+        CHECK(e->getLayer(false) == d.m_graphic.findLayer("0"));
+        CHECK(e->sourceHandle() == 0);
+        CHECK(e->xDictHandle() == 0);
+        CHECK(e->reactorHandles().empty());
+    }
+    CHECK(d.m_graphic.countLayers() == layers);
+    CHECK(lc::test::documentProblems(d.m_graphic).isEmpty());
+}

@@ -364,16 +364,15 @@ void RS_Modification::libraryInsert(const LC_LibraryInsertData& data, RS_Graphic
         }
     }
 
-    // fixme - blocks - copy nested blocks from source inserts to destination
+    // Everything read is new to this drawing, and goes on its layers of the same names.
+    constexpr unsigned provenance = RS_Entity::Identity | RS_Entity::TableRefs;
     for (const RS_Entity* e : *src) {
         if (e == nullptr || e->rtti() != RS2::EntityInsert) {
             continue;
         }
-        const auto* insert = static_cast<const RS_Insert*>(e);
-        RS_Block* block = insert->getBlockForInsert();
-        if (block != nullptr && destination->findBlock(block->getName()) == nullptr) {
-            auto* blockClone = static_cast<RS_Block*>(block->clone());
-            destination->addBlock(blockClone);
+        const RS_Block* block = static_cast<const RS_Insert*>(e)->getBlockForInsert();
+        if (block != nullptr) {
+            LC_CopyUtils::doCopyBlock(block, destination, provenance);
         }
     }
 
@@ -391,6 +390,8 @@ void RS_Modification::libraryInsert(const LC_LibraryInsertData& data, RS_Graphic
                 continue;
             }
             RS_Entity* clone = e->clone();
+            clone->clearDwgProvenance(provenance);
+            LC_CopyUtils::doCopyEntityLayer(clone, destination);
             block->addByBlockEntity(clone);
         }
 
