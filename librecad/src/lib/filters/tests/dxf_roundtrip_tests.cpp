@@ -352,6 +352,28 @@ std::vector<std::vector<std::string>> recordReactors(const std::string &path,
   return reactors;
 }
 
+// Owner and reactor (330), soft/hard pointer (340/350/360) references that
+// name no handle (5/105) of the file.
+std::vector<std::string> danglingReferences(const std::string &path) {
+  std::ifstream in(path);
+  std::string codeLine, valueLine;
+  std::set<std::string> defined;
+  std::vector<std::pair<std::string, std::string>> references;
+  while (std::getline(in, codeLine) && std::getline(in, valueLine)) {
+    const std::string c = trimDxfToken(codeLine), v = trimDxfToken(valueLine);
+    if (c == "5" || c == "105")
+      defined.insert(v);
+    else if ((c == "330" || c == "340" || c == "350" || c == "360") && v != "0")
+      references.emplace_back(c, v);
+  }
+  std::vector<std::string> dangling;
+  for (const auto &[code, handle] : references) {
+    if (defined.count(handle) == 0)
+      dangling.push_back(code + " " + handle);
+  }
+  return dangling;
+}
+
 // True if a record named `recordName` (0/<name>) contains group `code` before
 // the next 0-record begins.
 bool recordHasCode(const std::string &path, const std::string &recordName,
@@ -3728,9 +3750,13 @@ TEST_CASE("DXF export follows an extension dictionary moved off a structural han
 }
 
 namespace {
-// An R2000 drawing with an object LibreCAD keeps only as raw DXF.
+// An R2000 drawing whose dictionary and ACME_THING LibreCAD keeps only as
+// raw DXF; the MATERIAL is kept both raw and typed.
 const char *const kR2000WithRawMaterial =
     "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1015\n0\nENDSEC\n"
+    "0\nSECTION\n2\nCLASSES\n"
+    "0\nCLASS\n1\nACME_THING\n2\nAcmeThing\n3\nACME\n90\n0\n280\n0\n281\n0\n"
+    "0\nENDSEC\n"
     "0\nSECTION\n2\nENTITIES\n"
     "0\nLINE\n5\nA1\n100\nAcDbEntity\n8\n0\n100\nAcDbLine\n"
     "10\n0\n20\n0\n30\n0\n11\n10\n21\n0\n31\n0\n"
@@ -3739,8 +3765,9 @@ const char *const kR2000WithRawMaterial =
     "0\nDICTIONARY\n5\nC\n330\n0\n100\nAcDbDictionary\n281\n1\n"
     "3\nACAD_MATERIAL\n350\n80\n"
     "0\nDICTIONARY\n5\n80\n330\nC\n100\nAcDbDictionary\n281\n1\n"
-    "3\nMINE\n350\n90\n"
+    "3\nMINE\n350\n90\n3\nTHING\n350\n91\n"
     "0\nMATERIAL\n5\n90\n330\n80\n100\nAcDbMaterial\n1\nMINE\n"
+    "0\nACME_THING\n5\n91\n330\n80\n100\nAcmeThing\n1\nkept raw\n"
     "0\nENDSEC\n0\nEOF\n";
 } // namespace
 
@@ -3763,6 +3790,11 @@ TEST_CASE("DXF import records its version and saves back in it",
   std::string text = kR2000WithRawMaterial;
   const std::string r2000 = "AC1015";
   text.replace(text.find(r2000), r2000.size(), acadVer);
+  if (acadVer >= "AC1018") {
+    // From R2004 on, a CLASS also counts its instances (91).
+    const std::string proxyFlags = "90\n0\n280";
+    text.replace(text.find(proxyFlags), proxyFlags.size(), "90\n0\n91\n1\n280");
+  }
   writeText(src, text);
 
   RS_Graphic graphic;
@@ -3778,6 +3810,8 @@ TEST_CASE("DXF import records its version and saves back in it",
                               graphic.getFormatType()));
   }
   CHECK(recordGroupValues(out, "MATERIAL", "5") == std::vector<std::string>{"90"});
+  CHECK(recordGroupValues(out, "ACME_THING", "5") == std::vector<std::string>{"91"});
+  CHECK(danglingReferences(out).empty());
   {
     // closed before the file is removed below (Windows keeps open files)
     std::ifstream written(out);
@@ -3793,6 +3827,40 @@ TEST_CASE("DXF import records its version and saves back in it",
                               RS2::FormatDXFRW));
   }
   CHECK(reread.getFormatType() == format);
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
+TEST_CASE("DXF saved in another version leaves out the raw objects it cannot hold",
+          "[dxf][roundtrip][filter][version]") {
+  ensureSettings();
+  const std::string src = tmpFile("other-version-src.dxf");
+  const std::string out = tmpFile("other-version-out.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+  writeText(src, kR2000WithRawMaterial);
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  {
+    // Raw objects are replayed only into the version they were read from.
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+
+  CHECK(recordGroupValues(out, "LINE", "5").size() == 1);
+  // The raw ACME_THING and its dictionary are left out; the MATERIAL, which
+  // LibreCAD also keeps typed, is written typed instead.
+  CHECK(recordGroupValues(out, "ACME_THING", "5").empty());
+  CHECK(rootDictEntries(out).count("ACAD_MATERIAL") == 0);
+  CHECK(recordGroupValues(out, "MATERIAL", "5") == std::vector<std::string>{"90"});
+  CHECK(danglingReferences(out).empty());
 
   std::filesystem::remove(src);
   std::filesystem::remove(out);

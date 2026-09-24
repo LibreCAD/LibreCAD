@@ -2305,6 +2305,8 @@ public:
   void setEntityAttributes(RS_Entity *entity, const DRW_Entity *attrib);
   void getEntityAttributes(DRW_Entity *ent, const RS_Entity *entity);
   std::uint32_t dxfReference(std::uint32_t source) const;
+  /** Whether a raw DXF record read from version @p source is written into the DXF being exported. */
+  bool replaysInDxfExport(DRW::Version source) const;
 
   static QString toDxfString(const QString &str);
   static QString toNativeString(const QString &data);
@@ -3035,6 +3037,10 @@ private:
   // Objects entity references may name that the DXF being written lacks:
   // GROUPs not written, or whose handle is structural.
   std::set<std::uint32_t> m_dxfDroppedReferenceHandles;
+  // The version of the DXF being exported, and how many raw records read
+  // from another version it leaves out.
+  DRW::Version m_dxfExportVersion = DRW::UNKNOWNV;
+  std::size_t m_dxfLeftOutRawRecords = 0;
   // Normalised names of the built-in LTYPE records written by writeLType()
   // during writeLTypes(); imported raw records with these names are skipped.
   std::set<std::string> m_builtinLTypeNames;

@@ -11514,6 +11514,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     m_version = 1032;
     m_exactColor = true;
   }
+  m_dxfExportVersion = exportVersion;
+  m_dxfLeftOutRawRecords = 0;
   /**
    * fixme - sand - files - RESTORE!!! Under win, encodeName() prevents using
    * unicode file names!!! Due to that, blocks/files may be saved incorrectly if
@@ -11584,8 +11586,17 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
         ++classes[it->second].instanceCount;
       }
     };
+    // A raw record is replayed only into the version it was read from; one
+    // read from another is left out of this file, with every reference to it.
     std::set<std::uint32_t> rawObjectHandles;
+    std::set<std::uint32_t> leftOutRawHandles;
     for (const DRW_RawDxfObject &o : metadata.rawDxfObjects()) {
+      if (!replaysInDxfExport(o.m_version)) {
+        ++m_dxfLeftOutRawRecords;
+        if (o.handle != 0)
+          leftOutRawHandles.insert(o.handle);
+        continue;
+      }
       if (o.handle != 0) {
         m_dxfW->reserveHandle(o.handle);
         rawObjectHandles.insert(o.handle);
@@ -11593,9 +11604,22 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       registerClassFor(o.name);
     }
     for (const DRW_RawDxfObject &e : metadata.rawDxfEntities()) {
+      if (!replaysInDxfExport(e.m_version)) {
+        ++m_dxfLeftOutRawRecords;
+        if (e.handle != 0)
+          leftOutRawHandles.insert(e.handle);
+        continue;
+      }
       if (e.handle != 0)
         m_dxfW->reserveHandle(e.handle);
       registerClassFor(e.name); // custom ENTITIES need a CLASS too
+    }
+    std::vector<DRW_RawDxfSection> rawSections;
+    for (const DRW_RawDxfSection &section : metadata.rawDxfSections()) {
+      if (replaysInDxfExport(section.m_version))
+        rawSections.push_back(section);
+      else
+        ++m_dxfLeftOutRawRecords;
     }
 
     std::set<std::uint32_t> plotSettingsHandles;
@@ -11638,7 +11662,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       handle = static_cast<std::uint32_t>(value);
       return true;
     };
-    for (const DRW_RawDxfSection &section : metadata.rawDxfSections()) {
+    for (const DRW_RawDxfSection &section : rawSections) {
       for (const DRW_Variant &group : section.m_groups) {
         std::uint32_t handle = 0;
         if (rawSectionHandle(group, handle) && handle != 0)
@@ -11654,6 +11678,12 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     // minted handle can't collide, and register the same CLASS the raw-net
     // objects use (else AutoCAD/ezdxf drop the instance). The dedup predicate
     // here MUST match writeObjects' emitTyped.
+    // A typed record written in place of a raw one left out keeps its handle,
+    // and references to it stay: it is not left out.
+    const auto standsInForLeftOut = [&](std::uint32_t handle) {
+      if (leftOutRawHandles.erase(handle) != 0 && m_dxfLeftOutRawRecords > 0)
+        --m_dxfLeftOutRawRecords;
+    };
     auto reserveTyped = [&](std::uint32_t handle,
                             LC_DwgAdvancedMetadata::ReplayState state,
                             const char *recordName) {
@@ -11663,6 +11693,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
         return;
       m_dxfW->reserveHandle(handle);
       registerClassFor(recordName);
+      standsInForLeftOut(handle);
     };
     for (const auto &record : metadata.suns())
       reserveTyped(record.handle, record.replayState, "SUN");
@@ -11741,6 +11772,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
           rawObjectHandles.count(handle) != 0)
         return;
       m_dxfW->reserveHandle(handle);
+      standsInForLeftOut(handle);
     };
     for (const auto &record : metadata.mlineStyles())
       reserveFixedTyped(record.handle, record.replayState);
@@ -11834,6 +11866,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     }
     for (const std::uint32_t h : keptGroupHandles)
       m_dxfDroppedReferenceHandles.erase(h);
+    m_dxfDroppedReferenceHandles.insert(leftOutRawHandles.cbegin(),
+                                        leftOutRawHandles.cend());
     for (const DRW_PlotSettings &settings : metadata.plotSettings()) {
       if (settings.handle != 0 &&
           kFixedStructural.count(settings.handle) != 0) {
@@ -11864,11 +11898,15 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       }
       handleRemap.emplace(h, replacement);
     };
-    for (const DRW_RawDxfObject &o : metadata.rawDxfObjects())
-      remapIfColliding(o.handle);
-    for (const DRW_RawDxfObject &e : metadata.rawDxfEntities())
-      remapIfColliding(e.handle);
-    for (const DRW_RawDxfSection &section : metadata.rawDxfSections()) {
+    for (const DRW_RawDxfObject &o : metadata.rawDxfObjects()) {
+      if (replaysInDxfExport(o.m_version))
+        remapIfColliding(o.handle);
+    }
+    for (const DRW_RawDxfObject &e : metadata.rawDxfEntities()) {
+      if (replaysInDxfExport(e.m_version))
+        remapIfColliding(e.handle);
+    }
+    for (const DRW_RawDxfSection &section : rawSections) {
       for (const DRW_Variant &group : section.m_groups) {
         std::uint32_t handle = 0;
         if (rawSectionHandle(group, handle))
@@ -11883,8 +11921,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       m_dxfW = nullptr;
       return false;
     }
-    if (!metadata.rawDxfSections().empty())
-      m_dxfW->setRawDxfSections(metadata.rawDxfSections());
+    if (!rawSections.empty())
+      m_dxfW->setRawDxfSections(rawSections);
     // setHandleRemap is pushed AFTER the named-dict block below so any remap
     // a colliding named-dict handle adds is included in the codec's table.
 
@@ -11896,8 +11934,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
         m_dxfSuppressedObjectHandles.insert(o.handle);
         continue;
       }
-      if (o.handle == acadGroupHandle)
-        continue; // already suppressed
+      if (o.handle == acadGroupHandle || !replaysInDxfExport(o.m_version))
+        continue; // already suppressed, or left out
       if (o.parentHandle != sourceRootHandle)
         continue; // only direct root children get a root entry
       auto it = rootEntryName.find(o.handle);
@@ -12261,18 +12299,20 @@ void RS_FilterDXFRW::prepareDxfEntityHandleMap() {
     }
   };
   for (const DRW_RawDxfObject &raw : metadata.rawDxfEntities())
-    noteRawSelfHandle(raw, false);
+    noteRawSelfHandle(raw, !replaysInDxfExport(raw.m_version));
   for (const DRW_RawDxfObject &raw : metadata.rawDxfObjects())
-    noteRawSelfHandle(raw, m_dxfSuppressedObjectHandles.count(raw.handle) != 0);
+    noteRawSelfHandle(raw, m_dxfSuppressedObjectHandles.count(raw.handle) != 0 ||
+                               !replaysInDxfExport(raw.m_version));
 
   for (const DRW_RawDxfObject &raw : metadata.rawDxfEntities()) {
-    if (raw.handle != 0) {
+    if (raw.handle != 0 && replaysInDxfExport(raw.m_version)) {
       ++sourceHandleCounts[raw.handle];
       rawEntityHandles.insert(raw.handle);
     }
   }
   for (const DRW_RawDxfObject &raw : metadata.rawDxfObjects()) {
-    if (raw.handle == 0 || m_dxfSuppressedObjectHandles.count(raw.handle) != 0)
+    if (raw.handle == 0 || m_dxfSuppressedObjectHandles.count(raw.handle) != 0 ||
+        !replaysInDxfExport(raw.m_version))
       continue;
     ++sourceHandleCounts[raw.handle];
     rawObjectHandles.insert(raw.handle);
@@ -25697,8 +25737,9 @@ void RS_FilterDXFRW::writeObjects() {
   if (m_graphic != nullptr) {
     for (const DRW_RawDxfObject &rawObject :
          m_graphic->dwgAdvancedMetadata().rawDxfObjects()) {
-      if (rawObject.handle != 0 &&
-          m_dxfSuppressedObjectHandles.count(rawObject.handle) != 0)
+      if ((rawObject.handle != 0 &&
+           m_dxfSuppressedObjectHandles.count(rawObject.handle) != 0) ||
+          !replaysInDxfExport(rawObject.m_version))
         continue;
       DRW_RawDxfObject object = rawObject;
       noteDxfWrite(m_dxfW->writeRawDxfObject(&object));
@@ -25718,7 +25759,7 @@ void RS_FilterDXFRW::writeObjects() {
     const auto &metadata = m_graphic->dwgAdvancedMetadata();
     std::set<std::uint32_t> rawHandles;
     for (const DRW_RawDxfObject &o : metadata.rawDxfObjects())
-      if (o.handle != 0)
+      if (o.handle != 0 && replaysInDxfExport(o.m_version))
         rawHandles.insert(o.handle);
     auto emitTyped = [&](std::uint32_t handle,
                          LC_DwgAdvancedMetadata::ReplayState state) {
@@ -26924,6 +26965,8 @@ void RS_FilterDXFRW::writeEntities() {
   std::set<std::uint32_t> rawSectionObjectHandles;
   if (m_dwgW == nullptr && m_graphic != nullptr) {
     for (const auto &raw : m_graphic->dwgAdvancedMetadata().rawDxfEntities()) {
+      if (!replaysInDxfExport(raw.m_version))
+        continue;
       if (raw.name == "GEOPOSITIONMARKER" || raw.name == "POSITIONMARKER")
         rawGeoPositionMarkerHandles.insert(raw.handle);
       if (raw.name == "SECTIONOBJECT" || raw.name == "SECTION_OBJECT")
@@ -26997,6 +27040,8 @@ void RS_FilterDXFRW::writeEntities() {
   if (!m_dwgW && m_graphic != nullptr) {
     for (const DRW_RawDxfObject &rawEntity :
          m_graphic->dwgAdvancedMetadata().rawDxfEntities()) {
+      if (!replaysInDxfExport(rawEntity.m_version))
+        continue; // left out, counted in fileExport
       DRW_RawDxfObject entity = rawEntity;
       noteDxfWrite(m_dxfW->writeRawDxfObject(&entity));
     }
@@ -31878,6 +31923,10 @@ void RS_FilterDXFRW::getEntityAttributes(DRW_Entity *ent,
   if (entity->hasDrwExtData() && ent->extData.empty()) {
     ent->extData = entity->getDrwExtData();
   }
+}
+
+bool RS_FilterDXFRW::replaysInDxfExport(const DRW::Version source) const {
+  return source == DRW::UNKNOWNV || source == m_dxfExportVersion;
 }
 
 /**
