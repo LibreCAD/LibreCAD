@@ -2967,9 +2967,11 @@ TEST_CASE("DXF unused CLASS definitions survive filter round trip",
                               RS2::FormatDXFRW));
   }
   {
+    // R12 has no CLASSES section: the classes are left out, the save is not
     RS_FilterDXFRW filter;
-    CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(r12Out),
-                                  RS2::FormatDXFRW12));
+    CHECK(filter.fileExport(graphic, QString::fromStdString(r12Out),
+                            RS2::FormatDXFRW12));
+    CHECK_FALSE(containsLine(r12Out, "CLASSES"));
   }
 
   RS_Graphic reloaded;

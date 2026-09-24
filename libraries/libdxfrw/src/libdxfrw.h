@@ -571,7 +571,9 @@ private:
     bool emitBlockRecord(const PendingDxfBlockRecord& record);
     // captureSourceHandle=false on the VERTEX/SEQEND parent re-entries
     // (writePolyline/writeInsert) so they do not pollute the source->minted map.
-    bool rejectUnsupportedDxfWrite() noexcept;
+    //! Leaves out a record the version being written has no place for, and
+    //! counts it in leftOut(); the record's writer returns what this does.
+    bool leaveOutUnsupported(const char *recordName) noexcept;
     bool failDxfWrite() noexcept;
     bool writeRequiredString(int code, const std::string& value);
     bool allocateDxfHandle(std::uint32_t& handle) noexcept;

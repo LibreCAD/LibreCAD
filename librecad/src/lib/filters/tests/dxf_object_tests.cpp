@@ -256,7 +256,7 @@ TEST_CASE("DXF table writers do not normalize caller-owned state",
   std::filesystem::remove(path, ignored);
 }
 
-TEST_CASE("DXF legacy writer rejects unsupported entity emitters",
+TEST_CASE("DXF R12 leaves out the records it has no place for",
           "[dxf][writer][unsupported][safety]") {
   const std::array<LegacyUnsupportedEmitter::Kind, 14> kinds = {
       LegacyUnsupportedEmitter::Kind::LwPolyline,
@@ -288,9 +288,13 @@ TEST_CASE("DXF legacy writer rejects unsupported entity emitters",
     emitter.m_kind = kind;
     dxfRW writer(path.string().c_str());
     emitter.m_rw = &writer;
-    CHECK_FALSE(writer.write(&emitter, DRW::AC1009, false));
-    CHECK_FALSE(emitter.m_result);
-    CHECK(slurp(path) == "previous output\n");
+    CHECK(writer.write(&emitter, DRW::AC1009, false));
+    CHECK(emitter.m_result);
+    CHECK(slurp(path) != "previous output\n");
+    REQUIRE(writer.leftOut().size() == 1);
+    const auto &[what, count] = *writer.leftOut().cbegin();
+    CHECK(count == 1);
+    CHECK(what.find("(not in this DXF version)") != std::string::npos);
     std::error_code ignored;
     std::filesystem::remove(path, ignored);
   }

@@ -11783,13 +11783,25 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     for (const auto &record : metadata.sectionObjects())
       reserveFixedTyped(record.handle, record.replayState);
 
-    if (exportVersion <= DRW::AC1009 && !classes.empty()) {
-      RS_DEBUG->print(
-          RS_Debug::D_WARNING,
-          "RS_FilterDXFRW: cannot preserve DXF CLASS records in R12 output");
-      delete m_dxfW;
-      m_dxfW = nullptr;
-      return false;
+    // R12 has no CLASSES section, and none of the objects a CLASS describes.
+    if (exportVersion <= DRW::AC1009)
+      classes.clear();
+    // A source CLASS no written record uses gives way to a used one of the
+    // same class name under another record name, e.g. a typed object written
+    // in place of a raw one left out: two CLASS records may not share a name.
+    {
+      std::set<std::string> usedClassNames;
+      for (const DRW_Class &cls : classes) {
+        if (cls.instanceCount > 0)
+          usedClassNames.insert(normalizeDwgTableName(cls.className));
+      }
+      classes.erase(std::remove_if(classes.begin(), classes.end(),
+                                   [&usedClassNames](const DRW_Class &cls) {
+                                     return cls.instanceCount == 0 &&
+                                            usedClassNames.count(normalizeDwgTableName(
+                                                cls.className)) != 0;
+                                   }),
+                    classes.end());
     }
     if (!classes.empty())
       m_dxfW->setDxfClasses(classes);
