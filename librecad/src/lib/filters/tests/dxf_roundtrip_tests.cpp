@@ -3866,6 +3866,49 @@ TEST_CASE("DXF saved in another version leaves out the raw objects it cannot hol
   std::filesystem::remove(out);
 }
 
+TEST_CASE("DXF text keeps control characters and carets as caret codes",
+          "[dxf][roundtrip][filter][text]") {
+  ensureSettings();
+  const std::string src = tmpFile("caret-src.dxf");
+  const std::string out = tmpFile("caret-out.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  // ^I is a TAB, ^M a carriage return, "^ " a literal caret; ASCII DXF can
+  // hold neither control character as such.
+  writeText(src,
+            "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLAYER\n"
+            "0\nLAYER\n2\nA^B\n70\n0\n62\n7\n6\nCONTINUOUS\n0\nENDTAB\n0\nENDSEC\n"
+            "0\nSECTION\n2\nENTITIES\n"
+            "0\nTEXT\n8\nA^B\n10\n0\n20\n0\n30\n0\n40\n1\n1\nx^Iy\n"
+            "0\nTEXT\n8\n0\n10\n0\n20\n5\n30\n0\n40\n1\n1\nc^Md\n"
+            "0\nTEXT\n8\n0\n10\n0\n20\n9\n30\n0\n40\n1\n1\np^ q\n"
+            "0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+
+  CHECK(recordGroupValues(out, "TEXT", "1")
+        == std::vector<std::string>{"x^Iy", "c^Md", "p^ q"});
+  const auto textLayers = recordGroupValues(out, "TEXT", "8");
+  REQUIRE_FALSE(textLayers.empty());
+  CHECK(textLayers.front() == "A^B");
+  const auto layerNames = recordGroupValues(out, "LAYER", "2");
+  CHECK(std::find(layerNames.cbegin(), layerNames.cend(), "A^B") != layerNames.cend());
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
 TEST_CASE("DXF proxy raw carriers preserve wide self handles",
           "[dxf][roundtrip][filter][proxy][handles]") {
   ensureSettings();

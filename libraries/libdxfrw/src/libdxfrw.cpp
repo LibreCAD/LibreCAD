@@ -122,6 +122,21 @@ bool isValidDxfEedVariant(const DRW_Variant *value) {
     }
 }
 
+std::string dxfCaretEncodedControls(const std::string& text) {
+    std::string encoded;
+    encoded.reserve(text.size());
+    for (const char ch : text) {
+        const auto byte = static_cast<unsigned char>(ch);
+        if (byte < 0x20) {
+            encoded.push_back('^');
+            encoded.push_back(static_cast<char>(byte + 0x40));
+        } else {
+            encoded.push_back(ch);
+        }
+    }
+    return encoded;
+}
+
 bool isSafeDxfRecordText(const std::string& text) {
     return text.find('\0') == std::string::npos
         && text.find('\r') == std::string::npos
@@ -7796,8 +7811,12 @@ bool dxfRW::writeExtData(const std::vector<DRW_Variant*> &ed){
                         recordResult(false);
                         break;
                     }
+                    // ASCII DXF cannot hold a line break inside a value:
+                    // write control characters as caret codes (^J, ^M, ...).
                     recordResult(writer->writeUtf8String(
-                        cc, *(*it)->content.s));
+                        cc, cc == 1000 && !binFile
+                                ? dxfCaretEncodedControls(*(*it)->content.s)
+                                : *(*it)->content.s));
                     break;
                 }
                 case 1004:

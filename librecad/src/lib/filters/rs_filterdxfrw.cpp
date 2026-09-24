@@ -31813,7 +31813,8 @@ void RS_FilterDXFRW::getEntityAttributes(DRW_Entity *ent,
   // Width:
   DRW_LW_Conv::lineWidth width = widthToNumber(pen.getWidth());
 
-  ent->layer = toDxfString(layerName).toUtf8().data();
+  // Verbatim, as the LAYER record and the import (setEntityAttributes) have it
+  ent->layer = layerName.toUtf8().data();
   ent->color = color;
   ent->color24 = exact_rgb;
   if (pen.getColor().hasColorName()) {
@@ -32179,6 +32180,9 @@ QString RS_FilterDXFRW::toDxfString(const QString &str) {
     case 0x0A:
       res.append(uR"(\P)");
       break;
+    case 0x5E: // '^' starts a caret code (toNativeString); "^ " is a literal one
+      res.append(u"^ ");
+      break;
     case 0x2205:
     case 0x2300:
       res.append(u"%%C");
@@ -32190,7 +32194,12 @@ QString RS_FilterDXFRW::toDxfString(const QString &str) {
       res.append(u"%%P");
       break;
     default:
-      res.append(qchar);
+      if (qchar.unicode() < 0x20) { // control character: caret code, ^I for TAB
+        res.append(QChar(0x5E));
+        res.append(QChar(static_cast<ushort>(qchar.unicode() + 0x40)));
+      } else {
+        res.append(qchar);
+      }
       break;
     }
   }
