@@ -2138,12 +2138,10 @@ bool RS_EntityContainer::ignoredSnap() const {
     return ignoredOnModification();
 }
 
-#define DEBUG_CONTAINER_DUPLICATE  // fixme - sand - disable before push!
-
-void RS_EntityContainer::debugEntityAlreadyPresentExists(const RS_Entity* entity) const {
-#ifdef DEBUG_CONTAINER_DUPLICATE
-    const qsizetype countOfEntities = m_entities.count(entity);
-    Q_ASSERT(countOfEntities == 0);
+// A container owns each entity once; adding one twice means a double delete later.
+void RS_EntityContainer::debugEntityAlreadyPresentExists([[maybe_unused]] const RS_Entity* entity) const {
+#ifndef QT_NO_DEBUG
+    Q_ASSERT(!m_entities.contains(entity));
 #endif
 }
 

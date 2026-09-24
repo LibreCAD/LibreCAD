@@ -25,6 +25,7 @@
 
 #include <memory>
 
+#include "doc_plugin_interface.h"
 #include "lc_actiondrawdual.h"
 #include "lc_actiontestsupport.h"
 #include "lc_hyperbola.h"
@@ -45,6 +46,14 @@ struct DrawingFixture {
         m_graphic.onLoadingCompleted();
         m_view.setDocument(&m_graphic);
         m_context.setDocumentAndView(&m_graphic, &m_view);
+    }
+
+    int occurrences(const RS_Entity* entity) const {
+        int n = 0;
+        for (const RS_Entity* e : m_graphic) {
+            n += e == entity ? 1 : 0;
+        }
+        return n;
     }
 };
 
@@ -91,4 +100,22 @@ TEST_CASE("Draw Dual of a circle about an outside point adds both hyperbola bran
         }
     }
     CHECK(hyperbolas == 2);
+}
+
+TEST_CASE("A plugin edit adds the edited entity once", "[plugins][ownership]") {
+    for (const auto how : {DPI::DELETE_ORIGINAL, DPI::KEEP_ORIGINAL}) {
+        auto f = std::make_unique<DrawingFixture>();
+        auto* line = new RS_Line(&f->m_graphic, RS_LineData(RS_Vector{0, 0}, RS_Vector{1, 1}));
+        f->m_graphic.addEntity(line);
+        RS_Entity* moved = line->clone();
+        moved->move(RS_Vector{5, 0});
+
+        const Doc_plugin_interface plugin(&f->m_context, nullptr);
+        CHECK(plugin.addToUndo(line, moved, how));
+
+        CHECK(f->occurrences(moved) == 1);
+        CHECK(f->occurrences(line) == 1);
+        CHECK(line->isDeleted() == (how == DPI::DELETE_ORIGINAL));
+        f.reset(); // closing the drawing frees each entity once
+    }
 }
