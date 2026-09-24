@@ -174,6 +174,17 @@ void RS_EntityContainer::reparent(RS_EntityContainer* newParent) {
     }
 }
 
+void RS_EntityContainer::clearDwgProvenance(const unsigned what) {
+    RS_Entity::clearDwgProvenance(what);
+    if (m_autoDelete) {
+        for (RS_Entity* e : std::as_const(m_entities)) {
+            if (e != nullptr) {
+                e->clearDwgProvenance(what);
+            }
+        }
+    }
+}
+
 void RS_EntityContainer::setVisible(const bool v) {
     RS_Entity::setVisible(v);
 

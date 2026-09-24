@@ -539,6 +539,16 @@ public:
     quint32 sourceHandle() const;
     void setSourceHandle(quint32 h);
 
+    /** What clearDwgProvenance() clears, as bits. */
+    enum DwgProvenance : unsigned {
+        /** The source handle, extension dictionary and reactors: one live entity at most holds them. */
+        Identity = 1u << 0,
+        /** Material, plot style, shadow and visual style handles: objects of the drawing read from. */
+        TableRefs = 1u << 1
+    };
+    /** Clears the given DwgProvenance bits here and in the owned children. */
+    virtual void clearDwgProvenance(unsigned what);
+
     friend std::ostream& operator<<(std::ostream& os, RS_Entity& e);
     /** Recalculates the borders of this entity. */
     virtual void calculateBorders() = 0;

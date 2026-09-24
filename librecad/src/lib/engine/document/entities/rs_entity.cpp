@@ -1121,6 +1121,22 @@ void RS_Entity::setXDictHandle(quint32 h) { m_pImpl->m_xDictHandle = h; }
 quint32 RS_Entity::sourceHandle() const { return m_pImpl->m_sourceHandle; }
 void RS_Entity::setSourceHandle(quint32 h) { m_pImpl->m_sourceHandle = h; }
 
+void RS_Entity::clearDwgProvenance(const unsigned what) {
+    if ((what & Identity) != 0) {
+        m_pImpl->m_sourceHandle = 0;
+        m_pImpl->m_xDictHandle = 0;
+        m_pImpl->m_reactorHandles.clear();
+    }
+    if ((what & TableRefs) != 0) {
+        m_pImpl->m_materialHandle = 0;
+        m_pImpl->m_plotStyleHandle = 0;
+        m_pImpl->m_shadowHandle = 0;
+        m_pImpl->m_fullVisualStyleH = 0;
+        m_pImpl->m_faceVisualStyleH = 0;
+        m_pImpl->m_edgeVisualStyleH = 0;
+    }
+}
+
 //! constructionLayer contains entities of infinite length, constructionLayer doesn't show up in print
 bool RS_Entity::isConstruction(const bool typeCheck) const {
     if (typeCheck && (getParent() != nullptr) && rtti() != RS2::EntityLine) {
