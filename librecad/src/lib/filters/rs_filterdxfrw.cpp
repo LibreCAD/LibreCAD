@@ -11055,6 +11055,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
 
   this->m_graphic = &g;
   m_writeFailed = false;
+  m_dxfLeftOutRawRecords = 0;
+  m_dxfLeftOut.clear();
 
   // check if we can write to that directory:
 #ifndef Q_OS_WIN
@@ -11515,7 +11517,6 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     m_exactColor = true;
   }
   m_dxfExportVersion = exportVersion;
-  m_dxfLeftOutRawRecords = 0;
   /**
    * fixme - sand - files - RESTORE!!! Under win, encodeName() prevents using
    * unicode file names!!! Due to that, blocks/files may be saved incorrectly if
@@ -12157,6 +12158,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
   //    bool success = m_dxfW->write(this, exportVersion, false); //ascii
   const bool success =
       m_dxfW->write(this, exportVersion, binary) && !m_writeFailed; // binary
+  m_dxfLeftOut = m_dxfW->leftOut();
   delete m_dxfW;
 
   if (!success) {
@@ -16071,6 +16073,24 @@ RS2::FormatType RS_FilterDXFRW::formatForDwgVersion(const DRW::Version version) 
   default: // R14 and older
     return RS2::FormatUnknown;
   }
+}
+
+QString RS_FilterDXFRW::exportReport() const {
+  QStringList lines;
+  if (m_dxfLeftOutRawRecords > 0) {
+    lines << QObject::tr("%1 object(s) read from another DXF version, which "
+                         "this version cannot hold", "RS_FilterDXFRW")
+                 .arg(m_dxfLeftOutRawRecords);
+  }
+  for (const auto &[what, count] : m_dxfLeftOut)
+    lines << QStringLiteral("%1 × %2").arg(count).arg(QString::fromStdString(what));
+#ifdef DWGSUPPORT
+  if (m_lastDwgWriteSkipCounters.total() > 0) {
+    lines << QObject::tr("%1 object(s) DWG cannot hold", "RS_FilterDXFRW")
+                 .arg(m_lastDwgWriteSkipCounters.total());
+  }
+#endif
+  return lines.join(QLatin1Char('\n'));
 }
 
 RS2::FormatType RS_FilterDXFRW::formatForDxfVersion(const DRW::Version version) {

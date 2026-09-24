@@ -89,6 +89,14 @@ public:
      * The default implementation is for existing filters, inherited without error handling methods.
      * It is strongly recommend for new implementations to overwrite this method with some useful error messages.
      */
+    /**
+     * What the last export left out or simplified because the file format or
+     * version cannot hold it, one item per line; empty if nothing.
+     */
+    virtual QString exportReport() const {
+        return {};
+    }
+
     virtual QString lastError() const {
         return QObject::tr("undefined error", "RS_FilterInterface");
     }

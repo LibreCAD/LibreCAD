@@ -58,6 +58,7 @@
 #include "lc_mleader.h"
 #include "rs_dimaligned.h"
 #include "rs_dimension.h"
+#include "rs_fileio.h"
 #include "rs_filterdxfrw.h"
 #include "rs_filterjww.h"
 #include "rs_graphic.h"
@@ -3866,6 +3867,32 @@ TEST_CASE("DXF saved in another version leaves out the raw objects it cannot hol
 
   std::filesystem::remove(src);
   std::filesystem::remove(out);
+}
+
+TEST_CASE("DXF export reports what it left out",
+          "[dxf][roundtrip][filter][version]") {
+  ensureSettings();
+  const std::string src = tmpFile("report-src.dxf");
+  const std::string same = tmpFile("report-same.dxf");
+  const std::string other = tmpFile("report-other.dxf");
+  writeText(src, kR2000WithRawMaterial);
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  RS_FileIO *io = RS_FileIO::instance();
+  REQUIRE(io->fileExport(graphic, QString::fromStdString(same), graphic.getFormatType()));
+  CHECK(io->lastExportReport().isEmpty());
+  // R2007 cannot hold the raw ACME_THING and its dictionary read from R2000
+  REQUIRE(io->fileExport(graphic, QString::fromStdString(other), RS2::FormatDXFRW));
+  CHECK(io->lastExportReport().startsWith(QStringLiteral("2 object(s)")));
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(same);
+  std::filesystem::remove(other);
 }
 
 TEST_CASE("DXF text keeps control characters and carets as caret codes",

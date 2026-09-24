@@ -1996,6 +1996,7 @@ public:
 
   // Error messages
   QString lastError() const override;
+  QString exportReport() const override;
 
 #ifdef DWGSUPPORT
   // Snapshot of the current DWG admission attempt for the explicit-path
@@ -3041,6 +3042,8 @@ private:
   // from another version it leaves out.
   DRW::Version m_dxfExportVersion = DRW::UNKNOWNV;
   std::size_t m_dxfLeftOutRawRecords = 0;
+  // What the codec left out of the DXF last exported (dxfRW::leftOut()).
+  std::map<std::string, std::size_t> m_dxfLeftOut;
   // Normalised names of the built-in LTYPE records written by writeLType()
   // during writeLTypes(); imported raw records with these names are skipped.
   std::set<std::string> m_builtinLTypeNames;
