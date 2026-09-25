@@ -2659,6 +2659,21 @@ bool RS_Modification::explode(const QList<RS_Entity*>& entitiesList, LC_Document
             for (const RS_Entity* e2 : entities) {
                 if (e2 != nullptr) {
                     RS_Entity* clone = e2->clone();
+                    if (containerType == RS2::EntityInsert) {
+                        // FlagVisible on an insert's expansion children is derived
+                        // from the frozen-layer/frozen-block state at the time the
+                        // insert was last updated (see hasEffectiveInsertVisibility()
+                        // in rs_insert.cpp), not the child's own code-60 visibility.
+                        // Exploding must not freeze that derived snapshot in: the
+                        // clone becomes a top-level entity with no insert left to
+                        // recompute it, so a frozen layer at explode time would
+                        // otherwise leave it permanently invisible.
+                        clone->setVisible(true);
+                    }
+                    // FlagHatchChild marks a pattern line's role inside its parent
+                    // hatch (see RS_Hatch::updatePatternHatch()); it does not
+                    // describe the exploded, now-independent copy.
+                    clone->delFlag(RS2::FlagHatchChild);
                     ctx += clone;
 
                     // In order to fix bug #819 and escape similar issues,

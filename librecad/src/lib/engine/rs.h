@@ -92,6 +92,14 @@ namespace RS2 {
     };
 
     /**
+     * Flags about an entity's state in its document, which a copy of the
+     * entity does not have. A copy keeps every other flag. Classify any new
+     * flag here.
+     */
+    constexpr unsigned FlagsTransient = FlagDeleted | FlagSelected | FlagSelected1 | FlagSelected2 |
+                                        FlagHighlighted | FlagProcessed | FlagInVisualSnap;
+
+    /**
      * Variable types used by RS_VariableDict and RS_Variable.
      */
     enum VariableType {

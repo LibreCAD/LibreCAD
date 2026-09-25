@@ -351,10 +351,7 @@ RS_Insert::RS_Insert(RS_EntityContainer* parent,
 }
 
 RS_Entity* RS_Insert::clone() const{
-	auto i = new RS_Insert(*this);
-	i->setOwner(isOwner());
-	i->detach();
-	return i;
+	return new RS_Insert(*this);
 }
 
 /**

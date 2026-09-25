@@ -44,20 +44,6 @@ public:
     return *this;
   }
 
-  LC_CachedLengthEntity(LC_CachedLengthEntity&& entity) noexcept
-      : RS_AtomicEntity{std::move(entity)}
-      , m_cachedLength{entity.m_cachedLength}
-  {
-  }
-
-  LC_CachedLengthEntity& operator = (LC_CachedLengthEntity&& other) noexcept {
-    if (this != &other) {
-      RS_AtomicEntity::operator=(std::move(other));
-      m_cachedLength = other.m_cachedLength;
-    }
-    return *this;
-  }
-
   double getLength() const override{
     return m_cachedLength;
   }

@@ -64,6 +64,9 @@ struct RS_Entity::Impl {
     /// import → save cycle. Each shared_ptr<DRW_Variant> is a single
     /// group-code/value pair (see DRW_Entity::extData for the exact
     /// schema). Empty for the common case of entities without XDATA.
+    /// Copies of an entity share the items: nothing modifies them once an
+    /// entity holds them (the DWG reader edits them before the entity
+    /// exists), so replace the whole list with setDrwExtData() instead.
     std::vector<std::shared_ptr<DRW_Variant>> drwExtData;
 
     // Passive metadata sidecars (DBCOLOR-style). All defaults map to
@@ -82,41 +85,6 @@ struct RS_Entity::Impl {
     // set / minted by LibreCAD. Lets the writer build an old->new handle map
     // for refs that point at model entities (e.g. GROUP code-340 members).
     quint32 m_sourceHandle = 0;
-
-    void fromOther(const Impl* other) {
-        if (other != nullptr) {
-            pen = other->pen;
-            varList = other->varList;
-            // Deep-copy so the destination owns independent DRW_Variants;
-            // shared_ptrs would otherwise alias, which is correct only
-            // for read-only consumers.
-
-            // fixme - sand - 2dxli well, it is 100% percents necessary to use deeep-copy?
-            // fixme  - there might be lost of copies and creation of clones during normal user operations and editing
-            // fixme -  operations. It seems no need to create lots of copies for transient data and hold them in
-            // fixme -  undo history and so. Potentially the only case that may be reasonable for deepcopy is copy/paste
-            // fixme - between documents or explicit entity copy creation by the user
-            drwExtData.clear();
-            drwExtData.reserve(other->drwExtData.size());
-            for (const auto &sp : other->drwExtData) {
-              if (sp) {
-                drwExtData.push_back(std::make_shared<DRW_Variant>(*sp));
-              } else {
-                drwExtData.push_back(nullptr);
-              }
-            }
-            m_materialHandle = other->m_materialHandle;
-            m_plotStyleHandle = other->m_plotStyleHandle;
-            m_shadowMode = other->m_shadowMode;
-            m_shadowHandle = other->m_shadowHandle;
-            m_fullVisualStyleH = other->m_fullVisualStyleH;
-            m_faceVisualStyleH = other->m_faceVisualStyleH;
-            m_edgeVisualStyleH = other->m_edgeVisualStyleH;
-            m_reactorHandles = other->m_reactorHandles;
-            m_xDictHandle = other->m_xDictHandle;
-            m_sourceHandle = other->m_sourceHandle;
-        }
-    }
 };
 
 /**
@@ -135,9 +103,10 @@ RS_Entity::RS_Entity(RS_EntityContainer* parent)
 //     init(setPenToActive);
 // }
 
-RS_Entity::RS_Entity(const RS_Entity& other) : m_parent{other.m_parent}, m_minV{other.m_minV}, m_maxV{other.m_maxV}, m_layer{other.m_layer},
-                                               m_updateEnabled{other.m_updateEnabled}, m_pImpl{std::make_unique<Impl>(*other.m_pImpl)} {
-    setFlag(RS2::FlagVisible);
+RS_Entity::RS_Entity(const RS_Entity& other) : RS_Undoable{other}, m_parent{other.m_parent}, m_minV{other.m_minV}, m_maxV{other.m_maxV},
+                                               m_layer{other.m_layer}, m_updateEnabled{other.m_updateEnabled},
+                                               m_pImpl{std::make_unique<Impl>(*other.m_pImpl)} {
+    delFlag(RS2::FlagsTransient);
     initId();
 }
 
@@ -149,27 +118,7 @@ RS_Entity& RS_Entity::operator =(const RS_Entity& other) {
         m_layer = other.m_layer;
         m_updateEnabled = other.m_updateEnabled;
         m_pImpl = std::make_unique<Impl>(*other.m_pImpl);
-        setFlag(RS2::FlagVisible);
-        initId();
-    }
-    return *this;
-}
-
-RS_Entity::RS_Entity(RS_Entity&& other) noexcept : m_parent{other.m_parent}, m_minV{other.m_minV}, m_maxV{other.m_maxV}, m_layer{other.m_layer},
-                                                   m_updateEnabled{other.m_updateEnabled}, m_pImpl{std::move(other.m_pImpl)} {
-    setFlag(RS2::FlagVisible);
-    initId();
-}
-
-RS_Entity& RS_Entity::operator =(RS_Entity&& other) noexcept {
-    if (this != &other) {
-        m_parent = other.m_parent;
-        m_minV = other.m_minV;
-        m_maxV = other.m_maxV;
-        m_layer = other.m_layer;
-        m_updateEnabled = other.m_updateEnabled;
-        m_pImpl = std::move(other.m_pImpl);
-        setFlag(RS2::FlagVisible);
+        setFlags((getFlags() & RS2::FlagsTransient) | (other.getFlags() & ~RS2::FlagsTransient));
         initId();
     }
     return *this;

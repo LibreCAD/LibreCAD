@@ -41,10 +41,7 @@ LC_Tolerance::LC_Tolerance(RS_EntityContainer* parent, const LC_ToleranceData& d
 }
 
 RS_Entity* LC_Tolerance::clone() const {
-    auto* d = new LC_Tolerance(*this);
-    d->setOwner(isOwner());
-    d->detach();
-    return d;
+    return new LC_Tolerance(*this);
 }
 
 void LC_Tolerance::update() {

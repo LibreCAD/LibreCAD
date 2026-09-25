@@ -57,10 +57,9 @@ class RS_Entity : public RS_Undoable, public LC_Drawable {
 public:
     explicit RS_Entity(RS_EntityContainer* parent = nullptr);
     // RS_Entity(RS_EntityContainer *parent, bool setPenToActive = false);
+    /** A copy has the original's value and a new id, and none of its RS2::FlagsTransient. */
     RS_Entity(const RS_Entity& other);
     RS_Entity& operator =(const RS_Entity& other);
-    RS_Entity(RS_Entity&& other) noexcept;
-    RS_Entity& operator =(RS_Entity&& other) noexcept;
     ~RS_Entity() override;
 
     virtual RS_Entity* clone() const = 0;

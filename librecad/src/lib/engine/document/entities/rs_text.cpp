@@ -90,10 +90,7 @@ RS_Text::RS_Text(RS_EntityContainer* parent, const RS_TextData& d)
 }
 
 RS_Entity* RS_Text::clone() const {
-    const auto t = new RS_Text(*this);
-    t->setOwner(isOwner());
-    t->detach();
-    return t;
+    return new RS_Text(*this);
 }
 
 /**

@@ -736,17 +736,6 @@ bool RS_Graphic::fitToPage() {
 }
 
 
-void RS_Graphic::addEntity(const RS_Entity* entity) {
-    RS_Document::addEntity(entity);
-    if ( /*entity->rtti() == RS2::EntityBlock ||*/
-        entity->rtti() == RS2::EntityContainer) {
-        auto* e = static_cast<const RS_EntityContainer*>(entity);
-        for (const auto e1 : *e) {
-            addEntity(e1);
-        }
-    }
-}
-
 /**
  * Dumps the entities to stdout.
  */
