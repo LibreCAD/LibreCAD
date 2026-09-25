@@ -3911,6 +3911,173 @@ TEST_CASE("DXF saved in another version leaves out the raw objects it cannot hol
   std::filesystem::remove(out);
 }
 
+TEST_CASE("DXF write planning excludes typed objects below their version gate",
+          "[dxf][roundtrip][filter][version][objects]") {
+  ensureSettings();
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  auto *line = new RS_Line(&graphic, RS_LineData(RS_Vector(0.0, 0.0),
+                                                RS_Vector(1.0, 1.0)));
+  line->setReactorHandles({0x70u, 0xE0u, 0xE1u, 0xE2u, 0xE3u});
+  graphic.addEntity(line);
+
+  auto &metadata = graphic.dwgAdvancedMetadata();
+  DRW_MLeaderStyle style;
+  style.handle = 0xE0u;
+  style.parentHandle = 0x70u;
+  metadata.addMLeaderStyle(style);
+  DRW_Field field;
+  field.handle = 0xE1u;
+  field.parentHandle = 0x70u;
+  metadata.addField(field);
+  DRW_FieldList fieldList;
+  fieldList.handle = 0xE2u;
+  fieldList.parentHandle = 0x70u;
+  metadata.addFieldList(fieldList);
+  DRW_EvaluationGraph graph;
+  graph.handle = 0xE3u;
+  metadata.addEvaluationGraph(graph);
+
+  DRW_Dictionary parent;
+  parent.handle = 0x70u;
+  parent.parentHandle = 0xCu;
+  parent.name = "ACAD_TYPED";
+  for (const auto &[name, handle] :
+       {std::pair<const char *, std::uint32_t>{"STYLE", 0xE0u},
+        {"FIELD", 0xE1u}, {"FIELDLIST", 0xE2u}, {"GRAPH", 0xE3u}})
+    parent.m_entries.push_back({name, handle});
+  metadata.addDictionary(parent);
+
+  for (const auto &[name, handle] :
+       {std::pair<const char *, std::uint32_t>{"MLEADERSTYLE", 0xE0u},
+        {"FIELD", 0xE1u}, {"FIELDLIST", 0xE2u},
+        {"EVALUATION_GRAPH", 0xE3u}}) {
+    DRW_RawDxfObject raw;
+    raw.name = name;
+    raw.handle = handle;
+    raw.m_version = DRW::AC1032;
+    metadata.addRawDxfObject(raw);
+  }
+  DRW_RawDxfObject oldParent;
+  oldParent.name = "DICTIONARY";
+  oldParent.handle = 0x70u;
+  oldParent.m_version = DRW::AC1032;
+  metadata.addRawDxfObject(oldParent);
+
+  const std::string oldOut = tmpFile("typed_gates_r14.dxf");
+  const std::string fieldOut = tmpFile("typed_gates_r2000.dxf");
+  const std::string newOut = tmpFile("typed_gates_r2007.dxf");
+  std::filesystem::remove(oldOut);
+  std::filesystem::remove(fieldOut);
+  std::filesystem::remove(newOut);
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(oldOut),
+                              RS2::FormatDXFRW14));
+  }
+  const auto oldClasses = recordGroupValues(oldOut, "CLASS", "1");
+  for (const char *name : {"MLEADERSTYLE", "FIELD", "FIELDLIST",
+                           "EVALUATION_GRAPH"}) {
+    CHECK(recordGroupValues(oldOut, name, "5").empty());
+    CHECK(std::find(oldClasses.begin(), oldClasses.end(), name) ==
+          oldClasses.end());
+  }
+  CHECK(rootDictEntries(oldOut).count("ACAD_TYPED") == 0);
+  const auto oldDictionaries = recordGroupValues(oldOut, "DICTIONARY", "5");
+  CHECK(std::find(oldDictionaries.begin(), oldDictionaries.end(), "70") ==
+        oldDictionaries.end());
+  CHECK_FALSE(containsLine(oldOut, "{ACAD_REACTORS"));
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(fieldOut),
+                              RS2::FormatDXFRW2000));
+  }
+  CHECK(recordGroupValues(fieldOut, "MLEADERSTYLE", "5").empty());
+  CHECK(recordGroupValues(fieldOut, "EVALUATION_GRAPH", "5").empty());
+  CHECK(recordGroupValues(fieldOut, "FIELD", "5") ==
+        std::vector<std::string>{"E1"});
+  CHECK(recordGroupValues(fieldOut, "FIELDLIST", "5") ==
+        std::vector<std::string>{"E2"});
+  CHECK(rootDictEntries(fieldOut).count("ACAD_TYPED") == 1);
+  const auto references = recordGroupValues(fieldOut, "LINE", "330");
+  CHECK(std::find(references.begin(), references.end(), "70") !=
+        references.end());
+  CHECK(std::find(references.begin(), references.end(), "E0") ==
+        references.end());
+  CHECK(std::find(references.begin(), references.end(), "E1") !=
+        references.end());
+  CHECK(std::find(references.begin(), references.end(), "E2") !=
+        references.end());
+  CHECK(std::find(references.begin(), references.end(), "E3") ==
+        references.end());
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(newOut),
+                              RS2::FormatDXFRW));
+  }
+  for (const auto &[name, handle] :
+       {std::pair<const char *, const char *>{"MLEADERSTYLE", "E0"},
+        {"FIELD", "E1"}, {"FIELDLIST", "E2"},
+        {"EVALUATION_GRAPH", "E3"}})
+    CHECK(recordGroupValues(newOut, name, "5") ==
+          std::vector<std::string>{handle});
+  CHECK(rootDictEntries(newOut).count("ACAD_TYPED") == 1);
+
+  std::filesystem::remove(oldOut);
+  std::filesystem::remove(fieldOut);
+  std::filesystem::remove(newOut);
+}
+
+TEST_CASE("DXF live identities win over left-out raw carriers with the same handle",
+          "[dxf][roundtrip][filter][handles][version]") {
+  ensureSettings();
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  auto *target = new RS_Line(&graphic, RS_LineData(RS_Vector(0.0, 0.0),
+                                                  RS_Vector(1.0, 0.0)));
+  target->setSourceHandle(0xA0u);
+  graphic.addEntity(target);
+  auto *referer = new RS_Line(&graphic, RS_LineData(RS_Vector(0.0, 1.0),
+                                                   RS_Vector(1.0, 1.0)));
+  referer->setSourceHandle(0xA1u);
+  referer->setReactorHandles({0xA0u, 0xB0u});
+  graphic.addEntity(referer);
+
+  DRW_Group group;
+  group.handle = 0xB0u;
+  group.m_entityHandles = {0xA0u};
+  auto &metadata = graphic.dwgAdvancedMetadata();
+  metadata.addGroup(group);
+  for (const std::uint32_t handle : {0xA0u, 0xB0u}) {
+    DRW_RawDxfObject raw;
+    raw.name = handle == 0xA0u ? "LINE" : "GROUP";
+    raw.handle = handle;
+    raw.m_version = DRW::AC1015;
+    if (handle == 0xA0u)
+      metadata.addRawDxfEntity(raw);
+    else
+      metadata.addRawDxfObject(raw);
+  }
+
+  const std::string out = tmpFile("live_raw_handle_collision.dxf");
+  std::filesystem::remove(out);
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+  const auto lines = recordGroupValues(out, "LINE", "5");
+  REQUIRE(lines.size() == 2);
+  CHECK(recordGroupValues(out, "GROUP", "5") ==
+        std::vector<std::string>{"B0"});
+  const auto references = recordGroupValues(out, "LINE", "330");
+  CHECK(std::count(references.begin(), references.end(), lines.front()) == 1);
+  CHECK(std::count(references.begin(), references.end(), "B0") == 1);
+  std::filesystem::remove(out);
+}
+
 TEST_CASE("DXF export reports what it left out",
           "[dxf][roundtrip][filter][version]") {
   ensureSettings();

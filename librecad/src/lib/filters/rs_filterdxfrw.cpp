@@ -11677,8 +11677,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     // will be typed-emitted (ReplayAllowed, nonzero handle, NOT already in the
     // raw net → not double-counted), reserve its verbatim code-5 handle so a
     // minted handle can't collide, and register the same CLASS the raw-net
-    // objects use (else AutoCAD/ezdxf drop the instance). The dedup predicate
-    // here MUST match writeObjects' emitTyped.
+    // objects use (else AutoCAD/ezdxf drop the instance). Dedup matches
+    // writeObjects' emitTyped; minVersion matches the codec writer's gate.
     // A typed record written in place of a raw one left out keeps its handle,
     // and references to it stay: it is not left out.
     const auto standsInForLeftOut = [&](std::uint32_t handle) {
@@ -11687,8 +11687,9 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     };
     auto reserveTyped = [&](std::uint32_t handle,
                             LC_DwgAdvancedMetadata::ReplayState state,
-                            const char *recordName) {
-      if (handle == 0 ||
+                            const char *recordName,
+                            DRW::Version minVersion = DRW::UNKNOWNV) {
+      if (exportVersion < minVersion || handle == 0 ||
           state != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed ||
           rawObjectHandles.count(handle) != 0)
         return;
@@ -11705,7 +11706,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     for (const auto &record : metadata.rasterVariables())
       reserveTyped(record.handle, record.replayState, "RASTERVARIABLES");
     for (const auto &record : metadata.mleaderStyles())
-      reserveTyped(record.handle, record.replayState, "MLEADERSTYLE");
+      reserveTyped(record.handle, record.replayState, "MLEADERSTYLE",
+                   DRW::AC1021);
     for (const auto &record : metadata.geoData())
       reserveTyped(record.handle, record.replayState, "GEODATA");
     for (const auto &record : metadata.spatialFilters())
@@ -11713,11 +11715,11 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     for (const auto &record : metadata.sortEntsTables())
       reserveTyped(record.handle, record.replayState, "SORTENTSTABLE");
     for (const auto &record : metadata.fields())
-      reserveTyped(record.handle, record.replayState, "FIELD");
+      reserveTyped(record.handle, record.replayState, "FIELD", DRW::AC1015);
     for (const auto &record : metadata.partialViewingIndexes())
       reserveTyped(record.handle, record.replayState, "PARTIALVIEWINGINDEX");
     for (const auto &record : metadata.fieldLists())
-      reserveTyped(record.handle, record.replayState, "FIELDLIST");
+      reserveTyped(record.handle, record.replayState, "FIELDLIST", DRW::AC1015);
     // SLICE 2: WIPEOUTVARIABLES is a CUSTOM class -> reserve + register CLASS.
     for (const auto &record : metadata.wipeoutVariables())
       reserveTyped(record.handle, record.replayState, "WIPEOUTVARIABLES");
@@ -11754,8 +11756,11 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       reserveTyped(record.handle, record.replayState, "DBCOLOR");
     for (const auto &record : metadata.dimensionAssociations())
       reserveTyped(record.handle, record.replayState, "DIMASSOC");
-    for (const auto &record : metadata.evaluationGraphs())
-      reserveTyped(record.handle, record.replayState, "EVALUATION_GRAPH");
+    for (const auto &record : metadata.evaluationGraphs()) {
+      if (exportVersion >= DRW::AC1021 &&
+          canWriteNativeEvaluationGraph(evaluationGraphFromMetadata(record)))
+        reserveTyped(record.handle, record.replayState, "EVALUATION_GRAPH");
+    }
     for (const auto &record : metadata.sections())
       reserveTyped(record.handle, record.replayState,
                    sectionRecordName(record.kind));
@@ -11877,10 +11882,10 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       else if (h != 0 && (!written || structural))
         m_dxfDroppedReferenceHandles.insert(h);
     }
-    for (const std::uint32_t h : keptGroupHandles)
-      m_dxfDroppedReferenceHandles.erase(h);
     m_dxfDroppedReferenceHandles.insert(leftOutRawHandles.cbegin(),
                                         leftOutRawHandles.cend());
+    for (const std::uint32_t h : keptGroupHandles)
+      m_dxfDroppedReferenceHandles.erase(h);
     for (const DRW_PlotSettings &settings : metadata.plotSettings()) {
       if (settings.handle != 0 &&
           kFixedStructural.count(settings.handle) != 0) {
@@ -11983,13 +11988,14 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     // dangling-entry fixes and corrupt cross-refs.
     //
     // The set of objects we emit on this path (their code-5 handles):
-    // the ReplayAllowed, non-raw-net data-only records (matches writeObjects'
-    // emitTyped), plus the raw-net objects (re-emitted verbatim above).
+    // the version-supported, ReplayAllowed, non-raw-net data-only records,
+    // plus the raw-net objects (re-emitted verbatim above).
     std::set<std::uint32_t> emittedObjectHandles = rawObjectHandles;
     std::set<std::uint32_t> neededParents; // 330 owners we must materialize
     auto noteDataOnly = [&](std::uint32_t handle, std::uint32_t parent,
-                            LC_DwgAdvancedMetadata::ReplayState state) {
-      if (handle == 0 ||
+                            LC_DwgAdvancedMetadata::ReplayState state,
+                            DRW::Version minVersion = DRW::UNKNOWNV) {
+      if (exportVersion < minVersion || handle == 0 ||
           state != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed ||
           rawObjectHandles.count(handle) != 0)
         return; // not emitted on this path
@@ -12006,7 +12012,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     for (const auto &r : metadata.rasterVariables())
       noteDataOnly(r.handle, r.parentHandle, r.replayState);
     for (const auto &r : metadata.mleaderStyles())
-      noteDataOnly(r.handle, r.parentHandle, r.replayState);
+      noteDataOnly(r.handle, r.parentHandle, r.replayState, DRW::AC1021);
     for (const auto &r : metadata.geoData())
       noteDataOnly(r.handle, r.parentHandle, r.replayState);
     for (const auto &r : metadata.spatialFilters())
@@ -12014,9 +12020,9 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     for (const auto &r : metadata.sortEntsTables())
       noteDataOnly(r.handle, r.parentHandle, r.replayState);
     for (const auto &r : metadata.fields())
-      noteDataOnly(r.handle, r.parentHandle, r.replayState);
+      noteDataOnly(r.handle, r.parentHandle, r.replayState, DRW::AC1015);
     for (const auto &r : metadata.fieldLists())
-      noteDataOnly(r.handle, r.parentHandle, r.replayState);
+      noteDataOnly(r.handle, r.parentHandle, r.replayState, DRW::AC1015);
     for (const auto &r : metadata.mlineStyles())
       noteDataOnly(r.handle, r.parentHandle, r.replayState);
     for (const auto &r : metadata.layouts())
@@ -12103,6 +12109,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     }
     if (!namedDicts.empty())
       m_dxfW->setNamedDictObjects(namedDicts);
+    for (const std::uint32_t h : m_dxfEmittedNamedDictHandles)
+      m_dxfDroppedReferenceHandles.erase(h);
 
     // (4) F3: typed GROUP emit (both directions). GROUP is read into typed
     // metadata only (processGroup -> addGroup; never routed to the DXF raw
@@ -31982,10 +31990,6 @@ bool RS_FilterDXFRW::replaysInDxfExport(const DRW::Version source) const {
 std::uint32_t RS_FilterDXFRW::dxfReference(std::uint32_t source) const {
   if (m_dxfW == nullptr || source == 0)
     return source;
-  const bool codecWritesIt = source == 0xCu || source == 0xDu;
-  if (m_dxfDroppedReferenceHandles.count(source) != 0 ||
-      (m_dxfSuppressedObjectHandles.count(source) != 0 && !codecWritesIt))
-    return 0;
   // Entities are written under fresh handles, all taken before the first
   // entity is written; a handle several entities share names none of them.
   const DRW_WritingContext *context = m_dxfW->getWritingContext();
@@ -31994,6 +31998,10 @@ std::uint32_t RS_FilterDXFRW::dxfReference(std::uint32_t source) const {
   const auto entity = context->sourceHandleToMintedMap.find(source);
   if (entity != context->sourceHandleToMintedMap.end())
     return entity->second;
+  const bool codecWritesIt = source == 0xCu || source == 0xDu;
+  if (m_dxfDroppedReferenceHandles.count(source) != 0 ||
+      (m_dxfSuppressedObjectHandles.count(source) != 0 && !codecWritesIt))
+    return 0;
   return m_dxfW->remapHandle(source);
 }
 
