@@ -3438,6 +3438,7 @@ public:
     m_layerTableEntries.clear();
     m_dimStyleTableEntries.clear();
     m_appIdTableEntries.clear();
+    m_spaceBlockRecords.clear();
     m_rawDxfObjects.clear();
     m_rawDxfEntities.clear();
     m_rawDxfSections.clear();
@@ -3787,6 +3788,17 @@ public:
   void addAppIdTableEntry(const DRW_AppId &data) {
     if (!data.name.empty())
       m_appIdTableEntries[data.name] = data;
+  }
+
+  // The model and paper space block records (*Model_Space, *Paper_Space,
+  // *Paper_Space0, ...), by source handle. LibreCAD keeps no block for them,
+  // but layouts and other objects name them.
+  void addSpaceBlockRecord(std::uint32_t handle, const std::string &name) {
+    if (handle != 0 && !name.empty())
+      m_spaceBlockRecords[handle] = name;
+  }
+  const std::map<std::uint32_t, std::string> &spaceBlockRecords() const {
+    return m_spaceBlockRecords;
   }
 
   void addView(const DRW_View &view) {
@@ -13263,6 +13275,7 @@ private:
   std::map<std::string, DRW_LType> m_lineTypeTableEntries;
   std::map<std::string, DRW_Textstyle> m_textStyleTableEntries;
   std::map<std::string, DRW_Layer> m_layerTableEntries;
+  std::map<std::uint32_t, std::string> m_spaceBlockRecords;
   std::map<std::string, DRW_Dimstyle> m_dimStyleTableEntries;
   std::map<std::string, DRW_AppId> m_appIdTableEntries;
   std::vector<DRW_RawDxfObject> m_rawDxfObjects;

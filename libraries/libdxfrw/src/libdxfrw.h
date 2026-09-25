@@ -324,6 +324,10 @@ public:
     void setHandleRemap(const std::map<std::uint32_t, std::uint32_t> &remap) {
         m_handleRemap = remap;
     }
+    //! Add one remap without replacing an existing one for the handle.
+    void addHandleRemap(std::uint32_t from, std::uint32_t to) {
+        m_handleRemap.emplace(from, to);
+    }
     std::uint32_t remapHandle(std::uint32_t handle) const {
         auto it = m_handleRemap.find(handle);
         return it == m_handleRemap.end() ? handle : it->second;

@@ -4688,6 +4688,9 @@ void RS_FilterDXFRW::addBlock(const DRW_Block &data) {
     } else {
       m_blockHash.insert(data.parentHandle, m_dummyContainer);
     }
+    // Layouts name these block records; a save must find them by name.
+    m_graphic->dwgAdvancedMetadata().addSpaceBlockRecord(
+        static_cast<std::uint32_t>(data.parentHandle), data.name);
   }
 }
 
@@ -11532,6 +11535,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
    */
   m_dxfW = new dxfRW(QFile::encodeName(file));
   m_dxfBlockInsertHandles.clear();
+  m_dxfExtraPaperSpaces.clear();
   // fixme - sand - save to binary format enabling/disabling!!
   const bool binary = false;
 
@@ -12445,6 +12449,63 @@ void RS_FilterDXFRW::writeBlockRecords() {
           blk->getPreviewData(), insertRefsFor(blk->getName())));
     }
   }
+
+  // A layout's paper space other than the first (*Paper_Space0, ...) has no
+  // LibreCAD block, but the layout needs its block record: write it, empty.
+  m_dxfExtraPaperSpaces = dxfExtraPaperSpaceNames();
+  for (const std::string &name : m_dxfExtraPaperSpaces)
+    noteDxfWrite(m_dxfW->writeBlockRecord(name, 0, {}, {}));
+}
+
+std::vector<std::string> RS_FilterDXFRW::dxfExtraPaperSpaceNames() const {
+  std::vector<std::string> names;
+  if (m_version < 1015) // LAYOUT objects are R2000 and later
+    return names;
+  const auto &metadata = m_graphic->dwgAdvancedMetadata();
+  const auto &spaces = metadata.spaceBlockRecords();
+  std::set<std::string> seen;
+  for (const auto &layout : metadata.layouts()) {
+    if (layout.replayState !=
+        LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed)
+      continue;
+    const auto space = spaces.find(layout.paperSpaceBlockRecordHandle);
+    if (space == spaces.end())
+      continue;
+    const QString name = QString::fromUtf8(space->second.c_str());
+    static const QRegularExpression numbered(
+        QStringLiteral("^\\*paper_space\\d+$"),
+        QRegularExpression::CaseInsensitiveOption);
+    if (numbered.match(name).hasMatch() &&
+        seen.insert(name.toLower().toStdString()).second)
+      names.push_back(space->second);
+  }
+  return names;
+}
+
+void RS_FilterDXFRW::installDxfBlockRecordRemap() {
+  // Block records are written under new handles; a reference to one follows
+  // it by name. The model and paper space records have fixed handles.
+  const auto written = [this](const std::string &name) {
+    return m_dxfW->getBlockRecordHandleToWrite(name);
+  };
+  for (const auto &[source, name] :
+       m_graphic->dwgAdvancedMetadata().spaceBlockRecords()) {
+    const QString lower = QString::fromUtf8(name.c_str()).toLower();
+    const std::uint32_t target = lower == QLatin1String("*model_space") ? 0x1Fu
+                                 : lower == QLatin1String("*paper_space")
+                                     ? 0x1Eu
+                                     : written(name);
+    if (target != DRW::NoHandle)
+      m_dxfW->addHandleRemap(source, target);
+  }
+  for (unsigned i = 0; i < m_graphic->countBlocks(); i++) {
+    const RS_Block *blk = m_graphic->blockAt(i);
+    if (blk->isDeleted() || blk->sourceHandle() == 0)
+      continue;
+    const std::uint32_t target = written(blk->getName().toUtf8().toStdString());
+    if (target != DRW::NoHandle)
+      m_dxfW->addHandleRemap(blk->sourceHandle(), target);
+  }
 }
 
 /**
@@ -12562,6 +12623,9 @@ void RS_FilterDXFRW::writeBlocks() {
 
   RS_Block *blk;
 
+  if (m_version > 1009)
+    installDxfBlockRecordRemap();
+
   // write unnamed blocks
   QHash<RS_Entity *, QString>::const_iterator it = m_noNameBlock.constBegin();
   while (it != m_noNameBlock.constEnd()) {
@@ -12602,6 +12666,12 @@ void RS_FilterDXFRW::writeBlocks() {
         }
       }
     }
+  }
+
+  for (const std::string &name : m_dxfExtraPaperSpaces) {
+    DRW_Block block;
+    block.name = name;
+    noteDxfWrite(m_dxfW->writeBlock(&block));
   }
 }
 
@@ -25885,6 +25955,8 @@ void RS_FilterDXFRW::writeObjects() {
         continue;
       DRW_Layout layout = layoutFromMetadata(record);
       layout.parentHandle = resolveOwner(record.parentHandle);
+      layout.paperSpaceBlockRecordHandle.ref =
+          m_dxfW->remapHandle(record.paperSpaceBlockRecordHandle);
       noteDxfWrite(m_dxfW->writeLayout(&layout));
     }
     // GEODATA is a custom object with a CLASS record. DWG read captures all

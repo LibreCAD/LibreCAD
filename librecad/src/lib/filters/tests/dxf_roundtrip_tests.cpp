@@ -3879,6 +3879,116 @@ TEST_CASE("DXF import records its version and saves back in it",
   std::filesystem::remove(out);
 }
 
+namespace {
+std::string dxfLayoutRecord(const char *handle, const char *name, int tab,
+                            const char *blockRecord) {
+  return std::string("0\nLAYOUT\n5\n") + handle + "\n330\n1A\n" +
+         "100\nAcDbPlotSettings\n1\n\n2\nnone_device\n4\n\n6\n\n"
+         "40\n0\n41\n0\n42\n0\n43\n0\n44\n0\n45\n0\n"
+         "70\n688\n72\n0\n73\n0\n74\n5\n7\n\n75\n16\n"
+         "100\nAcDbLayout\n1\n" + name + "\n70\n1\n71\n" + std::to_string(tab) +
+         "\n10\n0\n20\n0\n11\n12\n21\n9\n12\n0\n22\n0\n32\n0\n76\n0\n146\n0\n"
+         "330\n" + blockRecord + "\n";
+}
+
+std::string dxfBlockRecord(const char *handle, const char *name) {
+  return std::string("0\nBLOCK_RECORD\n5\n") + handle +
+         "\n330\n1\n100\nAcDbSymbolTableRecord\n100\nAcDbBlockTableRecord\n2\n" +
+         name + "\n";
+}
+
+std::string dxfEmptyBlock(const char *handle, const char *endHandle,
+                          const char *owner, const char *name) {
+  return std::string("0\nBLOCK\n5\n") + handle + "\n330\n" + owner +
+         "\n100\nAcDbEntity\n8\n0\n100\nAcDbBlockBegin\n2\n" + name +
+         "\n70\n0\n10\n0\n20\n0\n30\n0\n3\n" + name + "\n1\n\n" +
+         "0\nENDBLK\n5\n" + endHandle + "\n330\n" + owner +
+         "\n100\nAcDbEntity\n8\n0\n100\nAcDbBlockEnd\n";
+}
+
+// The name of the block record the AcDbLayout part of layout @p name names.
+std::string layoutBlockRecordName(const std::string &path,
+                                  const std::string &name) {
+  const DxfRecordGroups layout = recordGroupsWithValue(path, "LAYOUT", "1", name);
+  std::string blockRecord;
+  bool inLayout = false;
+  for (const auto &[code, value] : layout) {
+    if (code == "100")
+      inLayout = value == "AcDbLayout";
+    else if (inLayout && code == "330")
+      blockRecord = value;
+  }
+  if (blockRecord.empty())
+    return {};
+  for (const auto &[code, value] :
+       recordGroupsWithValue(path, "BLOCK_RECORD", "5", blockRecord))
+    if (code == "2")
+      return value;
+  return "?" + blockRecord;
+}
+} // namespace
+
+TEST_CASE("DXF layouts name the block records of their spaces",
+          "[dxf][roundtrip][filter][handles][layout]") {
+  ensureSettings();
+  const std::string src = tmpFile("layout-spaces-src.dxf");
+  const std::string out = tmpFile("layout-spaces-out.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  // The source's space block records have handles the save gives other
+  // records: its *Model_Space is 1E, where the save writes *Paper_Space, and
+  // the reverse. Layout2's *Paper_Space0 has no LibreCAD block.
+  writeText(src,
+            "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1015\n0\nENDSEC\n"
+            "0\nSECTION\n2\nTABLES\n"
+            "0\nTABLE\n2\nBLOCK_RECORD\n5\n1\n330\n0\n100\nAcDbSymbolTable\n70\n3\n" +
+                dxfBlockRecord("1E", "*Model_Space") +
+                dxfBlockRecord("1F", "*Paper_Space") +
+                dxfBlockRecord("2C", "*Paper_Space0") +
+                "0\nENDTAB\n0\nENDSEC\n"
+                "0\nSECTION\n2\nBLOCKS\n" +
+                dxfEmptyBlock("2D", "2E", "1E", "*Model_Space") +
+                dxfEmptyBlock("2F", "30", "1F", "*Paper_Space") +
+                dxfEmptyBlock("31", "32", "2C", "*Paper_Space0") +
+                "0\nENDSEC\n"
+                "0\nSECTION\n2\nENTITIES\n"
+                "0\nLINE\n5\nA1\n100\nAcDbEntity\n8\n0\n100\nAcDbLine\n"
+                "10\n0\n20\n0\n30\n0\n11\n10\n21\n0\n31\n0\n"
+                "0\nENDSEC\n"
+                "0\nSECTION\n2\nOBJECTS\n"
+                "0\nDICTIONARY\n5\nC\n330\n0\n100\nAcDbDictionary\n281\n1\n"
+                "3\nACAD_LAYOUT\n350\n1A\n"
+                "0\nDICTIONARY\n5\n1A\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+                "3\nLayout1\n350\n3B\n3\nLayout2\n350\n3C\n3\nModel\n350\n3A\n" +
+                dxfLayoutRecord("3A", "Model", 0, "1E") +
+                dxfLayoutRecord("3B", "Layout1", 1, "1F") +
+                dxfLayoutRecord("3C", "Layout2", 2, "2C") +
+                "0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              graphic.getFormatType()));
+  }
+
+  CHECK(layoutBlockRecordName(out, "Model") == "*Model_Space");
+  CHECK(layoutBlockRecordName(out, "Layout1") == "*Paper_Space");
+  CHECK(layoutBlockRecordName(out, "Layout2") == "*Paper_Space0");
+  const auto blocks = recordGroupValues(out, "BLOCK", "2");
+  CHECK(std::count(blocks.begin(), blocks.end(), "*Paper_Space0") == 1);
+  CHECK(danglingReferences(out).empty());
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
 TEST_CASE("DXF saved in another version leaves out the raw objects it cannot hold",
           "[dxf][roundtrip][filter][version]") {
   ensureSettings();

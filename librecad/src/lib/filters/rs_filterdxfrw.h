@@ -2307,6 +2307,10 @@ public:
   void setEntityAttributes(RS_Entity *entity, const DRW_Entity *attrib);
   void getEntityAttributes(DRW_Entity *ent, const RS_Entity *entity);
   std::uint32_t dxfReference(std::uint32_t source) const;
+  /** Numbered paper spaces (*Paper_Space0, ...) the written layouts need. */
+  std::vector<std::string> dxfExtraPaperSpaceNames() const;
+  /** Make references to source block records follow them to their written handles. */
+  void installDxfBlockRecordRemap();
   /** Whether a raw DXF record read from version @p source is written into the DXF being exported. */
   bool replaysInDxfExport(DRW::Version source) const;
 
@@ -3160,6 +3164,8 @@ private:
   QHash<RS_Entity *, QString> m_noNameBlock;
   /** Planned DXF INSERT handles grouped by their referenced block name. */
   std::map<QString, std::vector<std::uint32_t>> m_dxfBlockInsertHandles;
+  /** Numbered paper spaces written, empty, for the layouts naming them. */
+  std::vector<std::string> m_dxfExtraPaperSpaces;
   QHash<QString, QString> m_fontList;
   bool m_oldMText = false;
   dxfRW *m_dxfW{nullptr};
