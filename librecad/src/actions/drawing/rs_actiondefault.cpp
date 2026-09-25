@@ -132,8 +132,6 @@ void RS_ActionDefault::keyPressEvent(QKeyEvent *e){
     //        std::cout<<"RS_ActionDefault::keyPressEvent(): begin"<<std::endl;
     switch (e->key()) {
         case Qt::Key_Shift:
-            m_snapRestriction = m_snapMode.restriction;
-            setSnapRestriction(RS2::RestrictOrthogonal);
             e->accept();
             break; //avoid clearing command line at shift key
             //cleanup default action, issue#285
@@ -151,7 +149,6 @@ void RS_ActionDefault::keyPressEvent(QKeyEvent *e){
 
 void RS_ActionDefault::keyReleaseEvent(QKeyEvent *e){
     if (e->key() == Qt::Key_Shift){
-        setSnapRestriction(m_snapRestriction);
         e->accept();
     }
 }
