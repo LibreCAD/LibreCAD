@@ -1025,7 +1025,7 @@ QString Doc_plugin_interface::addBlockfromFromdisk(const QString fullName) {
             RS_Entity* e = g.entityAt(i)->clone();
             e->reparent(b);
             e->clearDwgProvenance(provenance);
-            LC_CopyUtils::doCopyEntityLayer(e, m_docGr);
+            LC_CopyUtils::doCopyEntityLayer(e, m_docGr, &g);
             b->addEntity(e);
         }
         m_docGr->addBlock(b);

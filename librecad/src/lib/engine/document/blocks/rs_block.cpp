@@ -74,7 +74,14 @@ RS_Entity* RS_Block::clone() const {
     blk->setGraphicView(getGraphicView()); // fixme - remove this dependency
 
     for (const RS_Entity* entity : getEntityList()) {
-        if (entity != nullptr) {
+        // The block editor edits this RS_Block as its own document: a
+        // deletion there only sets the entity's own FlagDeleted and keeps it
+        // in the list as undo history (RS_Document::undoableDelete). Skip
+        // those here, the same way every writer already does, so a clone
+        // does not resurrect them as live geometry. Check the entity's own
+        // flag, not isDeleted(), which also follows the parent chain and
+        // would make a clone of a deleted block come out empty.
+        if (entity != nullptr && !entity->getFlag(RS2::FlagDeleted)) {
             RS_Entity* copy = entity->clone();
             copy->setParent(blk);
             blk->push_back(copy);

@@ -752,3 +752,83 @@ TEST_CASE("A plugin's block from disk comes onto the drawing's layers as new obj
     CHECK(d.m_graphic.countLayers() == layers);
     CHECK(lc::test::documentProblems(d.m_graphic).isEmpty());
 }
+
+TEST_CASE("Pasting a block does not resurrect an entity the block editor deleted", "[copy][paste][block]") {
+    auto source = std::make_unique<Drawing>();
+    source->addBlock("DOOR", [](RS_Block& b) {
+        b.addEntity(new RS_Line(&b, RS_LineData(RS_Vector{0, 0}, RS_Vector{1, 0})));
+        auto* trimmedAway = new RS_Line(&b, RS_LineData(RS_Vector{0, 1}, RS_Vector{1, 1}));
+        b.addEntity(trimmedAway);
+        // The block editor edits the block itself as its own document:
+        // undoableDelete only flags an entity deleted and keeps it in the
+        // block's list, as undo history (RS_Document::undoableDelete).
+        trimmedAway->setFlag(RS2::FlagDeleted);
+    });
+    source->copy({source->addInsert("DOOR", RS_Vector{0, 0})});
+
+    Drawing destination;
+    destination.paste(RS_Vector{0, 100});
+    source.reset(); // nothing pasted or on the clipboard may depend on the source drawing
+
+    const RS_Block* door = destination.m_graphic.findBlock("DOOR");
+    REQUIRE(door != nullptr);
+    int liveLines = 0;
+    for (const RS_Entity* e : *door) {
+        if (e != nullptr && !e->isDeleted()) {
+            ++liveLines;
+        }
+    }
+    CHECK(liveLines == 1);
+}
+
+TEST_CASE("Copying an insert of a block that inserts another block on a since-deleted layer reads no freed layer",
+          "[copy][paste][layer]") {
+    // RS_Graphic::removeLayer() only sweeps top-level entities and direct
+    // children of blocks; it never reaches the expansion children of a
+    // nested INSERT two blocks deep. LEAF's own line still names the freed
+    // layer by pointer.
+    Drawing source;
+    RS_Layer* removable = source.addLayer("REMOVABLE");
+    source.addBlock("LEAF", [&](RS_Block& b) {
+        auto* line = new RS_Line(&b, RS_LineData(RS_Vector{0, 0}, RS_Vector{1, 0}));
+        line->setLayer(removable);
+        b.addEntity(line);
+    });
+    source.addBlock("MIDDLE", [](RS_Block& b) {
+        b.addEntity(new RS_Insert(&b, RS_InsertData("LEAF", RS_Vector{0, 0}, RS_Vector{1, 1}, 0, 1, 1, RS_Vector{0, 0})));
+    });
+    RS_Insert* topInsert = source.addInsert("MIDDLE", RS_Vector{0, 0});
+
+    source.m_graphic.removeLayer(removable); // frees `removable`
+
+    source.copy({topInsert}); // must not dereference the freed layer (ASan)
+
+    Drawing destination;
+    destination.paste(RS_Vector{0, 100});
+    CHECK(lc::test::documentProblems(destination.m_graphic).isEmpty());
+}
+
+TEST_CASE("Pasting onto the points it removes in the same batch does not take over their identity",
+          "[copy][paste][undo]") {
+    Drawing source;
+    RS_Line* line = source.addLine(0, 0x2A);
+    giveIdentity(line);
+    source.copy({line});
+
+    Drawing destination;
+    destination.modify([&](LC_DocumentModificationBatch& ctx) {
+        // Mimics LC_ActionPasteToPoints: paste, then delete in the same
+        // section, so the undo section's own handle-takeover rule alone
+        // would let the pasted clone claim the deleted point's identity.
+        auto* point = new RS_Line(&destination.m_graphic, RS_LineData(RS_Vector{0, 100}, RS_Vector{0, 100}));
+        point->setSourceHandle(0x2A);
+        destination.m_graphic.addEntity(point);
+        LC_CopyUtils::paste(LC_CopyUtils::RS_PasteData(RS_Vector{0, 100}), &destination.m_graphic, ctx);
+        ctx.dontSetActiveLayerAndPen();
+        ctx.remove(point);
+    });
+
+    const auto lines = destination.live(RS2::EntityLine);
+    REQUIRE(lines.size() == 1);
+    checkIdentity(lines.front(), 0);
+}

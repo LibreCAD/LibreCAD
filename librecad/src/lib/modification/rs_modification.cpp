@@ -391,7 +391,7 @@ void RS_Modification::libraryInsert(const LC_LibraryInsertData& data, RS_Graphic
             }
             RS_Entity* clone = e->clone();
             clone->clearDwgProvenance(provenance);
-            LC_CopyUtils::doCopyEntityLayer(clone, destination);
+            LC_CopyUtils::doCopyEntityLayer(clone, destination, src);
             block->addByBlockEntity(clone);
         }
 

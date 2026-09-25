@@ -157,15 +157,32 @@ void LC_CopyUtils::doCopyEntity(RS_Entity* e, const RS_Vector& ref, RS_Graphic* 
     clipboardGraphic->addEntity(clone);
     clone->reparent(clipboardGraphic);
 
-    doCopyEntityLayer(clone, clipboardGraphic);
+    // e, not clone: once reparented, the clone's own getGraphic() answers
+    // with clipboardGraphic, which is the destination doCopyEntityLayer
+    // needs to check against, not the source the copied layer pointers
+    // still name.
+    doCopyEntityLayer(clone, clipboardGraphic, e->getGraphic());
     if (isInsert) {
         doCopyInsert(insert, clipboardGraphic, 0);
     }
 }
 
-void LC_CopyUtils::doCopyEntityLayer(RS_Entity* entity, RS_Graphic* graphic) {
+void LC_CopyUtils::doCopyEntityLayer(RS_Entity* entity, RS_Graphic* graphic, RS_Graphic* source) {
     // layer could be null if copy is performed in font file, where block is open. LibreCAD#2110
-    const RS_Layer* layer = entity->getLayer(false);
+    RS_Layer* layer = entity->getLayer(false);
+    if (layer != nullptr) {
+        // entity's layer pointer was copied verbatim from the source entity
+        // it was cloned from (RS_Entity's copy constructor copies m_layer
+        // as-is). RS_Graphic::removeLayer() does not sweep the expansion
+        // children of a nested INSERT, so that pointer can already be
+        // dangling here (delete a layer, then copy an insert of a block
+        // that inserts another block drawing on it). Confirm it is still a
+        // live layer of its own source graphic before dereferencing it.
+        const RS_LayerList* sourceLayers = source != nullptr ? source->getLayerList() : nullptr;
+        if (sourceLayers == nullptr || !sourceLayers->contains(layer)) {
+            layer = nullptr;
+        }
+    }
     if (layer != nullptr) {
         RS_Layer* ownLayer = graphic->findLayer(layer->getName());
         if (ownLayer == nullptr) {
@@ -174,10 +191,16 @@ void LC_CopyUtils::doCopyEntityLayer(RS_Entity* entity, RS_Graphic* graphic) {
         }
         entity->setLayer(ownLayer);
     }
-    if (entity->isContainer() && static_cast<RS_EntityContainer*>(entity)->isOwner()) {
+    // An INSERT's own children are its cached, derived expansion. update()
+    // regenerates them once the insert is added to the destination graphic,
+    // resolved against the destination's own copy of the block, so
+    // recursing into them here would only repeat the dangling-pointer risk
+    // above for no benefit.
+    if (entity->isContainer() && entity->rtti() != RS2::EntityInsert
+        && static_cast<RS_EntityContainer*>(entity)->isOwner()) {
         for (RS_Entity* child : *static_cast<RS_EntityContainer*>(entity)) {
             if (child != nullptr) {
-                doCopyEntityLayer(child, graphic);
+                doCopyEntityLayer(child, graphic, source);
             }
         }
     }
@@ -187,15 +210,19 @@ void LC_CopyUtils::doCopyBlock(const RS_Block* block, RS_Graphic* graphic, const
     if (graphic->findBlock(block->getName()) != nullptr) {
         return; // the graphic's own definition wins
     }
+    RS_Graphic* source = block->getGraphic();
     auto* blockClone = static_cast<RS_Block*>(block->clone());
     blockClone->reparent(graphic); // not the source's: that graphic may close first
     blockClone->clearDwgProvenance(provenance);
     graphic->addBlock(blockClone);
     for (RS_Entity* e : *blockClone) {
-        doCopyEntityLayer(e, graphic);
+        doCopyEntityLayer(e, graphic, source);
     }
     for (const RS_Entity* e : *block) {
-        if (e != nullptr && e->rtti() == RS2::EntityInsert) {
+        // The block editor edits `block` as its own document, so a deleted
+        // insert stays in its entity list as undo history (see
+        // RS_Block::clone()); skip it, or its own block gets copied in too.
+        if (e != nullptr && e->rtti() == RS2::EntityInsert && !e->getFlag(RS2::FlagDeleted)) {
             doCopyInsert(static_cast<const RS_Insert*>(e), graphic, provenance);
         }
     }
@@ -244,9 +271,14 @@ void LC_CopyUtils::paste(const RS_PasteData& data, RS_Graphic* graphic, LC_Docum
         clone->scale(zero, scaleV);
         clone->rotate(zero, data.angle);
         clone->move(data.insertionPoint);
-        doCopyEntityLayer(clone, graphic);
-        // the undo section clears the identity: paste deletes nothing it could take over
-        clone->clearDwgProvenance(foreignTables);
+        doCopyEntityLayer(clone, graphic, src);
+        // A pasted entity never replaces what it was copied from, so it never
+        // keeps that entity's identity, even when the caller's undo section
+        // also deletes entities of its own in the same batch (Paste to
+        // Points, which pastes and removes the points it lands on in one
+        // section) and would otherwise let the paste take over a freed
+        // handle that names something else entirely.
+        clone->clearDwgProvenance(RS_Entity::Identity | foreignTables);
         ctx += clone;
     }
     graphic->updateInserts();

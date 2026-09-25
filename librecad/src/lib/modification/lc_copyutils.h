@@ -50,8 +50,13 @@ namespace LC_CopyUtils {
     RS_Vector getInterGraphicsScaleFactor(double userFactor, const RS_Graphic *source, const RS_Graphic* destination);
     void copy(const RS_Vector& ref, QList<RS_Entity*>& entities, const RS_Graphic* graphic);
     void paste(const RS_PasteData& data, RS_Graphic* graphic, LC_DocumentModificationBatch& ctx);
-    /** Puts the entity and its owned descendants on the graphic's layers of the same names, adding missing ones. */
-    void doCopyEntityLayer(RS_Entity* entity, RS_Graphic* graphic);
+    /**
+     * Puts the entity and its owned descendants on the graphic's layers of the same names, adding missing ones.
+     * @param source The graphic entity's (and its descendants') layer pointers were copied from. Used to tell a
+     *   live layer pointer from one that source has since deleted (RS_Graphic::removeLayer() does not sweep every
+     *   descendant of a nested INSERT), so it is never dereferenced.
+     */
+    void doCopyEntityLayer(RS_Entity* entity, RS_Graphic* graphic, RS_Graphic* source);
     /**
      * Copies the block, and the blocks it inserts, into the graphic unless it has one of the same name,
      * and clears the given RS_Entity::DwgProvenance bits of each copy.
