@@ -1989,7 +1989,8 @@ public:
         t == RS2::FormatDWG2013 || t == RS2::FormatDWG2018)
       return true;
 #endif
-    return (t == RS2::FormatDXFRW2018 || t == RS2::FormatDXFRW ||
+    return (t == RS2::FormatDXFRW2018 || t == RS2::FormatDXFRW2013 ||
+            t == RS2::FormatDXFRW2010 || t == RS2::FormatDXFRW ||
             t == RS2::FormatDXFRW2004 || t == RS2::FormatDXFRW2000 ||
             t == RS2::FormatDXFRW14 || t == RS2::FormatDXFRW12);
   }
