@@ -137,6 +137,19 @@ void RS_Insert::update() {
         return;
     }
 
+    // Issue #2921: a block reference cycle (this block, or one it nests,
+    // contains an insert naming the block back) would otherwise recurse
+    // through this function forever, one fresh RS_Insert instance at each
+    // level, so no per-instance reentrancy flag catches it. A dangling
+    // library-insert reference, resolved for the first time by a paste
+    // that happens to complete such a cycle, is how one can arise where it
+    // couldn't before. Leave this insert's cache empty instead, as for a
+    // block that isn't found at all, just above.
+    if (!blk->findNestedInsert(blk->getName()).isEmpty()) {
+        RS_DEBUG->print("RS_Insert::update: block reference cycle");
+        return;
+    }
+
     if (isUndone()) {
         RS_DEBUG->print("RS_Insert::update: Insert is in undo list");
         return;
