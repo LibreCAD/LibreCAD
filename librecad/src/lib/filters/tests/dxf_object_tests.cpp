@@ -51,6 +51,12 @@
 namespace {
 
 std::string slurp(const std::filesystem::path &path);
+std::vector<std::pair<std::string, std::string>> readGroups(
+    const std::filesystem::path &path);
+bool recordHasConsecutive(
+    const std::vector<std::pair<std::string, std::string>> &groups,
+    const std::string &recordType, const std::string &recordName,
+    const std::vector<std::pair<std::string, std::string>> &sequence);
 
 // Stub satisfying every DRW_Interface pure virtual.
 class StubInterface : public DRW_Interface {
@@ -262,6 +268,183 @@ TEST_CASE("DXF table writers do not normalize caller-owned state",
   CHECK(emitter.m_ltype.length == 123.0);
   CHECK(emitter.m_vport.name == "SOURCE_VPORT");
 
+  std::filesystem::remove(path, ignored);
+}
+
+class DxfTableReferenceEmitter final : public StubInterface {
+public:
+  dxfRW *m_writer = nullptr;
+  DRW_UCS m_ucs;
+  DRW_Vport m_vport;
+  bool m_ucsResult = false;
+  bool m_activeVportResult = false;
+  bool m_vportResult = false;
+
+  void writeUCSs() override { m_ucsResult = m_writer->writeUCS(&m_ucs); }
+  void writeVports() override {
+    DRW_Vport active;
+    active.name = "*ACTIVE";
+    m_activeVportResult = m_writer->writeVport(&active);
+    m_vportResult = m_writer->writeVport(&m_vport);
+  }
+};
+
+TEST_CASE("DXF writes table targets before their references",
+          "[dxf][writer][handles]") {
+  const auto path = std::filesystem::temp_directory_path() /
+                    "lc_dxf_table_reference_order.dxf";
+  std::error_code ignored;
+  std::filesystem::remove(path, ignored);
+
+  DxfTableReferenceEmitter emitter;
+  emitter.m_ucs.handle = 0x700u;
+  emitter.m_ucs.name = "REFERENCED_UCS";
+  emitter.m_vport.name = "CUSTOM_VPORT";
+  emitter.m_vport.namedUcsHandle = 0x700u;
+
+  dxfRW writer(path.string().c_str());
+  emitter.m_writer = &writer;
+  writer.setReferenceResolver(
+      [&writer](std::uint32_t source) { return writer.remapHandle(source); });
+  REQUIRE(writer.write(&emitter, DRW::AC1018, false));
+  CHECK(emitter.m_ucsResult);
+  CHECK(emitter.m_activeVportResult);
+  CHECK(emitter.m_vportResult);
+
+  const auto groups = readGroups(path);
+  const auto tablePosition = [&groups](const std::string &name) {
+    const auto entry = std::find(groups.begin(), groups.end(),
+                                 std::make_pair(std::string("2"), name));
+    return std::distance(groups.begin(), entry);
+  };
+  CHECK(tablePosition("UCS") < tablePosition("VPORT"));
+  CHECK(tablePosition("STYLE") < tablePosition("LTYPE"));
+  CHECK(recordHasConsecutive(
+      groups, "VPORT", "CUSTOM_VPORT",
+      {{"345", writer.toHexStrHandle(writer.remapHandle(0x700u))}}));
+  std::filesystem::remove(path, ignored);
+}
+
+class RepeatedWriteEmitter final : public StubInterface {
+public:
+  dxfRW *m_writer = nullptr;
+  bool m_addVport = true;
+  bool m_activeVportResult = false;
+  bool m_vportResult = false;
+  bool m_textStyleResult = false;
+
+  void writeVports() override {
+    DRW_Vport active;
+    active.name = "*ACTIVE";
+    m_activeVportResult = m_writer->writeVport(&active);
+    if (!m_addVport)
+      return;
+    DRW_Vport vport;
+    vport.name = "EXTRA_VPORT";
+    m_vportResult = m_writer->writeVport(&vport);
+  }
+
+  void writeTextstyles() override {
+    DRW_Textstyle style;
+    style.handle = 0x40u;
+    style.name = "REMAPPED_STYLE";
+    m_textStyleResult = m_writer->writeTextstyle(&style);
+  }
+};
+
+TEST_CASE("DXF write sessions discard generated handle mappings",
+          "[dxf][writer][handles]") {
+  const auto path = std::filesystem::temp_directory_path() /
+                    "lc_dxf_writer_session_remap.dxf";
+  std::error_code ignored;
+  std::filesystem::remove(path, ignored);
+
+  dxfRW writer(path.string().c_str());
+  writer.setHandleRemap({{0x700u, 0x710u}});
+  RepeatedWriteEmitter emitter;
+  emitter.m_writer = &writer;
+
+  REQUIRE(writer.write(&emitter, DRW::AC1018, false));
+  CHECK(emitter.m_activeVportResult);
+  CHECK(emitter.m_vportResult);
+  CHECK(emitter.m_textStyleResult);
+  const std::uint32_t firstStyleHandle = writer.remapHandle(0x40u);
+  CHECK(writer.remapHandle(0x700u) == 0x710u);
+
+  emitter.m_addVport = false;
+  REQUIRE(writer.write(&emitter, DRW::AC1018, false));
+  CHECK(emitter.m_activeVportResult);
+  CHECK(emitter.m_textStyleResult);
+  const std::uint32_t secondStyleHandle = writer.remapHandle(0x40u);
+  CHECK(secondStyleHandle != firstStyleHandle);
+  CHECK(writer.remapHandle(0x700u) == 0x710u);
+
+  std::filesystem::remove(path, ignored);
+}
+
+class DxfObjectReferenceEmitter final : public StubInterface {
+public:
+  dxfRW *m_writer = nullptr;
+  DRW_Layout m_layout;
+  DRW_GeoData m_geoData;
+  DRW_MLeaderStyle m_mleaderStyle;
+  bool m_layoutResult = false;
+  bool m_geoDataResult = false;
+  bool m_mleaderStyleResult = false;
+
+  void writeObjects() override {
+    m_layoutResult = m_writer->writeLayout(&m_layout);
+    m_geoDataResult = m_writer->writeGeoData(&m_geoData);
+    m_mleaderStyleResult = m_writer->writeMLeaderStyle(&m_mleaderStyle);
+  }
+};
+
+TEST_CASE("DXF typed objects remap their handle references",
+          "[dxf][writer][handles]") {
+  const auto path = std::filesystem::temp_directory_path() /
+                    "lc_dxf_object_reference_remap.dxf";
+  std::error_code ignored;
+  std::filesystem::remove(path, ignored);
+
+  DxfObjectReferenceEmitter emitter;
+  emitter.m_layout.handle = 0x41u;
+  emitter.m_layout.name = "Sheet";
+  emitter.m_layout.shadePlotHandle.ref = 0x704u;
+  emitter.m_layout.paperSpaceBlockRecordHandle.ref = 0x700u;
+  emitter.m_layout.lastActiveViewportHandle.ref = 0x701u;
+  emitter.m_layout.namedUcsHandle.ref = 0x702u;
+  emitter.m_layout.baseUcsHandle.ref = 0x703u;
+  emitter.m_geoData.handle = 0x42u;
+  emitter.m_geoData.m_hostBlockHandle = 0x700u;
+  emitter.m_mleaderStyle.handle = 0x43u;
+  emitter.m_mleaderStyle.name = "REFS";
+  emitter.m_mleaderStyle.leaderLineTypeHandle.ref = 0x700u;
+  emitter.m_mleaderStyle.arrowHeadBlockHandle.ref = 0x701u;
+  emitter.m_mleaderStyle.textStyleHandle.ref = 0x702u;
+  emitter.m_mleaderStyle.blockHandle.ref = 0x703u;
+
+  dxfRW writer(path.string().c_str());
+  emitter.m_writer = &writer;
+  writer.setReferenceResolver([](std::uint32_t handle) {
+    return handle >= 0x700u && handle <= 0x704u ? handle + 0x100u : handle;
+  });
+  DRW_Class geoDataClass;
+  REQUIRE(dxfRW::dxfClassForRecordName("GEODATA", geoDataClass));
+  geoDataClass.instanceCount = 1;
+  DRW_Class mleaderStyleClass;
+  REQUIRE(dxfRW::dxfClassForRecordName("MLEADERSTYLE", mleaderStyleClass));
+  mleaderStyleClass.instanceCount = 1;
+  writer.setDxfClasses({geoDataClass, mleaderStyleClass});
+
+  REQUIRE(writer.write(&emitter, DRW::AC1021, false));
+  CHECK(emitter.m_layoutResult);
+  CHECK(emitter.m_geoDataResult);
+  CHECK(emitter.m_mleaderStyleResult);
+  const auto groups = readGroups(path);
+  for (const std::string &handle : {"800", "801", "802", "803", "804"})
+    CHECK(std::any_of(groups.begin(), groups.end(), [&](const auto &group) {
+      return group.second == handle;
+    }));
   std::filesystem::remove(path, ignored);
 }
 

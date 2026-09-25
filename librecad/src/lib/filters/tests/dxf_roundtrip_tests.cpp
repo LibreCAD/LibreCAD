@@ -353,8 +353,8 @@ std::vector<std::vector<std::string>> recordReactors(const std::string &path,
   return reactors;
 }
 
-// Owner and reactor (330), soft/hard pointer (340/350/360) references that
-// name no handle (5/105) of the file.
+// Owner and reactor (330), soft/hard pointer (340/350/360) and plot style
+// (390) references that name no handle (5/105) of the file.
 std::vector<std::string> danglingReferences(const std::string &path) {
   std::ifstream in(path);
   std::string codeLine, valueLine;
@@ -364,7 +364,8 @@ std::vector<std::string> danglingReferences(const std::string &path) {
     const std::string c = trimDxfToken(codeLine), v = trimDxfToken(valueLine);
     if (c == "5" || c == "105")
       defined.insert(v);
-    else if ((c == "330" || c == "340" || c == "350" || c == "360") && v != "0")
+    else if ((c == "330" || c == "340" || c == "350" || c == "360" ||
+              c == "390") && v != "0")
       references.emplace_back(c, v);
   }
   std::vector<std::string> dangling;
@@ -3874,6 +3875,430 @@ TEST_CASE("DXF import records its version and saves back in it",
                               RS2::FormatDXFRW));
   }
   CHECK(reread.getFormatType() == format);
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
+namespace {
+std::string dxfLayoutRecord(const char *handle, const char *name, int tab,
+                            const char *blockRecord) {
+  return std::string("0\nLAYOUT\n5\n") + handle + "\n330\n1A\n" +
+         "100\nAcDbPlotSettings\n1\n\n2\nnone_device\n4\n\n6\n\n"
+         "40\n0\n41\n0\n42\n0\n43\n0\n44\n0\n45\n0\n"
+         "70\n688\n72\n0\n73\n0\n74\n5\n7\n\n75\n16\n"
+         "100\nAcDbLayout\n1\n" + name + "\n70\n1\n71\n" + std::to_string(tab) +
+         "\n10\n0\n20\n0\n11\n12\n21\n9\n12\n0\n22\n0\n32\n0\n76\n0\n146\n0\n"
+         "330\n" + blockRecord + "\n";
+}
+
+std::string dxfBlockRecord(const char *handle, const char *name) {
+  return std::string("0\nBLOCK_RECORD\n5\n") + handle +
+         "\n330\n1\n100\nAcDbSymbolTableRecord\n100\nAcDbBlockTableRecord\n2\n" +
+         name + "\n";
+}
+
+std::string dxfEmptyBlock(const char *handle, const char *endHandle,
+                          const char *owner, const char *name) {
+  return std::string("0\nBLOCK\n5\n") + handle + "\n330\n" + owner +
+         "\n100\nAcDbEntity\n8\n0\n100\nAcDbBlockBegin\n2\n" + name +
+         "\n70\n0\n10\n0\n20\n0\n30\n0\n3\n" + name + "\n1\n\n" +
+         "0\nENDBLK\n5\n" + endHandle + "\n330\n" + owner +
+         "\n100\nAcDbEntity\n8\n0\n100\nAcDbBlockEnd\n";
+}
+
+// The name of the block record the AcDbLayout part of layout @p name names.
+std::string layoutBlockRecordName(const std::string &path,
+                                  const std::string &name) {
+  const DxfRecordGroups layout = recordGroupsWithValue(path, "LAYOUT", "1", name);
+  std::string blockRecord;
+  bool inLayout = false;
+  for (const auto &[code, value] : layout) {
+    if (code == "100")
+      inLayout = value == "AcDbLayout";
+    else if (inLayout && code == "330")
+      blockRecord = value;
+  }
+  if (blockRecord.empty())
+    return {};
+  for (const auto &[code, value] :
+       recordGroupsWithValue(path, "BLOCK_RECORD", "5", blockRecord))
+    if (code == "2")
+      return value;
+  return "?" + blockRecord;
+}
+} // namespace
+
+TEST_CASE("DXF layouts name the block records of their spaces",
+          "[dxf][roundtrip][filter][handles][layout]") {
+  ensureSettings();
+  const std::string src = tmpFile("layout-spaces-src.dxf");
+  const std::string out = tmpFile("layout-spaces-out.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  // The source's space block records have handles the save gives other
+  // records: its *Model_Space is 1E, where the save writes *Paper_Space, and
+  // the reverse. Layout2's *Paper_Space0 has no LibreCAD block.
+  writeText(src,
+            "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1015\n0\nENDSEC\n"
+            "0\nSECTION\n2\nTABLES\n"
+            "0\nTABLE\n2\nBLOCK_RECORD\n5\n1\n330\n0\n100\nAcDbSymbolTable\n70\n3\n" +
+                dxfBlockRecord("1E", "*Model_Space") +
+                dxfBlockRecord("1F", "*Paper_Space") +
+                dxfBlockRecord("2C", "*Paper_Space0") +
+                "0\nENDTAB\n0\nENDSEC\n"
+                "0\nSECTION\n2\nBLOCKS\n" +
+                dxfEmptyBlock("2D", "2E", "1E", "*Model_Space") +
+                dxfEmptyBlock("2F", "30", "1F", "*Paper_Space") +
+                dxfEmptyBlock("31", "32", "2C", "*Paper_Space0") +
+                "0\nENDSEC\n"
+                "0\nSECTION\n2\nENTITIES\n"
+                "0\nLINE\n5\nA1\n100\nAcDbEntity\n8\n0\n100\nAcDbLine\n"
+                "10\n0\n20\n0\n30\n0\n11\n10\n21\n0\n31\n0\n"
+                "0\nENDSEC\n"
+                "0\nSECTION\n2\nOBJECTS\n"
+                "0\nDICTIONARY\n5\nC\n330\n0\n100\nAcDbDictionary\n281\n1\n"
+                "3\nACAD_LAYOUT\n350\n1A\n"
+                "0\nDICTIONARY\n5\n1A\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+                "3\nLayout1\n350\n3B\n3\nLayout2\n350\n3C\n3\nModel\n350\n3A\n" +
+                dxfLayoutRecord("3A", "Model", 0, "1E") +
+                dxfLayoutRecord("3B", "Layout1", 1, "1F") +
+                dxfLayoutRecord("3C", "Layout2", 2, "2C") +
+                "0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              graphic.getFormatType()));
+  }
+
+  CHECK(layoutBlockRecordName(out, "Model") == "*Model_Space");
+  CHECK(layoutBlockRecordName(out, "Layout1") == "*Paper_Space");
+  CHECK(layoutBlockRecordName(out, "Layout2") == "*Paper_Space0");
+  const auto blocks = recordGroupValues(out, "BLOCK", "2");
+  CHECK(std::count(blocks.begin(), blocks.end(), "*Paper_Space0") == 1);
+  CHECK(danglingReferences(out).empty());
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
+TEST_CASE("DXF moves a typed object off a handle the save gives a structural record",
+          "[dxf][roundtrip][filter][handles][layout]") {
+  ensureSettings();
+  const std::string src = tmpFile("layout-structural-src.dxf");
+  const std::string out = tmpFile("layout-structural-out.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  // Layout1 has handle 1E, where the save writes the *Paper_Space block
+  // record, as in DWGs from some other applications.
+  writeText(src,
+            "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1015\n0\nENDSEC\n"
+            "0\nSECTION\n2\nTABLES\n"
+            "0\nTABLE\n2\nBLOCK_RECORD\n5\n1\n330\n0\n100\nAcDbSymbolTable\n70\n2\n" +
+                dxfBlockRecord("1F", "*Model_Space") +
+                dxfBlockRecord("58", "*Paper_Space") +
+                "0\nENDTAB\n0\nENDSEC\n"
+                "0\nSECTION\n2\nBLOCKS\n" +
+                dxfEmptyBlock("20", "21", "1F", "*Model_Space") +
+                dxfEmptyBlock("59", "5A", "58", "*Paper_Space") +
+                "0\nENDSEC\n"
+                "0\nSECTION\n2\nENTITIES\n"
+                "0\nLINE\n5\nA1\n100\nAcDbEntity\n8\n0\n100\nAcDbLine\n"
+                "10\n0\n20\n0\n30\n0\n11\n10\n21\n0\n31\n0\n"
+                "0\nENDSEC\n"
+                "0\nSECTION\n2\nOBJECTS\n"
+                "0\nDICTIONARY\n5\nC\n330\n0\n100\nAcDbDictionary\n281\n1\n"
+                "3\nACAD_LAYOUT\n350\n1A\n"
+                "0\nDICTIONARY\n5\n1A\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+                "3\nLayout1\n350\n1E\n3\nModel\n350\n22\n" +
+                dxfLayoutRecord("22", "Model", 0, "1F") +
+                dxfLayoutRecord("1E", "Layout1", 1, "58") +
+                "0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              graphic.getFormatType()));
+  }
+
+  const auto layout1 = recordGroupsWithValue(out, "LAYOUT", "1", "Layout1");
+  REQUIRE_FALSE(layout1.empty());
+  std::string layoutHandle;
+  for (const auto &[code, value] : layout1)
+    if (code == "5")
+      layoutHandle = value;
+  CHECK(layoutHandle != "1E");
+  CHECK(layoutBlockRecordName(out, "Layout1") == "*Paper_Space");
+  CHECK(layoutBlockRecordName(out, "Model") == "*Model_Space");
+  // The layout dictionary follows the layout to its new handle.
+  const auto layoutDict = recordGroupsWithValue(out, "DICTIONARY", "3", "Layout1");
+  bool named = false;
+  for (std::size_t i = 0; i + 1 < layoutDict.size(); ++i)
+    if (layoutDict[i] == std::make_pair(std::string("3"), std::string("Layout1")))
+      named = layoutDict[i + 1].second == layoutHandle;
+  CHECK(named);
+  {
+    std::ifstream in(out);
+    std::string code, value;
+    std::map<std::string, int> defined;
+    while (std::getline(in, code) && std::getline(in, value))
+      if (trimDxfToken(code) == "5" || trimDxfToken(code) == "105")
+        ++defined[trimDxfToken(value)];
+    for (const auto &[handle, count] : defined) {
+      CAPTURE(handle);
+      CHECK(count == 1);
+    }
+  }
+  CHECK(danglingReferences(out).empty());
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
+TEST_CASE("DXF references to table records follow them to their written handles",
+          "[dxf][roundtrip][filter][handles]") {
+  ensureSettings();
+  const std::string src = tmpFile("table-refs-src.dxf");
+  const std::string out = tmpFile("table-refs-out.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  // A raw object names a text style, a layer and a linetype by handle; the
+  // save writes each table record under a handle of its own.
+  writeText(src,
+            "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1015\n0\nENDSEC\n"
+            "0\nSECTION\n2\nCLASSES\n"
+            "0\nCLASS\n1\nACME_THING\n2\nAcmeThing\n3\nACME\n90\n0\n280\n0\n281\n0\n"
+            "0\nENDSEC\n"
+            "0\nSECTION\n2\nTABLES\n"
+            "0\nTABLE\n2\nLTYPE\n5\n5\n330\n0\n100\nAcDbSymbolTable\n70\n1\n"
+            "0\nLTYPE\n5\n3D\n330\n5\n100\nAcDbSymbolTableRecord\n"
+            "100\nAcDbLinetypeTableRecord\n2\nDASHED\n70\n0\n3\n__ __\n72\n65\n"
+            "73\n2\n40\n0.75\n49\n0.5\n74\n0\n49\n-0.25\n74\n0\n"
+            "0\nENDTAB\n"
+            "0\nTABLE\n2\nLAYER\n5\n2\n330\n0\n100\nAcDbSymbolTable\n70\n1\n"
+            "0\nLAYER\n5\n40\n330\n2\n100\nAcDbSymbolTableRecord\n"
+            "100\nAcDbLayerTableRecord\n2\nWalls\n70\n0\n62\n1\n6\nDASHED\n"
+            "0\nENDTAB\n"
+            "0\nTABLE\n2\nSTYLE\n5\n3\n330\n0\n100\nAcDbSymbolTable\n70\n1\n"
+            "0\nSTYLE\n5\n3F\n330\n3\n100\nAcDbSymbolTableRecord\n"
+            "100\nAcDbTextStyleTableRecord\n2\nMyStyle\n70\n0\n40\n0\n41\n1\n"
+            "50\n0\n71\n0\n42\n2.5\n3\ntxt\n4\n\n"
+            "0\nENDTAB\n0\nENDSEC\n"
+            "0\nSECTION\n2\nENTITIES\n"
+            "0\nLINE\n5\nA1\n100\nAcDbEntity\n8\nWalls\n100\nAcDbLine\n"
+            "10\n0\n20\n0\n30\n0\n11\n10\n21\n0\n31\n0\n"
+            "0\nENDSEC\n"
+            "0\nSECTION\n2\nOBJECTS\n"
+            "0\nDICTIONARY\n5\nC\n330\n0\n100\nAcDbDictionary\n281\n1\n"
+            "3\nACME_THINGS\n350\n80\n"
+            "0\nDICTIONARY\n5\n80\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+            "3\nTHING\n350\n91\n"
+            "0\nACME_THING\n5\n91\n330\n80\n100\nAcmeThing\n"
+            "340\n3F\n340\n40\n340\n3D\n"
+            "0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              graphic.getFormatType()));
+  }
+
+  const auto refs = recordGroupValues(out, "ACME_THING", "340");
+  REQUIRE(refs.size() == 3);
+  const auto nameOf = [&out](const char *record, const std::string &handle) {
+    for (const auto &[code, value] : recordGroupsWithValue(out, record, "5", handle))
+      if (code == "2")
+        return value;
+    return std::string("?") + handle;
+  };
+  CHECK(nameOf("STYLE", refs[0]) == "MyStyle");
+  CHECK(nameOf("LAYER", refs[1]) == "Walls");
+  CHECK(nameOf("LTYPE", refs[2]) == "DASHED");
+  CHECK(danglingReferences(out).empty());
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
+TEST_CASE("DXF layers name their plot style only where it is written",
+          "[dxf][roundtrip][filter][handles]") {
+  ensureSettings();
+  const std::string src = tmpFile("plot-style-src.dxf");
+  const std::string out = tmpFile("plot-style-out.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  // The source's "Normal" plot style placeholder has handle 4A, not the F
+  // the save used to name on every layer.
+  writeText(src,
+            "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1015\n0\nENDSEC\n"
+            "0\nSECTION\n2\nCLASSES\n"
+            "0\nCLASS\n1\nACDBDICTIONARYWDFLT\n2\nAcDbDictionaryWithDefault\n"
+            "3\nObjectDBX Classes\n90\n0\n280\n0\n281\n0\n"
+            "0\nCLASS\n1\nACDBPLACEHOLDER\n2\nAcDbPlaceHolder\n"
+            "3\nObjectDBX Classes\n90\n0\n280\n0\n281\n0\n"
+            "0\nENDSEC\n"
+            "0\nSECTION\n2\nTABLES\n"
+            "0\nTABLE\n2\nLAYER\n5\n2\n330\n0\n100\nAcDbSymbolTable\n70\n2\n"
+            "0\nLAYER\n5\n10\n330\n2\n100\nAcDbSymbolTableRecord\n"
+            "100\nAcDbLayerTableRecord\n2\n0\n70\n0\n62\n7\n6\nCONTINUOUS\n"
+            "370\n-3\n390\n4A\n"
+            "0\nLAYER\n5\n40\n330\n2\n100\nAcDbSymbolTableRecord\n"
+            "100\nAcDbLayerTableRecord\n2\nWalls\n70\n0\n62\n1\n6\nCONTINUOUS\n"
+            "370\n-3\n390\n4A\n"
+            "0\nENDTAB\n0\nENDSEC\n"
+            "0\nSECTION\n2\nENTITIES\n"
+            "0\nLINE\n5\nA1\n100\nAcDbEntity\n8\nWalls\n100\nAcDbLine\n"
+            "10\n0\n20\n0\n30\n0\n11\n10\n21\n0\n31\n0\n"
+            "0\nENDSEC\n"
+            "0\nSECTION\n2\nOBJECTS\n"
+            "0\nDICTIONARY\n5\nC\n330\n0\n100\nAcDbDictionary\n281\n1\n"
+            "3\nACAD_PLOTSTYLENAME\n350\n49\n"
+            "0\nACDBDICTIONARYWDFLT\n5\n49\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+            "3\nNormal\n350\n4A\n100\nAcDbDictionaryWithDefault\n340\n4A\n"
+            "0\nACDBPLACEHOLDER\n5\n4A\n330\n49\n"
+            "0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  // A layer the drawing did not have names no plot style.
+  graphic.addLayer(new RS_Layer(QStringLiteral("New")));
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              graphic.getFormatType()));
+  }
+
+  const auto plotStyleOf = [&out](const char *layer) {
+    std::vector<std::string> values;
+    for (const auto &[code, value] : recordGroupsWithValue(out, "LAYER", "2", layer))
+      if (code == "390")
+        values.push_back(value);
+    return values;
+  };
+  REQUIRE(recordGroupValues(out, "ACDBPLACEHOLDER", "5") ==
+          std::vector<std::string>{"4A"});
+  CHECK(plotStyleOf("Walls") == std::vector<std::string>{"4A"});
+  CHECK(plotStyleOf("0") == std::vector<std::string>{"4A"});
+  CHECK(plotStyleOf("New").empty());
+  CHECK(danglingReferences(out).empty());
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
+TEST_CASE("DXF references to the source's root dictionary name the one written",
+          "[dxf][roundtrip][filter][handles]") {
+  ensureSettings();
+  const std::string src = tmpFile("root-dict-src.dxf");
+  const std::string out = tmpFile("root-dict-out.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  // The source's root dictionary is B; the save writes its own at C. The
+  // material dictionary names the root as owner and as reactor.
+  std::string text = kR2000WithRawMaterial;
+  const auto replaceOnce = [&text](const std::string &from, const std::string &to) {
+    const auto at = text.find(from);
+    REQUIRE(at != std::string::npos);
+    text.replace(at, from.size(), to);
+  };
+  replaceOnce("0\nDICTIONARY\n5\nC\n330\n0\n", "0\nDICTIONARY\n5\nB\n330\n0\n");
+  replaceOnce("0\nDICTIONARY\n5\n80\n330\nC\n",
+              "0\nDICTIONARY\n5\n80\n102\n{ACAD_REACTORS\n330\nB\n102\n}\n330\nB\n");
+  writeText(src, text);
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              graphic.getFormatType()));
+  }
+
+  CHECK(rootDictEntries(out).count("ACAD_MATERIAL") == 1);
+  const auto materials = recordGroupsWithValue(out, "DICTIONARY", "5", "80");
+  REQUIRE_FALSE(materials.empty());
+  std::vector<std::string> owners;
+  for (const auto &[code, value] : materials)
+    if (code == "330")
+      owners.push_back(value);
+  CHECK(owners == std::vector<std::string>{"C", "C"});
+  CHECK(danglingReferences(out).empty());
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
+TEST_CASE("DXF XDATA handles follow the entities they name",
+          "[dxf][roundtrip][filter][handles][xdata]") {
+  ensureSettings();
+  const std::string src = tmpFile("xdata-handle-src.dxf");
+  const std::string out = tmpFile("xdata-handle-out.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  // An MTEXT's columns are linked this way; here one line names the other.
+  writeText(src,
+            "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1015\n0\nENDSEC\n"
+            "0\nSECTION\n2\nENTITIES\n"
+            "0\nLINE\n5\nA1\n100\nAcDbEntity\n8\n0\n100\nAcDbLine\n"
+            "10\n0\n20\n0\n30\n0\n11\n10\n21\n0\n31\n0\n"
+            "1001\nACME_APP\n1005\nA2\n"
+            "0\nLINE\n5\nA2\n100\nAcDbEntity\n8\n0\n100\nAcDbLine\n"
+            "10\n0\n20\n5\n30\n0\n11\n10\n21\n5\n31\n0\n"
+            "0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              graphic.getFormatType()));
+  }
+
+  const auto lines = recordGroupValues(out, "LINE", "5");
+  REQUIRE(lines.size() == 2);
+  const auto named = recordGroupValues(out, "LINE", "1005");
+  REQUIRE(named.size() == 1);
+  CHECK(named.front() != "A2");
+  CHECK(std::count(lines.begin(), lines.end(), named.front()) == 1);
+  CHECK(recordGroupsWithValue(out, "LINE", "1005", named.front()) !=
+        recordGroupsWithValue(out, "LINE", "5", named.front()));
 
   std::filesystem::remove(src);
   std::filesystem::remove(out);
