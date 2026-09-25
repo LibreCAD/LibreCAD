@@ -27214,7 +27214,10 @@ void RS_FilterDXFRW::writeEntities() {
                   5};
               return recordDwgWriteReferenceReceipt(receipt);
             });
-      } else if (m_dxfW != nullptr && m_dxfW->getVersion() >= DRW::AC1015) {
+      } else if (m_dxfW != nullptr) {
+        // dxfRW::writeCamera() leaves CAMERA out below AC1015 and counts
+        // it, the same as every other version-gated writer; it does not
+        // need this filter's own gate ahead of it.
         camera.handle = record.handle;
         camera.parentHandle =
             record.parentHandle == DRW::DwgModelSpaceBlockRecordHandle
@@ -27223,8 +27226,6 @@ void RS_FilterDXFRW::writeEntities() {
         camera.m_viewHandle = m_dxfW->remapHandle(record.viewHandle);
         camera.extData = record.extData;
         noteDxfWrite(m_dxfW->writeCamera(&camera));
-      } else if (m_dxfW != nullptr) {
-        m_writeFailed = true;
       }
     }
   }
@@ -27275,10 +27276,8 @@ void RS_FilterDXFRW::writeEntities() {
               return m_dwgW->writeGeoPositionMarker(&marker);
             });
       } else if (m_dxfW != nullptr) {
-        if (m_dxfW->getVersion() < DRW::AC1027) {
-          m_writeFailed = true;
-          continue;
-        }
+        // dxfRW::writeGeoPositionMarker() leaves the record out below
+        // AC1027 and counts it; no need to fail the save ahead of it.
         marker.handle = record.handle;
         const bool paperSpace =
             record.parentHandle == DRW::DwgPaperSpaceBlockRecordHandle ||
@@ -27330,10 +27329,8 @@ void RS_FilterDXFRW::writeEntities() {
                   optionalDrops, m_dwgW->getVersion(), "DWG ENTITIES");
             });
       } else if (m_dxfW != nullptr) {
-        if (m_dxfW->getVersion() < DRW::AC1021) {
-          m_writeFailed = true;
-          continue;
-        }
+        // dxfRW::writeSectionObject() leaves the record out below AC1021
+        // and counts it; no need to fail the save ahead of it.
         section.handle = record.handle;
         section.m_sectionSettingsHandle =
             m_dxfW->remapHandle(record.sectionSettingsHandle);
@@ -28515,7 +28512,12 @@ void RS_FilterDXFRW::reconstructMLines(RS_EntityContainer *container,
         }
       }
     } else if (m_dxfW) {
-      emitted = noteDxfWrite(m_dxfW->writeMLine(&ml));
+      // dxfRW::writeMLine() returns true for "left out" (MLINE has no R12
+      // record) the same as for "written": that would mark the member
+      // polylines consumed below and drop them, instead of falling back to
+      // writing them as plain entities. Take that fallback here instead.
+      emitted =
+          m_dxfW->getVersion() > DRW::AC1009 && noteDxfWrite(m_dxfW->writeMLine(&ml));
     }
 
     if (!emitted) {
@@ -28929,11 +28931,16 @@ void RS_FilterDXFRW::reconstructTypedConversions(
       line.extPoint = meta->coords[2];
       line.thickness = meta->thickness;
       emitNative(&line);
+      // dxfRW::write3DLine() returns true for "left out" (no 3DLINE record
+      // below R2000) the same as for "written": that would consume the
+      // source RS_Line below and drop it, instead of falling back to
+      // writing it as a plain LINE. Take that fallback here instead.
       const bool emitted =
           m_dwgW
               ? writeDwgTyped(
                     [&line, this] { return m_dwgW->write3DLine(&line); })
-              : m_dxfW != nullptr && noteDxfWrite(m_dxfW->write3DLine(&line));
+              : m_dxfW != nullptr && m_dxfW->getVersion() >= DRW::AC1015 &&
+                    noteDxfWrite(m_dxfW->write3DLine(&line));
       if (emitted)
         consumed.insert(e);
     } else if (meta->marker == kLineExtrusionMarker) {
@@ -30244,7 +30251,7 @@ void RS_FilterDXFRW::writeMText(const RS_MText *t) {
     }
     for (int i = 0; i < txtList.size(); ++i) {
       if (!txtList.at(i).isEmpty()) {
-        text->text = toDxfString(txtList.at(i)).toUtf8().data();
+        text->text = toDxfString(txtList.at(i), m_dwgW == nullptr).toUtf8().data();
         RS_Vector inc = RS_Vector::polar(dist * i, t->getAngle() + M_PI_2);
         if (setSec) {
           text->secPoint.x += inc.x;
@@ -30300,7 +30307,7 @@ void RS_FilterDXFRW::writeMText(const RS_MText *t) {
       text->alignV = static_cast<DRW_Text::VAlign>(2);
     }
 
-    text->text = toDxfString(t->getText()).toUtf8().data();
+    text->text = toDxfString(t->getText(), m_dwgW == nullptr).toUtf8().data();
     //        text->widthscale =t->getWidth();
     text->widthscale = t->getUsedTextWidth(); // getSize().x;
     txt2.interlin = t->getLineSpacingFactor();
@@ -30356,7 +30363,7 @@ void RS_FilterDXFRW::writeText(RS_Text *t) {
       }*/
 
   if (!t->getText().isEmpty()) {
-    text.text = toDxfString(t->getText()).toUtf8().data();
+    text.text = toDxfString(t->getText(), m_dwgW == nullptr).toUtf8().data();
     if (m_dwgW) {
       if (!m_dwgW->writeText(&text))
         m_writeFailed = true;
@@ -30539,7 +30546,7 @@ void RS_FilterDXFRW::writeDimension(RS_Dimension *d) {
   dim->setStyle(d->getStyle().toUtf8().data());
   dim->setAlign(attachmentPoint);
   dim->setTextLineStyle(d->getLineSpacingStyle());
-  dim->setText(toDxfString(d->getLabel(false)).toUtf8().data());
+  dim->setText(toDxfString(d->getLabel(false), m_dwgW == nullptr).toUtf8().data());
   dim->setTextLineFactor(d->getLineSpacingFactor());
   dim->setHDir(d->getHDir());
   dim->setFlipArrow1(d->isFlipArrow1());
@@ -30598,7 +30605,7 @@ void RS_FilterDXFRW::writeTolerance(LC_Tolerance *t) {
   tol.xAxisDirectionVector =
       DRW_Coord(data.directionVector.x, data.directionVector.y, 0.0);
   tol.extPoint = DRW_Coord(0.0, 0.0, 1.0);
-  tol.text = toDxfString(data.textCode).toUtf8().constData();
+  tol.text = toDxfString(data.textCode, m_dwgW == nullptr).toUtf8().constData();
   const QString style =
       data.dimStyleName.isEmpty() ? m_dimStyle : data.dimStyleName;
   tol.dimStyleName = style.toUtf8().constData();
@@ -31047,8 +31054,13 @@ void RS_FilterDXFRW::writeImage(const RS_Image *i) {
 
   DRW_ImageDef *imgDef =
       m_dxfW->writeImage(&image, fileName);
-  if (imgDef == nullptr)
-    m_writeFailed = true;
+  if (imgDef == nullptr) {
+    // dxfRW::writeImage() also returns nullptr, with no error, to leave
+    // IMAGE out at R12 and older (counted in leftOut()); only any other
+    // nullptr is an actual write failure.
+    if (m_dxfW->getVersion() > DRW::AC1009)
+      m_writeFailed = true;
+  }
   if (imgDef) {
     if (definitionRecord != nullptr) {
       imgDef->imgVersion = definitionRecord->classVersion;
@@ -31208,7 +31220,7 @@ RS_FilterDXFRW::writeMLeader(LC_MLeader *m) {
   e.context.landingGap = d.landingDistance;
   e.context.hasTextContents = d.hasTextContents;
   e.context.hasContentsBlock = d.hasBlockContents;
-  e.context.textLabel = toDxfString(d.textLabel).toUtf8().data();
+  e.context.textLabel = toDxfString(d.textLabel, m_dwgW == nullptr).toUtf8().data();
   e.context.textNormal = DRW_Coord(0.0, 0.0, 1.0);
   const RS_Vector textLocation =
       d.textLocation.valid ? d.textLocation : d.contentBasePoint;
@@ -31542,7 +31554,7 @@ RS_FilterDXFRW::writeMLeader(LC_MLeader *m) {
       text.angle = d.textRotation * 180.0 / M_PI;
       text.style = d.textStyleName.isEmpty() ? "Standard"
                                              : d.textStyleName.toStdString();
-      text.text = toDxfString(d.textLabel).toUtf8().data();
+      text.text = toDxfString(d.textLabel, m_dwgW == nullptr).toUtf8().data();
       text.widthscale = d.boundaryWidth;
       text.interlin = 1.0;
       if (wroteGeometry)
@@ -32203,7 +32215,7 @@ DRW_LW_Conv::lineWidth RS_FilterDXFRW::widthToNumber(RS2::LineWidth width) {
  * - %%%d for a degree sign
  * - %%%p for a plus/minus sign
  */
-QString RS_FilterDXFRW::toDxfString(const QString &str) {
+QString RS_FilterDXFRW::toDxfString(const QString &str, const bool caretCodes) {
   QString res;
   res.reserve(str.length() + 16);
 
@@ -32213,7 +32225,11 @@ QString RS_FilterDXFRW::toDxfString(const QString &str) {
       res.append(uR"(\P)");
       break;
     case 0x5E: // '^' starts a caret code (toNativeString); "^ " is a literal one
-      res.append(u"^ ");
+      if (caretCodes) {
+        res.append(u"^ ");
+      } else {
+        res.append(qchar);
+      }
       break;
     case 0x2205:
     case 0x2300:
@@ -32226,7 +32242,7 @@ QString RS_FilterDXFRW::toDxfString(const QString &str) {
       res.append(u"%%P");
       break;
     default:
-      if (qchar.unicode() < 0x20) { // control character: caret code, ^I for TAB
+      if (caretCodes && qchar.unicode() < 0x20) { // control character: caret code, ^I for TAB
         res.append(QChar(0x5E));
         res.append(QChar(static_cast<ushort>(qchar.unicode() + 0x40)));
       } else {

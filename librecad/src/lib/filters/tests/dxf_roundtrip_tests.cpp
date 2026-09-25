@@ -1137,6 +1137,48 @@ TEST_CASE("DXF filter preserves WCS POINT and LINE extrusion fields",
   std::filesystem::remove(dwgOut);
 }
 
+TEST_CASE("A 3DLINE saved as R12 falls back to a plain LINE instead of being dropped",
+          "[dxf][roundtrip][filter][r12]") {
+  ensureSettings();
+  const std::string src = tmpFile("threedline_r12_src.dxf");
+  const std::string out = tmpFile("threedline_r12_out.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  // 3DLINE has no R12 record (dxfRW::write3DLine() leaves it out below
+  // AC1015). The source line must still reach the file, as a plain LINE.
+  writeText(src,
+            "0\nSECTION\n2\nENTITIES\n"
+            "0\n3DLINE\n8\n0\n10\n10.0\n20\n11.0\n30\n12.0\n"
+            "11\n13.0\n21\n14.0\n31\n15.0\n"
+            "0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW12));
+  }
+
+  // The fallback LINE keeps the endpoints' X/Y; RS_Line has no field of its
+  // own for the Z each point had as a 3DLINE (that survives only in the
+  // type-fidelity XDATA a *native* 3DLINE write reads back), so losing it
+  // here, on a downgrade to a version that cannot hold a 3DLINE, is the
+  // best this fallback can do. The point is that the line itself is not
+  // silently dropped.
+  CHECK(countRecords(out, "3DLINE") == 0);
+  REQUIRE(countRecords(out, "LINE") == 1);
+  CHECK(firstGroupValueAsDouble(out, "LINE", "10") == 10.0);
+  CHECK(firstGroupValueAsDouble(out, "LINE", "20") == 11.0);
+  CHECK(firstGroupValueAsDouble(out, "LINE", "11") == 13.0);
+  CHECK(firstGroupValueAsDouble(out, "LINE", "21") == 14.0);
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
 TEST_CASE("DXF filter preserves ARC OCS extrusion and reflected sweep",
           "[dxf][roundtrip][filter][extrusion]") {
   ensureSettings();

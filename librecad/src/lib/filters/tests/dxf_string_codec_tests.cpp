@@ -245,6 +245,24 @@ TEST_CASE("toDxfString: control characters and carets become caret codes",
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("toDxfString: caretCodes=false leaves control characters and carets as-is",
+          "[dxf_codec][to_dxf]") {
+    // A DWG string holds the characters themselves; caret codes are an ASCII
+    // DXF-only spelling for what it cannot hold directly (see the caretCodes
+    // parameter doc). Every RS_FilterDXFRW call site that may write either
+    // format passes caretCodes = (m_dwgW == nullptr).
+    CHECK(RS_FilterDXFRW::toDxfString(QStringLiteral("x\ty"), false) == QStringLiteral("x\ty"));
+    CHECK(RS_FilterDXFRW::toDxfString(QStringLiteral("c\rd"), false) == QStringLiteral("c\rd"));
+    CHECK(RS_FilterDXFRW::toDxfString(QString(QChar(0)) + QStringLiteral("z"), false) ==
+          QString(QChar(0)) + QStringLiteral("z"));
+    CHECK(RS_FilterDXFRW::toDxfString(QStringLiteral("m^2"), false) == QStringLiteral("m^2"));
+    // The LF-to-\P and %%D/%%C/%%P substitutions are MTEXT/text markup, not
+    // an ASCII-container escape, so they still apply for either format.
+    CHECK(RS_FilterDXFRW::toDxfString(QStringLiteral("a\nb"), false) == QStringLiteral(R"(a\Pb)"));
+    CHECK(RS_FilterDXFRW::toDxfString(QString(QChar(0x00B0)), false) == QStringLiteral("%%D"));
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("toDxfString: Unicode passes through unchanged",
           "[dxf_codec][to_dxf]") {
     requireDxfEqual(QStringLiteral("中文测试"));

@@ -2309,7 +2309,11 @@ public:
   /** Whether a raw DXF record read from version @p source is written into the DXF being exported. */
   bool replaysInDxfExport(DRW::Version source) const;
 
-  static QString toDxfString(const QString &str);
+  //! @param caretCodes Caret-encode control characters and a literal '^', as
+  //!   an ASCII DXF value must (toNativeString() decodes them back). A DWG
+  //!   string holds the characters themselves and must not be caret-encoded;
+  //!   callers that may write either pass caretCodes = (m_dwgW == nullptr).
+  static QString toDxfString(const QString &str, bool caretCodes = true);
   static QString toNativeString(const QString &data);
 
   /** Build an LC_SplinePoints from a DRW_Spline boundary edge of a hatch

@@ -129,7 +129,8 @@ public:
     Underlay,
     MText,
     Light,
-    Mesh
+    Mesh,
+    Image
   };
 
   dxfRW *m_rw = nullptr;
@@ -208,6 +209,14 @@ public:
       m_result = m_rw->writeMesh(&entity);
       break;
     }
+    case Kind::Image: {
+      // writeImage() returns the IMAGEDEF it wrote, not a bool: nullptr
+      // with no write error is how it says "left out", the same as every
+      // other writer here says it by returning true.
+      DRW_Image entity;
+      m_result = m_rw->writeImage(&entity, "img") == nullptr;
+      break;
+    }
     }
   }
 };
@@ -258,7 +267,7 @@ TEST_CASE("DXF table writers do not normalize caller-owned state",
 
 TEST_CASE("DXF R12 leaves out the records it has no place for",
           "[dxf][writer][unsupported][safety]") {
-  const std::array<LegacyUnsupportedEmitter::Kind, 14> kinds = {
+  const std::array<LegacyUnsupportedEmitter::Kind, 15> kinds = {
       LegacyUnsupportedEmitter::Kind::LwPolyline,
       LegacyUnsupportedEmitter::Kind::Spline,
       LegacyUnsupportedEmitter::Kind::Helix,
@@ -272,7 +281,8 @@ TEST_CASE("DXF R12 leaves out the records it has no place for",
       LegacyUnsupportedEmitter::Kind::Underlay,
       LegacyUnsupportedEmitter::Kind::MText,
       LegacyUnsupportedEmitter::Kind::Light,
-      LegacyUnsupportedEmitter::Kind::Mesh};
+      LegacyUnsupportedEmitter::Kind::Mesh,
+      LegacyUnsupportedEmitter::Kind::Image};
 
   int index = 0;
   for (const auto kind : kinds) {

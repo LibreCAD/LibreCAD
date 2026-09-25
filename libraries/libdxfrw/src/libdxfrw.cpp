@@ -5730,8 +5730,13 @@ bool dxfRW::writeViewport(DRW_Viewport *ent) {
 
 DRW_ImageDef* dxfRW::writeImage(DRW_Image *ent, std::string name){
     if (version <= DRW::AC1009) {
-        m_writeError = true;
-        return nullptr; // IMAGE is not available in ACAD R12 / earlier.
+        // IMAGE is not available in ACAD R12 / earlier; leave it out and
+        // count it, the same as every other version-gated writer, instead
+        // of failing the whole save. A null return with no write error set
+        // is how the caller (RS_FilterDXFRW::writeImage) tells the two
+        // apart.
+        leaveOutUnsupported("IMAGE");
+        return nullptr;
     }
     if (!preflightEntity(ent))
         return nullptr;
