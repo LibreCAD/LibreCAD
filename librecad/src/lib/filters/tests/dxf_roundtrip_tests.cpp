@@ -3989,6 +3989,86 @@ TEST_CASE("DXF layouts name the block records of their spaces",
   std::filesystem::remove(out);
 }
 
+TEST_CASE("DXF moves a typed object off a handle the save gives a structural record",
+          "[dxf][roundtrip][filter][handles][layout]") {
+  ensureSettings();
+  const std::string src = tmpFile("layout-structural-src.dxf");
+  const std::string out = tmpFile("layout-structural-out.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  // Layout1 has handle 1E, where the save writes the *Paper_Space block
+  // record, as in DWGs from some other applications.
+  writeText(src,
+            "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1015\n0\nENDSEC\n"
+            "0\nSECTION\n2\nTABLES\n"
+            "0\nTABLE\n2\nBLOCK_RECORD\n5\n1\n330\n0\n100\nAcDbSymbolTable\n70\n2\n" +
+                dxfBlockRecord("1F", "*Model_Space") +
+                dxfBlockRecord("58", "*Paper_Space") +
+                "0\nENDTAB\n0\nENDSEC\n"
+                "0\nSECTION\n2\nBLOCKS\n" +
+                dxfEmptyBlock("20", "21", "1F", "*Model_Space") +
+                dxfEmptyBlock("59", "5A", "58", "*Paper_Space") +
+                "0\nENDSEC\n"
+                "0\nSECTION\n2\nENTITIES\n"
+                "0\nLINE\n5\nA1\n100\nAcDbEntity\n8\n0\n100\nAcDbLine\n"
+                "10\n0\n20\n0\n30\n0\n11\n10\n21\n0\n31\n0\n"
+                "0\nENDSEC\n"
+                "0\nSECTION\n2\nOBJECTS\n"
+                "0\nDICTIONARY\n5\nC\n330\n0\n100\nAcDbDictionary\n281\n1\n"
+                "3\nACAD_LAYOUT\n350\n1A\n"
+                "0\nDICTIONARY\n5\n1A\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+                "3\nLayout1\n350\n1E\n3\nModel\n350\n22\n" +
+                dxfLayoutRecord("22", "Model", 0, "1F") +
+                dxfLayoutRecord("1E", "Layout1", 1, "58") +
+                "0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              graphic.getFormatType()));
+  }
+
+  const auto layout1 = recordGroupsWithValue(out, "LAYOUT", "1", "Layout1");
+  REQUIRE_FALSE(layout1.empty());
+  std::string layoutHandle;
+  for (const auto &[code, value] : layout1)
+    if (code == "5")
+      layoutHandle = value;
+  CHECK(layoutHandle != "1E");
+  CHECK(layoutBlockRecordName(out, "Layout1") == "*Paper_Space");
+  CHECK(layoutBlockRecordName(out, "Model") == "*Model_Space");
+  // The layout dictionary follows the layout to its new handle.
+  const auto layoutDict = recordGroupsWithValue(out, "DICTIONARY", "3", "Layout1");
+  bool named = false;
+  for (std::size_t i = 0; i + 1 < layoutDict.size(); ++i)
+    if (layoutDict[i] == std::make_pair(std::string("3"), std::string("Layout1")))
+      named = layoutDict[i + 1].second == layoutHandle;
+  CHECK(named);
+  {
+    std::ifstream in(out);
+    std::string code, value;
+    std::map<std::string, int> defined;
+    while (std::getline(in, code) && std::getline(in, value))
+      if (trimDxfToken(code) == "5" || trimDxfToken(code) == "105")
+        ++defined[trimDxfToken(value)];
+    for (const auto &[handle, count] : defined) {
+      CAPTURE(handle);
+      CHECK(count == 1);
+    }
+  }
+  CHECK(danglingReferences(out).empty());
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
 TEST_CASE("DXF saved in another version leaves out the raw objects it cannot hold",
           "[dxf][roundtrip][filter][version]") {
   ensureSettings();

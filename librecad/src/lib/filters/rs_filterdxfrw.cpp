@@ -11697,15 +11697,22 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       if (leftOutRawHandles.erase(handle) != 0 && m_dxfLeftOutRawRecords > 0)
         --m_dxfLeftOutRawRecords;
     };
+    // Handles of the typed objects writeObjects emits, for the
+    // structural-collision remap; typed entities are written elsewhere.
+    std::vector<std::uint32_t> typedHandles;
     auto reserveTyped = [&](std::uint32_t handle,
                             LC_DwgAdvancedMetadata::ReplayState state,
                             const char *recordName,
-                            DRW::Version minVersion = DRW::UNKNOWNV) {
+                            const char *recordName,
+                            DRW::Version minVersion = DRW::UNKNOWNV,
+                            bool isObject = true) {
       if (exportVersion < minVersion || handle == 0 ||
           state != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed ||
           rawObjectHandles.count(handle) != 0)
         return;
       m_dxfW->reserveHandle(handle);
+      if (isObject)
+        typedHandles.push_back(handle);
       registerClassFor(recordName);
       standsInForLeftOut(handle);
     };
@@ -11742,7 +11749,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       reserveTyped(record.handle, record.replayState, "NAVISWORKSMODELDEF");
     if (exportVersion >= DRW::AC1015) {
       for (const auto &record : metadata.navisworksModels())
-        reserveTyped(record.handle, record.replayState, "NAVISWORKSMODEL");
+        reserveTyped(record.handle, record.replayState, "NAVISWORKSMODEL",
+                     DRW::UNKNOWNV, false);
     }
     for (const auto &record : metadata.pointCloudColorMaps())
       reserveTyped(record.handle, record.replayState, "POINTCLOUDCOLORMAP");
@@ -11784,12 +11792,15 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     }
     // SLICE 1: fixed built-ins -> reserve handles but register NO CLASS.
     auto reserveFixedTyped = [&](std::uint32_t handle,
-                                 LC_DwgAdvancedMetadata::ReplayState state) {
+                                 LC_DwgAdvancedMetadata::ReplayState state,
+                                 bool isObject = true) {
       if (handle == 0 ||
           state != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed ||
           rawObjectHandles.count(handle) != 0)
         return;
       m_dxfW->reserveHandle(handle);
+      if (isObject)
+        typedHandles.push_back(handle);
       standsInForLeftOut(handle);
     };
     for (const auto &record : metadata.mlineStyles())
@@ -11797,9 +11808,9 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     for (const auto &record : metadata.layouts())
       reserveFixedTyped(record.handle, record.replayState);
     for (const auto &record : metadata.geoPositionMarkers())
-      reserveFixedTyped(record.handle, record.replayState);
+      reserveFixedTyped(record.handle, record.replayState, false);
     for (const auto &record : metadata.sectionObjects())
-      reserveFixedTyped(record.handle, record.replayState);
+      reserveFixedTyped(record.handle, record.replayState, false);
 
     // R12 has no CLASSES section, and none of the objects a CLASS describes.
     if (exportVersion <= DRW::AC1009)
@@ -11936,6 +11947,11 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       if (replaysInDxfExport(e.m_version))
         remapIfColliding(e.handle);
     }
+    // Typed objects keep their source handle too, so the same collisions
+    // happen there (a DWG's LAYOUT or MATERIAL at 1E or 1F): writeObjects
+    // writes them, and references to them, under the replacement.
+    for (const std::uint32_t h : typedHandles)
+      remapIfColliding(h);
     for (const DRW_RawDxfSection &section : rawSections) {
       for (const DRW_Variant &group : section.m_groups) {
         std::uint32_t handle = 0;
@@ -25896,13 +25912,14 @@ void RS_FilterDXFRW::writeObjects() {
     auto resolveOwner = [&](std::uint32_t parent) -> int {
       if (parent == 0 || m_dxfEmittedNamedDictHandles.count(parent) != 0 ||
           rawHandles.count(parent) != 0)
-        return static_cast<int>(parent);
+        return static_cast<int>(m_dxfW->remapHandle(parent));
       return 0; // dangling -> owner C
     };
     for (const auto &record : metadata.suns()) {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_Sun sun = sunFromMetadata(record);
+      sun.handle = m_dxfW->remapHandle(sun.handle);
       sun.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeSun(&sun));
     }
@@ -25910,6 +25927,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_Scale scale = scaleFromMetadata(record);
+      scale.handle = m_dxfW->remapHandle(scale.handle);
       scale.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeScale(&scale));
     }
@@ -25917,6 +25935,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_DictionaryVar dv = dictionaryVarFromMetadata(record);
+      dv.handle = m_dxfW->remapHandle(dv.handle);
       dv.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeDictionaryVar(&dv));
     }
@@ -25924,6 +25943,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_RasterVariables rv = rasterVariablesFromMetadata(record);
+      rv.handle = m_dxfW->remapHandle(rv.handle);
       rv.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeRasterVariables(&rv));
     }
@@ -25934,6 +25954,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_MLeaderStyle style = mleaderStyleFromMetadata(record);
+      style.handle = m_dxfW->remapHandle(style.handle);
       style.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeMLeaderStyle(&style));
     }
@@ -25944,6 +25965,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_MLineStyle style = mlineStyleFromMetadata(record);
+      style.handle = m_dxfW->remapHandle(style.handle);
       style.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeMLineStyle(&style));
     }
@@ -25954,6 +25976,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_Layout layout = layoutFromMetadata(record);
+      layout.handle = m_dxfW->remapHandle(layout.handle);
       layout.parentHandle = resolveOwner(record.parentHandle);
       layout.paperSpaceBlockRecordHandle.ref =
           m_dxfW->remapHandle(record.paperSpaceBlockRecordHandle);
@@ -25965,6 +25988,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_GeoData gd = geoDataFromMetadata(record);
+      gd.handle = m_dxfW->remapHandle(gd.handle);
       gd.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeGeoData(&gd));
     }
@@ -25975,6 +25999,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_SpatialFilter sf = spatialFilterFromMetadata(record);
+      sf.handle = m_dxfW->remapHandle(sf.handle);
       sf.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeSpatialFilter(&sf));
     }
@@ -25984,6 +26009,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_SortEntsTable se = sortEntsTableFromMetadata(record);
+      se.handle = m_dxfW->remapHandle(se.handle);
       se.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeSortEntsTable(&se));
     }
@@ -25993,6 +26019,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_Field field = fieldFromMetadata(record);
+      field.handle = m_dxfW->remapHandle(field.handle);
       field.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeField(&field));
     }
@@ -26000,6 +26027,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_FieldList fieldList = fieldListFromMetadata(record);
+      fieldList.handle = m_dxfW->remapHandle(fieldList.handle);
       fieldList.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeFieldList(&fieldList));
     }
@@ -26009,6 +26037,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_WipeoutVariables wv = wipeoutVariablesFromMetadata(record);
+      wv.handle = m_dxfW->remapHandle(wv.handle);
       wv.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeWipeoutVariables(&wv));
     }
@@ -26016,6 +26045,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_PointCloudDef definition = pointCloudDefinitionFromMetadata(record);
+      definition.handle = m_dxfW->remapHandle(definition.handle);
       definition.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writePointCloudDef(&definition));
     }
@@ -26024,6 +26054,7 @@ void RS_FilterDXFRW::writeObjects() {
         continue;
       DRW_NavisworksModelDef definition =
           navisworksModelDefinitionFromMetadata(record);
+      definition.handle = m_dxfW->remapHandle(definition.handle);
       definition.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeNavisworksModelDef(&definition));
     }
@@ -26031,6 +26062,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_PointCloudColorMap colorMap = pointCloudColorMapFromMetadata(record);
+      colorMap.handle = m_dxfW->remapHandle(colorMap.handle);
       colorMap.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writePointCloudColorMap(&colorMap));
     }
@@ -26038,6 +26070,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_Background background = backgroundFromMetadata(record);
+      background.handle = m_dxfW->remapHandle(background.handle);
       background.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeBackground(&background,
                                            backgroundRecordName(record.kind)));
@@ -26046,6 +26079,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_Material material = materialFromMetadata(record);
+      material.handle = m_dxfW->remapHandle(material.handle);
       material.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeMaterial(&material));
     }
@@ -26053,6 +26087,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_RenderSettings settings = renderSettingsFromMetadata(record);
+      settings.handle = m_dxfW->remapHandle(settings.handle);
       settings.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeRenderSettings(
           &settings, renderSettingsRecordName(record.kind)));
@@ -26061,6 +26096,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_SunStudy study = sunStudyFromMetadata(record);
+      study.handle = m_dxfW->remapHandle(study.handle);
       study.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeSunStudy(&study));
     }
@@ -26068,6 +26104,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_MotionPath path = motionPathFromMetadata(record);
+      path.handle = m_dxfW->remapHandle(path.handle);
       path.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeMotionPath(&path));
     }
@@ -26075,6 +26112,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_CurvePath path = curvePathFromMetadata(record);
+      path.handle = m_dxfW->remapHandle(path.handle);
       path.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeCurvePath(&path));
     }
@@ -26082,6 +26120,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_PointPath path = pointPathFromMetadata(record);
+      path.handle = m_dxfW->remapHandle(path.handle);
       path.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writePointPath(&path));
     }
@@ -26089,6 +26128,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_ObjectPtr object = objectPtrFromMetadata(record);
+      object.handle = m_dxfW->remapHandle(object.handle);
       object.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeObjectPtr(&object));
     }
@@ -26096,6 +26136,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_PartialViewingIndex index = partialViewingIndexFromMetadata(record);
+      index.handle = m_dxfW->remapHandle(index.handle);
       index.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writePartialViewingIndex(&index));
     }
@@ -26103,12 +26144,14 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_DbColor color = dbColorFromMetadata(record);
+      color.handle = m_dxfW->remapHandle(color.handle);
       color.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeDbColor(&color));
     }
     for (const auto &record : metadata.dimensionAssociations()) {
       DRW_DimensionAssociation association =
           dimensionAssociationFromMetadata(record);
+      association.handle = m_dxfW->remapHandle(association.handle);
       if (!canWriteNativeDimensionAssociation(association) ||
           !emitTyped(record.handle, record.replayState))
         continue;
@@ -26117,6 +26160,7 @@ void RS_FilterDXFRW::writeObjects() {
     }
     for (const auto &record : metadata.evaluationGraphs()) {
       DRW_EvaluationGraph graph = evaluationGraphFromMetadata(record);
+      graph.handle = m_dxfW->remapHandle(graph.handle);
       if (!canWriteNativeEvaluationGraph(graph) ||
           !emitTyped(record.handle, record.replayState))
         continue;
@@ -26127,6 +26171,7 @@ void RS_FilterDXFRW::writeObjects() {
       if (!emitTyped(record.handle, record.replayState))
         continue;
       DRW_Section section = sectionFromMetadata(record);
+      section.handle = m_dxfW->remapHandle(section.handle);
       section.parentHandle = resolveOwner(record.parentHandle);
       if (section.m_kind == DRW_Section::Manager) {
         for (auto &handle : section.m_sectionHandles) {
