@@ -38,6 +38,7 @@
 #include "rs_fontlist.h"
 #include "rs_hatch.h"
 #include "rs_insert.h"
+#include "rs_layer.h"
 #include "rs_line.h"
 #include "rs_modification.h"
 #include "rs_mtext.h"
@@ -369,4 +370,84 @@ TEST_CASE("An invisible entity stays invisible when moved and saved", "[copy][fl
     }
     CHECK(lines == 1);
     std::filesystem::remove(path);
+}
+
+TEST_CASE("Exploding an insert on a frozen layer does not freeze its derived invisibility",
+          "[copy][flags][explode]") {
+    // hasEffectiveInsertVisibility() (rs_insert.cpp) derives an expansion
+    // child's FlagVisible from the layer/block state at the last update. An
+    // exploded child becomes a top-level entity with no insert left to
+    // recompute that, so explode() must not carry the snapshot over.
+    Drawing d;
+    auto* frozenLayer = new RS_Layer(QStringLiteral("F"));
+    d.m_graphic.addLayer(frozenLayer);
+    d.m_graphic.setFreezeLayers({}, {frozenLayer});
+
+    auto* block = new RS_Block(&d.m_graphic, RS_BlockData(QStringLiteral("B"), RS_Vector(0, 0), false));
+    auto* boundLine = new RS_Line(block, RS_LineData(RS_Vector(0, 0), RS_Vector(1, 0)));
+    boundLine->setLayer(frozenLayer);
+    block->addEntity(boundLine);
+    d.m_graphic.addBlock(block);
+
+    auto* insert = new RS_Insert(&d.m_graphic,
+                                  RS_InsertData(QStringLiteral("B"), RS_Vector(0, 0), RS_Vector(1, 1), 0.0,
+                                                1, 1, RS_Vector(0, 0)));
+    d.m_graphic.addEntity(insert);
+    REQUIRE(insert->count() == 1);
+    REQUIRE_FALSE(insert->entityAt(0)->getFlag(RS2::FlagVisible));
+
+    d.m_graphic.undoableModify(d.m_view.getViewPort(), [&](LC_DocumentModificationBatch& ctx) -> bool {
+        RS_Modification::explode({insert}, ctx);
+        return true;
+    });
+
+    RS_Line* exploded = nullptr;
+    for (RS_Entity* e : d.m_graphic) {
+        if (e != nullptr && !e->isDeleted() && e->rtti() == RS2::EntityLine) {
+            exploded = static_cast<RS_Line*>(e);
+        }
+    }
+    REQUIRE(exploded != nullptr);
+
+    d.m_graphic.setFreezeLayers({frozenLayer}, {});
+    CHECK(exploded->isVisible());
+}
+
+TEST_CASE("Exploding a hatch drops FlagHatchChild from its pattern lines",
+          "[copy][flags][explode]") {
+    // FlagHatchChild marks a line's role inside its parent hatch; an
+    // exploded pattern line is a plain, independent RS_Line and must not
+    // keep it (it changes isConstruction() and how the line prints/draws).
+    lc::test::application();
+    LC_GROUP_GUARD("Paths");
+    const QString previousPatterns = LC_GET_STR("Patterns", "");
+    LC_SET("Patterns", QStringLiteral(LIBRECAD_SOURCE_DIR "/librecad/support/patterns"));
+
+    Drawing d;
+    auto* hatch = new RS_Hatch(&d.m_graphic, RS_HatchData(false, 1.0, 0.0, "ANSI31"));
+    auto* loop = new RS_EntityContainer(hatch);
+    hatch->addEntity(loop);
+    loop->addEntity(new RS_Line(loop, RS_Vector(0, 0), RS_Vector(20, 0)));
+    loop->addEntity(new RS_Line(loop, RS_Vector(20, 0), RS_Vector(20, 10)));
+    loop->addEntity(new RS_Line(loop, RS_Vector(20, 10), RS_Vector(0, 10)));
+    loop->addEntity(new RS_Line(loop, RS_Vector(0, 10), RS_Vector(0, 0)));
+    hatch->update();
+    REQUIRE(hatch->count() > 1); // boundary loop plus at least one pattern line
+    d.m_graphic.addEntity(hatch);
+
+    d.m_graphic.undoableModify(d.m_view.getViewPort(), [&](LC_DocumentModificationBatch& ctx) -> bool {
+        RS_Modification::explode({hatch}, ctx);
+        return true;
+    });
+
+    int lines = 0;
+    for (RS_Entity* e : d.m_graphic) {
+        if (e != nullptr && !e->isDeleted() && e->rtti() == RS2::EntityLine) {
+            ++lines;
+            CHECK_FALSE(e->getFlag(RS2::FlagHatchChild));
+        }
+    }
+    CHECK(lines > 0);
+
+    LC_SET("Patterns", previousPatterns);
 }
