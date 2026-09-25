@@ -387,6 +387,7 @@ TEST_CASE("DXF FIELD and FIELDLIST objects write class and cached value data",
   em.m_field.m_valueString = "drawing.dwg";
   em.m_field.m_valueStringLength = 11;
   em.m_field.m_childHandles = {0x2Cu};
+  em.m_field.m_objectHandles = {0x2Eu};
 
   DRW_Field::ChildValue attdef;
   attdef.m_key = "ACFD_FIELDTEXT_ATTDEF";
@@ -446,6 +447,9 @@ TEST_CASE("DXF FIELD and FIELDLIST objects write class and cached value data",
   {
     dxfRW w(path.string().c_str());
     em.m_rw = &w;
+    w.setReferenceResolver([](std::uint32_t handle) {
+      return handle >= 0x2Au && handle <= 0x2Eu ? handle + 0x10u : handle;
+    });
     DRW_Class fieldCls;
     REQUIRE(dxfRW::dxfClassForRecordName("FIELD", fieldCls));
     fieldCls.instanceCount = 1;
@@ -468,14 +472,15 @@ TEST_CASE("DXF FIELD and FIELDLIST objects write class and cached value data",
   CHECK(hasConsecutive(groups,
                        {{"0", "FIELD"}, {"5", "2A"}, {"330", "C"},
                         {"100", "AcDbField"}, {"1", "_text"}}));
-  CHECK(hasConsecutive(groups, {{"90", "1"}, {"360", "2C"}, {"97", "0"}}));
+  CHECK(hasConsecutive(groups, {{"90", "1"}, {"360", "3C"}, {"97", "1"},
+                               {"331", "3E"}}));
   CHECK(hasConsecutive(groups,
                        {{"6", "ACFD_FIELD_VALUE"}, {"93", "0"}, {"90", "4"},
                         {"1", "drawing.dwg"}, {"94", "3"},
                         {"300", "%tc1"}, {"302", "drawing.dwg"}}));
   CHECK(hasConsecutive(groups,
                        {{"6", "ACFD_FIELD_HANDLE"}, {"93", "0"}, {"90", "64"},
-                        {"330", "2D"}, {"94", "4"}}));
+                        {"330", "3D"}, {"94", "4"}}));
   CHECK(hasConsecutive(groups,
                        {{"6", "ACFD_FIELD_DATE"}, {"93", "0"}, {"90", "8"},
                         {"92", "2"}, {"310", "01AB"}, {"94", "12"}}));
@@ -491,7 +496,7 @@ TEST_CASE("DXF FIELD and FIELDLIST objects write class and cached value data",
   CHECK(hasConsecutive(groups,
                        {{"0", "FIELDLIST"}, {"5", "2B"}, {"330", "C"},
                         {"100", "AcDbIdSet"}, {"90", "2"}, {"290", "0"},
-                        {"330", "0"}, {"330", "2A"},
+                        {"330", "0"}, {"330", "3A"},
                         {"100", "AcDbFieldList"}}));
 
   FieldCapture cap;
@@ -506,7 +511,7 @@ TEST_CASE("DXF FIELD and FIELDLIST objects write class and cached value data",
   CHECK(cap.m_field.m_fieldCode == "%<\\AcVar Filename>%");
   CHECK(cap.m_field.m_valueString == "drawing.dwg");
   REQUIRE(cap.m_field.m_childHandles.size() == 1u);
-  CHECK(cap.m_field.m_childHandles.at(0) == 0x2Cu);
+  CHECK(cap.m_field.m_childHandles.at(0) == 0x3Cu);
   REQUIRE(cap.m_field.m_childValues.size() == 5u);
   CHECK(cap.m_field.m_childValues.at(0).m_value.m_formatFlags == 5);
   CHECK(cap.m_field.m_childValues.at(0).m_value.m_unitType == 2);
@@ -519,7 +524,7 @@ TEST_CASE("DXF FIELD and FIELDLIST objects write class and cached value data",
   CHECK(cap.m_field.m_childValues.at(1).m_value.m_formatString == "%tc1");
   CHECK(cap.m_field.m_childValues.at(2).m_key == "ACFD_FIELD_HANDLE");
   CHECK(cap.m_field.m_childValues.at(2).m_value.m_dataType == 64);
-  CHECK(cap.m_field.m_childValues.at(2).m_value.m_handle == 0x2Du);
+  CHECK(cap.m_field.m_childValues.at(2).m_value.m_handle == 0x3Du);
   CHECK(cap.m_field.m_childValues.at(2).m_value.m_formatFlags == 0);
   CHECK(cap.m_field.m_childValues.at(2).m_value.m_unitType == 4);
   CHECK(cap.m_field.m_childValues.at(3).m_value.m_dataType == 8);
@@ -538,7 +543,7 @@ TEST_CASE("DXF FIELD and FIELDLIST objects write class and cached value data",
   REQUIRE(cap.m_fieldListCount == 1);
   REQUIRE(cap.m_list.m_fieldHandles.size() == 2u);
   CHECK(cap.m_list.m_fieldHandles.at(0) == 0u);
-  CHECK(cap.m_list.m_fieldHandles.at(1) == 0x2Au);
+  CHECK(cap.m_list.m_fieldHandles.at(1) == 0x3Au);
 }
 
 TEST_CASE("DXF FIELD writers reject unsupported and oversized payloads",

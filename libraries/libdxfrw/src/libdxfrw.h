@@ -322,10 +322,16 @@ public:
      * whose value is a remapped handle is rewritten to the new handle. Empty by
      * default (raw handles preserved verbatim). Keys/values are numeric handles. */
     void setHandleRemap(const std::map<std::uint32_t, std::uint32_t> &remap) {
+        m_explicitHandleRemap = remap;
         m_handleRemap = remap;
     }
     //! Add one remap without replacing an existing one for the handle.
     void addHandleRemap(std::uint32_t from, std::uint32_t to) {
+        m_explicitHandleRemap.emplace(from, to);
+        m_handleRemap.emplace(from, to);
+    }
+    //! Add a handle remap derived during this DXF write only.
+    void addDxfWriteHandleRemap(std::uint32_t from, std::uint32_t to) {
         m_handleRemap.emplace(from, to);
     }
     std::uint32_t remapHandle(std::uint32_t handle) const {
@@ -664,10 +670,10 @@ private:
     /// GROUP objects to typed-emit in writeObjects (DXF path). Populated via
     /// setGroups; empty by default so a fresh write is byte-identical.
     std::vector<DRW_Group> m_groups;
-    /// Numeric handle -> replacement handle, applied by writeRawDxfObject to the
-    /// few raw objects whose original handle collides with a fixed structural
-    /// literal. Empty by default (raw handles emitted verbatim).
+    /// Caller-provided and current-write handle remaps.
     std::map<std::uint32_t, std::uint32_t> m_handleRemap;
+    /// Remaps supplied by callers; retained when a new write session starts.
+    std::map<std::uint32_t, std::uint32_t> m_explicitHandleRemap;
     std::function<std::uint32_t(std::uint32_t)> m_referenceResolver;
     std::map<std::string, std::size_t> m_leftOut;
     void noteLeftOut(const char *what) { ++m_leftOut[what]; }

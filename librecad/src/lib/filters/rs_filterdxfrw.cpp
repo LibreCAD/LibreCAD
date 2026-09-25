@@ -11704,7 +11704,6 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     auto reserveTyped = [&](std::uint32_t handle,
                             LC_DwgAdvancedMetadata::ReplayState state,
                             const char *recordName,
-                            const char *recordName,
                             DRW::Version minVersion = DRW::UNKNOWNV,
                             bool isObject = true) {
       if (exportVersion < minVersion || handle == 0 ||
@@ -12520,7 +12519,7 @@ void RS_FilterDXFRW::installDxfBlockRecordRemap() {
                                      ? 0x1Eu
                                      : written(name);
     if (target != DRW::NoHandle)
-      m_dxfW->addHandleRemap(source, target);
+      m_dxfW->addDxfWriteHandleRemap(source, target);
   }
   for (unsigned i = 0; i < m_graphic->countBlocks(); i++) {
     const RS_Block *blk = m_graphic->blockAt(i);
@@ -12528,7 +12527,7 @@ void RS_FilterDXFRW::installDxfBlockRecordRemap() {
       continue;
     const std::uint32_t target = written(blk->getName().toUtf8().toStdString());
     if (target != DRW::NoHandle)
-      m_dxfW->addHandleRemap(blk->sourceHandle(), target);
+      m_dxfW->addDxfWriteHandleRemap(blk->sourceHandle(), target);
   }
 }
 
@@ -25999,8 +25998,6 @@ void RS_FilterDXFRW::writeObjects() {
       DRW_Layout layout = layoutFromMetadata(record);
       layout.handle = m_dxfW->remapHandle(layout.handle);
       layout.parentHandle = resolveOwner(record.parentHandle);
-      layout.paperSpaceBlockRecordHandle.ref =
-          m_dxfW->remapHandle(record.paperSpaceBlockRecordHandle);
       noteDxfWrite(m_dxfW->writeLayout(&layout));
     }
     // GEODATA is a custom object with a CLASS record. DWG read captures all
