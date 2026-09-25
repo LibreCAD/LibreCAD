@@ -4213,6 +4213,53 @@ TEST_CASE("DXF layers name their plot style only where it is written",
   std::filesystem::remove(out);
 }
 
+TEST_CASE("DXF references to the source's root dictionary name the one written",
+          "[dxf][roundtrip][filter][handles]") {
+  ensureSettings();
+  const std::string src = tmpFile("root-dict-src.dxf");
+  const std::string out = tmpFile("root-dict-out.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  // The source's root dictionary is B; the save writes its own at C. The
+  // material dictionary names the root as owner and as reactor.
+  std::string text = kR2000WithRawMaterial;
+  const auto replaceOnce = [&text](const std::string &from, const std::string &to) {
+    const auto at = text.find(from);
+    REQUIRE(at != std::string::npos);
+    text.replace(at, from.size(), to);
+  };
+  replaceOnce("0\nDICTIONARY\n5\nC\n330\n0\n", "0\nDICTIONARY\n5\nB\n330\n0\n");
+  replaceOnce("0\nDICTIONARY\n5\n80\n330\nC\n",
+              "0\nDICTIONARY\n5\n80\n102\n{ACAD_REACTORS\n330\nB\n102\n}\n330\nB\n");
+  writeText(src, text);
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              graphic.getFormatType()));
+  }
+
+  CHECK(rootDictEntries(out).count("ACAD_MATERIAL") == 1);
+  const auto materials = recordGroupsWithValue(out, "DICTIONARY", "5", "80");
+  REQUIRE_FALSE(materials.empty());
+  std::vector<std::string> owners;
+  for (const auto &[code, value] : materials)
+    if (code == "330")
+      owners.push_back(value);
+  CHECK(owners == std::vector<std::string>{"C", "C"});
+  CHECK(danglingReferences(out).empty());
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
 TEST_CASE("DXF saved in another version leaves out the raw objects it cannot hold",
           "[dxf][roundtrip][filter][version]") {
   ensureSettings();

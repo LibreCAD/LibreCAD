@@ -11953,6 +11953,10 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     // writes them, and references to them, under the replacement.
     for (const std::uint32_t h : typedHandles)
       remapIfColliding(h);
+    // The codec writes the root dictionary at C; references to the source's
+    // own root, such as its children's owners and reactors, follow it there.
+    if (sourceRootHandle != 0 && sourceRootHandle != 0xCu)
+      handleRemap.emplace(sourceRootHandle, 0xCu);
     for (const DRW_RawDxfSection &section : rawSections) {
       for (const DRW_Variant &group : section.m_groups) {
         std::uint32_t handle = 0;
