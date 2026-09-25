@@ -1773,6 +1773,10 @@ TEST_CASE("DWG pre-R13 blocks are named from the BLOCK table",
   const Case cases[] = {
       {"r10/entities.dwg", {"BLOCK1", "BLOCK2", "*D2"}},
       {"r2.10/block.dwg", {"ABCDEFGHIJKLMNOPQRSTUVWXYZ12345", "BLOCK"}},
+      // Unlike r10/entities.dwg's third block, this one's BLOCK entity
+      // carries a bare, unnumbered inline name ("*D", opts=4): only the
+      // table record at the same offset has it numbered ("*D2").
+      {"r11/entities-2d.dwg", {"BLOCK1", "BLOCK2", "*D2"}},
   };
   for (const Case &c : cases) {
     const std::filesystem::path path = std::filesystem::path(home) / "dev" /

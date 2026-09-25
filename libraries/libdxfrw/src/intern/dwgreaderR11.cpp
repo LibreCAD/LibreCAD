@@ -1114,6 +1114,13 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa,
             std::string xref, name;
             if (opts & 0x02) xref = readTv();   // xref path name
             if (opts & 0x04) name = readTv();   // block name (inline)
+            // A bare anonymous prefix (*D, *U, *X) carries no number of its
+            // own; the matching BLOCK table record has it numbered by table
+            // index (readNameTable), as the DXF of the drawing does. Prefer
+            // that name here too, the way an empty inline name already does
+            // below, so both name the same block the same way.
+            if (name.size() == 2 && name.front() == '*')
+                name.clear();
             if (name.empty() && recStart >= m_blocksStart) {
                 const auto offset = static_cast<std::uint32_t>(recStart - m_blocksStart);
                 const auto named = m_blockNameByOffset.find(offset);
