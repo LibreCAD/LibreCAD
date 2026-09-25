@@ -536,6 +536,20 @@ void RS_EntityContainer::clear() {
     resetBorders();
 }
 
+std::vector<std::unique_ptr<RS_Entity>> RS_EntityContainer::takeEntities() {
+    std::vector<std::unique_ptr<RS_Entity>> taken;
+    taken.reserve(static_cast<std::size_t>(m_entities.size()));
+    for (RS_Entity* entity : std::as_const(m_entities)) {
+        if (entity != nullptr) {
+            entity->setParent(nullptr);
+            taken.emplace_back(entity);
+        }
+    }
+    m_entities.clear();
+    resetBorders();
+    return taken;
+}
+
 unsigned int RS_EntityContainer::count() const {
     return m_entities.size();
 }
@@ -2124,12 +2138,10 @@ bool RS_EntityContainer::ignoredSnap() const {
     return ignoredOnModification();
 }
 
-#define DEBUG_CONTAINER_DUPLICATE  // fixme - sand - disable before push!
-
-void RS_EntityContainer::debugEntityAlreadyPresentExists(const RS_Entity* entity) const {
-#ifdef DEBUG_CONTAINER_DUPLICATE
-    const qsizetype countOfEntities = m_entities.count(entity);
-    Q_ASSERT(countOfEntities == 0);
+// A container owns each entity once; adding one twice means a double delete later.
+void RS_EntityContainer::debugEntityAlreadyPresentExists([[maybe_unused]] const RS_Entity* entity) const {
+#ifndef QT_NO_DEBUG
+    Q_ASSERT(!m_entities.contains(entity));
 #endif
 }
 

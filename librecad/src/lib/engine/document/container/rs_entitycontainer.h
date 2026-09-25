@@ -119,6 +119,8 @@ public:
     int findEntityIndex(const RS_Entity* entity) const;
     bool areNeighborsEntities(RS_Entity const *const  e1, RS_Entity const *const  e2) const;
     virtual void clear();
+    /** Empties the container without deleting its entities: the caller owns them, parentless. */
+    std::vector<std::unique_ptr<RS_Entity>> takeEntities();
 
     //virtual unsigned long int count() {
     // return count(false);

@@ -105,12 +105,11 @@ bool LC_ActionDrawDual::createDualForSelected(LC_DocumentModificationBatch& ctx)
 
         if (dualCopy != nullptr) {
             if (dualCopy->isContainer()) {
-                auto* dualContainer = static_cast<RS_EntityContainer*>(dualCopy);
-                for (RS_Entity* dual: *dualContainer) {
-                    ctx += dual;
+                const std::unique_ptr<RS_EntityContainer> dualContainer{static_cast<RS_EntityContainer*>(dualCopy)};
+                for (auto& dual : dualContainer->takeEntities()) {
+                    ctx += dual.release();
                     count++;
                 }
-                delete dualCopy;
             } else {
                 ctx += dualCopy;
                 count++;

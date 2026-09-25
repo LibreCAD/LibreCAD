@@ -839,7 +839,6 @@ Doc_plugin_interface::Doc_plugin_interface(LC_ActionContext* actionContext, QWid
 }
 
 bool Doc_plugin_interface::addToUndo(RS_Entity* current, RS_Entity* modified, const DPI::Disposition how) const {
-    m_document->addEntity(modified);
     const LC_UndoSection undo(m_document, m_viewport);
     current->clearSelectionFlag();
     if (how == DPI::DELETE_ORIGINAL) {
