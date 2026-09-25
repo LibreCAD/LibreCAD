@@ -11536,6 +11536,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
   m_dxfW = new dxfRW(QFile::encodeName(file));
   m_dxfBlockInsertHandles.clear();
   m_dxfExtraPaperSpaces.clear();
+  m_dxfEmittedObjectHandles.clear();
   // fixme - sand - save to binary format enabling/disabling!!
   const bool binary = false;
 
@@ -12071,6 +12072,9 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
               static_cast<std::uint32_t>(settings.parentHandle));
       }
     }
+    m_dxfEmittedObjectHandles = emittedObjectHandles;
+    for (const std::uint32_t h : m_dxfSuppressedObjectHandles)
+      m_dxfEmittedObjectHandles.erase(h);
 
     std::vector<DRW_Dictionary> namedDicts;
     std::set<std::uint32_t> emittedDictHandles;
@@ -19019,6 +19023,19 @@ void RS_FilterDXFRW::writeLayers() {
                                        sourceHandle, lay.handle))
         m_writeFailed = true;
     } else {
+      // The plot style (390) is named only if its placeholder is written.
+      lay.handlePlotS.clear();
+      if (const auto *sourceLayer =
+              m_graphic->dwgAdvancedMetadata().findLayerTableEntryByName(
+                  lay.name)) {
+        std::uint32_t plotStyle = sourceLayer->plotStyleHandle.ref;
+        if (plotStyle == 0 && !sourceLayer->handlePlotS.empty())
+          plotStyle = static_cast<std::uint32_t>(
+              std::strtoul(sourceLayer->handlePlotS.c_str(), nullptr, 16));
+        if (plotStyle != 0 && m_dxfEmittedObjectHandles.count(plotStyle) != 0)
+          lay.handlePlotS =
+              m_dxfW->toHexStrHandle(m_dxfW->remapHandle(plotStyle));
+      }
       noteDxfWrite(m_dxfW->writeLayer(&lay));
     }
   }

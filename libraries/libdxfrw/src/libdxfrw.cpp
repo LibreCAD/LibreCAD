@@ -2434,7 +2434,10 @@ bool dxfRW::writeLayer(DRW_Layer *ent){
             write(writer->writeBool(290, ent->plotF));
             write(writer->writeInt16(370,
                                      DRW_LW_Conv::lineWidth2dxfInt(ent->lWeight)));
-            write(writer->writeString(390, "F"));
+            // The plot style names an object the caller writes; without
+            // one the layer names none.
+            if (!ent->handlePlotS.empty())
+                write(writer->writeString(390, ent->handlePlotS));
         }
     } else
         write(writer->writeUtf8Caps(6, ent->lineType));

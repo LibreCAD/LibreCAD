@@ -3166,6 +3166,8 @@ private:
   std::map<QString, std::vector<std::uint32_t>> m_dxfBlockInsertHandles;
   /** Numbered paper spaces written, empty, for the layouts naming them. */
   std::vector<std::string> m_dxfExtraPaperSpaces;
+  /** Source handles of the objects the DXF being written holds. */
+  std::set<std::uint32_t> m_dxfEmittedObjectHandles;
   QHash<QString, QString> m_fontList;
   bool m_oldMText = false;
   dxfRW *m_dxfW{nullptr};

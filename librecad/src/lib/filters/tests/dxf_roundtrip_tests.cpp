@@ -353,8 +353,8 @@ std::vector<std::vector<std::string>> recordReactors(const std::string &path,
   return reactors;
 }
 
-// Owner and reactor (330), soft/hard pointer (340/350/360) references that
-// name no handle (5/105) of the file.
+// Owner and reactor (330), soft/hard pointer (340/350/360) and plot style
+// (390) references that name no handle (5/105) of the file.
 std::vector<std::string> danglingReferences(const std::string &path) {
   std::ifstream in(path);
   std::string codeLine, valueLine;
@@ -364,7 +364,8 @@ std::vector<std::string> danglingReferences(const std::string &path) {
     const std::string c = trimDxfToken(codeLine), v = trimDxfToken(valueLine);
     if (c == "5" || c == "105")
       defined.insert(v);
-    else if ((c == "330" || c == "340" || c == "350" || c == "360") && v != "0")
+    else if ((c == "330" || c == "340" || c == "350" || c == "360" ||
+              c == "390") && v != "0")
       references.emplace_back(c, v);
   }
   std::vector<std::string> dangling;
@@ -4135,6 +4136,77 @@ TEST_CASE("DXF references to table records follow them to their written handles"
   CHECK(nameOf("STYLE", refs[0]) == "MyStyle");
   CHECK(nameOf("LAYER", refs[1]) == "Walls");
   CHECK(nameOf("LTYPE", refs[2]) == "DASHED");
+  CHECK(danglingReferences(out).empty());
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
+TEST_CASE("DXF layers name their plot style only where it is written",
+          "[dxf][roundtrip][filter][handles]") {
+  ensureSettings();
+  const std::string src = tmpFile("plot-style-src.dxf");
+  const std::string out = tmpFile("plot-style-out.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  // The source's "Normal" plot style placeholder has handle 4A, not the F
+  // the save used to name on every layer.
+  writeText(src,
+            "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1015\n0\nENDSEC\n"
+            "0\nSECTION\n2\nCLASSES\n"
+            "0\nCLASS\n1\nACDBDICTIONARYWDFLT\n2\nAcDbDictionaryWithDefault\n"
+            "3\nObjectDBX Classes\n90\n0\n280\n0\n281\n0\n"
+            "0\nCLASS\n1\nACDBPLACEHOLDER\n2\nAcDbPlaceHolder\n"
+            "3\nObjectDBX Classes\n90\n0\n280\n0\n281\n0\n"
+            "0\nENDSEC\n"
+            "0\nSECTION\n2\nTABLES\n"
+            "0\nTABLE\n2\nLAYER\n5\n2\n330\n0\n100\nAcDbSymbolTable\n70\n2\n"
+            "0\nLAYER\n5\n10\n330\n2\n100\nAcDbSymbolTableRecord\n"
+            "100\nAcDbLayerTableRecord\n2\n0\n70\n0\n62\n7\n6\nCONTINUOUS\n"
+            "370\n-3\n390\n4A\n"
+            "0\nLAYER\n5\n40\n330\n2\n100\nAcDbSymbolTableRecord\n"
+            "100\nAcDbLayerTableRecord\n2\nWalls\n70\n0\n62\n1\n6\nCONTINUOUS\n"
+            "370\n-3\n390\n4A\n"
+            "0\nENDTAB\n0\nENDSEC\n"
+            "0\nSECTION\n2\nENTITIES\n"
+            "0\nLINE\n5\nA1\n100\nAcDbEntity\n8\nWalls\n100\nAcDbLine\n"
+            "10\n0\n20\n0\n30\n0\n11\n10\n21\n0\n31\n0\n"
+            "0\nENDSEC\n"
+            "0\nSECTION\n2\nOBJECTS\n"
+            "0\nDICTIONARY\n5\nC\n330\n0\n100\nAcDbDictionary\n281\n1\n"
+            "3\nACAD_PLOTSTYLENAME\n350\n49\n"
+            "0\nACDBDICTIONARYWDFLT\n5\n49\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+            "3\nNormal\n350\n4A\n100\nAcDbDictionaryWithDefault\n340\n4A\n"
+            "0\nACDBPLACEHOLDER\n5\n4A\n330\n49\n"
+            "0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  // A layer the drawing did not have names no plot style.
+  graphic.addLayer(new RS_Layer(QStringLiteral("New")));
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              graphic.getFormatType()));
+  }
+
+  const auto plotStyleOf = [&out](const char *layer) {
+    std::vector<std::string> values;
+    for (const auto &[code, value] : recordGroupsWithValue(out, "LAYER", "2", layer))
+      if (code == "390")
+        values.push_back(value);
+    return values;
+  };
+  REQUIRE(recordGroupValues(out, "ACDBPLACEHOLDER", "5") ==
+          std::vector<std::string>{"4A"});
+  CHECK(plotStyleOf("Walls") == std::vector<std::string>{"4A"});
+  CHECK(plotStyleOf("0") == std::vector<std::string>{"4A"});
+  CHECK(plotStyleOf("New").empty());
   CHECK(danglingReferences(out).empty());
 
   std::filesystem::remove(src);
