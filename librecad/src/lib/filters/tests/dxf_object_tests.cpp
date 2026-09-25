@@ -129,7 +129,8 @@ public:
     Underlay,
     MText,
     Light,
-    Mesh
+    Mesh,
+    Image
   };
 
   dxfRW *m_rw = nullptr;
@@ -208,6 +209,14 @@ public:
       m_result = m_rw->writeMesh(&entity);
       break;
     }
+    case Kind::Image: {
+      // writeImage() returns the IMAGEDEF it wrote, not a bool: nullptr
+      // with no write error is how it says "left out", the same as every
+      // other writer here says it by returning true.
+      DRW_Image entity;
+      m_result = m_rw->writeImage(&entity, "img") == nullptr;
+      break;
+    }
     }
   }
 };
@@ -256,9 +265,9 @@ TEST_CASE("DXF table writers do not normalize caller-owned state",
   std::filesystem::remove(path, ignored);
 }
 
-TEST_CASE("DXF legacy writer rejects unsupported entity emitters",
+TEST_CASE("DXF R12 leaves out the records it has no place for",
           "[dxf][writer][unsupported][safety]") {
-  const std::array<LegacyUnsupportedEmitter::Kind, 14> kinds = {
+  const std::array<LegacyUnsupportedEmitter::Kind, 15> kinds = {
       LegacyUnsupportedEmitter::Kind::LwPolyline,
       LegacyUnsupportedEmitter::Kind::Spline,
       LegacyUnsupportedEmitter::Kind::Helix,
@@ -272,7 +281,8 @@ TEST_CASE("DXF legacy writer rejects unsupported entity emitters",
       LegacyUnsupportedEmitter::Kind::Underlay,
       LegacyUnsupportedEmitter::Kind::MText,
       LegacyUnsupportedEmitter::Kind::Light,
-      LegacyUnsupportedEmitter::Kind::Mesh};
+      LegacyUnsupportedEmitter::Kind::Mesh,
+      LegacyUnsupportedEmitter::Kind::Image};
 
   int index = 0;
   for (const auto kind : kinds) {
@@ -288,9 +298,13 @@ TEST_CASE("DXF legacy writer rejects unsupported entity emitters",
     emitter.m_kind = kind;
     dxfRW writer(path.string().c_str());
     emitter.m_rw = &writer;
-    CHECK_FALSE(writer.write(&emitter, DRW::AC1009, false));
-    CHECK_FALSE(emitter.m_result);
-    CHECK(slurp(path) == "previous output\n");
+    CHECK(writer.write(&emitter, DRW::AC1009, false));
+    CHECK(emitter.m_result);
+    CHECK(slurp(path) != "previous output\n");
+    REQUIRE(writer.leftOut().size() == 1);
+    const auto &[what, count] = *writer.leftOut().cbegin();
+    CHECK(count == 1);
+    CHECK(what.find("(not in this DXF version)") != std::string::npos);
     std::error_code ignored;
     std::filesystem::remove(path, ignored);
   }
@@ -4776,9 +4790,12 @@ TEST_CASE("DXF table-entry application groups round trip typed records",
     auto &group = emitter.m_layer.appData.emplace_back();
     group.emplace_back(102, std::string{"CUSTOM_TABLE_APP"});
     group.emplace_back(102, std::string{"}"});
-    CHECK_FALSE(writer.write(&emitter, DRW::AC1009, false));
-    CHECK_FALSE(emitter.m_writeResult);
+    // R12 has no application data: left out, not refused
+    CHECK(writer.write(&emitter, DRW::AC1009, false));
+    CHECK(emitter.m_writeResult);
+    CHECK(writer.leftOut().count("application data of a table record (R12)") == 1);
   }
+  CHECK(slurp(legacyPath).find("CUSTOM_TABLE_APP") == std::string::npos);
   std::filesystem::remove(legacyPath);
 }
 
@@ -9858,6 +9875,84 @@ TEST_CASE("DXF IMAGE and WIPEOUT reject non-finite payload fields",
   }
 }
 
+TEST_CASE("DXF objects a version has no place for are left out",
+          "[dxf][writer][unsupported]") {
+  // FIELD needs R2000, an evaluation graph R2007: older targets leave them
+  // out instead of failing the save.
+  class OldVersionEmitter : public StubInterface {
+  public:
+    dxfRW *m_rw = nullptr;
+    bool m_result = false;
+    void writeObjects() override {
+      DRW_Field field;
+      DRW_EvaluationGraph graph;
+      m_result = m_rw->writeField(&field) && m_rw->writeEvaluationGraph(&graph);
+    }
+  };
+  const auto path = std::filesystem::temp_directory_path() /
+                    "lc_dxf_old_version_objects.dxf";
+  std::filesystem::remove(path);
+  OldVersionEmitter emitter;
+  dxfRW writer(path.string().c_str());
+  emitter.m_rw = &writer;
+  CHECK(writer.write(&emitter, DRW::AC1014, false));
+  CHECK(emitter.m_result);
+  CHECK(writer.leftOut().count("FIELD (not in this DXF version)") == 1);
+  CHECK(writer.leftOut().count("EVALUATION_GRAPH (not in this DXF version)") == 1);
+  std::filesystem::remove(path);
+}
+
+TEST_CASE("DXF raw strings with line breaks become caret codes in ASCII",
+          "[dxf][writer][raw]") {
+  // A binary DXF can hold a line break inside a string; an ASCII one cannot.
+  RawObjectEmitter emitter;
+  emitter.m_obj.name = "ACME_THING";
+  emitter.m_obj.handle = 0x91u;
+  emitter.m_obj.groups = {DRW_Variant(5, std::string("91")),
+                          DRW_Variant(100, std::string("AcmeThing")),
+                          DRW_Variant(1, std::string("line one\nline two"))};
+  const auto path = std::filesystem::temp_directory_path() /
+                    "lc_dxf_raw_line_break.dxf";
+  std::filesystem::remove(path);
+  {
+    dxfRW writer(path.string().c_str());
+    emitter.m_rw = &writer;
+    REQUIRE(writer.reserveHandle(0x91u));
+    CHECK(writer.write(&emitter, DRW::AC1021, false));
+    CHECK(emitter.m_writeResult);
+  }
+  CHECK(slurp(path).find("\nline one^Jline two\n") != std::string::npos);
+  std::filesystem::remove(path);
+}
+
+TEST_CASE("DXF built-in linetypes leave out application data",
+          "[dxf][ltype][writer]") {
+  // BYLAYER, BYBLOCK and CONTINUOUS are written by the codec itself; the
+  // payload a source file attaches to them (R14 DWG) cannot follow.
+  class LTypeEmitter : public StubInterface {
+  public:
+    dxfRW *m_rw = nullptr;
+    bool m_result = false;
+    void writeLTypes() override {
+      DRW_LType continuous;
+      continuous.name = "Continuous";
+      continuous.reactorHandles = {0x40u};
+      m_result = m_rw->writeLineType(&continuous);
+    }
+  };
+
+  const auto path = std::filesystem::temp_directory_path() /
+                    "lc_dxf_builtin_ltype_payload.dxf";
+  std::filesystem::remove(path);
+  LTypeEmitter emitter;
+  dxfRW writer(path.string().c_str());
+  emitter.m_rw = &writer;
+  CHECK(writer.write(&emitter, DRW::AC1021, false));
+  CHECK(emitter.m_result);
+  CHECK(writer.leftOut().count("application data of a built-in linetype") == 1);
+  std::filesystem::remove(path);
+}
+
 TEST_CASE("DXF UNDERLAY rejects invalid writer payloads",
           "[dxf][underlay][writer][safety]") {
   class UnderlayEmitter : public StubInterface {
@@ -9882,17 +9977,26 @@ TEST_CASE("DXF UNDERLAY rejects invalid writer payloads",
     std::filesystem::remove(path);
   }
 
-  SECTION("inverse clipping before R2010") {
+  SECTION("inverse clipping before R2010 is left out") {
     UnderlayEmitter emitter;
     emitter.m_underlay.inverseClipBoundary = {
         DRW_Coord{0.0, 0.0, 0.0}, DRW_Coord{1.0, 1.0, 0.0}};
+    emitter.m_underlay.flags = 0x10;
     const auto path = std::filesystem::temp_directory_path() /
                       "lc_dxf_underlay_old_inverse.dxf";
     std::filesystem::remove(path);
     dxfRW writer(path.string().c_str());
     emitter.m_rw = &writer;
-    CHECK_FALSE(writer.write(&emitter, DRW::AC1021, false));
-    CHECK_FALSE(emitter.m_result);
+    CHECK(writer.write(&emitter, DRW::AC1021, false));
+    CHECK(emitter.m_result);
+    const std::string written = slurp(path);
+    const auto start = written.find("PDFUNDERLAY");
+    REQUIRE(start != std::string::npos);
+    const std::string record = written.substr(start, written.find("\n  0\n", start) - start);
+    CHECK(record.find("\n170\n") == std::string::npos);
+    CHECK(record.find("\n280\n") != std::string::npos);
+    CHECK(record.find("\n280\n    16\n") == std::string::npos);
+    CHECK(writer.leftOut().count("inverted clip of an underlay (R2007 and older)") == 1);
     std::filesystem::remove(path);
   }
 }
@@ -11449,7 +11553,7 @@ TEST_CASE("DXF OBJECTS helper failures latch the enclosing write",
   }
 }
 
-TEST_CASE("DXF SORTENTSTABLE rejects unresolved remapped entity handles",
+TEST_CASE("DXF SORTENTSTABLE leaves out entries for entities it does not write",
           "[dxf][sortents][writer][safety]") {
   class SortEntsFailureEmitter : public StubInterface {
   public:
@@ -11483,10 +11587,13 @@ TEST_CASE("DXF SORTENTSTABLE rejects unresolved remapped entity handles",
   SortEntsFailureEmitter emitter;
   dxfRW writer(path.string().c_str());
   emitter.m_rw = &writer;
-  CHECK_FALSE(writer.write(&emitter, DRW::AC1027, false));
+  CHECK(writer.write(&emitter, DRW::AC1027, false));
   CHECK(emitter.m_entityResult);
-  CHECK_FALSE(emitter.m_sortResult);
-  CHECK(slurp(path) == "previous output\n");
+  CHECK(emitter.m_sortResult);
+  const std::string written = slurp(path);
+  CHECK(written.find("SORTENTSTABLE") != std::string::npos);
+  CHECK(written.find("\n331\n") == std::string::npos);
+  CHECK(writer.leftOut().count("draw-order entry of an entity not written") == 1);
   std::error_code ignored;
   std::filesystem::remove(path, ignored);
 }
@@ -11604,8 +11711,16 @@ TEST_CASE("DXF EVALUATION_GRAPH writer enforces native limits",
     CHECK_FALSE(emitter.m_writeResult);
   };
 
-  SECTION("unsupported DXF version") {
-    verifyRejected(DRW::AC1018, makeGraph());
+  SECTION("a version without evaluation graphs leaves the graph out") {
+    std::filesystem::remove(path);
+    EvaluationGraphEmitter emitter;
+    emitter.m_graph = makeGraph();
+    emitter.m_recordName = "EVALUATION_GRAPH";
+    dxfRW writer(path.string().c_str());
+    emitter.m_rw = &writer;
+    CHECK(writer.write(&emitter, DRW::AC1018, false));
+    CHECK(emitter.m_writeResult);
+    CHECK(writer.leftOut().count("EVALUATION_GRAPH (not in this DXF version)") == 1);
   }
 
   SECTION("node count exceeds the DWG-native limit") {

@@ -211,9 +211,12 @@ bool RS_FileIO::fileExport(RS_Graphic& graphic, const QString& file, RS2::Format
         type = detectFormat(file, false);
     }
 
+    m_lastExportReport.clear();
     std::unique_ptr<RS_FilterInterface>&& filter(getExportFilter(file, type));
     if (filter) {
-        return filter->fileExport(graphic, file, type);
+        const bool exported = filter->fileExport(graphic, file, type);
+        m_lastExportReport = filter->exportReport();
+        return exported;
     }
     RS_DEBUG->print("RS_FileIO::fileExport: no filter found");
 

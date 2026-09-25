@@ -415,6 +415,8 @@ protected:
     m_dwgWriteHandleRemap.clear();
     m_dwgWriteKnownHandles.clear();
     m_dwgWriteEntityHandleByEntity.clear();
+    m_dwgWriteGeneratedEntityHandleByEntity.clear();
+    m_dwgWriteInsertChildHandlesByEntity.clear();
     m_dwgWriteEntityHandleRemap.clear();
     m_dwgWriteEntityHandlesEmitted.clear();
     m_dwgWriteDuplicateEntityHandles.clear();
@@ -1873,6 +1875,16 @@ protected:
 
   // Entity source identity and commit state.
   std::map<const RS_Entity *, std::uint32_t> m_dwgWriteEntityHandleByEntity;
+  // R2000 owners that hold source-backed entities take every entity handle
+  // before the entity sweep so the owner's handles stay consecutive
+  // (prepareDwgEntityHandleMap). These are the output handles of entities
+  // without a source handle, whose identities are still committed as
+  // generated entities on write, and the ATTRIB..SEQEND handles that follow
+  // each INSERT. Filled once per write, read-only afterwards.
+  std::map<const RS_Entity *, std::uint32_t>
+      m_dwgWriteGeneratedEntityHandleByEntity;
+  std::map<const RS_Entity *, std::vector<std::uint32_t>>
+      m_dwgWriteInsertChildHandlesByEntity;
   std::map<std::uint32_t, std::uint32_t> m_dwgWriteEntityHandleRemap;
   std::set<std::uint32_t> m_dwgWriteEntityHandlesEmitted;
   std::set<std::uint32_t> m_dwgWriteDuplicateEntityHandles;
@@ -1984,6 +1996,7 @@ public:
 
   // Error messages
   QString lastError() const override;
+  QString exportReport() const override;
 
 #ifdef DWGSUPPORT
   // Snapshot of the current DWG admission attempt for the explicit-path
@@ -1993,6 +2006,7 @@ public:
   // The format that writes DWG files of @p version, or RS2::FormatUnknown
   // for a version LibreCAD cannot write.
   static RS2::FormatType formatForDwgVersion(DRW::Version version);
+  static RS2::FormatType formatForDxfVersion(DRW::Version version);
 #endif
 
   // Import:
@@ -2291,8 +2305,15 @@ public:
 
   void setEntityAttributes(RS_Entity *entity, const DRW_Entity *attrib);
   void getEntityAttributes(DRW_Entity *ent, const RS_Entity *entity);
+  std::uint32_t dxfReference(std::uint32_t source) const;
+  /** Whether a raw DXF record read from version @p source is written into the DXF being exported. */
+  bool replaysInDxfExport(DRW::Version source) const;
 
-  static QString toDxfString(const QString &str);
+  //! @param caretCodes Caret-encode control characters and a literal '^', as
+  //!   an ASCII DXF value must (toNativeString() decodes them back). A DWG
+  //!   string holds the characters themselves and must not be caret-encoded;
+  //!   callers that may write either pass caretCodes = (m_dwgW == nullptr).
+  static QString toDxfString(const QString &str, bool caretCodes = true);
   static QString toNativeString(const QString &data);
 
   /** Build an LC_SplinePoints from a DRW_Spline boundary edge of a hatch
@@ -3018,6 +3039,15 @@ private:
    *  colliding with the fixed root/group handles C/D). Computed in fileExport
    *  before write(), consumed by the rawDxfObjects re-emit in writeObjects. */
   std::set<std::uint32_t> m_dxfSuppressedObjectHandles;
+  // Objects entity references may name that the DXF being written lacks:
+  // GROUPs not written, or whose handle is structural.
+  std::set<std::uint32_t> m_dxfDroppedReferenceHandles;
+  // The version of the DXF being exported, and how many raw records read
+  // from another version it leaves out.
+  DRW::Version m_dxfExportVersion = DRW::UNKNOWNV;
+  std::size_t m_dxfLeftOutRawRecords = 0;
+  // What the codec left out of the DXF last exported (dxfRW::leftOut()).
+  std::map<std::string, std::size_t> m_dxfLeftOut;
   // Normalised names of the built-in LTYPE records written by writeLType()
   // during writeLTypes(); imported raw records with these names are skipped.
   std::set<std::string> m_builtinLTypeNames;

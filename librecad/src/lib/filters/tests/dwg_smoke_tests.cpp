@@ -1748,6 +1748,50 @@ public:
 // bodies for pre-R10, elevation-for-all, empty-ENTITIES tolerance, and
 // REPEAT/ENDREP/LOAD structural markers. Each fixture carries a 2D LINE at
 // (6,1,0) (z=0 proves the pre-R10 2D-body path; byte-identical to dwgread).
+namespace {
+class BlockNameCapture : public CountingIface {
+public:
+  std::vector<std::string> names;
+  void addBlock(const DRW_Block &b) override {
+    CountingIface::addBlock(b);
+    names.push_back(b.name);
+  }
+};
+} // namespace
+
+// A pre-R13 BLOCK entity usually carries no name of its own; the BLOCK table
+// record naming it holds the offset of the block in the BLOCKS section. Every
+// block used to arrive unnamed, so only one survived import and a DXF save
+// refused it. Names checked against the DXF each sample ships with.
+TEST_CASE("DWG pre-R13 blocks are named from the BLOCK table",
+          "[dwg][pre-r13][blocks]") {
+  const char *home = std::getenv("HOME");
+  if (!home) {
+    SKIP("HOME not set; skipping external corpus");
+  }
+  struct Case { const char *file; std::vector<std::string> names; };
+  const Case cases[] = {
+      {"r10/entities.dwg", {"BLOCK1", "BLOCK2", "*D2"}},
+      {"r2.10/block.dwg", {"ABCDEFGHIJKLMNOPQRSTUVWXYZ12345", "BLOCK"}},
+      // Unlike r10/entities.dwg's third block, this one's BLOCK entity
+      // carries a bare, unnumbered inline name ("*D", opts=4): only the
+      // table record at the same offset has it numbered ("*D2").
+      {"r11/entities-2d.dwg", {"BLOCK1", "BLOCK2", "*D2"}},
+  };
+  for (const Case &c : cases) {
+    const std::filesystem::path path = std::filesystem::path(home) / "dev" /
+                                       "libredwg" / "test" / "test-data" / c.file;
+    INFO("fixture: " << c.file);
+    if (!std::filesystem::is_regular_file(path)) {
+      SKIP("libredwg sample absent; skipping");
+    }
+    BlockNameCapture iface;
+    dwgR reader(path.string().c_str());
+    REQUIRE(reader.read(&iface, /*ext=*/true));
+    CHECK(iface.names == c.names);
+  }
+}
+
 TEST_CASE("DWG pre-R10 tier (R2.6/R9/R2.10) reads entities with 2D bodies",
           "[dwg][pre-r13][pre-r10]") {
   struct Case { const char *file; DRW::Version version; int minEntities; };

@@ -388,10 +388,11 @@ TEST_CASE("UNDERLAY rejects oversized clip storage before writing",
   std::filesystem::remove(path);
   dxfRW writer(path.string().c_str());
   emitter.m_rw = &writer;
-  // Writing an entity the encoder cannot represent is atomic: every
-  // rejecting writer sets m_writeError (dxfRW::rejectUnsupportedDxfWrite()
-  // and the per-entity validation branches), and dxfRW::write() turns that
-  // into a failed write rather than silently dropping the entity.
+  // Writing an entity whose data is invalid is atomic: the per-entity
+  // validation branches set m_writeError, and dxfRW::write() turns that
+  // into a failed write rather than silently dropping the entity. (A valid
+  // entity the target version has no record for is left out and counted
+  // in dxfRW::leftOut() instead.)
   CHECK_FALSE(writer.write(&emitter, DRW::AC1021, false));
   CHECK_FALSE(emitter.m_writeResult);
   // The output transaction is aborted, so no partial file is left behind.

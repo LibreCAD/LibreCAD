@@ -30938,3 +30938,265 @@ TEST_CASE("dwgRW remaps raw class ordinal conflicts instead of aborting write",
   REQUIRE(writer.write(&iface, DRW::AC1018, /*bin=*/false));
   std::remove(path.c_str());
 }
+
+namespace {
+// Records what the mixed-handle tests read back from a written DWG.
+class DwgOwnerChainIface final : public EmptyIface {
+public:
+  std::vector<DRW_Line> lines;
+  std::vector<DRW_Insert> inserts;
+
+  void addLine(const DRW_Line &line) override { lines.push_back(line); }
+  void addInsert(const DRW_Insert &insert) override {
+    inserts.push_back(insert);
+  }
+};
+
+void readOwnerChainDwg(const std::string &path, DwgOwnerChainIface &iface) {
+  dwgRW reader(path.c_str());
+  REQUIRE(reader.read(&iface, /*ext=*/false));
+  REQUIRE(reader.getError() == DRW::BAD_NONE);
+  REQUIRE(reader.getEntityParseFailures() == 0);
+}
+
+const RS2::FormatType kMixedHandleFormats[] = {
+    RS2::FormatDWG, RS2::FormatDWG2004, RS2::FormatDWG2013,
+    RS2::FormatDWG2018};
+} // namespace
+
+// R2000 entities carry nolinks=1, so an owner's entity chain is implied by
+// consecutive handles and the writer refuses an owner whose handles leave a
+// gap. Source-backed entities used to get their output handles before the
+// table records were written and everything else only when encoded, so
+// opening a drawing and adding one entity made every Save As R2000 DWG fail
+// with BAD_OPEN.
+TEST_CASE("RS_FilterDXFRW saves source-handled and new entities together",
+          "[dwg-write][handles][filter][mixed-source-handles]") {
+  ensureQtSettings();
+  struct Case {
+    const char *name;
+    std::uint32_t first;
+    std::uint32_t second;
+  };
+  const Case cases[] = {
+      {"none_none", 0u, 0u},  {"a1_a2", 0xA1u, 0xA2u},
+      {"a1_none", 0xA1u, 0u}, {"none_a1", 0u, 0xA1u},
+      {"40_none", 0x40u, 0u}, {"2000_none", 0x2000u, 0u},
+  };
+  for (const Case &c : cases) {
+    for (RS2::FormatType format : kMixedHandleFormats) {
+      CAPTURE(c.name, static_cast<int>(format));
+      const std::string path =
+          tempPath(std::string("mixed_source_handles_") + c.name + ".dwg");
+      std::remove(path.c_str());
+
+      RS_Graphic source;
+      source.initForNewDocument();
+      auto *first = new RS_Line(
+          &source, RS_LineData{RS_Vector{0.0, 0.0}, RS_Vector{10.0, 0.0}});
+      first->setSourceHandle(c.first);
+      source.addEntity(first);
+      auto *second = new RS_Line(
+          &source, RS_LineData{RS_Vector{0.0, 5.0}, RS_Vector{10.0, 5.0}});
+      second->setSourceHandle(c.second);
+      source.addEntity(second);
+
+      {
+        RS_FilterDXFRW filter;
+        REQUIRE(
+            filter.fileExport(source, QString::fromStdString(path), format));
+      }
+
+      DwgOwnerChainIface readIface;
+      readOwnerChainDwg(path, readIface);
+      REQUIRE(readIface.lines.size() == 2u);
+      const std::uint32_t low =
+          std::min(readIface.lines[0].handle, readIface.lines[1].handle);
+      const std::uint32_t high =
+          std::max(readIface.lines[0].handle, readIface.lines[1].handle);
+      CHECK(low != DRW::NoHandle);
+      CHECK(low != high);
+      if (format == RS2::FormatDWG)
+        CHECK(high == low + 1u);
+      std::remove(path.c_str());
+    }
+  }
+}
+
+TEST_CASE("RS_FilterDXFRW saves a block mixing source-handled and new "
+          "entities",
+          "[dwg-write][handles][filter][mixed-source-handles]") {
+  ensureQtSettings();
+  for (RS2::FormatType format : kMixedHandleFormats) {
+    CAPTURE(static_cast<int>(format));
+    const std::string path = tempPath("mixed_source_handles_block.dwg");
+    std::remove(path.c_str());
+
+    RS_Graphic source;
+    source.initForNewDocument();
+    auto *block = new RS_Block(
+        &source,
+        RS_BlockData(QStringLiteral("MIXED"), RS_Vector(0.0, 0.0), false));
+    block->setSourceHandle(0xB0u);
+    source.addBlock(block);
+    auto *sourceLine = new RS_Line(
+        block, RS_LineData{RS_Vector{0.0, 0.0}, RS_Vector{1.0, 0.0}});
+    sourceLine->setSourceHandle(0xB1u);
+    block->addEntity(sourceLine);
+    block->addEntity(new RS_Line(
+        block, RS_LineData{RS_Vector{0.0, 1.0}, RS_Vector{1.0, 1.0}}));
+
+    // Only the INSERT in model space: the R2000 reader follows an INSERT
+    // without ATTRIBs to handle SEQEND + 1 = 1 and loses the rest of the
+    // chain (dwgReader insert commit), a separate reader bug.
+    auto *insert = new RS_Insert(
+        &source, RS_InsertData(QStringLiteral("MIXED"), RS_Vector(5.0, 5.0),
+                               RS_Vector(1.0, 1.0), 0.0, 1, 1, RS_Vector(),
+                               nullptr, RS2::NoUpdate));
+    insert->setSourceHandle(0xA1u);
+    source.addEntity(insert);
+
+    {
+      RS_FilterDXFRW filter;
+      REQUIRE(filter.fileExport(source, QString::fromStdString(path), format));
+    }
+
+    DwgOwnerChainIface readIface;
+    readOwnerChainDwg(path, readIface);
+    REQUIRE(readIface.lines.size() == 2u);
+    if (format == RS2::FormatDWG) {
+      CHECK(std::max(readIface.lines[0].handle, readIface.lines[1].handle) ==
+            std::min(readIface.lines[0].handle, readIface.lines[1].handle) +
+                1u);
+    }
+    REQUIRE(readIface.inserts.size() == 1u);
+    CHECK(readIface.inserts.front().name == "MIXED");
+    std::remove(path.c_str());
+  }
+}
+
+// An INSERT's ATTRIBs and SEQEND are frames of the INSERT's owner too; for a
+// source-backed INSERT they have to follow its early handle in R2000.
+TEST_CASE("RS_FilterDXFRW saves an imported attributed INSERT as DWG",
+          "[dwg-write][handles][filter][mixed-source-handles]") {
+  ensureQtSettings();
+  const std::string dxfPath = tempPath("mixed_source_handles_attrib.dxf");
+  {
+    std::ofstream dxf(dxfPath, std::ios::binary | std::ios::trunc);
+    const char *const tags[] = {
+        // clang-format off
+        "0", "SECTION", "2", "HEADER", "9", "$ACADVER", "1", "AC1015",
+        "9", "$HANDSEED", "5", "100", "0", "ENDSEC",
+        "0", "SECTION", "2", "BLOCKS",
+        "0", "BLOCK", "5", "B0", "100", "AcDbEntity", "8", "0",
+        "100", "AcDbBlockBegin", "2", "B", "70", "2",
+        "10", "0.0", "20", "0.0", "30", "0.0", "3", "B", "1", "",
+        "0", "LINE", "5", "B1", "100", "AcDbEntity", "8", "0",
+        "100", "AcDbLine", "10", "0.0", "20", "1.0", "30", "0.0",
+        "11", "10.0", "21", "1.0", "31", "0.0",
+        "0", "ATTDEF", "5", "B3", "100", "AcDbEntity", "8", "0",
+        "100", "AcDbText", "10", "0.0", "20", "0.0", "30", "0.0",
+        "40", "1.0", "1", "", "100", "AcDbAttributeDefinition",
+        "3", "TAG", "2", "TAG", "70", "0",
+        "0", "ENDBLK", "5", "B4", "100", "AcDbEntity", "8", "0",
+        "100", "AcDbBlockEnd", "0", "ENDSEC",
+        "0", "SECTION", "2", "ENTITIES",
+        "0", "INSERT", "5", "A1", "100", "AcDbEntity", "8", "0",
+        "100", "AcDbBlockReference", "66", "1", "2", "B",
+        "10", "5.0", "20", "5.0", "30", "0.0",
+        "0", "ATTRIB", "5", "A3", "100", "AcDbEntity", "8", "0",
+        "100", "AcDbText", "10", "5.0", "20", "5.0", "30", "0.0",
+        "40", "1.0", "1", "val", "100", "AcDbAttribute",
+        "2", "TAG", "70", "0",
+        "0", "SEQEND", "5", "A4", "100", "AcDbEntity", "8", "0",
+        "0", "LINE", "5", "A2", "100", "AcDbEntity", "8", "0",
+        "100", "AcDbLine", "10", "0.0", "20", "0.0", "30", "0.0",
+        "11", "10.0", "21", "0.0", "31", "0.0",
+        "0", "ENDSEC", "0", "EOF",
+        // clang-format on
+    };
+    for (const char *tag : tags)
+      dxf << tag << '\n';
+  }
+
+  for (const bool addEntity : {false, true}) {
+    for (RS2::FormatType format : kMixedHandleFormats) {
+      CAPTURE(addEntity, static_cast<int>(format));
+      RS_Graphic source;
+      {
+        RS_FilterDXFRW filter;
+        REQUIRE(filter.fileImport(source, QString::fromStdString(dxfPath),
+                                  RS2::FormatDXFRW));
+      }
+      if (addEntity) {
+        source.addEntity(new RS_Line(
+            &source, RS_LineData{RS_Vector{0.0, 9.0}, RS_Vector{10.0, 9.0}}));
+      }
+
+      const std::string path = tempPath("mixed_source_handles_attrib.dwg");
+      std::remove(path.c_str());
+      {
+        RS_FilterDXFRW filter;
+        REQUIRE(
+            filter.fileExport(source, QString::fromStdString(path), format));
+      }
+
+      DwgOwnerChainIface readIface;
+      readOwnerChainDwg(path, readIface);
+      CHECK(readIface.lines.size() == (addEntity ? 3u : 2u));
+      REQUIRE(readIface.inserts.size() == 1u);
+      const DRW_Insert &insert = readIface.inserts.front();
+      REQUIRE(insert.attlist.size() == 1u);
+      REQUIRE(insert.attlist.front() != nullptr);
+      CHECK(insert.attlist.front()->tag == "TAG");
+      CHECK(insert.attlist.front()->text == "val");
+      if (format == RS2::FormatDWG) {
+        // INSERT, ATTRIB and SEQEND take consecutive handles.
+        CHECK(insert.attlist.front()->handle == insert.handle + 1u);
+        CHECK(insert.seqendH.ref == insert.handle + 2u);
+      }
+      std::remove(path.c_str());
+    }
+  }
+  std::remove(dxfPath.c_str());
+}
+
+// A handle-less entity the writers drop (an empty polyline) must not leave an
+// unused handle inside an R2000 owner chain.
+TEST_CASE("RS_FilterDXFRW saves source-handled entities around a dropped "
+          "new one",
+          "[dwg-write][handles][filter][mixed-source-handles]") {
+  ensureQtSettings();
+  for (RS2::FormatType format : kMixedHandleFormats) {
+    CAPTURE(static_cast<int>(format));
+    const std::string path = tempPath("mixed_source_handles_dropped.dwg");
+    std::remove(path.c_str());
+
+    RS_Graphic source;
+    source.initForNewDocument();
+    auto *first = new RS_Line(
+        &source, RS_LineData{RS_Vector{0.0, 0.0}, RS_Vector{10.0, 0.0}});
+    first->setSourceHandle(0xA1u);
+    source.addEntity(first);
+    source.addEntity(new RS_Polyline(&source));
+    auto *last = new RS_Line(
+        &source, RS_LineData{RS_Vector{0.0, 5.0}, RS_Vector{10.0, 5.0}});
+    last->setSourceHandle(0xA2u);
+    source.addEntity(last);
+
+    {
+      RS_FilterDXFRW filter;
+      REQUIRE(filter.fileExport(source, QString::fromStdString(path), format));
+    }
+
+    DwgOwnerChainIface readIface;
+    readOwnerChainDwg(path, readIface);
+    REQUIRE(readIface.lines.size() == 2u);
+    if (format == RS2::FormatDWG) {
+      CHECK(std::max(readIface.lines[0].handle, readIface.lines[1].handle) ==
+            std::min(readIface.lines[0].handle, readIface.lines[1].handle) +
+                1u);
+    }
+    std::remove(path.c_str());
+  }
+}

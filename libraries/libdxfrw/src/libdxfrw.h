@@ -243,6 +243,10 @@ public:
      * reserved or minted so far). Used to populate $HANDSEED. Mirrors
      * dwgWriter::highWaterHandle. */
     std::uint32_t highWaterHandle() const { return m_handleAllocator.current(); }
+    /*!< Whether reserveHandle() was called for @p h. */
+    bool isReservedHandle(std::uint32_t h) const {
+        return m_handleAllocator.isExplicitlyReserved(h);
+    }
     /*!< Register the CLASS records to emit in the DXF CLASSES section. The
      * filter supplies source definitions and recomputes instance counts from
      * raw and typed records selected for output. */
@@ -287,11 +291,14 @@ public:
     }
     /*!< Register GROUP objects to typed-emit in the regenerated OBJECTS section
      * (DXF write path only). Each carries its name/description/flags and the
-     * member entity SOURCE handles (DRW_Group::m_entityHandles). The codec mints
-     * a fresh group handle, injects the (name, minted-handle) entry into the
-     * ACAD_GROUP D dict, and emits the GROUP with 340 references resolved through
-     * the writeEntity source->minted map (members absent from the map — consumed
-     * or filtered entities — are skipped, never emitted as a dangling 340).
+     * member entity SOURCE handles (DRW_Group::m_entityHandles). A GROUP whose
+     * handle the caller reserved (reserveHandle) is emitted under it, so that
+     * references written before OBJECTS — its members' reactors — can name it;
+     * any other GROUP, or a second one with the same handle, gets a fresh
+     * handle. The codec injects the (name, handle) entry into the ACAD_GROUP D
+     * dict, and emits the GROUP with 340 references resolved through the
+     * writeEntity source->minted map (members absent from the map — consumed or
+     * filtered entities — are skipped, never emitted as a dangling 340).
      * Empty by default. */
     void setGroups(const std::vector<DRW_Group> &groups) {
         m_groups = groups;
@@ -321,6 +328,15 @@ public:
         auto it = m_handleRemap.find(handle);
         return it == m_handleRemap.end() ? handle : it->second;
     }
+    /*!< Map a handle an entity or table record names in its reactors or
+     * extension dictionary to the handle its target is written under; 0 leaves
+     * the reference out. Without a resolver the handles are written as given. */
+    void setReferenceResolver(std::function<std::uint32_t(std::uint32_t)> resolver) {
+        m_referenceResolver = std::move(resolver);
+    }
+    /*!< What the last write left out or simplified because the target version
+     * cannot hold it, by description, with a count. */
+    const std::map<std::string, std::size_t> &leftOut() const { return m_leftOut; }
     //! Resolve a source entity handle after writeEntity() minted its DXF handle.
     std::uint32_t remapEntityHandle(std::uint32_t sourceHandle) const;
     //! Reserve the future code-5 handle for a source entity before table
@@ -335,6 +351,10 @@ public:
     void markSourceHandleAmbiguous(std::uint32_t sourceHandle);
 
     DRW::Version getVersion() const;
+    //! The version a read file declares in $ACADVER. getVersion() gives the
+    //! version it was decoded as, which is one for R13-R2004 and one for
+    //! R2007 and later.
+    DRW::Version getSourceVersion() const;
     DRW::error getError() const;
 
     std::uint32_t getBlockRecordHandleToWrite(const std::string& blockName) const;
@@ -551,7 +571,9 @@ private:
     bool emitBlockRecord(const PendingDxfBlockRecord& record);
     // captureSourceHandle=false on the VERTEX/SEQEND parent re-entries
     // (writePolyline/writeInsert) so they do not pollute the source->minted map.
-    bool rejectUnsupportedDxfWrite() noexcept;
+    //! Leaves out a record the version being written has no place for, and
+    //! counts it in leftOut(); the record's writer returns what this does.
+    bool leaveOutUnsupported(const char *recordName) noexcept;
     bool failDxfWrite() noexcept;
     bool writeRequiredString(int code, const std::string& value);
     bool allocateDxfHandle(std::uint32_t& handle) noexcept;
@@ -597,6 +619,7 @@ private:
 
 private:
     DRW::Version version { DRW::UNKNOWNV };
+    DRW::Version m_sourceVersion { DRW::UNKNOWNV };
     DRW::error error {DRW::BAD_NONE};
     bool m_writeError {false};
     std::string fileName;
@@ -640,6 +663,15 @@ private:
     /// few raw objects whose original handle collides with a fixed structural
     /// literal. Empty by default (raw handles emitted verbatim).
     std::map<std::uint32_t, std::uint32_t> m_handleRemap;
+    std::function<std::uint32_t(std::uint32_t)> m_referenceResolver;
+    std::map<std::string, std::size_t> m_leftOut;
+    void noteLeftOut(const char *what) { ++m_leftOut[what]; }
+    std::uint32_t resolveReference(std::uint32_t handle) const {
+        return handle == 0 || !m_referenceResolver ? handle : m_referenceResolver(handle);
+    }
+    std::vector<std::uint32_t> resolveReferences(const std::vector<std::uint32_t> &handles) const;
+    std::list<std::list<DRW_Variant>> resolveAppDataReferences(
+        const std::list<std::list<DRW_Variant>> &appData);
     bool wlayer0 {false};
     bool dimstyleStd {false};
     bool applyExt {false};

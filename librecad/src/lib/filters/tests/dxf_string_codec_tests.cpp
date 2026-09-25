@@ -44,7 +44,8 @@
 
 namespace {
 
-// ---- Reference implementations (pre-optimisation, verbatim) ----
+// ---- Reference implementations (pre-optimisation; toDxfString since
+//      caret-encodes control characters and carets) ----
 
 QString toDxfStringReference(const QString& str) {
     // 1. Reserve memory up front to eliminate reallocation overhead
@@ -56,7 +57,7 @@ QString toDxfStringReference(const QString& str) {
         const ushort c = qchar.unicode();
 
         // 3. Keep standard ASCII characters without filtering overhead
-        if (c <= 175 && c >= 11) {
+        if (c <= 175 && c >= 0x20 && c != 0x5E) {
             res.append(qchar);
             continue;
         }
@@ -65,6 +66,9 @@ QString toDxfStringReference(const QString& str) {
         switch (c) {
         case 0x0A:
             res.append(uR"(\P)");
+            break;
+        case 0x5E: // a literal caret
+            res.append(u"^ ");
             break;
         case 0x2205:
         case 0x2300:
@@ -77,7 +81,12 @@ QString toDxfStringReference(const QString& str) {
             res.append(u"%%P");
             break;
         default:
-            res.append(qchar);
+            if (c < 0x20) { // other control characters: caret codes
+                res.append(QChar(0x5E));
+                res.append(QChar(static_cast<ushort>(c + 0x40)));
+            } else {
+                res.append(qchar);
+            }
             break;
         }
     }
@@ -219,6 +228,38 @@ TEST_CASE("toDxfString: boundary chars around the [11, 175] fast-path",
     requireDxfEqual(QString(QChar(0xB0)) + QStringLiteral("a"));      // 176 — above fast-path
     requireDxfEqual(QString(QChar(0x100)) + QStringLiteral("a"));     // generic Unicode
     requireDxfEqual(QString(QChar(0x4E2D)) + QStringLiteral("a"));    // CJK
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("toDxfString: control characters and carets become caret codes",
+          "[dxf_codec][to_dxf]") {
+    CHECK(RS_FilterDXFRW::toDxfString(QStringLiteral("x\ty")) == QStringLiteral("x^Iy"));
+    CHECK(RS_FilterDXFRW::toDxfString(QStringLiteral("c\rd")) == QStringLiteral("c^Md"));
+    CHECK(RS_FilterDXFRW::toDxfString(QString(QChar(0)) + QStringLiteral("z")) == QStringLiteral("^@z"));
+    CHECK(RS_FilterDXFRW::toDxfString(QStringLiteral("p^q")) == QStringLiteral("p^ q"));
+    // toNativeString reads them back
+    for (const QString& text : {QStringLiteral("x\ty"), QStringLiteral("c\rd"), QStringLiteral("p^q"),
+                                QStringLiteral("^^\t^")}) {
+        CHECK(RS_FilterDXFRW::toNativeString(RS_FilterDXFRW::toDxfString(text)) == text);
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("toDxfString: caretCodes=false leaves control characters and carets as-is",
+          "[dxf_codec][to_dxf]") {
+    // A DWG string holds the characters themselves; caret codes are an ASCII
+    // DXF-only spelling for what it cannot hold directly (see the caretCodes
+    // parameter doc). Every RS_FilterDXFRW call site that may write either
+    // format passes caretCodes = (m_dwgW == nullptr).
+    CHECK(RS_FilterDXFRW::toDxfString(QStringLiteral("x\ty"), false) == QStringLiteral("x\ty"));
+    CHECK(RS_FilterDXFRW::toDxfString(QStringLiteral("c\rd"), false) == QStringLiteral("c\rd"));
+    CHECK(RS_FilterDXFRW::toDxfString(QString(QChar(0)) + QStringLiteral("z"), false) ==
+          QString(QChar(0)) + QStringLiteral("z"));
+    CHECK(RS_FilterDXFRW::toDxfString(QStringLiteral("m^2"), false) == QStringLiteral("m^2"));
+    // The LF-to-\P and %%D/%%C/%%P substitutions are MTEXT/text markup, not
+    // an ASCII-container escape, so they still apply for either format.
+    CHECK(RS_FilterDXFRW::toDxfString(QStringLiteral("a\nb"), false) == QStringLiteral(R"(a\Pb)"));
+    CHECK(RS_FilterDXFRW::toDxfString(QString(QChar(0x00B0)), false) == QStringLiteral("%%D"));
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)

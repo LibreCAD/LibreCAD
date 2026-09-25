@@ -92,6 +92,7 @@
 #include "rs_actioninterface.h"
 #include "rs_actionprintpreview.h"
 #include "rs_debug.h"
+#include "rs_fileio.h"
 #include "rs_settings.h"
 #include "rs_units.h"
 #include "twostackedlabels.h"
@@ -272,7 +273,12 @@ bool QC_ApplicationWindow::doSave(QC_MDIWindow* w, const bool forceSaveAs) {
             }
 
             drawingFileFullPath = w->getFileName();
-            msg = tr("Saved drawing: %1").arg(drawingFileFullPath);
+            // Say what the file could not hold; the save itself went through.
+            const QString leftOut = RS_FileIO::instance()->lastExportReport();
+            msg = leftOut.isEmpty()
+                ? tr("Saved drawing: %1").arg(drawingFileFullPath)
+                : tr("Saved drawing: %1. Left out: %2")
+                      .arg(drawingFileFullPath, leftOut.split(QLatin1Char('\n')).join(QStringLiteral("; ")));
             showStatusMessage(msg, 2000);
 
             m_recentFilesList->addIfAbsent(drawingFileFullPath);
