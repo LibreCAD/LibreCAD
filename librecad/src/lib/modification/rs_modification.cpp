@@ -357,7 +357,11 @@ bool RS_Modification::changeAttributes(
 
         if (data.applyBlockDeep && en->rtti() == RS2::EntityInsert) {
             RS_Block* bl = static_cast<RS_Insert*>(en)->getBlockForInsert();
-            blocks << bl;
+            // An insert whose block wasn't found (e.g. a pasted insert whose
+            // block failed to come along) has nothing to recurse into.
+            if (bl) {
+                blocks << bl;
+            }
         }
 
         RS_Entity* cl = en->clone();
@@ -456,6 +460,13 @@ void RS_Modification::copy(const RS_Vector& ref, const bool cut) {
     RS_CLIPBOARD->clear();
     RS_CLIPBOARD->getGraphic()->setUnit(m_graphic->getUnit());
 
+    // Issue #2921: Cut must be undoable; copyEntity() records each cut
+    // entity via m_document->addUndoable(), which needs an open undo
+    // cycle. A plain copy never mutates the document, so this stays a
+    // no-op then (LC_UndoSection only opens a cycle when handleUndo is
+    // true).
+    LC_UndoSection undo(m_document, m_handleUndo && cut);
+
     for(RS_Entity* e: *m_container){
         if (e != nullptr && e->isSelected()) {
             copyEntity(e, ref, cut);
@@ -485,6 +496,27 @@ void RS_Modification::copyEntity(RS_Entity* e, const RS_Vector& ref, bool cut) {
     e2->move(-ref);
 
     RS_CLIPBOARD->addEntity(e2);
+
+    // Issues #2548/#2921: carry the entity's layer, and for an insert its
+    // block(s) (recursively), into the clipboard, then point the
+    // clipboard's own copy at its own layer clone instead of the source
+    // drawing's. Without this, closing the source document or deleting a
+    // layer there leaves the clipboard holding a dangling RS_Layer*, and
+    // a pasted insert names a block the target never receives.
+    copyLayers(e);
+    copyBlocks(e);
+    if (RS_Layer* l = e->getLayer()) {
+        e2->setLayer(l->getName());
+    }
+    if (e2->rtti() == RS2::EntityInsert) {
+        // e2 still carries whatever cached, transformed copy of its block's
+        // entities it had at clone() time, from the source. copyBlocks()
+        // just above decoupled and registered that block in the clipboard;
+        // rebuild the cache from it, discarding the stale one. (A block
+        // reference cycle this happens to complete, issue #2921, is
+        // guarded in RS_Insert::update() itself.)
+        static_cast<RS_Insert*>(e2)->update();
+    }
 
     if (cut) {
         e->changeUndoState();
@@ -569,14 +601,65 @@ void RS_Modification::copyBlocks(RS_Entity* e) {
     QString bn = b->getName();
     if (!RS_CLIPBOARD->hasBlock(bn)) {
         RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyBlocks: add block name: %s", bn.toLatin1().data());
-        RS_CLIPBOARD->addBlock((RS_Block*)b->clone());
-    }
-    //find insert into insert
-    for(auto e2: *b) {
-        //call copyBlocks only if entity are insert
-        if (e2->rtti()==RS2::EntityInsert) {
-            RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyBlocks: process insert-into-insert blocks for %s", getIdFlagString(e).c_str());
-            copyBlocks(e2);
+        // Issue #2921: build a block of our own instead of cloning the
+        // source's. RS_Block::clone() copy-constructs RS_Document, which
+        // shares the source block's own undo history (undoing something in
+        // the clipboard's, or later the target's, copy could then reach
+        // back and mutate the source's block) and copies its own layer
+        // pointer verbatim (nothing else ever sets one on the copy, so it
+        // keeps naming the source drawing's layer).
+        auto* blockClone = new RS_Block(
+            RS_CLIPBOARD->getGraphic(), RS_BlockData(bn, b->getBasePoint(), b->isFrozen()));
+        RS_CLIPBOARD->addBlock(blockClone);
+
+        // Find insert into insert, and register THAT block first: the
+        // fixup below rebuilds any insert child's own cached content from
+        // its referenced block, which must already be in the clipboard by
+        // then.
+        for(auto e2: *b) {
+            if (e2->rtti()==RS2::EntityInsert) {
+                RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyBlocks: process insert-into-insert blocks for %s", getIdFlagString(e).c_str());
+                copyBlocks(e2);
+            }
+        }
+
+        // Issue #2921: clone each child into the new block ourselves,
+        // rather than through RS_Block::clone()'s own detach(), which
+        // reparents every child directly onto the block (RS_EntityContainer
+        // ::reparent() is recursive), flattening one that is itself a
+        // container (a dimension's parts, say) onto the block instead of
+        // keeping it parented to its own clone. An insert child uses its
+        // own reparent() override instead of setParent(): the same
+        // non-recursive effect, and it also invalidates the child's cached
+        // block pointer.
+        for(auto* srcChild: *b) {
+            if (!srcChild) {
+                continue;
+            }
+            RS_Entity* childClone = srcChild->clone();
+            if (childClone->rtti() == RS2::EntityInsert) {
+                childClone->reparent(blockClone);
+            } else {
+                childClone->setParent(blockClone);
+            }
+            blockClone->addEntity(childClone);
+
+            // Point it at the clipboard's own layer clone (copyLayers(),
+            // above in copyEntity(), already cloned every name this
+            // block's children need into the clipboard) instead of the
+            // source drawing's.
+            if (childClone->getLayer()) {
+                childClone->setLayer(childClone->getLayer()->getName());
+            }
+            if (childClone->rtti() == RS2::EntityInsert) {
+                // Rebuild its cached content (a transformed copy of ITS OWN
+                // referenced block, independent of the RS_Block above) from
+                // the now-registered block, discarding whatever it cloned
+                // from the source. (A block reference cycle this copy
+                // happens to complete -- a stale library-insert reference,
+                // say -- is guarded in RS_Insert::update() itself.)
+                static_cast<RS_Insert*>(childClone)->update();
+            }
         }
     }
 
@@ -609,6 +692,32 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
 
     RS_Vector scale = getPasteScale(data, source, *m_graphic);
 
+    // Issue #2447: reserve the wrapper block's name -- creating it, empty,
+    // if a paste as a new block hasn't already left one by this name --
+    // before pasteBlocks() below can register any of source's OWN blocks
+    // under m_graphic. A library file can define an internal block that
+    // happens to share its file name with data.blockName; reserving the
+    // wrapper's name first makes pasteBlocks() skip that unrelated block
+    // as an already-existing one (the same #2447 rule this wrapper itself
+    // relies on), rather than pasteBlocks() creating a second, colliding
+    // block under the very name addNewBlock() is about to also claim.
+    RS_Block* wrapper = nullptr;
+    bool wrapperIsNew = false;
+    if (data.asInsert) {
+        wrapper = m_graphic->findBlock(data.blockName);
+        if (wrapper == nullptr) {
+            wrapper = addNewBlock(m_graphic->newBlockName(data.blockName), *m_graphic);
+            wrapperIsNew = true;
+        }
+    }
+
+    // Issues #2548/#2921: make sure the target has a layer and a block for
+    // every one the pasted entities name, before resolving any of them by
+    // name below. pasteBlocks() also re-homes each materialized block's own
+    // entities onto the target's same-named layer.
+    pasteLayers(source);
+    pasteBlocks(source);
+
     if (!data.asInsert) {
 
         std::vector<RS_Entity*> addList;
@@ -627,9 +736,16 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
                 e2->scale(data.insertionPoint, scale);
             }
 
-            e2->setLayer(m_graphic->getActiveLayer());
+            // Issue #2548: keep the entity's own layer (created above if the
+            // target didn't have it yet) instead of forcing every paste onto
+            // the currently active layer.
+            if (const RS_Layer* l = e->getLayer()) {
+                e2->setLayer(l->getName());
+            } else {
+                e2->setLayer(m_graphic->getActiveLayer());
+            }
 
-            // Force early update to apply composed angle
+            // Force early update to apply composed angle.
             if (e2->rtti() == RS2::EntityInsert) {
                 static_cast<RS_Insert*>(e2)->update();
             }
@@ -640,14 +756,11 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
         addNewEntities(addList);
     } else {
 
-        // Issue #2447 : use the existing block, if exists
-        QString name = data.blockName;
-        RS_Block* b = m_graphic->findBlock(name);
-        if (b == nullptr) {
-            // paste as block: create new block:
-            name = m_graphic->newBlockName(name);
-            b = addNewBlock(name, *m_graphic);
-
+        // Issue #2447: b is the existing wrapper block if one was found
+        // above, or the empty one just reserved there under a fresh name.
+        RS_Block* b = wrapper;
+        const QString name = b->getName();
+        if (wrapperIsNew) {
             // Add entities to block in raw state - no transformations applied.
             // All scale/rotation is handled by the outer Insert via its
             // scaleFactor and angle properties during update().
@@ -657,6 +770,18 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
                 RS_Entity* e2 = e->clone();
                 e2->reparent(b);
                 b->addEntity(e2);
+                // Issue #2548: as above, keep each entity's own layer.
+                if (const RS_Layer* l = e->getLayer()) {
+                    e2->setLayer(l->getName());
+                }
+                if (e2->rtti() == RS2::EntityInsert) {
+                    // As in copyEntity(): e2 still carries whatever cached,
+                    // transformed copy of its block's entities it had at
+                    // clone() time. pasteBlocks(), above, already
+                    // materialized that block in m_graphic; rebuild the
+                    // cache from it, discarding the stale one.
+                    static_cast<RS_Insert*>(e2)->update();
+                }
             }
         }
 
@@ -713,6 +838,96 @@ bool RS_Modification::pasteLayers(RS_Graphic* source) {
     }
 
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteLayers: OK");
+    return true;
+}
+
+
+
+/**
+ * Create blocks in destination m_graphic for every block the source's
+ * entities reference (an insert's, possibly nested), reusing an existing
+ * block of the same name (issue #2447). Each materialized block's own
+ * entities are pointed at the destination's same-named layer (added by
+ * pasteLayers(), which must run first), so they don't keep a stale layer
+ * pointer into the clipboard or the source drawing.
+ *
+ **/
+bool RS_Modification::pasteBlocks(RS_Graphic* source) {
+
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteBlocks");
+
+    if (!source) {
+        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::pasteBlocks: no valid graphic found");
+        return false;
+    }
+
+    RS_BlockList* blks = source->getBlockList();
+
+    // Pass 1: create an empty block of our own (issue #2921: not a clone of
+    // the clipboard's -- see copyBlocks() for why) for every block the
+    // target doesn't already have (issue #2447), so a block referencing
+    // another one always finds it in pass 2 below, whichever order
+    // source->getBlockList() gives them in. sourceOf[i] is the clipboard
+    // block added[i]'s children (pass 2) are cloned from.
+    QList<RS_Block*> added;
+    QList<RS_Block*> sourceOf;
+    for(RS_Block* b: *blks) {
+
+        if (!b) {
+            RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Modification::pasteBlocks: nullptr block in source");
+            continue;
+        }
+
+        QString bn = b->getName();
+        if (m_graphic->findBlock(bn)) {
+            continue;
+        }
+
+        RS_Block* blockClone = new RS_Block(
+            m_graphic, RS_BlockData(bn, b->getBasePoint(), b->isFrozen()));
+        m_graphic->addBlock(blockClone);
+        added << blockClone;
+        sourceOf << b;
+
+        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteBlocks: block added: %s", bn.toLatin1().data());
+    }
+
+    // Pass 2: clone each block's children from the clipboard (as in
+    // copyBlocks(), not through RS_Block::clone(), to avoid sharing the
+    // clipboard block's undo history and keep a child that is itself a
+    // container parented to its own clone, not flattened onto the block).
+    // Point each one at the target's same-named layer (added by
+    // pasteLayers(), which must run before this), and rebuild any insert
+    // child's own cached content from the block IT references (now
+    // guaranteed present, from pass 1), discarding whatever it cloned from
+    // the clipboard. Without either, this entity still names a layer or
+    // block that isn't in the target, or reads a dangling RS_Layer* once
+    // the clipboard is next cleared.
+    for(int i = 0; i < added.size(); ++i) {
+        RS_Block* blockClone = added[i];
+        RS_Block* b = sourceOf[i];
+        for(auto* srcChild: *b) {
+            if (!srcChild) {
+                continue;
+            }
+            RS_Entity* childClone = srcChild->clone();
+            if (childClone->rtti() == RS2::EntityInsert) {
+                childClone->reparent(blockClone);
+            } else {
+                childClone->setParent(blockClone);
+            }
+            blockClone->addEntity(childClone);
+
+            if (childClone->getLayer()) {
+                childClone->setLayer(childClone->getLayer()->getName());
+            }
+            if (childClone->rtti() == RS2::EntityInsert) {
+                static_cast<RS_Insert*>(childClone)->update();
+            }
+        }
+    }
+
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteBlocks: OK");
     return true;
 }
 

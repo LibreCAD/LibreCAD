@@ -282,6 +282,7 @@ private:
     void copyLayers(RS_Entity* e);
     void copyBlocks(RS_Entity* e);
     bool pasteLayers(RS_Graphic* source);
+    bool pasteBlocks(RS_Graphic* source);
     bool pasteContainer(RS_Entity* entity, RS_EntityContainer* container, QHash<QString, QString>blocksDict, RS_Vector insertionPoint);
     void pasteEntity(RS_Entity* entity, RS_EntityContainer* container);
     void deselectOriginals(bool remove);

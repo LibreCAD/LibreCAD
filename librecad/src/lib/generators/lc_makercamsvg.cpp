@@ -283,6 +283,11 @@ void LC_MakerCamSVG::writeEntity(RS_Entity* entity) {
 void LC_MakerCamSVG::writeInsert(RS_Insert* insert) {
 
     RS_Block* block = insert->getBlockForInsert();
+    if (!block) {
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "LC_MakerCamSVG::writeInsert: no block found for insert, skipping");
+        return;
+    }
 
     RS_Vector insertionpoint = insert->getInsertionPoint();
     // The conversion from drawing space to the svg space (column major) transform matrix(M):
