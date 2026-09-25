@@ -4069,6 +4069,78 @@ TEST_CASE("DXF moves a typed object off a handle the save gives a structural rec
   std::filesystem::remove(out);
 }
 
+TEST_CASE("DXF references to table records follow them to their written handles",
+          "[dxf][roundtrip][filter][handles]") {
+  ensureSettings();
+  const std::string src = tmpFile("table-refs-src.dxf");
+  const std::string out = tmpFile("table-refs-out.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  // A raw object names a text style, a layer and a linetype by handle; the
+  // save writes each table record under a handle of its own.
+  writeText(src,
+            "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1015\n0\nENDSEC\n"
+            "0\nSECTION\n2\nCLASSES\n"
+            "0\nCLASS\n1\nACME_THING\n2\nAcmeThing\n3\nACME\n90\n0\n280\n0\n281\n0\n"
+            "0\nENDSEC\n"
+            "0\nSECTION\n2\nTABLES\n"
+            "0\nTABLE\n2\nLTYPE\n5\n5\n330\n0\n100\nAcDbSymbolTable\n70\n1\n"
+            "0\nLTYPE\n5\n3D\n330\n5\n100\nAcDbSymbolTableRecord\n"
+            "100\nAcDbLinetypeTableRecord\n2\nDASHED\n70\n0\n3\n__ __\n72\n65\n"
+            "73\n2\n40\n0.75\n49\n0.5\n74\n0\n49\n-0.25\n74\n0\n"
+            "0\nENDTAB\n"
+            "0\nTABLE\n2\nLAYER\n5\n2\n330\n0\n100\nAcDbSymbolTable\n70\n1\n"
+            "0\nLAYER\n5\n40\n330\n2\n100\nAcDbSymbolTableRecord\n"
+            "100\nAcDbLayerTableRecord\n2\nWalls\n70\n0\n62\n1\n6\nDASHED\n"
+            "0\nENDTAB\n"
+            "0\nTABLE\n2\nSTYLE\n5\n3\n330\n0\n100\nAcDbSymbolTable\n70\n1\n"
+            "0\nSTYLE\n5\n3F\n330\n3\n100\nAcDbSymbolTableRecord\n"
+            "100\nAcDbTextStyleTableRecord\n2\nMyStyle\n70\n0\n40\n0\n41\n1\n"
+            "50\n0\n71\n0\n42\n2.5\n3\ntxt\n4\n\n"
+            "0\nENDTAB\n0\nENDSEC\n"
+            "0\nSECTION\n2\nENTITIES\n"
+            "0\nLINE\n5\nA1\n100\nAcDbEntity\n8\nWalls\n100\nAcDbLine\n"
+            "10\n0\n20\n0\n30\n0\n11\n10\n21\n0\n31\n0\n"
+            "0\nENDSEC\n"
+            "0\nSECTION\n2\nOBJECTS\n"
+            "0\nDICTIONARY\n5\nC\n330\n0\n100\nAcDbDictionary\n281\n1\n"
+            "3\nACME_THINGS\n350\n80\n"
+            "0\nDICTIONARY\n5\n80\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+            "3\nTHING\n350\n91\n"
+            "0\nACME_THING\n5\n91\n330\n80\n100\nAcmeThing\n"
+            "340\n3F\n340\n40\n340\n3D\n"
+            "0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              graphic.getFormatType()));
+  }
+
+  const auto refs = recordGroupValues(out, "ACME_THING", "340");
+  REQUIRE(refs.size() == 3);
+  const auto nameOf = [&out](const char *record, const std::string &handle) {
+    for (const auto &[code, value] : recordGroupsWithValue(out, record, "5", handle))
+      if (code == "2")
+        return value;
+    return std::string("?") + handle;
+  };
+  CHECK(nameOf("STYLE", refs[0]) == "MyStyle");
+  CHECK(nameOf("LAYER", refs[1]) == "Walls");
+  CHECK(nameOf("LTYPE", refs[2]) == "DASHED");
+  CHECK(danglingReferences(out).empty());
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
 TEST_CASE("DXF saved in another version leaves out the raw objects it cannot hold",
           "[dxf][roundtrip][filter][version]") {
   ensureSettings();

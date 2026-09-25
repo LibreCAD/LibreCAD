@@ -620,6 +620,7 @@ private:
     bool writeTableEntryAppData(const DRW_TableEntry& entry);
 
     bool setError(const DRW::error lastError);
+    void noteTableRecordHandle(std::uint32_t source, std::uint32_t written);
 
 private:
     DRW::Version version { DRW::UNKNOWNV };

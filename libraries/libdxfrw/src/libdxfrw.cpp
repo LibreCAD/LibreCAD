@@ -2288,6 +2288,10 @@ bool dxfRW::writeLineType(DRW_LType *ent){
               });
     //do not write linetypes handled by library
     if (strname == "BYLAYER" || strname == "BYBLOCK" || strname == "CONTINUOUS") {
+        noteTableRecordHandle(static_cast<std::uint32_t>(ent->handle),
+                              strname == "BYBLOCK"   ? 0x14u
+                              : strname == "BYLAYER" ? 0x15u
+                                                     : 0x16u);
         // These mandatory records are emitted before the interface callback,
         // without the application data a source file may attach to them.
         if (!ent->appData.empty() || !ent->extData.empty()
@@ -2368,6 +2372,7 @@ bool dxfRW::writeLineType(DRW_LType *ent){
         return false;
     }
     state.commit();
+    noteTableRecordHandle(static_cast<std::uint32_t>(ent->handle), allocatedHandle);
     return true;
 }
 
@@ -2447,6 +2452,7 @@ bool dxfRW::writeLayer(DRW_Layer *ent){
         return false;
     }
     state.commit();
+    noteTableRecordHandle(static_cast<std::uint32_t>(ent->handle), allocatedHandle != 0 ? allocatedHandle : 0x10u);
     return true;
 }
 
@@ -2527,6 +2533,7 @@ bool dxfRW::writeTextstyle(DRW_Textstyle *ent){
         return false;
     }
     state.commit();
+    noteTableRecordHandle(static_cast<std::uint32_t>(ent->handle), allocatedHandle);
     return true;
 }
 
@@ -2641,6 +2648,7 @@ bool dxfRW::writeVport(DRW_Vport *ent){
         return false;
     }
     state.commit();
+    noteTableRecordHandle(static_cast<std::uint32_t>(ent->handle), allocatedHandle);
     return true;
 }
 
@@ -2862,6 +2870,7 @@ bool dxfRW::writeDimstyle(DRW_Dimstyle *ent){
         return false;
     }
     state.commit();
+    noteTableRecordHandle(static_cast<std::uint32_t>(ent->handle), allocatedHandle);
     return true;
 }
 
@@ -2959,6 +2968,7 @@ bool dxfRW::writeView(DRW_View *ent){
         return false;
     }
     state.commit();
+    noteTableRecordHandle(static_cast<std::uint32_t>(ent->handle), allocatedHandle);
     return true;
 }
 
@@ -3019,6 +3029,7 @@ bool dxfRW::writeUCS(DRW_UCS *ent){
         return false;
     }
     state.commit();
+    noteTableRecordHandle(static_cast<std::uint32_t>(ent->handle), allocatedHandle);
     return true;
 }
 
@@ -3035,8 +3046,10 @@ bool dxfRW::writeAppId(DRW_AppId *ent){
                   return static_cast<char>(std::toupper(ch));
               });
     //do not write mandatory ACAD appId, handled by library
-    if (strname == "ACAD")
+    if (strname == "ACAD") {
+        noteTableRecordHandle(static_cast<std::uint32_t>(ent->handle), 0x12u);
         return true;
+    }
     RecordStateScope state(*this, ent);
     DxfWriterRecordScope record(*writer);
     std::uint32_t allocatedHandle = 0;
@@ -3070,6 +3083,7 @@ bool dxfRW::writeAppId(DRW_AppId *ent){
         return false;
     }
     state.commit();
+    noteTableRecordHandle(static_cast<std::uint32_t>(ent->handle), allocatedHandle);
     return true;
 }
 
@@ -15978,6 +15992,14 @@ std::string dxfRW::toHexStr(int n){
 
 DRW::Version dxfRW::getVersion() const {
     return version;
+}
+
+void dxfRW::noteTableRecordHandle(std::uint32_t source, std::uint32_t written) {
+    // A table record is written under a handle of its own; a reference to
+    // the handle it was read with follows it.
+    if (version > DRW::AC1009 && source != 0 && written != 0
+        && source != written)
+        m_handleRemap.emplace(source, written);
 }
 
 DRW::Version dxfRW::getSourceVersion() const {
