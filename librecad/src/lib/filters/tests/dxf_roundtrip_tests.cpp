@@ -5805,6 +5805,344 @@ TEST_CASE("DXF DSTYLE line type reference survives a non-ASCII linetype name",
   checkDimLineTypeRef("dimension_dstyle_ltype_utf8.dxf", "\xC3\xB6lfarbe");
 }
 
+namespace {
+
+// A DIMSTYLE record with the given groups after its name and flags.
+std::string dimStyleRecord(const std::string &handle, const std::string &name,
+                           const std::string &groups) {
+  return "0\nDIMSTYLE\n105\n" + handle + "\n330\nA\n"
+         "100\nAcDbSymbolTableRecord\n100\nAcDbDimStyleTableRecord\n"
+         "2\n" + name + "\n70\n0\n" + groups;
+}
+
+// ByBlock, ByLayer and Continuous at handles 14-16, `lineTypes` at 40, 41
+// and so on, and the DIMSTYLE records `dimStyles`.
+std::string dimStyleLineTypeFixture(const std::vector<std::string> &lineTypes,
+                                    const std::string &dimStyles) {
+  const auto record = [](const std::string &handle, const std::string &name,
+                         const std::string &pattern) {
+    return "0\nLTYPE\n5\n" + handle + "\n330\n5\n"
+           "100\nAcDbSymbolTableRecord\n100\nAcDbLinetypeTableRecord\n"
+           "2\n" + name + "\n70\n0\n" + pattern;
+  };
+  const std::string solid = "72\n65\n73\n0\n40\n0.0\n";
+  std::string records = record("14", "ByBlock", "3\n\n" + solid) +
+                        record("15", "ByLayer", "3\n\n" + solid) +
+                        record("16", "Continuous", "3\nSolid line\n" + solid);
+  for (std::size_t i = 0; i < lineTypes.size(); ++i)
+    records += record(std::to_string(40 + i), lineTypes[i],
+                      "3\nDashed\n72\n65\n73\n2\n40\n19.05\n"
+                      "49\n12.7\n74\n0\n49\n-6.35\n74\n0\n");
+  return "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n0\nENDSEC\n"
+         "0\nSECTION\n2\nTABLES\n"
+         "0\nTABLE\n2\nLTYPE\n5\n5\n330\n0\n100\nAcDbSymbolTable\n70\n" +
+         std::to_string(3 + lineTypes.size()) + "\n" + records +
+         "0\nENDTAB\n"
+         "0\nTABLE\n2\nDIMSTYLE\n5\nA\n330\n0\n"
+         "100\nAcDbSymbolTable\n70\n1\n100\nAcDbDimStyleTable\n71\n0\n" +
+         dimStyles +
+         "0\nENDTAB\n0\nENDSEC\n"
+         "0\nSECTION\n2\nENTITIES\n0\nENDSEC\n0\nEOF\n";
+}
+
+// VENDOR_DIM with DIMLTYPE, DIMLTEX1 and DIMLTEX2 at LTYPE 40, 41 and 42.
+const std::string kVendorDim =
+    dimStyleRecord("31", "VENDOR_DIM", "345\n40\n346\n41\n347\n42\n");
+
+// DIMLTYPE, DIMLTEX1 and DIMLTEX2 of a dimension style.
+std::vector<std::string> dimStyleLineTypes(const RS_Graphic &graphic,
+                                           const char *name) {
+  LC_DimStyle *style = graphic.getDimStyleByName(QString::fromUtf8(name));
+  REQUIRE(style != nullptr);
+  return {style->dimensionLine()->lineTypeName().toStdString(),
+          style->extensionLine()->lineTypeFirstRaw().toStdString(),
+          style->extensionLine()->lineTypeSecondRaw().toStdString()};
+}
+
+std::string lineTypeHandle(const std::string &path, const std::string &name) {
+  for (const auto &[code, value] :
+       recordGroupsWithValue(path, "LTYPE", "2", name))
+    if (code == "5")
+      return value;
+  return {};
+}
+
+// Groups 345-347 of a written DIMSTYLE record point at the LTYPE records
+// named `lineTypes`. ByBlock is written as no group.
+void checkWrittenDimStyleLineTypes(const std::string &path, const char *name,
+                                   const std::vector<std::string> &lineTypes) {
+  const char *codes[] = {"345", "346", "347"};
+  for (std::size_t i = 0; i < 3; ++i) {
+    INFO(name << " group " << codes[i]);
+    const auto written = namedRecordGroupValues(path, "DIMSTYLE", name,
+                                                codes[i]);
+    if (lineTypes[i] == "ByBlock") {
+      CHECK(written.empty());
+    } else {
+      const std::string handle = lineTypeHandle(path, lineTypes[i]);
+      CHECK_FALSE(handle.empty());
+      CHECK(written == std::vector<std::string>{handle});
+    }
+  }
+}
+
+// Opens `fixture`, saves it as R2007 DXF and reopens the saved file.
+void checkDimStyleLineTypeRoundTrip(const std::string &stem,
+                                    const std::string &fixture,
+                                    const std::vector<std::string> &lineTypes) {
+  const std::string src = tmpFile((stem + "_src.dxf").c_str());
+  const std::string out = tmpFile((stem + "_out.dxf").c_str());
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+  writeText(src, fixture);
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  CHECK(dimStyleLineTypes(graphic, "VENDOR_DIM") == lineTypes);
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+  checkWrittenDimStyleLineTypes(out, "VENDOR_DIM", lineTypes);
+
+  RS_Graphic reimported;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(reimported, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+  CHECK(dimStyleLineTypes(reimported, "VENDOR_DIM") == lineTypes);
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
+// The LINE records of a dimension block, in every DXF version, carry the
+// linetypes `expected` (sorted).
+void checkDimensionBlockLineTypes(const std::string &stem,
+                                  const std::vector<std::string> &lineTypes,
+                                  const std::vector<std::string> &expected) {
+  const std::string src = tmpFile((stem + "_src.dxf").c_str());
+  std::filesystem::remove(src);
+  writeText(src, dimStyleLineTypeFixture(lineTypes, kVendorDim));
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  RS_DimensionData data;
+  data.definitionPoint = RS_Vector(5.0, 3.0);
+  data.middleOfText = RS_Vector(5.0, 3.0);
+  data.style = "VENDOR_DIM";
+  auto *dimension = new RS_DimAligned(
+      &graphic, data,
+      RS_DimAlignedData(RS_Vector(0.0, 0.0), RS_Vector(10.0, 0.0)));
+  graphic.addEntity(dimension);
+  dimension->update();
+
+  for (const auto &[suffix, format] :
+       {std::make_pair("r12", RS2::FormatDXFRW12),
+        std::make_pair("r2000", RS2::FormatDXFRW2000),
+        std::make_pair("r2007", RS2::FormatDXFRW)}) {
+    INFO(suffix);
+    const std::string out = tmpFile((stem + "_" + suffix + ".dxf").c_str());
+    std::filesystem::remove(out);
+    {
+      RS_FilterDXFRW filter;
+      REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), format));
+    }
+    std::vector<std::string> written = recordGroupValues(out, "LINE", "6");
+    std::sort(written.begin(), written.end());
+    CHECK(written == expected);
+    std::filesystem::remove(out);
+  }
+  std::filesystem::remove(src);
+}
+
+// The DXF text of `path` with LTYPE record `name` moved to handle `to`,
+// and its DSTYLE references with it.
+std::string withLineTypeHandle(const std::string &path, const std::string &name,
+                               const std::string &to) {
+  const std::string from = lineTypeHandle(path, name);
+  REQUIRE_FALSE(from.empty());
+  std::ifstream input(path);
+  std::ostringstream output;
+  std::string code, value;
+  while (std::getline(input, code) && std::getline(input, value)) {
+    const std::string groupCode = trimDxfToken(code);
+    if ((groupCode == "5" || groupCode == "1005") &&
+        trimDxfToken(value) == from)
+      value = to;
+    output << code << '\n' << value << '\n';
+  }
+  return output.str();
+}
+
+} // namespace
+
+TEST_CASE("DXF DIMSTYLE linetype reference resolves back to the named linetype",
+          "[dxf][roundtrip][filter][dimstyle][ltype]") {
+  ensureSettings();
+  const std::vector<std::string> lineTypes = {"VENDOR_TAB", "VENDOR_DOT",
+                                              "VENDOR_DASH"};
+  checkDimStyleLineTypeRoundTrip(
+      "dimstyle_ltype_named", dimStyleLineTypeFixture(lineTypes, kVendorDim),
+      lineTypes);
+}
+
+TEST_CASE("A built-in DIMLTYPE survives a DXF round trip",
+          "[dxf][roundtrip][filter][dimstyle][ltype]") {
+  ensureSettings();
+  const std::vector<std::string> lineTypes = {"DASHED", "HIDDEN", "CENTER"};
+  checkDimStyleLineTypeRoundTrip(
+      "dimstyle_ltype_builtin", dimStyleLineTypeFixture(lineTypes, kVendorDim),
+      lineTypes);
+}
+
+TEST_CASE("ByLayer and Continuous DIMSTYLE linetypes survive a DXF round trip",
+          "[dxf][roundtrip][filter][dimstyle][ltype]") {
+  ensureSettings();
+  checkDimStyleLineTypeRoundTrip(
+      "dimstyle_ltype_fixed",
+      dimStyleLineTypeFixture(
+          {}, dimStyleRecord("31", "VENDOR_DIM", "345\n15\n346\n16\n347\n14\n")),
+      {"ByLayer", "Continuous", "ByBlock"});
+}
+
+TEST_CASE("DXF DIMSTYLE linetypes in legacy LibreCAD groups 347 and 348 read",
+          "[dxf][roundtrip][filter][dimstyle][ltype]") {
+  ensureSettings();
+  const std::vector<std::string> lineTypes = {"DASHED", "HIDDEN", "CENTER"};
+  checkDimStyleLineTypeRoundTrip(
+      "dimstyle_ltype_legacy",
+      dimStyleLineTypeFixture(
+          lineTypes,
+          dimStyleRecord("31", "VENDOR_DIM", "345\n40\n347\n41\n348\n42\n")),
+      lineTypes);
+}
+
+TEST_CASE("A DIMSTYLE for one dimension type does not inherit linetypes",
+          "[dxf][roundtrip][filter][dimstyle][ltype]") {
+  ensureSettings();
+  const std::string src = tmpFile("dimstyle_ltype_child_src.dxf");
+  const std::string out = tmpFile("dimstyle_ltype_child_out.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+  const std::vector<std::string> lineTypes = {"DASHED", "HIDDEN", "CENTER"};
+  const std::vector<std::string> byBlock(3, "ByBlock");
+  writeText(src, dimStyleLineTypeFixture(
+                     lineTypes,
+                     kVendorDim + dimStyleRecord("32", "VENDOR_DIM$0", "")));
+
+  // A record without linetype groups means ByBlock, as it does for a base
+  // style; loading merges only what a type style leaves unset.
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  graphic.onLoadingCompleted();
+  CHECK(dimStyleLineTypes(graphic, "VENDOR_DIM") == lineTypes);
+  CHECK(dimStyleLineTypes(graphic, "VENDOR_DIM$0") == byBlock);
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+  checkWrittenDimStyleLineTypes(out, "VENDOR_DIM", lineTypes);
+  checkWrittenDimStyleLineTypes(out, "VENDOR_DIM$0", byBlock);
+
+  RS_Graphic reimported;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(reimported, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+  reimported.onLoadingCompleted();
+  CHECK(dimStyleLineTypes(reimported, "VENDOR_DIM$0") == byBlock);
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
+TEST_CASE("DXF dimension blocks draw with the DIMSTYLE linetypes",
+          "[dxf][roundtrip][filter][dimension][dimstyle][ltype]") {
+  ensureSettings();
+  checkDimensionBlockLineTypes("dimstyle_ltype_block_builtin",
+                               {"DASHED", "HIDDEN", "CENTER"},
+                               {"CENTER", "DASHED", "HIDDEN"});
+  // A name without a built-in pattern draws continuous, as it does on any
+  // other entity.
+  checkDimensionBlockLineTypes("dimstyle_ltype_block_named",
+                               {"VENDOR_TAB", "VENDOR_DOT", "VENDOR_DASH"},
+                               {"CONTINUOUS", "CONTINUOUS", "CONTINUOUS"});
+}
+
+TEST_CASE("DXF DSTYLE linetype references resolve high handles",
+          "[dxf][roundtrip][filter][dimension][dimstyle][ltype]") {
+  ensureSettings();
+  const std::string out = tmpFile("dimension_dstyle_ltype_high.dxf");
+  const std::string moved = tmpFile("dimension_dstyle_ltype_high_moved.dxf");
+  std::filesystem::remove(out);
+  std::filesystem::remove(moved);
+
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  for (const char *name : {"vendor_dash", "vendor_dot", "vendor_center"}) {
+    DRW_LType imported;
+    imported.updateValues(name, "Imported dashed", 2, 12.7, {6.35, -6.35});
+    graphic.dwgAdvancedMetadata().addLineTypeName(imported);
+  }
+  RS_DimensionData data;
+  data.definitionPoint = RS_Vector(5.0, 3.0);
+  data.middleOfText = RS_Vector(5.0, 3.0);
+  data.style = "Standard";
+  auto *dimension = new RS_DimAligned(
+      &graphic, data,
+      RS_DimAlignedData(RS_Vector(0.0, 0.0), RS_Vector(10.0, 0.0)));
+  LC_DimStyle override;
+  override.dimensionLine()->setLineType(QStringLiteral("vendor_dash"));
+  override.extensionLine()->setLineTypeFirst(QStringLiteral("vendor_dot"));
+  override.extensionLine()->setLineTypeSecond(QStringLiteral("vendor_center"));
+  dimension->setDimStyleOverride(&override);
+  graphic.addEntity(dimension);
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW2018));
+  }
+  // A handle above 0x7FFFFFFF does not fit a signed 32-bit parse.
+  writeText(moved, withLineTypeHandle(out, "vendor_dash", "80000040"));
+
+  RS_Graphic reloaded;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(reloaded, QString::fromStdString(moved),
+                              RS2::FormatDXFRW));
+  }
+  auto *reloadedDimension = dynamic_cast<RS_Dimension *>(reloaded.firstEntity());
+  REQUIRE(reloadedDimension != nullptr);
+  LC_DimStyle *reloadedOverride = reloadedDimension->getDimStyleOverride();
+  REQUIRE(reloadedOverride != nullptr);
+  CHECK(reloadedOverride->dimensionLine()->lineTypeName().toStdString() ==
+        "vendor_dash");
+  CHECK(reloadedOverride->extensionLine()->lineTypeFirstRaw().toStdString() ==
+        "vendor_dot");
+  CHECK(reloadedOverride->extensionLine()->lineTypeSecondRaw().toStdString() ==
+        "vendor_center");
+
+  std::filesystem::remove(out);
+  std::filesystem::remove(moved);
+}
+
 TEST_CASE("DXF unused LTYPE and STYLE application groups survive filter round trip",
           "[dxf][roundtrip][filter][ltype][style][application-groups]") {
   ensureSettings();
