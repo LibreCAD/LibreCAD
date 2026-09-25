@@ -26032,6 +26032,8 @@ void RS_FilterDXFRW::writeObjects() {
       DRW_SortEntsTable se = sortEntsTableFromMetadata(record);
       se.handle = m_dxfW->remapHandle(se.handle);
       se.parentHandle = resolveOwner(record.parentHandle);
+      // The block record whose entities it orders, under its written handle.
+      se.m_blockOwnerHandle = m_dxfW->remapHandle(se.m_blockOwnerHandle);
       noteDxfWrite(m_dxfW->writeSortEntsTable(&se));
     }
     // FIELD/FIELDLIST are custom objects. Emit FIELD first so FIELDLIST 330
