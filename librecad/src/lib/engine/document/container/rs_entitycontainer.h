@@ -66,6 +66,7 @@ public:
     }
 
     void reparent(RS_EntityContainer* newParent) override;
+    void clearDwgProvenance(unsigned what) override;
 
     /**
      * @return true: because entities made from this class

@@ -23,8 +23,10 @@
 #ifndef LC_DOCUMENTINVARIANTS_H
 #define LC_DOCUMENTINVARIANTS_H
 
+#include <fstream>
 #include <map>
 #include <set>
+#include <string>
 
 #include <QString>
 #include <QStringList>
@@ -104,6 +106,38 @@ inline QStringList documentProblems(RS_Graphic& graphic) {
         const RS_Block* block = graphic.blockAt(i);
         collectContainerProblems(*block, problems);
         checkTopLevel(*block);
+    }
+    return problems;
+}
+
+/** Owner (330) and hard-owner (360) references in a written DXF that name no handle (5, 105) of the file. */
+inline QStringList danglingReferences(const QString& dxfPath) {
+    std::ifstream in(dxfPath.toStdString());
+    auto trim = [](std::string value) {
+        const std::size_t first = value.find_first_not_of(" \t");
+        const std::size_t last = value.find_last_not_of(" \t\r");
+        return first == std::string::npos ? std::string{} : value.substr(first, last - first + 1);
+    };
+    std::set<std::string> defined;
+    std::map<std::string, std::string> references; // handle -> the code that names it
+    std::string code;
+    std::string value;
+    while (std::getline(in, code) && std::getline(in, value)) {
+        code = trim(code);
+        value = trim(value);
+        if (code == "5" || code == "105") {
+            defined.insert(value);
+        }
+        else if ((code == "330" || code == "360") && value != "0") {
+            references.emplace(value, code);
+        }
+    }
+    QStringList problems;
+    for (const auto& [handle, byCode] : references) {
+        if (defined.count(handle) == 0) {
+            problems << QStringLiteral("%1 %2 names no object of the file")
+                            .arg(QString::fromStdString(byCode), QString::fromStdString(handle));
+        }
     }
     return problems;
 }

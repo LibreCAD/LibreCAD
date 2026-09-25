@@ -51,9 +51,17 @@ LC_UndoSection::~LC_UndoSection(){
 
 void LC_UndoSection::undoableDelete(RS_Entity* e) const {
     m_document->undoableDelete(e);
+    if (e->sourceHandle() != 0) {
+        m_freedHandles.insert(e->sourceHandle());
+    }
 }
 
 void LC_UndoSection::undoableAdd(RS_Entity* e) const {
+    // Only an entity taking the place of one this section deleted keeps its DWG identity, with its
+    // children's; anything else is new to the drawing, even if made of copies.
+    if (e->sourceHandle() == 0 || !m_freedHandles.remove(e->sourceHandle())) {
+        e->clearDwgProvenance(RS_Entity::Identity);
+    }
     m_document->undoableAdd(e);
 }
 
@@ -62,8 +70,8 @@ void LC_UndoSection::addUndoable(RS_Undoable* u) const {
 }
 
 void LC_UndoSection::undoableReplace(RS_Entity* entityToDelete, RS_Entity* entityToAdd) const {
-     m_document->undoableDelete(entityToDelete);
-     m_document->undoableAdd(entityToAdd);
+    undoableDelete(entityToDelete);
+    undoableAdd(entityToAdd);
 }
 
 bool LC_UndoSection::undoableExecute(const RS_Document::FunUndoable& doUndoable) const {
@@ -83,7 +91,7 @@ bool LC_UndoSection::undoableExecute(const RS_Document::FunUndoable& doUndoable,
                 const auto layer = e->getLayer(true);
                 // Null layer: treat as unlocked (e.g. mid-import / no graphic).
                 if (layer == nullptr || !layer->isLocked()) {
-                      m_document->undoableDelete(e);
+                    undoableDelete(e);
                 }
             }
         }

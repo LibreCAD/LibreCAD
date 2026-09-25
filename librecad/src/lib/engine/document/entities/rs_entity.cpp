@@ -436,7 +436,17 @@ bool RS_Entity::isVisible() const {
         return true;
     }*/
     if (m_layer != nullptr) {
-        return !m_layer->isFrozen();
+        // An expansion child's layer pointer is copied verbatim from the
+        // entity it was cloned from (see the RS_Entity copy constructor);
+        // RS_Graphic::removeLayer() does not sweep a nested INSERT's own
+        // cached children, so this can already be dangling here once the
+        // entity belongs to a graphic (select an insert after deleting a
+        // layer a block it inserts, in turn, draws on). validatedLayer()
+        // only compares the pointer, so it is safe to call even then; the
+        // same fallback getLayerResolved() uses below when there is no
+        // explicit layer applies when the pointer no longer names one.
+        RS_Layer *layer = getGraphic() != nullptr ? validatedLayer(m_layer) : m_layer;
+        return layer == nullptr || !layer->isFrozen();
     }
     /*RS_EntityContainer* parent = getParent();
 if (parent && parent->isUndone()) {
@@ -1120,6 +1130,22 @@ quint32 RS_Entity::xDictHandle() const { return m_pImpl->m_xDictHandle; }
 void RS_Entity::setXDictHandle(quint32 h) { m_pImpl->m_xDictHandle = h; }
 quint32 RS_Entity::sourceHandle() const { return m_pImpl->m_sourceHandle; }
 void RS_Entity::setSourceHandle(quint32 h) { m_pImpl->m_sourceHandle = h; }
+
+void RS_Entity::clearDwgProvenance(const unsigned what) {
+    if ((what & Identity) != 0) {
+        m_pImpl->m_sourceHandle = 0;
+        m_pImpl->m_xDictHandle = 0;
+        m_pImpl->m_reactorHandles.clear();
+    }
+    if ((what & TableRefs) != 0) {
+        m_pImpl->m_materialHandle = 0;
+        m_pImpl->m_plotStyleHandle = 0;
+        m_pImpl->m_shadowHandle = 0;
+        m_pImpl->m_fullVisualStyleH = 0;
+        m_pImpl->m_faceVisualStyleH = 0;
+        m_pImpl->m_edgeVisualStyleH = 0;
+    }
+}
 
 //! constructionLayer contains entities of infinite length, constructionLayer doesn't show up in print
 bool RS_Entity::isConstruction(const bool typeCheck) const {
