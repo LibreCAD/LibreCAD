@@ -101,7 +101,6 @@ protected:
 private:
     struct ActionData;
     std::unique_ptr<ActionData> m_actionData;
-    RS2::SnapRestriction m_snapRestriction = RS2::RestrictNothing;
     RS2::EntityType m_typeToSelect = RS2::EntityType::EntityUnknown;
 
     bool m_allowEntityQuickInfoForCtrl = false;
