@@ -7837,12 +7837,28 @@ bool dxfRW::writeExtData(const std::vector<DRW_Variant*> &ed){
                         recordResult(false);
                         break;
                     }
+                    const std::string &value = *(*it)->content.s;
+                    if (cc == 1005 && m_referenceResolver) {
+                        // A handle follows the object it names; one naming
+                        // an object left out becomes the null handle.
+                        std::uint32_t handle = 0;
+                        const auto parsed = std::from_chars(
+                            value.data(), value.data() + value.size(),
+                            handle, 16);
+                        if (parsed.ec == std::errc{}
+                            && parsed.ptr == value.data() + value.size()
+                            && handle != 0) {
+                            recordResult(writer->writeUtf8String(
+                                cc, toHexStr(m_referenceResolver(handle))));
+                            break;
+                        }
+                    }
                     // ASCII DXF cannot hold a line break inside a value:
                     // write control characters as caret codes (^J, ^M, ...).
                     recordResult(writer->writeUtf8String(
                         cc, cc == 1000 && !binFile
-                                ? dxfCaretEncodedControls(*(*it)->content.s)
-                                : *(*it)->content.s));
+                                ? dxfCaretEncodedControls(value)
+                                : value));
                     break;
                 }
                 case 1004:

@@ -4260,6 +4260,50 @@ TEST_CASE("DXF references to the source's root dictionary name the one written",
   std::filesystem::remove(out);
 }
 
+TEST_CASE("DXF XDATA handles follow the entities they name",
+          "[dxf][roundtrip][filter][handles][xdata]") {
+  ensureSettings();
+  const std::string src = tmpFile("xdata-handle-src.dxf");
+  const std::string out = tmpFile("xdata-handle-out.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  // An MTEXT's columns are linked this way; here one line names the other.
+  writeText(src,
+            "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1015\n0\nENDSEC\n"
+            "0\nSECTION\n2\nENTITIES\n"
+            "0\nLINE\n5\nA1\n100\nAcDbEntity\n8\n0\n100\nAcDbLine\n"
+            "10\n0\n20\n0\n30\n0\n11\n10\n21\n0\n31\n0\n"
+            "1001\nACME_APP\n1005\nA2\n"
+            "0\nLINE\n5\nA2\n100\nAcDbEntity\n8\n0\n100\nAcDbLine\n"
+            "10\n0\n20\n5\n30\n0\n11\n10\n21\n5\n31\n0\n"
+            "0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              graphic.getFormatType()));
+  }
+
+  const auto lines = recordGroupValues(out, "LINE", "5");
+  REQUIRE(lines.size() == 2);
+  const auto named = recordGroupValues(out, "LINE", "1005");
+  REQUIRE(named.size() == 1);
+  CHECK(named.front() != "A2");
+  CHECK(std::count(lines.begin(), lines.end(), named.front()) == 1);
+  CHECK(recordGroupsWithValue(out, "LINE", "1005", named.front()) !=
+        recordGroupsWithValue(out, "LINE", "5", named.front()));
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
 TEST_CASE("DXF saved in another version leaves out the raw objects it cannot hold",
           "[dxf][roundtrip][filter][version]") {
   ensureSettings();
