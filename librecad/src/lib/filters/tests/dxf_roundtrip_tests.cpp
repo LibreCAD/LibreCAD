@@ -6081,11 +6081,12 @@ TEST_CASE("DXF dimension blocks draw with the DIMSTYLE linetypes",
   checkDimensionBlockLineTypes("dimstyle_ltype_block_builtin",
                                {"DASHED", "HIDDEN", "CENTER"},
                                {"CENTER", "DASHED", "HIDDEN"});
-  // A name without a built-in pattern draws continuous, as it does on any
-  // other entity.
+  // A name without a built-in pattern draws continuous (nothing in LibreCAD
+  // renders an arbitrary dash pattern), but the name itself still reaches
+  // the written file, the same as it does on any other entity's pen.
   checkDimensionBlockLineTypes("dimstyle_ltype_block_named",
                                {"VENDOR_TAB", "VENDOR_DOT", "VENDOR_DASH"},
-                               {"CONTINUOUS", "CONTINUOUS", "CONTINUOUS"});
+                               {"VENDOR_DASH", "VENDOR_DOT", "VENDOR_TAB"});
 }
 
 TEST_CASE("DXF DSTYLE linetype references resolve high handles",
