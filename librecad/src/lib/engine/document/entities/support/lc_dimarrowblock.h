@@ -24,12 +24,21 @@
 #ifndef LC_DIMARROWBLOCK_H
 #define LC_DIMARROWBLOCK_H
 
+#include <memory>
+#include <vector>
+
 #include "rs_atomicentity.h"
 
 class LC_DimArrow: public RS_AtomicEntity{
 public:
     LC_DimArrow(RS_EntityContainer* parent, const RS_Vector &pos, double angle, double size);
     RS2::EntityType rtti() const override {return RS2::EntityDimArrowBlock;}
+    // The primitives (SOLID/LINE/...) a file format writer saves this arrow
+    // as, in world coordinates, matching draw() as closely as each kind of
+    // arrow allows. Empty (the default) for any kind not yet given one.
+    virtual std::vector<std::unique_ptr<RS_Entity>> exportPrimitives() const {
+        return {};
+    }
 
     void move(const RS_Vector& offset) override;
     void rotate(const RS_Vector& center, double angle) override;

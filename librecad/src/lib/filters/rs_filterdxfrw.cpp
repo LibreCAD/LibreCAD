@@ -74,6 +74,7 @@
 #include "lc_containertraverser.h"
 #include "lc_defaults.h"
 #include "lc_dimarc.h"
+#include "lc_dimarrowblock.h"
 #include "lc_dimarrowregistry.h"
 #include "lc_dimordinate.h"
 #include "lc_dimstyle.h"
@@ -29487,6 +29488,21 @@ void RS_FilterDXFRW::writeEntity(RS_Entity *e) {
   case RS2::EntityParabola:
     writeParabola(static_cast<LC_Parabola *>(e));
     break;
+  case RS2::EntityDimArrowBlock: {
+    // An arrowhead is not itself a persistent, saved entity kind (comment on
+    // LC_DimArrowPoly::doGetNearestPointOnEntity) -- write whatever real
+    // primitives exportPrimitives() gives for it (SOLID/LINE/..., or none
+    // yet for a kind that has not been given one) with its own pen, in
+    // place of it.
+    auto *arrow = static_cast<LC_DimArrow *>(e);
+    const RS_Pen pen = arrow->getPen(false);
+    for (auto &primitive : arrow->exportPrimitives()) {
+      primitive->setPen(pen);
+      primitive->setLayer(nullptr);
+      writeEntity(primitive.get());
+    }
+    break;
+  }
     //    case RS2::EntityVertex:
     //        break;
   case RS2::EntityInsert:

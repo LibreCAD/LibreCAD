@@ -26,7 +26,11 @@
 #include <cmath>
 #include <memory>
 
+#include "lc_arrow_headclosed.h"
 #include "lc_arrow_headopen.h"
+#include "rs_line.h"
+#include "rs_polyline.h"
+#include "rs_solid.h"
 
 namespace {
     // A copy is built from the position and the angle, so it matches the arrow only while its transforms
@@ -66,5 +70,46 @@ TEST_CASE("LC_DimArrow transforms keep the arrow consistent", "[dimension][arrow
         CHECK(arrow.getPosition().distanceTo(RS_Vector(-5., 15.)) < 1e-9);
         CHECK(arrow.getAngle() == Catch::Approx(M_PI / 2. - 0.3));
         requireMatchesCopy(arrow);
+    }
+}
+
+TEST_CASE("LC_ArrowHeadClosed exports the same shape it draws",
+          "[dimension][arrow]") {
+    const RS_Vector position(10., 5.);
+    const double dirAngle = 0.2;
+    const double size = 2.;
+    const double ownAngle = M_PI / 12.;
+
+    SECTION("filled: one SOLID at the triangle's own vertices") {
+        LC_ArrowHeadClosed arrow(nullptr, position, dirAngle, size, ownAngle,
+                                 /*filled=*/true);
+        auto primitives = arrow.exportPrimitives();
+        REQUIRE(primitives.size() == 1);
+        const auto *solid = dynamic_cast<RS_Solid *>(primitives.front().get());
+        REQUIRE(solid != nullptr);
+        // getCorner(2)/(3) alias when a SOLID has only three distinct points.
+        CHECK(solid->getCorner(0).distanceTo(solid->getCorner(1)) > 1e-6);
+        CHECK(solid->getCorner(1).distanceTo(solid->getCorner(2)) > 1e-6);
+        CHECK(solid->getMin().distanceTo(arrow.getMin()) < 1e-9);
+        CHECK(solid->getMax().distanceTo(arrow.getMax()) < 1e-9);
+    }
+
+    SECTION("unfilled: a closed 3-point outline, plus the stem draw() adds") {
+        LC_ArrowHeadClosed arrow(nullptr, position, dirAngle, size, ownAngle,
+                                 /*filled=*/false);
+        auto primitives = arrow.exportPrimitives();
+        REQUIRE(primitives.size() == 2);
+        const auto *outline =
+            dynamic_cast<RS_Polyline *>(primitives[0].get());
+        REQUIRE(outline != nullptr);
+        CHECK(outline->isClosed());
+        CHECK(outline->getVertex(2).distanceTo(outline->getStartpoint()) >
+              1e-6);
+        const auto *stem = dynamic_cast<RS_Line *>(primitives[1].get());
+        REQUIRE(stem != nullptr);
+        // The stem runs from the arrow's tip -- its own second vertex -- to
+        // the dimension line's own catch point, same as draw()'s extra line.
+        CHECK(stem->getStartpoint().distanceTo(outline->getVertex(1)) < 1e-9);
+        CHECK(stem->getEndpoint().distanceTo(arrow.getPosition()) < 1e-9);
     }
 }
