@@ -520,6 +520,9 @@ void LC_AbstractActionWithPreview::mouseMoveEvent(QMouseEvent *e){
         }
         graphicView->redraw();
     }
+    else {
+        snapPoint(e);
+    }
     doMouseMoveEnd(status, e);
     clearAlternativeActionMode();
 }
@@ -887,5 +890,4 @@ RS_Line* LC_AbstractActionWithPreview::createLine(const RS_Vector &startPoint, c
     list << result;
     return result;
 }
-
 
