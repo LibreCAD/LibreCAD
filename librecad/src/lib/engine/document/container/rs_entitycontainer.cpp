@@ -579,8 +579,10 @@ int RS_EntityContainer::updateDimensions(const bool autoText) {
         }
         if (RS_Information::isDimension(e->rtti())) {
             const auto dimension = static_cast<RS_Dimension*>(e);
-            // update and reposition label:
-            dimension->update();
+            // update and reposition label: honor the caller's autoText request
+            // (update() alone leaves the dimension's own cached autoText flag,
+            // from whenever it was last resolved, untouched).
+            dimension->updateDim(autoText);
             updatedDimsCount++;
         }
         else if (e->isContainer()) {
