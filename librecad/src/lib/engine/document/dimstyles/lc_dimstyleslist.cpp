@@ -156,6 +156,20 @@ void LC_DimStylesList::mergeStyles() {
         }
     }
 
+    // A named base style itself may leave fields unset: some DXF writers only store
+    // a DIMSTYLE table entry's fields that differ from the drawing's own $DIM*
+    // header values, instead of repeating every field the way AutoCAD's own writer
+    // does. Fill those gaps from the header-derived fallback style before
+    // propagating the (now complete) base down to its type-specific variants below.
+    if (m_fallbackDimStyleFromVars != nullptr) {
+        for (const auto baseStyle : std::as_const(baseStyles)) {
+            if (baseStyle != m_fallbackDimStyleFromVars.get()) {
+                const auto savedCheckMode = baseStyle->getModifyCheckMode();
+                baseStyle->mergeWith(m_fallbackDimStyleFromVars.get(), LC_DimStyle::ModificationAware::UNSET, savedCheckMode);
+            }
+        }
+    }
+
     for (const auto typeSpecificStyle: entityTypeStyles) {
         QString baseName;
         RS2::EntityType entityType;

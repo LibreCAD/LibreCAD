@@ -6086,6 +6086,75 @@ TEST_CASE("DXF dimension blocks draw with the DIMSTYLE linetypes",
                                {"CONTINUOUS", "CONTINUOUS", "CONTINUOUS"});
 }
 
+TEST_CASE("A named DIMSTYLE that leaves a field unset follows the header, not the library default",
+          "[dxf][roundtrip][filter][dimstyle]") {
+  ensureSettings();
+  const std::string src = tmpFile("dimstyle_dimtad_header_fallback_src.dxf");
+  std::filesystem::remove(src);
+  // $DIMTAD is 0 ("center text between the extension lines") in the header,
+  // but the SPARSE_STYLE table entry never writes group 77 at all -- some
+  // DXF writers only store a DIMSTYLE's fields that differ from the
+  // drawing's own $DIM* header values, unlike AutoCAD's own writer, which
+  // always writes every field.
+  writeText(src,
+            "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n"
+            "9\n$DIMTAD\n70\n0\n0\nENDSEC\n"
+            "0\nSECTION\n2\nTABLES\n"
+            "0\nTABLE\n2\nDIMSTYLE\n5\nA\n330\n0\n"
+            "100\nAcDbSymbolTable\n70\n1\n100\nAcDbDimStyleTable\n71\n0\n" +
+            dimStyleRecord("31", "SPARSE_STYLE", "") +
+            "0\nENDTAB\n0\nENDSEC\n"
+            "0\nSECTION\n2\nENTITIES\n0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                            RS2::FormatDXFRW));
+  graphic.onLoadingCompleted();
+
+  LC_DimStyle *style =
+      graphic.getDimStyleByName(QStringLiteral("SPARSE_STYLE"));
+  REQUIRE(style != nullptr);
+  // LC_DimStyle::Text's own hardcoded default is
+  // ABOVE_DIM_LINE_EXCEPT_NOT_HORIZONTAL (1); the drawing's header says 0.
+  CHECK(style->text()->verticalPositioning() ==
+        LC_DimStyle::Text::CENTER_BETWEEN_EXT_LINES);
+
+  std::filesystem::remove(src);
+}
+
+TEST_CASE("RS_EntityContainer::updateDimensions(true) forces a dimension "
+          "back to its auto text position",
+          "[dimension]") {
+  ensureSettings();
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+
+  RS_DimensionData dimensionData;
+  dimensionData.definitionPoint = RS_Vector{50.0, 20.0};
+  dimensionData.autoText = true;
+  auto *dimension = new RS_DimAligned(
+      &graphic, dimensionData,
+      RS_DimAlignedData{RS_Vector{0.0, 0.0}, RS_Vector{100.0, 0.0}});
+  graphic.addEntity(dimension);
+  dimension->update();
+  const RS_Vector autoPosition = dimension->getMiddleOfText();
+
+  // Simulate a dimension whose text was explicitly placed away from the
+  // auto position (as a loaded DIMENSION entity's own text_midpoint would),
+  // then locked in as "not auto" by a plain update().
+  const RS_Vector explicitPosition = autoPosition + RS_Vector{0.0, 25.0};
+  dimension->setMiddleOfText(explicitPosition);
+  dimension->updateDim(false);
+  REQUIRE(dimension->getMiddleOfText().distanceTo(explicitPosition) < 1e-9);
+
+  // updateDimensions(true) means "reposition every label automatically" --
+  // it must actually reach the dimension's own autoText flag, not just call
+  // its plain update(), which would keep replaying the explicit position.
+  graphic.updateDimensions(true);
+  CHECK(dimension->getMiddleOfText().distanceTo(autoPosition) < 1e-9);
+}
+
 TEST_CASE("DXF DSTYLE linetype references resolve high handles",
           "[dxf][roundtrip][filter][dimension][dimstyle][ltype]") {
   ensureSettings();
