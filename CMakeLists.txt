@@ -2603,6 +2603,7 @@ if (BUILD_TESTS)
         librecad/src/ui/main/persistence/tests/lc_documentsstorage_tests.cpp
         librecad/src/plugins/tests/qc_actiongetselect_tests.cpp
         librecad/src/lib/gui/tests/lc_graphicviewrenderer_tests.cpp
+        librecad/src/ui/view/tests/qg_graphicview_cursor_tests.cpp
         librecad/src/main/tests/console_command_utils_tests.cpp
         librecad/src/main/tests/lc_pdfprintlooptests.cpp
         librecad/src/main/tests/lc_consoleimporttests.cpp
