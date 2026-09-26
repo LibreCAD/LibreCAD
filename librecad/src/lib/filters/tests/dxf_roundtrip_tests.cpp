@@ -7534,6 +7534,94 @@ TEST_CASE("An open polyline's VERTEX and SEQEND carry its own layer and "
   std::filesystem::remove(out12);
 }
 
+TEST_CASE("An open polyline keeps every vertex on DXF re-save; a closed "
+          "one is unchanged",
+          "[dxf][roundtrip][filter][polyline]") {
+  ensureSettings();
+
+  RS_Graphic openGraphic;
+  openGraphic.initForNewDocument();
+  auto *openPolyline = new RS_Polyline(&openGraphic);
+  openPolyline->addVertex(RS_Vector(0.0, 0.0, 0.0));
+  openPolyline->addVertex(RS_Vector(10.0, 0.0, 0.0));
+  openPolyline->addVertex(RS_Vector(10.0, 10.0, 0.0));
+  openGraphic.addEntity(openPolyline);
+
+  RS_Graphic closedGraphic;
+  closedGraphic.initForNewDocument();
+  auto *closedPolyline = new RS_Polyline(&closedGraphic);
+  closedPolyline->addVertex(RS_Vector(0.0, 0.0, 0.0));
+  closedPolyline->addVertex(RS_Vector(10.0, 0.0, 0.0));
+  closedPolyline->addVertex(RS_Vector(10.0, 10.0, 0.0));
+  // The two-argument overload both sets the flag and adds the explicit
+  // closing segment (RS_Polyline::endPolyline()); the one-argument overload
+  // only sets the flag, leaving a triangle with just two sides.
+  closedPolyline->setClosed(true, 0.0);
+  closedGraphic.addEntity(closedPolyline);
+
+  const std::string openOut = tmpFile("polyline_open_r12.dxf");
+  const std::string closedOut = tmpFile("polyline_closed_r12.dxf");
+  std::filesystem::remove(openOut);
+  std::filesystem::remove(closedOut);
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(openGraphic, QString::fromStdString(openOut),
+                              RS2::FormatDXFRW12));
+  }
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(closedGraphic, QString::fromStdString(closedOut),
+                              RS2::FormatDXFRW12));
+  }
+  // Three points: an open polyline (two segments) needs a vertex for each
+  // segment's start plus one more for the last segment's end; a closed one
+  // (three segments, the third closing back to the first point) needs one
+  // per segment's start and no more, since the last segment's end coincides
+  // with the first vertex already in the list.
+  CHECK(countRecords(openOut, "VERTEX") == 3);
+  CHECK(countRecords(closedOut, "VERTEX") == 3);
+  std::filesystem::remove(openOut);
+  std::filesystem::remove(closedOut);
+}
+
+#ifdef DWGSUPPORT
+TEST_CASE("An open polyline keeps every vertex through a DWG round-trip",
+          "[dwg][roundtrip][filter][polyline]") {
+  ensureSettings();
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  auto *polyline = new RS_Polyline(&graphic);
+  polyline->addVertex(RS_Vector(0.0, 0.0, 0.0));
+  polyline->addVertex(RS_Vector(10.0, 0.0, 0.0));
+  graphic.addEntity(polyline);
+
+  const std::string dwg = tmpFile("polyline_open_roundtrip.dwg");
+  std::filesystem::remove(dwg);
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(dwg),
+                              RS2::FormatDWG2004));
+  }
+
+  RS_Graphic fromDwg;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(fromDwg, QString::fromStdString(dwg),
+                              RS2::FormatDWG));
+  }
+  RS_Entity *reloaded = fromDwg.firstEntity(RS2::ResolveNone);
+  REQUIRE(reloaded != nullptr);
+  REQUIRE(reloaded->rtti() == RS2::EntityPolyline);
+  auto *reloadedPolyline = static_cast<RS_Polyline *>(reloaded);
+  CHECK(reloadedPolyline->getStartpoint().distanceTo(RS_Vector(0.0, 0.0)) <
+        RS_TOLERANCE);
+  CHECK(reloadedPolyline->getEndpoint().distanceTo(RS_Vector(10.0, 0.0)) <
+        RS_TOLERANCE);
+
+  std::filesystem::remove(dwg);
+}
+#endif // DWGSUPPORT
+
 TEST_CASE("DXF ISO alias keeps its literal name instead of the family name",
           "[dxf][roundtrip][filter][linetype][named]") {
   ensureSettings();

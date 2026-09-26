@@ -29865,6 +29865,7 @@ void RS_FilterDXFRW::writePolyline(const RS_Polyline *p) {
   }
 
   RS_Entity *nextEntity = nullptr;
+  RS_AtomicEntity *lastSegment = nullptr;
   for (RS_Entity *e = p->firstEntity(RS2::ResolveNone); e != nullptr;
        e = nextEntity) {
     nextEntity = p->nextEntity(RS2::ResolveNone);
@@ -29873,6 +29874,7 @@ void RS_FilterDXFRW::writePolyline(const RS_Polyline *p) {
       continue;
     }
     RS_AtomicEntity *ae = static_cast<RS_AtomicEntity *>(e);
+    lastSegment = ae;
 
     // Write vertex:
     double bulge = 0.0;
@@ -29907,6 +29909,17 @@ void RS_FilterDXFRW::writePolyline(const RS_Polyline *p) {
       pol.vertlist.back()->extData.push_back(
           std::make_shared<DRW_Variant>(1040, yRadius));
     }
+  }
+  // Each vertex above is a segment's FROM point (its bulge, when set,
+  // describes that segment). A closed polyline's last segment returns to the
+  // first vertex, so nothing further is needed; an open one's last segment
+  // ends at a point that starts no segment of its own and, left out of this
+  // loop entirely, was silently dropped -- degenerating a single-segment
+  // open polyline (e.g. one DXF LINE read back as a 2-point polyline) to one
+  // point.
+  if (!p->isClosed() && lastSegment != nullptr) {
+    pol.addVertex(DRW_Vertex(lastSegment->getEndpoint().x,
+                             lastSegment->getEndpoint().y, 0.0, 0.0));
   }
   getEntityAttributes(&pol, p);
   if (auto lwMeta = extractLWPolylineMeta(const_cast<RS_Polyline *>(p))) {
