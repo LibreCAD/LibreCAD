@@ -53,6 +53,7 @@
 
 #include "drw_base.h"
 #include "lc_dimstyle.h"
+#include "lc_dimarc.h"
 #include "lc_dwgadvancedmetadata.h"
 #include "lc_linetypenames.h"
 #include "lc_mleader.h"
@@ -7583,6 +7584,74 @@ TEST_CASE("An open polyline keeps every vertex on DXF re-save; a closed "
   CHECK(countRecords(closedOut, "VERTEX") == 3);
   std::filesystem::remove(openOut);
   std::filesystem::remove(closedOut);
+}
+
+TEST_CASE("An arc dimension's arc-length symbol is written as a real ARC, "
+          "not Unicode text",
+          "[dxf][roundtrip][filter][dimension][arc]") {
+  ensureSettings();
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  RS_DimensionData dimensionData;
+  dimensionData.definitionPoint = RS_Vector(10.0, 0.0);
+  dimensionData.middleOfText = RS_Vector(0.0, 10.0);
+  dimensionData.text = "<>";
+  dimensionData.style = "Standard";
+  dimensionData.autoText = true;
+  LC_DimArcData arcData(10.0, 5.0 * M_PI, RS_Vector(0.0, 0.0),
+                        RS_Vector(0.0, 1.0), RS_Vector(1.0, 0.0));
+  arcData.arcSymbol = 1; // above the text, as its own entity
+  auto *dimension = new LC_DimArc(&graphic, dimensionData, arcData);
+  graphic.addEntity(dimension);
+  dimension->update();
+
+  // The symbol is drawn as a one-character MText before export -- confirm
+  // the fixture actually exercises the arcSymbol==1 path.
+  bool foundMTextSymbol = false;
+  for (RS_Entity *e : *dimension) {
+    if (e != nullptr && e->rtti() == RS2::EntityMText &&
+        static_cast<RS_MText *>(e)->getText() == QStringLiteral("∩")) {
+      foundMTextSymbol = true;
+    }
+  }
+  REQUIRE(foundMTextSymbol);
+
+  const std::string out = tmpFile("dimarc_symbol.dxf");
+  std::filesystem::remove(out);
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+
+  // The symbol glyph itself no longer appears anywhere in the file...
+  {
+    std::ifstream check(out);
+    const std::string content((std::istreambuf_iterator<char>(check)),
+                              std::istreambuf_iterator<char>());
+    CHECK(content.find("\xE2\x88\xA9") == std::string::npos);
+  }
+  // ...and exactly one more ARC did, much smaller than the two dimension arcs.
+  std::ifstream in(out);
+  std::string codeLine, valueLine;
+  std::vector<double> radii;
+  bool inArc = false;
+  while (std::getline(in, codeLine) && std::getline(in, valueLine)) {
+    const std::string code = trimDxfToken(codeLine);
+    const std::string value = trimDxfToken(valueLine);
+    if (code == "0")
+      inArc = value == "ARC";
+    else if (inArc && code == "40")
+      radii.push_back(std::stod(value));
+  }
+  REQUIRE(radii.size() == 3);
+  std::sort(radii.begin(), radii.end());
+  // The two dimension arcs share the dimension's own 10.0 radius; the
+  // symbol's is half the style's default text height (2.5), clearly smaller
+  // but not by an exact, code-independent ratio.
+  CHECK(radii[0] < radii[1] * 0.2);
+
+  std::filesystem::remove(out);
 }
 
 #ifdef DWGSUPPORT

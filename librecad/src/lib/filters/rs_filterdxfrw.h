@@ -2275,6 +2275,7 @@ public:
   void writeLine(const RS_Line *l);
   void writeCircle(const RS_Circle *c);
   void writeArc(const RS_Arc *a);
+  bool writeDimArcSymbolAsArc(RS_Entity *e);
   void writeEllipse(const RS_Ellipse *s);
   void writeHyperbola(LC_Hyperbola *h);
   void writeParabola(LC_Parabola *p);

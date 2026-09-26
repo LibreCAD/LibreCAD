@@ -12267,6 +12267,7 @@ void RS_FilterDXFRW::prepareBlocks() {
       case RS2::EntityDimAngular:
       case RS2::EntityDimRadial:
       case RS2::EntityDimDiametric:
+      case RS2::EntityDimArc:
       case RS2::EntityDimLeader: {
         const QString prefix = "*D" + QString::number(++dimNum);
         m_noNameBlock[e] = prefix;
@@ -12623,7 +12624,8 @@ void RS_FilterDXFRW::writeBlocks() {
       }
       for (RS_Entity *entity :
            lc::LC_ContainerTraverser{*blk, RS2::ResolveNone}.entities()) {
-        if (!entity->getFlag(RS2::FlagDeleted) && consumed.count(entity) == 0) {
+        if (!entity->getFlag(RS2::FlagDeleted) && consumed.count(entity) == 0 &&
+            !writeDimArcSymbolAsArc(entity)) {
           writeEntity(entity);
         }
       }
@@ -12664,7 +12666,7 @@ void RS_FilterDXFRW::writeBlocks() {
     const auto ct = static_cast<RS_EntityContainer *>(it.key());
     for (RS_Entity *e :
          lc::LC_ContainerTraverser{*ct, RS2::ResolveNone}.entities()) {
-      if (e->isAlive()) {
+      if (e->isAlive() && !writeDimArcSymbolAsArc(e)) {
         writeEntity(e);
       }
     }
@@ -29780,6 +29782,32 @@ void RS_FilterDXFRW::writeCircle(const RS_Circle *c) {
     return;
   }
   noteDxfWrite(m_dxfW->writeCircle(&circle));
+}
+
+// An arc-length dimension's "∩" symbol (LC_DimArc::updateEntity(),
+// lc_dimarc.cpp) is drawn as a one-character MText -- a Unicode glyph a
+// reader may have no font for, and never a linetype-carrying entity at all.
+// AutoCAD writes it as a real ARC; no two real sample files agreed on its
+// exact size (0.817 vs 0.933 times text height, the only two available), so
+// this does not attempt to match that construction. It builds the arc from
+// the same height, position and angle LC_DimArc already chose for the
+// glyph, as a semicircle the width of the glyph's own height, open toward
+// the text -- LibreCAD's own placement, expressed as geometry instead of a
+// character. Returns false, having written nothing, for any other entity.
+bool RS_FilterDXFRW::writeDimArcSymbolAsArc(RS_Entity *e) {
+  if (e == nullptr || e->rtti() != RS2::EntityMText)
+    return false;
+  const auto *symbol = static_cast<const RS_MText *>(e);
+  if (symbol->getText() != QStringLiteral("∩"))
+    return false;
+  const double radius = symbol->getHeight() / 2.0;
+  const double angle = symbol->getAngle();
+  RS_Arc arc(nullptr, RS_ArcData(symbol->getInsertionPoint(), radius, angle,
+                                 angle + M_PI, false));
+  arc.setPen(symbol->getPen(false));
+  arc.setLayer(nullptr);
+  writeArc(&arc);
+  return true;
 }
 
 /**
