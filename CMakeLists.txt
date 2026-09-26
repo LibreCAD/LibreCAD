@@ -844,6 +844,9 @@ librecad/ts/librecad_sk.ts
 librecad/ts/librecad_sl.ts
 librecad/ts/librecad_sq_al.ts
 librecad/ts/librecad_sr.ts
+librecad/ts/librecad_sr_ba.ts
+librecad/ts/librecad_sr_me.ts
+librecad/ts/librecad_sr_rs.ts
 librecad/ts/librecad_sv.ts
 librecad/ts/librecad_ta.ts
 librecad/ts/librecad_th.ts

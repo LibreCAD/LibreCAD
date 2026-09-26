@@ -41,62 +41,51 @@
 <context>
     <name>CustomToolbarCreator</name>
     <message>
-        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="14"/>
         <source>Frame</source>
-        <translation type="unfinished">프레임</translation>
+        <translation type="vanished">프레임</translation>
     </message>
     <message>
-        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="86"/>
         <source>&gt;</source>
-        <translation type="unfinished">&gt;</translation>
+        <translation type="vanished">&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="105"/>
         <source>&lt;</source>
-        <translation type="unfinished">&lt;</translation>
+        <translation type="vanished">&lt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="139"/>
         <source>+</source>
-        <translation>+</translation>
+        <translation type="vanished">+</translation>
     </message>
     <message>
-        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="149"/>
         <source>-</source>
-        <translation>-</translation>
+        <translation type="vanished">-</translation>
     </message>
     <message>
-        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="156"/>
         <source>input a name and then press +</source>
-        <translation>이름을 입력한 후 +를 누르세요</translation>
+        <translation type="vanished">이름을 입력한 후 +를 누르세요</translation>
     </message>
     <message>
-        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="193"/>
         <source>Save</source>
-        <translation type="unfinished">Save</translation>
+        <translation type="vanished">저장</translation>
     </message>
 </context>
 <context>
     <name>CustomWidgetCreator</name>
     <message>
-        <location filename="../src/ui/generic/customwidgetcreator.ui" line="14"/>
         <source>Frame</source>
-        <translation type="unfinished">프레임</translation>
+        <translation type="vanished">프레임</translation>
     </message>
     <message>
-        <location filename="../src/ui/generic/customwidgetcreator.ui" line="65"/>
         <source>-&gt;</source>
-        <translation>-></translation>
+        <translation type="vanished">-&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/generic/customwidgetcreator.ui" line="72"/>
         <source>&lt;-</source>
-        <translation>&lt;-</translation>
+        <translation type="vanished">&lt;-</translation>
     </message>
     <message>
-        <location filename="../src/ui/generic/customwidgetcreator.ui" line="115"/>
         <source>Save</source>
-        <translation type="unfinished">Save</translation>
+        <translation type="vanished">저장</translation>
     </message>
 </context>
 <context>
@@ -227,6 +216,66 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
+    <name>LC_ActionDrawHyperbolaFP</name>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="260"/>
+        <source>Foci cannot be coincident</source>
+        <translation>초점은 일치할 수 없습니다.</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="273"/>
+        <source>The point does not define a hyperbola with these foci</source>
+        <translation>이 점은 주어진 초점으로 쌍곡선을 정의하지 않습니다.</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="286"/>
+        <source>The end point is not on the same hyperbola branch</source>
+        <translation>종료점은 동일한 쌍곡선 가지에 있지 않습니다.</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="295"/>
+        <source>Start and end points cannot be the same</source>
+        <translation>시작점과 종료점은 동일할 수 없습니다.</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="314"/>
+        <source>specify the two foci, then the start and end points on one branch</source>
+        <translation>두 초점을 지정한 다음, 하나의 가지에 있는 시작점과 종료점을 지정합니다.</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="326"/>
+        <source>Specify the first focus</source>
+        <translation>첫 번째 초점을 지정합니다.</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="327"/>
+        <source>Cancel</source>
+        <translation>취소</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="330"/>
+        <source>Specify the second focus</source>
+        <translation>두 번째 초점을 지정합니다.</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="331"/>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="335"/>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="339"/>
+        <source>Back</source>
+        <translation>뒤로</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="334"/>
+        <source>Specify the start point on the branch</source>
+        <translation>가지 위의 시작점을 지정합니다.</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="338"/>
+        <source>Specify the end point on the same branch</source>
+        <translation>동일한 가지 위의 종료점을 지정합니다.</translation>
+    </message>
+</context>
+<context>
     <name>LC_ActionDrawLinePoints</name>
     <message>
         <location filename="../src/actions/lc_actiondrawlinepoints.cpp" line="513"/>
@@ -255,9 +304,15 @@ or [%2]</source>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawlinepoints.cpp" line="521"/>
-        <source>Specify  distance (angle %1 deg)
+        <source>Specify distance (angle %1 deg)
 or [%2]</source>
         <translation>거리 지정 (각도 %1도)
+또는 [%2]</translation>
+    </message>
+    <message>
+        <source>Specify  distance (angle %1 deg)
+or [%2]</source>
+        <translation type="vanished">거리 지정 (각도 %1도)
 또는 [%2]</translation>
     </message>
 </context>
@@ -417,12 +472,12 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawSliceDivide</name>
     <message>
-        <location filename="../src/actions/lc_abstractactionwithpreview.cpp" line="846"/>
+        <location filename="../src/actions/lc_abstractactionwithpreview.cpp" line="858"/>
         <source> is not divided as it is locked.</source>
         <translation> 잠겨 있어 분할할 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../src/actions/lc_abstractactionwithpreview.cpp" line="854"/>
+        <location filename="../src/actions/lc_abstractactionwithpreview.cpp" line="860"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
         <translation> 폴리라인의 일부여서 분할할 수 없습니다. 먼저 폴리라인을 확장하세요.</translation>
     </message>
@@ -485,7 +540,7 @@ or [%2]</source>
 <context>
     <name>LC_ActionFactory</name>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1528"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1537"/>
         <source>&amp;Window Zoom</source>
         <translation>창 &amp;확대</translation>
     </message>
@@ -495,1013 +550,1013 @@ or [%2]</source>
         <translation>확대/축소 &amp;팬</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="63"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="64"/>
         <source>Select Entity</source>
         <translation>엔티티 선택</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="70"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="71"/>
         <source>Select Window</source>
         <translation>창 선택</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="77"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="78"/>
         <source>Deselect Window</source>
         <translation>창 선택 취소</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="84"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="85"/>
         <source>(De-)Select &amp;Contour</source>
         <translation>윤곽선 (선택/취소)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="91"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="92"/>
         <source>Select Intersected Entities</source>
         <translation>교차 엔티티 선택</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="98"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="99"/>
         <source>Deselect Intersected Entities</source>
         <translation>교차 엔티티 선택 취소</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="105"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="106"/>
         <source>(De-)Select Layer</source>
         <translation>레이어 (선택/취소)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="114"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="115"/>
         <source>&amp;Points</source>
         <translation>&amp;점</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="124"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="125"/>
         <source>&amp;2 Points</source>
         <translation>&amp;2점</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="131"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="132"/>
         <source>&amp;Angle</source>
         <translation>&amp;각도</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="138"/>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="648"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="139"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="657"/>
         <source>&amp;Horizontal</source>
         <translation>&amp;수평</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="145"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="146"/>
         <source>Vertical</source>
         <translation>수직</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="158"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="159"/>
         <source>&amp;Freehand Line</source>
         <translation>&amp;자유선</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="165"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="166"/>
         <source>&amp;Parallel</source>
         <translation>&amp;평행</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="172"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="173"/>
         <source>Parallel through point</source>
         <translation>점을 통한 평행선</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="179"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="180"/>
         <source>Rectangle</source>
         <translation>직사각형</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="186"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="187"/>
         <source>Bisector</source>
         <translation>이등분선</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="193"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="194"/>
         <source>Tangent (P,C)</source>
         <translation>접선 (P,C)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="200"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="201"/>
         <source>Tangent (C,C)</source>
         <translation>접선 (C,C)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="207"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="208"/>
         <source>Tangent &amp;Orthogonal</source>
         <translation>접선 &amp;직교</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="214"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="215"/>
         <source>Orthogonal</source>
         <translation>직교</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="221"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="222"/>
         <source>Relative angle</source>
         <translation>상대 각도</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="228"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="229"/>
         <source>Pol&amp;ygon (Cen,Cor)</source>
         <translation>다각형 (중심,모서리)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="242"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="243"/>
         <source>Polygo&amp;n (Cor,Cor)</source>
         <translation>다각형 (모서리,모서리)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="251"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="252"/>
         <source>Center, &amp;Point</source>
         <translation>중심, &amp;점</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="360"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="361"/>
         <source>Center, &amp;Radius</source>
         <translation>중심, &amp;반경</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="367"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="368"/>
         <source>2 Points</source>
         <translation>2점</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="374"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="375"/>
         <source>2 Points, Radius</source>
         <translation>2점, 반경</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="381"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="382"/>
         <source>3 Points</source>
         <translation>3점</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="388"/>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="449"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="389"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="450"/>
         <source>&amp;Concentric</source>
         <translation>&amp;동심</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="396"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="397"/>
         <source>Circle &amp;Inscribed</source>
         <translation>원 &amp;내접</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="403"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="404"/>
         <source>Tangential 2 Circles, Radius</source>
         <comment>circle tangential with two circles, and given radius</comment>
         <translation>접선 2원, 반경</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="410"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="411"/>
         <source>Tangential 2 Circles, 1 Point</source>
         <translation>접선 2원, 1점</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="417"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="418"/>
         <source>Tangential &amp;3 Circles</source>
         <translation>접선 &amp;3원</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="424"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="425"/>
         <source>Tangential, 2 P&amp;oints</source>
         <translation>접선, 2점</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="433"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="434"/>
         <source>&amp;Center, Point, Angles</source>
         <translation>&amp;중심, 점, 각도</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="441"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="442"/>
         <source>&amp;3 Points</source>
         <translation>&amp;3점</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="457"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="458"/>
         <source>Arc &amp;Tangential</source>
         <translation>원호 &amp;접선</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="467"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="468"/>
         <source>&amp;Ellipse (Axis)</source>
         <translation>&amp;타원 (축)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="474"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="475"/>
         <source>Ellipse &amp;Arc (Axis)</source>
         <translation>타원 &amp;원호 (축)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="481"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="482"/>
         <source>Ellipse &amp;Foci Point</source>
         <translation>타원 &amp;초점</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="488"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="489"/>
         <source>Ellipse &amp;4 Point</source>
         <translation>타원 &amp;4점</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="495"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="496"/>
         <source>Ellipse Center and &amp;3 Points</source>
         <translation>타원 중심 및 &amp;3점</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="502"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="503"/>
         <source>Ellipse &amp;Inscribed</source>
         <translation>타원 &amp;내접</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="526"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="535"/>
         <source>&amp;Spline</source>
         <translation>&amp;스플라인</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="533"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="542"/>
         <source>&amp;Spline through points</source>
         <translation>점 통과 &amp;스플라인</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="542"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="551"/>
         <source>&amp;Polyline</source>
         <translation>&amp;폴리라인</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="549"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="558"/>
         <source>&amp;Add node</source>
         <translation>&amp;노드 추가</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="557"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="566"/>
         <source>A&amp;ppend node</source>
         <translation>노드 &amp;추가</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="565"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="574"/>
         <source>&amp;Delete node</source>
         <translation>&amp;노드 삭제</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="573"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="582"/>
         <source>Delete &amp;between two nodes</source>
         <translation>두 노드 사이 &amp;삭제</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="581"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="590"/>
         <source>&amp;Trim segments</source>
         <translation>&amp;세그먼트 자르기</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="589"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="598"/>
         <source>Create &amp;Equidistant Polylines</source>
         <translation>등거리 폴리라인 &amp;생성</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="596"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="605"/>
         <source>Create Polyline from Existing &amp;Segments</source>
         <translation>기존 세그먼트에서 폴리라인 &amp;생성</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="605"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="614"/>
         <source>&amp;MText</source>
         <translation>&amp;다중 텍스트</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="611"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="620"/>
         <source>&amp;Text</source>
         <translation>&amp;텍스트</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="618"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="627"/>
         <source>&amp;Hatch</source>
         <translation>&amp;해치</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="625"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="634"/>
         <source>Insert &amp;Image</source>
         <translation>&amp;이미지 삽입</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="634"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="643"/>
         <source>&amp;Aligned</source>
         <translation>&amp;정렬</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="641"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="650"/>
         <source>&amp;Linear</source>
         <translation>&amp;선형</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="655"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="664"/>
         <source>&amp;Vertical</source>
         <translation>&amp;수직</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="662"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="671"/>
         <source>&amp;Radial</source>
         <translation>&amp;방사형</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="669"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="678"/>
         <source>&amp;Diametric</source>
         <translation>&amp;지름</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="676"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="685"/>
         <source>&amp;Angular</source>
         <translation>&amp;각도</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="690"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="699"/>
         <source>&amp;Leader</source>
         <translation>&amp;리더</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="699"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="708"/>
         <source>&amp;Attributes</source>
         <translation>&amp;속성</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="707"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="716"/>
         <source>&amp;Delete</source>
         <translation>&amp;삭제</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="714"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="723"/>
         <source>Delete Freehand</source>
         <translation>자유선 삭제</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="721"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="730"/>
         <source>&amp;Move / Copy</source>
         <translation>&amp;이동 / 복사</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="729"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="738"/>
         <source>Re&amp;vert direction</source>
         <translation>방향 &amp;반전</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="731"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="740"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="737"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="746"/>
         <source>&amp;Rotate</source>
         <translation>&amp;회전</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="745"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="754"/>
         <source>&amp;Scale</source>
         <translation>&amp;크기 조정</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="753"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="762"/>
         <source>&amp;Mirror</source>
         <translation>&amp;대칭</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="768"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="777"/>
         <source>Rotate T&amp;wo</source>
         <translation>두 개 회전</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="775"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="784"/>
         <source>&amp;Properties</source>
         <translation>&amp;속성</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="783"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="792"/>
         <source>&amp;Trim</source>
         <translation>&amp;자르기</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="799"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="808"/>
         <source>&amp;Lengthen</source>
         <translation>&amp;연장</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="815"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="824"/>
         <source>&amp;Divide</source>
         <translation>&amp;분할</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="823"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="832"/>
         <source>&amp;Stretch</source>
         <translation>&amp;늘리기</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="831"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="840"/>
         <source>&amp;Bevel</source>
         <translation>&amp;모따기</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="839"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="848"/>
         <source>&amp;Fillet</source>
         <translation>&amp;필렛</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="847"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="856"/>
         <source>&amp;Explode Text into Letters</source>
         <translation>텍스트를 문자로 &amp;분해</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="913"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="922"/>
         <source>Point inside contour</source>
         <translation>윤곽선 내부 점</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="919"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="928"/>
         <source>&amp;Distance Point to Point</source>
         <translation>점 간 &amp;거리</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="926"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="935"/>
         <source>&amp;Distance Entity to Point</source>
         <translation>엔티티에서 점까지 &amp;거리</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="933"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="942"/>
         <source>An&amp;gle between two lines</source>
         <translation>두 선 간 &amp;각도</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="940"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="949"/>
         <source>&amp;Total length of selected entities</source>
         <translation>선택한 엔티티의 &amp;총 길이</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="947"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="956"/>
         <source>Polygonal &amp;Area</source>
         <translation>다각형 &amp;면적</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1409"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1418"/>
         <source>&amp;Selection pointer</source>
         <translation>&amp;선택 포인터</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1419"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1428"/>
         <source>&amp;Undo</source>
         <translation>&amp;실행 취소</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1430"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1439"/>
         <source>&amp;Redo</source>
         <translation>&amp;다시 실행</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1441"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1450"/>
         <source>Cu&amp;t</source>
         <translation>자르기</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1452"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1461"/>
         <source>&amp;Copy</source>
         <translation>&amp;복사</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1463"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1472"/>
         <source>&amp;Paste</source>
         <translation>&amp;붙여넣기</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="966"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="975"/>
         <source>move to bottom</source>
         <translation>맨 아래로 이동</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="974"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="983"/>
         <source>lower after entity</source>
         <translation>엔티티 뒤로 낮추기</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="982"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="991"/>
         <source>raise over entity</source>
         <translation>엔티티 위로 올리기</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="990"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="999"/>
         <source>move to top</source>
         <translation>맨 위로 이동</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1028"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1037"/>
         <source>&amp;Add Layer</source>
         <translation>레이어 &amp;추가</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1035"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1044"/>
         <source>&amp;Remove Layer</source>
         <translation>레이어 &amp;제거</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1042"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1051"/>
         <source>&amp;Edit Layer</source>
         <translation>레이어 &amp;편집</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1049"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1058"/>
         <source>Toggle Layer Loc&amp;k</source>
         <translation>레이어 잠금 토글</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1056"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1065"/>
         <source>&amp;Toggle Layer Visibility</source>
         <translation>레이어 가시성 &amp;토글</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1063"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1072"/>
         <source>Toggle Layer &amp;Print</source>
         <translation>레이어 &amp;인쇄 토글</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1070"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1079"/>
         <source>Toggle &amp;Construction Layer</source>
         <translation>구성 레이어 토글</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1103"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1112"/>
         <source>&amp;Add Block</source>
         <translation>블록 &amp;추가</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1110"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1119"/>
         <source>&amp;Remove Block</source>
         <translation>블록 &amp;제거</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1117"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1126"/>
         <source>&amp;Rename Block</source>
         <translation>블록 이름 &amp;변경</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1124"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1133"/>
         <source>&amp;Edit Block</source>
         <translation>블록 &amp;편집</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1131"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1140"/>
         <source>&amp;Save Block</source>
         <translation>블록 &amp;저장</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1138"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1147"/>
         <source>&amp;Insert Block</source>
         <translation>블록 &amp;삽입</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1145"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1154"/>
         <source>Toggle Block &amp;Visibility</source>
         <translation>블록 가시성 토글</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1152"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1161"/>
         <source>&amp;Create Block</source>
         <translation>블록 &amp;생성</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="854"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="863"/>
         <source>Ex&amp;plode</source>
         <translation>폭발</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1161"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1170"/>
         <source>&amp;Application Preferences</source>
         <translation>&amp;응용 프로그램 환경 설정</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1169"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1178"/>
         <source>Current &amp;Drawing Preferences</source>
         <translation>현재 &amp;그리기 환경 설정</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1192"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1201"/>
         <source>&amp;Delete selected</source>
         <translation>선택 항목 &amp;삭제</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1200"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1209"/>
         <source>Select &amp;All</source>
         <translation>모두 &amp;선택</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1210"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1219"/>
         <source>Deselect &amp;all</source>
         <translation>모두 선택 취소</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1212"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1221"/>
         <source>Ctrl+K</source>
         <translation>Ctrl+K</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1219"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1228"/>
         <source>Invert Selection</source>
         <translation>선택 반전</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1476"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1485"/>
         <source>Zoom &amp;In</source>
         <translation>&amp;확대</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1486"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1495"/>
         <source>Zoom &amp;Out</source>
         <translation>&amp;축소</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1496"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1505"/>
         <source>&amp;Auto Zoom</source>
         <translation>&amp;자동 확대</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1506"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1515"/>
         <source>Previous &amp;View</source>
         <translation>이전 &amp;보기</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1517"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1526"/>
         <source>&amp;Redraw</source>
         <translation>&amp;다시 그리기</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1540"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1550"/>
         <source>&amp;New</source>
         <translation>&amp;새로 만들기</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1550"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1560"/>
         <source>New From &amp;Template</source>
         <translation>템플릿에서 &amp;새로 만들기</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1559"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1569"/>
         <source>&amp;Open...</source>
         <translation>&amp;열기...</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1569"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1579"/>
         <source>&amp;Save</source>
         <translation>&amp;저장</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1579"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1589"/>
         <source>Save &amp;as...</source>
         <translation>다른 이름으로 저장...</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1244"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1253"/>
         <source>&amp;Export as image</source>
         <translation>이미지로 &amp;내보내기</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1250"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1259"/>
         <source>&amp;Close</source>
         <translation>&amp;닫기</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1599"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1609"/>
         <source>&amp;Print...</source>
         <translation>&amp;인쇄...</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1265"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1274"/>
         <source>Export as PDF</source>
         <translation>PDF로 내보내기</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1610"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1620"/>
         <source>Print Pre&amp;view</source>
         <translation>인쇄 미리보기</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1621"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1631"/>
         <source>&amp;Quit</source>
         <translation>&amp;종료</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1271"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1280"/>
         <source>&amp;Block</source>
         <translation>&amp;블록</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1279"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1288"/>
         <source>&amp;Fullscreen</source>
         <translation>&amp;전체 화면</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1290"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1299"/>
         <source>&amp;Grid</source>
         <translation>&amp;그리드</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1292"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1301"/>
         <source>Ctrl+G</source>
         <comment>Toggle Grid</comment>
         <translation>Ctrl+G</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1300"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1309"/>
         <source>&amp;Draft</source>
         <translation>&amp;초안</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1309"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1318"/>
         <source>&amp;Statusbar</source>
         <translation>&amp;상태 표시줄</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1312"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1321"/>
         <source>Ctrl+I</source>
         <comment>Hide Statusbar</comment>
         <translation>Ctrl+I</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1317"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1326"/>
         <source>Focus on &amp;Command Line</source>
         <translation>명령줄에 &amp;포커스</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1178"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1187"/>
         <source>Widget Options</source>
         <translation>위젯 옵션</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1328"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1337"/>
         <source>Left</source>
         <translation>Left</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1337"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1346"/>
         <source>Right</source>
         <translation>오른쪽</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1346"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1355"/>
         <source>Top</source>
         <translation>Top</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1355"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1364"/>
         <source>Bottom</source>
         <translation>아래쪽</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1364"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1373"/>
         <source>Floating</source>
         <translation>플로팅</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1373"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1382"/>
         <source>Reload Style Sheet</source>
         <translation>스타일 시트 다시 로드</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1184"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1193"/>
         <source>Device Options</source>
         <translation>장치 옵션</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="761"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="770"/>
         <source>Mo&amp;ve and Rotate</source>
         <translation>이동 및 회전</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="791"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="800"/>
         <source>Tr&amp;im Two</source>
         <translation>두 개 자르기</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="807"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="816"/>
         <source>O&amp;ffset</source>
         <translation>오프셋</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1386"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1395"/>
         <source>Menu Creator</source>
         <translation>메뉴 생성기</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1393"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1402"/>
         <source>Toolbar Creator</source>
         <translation>도구 모음 생성기</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1303"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1312"/>
         <source>Ctrl+D</source>
         <comment>Toggle Draft Mode</comment>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="235"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="236"/>
         <source>Pol&amp;ygon (Cen,Tan)</source>
         <translation>다각형 (중심,접선)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="683"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="692"/>
         <source>&amp;Arc</source>
         <translation>&amp;원호</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1000"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1009"/>
         <source>&amp;Show all layers</source>
         <translation>모든 레이어 &amp;표시</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1007"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1016"/>
         <source>&amp;Hide all layers</source>
         <translation>모든 레이어 &amp;숨기기</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1014"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1023"/>
         <source>&amp;Unlock all</source>
         <translation>모두 &amp;잠금 해제</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1021"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1030"/>
         <source>&amp;Lock all</source>
         <translation>모두 &amp;잠금</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1077"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1086"/>
         <source>&amp;Export Selected Layer(s)</source>
         <translation>선택한 레이어 &amp;내보내기</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1082"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1091"/>
         <source>Export &amp;Visible Layer(s)</source>
         <translation>표시된 레이어 &amp;내보내기</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1089"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1098"/>
         <source>&amp;Show all blocks</source>
         <translation>모든 블록 &amp;표시</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1096"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1105"/>
         <source>&amp;Hide all blocks</source>
         <translation>모든 블록 &amp;숨기기</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1228"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1237"/>
         <source>Export as CA&amp;M/plain SVG...</source>
         <translation>CAM/일반 SVG로 &amp;내보내기...</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1257"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1266"/>
         <source>Close All</source>
         <translation>모두 닫기</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1380"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1389"/>
         <source>Re-dock Widgets</source>
         <translation>위젯 재도킹</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1589"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1599"/>
         <source>Save A&amp;ll...</source>
         <translation>모두 저장...</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="257"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="258"/>
         <source>Cross</source>
         <translation>교차</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="263"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="264"/>
         <source>Snake</source>
         <translation>스네이크</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="269"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="270"/>
         <source>Snake (X)</source>
         <translation>스네이크 (X)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="275"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="276"/>
         <source>Snake (Y)</source>
         <translation>스네이크 (Y)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="281"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="282"/>
         <source>Rectangle (1 Point)</source>
         <translation>직사각형 (1점)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="287"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="288"/>
         <source>Rectangle (2 Points)</source>
         <translation>직사각형 (2점)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="293"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="294"/>
         <source>Rectangle (3 Points)</source>
         <translation>직사각형 (3점)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="299"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="300"/>
         <source>Star</source>
         <translation>Star</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="305"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="306"/>
         <source>Break/Divide</source>
         <translation>분할/나누기</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="311"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="312"/>
         <source>Line Gap</source>
         <translation>선 간격</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="317"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="318"/>
         <source>Angle From Line</source>
         <translation>선에서 각도</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="323"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="324"/>
         <source>Orthogonal From Line</source>
         <translation>선에서 직교</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="329"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="330"/>
         <source>From Point To Line</source>
         <translation>점에서 선으로</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="335"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="336"/>
         <source>Slice/Divide Line</source>
         <translation>선 자르기/분할</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="341"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="342"/>
         <source>Slice/Divide Circle</source>
         <translation>원 자르기/분할</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="347"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="348"/>
         <source>Line of Points</source>
         <translation>점의 선</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="353"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="354"/>
         <source>By Arc</source>
         <translation>원호로</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="510"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="519"/>
         <source>Para&amp;bola 4 points</source>
         <translation>포물선 4점</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="517"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="526"/>
         <source>Parabola &amp;Focus Directrix</source>
         <translation>포물선 &amp;초점 준선</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="864"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="873"/>
         <source>&amp;Pick Pen From Entity</source>
         <translation>엔티티에서 &amp;펜 선택</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="872"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="881"/>
         <source>&amp;Pick Pen From Entity (Resolved)</source>
         <translation>엔티티에서 &amp;펜 선택 (해결됨)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="881"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="890"/>
         <source>Apply Pen to Entity</source>
         <translation>엔티티에 펜 적용</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="889"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="898"/>
         <source>Copy Pen</source>
         <translation>펜 복사</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="897"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="906"/>
         <source>Line Join</source>
         <translation>선 연결</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="904"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="913"/>
         <source>Duplicate</source>
         <translation>복제</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1632"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1642"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
         <translation>현재 펜을 활성 레이어 펜으로 업데이트</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="510"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="511"/>
         <source>&amp;Hyperbola Foci Point</source>
         <translation>&amp;쌍곡선 초점</translation>
     </message>
@@ -1674,9 +1729,8 @@ or [%2]</source>
 <context>
     <name>LC_CustomToolbar</name>
     <message>
-        <location filename="../src/ui/lc_customtoolbar.cpp" line="36"/>
         <source>Add or Remove Action</source>
-        <translation>액션 추가 또는 제거</translation>
+        <translation type="vanished">액션 추가 또는 제거</translation>
     </message>
 </context>
 <context>
@@ -2083,160 +2137,160 @@ or [%2]</source>
         <translation>평면 목록 모드)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="653"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="656"/>
         <source>Layer Menu</source>
         <translation>레이어 메뉴</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="672"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="675"/>
         <source>&amp;Add Child Layer</source>
         <translation>자식 레이어 &amp;추가</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="673"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="676"/>
         <source>&amp;Rename</source>
         <translation>&amp;이름 변경</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="674"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="677"/>
         <source>&amp;Remove Layers (Sub-Tree)</source>
         <translation>레이어 &amp;제거 (하위 트리)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="676"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="679"/>
         <source>&amp;Copy Structure (Sub-Tree)</source>
         <translation>구조 &amp;복사 (하위 트리)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="677"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="680"/>
         <source>&amp;Duplicate Content (Sub-Tree)</source>
         <translation>콘텐츠 &amp;복제 (하위 트리)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="679"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="682"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
         <translation>엔티티 &amp;선택 (하위 트리)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="684"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="687"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
         <translation>레이어 &amp;속성 편집</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="686"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="689"/>
         <source>&amp;Remove Layer</source>
         <translation>레이어 &amp;제거</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="695"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="698"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
         <translation>치수 하위 레이어 &amp;추가</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="699"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="702"/>
         <source>&amp;Add Info Sub-Layer</source>
         <translation>정보 하위 레이어 &amp;추가</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="703"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="706"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
         <translation>대체 보기 하위 레이어 &amp;추가</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="709"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="712"/>
         <source>&amp;Remove Sub-layers</source>
         <translation>하위 레이어 &amp;제거</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="717"/>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="728"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="720"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="731"/>
         <source>Convert to Dimensional Layer</source>
         <translation>치수 레이어로 변환</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="718"/>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="731"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="721"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="734"/>
         <source>Convert to Info Layer</source>
         <translation>정보 레이어로 변환</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="719"/>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="734"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="722"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="737"/>
         <source>Convert to Alternative Position Layer</source>
         <translation>대체 위치 레이어로 변환</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="726"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="729"/>
         <source>Convert to Normal Layer</source>
         <translation>일반 레이어로 변환</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="740"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="743"/>
         <source>&amp;Select Layer&apos;s Entities</source>
         <translation>레이어 엔티티 &amp;선택</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="743"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="746"/>
         <source>&amp;Create Layer Copy</source>
         <translation>레이어 복사본 &amp;생성</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="744"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="747"/>
         <source>&amp;Duplicate Layer With Content</source>
         <translation>콘텐츠와 함께 레이어 &amp;복제</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="748"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="751"/>
         <source>Move Selection to Layer</source>
         <translation>선택을 레이어로 이동</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="749"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="752"/>
         <source>Duplicate Selection to Layer</source>
         <translation>선택을 레이어로 복제</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="756"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="759"/>
         <source>&amp;Add Layer</source>
         <translation>레이어 &amp;추가</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="758"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="761"/>
         <source>&amp;Freeze Others Layers</source>
         <translation>다른 레이어 &amp;고정</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="759"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="762"/>
         <source>&amp;Defreeze All Layers</source>
         <translation>모든 레이어 고정 해제</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="760"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="763"/>
         <source>&amp;Freeze All Layers</source>
         <translation>모든 레이어 고정</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="761"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="764"/>
         <source>&amp;Unlock All Layers</source>
         <translation>모든 레이어 잠금 해제</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="762"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="765"/>
         <source>&amp;Lock All Layers</source>
         <translation>모든 레이어 잠금</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="763"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="766"/>
         <source>Enable &amp;Printing All Layers</source>
         <translation>모든 레이어 &amp;인쇄 활성화</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="764"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="767"/>
         <source>&amp;Disable Printing All Layers</source>
         <translation>모든 레이어 &amp;인쇄 비활성화</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="766"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="769"/>
         <source>&amp;Find And Remove Empty Layers</source>
         <translation>빈 레이어 &amp;찾기 및 제거</translation>
     </message>
@@ -3390,67 +3444,67 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
 <context>
     <name>LC_WidgetFactory</name>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="378"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="381"/>
         <source>Library Browser</source>
         <translation>라이브러리 브라우저</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="390"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="393"/>
         <source>Command line</source>
         <translation>명령줄</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="414"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="417"/>
         <source>Dock</source>
         <translation>Dock</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="414"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="417"/>
         <source>Float</source>
         <translation>플로팅</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="598"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="601"/>
         <source>Lines</source>
         <translation>선</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="605"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="608"/>
         <source>Circles</source>
         <translation>원</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="612"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="615"/>
         <source>Freehand</source>
         <translation>자유선</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="619"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="622"/>
         <source>Ellipses</source>
         <translation>타원</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="626"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="629"/>
         <source>PolyLines</source>
         <translation>폴리라인</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="633"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="636"/>
         <source>Select</source>
         <translation>선택</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="640"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="643"/>
         <source>Dimensions</source>
         <translation>치수</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="647"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="650"/>
         <source>Modify</source>
         <translation>수정</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="654"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="657"/>
         <source>Measure</source>
         <translation>측정</translation>
     </message>
@@ -3613,183 +3667,173 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="674"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="677"/>
         <source>&amp;File</source>
         <translation>파일(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="716"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="719"/>
         <source>&amp;Edit</source>
         <translation>편집(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="737"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="740"/>
         <source>&amp;View</source>
         <translation>보기(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="796"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="799"/>
         <source>&amp;Select</source>
         <translation>선택(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="761"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="764"/>
         <source>&amp;Line</source>
         <translation>선(&amp;L)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="768"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="771"/>
         <source>&amp;Circle</source>
         <translation>원(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="782"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="785"/>
         <source>&amp;Ellipse</source>
         <translation>타원(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="812"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="815"/>
         <source>&amp;Modify</source>
         <translation>수정(&amp;M)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="821"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="824"/>
         <source>&amp;Info</source>
         <translation>정보(&amp;I)</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3047"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="930"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="933"/>
         <source>About</source>
         <translation>정보</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="879"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="882"/>
         <source>&amp;Help</source>
         <translation>도움말(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1219"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1236"/>
         <source>&amp;Cascade</source>
         <translation>&amp;계단식</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1220"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1237"/>
         <source>&amp;Tile</source>
         <translation>&amp;타일</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1222"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1239"/>
         <source>Tile &amp;Horizontally</source>
         <translation>가로 &amp;타일</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1538"/>
         <source>Creating new file...</source>
-        <translation>새 파일 만들기...</translation>
+        <translation type="vanished">새 파일 만들기...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1586"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1601"/>
         <source>unnamed document %1</source>
         <translation>이름없는 문서%1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3327"/>
         <source>Opening recent file...</source>
-        <translation>최근 파일 열기...</translation>
+        <translation type="vanished">최근 파일 열기...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2015"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2030"/>
         <source>Loaded document: </source>
         <translation>읽은 문서:</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2021"/>
         <source>Opening aborted</source>
-        <translation>열기 취소</translation>
+        <translation type="vanished">열기 취소</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2438"/>
         <source>Printing...</source>
-        <translation>인쇄하기...</translation>
+        <translation type="vanished">인쇄하기...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2838"/>
         <source>Exiting application...</source>
-        <translation>응용프로그램 종료...</translation>
+        <translation type="vanished">응용프로그램 종료...</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="345"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="347"/>
         <source>Layer List</source>
         <translation>레이어 목록</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="368"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="371"/>
         <source>Block List</source>
         <translation>블록 목록</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2760"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2768"/>
         <source>Print preview for %1</source>
         <translation>%1 인쇄 미리보기</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1661"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1744"/>
         <source>New Drawing created.</source>
         <translation>새 도면 작성.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="516"/>
         <source>Saving drawing...</source>
-        <translation>도면 저장하기...</translation>
+        <translation type="vanished">도면 저장하기...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="525"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="529"/>
         <source>Saved drawing: %1</source>
         <translation>저장 도면 : %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2118"/>
         <source>Exporting drawing...</source>
-        <translation>도면 내보내기...</translation>
+        <translation type="vanished">도면 내보내기...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2214"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2223"/>
         <source>Exported: %1</source>
         <translation>내보냄: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2254"/>
         <source>Exporting...</source>
-        <translation>내보내는 중...</translation>
+        <translation type="vanished">내보내는 중...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2327"/>
         <source>Export complete</source>
-        <translation>내보내기 완료</translation>
+        <translation type="vanished">내보내기 완료</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2329"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2334"/>
         <source>Export failed!</source>
         <translation>내보내기 실패!</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2684"/>
         <source>Printing complete</source>
-        <translation>인쇄 완료</translation>
+        <translation type="vanished">인쇄 완료</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3450"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3461"/>
         <source>Command line</source>
         <translation>명령행</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1584"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1599"/>
         <source>Block &apos;%1&apos;</source>
         <translation>블록 &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1791"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1806"/>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
@@ -3798,22 +3842,21 @@ Please check the permissions.</source>
 권한을 점검해 보십시오.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="789"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="792"/>
         <source>&amp;Polyline</source>
         <translation>다각형(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2087"/>
         <source>Auto-saving drawing...</source>
-        <translation>도면 자동 저장...</translation>
+        <translation type="vanished">도면 자동 저장...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2095"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2106"/>
         <source>Auto-saved drawing</source>
         <translation>자동 저장된 그리기</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2100"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2111"/>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
@@ -3824,12 +3867,12 @@ Auto-save disabled.</source>
 자동 저장 비활성</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="685"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="688"/>
         <source>Import</source>
         <translation>가져오기</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="988"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="991"/>
         <source>&amp;Toolbars</source>
         <translation>도구막대(&amp;T)</translation>
     </message>
@@ -3844,72 +3887,72 @@ Auto-save disabled.</source>
         <translation>버전:%1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1891"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1907"/>
         <source>Warning: File already opened : </source>
         <translation>경고:파일이 이미 열려있음:</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="542"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="545"/>
         <source>Cannot save the file </source>
         <translation>파일을 저장할 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="544"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="547"/>
         <source> , please check the filename and permissions.</source>
         <translation> , 파일 이름과 권한을 확인하세요.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1221"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1238"/>
         <source>Tile &amp;Vertically</source>
         <translation>수직(&amp;V) 바둑판식 배열</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1172"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1189"/>
         <source>Ta&amp;b mode</source>
         <translation>탭(&amp;b) 모드</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1727"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1741"/>
         <source>New document from template: </source>
         <translation>템플리트에서 새 문서:</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1775"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1790"/>
         <source>Select Template aborted</source>
         <translation>선택한 템플리트 취소</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2105"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2116"/>
         <source>Auto-saving failed</source>
         <translation>자동 저장 실패</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="421"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="424"/>
         <source>File</source>
         <translation>File</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="428"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="431"/>
         <source>Edit</source>
         <translation>Edit</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="449"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="452"/>
         <source>View</source>
         <translation>View</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="464"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="467"/>
         <source>Snap Selection</source>
         <translation>스냅 선택</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="476"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="479"/>
         <source>Tool Options</source>
         <translation>도구 선택사항</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2155"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2164"/>
         <source>Export as</source>
         <translation>다른이름으로 내보내기</translation>
     </message>
@@ -3929,26 +3972,26 @@ Auto-save disabled.</source>
         <translation>QT 버전:%1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="535"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1593"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1999"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="538"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1608"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2014"/>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2882"/>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3255"/>
         <source>Draft Mode</source>
         <translation>초안 모드</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2490"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2500"/>
         <source>Export as PDF</source>
         <translation>PDF로 내보내기</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="689"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="692"/>
         <source>Export</source>
         <translation>내보내기</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1934"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1949"/>
         <source>Cannot open the file
 %1
 Please check its existence and permissions.</source>
@@ -3957,142 +4000,142 @@ Please check its existence and permissions.</source>
 존재 여부와 권한을 확인하세요.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2020"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2034"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
         <translation>파일 &apos;%1&apos;이 존재하지 않습니다. 파일열기가 취소되었습니다.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="589"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="592"/>
         <source>Categories</source>
         <translation>카테고리</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="830"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="833"/>
         <source>&amp;Order</source>
         <translation>&amp;순서</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="302"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="440"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="303"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="443"/>
         <source>Order</source>
         <translation>순서</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="282"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="550"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="283"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="553"/>
         <source>Select</source>
         <translation>선택</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="257"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="520"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="258"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="523"/>
         <source>Line</source>
         <translation>Line</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="262"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="526"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="263"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="529"/>
         <source>Circle</source>
         <translation>원</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="775"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="778"/>
         <source>&amp;Curve</source>
         <translation>&amp;곡선</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="267"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="532"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="268"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="535"/>
         <source>Curve</source>
         <translation>곡선</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="272"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="538"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="273"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="541"/>
         <source>Ellipse</source>
         <translation>타원</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="277"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="544"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="278"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="547"/>
         <source>Polyline</source>
         <translation>폴리라인</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="287"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="556"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="288"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="559"/>
         <source>Dimension</source>
         <translation>치수</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="292"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="562"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="293"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="565"/>
         <source>Modify</source>
         <translation>수정</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="297"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="568"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="298"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="571"/>
         <source>Info</source>
         <translation>Info</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="471"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="474"/>
         <source>Pen</source>
         <translation>Pen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="483"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="486"/>
         <source>Dock Areas</source>
         <translation>도킹 영역</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="186"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="187"/>
         <source>Grid Status</source>
         <translation>그리드 상태</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3295"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3307"/>
         <source>Toolbars</source>
         <translation>도구 모음</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3300"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3312"/>
         <source>Dockwidgets</source>
         <translation>도킹 위젯</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3509"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3520"/>
         <source>Device Options</source>
         <translation>장치 옵션</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3512"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3523"/>
         <source>Device</source>
         <translation>장치</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="705"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="708"/>
         <source>&amp;Options</source>
         <translation>&amp;옵션</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="731"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="734"/>
         <source>Pl&amp;ugins</source>
         <translation>플&amp;러그인</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="804"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="807"/>
         <source>Dime&amp;nsion</source>
         <translation>치수</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="961"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="964"/>
         <source>Dock Wid&amp;gets</source>
         <translation>도킹 위젯</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="362"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="364"/>
         <source>Recent Files</source>
         <translation>최근 파일</translation>
     </message>
@@ -4127,131 +4170,136 @@ Please check its existence and permissions.</source>
         <translation>시스템</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3547"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3558"/>
         <source>Toolbar Creator</source>
         <translation>도구 모음 생성기</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3613"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3624"/>
         <source>Menu Creator</source>
         <translation>메뉴 생성기</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3638"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3649"/>
         <source>Menu Assigner</source>
         <translation>메뉴 할당기</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="755"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="758"/>
         <source>&amp;Tools</source>
         <translation>&amp;도구</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="869"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="872"/>
         <source>&amp;Drawings</source>
         <translation>&amp;그리기</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="516"/>
         <source>Saving drawing: %1</source>
-        <translation>그리기 저장: %1</translation>
+        <translation type="vanished">그리기 저장: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="521"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="525"/>
         <source>Save cancelled</source>
         <translation>저장 취소됨</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="652"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="654"/>
         <source>Closing Drawing</source>
         <translation>그리기 닫는 중</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="660"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="662"/>
         <source>Save changes to the following item?
 %1</source>
         <translation>다음 항목에 변경 사항을 저장하시겠습니까?
 %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="674"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="676"/>
         <source>&amp;Save</source>
         <translation>&amp;저장</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="675"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="677"/>
         <source>Save &amp;as...</source>
         <translation>다른 이름으로 저장...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="679"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="681"/>
         <source>&amp;Save %1</source>
         <translation>%1 &amp;저장</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="680"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="682"/>
         <source>Save %1 &amp;as...</source>
         <translation>%1 다른 이름으로 &amp;저장...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1176"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1193"/>
         <source>&amp;Window mode</source>
         <translation>&amp;창 모드</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1182"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1199"/>
         <source>&amp;Layout</source>
         <translation>&amp;레이아웃</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1185"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1202"/>
         <source>Rounded</source>
         <translation>둥글게</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1189"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1206"/>
         <source>Triangular</source>
         <translation>삼각형</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1195"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1212"/>
         <source>North</source>
         <translation>북쪽</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1199"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1216"/>
         <source>South</source>
         <translation>남쪽</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1203"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1220"/>
         <source>East</source>
         <translation>East</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1207"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1224"/>
         <source>West</source>
         <translation>West</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1212"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1229"/>
         <source>&amp;Arrange</source>
         <translation>&amp;정렬</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1215"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1232"/>
         <source>&amp;Maximized</source>
         <translation>&amp;최대화</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2062"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2075"/>
         <source>Save All cancelled</source>
         <translation>모두 저장 취소됨</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2396"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2401"/>
         <source>Close All cancelled</source>
         <translation>모두 닫기 취소됨</translation>
+    </message>
+    <message>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2470"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2482"/>
+        <source>Cannot apply the drawing page settings.</source>
+        <translation>도면 페이지 설정을 적용할 수 없습니다.</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3093"/>
@@ -4259,83 +4307,83 @@ Please check its existence and permissions.</source>
         <translation>코드</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3450"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3461"/>
         <source>Cmd</source>
         <translation>Cmd</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3451"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3462"/>
         <source>Float</source>
         <translation>플로팅</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3451"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3462"/>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
         <translation>Dock</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="883"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="886"/>
         <source>&amp;Wiki</source>
         <translation>&amp;위키</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="884"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="887"/>
         <source>User&apos;s &amp;Manual</source>
         <translation>사용자 &amp;매뉴얼</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="885"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="888"/>
         <source>&amp;Commands</source>
         <translation>&amp;명령</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="886"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="889"/>
         <source>&amp;Style Sheets</source>
         <translation>&amp;스타일 시트</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="887"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="890"/>
         <source>Wid&amp;gets</source>
         <translation>위젯</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="888"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="891"/>
         <source>&amp;Forum</source>
         <translation>&amp;포럼</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="889"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="892"/>
         <source>Zulip &amp;Chat</source>
         <translation>Zulip &amp;채팅</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="890"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="893"/>
         <source>&amp;Release Information</source>
         <translation>&amp;릴리스 정보</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="916"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="919"/>
         <source>On&amp;line</source>
         <translation>온&amp;라인</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="938"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="941"/>
         <source>&amp;Donate</source>
         <translation>&amp;기부</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2426"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2431"/>
         <source>Please adjust scaling and positioning in print preview first.</source>
         <translation>인쇄 미리보기에서 먼저 크기 조정과 위치를 조정하세요.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="336"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="337"/>
         <source>Pen Palette</source>
         <translation>펜 팔레트</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="357"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="359"/>
         <source>Layer Tree</source>
         <translation>레이어 트리</translation>
     </message>
@@ -4343,18 +4391,17 @@ Please check its existence and permissions.</source>
 <context>
     <name>QG_ActionHandler</name>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="1273"/>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
-        <translation>이동</translation>
+        <translation type="vanished">이동</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="1262"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="1275"/>
         <source>Spacebar: restored snapping mode to normal</source>
         <translation>스페이스 바: 스냅 모드를 기본으로 복원</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="1263"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="1276"/>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
         <translation>스페이스 바: 스냅 모드를 임시로 자유 스냅 모드로 설정</translation>
     </message>
@@ -4642,7 +4689,7 @@ in a separate window</source>
 <context>
     <name>QG_CommandEdit</name>
     <message>
-        <location filename="../src/ui/qg_commandedit.cpp" line="289"/>
+        <location filename="../src/ui/qg_commandedit.cpp" line="303"/>
         <source>clear</source>
         <translation>지우기</translation>
     </message>
@@ -4689,10 +4736,9 @@ in a separate window</source>
         <translation>명령 기록과 출력</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_commandwidget.cpp" line="254"/>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
-        <translation>나가기</translation>
+        <translation type="vanished">나가기</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="132"/>
@@ -4701,22 +4747,22 @@ in a separate window</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="94"/>
-        <location filename="../src/ui/forms/qg_commandwidget.cpp" line="343"/>
+        <location filename="../src/ui/forms/qg_commandwidget.cpp" line="344"/>
         <source>Dock</source>
         <translation>Dock</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_commandwidget.cpp" line="343"/>
+        <location filename="../src/ui/forms/qg_commandwidget.cpp" line="344"/>
         <source>Float</source>
         <translation>플로팅</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_commandwidget.cpp" line="344"/>
+        <location filename="../src/ui/forms/qg_commandwidget.cpp" line="345"/>
         <source>Command line</source>
         <translation>명령줄</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_commandwidget.cpp" line="344"/>
+        <location filename="../src/ui/forms/qg_commandwidget.cpp" line="345"/>
         <source>Cmd</source>
         <translation>Cmd</translation>
     </message>
@@ -7299,44 +7345,36 @@ so default step value required for baking</source>
 <context>
     <name>QG_DlgOptionsVariables</name>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="17"/>
         <source>Drawing Variables</source>
-        <translation>도면 변수</translation>
+        <translation type="vanished">도면 변수</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="54"/>
         <source>Variable</source>
-        <translation>변수</translation>
+        <translation type="vanished">변수</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="59"/>
         <source>Code</source>
-        <translation>코드</translation>
+        <translation type="vanished">코드</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="64"/>
         <source>Value</source>
-        <translation>값</translation>
+        <translation type="vanished">값</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="96"/>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="vanished">&amp;OK</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="99"/>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="vanished">Alt+O</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="112"/>
         <source>Cancel</source>
-        <translation>취소</translation>
+        <translation type="vanished">취소</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="115"/>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="vanished">Esc</translation>
     </message>
 </context>
 <context>
@@ -8497,12 +8535,12 @@ so default step value required for baking</source>
 <context>
     <name>QG_GraphicView</name>
     <message>
-        <location filename="../src/ui/qg_graphicview.cpp" line="569"/>
+        <location filename="../src/ui/qg_graphicview.cpp" line="572"/>
         <source>Edit Properties</source>
         <translation>속성 편집</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_graphicview.cpp" line="566"/>
+        <location filename="../src/ui/qg_graphicview.cpp" line="569"/>
         <source>Edit Block</source>
         <translation>블록 편집</translation>
     </message>
@@ -8651,27 +8689,27 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation>레이어 속성 변경 / 이름 변경</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="549"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="552"/>
         <source>Layer Menu</source>
         <translation>레이어 메뉴</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="556"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="559"/>
         <source>&amp;Defreeze all Layers</source>
         <translation>모든 레이어 동결 해제(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="558"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="561"/>
         <source>&amp;Freeze all Layers</source>
         <translation>모든 레이어 동결(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="579"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="582"/>
         <source>&amp;Add Layer</source>
         <translation>레이어 추가(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="575"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="578"/>
         <source>&amp;Remove Layer</source>
         <translation>레이어 제거(&amp;R)</translation>
     </message>
@@ -8681,22 +8719,22 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation>알맞은 레이어 이름 찾기</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="581"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="584"/>
         <source>Edit Layer &amp;Attributes</source>
         <translation>레이어 속성(&amp;A) 편집</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="567"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="570"/>
         <source>Toggle Layer &amp;Visibility</source>
         <translation>레이어 표시여부(&amp;v) 변경</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="571"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="574"/>
         <source>Toggle Layer &amp;Printing</source>
         <translation>레이어 인쇄여부(&amp;P) 변경</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="573"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="576"/>
         <source>Toggle &amp;Construction Layer</source>
         <translation>구성(&amp;C) 레이어 속성 변경</translation>
     </message>
@@ -8721,27 +8759,27 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation>필터</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="560"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="563"/>
         <source>&amp;Unlock all Layers</source>
         <translation>모든 레이어 잠금 해제(&amp;U)</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="562"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="565"/>
         <source>&amp;Lock all Layers</source>
         <translation>모든 레이어 잠금(&amp;L)</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="569"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="572"/>
         <source>Toggle Layer Loc&amp;k</source>
         <translation>레이어 잠금/해제</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="586"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="589"/>
         <source>&amp;Export Selected Layer(s)</source>
         <translation>선택한 레이어 내보내기</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="589"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="592"/>
         <source>Export &amp;Visible Layer(s)</source>
         <translation>표시된 레이어 내보내기</translation>
     </message>
@@ -8978,7 +9016,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QG_RecentFiles</name>
     <message>
-        <location filename="../src/ui/qg_recentfiles.cpp" line="180"/>
+        <location filename="../src/ui/qg_recentfiles.cpp" line="181"/>
         <source>&amp;%1 %2</source>
         <translation>&amp;%1 %2</translation>
     </message>
@@ -9160,7 +9198,7 @@ p, li { white-space: pre-wrap; }
         <translation>상대 좌표 위치 설정</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="136"/>
+        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="138"/>
         <source>Lock relative zero position</source>
         <translation>상대 좌표 위치 고정</translation>
     </message>
@@ -9170,17 +9208,17 @@ p, li { white-space: pre-wrap; }
         <translation>전용 스냅 모드</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="220"/>
+        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="224"/>
         <source>Relative zero position is %1</source>
         <translation>상대 0점 위치는 %1입니다.</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="220"/>
+        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="224"/>
         <source>locked</source>
         <translation>고정됨</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="220"/>
+        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="224"/>
         <source>unlocked</source>
         <translation>고정 해제됨</translation>
     </message>
@@ -9333,15 +9371,15 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1794"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1938"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2099"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1809"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1953"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2110"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="215"/>
         <source>Warning</source>
         <translation>경고</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="1760"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="1762"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="310"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="322"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="384"/>
@@ -9388,13 +9426,13 @@ This action can NOT be undone.</source>
 이 작업은 되돌릴 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="1760"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="1762"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="385"/>
         <source>Layer &quot;0&quot; can never be removed.</source>
         <translation>레이어 &quot;0&quot;은 제거할 수 없습니다.</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="1808"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="1810"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="395"/>
         <source>Remove %n layer(s)</source>
         <translation>
@@ -9402,13 +9440,13 @@ This action can NOT be undone.</source>
         </translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="1809"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="1811"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="399"/>
         <source>Listed layers and all entities on them will be removed.</source>
         <translation>나열된 레이어와 그 위에 있는 모든 개체가 제거됩니다.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="1810"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="1812"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="401"/>
         <source>Warning: this action can NOT be undone!</source>
         <translation>경고: 이 작업은 되돌릴 수 없습니다!</translation>
@@ -9419,7 +9457,7 @@ This action can NOT be undone.</source>
         <translation>경고: 레이어 &quot;0&quot;은 제거할 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="1811"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="1813"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="410"/>
         <source>Layers for removal:</source>
         <translation>제거할 레이어:</translation>
@@ -9473,8 +9511,8 @@ Please specify a different value.</source>
         <translation>%1 색상에 유효하지 않은 값이 제공되었습니다. 다른 값을 지정하십시오.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="977"/>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="987"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="980"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="990"/>
         <source>Remove empty layers</source>
         <translation>빈 레이어 제거</translation>
     </message>
@@ -9485,44 +9523,44 @@ Clear filtering mask and repeat.</source>
 필터 마스크를 지우고 다시 시도하십시오.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="988"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="991"/>
         <source>No layers without entities found, nothing to remove.</source>
         <translation>엔터티가 없는 레이어가 없어 제거할 것이 없습니다.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="1129"/>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="1174"/>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="1182"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="1131"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="1176"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="1184"/>
         <source>Add Layer</source>
         <translation>레이어 추가</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="1130"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="1132"/>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
         <translation>[%1]에 대해 이미 해당 하위 레이어가 존재합니다. 다른 이름을 지정하십시오.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="1175"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="1177"/>
         <source>Such child layer already exist for 
 [%1].
 </source>
         <translation>[%1]에 대해 이미 해당 하위 레이어가 존재합니다.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="1183"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="1185"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
         <translation>차원 레이어는 일반 활성 레이어에만 추가할 수 있습니다.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="1246"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="1248"/>
         <source>Move Selection</source>
         <translation>선택 항목 이동</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="1253"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="1255"/>
         <source>Duplicate Selection</source>
         <translation>선택 항목 복제</translation>
     </message>
@@ -9535,8 +9573,8 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
 아니요를 선택하면 &quot;레이어별&quot; 값이 유지되므로 대상 레이어의 펜이 해당 개체의 펜을 정의합니다.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="1826"/>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="1877"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="1828"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="1879"/>
         <source>Layer DialogEx</source>
         <translation>레이어 대화 상자</translation>
     </message>
@@ -9637,7 +9675,7 @@ Please specify a different value.</source>
         <translation type="vanished">지정된 펜 파일에 펜 데이터를 저장할 수 없습니다. 파일의 올바른 경로를 지정하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="978"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="981"/>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
 Clear filtering mask and repeat.</source>
@@ -9646,7 +9684,7 @@ Clear filtering mask and repeat.</source>
 필터 마스크를 지우고 다시 시도하십시오.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="1270"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="1272"/>
         <source>Replace &quot;By Layer&quot; value to source layers values?
 
 If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
@@ -9987,52 +10025,52 @@ Do you want to replace it?</source>
         <translation>구형 드로잉 교환 %1</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="177"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="179"/>
         <source>Opened dwg file version %1.</source>
         <translation>dwg 파일 버젼 %1 을 열었습니다.</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4075"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4146"/>
         <source>unknown error opening dwg file</source>
         <translation>dwg 파일 여는 중 알 수 없는 에러.</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4079"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4150"/>
         <source>can&apos;t open this dwg file</source>
         <translation>이 dwg 파일을 열 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4083"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4154"/>
         <source>unsupported dwg version</source>
         <translation>비호환 dwg 버젼</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4091"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4162"/>
         <source>error reading file header in dwg file</source>
         <translation>dwg 파일에서 파일 헤더를 읽는 중 에러</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4095"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4166"/>
         <source>error reading header vars in dwg file</source>
         <translation>dwg 파일에서 헤더 변수 읽는 중 에러</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4099"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4170"/>
         <source>error reading classes in dwg file</source>
         <translation>dwg 파일에서 클래스 읽는 중 에러</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4103"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4174"/>
         <source>error reading offsets in dwg file</source>
         <translation>dwg 파일에서 오프셋 읽는 중 에러</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4107"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4178"/>
         <source>error reading tables in dwg file</source>
         <translation>dwg 파일에서 테이블 읽는 중 에러</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4115"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4186"/>
         <source>error reading entities in dwg file</source>
         <translation>dwg 파일에서 요소 읽는 중 에러</translation>
     </message>
@@ -10047,7 +10085,7 @@ Do you want to replace it?</source>
         <translation>디스크의 파일을 수정했습니다. 데이터 손실을 피하기 위해 다른 파일에 저장해 주십시오! 파일 수정 : %1</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_entitycontainer.cpp" line="1623"/>
+        <location filename="../src/lib/engine/rs_entitycontainer.cpp" line="1652"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
         <translation>(%2, %3) 과 (%4, %5) 사이에서 gap=%1 에 의해 해칭을 실패했다.</translation>
     </message>
@@ -10057,12 +10095,12 @@ Do you want to replace it?</source>
         <translation>경고</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4111"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4182"/>
         <source>error reading blocks in dwg file</source>
         <translation>dwg 파일에서 블록 읽는 중 에러</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4119"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4190"/>
         <source>error reading objects in dwg file</source>
         <translation>dwg 파일에서 오브젝트 읽는 중 에러</translation>
     </message>
@@ -10072,1116 +10110,1116 @@ Do you want to replace it?</source>
         <translation>모든 이미지 파일들 (%1)</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="60"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="87"/>
         <source>: duplicated command: %1 is already taken by %2</source>
         <translation>: 중복된 명령: %1은 이미 %2에서 사용 중입니다.</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="851"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="878"/>
         <source>point</source>
         <comment>draw point</comment>
         <translation>점</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="852"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="879"/>
         <source>po</source>
         <comment>draw point</comment>
         <translation>po</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="155"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="182"/>
         <source>line</source>
         <comment>draw line</comment>
         <translation>line</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="154"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="181"/>
         <source>li</source>
         <comment>draw line</comment>
         <translation>li</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="156"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="183"/>
         <source>l</source>
         <comment>draw line</comment>
         <translation>l</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="520"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="547"/>
         <source>polyline</source>
         <comment>draw polyline</comment>
         <translation>폴리라인</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="521"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="548"/>
         <source>pl</source>
         <comment>draw polyline</comment>
         <translation>pl</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="478"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="505"/>
         <source>free</source>
         <comment>draw freehand line</comment>
         <translation>free</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="480"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="507"/>
         <source>fhl</source>
         <comment>draw freehand line</comment>
         <translation>fhl</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="446"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="473"/>
         <source>spline</source>
         <comment>draw spline</comment>
         <translation>스플라인</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="448"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="475"/>
         <source>spl</source>
         <comment>draw spline</comment>
         <translation>spl</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="453"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="480"/>
         <source>spline2</source>
         <comment>spline through points</comment>
         <translation>스플라인2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="455"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="482"/>
         <source>stp</source>
         <comment>spline through points</comment>
         <translation>stp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="295"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="322"/>
         <source>ptp</source>
         <comment>parallel through point</comment>
         <translation>ptp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="302"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="329"/>
         <source>bisect</source>
         <comment>angle bisector</comment>
         <translation>이등분</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="301"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="328"/>
         <source>bi</source>
         <comment>angle bisector</comment>
         <translation>bi</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="309"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="336"/>
         <source>tanpc</source>
         <comment>tangent point and circle</comment>
         <translation>tanpc</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="328"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="355"/>
         <source>ortho</source>
         <comment>perpendicular line</comment>
         <translation>직교</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="202"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="229"/>
         <source>rect</source>
         <comment>draw rectangle</comment>
         <translation>rect</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="354"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="381"/>
         <source>polygon2v</source>
         <comment>polygon by 2 vertices</comment>
         <translation>두 꼭짓점 다각형</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="356"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="383"/>
         <source>poly2</source>
         <comment>polygon by 2 vertices</comment>
         <translation>poly2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="363"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="390"/>
         <source>circle</source>
         <comment>draw circle</comment>
         <translation>원</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="364"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="391"/>
         <source>ci</source>
         <comment>draw circle</comment>
         <translation>ci</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="371"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="398"/>
         <source>c2</source>
         <comment>circle 2 points</comment>
         <translation>c2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="384"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="411"/>
         <source>c3</source>
         <comment>circle 3 points</comment>
         <translation>c3</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="420"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="447"/>
         <source>tan3</source>
         <comment>circle tangent to 3</comment>
         <translation>tan3</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="419"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="446"/>
         <source>ct3</source>
         <comment>circle tangent to 3</comment>
         <translation>ct3</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="511"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="538"/>
         <source>ellipseinscribed</source>
         <comment>inscribed ellipse</comment>
         <translation>타원 내접</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="512"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="539"/>
         <source>ei</source>
         <comment>inscribed ellipse</comment>
         <translation>ei</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="513"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="540"/>
         <source>ie</source>
         <comment>inscribed ellipse</comment>
         <translation>ie</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="845"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="872"/>
         <source>hatch</source>
         <comment>draw hatch</comment>
         <translation>해칭</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="846"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="873"/>
         <source>ha</source>
         <comment>draw hatch</comment>
         <translation>ha</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="831"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="858"/>
         <source>mtext</source>
         <comment>draw mtext</comment>
         <translation>mtext</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="833"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="860"/>
         <source>mtxt</source>
         <comment>draw mtext</comment>
         <translation>mtxt</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="838"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="865"/>
         <source>text</source>
         <comment>draw text</comment>
         <translation>text</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="840"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="867"/>
         <source>txt</source>
         <comment>draw text</comment>
         <translation>txt</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="991"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1018"/>
         <source>regen</source>
         <comment>zoom - redraw</comment>
         <translation>다시 생성</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="992"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1019"/>
         <source>redraw</source>
         <comment>zoom - redraw</comment>
         <translation>다시 그리기</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="993"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1020"/>
         <source>rg</source>
         <comment>zoom - redraw</comment>
         <translation>rg</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="994"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1021"/>
         <source>zr</source>
         <comment>zoom - redraw</comment>
         <translation>zr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1011"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1038"/>
         <source>zoomwindow</source>
         <comment>zoom - window</comment>
         <translation>창 확대</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1012"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1039"/>
         <source>zw</source>
         <comment>zoom - window</comment>
         <translation>zw</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="999"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1026"/>
         <source>zoomauto</source>
         <comment>zoom - auto</comment>
         <translation>자동 확대</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1000"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1027"/>
         <source>za</source>
         <comment>zoom - auto</comment>
         <translation>za</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1017"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1044"/>
         <source>zoompan</source>
         <comment>zoom - pan</comment>
         <translation>줌/팬</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1018"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1045"/>
         <source>zp</source>
         <comment>zoom - pan</comment>
         <translation>zp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1005"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1032"/>
         <source>zoomprevious</source>
         <comment>zoom - previous</comment>
         <translation>이전 확대/축소</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1006"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1033"/>
         <source>zv</source>
         <comment>zoom - previous</comment>
         <translation>zv</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="960"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="987"/>
         <source>kill</source>
         <comment>kill all actions</comment>
         <translation>kill</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="962"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="989"/>
         <source>k</source>
         <comment>kill all actions</comment>
         <translation>k</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="967"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="994"/>
         <source>undo</source>
         <comment>undo cycle</comment>
         <translation>undo</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="969"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="996"/>
         <source>u</source>
         <comment>undo cycle</comment>
         <translation>u</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="974"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1001"/>
         <source>redo</source>
         <comment>redo cycle</comment>
         <translation>redo</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="976"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1003"/>
         <source>r</source>
         <comment>redo cycle</comment>
         <translation>r</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="611"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="638"/>
         <source>dimaligned</source>
         <comment>dimension - aligned</comment>
         <translation>dimaligned</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="623"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="650"/>
         <source>dimhorizontal</source>
         <comment>dimension - horizontal</comment>
         <translation>dimhorizontal</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="624"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="651"/>
         <source>dh</source>
         <comment>dimension - horizontal</comment>
         <translation>dh</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="629"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="656"/>
         <source>dimvertical</source>
         <comment>dimension - vertical</comment>
         <translation>dimvertical</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="630"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="657"/>
         <source>dv</source>
         <comment>dimension - vertical</comment>
         <translation>dv</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="617"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="644"/>
         <source>dimlinear</source>
         <comment>dimension - linear</comment>
         <translation>dimlinear</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="618"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="645"/>
         <source>dl</source>
         <comment>dimension - linear</comment>
         <translation>dl</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="649"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="676"/>
         <source>dimangular</source>
         <comment>dimension - angular</comment>
         <translation>dimangular</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="651"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="678"/>
         <source>dan</source>
         <comment>dimension - angular</comment>
         <translation>dan</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="636"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="663"/>
         <source>dimradial</source>
         <comment>dimension - radial</comment>
         <translation>dimradial</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="644"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="671"/>
         <source>dimdiametric</source>
         <comment>dimension - diametric</comment>
         <translation>대각선</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="642"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="669"/>
         <source>dimdiameter</source>
         <comment>dimension - diametric</comment>
         <translation>대각선</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="643"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="670"/>
         <source>dd</source>
         <comment>dimension - diametric</comment>
         <translation>dd</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="656"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="683"/>
         <source>dimleader</source>
         <comment>dimension - leader</comment>
         <translation>치수 선</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="657"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="684"/>
         <source>ld</source>
         <comment>dimension - leader</comment>
         <translation>ld</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="662"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="689"/>
         <source>dimregen</source>
         <comment>dimension - regenerate</comment>
         <translation>치수 재생성</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="933"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="960"/>
         <source>restrictnothing</source>
         <comment>restrict - nothing</comment>
         <translation>제한 없음</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="934"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="961"/>
         <source>rn</source>
         <comment>restrict - nothing</comment>
         <translation>rn</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="939"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="966"/>
         <source>restrictorthogonal</source>
         <comment>restrict - orthogonal</comment>
         <translation>직각 제한</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="940"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="967"/>
         <source>rr</source>
         <comment>restrict - orthogonal</comment>
         <translation>rr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="945"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="972"/>
         <source>restricthorizontal</source>
         <comment>restrict - horizontal</comment>
         <translation>가로 제한</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="946"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="973"/>
         <source>rh</source>
         <comment>restrict - horizontal</comment>
         <translation>rh</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="951"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="978"/>
         <source>restrictvertical</source>
         <comment>restrict - vertical</comment>
         <translation>세로 제한</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="952"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="979"/>
         <source>rv</source>
         <comment>restrict - vertical</comment>
         <translation>rv</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="671"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="698"/>
         <source>mv</source>
         <comment>modify - move (copy)</comment>
         <translation>mv</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="740"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="767"/>
         <source>bev</source>
         <comment>modify - bevel</comment>
         <translation>bev</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="741"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="768"/>
         <source>ch</source>
         <comment>modify - bevel</comment>
         <translation>ch</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="747"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="774"/>
         <source>fi</source>
         <comment>modify - fillet</comment>
         <translation>fi</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="753"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="780"/>
         <source>cut</source>
         <comment>modify - divide (cut)</comment>
         <translation>cut</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="754"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="781"/>
         <source>div</source>
         <comment>modify - divide (cut)</comment>
         <translation>div</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="689"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="716"/>
         <source>mi</source>
         <comment>modify -  mirror</comment>
         <translation>mi</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="708"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="735"/>
         <source>rev</source>
         <comment>modify -  revert direction</comment>
         <translation>rev</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="677"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="704"/>
         <source>ro</source>
         <comment>modify - rotate</comment>
         <translation>ro</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="683"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="710"/>
         <source>sz</source>
         <comment>modify - scale</comment>
         <translation>sz</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="714"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="741"/>
         <source>tm</source>
         <comment>modify - trim (extend)</comment>
         <translation>tm</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="721"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="748"/>
         <source>tm2</source>
         <comment>modify - multi trim (extend)</comment>
         <translation>tm2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="727"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="754"/>
         <source>le</source>
         <comment>modify - lengthen</comment>
         <translation>le</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="761"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="788"/>
         <source>ss</source>
         <comment>modify - stretch</comment>
         <translation>ss</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="793"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="820"/>
         <source>er</source>
         <comment>modify - delete (erase)</comment>
         <translation>er</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="794"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="821"/>
         <source>del</source>
         <comment>modify - delete (erase)</comment>
         <translation>del</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="787"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="814"/>
         <source>xp</source>
         <comment>explode block/polyline into entities</comment>
         <translation>xp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="866"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="893"/>
         <source>snapfree</source>
         <comment>snap - free</comment>
         <translation>snapfree</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="868"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="895"/>
         <source>os</source>
         <comment>snap - free</comment>
         <translation>os</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="873"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="900"/>
         <source>snapcenter</source>
         <comment>snap - center</comment>
         <translation>snapcenter</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="874"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="901"/>
         <source>sc</source>
         <comment>snap - center</comment>
         <translation>sc</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="879"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="906"/>
         <source>snapdist</source>
         <comment>snap - distance to endpoints</comment>
         <translation>snapdist</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="880"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="907"/>
         <source>sd</source>
         <comment>snap - distance to endpoints</comment>
         <translation>sd</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="885"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="912"/>
         <source>snapend</source>
         <comment>snap - end points</comment>
         <translation>snapend</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="886"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="913"/>
         <source>se</source>
         <comment>snap - end points</comment>
         <translation>se</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="891"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="918"/>
         <source>snapgrid</source>
         <comment>snap - grid</comment>
         <translation>snapgrid</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="892"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="919"/>
         <source>sg</source>
         <comment>snap - grid</comment>
         <translation>sg</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="897"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="924"/>
         <source>snapintersection</source>
         <comment>snap - intersection</comment>
         <translation>스냅 교차점</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="898"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="925"/>
         <source>si</source>
         <comment>snap - intersection</comment>
         <translation>si</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="903"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="930"/>
         <source>snapmiddle</source>
         <comment>snap - middle points</comment>
         <translation>중앙 스냅</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="904"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="931"/>
         <source>sm</source>
         <comment>snap - middle points</comment>
         <translation>sm</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="909"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="936"/>
         <source>snaponentity</source>
         <comment>snap - on entity</comment>
         <translation>엔터티에 스냅</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="910"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="937"/>
         <source>sn</source>
         <comment>snap - on entity</comment>
         <translation>sn</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="911"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="938"/>
         <source>np</source>
         <comment>snap - on entity</comment>
         <translation>np</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="927"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="954"/>
         <source>setrelativezero</source>
         <comment>set relative zero position</comment>
         <translation>상대 원점 설정</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="928"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="955"/>
         <source>rz</source>
         <comment>set relative zero position</comment>
         <translation>rz</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="589"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="616"/>
         <source>selectall</source>
         <comment>Select all entities</comment>
         <translation>모두 선택</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="590"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="617"/>
         <source>sa</source>
         <comment>Select all entities</comment>
         <translation>sa</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="595"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="622"/>
         <source>deselectall</source>
         <comment>deselect all entities</comment>
         <translation>모두 선택 해제</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="597"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="624"/>
         <source>tn</source>
         <comment>deselect all entities</comment>
         <translation>tn</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="774"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="801"/>
         <source>attr</source>
         <comment>modify attribute</comment>
         <translation>attr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="775"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="802"/>
         <source>ma</source>
         <comment>modify attribute</comment>
         <translation>ma</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="767"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="794"/>
         <source>prop</source>
         <comment>modify properties</comment>
         <translation>prop</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="803"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="830"/>
         <source>dist</source>
         <comment>distance point to point</comment>
         <translation>dist</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="804"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="831"/>
         <source>dpp</source>
         <comment>distance point to point</comment>
         <translation>dpp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="818"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="845"/>
         <source>ang</source>
         <comment>measure angle</comment>
         <translation>ang</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1063"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="1156"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1096"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1189"/>
         <source>angle</source>
         <translation>각도</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1064"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1097"/>
         <source>dpi</source>
         <translation>dpi</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1065"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="1168"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1098"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1201"/>
         <source>close</source>
         <translation>닫기</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1066"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="1164"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1099"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1197"/>
         <source>chord length</source>
         <translation>현의 길이</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1067"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="1171"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1100"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1204"/>
         <source>columns</source>
         <translation>열</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1068"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1101"/>
         <source>columnspacing</source>
         <translation>열 간격</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1070"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="1179"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1103"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1212"/>
         <source>factor</source>
         <translation>계수</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1071"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1104"/>
         <source>length</source>
         <translation>길이</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1074"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1107"/>
         <source>number</source>
         <translation>숫자</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1075"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="1206"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1108"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1239"/>
         <source>radius</source>
         <translation>반지름</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1076"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1109"/>
         <source>rows</source>
         <translation>rows</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1077"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1110"/>
         <source>rowspacing</source>
         <translation>행 간격</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1078"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="1221"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1111"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1254"/>
         <source>through</source>
         <translation>통과</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1079"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1112"/>
         <source>trim</source>
         <translation>trim</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1157"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1190"/>
         <source>ang</source>
         <comment>angle</comment>
         <translation>ang</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1158"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1191"/>
         <source>an</source>
         <comment>angle</comment>
         <translation>an</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1160"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1193"/>
         <source>center</source>
         <translation>중앙</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1161"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1194"/>
         <source>cen</source>
         <comment>center</comment>
         <translation>cen</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1162"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1195"/>
         <source>ce</source>
         <comment>center</comment>
         <translation>ce</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1166"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1199"/>
         <source>cl</source>
         <comment>chord length</comment>
         <translation>cl</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1169"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1202"/>
         <source>c</source>
         <comment>close</comment>
         <translation>c</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1172"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1205"/>
         <source>cols</source>
         <comment>columns</comment>
         <translation>cols</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1173"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1206"/>
         <source>co</source>
         <comment>columns</comment>
         <translation>co</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1175"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1208"/>
         <source>columnspacing</source>
         <comment>columnspacing for inserts</comment>
         <translation>열 간격</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1176"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1209"/>
         <source>colspacing</source>
         <comment>columnspacing for inserts</comment>
         <translation>열 간격</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1177"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1210"/>
         <source>cs</source>
         <comment>columnspacing for inserts</comment>
         <translation>cs</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1180"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1213"/>
         <source>fact</source>
         <comment>factor</comment>
         <translation>fact</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1181"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1214"/>
         <source>f</source>
         <comment>factor</comment>
         <translation>f</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1187"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1220"/>
         <source>help</source>
         <translation>help</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1188"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1221"/>
         <source>?</source>
         <comment>help</comment>
         <translation>?</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1190"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1223"/>
         <source>length</source>
         <comment>length</comment>
         <translation>길이</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1191"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1224"/>
         <source>len</source>
         <comment>length</comment>
         <translation>len</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1192"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1225"/>
         <source>l</source>
         <comment>length</comment>
         <translation>l</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1194"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1227"/>
         <source>length1</source>
         <comment>length1</comment>
         <translation>길이1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1195"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1228"/>
         <source>len1</source>
         <comment>length1</comment>
         <translation>길이1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1196"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1229"/>
         <source>l1</source>
         <comment>length1</comment>
         <translation>길이1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1198"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1231"/>
         <source>length2</source>
         <comment>length2</comment>
         <translation>길이2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1199"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1232"/>
         <source>len2</source>
         <comment>length2</comment>
         <translation>길이2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1200"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1233"/>
         <source>l2</source>
         <comment>length2</comment>
         <translation>길이2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1202"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1235"/>
         <source>number</source>
         <comment>number</comment>
         <translation>숫자</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1203"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1236"/>
         <source>num</source>
         <comment>number</comment>
         <translation>num</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1204"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1237"/>
         <source>n</source>
         <comment>number</comment>
         <translation>n</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1207"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1240"/>
         <source>ra</source>
         <comment>radius</comment>
         <translation>ra</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1209"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1242"/>
         <source>reversed</source>
         <comment>reversed</comment>
         <translation>뒤집힘</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1210"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="1211"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1243"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1244"/>
         <source>rev</source>
         <comment>reversed</comment>
         <translation>rev</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1213"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1246"/>
         <source>row</source>
         <comment>row</comment>
         <translation>row</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1215"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1248"/>
         <source>rowspacing</source>
         <comment>rowspacing for inserts</comment>
         <translation>행 간격</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1216"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1249"/>
         <source>rs</source>
         <comment>rowspacing for inserts</comment>
         <translation>rs</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1218"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1251"/>
         <source>text</source>
         <translation>text</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1219"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1252"/>
         <source>t</source>
         <comment>text</comment>
         <translation>t</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1222"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1255"/>
         <source>t</source>
         <comment>through</comment>
         <translation>t</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1224"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1257"/>
         <source>undo</source>
         <translation>undo</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1225"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1258"/>
         <source>u</source>
         <comment>undo</comment>
         <translation>u</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1227"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1260"/>
         <source>redo</source>
         <translation>redo</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1228"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1261"/>
         <source>r</source>
         <comment>redo</comment>
         <translation>r</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1230"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1263"/>
         <source>back</source>
         <translation>back</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1231"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1264"/>
         <source>b</source>
         <comment>back</comment>
         <translation>b</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1236"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1269"/>
         <source>paperoffset</source>
         <translation>용지 오프셋</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1237"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1270"/>
         <source>graphoffset</source>
         <translation>그래프 오프셋</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1356"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1392"/>
         <source>Command: %1 (%2)</source>
         <translation>명령: %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1363"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1399"/>
         <source>RS_Commands:: command not found: %1</source>
         <translation>RS_Commands:: 명령어를 찾을 수 없습니다: %1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1417"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1453"/>
         <source>Command not found: %1</source>
         <translation>명령어를 찾을 수 없습니다: %1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1403"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1439"/>
         <source>Accepted keycode: %1</source>
         <translation>수신된 키 코드: %1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1456"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1503"/>
         <source>Available commands:</source>
         <translation>사용 가능한 명령어:</translation>
     </message>
@@ -11192,44 +11230,44 @@ Do you want to replace it?</source>
         <translation>None</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4087"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4158"/>
         <source>error reading file metadata in dwg file</source>
         <translation>DWG 파일의 파일 메타데이터를 읽는 중 오류 발생</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_commandedit.cpp" line="198"/>
+        <location filename="../src/ui/qg_commandedit.cpp" line="216"/>
         <source>Calculator error for input: </source>
         <translation>입력에 대한 계산기 오류:</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1233"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1266"/>
         <source>bw</source>
         <translation>bw</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1234"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1267"/>
         <source>blackwhite</source>
         <translation>흑백</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1235"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1268"/>
         <source>color</source>
         <translation>색상</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="755"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="782"/>
         <source>di</source>
         <comment>modify - divide (cut)</comment>
         <translation>di</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="720"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="747"/>
         <source>t2</source>
         <comment>modify - multi trim (extend)</comment>
         <translation>t2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="768"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="795"/>
         <source>mp</source>
         <comment>modify properties</comment>
         <translation>mp</translation>
@@ -11337,7 +11375,7 @@ Do you want to replace it?</source>
         <translation>위젯</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="495"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="498"/>
         <source>Creators</source>
         <translation>생성자</translation>
     </message>
@@ -11349,12 +11387,12 @@ Do you want to replace it?</source>
         <translation>All</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1968"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1983"/>
         <source>Invalid objects removed:</source>
         <translation>유효하지 않은 객체 제거됨:</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="148"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="149"/>
         <source>Pen Wizard</source>
         <translation>펜 마법사</translation>
     </message>
@@ -11374,28 +11412,27 @@ Do you want to replace it?</source>
         <translation>제거</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_commandedit.cpp" line="120"/>
+        <location filename="../src/ui/qg_commandedit.cpp" line="138"/>
         <source>You must input a distance first.</source>
         <translation>먼저 거리를 입력해야 합니다.</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_commandedit.cpp" line="297"/>
         <source>cal</source>
-        <translation>cal</translation>
+        <translation type="vanished">cal</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_commandedit.cpp" line="301"/>
+        <location filename="../src/ui/qg_commandedit.cpp" line="315"/>
         <source>Calculator mode: On</source>
         <translation>계산기 모드: 켜짐</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_commandedit.cpp" line="303"/>
+        <location filename="../src/ui/qg_commandedit.cpp" line="317"/>
         <source>Calculator mode: Off</source>
         <translation>계산기 모드: 꺼짐</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3825"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="934"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3836"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="937"/>
         <source>License</source>
         <translation>라이선스</translation>
     </message>
@@ -11405,853 +11442,853 @@ Do you want to replace it?</source>
         <translation>%1개의 레이어를 찾을 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="153"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="180"/>
         <source>line2p</source>
         <comment>draw line</comment>
         <translation>line2p</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="182"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="209"/>
         <source>lineang</source>
         <comment>angled line</comment>
         <translation>lineang</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="183"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="210"/>
         <source>la</source>
         <comment>angled line</comment>
         <translation>la</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="188"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="215"/>
         <source>linehor</source>
         <comment>horizontal line</comment>
         <translation>linehor</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="189"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="216"/>
         <source>lh</source>
         <comment>horizontal line</comment>
         <translation>lh</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="194"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="221"/>
         <source>linever</source>
         <comment>vertical line</comment>
         <translation>linever</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="195"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="222"/>
         <source>lv</source>
         <comment>vertical line</comment>
         <translation>lv</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="200"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="227"/>
         <source>linerec</source>
         <comment>draw rectangle</comment>
         <translation>linerec</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="201"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="228"/>
         <source>re</source>
         <comment>draw rectangle</comment>
         <translation>re</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="285"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="312"/>
         <source>linepar</source>
         <comment>create parallel</comment>
         <translation>linepar</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="286"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="313"/>
         <source>lineoff</source>
         <comment>create parallel</comment>
         <translation>lineoff</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="287"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="314"/>
         <source>pa</source>
         <comment>create parallel</comment>
         <translation>pa</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="288"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="315"/>
         <source>ll</source>
         <comment>create parallel</comment>
         <translation>ll</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="293"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="320"/>
         <source>lineparthro</source>
         <comment>parallel through point</comment>
         <translation>lineparthro</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="294"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="321"/>
         <source>lp</source>
         <comment>parallel through point</comment>
         <translation>lp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="300"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="327"/>
         <source>linebisect</source>
         <comment>angle bisector</comment>
         <translation>linebisect</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="307"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="334"/>
         <source>linetancp</source>
         <comment>tangent point and circle</comment>
         <translation>linetancp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="308"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="335"/>
         <source>lt</source>
         <comment>tangent point and circle</comment>
         <translation>lt</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="314"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="341"/>
         <source>linetan2c</source>
         <comment>tangent two circles</comment>
         <translation>linetan2c</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="315"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="342"/>
         <source>lc</source>
         <comment>tangent two circles</comment>
         <translation>lc</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="320"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="347"/>
         <source>linetancper</source>
         <comment>tangent line and circle</comment>
         <translation>linetancper</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="321"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="348"/>
         <source>or</source>
         <comment>tangent line and circle</comment>
         <translation>or</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="326"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="353"/>
         <source>lineperp</source>
         <comment>perpendicular line</comment>
         <translation>lineperp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="327"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="354"/>
         <source>lo</source>
         <comment>perpendicular line</comment>
         <translation>lo</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="333"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="360"/>
         <source>linerelang</source>
         <comment>relative line</comment>
         <translation>linerelang</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="334"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="361"/>
         <source>lr</source>
         <comment>relative line</comment>
         <translation>lr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="339"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="366"/>
         <source>polygoncencor</source>
         <comment>polygon centre point</comment>
         <translation>polygoncencor</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="340"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="367"/>
         <source>pp</source>
         <comment>polygon centre point</comment>
         <translation>pp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="341"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="368"/>
         <source>polycp</source>
         <comment>polygon centre point</comment>
         <translation>polycp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="342"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="369"/>
         <source>pcp</source>
         <comment>polygon centre point</comment>
         <translation>pcp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="347"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="374"/>
         <source>polygoncentan</source>
         <comment>polygon centre vertex</comment>
         <translation>polygoncentan</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="348"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="375"/>
         <source>pv</source>
         <comment>polygon centre vertex</comment>
         <translation>pv</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="349"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="376"/>
         <source>polyct</source>
         <comment>polygon centre vertex</comment>
         <translation>polyct</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="355"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="382"/>
         <source>p2</source>
         <comment>polygon by 2 vertices</comment>
         <translation>p2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="365"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="392"/>
         <source>c</source>
         <comment>draw circle</comment>
         <translation>c</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="370"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="397"/>
         <source>circle2p</source>
         <comment>circle 2 points</comment>
         <translation>circle2p</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="372"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="399"/>
         <source>c2p</source>
         <comment>circle 2 points</comment>
         <translation>c2p</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="377"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="404"/>
         <source>circle2pr</source>
         <comment>circle 2 points radius</comment>
         <translation>circle2pr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="378"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="405"/>
         <source>cc</source>
         <comment>circle 2 points radius</comment>
         <translation>cc</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="383"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="410"/>
         <source>circle3p</source>
         <comment>circle 3 points</comment>
         <translation>circle3p</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="385"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="412"/>
         <source>c3p</source>
         <comment>circle 3 points</comment>
         <translation>c3p</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="390"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="417"/>
         <source>circlecr</source>
         <comment>circle point radius</comment>
         <translation>circlecr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="391"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="418"/>
         <source>cr</source>
         <comment>circle point radius</comment>
         <translation>cr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="392"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="419"/>
         <source>ccr</source>
         <comment>circle point radius</comment>
         <translation>ccr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="398"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="425"/>
         <source>circletan2cp</source>
         <comment>circle 2 tangent point</comment>
         <translation>circletan2cp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="399"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="426"/>
         <source>tr</source>
         <comment>circle 2 tangent point</comment>
         <translation>tr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="404"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="431"/>
         <source>circletan2p</source>
         <comment>circle tangent 2 points</comment>
         <translation>circletan2p</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="405"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="432"/>
         <source>td</source>
         <comment>circle tangent 2 points</comment>
         <translation>td</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="410"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="437"/>
         <source>circletan2cr</source>
         <comment>circle 2 tangent radius</comment>
         <translation>circletan2cr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="411"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="438"/>
         <source>tc</source>
         <comment>circle 2 tangent radius</comment>
         <translation>tc</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="417"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="444"/>
         <source>circletan3</source>
         <comment>circle tangent to 3</comment>
         <translation>circletan3</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="418"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="445"/>
         <source>t3</source>
         <comment>circle tangent to 3</comment>
         <translation>t3</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="427"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="454"/>
         <source>arc</source>
         <comment>arc point radius</comment>
         <translation>arc</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="428"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="455"/>
         <source>ar</source>
         <comment>arc point radius</comment>
         <translation>ar</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="429"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="456"/>
         <source>a</source>
         <comment>arc point radius</comment>
         <translation>a</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="434"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="461"/>
         <source>arc3p</source>
         <comment>draw 3pt arc</comment>
         <translation>arc3p</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="435"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="462"/>
         <source>a3</source>
         <comment>draw 3pt arc</comment>
         <translation>a3</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="440"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="467"/>
         <source>arctan</source>
         <comment>arc tangent</comment>
         <translation>아크탄젠트</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="441"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="468"/>
         <source>at</source>
         <comment>arc tangent</comment>
         <translation>at</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="447"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="474"/>
         <source>sf</source>
         <comment>draw spline</comment>
         <translation>sf</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="454"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="481"/>
         <source>sp</source>
         <comment>spline through points</comment>
         <translation>sp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="460"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="487"/>
         <source>arcellc2ax</source>
         <comment>arc ellipse</comment>
         <translation>arcellc2ax</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="461"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="488"/>
         <source>ae</source>
         <comment>arc ellipse</comment>
         <translation>ae</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="479"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="506"/>
         <source>fh</source>
         <comment>draw freehand line</comment>
         <translation>fh</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="487"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="514"/>
         <source>ellipsec2p</source>
         <comment>ellipse axis</comment>
         <translation>타원 2점</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="488"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="515"/>
         <source>ea</source>
         <comment>ellipse axis</comment>
         <translation>ea</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="493"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="520"/>
         <source>ellipse3p</source>
         <comment>ellipse foci</comment>
         <translation>타원 3점</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="494"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="521"/>
         <source>ef</source>
         <comment>ellipse foci</comment>
         <translation>ef</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="499"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="526"/>
         <source>ellipse4p</source>
         <comment>ellipse 4 point</comment>
         <translation>타원 4점</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="500"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="527"/>
         <source>e4</source>
         <comment>ellipse 4 point</comment>
         <translation>e4</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="505"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="532"/>
         <source>ellipsec3p</source>
         <comment>ellipse center 3 point</comment>
         <translation>타원 3점(곡선)</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="506"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="533"/>
         <source>e3</source>
         <comment>ellipse center 3 point</comment>
         <translation>e3</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="545"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="572"/>
         <source>plineadd</source>
         <comment>pl add node</comment>
         <translation>선 추가</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="546"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="573"/>
         <source>pi</source>
         <comment>pl add node</comment>
         <translation>pi</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="551"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="578"/>
         <source>plineapp</source>
         <comment>pl append node</comment>
         <translation>plineapp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="552"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="579"/>
         <source>pn</source>
         <comment>pl append node</comment>
         <translation>pn</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="557"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="584"/>
         <source>plinedel</source>
         <comment>pl delete node</comment>
         <translation>plinedel</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="558"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="585"/>
         <source>pd</source>
         <comment>pl delete node</comment>
         <translation>pd</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="563"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="590"/>
         <source>plinedeltwn</source>
         <comment>pl del between nodes</comment>
         <translation>plinedeltwn</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="564"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="591"/>
         <source>pr</source>
         <comment>pl del between nodes</comment>
         <translation>pr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="569"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="596"/>
         <source>plinetrm</source>
         <comment>pl trim segments</comment>
         <translation>plinetrm</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="570"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="597"/>
         <source>pt</source>
         <comment>pl trim segments</comment>
         <translation>pt</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="575"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="602"/>
         <source>plinepar</source>
         <comment>pl equidistant</comment>
         <translation>plinepar</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="576"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="603"/>
         <source>pe</source>
         <comment>pl equidistant</comment>
         <translation>pe</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="581"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="608"/>
         <source>plinejoin</source>
         <comment>pl join</comment>
         <translation>plinejoin</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="582"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="609"/>
         <source>pj</source>
         <comment>pl join</comment>
         <translation>pj</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="596"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="623"/>
         <source>sx</source>
         <comment>deselect all entities</comment>
         <translation>sx</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="602"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="629"/>
         <source>invertselect</source>
         <comment>invert select</comment>
         <translation>선택 반전</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="603"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="630"/>
         <source>is</source>
         <comment>invert select</comment>
         <translation>is</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="612"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="639"/>
         <source>ds</source>
         <comment>dimension - aligned</comment>
         <translation>ds</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="635"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="662"/>
         <source>dimradius</source>
         <comment>dimension - radial</comment>
         <translation>흐림 반경</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="637"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="664"/>
         <source>dr</source>
         <comment>dimension - radial</comment>
         <translation>dr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="650"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="677"/>
         <source>da</source>
         <comment>dimension - angular</comment>
         <translation>da</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="663"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="690"/>
         <source>dg</source>
         <comment>dimension - regenerate</comment>
         <translation>dg</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="670"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="697"/>
         <source>modmove</source>
         <comment>modify - move (copy)</comment>
         <translation>이동</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="676"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="703"/>
         <source>modrotate</source>
         <comment>modify - rotate</comment>
         <translation>회전</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="682"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="709"/>
         <source>modscale</source>
         <comment>modify - scale</comment>
         <translation>크기 조정</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="688"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="715"/>
         <source>modmirror</source>
         <comment>modify -  mirror</comment>
         <translation>대칭 이동</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="694"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="721"/>
         <source>modmovrot</source>
         <comment>modify - move rotate</comment>
         <translation>이동 및 회전</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="695"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="722"/>
         <source>mr</source>
         <comment>modify - move rotate</comment>
         <translation>mr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="700"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="727"/>
         <source>mod2rot</source>
         <comment>modify - rotate2</comment>
         <translation>회전</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="701"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="728"/>
         <source>r2</source>
         <comment>modify - rotate2</comment>
         <translation>r2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="706"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="733"/>
         <source>modrevert</source>
         <comment>modify -  revert direction</comment>
         <translation>되돌리기</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="707"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="734"/>
         <source>md</source>
         <comment>modify -  revert direction</comment>
         <translation>md</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="713"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="740"/>
         <source>modtrim</source>
         <comment>modify - trim (extend)</comment>
         <translation>모드 트리밍</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="719"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="746"/>
         <source>modtrim2</source>
         <comment>modify - multi trim (extend)</comment>
         <translation>모드 트리밍 2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="726"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="753"/>
         <source>modlengthen</source>
         <comment>modify - lengthen</comment>
         <translation>모드 길이 조정</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="732"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="759"/>
         <source>modoffset</source>
         <comment>modify - offset</comment>
         <translation>모드 오프셋</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="733"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="760"/>
         <source>mo</source>
         <comment>modify - offset</comment>
         <translation>mo</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="734"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="761"/>
         <source>moff</source>
         <comment>modify - offset</comment>
         <translation>moff</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="739"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="766"/>
         <source>modbevel</source>
         <comment>modify - bevel</comment>
         <translation>모드 베벨</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="746"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="773"/>
         <source>modfillet</source>
         <comment>modify - fillet</comment>
         <translation>모드 필릿</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="752"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="779"/>
         <source>moddivide</source>
         <comment>modify - divide (cut)</comment>
         <translation>모드 분할</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="760"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="787"/>
         <source>modstretch</source>
         <comment>modify - stretch</comment>
         <translation>모드 늘이기</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="766"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="793"/>
         <source>modproperties</source>
         <comment>modify properties</comment>
         <translation>속성 수정</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="773"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="800"/>
         <source>modattr</source>
         <comment>modify attribute</comment>
         <translation>속성 수정</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="780"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="807"/>
         <source>modexpltext</source>
         <comment>explode text strings</comment>
         <translation>설명 텍스트 수정</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="781"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="808"/>
         <source>xt</source>
         <comment>explode text strings</comment>
         <translation>xt</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="786"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="813"/>
         <source>modexplode</source>
         <comment>explode block/polyline into entities</comment>
         <translation>세부 정보 표시</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="792"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="819"/>
         <source>moddelete</source>
         <comment>modify - delete (erase)</comment>
         <translation>삭제</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="801"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="828"/>
         <source>infodistance</source>
         <comment>distance point to point</comment>
         <translation>거리 정보</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="802"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="829"/>
         <source>id</source>
         <comment>distance point to point</comment>
         <translation>id</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="809"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="836"/>
         <source>infodistep</source>
         <comment>distance entity to point</comment>
         <translation>단계별 거리 정보</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="810"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="837"/>
         <source>ii</source>
         <comment>distance entity to point</comment>
         <translation>ii</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="811"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="838"/>
         <source>dep</source>
         <comment>distance entity to point</comment>
         <translation>dep</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="816"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="843"/>
         <source>infoangle</source>
         <comment>measure angle</comment>
         <translation>정보 각도</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="817"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="844"/>
         <source>ia</source>
         <comment>measure angle</comment>
         <translation>ia</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="823"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="850"/>
         <source>infoarea</source>
         <comment>measure area</comment>
         <translation>정보 영역</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="824"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="851"/>
         <source>aa</source>
         <comment>measure area</comment>
         <translation>aa</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="832"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="859"/>
         <source>mt</source>
         <comment>draw mtext</comment>
         <translation>mt</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="839"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="866"/>
         <source>tx</source>
         <comment>draw text</comment>
         <translation>tx</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="867"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="894"/>
         <source>so</source>
         <comment>snap - free</comment>
         <translation>so</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="961"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="988"/>
         <source>ki</source>
         <comment>kill all actions</comment>
         <translation>ki</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="968"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="995"/>
         <source>un</source>
         <comment>undo cycle</comment>
         <translation>un</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="975"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1002"/>
         <source>rd</source>
         <comment>redo cycle</comment>
         <translation>rd</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="983"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1010"/>
         <source>drawpref</source>
         <comment>drawing preferences</comment>
         <translation>drawpref</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="984"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1011"/>
         <source>dp</source>
         <comment>drawing preferences</comment>
         <translation>dp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1069"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="1183"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1102"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1216"/>
         <source>equation</source>
         <translation>방정식</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1072"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1105"/>
         <source>length1</source>
         <comment>bevel/fillet length1</comment>
         <translation>길이 1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1073"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1106"/>
         <source>length2</source>
         <comment>bevel/fillet length2</comment>
         <translation>길이 2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1184"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1217"/>
         <source>eqn</source>
         <comment>equation</comment>
         <translation>eqn</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1185"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1218"/>
         <source>eq</source>
         <comment>equation</comment>
         <translation>eq</translation>
@@ -12511,85 +12548,85 @@ Do you want to replace it?</source>
         <translation>오류를 무시하고 파일을 열까요?</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="103"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="105"/>
         <source>no DXF/DWG error</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG 오류가 없습니다.</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="105"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="107"/>
         <source>error opening DXF/DWG file</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG 파일을 여는 중 오류가 발생했습니다.</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="107"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="109"/>
         <source>unsupported DXF/DWG file version</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>지원되지 않는 DXF/DWG 파일 버전입니다.</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="109"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="111"/>
         <source>error reading DXF/DWG meta data</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG 메타데이터를 읽는 중 오류가 발생했습니다.</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="111"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="113"/>
         <source>error reading DXF/DWG file header</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG 파일 헤더를 읽는 중 오류가 발생했습니다.</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="113"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="115"/>
         <source>error reading DXF/DWG header dara</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG 헤더 데이터를 읽는 중 오류가 발생했습니다.</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="115"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="117"/>
         <source>error reading DXF/DWG object map</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG 객체 맵을 읽는 중 오류가 발생했습니다.</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="117"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="119"/>
         <source>error reading DXF/DWG classes</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG 클래스를 읽는 중 오류가 발생했습니다.</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="119"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="121"/>
         <source>error reading DXF/DWG tables</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG 테이블을 읽는 중 오류가 발생했습니다.</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="121"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="123"/>
         <source>error reading DXF/DWG blocks</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG 블록을 읽는 중 오류가 발생했습니다.</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="123"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="125"/>
         <source>error reading DXF/DWG entities</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG 엔터티를 읽는 중 오류가 발생했습니다.</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="125"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="127"/>
         <source>error reading DXF/DWG objects</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG 객체를 읽는 중 오류가 발생했습니다.</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="127"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="129"/>
         <source>error reading DXF/DWG sections</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG 섹션을 읽는 중 오류가 발생했습니다.</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="129"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="131"/>
         <source>error reading DXF/DWG code</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG 코드를 읽는 중 오류가 발생했습니다.</translation>
@@ -12653,8 +12690,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="101"/>
         <source>Paper size (Width x Height) in mm.</source>
+        <translation type="unfinished">용지 크기(가로 x 세로) (mm).</translation>
+    </message>
+    <message>
+        <source>Paper size (Width x Height) in mm.</source>
         <comment>WxH</comment>
-        <translation>용지 크기(가로 x 세로) (mm).</translation>
+        <translation type="vanished">용지 크기(가로 x 세로) (mm).</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>
@@ -12746,566 +12787,566 @@ Do you want to replace it?</source>
         <translation>R</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="161"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="188"/>
         <source>sline</source>
         <comment>draw snake line</comment>
         <translation>sline</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="162"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="189"/>
         <source>sli</source>
         <comment>draw snake line</comment>
         <translation>sli</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="163"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="190"/>
         <source>sl</source>
         <comment>draw snake line</comment>
         <translation>sl</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="168"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="195"/>
         <source>slinex</source>
         <comment>draw snake line (X)</comment>
         <translation>slinex</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="169"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="196"/>
         <source>slix</source>
         <comment>draw snake line (X)</comment>
         <translation>slix</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="170"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="197"/>
         <source>rlx</source>
         <comment>draw snake line (X)</comment>
         <translation>rlx</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="175"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="202"/>
         <source>sliney</source>
         <comment>draw snake line (Y)</comment>
         <translation>sliney</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="176"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="203"/>
         <source>sliy</source>
         <comment>draw snake line (Y)</comment>
         <translation>sliy</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="177"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="204"/>
         <source>rly</source>
         <comment>draw snake line (Y)</comment>
         <translation>rly</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="207"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="234"/>
         <source>rect1</source>
         <comment>draw rectangle (1 Point)</comment>
         <translation>rect1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="208"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="235"/>
         <source>re1</source>
         <comment>draw rectangle (1 Point)</comment>
         <translation>re1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="213"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="240"/>
         <source>rect2</source>
         <comment>draw rectangle (2 Points)</comment>
         <translation>rect2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="214"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="241"/>
         <source>re2</source>
         <comment>draw rectangle (2 Points)</comment>
         <translation>re2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="219"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="246"/>
         <source>rect3</source>
         <comment>draw rectangle (3 Points)</comment>
         <translation>rect3</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="220"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="247"/>
         <source>re3</source>
         <comment>draw rectangle (3 Points)</comment>
         <translation>re3</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="225"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="252"/>
         <source>slicel</source>
         <comment>slice/divide line</comment>
         <translation>slicel</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="226"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="253"/>
         <source>sll</source>
         <comment>slice/divide line</comment>
         <translation>sll</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="231"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="258"/>
         <source>slicec</source>
         <comment>slice/divide circle/arc</comment>
         <translation>slicec</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="232"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="259"/>
         <source>slc</source>
         <comment>slice/divide circle/arc</comment>
         <translation>slc</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="237"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="264"/>
         <source>star</source>
         <comment>draw star</comment>
         <translation>star</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="238"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="265"/>
         <source>st</source>
         <comment>draw star</comment>
         <translation>st</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="243"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="270"/>
         <source>cross</source>
         <comment>draw cross for circle</comment>
         <translation>십자</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="244"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="271"/>
         <source>cx</source>
         <comment>draw cross for circle</comment>
         <translation>cx</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="249"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="276"/>
         <source>linepoints</source>
         <comment>draw line of points</comment>
         <translation>선 지점</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="250"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="277"/>
         <source>lpoints</source>
         <comment>draw line of points</comment>
         <translation>lpoints</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="255"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="282"/>
         <source>criclebyarc</source>
         <comment>draw circle by arc</comment>
         <translation>호로 원 그리기</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="256"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="283"/>
         <source>cba</source>
         <comment>draw circle by arc</comment>
         <translation>cba</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="261"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="288"/>
         <source>duplicate</source>
         <comment>duplicate entity</comment>
         <translation>중복</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="262"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="289"/>
         <source>dup</source>
         <comment>duplicate entity</comment>
         <translation>dup</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="267"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="294"/>
         <source>linejoin</source>
         <comment>lines join</comment>
         <translation>선 연결</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="268"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="295"/>
         <source>lj</source>
         <comment>lines join</comment>
         <translation>lj</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="273"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="300"/>
         <source>breakdivide</source>
         <comment>break or divide entity</comment>
         <translation>분할</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="274"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="301"/>
         <source>bd</source>
         <comment>break or divide entity</comment>
         <translation>bd</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="279"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="306"/>
         <source>gapline</source>
         <comment>line gap</comment>
         <translation>간격선</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="280"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="307"/>
         <source>gl</source>
         <comment>line gap</comment>
         <translation>gl</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="466"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="493"/>
         <source>parabola4p</source>
         <comment>Parabola 4 points</comment>
         <translation>4점 포물선</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="467"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="494"/>
         <source>pl4</source>
         <comment>Parabola 4 points</comment>
         <translation>pl4</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="472"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="499"/>
         <source>parabolafd</source>
         <comment>Parabola focus directrix</comment>
         <translation>포물선</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="473"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="500"/>
         <source>plfd</source>
         <comment>Parabola focus directrix</comment>
         <translation>plfd</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="526"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="527"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="553"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="554"/>
         <source>angleline</source>
         <comment>draw angle from line</comment>
         <translation>각도선</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="532"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="559"/>
         <source>rortoline</source>
         <comment>draw orthogonal</comment>
         <translation>회전선</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="533"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="560"/>
         <source>rort</source>
         <comment>draw orthogonal</comment>
         <translation>rort</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="538"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="565"/>
         <source>point2line</source>
         <comment>draw line from point to line</comment>
         <translation>점-선</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="539"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="566"/>
         <source>p2l</source>
         <comment>draw line from point to line</comment>
         <translation>p2l</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="918"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="945"/>
         <source>snapmiddlemanual</source>
         <comment>snap middle manual</comment>
         <translation>중앙 스냅 (수동)</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="919"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="946"/>
         <source>snapmanual</source>
         <comment>snap middle manual</comment>
         <translation>수동 스냅</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="920"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="947"/>
         <source>smm</source>
         <comment>snap middle manual</comment>
         <translation>smm</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1082"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1115"/>
         <source>x</source>
         <translation>x</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1083"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1116"/>
         <source>y</source>
         <translation>y</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1084"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1117"/>
         <source>p</source>
         <translation>p</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1085"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1118"/>
         <source>anglerel</source>
         <translation>상대 각도</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1086"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1119"/>
         <source>start</source>
         <translation>시작</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1089"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1122"/>
         <source>offset</source>
         <translation>오프셋</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1090"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1123"/>
         <source>linesnap</source>
         <translation>선 스냅</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1091"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1124"/>
         <source>ticksnap</source>
         <translation>틱 스냅</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1094"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1127"/>
         <source>width</source>
         <translation>너비</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1095"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1128"/>
         <source>height</source>
         <translation>높이</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1096"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1129"/>
         <source>pos</source>
         <translation>pos</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1097"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1130"/>
         <source>size</source>
         <translation>size</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1098"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="1104"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1131"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1137"/>
         <source>bevels</source>
         <translation>경사</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1099"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1132"/>
         <source>nopoly</source>
         <translation>다각형 사용 안 함</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1100"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1133"/>
         <source>usepoly</source>
         <translation>다각형 사용</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1101"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1134"/>
         <source>corners</source>
         <translation>모서리</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1102"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1135"/>
         <source>str</source>
         <translation>str</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1103"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1136"/>
         <source>round</source>
         <translation>둥글게</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1105"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1138"/>
         <source>snap1</source>
         <translation>스냅 1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1106"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1139"/>
         <source>topl</source>
         <translation>topl</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1107"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1140"/>
         <source>top</source>
         <translation>top</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1108"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1141"/>
         <source>topr</source>
         <translation>topr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1109"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1142"/>
         <source>left</source>
         <translation>left</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1110"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1143"/>
         <source>middle</source>
         <translation>중앙</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1111"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1144"/>
         <source>right</source>
         <translation>오른쪽</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1112"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1145"/>
         <source>bottoml</source>
         <translation>하단 왼쪽</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1113"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1146"/>
         <source>bottom</source>
         <translation>하단</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1114"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1147"/>
         <source>bottomr</source>
         <translation>하단 오른쪽</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1115"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1148"/>
         <source>snapcorner</source>
         <translation>모서리 맞춤</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1116"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1149"/>
         <source>snapshift</source>
         <translation>스냅 시프트</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1117"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1150"/>
         <source>sizein</source>
         <translation>크기 조정 (안쪽)</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1118"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1151"/>
         <source>sizeout</source>
         <translation>크기 조정 (바깥쪽)</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1119"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1152"/>
         <source>hor</source>
         <translation>hor</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1120"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1153"/>
         <source>vert</source>
         <translation>vert</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1123"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1156"/>
         <source>snap2</source>
         <translation>스냅 2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1124"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1157"/>
         <source>corner</source>
         <translation>모서리</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1125"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1158"/>
         <source>mid-vert</source>
         <translation>수직 중앙</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1126"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1159"/>
         <source>mid-hor</source>
         <translation>수평 중앙</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1128"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1161"/>
         <source>quad</source>
         <translation>quad</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1129"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1162"/>
         <source>noquad</source>
         <translation>noquad</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1130"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1163"/>
         <source>angle_inner</source>
         <translation>angle_inner</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1133"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1166"/>
         <source>edges</source>
         <translation>edges</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1134"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1167"/>
         <source>edge-none</source>
         <translation>edge-none</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1135"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1168"/>
         <source>edge-both</source>
         <translation>edge-both</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1136"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1169"/>
         <source>edge-start</source>
         <translation>edge-start</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1137"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1170"/>
         <source>edge-end</source>
         <translation>edge-end</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1138"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1171"/>
         <source>end</source>
         <translation>end</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1139"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1172"/>
         <source>both</source>
         <translation>both</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1140"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1173"/>
         <source>none</source>
         <translation>none</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1141"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1174"/>
         <source>fit</source>
         <translation>fit</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1142"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1175"/>
         <source>nofit</source>
         <translation>맞지 않음</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1143"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1176"/>
         <source>dist_fixed</source>
         <translation>고정 간격</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1144"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1177"/>
         <source>dist_flex</source>
         <translation>유연한 간격</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1145"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1178"/>
         <source>distance</source>
         <translation>간격</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1149"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1182"/>
         <source>sym</source>
         <translation>sym</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1150"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1183"/>
         <source>nosym</source>
         <translation>비대칭</translation>
     </message>
@@ -13345,16 +13386,14 @@ Do you want to replace it?</source>
         <translation>사용자 색상</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_commandedit.cpp" line="258"/>
         <source>cal </source>
         <comment>command to trigger cli calculator</comment>
-        <translation>cal</translation>
+        <translation type="vanished">cal</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_commandedit.cpp" line="259"/>
         <source>calculate </source>
         <comment>command to trigger cli calculator</comment>
-        <translation>계산</translation>
+        <translation type="vanished">계산</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="35"/>
@@ -14915,22 +14954,22 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLineTangent1</name>
     <message>
-        <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="181"/>
+        <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="182"/>
         <source>Specify point</source>
         <translation>점 지정</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="182"/>
+        <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="183"/>
         <source>Cancel</source>
         <translation>취소</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="185"/>
+        <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="186"/>
         <source>Select circle, arc or ellipse</source>
         <translation>원, 호 또는 타원 선택</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="186"/>
+        <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="187"/>
         <source>Back</source>
         <translation>Back</translation>
     </message>
@@ -15089,33 +15128,38 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawSpline</name>
     <message>
-        <location filename="../src/actions/rs_actiondrawspline.cpp" line="276"/>
+        <location filename="../src/actions/rs_actiondrawspline.cpp" line="277"/>
         <source>Specify first control point</source>
         <translation>첫 번째 제어점 지정</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawspline.cpp" line="277"/>
+        <location filename="../src/actions/rs_actiondrawspline.cpp" line="278"/>
         <source>Cancel</source>
         <translation>취소</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawspline.cpp" line="289"/>
+        <location filename="../src/actions/rs_actiondrawspline.cpp" line="290"/>
         <source>Specify next control point or [%1]</source>
         <translation>다음 제어점 또는 [%1] 지정</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawspline.cpp" line="290"/>
-        <location filename="../src/actions/rs_actiondrawspline.cpp" line="294"/>
+        <location filename="../src/actions/rs_actiondrawspline.cpp" line="291"/>
+        <location filename="../src/actions/rs_actiondrawspline.cpp" line="295"/>
         <source>Back</source>
         <translation>Back</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawspline.cpp" line="293"/>
+        <location filename="../src/actions/rs_actiondrawspline.cpp" line="294"/>
         <source>Specify next control point</source>
         <translation>다음 제어점 지정</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawspline.cpp" line="365"/>
+        <location filename="../src/actions/rs_actiondrawspline.cpp" line="333"/>
+        <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
+        <translation>선 시퀀스를 닫을 수 없습니다: 아직 충분한 엔티티가 정의되지 않았습니다.</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/rs_actiondrawspline.cpp" line="359"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
         <translation>실행 취소할 수 없습니다: 아직 충분한 엔티티가 정의되지 않았습니다.</translation>
     </message>
@@ -15402,40 +15446,40 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionModifyBevel</name>
     <message>
-        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="191"/>
-        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="204"/>
+        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="193"/>
+        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="206"/>
         <source>Not a valid expression</source>
         <translation>유효한 표현식이 아닙니다</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="270"/>
+        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="272"/>
         <source>Select first entity</source>
         <translation>첫 번째 엔티티 선택</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="271"/>
+        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="273"/>
         <source>Cancel</source>
         <translation>취소</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="274"/>
+        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="276"/>
         <source>Select second entity</source>
         <translation>두 번째 엔티티 선택</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="275"/>
-        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="279"/>
-        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="283"/>
+        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="277"/>
+        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="281"/>
+        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="285"/>
         <source>Back</source>
         <translation>Back</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="278"/>
+        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="280"/>
         <source>Enter length 1:</source>
         <translation>길이 1 입력:</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="282"/>
+        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="284"/>
         <source>Enter length 2:</source>
         <translation>길이 2 입력:</translation>
     </message>
@@ -15487,62 +15531,62 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionModifyDeleteFree</name>
     <message>
-        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="166"/>
+        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="171"/>
         <source>Specify first break point on a polyline</source>
         <translation>폴리라인상의 첫 번째 절단점 지정</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="167"/>
+        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="172"/>
         <source>Cancel</source>
         <translation>취소</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="170"/>
+        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="175"/>
         <source>Specify second break point on the same polyline</source>
         <translation>같은 폴리라인상의 두 번째 절단점 지정</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="172"/>
+        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="177"/>
         <source>Back</source>
         <translation>Back</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="101"/>
+        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="106"/>
         <source>Entities not in the same polyline.</source>
         <translation>엔티티가 같은 폴리라인에 없습니다.</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="104"/>
+        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="109"/>
         <source>Parent of second entity is not a polyline</source>
         <translation>두 번째 엔티티의 부모가 폴리라인이 아닙니다</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="133"/>
+        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="138"/>
         <source>Parent of first entity is not a polyline</source>
         <translation>첫 번째 엔티티의 부모가 폴리라인이 아닙니다</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="107"/>
+        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="112"/>
         <source>Parent of second entity is nullptr</source>
         <translation>두 번째 엔티티의 부모가 nullptr입니다</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="110"/>
+        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="115"/>
         <source>One of the chosen entities is nullptr</source>
         <translation>선택된 엔티티 중 하나가 nullptr입니다</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="137"/>
+        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="142"/>
         <source>Parent of first entity is nullptr</source>
         <translation>첫 번째 엔티티의 부모가 nullptr입니다</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="141"/>
+        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="146"/>
         <source>First entity is nullptr</source>
         <translation>첫 번째 엔티티가 nullptr입니다</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="153"/>
+        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="158"/>
         <source>Second entity is nullptr</source>
         <translation>두 번째 엔티티가 nullptr입니다</translation>
     </message>
@@ -15722,34 +15766,34 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionModifyRound</name>
     <message>
-        <location filename="../src/actions/rs_actionmodifyround.cpp" line="319"/>
-        <location filename="../src/actions/rs_actionmodifyround.cpp" line="332"/>
+        <location filename="../src/actions/rs_actionmodifyround.cpp" line="328"/>
+        <location filename="../src/actions/rs_actionmodifyround.cpp" line="341"/>
         <source>Not a valid expression</source>
         <translation>유효한 표현식이 아닙니다</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifyround.cpp" line="411"/>
-        <location filename="../src/actions/rs_actionmodifyround.cpp" line="415"/>
+        <location filename="../src/actions/rs_actionmodifyround.cpp" line="420"/>
+        <location filename="../src/actions/rs_actionmodifyround.cpp" line="424"/>
         <source>Back</source>
         <translation>Back</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifyround.cpp" line="414"/>
+        <location filename="../src/actions/rs_actionmodifyround.cpp" line="423"/>
         <source>Specify second entity</source>
         <translation>두 번째 엔티티 지정</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifyround.cpp" line="418"/>
+        <location filename="../src/actions/rs_actionmodifyround.cpp" line="427"/>
         <source>Enter radius:</source>
         <translation>반경 입력:</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifyround.cpp" line="419"/>
+        <location filename="../src/actions/rs_actionmodifyround.cpp" line="428"/>
         <source>Cancel</source>
         <translation>취소</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifyround.cpp" line="410"/>
+        <location filename="../src/actions/rs_actionmodifyround.cpp" line="419"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
         <translation>첫 번째 엔티티 지정 또는 반경 &lt;%1&gt; 입력</translation>
     </message>
@@ -16121,28 +16165,28 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionPolylineSegment</name>
     <message>
-        <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="306"/>
+        <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="312"/>
         <source>No Entity found.</source>
         <translation>엔티티를 찾을 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="350"/>
+        <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="356"/>
         <source>Choose one of the segments on the original polyline</source>
         <translation>원본 폴리라인상의 세그먼트 중 하나 선택</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="351"/>
+        <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="357"/>
         <source>Cancel</source>
         <translation>취소</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="309"/>
+        <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="315"/>
         <source>Entity can not be a closed polyline.</source>
         <translation>엔티티는 닫힌 폴리라인이 될 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="65"/>
-        <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="86"/>
+        <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="66"/>
+        <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="87"/>
         <source>Polyline created</source>
         <translation>폴리라인 생성됨</translation>
     </message>
@@ -16203,57 +16247,57 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionPrintPreview</name>
     <message>
-        <location filename="../src/actions/rs_actionprintpreview.cpp" line="272"/>
+        <location filename="../src/actions/rs_actionprintpreview.cpp" line="278"/>
         <source>RS_ActionPrintPreview::fit(): Invalid paper size</source>
         <translation>RS_ActionPrintPreview::fit(): 유효하지 않은 용지 크기</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionprintpreview.cpp" line="138"/>
+        <location filename="../src/actions/rs_actionprintpreview.cpp" line="144"/>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
         <translation>용지 좌표로 인쇄 오프셋 (%1, %2)</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionprintpreview.cpp" line="141"/>
+        <location filename="../src/actions/rs_actionprintpreview.cpp" line="147"/>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
         <translation>그래프 좌표로 인쇄 오프셋 (%1, %2)</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionprintpreview.cpp" line="168"/>
+        <location filename="../src/actions/rs_actionprintpreview.cpp" line="174"/>
         <source>Printout offset in graph coordinates</source>
         <translation>그래프 좌표로 인쇄 오프셋</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionprintpreview.cpp" line="173"/>
+        <location filename="../src/actions/rs_actionprintpreview.cpp" line="179"/>
         <source>Printout offset in paper coordinates</source>
         <translation>용지 좌표로 인쇄 오프셋</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionprintpreview.cpp" line="178"/>
+        <location filename="../src/actions/rs_actionprintpreview.cpp" line="184"/>
         <source>: select printout offset coordinates</source>
         <translation>: 인쇄 오프셋 좌표 선택</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionprintpreview.cpp" line="179"/>
+        <location filename="../src/actions/rs_actionprintpreview.cpp" line="185"/>
         <source>type in offset from command line to offset printout</source>
         <translation>명령줄에서 오프셋 입력하여 인쇄 오프셋</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionprintpreview.cpp" line="187"/>
+        <location filename="../src/actions/rs_actionprintpreview.cpp" line="193"/>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
         <translation>인쇄 오프셋은 상대 제로를 무시합니다. &apos;@&apos; 무시</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionprintpreview.cpp" line="158"/>
+        <location filename="../src/actions/rs_actionprintpreview.cpp" line="164"/>
         <source>Printout in Black/White</source>
         <translation>흑백 인쇄</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionprintpreview.cpp" line="163"/>
+        <location filename="../src/actions/rs_actionprintpreview.cpp" line="169"/>
         <source>Printout in color</source>
         <translation>컬러 인쇄</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionprintpreview.cpp" line="356"/>
+        <location filename="../src/actions/rs_actionprintpreview.cpp" line="365"/>
         <source>RS_ActionPrintPreview::calcPagesNum(): Limit of pages has been exceeded.</source>
         <translation>RS_ActionPrintPreview::calcPagesNum(): 페이지 제한을 초과했습니다.</translation>
     </message>
@@ -16340,7 +16384,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionselect.cpp" line="135"/>
         <location filename="../src/actions/rs_actionselect.cpp" line="135"/>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="98"/>
@@ -16490,18 +16534,18 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionZoomPan</name>
     <message>
-        <location filename="../src/actions/rs_actionzoompan.cpp" line="119"/>
+        <location filename="../src/actions/rs_actionzoompan.cpp" line="127"/>
         <source>Click and drag to pan zoom</source>
         <translation>확대/축소를 위해 클릭하고 드래그</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionzoompan.cpp" line="120"/>
-        <location filename="../src/actions/rs_actionzoompan.cpp" line="124"/>
+        <location filename="../src/actions/rs_actionzoompan.cpp" line="128"/>
+        <location filename="../src/actions/rs_actionzoompan.cpp" line="132"/>
         <source>Cancel</source>
         <translation>취소</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionzoompan.cpp" line="123"/>
+        <location filename="../src/actions/rs_actionzoompan.cpp" line="131"/>
         <source>Zoom panning</source>
         <translation>확대 팬</translation>
     </message>
@@ -16532,7 +16576,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_GraphicView</name>
     <message>
-        <location filename="../src/lib/gui/rs_graphicview.cpp" line="1542"/>
+        <location filename="../src/lib/gui/rs_graphicview.cpp" line="1550"/>
         <source>Draft</source>
         <translation>초안</translation>
     </message>
@@ -17543,66 +17587,6 @@ This block cannot be inserted.</source>
     <message>
         <source>Height:</source>
         <translation type="vanished">세로:</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawHyperbolaFP</name>
-    <message>
-        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="260"/>
-        <source>Foci cannot be coincident</source>
-        <translation>초점은 일치할 수 없습니다.</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="273"/>
-        <source>The point does not define a hyperbola with these foci</source>
-        <translation>이 점은 주어진 초점으로 쌍곡선을 정의하지 않습니다.</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="286"/>
-        <source>The end point is not on the same hyperbola branch</source>
-        <translation>종료점은 동일한 쌍곡선 가지에 있지 않습니다.</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="295"/>
-        <source>Start and end points cannot be the same</source>
-        <translation>시작점과 종료점은 동일할 수 없습니다.</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="314"/>
-        <source>specify the two foci, then the start and end points on one branch</source>
-        <translation>두 초점을 지정한 다음, 하나의 가지에 있는 시작점과 종료점을 지정합니다.</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="326"/>
-        <source>Specify the first focus</source>
-        <translation>첫 번째 초점을 지정합니다.</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="327"/>
-        <source>Cancel</source>
-        <translation>취소</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="330"/>
-        <source>Specify the second focus</source>
-        <translation>두 번째 초점을 지정합니다.</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="331"/>
-        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="335"/>
-        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="339"/>
-        <source>Back</source>
-        <translation>뒤로</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="334"/>
-        <source>Specify the start point on the branch</source>
-        <translation>가지 위의 시작점을 지정합니다.</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="338"/>
-        <source>Specify the end point on the same branch</source>
-        <translation>동일한 가지 위의 종료점을 지정합니다.</translation>
     </message>
 </context>
 </TS>

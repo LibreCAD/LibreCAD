@@ -41,62 +41,51 @@
 <context>
     <name>CustomToolbarCreator</name>
     <message>
-        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="14"/>
         <source>Frame</source>
-        <translation>კადრი</translation>
+        <translation type="vanished">კადრი</translation>
     </message>
     <message>
-        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="86"/>
         <source>&gt;</source>
-        <translation>&gt;</translation>
+        <translation type="vanished">&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="105"/>
         <source>&lt;</source>
-        <translation>&lt;</translation>
+        <translation type="vanished">&lt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="139"/>
         <source>+</source>
-        <translation>+</translation>
+        <translation type="vanished">+</translation>
     </message>
     <message>
-        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="149"/>
         <source>-</source>
-        <translation>-</translation>
+        <translation type="vanished">-</translation>
     </message>
     <message>
-        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="156"/>
         <source>input a name and then press +</source>
-        <translation>შეიყვანეთ სახელი და დააჭირეთ +</translation>
+        <translation type="vanished">შეიყვანეთ სახელი და დააჭირეთ +</translation>
     </message>
     <message>
-        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="193"/>
         <source>Save</source>
-        <translation>შენახვა</translation>
+        <translation type="vanished">შენახვა</translation>
     </message>
 </context>
 <context>
     <name>CustomWidgetCreator</name>
     <message>
-        <location filename="../src/ui/generic/customwidgetcreator.ui" line="14"/>
         <source>Frame</source>
-        <translation>კადრი</translation>
+        <translation type="vanished">კადრი</translation>
     </message>
     <message>
-        <location filename="../src/ui/generic/customwidgetcreator.ui" line="65"/>
         <source>-&gt;</source>
-        <translation>-></translation>
+        <translation type="vanished">-&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/generic/customwidgetcreator.ui" line="72"/>
         <source>&lt;-</source>
-        <translation>&lt;-</translation>
+        <translation type="vanished">&lt;-</translation>
     </message>
     <message>
-        <location filename="../src/ui/generic/customwidgetcreator.ui" line="115"/>
         <source>Save</source>
-        <translation>შენახვა</translation>
+        <translation type="vanished">შენახვა</translation>
     </message>
 </context>
 <context>
@@ -228,6 +217,66 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
+    <name>LC_ActionDrawHyperbolaFP</name>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="260"/>
+        <source>Foci cannot be coincident</source>
+        <translation>ფოკუსები ვერ შეიძლება იყოს ერთმანეთთან თანხვედრებული</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="273"/>
+        <source>The point does not define a hyperbola with these foci</source>
+        <translation>პუნქტი არ განსაზღვრავს ჰიპერბოლას ამ ფოკუსებით</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="286"/>
+        <source>The end point is not on the same hyperbola branch</source>
+        <translation>საბოლოო პუნქტი არ არის ერთ და იმავე ჰიპერბოლის ტოტი</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="295"/>
+        <source>Start and end points cannot be the same</source>
+        <translation>დასაწყისი და საბოლოო პუნქტები ვერ შეიძლება იყოს ერთმანეთი</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="314"/>
+        <source>specify the two foci, then the start and end points on one branch</source>
+        <translation>მითითეთ ორი ფოკუსი, შემდეგ დასაწყისი და საბოლოო პუნქტები ერთ ტოტზე</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="326"/>
+        <source>Specify the first focus</source>
+        <translation>მითითეთ პირველი ფოკუსი</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="327"/>
+        <source>Cancel</source>
+        <translation>გაუქმება</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="330"/>
+        <source>Specify the second focus</source>
+        <translation>მითითეთ მეორე ფოკუსი</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="331"/>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="335"/>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="339"/>
+        <source>Back</source>
+        <translation>უკან</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="334"/>
+        <source>Specify the start point on the branch</source>
+        <translation>მითითეთ დასაწყისი პუნქტი ტოტზე</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="338"/>
+        <source>Specify the end point on the same branch</source>
+        <translation>მითითეთ საბოლოო პუნქტი იმავე ტოტზე</translation>
+    </message>
+</context>
+<context>
     <name>LC_ActionDrawLinePoints</name>
     <message>
         <location filename="../src/actions/lc_actiondrawlinepoints.cpp" line="513"/>
@@ -256,9 +305,15 @@ or [%2]</source>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawlinepoints.cpp" line="521"/>
-        <source>Specify  distance (angle %1 deg)
+        <source>Specify distance (angle %1 deg)
 or [%2]</source>
         <translation>მიუთითეთ მანძილი (კუთხე %1 გრადუსი)
+ან [%2]</translation>
+    </message>
+    <message>
+        <source>Specify  distance (angle %1 deg)
+or [%2]</source>
+        <translation type="vanished">მიუთითეთ მანძილი (კუთხე %1 გრადუსი)
 ან [%2]</translation>
     </message>
 </context>
@@ -418,12 +473,12 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawSliceDivide</name>
     <message>
-        <location filename="../src/actions/lc_abstractactionwithpreview.cpp" line="846"/>
+        <location filename="../src/actions/lc_abstractactionwithpreview.cpp" line="858"/>
         <source> is not divided as it is locked.</source>
         <translation> ვერ იყოფა, რადგან დაბლოკილია.</translation>
     </message>
     <message>
-        <location filename="../src/actions/lc_abstractactionwithpreview.cpp" line="854"/>
+        <location filename="../src/actions/lc_abstractactionwithpreview.cpp" line="860"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
         <translation> ვერ იყოფა, რადგან პოლილაინის ნაწილია. ჯერ გააფართოვეთ პოლილაინი.</translation>
     </message>
@@ -486,7 +541,7 @@ or [%2]</source>
 <context>
     <name>LC_ActionFactory</name>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1528"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1537"/>
         <source>&amp;Window Zoom</source>
         <translation>&amp;ფანჯრის გადიდება</translation>
     </message>
@@ -496,1013 +551,1013 @@ or [%2]</source>
         <translation>გადიდება &amp;პანორამირება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="63"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="64"/>
         <source>Select Entity</source>
         <translation>ენტიტეტის არჩევა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="70"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="71"/>
         <source>Select Window</source>
         <translation>ფანჯრის არჩევა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="77"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="78"/>
         <source>Deselect Window</source>
         <translation>ფანჯრის მონიშვნის მოხსნა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="84"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="85"/>
         <source>(De-)Select &amp;Contour</source>
         <translation>(გა)არჩევა &amp;კონტურის</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="91"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="92"/>
         <source>Select Intersected Entities</source>
         <translation>გადაკვეთილი ენტიტეტების არჩევა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="98"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="99"/>
         <source>Deselect Intersected Entities</source>
         <translation>გადაკვეთილი ენტიტეტების არჩევის გაუქმება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="105"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="106"/>
         <source>(De-)Select Layer</source>
         <translation>(გა)არჩევა ფენის</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="114"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="115"/>
         <source>&amp;Points</source>
         <translation>&amp;წერტილები</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="124"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="125"/>
         <source>&amp;2 Points</source>
         <translation>&amp;2 წერტილი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="131"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="132"/>
         <source>&amp;Angle</source>
         <translation>&amp;კუთხე</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="138"/>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="648"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="139"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="657"/>
         <source>&amp;Horizontal</source>
         <translation>&amp;ჰორიზონტალური</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="145"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="146"/>
         <source>Vertical</source>
         <translation>ვერტიკალური</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="158"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="159"/>
         <source>&amp;Freehand Line</source>
         <translation>&amp;ხელით დახატული ხაზი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="165"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="166"/>
         <source>&amp;Parallel</source>
         <translation>&amp;პარალელური</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="172"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="173"/>
         <source>Parallel through point</source>
         <translation>პარალელური წერტილის გავლით</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="179"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="180"/>
         <source>Rectangle</source>
         <translation>მართკუთხედი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="186"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="187"/>
         <source>Bisector</source>
         <translation>ბისექტრისა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="193"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="194"/>
         <source>Tangent (P,C)</source>
         <translation>მხები (P,C)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="200"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="201"/>
         <source>Tangent (C,C)</source>
         <translation>მხები (C,C)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="207"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="208"/>
         <source>Tangent &amp;Orthogonal</source>
         <translation>მხები &amp;ორთოგონალური</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="214"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="215"/>
         <source>Orthogonal</source>
         <translation>ორთოგონალური</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="221"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="222"/>
         <source>Relative angle</source>
         <translation>შედარებითი კუთხე</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="228"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="229"/>
         <source>Pol&amp;ygon (Cen,Cor)</source>
         <translation>მრავალკუთხა (ცენტრი,კუთხე)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="242"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="243"/>
         <source>Polygo&amp;n (Cor,Cor)</source>
         <translation>მრავალკუთხა (კუთხე,კუთხე)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="251"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="252"/>
         <source>Center, &amp;Point</source>
         <translation>ცენტრი, &amp;წერტილი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="360"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="361"/>
         <source>Center, &amp;Radius</source>
         <translation>ცენტრი, &amp;რადიუსი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="367"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="368"/>
         <source>2 Points</source>
         <translation>2 წერტილი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="374"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="375"/>
         <source>2 Points, Radius</source>
         <translation>2 წერტლი, რადიუსი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="381"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="382"/>
         <source>3 Points</source>
         <translation>3 წერტილი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="388"/>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="449"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="389"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="450"/>
         <source>&amp;Concentric</source>
         <translation>&amp;კონცენტრული</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="396"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="397"/>
         <source>Circle &amp;Inscribed</source>
         <translation>წრე &amp;ჩასმული</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="403"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="404"/>
         <source>Tangential 2 Circles, Radius</source>
         <comment>circle tangential with two circles, and given radius</comment>
         <translation>მხები 2 წრე, რადიუსი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="410"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="411"/>
         <source>Tangential 2 Circles, 1 Point</source>
         <translation>მხები 2 წრე, 1 წერტილი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="417"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="418"/>
         <source>Tangential &amp;3 Circles</source>
         <translation>მხები &amp;3 წრე</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="424"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="425"/>
         <source>Tangential, 2 P&amp;oints</source>
         <translation>მხები, 2 წერტილი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="433"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="434"/>
         <source>&amp;Center, Point, Angles</source>
         <translation>&amp;ცენტრი, წერტილი, კუთხეები</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="441"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="442"/>
         <source>&amp;3 Points</source>
         <translation>&amp;3 წერტილი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="457"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="458"/>
         <source>Arc &amp;Tangential</source>
         <translation>მხები &amp;რკალი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="467"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="468"/>
         <source>&amp;Ellipse (Axis)</source>
         <translation>&amp;ელიფსი (ღერძი)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="474"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="475"/>
         <source>Ellipse &amp;Arc (Axis)</source>
         <translation>ელიფსი &amp;მრუდი (ღერძი)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="481"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="482"/>
         <source>Ellipse &amp;Foci Point</source>
         <translation>ელიფსი &amp;ფოკუსის წერტილი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="488"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="489"/>
         <source>Ellipse &amp;4 Point</source>
         <translation>ელიფსი &amp;4 წერტილი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="495"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="496"/>
         <source>Ellipse Center and &amp;3 Points</source>
         <translation>ელიფსის ცენტრი და &amp;3 წერტილი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="502"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="503"/>
         <source>Ellipse &amp;Inscribed</source>
         <translation>ელიფსი &amp;ჩასმული</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="526"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="535"/>
         <source>&amp;Spline</source>
         <translation>&amp;სპლაინი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="533"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="542"/>
         <source>&amp;Spline through points</source>
         <translation>&amp;სპლაინი წერტილებით</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="542"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="551"/>
         <source>&amp;Polyline</source>
         <translation>&amp;პოლიხაზი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="549"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="558"/>
         <source>&amp;Add node</source>
         <translation>&amp;კვანძის დამატება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="557"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="566"/>
         <source>A&amp;ppend node</source>
         <translation>&amp;კვანძის ბოლოშიმიწერა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="565"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="574"/>
         <source>&amp;Delete node</source>
         <translation>&amp;კვანძის წაშლა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="573"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="582"/>
         <source>Delete &amp;between two nodes</source>
         <translation>წაშლა &amp;ორ კვანძს შუა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="581"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="590"/>
         <source>&amp;Trim segments</source>
         <translation>&amp;სეგმენტების მოჭრა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="589"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="598"/>
         <source>Create &amp;Equidistant Polylines</source>
         <translation>შექმნა &amp;თანაბარი მანძილის პოლილაინების</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="596"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="605"/>
         <source>Create Polyline from Existing &amp;Segments</source>
         <translation>შექმნა პოლილაინი არსებული &amp;სეგმენტებიდან</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="605"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="614"/>
         <source>&amp;MText</source>
         <translation>&amp;მრავალხაზიანი ტექსტი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="611"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="620"/>
         <source>&amp;Text</source>
         <translation>&amp;ტექტი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="618"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="627"/>
         <source>&amp;Hatch</source>
         <translation>&amp;ჰაჩი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="625"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="634"/>
         <source>Insert &amp;Image</source>
         <translation>&amp;სურათის ჩასმა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="634"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="643"/>
         <source>&amp;Aligned</source>
         <translation>&amp;შეწეულია</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="641"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="650"/>
         <source>&amp;Linear</source>
         <translation>&amp;ხაზოვანი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="655"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="664"/>
         <source>&amp;Vertical</source>
         <translation>&amp;ვერტიკალური</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="662"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="671"/>
         <source>&amp;Radial</source>
         <translation>&amp;რადიალური</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="669"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="678"/>
         <source>&amp;Diametric</source>
         <translation>&amp;დიამეტრალური</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="676"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="685"/>
         <source>&amp;Angular</source>
         <translation>&amp;კუთხოვანი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="690"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="699"/>
         <source>&amp;Leader</source>
         <translation>&amp;წამყვანი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="699"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="708"/>
         <source>&amp;Attributes</source>
         <translation>&amp;ატრიბუტები</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="707"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="716"/>
         <source>&amp;Delete</source>
         <translation>&amp;წაშლა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="714"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="723"/>
         <source>Delete Freehand</source>
         <translation>ხელით წაშლა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="721"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="730"/>
         <source>&amp;Move / Copy</source>
         <translation>&amp;გადატანა / კოპირება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="729"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="738"/>
         <source>Re&amp;vert direction</source>
         <translation>&amp;მიმართულების შებრუნება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="731"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="740"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="737"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="746"/>
         <source>&amp;Rotate</source>
         <translation>&amp;შემობრუნება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="745"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="754"/>
         <source>&amp;Scale</source>
         <translation>&amp;მასშტაბირება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="753"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="762"/>
         <source>&amp;Mirror</source>
         <translation>&amp;ასლი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="768"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="777"/>
         <source>Rotate T&amp;wo</source>
         <translation>&amp;ორის შემობრუნება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="775"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="784"/>
         <source>&amp;Properties</source>
         <translation>&amp;თვისებები</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="783"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="792"/>
         <source>&amp;Trim</source>
         <translation>&amp;დაჭრა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="799"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="808"/>
         <source>&amp;Lengthen</source>
         <translation>&amp;გაგრძელება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="815"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="824"/>
         <source>&amp;Divide</source>
         <translation>გა&amp;ყოფა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="823"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="832"/>
         <source>&amp;Stretch</source>
         <translation>&amp;გაწელვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="831"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="840"/>
         <source>&amp;Bevel</source>
         <translation>&amp;ჩასმა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="839"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="848"/>
         <source>&amp;Fillet</source>
         <translation>&amp;მომრგვალებული ნაზოლი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="847"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="856"/>
         <source>&amp;Explode Text into Letters</source>
         <translation>&amp;ტექსტის აფეთქება ასოებად</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="913"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="922"/>
         <source>Point inside contour</source>
         <translation>წერტილი კონტურში</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="919"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="928"/>
         <source>&amp;Distance Point to Point</source>
         <translation>&amp;მანძილი წერტილიდან წერტილამდე</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="926"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="935"/>
         <source>&amp;Distance Entity to Point</source>
         <translation>&amp;მანძილი ენტიტეტიდან წერტილამდე</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="933"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="942"/>
         <source>An&amp;gle between two lines</source>
         <translation>კ&amp;უთხე ორ ხაზს შორის</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="940"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="949"/>
         <source>&amp;Total length of selected entities</source>
         <translation>&amp;არჩეული ენტიტეტების საერთო სიგრძე</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="947"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="956"/>
         <source>Polygonal &amp;Area</source>
         <translation>მრავალკუთხა &amp;ფართობი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1409"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1418"/>
         <source>&amp;Selection pointer</source>
         <translation>&amp;არჩევის მაჩვენებელი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1419"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1428"/>
         <source>&amp;Undo</source>
         <translation>&amp;დაბრუნება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1430"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1439"/>
         <source>&amp;Redo</source>
         <translation>&amp;თავიდან გაკეთება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1441"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1450"/>
         <source>Cu&amp;t</source>
         <translation>ამ&amp;ოჭრა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1452"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1461"/>
         <source>&amp;Copy</source>
         <translation>&amp;კოპირება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1463"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1472"/>
         <source>&amp;Paste</source>
         <translation>&amp;ჩასმა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="966"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="975"/>
         <source>move to bottom</source>
         <translation>ქვემოთ გადატანა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="974"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="983"/>
         <source>lower after entity</source>
         <translation>ენტიტეტის შემდეგ დაწევა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="982"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="991"/>
         <source>raise over entity</source>
         <translation>ენტიტეტის ზემოთ აწევა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="990"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="999"/>
         <source>move to top</source>
         <translation>თავში ატანა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1028"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1037"/>
         <source>&amp;Add Layer</source>
         <translation>&amp;ფენის დამატება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1035"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1044"/>
         <source>&amp;Remove Layer</source>
         <translation>&amp;ფენის წაშლა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1042"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1051"/>
         <source>&amp;Edit Layer</source>
         <translation>ფენის &amp;ჩასწორება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1049"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1058"/>
         <source>Toggle Layer Loc&amp;k</source>
         <translation>ფენის ჩაკეტვის გადართვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1056"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1065"/>
         <source>&amp;Toggle Layer Visibility</source>
         <translation>ფენის ხილვადობის &amp;გადართვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1063"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1072"/>
         <source>Toggle Layer &amp;Print</source>
         <translation>ფენის &amp;ბეჭდვის გადართვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1070"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1079"/>
         <source>Toggle &amp;Construction Layer</source>
         <translation>მშენებლობის ფენის გადართვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1103"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1112"/>
         <source>&amp;Add Block</source>
         <translation>&amp;ბლოკის დამატება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1110"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1119"/>
         <source>&amp;Remove Block</source>
         <translation>&amp;ბლოკის წაშლა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1117"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1126"/>
         <source>&amp;Rename Block</source>
         <translation>ბლოკის &amp;სახელის გადარქმევა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1124"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1133"/>
         <source>&amp;Edit Block</source>
         <translation>ბლოკის &amp;ჩასწორება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1131"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1140"/>
         <source>&amp;Save Block</source>
         <translation>&amp;ბლოკის შენახვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1138"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1147"/>
         <source>&amp;Insert Block</source>
         <translation>&amp;ბლოკს ჩასმა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1145"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1154"/>
         <source>Toggle Block &amp;Visibility</source>
         <translation>ბლოკის ხილვადობის გადართვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1152"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1161"/>
         <source>&amp;Create Block</source>
         <translation>&amp;ბლოკის შექმნა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="854"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="863"/>
         <source>Ex&amp;plode</source>
         <translation>&amp;აფეთქება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1161"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1170"/>
         <source>&amp;Application Preferences</source>
         <translation>&amp;აპლიკაციის მორგება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1169"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1178"/>
         <source>Current &amp;Drawing Preferences</source>
         <translation>მიმდინარე &amp;ნახატის პარამეტრები</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1192"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1201"/>
         <source>&amp;Delete selected</source>
         <translation>მონიშნულის &amp;წაშლა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1200"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1209"/>
         <source>Select &amp;All</source>
         <translation>ყველაფრის &amp;მონიშვნა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1210"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1219"/>
         <source>Deselect &amp;all</source>
         <translation>მონიშვნის &amp;მოხსნა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1212"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1221"/>
         <source>Ctrl+K</source>
         <translation>Ctrl+K</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1219"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1228"/>
         <source>Invert Selection</source>
         <translation>მონიშვნის ინვერსია</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1476"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1485"/>
         <source>Zoom &amp;In</source>
         <translation>&amp;გადიდება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1486"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1495"/>
         <source>Zoom &amp;Out</source>
         <translation>გადიდება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1496"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1505"/>
         <source>&amp;Auto Zoom</source>
         <translation>ავტომატური &amp;გადიდება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1506"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1515"/>
         <source>Previous &amp;View</source>
         <translation>&amp;წინა ხედი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1517"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1526"/>
         <source>&amp;Redraw</source>
         <translation>ე&amp;კრანის გადახატვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1540"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1550"/>
         <source>&amp;New</source>
         <translation>&amp;ახალი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1550"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1560"/>
         <source>New From &amp;Template</source>
         <translation>ნიმუშიდან ახლის &amp;შექმნა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1559"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1569"/>
         <source>&amp;Open...</source>
         <translation>&amp;გახსნა...</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1569"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1579"/>
         <source>&amp;Save</source>
         <translation>&amp;შენახვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1579"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1589"/>
         <source>Save &amp;as...</source>
         <translation>&amp;შენახვა როგორც...</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1244"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1253"/>
         <source>&amp;Export as image</source>
         <translation>გამოსახულების სახით &amp;გატანა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1250"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1259"/>
         <source>&amp;Close</source>
         <translation>&amp;დახურვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1599"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1609"/>
         <source>&amp;Print...</source>
         <translation>&amp;ამობეჭდვა...</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1265"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1274"/>
         <source>Export as PDF</source>
         <translation>PDF-ად გატანა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1610"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1620"/>
         <source>Print Pre&amp;view</source>
         <translation>საბეჭდის &amp;გადახედვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1621"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1631"/>
         <source>&amp;Quit</source>
         <translation>&amp;გასვლა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1271"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1280"/>
         <source>&amp;Block</source>
         <translation>&amp;ბლოკი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1279"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1288"/>
         <source>&amp;Fullscreen</source>
         <translation>&amp;მთელ ეკრანზე</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1290"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1299"/>
         <source>&amp;Grid</source>
         <translation>&amp;ბადე</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1292"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1301"/>
         <source>Ctrl+G</source>
         <comment>Toggle Grid</comment>
         <translation>Ctrl+G</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1300"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1309"/>
         <source>&amp;Draft</source>
         <translation>&amp;მონახაზი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1309"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1318"/>
         <source>&amp;Statusbar</source>
         <translation>სტატუსის ზოლი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1312"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1321"/>
         <source>Ctrl+I</source>
         <comment>Hide Statusbar</comment>
         <translation>Ctrl+I</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1317"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1326"/>
         <source>Focus on &amp;Command Line</source>
         <translation>ფოკუსის შენრჩუნება &amp;ბრძანების სტრიქონზე</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1178"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1187"/>
         <source>Widget Options</source>
         <translation>ვიჯეტის მორგება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1328"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1337"/>
         <source>Left</source>
         <translation>Left</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1337"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1346"/>
         <source>Right</source>
         <translation>მარჯვენა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1346"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1355"/>
         <source>Top</source>
         <translation>Top</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1355"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1364"/>
         <source>Bottom</source>
         <translation>ბოლოში</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1364"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1373"/>
         <source>Floating</source>
         <translation>მცურავი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1373"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1382"/>
         <source>Reload Style Sheet</source>
         <translation>სტილის ფურცლის თავიდან ჩათვირთვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1184"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1193"/>
         <source>Device Options</source>
         <translation>მოწყობილობის მორგება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="761"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="770"/>
         <source>Mo&amp;ve and Rotate</source>
         <translation>&amp;გადატანა და შებრუნება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="791"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="800"/>
         <source>Tr&amp;im Two</source>
         <translation>ორის &amp;მოჭრა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="807"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="816"/>
         <source>O&amp;ffset</source>
         <translation>&amp;წანაცვლება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1386"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1395"/>
         <source>Menu Creator</source>
         <translation>მენიუს შექმნა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1393"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1402"/>
         <source>Toolbar Creator</source>
         <translation>ხელსაწყოთა ზოლის შექმნა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1303"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1312"/>
         <source>Ctrl+D</source>
         <comment>Toggle Draft Mode</comment>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="235"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="236"/>
         <source>Pol&amp;ygon (Cen,Tan)</source>
         <translation>მრავალკუთხა (ცენტრი,მხები)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="683"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="692"/>
         <source>&amp;Arc</source>
         <translation>&amp;რკალი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1000"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1009"/>
         <source>&amp;Show all layers</source>
         <translation>&amp;ყველა ფენის შექმნა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1007"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1016"/>
         <source>&amp;Hide all layers</source>
         <translation>&amp;ყველა ფენის დამალვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1014"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1023"/>
         <source>&amp;Unlock all</source>
         <translation>&amp;ყველას განბლოკვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1021"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1030"/>
         <source>&amp;Lock all</source>
         <translation>ყველას &amp;დაბლოკვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1077"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1086"/>
         <source>&amp;Export Selected Layer(s)</source>
         <translation>&amp;მონიშნული ფენების გატანა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1082"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1091"/>
         <source>Export &amp;Visible Layer(s)</source>
         <translation>&amp;ხილული ფენების გატანა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1089"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1098"/>
         <source>&amp;Show all blocks</source>
         <translation>&amp;ყველა ბლოკის ჩვენება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1096"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1105"/>
         <source>&amp;Hide all blocks</source>
         <translation>&amp;ყველა ბლოკის დამალვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1228"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1237"/>
         <source>Export as CA&amp;M/plain SVG...</source>
         <translation>ექსპორტი როგორც CA&amp;M/უბრალო SVG...</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1257"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1266"/>
         <source>Close All</source>
         <translation>ყველას დახურვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1380"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1389"/>
         <source>Re-dock Widgets</source>
         <translation>ვიჯეტების ხელახლა დოკირება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1589"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1599"/>
         <source>Save A&amp;ll...</source>
         <translation>&amp;ყველას შენახვა...</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="257"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="258"/>
         <source>Cross</source>
         <translation>ჯვარი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="263"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="264"/>
         <source>Snake</source>
         <translation>გველი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="269"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="270"/>
         <source>Snake (X)</source>
         <translation>გველი (X)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="275"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="276"/>
         <source>Snake (Y)</source>
         <translation>გველი (Y)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="281"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="282"/>
         <source>Rectangle (1 Point)</source>
         <translation>მართკუთხა (1 წერტილი)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="287"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="288"/>
         <source>Rectangle (2 Points)</source>
         <translation>მართკუთხა (2 წერტილი)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="293"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="294"/>
         <source>Rectangle (3 Points)</source>
         <translation>მართკუთხა (3 წერტილი)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="299"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="300"/>
         <source>Star</source>
         <translation>Star</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="305"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="306"/>
         <source>Break/Divide</source>
         <translation>გაწყვეტა/გაყოფა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="311"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="312"/>
         <source>Line Gap</source>
         <translation>ხაზის შუალედი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="317"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="318"/>
         <source>Angle From Line</source>
         <translation>კუთხე ხაზიდან</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="323"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="324"/>
         <source>Orthogonal From Line</source>
         <translation>ორთოგონალური ხაზიდან</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="329"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="330"/>
         <source>From Point To Line</source>
         <translation>წერტილიდან ხაზამდე</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="335"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="336"/>
         <source>Slice/Divide Line</source>
         <translation>ხაზის დაჭრა/გაყოფა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="341"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="342"/>
         <source>Slice/Divide Circle</source>
         <translation>წრის დაჭრა/გაყოფა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="347"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="348"/>
         <source>Line of Points</source>
         <translation>წერტილების ხაზი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="353"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="354"/>
         <source>By Arc</source>
         <translation>მრუდით</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="510"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="519"/>
         <source>Para&amp;bola 4 points</source>
         <translation>პარა&amp;ბოლა 4 წერტილი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="517"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="526"/>
         <source>Parabola &amp;Focus Directrix</source>
         <translation>პარაბოლა &amp;ფოკუსი დირექტრისა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="864"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="873"/>
         <source>&amp;Pick Pen From Entity</source>
         <translation>&amp;ენტიტეტიდან პენის არჩევა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="872"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="881"/>
         <source>&amp;Pick Pen From Entity (Resolved)</source>
         <translation>&amp;ენტიტეტიდან პენის არჩევა (გადაწყვეტილი)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="881"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="890"/>
         <source>Apply Pen to Entity</source>
         <translation>ენტიტეტზე პენის გადატანა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="889"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="898"/>
         <source>Copy Pen</source>
         <translation>პენის კოპირება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="897"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="906"/>
         <source>Line Join</source>
         <translation>ხაზის შეერთება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="904"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="913"/>
         <source>Duplicate</source>
         <translation>დუბლიკატი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1632"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1642"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
         <translation>მიმდინარე პენის განახლება აქტიური ფენის პენით</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="510"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="511"/>
         <source>&amp;Hyperbola Foci Point</source>
         <translation>&amp;ჰიპერბოლის ფოკუსების პუნქტი</translation>
     </message>
@@ -1675,9 +1730,8 @@ or [%2]</source>
 <context>
     <name>LC_CustomToolbar</name>
     <message>
-        <location filename="../src/ui/lc_customtoolbar.cpp" line="36"/>
         <source>Add or Remove Action</source>
-        <translation>დამატება ან წაშლა ქმედება</translation>
+        <translation type="vanished">დამატება ან წაშლა ქმედება</translation>
     </message>
 </context>
 <context>
@@ -2084,160 +2138,160 @@ or [%2]</source>
         <translation>ბრტყელი სიის რეჟიმი)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="653"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="656"/>
         <source>Layer Menu</source>
         <translation>ფენის მენიუ</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="672"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="675"/>
         <source>&amp;Add Child Layer</source>
         <translation>&amp;შვილობილი ფენის დამატება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="673"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="676"/>
         <source>&amp;Rename</source>
         <translation>&amp;სახელის შეცვლა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="674"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="677"/>
         <source>&amp;Remove Layers (Sub-Tree)</source>
         <translation>&amp;ფენების წაშლა (ქვე-ხე)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="676"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="679"/>
         <source>&amp;Copy Structure (Sub-Tree)</source>
         <translation>&amp;სტრუქტურის კოპირება (ქვე-ხე)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="677"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="680"/>
         <source>&amp;Duplicate Content (Sub-Tree)</source>
         <translation>&amp;შიგთავსის დუბლირება (ქვე-ხე)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="679"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="682"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
         <translation>&amp;ენტიტეტების არჩევა (ქვე-ხე)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="684"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="687"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
         <translation>ფენის &amp;ატრიბუტების &amp;რედაქტირება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="686"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="689"/>
         <source>&amp;Remove Layer</source>
         <translation>&amp;ფენის წაშლა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="695"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="698"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
         <translation>&amp;ზომების ქვე-ფენის დამატება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="699"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="702"/>
         <source>&amp;Add Info Sub-Layer</source>
         <translation>&amp;ინფორმაციის ქვე-ფენის დამატება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="703"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="706"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
         <translation>&amp;ალტერნატიული ხედის ქვე-ფენის დამატება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="709"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="712"/>
         <source>&amp;Remove Sub-layers</source>
         <translation>&amp;ქვე-ფენების წაშლა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="717"/>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="728"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="720"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="731"/>
         <source>Convert to Dimensional Layer</source>
         <translation>ზომით ფენად გადაკეთება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="718"/>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="731"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="721"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="734"/>
         <source>Convert to Info Layer</source>
         <translation>ინფორმაციულ ფენად გადაკეთება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="719"/>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="734"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="722"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="737"/>
         <source>Convert to Alternative Position Layer</source>
         <translation>ალტერნატიული პოზიციის ფენად გადაკეთება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="726"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="729"/>
         <source>Convert to Normal Layer</source>
         <translation>ნორმალურ ფენად გადაკეთება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="740"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="743"/>
         <source>&amp;Select Layer&apos;s Entities</source>
         <translation>ფენის ენტიტეტების &amp;არჩევა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="743"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="746"/>
         <source>&amp;Create Layer Copy</source>
         <translation>ფენის &amp;კოპიის შექმნა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="744"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="747"/>
         <source>&amp;Duplicate Layer With Content</source>
         <translation>ფენის &amp;დუბლირება შიგთავსით</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="748"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="751"/>
         <source>Move Selection to Layer</source>
         <translation>არჩევის გადატანა ფენაში</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="749"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="752"/>
         <source>Duplicate Selection to Layer</source>
         <translation>არჩევის დუბლირება ფენაში</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="756"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="759"/>
         <source>&amp;Add Layer</source>
         <translation>ფენის &amp;დამატება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="758"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="761"/>
         <source>&amp;Freeze Others Layers</source>
         <translation>სხვა ფენების &amp;გაყინვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="759"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="762"/>
         <source>&amp;Defreeze All Layers</source>
         <translation>ყველა ფენის &amp;გალღობა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="760"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="763"/>
         <source>&amp;Freeze All Layers</source>
         <translation>ყველა ფენის &amp;გაყინვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="761"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="764"/>
         <source>&amp;Unlock All Layers</source>
         <translation>ყველა ფენის &amp;განბლოკვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="762"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="765"/>
         <source>&amp;Lock All Layers</source>
         <translation>ყველა ფენის &amp;დაბლოკვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="763"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="766"/>
         <source>Enable &amp;Printing All Layers</source>
         <translation>ყველა ფენის &amp;ბეჭდვის ჩართვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="764"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="767"/>
         <source>&amp;Disable Printing All Layers</source>
         <translation>ყველა ფენის &amp;ბეჭდვის გამორთვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="766"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="769"/>
         <source>&amp;Find And Remove Empty Layers</source>
         <translation>&amp;ცარიელი ფენების პოვნა და წაშლა</translation>
     </message>
@@ -3411,67 +3465,67 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
 <context>
     <name>LC_WidgetFactory</name>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="378"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="381"/>
         <source>Library Browser</source>
         <translation>ბიბლიოთეკის ბრაუზერი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="390"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="393"/>
         <source>Command line</source>
         <translation>ბრძანებათა სტრიქონი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="414"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="417"/>
         <source>Dock</source>
         <translation>Dock</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="414"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="417"/>
         <source>Float</source>
         <translation>მცურავი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="598"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="601"/>
         <source>Lines</source>
         <translation>ხაზები</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="605"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="608"/>
         <source>Circles</source>
         <translation>წრეები</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="612"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="615"/>
         <source>Freehand</source>
         <translation>ხელით დახატული</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="619"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="622"/>
         <source>Ellipses</source>
         <translation>ოვალები</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="626"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="629"/>
         <source>PolyLines</source>
         <translation>პოლიხაზები</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="633"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="636"/>
         <source>Select</source>
         <translation>აირჩიეთ</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="640"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="643"/>
         <source>Dimensions</source>
         <translation>ზომები</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="647"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="650"/>
         <source>Modify</source>
         <translation>ჩასწორება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="654"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="657"/>
         <source>Measure</source>
         <translation>გაზომვა</translation>
     </message>
@@ -3634,178 +3688,169 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="674"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="677"/>
         <source>&amp;File</source>
         <translation>&amp;ფაილი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="716"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="719"/>
         <source>&amp;Edit</source>
         <translation>&amp;ჩასწორება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="737"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="740"/>
         <source>&amp;View</source>
         <translation>&amp;ხედი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="796"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="799"/>
         <source>&amp;Select</source>
         <translation>&amp;მონიშვნა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="761"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="764"/>
         <source>&amp;Line</source>
         <translation>&amp;ხაზი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="768"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="771"/>
         <source>&amp;Circle</source>
         <translation>&amp;წრე</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="782"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="785"/>
         <source>&amp;Ellipse</source>
         <translation>&amp;ოვალი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="812"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="815"/>
         <source>&amp;Modify</source>
         <translation>&amp;შეცვლა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="821"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="824"/>
         <source>&amp;Info</source>
         <translation>&amp;ინფო</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3047"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="930"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="933"/>
         <source>About</source>
         <translation>პროგრამის შესახებ</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="879"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="882"/>
         <source>&amp;Help</source>
         <translation>&amp;დახმარება</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1219"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1236"/>
         <source>&amp;Cascade</source>
         <translation>&amp;კასკადი</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1220"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1237"/>
         <source>&amp;Tile</source>
         <translation>&amp;ფილა</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1222"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1239"/>
         <source>Tile &amp;Horizontally</source>
         <translation>ფილები &amp;ჰორიზონტალურად</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1538"/>
         <source>Creating new file...</source>
-        <translation>ახალი ფაილის შექმნა...</translation>
+        <translation type="vanished">ახალი ფაილის შექმნა...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1586"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1601"/>
         <source>unnamed document %1</source>
         <translation>უსახელო დოკუმენტი %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2015"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2030"/>
         <source>Loaded document: </source>
         <translation>ჩატვირთულია დოკუმენტი: </translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2021"/>
         <source>Opening aborted</source>
-        <translation>გახსნა შეწყვეტილია</translation>
+        <translation type="vanished">გახსნა შეწყვეტილია</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2438"/>
         <source>Printing...</source>
-        <translation>დაბეჭდვა...</translation>
+        <translation type="vanished">დაბეჭდვა...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2838"/>
         <source>Exiting application...</source>
-        <translation>პროგრამიდან გამოსვლა...</translation>
+        <translation type="vanished">პროგრამიდან გამოსვლა...</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="345"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="347"/>
         <source>Layer List</source>
         <translation>ფენების სია</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="368"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="371"/>
         <source>Block List</source>
         <translation>ბლოკების სია</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2760"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2768"/>
         <source>Print preview for %1</source>
         <translation>ბეჭდვის წინასწარი ნახვა %1-ისთვის</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1661"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1744"/>
         <source>New Drawing created.</source>
         <translation>ახალი ნახატი შექმნილია.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="516"/>
         <source>Saving drawing...</source>
-        <translation>ნახატის შენახვა...</translation>
+        <translation type="vanished">ნახატის შენახვა...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="525"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="529"/>
         <source>Saved drawing: %1</source>
         <translation>შენახული ნახატი: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2118"/>
         <source>Exporting drawing...</source>
-        <translation>ნახატის ექსპორტი...</translation>
+        <translation type="vanished">ნახატის ექსპორტი...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2214"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2223"/>
         <source>Exported: %1</source>
         <translation>ექსპორტირებული: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2254"/>
         <source>Exporting...</source>
-        <translation>გატანა…</translation>
+        <translation type="vanished">გატანა…</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2327"/>
         <source>Export complete</source>
-        <translation>ექსპორტი დასრულებულია</translation>
+        <translation type="vanished">ექსპორტი დასრულებულია</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2329"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2334"/>
         <source>Export failed!</source>
         <translation>გატანის შეცდომა!</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2684"/>
         <source>Printing complete</source>
-        <translation>დაბეჭდვა დასრულდა</translation>
+        <translation type="vanished">დაბეჭდვა დასრულდა</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3450"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3461"/>
         <source>Command line</source>
         <translation>ბრძანებათა სტრიქონი</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1584"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1599"/>
         <source>Block &apos;%1&apos;</source>
         <translation>ბლოკი &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1791"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1806"/>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
@@ -3814,22 +3859,21 @@ Please check the permissions.</source>
 გთხოვთ შეამოწმოთ ნებართვები.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="789"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="792"/>
         <source>&amp;Polyline</source>
         <translation>&amp;პოლიხაზი</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2087"/>
         <source>Auto-saving drawing...</source>
-        <translation>ნახატის ავტო-შენახვა...</translation>
+        <translation type="vanished">ნახატის ავტო-შენახვა...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2095"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2106"/>
         <source>Auto-saved drawing</source>
         <translation>ავტო-შენახული ნახატი</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2100"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2111"/>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
@@ -3840,12 +3884,12 @@ Auto-save disabled.</source>
 ავტო-შენახვა გამორთულია.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="685"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="688"/>
         <source>Import</source>
         <translation>შემოტანა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="988"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="991"/>
         <source>&amp;Toolbars</source>
         <translation>&amp;ხელსაწყოთა ზოლები</translation>
     </message>
@@ -3860,72 +3904,72 @@ Auto-save disabled.</source>
         <translation>ვერსია: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1891"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1907"/>
         <source>Warning: File already opened : </source>
         <translation>გაფრთხილება: ფაილი უკვე გახსნილია : </translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="542"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="545"/>
         <source>Cannot save the file </source>
         <translation>ფაილის შენახვა შეუძლებელია </translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="544"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="547"/>
         <source> , please check the filename and permissions.</source>
         <translation> , გთხოვთ შეამოწმოთ ფაილის სახელი და ნებართვები.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1221"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1238"/>
         <source>Tile &amp;Vertically</source>
         <translation>ფილები &amp;ვერტიკალურად</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1172"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1189"/>
         <source>Ta&amp;b mode</source>
         <translation>&amp;ჩანართების რეჟიმი</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1727"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1741"/>
         <source>New document from template: </source>
         <translation>ახალი დოკუმენტი შაბლონიდან: </translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1775"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1790"/>
         <source>Select Template aborted</source>
         <translation>შაბლონის არჩევა შეწყვეტილია</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2105"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2116"/>
         <source>Auto-saving failed</source>
         <translation>ავტო-შენახვა ვერ მოხერხდა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="421"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="424"/>
         <source>File</source>
         <translation>File</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="428"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="431"/>
         <source>Edit</source>
         <translation>Edit</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="449"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="452"/>
         <source>View</source>
         <translation>View</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="464"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="467"/>
         <source>Snap Selection</source>
         <translation>მონიშნულის მიმაგრება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="476"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="479"/>
         <source>Tool Options</source>
         <translation>ხელსაწყოების გამართვა</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2155"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2164"/>
         <source>Export as</source>
         <translation>გატანა, როგორც</translation>
     </message>
@@ -3945,26 +3989,26 @@ Auto-save disabled.</source>
         <translation>Qt ვერსია: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="535"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1593"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1999"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="538"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1608"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2014"/>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2882"/>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3255"/>
         <source>Draft Mode</source>
         <translation>ნახაზის რეჟიმი</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2490"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2500"/>
         <source>Export as PDF</source>
         <translation>PDF-ად გატანა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="689"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="692"/>
         <source>Export</source>
         <translation>გატანა</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1934"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1949"/>
         <source>Cannot open the file
 %1
 Please check its existence and permissions.</source>
@@ -3973,147 +4017,146 @@ Please check its existence and permissions.</source>
 გთხოვთ შეამოწმოთ არსებობა და ნებართვები.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2020"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2034"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
         <translation>ფაილი „%1“ არ არსებობს. გახსნა შეწყვეტილია</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="589"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="592"/>
         <source>Categories</source>
         <translation>კატეგორიები</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="830"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="833"/>
         <source>&amp;Order</source>
         <translation>&amp;მიმდევრობა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="302"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="440"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="303"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="443"/>
         <source>Order</source>
         <translation>დალაგება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="282"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="550"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="283"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="553"/>
         <source>Select</source>
         <translation>აირჩიეთ</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="257"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="520"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="258"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="523"/>
         <source>Line</source>
         <translation>Line</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="262"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="526"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="263"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="529"/>
         <source>Circle</source>
         <translation>წრე</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="775"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="778"/>
         <source>&amp;Curve</source>
         <translation>&amp;მრუდი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="267"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="532"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="268"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="535"/>
         <source>Curve</source>
         <translation>მრუდი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="272"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="538"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="273"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="541"/>
         <source>Ellipse</source>
         <translation>ოვალი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="277"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="544"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="278"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="547"/>
         <source>Polyline</source>
         <translation>პოლიხაზი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="287"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="556"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="288"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="559"/>
         <source>Dimension</source>
         <translation>განზომილება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="292"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="562"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="293"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="565"/>
         <source>Modify</source>
         <translation>ჩასწორება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="297"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="568"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="298"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="571"/>
         <source>Info</source>
         <translation>Info</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="471"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="474"/>
         <source>Pen</source>
         <translation>Pen</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3327"/>
         <source>Opening recent file...</source>
-        <translation>ბოლო ფაილის გახსნა...</translation>
+        <translation type="vanished">ბოლო ფაილის გახსნა...</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="483"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="486"/>
         <source>Dock Areas</source>
         <translation>დოკის ზონები</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="186"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="187"/>
         <source>Grid Status</source>
         <translation>ბადის სტატუსი</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3295"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3307"/>
         <source>Toolbars</source>
         <translation>ხელსაწყოთა ზოლები</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3300"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3312"/>
         <source>Dockwidgets</source>
         <translation>დოკის ვიჯეტები</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3509"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3520"/>
         <source>Device Options</source>
         <translation>მოწყობილობის მორგება</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3512"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3523"/>
         <source>Device</source>
         <translation>მოწყობილობა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="705"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="708"/>
         <source>&amp;Options</source>
         <translation>&amp;მორგება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="731"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="734"/>
         <source>Pl&amp;ugins</source>
         <translation>&amp;დამატებები</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="804"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="807"/>
         <source>Dime&amp;nsion</source>
         <translation>&amp;განზომილება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="961"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="964"/>
         <source>Dock Wid&amp;gets</source>
         <translation>დოკის ვიჯეტები</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="362"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="364"/>
         <source>Recent Files</source>
         <translation>უახლესი ფაილები</translation>
     </message>
@@ -4148,131 +4191,136 @@ Please check its existence and permissions.</source>
         <translation>სისტემა</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3547"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3558"/>
         <source>Toolbar Creator</source>
         <translation>ხელსაწყოთა ზოლის შექმნა</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3613"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3624"/>
         <source>Menu Creator</source>
         <translation>მენიუს შექმნა</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3638"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3649"/>
         <source>Menu Assigner</source>
         <translation>მენიუს მიმნიჭებელი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="755"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="758"/>
         <source>&amp;Tools</source>
         <translation>&amp;ხელსაწყოები</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="869"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="872"/>
         <source>&amp;Drawings</source>
         <translation>&amp;ნახაზები</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="516"/>
         <source>Saving drawing: %1</source>
-        <translation>ნახაზის შენახვა: %1</translation>
+        <translation type="vanished">ნახაზის შენახვა: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="521"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="525"/>
         <source>Save cancelled</source>
         <translation>შენახვა გაუქმდა</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="652"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="654"/>
         <source>Closing Drawing</source>
         <translation>ნახაზის დახურვა</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="660"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="662"/>
         <source>Save changes to the following item?
 %1</source>
         <translation>შევინახო ცვლილებები შემდეგ ელემენტში?
 %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="674"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="676"/>
         <source>&amp;Save</source>
         <translation>&amp;შენახვა</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="675"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="677"/>
         <source>Save &amp;as...</source>
         <translation>&amp;შენახვა როგორც...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="679"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="681"/>
         <source>&amp;Save %1</source>
         <translation>%1-ის &amp;შენახვა</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="680"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="682"/>
         <source>Save %1 &amp;as...</source>
         <translation>&apos;%1&apos;-ის &amp;შენახვა, როგორც...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1176"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1193"/>
         <source>&amp;Window mode</source>
         <translation>&amp;ფანჯრის რეჟიმი</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1182"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1199"/>
         <source>&amp;Layout</source>
         <translation>&amp;განლაგება</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1185"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1202"/>
         <source>Rounded</source>
         <translation>მომრგვალებული</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1189"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1206"/>
         <source>Triangular</source>
         <translation>სამკუთხედი</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1195"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1212"/>
         <source>North</source>
         <translation>ჩრდილოეთი</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1199"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1216"/>
         <source>South</source>
         <translation>სამხრეთი</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1203"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1220"/>
         <source>East</source>
         <translation>East</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1207"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1224"/>
         <source>West</source>
         <translation>West</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1212"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1229"/>
         <source>&amp;Arrange</source>
         <translation>&amp;დალაგება</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1215"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1232"/>
         <source>&amp;Maximized</source>
         <translation>&amp;გაშლილი</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2062"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2075"/>
         <source>Save All cancelled</source>
         <translation>ყველაფრის შენახვა გაუქმდა</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2396"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2401"/>
         <source>Close All cancelled</source>
         <translation>ყველაფრის დახურვა გაუქმდა</translation>
+    </message>
+    <message>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2470"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2482"/>
+        <source>Cannot apply the drawing page settings.</source>
+        <translation>ნახატის გვერდის პარამეტრების გამოყენება შეუძლებელია.</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3093"/>
@@ -4280,83 +4328,83 @@ Please check its existence and permissions.</source>
         <translation>კოდი</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3450"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3461"/>
         <source>Cmd</source>
         <translation>Cmd</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3451"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3462"/>
         <source>Float</source>
         <translation>მცურავი</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3451"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3462"/>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
         <translation>Dock</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="883"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="886"/>
         <source>&amp;Wiki</source>
         <translation>&amp;ვიკი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="884"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="887"/>
         <source>User&apos;s &amp;Manual</source>
         <translation>მომხმარებლის &amp;სახელმძღვანელო</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="885"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="888"/>
         <source>&amp;Commands</source>
         <translation>&amp;ბრძანებები</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="886"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="889"/>
         <source>&amp;Style Sheets</source>
         <translation>&amp;სტილის ცხრილები</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="887"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="890"/>
         <source>Wid&amp;gets</source>
         <translation>&amp;ვიჯეტები</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="888"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="891"/>
         <source>&amp;Forum</source>
         <translation>&amp;ფორუმი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="889"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="892"/>
         <source>Zulip &amp;Chat</source>
         <translation>Zulip &amp;ჩატი</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="890"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="893"/>
         <source>&amp;Release Information</source>
         <translation>&amp;გამოშვების ინფორმაცია</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="916"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="919"/>
         <source>On&amp;line</source>
         <translation>&amp;ონლაინ</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="938"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="941"/>
         <source>&amp;Donate</source>
         <translation>&amp;შეწირვა</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2426"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2431"/>
         <source>Please adjust scaling and positioning in print preview first.</source>
         <translation>გთხოვთ ჯერ შეცვალოთ მასშტაბი და პოზიცია ბეჭდვის წინასწარ ნახვაში.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="336"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="337"/>
         <source>Pen Palette</source>
         <translation>პენის პალიტრა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="357"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="359"/>
         <source>Layer Tree</source>
         <translation>ფენების ხე</translation>
     </message>
@@ -4364,18 +4412,17 @@ Please check its existence and permissions.</source>
 <context>
     <name>QG_ActionHandler</name>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="1273"/>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
-        <translation>escape</translation>
+        <translation type="vanished">escape</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="1262"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="1275"/>
         <source>Spacebar: restored snapping mode to normal</source>
         <translation>სივრცის კლავიშა: დაბრუნდა ჩვეულებრივი რეჟიმში</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="1263"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="1276"/>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
         <translation>სივრცის კლავიშა: დროებით შეიცვალა რეჟიმი და დაყენდა თავისუფალი რეჟიმში</translation>
     </message>
@@ -4662,7 +4709,7 @@ in a separate window</source>
 <context>
     <name>QG_CommandEdit</name>
     <message>
-        <location filename="../src/ui/qg_commandedit.cpp" line="289"/>
+        <location filename="../src/ui/qg_commandedit.cpp" line="303"/>
         <source>clear</source>
         <translation>clear</translation>
     </message>
@@ -4709,10 +4756,9 @@ in a separate window</source>
         <translation>ბრძანების ისტორია და გამომავალი</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_commandwidget.cpp" line="254"/>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
-        <translation>escape</translation>
+        <translation type="vanished">escape</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="132"/>
@@ -4721,22 +4767,22 @@ in a separate window</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="94"/>
-        <location filename="../src/ui/forms/qg_commandwidget.cpp" line="343"/>
+        <location filename="../src/ui/forms/qg_commandwidget.cpp" line="344"/>
         <source>Dock</source>
         <translation>Dock</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_commandwidget.cpp" line="343"/>
+        <location filename="../src/ui/forms/qg_commandwidget.cpp" line="344"/>
         <source>Float</source>
         <translation>მცურავი</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_commandwidget.cpp" line="344"/>
+        <location filename="../src/ui/forms/qg_commandwidget.cpp" line="345"/>
         <source>Command line</source>
         <translation>ბრძანებათა სტრიქონი</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_commandwidget.cpp" line="344"/>
+        <location filename="../src/ui/forms/qg_commandwidget.cpp" line="345"/>
         <source>Cmd</source>
         <translation>Cmd</translation>
     </message>
@@ -7320,44 +7366,36 @@ so default step value required for baking</source>
 <context>
     <name>QG_DlgOptionsVariables</name>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="17"/>
         <source>Drawing Variables</source>
-        <translation>ჩარჩოს ცვლადები</translation>
+        <translation type="vanished">ჩარჩოს ცვლადები</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="54"/>
         <source>Variable</source>
-        <translation>ცვლადი</translation>
+        <translation type="vanished">ცვლადი</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="59"/>
         <source>Code</source>
-        <translation>კოდი</translation>
+        <translation type="vanished">კოდი</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="64"/>
         <source>Value</source>
-        <translation>მნიშვნელობა</translation>
+        <translation type="vanished">მნიშვნელობა</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="96"/>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="vanished">&amp;OK</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="99"/>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="vanished">Alt+O</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="112"/>
         <source>Cancel</source>
-        <translation>გაუქმება</translation>
+        <translation type="vanished">გაუქმება</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="115"/>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="vanished">Esc</translation>
     </message>
 </context>
 <context>
@@ -8522,12 +8560,12 @@ so default step value required for baking</source>
 <context>
     <name>QG_GraphicView</name>
     <message>
-        <location filename="../src/ui/qg_graphicview.cpp" line="569"/>
+        <location filename="../src/ui/qg_graphicview.cpp" line="572"/>
         <source>Edit Properties</source>
         <translation>თვისებების ჩასწორება</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_graphicview.cpp" line="566"/>
+        <location filename="../src/ui/qg_graphicview.cpp" line="569"/>
         <source>Edit Block</source>
         <translation>ბლოკის რედაქტირება</translation>
     </message>
@@ -8676,27 +8714,27 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation>შრის თვისებების შეცვლა / სახელი</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="549"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="552"/>
         <source>Layer Menu</source>
         <translation>ფენის მენიუ</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="556"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="559"/>
         <source>&amp;Defreeze all Layers</source>
         <translation>ყველა შრის გათავისუფლება</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="558"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="561"/>
         <source>&amp;Freeze all Layers</source>
         <translation>ყველა შრის დაფიქსირება</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="579"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="582"/>
         <source>&amp;Add Layer</source>
         <translation>&amp;ფენის დამატება</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="575"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="578"/>
         <source>&amp;Remove Layer</source>
         <translation>&amp;ფენის წაშლა</translation>
     </message>
@@ -8706,22 +8744,22 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation>შესატყვისი სახელების მქონე შრის ძიება</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="581"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="584"/>
         <source>Edit Layer &amp;Attributes</source>
         <translation>შრის თვისებების რედაქტირება</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="567"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="570"/>
         <source>Toggle Layer &amp;Visibility</source>
         <translation>შრის ხილვადობის ჩართვა/გამორთვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="571"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="574"/>
         <source>Toggle Layer &amp;Printing</source>
         <translation>შრის დაბეჭდვის ჩართვა/გამორთვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="573"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="576"/>
         <source>Toggle &amp;Construction Layer</source>
         <translation>შენობის შრის ჩართვა/გამორთვა</translation>
     </message>
@@ -8746,27 +8784,27 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation>ფილტრი</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="560"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="563"/>
         <source>&amp;Unlock all Layers</source>
         <translation>ყველა შრის გახსნა</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="562"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="565"/>
         <source>&amp;Lock all Layers</source>
         <translation>ყველა შრის დაფიქსირება</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="569"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="572"/>
         <source>Toggle Layer Loc&amp;k</source>
         <translation>შრის ჩაკეტვის/გახსნის გადართვა</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="586"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="589"/>
         <source>&amp;Export Selected Layer(s)</source>
         <translation>&amp;მონიშნული ფენების გატანა</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="589"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="592"/>
         <source>Export &amp;Visible Layer(s)</source>
         <translation>&amp;ხილული ფენების გატანა</translation>
     </message>
@@ -8999,7 +9037,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QG_RecentFiles</name>
     <message>
-        <location filename="../src/ui/qg_recentfiles.cpp" line="180"/>
+        <location filename="../src/ui/qg_recentfiles.cpp" line="181"/>
         <source>&amp;%1 %2</source>
         <translation>ბოლო %1 ფაილი, %2.</translation>
     </message>
@@ -9173,7 +9211,7 @@ p, li { white-space: pre-wrap; }
         <translation>დააყენე შედარებითი ნულის პოზიცია</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="136"/>
+        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="138"/>
         <source>Lock relative zero position</source>
         <translation>დაფიქსირე შედარებითი ნულის პოზიცია</translation>
     </message>
@@ -9183,17 +9221,17 @@ p, li { white-space: pre-wrap; }
         <translation>ექსკლუზიური შეჭერის რეჟიმი</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="220"/>
+        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="224"/>
         <source>Relative zero position is %1</source>
         <translation>ნულიდან შეფარდებითი პოზიცია არის %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="220"/>
+        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="224"/>
         <source>locked</source>
         <translation>დაბლოკილია</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="220"/>
+        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="224"/>
         <source>unlocked</source>
         <translation>გაუქმებულია</translation>
     </message>
@@ -9342,15 +9380,15 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1794"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1938"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2099"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1809"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1953"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2110"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="215"/>
         <source>Warning</source>
         <translation>გაფთხილება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="1760"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="1762"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="310"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="322"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="384"/>
@@ -9397,13 +9435,13 @@ This action can NOT be undone.</source>
 ეს მოქმედება ვერ მოხსნა.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="1760"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="1762"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="385"/>
         <source>Layer &quot;0&quot; can never be removed.</source>
         <translation>შრეს &quot;0&quot; არ შეიძლება წაშლილი.</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="1808"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="1810"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="395"/>
         <source>Remove %n layer(s)</source>
         <translation>
@@ -9412,13 +9450,13 @@ This action can NOT be undone.</source>
         </translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="1809"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="1811"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="399"/>
         <source>Listed layers and all entities on them will be removed.</source>
         <translation>ჩამოთვლილი შრეები და მათზე არსებული ყველა ელემენტი წაიშლება.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="1810"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="1812"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="401"/>
         <source>Warning: this action can NOT be undone!</source>
         <translation>გაფრთხილება: ეს მოქმედება არ შეიძლება გაუქმდეს!</translation>
@@ -9429,7 +9467,7 @@ This action can NOT be undone.</source>
         <translation>გაფრთხილება: შრე &quot;0&quot; არ შეიძლება წაშლილი.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="1811"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="1813"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="410"/>
         <source>Layers for removal:</source>
         <translation>წასაშლელი შრეები:</translation>
@@ -9487,8 +9525,8 @@ Please specify a different value.</source>
 გთხოვთ, მიუთითოთ სხვა მნიშვნელობა.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="977"/>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="987"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="980"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="990"/>
         <source>Remove empty layers</source>
         <translation>ამოიღეთ ცარიელი ფენები</translation>
     </message>
@@ -9499,19 +9537,19 @@ Clear filtering mask and repeat.</source>
 გააუქეთ ფილტრის ნიღაბი და გაიმეოროთ.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="988"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="991"/>
         <source>No layers without entities found, nothing to remove.</source>
         <translation>არ მოიძებნა ობიექტების გარეშე ფენა(ები), არაფრის ამოღება არ არის.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="1129"/>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="1174"/>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="1182"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="1131"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="1176"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="1184"/>
         <source>Add Layer</source>
         <translation>დამატება ფენა</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="1130"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="1132"/>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
@@ -9519,7 +9557,7 @@ Please specify a different name.</source>
 [%1]. გთხოვთ, მიუთითოთ სხვა სახელი.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="1175"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="1177"/>
         <source>Such child layer already exist for 
 [%1].
 </source>
@@ -9527,18 +9565,18 @@ Please specify a different name.</source>
 [%1].</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="1183"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="1185"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
         <translation>განზომილებიანი ფენა შეიძლება დაემატოს მხოლოდ ჩვეულებრივ, აქტიურ ფენას.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="1246"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="1248"/>
         <source>Move Selection</source>
         <translation>სელექციის გადაადგილება</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="1253"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="1255"/>
         <source>Duplicate Selection</source>
         <translation>სელექციის დუბლირება</translation>
     </message>
@@ -9551,8 +9589,8 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
 თუ პასუხი არის &quot;არა&quot; - &quot;ფენის მიხედვით&quot; მნიშვნელობა დარჩება და, შესაბამისად, მიზნობრივი ფენის ფერი განსაზღვრავს ასეთ ობიექტების ფერს.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="1826"/>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="1877"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="1828"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="1879"/>
         <source>Layer DialogEx</source>
         <translation>ფენების დიალოგი</translation>
     </message>
@@ -9652,7 +9690,7 @@ Please specify a different value.</source>
         <translation type="vanished">კალმის მონაცემების შენახვა მითითებულ ფაილში ვერ მოხერხდა. გსურთ, მიუთითოთ სწორი გზა ფაილამდე?</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="978"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="981"/>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
 Clear filtering mask and repeat.</source>
@@ -9661,7 +9699,7 @@ Clear filtering mask and repeat.</source>
 გააუქმეთ ფილტრი და გაიმეოროთ.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="1270"/>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="1272"/>
         <source>Replace &quot;By Layer&quot; value to source layers values?
 
 If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
@@ -10002,52 +10040,52 @@ Do you want to replace it?</source>
         <translation>ძველი ნახაზების გაცვლითი %1</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="177"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="179"/>
         <source>Opened dwg file version %1.</source>
         <translation>გახსნილი dwg ფაილის ვერსია %1.</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4075"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4146"/>
         <source>unknown error opening dwg file</source>
         <translation>უცნობი შეცდომა dwg ფაილის გახსნისას</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4079"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4150"/>
         <source>can&apos;t open this dwg file</source>
         <translation>ვერ შევძლებთ ამ dwg ფაილის გახსნას</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4083"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4154"/>
         <source>unsupported dwg version</source>
         <translation>QObject: არ მხარია dwg-ის ვერსია</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4091"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4162"/>
         <source>error reading file header in dwg file</source>
         <translation>QObject: შეცდომა dwg-ის ფაილის სათაურის წაკითხვისას</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4095"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4166"/>
         <source>error reading header vars in dwg file</source>
         <translation>QObject: შეცდომა dwg-ის ფაილის სათაურის ცვლადების წაკითხვისას</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4099"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4170"/>
         <source>error reading classes in dwg file</source>
         <translation>QObject: შეცდომა dwg-ის ფაილის კლასების წაკითხვისას</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4103"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4174"/>
         <source>error reading offsets in dwg file</source>
         <translation>QObject: შეცდომა dwg-ის ფაილის ოფსეტების წაკითხვისას</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4107"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4178"/>
         <source>error reading tables in dwg file</source>
         <translation>QObject: შეცდომა dwg-ის ფაილის ცხრილების წაკითხვისას</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4115"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4186"/>
         <source>error reading entities in dwg file</source>
         <translation>QObject: შეცდომა dwg-ის ფაილის ობიექტების წაკითხვისას</translation>
     </message>
@@ -10062,7 +10100,7 @@ Do you want to replace it?</source>
         <translation>QObject: ფაილი დისკზე შეცვლილია. გთხოვთ, შეინახეთ სხვა ფაილად, რათა თავიდან აიცილოთ მონაცემების დაკარგვა! შეცვლილი ფაილი: %1</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_entitycontainer.cpp" line="1623"/>
+        <location filename="../src/lib/engine/rs_entitycontainer.cpp" line="1652"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
         <translation>QObject: შევსების ოპერაცია წარუმატებელია, რადგან (%2, %3)-სა და (%4, %5)-ს შორის არის უფსკრული=%1</translation>
     </message>
@@ -10072,12 +10110,12 @@ Do you want to replace it?</source>
         <translation>გაფრთხილება</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4111"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4182"/>
         <source>error reading blocks in dwg file</source>
         <translation>შეცდომა dwg ფაილში ბლოკების კითხვისას</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4119"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4190"/>
         <source>error reading objects in dwg file</source>
         <translation>შეცდომა dwg ფაილში ობიექტების კითხვისას</translation>
     </message>
@@ -10087,1116 +10125,1116 @@ Do you want to replace it?</source>
         <translation>ყველა გამოსახულების ფაილი (%1)</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="60"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="87"/>
         <source>: duplicated command: %1 is already taken by %2</source>
         <translation>: დუბლირებული ბრძანება: %1 უკვე გამოიყენა %2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="851"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="878"/>
         <source>point</source>
         <comment>draw point</comment>
         <translation>წერტილი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="852"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="879"/>
         <source>po</source>
         <comment>draw point</comment>
         <translation>po</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="155"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="182"/>
         <source>line</source>
         <comment>draw line</comment>
         <translation>line</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="154"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="181"/>
         <source>li</source>
         <comment>draw line</comment>
         <translation>li</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="156"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="183"/>
         <source>l</source>
         <comment>draw line</comment>
         <translation>l</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="520"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="547"/>
         <source>polyline</source>
         <comment>draw polyline</comment>
         <translation>პოლიხაზი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="521"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="548"/>
         <source>pl</source>
         <comment>draw polyline</comment>
         <translation>pl</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="478"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="505"/>
         <source>free</source>
         <comment>draw freehand line</comment>
         <translation>free</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="480"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="507"/>
         <source>fhl</source>
         <comment>draw freehand line</comment>
         <translation>fhl</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="446"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="473"/>
         <source>spline</source>
         <comment>draw spline</comment>
         <translation>სპლაინი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="448"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="475"/>
         <source>spl</source>
         <comment>draw spline</comment>
         <translation>spl</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="453"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="480"/>
         <source>spline2</source>
         <comment>spline through points</comment>
         <translation>სპლაინი2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="455"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="482"/>
         <source>stp</source>
         <comment>spline through points</comment>
         <translation>stp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="295"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="322"/>
         <source>ptp</source>
         <comment>parallel through point</comment>
         <translation>ptp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="302"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="329"/>
         <source>bisect</source>
         <comment>angle bisector</comment>
         <translation>bisect</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="301"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="328"/>
         <source>bi</source>
         <comment>angle bisector</comment>
         <translation>bi</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="309"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="336"/>
         <source>tanpc</source>
         <comment>tangent point and circle</comment>
         <translation>tanpc</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="328"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="355"/>
         <source>ortho</source>
         <comment>perpendicular line</comment>
         <translation>ორთო</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="202"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="229"/>
         <source>rect</source>
         <comment>draw rectangle</comment>
         <translation>rect</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="354"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="381"/>
         <source>polygon2v</source>
         <comment>polygon by 2 vertices</comment>
         <translation>polygon2v</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="356"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="383"/>
         <source>poly2</source>
         <comment>polygon by 2 vertices</comment>
         <translation>პოლი2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="363"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="390"/>
         <source>circle</source>
         <comment>draw circle</comment>
         <translation>წრე</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="364"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="391"/>
         <source>ci</source>
         <comment>draw circle</comment>
         <translation>ci</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="371"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="398"/>
         <source>c2</source>
         <comment>circle 2 points</comment>
         <translation>ც2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="384"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="411"/>
         <source>c3</source>
         <comment>circle 3 points</comment>
         <translation>ც3</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="420"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="447"/>
         <source>tan3</source>
         <comment>circle tangent to 3</comment>
         <translation>ტან3</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="419"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="446"/>
         <source>ct3</source>
         <comment>circle tangent to 3</comment>
         <translation>ცტ3</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="511"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="538"/>
         <source>ellipseinscribed</source>
         <comment>inscribed ellipse</comment>
         <translation>ელიფსში ჩახაზული</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="512"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="539"/>
         <source>ei</source>
         <comment>inscribed ellipse</comment>
         <translation>ei</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="513"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="540"/>
         <source>ie</source>
         <comment>inscribed ellipse</comment>
         <translation>ie</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="845"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="872"/>
         <source>hatch</source>
         <comment>draw hatch</comment>
         <translation>ხაზები</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="846"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="873"/>
         <source>ha</source>
         <comment>draw hatch</comment>
         <translation>ha</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="831"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="858"/>
         <source>mtext</source>
         <comment>draw mtext</comment>
         <translation>მულტიტექსტი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="833"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="860"/>
         <source>mtxt</source>
         <comment>draw mtext</comment>
         <translation>mtxt</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="838"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="865"/>
         <source>text</source>
         <comment>draw text</comment>
         <translation>text</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="840"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="867"/>
         <source>txt</source>
         <comment>draw text</comment>
         <translation>txt</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="991"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1018"/>
         <source>regen</source>
         <comment>zoom - redraw</comment>
         <translation>გაახლედ</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="992"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1019"/>
         <source>redraw</source>
         <comment>zoom - redraw</comment>
         <translation>გადახატვა</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="993"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1020"/>
         <source>rg</source>
         <comment>zoom - redraw</comment>
         <translation>rg</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="994"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1021"/>
         <source>zr</source>
         <comment>zoom - redraw</comment>
         <translation>zr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1011"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1038"/>
         <source>zoomwindow</source>
         <comment>zoom - window</comment>
         <translation>ფანჯრის მასშტაბი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1012"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1039"/>
         <source>zw</source>
         <comment>zoom - window</comment>
         <translation>zw</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="999"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1026"/>
         <source>zoomauto</source>
         <comment>zoom - auto</comment>
         <translation>ავტომატური მასშტაბი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1000"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1027"/>
         <source>za</source>
         <comment>zoom - auto</comment>
         <translation>za</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1017"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1044"/>
         <source>zoompan</source>
         <comment>zoom - pan</comment>
         <translation>მზიდი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1018"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1045"/>
         <source>zp</source>
         <comment>zoom - pan</comment>
         <translation>zp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1005"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1032"/>
         <source>zoomprevious</source>
         <comment>zoom - previous</comment>
         <translation>წინასწარი მასშტაბი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1006"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1033"/>
         <source>zv</source>
         <comment>zoom - previous</comment>
         <translation>zv</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="960"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="987"/>
         <source>kill</source>
         <comment>kill all actions</comment>
         <translation>kill</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="962"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="989"/>
         <source>k</source>
         <comment>kill all actions</comment>
         <translation>k</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="967"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="994"/>
         <source>undo</source>
         <comment>undo cycle</comment>
         <translation>undo</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="969"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="996"/>
         <source>u</source>
         <comment>undo cycle</comment>
         <translation>u</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="974"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1001"/>
         <source>redo</source>
         <comment>redo cycle</comment>
         <translation>redo</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="976"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1003"/>
         <source>r</source>
         <comment>redo cycle</comment>
         <translation>r</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="611"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="638"/>
         <source>dimaligned</source>
         <comment>dimension - aligned</comment>
         <translation>ზომით გასწორება</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="623"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="650"/>
         <source>dimhorizontal</source>
         <comment>dimension - horizontal</comment>
         <translation>ზომით ჰორიზონტალურად</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="624"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="651"/>
         <source>dh</source>
         <comment>dimension - horizontal</comment>
         <translation>dh</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="629"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="656"/>
         <source>dimvertical</source>
         <comment>dimension - vertical</comment>
         <translation>ვერტიკალური ზომა</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="630"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="657"/>
         <source>dv</source>
         <comment>dimension - vertical</comment>
         <translation>dv</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="617"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="644"/>
         <source>dimlinear</source>
         <comment>dimension - linear</comment>
         <translation>ხაზოვანი ზომა</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="618"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="645"/>
         <source>dl</source>
         <comment>dimension - linear</comment>
         <translation>dl</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="649"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="676"/>
         <source>dimangular</source>
         <comment>dimension - angular</comment>
         <translation>კუთხოვანი ზომა</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="651"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="678"/>
         <source>dan</source>
         <comment>dimension - angular</comment>
         <translation>dan</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="636"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="663"/>
         <source>dimradial</source>
         <comment>dimension - radial</comment>
         <translation>რადიალური ზომა</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="644"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="671"/>
         <source>dimdiametric</source>
         <comment>dimension - diametric</comment>
         <translation>დიამეტრული ზომა</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="642"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="669"/>
         <source>dimdiameter</source>
         <comment>dimension - diametric</comment>
         <translation>დიამეტრი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="643"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="670"/>
         <source>dd</source>
         <comment>dimension - diametric</comment>
         <translation>dd</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="656"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="683"/>
         <source>dimleader</source>
         <comment>dimension - leader</comment>
         <translation>ზომის ხაზი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="657"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="684"/>
         <source>ld</source>
         <comment>dimension - leader</comment>
         <translation>ld</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="662"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="689"/>
         <source>dimregen</source>
         <comment>dimension - regenerate</comment>
         <translation>ზომის განახლება</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="933"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="960"/>
         <source>restrictnothing</source>
         <comment>restrict - nothing</comment>
         <translation>შეზღუდვა არანაირი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="934"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="961"/>
         <source>rn</source>
         <comment>restrict - nothing</comment>
         <translation>rn</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="939"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="966"/>
         <source>restrictorthogonal</source>
         <comment>restrict - orthogonal</comment>
         <translation>შეზღუდვა ორთოგონალური</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="940"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="967"/>
         <source>rr</source>
         <comment>restrict - orthogonal</comment>
         <translation>rr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="945"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="972"/>
         <source>restricthorizontal</source>
         <comment>restrict - horizontal</comment>
         <translation>შეზღუდვა ჰორიზონტალური</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="946"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="973"/>
         <source>rh</source>
         <comment>restrict - horizontal</comment>
         <translation>rh</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="951"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="978"/>
         <source>restrictvertical</source>
         <comment>restrict - vertical</comment>
         <translation>შეზღუდვა ვერტიკალური</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="952"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="979"/>
         <source>rv</source>
         <comment>restrict - vertical</comment>
         <translation>rv</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="671"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="698"/>
         <source>mv</source>
         <comment>modify - move (copy)</comment>
         <translation>mv</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="740"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="767"/>
         <source>bev</source>
         <comment>modify - bevel</comment>
         <translation>bev</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="741"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="768"/>
         <source>ch</source>
         <comment>modify - bevel</comment>
         <translation>ch</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="747"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="774"/>
         <source>fi</source>
         <comment>modify - fillet</comment>
         <translation>fi</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="753"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="780"/>
         <source>cut</source>
         <comment>modify - divide (cut)</comment>
         <translation>cut</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="754"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="781"/>
         <source>div</source>
         <comment>modify - divide (cut)</comment>
         <translation>div</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="689"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="716"/>
         <source>mi</source>
         <comment>modify -  mirror</comment>
         <translation>mi</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="708"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="735"/>
         <source>rev</source>
         <comment>modify -  revert direction</comment>
         <translation>rev</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="677"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="704"/>
         <source>ro</source>
         <comment>modify - rotate</comment>
         <translation>ro</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="683"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="710"/>
         <source>sz</source>
         <comment>modify - scale</comment>
         <translation>sz</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="714"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="741"/>
         <source>tm</source>
         <comment>modify - trim (extend)</comment>
         <translation>tm</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="721"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="748"/>
         <source>tm2</source>
         <comment>modify - multi trim (extend)</comment>
         <translation>თმ2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="727"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="754"/>
         <source>le</source>
         <comment>modify - lengthen</comment>
         <translation>le</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="761"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="788"/>
         <source>ss</source>
         <comment>modify - stretch</comment>
         <translation>ss</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="793"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="820"/>
         <source>er</source>
         <comment>modify - delete (erase)</comment>
         <translation>er</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="794"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="821"/>
         <source>del</source>
         <comment>modify - delete (erase)</comment>
         <translation>del</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="787"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="814"/>
         <source>xp</source>
         <comment>explode block/polyline into entities</comment>
         <translation>xp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="866"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="893"/>
         <source>snapfree</source>
         <comment>snap - free</comment>
         <translation>თავისუფალი შეკავშირება</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="868"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="895"/>
         <source>os</source>
         <comment>snap - free</comment>
         <translation>os</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="873"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="900"/>
         <source>snapcenter</source>
         <comment>snap - center</comment>
         <translation>შეკავშირება ცენტრში</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="874"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="901"/>
         <source>sc</source>
         <comment>snap - center</comment>
         <translation>sc</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="879"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="906"/>
         <source>snapdist</source>
         <comment>snap - distance to endpoints</comment>
         <translation>შეკავშირების მანძილი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="880"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="907"/>
         <source>sd</source>
         <comment>snap - distance to endpoints</comment>
         <translation>sd</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="885"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="912"/>
         <source>snapend</source>
         <comment>snap - end points</comment>
         <translation>შეკავშირების ბოლო</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="886"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="913"/>
         <source>se</source>
         <comment>snap - end points</comment>
         <translation>se</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="891"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="918"/>
         <source>snapgrid</source>
         <comment>snap - grid</comment>
         <translation>შეკავშირება გრაგნილზე</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="892"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="919"/>
         <source>sg</source>
         <comment>snap - grid</comment>
         <translation>sg</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="897"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="924"/>
         <source>snapintersection</source>
         <comment>snap - intersection</comment>
         <translation>შეკავშირება გადაკვეთის წერტილზე</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="898"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="925"/>
         <source>si</source>
         <comment>snap - intersection</comment>
         <translation>si</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="903"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="930"/>
         <source>snapmiddle</source>
         <comment>snap - middle points</comment>
         <translation>შეკავშირება შუაში</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="904"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="931"/>
         <source>sm</source>
         <comment>snap - middle points</comment>
         <translation>sm</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="909"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="936"/>
         <source>snaponentity</source>
         <comment>snap - on entity</comment>
         <translation>ობიექტზე მიმაგრება</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="910"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="937"/>
         <source>sn</source>
         <comment>snap - on entity</comment>
         <translation>sn</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="911"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="938"/>
         <source>np</source>
         <comment>snap - on entity</comment>
         <translation>np</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="927"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="954"/>
         <source>setrelativezero</source>
         <comment>set relative zero position</comment>
         <translation>შედარებითი ნულის დაყენება</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="928"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="955"/>
         <source>rz</source>
         <comment>set relative zero position</comment>
         <translation>rz</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="589"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="616"/>
         <source>selectall</source>
         <comment>Select all entities</comment>
         <translation>ყველაფრის არჩევა</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="590"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="617"/>
         <source>sa</source>
         <comment>Select all entities</comment>
         <translation>sa</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="595"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="622"/>
         <source>deselectall</source>
         <comment>deselect all entities</comment>
         <translation>ყველაფრის არჩევის გაუქმება</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="597"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="624"/>
         <source>tn</source>
         <comment>deselect all entities</comment>
         <translation>tn</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="774"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="801"/>
         <source>attr</source>
         <comment>modify attribute</comment>
         <translation>attr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="775"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="802"/>
         <source>ma</source>
         <comment>modify attribute</comment>
         <translation>ma</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="767"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="794"/>
         <source>prop</source>
         <comment>modify properties</comment>
         <translation>prop</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="803"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="830"/>
         <source>dist</source>
         <comment>distance point to point</comment>
         <translation>dist</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="804"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="831"/>
         <source>dpp</source>
         <comment>distance point to point</comment>
         <translation>dpp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="818"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="845"/>
         <source>ang</source>
         <comment>measure angle</comment>
         <translation>ang</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1063"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="1156"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1096"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1189"/>
         <source>angle</source>
         <translation>კუთხე</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1064"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1097"/>
         <source>dpi</source>
         <translation>dpi</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1065"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="1168"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1098"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1201"/>
         <source>close</source>
         <translation>დახურვა</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1066"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="1164"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1099"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1197"/>
         <source>chord length</source>
         <translation>ხმის სიგრძე</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1067"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="1171"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1100"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1204"/>
         <source>columns</source>
         <translation>სვეტები</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1068"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1101"/>
         <source>columnspacing</source>
         <translation>სვეტის მანძილი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1070"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="1179"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1103"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1212"/>
         <source>factor</source>
         <translation>ფაქტორი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1071"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1104"/>
         <source>length</source>
         <translation>ხანგრძლივობა</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1074"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1107"/>
         <source>number</source>
         <translation>ნომერი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1075"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="1206"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1108"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1239"/>
         <source>radius</source>
         <translation>რადიუსი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1076"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1109"/>
         <source>rows</source>
         <translation>rows</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1077"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1110"/>
         <source>rowspacing</source>
         <translation>ხაზის მანძილი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1078"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="1221"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1111"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1254"/>
         <source>through</source>
         <translation>სადამდე</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1079"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1112"/>
         <source>trim</source>
         <translation>trim</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1157"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1190"/>
         <source>ang</source>
         <comment>angle</comment>
         <translation>ang</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1158"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1191"/>
         <source>an</source>
         <comment>angle</comment>
         <translation>an</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1160"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1193"/>
         <source>center</source>
         <translation>ცენტრი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1161"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1194"/>
         <source>cen</source>
         <comment>center</comment>
         <translation>cen</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1162"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1195"/>
         <source>ce</source>
         <comment>center</comment>
         <translation>ce</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1166"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1199"/>
         <source>cl</source>
         <comment>chord length</comment>
         <translation>cl</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1169"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1202"/>
         <source>c</source>
         <comment>close</comment>
         <translation>c</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1172"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1205"/>
         <source>cols</source>
         <comment>columns</comment>
         <translation>cols</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1173"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1206"/>
         <source>co</source>
         <comment>columns</comment>
         <translation>co</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1175"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1208"/>
         <source>columnspacing</source>
         <comment>columnspacing for inserts</comment>
         <translation>სვეტებს შორის მანძილი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1176"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1209"/>
         <source>colspacing</source>
         <comment>columnspacing for inserts</comment>
         <translation>სვეტებს შორის მანძილი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1177"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1210"/>
         <source>cs</source>
         <comment>columnspacing for inserts</comment>
         <translation>cs</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1180"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1213"/>
         <source>fact</source>
         <comment>factor</comment>
         <translation>fact</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1181"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1214"/>
         <source>f</source>
         <comment>factor</comment>
         <translation>f</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1187"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1220"/>
         <source>help</source>
         <translation>help</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1188"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1221"/>
         <source>?</source>
         <comment>help</comment>
         <translation>?</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1190"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1223"/>
         <source>length</source>
         <comment>length</comment>
         <translation>ხანგრძლივობა</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1191"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1224"/>
         <source>len</source>
         <comment>length</comment>
         <translation>len</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1192"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1225"/>
         <source>l</source>
         <comment>length</comment>
         <translation>l</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1194"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1227"/>
         <source>length1</source>
         <comment>length1</comment>
         <translation>სიგრძე1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1195"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1228"/>
         <source>len1</source>
         <comment>length1</comment>
         <translation>სგრ1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1196"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1229"/>
         <source>l1</source>
         <comment>length1</comment>
         <translation>ს1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1198"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1231"/>
         <source>length2</source>
         <comment>length2</comment>
         <translation>სიგრძე2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1199"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1232"/>
         <source>len2</source>
         <comment>length2</comment>
         <translation>სგრ2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1200"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1233"/>
         <source>l2</source>
         <comment>length2</comment>
         <translation>ს2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1202"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1235"/>
         <source>number</source>
         <comment>number</comment>
         <translation>ნომერი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1203"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1236"/>
         <source>num</source>
         <comment>number</comment>
         <translation>num</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1204"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1237"/>
         <source>n</source>
         <comment>number</comment>
         <translation>n</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1207"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1240"/>
         <source>ra</source>
         <comment>radius</comment>
         <translation>ra</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1209"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1242"/>
         <source>reversed</source>
         <comment>reversed</comment>
         <translation>შებრუნებული</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1210"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="1211"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1243"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1244"/>
         <source>rev</source>
         <comment>reversed</comment>
         <translation>rev</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1213"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1246"/>
         <source>row</source>
         <comment>row</comment>
         <translation>row</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1215"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1248"/>
         <source>rowspacing</source>
         <comment>rowspacing for inserts</comment>
         <translation>ხაზებს შორის მანძილი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1216"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1249"/>
         <source>rs</source>
         <comment>rowspacing for inserts</comment>
         <translation>rs</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1218"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1251"/>
         <source>text</source>
         <translation>text</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1219"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1252"/>
         <source>t</source>
         <comment>text</comment>
         <translation>t</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1222"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1255"/>
         <source>t</source>
         <comment>through</comment>
         <translation>t</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1224"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1257"/>
         <source>undo</source>
         <translation>undo</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1225"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1258"/>
         <source>u</source>
         <comment>undo</comment>
         <translation>u</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1227"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1260"/>
         <source>redo</source>
         <translation>redo</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1228"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1261"/>
         <source>r</source>
         <comment>redo</comment>
         <translation>r</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1230"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1263"/>
         <source>back</source>
         <translation>back</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1231"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1264"/>
         <source>b</source>
         <comment>back</comment>
         <translation>b</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1236"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1269"/>
         <source>paperoffset</source>
         <translation>ქაღალდის შეხსვა</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1237"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1270"/>
         <source>graphoffset</source>
         <translation>გრაფიკის გადახრა</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1356"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1392"/>
         <source>Command: %1 (%2)</source>
         <translation>ბრძანება: %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1363"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1399"/>
         <source>RS_Commands:: command not found: %1</source>
         <translation>RS_Commands:: ბრძანება არ მოიძებნა: %1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1417"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1453"/>
         <source>Command not found: %1</source>
         <translation>ბრძანება ვერ ვიპოვე: %1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1403"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1439"/>
         <source>Accepted keycode: %1</source>
         <translation>მიღებული კლავიშის კოდი: %1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1456"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1503"/>
         <source>Available commands:</source>
         <translation>ხელმისაწვდომი ბრძანებები:</translation>
     </message>
@@ -11217,44 +11255,44 @@ Do you want to replace it?</source>
         <translation>None</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4087"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4158"/>
         <source>error reading file metadata in dwg file</source>
         <translation>შეცდომა dwg ფაილის მეტა-მონაცემების კითხვისას</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_commandedit.cpp" line="198"/>
+        <location filename="../src/ui/qg_commandedit.cpp" line="216"/>
         <source>Calculator error for input: </source>
         <translation>კალკულატორის შეცდომა:</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1233"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1266"/>
         <source>bw</source>
         <translation>bw</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1234"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1267"/>
         <source>blackwhite</source>
         <translation>შავი-თეთრი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1235"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1268"/>
         <source>color</source>
         <translation>ფერი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="755"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="782"/>
         <source>di</source>
         <comment>modify - divide (cut)</comment>
         <translation>di</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="720"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="747"/>
         <source>t2</source>
         <comment>modify - multi trim (extend)</comment>
         <translation>t2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="768"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="795"/>
         <source>mp</source>
         <comment>modify properties</comment>
         <translation>mp</translation>
@@ -11362,7 +11400,7 @@ Do you want to replace it?</source>
         <translation>ვიჯეტები</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="495"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="498"/>
         <source>Creators</source>
         <translation>შემქმნელები</translation>
     </message>
@@ -11374,12 +11412,12 @@ Do you want to replace it?</source>
         <translation>All</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1968"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1983"/>
         <source>Invalid objects removed:</source>
         <translation>არასწორი ობიექტები ამოღებულია:</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="148"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="149"/>
         <source>Pen Wizard</source>
         <translation>ხატვის ასისტენტი</translation>
     </message>
@@ -11399,28 +11437,27 @@ Do you want to replace it?</source>
         <translation>წაშლა</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_commandedit.cpp" line="120"/>
+        <location filename="../src/ui/qg_commandedit.cpp" line="138"/>
         <source>You must input a distance first.</source>
         <translation>მომხსენებელი, ჯერ ჩაწერეთ მანძილი.</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_commandedit.cpp" line="297"/>
         <source>cal</source>
-        <translation>cal</translation>
+        <translation type="vanished">cal</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_commandedit.cpp" line="301"/>
+        <location filename="../src/ui/qg_commandedit.cpp" line="315"/>
         <source>Calculator mode: On</source>
         <translation>კალკულატორის რეჟიმი: ჩართულია</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_commandedit.cpp" line="303"/>
+        <location filename="../src/ui/qg_commandedit.cpp" line="317"/>
         <source>Calculator mode: Off</source>
         <translation>კალკულატორის რეჟიმი: გამორთულია</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3825"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="934"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3836"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="937"/>
         <source>License</source>
         <translation>ლიცენზია</translation>
     </message>
@@ -11430,853 +11467,853 @@ Do you want to replace it?</source>
         <translation>%1 ფენა არ მოიძებნა</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="153"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="180"/>
         <source>line2p</source>
         <comment>draw line</comment>
         <translation>line2p</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="182"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="209"/>
         <source>lineang</source>
         <comment>angled line</comment>
         <translation>lineang</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="183"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="210"/>
         <source>la</source>
         <comment>angled line</comment>
         <translation>la</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="188"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="215"/>
         <source>linehor</source>
         <comment>horizontal line</comment>
         <translation>linehor</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="189"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="216"/>
         <source>lh</source>
         <comment>horizontal line</comment>
         <translation>lh</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="194"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="221"/>
         <source>linever</source>
         <comment>vertical line</comment>
         <translation>linever</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="195"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="222"/>
         <source>lv</source>
         <comment>vertical line</comment>
         <translation>lv</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="200"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="227"/>
         <source>linerec</source>
         <comment>draw rectangle</comment>
         <translation>linerec</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="201"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="228"/>
         <source>re</source>
         <comment>draw rectangle</comment>
         <translation>re</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="285"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="312"/>
         <source>linepar</source>
         <comment>create parallel</comment>
         <translation>linepar</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="286"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="313"/>
         <source>lineoff</source>
         <comment>create parallel</comment>
         <translation>lineoff</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="287"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="314"/>
         <source>pa</source>
         <comment>create parallel</comment>
         <translation>pa</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="288"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="315"/>
         <source>ll</source>
         <comment>create parallel</comment>
         <translation>ll</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="293"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="320"/>
         <source>lineparthro</source>
         <comment>parallel through point</comment>
         <translation>ხაზის ნაწილის სიგრძე</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="294"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="321"/>
         <source>lp</source>
         <comment>parallel through point</comment>
         <translation>lp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="300"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="327"/>
         <source>linebisect</source>
         <comment>angle bisector</comment>
         <translation>ხაზის ორმაგად გაყოფა</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="307"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="334"/>
         <source>linetancp</source>
         <comment>tangent point and circle</comment>
         <translation>ხაზის მხედრული კუთხის ტანგენსი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="308"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="335"/>
         <source>lt</source>
         <comment>tangent point and circle</comment>
         <translation>lt</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="314"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="341"/>
         <source>linetan2c</source>
         <comment>tangent two circles</comment>
         <translation>ხაზის მხედრული კუთხის ტანგენსი 2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="315"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="342"/>
         <source>lc</source>
         <comment>tangent two circles</comment>
         <translation>lc</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="320"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="347"/>
         <source>linetancper</source>
         <comment>tangent line and circle</comment>
         <translation>ხაზის მხედრული კუთხის პერიმეტრის ტანგენსი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="321"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="348"/>
         <source>or</source>
         <comment>tangent line and circle</comment>
         <translation>or</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="326"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="353"/>
         <source>lineperp</source>
         <comment>perpendicular line</comment>
         <translation>ხაზის პერპენდიკულარული</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="327"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="354"/>
         <source>lo</source>
         <comment>perpendicular line</comment>
         <translation>lo</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="333"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="360"/>
         <source>linerelang</source>
         <comment>relative line</comment>
         <translation>ხაზოვანი რეგიონი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="334"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="361"/>
         <source>lr</source>
         <comment>relative line</comment>
         <translation>lr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="339"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="366"/>
         <source>polygoncencor</source>
         <comment>polygon centre point</comment>
         <translation>მრავალკუთხედის ცენტრი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="340"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="367"/>
         <source>pp</source>
         <comment>polygon centre point</comment>
         <translation>pp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="341"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="368"/>
         <source>polycp</source>
         <comment>polygon centre point</comment>
         <translation>მრავალკუთხედის ცენტრი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="342"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="369"/>
         <source>pcp</source>
         <comment>polygon centre point</comment>
         <translation>pcp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="347"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="374"/>
         <source>polygoncentan</source>
         <comment>polygon centre vertex</comment>
         <translation>მრავალკუთხედის ცენტრი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="348"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="375"/>
         <source>pv</source>
         <comment>polygon centre vertex</comment>
         <translation>pv</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="349"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="376"/>
         <source>polyct</source>
         <comment>polygon centre vertex</comment>
         <translation>მრავალკუთხედის ტიპი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="355"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="382"/>
         <source>p2</source>
         <comment>polygon by 2 vertices</comment>
         <translation>p2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="365"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="392"/>
         <source>c</source>
         <comment>draw circle</comment>
         <translation>c</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="370"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="397"/>
         <source>circle2p</source>
         <comment>circle 2 points</comment>
         <translation>წრე 2 წერტილი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="372"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="399"/>
         <source>c2p</source>
         <comment>circle 2 points</comment>
         <translation>წ2წ</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="377"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="404"/>
         <source>circle2pr</source>
         <comment>circle 2 points radius</comment>
         <translation>წრე 2 წერტილი, რადიუსი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="378"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="405"/>
         <source>cc</source>
         <comment>circle 2 points radius</comment>
         <translation>cc</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="383"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="410"/>
         <source>circle3p</source>
         <comment>circle 3 points</comment>
         <translation>წრე 3 წერტილი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="385"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="412"/>
         <source>c3p</source>
         <comment>circle 3 points</comment>
         <translation>წ3წ</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="390"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="417"/>
         <source>circlecr</source>
         <comment>circle point radius</comment>
         <translation>წრე, ცენტრი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="391"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="418"/>
         <source>cr</source>
         <comment>circle point radius</comment>
         <translation>cr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="392"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="419"/>
         <source>ccr</source>
         <comment>circle point radius</comment>
         <translation>ccr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="398"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="425"/>
         <source>circletan2cp</source>
         <comment>circle 2 tangent point</comment>
         <translation>წრე, არკტანგენსი, 2 წერტილი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="399"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="426"/>
         <source>tr</source>
         <comment>circle 2 tangent point</comment>
         <translation>tr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="404"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="431"/>
         <source>circletan2p</source>
         <comment>circle tangent 2 points</comment>
         <translation>წრე, არკტანგენსი, 2 წერტილი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="405"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="432"/>
         <source>td</source>
         <comment>circle tangent 2 points</comment>
         <translation>td</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="410"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="437"/>
         <source>circletan2cr</source>
         <comment>circle 2 tangent radius</comment>
         <translation>წრეზე ორი წერტილის კუთხე</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="411"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="438"/>
         <source>tc</source>
         <comment>circle 2 tangent radius</comment>
         <translation>tc</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="417"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="444"/>
         <source>circletan3</source>
         <comment>circle tangent to 3</comment>
         <translation>წრეზე სამი წერტილის კუთხე</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="418"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="445"/>
         <source>t3</source>
         <comment>circle tangent to 3</comment>
         <translation>t3</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="427"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="454"/>
         <source>arc</source>
         <comment>arc point radius</comment>
         <translation>arc</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="428"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="455"/>
         <source>ar</source>
         <comment>arc point radius</comment>
         <translation>ar</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="429"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="456"/>
         <source>a</source>
         <comment>arc point radius</comment>
         <translation>a</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="434"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="461"/>
         <source>arc3p</source>
         <comment>draw 3pt arc</comment>
         <translation>arc3p</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="435"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="462"/>
         <source>a3</source>
         <comment>draw 3pt arc</comment>
         <translation>a3</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="440"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="467"/>
         <source>arctan</source>
         <comment>arc tangent</comment>
         <translation>arctan</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="441"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="468"/>
         <source>at</source>
         <comment>arc tangent</comment>
         <translation>at</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="447"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="474"/>
         <source>sf</source>
         <comment>draw spline</comment>
         <translation>sf</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="454"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="481"/>
         <source>sp</source>
         <comment>spline through points</comment>
         <translation>sp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="460"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="487"/>
         <source>arcellc2ax</source>
         <comment>arc ellipse</comment>
         <translation>arcellc2ax</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="461"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="488"/>
         <source>ae</source>
         <comment>arc ellipse</comment>
         <translation>ae</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="479"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="506"/>
         <source>fh</source>
         <comment>draw freehand line</comment>
         <translation>fh</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="487"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="514"/>
         <source>ellipsec2p</source>
         <comment>ellipse axis</comment>
         <translation>ელიფსე2პ</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="488"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="515"/>
         <source>ea</source>
         <comment>ellipse axis</comment>
         <translation>ea</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="493"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="520"/>
         <source>ellipse3p</source>
         <comment>ellipse foci</comment>
         <translation>ელიფსე3პ</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="494"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="521"/>
         <source>ef</source>
         <comment>ellipse foci</comment>
         <translation>ef</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="499"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="526"/>
         <source>ellipse4p</source>
         <comment>ellipse 4 point</comment>
         <translation>ელიფსე4პ</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="500"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="527"/>
         <source>e4</source>
         <comment>ellipse 4 point</comment>
         <translation>e4</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="505"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="532"/>
         <source>ellipsec3p</source>
         <comment>ellipse center 3 point</comment>
         <translation>ელეფსე3პ</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="506"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="533"/>
         <source>e3</source>
         <comment>ellipse center 3 point</comment>
         <translation>ე3</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="545"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="572"/>
         <source>plineadd</source>
         <comment>pl add node</comment>
         <translation>ხაზის დამატება</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="546"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="573"/>
         <source>pi</source>
         <comment>pl add node</comment>
         <translation>pi</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="551"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="578"/>
         <source>plineapp</source>
         <comment>pl append node</comment>
         <translation>ხაზის დამატება</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="552"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="579"/>
         <source>pn</source>
         <comment>pl append node</comment>
         <translation>pn</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="557"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="584"/>
         <source>plinedel</source>
         <comment>pl delete node</comment>
         <translation>ხაზის წაშლა</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="558"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="585"/>
         <source>pd</source>
         <comment>pl delete node</comment>
         <translation>pd</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="563"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="590"/>
         <source>plinedeltwn</source>
         <comment>pl del between nodes</comment>
         <translation>ხაზის წაშლა</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="564"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="591"/>
         <source>pr</source>
         <comment>pl del between nodes</comment>
         <translation>pr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="569"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="596"/>
         <source>plinetrm</source>
         <comment>pl trim segments</comment>
         <translation>ხაზის წაშლა</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="570"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="597"/>
         <source>pt</source>
         <comment>pl trim segments</comment>
         <translation>pt</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="575"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="602"/>
         <source>plinepar</source>
         <comment>pl equidistant</comment>
         <translation>ხაზის პარამეტრები</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="576"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="603"/>
         <source>pe</source>
         <comment>pl equidistant</comment>
         <translation>pe</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="581"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="608"/>
         <source>plinejoin</source>
         <comment>pl join</comment>
         <translation>plinejoin</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="582"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="609"/>
         <source>pj</source>
         <comment>pl join</comment>
         <translation>pj</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="596"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="623"/>
         <source>sx</source>
         <comment>deselect all entities</comment>
         <translation>sx</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="602"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="629"/>
         <source>invertselect</source>
         <comment>invert select</comment>
         <translation>invertselect</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="603"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="630"/>
         <source>is</source>
         <comment>invert select</comment>
         <translation>is</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="612"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="639"/>
         <source>ds</source>
         <comment>dimension - aligned</comment>
         <translation>ds</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="635"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="662"/>
         <source>dimradius</source>
         <comment>dimension - radial</comment>
         <translation>dimradius</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="637"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="664"/>
         <source>dr</source>
         <comment>dimension - radial</comment>
         <translation>dr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="650"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="677"/>
         <source>da</source>
         <comment>dimension - angular</comment>
         <translation>da</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="663"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="690"/>
         <source>dg</source>
         <comment>dimension - regenerate</comment>
         <translation>dg</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="670"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="697"/>
         <source>modmove</source>
         <comment>modify - move (copy)</comment>
         <translation>modmove</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="676"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="703"/>
         <source>modrotate</source>
         <comment>modify - rotate</comment>
         <translation>modrotate</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="682"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="709"/>
         <source>modscale</source>
         <comment>modify - scale</comment>
         <translation>მასშტაბის შეცვლა</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="688"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="715"/>
         <source>modmirror</source>
         <comment>modify -  mirror</comment>
         <translation>სარკისებრად გადაქცევა</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="694"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="721"/>
         <source>modmovrot</source>
         <comment>modify - move rotate</comment>
         <translation>გადაადგილება/როტაცია</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="695"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="722"/>
         <source>mr</source>
         <comment>modify - move rotate</comment>
         <translation>mr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="700"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="727"/>
         <source>mod2rot</source>
         <comment>modify - rotate2</comment>
         <translation>ორმაგი როტაცია</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="701"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="728"/>
         <source>r2</source>
         <comment>modify - rotate2</comment>
         <translation>r2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="706"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="733"/>
         <source>modrevert</source>
         <comment>modify -  revert direction</comment>
         <translation>გადატრიალება</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="707"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="734"/>
         <source>md</source>
         <comment>modify -  revert direction</comment>
         <translation>md</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="713"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="740"/>
         <source>modtrim</source>
         <comment>modify - trim (extend)</comment>
         <translation>კლების შეცვლა</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="719"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="746"/>
         <source>modtrim2</source>
         <comment>modify - multi trim (extend)</comment>
         <translation>კლების შეცვლა 2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="726"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="753"/>
         <source>modlengthen</source>
         <comment>modify - lengthen</comment>
         <translation>სიგრძის შეცვლა</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="732"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="759"/>
         <source>modoffset</source>
         <comment>modify - offset</comment>
         <translation>გადაადგილება</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="733"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="760"/>
         <source>mo</source>
         <comment>modify - offset</comment>
         <translation>mo</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="734"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="761"/>
         <source>moff</source>
         <comment>modify - offset</comment>
         <translation>moff</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="739"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="766"/>
         <source>modbevel</source>
         <comment>modify - bevel</comment>
         <translation>modbevel</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="746"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="773"/>
         <source>modfillet</source>
         <comment>modify - fillet</comment>
         <translation>modfillet</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="752"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="779"/>
         <source>moddivide</source>
         <comment>modify - divide (cut)</comment>
         <translation>moddivide</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="760"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="787"/>
         <source>modstretch</source>
         <comment>modify - stretch</comment>
         <translation>modstretch</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="766"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="793"/>
         <source>modproperties</source>
         <comment>modify properties</comment>
         <translation>modproperties</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="773"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="800"/>
         <source>modattr</source>
         <comment>modify attribute</comment>
         <translation>modattr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="780"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="807"/>
         <source>modexpltext</source>
         <comment>explode text strings</comment>
         <translation>modexpltext</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="781"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="808"/>
         <source>xt</source>
         <comment>explode text strings</comment>
         <translation>xt</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="786"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="813"/>
         <source>modexplode</source>
         <comment>explode block/polyline into entities</comment>
         <translation>modexplode</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="792"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="819"/>
         <source>moddelete</source>
         <comment>modify - delete (erase)</comment>
         <translation>moddelete</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="801"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="828"/>
         <source>infodistance</source>
         <comment>distance point to point</comment>
         <translation>ინფორმაცია მანძილზე</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="802"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="829"/>
         <source>id</source>
         <comment>distance point to point</comment>
         <translation>id</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="809"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="836"/>
         <source>infodistep</source>
         <comment>distance entity to point</comment>
         <translation>ინფორმაცია ნაბიჯზე</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="810"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="837"/>
         <source>ii</source>
         <comment>distance entity to point</comment>
         <translation>ii</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="811"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="838"/>
         <source>dep</source>
         <comment>distance entity to point</comment>
         <translation>dep</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="816"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="843"/>
         <source>infoangle</source>
         <comment>measure angle</comment>
         <translation>ინფორმაცია კუთხეზე</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="817"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="844"/>
         <source>ia</source>
         <comment>measure angle</comment>
         <translation>ia</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="823"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="850"/>
         <source>infoarea</source>
         <comment>measure area</comment>
         <translation>ინფორმაცია ფართობზე</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="824"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="851"/>
         <source>aa</source>
         <comment>measure area</comment>
         <translation>aa</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="832"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="859"/>
         <source>mt</source>
         <comment>draw mtext</comment>
         <translation>mt</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="839"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="866"/>
         <source>tx</source>
         <comment>draw text</comment>
         <translation>tx</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="867"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="894"/>
         <source>so</source>
         <comment>snap - free</comment>
         <translation>so</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="961"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="988"/>
         <source>ki</source>
         <comment>kill all actions</comment>
         <translation>ki</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="968"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="995"/>
         <source>un</source>
         <comment>undo cycle</comment>
         <translation>un</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="975"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1002"/>
         <source>rd</source>
         <comment>redo cycle</comment>
         <translation>rd</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="983"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1010"/>
         <source>drawpref</source>
         <comment>drawing preferences</comment>
         <translation>გამოტანა</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="984"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1011"/>
         <source>dp</source>
         <comment>drawing preferences</comment>
         <translation>dp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1069"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="1183"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1102"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1216"/>
         <source>equation</source>
         <translation>ტოლობა</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1072"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1105"/>
         <source>length1</source>
         <comment>bevel/fillet length1</comment>
         <translation>სიგრძე1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1073"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1106"/>
         <source>length2</source>
         <comment>bevel/fillet length2</comment>
         <translation>სიგრძე2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1184"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1217"/>
         <source>eqn</source>
         <comment>equation</comment>
         <translation>eqn</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1185"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1218"/>
         <source>eq</source>
         <comment>equation</comment>
         <translation>eq</translation>
@@ -12536,85 +12573,85 @@ Do you want to replace it?</source>
         <translation>გაიგნორეთ შეცდომა და გახსნათ ფაილი?</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="103"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="105"/>
         <source>no DXF/DWG error</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG შეცდომა არ აღმოჩნდა</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="105"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="107"/>
         <source>error opening DXF/DWG file</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG ფაილის გახსნის შეცდომა</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="107"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="109"/>
         <source>unsupported DXF/DWG file version</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG ფაილის ვერსია არ მხარდაჭერილა</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="109"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="111"/>
         <source>error reading DXF/DWG meta data</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG მეტა-მონაცემების წაკითხვის შეცდომა</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="111"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="113"/>
         <source>error reading DXF/DWG file header</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG ფაილის სათაურის წაკითხვის შეცდომა</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="113"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="115"/>
         <source>error reading DXF/DWG header dara</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG სათაურის მონაცემების წაკითხვის შეცდომა</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="115"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="117"/>
         <source>error reading DXF/DWG object map</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG ობიექტების რუქის წაკითხვის შეცდომა</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="117"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="119"/>
         <source>error reading DXF/DWG classes</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG კლასების წაკითხვის შეცდომა</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="119"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="121"/>
         <source>error reading DXF/DWG tables</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG ცხრილების წაკითხვის შეცდომა</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="121"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="123"/>
         <source>error reading DXF/DWG blocks</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG ბლოკების წაკითხვის შეცდომა</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="123"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="125"/>
         <source>error reading DXF/DWG entities</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG ობიექტების კითხვისას შეცდომა</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="125"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="127"/>
         <source>error reading DXF/DWG objects</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG ობიექტების კითხვისას შეცდომა</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="127"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="129"/>
         <source>error reading DXF/DWG sections</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG სექციების კითხვისას შეცდომა</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="129"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="131"/>
         <source>error reading DXF/DWG code</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>DXF/DWG კოდის კითხვისას შეცდომა</translation>
@@ -12678,8 +12715,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="101"/>
         <source>Paper size (Width x Height) in mm.</source>
+        <translation type="unfinished">ქაღალდის ზომა (სიგანე x სიმაღლე) მმ-ში.</translation>
+    </message>
+    <message>
+        <source>Paper size (Width x Height) in mm.</source>
         <comment>WxH</comment>
-        <translation>ქაღალდის ზომა (სიგანე x სიმაღლე) მმ-ში.</translation>
+        <translation type="vanished">ქაღალდის ზომა (სიგანე x სიმაღლე) მმ-ში.</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>
@@ -12771,566 +12812,566 @@ Do you want to replace it?</source>
         <translation>R</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="161"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="188"/>
         <source>sline</source>
         <comment>draw snake line</comment>
         <translation>ხაზი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="162"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="189"/>
         <source>sli</source>
         <comment>draw snake line</comment>
         <translation>sli</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="163"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="190"/>
         <source>sl</source>
         <comment>draw snake line</comment>
         <translation>sl</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="168"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="195"/>
         <source>slinex</source>
         <comment>draw snake line (X)</comment>
         <translation>ხაზი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="169"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="196"/>
         <source>slix</source>
         <comment>draw snake line (X)</comment>
         <translation>slix</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="170"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="197"/>
         <source>rlx</source>
         <comment>draw snake line (X)</comment>
         <translation>rlx</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="175"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="202"/>
         <source>sliney</source>
         <comment>draw snake line (Y)</comment>
         <translation>ხაზი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="176"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="203"/>
         <source>sliy</source>
         <comment>draw snake line (Y)</comment>
         <translation>sliy</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="177"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="204"/>
         <source>rly</source>
         <comment>draw snake line (Y)</comment>
         <translation>rly</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="207"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="234"/>
         <source>rect1</source>
         <comment>draw rectangle (1 Point)</comment>
         <translation>მკვეთავი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="208"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="235"/>
         <source>re1</source>
         <comment>draw rectangle (1 Point)</comment>
         <translation>re1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="213"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="240"/>
         <source>rect2</source>
         <comment>draw rectangle (2 Points)</comment>
         <translation>rect2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="214"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="241"/>
         <source>re2</source>
         <comment>draw rectangle (2 Points)</comment>
         <translation>re2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="219"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="246"/>
         <source>rect3</source>
         <comment>draw rectangle (3 Points)</comment>
         <translation>rect3</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="220"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="247"/>
         <source>re3</source>
         <comment>draw rectangle (3 Points)</comment>
         <translation>re3</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="225"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="252"/>
         <source>slicel</source>
         <comment>slice/divide line</comment>
         <translation>slicel</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="226"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="253"/>
         <source>sll</source>
         <comment>slice/divide line</comment>
         <translation>sll</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="231"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="258"/>
         <source>slicec</source>
         <comment>slice/divide circle/arc</comment>
         <translation>slicec</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="232"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="259"/>
         <source>slc</source>
         <comment>slice/divide circle/arc</comment>
         <translation>slc</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="237"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="264"/>
         <source>star</source>
         <comment>draw star</comment>
         <translation>star</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="238"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="265"/>
         <source>st</source>
         <comment>draw star</comment>
         <translation>st</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="243"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="270"/>
         <source>cross</source>
         <comment>draw cross for circle</comment>
         <translation>კვეთა</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="244"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="271"/>
         <source>cx</source>
         <comment>draw cross for circle</comment>
         <translation>cx</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="249"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="276"/>
         <source>linepoints</source>
         <comment>draw line of points</comment>
         <translation>ხაზის წერტილები</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="250"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="277"/>
         <source>lpoints</source>
         <comment>draw line of points</comment>
         <translation>ხ. წ.</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="255"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="282"/>
         <source>criclebyarc</source>
         <comment>draw circle by arc</comment>
         <translation>წრე მრუდით</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="256"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="283"/>
         <source>cba</source>
         <comment>draw circle by arc</comment>
         <translation>cba</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="261"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="288"/>
         <source>duplicate</source>
         <comment>duplicate entity</comment>
         <translation>კოპირება</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="262"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="289"/>
         <source>dup</source>
         <comment>duplicate entity</comment>
         <translation>dup</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="267"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="294"/>
         <source>linejoin</source>
         <comment>lines join</comment>
         <translation>ხაზის შეერთება</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="268"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="295"/>
         <source>lj</source>
         <comment>lines join</comment>
         <translation>lj</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="273"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="300"/>
         <source>breakdivide</source>
         <comment>break or divide entity</comment>
         <translation>თარგმანი 2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="274"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="301"/>
         <source>bd</source>
         <comment>break or divide entity</comment>
         <translation>bd</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="279"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="306"/>
         <source>gapline</source>
         <comment>line gap</comment>
         <translation>თარგმანი 4</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="280"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="307"/>
         <source>gl</source>
         <comment>line gap</comment>
         <translation>gl</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="466"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="493"/>
         <source>parabola4p</source>
         <comment>Parabola 4 points</comment>
         <translation>თარგმანი 6</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="467"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="494"/>
         <source>pl4</source>
         <comment>Parabola 4 points</comment>
         <translation>თარგმანი 7</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="472"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="499"/>
         <source>parabolafd</source>
         <comment>Parabola focus directrix</comment>
         <translation>თარგმანი 8</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="473"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="500"/>
         <source>plfd</source>
         <comment>Parabola focus directrix</comment>
         <translation>plfd</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="526"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="527"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="553"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="554"/>
         <source>angleline</source>
         <comment>draw angle from line</comment>
         <translation>თარგმანი 10</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="532"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="559"/>
         <source>rortoline</source>
         <comment>draw orthogonal</comment>
         <translation>rortoline</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="533"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="560"/>
         <source>rort</source>
         <comment>draw orthogonal</comment>
         <translation>rort</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="538"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="565"/>
         <source>point2line</source>
         <comment>draw line from point to line</comment>
         <translation>წერტილიდან ხაზამდე</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="539"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="566"/>
         <source>p2l</source>
         <comment>draw line from point to line</comment>
         <translation>წერტილიდან ხაზამდე</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="918"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="945"/>
         <source>snapmiddlemanual</source>
         <comment>snap middle manual</comment>
         <translation>ხაზის შუაში ხელით</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="919"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="946"/>
         <source>snapmanual</source>
         <comment>snap middle manual</comment>
         <translation>ხელით</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="920"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="947"/>
         <source>smm</source>
         <comment>snap middle manual</comment>
         <translation>smm</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1082"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1115"/>
         <source>x</source>
         <translation>x</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1083"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1116"/>
         <source>y</source>
         <translation>y</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1084"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1117"/>
         <source>p</source>
         <translation>p</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1085"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1118"/>
         <source>anglerel</source>
         <translation>კუთხოვანი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1086"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1119"/>
         <source>start</source>
         <translation>დასაწყისი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1089"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1122"/>
         <source>offset</source>
         <translation>გადახრა</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1090"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1123"/>
         <source>linesnap</source>
         <translation>ხაზზე გასწორება</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1091"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1124"/>
         <source>ticksnap</source>
         <translation>ნიშანზე გასწორება</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1094"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1127"/>
         <source>width</source>
         <translation>სიგანე</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1095"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1128"/>
         <source>height</source>
         <translation>სიმაღლე</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1096"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1129"/>
         <source>pos</source>
         <translation>pos</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1097"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1130"/>
         <source>size</source>
         <translation>size</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1098"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="1104"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1131"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1137"/>
         <source>bevels</source>
         <translation>ჩრდილები</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1099"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1132"/>
         <source>nopoly</source>
         <translation>ნეპოლი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1100"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1133"/>
         <source>usepoly</source>
         <translation>გამოიყენეთ პოლი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1101"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1134"/>
         <source>corners</source>
         <translation>კუთხეები</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1102"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1135"/>
         <source>str</source>
         <translation>str</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1103"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1136"/>
         <source>round</source>
         <translation>გაშვებული</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1105"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1138"/>
         <source>snap1</source>
         <translation>დააკავშირეთ</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1106"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1139"/>
         <source>topl</source>
         <translation>topl</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1107"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1140"/>
         <source>top</source>
         <translation>top</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1108"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1141"/>
         <source>topr</source>
         <translation>topr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1109"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1142"/>
         <source>left</source>
         <translation>left</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1110"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1143"/>
         <source>middle</source>
         <translation>შუაში</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1111"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1144"/>
         <source>right</source>
         <translation>მარჯვნივ</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1112"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1145"/>
         <source>bottoml</source>
         <translation>ქვედა მარჯვენა</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1113"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1146"/>
         <source>bottom</source>
         <translation>ქვედა</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1114"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1147"/>
         <source>bottomr</source>
         <translation>ქვედა მარჯვენა</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1115"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1148"/>
         <source>snapcorner</source>
         <translation>კუთხეზე</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1116"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1149"/>
         <source>snapshift</source>
         <translation>გადაადგილება</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1117"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1150"/>
         <source>sizein</source>
         <translation>შესვლა</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1118"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1151"/>
         <source>sizeout</source>
         <translation>გასვლა</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1119"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1152"/>
         <source>hor</source>
         <translation>hor</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1120"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1153"/>
         <source>vert</source>
         <translation>vert</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1123"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1156"/>
         <source>snap2</source>
         <translation>მიიყვანე</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1124"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1157"/>
         <source>corner</source>
         <translation>კუთხე</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1125"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1158"/>
         <source>mid-vert</source>
         <translation>ვერტიკალის შუაში</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1126"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1159"/>
         <source>mid-hor</source>
         <translation>ჰორიზონტალის შუაში</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1128"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1161"/>
         <source>quad</source>
         <translation>quad</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1129"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1162"/>
         <source>noquad</source>
         <translation>არ არის კვადრატი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1130"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1163"/>
         <source>angle_inner</source>
         <translation>შიდა კუთხე</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1133"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1166"/>
         <source>edges</source>
         <translation>წირები</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1134"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1167"/>
         <source>edge-none</source>
         <translation>წირი არ არის</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1135"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1168"/>
         <source>edge-both</source>
         <translation>ორივე მხარეს</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1136"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1169"/>
         <source>edge-start</source>
         <translation>დასაწყისში</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1137"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1170"/>
         <source>edge-end</source>
         <translation>დასასრულში</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1138"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1171"/>
         <source>end</source>
         <translation>end</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1139"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1172"/>
         <source>both</source>
         <translation>both</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1140"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1173"/>
         <source>none</source>
         <translation>none</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1141"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1174"/>
         <source>fit</source>
         <translation>fit</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1142"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1175"/>
         <source>nofit</source>
         <translation>არ მოერგოს</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1143"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1176"/>
         <source>dist_fixed</source>
         <translation>ფიქსირებული მანძილი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1144"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1177"/>
         <source>dist_flex</source>
         <translation>მზიდი მანძილი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1145"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1178"/>
         <source>distance</source>
         <translation>მანძილი</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1149"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1182"/>
         <source>sym</source>
         <translation>sym</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="1150"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="1183"/>
         <source>nosym</source>
         <translation>სიმის გარეშე</translation>
     </message>
@@ -13370,16 +13411,14 @@ Do you want to replace it?</source>
         <translation>მომხმარებლის ფერი</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_commandedit.cpp" line="258"/>
         <source>cal </source>
         <comment>command to trigger cli calculator</comment>
-        <translation>cal</translation>
+        <translation type="vanished">cal</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_commandedit.cpp" line="259"/>
         <source>calculate </source>
         <comment>command to trigger cli calculator</comment>
-        <translation>გამოთვლა</translation>
+        <translation type="vanished">გამოთვლა</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="35"/>
@@ -14940,22 +14979,22 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLineTangent1</name>
     <message>
-        <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="181"/>
+        <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="182"/>
         <source>Specify point</source>
         <translation>აირჩიეთ წერტილი</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="182"/>
+        <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="183"/>
         <source>Cancel</source>
         <translation>გაუქმება</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="185"/>
+        <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="186"/>
         <source>Select circle, arc or ellipse</source>
         <translation>აირჩიეთ წრე, რკალი ან ელიფსი</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="186"/>
+        <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="187"/>
         <source>Back</source>
         <translation>Back</translation>
     </message>
@@ -15114,33 +15153,38 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawSpline</name>
     <message>
-        <location filename="../src/actions/rs_actiondrawspline.cpp" line="276"/>
+        <location filename="../src/actions/rs_actiondrawspline.cpp" line="277"/>
         <source>Specify first control point</source>
         <translation>მიუთითეთ პირველი საკონტროლო წერტილი</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawspline.cpp" line="277"/>
+        <location filename="../src/actions/rs_actiondrawspline.cpp" line="278"/>
         <source>Cancel</source>
         <translation>გაუქმება</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawspline.cpp" line="289"/>
+        <location filename="../src/actions/rs_actiondrawspline.cpp" line="290"/>
         <source>Specify next control point or [%1]</source>
         <translation>მიუთითეთ შემდეგი საკონტროლო წერტილი ან [%1]</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawspline.cpp" line="290"/>
-        <location filename="../src/actions/rs_actiondrawspline.cpp" line="294"/>
+        <location filename="../src/actions/rs_actiondrawspline.cpp" line="291"/>
+        <location filename="../src/actions/rs_actiondrawspline.cpp" line="295"/>
         <source>Back</source>
         <translation>Back</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawspline.cpp" line="293"/>
+        <location filename="../src/actions/rs_actiondrawspline.cpp" line="294"/>
         <source>Specify next control point</source>
         <translation>მიუთითეთ შემდეგი საკონტროლო წერტილი</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawspline.cpp" line="365"/>
+        <location filename="../src/actions/rs_actiondrawspline.cpp" line="333"/>
+        <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
+        <translation>შესაძლებელია ხაზების სერიის დახურვა: ჯერ არ არის საკმარისი ობიექტი განსაზღვრული.</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/rs_actiondrawspline.cpp" line="359"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
         <translation>ვერ მოხერხდება გაუქმება: ჯერ არ არის საკმარისი ობიექტი განსაზღვრული.</translation>
     </message>
@@ -15427,40 +15471,40 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionModifyBevel</name>
     <message>
-        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="191"/>
-        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="204"/>
+        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="193"/>
+        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="206"/>
         <source>Not a valid expression</source>
         <translation>გამოსახულება არასწორია</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="270"/>
+        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="272"/>
         <source>Select first entity</source>
         <translation>აირჩიეთ პირველი ობიექტი</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="271"/>
+        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="273"/>
         <source>Cancel</source>
         <translation>გაუქმება</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="274"/>
+        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="276"/>
         <source>Select second entity</source>
         <translation>აირჩიეთ მეორე ობიექტი</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="275"/>
-        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="279"/>
-        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="283"/>
+        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="277"/>
+        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="281"/>
+        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="285"/>
         <source>Back</source>
         <translation>Back</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="278"/>
+        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="280"/>
         <source>Enter length 1:</source>
         <translation>შეიყვანეთ სიგრძე 1:</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="282"/>
+        <location filename="../src/actions/rs_actionmodifybevel.cpp" line="284"/>
         <source>Enter length 2:</source>
         <translation>შეიყვანეთ სიგრძე 2:</translation>
     </message>
@@ -15512,62 +15556,62 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionModifyDeleteFree</name>
     <message>
-        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="166"/>
+        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="171"/>
         <source>Specify first break point on a polyline</source>
         <translation>აირჩიეთ პოლილინიის პირველი გამტეხი წერტილი</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="167"/>
+        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="172"/>
         <source>Cancel</source>
         <translation>გაუქმება</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="170"/>
+        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="175"/>
         <source>Specify second break point on the same polyline</source>
         <translation>აირჩიეთ იგივე პოლილინიის მეორე გამტეხი წერტილი</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="172"/>
+        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="177"/>
         <source>Back</source>
         <translation>Back</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="101"/>
+        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="106"/>
         <source>Entities not in the same polyline.</source>
         <translation>ობიექტები არ არის ერთ და იმავე პოლილინიაში</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="104"/>
+        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="109"/>
         <source>Parent of second entity is not a polyline</source>
         <translation>მეორე ობიექტის მშობელი არ არის პოლილინია</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="133"/>
+        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="138"/>
         <source>Parent of first entity is not a polyline</source>
         <translation>პირველი ობიექტის მშობელი არ არის პოლილინია</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="107"/>
+        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="112"/>
         <source>Parent of second entity is nullptr</source>
         <translation>მეორე ობიექტის მშობელი არის ნულ-მითითებული</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="110"/>
+        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="115"/>
         <source>One of the chosen entities is nullptr</source>
         <translation>აირჩიული ობიექტებიდან ერთ-ერთი არის ნულ-მითითებული</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="137"/>
+        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="142"/>
         <source>Parent of first entity is nullptr</source>
         <translation>პირველი ობიექტის მშობელი არის ნულ-მითითებული</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="141"/>
+        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="146"/>
         <source>First entity is nullptr</source>
         <translation>პირველი ობიექტი არის ნულ-მითითებული</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="153"/>
+        <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="158"/>
         <source>Second entity is nullptr</source>
         <translation>მეორე ობიექტი არის ნულ-მითითებული</translation>
     </message>
@@ -15747,34 +15791,34 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionModifyRound</name>
     <message>
-        <location filename="../src/actions/rs_actionmodifyround.cpp" line="319"/>
-        <location filename="../src/actions/rs_actionmodifyround.cpp" line="332"/>
+        <location filename="../src/actions/rs_actionmodifyround.cpp" line="328"/>
+        <location filename="../src/actions/rs_actionmodifyround.cpp" line="341"/>
         <source>Not a valid expression</source>
         <translation>გამოსახულება არასწორია</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifyround.cpp" line="411"/>
-        <location filename="../src/actions/rs_actionmodifyround.cpp" line="415"/>
+        <location filename="../src/actions/rs_actionmodifyround.cpp" line="420"/>
+        <location filename="../src/actions/rs_actionmodifyround.cpp" line="424"/>
         <source>Back</source>
         <translation>Back</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifyround.cpp" line="414"/>
+        <location filename="../src/actions/rs_actionmodifyround.cpp" line="423"/>
         <source>Specify second entity</source>
         <translation>მითითებული უნდა იყოს მეორე ობიექტი</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifyround.cpp" line="418"/>
+        <location filename="../src/actions/rs_actionmodifyround.cpp" line="427"/>
         <source>Enter radius:</source>
         <translation>შეიყვანეთ რდიუსი:</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifyround.cpp" line="419"/>
+        <location filename="../src/actions/rs_actionmodifyround.cpp" line="428"/>
         <source>Cancel</source>
         <translation>გაუქმება</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifyround.cpp" line="410"/>
+        <location filename="../src/actions/rs_actionmodifyround.cpp" line="419"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
         <translation>მითითებული უნდა იყოს პირველი ობიექტი ან რადიუსი &lt;%1&gt;</translation>
     </message>
@@ -16146,28 +16190,28 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionPolylineSegment</name>
     <message>
-        <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="306"/>
+        <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="312"/>
         <source>No Entity found.</source>
         <translation>ობიექტი არ მოიძებნა.</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="350"/>
+        <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="356"/>
         <source>Choose one of the segments on the original polyline</source>
         <translation>აირჩიეთ ერთ-ერთი სეგმენტი ორიგინალურ პოლილინიაზე.</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="351"/>
+        <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="357"/>
         <source>Cancel</source>
         <translation>გაუქმება</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="309"/>
+        <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="315"/>
         <source>Entity can not be a closed polyline.</source>
         <translation>ობიექტი არ შეიძლება იყოს დახურული პოლილინია.</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="65"/>
-        <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="86"/>
+        <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="66"/>
+        <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="87"/>
         <source>Polyline created</source>
         <translation>პოლიხაზი შეიქმნა</translation>
     </message>
@@ -16228,57 +16272,57 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionPrintPreview</name>
     <message>
-        <location filename="../src/actions/rs_actionprintpreview.cpp" line="272"/>
+        <location filename="../src/actions/rs_actionprintpreview.cpp" line="278"/>
         <source>RS_ActionPrintPreview::fit(): Invalid paper size</source>
         <translation>RS_ActionPrintPreview::fit(): არასწორი ფურცლის ზომა</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionprintpreview.cpp" line="138"/>
+        <location filename="../src/actions/rs_actionprintpreview.cpp" line="144"/>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
         <translation>გამოსახულების გადაადგილება ფურცლის კოორდინატებში (%1, %2)</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionprintpreview.cpp" line="141"/>
+        <location filename="../src/actions/rs_actionprintpreview.cpp" line="147"/>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
         <translation>გამოსახულების გადაადგილება გრაფიკის კოორდინატებში (%1, %2)</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionprintpreview.cpp" line="168"/>
+        <location filename="../src/actions/rs_actionprintpreview.cpp" line="174"/>
         <source>Printout offset in graph coordinates</source>
         <translation>გამოსახულების გადაადგილება გრაფიკის კოორდინატებში</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionprintpreview.cpp" line="173"/>
+        <location filename="../src/actions/rs_actionprintpreview.cpp" line="179"/>
         <source>Printout offset in paper coordinates</source>
         <translation>გამოსახულების გადაადგილება ფურცლის კოორდინატებში</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionprintpreview.cpp" line="178"/>
+        <location filename="../src/actions/rs_actionprintpreview.cpp" line="184"/>
         <source>: select printout offset coordinates</source>
         <translation>: აირჩიეთ გამოსახულების გადაადგილების კოორდინატები</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionprintpreview.cpp" line="179"/>
+        <location filename="../src/actions/rs_actionprintpreview.cpp" line="185"/>
         <source>type in offset from command line to offset printout</source>
         <translation>შეიყვანეთ გადაადგილების მნიშვნელობა ბრძანების სტრიქონში, რათა გადააადგილოთ გამოსახულება</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionprintpreview.cpp" line="187"/>
+        <location filename="../src/actions/rs_actionprintpreview.cpp" line="193"/>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
         <translation>გამოსაჩივრების გადაადგილების კომპენსაცია არ ითვალისწინებს შედარებით ნულს. იგნორირებულია &apos;@&apos;</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionprintpreview.cpp" line="158"/>
+        <location filename="../src/actions/rs_actionprintpreview.cpp" line="164"/>
         <source>Printout in Black/White</source>
         <translation>გამოსაჩივრება შავი/თეთრ ფერში</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionprintpreview.cpp" line="163"/>
+        <location filename="../src/actions/rs_actionprintpreview.cpp" line="169"/>
         <source>Printout in color</source>
         <translation>გამოსაჩივრება ფერად</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionprintpreview.cpp" line="356"/>
+        <location filename="../src/actions/rs_actionprintpreview.cpp" line="365"/>
         <source>RS_ActionPrintPreview::calcPagesNum(): Limit of pages has been exceeded.</source>
         <translation>RS_ActionPrintPreview::calcPagesNum(): გადააჭარბა გვერდების ლიმიტი.</translation>
     </message>
@@ -16365,7 +16409,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionselect.cpp" line="135"/>
         <location filename="../src/actions/rs_actionselect.cpp" line="135"/>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="98"/>
@@ -16515,18 +16559,18 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionZoomPan</name>
     <message>
-        <location filename="../src/actions/rs_actionzoompan.cpp" line="119"/>
+        <location filename="../src/actions/rs_actionzoompan.cpp" line="127"/>
         <source>Click and drag to pan zoom</source>
         <translation>დააწკაპეთ და გადაიტანეთ მასშტაბის შესაცვლელად</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionzoompan.cpp" line="120"/>
-        <location filename="../src/actions/rs_actionzoompan.cpp" line="124"/>
+        <location filename="../src/actions/rs_actionzoompan.cpp" line="128"/>
+        <location filename="../src/actions/rs_actionzoompan.cpp" line="132"/>
         <source>Cancel</source>
         <translation>გაუქმება</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionzoompan.cpp" line="123"/>
+        <location filename="../src/actions/rs_actionzoompan.cpp" line="131"/>
         <source>Zoom panning</source>
         <translation>მასშტაბის შეცვლა</translation>
     </message>
@@ -16557,7 +16601,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_GraphicView</name>
     <message>
-        <location filename="../src/lib/gui/rs_graphicview.cpp" line="1542"/>
+        <location filename="../src/lib/gui/rs_graphicview.cpp" line="1550"/>
         <source>Draft</source>
         <translation>ეскіზი</translation>
     </message>
@@ -17601,66 +17645,6 @@ This block cannot be inserted.</source>
     <message>
         <source>Height:</source>
         <translation type="vanished">სიმაღლე:</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawHyperbolaFP</name>
-    <message>
-        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="260"/>
-        <source>Foci cannot be coincident</source>
-        <translation>ფოკუსები ვერ შეიძლება იყოს ერთმანეთთან თანხვედრებული</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="273"/>
-        <source>The point does not define a hyperbola with these foci</source>
-        <translation>პუნქტი არ განსაზღვრავს ჰიპერბოლას ამ ფოკუსებით</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="286"/>
-        <source>The end point is not on the same hyperbola branch</source>
-        <translation>საბოლოო პუნქტი არ არის ერთ და იმავე ჰიპერბოლის ტოტი</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="295"/>
-        <source>Start and end points cannot be the same</source>
-        <translation>დასაწყისი და საბოლოო პუნქტები ვერ შეიძლება იყოს ერთმანეთი</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="314"/>
-        <source>specify the two foci, then the start and end points on one branch</source>
-        <translation>მითითეთ ორი ფოკუსი, შემდეგ დასაწყისი და საბოლოო პუნქტები ერთ ტოტზე</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="326"/>
-        <source>Specify the first focus</source>
-        <translation>მითითეთ პირველი ფოკუსი</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="327"/>
-        <source>Cancel</source>
-        <translation>გაუქმება</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="330"/>
-        <source>Specify the second focus</source>
-        <translation>მითითეთ მეორე ფოკუსი</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="331"/>
-        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="335"/>
-        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="339"/>
-        <source>Back</source>
-        <translation>უკან</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="334"/>
-        <source>Specify the start point on the branch</source>
-        <translation>მითითეთ დასაწყისი პუნქტი ტოტზე</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="338"/>
-        <source>Specify the end point on the same branch</source>
-        <translation>მითითეთ საბოლოო პუნქტი იმავე ტოტზე</translation>
     </message>
 </context>
 </TS>
