@@ -293,13 +293,19 @@ RS_Pen RS_Dimension::getPenForText() const {
 }
 
 RS_Pen RS_Dimension::getPenExtensionLine(const bool first) const {
-    const RS2::LineType lineType = first ? getExtensionLineTypeFirst() : getExtensionLineTypeSecond();
-    RS_Pen result(getExtensionLineColor(), getExtensionLineWidth(), /*RS2::LineByBlock*/ lineType);
+    const QString name = first ? m_dimStyleTransient->extensionLine()->lineTypeFirstRaw()
+                               : m_dimStyleTransient->extensionLine()->lineTypeSecondRaw();
+    RS_Pen result(getExtensionLineColor(), getExtensionLineWidth(), /*RS2::LineByBlock*/ RS2::LineByBlock);
+    // Carries a custom name (setLineTypeName derives the same enum
+    // lineTypeFirst()/lineTypeSecond() would give; the style's own raw
+    // string and enum are always kept in sync) so it survives a save.
+    result.setLineTypeName(name);
     return result;
 }
 
 RS_Pen RS_Dimension::getPenDimensionLine() const {
-    RS_Pen result(getDimensionLineColor(), getDimensionLineWidth(), /*RS2::LineByBlock*/ getDimensionLineType());
+    RS_Pen result(getDimensionLineColor(), getDimensionLineWidth(), /*RS2::LineByBlock*/ RS2::LineByBlock);
+    result.setLineTypeName(m_dimStyleTransient->dimensionLine()->lineTypeName());
     return result;
 }
 

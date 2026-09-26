@@ -28,6 +28,8 @@
 #ifndef RS_PEN_H
 #define RS_PEN_H
 
+#include <cstdint>
+
 #include "lc_linemath.h"
 #include "rs.h"
 #include "rs_color.h"
@@ -66,6 +68,7 @@ public:
      * </pre>
      */
     explicit RS_Pen(const unsigned int f) : RS_Flags(f) {}
+
     //RS_Pen(const RS_Pen& pen) : RS_Flags(pen.getFlags()) {
     //    lineType = pen.lineType;
     //    width = pen.width;
@@ -75,8 +78,30 @@ public:
     RS2::LineType getLineType() const {
         return m_lineType;
     }
+    /// Sets the line type by enum and drops any name this pen carried.
     void setLineType(const RS2::LineType t) {
         m_lineType = t;
+        m_lineTypeId = 0;
+        m_lineTypeFoldId = 0;
+    }
+
+    /// Sets the line type from a name and keeps the name as this pen's identity.
+    void setLineTypeName(const QString& name);
+
+    /// The spelling this pen was given, or the canonical name of its enum.
+    QString getLineTypeName() const;
+
+    /// This pen's spelling as an opaque, process-local token; 0 if it has none.
+    std::uint16_t getLineTypeId() const {
+        return m_lineTypeId;
+    }
+
+    bool hasLineTypeName() const {
+        return m_lineTypeId != 0;
+    }
+    /// 0 when this pen paints as its enum says: no name, or its enum's own name.
+    std::uint16_t getLineTypeFoldId() const {
+        return m_lineTypeFoldId;
     }
     RS2::LineWidth getWidth() const {
         return m_width;
@@ -109,6 +134,8 @@ public:
 
     void setLineTypeFromPen(const RS_Pen& pen){
         m_lineType = pen.m_lineType;
+        m_lineTypeId = pen.m_lineTypeId;
+        m_lineTypeFoldId = pen.m_lineTypeFoldId;
     }
 
     bool isColorByLayer() const {
@@ -163,8 +190,10 @@ public:
     //    return *this;
     //}
 
+    // Equal pens paint the same; they need not be spelled the same.
     bool operator == (const RS_Pen& p) const {
-        return m_lineType==p.m_lineType && m_width==p.m_width && m_color==p.m_color;
+        return m_lineType==p.m_lineType && m_lineTypeFoldId==p.m_lineTypeFoldId
+            && m_width==p.m_width && m_color==p.m_color;
     }
 
     /**
@@ -172,13 +201,16 @@ public:
      * offset only if comparePatternOffset is set.
      */
     bool isSameAs(const RS_Pen& p, const double patternOffset, const bool comparePatternOffset) const {
-        return m_lineType == p.m_lineType && m_width == p.m_width && m_color == p.m_color && LC_LineMath::isSameLength(m_alpha, p.m_alpha) &&
+        return m_lineType == p.m_lineType && m_lineTypeFoldId == p.m_lineTypeFoldId &&
+            m_width == p.m_width && m_color == p.m_color && LC_LineMath::isSameLength(m_alpha, p.m_alpha) &&
             (!comparePatternOffset || LC_LineMath::isSameLength(m_dashOffset, patternOffset)) && !getFlag(RS2::FlagInvalid);
     }
 
     void updateBy(const RS_Pen & p){
         m_color = p.m_color;
         m_lineType = p.m_lineType;
+        m_lineTypeId = p.m_lineTypeId;
+        m_lineTypeFoldId = p.m_lineTypeFoldId;
         m_width = p.m_width;
         m_alpha = p.m_alpha;
         m_dashOffset = p.m_dashOffset;
@@ -209,6 +241,11 @@ private:
     double m_screenWidth = 0.;
     RS_Color m_color;
     float m_alpha = 1.;
+    // The spelling this pen was given, and the meaning spellings share: 0 is no
+    // name and, for the fold, "as my enum says". Declared here because the four
+    // bytes before m_dashOffset were padding; elsewhere they grow every pen.
+    std::uint16_t m_lineTypeId = 0;
+    std::uint16_t m_lineTypeFoldId = 0;
     double m_dashOffset = 0.;
 };
 

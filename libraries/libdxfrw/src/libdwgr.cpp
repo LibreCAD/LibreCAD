@@ -1551,6 +1551,7 @@ bool dwgRW::writeInsert(DRW_Insert *ent) {
         seqEnd.handle = ent->seqendH.ref;
         seqEnd.parentHandle = ent->handle;
         seqEnd.space = ent->space;
+        seqEnd.copyPresentationFrom(*ent);
         if (consumeCompoundSeqEndFailureForTest()
             || !writer->encodeEntity(&seqEnd))
             return fail();
@@ -1702,6 +1703,7 @@ bool dwgRW::writePolyline(DRW_Polyline *ent) {
             return fail();
         v->parentHandle = ent->handle;
         v->space = ent->space;
+        v->copyPresentationFrom(*ent);
         if (v->dwgSubtype() == DRW_Vertex::DwgSubtype::Auto) {
             if (isPolyface) {
                 v->setDwgSubtype((v->flags & 64) != 0
@@ -1729,6 +1731,7 @@ bool dwgRW::writePolyline(DRW_Polyline *ent) {
     seqEnd.handle = writer->allocNextHandle();
     seqEnd.parentHandle = ent->handle;
     seqEnd.space = ent->space;
+    seqEnd.copyPresentationFrom(*ent);
     if (seqEnd.handle == ent->handle
         || !childHandles.insert(seqEnd.handle).second)
         return fail();

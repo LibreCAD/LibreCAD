@@ -231,6 +231,34 @@ QString LC_LineTypeNames::lineTypeToName(RS2::LineType lineType) {
 }
 
 /**
+ * Folds a line type name to its identity: NFC, then ASCII-only upper case, so
+ * spellings that differ only in ASCII case or Unicode form fold alike. Not
+ * nameToLineType()'s QString::toUpper(); the two agree on ASCII names only.
+ */
+QString LC_LineTypeNames::foldName(const QString &name) {
+  // ASCII is NFC-stable, so the normalisation pass is skipped for it.
+  bool ascii = true;
+  for (const QChar c : name) {
+    if (c.unicode() >= 0x80) {
+      ascii = false;
+      break;
+    }
+  }
+
+  QString folded =
+      ascii ? name : name.normalized(QString::NormalizationForm_C);
+
+  // a-z only. QString::toUpper() folds non-ASCII case and grows "Straße";
+  // std::toupper() is locale-dependent and byte-wise.
+  for (QChar &c : folded) {
+    if (c >= u'a' && c <= u'z') {
+      c = QChar(static_cast<char16_t>(c.unicode() - 32));
+    }
+  }
+  return folded;
+}
+
+/**
  * Converts a RS_LineType into a name for a line type.
  */
 /*QString LC_LineTypeNames::lineTypeToDescription(RS2::LineType lineType) {

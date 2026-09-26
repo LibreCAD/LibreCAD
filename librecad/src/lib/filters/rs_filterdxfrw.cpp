@@ -45,6 +45,7 @@
 #include <sstream>
 #include <stack>
 #include <type_traits>
+#include <unordered_set>
 #include <utility>
 #include <vector>
 
@@ -54,6 +55,7 @@
 #include <QFileInfo>
 #include <QLocale>
 #include <QRegularExpression>
+#include <QSet>
 #include <QTemporaryFile>
 #if QT_VERSION >= QT_VERSION_CHECK(6, 4, 0)
 #include <QByteArrayView>
@@ -72,6 +74,7 @@
 #include "lc_containertraverser.h"
 #include "lc_defaults.h"
 #include "lc_dimarc.h"
+#include "lc_dimarrowblock.h"
 #include "lc_dimarrowregistry.h"
 #include "lc_dimordinate.h"
 #include "lc_dimstyle.h"
@@ -12265,6 +12268,7 @@ void RS_FilterDXFRW::prepareBlocks() {
       case RS2::EntityDimAngular:
       case RS2::EntityDimRadial:
       case RS2::EntityDimDiametric:
+      case RS2::EntityDimArc:
       case RS2::EntityDimLeader: {
         const QString prefix = "*D" + QString::number(++dimNum);
         m_noNameBlock[e] = prefix;
@@ -12621,7 +12625,8 @@ void RS_FilterDXFRW::writeBlocks() {
       }
       for (RS_Entity *entity :
            lc::LC_ContainerTraverser{*blk, RS2::ResolveNone}.entities()) {
-        if (!entity->getFlag(RS2::FlagDeleted) && consumed.count(entity) == 0) {
+        if (!entity->getFlag(RS2::FlagDeleted) && consumed.count(entity) == 0 &&
+            !writeDimArcSymbolAsArc(entity)) {
           writeEntity(entity);
         }
       }
@@ -12662,7 +12667,7 @@ void RS_FilterDXFRW::writeBlocks() {
     const auto ct = static_cast<RS_EntityContainer *>(it.key());
     for (RS_Entity *e :
          lc::LC_ContainerTraverser{*ct, RS2::ResolveNone}.entities()) {
-      if (e->isAlive()) {
+      if (e->isAlive() && !writeDimArcSymbolAsArc(e)) {
         writeEntity(e);
       }
     }
@@ -18832,10 +18837,110 @@ void RS_FilterDXFRW::writeDwgClasses() {
 #endif
 }
 
+namespace {
+// DXF cannot hold these in a name.
+bool isWritableLineTypeName(const QString &name) {
+  return !name.contains(QLatin1Char('\r')) &&
+         !name.contains(QLatin1Char('\n')) && !name.contains(QChar(u'\0'));
+}
+
+// A pen whose name means its own built-in, or cannot be written, uses the
+// built-in's name.
+QString lineTypeNameToWrite(const RS_Pen &pen) {
+  if (pen.getLineTypeFoldId() != 0) {
+    QString name = pen.getLineTypeName();
+    if (isWritableLineTypeName(name))
+      return name;
+  }
+  return LC_LineTypeNames::lineTypeToName(pen.getLineType());
+}
+
+// Every linetype name a writer emits as a string, first seen first, each once.
+// It walks what the writers walk: the top level of model space and of each
+// block, the children of pattern hatches, dimension overrides, layers, dim
+// styles, header variables and MLINESTYLE elements. Names given by handle are
+// left out: a handle only resolves through a record the file already has.
+std::vector<QString> referencedLineTypeNames(RS_Graphic &graphic) {
+  std::vector<QString> names;
+  QSet<QString> seenNames;
+  std::unordered_set<std::uint16_t> seenIds;
+  const auto addName = [&](const QString &name) {
+    if (name.trimmed().isEmpty() || !isWritableLineTypeName(name) ||
+        seenNames.contains(name))
+      return;
+    seenNames.insert(name);
+    names.push_back(name);
+  };
+  const auto addPen = [&](const RS_Pen &pen) {
+    if (pen.getLineTypeFoldId() != 0 &&
+        seenIds.insert(pen.getLineTypeId()).second)
+      addName(pen.getLineTypeName());
+  };
+  const auto addDimStyle = [&](const LC_DimStyle &style) {
+    addName(style.dimensionLine()->lineTypeName());
+    addName(style.extensionLine()->lineTypeFirstRaw());
+    addName(style.extensionLine()->lineTypeSecondRaw());
+  };
+  const auto addEntities = [&](const RS_EntityContainer &container) {
+    for (RS_Entity *e :
+         lc::LC_ContainerTraverser{container, RS2::ResolveNone}.entities()) {
+      if (e->getFlag(RS2::FlagDeleted))
+        continue;
+      addPen(e->getPen(false));
+      switch (e->rtti()) {
+      case RS2::EntityDimLinear:
+      case RS2::EntityDimOrdinate:
+      case RS2::EntityDimAligned:
+      case RS2::EntityDimAngular:
+      case RS2::EntityDimRadial:
+      case RS2::EntityDimDiametric:
+      case RS2::EntityDimArc:
+        if (const LC_DimStyle *style =
+                static_cast<RS_Dimension *>(e)->getDimStyleOverride())
+          addDimStyle(*style);
+        break;
+      case RS2::EntityHatch:
+        // R12 writes the pattern children with their own pens.
+        if (!static_cast<RS_Hatch *>(e)->isSolid()) {
+          for (RS_Entity *child :
+               lc::LC_ContainerTraverser{*static_cast<RS_Hatch *>(e),
+                                         RS2::ResolveNone}
+                   .entities())
+            addPen(child->getPen(false));
+        }
+        break;
+      default:
+        break;
+      }
+    }
+  };
+
+  addEntities(graphic);
+  for (unsigned i = 0; i < graphic.countBlocks(); i++) {
+    const RS_Block *block = graphic.blockAt(i);
+    if (!block->isDeleted())
+      addEntities(*block);
+  }
+  const RS_LayerList *layers = graphic.getLayerList();
+  for (unsigned i = 0; i < layers->count(); i++)
+    addPen(layers->at(i)->getPen());
+  for (const LC_DimStyle *style : *graphic.getDimStyleList()->getStylesList())
+    addDimStyle(*style);
+  for (const char *key : {"$CELTYPE", "$DIMLTYPE", "$DIMLTEX1", "$DIMLTEX2"})
+    addName(graphic.getVariableString(QLatin1String(key), QString()));
+  for (const auto &style : graphic.dwgAdvancedMetadata().mlineStyles()) {
+    for (const auto &element : style.elements)
+      addName(QString::fromStdString(element.linetype));
+  }
+  return names;
+}
+} // namespace
+
 void RS_FilterDXFRW::writeLType(const UTF8STRING &lTypeName,
                                 const UTF8STRING &ltDescription, int ltSize,
                                 double ltLength,
                                 const std::vector<double> &ltPath) {
+  m_builtinLTypePaths[normalizeDwgTableName(lTypeName)] = ltPath;
   DRW_LType ltype;
   ltype.updateValues(lTypeName, ltDescription, ltSize, ltLength, ltPath);
   if (const auto *source =
@@ -18881,6 +18986,7 @@ bool RS_FilterDXFRW::writeLTypeRecord(DRW_LType &ltype) {
 
 void RS_FilterDXFRW::writeLTypes() {
   m_builtinLTypeNames.clear();
+  m_builtinLTypePaths.clear();
   writeLType("CONTINUOUS", "Solid line", 0, 0, {});
   writeLType("ByLayer", "", 0, 0, {});
   writeLType("ByBlock", "", 0, 0, {});
@@ -18962,6 +19068,39 @@ void RS_FilterDXFRW::writeLTypes() {
     DRW_LType ltype = entry.second;
     (void)writeLTypeRecord(ltype);
   }
+  // A name that only a pen, a layer or a style gives still needs a record.
+  // It gets the dashes of the built-in it is drawn as, which are none for a
+  // name LibreCAD does not know. These records only add to the ones above.
+  // Blanks around a string do not make another name: pens have none, so
+  // names without them go first, and a padded one adds a record only for a
+  // name that has none yet.
+  std::vector<QString> names = referencedLineTypeNames(*m_graphic);
+  std::stable_partition(names.begin(), names.end(), [](const QString &name) {
+    return name.trimmed() == name;
+  });
+  for (const QString &name : names) {
+    const std::string utf8 = name.toStdString();
+    const std::string trimmed =
+        normalizeDwgTableName(name.trimmed().toStdString());
+    if (emittedNames.count(trimmed) != 0 ||
+        !emittedNames.insert(normalizeDwgTableName(utf8)).second)
+      continue;
+    emittedNames.insert(trimmed);
+    const std::string family = normalizeDwgTableName(
+        LC_LineTypeNames::lineTypeToName(
+            LC_LineTypeNames::nameToLineType(name))
+            .toStdString());
+    const auto literal = m_builtinLTypePaths.find(family);
+    const std::vector<double> path = literal != m_builtinLTypePaths.end()
+                                         ? literal->second
+                                         : std::vector<double>{};
+    double length = 0.0;
+    for (const double dash : path)
+      length += std::fabs(dash);
+    DRW_LType marker;
+    marker.updateValues(utf8, "", static_cast<int>(path.size()), length, path);
+    (void)writeLTypeRecord(marker);
+  }
 }
 
 void RS_FilterDXFRW::writeLayers() {
@@ -18976,8 +19115,7 @@ void RS_FilterDXFRW::writeLayers() {
     lay.color = LC_ColorNumbers::colorToNumber(pen.getColor(), &exact_rgb);
     lay.color24 = exact_rgb;
     lay.lWeight = widthToNumber(pen.getWidth());
-    lay.lineType =
-        LC_LineTypeNames::lineTypeToName(pen.getLineType()).toStdString();
+    lay.lineType = lineTypeNameToWrite(pen).toStdString();
     lay.flags = l->isFrozen() ? 0x01 : 0x00;
     if (l->isLocked()) {
       lay.flags |= 0x04;
@@ -20362,6 +20500,47 @@ void RS_FilterDXFRW::prepareDRWDimStyleExtData(DRW_Dimstyle &d,
     } catch (...) {
       m_writeFailed = true;
     }
+  }
+  // R2000/R2004 keep a style's own DIMLTYPE/DIMLTEX1/DIMLTEX2 in this XDATA
+  // instead of the native groups 345-347 that prepareDRWDimStyleDimLine/
+  // ExtLine write for > AC1018. writeDimstyles() replays a source table
+  // entry's own raw extData verbatim right after this returns, byte for
+  // byte, whenever this style came from one; only add these three ourselves
+  // when there is no such source, so a style with a name a file already
+  // carried never ends up with the pair written twice.
+  if (m_dxfW != nullptr && m_dxfW->getVersion() > DRW::AC1014 &&
+      m_dxfW->getVersion() <= DRW::AC1018 &&
+      m_graphic->dwgAdvancedMetadata().findDimStyleTableEntryByName(
+          d.name) == nullptr) {
+    auto dimLine = ds->dimensionLine();
+    auto extLine = ds->extensionLine();
+    const auto addLineTypeXData = [&](const char *appName, int typeCode,
+                                      const QString &name, bool modified) {
+      if (!modified)
+        return;
+      const std::uint32_t handle = findLineTypeHandleToWrite(name);
+      if (handle == DRW::NoHandle)
+        return;
+      try {
+        if (!d.addExtData(std::make_unique<DRW_Variant>(1001, appName)) ||
+            !d.addExtData(std::make_unique<DRW_Variant>(1070, typeCode)) ||
+            !d.addExtData(std::make_unique<DRW_Variant>(
+                1005, toHexStr(handle).toStdString()))) {
+          m_writeFailed = true;
+        }
+      } catch (...) {
+        m_writeFailed = true;
+      }
+    };
+    addLineTypeXData(
+        "ACAD_DSTYLE_DIM_LINETYPE", 380, dimLine->lineTypeName(),
+        dimLine->checkModifyState(LC_DimStyle::DimensionLine::$DIMLTYPE));
+    addLineTypeXData(
+        "ACAD_DSTYLE_DIM_EXT1_LINETYPE", 381, extLine->lineTypeFirstRaw(),
+        extLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMLTEX1));
+    addLineTypeXData(
+        "ACAD_DSTYLE_DIM_EXT2_LINETYPE", 382, extLine->lineTypeSecondRaw(),
+        extLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMLTEX2));
   }
   // todo - add support of ACAD_DIMSTYLE_DIMBREAK
   // todo - add support of ACAD_DIMSTYLE_DIMJAG
@@ -29309,6 +29488,21 @@ void RS_FilterDXFRW::writeEntity(RS_Entity *e) {
   case RS2::EntityParabola:
     writeParabola(static_cast<LC_Parabola *>(e));
     break;
+  case RS2::EntityDimArrowBlock: {
+    // An arrowhead is not itself a persistent, saved entity kind (comment on
+    // LC_DimArrowPoly::doGetNearestPointOnEntity) -- write whatever real
+    // primitives exportPrimitives() gives for it (SOLID/LINE/..., or none
+    // yet for a kind that has not been given one) with its own pen, in
+    // place of it.
+    auto *arrow = static_cast<LC_DimArrow *>(e);
+    const RS_Pen pen = arrow->getPen(false);
+    for (auto &primitive : arrow->exportPrimitives()) {
+      primitive->setPen(pen);
+      primitive->setLayer(nullptr);
+      writeEntity(primitive.get());
+    }
+    break;
+  }
     //    case RS2::EntityVertex:
     //        break;
   case RS2::EntityInsert:
@@ -29606,6 +29800,32 @@ void RS_FilterDXFRW::writeCircle(const RS_Circle *c) {
   noteDxfWrite(m_dxfW->writeCircle(&circle));
 }
 
+// An arc-length dimension's "∩" symbol (LC_DimArc::updateEntity(),
+// lc_dimarc.cpp) is drawn as a one-character MText -- a Unicode glyph a
+// reader may have no font for, and never a linetype-carrying entity at all.
+// AutoCAD writes it as a real ARC; no two real sample files agreed on its
+// exact size (0.817 vs 0.933 times text height, the only two available), so
+// this does not attempt to match that construction. It builds the arc from
+// the same height, position and angle LC_DimArc already chose for the
+// glyph, as a semicircle the width of the glyph's own height, open toward
+// the text -- LibreCAD's own placement, expressed as geometry instead of a
+// character. Returns false, having written nothing, for any other entity.
+bool RS_FilterDXFRW::writeDimArcSymbolAsArc(RS_Entity *e) {
+  if (e == nullptr || e->rtti() != RS2::EntityMText)
+    return false;
+  const auto *symbol = static_cast<const RS_MText *>(e);
+  if (symbol->getText() != QStringLiteral("∩"))
+    return false;
+  const double radius = symbol->getHeight() / 2.0;
+  const double angle = symbol->getAngle();
+  RS_Arc arc(nullptr, RS_ArcData(symbol->getInsertionPoint(), radius, angle,
+                                 angle + M_PI, false));
+  arc.setPen(symbol->getPen(false));
+  arc.setLayer(nullptr);
+  writeArc(&arc);
+  return true;
+}
+
 /**
  * Writes the given arc entity to the file.
  */
@@ -29730,6 +29950,7 @@ void RS_FilterDXFRW::writePolyline(const RS_Polyline *p) {
   }
 
   RS_Entity *nextEntity = nullptr;
+  RS_AtomicEntity *lastSegment = nullptr;
   for (RS_Entity *e = p->firstEntity(RS2::ResolveNone); e != nullptr;
        e = nextEntity) {
     nextEntity = p->nextEntity(RS2::ResolveNone);
@@ -29738,6 +29959,7 @@ void RS_FilterDXFRW::writePolyline(const RS_Polyline *p) {
       continue;
     }
     RS_AtomicEntity *ae = static_cast<RS_AtomicEntity *>(e);
+    lastSegment = ae;
 
     // Write vertex:
     double bulge = 0.0;
@@ -29772,6 +29994,17 @@ void RS_FilterDXFRW::writePolyline(const RS_Polyline *p) {
       pol.vertlist.back()->extData.push_back(
           std::make_shared<DRW_Variant>(1040, yRadius));
     }
+  }
+  // Each vertex above is a segment's FROM point (its bulge, when set,
+  // describes that segment). A closed polyline's last segment returns to the
+  // first vertex, so nothing further is needed; an open one's last segment
+  // ends at a point that starts no segment of its own and, left out of this
+  // loop entirely, was silently dropped -- degenerating a single-segment
+  // open polyline (e.g. one DXF LINE read back as a 2-point polyline) to one
+  // point.
+  if (!p->isClosed() && lastSegment != nullptr) {
+    pol.addVertex(DRW_Vertex(lastSegment->getEndpoint().x,
+                             lastSegment->getEndpoint().y, 0.0, 0.0));
   }
   getEntityAttributes(&pol, p);
   if (auto lwMeta = extractLWPolylineMeta(const_cast<RS_Polyline *>(p))) {
@@ -31835,8 +32068,7 @@ void RS_FilterDXFRW::setEntityAttributes(RS_Entity *entity,
   pen.setColor(col);
 
   // Linetype:
-  pen.setLineType(LC_LineTypeNames::nameToLineType(
-      QString::fromUtf8(attrib->lineType.c_str())));
+  pen.setLineTypeName(QString::fromUtf8(attrib->lineType.c_str()));
 
   // Width:
   pen.setWidth(numberToWidth(attrib->lWeight));
@@ -32015,7 +32247,7 @@ void RS_FilterDXFRW::getEntityAttributes(DRW_Entity *ent,
   // color);
 
   // Linetype:
-  QString lineType = LC_LineTypeNames::lineTypeToName(pen.getLineType());
+  QString lineType = lineTypeNameToWrite(pen);
 
   // Width:
   DRW_LW_Conv::lineWidth width = widthToNumber(pen.getWidth());
@@ -32175,9 +32407,12 @@ RS_Pen RS_FilterDXFRW::attributesToPen(const DRW_Layer *att) const {
     col.setColorName(QString::fromUtf8(att->colorName.c_str()));
   }
 
+  // Blanks alone stay solid here: a layer cannot be ByLayer.
+  const QString lineType = QString::fromUtf8(att->lineType.c_str());
   RS_Pen pen(col, numberToWidth(att->lWeight),
-             LC_LineTypeNames::nameToLineType(
-                 QString::fromUtf8(att->lineType.c_str())));
+             LC_LineTypeNames::nameToLineType(lineType));
+  if (!lineType.trimmed().isEmpty())
+    pen.setLineTypeName(lineType);
   return pen;
 }
 
@@ -33258,7 +33493,11 @@ void RS_FilterDXFRW::parseDimStyleExtData(const DRW_Dimstyle &s,
         continue;
       }
       applicationName = QString::fromStdString(value);
-      expectType = false; // for later "not", as actually we do expect it
+      // Each section is "1001 appname" then one or more (1070 field-code,
+      // value) pairs -- a 392/0 DIMTALN payload, say, or this PR's own
+      // 380/<handle>. A fresh 1001 starts by expecting the first pair's
+      // field code.
+      expectType = true;
       continue;
     }
     case 1002: {
@@ -33277,6 +33516,7 @@ void RS_FilterDXFRW::parseDimStyleExtData(const DRW_Dimstyle &s,
       if (expectType) {
         // code of var
         currentValType = val;
+        expectType = false;
       } else {
         // it fields
         auto intVar = DRW_Variant(currentValType, val);
@@ -33294,6 +33534,18 @@ void RS_FilterDXFRW::parseDimStyleExtData(const DRW_Dimstyle &s,
         continue;
       auto doubleVar = DRW_Variant(currentValType, value);
       tagData.push_back(doubleVar);
+      expectType = true;
+      break;
+    }
+    case 1005: {
+      // A handle-typed value: ACAD_DSTYLE_DIM_LINETYPE and its _EXT1_/_EXT2_
+      // siblings pair their 1070 type code with a 1005 handle here, not
+      // another 1070/1040 value.
+      std::string handle;
+      if (readXDataString(v, 1005, handle) != XDataReadResult::Valid)
+        continue;
+      auto handleVar = DRW_Variant(currentValType, handle);
+      tagData.push_back(handleVar);
       expectType = true;
       break;
     }
@@ -33316,6 +33568,15 @@ void RS_FilterDXFRW::applyParsedDimStyleExtData(
   }
   const DRW_Variant *var = &vector.at(0);
   int code = var->code();
+  // ACAD_DSTYLE_DIM_LINETYPE and its _EXT1_/_EXT2_ siblings hold the hex
+  // handle of an LTYPE record, the same reference group 345-347 hold on
+  // R2007+ (parseDimStyleGroups, "$DIMLTYPE").
+  const auto dimStyleXDataLineTypeName = [this](const DRW_Variant *v) {
+    bool ok = false;
+    const std::uint32_t handle =
+        QString::fromStdString(v->c_str()).toUInt(&ok, 16);
+    return ok ? lineTypeNameForHandle(m_graphic, handle) : QString{};
+  };
 
   if (appName == "ACAD_DSTYLE_DIMJAG") {
     if (code == 388) {
@@ -33336,6 +33597,29 @@ void RS_FilterDXFRW::applyParsedDimStyleExtData(
     if (code == 391) {
       // double val = var->d_val();
       // fixme - decide where to store it. This is "Dimension Break" in acad.
+    }
+  } else if (appName == "ACAD_DSTYLE_DIM_LINETYPE") {
+    // code 380, handle: R2000/R2004 keep a style's own DIMLTYPE here instead
+    // of in the group 345 that #2928 reads on R2007+ (dimStyleGroup's own
+    // struct has no field for it at those versions).
+    if (code == 380 && var->type() == DRW_Variant::STRING) {
+      const QString name = dimStyleXDataLineTypeName(var);
+      if (!name.isEmpty())
+        dimStyle->dimensionLine()->setLineType(name);
+    }
+  } else if (appName == "ACAD_DSTYLE_DIM_EXT1_LINETYPE") {
+    // code 381, handle: the R2000/R2004 form of group 346.
+    if (code == 381 && var->type() == DRW_Variant::STRING) {
+      const QString name = dimStyleXDataLineTypeName(var);
+      if (!name.isEmpty())
+        dimStyle->extensionLine()->setLineTypeFirst(name);
+    }
+  } else if (appName == "ACAD_DSTYLE_DIM_EXT2_LINETYPE") {
+    // code 382, handle: the R2000/R2004 form of group 347.
+    if (code == 382 && var->type() == DRW_Variant::STRING) {
+      const QString name = dimStyleXDataLineTypeName(var);
+      if (!name.isEmpty())
+        dimStyle->extensionLine()->setLineTypeSecond(name);
     }
   }
 }

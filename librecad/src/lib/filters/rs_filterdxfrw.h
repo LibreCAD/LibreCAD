@@ -2275,6 +2275,7 @@ public:
   void writeLine(const RS_Line *l);
   void writeCircle(const RS_Circle *c);
   void writeArc(const RS_Arc *a);
+  bool writeDimArcSymbolAsArc(RS_Entity *e);
   void writeEllipse(const RS_Ellipse *s);
   void writeHyperbola(LC_Hyperbola *h);
   void writeParabola(LC_Parabola *p);
@@ -3056,6 +3057,8 @@ private:
   // Normalised names of the built-in LTYPE records written by writeLType()
   // during writeLTypes(); imported raw records with these names are skipped.
   std::set<std::string> m_builtinLTypeNames;
+  // The same records' own dashes, before any imported record replaced them.
+  std::map<std::string, std::vector<double>> m_builtinLTypePaths;
 
   /** DXF export (DWG->DXF): SOURCE handles of the named parent dictionaries
    *  emitted via setNamedDictObjects (F4-followup). Computed in fileExport,

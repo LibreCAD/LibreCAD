@@ -39,6 +39,7 @@ namespace LC_LineTypeNames {
 
     RS2::LineType nameToLineType(const QString& name);
     QString lineTypeToName(RS2::LineType lineType);
+    QString foldName(const QString& name);
     // QString lineTypeToDescription(RS2::LineType lineType);
 }
 
