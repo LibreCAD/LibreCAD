@@ -2032,8 +2032,8 @@ bool dxfRW::writeEntity(DRW_Entity *ent, bool captureSourceHandle,
     return true;
 }
 
-bool dxfRW::writeSequenceEnd(std::uint32_t ownerHandle) {
-    if (writer == nullptr || ownerHandle == DRW::NoHandle
+bool dxfRW::writeSequenceEnd(const DRW_Entity &owner) {
+    if (writer == nullptr || owner.handle == DRW::NoHandle
         || writer->hasWriteError()) {
         m_writeError = true;
         return false;
@@ -2048,16 +2048,32 @@ bool dxfRW::writeSequenceEnd(std::uint32_t ownerHandle) {
         return false;
     }
     if (version > DRW::AC1014
-        && !writer->writeString(330, toHexStr(ownerHandle))) {
+        && !writer->writeString(330, toHexStr(owner.handle))) {
         m_writeError = true;
         return false;
     }
-    if (version > DRW::AC1009
-        && (!writer->writeString(100, "AcDbEntity")
-            || !writer->writeString(8, "0")
-            || !writer->writeString(100, "AcDbSequenceEnd"))) {
-        m_writeError = true;
-        return false;
+    // A SEQEND is not drawn, but real DXF/DWG still ties it to its owning
+    // POLYLINE/INSERT's layer, linetype and color -- like a VERTEX -- rather
+    // than defaulting to layer "0"/BYLAYER as this record's own construction
+    // would. Left as "0" (hardcoded) this dropped the owner's layer outright,
+    // and a name-only linetype reference the owner alone still used could
+    // vanish between it and here.
+    if (version > DRW::AC1009) {
+        if (!writer->writeString(100, "AcDbEntity")) {
+            m_writeError = true;
+            return false;
+        }
+        writer->writeUtf8String(8, owner.layer);
+        writer->writeUtf8String(6, owner.lineType);
+        writer->writeInt16(62, owner.color);
+        if (!writer->writeString(100, "AcDbSequenceEnd")) {
+            m_writeError = true;
+            return false;
+        }
+    } else {
+        writer->writeUtf8Caps(8, owner.layer);
+        writer->writeUtf8Caps(6, owner.lineType);
+        writer->writeInt16(62, owner.color);
     }
     return !writer->hasWriteError();
 }
@@ -3665,6 +3681,7 @@ bool dxfRW::writePolyline(DRW_Polyline *ent) {
     const std::uint32_t parentHandle = ent->handle;
     for (const auto& vertex : ent->vertlist) {
         DRW_Vertex *v = vertex.get();
+        v->copyPresentationFrom(*ent);
         writer->writeString(0, "VERTEX");
         if (!writeEntity(v, /*captureSourceHandle=*/true, parentHandle))
             return false;
@@ -3728,7 +3745,7 @@ bool dxfRW::writePolyline(DRW_Polyline *ent) {
             }
         }
     }
-    if (!writeSequenceEnd(parentHandle))
+    if (!writeSequenceEnd(*ent))
         return false;
     if (!record.commit()) {
         m_writeError = true;
@@ -4667,7 +4684,7 @@ bool dxfRW::writeInsert(DRW_Insert *ent){
             if (att && !writeAttrib(att.get(), insertHandle))
                 return false;
         }
-        if (!writeSequenceEnd(insertHandle))
+        if (!writeSequenceEnd(*ent))
             return false;
     }
     if (writer->hasWriteError() || !record.commit()) {

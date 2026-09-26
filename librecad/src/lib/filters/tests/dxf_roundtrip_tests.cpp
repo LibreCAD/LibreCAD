@@ -7489,6 +7489,51 @@ TEST_CASE("DWG round-trip keeps unregistered linetype names",
 }
 #endif // DWGSUPPORT
 
+// R2000+ writes a plain 2D polyline (no ellipse segment) as LWPOLYLINE, whose
+// own writer (RS_FilterDXFRW::writeLWPolyline) already added the last
+// segment's endpoint correctly before this fix. The old-style POLYLINE/VERTEX
+// writer this fix touches (RS_FilterDXFRW::writePolyline) is reached only for
+// an R12 target, or a polyline holding an ellipse segment at any version
+// (writeLWPolyline's has_ellipse check) -- an R12 target is the simpler of
+// the two to construct.
+TEST_CASE("An open polyline's VERTEX and SEQEND carry its own layer and "
+          "linetype in R12",
+          "[dxf][roundtrip][filter][polyline][linetype][named]") {
+  ensureSettings();
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  graphic.addLayer(new RS_Layer(QStringLiteral("PLINE_LAYER")));
+
+  auto *polyline = new RS_Polyline(&graphic);
+  polyline->setLayer(QStringLiteral("PLINE_LAYER"));
+  polyline->setPen(
+      RS_Pen(RS_Color(Qt::black), RS2::WidthByLayer, RS2::LineByBlock));
+  polyline->addVertex(RS_Vector(0.0, 0.0, 0.0));
+  polyline->addVertex(RS_Vector(10.0, 0.0, 0.0));
+  graphic.addEntity(polyline);
+
+  const std::string out12 = tmpFile("polyline_vertex_r12.dxf");
+  std::filesystem::remove(out12);
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out12),
+                              RS2::FormatDXFRW12));
+  }
+
+  // R12 upper-cases every name it writes (dxfWriter::writeUtf8Caps).
+  CHECK(sortedValues(recordGroupValues(out12, "VERTEX", "8")) ==
+        std::vector<std::string>{"PLINE_LAYER", "PLINE_LAYER"});
+  CHECK(sortedValues(recordGroupValues(out12, "VERTEX", "6")) ==
+        std::vector<std::string>{"BYBLOCK", "BYBLOCK"});
+  CHECK(recordGroupValues(out12, "SEQEND", "8") ==
+        std::vector<std::string>{"PLINE_LAYER"});
+  CHECK(recordGroupValues(out12, "SEQEND", "6") ==
+        std::vector<std::string>{"BYBLOCK"});
+
+  std::filesystem::remove(out12);
+}
+
 TEST_CASE("DXF ISO alias keeps its literal name instead of the family name",
           "[dxf][roundtrip][filter][linetype][named]") {
   ensureSettings();

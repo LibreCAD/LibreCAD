@@ -315,6 +315,17 @@ public:
         hasDsData = value ? 1 : 0;
     }
 
+    //! A VERTEX or SEQEND's own layer, linetype and color default to "0",
+    //! BYLAYER and ByLayer -- construction never sets them from its owning
+    //! POLYLINE or INSERT. Across a large DXF corpus these three always
+    //! equal the owner's (lineweight does not: real files never carry an
+    //! explicit one on either record, so it is left alone here).
+    void copyPresentationFrom(const DRW_Entity &owner) {
+        layer = owner.layer;
+        lineType = owner.lineType;
+        color = owner.color;
+    }
+
     //! Values decoded from the common DWG entity handle tail.
     [[nodiscard]] std::int32_t dwgReactorCount() const noexcept {
         return numReactors;
