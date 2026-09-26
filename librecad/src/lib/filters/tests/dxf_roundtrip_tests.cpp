@@ -7875,6 +7875,84 @@ TEST_CASE("An active pen carries its linetype identity into another document",
   std::filesystem::remove(out);
 }
 
+// AC1015/AC1018 (R2000/R2004) keep a DIMSTYLE's own DIMLTYPE/DIMLTEX1/
+// DIMLTEX2 in ACAD_DSTYLE_DIM[_EXT1|_EXT2]_LINETYPE XDATA (1001 app name,
+// 1070 380/381/382, 1005 LTYPE handle), not in the native 345-347 groups
+// R2007+ uses (#2928).
+const char *const kNamedR2000DimStyleXDataFixture =
+    "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1015\n0\nENDSEC\n"
+    "0\nSECTION\n2\nTABLES\n"
+    "0\nTABLE\n2\nLTYPE\n5\n5\n330\n0\n100\nAcDbSymbolTable\n70\n1\n"
+    "0\nLTYPE\n5\n40\n330\n5\n"
+    "100\nAcDbSymbolTableRecord\n100\nAcDbLinetypeTableRecord\n"
+    "2\nVENDOR_XDIM\n70\n0\n3\nVendor XDATA dimstyle linetype\n72\n65\n"
+    "73\n2\n40\n40.0\n49\n20.0\n74\n0\n49\n-20.0\n74\n0\n"
+    "0\nENDTAB\n"
+    "0\nTABLE\n2\nLAYER\n5\n2\n330\n0\n100\nAcDbSymbolTable\n70\n1\n"
+    "0\nLAYER\n5\n50\n330\n2\n"
+    "100\nAcDbSymbolTableRecord\n100\nAcDbLayerTableRecord\n"
+    "2\n0\n70\n0\n62\n7\n6\nCONTINUOUS\n"
+    "0\nENDTAB\n"
+    "0\nTABLE\n2\nDIMSTYLE\n5\nA\n330\n0\n"
+    "100\nAcDbSymbolTable\n70\n1\n100\nAcDbDimStyleTable\n71\n0\n"
+    "0\nDIMSTYLE\n105\n31\n330\nA\n"
+    "100\nAcDbSymbolTableRecord\n100\nAcDbDimStyleTableRecord\n"
+    "2\nVENDOR_XDIM_STYLE\n70\n0\n"
+    "1001\nACAD_DSTYLE_DIM_LINETYPE\n1070\n380\n1005\n40\n"
+    "1001\nACAD_DSTYLE_DIM_EXT1_LINETYPE\n1070\n381\n1005\n40\n"
+    "1001\nACAD_DSTYLE_DIM_EXT2_LINETYPE\n1070\n382\n1005\n40\n"
+    "0\nENDTAB\n0\nENDSEC\n"
+    "0\nSECTION\n2\nENTITIES\n0\nENDSEC\n0\nEOF\n";
+
+TEST_CASE("DXF DIMSTYLE linetypes in AC1015/AC1018 XDATA are read and "
+          "written back",
+          "[dxf][roundtrip][filter][linetype][named][dimstyle]") {
+  ensureSettings();
+  const std::string src =
+      writeFixture("named_xdim_src.dxf", kNamedR2000DimStyleXDataFixture);
+  const std::string out = tmpFile("named_xdim_out.dxf");
+  std::filesystem::remove(out);
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  const LC_DimStyle *style =
+      graphic.getDimStyleList()->findByName(QStringLiteral("VENDOR_XDIM_STYLE"));
+  REQUIRE(style != nullptr);
+  CHECK(style->dimensionLine()->lineTypeName() ==
+        QStringLiteral("VENDOR_XDIM"));
+  CHECK(style->extensionLine()->lineTypeFirstRaw() ==
+        QStringLiteral("VENDOR_XDIM"));
+  CHECK(style->extensionLine()->lineTypeSecondRaw() ==
+        QStringLiteral("VENDOR_XDIM"));
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW2000));
+  }
+  // A single unnamed-type style like this one is its own base style, so
+  // export also emits its own (unrelated) ACAD_DSTYLE_DIMTALN default;
+  // check the three linetype names are each written once rather than
+  // requiring an exact list.
+  const auto appNames = recordGroupValues(out, "DIMSTYLE", "1001");
+  for (const char *name : {"ACAD_DSTYLE_DIM_LINETYPE",
+                           "ACAD_DSTYLE_DIM_EXT1_LINETYPE",
+                           "ACAD_DSTYLE_DIM_EXT2_LINETYPE"}) {
+    INFO(name);
+    CHECK(countValues(appNames, name) == 1);
+  }
+  // The fixture's own LTYPE record (two dash segments) is unmodified and
+  // still there -- not replaced by a name-only marker.
+  CHECK(ltypeRecordGroupValues(out, "VENDOR_XDIM", "73") ==
+        std::vector<std::string>{"2"});
+
+  std::filesystem::remove(out);
+}
+
 TEST_CASE("DXF a linetype named only by an MLINESTYLE element reaches the walk",
           "[dxf][roundtrip][filter][linetype][named]") {
   ensureSettings();

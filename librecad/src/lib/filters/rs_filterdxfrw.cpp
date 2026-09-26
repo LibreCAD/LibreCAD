@@ -20498,6 +20498,47 @@ void RS_FilterDXFRW::prepareDRWDimStyleExtData(DRW_Dimstyle &d,
       m_writeFailed = true;
     }
   }
+  // R2000/R2004 keep a style's own DIMLTYPE/DIMLTEX1/DIMLTEX2 in this XDATA
+  // instead of the native groups 345-347 that prepareDRWDimStyleDimLine/
+  // ExtLine write for > AC1018. writeDimstyles() replays a source table
+  // entry's own raw extData verbatim right after this returns, byte for
+  // byte, whenever this style came from one; only add these three ourselves
+  // when there is no such source, so a style with a name a file already
+  // carried never ends up with the pair written twice.
+  if (m_dxfW != nullptr && m_dxfW->getVersion() > DRW::AC1014 &&
+      m_dxfW->getVersion() <= DRW::AC1018 &&
+      m_graphic->dwgAdvancedMetadata().findDimStyleTableEntryByName(
+          d.name) == nullptr) {
+    auto dimLine = ds->dimensionLine();
+    auto extLine = ds->extensionLine();
+    const auto addLineTypeXData = [&](const char *appName, int typeCode,
+                                      const QString &name, bool modified) {
+      if (!modified)
+        return;
+      const std::uint32_t handle = findLineTypeHandleToWrite(name);
+      if (handle == DRW::NoHandle)
+        return;
+      try {
+        if (!d.addExtData(std::make_unique<DRW_Variant>(1001, appName)) ||
+            !d.addExtData(std::make_unique<DRW_Variant>(1070, typeCode)) ||
+            !d.addExtData(std::make_unique<DRW_Variant>(
+                1005, toHexStr(handle).toStdString()))) {
+          m_writeFailed = true;
+        }
+      } catch (...) {
+        m_writeFailed = true;
+      }
+    };
+    addLineTypeXData(
+        "ACAD_DSTYLE_DIM_LINETYPE", 380, dimLine->lineTypeName(),
+        dimLine->checkModifyState(LC_DimStyle::DimensionLine::$DIMLTYPE));
+    addLineTypeXData(
+        "ACAD_DSTYLE_DIM_EXT1_LINETYPE", 381, extLine->lineTypeFirstRaw(),
+        extLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMLTEX1));
+    addLineTypeXData(
+        "ACAD_DSTYLE_DIM_EXT2_LINETYPE", 382, extLine->lineTypeSecondRaw(),
+        extLine->checkModifyState(LC_DimStyle::ExtensionLine::$DIMLTEX2));
+  }
   // todo - add support of ACAD_DIMSTYLE_DIMBREAK
   // todo - add support of ACAD_DIMSTYLE_DIMJAG
 }
@@ -33408,7 +33449,11 @@ void RS_FilterDXFRW::parseDimStyleExtData(const DRW_Dimstyle &s,
         continue;
       }
       applicationName = QString::fromStdString(value);
-      expectType = false; // for later "not", as actually we do expect it
+      // Each section is "1001 appname" then one or more (1070 field-code,
+      // value) pairs -- a 392/0 DIMTALN payload, say, or this PR's own
+      // 380/<handle>. A fresh 1001 starts by expecting the first pair's
+      // field code.
+      expectType = true;
       continue;
     }
     case 1002: {
@@ -33427,6 +33472,7 @@ void RS_FilterDXFRW::parseDimStyleExtData(const DRW_Dimstyle &s,
       if (expectType) {
         // code of var
         currentValType = val;
+        expectType = false;
       } else {
         // it fields
         auto intVar = DRW_Variant(currentValType, val);
@@ -33444,6 +33490,18 @@ void RS_FilterDXFRW::parseDimStyleExtData(const DRW_Dimstyle &s,
         continue;
       auto doubleVar = DRW_Variant(currentValType, value);
       tagData.push_back(doubleVar);
+      expectType = true;
+      break;
+    }
+    case 1005: {
+      // A handle-typed value: ACAD_DSTYLE_DIM_LINETYPE and its _EXT1_/_EXT2_
+      // siblings pair their 1070 type code with a 1005 handle here, not
+      // another 1070/1040 value.
+      std::string handle;
+      if (readXDataString(v, 1005, handle) != XDataReadResult::Valid)
+        continue;
+      auto handleVar = DRW_Variant(currentValType, handle);
+      tagData.push_back(handleVar);
       expectType = true;
       break;
     }
@@ -33466,6 +33524,15 @@ void RS_FilterDXFRW::applyParsedDimStyleExtData(
   }
   const DRW_Variant *var = &vector.at(0);
   int code = var->code();
+  // ACAD_DSTYLE_DIM_LINETYPE and its _EXT1_/_EXT2_ siblings hold the hex
+  // handle of an LTYPE record, the same reference group 345-347 hold on
+  // R2007+ (parseDimStyleGroups, "$DIMLTYPE").
+  const auto dimStyleXDataLineTypeName = [this](const DRW_Variant *v) {
+    bool ok = false;
+    const std::uint32_t handle =
+        QString::fromStdString(v->c_str()).toUInt(&ok, 16);
+    return ok ? lineTypeNameForHandle(m_graphic, handle) : QString{};
+  };
 
   if (appName == "ACAD_DSTYLE_DIMJAG") {
     if (code == 388) {
@@ -33486,6 +33553,29 @@ void RS_FilterDXFRW::applyParsedDimStyleExtData(
     if (code == 391) {
       // double val = var->d_val();
       // fixme - decide where to store it. This is "Dimension Break" in acad.
+    }
+  } else if (appName == "ACAD_DSTYLE_DIM_LINETYPE") {
+    // code 380, handle: R2000/R2004 keep a style's own DIMLTYPE here instead
+    // of in the group 345 that #2928 reads on R2007+ (dimStyleGroup's own
+    // struct has no field for it at those versions).
+    if (code == 380 && var->type() == DRW_Variant::STRING) {
+      const QString name = dimStyleXDataLineTypeName(var);
+      if (!name.isEmpty())
+        dimStyle->dimensionLine()->setLineType(name);
+    }
+  } else if (appName == "ACAD_DSTYLE_DIM_EXT1_LINETYPE") {
+    // code 381, handle: the R2000/R2004 form of group 346.
+    if (code == 381 && var->type() == DRW_Variant::STRING) {
+      const QString name = dimStyleXDataLineTypeName(var);
+      if (!name.isEmpty())
+        dimStyle->extensionLine()->setLineTypeFirst(name);
+    }
+  } else if (appName == "ACAD_DSTYLE_DIM_EXT2_LINETYPE") {
+    // code 382, handle: the R2000/R2004 form of group 347.
+    if (code == 382 && var->type() == DRW_Variant::STRING) {
+      const QString name = dimStyleXDataLineTypeName(var);
+      if (!name.isEmpty())
+        dimStyle->extensionLine()->setLineTypeSecond(name);
     }
   }
 }
