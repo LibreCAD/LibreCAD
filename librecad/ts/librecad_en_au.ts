@@ -43,37 +43,37 @@
     <message>
         <location filename="../src/ui/generic/customtoolbarcreator.ui" line="14"/>
         <source>Frame</source>
-        <translation type="unfinished">Frame</translation>
+        <translation>Frame</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/customtoolbarcreator.ui" line="86"/>
         <source>&gt;</source>
-        <translation type="unfinished">&gt;</translation>
+        <translation>&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/customtoolbarcreator.ui" line="105"/>
         <source>&lt;</source>
-        <translation type="unfinished">&lt;</translation>
+        <translation>&lt;</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/customtoolbarcreator.ui" line="139"/>
         <source>+</source>
-        <translation type="unfinished"></translation>
+        <translation>+</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/customtoolbarcreator.ui" line="149"/>
         <source>-</source>
-        <translation type="unfinished"></translation>
+        <translation>-</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/customtoolbarcreator.ui" line="156"/>
         <source>input a name and then press +</source>
-        <translation type="unfinished"></translation>
+        <translation>input a name and then press +</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/customtoolbarcreator.ui" line="193"/>
         <source>Save</source>
-        <translation type="unfinished">Save</translation>
+        <translation>Save</translation>
     </message>
 </context>
 <context>
@@ -81,22 +81,22 @@
     <message>
         <location filename="../src/ui/generic/customwidgetcreator.ui" line="14"/>
         <source>Frame</source>
-        <translation type="unfinished">Frame</translation>
+        <translation>Frame</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/customwidgetcreator.ui" line="65"/>
         <source>-&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>-&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/customwidgetcreator.ui" line="72"/>
         <source>&lt;-</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;-</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/customwidgetcreator.ui" line="115"/>
         <source>Save</source>
-        <translation type="unfinished">Save</translation>
+        <translation>Save</translation>
     </message>
 </context>
 <context>
@@ -1674,7 +1674,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_customtoolbar.cpp" line="36"/>
         <source>Add or Remove Action</source>
-        <translation type="unfinished"></translation>
+        <translation>Add or Remove Action</translation>
     </message>
 </context>
 <context>
@@ -7296,42 +7296,42 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="17"/>
         <source>Drawing Variables</source>
-        <translation type="unfinished"></translation>
+        <translation>Drawing Variables</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="54"/>
         <source>Variable</source>
-        <translation type="unfinished"></translation>
+        <translation>Variable</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="59"/>
         <source>Code</source>
-        <translation type="unfinished"></translation>
+        <translation>Code</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="64"/>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Value</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="96"/>
         <source>&amp;OK</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;OK</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="99"/>
         <source>Alt+O</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+O</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="112"/>
         <source>Cancel</source>
-        <translation type="unfinished">Cancel</translation>
+        <translation>Cancel</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="115"/>
         <source>Esc</source>
-        <translation type="unfinished"></translation>
+        <translation>Esc</translation>
     </message>
 </context>
 <context>

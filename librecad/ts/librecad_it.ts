@@ -53,7 +53,7 @@
     <message>
         <location filename="../src/ui/generic/customtoolbarcreator.ui" line="105"/>
         <source>&lt;</source>
-        <translation type="unfinished">&lt;</translation>
+        <translation>&lt;</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/customtoolbarcreator.ui" line="139"/>

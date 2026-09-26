@@ -43,7 +43,7 @@
     <message>
         <location filename="../src/ui/generic/customtoolbarcreator.ui" line="14"/>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Оквир</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/customtoolbarcreator.ui" line="86"/>
@@ -81,7 +81,7 @@
     <message>
         <location filename="../src/ui/generic/customwidgetcreator.ui" line="14"/>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Оквир</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/customwidgetcreator.ui" line="65"/>

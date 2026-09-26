@@ -18054,13 +18054,7 @@ Please check its existence and permissions.</source>
         <source>Save %1 &amp;as...</source>
         <translation>ບັນທຶກ %1 &amp;ເປັນ...</translation>
     </message>
-    <message numerus="yes">
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1084"></location>
-        <source>Loaded %1 — modelspace is empty; %n block(s) in the Blocks dock contain geometry.</source>
-        <translation>
- <numerusform>ໂຫຼດ %1 — ພື້ນທີ່ໂມເດວຫວ່າງເປົ່າ; ມີ %n ບລັອກ ທີ່ມີຂໍ້ມູນເລຂາຄະນິດ.</numerusform>
- </translation>
-    </message>
+    
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1145"></location>
         <source>Save All cancelled</source>
@@ -29994,20 +29988,8 @@ Do you want to replace it?</source>
         <source>entities</source>
         <translation>ອົງປະກອບ</translation>
     </message>
-    <message numerus="yes">
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="310"></location>
-        <source>, and %n more class(es)</source>
-        <translation>
- <numerusform>, ແລະ ອີກ %n ຄລາສ</numerusform>
- </translation>
-    </message>
-    <message numerus="yes">
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1318"/>
-        <source>, and %n more object type(s)</source>
-        <translation>
- <numerusform>, ແລະ ອີກ %n ປະເພດອົງປະກອບ</numerusform>
- </translation>
-    </message>
+    
+    
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="313"></location>
         <source>DWG load: %1 vendor-extension entities not rendered (%2). These are typically AutoCAD Mechanical or other vertical-product custom classes that libdxfrw cannot decode.</source>

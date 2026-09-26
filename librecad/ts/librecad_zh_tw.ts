@@ -73,7 +73,7 @@
     <message>
         <location filename="../src/ui/generic/customtoolbarcreator.ui" line="193"/>
         <source>Save</source>
-        <translation type="unfinished">Save</translation>
+        <translation>儲存</translation>
     </message>
 </context>
 <context>
@@ -96,7 +96,7 @@
     <message>
         <location filename="../src/ui/generic/customwidgetcreator.ui" line="115"/>
         <source>Save</source>
-        <translation type="unfinished">Save</translation>
+        <translation>儲存</translation>
     </message>
 </context>
 <context>
