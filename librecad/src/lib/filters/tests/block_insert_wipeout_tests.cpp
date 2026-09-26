@@ -1058,6 +1058,30 @@ TEST_CASE("Current layers remain visible while lock state stays independent", "[
   CHECK(zeroLayer->isLocked());
 }
 
+TEST_CASE("Automatic active-layer fallback prefers an unlocked visible layer", "[layers][active]") {
+  ensureTestApp();
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+
+  auto *zeroLayer = graphic.findLayer(QStringLiteral("0"));
+  auto *lockedLayer = new RS_Layer(QStringLiteral("A_LOCKED"));
+  auto *unlockedLayer = new RS_Layer(QStringLiteral("B_UNLOCKED"));
+  auto *activeLayer = new RS_Layer(QStringLiteral("C_ACTIVE"));
+  REQUIRE(zeroLayer != nullptr);
+  graphic.addLayer(lockedLayer);
+  graphic.addLayer(unlockedLayer);
+  graphic.addLayer(activeLayer);
+
+  graphic.toggleLayerLock(lockedLayer);
+  graphic.toggleLayer(zeroLayer);
+  graphic.activateLayer(activeLayer);
+  graphic.toggleLayer(activeLayer);
+
+  CHECK(activeLayer->isFrozen());
+  CHECK_FALSE(unlockedLayer->isFrozen());
+  CHECK(graphic.getActiveLayer() == unlockedLayer);
+}
+
 TEST_CASE("Layer changes rebuild flattened nested INSERT visibility",
           "[block-insert][layer-visibility][insert-nested]") {
   ensureTestApp();

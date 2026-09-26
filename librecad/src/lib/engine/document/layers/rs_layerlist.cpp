@@ -522,8 +522,13 @@ void RS_LayerList::ensureActiveLayerIsVisible() {
     RS_Layer* fallback = nullptr;
     for (RS_Layer* layer : std::as_const(m_layers)) {
         if (!layer->isFrozen()) {
-            fallback = layer;
-            break;
+            if (fallback == nullptr) {
+                fallback = layer;
+            }
+            if (!layer->isLocked()) {
+                fallback = layer;
+                break;
+            }
         }
     }
 
