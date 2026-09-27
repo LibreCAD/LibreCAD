@@ -21683,8 +21683,12 @@ bool DRW_Viewport::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t 
     if (!ret || !buf->isGood() || !sBuf->isGood())
         return fail();
 
+    // R13-R2004 keep the handle stream inline (sBuf aliases buf), so by this
+    // point sBuf has necessarily moved past stringEndBit into the handle
+    // data; only R2007+ has a detached string stream to bound here (see the
+    // identical guard in DRW_Block::parseDwg).
     if (!buf->isGood() || !sBuf->isGood()
-        || currentDwgBit(sBuf) > stringEndBit)
+        || (version > DRW::AC1018 && currentDwgBit(sBuf) > stringEndBit))
         return fail();
 
     dwgBuffer handleProbe = buf->forkIndependent();
