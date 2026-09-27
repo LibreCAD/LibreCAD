@@ -9352,6 +9352,16 @@ bool DRW_Table::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
         m_semanticContentComplete = parseTableContent(
             version, &contentBuf, &contentStringBuf, &contentHandleBuf,
             parsedContent, tableBounds);
+        // parseTableContent fills columns (and any rows before the row/cell
+        // that failed) before reporting incompleteness. That grid geometry
+        // was validated against its own bounds and is still useful even
+        // when a later cell could not be decoded, so keep it regardless of
+        // m_semanticContentComplete instead of dropping it with the shell.
+        m_content = std::move(parsedContent);
+        if (m_content.m_tableStyleHandle != 0)
+            m_tableStyleHandle = m_content.m_tableStyleHandle;
+        else
+            m_tableStyleHandle = tableStyleHandle;
         if (!m_semanticContentComplete || !contentBuf.isGood()
             || !contentStringBuf.isGood() || !contentHandleBuf.isGood()) {
             // The frame, entity prefix, and common handles remain valid. Keep
@@ -9363,11 +9373,6 @@ bool DRW_Table::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
         *buf = contentBuf;
         *sBuf = contentStringBuf;
         hBuff = contentHandleBuf;
-        m_content = std::move(parsedContent);
-        if (m_content.m_tableStyleHandle != 0)
-            m_tableStyleHandle = m_content.m_tableStyleHandle;
-        else
-            m_tableStyleHandle = tableStyleHandle;
         if (!buf->isGood() || !sBuf->isGood() || !hBuff.isGood())
             return fail();
         if (!m_semanticContentComplete) {
