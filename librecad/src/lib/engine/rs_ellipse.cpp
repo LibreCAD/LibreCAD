@@ -597,19 +597,27 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
     // cos(t) = 2ax/(2(a^2-b^2)) for a query on the major axis (y = 0), and the
     // pair with sin(t) = -2by/(2(a^2-b^2)) for a query on the minor axis (x = 0).
     std::vector<std::pair<double, double>> directions{{1., 0.}, {0., 1.}, {-1., 0.}, {0., -1.}};
-    if (twoa2b2 != 0.) {
-        // (1 - c)(1 + c) instead of 1 - c^2 keeps the result accurate for c close to +-1
-        const double cosOnMajorAxis = twoax / twoa2b2;
-        if (std::abs(cosOnMajorAxis) <= 1.) {
-            const double sinTheta = std::sqrt((1. - cosOnMajorAxis) * (1. + cosOnMajorAxis));
-            directions.emplace_back(cosOnMajorAxis, sinTheta);
-            directions.emplace_back(cosOnMajorAxis, -sinTheta);
+    // The same threshold as the branch above: below it, a==b is treated as a circle, where these
+    // ratios would be an unstable division by a value that is small but not exactly zero.
+    if (a0 > RS_TOLERANCE) {
+        // (1 - c)(1 + c) instead of 1 - c^2 keeps the result accurate for c close to +-1.
+        // Each formula gives exactly a seeded vertex when x, respectively y, is zero: skip it
+        // there rather than adding a candidate already in the list.
+        if (twoax != 0.) {
+            const double cosOnMajorAxis = twoax / twoa2b2;
+            if (std::abs(cosOnMajorAxis) <= 1.) {
+                const double sinTheta = std::sqrt((1. - cosOnMajorAxis) * (1. + cosOnMajorAxis));
+                directions.emplace_back(cosOnMajorAxis, sinTheta);
+                directions.emplace_back(cosOnMajorAxis, -sinTheta);
+            }
         }
-        const double sinOnMinorAxis = -twoby / twoa2b2;
-        if (std::abs(sinOnMinorAxis) <= 1.) {
-            const double cosTheta = std::sqrt((1. - sinOnMinorAxis) * (1. + sinOnMinorAxis));
-            directions.emplace_back(cosTheta, sinOnMinorAxis);
-            directions.emplace_back(-cosTheta, sinOnMinorAxis);
+        if (twoby != 0.) {
+            const double sinOnMinorAxis = -twoby / twoa2b2;
+            if (std::abs(sinOnMinorAxis) <= 1.) {
+                const double cosTheta = std::sqrt((1. - sinOnMinorAxis) * (1. + sinOnMinorAxis));
+                directions.emplace_back(cosTheta, sinOnMinorAxis);
+                directions.emplace_back(-cosTheta, sinOnMinorAxis);
+            }
         }
     }
     for (double cosTheta : roots) {
@@ -621,11 +629,10 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
         }
         const double c = std::clamp(cosTheta, -1.0, 1.0);
         const double denominator = twoax - twoa2b2 * c;
-        if (denominator == 0.) {
-            // both sides of the stationary condition vanish: an axis candidate above
-            continue;
-        }
-        // Normalized, so a root with a rounding error still maps onto the ellipse
+        // Normalized, so a root with a rounding error still maps onto the ellipse. A zero or
+        // near-zero denominator (both sides of the stationary condition vanishing: an axis
+        // candidate above) gives 0/0 = NaN or an overflowing sinTheta; either way norm below is
+        // not finite, so no separate exact-zero guard is needed here.
         const double sinTheta = twoby * c / denominator;
         const double norm = std::hypot(c, sinTheta);
         if (norm > 0. && std::isfinite(norm)) {

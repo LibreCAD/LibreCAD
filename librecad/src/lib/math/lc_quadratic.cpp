@@ -548,11 +548,16 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
         return getIntersection(p1->flipXY(), p2->flipXY()).flipXY();
     }
 
-    // Radical axis optimization when quadratic parts are proportional (e.g. two circles)
+    // Radical axis optimization when quadratic parts are proportional (e.g. two circles).
+    // quadScale must track the conics' own coefficient magnitude with no absolute floor: a
+    // conic's coefficients are about 1/a^2, so a floor of 1.0 turns this relative tolerance into
+    // an absolute one for any ellipse bigger than about 1 drawing unit, and two ellipses that are
+    // merely similar in shape (not exactly proportional) then wrongly reduce to a radical axis,
+    // losing the genuine general-quadratic intersection.
     const auto c1 = p1->getCoefficients();
     const auto c2 = p2->getCoefficients();
     const double quadScale = std::max({std::abs(c1[0]), std::abs(c1[2]),
-                                       std::abs(c2[0]), std::abs(c2[2]), 1.0});
+                                       std::abs(c2[0]), std::abs(c2[2])});
 
     double t = 0.0;
     bool canReduce = false;

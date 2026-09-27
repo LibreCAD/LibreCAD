@@ -26,6 +26,7 @@
 **********************************************************************/
 
 #include <algorithm>
+#include <cfloat>
 #include <random>
 #include <vector>
 
@@ -58,18 +59,24 @@ double curveDistance(const RS_Entity* entity, const RS_Vector& point)
 {
     const std::vector<double> ce = entity->getQuadratic().getCoefficients();
     const double x = point.x, y = point.y;
-    double f = 0., fx = 0., fy = 0.;
+    double f = 0., fx = 0., fy = 0., gradientSize = 0.;
     if (ce.size() == 6) {
         f = ce[0]*x*x + ce[1]*x*y + ce[2]*y*y + ce[3]*x + ce[4]*y + ce[5];
         fx = 2.*ce[0]*x + ce[1]*y + ce[3];
         fy = ce[1]*x + 2.*ce[2]*y + ce[4];
+        gradientSize = std::abs(2.*ce[0]*x) + std::abs(ce[1]*y) + std::abs(ce[3])
+                      + std::abs(ce[1]*x) + std::abs(2.*ce[2]*y) + std::abs(ce[4]);
     } else if (ce.size() == 3) {
         f = ce[0]*x + ce[1]*y + ce[2];
         fx = ce[0];
         fy = ce[1];
+        gradientSize = std::abs(fx) + std::abs(fy);
     }
     const double gradient = std::hypot(fx, fy);
-    if (gradient > 0.) {
+    // A relative test, as conicPoint() (rs_math.cpp) uses for the same computation: an absolute
+    // gradient>0. test cannot tell a genuine small slope from rounding noise left over from
+    // cancellation in fx/fy, and returns an arbitrary abs(f)/gradient for the latter.
+    if (gradient > std::sqrt(DBL_EPSILON) * gradientSize) {
         return std::abs(f)/gradient;
     }
     double distance = RS_MAXDOUBLE;

@@ -1244,21 +1244,34 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverFull(const std::vector<st
     // conics are within onConicsTolerance of the point halfway between them too: near a tangent
     // point candidates from different roots are all verified, and the conics are as close as
     // that between them, while between two separate intersections at least one conic is farther.
-    std::vector<RS_Vector> points;
+    std::vector<std::pair<RS_Vector, double>> points; // each point with its own already-known offConics distance
     const auto addPoint = [&](RS_Vector vp) {
-        if (!simultaneousQuadraticVerify(m, vp) || offConics(m, vp) > onConicsTolerance) {
+        if (!simultaneousQuadraticVerify(m, vp)) {
             return;
         }
-        for (RS_Vector& point: points) {
+        const double d = offConics(m, vp);
+        if (d > onConicsTolerance) {
+            return;
+        }
+        for (auto& [point, pointD]: points) {
             if (offConics(m, (point + vp) * 0.5) <= onConicsTolerance) {
-                if (offConics(m, vp) < offConics(m, point)) {
+                if (d < pointD) {
                     point = vp;
+                    pointD = d;
                 }
                 return;
             }
         }
-        points.push_back(vp);
+        points.emplace_back(vp, d);
     };
+
+    // Each conic's own coefficients set the natural scale for judging whether its x^2 or x
+    // coefficient is negligible at a given y below: an absolute threshold fails the same way it
+    // did for the y-quartic above, once a conic's coefficients are small (a large ellipse) or
+    // large (an ill-conditioned intermediate, as for two circles' dual curves).
+    const double scale1 = std::max({std::abs(a), std::abs(b), std::abs(c), std::abs(d), std::abs(e), std::abs(f)});
+    const double scale2 = std::max({std::abs(g), std::abs(h), std::abs(i), std::abs(j), std::abs(k), std::abs(l)});
+    constexpr double relativeZero = 64. * DBL_EPSILON;
 
     std::vector<double> ce(3,0.);
     for (const double y: roots) {
@@ -1270,14 +1283,16 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverFull(const std::vector<st
         ce[0]=a;
         ce[1]=b*y+d;
         ce[2]=c*y*y+e*y+f;
-        if(std::abs(ce[0])<1e-75 && std::abs(ce[1])<1e-75) {
+        double zeroTol = relativeZero * scale1;
+        if(std::abs(ce[0])<=zeroTol && std::abs(ce[1])<=zeroTol) {
             ce[0]=g;
             ce[1]=h*y+j;
             ce[2]=i*y*y+k*y+l;
+            zeroTol = relativeZero * scale2;
         }
-        if(std::abs(ce[0])<1e-75 && std::abs(ce[1])<1e-75) continue;
+        if(std::abs(ce[0])<=zeroTol && std::abs(ce[1])<=zeroTol) continue;
 
-        if(std::abs(ce[0])>1e-75){
+        if(std::abs(ce[0])>zeroTol){
             const std::vector<double> ce2{ce[1]/ce[0], ce[2]/ce[0]};
             auto xRoots=quadraticSolver(ce2);
             if (xRoots.empty()) {
@@ -1292,7 +1307,8 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverFull(const std::vector<st
         }
         addPoint(RS_Vector(-ce[2]/ce[1], y));
     }
-    for (const RS_Vector& point: points) {
+    for (const auto& [point, pointD]: points) {
+        (void)pointD;
         ret.push_back(point);
     }
     if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
