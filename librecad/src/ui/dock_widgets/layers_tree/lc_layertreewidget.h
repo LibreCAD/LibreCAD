@@ -161,6 +161,7 @@ private:
     void doCreateLayersCopy(const QModelIndex& sourceIndex, bool duplicateEntities);
     void duplicateLayerEntities(const RS_Layer* sourceLayer, RS_Layer* copyLayer, LC_DocumentModificationBatch& ctx) const;
     void doMoveSelectionToLayer(const LC_LayerTreeItem* layerItem, bool duplicate, bool resolvePens = false) const;
+    void makeLayerEntitiesVisible(const RS_Layer* layer, const QList<RS_Entity*>& entities);
     void doRemoveLayersFromSource(LC_LayerTreeItem* source, bool removeChildrenOnly);
     void doRemoveLayers(QList<RS_Layer*>& layers) const;
     void editActiveLayer();
