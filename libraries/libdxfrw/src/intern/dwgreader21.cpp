@@ -1897,14 +1897,18 @@ bool dwgReader21::captureRawDwgDataSections() {
             }
             typed.m_name = section.m_name;
             typed.m_version = version;
-            // A structural DataStorage failure invalidates the section's
-            // owner links. Do not publish a partial index and then continue
-            // to modeler callbacks that would expose dangling presence bits.
-            if (typed.parseFailed || !typed.structurallyValid
-                || !typed.replayAllowed) {
-                return false;
+            // A structural DataStorage failure means this section's own
+            // index is unusable, but that is this one section's problem,
+            // not the whole file's: nothing downstream requires a non-empty
+            // m_dataStorageSections (linkDataStorage already treats "no
+            // candidate section" as an ordinary, counted miss), and the
+            // section's raw bytes still round-trip via stagedRawSections
+            // below. Abandon only the typed index instead of failing the
+            // entire table-read phase over one malformed helper section.
+            if (!typed.parseFailed && typed.structurallyValid
+                && typed.replayAllowed) {
+                stagedDataStorageSections.push_back(std::move(typed));
             }
-            stagedDataStorageSections.push_back(std::move(typed));
         }
         populateVbaProjectSectionView(section);
         if (section.m_name == "AcDb:VBAProject"
