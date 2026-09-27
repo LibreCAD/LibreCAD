@@ -12510,7 +12510,7 @@ Wilt u het vervangen?</translation>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="76"/>
         <source>LibreCAD 2.2.2-alpha development builds can read and write DWG files directly.</source>
-        <translation type="unfinished"/>
+        <translation>De ontwikkelversies van LibreCAD 2.2.2-alpha kunnen DWG-bestanden rechtstreeks lezen en schrijven.</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="78"/>

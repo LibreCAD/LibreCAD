@@ -10282,7 +10282,7 @@ A doni ta zëvendësoni?</translation>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="76"/>
         <source>LibreCAD 2.2.2-alpha development builds can read and write DWG files directly.</source>
-        <translation type="unfinished"/>
+        <translation>Versionet në zhvillim të LibreCAD 2.2.2-alpha mund të lexojnë dhe të shkruajnë skedarë DWG drejtpërdrejt.</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="78"/>

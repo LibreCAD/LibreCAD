@@ -12505,7 +12505,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="76"/>
         <source>LibreCAD 2.2.2-alpha development builds can read and write DWG files directly.</source>
-        <translation type="unfinished"/>
+        <translation>LibreCAD 2.2.2-alpha 개발 버전에서는 DWG 파일을 직접 읽고 쓸 수 있습니다.</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="78"/>

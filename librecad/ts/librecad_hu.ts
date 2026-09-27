@@ -12549,7 +12549,7 @@ Lecseréli?</translation>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="76"/>
         <source>LibreCAD 2.2.2-alpha development builds can read and write DWG files directly.</source>
-        <translation type="unfinished"/>
+        <translation>A LibreCAD 2.2.2-alpha fejlesztői verziója közvetlenül képes DWG fájlokat olvasni és írni.</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="78"/>

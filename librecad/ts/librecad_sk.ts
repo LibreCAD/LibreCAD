@@ -12506,7 +12506,7 @@ Chcete ho nahradiť?</translation>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="76"/>
         <source>LibreCAD 2.2.2-alpha development builds can read and write DWG files directly.</source>
-        <translation type="unfinished"/>
+        <translation>LibreCAD 2.2.2-alpha – vývojové verzie umožňujú priame čítanie a zápis súborov DWG.</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="78"/>

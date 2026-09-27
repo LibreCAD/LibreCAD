@@ -12366,7 +12366,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="76"/>
         <source>LibreCAD 2.2.2-alpha development builds can read and write DWG files directly.</source>
-        <translation type="unfinished"/>
+        <translation>LibreCAD 2.2.2-alpha பதிப்பின் மேம்பாட்டு உருவாக்கங்கள் DWG கோப்புகளை நேரடியாகப் படிக்கவும் எழுதவும் முடியும்.</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="78"/>

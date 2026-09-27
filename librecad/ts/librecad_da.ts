@@ -12505,7 +12505,7 @@ Vil du overskrive den?</translation>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="76"/>
         <source>LibreCAD 2.2.2-alpha development builds can read and write DWG files directly.</source>
-        <translation type="unfinished"/>
+        <translation>Udviklingsversionerne af LibreCAD 2.2.2-alpha kan læse og skrive DWG-filer direkte.</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="78"/>
