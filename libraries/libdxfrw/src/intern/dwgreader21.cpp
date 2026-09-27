@@ -416,7 +416,15 @@ bool dwgReader21::parseDataPage(const dwgSectionInfo &si, std::uint8_t *dData){
             DRW_DBG("\nERROR: dwgReader21::parseDataPage: compressed page size exceeds raw page size\n");
             return false;
         }
-        if (pi.dataSize != 0 && pi.uSize > pi.dataSize) {
+        // pi.dataSize ("ds" in the section map, read alongside the page's
+        // offset) is this section's declared COMPRESSED footprint for this
+        // page, not an uncompressed-size cap: uSize is already bounded above
+        // (line 402-405) against decodedBufferSize/pageCap/si.size, all of
+        // which are genuine uncompressed-size limits, so comparing the much
+        // smaller compressed dataSize against uSize only ever rejects
+        // legitimately-compressed real files. Compare it against cSize
+        // (also compressed) instead.
+        if (pi.dataSize != 0 && pi.cSize > pi.dataSize) {
             recordPageFailure(pi, DwgIntegrityCheckKind::PageGeometry);
             DRW_DBG("\nERROR: dwgReader21::parseDataPage: page data size declarations disagree\n");
             return false;
@@ -1199,8 +1207,12 @@ bool dwgReader21::readFileHeader() {
             pi.cSize = SectionsMapBuf.getRawLong64();
             pi.checksum = SectionsMapBuf.getRawLong64();
             pi.crc = SectionsMapBuf.getRawLong64();
+            // ds (== pi.dataSize) is this page's on-disk/RS-padded footprint,
+            // not a decompressed-size cap: a well-compressed page's uSize
+            // (decompressed) routinely exceeds it. Bound uSize against the
+            // section's own capacity/size below instead (already present).
             if (ds == 0 || ds > dwgSafety::MaxBufferSize
-                || pi.uSize == 0 || pi.cSize == 0 || pi.uSize > ds
+                || pi.uSize == 0 || pi.cSize == 0
                 || po > sectionCapacity
                 || pi.uSize > sectionCapacity - po
                 || po > secInfo.size
@@ -1277,9 +1289,17 @@ bool dwgReader21::readFileHeader() {
             parsedSections.emplace(sectionId, std::move(secInfo));
     }
 
-    // SectionsAmount includes the empty descriptor that terminates the map.
-    if (!SectionsMapBuf.isGood() || !sawEmptySection
-        || sectionCount != SectionsAmount) {
+    // SectionsAmount is documented (above, where it is read) as "number of
+    // sections + 1" for the terminator -- but that terminator is only a
+    // physical empty-name descriptor when the map's byte layout has room for
+    // one. A real AutoCAD-family file's section map can simply end right
+    // after its last real section descriptor, with no trailing terminator
+    // bytes at all; sectionCount then stops at SectionsAmount - 1 and
+    // sawEmptySection is never set, which is a valid map, not a truncated
+    // one -- only actually-inconsistent counts should be rejected.
+    if (!SectionsMapBuf.isGood() ||
+        (sawEmptySection ? sectionCount != SectionsAmount
+                         : sectionCount != SectionsAmount - 1)) {
         recordFailure(DwgIntegrityCheckKind::PageGeometry,
                       DwgIntegrityPhase::SectionMap);
         return false;
@@ -1326,15 +1346,32 @@ bool dwgReader21::readFileHeader() {
                       DwgIntegrityPhase::FileHeader);
         return false;
     }
-    if (fileSize < minimumFileSize) {
+    // A real file's declared fileSize must cover every real page (lastPageEnd);
+    // that data being missing is fatal. The extra kR2007FileHeaderPageSize
+    // margin only accounts for AutoCAD's own habit of repeating the file
+    // header page once more at the very end of the stream -- a file whose
+    // last real page already reaches its declared end (no room left for that
+    // repeat) is still complete, so treat a shortfall confined to that
+    // optional margin as a warning, matching the fileSize-mismatch warning
+    // below rather than failing the whole read over it.
+    if (fileSize < lastPageEnd) {
         recordIntegrityDiagnostic(
             DwgIntegritySeverity::Error,
             DwgIntegrityAddressSpace::PhysicalFile,
             DwgIntegrityPhase::FileHeader,
             DwgIntegrityCheckKind::PageRange,
             -1, -1, nullptr, 0, false, fileSize, true,
-            0, false, minimumFileSize, fileSize, true);
+            0, false, lastPageEnd, fileSize, true);
         return false;
+    }
+    if (fileSize < minimumFileSize) {
+        recordIntegrityDiagnostic(
+            DwgIntegritySeverity::Warning,
+            DwgIntegrityAddressSpace::PhysicalFile,
+            DwgIntegrityPhase::FileHeader,
+            DwgIntegrityCheckKind::PageRange,
+            -1, -1, nullptr, 0, false, fileSize, true,
+            0, false, minimumFileSize, fileSize, true);
     }
     if (fileSize > fileBuf->size()) {
         recordIntegrityDiagnostic(
@@ -1860,14 +1897,18 @@ bool dwgReader21::captureRawDwgDataSections() {
             }
             typed.m_name = section.m_name;
             typed.m_version = version;
-            // A structural DataStorage failure invalidates the section's
-            // owner links. Do not publish a partial index and then continue
-            // to modeler callbacks that would expose dangling presence bits.
-            if (typed.parseFailed || !typed.structurallyValid
-                || !typed.replayAllowed) {
-                return false;
+            // A structural DataStorage failure means this section's own
+            // index is unusable, but that is this one section's problem,
+            // not the whole file's: nothing downstream requires a non-empty
+            // m_dataStorageSections (linkDataStorage already treats "no
+            // candidate section" as an ordinary, counted miss), and the
+            // section's raw bytes still round-trip via stagedRawSections
+            // below. Abandon only the typed index instead of failing the
+            // entire table-read phase over one malformed helper section.
+            if (!typed.parseFailed && typed.structurallyValid
+                && typed.replayAllowed) {
+                stagedDataStorageSections.push_back(std::move(typed));
             }
-            stagedDataStorageSections.push_back(std::move(typed));
         }
         populateVbaProjectSectionView(section);
         if (section.m_name == "AcDb:VBAProject"

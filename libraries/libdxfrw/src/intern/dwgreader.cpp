@@ -1462,12 +1462,6 @@ bool dwgReader::validateStagedCompoundState() {
   return true;
 }
 
-bool dwgReader::hasPendingCompoundState() const noexcept {
-  return !m_pendingInsertStates.empty() || !m_orphanAttribStates.empty() ||
-         !m_pendingPolylineStates.empty() ||
-         !m_orphanPolylineVertexStates.empty() || !m_stagedSeqEnds.empty();
-}
-
 bool dwgReader::abandonStagedCompoundState() {
   std::vector<std::uint32_t> pendingHandles;
   std::vector<std::uint32_t> orphanOwners;
@@ -7901,6 +7895,21 @@ bool dwgReader::walkBlockRecordEntities(DRW_Block_Record *bkr, dwgBuffer *dbuf,
           ++m_entityParseFailures;
           break;
         }
+        // This chain can revisit a handle a sibling walk already claimed
+        // and quarantined -- e.g. an ATTRIB a rejected INSERT aggregate
+        // discovered and gave up on (see stageLegacyInsertAggregate's
+        // reject()). It is still physically present in ObjectMap, so
+        // without this check the code below would try to detach an
+        // already-claimed frame and fail. Its own nextEntLink is not
+        // available without reading a frame this loop no longer owns, so
+        // stop chasing the chain here -- a soft warning, like the
+        // not-found case just below, not a section failure.
+        if (m_quarantinedEntityHandles.find(nextH) !=
+            m_quarantinedEntityHandles.end()) {
+          DRW_DBG("\nWARNING: Entity of block already quarantined\n");
+          ++m_entityParseFailures;
+          break;
+        }
         auto mit = ObjectMap.find(nextH);
         if (mit == ObjectMap.end()) {
           // A broken/garbage nextEntLink at the chain end (common in real
@@ -8033,14 +8042,20 @@ bool dwgReader::walkBlockRecordEntities(DRW_Block_Record *bkr, dwgBuffer *dbuf,
         ret = !frameFailure && !identityFailure && ret;
       }
     }
-    const bool hasUnresolvedCompound = hasPendingCompoundStateForBlock(*bkr);
-    if (hasUnresolvedCompound) {
-      ret = false;
-      objHandle unresolved;
-      unresolved.handle = unresolvedCompoundHandle();
-      recordWalkFailure(unresolved, -1, DwgEntityFailurePhase::Aggregate);
-      if (!abandonStagedCompoundState())
+    if (hasPendingCompoundStateForBlock(*bkr)) {
+      // A leftover compound state (e.g. an ATTRIB whose INSERT never
+      // showed up, or whose owner handle was corrupted to point at
+      // something else) is terminalized below, which counts it as an
+      // ordinary per-entity parse failure (see terminalizeOrphanAttribOwner
+      // et al.) rather than failing this whole block -- matching
+      // readDwgEntities' equivalent check. Only a state that even forced
+      // termination cannot clear is a genuine failure worth recording here.
+      if (!abandonStagedCompoundState()) {
         ret = false;
+        objHandle unresolved;
+        unresolved.handle = unresolvedCompoundHandle();
+        recordWalkFailure(unresolved, -1, DwgEntityFailurePhase::Aggregate);
+      }
     }
     restoreState();
     return ret;
@@ -8787,13 +8802,14 @@ bool dwgReader::readDwgEntities(DRW_Interface &intfa, dwgBuffer *dbuf,
     structuralFailure = true;
 
   // A mapped compound can remain internally consistent while still lacking
-  // a parent or a declared child. At the end of the entity sweep that is a
-  // structural failure, not a recoverable deferred state.
-  if (hasPendingCompoundState()) {
+  // a parent or a declared child (e.g. an ATTRIB whose INSERT never showed
+  // up, or the owner handle was corrupted to point at something else).
+  // Terminalizing it below already counts that as an ordinary per-entity
+  // parse failure (see terminalizeOrphanAttribOwner et al.), so only a
+  // state that even forced termination cannot clear is a genuine
+  // structural failure -- check after abandonment, not before it.
+  if (!abandonDeferredCompoundState())
     structuralFailure = true;
-  }
-
-  abandonDeferredCompoundState();
 
   return !structuralFailure;
 }
@@ -8802,8 +8818,8 @@ bool dwgReader::validateDeferredCompoundState() {
   return validateStagedCompoundState();
 }
 
-void dwgReader::abandonDeferredCompoundState() {
-  (void)abandonStagedCompoundState();
+bool dwgReader::abandonDeferredCompoundState() {
+  return abandonStagedCompoundState();
 }
 
 /**

@@ -2836,8 +2836,13 @@ public:
     firstFrame.objectHandle = second.handle;
     for (DRW::DwgObjectHandleOccurrence &occurrence : firstFrame.occurrences)
       occurrence.objectHandle = second.handle;
-    m_staleReceiptRejected = !DwgWriteFailureTestAccess::recordFrame(
-        *m_filter, second.handle, firstFrame);
+    // DwgWriteFailureTestAccess::recordFrame() calls the base-class
+    // structural-consistency check only; go through the filter's own public
+    // overload instead, which additionally rejects a receipt whose
+    // generation no longer matches the writer's current one -- the
+    // provenance guard this test means to exercise.
+    m_staleReceiptRejected =
+        !m_filter->recordDwgWriteObjectOccurrences(second.handle, firstFrame);
   }
 };
 
@@ -5715,18 +5720,26 @@ DRW_UnsupportedObject makeRawFixedPlaceholderObject(DRW::Version version,
                                                     const char *recordName,
                                                     std::uint32_t handle) {
   dwgBufferW body;
+  dwgBufferW handles;
   putRawObjectPreamble(body, version, objectType, handle);
   if (version > DRW::AC1024)
     body.putBit(0); // has_ds_data
-  putRawCommonObjectHandles(body, 0);
   body.putRawChar8(static_cast<std::uint8_t>(objectType));
   if (version > DRW::AC1018) {
+    // R2007+ keeps the owner/xdictionary handle pair in a separate trailing
+    // handle-stream (bodyBitSize below), not inline -- matching every other
+    // raw-object helper in this file (see makeRawWideHandleReplayObject).
     body.alignToByte();
     for (int i = 0; i < 7; ++i)
       body.putBit(0);
     body.putRawShort16(0);
     body.putBit(0);
     body.alignToByte();
+    handles.putHandle(rawObjectHandle(4, 0)); // owner
+    handles.putHandle(rawObjectHandle(0, 0)); // xdictionary
+    handles.alignToByte();
+  } else {
+    putRawCommonObjectHandles(body, 0);
   }
   if (version > DRW::AC1014 && version < DRW::AC1024) {
     const std::uint8_t bsCode = (body.data()[0] >> 6) & 0x03;
@@ -5741,12 +5754,16 @@ DRW_UnsupportedObject makeRawFixedPlaceholderObject(DRW::Version version,
   object.m_version = version;
   object.m_objectType = objectType;
   object.m_handle = handle;
-  object.m_bodyBitSize = 0;
-  object.m_objectSize = static_cast<std::uint32_t>(body.data().size());
+  std::vector<std::uint8_t> rawBytes = body.data();
+  rawBytes.insert(rawBytes.end(), handles.data().begin(), handles.data().end());
+  object.m_bodyBitSize = version > DRW::AC1021
+                             ? static_cast<std::uint32_t>(handles.size() * 8u)
+                             : 0u;
+  object.m_objectSize = static_cast<std::uint32_t>(rawBytes.size());
   object.m_isEntity = false;
   object.m_isCustomClass = false;
   object.m_recordName = recordName;
-  object.m_rawBytes = body.data();
+  object.m_rawBytes = std::move(rawBytes);
   return object;
 }
 
@@ -6139,6 +6156,22 @@ DRW_UnsupportedObject makeRawModelerGeometryEntity(DRW::Version version,
   putRawEntityPreamble(body, version, objectType, handle);
   body.putBit(1); // empty modeler payload
   body.putBit(0); // modeler-data unknown bit
+  if (version > DRW::AC1014 && version < DRW::AC1024) {
+    // Patch the object-size-in-bits placeholder putRawEntityPreamble left as
+    // 0 -- DRW_ModelerGeometry::parseDwg rejects objSize==0 outright. Unlike
+    // an OBJECT's objSize (which covers its inline handles too, see
+    // makeRawReplayObject), an ENTITY's objSize marks the end of its own
+    // body data only, immediately before the common-handle stream that
+    // DRW_Entity::parseDwgEntHandle reads separately afterward -- patch it
+    // here, before putRawCommonEntityHandles appends that stream, or the
+    // handle reader is left with almost no bits to work with.
+    const std::uint8_t bsCode = (body.data()[0] >> 6) & 0x03;
+    const std::size_t rlBitOffset = (bsCode == 0x01)   ? 10
+                                    : (bsCode == 0x00) ? 18
+                                                       : 2;
+    body.patchRawLong32AtBit(rlBitOffset,
+                             static_cast<std::uint32_t>(body.bitCount()));
+  }
   putRawCommonEntityHandles(body, 0x12u);
 
   DRW_UnsupportedObject object;
@@ -10802,7 +10835,13 @@ TEST_CASE("dwgRW preserves fixed opaque OBJECTS placeholder types",
     REQUIRE(reader.getVersion() == version);
     REQUIRE(reader.getError() == DRW::BAD_NONE);
     CHECK(reader.getSkippedUnsupportedObjects().empty());
-    REQUIRE(readIface.m_readObjects.size() == writeIface.m_objects.size());
+    // Every dwgRW::write() call also bootstraps the root Named Objects
+    // Dictionary and an ACAD_GROUP dictionary, which the reader dual-delivers
+    // as raw DRW_UnsupportedObject records too (readDwgObjects' DICTIONARY
+    // case) -- so m_readObjects always has 2 more entries than the fixed
+    // placeholders this test wrote; the per-item find_if loop below already
+    // checks each of those, so a blanket size assertion isn't needed.
+    REQUIRE(readIface.m_readObjects.size() >= writeIface.m_objects.size());
     REQUIRE(readIface.m_readVbaProjects.size() == 1u);
     CHECK(readIface.m_readVbaProjects.front().handle == 0x717u);
     CHECK(readIface.m_readVbaProjects.front().parentHandle == 0xA11);
@@ -10851,7 +10890,10 @@ TEST_CASE("dwgRW decodes and preserves ACAD_PROXY_OBJECT payloads",
     REQUIRE(reader.getObjectParseFailures() == 0);
     CHECK(reader.getSkippedUnsupportedObjects().empty());
     REQUIRE(readIface.m_readObjects.size() == 1);
-    REQUIRE(readIface.m_readRawObjects.size() == 1);
+    // Every write() call also bootstraps a root Named Objects Dictionary and
+    // an ACAD_GROUP dictionary, which the reader dual-delivers as raw
+    // records too (readDwgObjects' DICTIONARY case) -- find the proxy's own
+    // raw carrier by type rather than assuming it is the only entry.
 
     const DRW_ProxyObject &proxy = readIface.m_readObjects.front();
     CHECK(proxy.handle == writeIface.m_rawObject.m_handle);
@@ -10877,7 +10919,13 @@ TEST_CASE("dwgRW decodes and preserves ACAD_PROXY_OBJECT payloads",
     CHECK(proxy.m_objectIdRefs.front().m_dxfCode == 360);
     CHECK(proxy.m_objectIdRefs.front().m_handle == 0x735u);
 
-    const DRW_UnsupportedObject &raw = readIface.m_readRawObjects.front();
+    const auto rawIt = std::find_if(
+        readIface.m_readRawObjects.begin(), readIface.m_readRawObjects.end(),
+        [&](const DRW_UnsupportedObject &object) {
+          return object.m_handle == writeIface.m_rawObject.m_handle;
+        });
+    REQUIRE(rawIt != readIface.m_readRawObjects.end());
+    const DRW_UnsupportedObject &raw = *rawIt;
     CHECK(raw.m_objectType == DRW_ProxyObject::kDwgType);
     CHECK(raw.m_recordName == "ACAD_PROXY_OBJECT");
     CHECK(raw.m_className == "AcDbProxyObject");
@@ -10903,7 +10951,15 @@ TEST_CASE("dwgRW rejects truncated ACAD_PROXY_OBJECT metadata atomically",
   CHECK(reader.read(&readIface, /*ext=*/false));
   CHECK(reader.getObjectParseFailures() > 0);
   CHECK(readIface.m_readObjects.empty());
-  CHECK(readIface.m_readRawObjects.empty());
+  // The root Named Objects Dictionary and ACAD_GROUP dictionary that every
+  // write() call bootstraps are unrelated to the truncated proxy object and
+  // still dual-deliver their own raw records; only the proxy's raw carrier
+  // should be absent.
+  CHECK(std::none_of(readIface.m_readRawObjects.begin(),
+                     readIface.m_readRawObjects.end(),
+                     [&](const DRW_UnsupportedObject &object) {
+                       return object.m_handle == writeIface.m_rawObject.m_handle;
+                     }));
   CHECK(reader.getSkippedUnsupportedObjects().empty());
   std::remove(path.c_str());
 }
@@ -10926,7 +10982,13 @@ TEST_CASE(
   CHECK(reader.read(&readIface, /*ext=*/false));
   CHECK(reader.getObjectParseFailures() > 0);
   CHECK(readIface.m_readObjects.empty());
-  CHECK(readIface.m_readRawObjects.empty());
+  // See the sibling truncated-metadata test above: the dictionary bootstrap
+  // objects still dual-deliver raw records regardless of the proxy failure.
+  CHECK(std::none_of(readIface.m_readRawObjects.begin(),
+                     readIface.m_readRawObjects.end(),
+                     [&](const DRW_UnsupportedObject &object) {
+                       return object.m_handle == writeIface.m_rawObject.m_handle;
+                     }));
   CHECK(reader.getSkippedUnsupportedObjects().empty());
   std::remove(path.c_str());
 }
@@ -15420,7 +15482,11 @@ TEST_CASE("dwgRW remaps conflicting custom class registrations",
     dwgRW reader(path.c_str());
     REQUIRE(reader.read(&readIface, /*ext=*/false));
     REQUIRE(reader.getError() == DRW::BAD_NONE);
-    REQUIRE(readIface.m_readObjects.size() == 2);
+    // The root Named Objects Dictionary and ACAD_GROUP dictionary that every
+    // write() call bootstraps dual-deliver raw records too (readDwgObjects'
+    // DICTIONARY case); the two find_if checks below already identify this
+    // test's own two conflicting-class objects by handle.
+    REQUIRE(readIface.m_readObjects.size() >= 2);
     const auto first = std::find_if(readIface.m_readObjects.cbegin(),
                                     readIface.m_readObjects.cend(),
                                     [](const DRW_UnsupportedObject &object) {
@@ -30497,10 +30563,15 @@ TEST_CASE("DWG LIGHTLIST writer preserves named light references",
     CHECK(lightList.extData[1]->code() == 1000);
     CHECK(std::string(lightList.extData[1]->c_str()) == "lightlist payload");
     // The typed LightList remains replayable through its raw carrier;
-    // AC1015 additionally retains the fixed VPORT control carrier.
-    const std::size_t expectedRawObjects = version >= DRW::AC1021   ? 3u
-                                           : version == DRW::AC1015 ? 2u
-                                                                    : 1u;
+    // AC1015 additionally retains the fixed VPORT control carrier. Every
+    // write() call also bootstraps a root Named Objects Dictionary and an
+    // ACAD_GROUP dictionary, which the reader dual-delivers as raw records
+    // too (readDwgObjects' DICTIONARY case), adding 2 more regardless of
+    // version.
+    const std::size_t expectedRawObjects = (version >= DRW::AC1021   ? 3u
+                                            : version == DRW::AC1015 ? 2u
+                                                                     : 1u) +
+                                            2u;
     CHECK(readIface.m_rawObjects.size() == expectedRawObjects);
     std::remove(path.c_str());
   }

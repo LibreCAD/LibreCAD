@@ -1469,9 +1469,14 @@ bool isMLeaderStyleRawObject(
 
 bool isTableStyleRawObject(
     const LC_DwgAdvancedMetadata::RawObjectRecord &record) {
-  return record.objectType == DRW_TableStyle::kDwgClassNum ||
-         record.recordName == "TABLESTYLE" ||
-         record.className == "AcDbTableStyle";
+  // Unlike a fixed system object type (e.g. ACDBPLACEHOLDER's 80), a custom
+  // class number such as DRW_TableStyle::kDwgClassNum (509) is assigned
+  // per-file by that file's own CLASSES section (dwgreader.cpp) -- it is not
+  // a stable cross-file identifier, and this codebase's own writer reuses it
+  // as a bare default for unrelated raw objects (dwg_write_smoke_tests.cpp's
+  // makeRawReplayObject()). Match on name/class only, matching every other
+  // dynamic-class classifier in this file (isMLeaderStyleRawObject, etc.).
+  return record.recordName == "TABLESTYLE" || record.className == "AcDbTableStyle";
 }
 
 bool isOpaqueTableRawObject(
@@ -27942,7 +27947,16 @@ collectLinearPolylineVertices(const RS_Entity *entity, bool expectedClosed) {
   return vertices;
 }
 
-std::optional<MeshSidecarEntry> extractMeshSidecar(RS_Entity *e) {
+// duplicateMarker, when non-null, is set only when this entity's extData
+// carries a SECOND "LibreCAD_POLYLINE_MESH" marker group -- two groups both
+// claiming to be the one mesh sidecar for this entity, with no way to tell
+// which is authoritative. That is different from an otherwise-valid group
+// followed by an unrelated/unrecognized field (extractMeshSidecar still
+// returns nullopt for both): the latter is a legitimate edit that should
+// just fall back to writing an ordinary polyline, while the former must not
+// be silently resolved by picking one of the two candidates.
+std::optional<MeshSidecarEntry>
+extractMeshSidecar(RS_Entity *e, bool *duplicateMarker = nullptr) {
   if (!e || !e->hasDrwExtData())
     return std::nullopt;
 
@@ -27970,8 +27984,11 @@ std::optional<MeshSidecarEntry> extractMeshSidecar(RS_Entity *e) {
       }
       inGroup = marker == "LibreCAD_POLYLINE_MESH";
       if (inGroup) {
-        if (meta.markerCount != 0)
+        if (meta.markerCount != 0) {
+          if (duplicateMarker != nullptr)
+            *duplicateMarker = true;
           return std::nullopt;
+        }
         ++meta.markerCount;
       }
       continue;
@@ -28039,7 +28056,10 @@ std::optional<MeshSidecarEntry> extractMeshSidecar(RS_Entity *e) {
   return meta;
 }
 
-std::optional<PolyfaceSidecarEntry> extractPolyfaceSidecar(RS_Entity *e) {
+// See extractMeshSidecar's duplicateMarker comment -- same "two groups, no
+// way to pick one" distinction, for the LibreCAD_POLYLINE_PFACE marker.
+std::optional<PolyfaceSidecarEntry>
+extractPolyfaceSidecar(RS_Entity *e, bool *duplicateMarker = nullptr) {
   if (!e || !e->hasDrwExtData())
     return std::nullopt;
 
@@ -28066,8 +28086,11 @@ std::optional<PolyfaceSidecarEntry> extractPolyfaceSidecar(RS_Entity *e) {
       }
       inGroup = marker == "LibreCAD_POLYLINE_PFACE";
       if (inGroup) {
-        if (meta.markerCount != 0)
+        if (meta.markerCount != 0) {
+          if (duplicateMarker != nullptr)
+            *duplicateMarker = true;
           return std::nullopt;
+        }
         ++meta.markerCount;
       }
       continue;
@@ -28590,11 +28613,29 @@ void RS_FilterDXFRW::reconstructPolylineSidecars(
         entity->rtti() != RS2::EntityPolyline) {
       continue;
     }
-    if (auto meshMeta = extractMeshSidecar(entity))
+    bool duplicateMeshMarker = false;
+    if (auto meshMeta = extractMeshSidecar(entity, &duplicateMeshMarker)) {
       meshGroups[meshMeta->meshId].push_back(std::move(*meshMeta));
-    else if (auto polyfaceMeta = extractPolyfaceSidecar(entity))
+      continue;
+    }
+    if (duplicateMeshMarker) {
+      // Two groups both claim to be this entity's one mesh sidecar, with no
+      // way to tell which is authoritative -- refuse rather than silently
+      // re-emitting the entity as an ordinary polyline and picking one.
+      m_writeFailed = true;
+      return;
+    }
+    bool duplicatePolyfaceMarker = false;
+    if (auto polyfaceMeta =
+            extractPolyfaceSidecar(entity, &duplicatePolyfaceMarker)) {
       polyfaceGroups[polyfaceMeta->polyfaceId].push_back(
           std::move(*polyfaceMeta));
+      continue;
+    }
+    if (duplicatePolyfaceMarker) {
+      m_writeFailed = true;
+      return;
+    }
   }
 
   const auto writeDwgPolylineSidecar =
