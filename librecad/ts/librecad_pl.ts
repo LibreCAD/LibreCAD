@@ -10106,7 +10106,7 @@ Czy chcesz zastąpić?</translation>
         <translation>Wypełnianie wzorem nie powiodło się z powodu przerwy o wartości %1 między punktami (%2, %3) i (%4, %5)</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="113"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="115"/>
         <source>Warning</source>
         <translation>Ostrzeżenie</translation>
     </message>
@@ -12515,45 +12515,50 @@ Czy chcesz zastąpić?</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="76"/>
+        <source>LibreCAD 2.2.2-alpha development builds can read and write DWG files directly.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="78"/>
         <source>If this file fails to open try an older DWG format</source>
         <translation>Jeśli nie można otworzyć tego pliku, spróbuj użyć starszego formatu DWG.</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="77"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="79"/>
         <source>or try to find a converter to make it a DXF file.</source>
         <translation>lub spróbuj znaleźć konwerter, aby przekonwertować go na plik DXF.</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="80"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="82"/>
         <source>Information</source>
         <translation>Informacje</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="91"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="93"/>
         <source>Error</source>
         <comment>fileImport</comment>
         <translation>Błąd</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="92"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="94"/>
         <source>Import error:</source>
         <comment>fileImport</comment>
         <translation>Błąd importu:</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="107"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="109"/>
         <source>Anyhow, there are some entities identified.</source>
         <comment>dwgImport</comment>
         <translation>W każdym razie, zidentyfikowano pewne elementy.</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="108"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="110"/>
         <source>If you open the file now, the drawing may be not complete or unusable.</source>
         <comment>dwgImport</comment>
         <translation>Jeśli teraz otworzysz plik, rysunek może być niekompletny lub nieużyteczny.</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="110"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="112"/>
         <source>Ignore error and open the file?</source>
         <comment>dwgImport</comment>
         <translation>Ignorować błąd i otworzyć plik?</translation>

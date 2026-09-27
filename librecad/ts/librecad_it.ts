@@ -10132,7 +10132,7 @@ Vuoi sovrascrivere?</translation>
         <translation>Esecuzione tratteggio fallita a causa di un varco=%1 tra (%2, %3) e (%4, %5)</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="113"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="115"/>
         <source>Warning</source>
         <translation>Attenzione</translation>
     </message>
@@ -12546,45 +12546,50 @@ Vuoi sovrascrivere?</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="76"/>
+        <source>LibreCAD 2.2.2-alpha development builds can read and write DWG files directly.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="78"/>
         <source>If this file fails to open try an older DWG format</source>
         <translation>Si ce fichier ne peut pas être ouvert, essayez un format DWG plus ancien</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="77"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="79"/>
         <source>or try to find a converter to make it a DXF file.</source>
         <translation>ou essayez de trouver un convertisseur pour le transformer en fichier DXF.</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="80"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="82"/>
         <source>Information</source>
         <translation>Information</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="91"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="93"/>
         <source>Error</source>
         <comment>fileImport</comment>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="92"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="94"/>
         <source>Import error:</source>
         <comment>fileImport</comment>
         <translation>Erreur d&apos;importation :</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="107"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="109"/>
         <source>Anyhow, there are some entities identified.</source>
         <comment>dwgImport</comment>
         <translation>Quoi qu&apos;il en soit, certaines entités ont été identifiées.</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="108"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="110"/>
         <source>If you open the file now, the drawing may be not complete or unusable.</source>
         <comment>dwgImport</comment>
         <translation>Si abre el archivo ahora, el dibujo puede que no esté completo o sea inutilizable.</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="110"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="112"/>
         <source>Ignore error and open the file?</source>
         <comment>dwgImport</comment>
         <translation>Ignorare l&apos;errore ed aprire il file?</translation>

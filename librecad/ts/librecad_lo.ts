@@ -27166,16 +27166,21 @@ Do you want to replace it?</source>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="76"/>
+        <source>LibreCAD 2.2.2-alpha development builds can read and write DWG files directly.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="78"/>
         <source>If this file fails to open try an older DWG format</source>
         <translation>ຫາກແຟ້ມນີ້ລົ້ມເຫຼວ ລອງຟໍແມັດແບບ DWG ທີ່ເກົ່າກວ່າ</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="77"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="79"/>
         <source>or try to find a converter to make it a DXF file.</source>
         <translation>ຫຼື ພະຍາຍາມຫາຕົວແປງເພື່ອໃຫ້ເປັນແຟ້ມ DXF.</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="80"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="82"/>
         <source>Information</source>
         <translation>ຂໍ້ມູນ</translation>
     </message>
@@ -27184,37 +27189,37 @@ Do you want to replace it?</source>
         <translation type="vanished">ການຮອງຮັບ DWG ຍັງບໍ່ສົມບູນ; ຫາກເປີດແຟ້ມບໍ່ໄດ້ ກະລຸນາລອງໃຊ້ DWG ລຸ້ນເກົ່າ ຫຼື ແປງເປັນ DXF.</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="91"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="93"/>
         <source>Error</source>
         <comment>fileImport</comment>
         <translation>ຜິດພາດ</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="92"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="94"/>
         <source>Import error:</source>
         <comment>fileImport</comment>
         <translation>ການນຳເຂົ້າຜິດພາດ:</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="107"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="109"/>
         <source>Anyhow, there are some entities identified.</source>
         <comment>dwgImport</comment>
         <translation>ແນວໃດກໍຕາມ ມີບາງສ່ວນທີ່ລະບຸໄດ້.</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="108"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="110"/>
         <source>If you open the file now, the drawing may be not complete or unusable.</source>
         <comment>dwgImport</comment>
         <translation>ຫາກທ່ານເປີດແຟ້ມດຽວນີ້ ການແຕ້ມອາດຈະບໍ່ສົມບູນ ຫຼື ໃຊ້ງານບໍ່ໄດ້.</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="110"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="112"/>
         <source>Ignore error and open the file?</source>
         <comment>dwgImport</comment>
         <translation>ບໍ່ສົນໃຈຂໍ້ຜິດພາດ ແລະ ເປີດແຟ້ມຫຼືບໍ່?</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="113"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="115"/>
         <source>Warning</source>
         <translation>ຄຳເຕືອນ</translation>
     </message>

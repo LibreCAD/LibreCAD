@@ -9985,7 +9985,7 @@ Do you want to replace it?</source>
         <translation>فشل التضليل بسبب وجود فجوة =%1 بين (%2، %3) و (%4، %5)</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="113"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="115"/>
         <source>Warning</source>
         <translation>تحذير</translation>
     </message>
@@ -12399,45 +12399,50 @@ Do you want to replace it?</source>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="76"/>
+        <source>LibreCAD 2.2.2-alpha development builds can read and write DWG files directly.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="78"/>
         <source>If this file fails to open try an older DWG format</source>
         <translation>إذا فشل فتح هذا الملف، جرب تنسيق DWG أقدم.</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="77"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="79"/>
         <source>or try to find a converter to make it a DXF file.</source>
         <translation>أو حاول العثور على محول لجعله ملف DXF.</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="80"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="82"/>
         <source>Information</source>
         <translation>معلومات</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="91"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="93"/>
         <source>Error</source>
         <comment>fileImport</comment>
         <translation>خطأ</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="92"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="94"/>
         <source>Import error:</source>
         <comment>fileImport</comment>
         <translation>خطأ في الاستيراد:</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="107"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="109"/>
         <source>Anyhow, there are some entities identified.</source>
         <comment>dwgImport</comment>
         <translation>على أي حال، تم تحديد بعض الكيانات.</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="108"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="110"/>
         <source>If you open the file now, the drawing may be not complete or unusable.</source>
         <comment>dwgImport</comment>
         <translation>إذا قمت بفتح الملف الآن، فقد لا يكون الرسم كاملاً أو صالحاً للاستخدام.</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="110"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="112"/>
         <source>Ignore error and open the file?</source>
         <comment>dwgImport</comment>
         <translation>تجاهل الخطأ وفتح الملف؟</translation>

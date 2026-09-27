@@ -9725,6 +9725,11 @@ Do you want to replace it?</source>
    <translation type="unfinished"/>
   </message>
   <message>
+   <location filename="../src/lib/fileio/rs_fileio.cpp" line="76"/>
+   <source>LibreCAD 2.2.2-alpha development builds can read and write DWG files directly.</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
    <source>If this file fails to open try an older DWG format</source>
    <translation type="unfinished"/>
   </message>

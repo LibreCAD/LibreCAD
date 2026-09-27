@@ -10096,7 +10096,7 @@ Chcete ho nahradiť?</translation>
         <translation>Výplň zlyhala kvôli medzere=%1 medzi bodmi (%2, %3) a (%4, %5).</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="113"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="115"/>
         <source>Warning</source>
         <translation>Upozornenie</translation>
     </message>
@@ -12505,45 +12505,50 @@ Chcete ho nahradiť?</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="76"/>
+        <source>LibreCAD 2.2.2-alpha development builds can read and write DWG files directly.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="78"/>
         <source>If this file fails to open try an older DWG format</source>
         <translation>Ak tento súbor sa nedá otvoriť, skúste starší formát DWG.</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="77"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="79"/>
         <source>or try to find a converter to make it a DXF file.</source>
         <translation>alebo skúste nájsť konvertor, ktorý ho prekonvertuje na súbor DXF.</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="80"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="82"/>
         <source>Information</source>
         <translation>Informácie</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="91"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="93"/>
         <source>Error</source>
         <comment>fileImport</comment>
         <translation>Chyba</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="92"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="94"/>
         <source>Import error:</source>
         <comment>fileImport</comment>
         <translation>Chyba pri importe:</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="107"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="109"/>
         <source>Anyhow, there are some entities identified.</source>
         <comment>dwgImport</comment>
         <translation>Tak či tak, našli sa niektoré entity.</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="108"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="110"/>
         <source>If you open the file now, the drawing may be not complete or unusable.</source>
         <comment>dwgImport</comment>
         <translation>Ak súbor otvoríte teraz, kresba nemusí byť kompletná alebo použiteľná.</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="110"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="112"/>
         <source>Ignore error and open the file?</source>
         <comment>dwgImport</comment>
         <translation>Ignorovať chybu a otvoriť súbor?</translation>
