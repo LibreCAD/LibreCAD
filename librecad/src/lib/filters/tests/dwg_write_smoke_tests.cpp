@@ -2836,8 +2836,13 @@ public:
     firstFrame.objectHandle = second.handle;
     for (DRW::DwgObjectHandleOccurrence &occurrence : firstFrame.occurrences)
       occurrence.objectHandle = second.handle;
-    m_staleReceiptRejected = !DwgWriteFailureTestAccess::recordFrame(
-        *m_filter, second.handle, firstFrame);
+    // DwgWriteFailureTestAccess::recordFrame() calls the base-class
+    // structural-consistency check only; go through the filter's own public
+    // overload instead, which additionally rejects a receipt whose
+    // generation no longer matches the writer's current one -- the
+    // provenance guard this test means to exercise.
+    m_staleReceiptRejected =
+        !m_filter->recordDwgWriteObjectOccurrences(second.handle, firstFrame);
   }
 };
 
