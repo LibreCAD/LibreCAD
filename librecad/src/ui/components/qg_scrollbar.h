@@ -28,22 +28,25 @@
 #define QG_SCROLLBAR_H
 
 #include <QScrollBar>
+#include <QWheelEvent>
 
 /**
- * A small wrapper for the Qt scrollbar. This class offers a slot
- * for scroll events.
+ * A small wrapper for the Qt scrollbar used by drawing views.
+ *
+ * A wheel event over the bar is always consumed: QScrollBar ignores a wheel it cannot
+ * apply (at a range end), and Qt would then pass it on to the parent view, which zooms.
  */
 class QG_ScrollBar: public QScrollBar {
     Q_OBJECT
 public:
     explicit QG_ScrollBar(QWidget* parent=nullptr)
             : QScrollBar(parent) {
-        m_sizeHintCache = QScrollBar::sizeHint();
+        init();
     }
    explicit  QG_ScrollBar(const Qt::Orientation orientation,
                  QWidget* parent=nullptr)
             : QScrollBar(orientation, parent) {
-        m_sizeHintCache = QScrollBar::sizeHint();
+        init();
     }
 
     // This sizeHint caches the height value. Out of profiling (see #727),
@@ -53,9 +56,10 @@ public:
         return m_sizeHintCache;
     }
 
-public slots:
-    void slotWheelEvent(QWheelEvent* e) {
-        wheelEvent(e);
+protected:
+    void wheelEvent(QWheelEvent* e) override {
+        QScrollBar::wheelEvent(e);
+        e->accept();
     }
 
     void resizeEvent(QResizeEvent* event) override {
@@ -64,6 +68,18 @@ public slots:
     }
 
 private:
+    void init() {
+        m_sizeHintCache = QScrollBar::sizeHint();
+        // mouse events over the bar never reach the drawing view
+        setAttribute(Qt::WA_NoMousePropagation);
+        // drawing coordinates run left to right in every locale
+        setLayoutDirection(Qt::LeftToRight);
+        // QG_GraphicView::addScrollbars() relies on sliderReleased firing after the final
+        // SliderMove (tracking on is Qt's default, but enforce it here so the invariant
+        // holds in every build, not just where Q_ASSERT is compiled in).
+        setTracking(true);
+    }
+
     QSize m_sizeHintCache{};
 };
 

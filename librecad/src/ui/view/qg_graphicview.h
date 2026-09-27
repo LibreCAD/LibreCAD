@@ -27,8 +27,9 @@
 #ifndef QG_GRAPHICVIEW_H
 #define QG_GRAPHICVIEW_H
 
-#include <mutex>
+#include <functional>
 
+#include "lc_scrollmodel.h"
 #include "lc_ucslist.h"
 #include "rs.h"
 #include "rs_blocklistlistener.h"
@@ -44,6 +45,47 @@ class QLabel;
 class QMenu;
 class QMouseEvent;
 class LC_ActionContext;
+
+/**
+ * Fingerprint of the viewport state a scroll-model snapshot was built from:
+ * {ox, oy, fx, fy, W, H, UCS}. Some paths change the viewport without notifying
+ * (a silent VPORT restore, applyUCSAfterLoad, a keyboard zoom while a thumb is
+ * held); when a scrollbar slot finds this key has changed since the snapshot
+ * was taken, it rebases its origin before mapping the bar value (see
+ * QG_GraphicView::rebaseScrollIfStale()).
+ *
+ * The UCS is fingerprinted by its comparable contents (whether one is active,
+ * its origin and its X-axis angle), read directly off LC_GraphicViewport/
+ * LC_CoordinatesMapper (hasUCS()/getUcsOrigin()/getXAxisAngle()) -- never via
+ * LC_GraphicViewport::getCurrentUCS(), which heap-allocates a brand-new LC_UCS
+ * on every call and would leak here, and whose address is never stable across
+ * calls anyway (defeating equality while a UCS is active).
+ */
+struct LC_ScrollViewportKey {
+    int ox = 0;
+    int oy = 0;
+    double fx = 0.0;
+    double fy = 0.0;
+    int w = 0;
+    int h = 0;
+    bool hasUcs = false;
+    RS_Vector ucsOrigin;
+    double ucsAngle = 0.0;
+
+    bool operator==(const LC_ScrollViewportKey& other) const {
+        if (ox != other.ox || oy != other.oy || fx != other.fx || fy != other.fy
+            || w != other.w || h != other.h || hasUcs != other.hasUcs) {
+            return false;
+        }
+        if (!hasUcs) {
+            return true;
+        }
+        return ucsOrigin == other.ucsOrigin && ucsAngle == other.ucsAngle;
+    }
+    bool operator!=(const LC_ScrollViewportKey& other) const {
+        return !(*this == other);
+    }
+};
 
 /**
  * This is the Qt implementation of a widget which can view a 
@@ -196,8 +238,27 @@ private:
 
     void showEntityPropertiesDialog(RS_Entity *entity) const;
     void editAction(RS_Entity &entity) const;
-    // for scroll bar adjustment
-    std::mutex m_scrollbarMutex;
+    bool scrollContentExtents(RS_Vector& wcsMin, RS_Vector& wcsMax) const;
+    void keepScrollbarsOnDrawingSide() const;
+    LC_ScrollViewportKey rebaseScrollIfStale();
+    LC_ScrollModel::State computeAxisState(bool isHorizontal, bool hasContent, const RS_Vector& ucsMin,
+                                           const RS_Vector& ucsMax, const RS_Vector& factor, int ox, int oy,
+                                           int width, int height) const;
+    void driveScrollAxis(LC_ScrollModel::State& axisState, int value,
+                         const std::function<int(double)>& applyViewStart, int LC_ScrollViewportKey::* keyField);
+
+    // Scrollbar state. The bars only display the viewport; they are updated under
+    // QSignalBlocker and the per-axis snapshot maps bar values back to offsets.
+    //! Re-entry guard: true while adjustOffsetControls() updates the bars, or while a
+    //! scrollbar slot is driving the viewport (in which case no re-sync happens, so the
+    //! range stays frozen). GUI-thread-only, like QWidget/QScrollBar themselves: this is
+    //! a plain bool, not a mutex, and gives no thread safety at all -- it only prevents
+    //! this class's own re-entrant calls on the one (GUI) thread it is ever touched from.
+    bool m_scrollSyncing{false};
+    LC_ScrollModel::State m_hScroll;
+    LC_ScrollModel::State m_vScroll;
+    //! the viewport state m_hScroll/m_vScroll were last built or rebased from
+    LC_ScrollViewportKey m_scrollKey;
 };
 
 #endif

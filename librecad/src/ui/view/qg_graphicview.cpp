@@ -31,6 +31,8 @@
 #include <QNativeGestureEvent>
 #include <QPoint>
 #include <QPointingDevice>
+#include <QScopedValueRollback>
+#include <QSignalBlocker>
 #include <QTimer>
 #include <cmath>
 #include <cstdlib>
@@ -49,6 +51,7 @@
 #include "lc_relative_position_editing_widget.h"
 #include "lc_ucs_mark.h"
 #include "lc_undosection.h"
+#include "lc_viewmath.h"
 #include "qc_applicationwindow.h"
 #include "qg_blockwidget.h"
 #include "qg_scrollbar.h"
@@ -102,9 +105,9 @@ namespace {
         return vp.valid && withinValidRange(vp.x) && withinValidRange(vp.y);
     }
 
+    // finite and ordered; a point-like drawing (min == max) is valid content
     bool isRectValid(const RS_Vector& vpMin, const RS_Vector& vpMax) {
-        return withinValidRange(vpMin) && withinValidRange(vpMax) && vpMin.x < vpMax.x && vpMin.y < vpMax.y && vpMin.x + 1e6 >= vpMax.x &&
-            vpMin.y + 1e6 >= vpMax.y;
+        return withinValidRange(vpMin) && withinValidRange(vpMax) && vpMin.x <= vpMax.x && vpMin.y <= vpMax.y;
     }
 }
 
@@ -734,7 +737,21 @@ bool QG_GraphicView::event(QEvent* event) {
         }
         return true;
     }
+    if (event->type() == QEvent::LayoutDirectionChange) {
+        keepScrollbarsOnDrawingSide();
+    }
     return proceedEvent(event);
+}
+
+/**
+ * The drawing is painted from x = 0 to getWidth(), so the vertical scrollbar stays on the
+ * right in every locale: QGridLayout mirrors columns in a right-to-left UI unless its origin
+ * corner is mirrored too.
+ */
+void QG_GraphicView::keepScrollbarsOnDrawingSide() const {
+    if (m_layout != nullptr) {
+        m_layout->setOriginCorner(isRightToLeft() ? Qt::TopRightCorner : Qt::TopLeftCorner);
+    }
 }
 
 void QG_GraphicView::doZoom(const RS2::ZoomDirection direction, const RS_Vector& center, const double zoomFactor) const {
@@ -935,14 +952,8 @@ void QG_GraphicView::wheelEvent(QWheelEvent* e) {
                 const int hDelta = (m_invertHorizontalScroll) ? -numPixels.x() : numPixels.x();
                 const int vDelta = (m_invertVerticalScroll) ? -numPixels.y() : numPixels.y();
 
-                // scroll by scrollbars: issue #479 (it has its own issues)
-                if (m_scrollbars) {
-                    m_hScrollBar->setValue(m_hScrollBar->value() - hDelta);
-                    m_vScrollBar->setValue(m_vScrollBar->value() - vDelta);
-                }
-                else {
-                    getViewPort()->zoomPan(hDelta, vDelta);
-                }
+                // pan the viewport, not the scrollbars: a bar is bounded, panning is not (#2945)
+                getViewPort()->zoomPan(hDelta, vDelta);
             }
             redraw();
         }
@@ -1002,19 +1013,19 @@ void QG_GraphicView::wheelEvent(QWheelEvent* e) {
         }*/
 
     if (scroll && m_scrollbars) {
-        //scroll by scrollbars: issue #479
-
+        // pan the viewport with the direction the scrollbars used to give (issue #479);
+        // a bar is bounded, panning is not (#2945)
         int delta = 0;
 
         switch (direction) {
             case RS2::Left:
             case RS2::Right:
                 delta = (m_invertHorizontalScroll) ? -angleDeltaX : angleDeltaX;
-                m_hScrollBar->setValue(m_hScrollBar->value() + delta);
+                getViewPort()->zoomPan(-delta, 0);
                 break;
             default:
                 delta = (m_invertVerticalScroll) ? -angleDeltaY : angleDeltaY;
-                m_vScrollBar->setValue(m_vScrollBar->value() + delta);
+                getViewPort()->zoomPan(0, -delta);
                 break;
         }
     }
@@ -1134,81 +1145,193 @@ void QG_GraphicView::keyReleaseEvent(QKeyEvent* e) {
 }
 
 /**
+ * Drawing extents used as the scrollable content, in WCS.
+ * @return false when the drawing has no extents (empty drawing)
+ */
+bool QG_GraphicView::scrollContentExtents(RS_Vector& wcsMin, RS_Vector& wcsMax) const {
+    auto* viewport = getViewPort();
+    if (viewport == nullptr || !viewport->getViewBorders(wcsMin, wcsMax)) {
+        return false;
+    }
+    return isRectValid(wcsMin, wcsMax);
+}
+
+namespace {
+    void applyScrollState(QScrollBar* bar, const LC_ScrollModel::State& state) {
+        // the bars only display the viewport: changing them must not move it
+        const QSignalBlocker blocker(bar);
+        bar->setRange(0, state.maximum);
+        bar->setPageStep(state.pageStep);
+        bar->setSingleStep(state.singleStep);
+        bar->setValue(state.value);
+    }
+
+    // The viewport fingerprint a scroll snapshot was built from (see LC_ScrollViewportKey).
+    // The UCS is read by value (hasUCS()/getUcsOrigin()/getXAxisAngle()), never via
+    // getCurrentUCS(), which heap-allocates a fresh LC_UCS on every call and would leak
+    // here -- this function runs on essentially every viewport change.
+    LC_ScrollViewportKey viewportKey(const LC_GraphicViewport& viewport) {
+        const RS_Vector factor = viewport.getFactor();
+        return {viewport.getOffsetX(), viewport.getOffsetY(), factor.x, factor.y,
+                viewport.getWidth(), viewport.getHeight(),
+                viewport.hasUCS(), viewport.getUcsOrigin(), viewport.getXAxisAngle()};
+    }
+}
+
+/**
+ * Builds one axis's LC_ScrollModel::Axis/State from the viewport quantities that feed
+ * it: the shared math behind both adjustOffsetControls() (which then pushes it into the
+ * QScrollBar widgets) and rebaseScrollIfStale() (which only updates the internal
+ * snapshot -- see its comment). \p ox / \p oy / \p width / \p height are the viewport's
+ * CURRENT offsets and size, so the axis this builds always starts from the view that is
+ * actually on screen right now.
+ *
+ * The int -> double conversions below keep the subtraction/negation itself in double
+ * (rather than negating/subtracting as int first and widening the result), so this has
+ * no int-overflow risk regardless of how extreme ox/oy/height are.
+ */
+LC_ScrollModel::State QG_GraphicView::computeAxisState(const bool isHorizontal, const bool hasContent,
+                                                       const RS_Vector& ucsMin, const RS_Vector& ucsMax,
+                                                       const RS_Vector& factor, const int ox, const int oy,
+                                                       const int width, const int height) const {
+    if (isHorizontal) {
+        return LC_ScrollModel::compute({hasContent, ucsMin.x * factor.x, ucsMax.x * factor.x,
+                                        -static_cast<double>(ox), static_cast<double>(width)});
+    }
+    return LC_ScrollModel::compute({hasContent, -ucsMax.y * factor.y, -ucsMin.y * factor.y,
+                                    static_cast<double>(oy) - static_cast<double>(height),
+                                    static_cast<double>(height)});
+}
+
+/**
 * Called whenever the graphic view has changed.
-* Adjusts the scrollbar ranges / steps.
+* Projects the viewport onto the scrollbars: the scrollable region is
+* (drawing extents +/- half a view) united with the current view, so the bars
+* never clamp or move the view. See LC_ScrollModel.
 */
 void QG_GraphicView::adjustOffsetControls() {
-    if (!m_scrollbars) {
+    if (!m_scrollbars || m_hScrollBar == nullptr || m_vScrollBar == nullptr || getDocument() == nullptr) {
         return;
     }
-
-    std::unique_lock<std::mutex> lock(m_scrollbarMutex, std::defer_lock);
-    if (!lock.try_lock()) {
+    // a bar slot is moving the view, or we are already syncing: keep the frozen snapshot
+    if (m_scrollSyncing) {
         return;
     }
-
-    if (getDocument() == nullptr || m_hScrollBar == nullptr || m_vScrollBar == nullptr) {
+    // the range stays frozen while a thumb is held; sliderReleased re-syncs
+    if (m_hScrollBar->isSliderDown() || m_vScrollBar->isSliderDown()) {
         return;
     }
-    LC_LOG << __func__ << "(): begin";
-
-    // Same border source as LC_GraphicViewport::zoomAuto / MDI tile zoom —
-    // not forcedCalculateBorders, which used to pin empty INSERT/text to (0,0)
-    // and inflate the scroll range after graphic-view resize.
-    auto *viewport = getViewPort();
-    RS_Vector vpMin;
-    RS_Vector vpMax;
-    if (viewport != nullptr
-            && viewport->getViewBorders(vpMin, vpMax)) {
-        // view framing envelope (dense core for sheet-scale drawings)
-    } else if (getDocument() != nullptr) {
-        getDocument()->calculateBorders();
-        vpMin = getDocument()->getMin();
-        vpMax = getDocument()->getMax();
+    auto* viewport = getViewPort();
+    const int width = viewport->getWidth();
+    const int height = viewport->getHeight();
+    if (width <= 0 || height <= 0) {
+        return;
     }
+    const QScopedValueRollback<bool> guard(m_scrollSyncing, true);
 
-    // no drawing yet - still allow to scroll
-    if (!isRectValid(vpMin, vpMax)) {
-        vpMin = RS_Vector(-10, -10);
-        vpMax = RS_Vector(100, 100);
+    RS_Vector wcsMin;
+    RS_Vector wcsMax;
+    RS_Vector ucsMin;
+    RS_Vector ucsMax;
+    const bool hasContent = scrollContentExtents(wcsMin, wcsMax);
+    if (hasContent) {
+        viewport->ucsBoundsOfWcsBox(wcsMin, wcsMax, ucsMin, ucsMax);
     }
+    const RS_Vector factor = viewport->getFactor();
+    const int ox = viewport->getOffsetX();
+    const int oy = viewport->getOffsetY();
 
-    const int ox = getViewPort()->getOffsetX();
-    const int oy = getViewPort()->getOffsetY();
-
-    int minVal = static_cast<int>(-1.25 * getWidth() - ox);
-    int maxVal = static_cast<int>(0.25 * getWidth() - ox);
-
-    LC_LOG << __func__ << "(): x scrollbar range[" << minVal << ", " << maxVal << "]: " << getViewPort()->getOffsetX();
-    if (minVal <= maxVal) {
-        m_hScrollBar->setRange(minVal, maxVal);
+    m_hScroll = computeAxisState(true, hasContent, ucsMin, ucsMax, factor, ox, oy, width, height);
+    m_vScroll = computeAxisState(false, hasContent, ucsMin, ucsMax, factor, ox, oy, width, height);
+    m_scrollKey = viewportKey(*viewport);
+    if (m_hScroll.valid) {
+        applyScrollState(m_hScrollBar, m_hScroll);
     }
-
-    minVal = static_cast<int>(0.75 * getHeight() - oy);
-    maxVal = static_cast<int>(0.25 * getHeight() - oy);
-
-    if (minVal <= maxVal) {
-        m_vScrollBar->setRange(minVal, maxVal);
+    if (m_vScroll.valid) {
+        applyScrollState(m_vScrollBar, m_vScroll);
     }
+    LC_LOG << __func__ << "(): H [0, " << m_hScroll.maximum << "] page " << m_hScroll.pageStep << " value "
+        << m_hScroll.value << "; V [0, " << m_vScroll.maximum << "] page " << m_vScroll.pageStep << " value "
+        << m_vScroll.value;
+}
 
-    m_hScrollBar->setPageStep(getWidth());
-    m_vScrollBar->setPageStep(getHeight());
+/**
+ * Some paths change the viewport without going through adjustOffsetControls() (a silent
+ * VPORT restore, applyUCSAfterLoad(), a keyboard zoom while a thumb is held). When the
+ * viewport no longer matches the fingerprint the snapshot was taken from, this rebuilds
+ * m_hScroll/m_vScroll's SCALE (pixelsPerTick, maximum, pageStep) from the CURRENT content
+ * extents, factor, offsets and size -- the same inputs and the same computeAxisState()
+ * adjustOffsetControls() uses -- so a factor that changed silently is no longer stale
+ * (the bug this fixes: only the origin used to be corrected, never the scale).
+ *
+ * The origin is then RE-ANCHORED, not taken from that fresh compute() as is: the bar
+ * widget itself is not (and must not be, see below) touched here, so it still shows
+ * whatever value it last displayed (m_hScroll.value, unchanged since); origin is solved
+ * for so that viewStartFor(that unchanged value) reproduces the CURRENT actual view start
+ * exactly, now through the fresh pixelsPerTick. This is what keeps a rebase with no value
+ * change from moving the view, and what makes a value change from here measure correctly
+ * in fresh, current pixels-per-tick rather than in whatever pixels-per-tick happened to
+ * be in effect when the bar was last synced for real.
+ *
+ * This must NOT touch the QScrollBar widgets (applyScrollState()/setRange()/setValue()):
+ * it runs from inside slotHScrolled()/slotVScrolled(), themselves called from a bar's own
+ * valueChanged, so writing back to the bar here would recurse. The widgets simply stay
+ * at their last-synced (possibly now stale) range/page-step until the next real resync,
+ * either adjustOffsetControls() on sliderReleased or a later notified viewport change;
+ * only the internal snapshot used to map THIS slot call's value needs to be correct.
+ *
+ * Returns the freshly computed viewport key (whether or not it differed from
+ * m_scrollKey), so a caller that already needs it (a slot patching just the one field
+ * that changed) does not have to call viewportKey() again from scratch.
+ */
+LC_ScrollViewportKey QG_GraphicView::rebaseScrollIfStale() {
+    auto* viewport = getViewPort();
+    const LC_ScrollViewportKey key = viewportKey(*viewport);
+    if (key == m_scrollKey) {
+        return key;
+    }
+    const int width = viewport->getWidth();
+    const int height = viewport->getHeight();
+    if (width <= 0 || height <= 0) {
+        // No sane axis state can be built at a degenerate size: leave m_hScroll/m_vScroll
+        // untouched, and hand back the OLD m_scrollKey (not the freshly computed one) so a
+        // caller that stores our return value back into m_scrollKey does not mark this
+        // change as already handled. The next call, once the size is sane again, must still
+        // see the fingerprint mismatch and recompute for real.
+        return m_scrollKey;
+    }
+    RS_Vector wcsMin;
+    RS_Vector wcsMax;
+    RS_Vector ucsMin;
+    RS_Vector ucsMax;
+    const bool hasContent = scrollContentExtents(wcsMin, wcsMax);
+    if (hasContent) {
+        viewport->ucsBoundsOfWcsBox(wcsMin, wcsMax, ucsMin, ucsMax);
+    }
+    const RS_Vector factor = viewport->getFactor();
+    const int ox = viewport->getOffsetX();
+    const int oy = viewport->getOffsetY();
 
-    m_hScrollBar->setValue(-ox);
-    m_vScrollBar->setValue(oy);
-    LC_LOG << __func__ << "(): y scrollbar range[" << minVal << ", " << maxVal << "]: " << oy;
-
-    slotHScrolled(-ox);
-    slotVScrolled(oy);
-
-    //        RS_DEBUG->print("H min: %d / max: %d / step: %d / value: %d\n",
-    //                        hScrollBar->minimum(), hScrollBar->maximum(),
-    //                        hScrollBar->pageStep(), ox);
-
-    //        RS_DEBUG->print(/*RS_Debug::D_WARNING, */"V min: %d / max: %d / step: %d / value: %d\n",
-    //                        vScrollBar->minimum(), vScrollBar->maximum(),
-    //                        vScrollBar->pageStep(), oy);
-    LC_LOG << __func__ << "(): end";
+    if (m_hScroll.valid) {
+        const double currentStart = -static_cast<double>(ox);
+        const double anchorValue = m_hScroll.value;
+        m_hScroll = computeAxisState(true, hasContent, ucsMin, ucsMax, factor, ox, oy, width, height);
+        if (m_hScroll.valid) {
+            m_hScroll.origin = currentStart - anchorValue * m_hScroll.pixelsPerTick;
+            m_hScroll.value = static_cast<int>(anchorValue);
+        }
+    }
+    if (m_vScroll.valid) {
+        const double currentStart = static_cast<double>(oy) - static_cast<double>(height);
+        const double anchorValue = m_vScroll.value;
+        m_vScroll = computeAxisState(false, hasContent, ucsMin, ucsMax, factor, ox, oy, width, height);
+        if (m_vScroll.valid) {
+            m_vScroll.origin = currentStart - anchorValue * m_vScroll.pixelsPerTick;
+            m_vScroll.value = static_cast<int>(anchorValue);
+        }
+    }
+    m_scrollKey = key;
+    return key;
 }
 
 /**
@@ -1220,47 +1343,52 @@ void QG_GraphicView::adjustZoomControls() {
 
 
 /**
- * Slot for horizontal scroll events.
+ * Shared body of slotHScrolled()/slotVScrolled(): rebase \p axisState if the viewport
+ * changed silently, then map \p value through it and apply the result via \p
+ * applyViewStart, which sets the viewport's offset for this axis and returns the
+ * (int) offset it actually used. Only that one key field (ox for H, oy for V) is then
+ * patched into a copy of the key rebaseScrollIfStale() already computed, rather than
+ * calling viewportKey() again from scratch (see LC_ScrollViewportKey's comment).
+ *
+ * The H/V axes differ in more than one line each (Y is flipped and offset by the view
+ * height, X is not), so those differences stay as the two explicit one-line lambdas at
+ * each call site; this shares only what is byte-identical between them.
+ */
+void QG_GraphicView::driveScrollAxis(LC_ScrollModel::State& axisState, const int value,
+                                     const std::function<int(double)>& applyViewStart,
+                                     int LC_ScrollViewportKey::* const keyField) {
+    if (!axisState.valid) {
+        return;
+    }
+    LC_ScrollViewportKey key = rebaseScrollIfStale();
+    const QScopedValueRollback<bool> driving(m_scrollSyncing, true);
+    key.*keyField = applyViewStart(axisState.viewStartFor(value));
+    axisState.value = value;
+    m_scrollKey = key;
+}
+
+/**
+ * Slot for horizontal scroll events: maps the bar value through the snapshot
+ * taken at the last sync. The viewport notification redraws the view.
  */
 void QG_GraphicView::slotHScrolled(const int value) {
-    const auto viewport = getViewPort();
-    if (m_hScrollBar->maximum() == m_hScrollBar->minimum()) {
-        getDocument()->calculateBorders();
-        const RS_Vector min = getDocument()->getMin();
-        const RS_Vector max = getDocument()->getMax();
-        RS_Vector ucsMin;
-        RS_Vector ucsMax;
-        viewport->ucsBoundingBox(min, max, ucsMin, ucsMax);
-        const RS_Vector containerSize = ucsMax - ucsMin;
-        viewport->centerOffsetX(ucsMin, containerSize);
-    }
-    else {
-        viewport->setOffsetX(-value);
-    }
-    redraw();
+    driveScrollAxis(m_hScroll, value, [this](const double viewStart) {
+        const int ox = -LC_ViewMath::saturatingRound(viewStart);
+        getViewPort()->setOffsetX(ox);
+        return ox;
+    }, &LC_ScrollViewportKey::ox);
 }
 
 /**
  * Slot for vertical scroll events.
  */
 void QG_GraphicView::slotVScrolled(const int value) {
-    // Scrollbar behaviour tends to change with every Qt version..
-    // so let's keep old code in here for now
-
-    if (m_vScrollBar->maximum() == m_vScrollBar->minimum()) {
-        getDocument()->calculateBorders();
-        const RS_Vector min = getDocument()->getMin();
-        const RS_Vector max = getDocument()->getMax();
-        RS_Vector ucsMin;
-        RS_Vector ucsMax;
-        getViewPort()->ucsBoundingBox(min, max, ucsMin, ucsMax);
-        const RS_Vector containerSize = ucsMax - ucsMin;
-        getViewPort()->centerOffsetY(ucsMin, containerSize);
-    }
-    else {
-        getViewPort()->setOffsetY(value);
-    }
-    redraw();
+    driveScrollAxis(m_vScroll, value, [this](const double viewStart) {
+        auto* viewport = getViewPort();
+        const int oy = LC_ViewMath::saturatingRound(viewStart + viewport->getHeight());
+        viewport->setOffsetY(oy);
+        return oy;
+    }, &LC_ScrollViewportKey::oy);
 }
 
 /**
@@ -1437,16 +1565,23 @@ void QG_GraphicView::addScrollbars() {
     m_layout->setColumnStretch(2, 0);
     m_layout->setRowStretch(0, 1);
     m_layout->setRowStretch(1, 0);
+    keepScrollbarsOnDrawingSide();
 
-    m_hScrollBar->setSingleStep(50);
+    // adjustOffsetControls() freezes the range on sliderReleased through a direct
+    // connection, relying on sliderReleased firing after the final SliderMove. With
+    // tracking off, Qt emits sliderReleased before that move (qabstractslider.cpp),
+    // and a resync there would discard the drag. QG_ScrollBar::init() enables tracking
+    // unconditionally, so this invariant holds in release builds too, not only where
+    // Q_ASSERT compiles in.
     m_hScrollBar->setCursor(Qt::ArrowCursor);
     m_layout->addWidget(m_hScrollBar, 1, 0);
     connect(m_hScrollBar, &QG_ScrollBar::valueChanged, this, &QG_GraphicView::slotHScrolled);
+    connect(m_hScrollBar, &QG_ScrollBar::sliderReleased, this, &QG_GraphicView::adjustOffsetControls);
 
-    m_vScrollBar->setSingleStep(50);
     m_vScrollBar->setCursor(Qt::ArrowCursor);
     m_layout->addWidget(m_vScrollBar, 0, 1);
     connect(m_vScrollBar, &QG_ScrollBar::valueChanged, this, &QG_GraphicView::slotVScrolled);
+    connect(m_vScrollBar, &QG_ScrollBar::sliderReleased, this, &QG_GraphicView::adjustOffsetControls);
 }
 
 bool QG_GraphicView::hasScrollbars() const {
@@ -1601,8 +1736,10 @@ void QG_GraphicView::ucsHighlightStep() {
     }
     else {
         m_ucsHighlightData->stop();
-        // restore current view position
-        getViewPort()->justSetOffsetAndFactor(m_ucsHighlightData->savedViewOffset.x, m_ucsHighlightData->savedViewOffset.y,
+        // restore current view position; setOffsetAndFactor (not justSetOffsetAndFactor)
+        // notifies, so the scrollbars resync and the drawing layer, not just the overlay,
+        // is re-rendered (RedrawDrawing, not only RedrawOverlay as below)
+        getViewPort()->setOffsetAndFactor(m_ucsHighlightData->savedViewOffset.x, m_ucsHighlightData->savedViewOffset.y,
                                               m_ucsHighlightData->savedViewFactor);
     }
     redraw(RS2::RedrawOverlay);

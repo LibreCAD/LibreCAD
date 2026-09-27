@@ -690,7 +690,10 @@ void LC_GraphicViewport::doZoomAuto(const RS_Vector& min, const RS_Vector& max, 
         RS_Vector ucsMin;
         RS_Vector ucsMax;
 
-        ucsBoundingBox(min, max, ucsMin, ucsMax);
+        // Issue #2131: the old two-corner ucsBoundingBox() can be narrower than the WCS
+        // box's true UCS extent under a rotated UCS; ucsBoundsOfWcsBox() transforms all
+        // four corners, matching what the scrollbars already frame (adjustOffsetControls()).
+        ucsBoundsOfWcsBox(min, max, ucsMin, ucsMax);
 
         const RS_Vector ucsSize = ucsMax - ucsMin;
 

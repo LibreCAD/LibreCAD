@@ -1136,6 +1136,9 @@ set (SHARED_SOURCES
      librecad/src/lib/gui/lc_graphicviewport.h
      librecad/src/lib/gui/lc_graphicviewportlistener.h
      librecad/src/lib/gui/lc_latecompletionrequestor.h
+     librecad/src/lib/gui/lc_scrollmodel.cpp
+     librecad/src/lib/gui/lc_scrollmodel.h
+     librecad/src/lib/gui/lc_viewmath.h
      librecad/src/lib/gui/render/headless/lc_printviewportrenderer.cpp
      librecad/src/lib/gui/render/headless/lc_printviewportrenderer.h
      librecad/src/lib/gui/render/lc_graphicviewportrenderer.cpp
@@ -2603,6 +2606,9 @@ if (BUILD_TESTS)
         librecad/src/ui/main/persistence/tests/lc_documentsstorage_tests.cpp
         librecad/src/plugins/tests/qc_actiongetselect_tests.cpp
         librecad/src/lib/gui/tests/lc_graphicviewrenderer_tests.cpp
+        librecad/src/lib/gui/tests/lc_scrollmodel_tests.cpp
+        librecad/src/lib/gui/tests/lc_graphicviewport_zoomauto_tests.cpp
+        librecad/src/ui/view/tests/qg_graphicview_scroll_tests.cpp
         librecad/src/main/tests/console_command_utils_tests.cpp
         librecad/src/main/tests/lc_pdfprintlooptests.cpp
         librecad/src/main/tests/lc_consoleimporttests.cpp

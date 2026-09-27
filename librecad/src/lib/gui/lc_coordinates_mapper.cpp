@@ -22,6 +22,8 @@
 
 #include "lc_coordinates_mapper.h"
 
+#include <algorithm>
+
 #include "rs_math.h"
 #include "rs_vector.h"
 
@@ -158,6 +160,25 @@ RS_Vector LC_CoordinatesMapper::restrictVertical(const RS_Vector& baseWCSPoint, 
     return RS_Vector(baseWCSPoint.x, wcsCoord.y);
 }
 
+void LC_CoordinatesMapper::ucsBoundsOfWcsBox(const RS_Vector& wcsMin, const RS_Vector& wcsMax, RS_Vector& ucsMin,
+                                             RS_Vector& ucsMax) const {
+    if (!m_hasUcs) {
+        ucsMin = wcsMin;
+        ucsMax = wcsMax;
+        return;
+    }
+    const RS_Vector corners[] = {toUCS(wcsMin), toUCS(RS_Vector(wcsMin.x, wcsMax.y)), toUCS(wcsMax),
+                                 toUCS(RS_Vector(wcsMax.x, wcsMin.y))};
+    ucsMin = corners[0];
+    ucsMax = corners[0];
+    for (const RS_Vector& corner : corners) {
+        ucsMin = RS_Vector(std::min(ucsMin.x, corner.x), std::min(ucsMin.y, corner.y));
+        ucsMax = RS_Vector(std::max(ucsMax.x, corner.x), std::max(ucsMax.y, corner.y));
+    }
+}
+
+// Note: this box is built from two transformed corners only, so for a rotated UCS it may not
+// contain the whole WCS box (see #2131 below). Use ucsBoundsOfWcsBox() where containment matters.
 void LC_CoordinatesMapper::ucsBoundingBox(const RS_Vector& wcsMin, const RS_Vector& wcsMax, RS_Vector& ucsMin, RS_Vector& ucsMax) const {
     if (m_hasUcs) {
         /* This implementation does not work, too aggressive clipping of entities
