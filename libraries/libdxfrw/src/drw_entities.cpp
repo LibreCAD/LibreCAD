@@ -91,7 +91,7 @@ bool DRW_Entity::parseCode(int code, dxfReader *reader){
         ltypeScale = reader->getDouble();
         break;
     case 60:
-        visible = reader->getBool();
+        visible = reader->getInt32() == 0;
         break;
     case 420:
         color24 = reader->getInt32();
@@ -358,6 +358,7 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
     }
     dint16 invisibleFlag = buf->getBitShort(); //BS
     DRW_DBG(" invisibleFlag: "); DRW_DBG(invisibleFlag);
+    visible = (invisibleFlag & 1) == 0;
     if (version > DRW::AC1014) {//2000+
         lWeight = DRW_LW_Conv::dwgInt2lineWidth( buf->getRawChar8() ); //RC
         DRW_DBG(" lwFlag (lWeight): "); DRW_DBG(lWeight); DRW_DBG("\n");
