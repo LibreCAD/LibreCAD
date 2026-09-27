@@ -1007,11 +1007,12 @@ void RS_Graphic::replaceDimStylesList(const QString& defaultStyleName, const QLi
 void RS_Graphic::prepareForSave() {
     // fixme - sand - check what if dimension
     const auto entities = lc::LC_ContainerTraverser{*this, RS2::ResolveNone}.entities();
+    QList<LC_DimStyle*> dimStyleOverrides;
+    QList<RS_Dimension*> dimsWithOverrides;
     for (const auto e : entities) {
         if (e->isDeleted()) {
             continue;
         }
-        QList<LC_DimStyle*> dimStyleOverrides;
         const RS2::EntityType rtti = e->rtti();
         if (RS2::isDimensionalEntity(rtti)) {
             const auto dim = dynamic_cast<RS_Dimension*>(e);
@@ -1019,11 +1020,21 @@ void RS_Graphic::prepareForSave() {
                 LC_DimStyle* override = dim->getDimStyleOverride();
                 if (override != nullptr) {
                     dimStyleOverrides.append(override);
+                    dimsWithOverrides.append(dim);
                 }
             }
         }
-        if (!dimStyleOverrides.isEmpty()) {
-            LC_DimArrowRegistry::insertStandardArrowBlocks(this, dimStyleOverrides);
+    }
+    if (!dimStyleOverrides.isEmpty()) {
+        LC_DimArrowRegistry::insertStandardArrowBlocks(this, dimStyleOverrides);
+        // An override's arrow can only become a real block reference once its
+        // block exists -- which the call above may have just made true for
+        // the first time. Recompute now so this save, not just the next
+        // reopen, draws it as an INSERT instead of falling back to a bare
+        // LC_DimArrow that the writer can only approximate (or not draw at
+        // all, for a kind with no export primitives of its own).
+        for (const auto dim : dimsWithOverrides) {
+            dim->update();
         }
     }
 }

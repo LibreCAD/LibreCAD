@@ -24,6 +24,7 @@
 #include "lc_arrow_headclosed.h"
 
 #include "rs_painter.h"
+#include "rs_solid.h"
 
 LC_ArrowHeadClosed::LC_ArrowHeadClosed(RS_EntityContainer* container, const RS_Vector& point, const double dirAngle, const double size,
                                        const double ownAngle, const bool filled) : LC_DimArrowPoly{container, point, dirAngle, size},
@@ -43,6 +44,24 @@ void LC_ArrowHeadClosed::draw(RS_Painter* painter) {
         painter->drawPolygonWCS(vertexAt(0), vertexAt(1), vertexAt(2), vertexAt(0), RS_Vector(false));
         painter->drawLineWCS(vertexAt(1), getPosition());
     }
+}
+
+std::vector<std::unique_ptr<RS_Entity>> LC_ArrowHeadClosed::exportPrimitives() const {
+    std::vector<std::unique_ptr<RS_Entity>> result;
+    // Only the filled arrow is exported here: it is AutoCAD's default
+    // (DIMBLK "") and never gets a block of its own, on either side, so a
+    // SOLID is the only way to write it. The unfilled arrow is a named type
+    // ("Closed") that AutoCAD always stores as a block, exactly like the
+    // other nine LC_DimArrow kinds; LC_DimArrowRegistry::createArrowBlock()
+    // builds this class for it only when that block is momentarily missing
+    // from the drawing, which the write side should not paper over with
+    // hand-drawn primitives that were themselves wrong (an outline with no
+    // real stem -- vertexAt(1) already sits at the tip).
+    if (m_filled) {
+        result.push_back(std::make_unique<RS_Solid>(
+            nullptr, RS_SolidData(vertexAt(0), vertexAt(1), vertexAt(2))));
+    }
+    return result;
 }
 
 void LC_ArrowHeadClosed::createVertexes() {

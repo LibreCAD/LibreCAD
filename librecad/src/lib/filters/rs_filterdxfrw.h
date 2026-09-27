@@ -2275,6 +2275,7 @@ public:
   void writeLine(const RS_Line *l);
   void writeCircle(const RS_Circle *c);
   void writeArc(const RS_Arc *a);
+  bool writeDimArcSymbolAsArc(RS_Entity *e);
   void writeEllipse(const RS_Ellipse *s);
   void writeHyperbola(LC_Hyperbola *h);
   void writeParabola(LC_Parabola *p);
@@ -2364,6 +2365,17 @@ protected:
   void parseDimStyleExtData(const DRW_Dimstyle &s, LC_DimStyle *result);
   bool resolveBlockNameByHandle(std::uint32_t handle,
                                 QString &block_name) const;
+  // A DIMSTYLE's arrow-block fields (DIMLDRBLK/DIMBLK/DIMBLK1/DIMBLK2) can
+  // name their BLOCK_RECORD only by handle (V2000+); resolving that requires
+  // the BLOCK_RECORD table, which the DIMSTYLE table can precede in the file.
+  // createDimStyle() queues one entry per handle seen; this applies every
+  // queued resolution once the whole file has been read.
+  struct PendingDimStyleArrowRef {
+    std::uint32_t handle;
+    std::function<void(const QString &)> apply;
+  };
+  std::vector<PendingDimStyleArrowRef> m_pendingDimStyleArrowRefs;
+  void resolvePendingDimStyleArrowBlocks();
   DimStyleOverrideParseResult
   parseDimStyleOverride(const LC_ExtEntityData *data,
                         std::unique_ptr<LC_DimStyle> &result) const;
@@ -3056,6 +3068,8 @@ private:
   // Normalised names of the built-in LTYPE records written by writeLType()
   // during writeLTypes(); imported raw records with these names are skipped.
   std::set<std::string> m_builtinLTypeNames;
+  // The same records' own dashes, before any imported record replaced them.
+  std::map<std::string, std::vector<double>> m_builtinLTypePaths;
 
   /** DXF export (DWG->DXF): SOURCE handles of the named parent dictionaries
    *  emitted via setNamedDictObjects (F4-followup). Computed in fileExport,

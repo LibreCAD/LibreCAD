@@ -596,7 +596,7 @@ private:
     bool validateHatchPayload(const DRW_Hatch *ent) const;
     bool writeEntity(DRW_Entity *ent, bool captureSourceHandle = true,
                      std::uint32_t ownerOverride = DRW::NoHandle);
-    bool writeSequenceEnd(std::uint32_t ownerHandle);
+    bool writeSequenceEnd(const DRW_Entity &owner);
     bool writeArcDimension(DRW_DimArc *d);
     bool writeLargeRadialDimension(DRW_DimLargeRadial *d);
     bool writeTables();
