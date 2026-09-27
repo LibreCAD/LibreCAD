@@ -10890,7 +10890,10 @@ TEST_CASE("dwgRW decodes and preserves ACAD_PROXY_OBJECT payloads",
     REQUIRE(reader.getObjectParseFailures() == 0);
     CHECK(reader.getSkippedUnsupportedObjects().empty());
     REQUIRE(readIface.m_readObjects.size() == 1);
-    REQUIRE(readIface.m_readRawObjects.size() == 1);
+    // Every write() call also bootstraps a root Named Objects Dictionary and
+    // an ACAD_GROUP dictionary, which the reader dual-delivers as raw
+    // records too (readDwgObjects' DICTIONARY case) -- find the proxy's own
+    // raw carrier by type rather than assuming it is the only entry.
 
     const DRW_ProxyObject &proxy = readIface.m_readObjects.front();
     CHECK(proxy.handle == writeIface.m_rawObject.m_handle);
@@ -10916,7 +10919,13 @@ TEST_CASE("dwgRW decodes and preserves ACAD_PROXY_OBJECT payloads",
     CHECK(proxy.m_objectIdRefs.front().m_dxfCode == 360);
     CHECK(proxy.m_objectIdRefs.front().m_handle == 0x735u);
 
-    const DRW_UnsupportedObject &raw = readIface.m_readRawObjects.front();
+    const auto rawIt = std::find_if(
+        readIface.m_readRawObjects.begin(), readIface.m_readRawObjects.end(),
+        [&](const DRW_UnsupportedObject &object) {
+          return object.m_handle == writeIface.m_rawObject.m_handle;
+        });
+    REQUIRE(rawIt != readIface.m_readRawObjects.end());
+    const DRW_UnsupportedObject &raw = *rawIt;
     CHECK(raw.m_objectType == DRW_ProxyObject::kDwgType);
     CHECK(raw.m_recordName == "ACAD_PROXY_OBJECT");
     CHECK(raw.m_className == "AcDbProxyObject");
@@ -10942,7 +10951,15 @@ TEST_CASE("dwgRW rejects truncated ACAD_PROXY_OBJECT metadata atomically",
   CHECK(reader.read(&readIface, /*ext=*/false));
   CHECK(reader.getObjectParseFailures() > 0);
   CHECK(readIface.m_readObjects.empty());
-  CHECK(readIface.m_readRawObjects.empty());
+  // The root Named Objects Dictionary and ACAD_GROUP dictionary that every
+  // write() call bootstraps are unrelated to the truncated proxy object and
+  // still dual-deliver their own raw records; only the proxy's raw carrier
+  // should be absent.
+  CHECK(std::none_of(readIface.m_readRawObjects.begin(),
+                     readIface.m_readRawObjects.end(),
+                     [&](const DRW_UnsupportedObject &object) {
+                       return object.m_handle == writeIface.m_rawObject.m_handle;
+                     }));
   CHECK(reader.getSkippedUnsupportedObjects().empty());
   std::remove(path.c_str());
 }
@@ -10965,7 +10982,13 @@ TEST_CASE(
   CHECK(reader.read(&readIface, /*ext=*/false));
   CHECK(reader.getObjectParseFailures() > 0);
   CHECK(readIface.m_readObjects.empty());
-  CHECK(readIface.m_readRawObjects.empty());
+  // See the sibling truncated-metadata test above: the dictionary bootstrap
+  // objects still dual-deliver raw records regardless of the proxy failure.
+  CHECK(std::none_of(readIface.m_readRawObjects.begin(),
+                     readIface.m_readRawObjects.end(),
+                     [&](const DRW_UnsupportedObject &object) {
+                       return object.m_handle == writeIface.m_rawObject.m_handle;
+                     }));
   CHECK(reader.getSkippedUnsupportedObjects().empty());
   std::remove(path.c_str());
 }
@@ -15459,7 +15482,11 @@ TEST_CASE("dwgRW remaps conflicting custom class registrations",
     dwgRW reader(path.c_str());
     REQUIRE(reader.read(&readIface, /*ext=*/false));
     REQUIRE(reader.getError() == DRW::BAD_NONE);
-    REQUIRE(readIface.m_readObjects.size() == 2);
+    // The root Named Objects Dictionary and ACAD_GROUP dictionary that every
+    // write() call bootstraps dual-deliver raw records too (readDwgObjects'
+    // DICTIONARY case); the two find_if checks below already identify this
+    // test's own two conflicting-class objects by handle.
+    REQUIRE(readIface.m_readObjects.size() >= 2);
     const auto first = std::find_if(readIface.m_readObjects.cbegin(),
                                     readIface.m_readObjects.cend(),
                                     [](const DRW_UnsupportedObject &object) {
@@ -30536,10 +30563,15 @@ TEST_CASE("DWG LIGHTLIST writer preserves named light references",
     CHECK(lightList.extData[1]->code() == 1000);
     CHECK(std::string(lightList.extData[1]->c_str()) == "lightlist payload");
     // The typed LightList remains replayable through its raw carrier;
-    // AC1015 additionally retains the fixed VPORT control carrier.
-    const std::size_t expectedRawObjects = version >= DRW::AC1021   ? 3u
-                                           : version == DRW::AC1015 ? 2u
-                                                                    : 1u;
+    // AC1015 additionally retains the fixed VPORT control carrier. Every
+    // write() call also bootstraps a root Named Objects Dictionary and an
+    // ACAD_GROUP dictionary, which the reader dual-delivers as raw records
+    // too (readDwgObjects' DICTIONARY case), adding 2 more regardless of
+    // version.
+    const std::size_t expectedRawObjects = (version >= DRW::AC1021   ? 3u
+                                            : version == DRW::AC1015 ? 2u
+                                                                     : 1u) +
+                                            2u;
     CHECK(readIface.m_rawObjects.size() == expectedRawObjects);
     std::remove(path.c_str());
   }
