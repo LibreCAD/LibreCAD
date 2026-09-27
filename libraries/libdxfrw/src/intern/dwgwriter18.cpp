@@ -571,8 +571,14 @@ bool dwgWriter18::addRawDwgSection(const DRW_RawDwgSection& section) {
         || (!opaqueName && !prototypeAllowed && !vbaAllowed)
         || (m_version < DRW::AC1021 && section.m_name.size() > 63))
         return false;
+    // Encoding 1 (stored) is version-agnostic, but 2 and 4 are each a
+    // version's own compressed-page marker: 2 is R2004's plain-LZ scheme, 4
+    // is R2007+'s RS+LZ scheme. A section whose own m_version already
+    // targets R2007+ claiming encoding 2 is simply wrong metadata for that
+    // format, not a value replay is expected to carry forward.
     if ((section.m_encoding != 1 && section.m_encoding != 2
          && section.m_encoding != 4)
+        || (m_version >= DRW::AC1021 && section.m_encoding == 2)
         || section.m_encrypted != 0
         || section.m_maxSize > dwgSafety::MaxBufferSize
         || (section.m_maxSize != 0
