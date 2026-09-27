@@ -26,6 +26,7 @@
 **********************************************************************/
 
 #include <algorithm>
+#include <cfloat>
 #include <random>
 #include <vector>
 
@@ -51,6 +52,37 @@ namespace {
 // the length of the shorter curve, a tangent point is identified. This may generate false tangent points
 //
 constexpr double g_tangentTolerance = 1e-6;
+
+// The first-order distance of a point from the whole curve of an entity, from its implicit
+// equation. getNearestPointOnEntity() measures only the drawn part of a parabola.
+double curveDistance(const RS_Entity* entity, const RS_Vector& point)
+{
+    const std::vector<double> ce = entity->getQuadratic().getCoefficients();
+    const double x = point.x, y = point.y;
+    double f = 0., fx = 0., fy = 0., gradientSize = 0.;
+    if (ce.size() == 6) {
+        f = ce[0]*x*x + ce[1]*x*y + ce[2]*y*y + ce[3]*x + ce[4]*y + ce[5];
+        fx = 2.*ce[0]*x + ce[1]*y + ce[3];
+        fy = ce[1]*x + 2.*ce[2]*y + ce[4];
+        gradientSize = std::abs(2.*ce[0]*x) + std::abs(ce[1]*y) + std::abs(ce[3])
+                      + std::abs(ce[1]*x) + std::abs(2.*ce[2]*y) + std::abs(ce[4]);
+    } else if (ce.size() == 3) {
+        f = ce[0]*x + ce[1]*y + ce[2];
+        fx = ce[0];
+        fy = ce[1];
+        gradientSize = std::abs(fx) + std::abs(fy);
+    }
+    const double gradient = std::hypot(fx, fy);
+    // A relative test, as conicPoint() (rs_math.cpp) uses for the same computation: an absolute
+    // gradient>0. test cannot tell a genuine small slope from rounding noise left over from
+    // cancellation in fx/fy, and returns an arbitrary abs(f)/gradient for the latter.
+    if (gradient > std::sqrt(DBL_EPSILON) * gradientSize) {
+        return std::abs(f)/gradient;
+    }
+    double distance = RS_MAXDOUBLE;
+    entity->getNearestPointOnEntity(point, false, &distance);
+    return distance;
+}
 
 // whether the entity is circular (circle or arc)
 bool isArc(RS_Entity const* e) {
@@ -217,10 +249,11 @@ public:
         return {ret, true};
     }
 
-    // CreateOffset remains unchanged
+    // The offset is a distance, as for lines: scaling the radius by (1 + offsetValue) accepted a
+    // gap growing with the square of the size, and found tangent points between separate curves
     std::unique_ptr<RS_Entity> CreateOffset(const RS_Entity* e1, double offsetValue) const override {
         std::unique_ptr<RS_Entity> circle{ e1->clone()};
-        circle->setRadius(e1->getRadius()*(1. + offsetValue));
+        circle->setRadius(e1->getRadius() + offsetValue);
         return circle;
     }
 };
@@ -303,6 +336,17 @@ RS_VectorSolutions TangentFinder::GetTangent() const
                     ret.clear();               // two distinct points → not a tangent
                 }
             }
+
+            // A tangent point is on both curves, up to the gap accepted for a tangent point. Bisection
+            // between offsets can end elsewhere, between two separate intersections.
+            const double gap = g_tangentTolerance * std::min(m_e1->getLength(), m_e2->getLength()) * 3.0;
+            RS_VectorSolutions onBoth;
+            for (const RS_Vector& vp : ret) {
+                if (curveDistance(m_e1, vp) <= gap && curveDistance(m_e2, vp) <= gap) {
+                    onBoth.push_back(vp);
+                }
+            }
+            ret = onBoth;
 
             if (!ret.empty()) {
                 ret.setTangent(true);

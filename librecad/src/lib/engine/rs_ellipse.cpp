@@ -25,6 +25,8 @@
 **
 **********************************************************************/
 
+#include <algorithm>
+
 #include "rs_ellipse.h"
 
 #include  "lc_quadratic.h"
@@ -578,57 +580,94 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
         roots.push_back(-roots.front());
     }
     if(roots.empty()) {
-        //this should not happen
-        std::cout<<"(a= "<<a<<" b= "<<b<<" x= "<<x<<" y= "<<y<<" )\n";
-        std::cout<<"finding minimum for ("<<x<<"-"<<a<<"*cos(t))^2+("<<y<<"-"<<b<<"*sin(t))^2\n";
-        std::cout<<"2::find cosine, variable c, solve(c^4 +("<<ce[0]<<")*c^3+("<<ce[1]<<")*c^2+("<<ce[2]<<")*c+("<<ce[3]<<")=0,c)\n";
-        std::cout<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<' '<<ce[3]<<std::endl;
-        std::cerr<<"RS_Math::RS_Ellipse::getNearestPointOnEntity() finds no root from quartic, this should not happen\n";
-        return RS_Vector(coord); // better not to return invalid: return RS_Vector(false);
+        //this should not happen; the axis candidates below still give a point on the ellipse
+        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Ellipse::getNearestPointOnEntity() finds no root from quartic, this should not happen\n");
     }
 
-//    RS_Vector vp2(false);
-	double d,dDistance(RS_MAXDOUBLE*RS_MAXDOUBLE);
-    //double ea;
-    for(size_t i=0; i<roots.size(); i++) {
-        //I don't understand the reason yet, but I can do without checking whether sine/cosine are valid
-        //if ( fabs(roots[i])>1.) continue;
-		double const s=twoby*roots[i]/(twoax-twoa2b2*roots[i]); //sine
-        //if (fabs(s) > 1. ) continue;
-		double const d2=twoa2b2+(twoax-2.*roots[i]*twoa2b2)*roots[i]+twoby*s;
-        if (d2<0) continue; // fartherest
-        RS_Vector vp3;
-        vp3.set(a*roots[i],b*s);
-        d=(vp3-ret).squared();
-//        std::cout<<i<<" Checking: cos= "<<roots[i]<<" sin= "<<s<<" angle= "<<atan2(roots[i],s)<<" ds2= "<<d<<" d="<<d2<<std::endl;
-        if( ret.valid && d>dDistance) continue;
-        ret=vp3;
-        dDistance=d;
-//			ea=atan2(roots[i],s);
+    // Candidate points, as the cosine and sine of their elliptic angles. Every
+    // candidate lies on the ellipse, so the nearest point is the candidate at
+    // the smallest distance, and an extra candidate cannot undercut the true
+    // minimum.
+    //
+    // The squared distance is stationary where
+    //     sin(t) (2ax - 2(a^2-b^2) cos(t)) = 2by cos(t).
+    // For a query on an axis the quartic has a double root, which the solver
+    // can lose or compute inaccurately. The stationary points of such a query
+    // are known, so they are always candidates: the four vertices, the pair with
+    // cos(t) = 2ax/(2(a^2-b^2)) for a query on the major axis (y = 0), and the
+    // pair with sin(t) = -2by/(2(a^2-b^2)) for a query on the minor axis (x = 0).
+    std::vector<std::pair<double, double>> directions{{1., 0.}, {0., 1.}, {-1., 0.}, {0., -1.}};
+    // The same threshold as the branch above: below it, a==b is treated as a circle, where these
+    // ratios would be an unstable division by a value that is small but not exactly zero.
+    if (a0 > RS_TOLERANCE) {
+        // (1 - c)(1 + c) instead of 1 - c^2 keeps the result accurate for c close to +-1.
+        // Each formula gives exactly a seeded vertex when x, respectively y, is zero: skip it
+        // there rather than adding a candidate already in the list.
+        if (twoax != 0.) {
+            const double cosOnMajorAxis = twoax / twoa2b2;
+            if (std::abs(cosOnMajorAxis) <= 1.) {
+                const double sinTheta = std::sqrt((1. - cosOnMajorAxis) * (1. + cosOnMajorAxis));
+                directions.emplace_back(cosOnMajorAxis, sinTheta);
+                directions.emplace_back(cosOnMajorAxis, -sinTheta);
+            }
+        }
+        if (twoby != 0.) {
+            const double sinOnMinorAxis = -twoby / twoa2b2;
+            if (std::abs(sinOnMinorAxis) <= 1.) {
+                const double cosTheta = std::sqrt((1. - sinOnMinorAxis) * (1. + sinOnMinorAxis));
+                directions.emplace_back(cosTheta, sinOnMinorAxis);
+                directions.emplace_back(-cosTheta, sinOnMinorAxis);
+            }
+        }
     }
-    if( ! ret.valid ) {
-        //this should not happen
-//        std::cout<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<' '<<ce[3]<<std::endl;
-//        std::cout<<"(x,y)=( "<<x<<" , "<<y<<" ) a= "<<a<<" b= "<<b<<" sine= "<<s<<" d2= "<<d2<<" dist= "<<d<<std::endl;
-//        std::cout<<"RS_Ellipse::getNearestPointOnEntity() finds no minimum, this should not happen\n";
-        RS_DEBUG->print(RS_Debug::D_ERROR,"RS_Ellipse::getNearestPointOnEntity() finds no minimum, this should not happen\n");
+    for (double cosTheta : roots) {
+        // Skip spurious roots from squaring during the quartic derivation:
+        // they have |cos| > 1 and do not correspond to any real angle on the
+        // ellipse.
+        if (std::abs(cosTheta) > 1.0 + RS_TOLERANCE) {
+            continue;
+        }
+        const double c = std::clamp(cosTheta, -1.0, 1.0);
+        const double denominator = twoax - twoa2b2 * c;
+        // Normalized, so a root with a rounding error still maps onto the ellipse. A zero or
+        // near-zero denominator (both sides of the stationary condition vanishing: an axis
+        // candidate above) gives 0/0 = NaN or an overflowing sinTheta; either way norm below is
+        // not finite, so no separate exact-zero guard is needed here.
+        const double sinTheta = twoby * c / denominator;
+        const double norm = std::hypot(c, sinTheta);
+        if (norm > 0. && std::isfinite(norm)) {
+            directions.emplace_back(c / norm, sinTheta / norm);
+        }
     }
-	if (dist) {
+
+    RS_Vector const query = ret;
+    double dDistance = RS_MAXDOUBLE * RS_MAXDOUBLE;
+    auto tryCandidate = [&](const double cosTheta, const double sinTheta) {
+        const RS_Vector vp{a * cosTheta, b * sinTheta};
+        const double d = (vp - query).squared();
+        if (d < dDistance) {
+            ret = vp;
+            dDistance = d;
+        }
+    };
+    // On an elliptic arc only points on the arc count, and the endpoints are
+    // candidates too: the nearest point of the whole ellipse can be off the arc
+    // while another stationary point is on it.
+    const bool arcOnly = onEntity && isEllipticArc();
+    for (const auto& [cosTheta, sinTheta] : directions) {
+        if (!arcOnly || RS_Math::isAngleBetween(std::atan2(sinTheta, cosTheta), getAngle1(), getAngle2(), isReversed())) {
+            tryCandidate(cosTheta, sinTheta);
+        }
+    }
+    if (arcOnly) {
+        tryCandidate(std::cos(getAngle1()), std::sin(getAngle1()));
+        tryCandidate(std::cos(getAngle2()), std::sin(getAngle2()));
+    }
+    if (dist) {
         *dist = std::sqrt(dDistance);
     }
     ret.rotate(getAngle());
     ret.move(getCenter());
-//    ret=vp2;
-    if (onEntity) {
-        if (!RS_Math::isAngleBetween(getEllipseAngle(ret), getAngle1(), getAngle2(), isReversed())) { // not on entity, use the nearest endpoint
-               //std::cout<<"not on ellipse, ( "<<getAngle1()<<" "<<getEllipseAngle(ret)<<" "<<getAngle2()<<" ) reversed= "<<isReversed()<<"\n";
-            ret=getNearestEndpoint(coord,dist);
-        }
-    }
-
-//    if(! ret.valid) {
-//        std::cout<<"RS_Ellipse::getNearestOnEntity() returns invalid by mistake. This should not happen!"<<std::endl;
-//    }
     return ret;
 }
 

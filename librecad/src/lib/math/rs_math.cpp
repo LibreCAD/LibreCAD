@@ -28,7 +28,9 @@
 #include <boost/numeric/ublas/lu.hpp>
 #include <boost/math/special_functions/ellint_2.hpp>
 
+#include <algorithm>
 #include <cmath>
+#include <cfloat>
 #include <muParser.h>
 #include <QString>
 #include <QRegularExpression>
@@ -754,16 +756,19 @@ std::vector<double> RS_Math::quarticSolver(const std::vector<double>& ce)
 			qDebug()<<"Quartic Error:: Found one real root for cubic, but negative\n";
             return ans;
         }
+        // Solve both quadratic factors. The cubic can report a single real root
+        // when rounding has hidden a double root, and then both factors hold
+        // real roots: a double root of the quartic, as in (x^2 - 1)(x - 2)^2,
+        // gives the cubic a double root.
         double sqrtz0=sqrt(r3[0]);
         std::vector<double> ce2(2,0.);
         ce2[0]=	-sqrtz0;
         ce2[1]=0.5*(p+r3[0])+0.5*q/sqrtz0;
         auto r1=quadraticSolver(ce2);
-        if (r1.size()==0 ) {
-            ce2[0]=	sqrtz0;
-            ce2[1]=0.5*(p+r3[0])-0.5*q/sqrtz0;
-            r1=quadraticSolver(ce2);
-        }
+        ce2[0]=	sqrtz0;
+        ce2[1]=0.5*(p+r3[0])-0.5*q/sqrtz0;
+        const auto r2=quadraticSolver(ce2);
+        r1.insert(r1.end(), r2.begin(), r2.end());
 		for(auto& x: r1){
 			x -= shift;
 		}
@@ -1024,6 +1029,108 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolver(const std::vector<double
     return simultaneousQuadraticSolverFull(m1);
 }
 
+namespace {
+// A polynomial coefficient summed from its terms. It is zero when it is below the rounding error of
+// that sum. An absolute threshold depends on the units: the coefficients of an ellipse are about
+// 1/a^2, and those of the elimination quartic about their fourth powers, below 1e-14 for a = 500.
+struct Coefficient {
+    double value = 0.;
+    double size = 0.;
+    void add(double term) {
+        value += term;
+        size += std::abs(term);
+    }
+    bool isZero() const {
+        return std::abs(value) <= 64. * DBL_EPSILON * size;
+    }
+};
+
+// the real roots of sum_k ce[k] y^k, of the degree of its highest coefficient that is not zero
+std::vector<double> polynomialRoots(const std::vector<Coefficient>& ce)
+{
+    size_t degree = ce.size() - 1;
+    while (degree > 0 && ce[degree].isZero()) {
+        --degree;
+    }
+    if (degree == 0) {
+        return {};
+    }
+    if (ce.front().isZero()) {
+        std::vector<double> roots = polynomialRoots({ce.begin() + 1, ce.begin() + degree + 1});
+        roots.push_back(0.);
+        return roots;
+    }
+    const double lead = ce[degree].value;
+    switch (degree) {
+    case 1:
+        return {-ce[0].value/lead};
+    case 2:
+        return RS_Math::quadraticSolver({ce[1].value/lead, ce[0].value/lead});
+    case 3:
+        return RS_Math::cubicSolver({ce[2].value/lead, ce[1].value/lead, ce[0].value/lead});
+    default:
+        return RS_Math::quarticSolver({ce[3].value/lead, ce[2].value/lead, ce[1].value/lead, ce[0].value/lead});
+    }
+}
+
+// A point near a conic: its first-order distance |F|/|grad F| from it, and the radius of curvature
+struct ConicPoint {
+    double distance = 0.;
+    double radius = std::numeric_limits<double>::infinity();
+};
+
+ConicPoint conicPoint(const std::vector<double>& ce, const RS_Vector& p)
+{
+    ConicPoint ret;
+    const double x = p.x, y = p.y;
+    const double terms[6] = {ce[0]*x*x, ce[1]*x*y, ce[2]*y*y, ce[3]*x, ce[4]*y, ce[5]};
+    double f = 0., fSize = 0.;
+    for (double term: terms) {
+        f += term;
+        fSize += std::abs(term);
+    }
+    const double fx = 2.*ce[0]*x + ce[1]*y + ce[3];
+    const double fy = ce[1]*x + 2.*ce[2]*y + ce[4];
+    const double gradientSize = std::abs(2.*ce[0]*x) + std::abs(ce[1]*y) + std::abs(ce[3])
+                                + std::abs(ce[1]*x) + std::abs(2.*ce[2]*y) + std::abs(ce[4]);
+    const double gradient = std::hypot(fx, fy);
+    // on the conic to the rounding of F, as at a singular point, where the lines of a degenerate
+    // conic cross
+    if (std::abs(f) <= 64. * DBL_EPSILON * fSize) {
+        return ret;
+    }
+    // a stationary point of F off the conic, as the center of an ellipse
+    if (!(gradient > std::sqrt(DBL_EPSILON) * gradientSize)) {
+        ret.distance = std::numeric_limits<double>::infinity();
+        return ret;
+    }
+    ret.distance = std::abs(f)/gradient;
+    const double bending = std::abs(2.*ce[0]*fy*fy - 2.*ce[1]*fx*fy + 2.*ce[2]*fx*fx);
+    if (bending > 0.) {
+        ret.radius = gradient*gradient*gradient/bending;
+    }
+    return ret;
+}
+
+// How far a point is from both conics, relative to the smaller radius of curvature. Unlike |F|
+// relative to its largest term, this does not depend on the coordinates: that residual accepted
+// points far from a small conic away from the origin.
+double offConics(const std::vector<std::vector<double> >& m, const RS_Vector& p)
+{
+    const ConicPoint first = conicPoint(m[0], p);
+    const ConicPoint second = conicPoint(m[1], p);
+    const double distance = std::max(first.distance, second.distance);
+    if (!(distance > 0.) || !std::isfinite(distance)) {
+        return distance;
+    }
+    // a conic that is straight at the point has no radius: that point is left to the residual
+    return distance / std::min(first.radius, second.radius);
+}
+
+// a point on both conics, closer to them than this times their radius of curvature
+constexpr double onConicsTolerance = 1e-8;
+} // namespace
+
 /** solver quadratic simultaneous equations of a set of two **/
 /* solve the following quadratic simultaneous equations,
   * ma000 x^2 + ma001 xy + ma011 y^2 + mb00 x + mb01 y + mc0 =0
@@ -1087,28 +1194,45 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverFull(const std::vector<st
     double  j2=j*j;
     double  k2=k*k;
     double  l2=l*l;
-    std::vector<double> qy(5,0.);
+    // the coefficients with the sizes of their terms, see Coefficient
+    std::vector<Coefficient> qy(5);
     //y^4
-    qy[4]=-c2*g2 + b*c*g*h - a*c*h2 - b2*g*i + 2.*a*c*g*i + a*b*h*i - a2*i2;
+    qy[4].add(-c2*g2); qy[4].add(b*c*g*h); qy[4].add(-a*c*h2); qy[4].add(-b2*g*i); qy[4].add(2.*a*c*g*i);
+    qy[4].add(a*b*h*i); qy[4].add(-a2*i2);
     //y^3
-    qy[3]=-2.*c*e*g2 + c*d*g*h + b*e*g*h - a*e*h2 - 2.*b*d*g*i + 2.*a*e*g*i + a*d*h*i +
-            b*c*g*j - 2.*a*c*h*j + a*b*i*j - b2*g*k + 2.*a*c*g*k + a*b*h*k - 2.*a2*i*k;
+    qy[3].add(-2.*c*e*g2); qy[3].add(c*d*g*h); qy[3].add(b*e*g*h); qy[3].add(-a*e*h2); qy[3].add(-2.*b*d*g*i);
+    qy[3].add(2.*a*e*g*i); qy[3].add(a*d*h*i); qy[3].add(b*c*g*j); qy[3].add(-2.*a*c*h*j); qy[3].add(a*b*i*j);
+    qy[3].add(-b2*g*k); qy[3].add(2.*a*c*g*k); qy[3].add(a*b*h*k); qy[3].add(-2.*a2*i*k);
     //y^2
-    qy[2]=(-e2*g2 + d*e*g*h - d2*g*i + c*d*g*j + b*e*g*j - 2.*a*e*h*j + a*d*i*j - a*c*j2 -
-           2.*b*d*g*k + 2.*a*e*g*k + a*d*h*k + a*b*j*k - a2*k2 - b2*g*l + 2.*a*c*g*l + a*b*h*l - 2.*a2*i*l)
-            - (2.*c*f*g2 - b*f*g*h + a*f*h2 - 2.*a*f*g*i);
+    qy[2].add(-e2*g2); qy[2].add(d*e*g*h); qy[2].add(-d2*g*i); qy[2].add(c*d*g*j); qy[2].add(b*e*g*j);
+    qy[2].add(-2.*a*e*h*j); qy[2].add(a*d*i*j); qy[2].add(-a*c*j2); qy[2].add(-2.*b*d*g*k);
+    qy[2].add(2.*a*e*g*k); qy[2].add(a*d*h*k); qy[2].add(a*b*j*k); qy[2].add(-a2*k2); qy[2].add(-b2*g*l);
+    qy[2].add(2.*a*c*g*l); qy[2].add(a*b*h*l); qy[2].add(-2.*a2*i*l); qy[2].add(-2.*c*f*g2);
+    qy[2].add(b*f*g*h); qy[2].add(-a*f*h2); qy[2].add(2.*a*f*g*i);
     //y
-    qy[1]=(d*e*g*j - a*e*j2 - d2*g*k + a*d*j*k - 2.*b*d*g*l + 2.*a*e*g*l + a*d*h*l + a*b*j*l - 2.*a2*k*l)
-            -(2.*e*f*g2 - d*f*g*h - b*f*g*j + 2.*a*f*h*j - 2.*a*f*g*k);
+    qy[1].add(d*e*g*j); qy[1].add(-a*e*j2); qy[1].add(-d2*g*k); qy[1].add(a*d*j*k); qy[1].add(-2.*b*d*g*l);
+    qy[1].add(2.*a*e*g*l); qy[1].add(a*d*h*l); qy[1].add(a*b*j*l); qy[1].add(-2.*a2*k*l);
+    qy[1].add(-2.*e*f*g2); qy[1].add(d*f*g*h); qy[1].add(b*f*g*j); qy[1].add(-2.*a*f*h*j);
+    qy[1].add(2.*a*f*g*k);
     //y^0
-    qy[0]=-d2*g*l + a*d*j*l - a2*l2
-            - ( f2*g2 - d*f*g*j + a*f*j2 - 2.*a*f*g*l);
-	if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
-		DEBUG_HEADER
-        std::cout<<qy[4]<<"*y^4 +("<<qy[3]<<")*y^3+("<<qy[2]<<")*y^2+("<<qy[1]<<")*y+("<<qy[0]<<")==0"<<std::endl;
-	}
-    //quarticSolver
-	auto roots=quarticSolverFull(qy);
+    qy[0].add(-d2*g*l); qy[0].add(a*d*j*l); qy[0].add(-a2*l2); qy[0].add(-f2*g2); qy[0].add(d*f*g*j);
+    qy[0].add(-a*f*j2); qy[0].add(2.*a*f*g*l);
+    if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
+        DEBUG_HEADER
+        std::cout<<qy[4].value<<"*y^4 +("<<qy[3].value<<")*y^3+("<<qy[2].value<<")*y^2+("<<qy[1].value<<")*y+("<<qy[0].value<<")==0"<<std::endl;
+    }
+    auto roots=polynomialRoots(qy);
+    // A tangent point is a double root, or a quadruple one where two conics touch at two points
+    // with the same y, and the solvers can lose such roots to rounding. They are also roots of
+    // the derivative; candidates from it that are not intersections fail the tests of addPoint.
+    std::vector<Coefficient> derivative(4);
+    for (size_t k = 1; k < qy.size(); ++k) {
+        derivative[k-1].value = k*qy[k].value;
+        derivative[k-1].size = k*qy[k].size;
+    }
+    for (double y: polynomialRoots(derivative)) {
+        roots.push_back(y);
+    }
     if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
         std::cout<<"roots.size()= "<<roots.size()<<std::endl;
     }
@@ -1116,54 +1240,81 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverFull(const std::vector<st
     if (roots.size()==0 ) { // no intersection found
         return ret;
     }
-    std::vector<double> ce(0,0.);
+    // Keep a verified point on both conics, once. Two points are the same intersection when the
+    // conics are within onConicsTolerance of the point halfway between them too: near a tangent
+    // point candidates from different roots are all verified, and the conics are as close as
+    // that between them, while between two separate intersections at least one conic is farther.
+    std::vector<std::pair<RS_Vector, double>> points; // each point with its own already-known offConics distance
+    const auto addPoint = [&](RS_Vector vp) {
+        if (!simultaneousQuadraticVerify(m, vp)) {
+            return;
+        }
+        const double d = offConics(m, vp);
+        if (d > onConicsTolerance) {
+            return;
+        }
+        for (auto& [point, pointD]: points) {
+            if (offConics(m, (point + vp) * 0.5) <= onConicsTolerance) {
+                if (d < pointD) {
+                    point = vp;
+                    pointD = d;
+                }
+                return;
+            }
+        }
+        points.emplace_back(vp, d);
+    };
 
-    for(size_t i0=0;i0<roots.size();i0++){
+    // Each conic's own coefficients set the natural scale for judging whether its x^2 or x
+    // coefficient is negligible at a given y below: an absolute threshold fails the same way it
+    // did for the y-quartic above, once a conic's coefficients are small (a large ellipse) or
+    // large (an ill-conditioned intermediate, as for two circles' dual curves).
+    const double scale1 = std::max({std::abs(a), std::abs(b), std::abs(c), std::abs(d), std::abs(e), std::abs(f)});
+    const double scale2 = std::max({std::abs(g), std::abs(h), std::abs(i), std::abs(j), std::abs(k), std::abs(l)});
+    constexpr double relativeZero = 64. * DBL_EPSILON;
+
+    std::vector<double> ce(3,0.);
+    for (const double y: roots) {
         if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
-			DEBUG_HEADER
-            std::cout<<"y="<<roots[i0]<<std::endl;
+            DEBUG_HEADER
+            std::cout<<"y="<<y<<std::endl;
         }
-        /*
-          Collect[Eliminate[{ a*x^2 + b*x*y+c*y^2+d*x+e*y+f==0,g*x^2+h*x*y+i*y^2+j*x+k*y+l==0},x],y]
-          */
-        ce.resize(3);
+        // x from the first conic at this y, or from the second one where the first does not give it
         ce[0]=a;
-        ce[1]=b*roots[i0]+d;
-        ce[2]=c*roots[i0]*roots[i0]+e*roots[i0]+f;
-//    DEBUG_HEADER
-//                std::cout<<"("<<ce[0]<<")*x^2 + ("<<ce[1]<<")*x + ("<<ce[2]<<") == 0"<<std::endl;
-        if(std::abs(ce[0])<1e-75 && std::abs(ce[1])<1e-75) {
+        ce[1]=b*y+d;
+        ce[2]=c*y*y+e*y+f;
+        double zeroTol = relativeZero * scale1;
+        if(std::abs(ce[0])<=zeroTol && std::abs(ce[1])<=zeroTol) {
             ce[0]=g;
-            ce[1]=h*roots[i0]+j;
-            ce[2]=i*roots[i0]*roots[i0]+k*roots[i0]+f;
-//            DEBUG_HEADER
-//            std::cout<<"("<<ce[0]<<")*x^2 + ("<<ce[1]<<")*x + ("<<ce[2]<<") == 0"<<std::endl;
-
+            ce[1]=h*y+j;
+            ce[2]=i*y*y+k*y+l;
+            zeroTol = relativeZero * scale2;
         }
-        if(std::abs(ce[0])<1e-75 && std::abs(ce[1])<1e-75) continue;
+        if(std::abs(ce[0])<=zeroTol && std::abs(ce[1])<=zeroTol) continue;
 
-        if(std::abs(a)>1e-75){
-            std::vector<double> ce2(2,0.);
-            ce2[0]=ce[1]/ce[0];
-            ce2[1]=ce[2]/ce[0];
-//                DEBUG_HEADER
-//                        std::cout<<"x^2 +("<<ce2[0]<<")*x+("<<ce2[1]<<")==0"<<std::endl;
-			auto xRoots=quadraticSolver(ce2);
-            for(size_t j0=0;j0<xRoots.size();j0++){
-//                DEBUG_HEADER
-//                std::cout<<"x="<<xRoots[j0]<<std::endl;
-                RS_Vector vp(xRoots[j0],roots[i0]);
-                if(simultaneousQuadraticVerify(m,vp)) ret.push_back(vp);
+        if(std::abs(ce[0])>zeroTol){
+            const std::vector<double> ce2{ce[1]/ce[0], ce[2]/ce[0]};
+            auto xRoots=quadraticSolver(ce2);
+            if (xRoots.empty()) {
+                // No real x at this y. At a tangent point the discriminant can be zero, rounded
+                // below zero: the double root, which fails the tests of addPoint otherwise.
+                xRoots.push_back(-0.5*ce2[0]);
+            }
+            for (double x: xRoots) {
+                addPoint(RS_Vector(x, y));
             }
             continue;
         }
-        RS_Vector vp(-ce[2]/ce[1],roots[i0]);
-        if(simultaneousQuadraticVerify(m,vp)) ret.push_back(vp);
+        addPoint(RS_Vector(-ce[2]/ce[1], y));
     }
-	if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
-		DEBUG_HEADER
+    for (const auto& [point, pointD]: points) {
+        (void)pointD;
+        ret.push_back(point);
+    }
+    if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
+        DEBUG_HEADER
         std::cout<<"ret="<<ret<<std::endl;
-	}
+    }
     return ret;
 }
 
@@ -1265,6 +1416,7 @@ bool RS_Math::simultaneousQuadraticVerify(const std::vector<std::vector<double> 
 	double sum0=0., sum1=0.;
 	double f00=0.,f01=0.;
 	double amax0, amax1;
+	double amax00=0., amax01=0.;
 	for(size_t i0=0; i0<20; ++i0){
 		double& x=v.x;
 		double& y=v.y;
@@ -1296,6 +1448,8 @@ bool RS_Math::simultaneousQuadraticVerify(const std::vector<std::vector<double> 
 		if(!i0){
 			f00=sum0;
 			f01=sum1;
+			amax00=amax0;
+			amax01=amax1;
 		}
 		if(!ret) break;
 		v -= RS_Vector(dn[0], dn[1]);
@@ -1304,6 +1458,9 @@ bool RS_Math::simultaneousQuadraticVerify(const std::vector<std::vector<double> 
 		v=v0;
 		sum0=f00;
 		sum1=f01;
+		// the term sizes at v0 too: those of a diverged step accepted points off the conics
+		amax0=amax00;
+		amax1=amax01;
 	}
 
 //    DEBUG_HEADER
