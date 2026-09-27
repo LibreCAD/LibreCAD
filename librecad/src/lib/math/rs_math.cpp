@@ -754,16 +754,19 @@ std::vector<double> RS_Math::quarticSolver(const std::vector<double>& ce)
 			qDebug()<<"Quartic Error:: Found one real root for cubic, but negative\n";
             return ans;
         }
+        // Solve both quadratic factors. The cubic can report a single real root
+        // when rounding has hidden a double root, and then both factors hold
+        // real roots: a double root of the quartic, as in (x^2 - 1)(x - 2)^2,
+        // gives the cubic a double root.
         double sqrtz0=sqrt(r3[0]);
         std::vector<double> ce2(2,0.);
         ce2[0]=	-sqrtz0;
         ce2[1]=0.5*(p+r3[0])+0.5*q/sqrtz0;
         auto r1=quadraticSolver(ce2);
-        if (r1.size()==0 ) {
-            ce2[0]=	sqrtz0;
-            ce2[1]=0.5*(p+r3[0])-0.5*q/sqrtz0;
-            r1=quadraticSolver(ce2);
-        }
+        ce2[0]=	sqrtz0;
+        ce2[1]=0.5*(p+r3[0])-0.5*q/sqrtz0;
+        const auto r2=quadraticSolver(ce2);
+        r1.insert(r1.end(), r2.begin(), r2.end());
 		for(auto& x: r1){
 			x -= shift;
 		}
