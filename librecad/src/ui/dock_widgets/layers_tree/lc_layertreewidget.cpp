@@ -739,7 +739,7 @@ void LC_LayerTreeWidget::onCustomContextMenu(const QPoint &point){
                     }
                     if (!invisibleEntities.isEmpty()) {
                         contextMenu->addAction(
-                            tr("Make All Entities Visible on Layer..."), this,
+                            tr("Restore Model/Paper Space Entity Visibility..."), this,
                             [this, layer, invisibleEntities]() {
                                 makeLayerEntitiesVisible(layer, invisibleEntities);
                             });
@@ -1736,7 +1736,7 @@ void LC_LayerTreeWidget::makeLayerEntitiesVisible(const RS_Layer* layer, const Q
         return;
     }
 
-    const QString message = tr("Make %1 individually invisible entities on layer \"%2\" visible?\n\n"
+    const QString message = tr("Make %1 individually invisible model/paper-space entities on layer \"%2\" visible?\n\n"
                                "This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entities "
                                "that were intentionally hidden.")
                                 .arg(entities.size())
