@@ -7632,17 +7632,19 @@ TEST_CASE("An arc dimension's arc-length symbol is written as a real ARC, "
     CHECK(content.find("\xE2\x88\xA9") == std::string::npos);
   }
   // ...and exactly one more ARC did, much smaller than the two dimension arcs.
-  std::ifstream in(out);
-  std::string codeLine, valueLine;
   std::vector<double> radii;
-  bool inArc = false;
-  while (std::getline(in, codeLine) && std::getline(in, valueLine)) {
-    const std::string code = trimDxfToken(codeLine);
-    const std::string value = trimDxfToken(valueLine);
-    if (code == "0")
-      inArc = value == "ARC";
-    else if (inArc && code == "40")
-      radii.push_back(std::stod(value));
+  {
+    std::ifstream in(out);
+    std::string codeLine, valueLine;
+    bool inArc = false;
+    while (std::getline(in, codeLine) && std::getline(in, valueLine)) {
+      const std::string code = trimDxfToken(codeLine);
+      const std::string value = trimDxfToken(valueLine);
+      if (code == "0")
+        inArc = value == "ARC";
+      else if (inArc && code == "40")
+        radii.push_back(std::stod(value));
+    }
   }
   REQUIRE(radii.size() == 3);
   std::sort(radii.begin(), radii.end());
