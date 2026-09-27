@@ -1466,9 +1466,14 @@ bool isMLeaderStyleRawObject(
 
 bool isTableStyleRawObject(
     const LC_DwgAdvancedMetadata::RawObjectRecord &record) {
-  return record.objectType == DRW_TableStyle::kDwgClassNum ||
-         record.recordName == "TABLESTYLE" ||
-         record.className == "AcDbTableStyle";
+  // Unlike a fixed system object type (e.g. ACDBPLACEHOLDER's 80), a custom
+  // class number such as DRW_TableStyle::kDwgClassNum (509) is assigned
+  // per-file by that file's own CLASSES section (dwgreader.cpp) -- it is not
+  // a stable cross-file identifier, and this codebase's own writer reuses it
+  // as a bare default for unrelated raw objects (dwg_write_smoke_tests.cpp's
+  // makeRawReplayObject()). Match on name/class only, matching every other
+  // dynamic-class classifier in this file (isMLeaderStyleRawObject, etc.).
+  return record.recordName == "TABLESTYLE" || record.className == "AcDbTableStyle";
 }
 
 bool isOpaqueTableRawObject(
