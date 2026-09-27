@@ -6188,10 +6188,16 @@ public:
   const std::vector<RawObjectRecord> &rawObjects() const {
     return m_rawObjects;
   }
+  // "Object" here means a DWG OBJECT, not an ENTITY: callers use this to
+  // decide whether a reference target that could not be written natively
+  // still names a real source record whose ownership edge must not be
+  // silently severed. An entity's handle is never a valid OBJECT reference
+  // target in the first place, so it does not qualify even when a raw
+  // record for it exists.
   bool hasRawObjectForHandle(std::uint32_t handle) const {
     return std::any_of(m_rawObjects.cbegin(), m_rawObjects.cend(),
                        [handle](const RawObjectRecord &record) {
-                         return record.handle == handle;
+                         return record.handle == handle && !record.isEntity;
                        });
   }
   const std::vector<DRW_DwgFramePublication> &dwgFramePublications() const {
