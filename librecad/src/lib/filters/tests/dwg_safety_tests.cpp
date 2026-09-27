@@ -17768,7 +17768,7 @@ TEST_CASE("DWG staged INSERT aggregate owns its map frame and receipt",
     CHECK(reader.m_dwgSourceFrameLedger.front().m_disposition
           == DRW_DwgFrameDisposition::Staged);
 
-    reader.abandonDeferredCompoundState();
+    CHECK(reader.abandonDeferredCompoundState());
     CHECK(reader.stagedPendingInsertCountForTest() == 0u);
     CHECK(reader.m_dwgSourceFrameLedger.front().m_disposition
           == DRW_DwgFrameDisposition::Quarantined);
@@ -17825,7 +17825,7 @@ TEST_CASE("DWG staged aggregates reject receiptless and duplicate custody",
     CHECK_FALSE(receiptlessReader.validateDeferredCompoundState());
     CHECK(receiptlessReader.ObjectMap.empty());
     CHECK(receiptlessReader.stagedPendingInsertCountForTest() == 1u);
-    receiptlessReader.abandonDeferredCompoundState();
+    CHECK(receiptlessReader.abandonDeferredCompoundState());
     CHECK(receiptlessReader.stagedPendingInsertCountForTest() == 0u);
 
     DwgEntityReaderProbe parallelReader(
@@ -17843,7 +17843,7 @@ TEST_CASE("DWG staged aggregates reject receiptless and duplicate custody",
     CHECK_FALSE(parallelReader.stagePendingInsertForTest(insert, publication));
     CHECK(parallelReader.validateDeferredCompoundState());
     CHECK(parallelReader.stagedPendingInsertCountForTest() == 1u);
-    parallelReader.abandonDeferredCompoundState();
+    CHECK(parallelReader.abandonDeferredCompoundState());
     CHECK(parallelReader.stagedPendingInsertCountForTest() == 0u);
 }
 

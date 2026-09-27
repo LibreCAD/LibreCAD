@@ -632,7 +632,7 @@ protected:
   publishDeferredRawObjects(DRW_Interface &intfa,
                             std::vector<DRW_UnsupportedObject> &objects);
   [[nodiscard]] bool validateDeferredCompoundState();
-  void abandonDeferredCompoundState();
+  [[nodiscard]] bool abandonDeferredCompoundState();
   //! Attach an AC1027+ DataStorage record to a parsed modeler/surface
   //! entity. Missing links are compatibility diagnostics, not parse errors.
   void linkDataStorage(DRW_Entity &entity);
@@ -900,7 +900,6 @@ protected:
                           const DRW_DwgFramePublication &publication);
   [[nodiscard]] bool validateStagedFrame(const DwgStagedFrame &frame);
   [[nodiscard]] bool validateStagedCompoundState();
-  [[nodiscard]] bool hasPendingCompoundState() const noexcept;
   [[nodiscard]] bool
   hasPendingCompoundStateForBlock(const DRW_Block_Record &block) const;
   [[nodiscard]] bool abandonStagedCompoundState();
