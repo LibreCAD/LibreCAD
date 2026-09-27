@@ -57,8 +57,10 @@
 #include "lc_dwgadvancedmetadata.h"
 #include "lc_linetypenames.h"
 #include "lc_mleader.h"
+#include "lc_containertraverser.h"
 #include "rs_dimaligned.h"
 #include "rs_dimension.h"
+#include "rs_insert.h"
 #include "rs_fileio.h"
 #include "rs_filterdxf1.h"
 #include "rs_filterdxfrw.h"
@@ -6145,6 +6147,98 @@ TEST_CASE("DXF DSTYLE linetype references resolve high handles",
 
   std::filesystem::remove(out);
   std::filesystem::remove(moved);
+}
+
+TEST_CASE("DXF DIMSTYLE arrow blocks named only by handle resolve, even when "
+          "DIMSTYLE precedes BLOCK_RECORD in the file",
+          "[dxf][roundtrip][filter][dimstyle][arrow]") {
+  ensureSettings();
+  const std::string src = tmpFile("dimstyle_arrow_handle_only_src.dxf");
+  std::filesystem::remove(src);
+
+  // As real AutoCAD-family files do (matches
+  // libredwg/test/test-data/2013/gh109_1.dxf byte for byte): the DIMSTYLE
+  // table entry names its arrow block ONLY by handle (342), no legacy name
+  // (5); DIMSTYLE itself comes before BLOCK_RECORD, per the DXF spec's own
+  // table order, so the handle cannot be resolved until the whole file --
+  // including BLOCK_RECORD -- has been read.
+  writeText(src,
+            "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n0\nENDSEC\n"
+            "0\nSECTION\n2\nTABLES\n"
+            "0\nTABLE\n2\nDIMSTYLE\n5\nA\n330\n0\n"
+            "100\nAcDbSymbolTable\n70\n1\n100\nAcDbDimStyleTable\n71\n0\n" +
+                dimStyleRecord("31", "HANDLE_ONLY", "342\n2A\n") +
+                "0\nENDTAB\n"
+                "0\nTABLE\n2\nBLOCK_RECORD\n5\n1\n330\n0\n100\nAcDbSymbolTable\n70\n1\n" +
+                dxfBlockRecord("2A", "_ArchTick") +
+                "0\nENDTAB\n0\nENDSEC\n"
+                "0\nSECTION\n2\nBLOCKS\n" +
+                dxfEmptyBlock("2B", "2C", "2A", "_ArchTick") +
+                "0\nENDSEC\n"
+                "0\nSECTION\n2\nENTITIES\n0\nENDSEC\n0\nEOF\n");
+
+  RS_Graphic graphic;
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                            RS2::FormatDXFRW));
+
+  LC_DimStyle *style = graphic.getDimStyleByName(QStringLiteral("HANDLE_ONLY"));
+  REQUIRE(style != nullptr);
+  // Before the fix this read back as the raw handle string "2A", because
+  // DIMSTYLE's own parseCode() clobbered the (here nonexistent) legacy name
+  // with the handle's text rather than leaving it for handle resolution.
+  CHECK(style->arrowhead()->sameBlockName() == QStringLiteral("_ArchTick"));
+
+  std::filesystem::remove(src);
+}
+
+TEST_CASE("A dimension's override arrow becomes an INSERT as soon as its "
+          "block exists, without needing a reopen first",
+          "[dimension][arrow]") {
+  ensureSettings();
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+
+  RS_DimensionData data;
+  data.definitionPoint = RS_Vector(5.0, 3.0);
+  data.middleOfText = RS_Vector(5.0, 3.0);
+  data.style = "Standard";
+  auto *dimension = new RS_DimAligned(
+      &graphic, data,
+      RS_DimAlignedData(RS_Vector(0.0, 0.0), RS_Vector(10.0, 0.0)));
+  LC_DimStyle override;
+  override.arrowhead()->setSameBlockName(QStringLiteral("_DOT"));
+  dimension->setDimStyleOverride(&override);
+  graphic.addEntity(dimension);
+  dimension->update();
+
+  // _DOT is not yet a block in this graphic, so the dimension can only have
+  // built its own LC_DimArrow fallback for it.
+  bool hasBareArrow = false;
+  for (RS_Entity *child :
+       lc::LC_ContainerTraverser{*dimension, RS2::ResolveNone}.entities()) {
+    if (child != nullptr && child->rtti() == RS2::EntityDimArrowBlock)
+      hasBareArrow = true;
+    REQUIRE(child->rtti() != RS2::EntityInsert);
+  }
+  REQUIRE(hasBareArrow);
+
+  // prepareForSave() inserts the override's standard arrow blocks; it must
+  // also recompute the dimension so this same save draws the real block
+  // instead of repeating whatever the writer can approximate a bare
+  // LC_DimArrow with (or nothing, for a kind with no export primitives).
+  graphic.prepareForSave();
+
+  int insertCount = 0;
+  for (RS_Entity *child :
+       lc::LC_ContainerTraverser{*dimension, RS2::ResolveNone}.entities()) {
+    if (child == nullptr || child->rtti() != RS2::EntityInsert)
+      continue;
+    ++insertCount;
+    CHECK(static_cast<RS_Insert *>(child)->getName() ==
+          QStringLiteral("_DOT"));
+  }
+  CHECK(insertCount == 2); // one per end
 }
 
 TEST_CASE("DXF unused LTYPE and STYLE application groups survive filter round trip",

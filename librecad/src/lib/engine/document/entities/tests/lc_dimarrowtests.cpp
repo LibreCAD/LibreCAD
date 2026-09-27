@@ -28,8 +28,6 @@
 
 #include "lc_arrow_headclosed.h"
 #include "lc_arrow_headopen.h"
-#include "rs_line.h"
-#include "rs_polyline.h"
 #include "rs_solid.h"
 
 namespace {
@@ -94,22 +92,19 @@ TEST_CASE("LC_ArrowHeadClosed exports the same shape it draws",
         CHECK(solid->getMax().distanceTo(arrow.getMax()) < 1e-9);
     }
 
-    SECTION("unfilled: a closed 3-point outline, plus the stem draw() adds") {
+    SECTION("unfilled: nothing -- it is a named block (\"Closed\"), not the "
+            "blockless default") {
+        // Unlike the filled arrow (DIMBLK "", AutoCAD's own default, which
+        // never has a block on either side), the unfilled outline is a named
+        // arrow type that AutoCAD always stores as an INSERT of its own
+        // block. LC_ArrowHeadClosed(filled=false) is only what
+        // LC_DimArrowRegistry falls back to while that block is momentarily
+        // missing from the drawing; the write side should not hand-draw it
+        // and instead let the model-level fix (ensuring the block exists
+        // before the dimension regenerates) turn it into an RS_Insert like
+        // every other named kind.
         LC_ArrowHeadClosed arrow(nullptr, position, dirAngle, size, ownAngle,
                                  /*filled=*/false);
-        auto primitives = arrow.exportPrimitives();
-        REQUIRE(primitives.size() == 2);
-        const auto *outline =
-            dynamic_cast<RS_Polyline *>(primitives[0].get());
-        REQUIRE(outline != nullptr);
-        CHECK(outline->isClosed());
-        CHECK(outline->getVertex(2).distanceTo(outline->getStartpoint()) >
-              1e-6);
-        const auto *stem = dynamic_cast<RS_Line *>(primitives[1].get());
-        REQUIRE(stem != nullptr);
-        // The stem runs from the arrow's tip -- its own second vertex -- to
-        // the dimension line's own catch point, same as draw()'s extra line.
-        CHECK(stem->getStartpoint().distanceTo(outline->getVertex(1)) < 1e-9);
-        CHECK(stem->getEndpoint().distanceTo(arrow.getPosition()) < 1e-9);
+        CHECK(arrow.exportPrimitives().empty());
     }
 }

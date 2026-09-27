@@ -2365,6 +2365,17 @@ protected:
   void parseDimStyleExtData(const DRW_Dimstyle &s, LC_DimStyle *result);
   bool resolveBlockNameByHandle(std::uint32_t handle,
                                 QString &block_name) const;
+  // A DIMSTYLE's arrow-block fields (DIMLDRBLK/DIMBLK/DIMBLK1/DIMBLK2) can
+  // name their BLOCK_RECORD only by handle (V2000+); resolving that requires
+  // the BLOCK_RECORD table, which the DIMSTYLE table can precede in the file.
+  // createDimStyle() queues one entry per handle seen; this applies every
+  // queued resolution once the whole file has been read.
+  struct PendingDimStyleArrowRef {
+    std::uint32_t handle;
+    std::function<void(const QString &)> apply;
+  };
+  std::vector<PendingDimStyleArrowRef> m_pendingDimStyleArrowRefs;
+  void resolvePendingDimStyleArrowBlocks();
   DimStyleOverrideParseResult
   parseDimStyleOverride(const LC_ExtEntityData *data,
                         std::unique_ptr<LC_DimStyle> &result) const;

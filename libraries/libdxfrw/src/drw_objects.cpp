@@ -2869,16 +2869,24 @@ bool DRW_Dimstyle::parseCode(int code, const std::unique_ptr<dxfReader>& reader)
         dimtxsty = reader->getUtf8String();
         break;
     case 341:
-        dimldrblk = reader->getUtf8String();
+        // V2000+ handle to the leader arrow's BLOCK_RECORD; DIMLDRBLK has no
+        // legacy name-only code, unlike 342-344 below. Left for the consumer
+        // to resolve once BLOCK_RECORD is readable (dimldrblk itself is never
+        // a plain name in a real file).
+        dimldrblkH.ref = reader->getHandleString();
         break;
     case 342:
-        dimblk = reader->getUtf8String();
+        // V2000+ files usually carry both this handle and the legacy name in
+        // 5 (see below); some (BricsCAD-family among them) write only this.
+        // Storing it as a string here would overwrite a correct 5 with a raw
+        // handle, so keep it in the handle field for the consumer to resolve.
+        dimblkH.ref = reader->getHandleString();
         break;
     case 343:
-        dimblk1 = reader->getUtf8String();
+        dimblk1H.ref = reader->getHandleString();
         break;
     case 344:
-        dimblk2 = reader->getUtf8String();
+        dimblk2H.ref = reader->getHandleString();
         break;
     case 345:
         dimltypeH.ref = reader->getHandleString();

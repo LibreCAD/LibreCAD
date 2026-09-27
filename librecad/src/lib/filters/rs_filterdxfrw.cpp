@@ -4103,6 +4103,7 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
   m_mlineStyleCache.clear();
   m_underlayDefMap.clear();
   m_xrefBlockNames.clear();
+  m_pendingDimStyleArrowRefs.clear();
 
 #ifdef DWGSUPPORT
   if (type == RS2::FormatDWG || type == RS2::FormatDWG2004 ||
@@ -4249,6 +4250,9 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
                 << printDwgVersion(m_dxfR->getSourceVersion()).toStdString() << "\n";
       // Save writes the drawing back in the version it was read in, if it can
       m_graphic->setFormatType(formatForDxfVersion(m_dxfR->getSourceVersion()));
+      // The whole file, so every TABLES entry including BLOCK_RECORD, has now
+      // been read while m_dxfR (and its reading context) is still alive.
+      resolvePendingDimStyleArrowBlocks();
     }
     // graphic->setAutoUpdateBorders(true);
 
@@ -29491,14 +29495,20 @@ void RS_FilterDXFRW::writeEntity(RS_Entity *e) {
   case RS2::EntityDimArrowBlock: {
     // An arrowhead is not itself a persistent, saved entity kind (comment on
     // LC_DimArrowPoly::doGetNearestPointOnEntity) -- write whatever real
-    // primitives exportPrimitives() gives for it (SOLID/LINE/..., or none
-    // yet for a kind that has not been given one) with its own pen, in
-    // place of it.
+    // primitives exportPrimitives() gives for it (only the blockless default
+    // arrow has any; every other kind resolves to a real RS_Insert well
+    // before writeEntity ever sees an EntityDimArrowBlock, so long as its
+    // block exists) with its own pen, on the dimension's own layer, in place
+    // of it. The primitives have no parent to inherit a layer through
+    // (getLayer() would return nullptr), so resolve the arrow's own layer
+    // here instead -- the same layer its sibling LINE/MTEXT/INSERT children
+    // already write, and the one AutoCAD's own SOLID would be on.
     auto *arrow = static_cast<LC_DimArrow *>(e);
     const RS_Pen pen = arrow->getPen(false);
+    RS_Layer *layer = arrow->getLayer();
     for (auto &primitive : arrow->exportPrimitives()) {
       primitive->setPen(pen);
-      primitive->setLayer(nullptr);
+      primitive->setLayer(layer);
       writeEntity(primitive.get());
     }
     break;
@@ -33106,19 +33116,36 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
 
   auto arrowStyle = result->arrowhead();
 
-  DRW_Variant *var = checkedDimStyleVariable(s, "$DIMBLK");
-  if (var != nullptr) {
-    arrowStyle->setSameBlockName(strVal(var));
-  }
-  var = checkedDimStyleVariable(s, "$DIMBLK1");
-  if (var != nullptr) {
-    arrowStyle->setArrowHeadBlockNameFirst(strVal(var));
-  }
-  var = checkedDimStyleVariable(s, "$DIMBLK2");
-  if (var != nullptr) {
-    arrowStyle->setArrowHeadBlockNameSecond(strVal(var));
-  }
-  var = checkedDimStyleVariable(s, "$DIMASZ");
+  // A block name may come from the legacy plain-name group (5/6/7, always
+  // present pre-V2000) or from a V2000+ handle to the BLOCK_RECORD (342-344).
+  // Some writers emit both (the handle is a mirror); others (DIMLDRBLK's 341
+  // always, and some V2000+ writers for 342-344 too) emit only the handle.
+  // Resolving a handle needs the BLOCK_RECORD table, which the DIMSTYLE table
+  // can precede in the file, so it is deferred: apply the immediate name (if
+  // any) now, and queue the handle to be resolved once the whole file, and
+  // so every table, has been read (see resolvePendingDimStyleArrowBlocks()).
+  const auto arrowBlockName = [this](const DRW_Dimstyle &style, const char *key,
+                                     const dwgHandle &handle,
+                                     std::function<void(const QString &)> apply) {
+    const DRW_Variant *v = checkedDimStyleVariable(style, key);
+    if (v != nullptr) {
+      apply(strVal(v));
+    }
+    if (handle.ref != 0) {
+      m_pendingDimStyleArrowRefs.push_back({handle.ref, std::move(apply)});
+    }
+  };
+
+  arrowBlockName(s, "$DIMBLK", s.dimblkH, [arrowStyle](const QString &n) {
+    arrowStyle->setSameBlockName(n);
+  });
+  arrowBlockName(s, "$DIMBLK1", s.dimblk1H, [arrowStyle](const QString &n) {
+    arrowStyle->setArrowHeadBlockNameFirst(n);
+  });
+  arrowBlockName(s, "$DIMBLK2", s.dimblk2H, [arrowStyle](const QString &n) {
+    arrowStyle->setArrowHeadBlockNameSecond(n);
+  });
+  DRW_Variant *var = checkedDimStyleVariable(s, "$DIMASZ");
   if (var != nullptr) {
     arrowStyle->setSize(var->d_val());
   }
@@ -33423,10 +33450,9 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
   }
 
   auto leaderStyle = result->leader();
-  var = checkedDimStyleVariable(s, "$DIMLDRBLK");
-  if (var != nullptr) {
-    leaderStyle->setArrowBlockName(strVal(var));
-  }
+  arrowBlockName(s, "$DIMLDRBLK", s.dimldrblkH, [leaderStyle](const QString &n) {
+    leaderStyle->setArrowBlockName(n);
+  });
 
   auto arc = result->arc();
   var = checkedDimStyleVariable(s, "$DIMARCSYM");
@@ -33464,6 +33490,20 @@ bool RS_FilterDXFRW::resolveBlockNameByHandle(std::uint32_t blockHandle,
   }
   blockName = name.c_str();
   return true;
+}
+
+// createDimStyle() queues one entry per DIMSTYLE arrow-block handle it can't
+// resolve immediately (BLOCK_RECORD, read after DIMSTYLE within TABLES, isn't
+// available yet). Called once the whole file has been read, while m_dxfR (and
+// so its reading context) is still alive.
+void RS_FilterDXFRW::resolvePendingDimStyleArrowBlocks() {
+  for (const auto &pending : m_pendingDimStyleArrowRefs) {
+    QString blockName;
+    if (resolveBlockNameByHandle(pending.handle, blockName)) {
+      pending.apply(blockName);
+    }
+  }
+  m_pendingDimStyleArrowRefs.clear();
 }
 
 void RS_FilterDXFRW::parseDimStyleExtData(const DRW_Dimstyle &s,
