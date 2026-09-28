@@ -142,6 +142,19 @@ public:
     void setCursorHiding(bool state);
     void addScrollbars();
     bool hasScrollbars() const;
+    /**
+     * Gives the scrollbars (addScrollbars()) the distance tooltip, scrollBarToolTip().
+     * For drawing windows; small previews (hatch, dimension style) do without.
+     */
+    void setScrollBarToolTips(bool enabled);
+    /**
+     * The tooltip of the horizontal (\p horizontal) or vertical bar: the drawing's and the
+     * view's UCS range along it and where the drawing is, e.g. "Drawing X 0..100 · View X
+     * 1234.5..1336.8 · drawing is 1134.5 to the left (≈11.1 view widths)". The drawing's
+     * range is the one the bar last synced (so it matches the band); the view is current.
+     * Empty (no tooltip) while the band setting, Appearance/ScrollBarContentBand, is off.
+     */
+    QString scrollBarToolTip(bool horizontal) const;
     void setCurrentQAction(QAction* q_action);
     QString obtainEntityDescription(RS_Entity* entity, RS2::EntityDescriptionLevel shortDescription) override;
     virtual void initView();
@@ -223,6 +236,8 @@ private:
     bool m_isSmoothScrolling;
     std::unique_ptr<LC_UCSMarkOptions> m_ucsMarkOptions;
     bool m_scrollbars{false};
+    //! paint the drawing's extents as a band on the scrollbars (Appearance/ScrollBarContentBand)
+    bool m_scrollBarContentBand{LC_ScrollModel::kContentBandDefault};
     bool m_cursorHiding{false};
     bool m_selectCursorHiding{false};
     bool m_invertZoomDirection{false};
@@ -257,6 +272,10 @@ private:
     bool m_scrollSyncing{false};
     LC_ScrollModel::State m_hScroll;
     LC_ScrollModel::State m_vScroll;
+    //! the drawing's UCS box as the bars last showed it, for scrollBarToolTip()
+    bool m_scrollTipHasContent{false};
+    RS_Vector m_scrollTipUcsMin;
+    RS_Vector m_scrollTipUcsMax;
     //! the viewport state m_hScroll/m_vScroll were last built or rebased from
     LC_ScrollViewportKey m_scrollKey;
 };

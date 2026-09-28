@@ -27,18 +27,38 @@
 #ifndef QG_SCROLLBAR_H
 #define QG_SCROLLBAR_H
 
+#include <functional>
+
+#include <QColor>
 #include <QScrollBar>
+#include <QString>
 #include <QWheelEvent>
+
+#include "lc_scrollmodel.h"
+
+class QPalette;
+class QStyleOptionSlider;
 
 /**
  * A small wrapper for the Qt scrollbar used by drawing views.
  *
  * A wheel event over the bar is always consumed: QScrollBar ignores a wheel it cannot
  * apply (at a range end), and Qt would then pass it on to the parent view, which zooms.
+ *
+ * The bar can also show where the drawing lies along it (issue #2945): a thin stripe
+ * along the groove's outer edge from the drawing's first to its last tick, mapped
+ * through the style's own thumb geometry (LC_ScrollModel::bandPixels()), so that the
+ * thumb lies inside the band whenever the view lies inside the drawing. It is painted
+ * only once the view has left the drawing along the bar, after the style's own
+ * painting, never over the thumb, and never changes hit-testing. A tooltip provider
+ * can add the distance the clamped thumb can no longer show.
  */
 class QG_ScrollBar: public QScrollBar {
     Q_OBJECT
 public:
+    /** Default of the Appearance/ScrollBarContentBand setting. */
+    static constexpr bool kContentBandDefault = LC_ScrollModel::kContentBandDefault;
+
     explicit QG_ScrollBar(QWidget* parent=nullptr)
             : QScrollBar(parent) {
         init();
@@ -56,6 +76,49 @@ public:
         return m_sizeHintCache;
     }
 
+    /**
+     * The drawing's extents along this bar, in the bar's ticks (the same ticks as its
+     * value, see LC_ScrollModel::State::tickFor()). Repaints only on a change.
+     */
+    void setContentBand(bool hasContent, double startTick, double endTick);
+    void setContentBandEnabled(bool enabled);
+    bool isContentBandEnabled() const {
+        return m_bandEnabled;
+    }
+    /**
+     * The stripe in this bar's logical pixels, before the thumb is cut out of it and
+     * whether or not the view currently needs it; a null rect when there is no band
+     * (disabled, empty drawing, bar too small).
+     */
+    QRect contentBandRect() const;
+    /**
+     * Whether the stripe is painted now: there is a band, and the view and the drawing
+     * are disjoint along the bar (LC_ScrollModel::bandIsInformative()).
+     */
+    bool isContentBandPainted() const;
+    /** the stripe colour for this bar's palette (cached, see contentBandColorFor()) */
+    QColor contentBandColor() const;
+    /**
+     * The stripe colour for \p palette: the first of Accent (Qt >= 6.6), Highlight and
+     * WindowText blended toward the accent that reaches kMinBandContrast against
+     * Window (and against Window shaded slightly, as styles draw the groove); the
+     * candidates are lightened first on a dark palette. Always opaque, 8 bits per channel.
+     */
+    static QColor contentBandColorFor(const QPalette& palette);
+    /** WCAG 2 contrast ratio of two opaque colours, 1..21 */
+    static double contrastRatio(const QColor& a, const QColor& b);
+    /** WCAG 2.1 minimum contrast for non-text graphics */
+    static constexpr double kMinBandContrast = 3.0;
+
+    /**
+     * Supplies the bar's tooltip text on demand (an empty string shows none). The
+     * drawing views set one that gives the drawing's and the view's ranges and their
+     * distance; bars without a provider show the ordinary QWidget tooltip.
+     */
+    void setToolTipProvider(std::function<QString()> provider);
+    /** the provider's current text, or an empty string without a provider */
+    QString providedToolTip() const;
+
 protected:
     void wheelEvent(QWheelEvent* e) override {
         QScrollBar::wheelEvent(e);
@@ -66,6 +129,10 @@ protected:
         m_sizeHintCache = QScrollBar::sizeHint();
         QScrollBar::resizeEvent(event);
     }
+
+    bool event(QEvent* event) override;
+    void changeEvent(QEvent* event) override;
+    void paintEvent(QPaintEvent* event) override;
 
 private:
     void init() {
@@ -80,7 +147,16 @@ private:
         setTracking(true);
     }
 
+    QRectF contentBandStripe(const QStyleOptionSlider& option) const;
+
     QSize m_sizeHintCache{};
+    bool m_bandEnabled = kContentBandDefault;
+    bool m_bandHasContent = false;
+    double m_bandStart = 0.0;
+    double m_bandEnd = 0.0;
+    //! contentBandColor() cache, cleared on a palette or style change
+    mutable QColor m_bandColor;
+    std::function<QString()> m_toolTipProvider;
 };
 
 #endif

@@ -36,6 +36,7 @@
 #include "main.h"
 #include "qc_applicationwindow.h"
 #include "qg_filedialog.h"
+#include "qg_scrollbar.h"
 #include "rs_debug.h"
 #include "rs_math.h"
 #include "rs_settings.h"
@@ -254,8 +255,14 @@ void QG_DlgOptionsGeneral::init(){
         checked = LC_GET_BOOL("Autopanning");
         cb_autopanning->setChecked(checked);
 
-        checked = LC_GET_INT("ScrollBars");
+        // the same default as QC_ApplicationWindow::setupNewGraphicView(): bars are on
+        checked = LC_GET_BOOL("ScrollBars", true);
         scrollbars_check_box->setChecked(checked);
+        cbScrollBarContentBand->setChecked(LC_GET_BOOL("ScrollBarContentBand", QG_ScrollBar::kContentBandDefault));
+        cbScrollBarContentBand->setEnabled(checked);
+        // init() runs again on importSettings()
+        connect(scrollbars_check_box, &QCheckBox::toggled, cbScrollBarContentBand, &QWidget::setEnabled,
+                Qt::UniqueConnection);
 
         checked = LC_GET_BOOL("ExtendAxisLines", false);
         cbGridExtendAxisLines->setChecked(checked);
@@ -845,6 +852,7 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("ClassicRenderer", cbClassicRendering->isChecked());
             LC_SET("Autopanning", cb_autopanning->isChecked());
             LC_SET("ScrollBars", scrollbars_check_box->isChecked());
+            LC_SET("ScrollBarContentBand", cbScrollBarContentBand->isChecked());
             LC_SET("ShowKeyboardShortcutsInTooltips", cbShowKeyboardShortcutsInToolTips->isChecked());
             LC_SET("PersistDialogPositions", cbPersistentDialogs->isChecked());
             LC_SET("PersistDialogRestoreSizeOnly", cbPersistentDialogSizeOnly->isChecked());

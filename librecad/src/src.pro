@@ -1027,6 +1027,7 @@ SOURCES += \
     ui/action_options/lc_action_options_properties_filler_base.cpp \
     ui/action_options/line/lc_line_radiant_options_widget.cpp \
     ui/action_options/line/lc_line_radiant_options_filler.cpp \
+    ui/components/qg_scrollbar.cpp \
     ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp \
     ui/components/relative_position_assistant/lc_relative_position_evaluator.cpp \
     ui/components/utils/lc_entitymetauiutils.cpp \

@@ -1451,6 +1451,7 @@ set (SHARED_SOURCES
      librecad/src/ui/components/pen/qg_widgetpen.h
      librecad/src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.h
      librecad/src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp
+     librecad/src/ui/components/qg_scrollbar.cpp
      librecad/src/ui/components/qg_scrollbar.h
      librecad/src/ui/components/status_bar/lc_anglesbasiswidget.cpp
      librecad/src/ui/components/status_bar/lc_anglesbasiswidget.h
@@ -2609,6 +2610,7 @@ if (BUILD_TESTS)
         librecad/src/lib/gui/tests/lc_scrollmodel_tests.cpp
         librecad/src/lib/gui/tests/lc_graphicviewport_zoomauto_tests.cpp
         librecad/src/ui/view/tests/qg_graphicview_scroll_tests.cpp
+        librecad/src/ui/view/tests/qg_scrollbar_band_tests.cpp
         librecad/src/main/tests/console_command_utils_tests.cpp
         librecad/src/main/tests/lc_pdfprintlooptests.cpp
         librecad/src/main/tests/lc_consoleimporttests.cpp

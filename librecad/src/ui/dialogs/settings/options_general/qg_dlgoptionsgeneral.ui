@@ -74,7 +74,7 @@
           <property name="verticalSpacing">
            <number>6</number>
           </property>
-          <item row="3" column="0" colspan="2">
+          <item row="3" column="0">
            <widget class="QCheckBox" name="scrollbars_check_box">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -87,6 +87,22 @@
             </property>
             <property name="text">
              <string>Scrollbars</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QCheckBox" name="cbScrollBarContentBand">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Marks where the drawing lies along a scrollbar once the view has left it, and gives its distance in the scrollbar's tooltip, so it can be found again when panned far away</string>
+            </property>
+            <property name="text">
+             <string>Show drawing extents on scrollbars</string>
             </property>
            </widget>
           </item>

@@ -18,11 +18,14 @@
 
 // Issue #2945: the widget-free scrollbar model and the UCS box it is built on.
 
+#include <algorithm>
 #include <cmath>
 #include <limits>
 
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
+
+#include <QStyle>
 
 #include "lc_coordinates_mapper.h"
 #include "lc_scrollmodel.h"
@@ -186,4 +189,331 @@ TEST_CASE("The UCS box of a WCS box contains all four corners", "[navigation][29
     identity.ucsBoundsOfWcsBox(wcsMin, wcsMax, ucsMin, ucsMax);
     CHECK(ucsMin == wcsMin);
     CHECK(ucsMax == wcsMax);
+}
+
+// --- P18: drawing-extents band (content interval + band pixels + paint rule) --------------
+
+using LC_ScrollModel::Band;
+using LC_ScrollModel::ThumbGeometry;
+
+namespace {
+    /// a common-style (Fusion/Windows) thumb for a groove of \p groove px starting at \p g0
+    struct SimThumb {
+        int g0 = 14;
+        int groove = 560;
+        int minLength = 26;
+        int maximum = 0;
+        int pageStep = 1;
+        int length() const {
+            const double len = static_cast<double>(pageStep) * groove / (static_cast<double>(maximum) + pageStep);
+            return std::max(minLength, static_cast<int>(len));
+        }
+        int startAt(const int value) const {
+            return g0 + QStyle::sliderPositionFromValue(0, maximum, value, groove - length());
+        }
+        ThumbGeometry geometry() const {
+            return {static_cast<double>(g0), static_cast<double>(startAt(maximum) - startAt(0)),
+                    static_cast<double>(length()), maximum, pageStep};
+        }
+    };
+
+    SimThumb simThumbFor(const State& s, const int minLength = 26) {
+        SimThumb t;
+        t.minLength = minLength;
+        t.maximum = s.maximum;
+        t.pageStep = s.pageStep;
+        return t;
+    }
+
+    double startTick(const State& s) {
+        return s.tickFor(s.contentMin);
+    }
+
+    double endTick(const State& s) {
+        return s.tickFor(s.contentMax);
+    }
+
+    Band bandFor(const State& s, const SimThumb& thumb) {
+        return LC_ScrollModel::bandPixels(thumb.geometry(), s.hasContent, startTick(s), endTick(s));
+    }
+
+    /// the tick interval reproduces the content pixels through the state's own mapping
+    void checkTicksReproduceContent(const State& s, const double cMin, const double cMax) {
+        REQUIRE(s.hasContent);
+        CHECK(s.contentMin == cMin);
+        CHECK(s.contentMax == cMax);
+        const double tolerance = 1e-9 * std::max({1.0, std::abs(cMin), std::abs(cMax)});
+        CHECK(s.origin + startTick(s) * s.pixelsPerTick == Approx(cMin).margin(tolerance));
+        CHECK(s.origin + endTick(s) * s.pixelsPerTick == Approx(cMax).margin(tolerance));
+    }
+}
+
+TEST_CASE("State carries the content interval in pixels; ticks follow a rebased origin", "[navigation][2945-band]") {
+    SECTION("wide content, view inside") {
+        const State s = LC_ScrollModel::compute({true, 0.0, 2000.0, 600.0, 800.0});
+        checkTicksReproduceContent(s, 0.0, 2000.0);
+        CHECK(startTick(s) == 400.0); // half a view of margin before the drawing
+        CHECK(endTick(s) == 2400.0);
+        CHECK(endTick(s) - startTick(s) > s.pageStep);
+        // view inside content <=> value in [a, b - L]
+        CHECK(s.value >= startTick(s));
+        CHECK(s.value + s.pageStep <= endTick(s));
+    }
+    SECTION("narrow content, view covers it") {
+        const State s = LC_ScrollModel::compute({true, 0.0, 100.0, -350.0, 800.0});
+        checkTicksReproduceContent(s, 0.0, 100.0);
+        CHECK(endTick(s) - startTick(s) < s.pageStep);
+        CHECK(s.value <= startTick(s));
+        CHECK(s.value + s.pageStep >= endTick(s));
+    }
+    SECTION("empty drawing: no interval") {
+        const State s = LC_ScrollModel::compute({false, 0.0, 100.0, 0.0, 800.0});
+        REQUIRE(s.valid);
+        CHECK(!s.hasContent);
+        const double nan = std::numeric_limits<double>::quiet_NaN();
+        CHECK(!LC_ScrollModel::compute({true, nan, 100.0, 0.0, 800.0}).hasContent);
+        CHECK(!LC_ScrollModel::compute({true, 100.0, 0.0, 0.0, 800.0}).hasContent);
+    }
+    SECTION("the interval always lies inside the scrollable region") {
+        for (const double viewStart : {-1e6, -5000.0, -400.0, 0.0, 600.0, 1500.0, 5000.0, 1e6}) {
+            for (const double extent : {0.0, 1.0, 100.0, 800.0, 2000.0, 1e5}) {
+                const State s = LC_ScrollModel::compute({true, 0.0, extent, viewStart, 800.0});
+                INFO("view start " << viewStart << " extent " << extent);
+                checkTicksReproduceContent(s, 0.0, extent);
+                CHECK(startTick(s) >= s.pageStep / 2.0 - 1.0);
+                CHECK(endTick(s) <= s.maximum + s.pageStep / 2.0 + 1.0);
+            }
+        }
+    }
+    SECTION("huge coordinates: several pixels per tick, no rounding to ticks") {
+        const double cMin = 1.0e9;
+        const double cMax = 1.0e9 + 5.0e7 * 400.0;
+        const State s = LC_ScrollModel::compute({true, cMin, cMax, cMin + 12345.0, 800.0});
+        REQUIRE(s.valid);
+        REQUIRE(s.pixelsPerTick > 1.0);
+        checkTicksReproduceContent(s, cMin, cMax);
+        CHECK(std::isfinite(startTick(s)));
+        CHECK(std::isfinite(endTick(s)));
+        CHECK(endTick(s) <= s.maximum + s.pageStep);
+        CHECK(startTick(s) != std::floor(startTick(s))); // a fraction of a tick is kept
+    }
+    SECTION("a rebase re-anchors the origin: pixels stay, ticks follow") {
+        // what QG_GraphicView::rebaseScrollIfStale() does: a fresh compute, then origin solved
+        // for the value the bar still shows; the content stays in pixels, so nothing else moves
+        State s = LC_ScrollModel::compute({true, 0.0, 2000.0, 600.0, 800.0});
+        const double before = startTick(s);
+        s.origin -= 123.5;
+        checkTicksReproduceContent(s, 0.0, 2000.0);
+        CHECK(startTick(s) == Approx(before + 123.5 / s.pixelsPerTick));
+        State coarse = LC_ScrollModel::compute({true, 0.0, 5.0e9, 1.0e9, 800.0});
+        REQUIRE(coarse.pixelsPerTick > 1.0);
+        coarse.origin += 777.25;
+        checkTicksReproduceContent(coarse, 0.0, 5.0e9);
+    }
+}
+
+TEST_CASE("Far-panned views keep the tick interval exact and the band apart from the thumb",
+          "[navigation][2945-band]") {
+    const double extent = 762.0; // the 100 x 50 drawing at zoom extents
+    const double view = 782.0;
+    for (const double widths : {2.0, 10.0, 100.0, 1000.0, 1.0e5}) {
+        for (const int side : {1, -1}) {
+            const double viewStart = side > 0 ? widths * extent : -widths * extent - view;
+            const State s = LC_ScrollModel::compute({true, 0.0, extent, viewStart, view});
+            INFO("widths " << widths << " side " << side << " pixelsPerTick " << s.pixelsPerTick);
+            REQUIRE(s.valid);
+            checkTicksReproduceContent(s, 0.0, extent);
+            // far away the band is always informative
+            CHECK(LC_ScrollModel::bandIsInformative(startTick(s), endTick(s), s.value, s.pageStep));
+            for (const int minLength : {9, 20, 26, 34}) {
+                const SimThumb thumb = simThumbFor(s, minLength);
+                const Band band = bandFor(s, thumb);
+                REQUIRE(band.visible);
+                const int thumbStart = thumb.startAt(s.value);
+                const int thumbEnd = thumbStart + thumb.length();
+                CHECK(band.end - band.start >= LC_ScrollModel::kMinBandPixels);
+                CHECK(band.start >= thumb.g0);
+                CHECK(band.end <= thumb.g0 + thumb.groove);
+                // disjoint, at the opposite end from the thumb
+                if (side > 0) {
+                    CHECK(band.end <= thumbStart);
+                    CHECK(thumbEnd == thumb.g0 + thumb.groove);
+                } else {
+                    CHECK(band.start >= thumbEnd);
+                    CHECK(thumbStart == thumb.g0);
+                }
+            }
+        }
+    }
+}
+
+// Invariant 1 of LC_ScrollModel::bandPixels() is ONE-DIRECTIONAL: view inside => thumb
+// inside is exact, but a thumb inside the band only means the view is inside to within one
+// thumb pixel's worth of ticks (many views when a pixel covers many ticks). The converse is
+// therefore only checked with 2 px of slack, and only where a pixel is a small part of a view.
+TEST_CASE("View inside the drawing => thumb inside the band, swept against Qt's integer thumb",
+          "[navigation][2945-band]") {
+    long failures = 0;
+    long escapes = 0;
+    long samples = 0;
+    long clamped = 0;
+    long coarse = 0;
+    for (const double extent : {3.0, 100.0, 700.0, 800.0, 801.0, 2000.0, 1.0e4, 1.0e6, 5.0e8}) {
+        for (const int minLength : {9, 20, 26, 34}) {
+            for (int i = -40; i <= 40; ++i) {
+                const double viewStart = -2.0 * extent - 800.0 + (i + 40) * (5.0 * extent + 1600.0) / 80.0 + 0.37 * i;
+                const State s = LC_ScrollModel::compute({true, 0.0, extent, viewStart, 800.0});
+                REQUIRE(s.valid);
+                const SimThumb thumb = simThumbFor(s, minLength);
+                const Band band = bandFor(s, thumb);
+                if (!band.visible) {
+                    continue;
+                }
+                ++samples;
+                clamped += thumb.length() == minLength ? 1 : 0;
+                coarse += s.pixelsPerTick > 1.0 ? 1 : 0;
+                const int t0 = thumb.startAt(s.value);
+                const int t1 = t0 + thumb.length();
+                const double vs = s.viewStartFor(s.value);
+                const bool viewInside = vs >= 0.0 && vs + s.pageStep * s.pixelsPerTick <= extent;
+                if (viewInside && !(t0 >= band.start && t1 <= band.end)) {
+                    ++failures;
+                }
+                if (band.start < thumb.g0 || band.end > thumb.g0 + thumb.groove) {
+                    ++escapes;
+                }
+                if (t0 >= band.start + 2 && t1 <= band.end - 2 && extent >= 2.0 * s.pageStep) {
+                    CHECK(viewInside);
+                }
+            }
+        }
+    }
+    INFO("samples " << samples << " clamped " << clamped << " coarse " << coarse);
+    CHECK(samples > 1000);
+    CHECK(clamped > 100); // the sweep covers thumbs clamped to their minimum length ...
+    CHECK(coarse > 50);   // ... and more than one pixel per tick
+    CHECK(failures == 0);
+    CHECK(escapes == 0); // the band never leaves the groove
+}
+
+// Invariant 2: for narrow content, view covers => thumb covers is exact (unless the band was
+// grown to its minimum length, which is not a projection any more); like invariant 1, the
+// converse holds to within one thumb pixel, so it is checked with 1 px of slack.
+TEST_CASE("View covers narrow content => thumb covers the band, and back within a pixel",
+          "[navigation][2945-band]") {
+    long samples = 0;
+    long failures = 0;
+    long converseSamples = 0;
+    for (const double extent : {3.0, 50.0, 100.0, 400.0, 700.0}) {
+        for (const int minLength : {9, 20, 26}) {
+            for (int i = 0; i <= 200; ++i) {
+                const double viewStart = -900.0 + i * (extent + 1000.0) / 200.0;
+                const State s = LC_ScrollModel::compute({true, 0.0, extent, viewStart, 800.0});
+                const SimThumb thumb = simThumbFor(s, minLength);
+                const Band band = bandFor(s, thumb);
+                if (!band.visible) {
+                    continue;
+                }
+                const int t0 = thumb.startAt(s.value);
+                const int t1 = t0 + thumb.length();
+                const double vs = s.viewStartFor(s.value);
+                const bool viewCovers = vs <= 0.0 && vs + s.pageStep * s.pixelsPerTick >= extent;
+                const bool grown = band.end - band.start <= LC_ScrollModel::kMinBandPixels + 1;
+                if (!grown) {
+                    ++samples;
+                    if (viewCovers && !(t0 <= band.start && t1 >= band.end)) {
+                        ++failures;
+                        FAIL_CHECK("extent " << extent << " min " << minLength << " view " << vs << " thumb [" << t0
+                                   << ", " << t1 << ") band [" << band.start << ", " << band.end << ")");
+                    }
+                }
+                if (t0 <= band.start - 1 && t1 >= band.end + 1) {
+                    ++converseSamples;
+                    CHECK(viewCovers);
+                }
+            }
+        }
+    }
+    CHECK(samples > 500);
+    CHECK(converseSamples > 300);
+    CHECK(failures == 0);
+}
+
+TEST_CASE("The band is painted only once the view and the drawing are disjoint", "[navigation][2945-band]") {
+    using LC_ScrollModel::bandIsInformative;
+    // content ticks [400, 2400], page 800
+    CHECK(!bandIsInformative(400.0, 2400.0, 400, 800));   // inside, at the start edge
+    CHECK(!bandIsInformative(400.0, 2400.0, 1000, 800));  // inside
+    CHECK(!bandIsInformative(400.0, 2400.0, 1600, 800));  // inside, at the end edge
+    CHECK(!bandIsInformative(400.0, 2400.0, 399, 800));   // straddles the start
+    CHECK(!bandIsInformative(400.0, 2400.0, 1601, 800));  // straddles the end
+    CHECK(!bandIsInformative(400.0, 2400.0, -399, 800));  // one tick of the drawing in view
+    CHECK(!bandIsInformative(400.0, 2400.0, 2399, 800));
+    CHECK(bandIsInformative(400.0, 2400.0, -400, 800));   // the view ends where the drawing starts
+    CHECK(bandIsInformative(400.0, 2400.0, 2400, 800));   // the view starts where the drawing ends
+    CHECK(bandIsInformative(400.0, 2400.0, 5000, 800));   // past the end
+    CHECK(bandIsInformative(400.0, 2400.0, 0, 300));      // before the start
+    // narrow content [400, 500]: covered, straddled, then left
+    CHECK(!bandIsInformative(400.0, 500.0, 0, 800));
+    CHECK(!bandIsInformative(400.0, 500.0, 400, 100));    // exactly the view: inside and covers
+    CHECK(!bandIsInformative(400.0, 500.0, 450, 800));
+    CHECK(!bandIsInformative(400.0, 500.0, 350, 100));
+    CHECK(bandIsInformative(400.0, 500.0, 500, 100));
+    CHECK(bandIsInformative(400.0, 500.0, 200, 100));
+    // fractional ticks are not rounded
+    CHECK(bandIsInformative(1200.5, 2400.0, 400, 800));
+    CHECK(!bandIsInformative(1199.5, 2400.0, 400, 800));
+    CHECK(bandIsInformative(0.0, 399.5, 400, 800));
+    CHECK(!bandIsInformative(0.0, 400.5, 400, 800));
+    // the states compute() produces: suppressed while any of the drawing [0, 2000] is in
+    // view (inside, covered or straddled), shown once the view has left it
+    for (const double viewStart : {-799.0, -400.0, 0.0, 10.0, 600.0, 1200.0, 1600.0, 1999.0}) {
+        const State s = LC_ScrollModel::compute({true, 0.0, 2000.0, viewStart, 800.0});
+        INFO("view start " << viewStart);
+        CHECK(!bandIsInformative(startTick(s), endTick(s), s.value, s.pageStep));
+    }
+    for (const double viewStart : {-5000.0, -800.0, 2000.0, 2001.0, 9000.0}) {
+        const State s = LC_ScrollModel::compute({true, 0.0, 2000.0, viewStart, 800.0});
+        INFO("view start " << viewStart);
+        CHECK(bandIsInformative(startTick(s), endTick(s), s.value, s.pageStep));
+    }
+}
+
+TEST_CASE("The band is the linear projection while the thumb is proportional", "[navigation][2945-band]") {
+    // no minimum-length clamp: B == [g0 + G*a/(max+L), g0 + G*b/(max+L)]
+    const State s = LC_ScrollModel::compute({true, 0.0, 2000.0, 600.0, 800.0});
+    SimThumb thumb = simThumbFor(s, 1);
+    const Band band = bandFor(s, thumb);
+    REQUIRE(band.visible);
+    const double scale = static_cast<double>(thumb.groove) / (s.maximum + s.pageStep);
+    CHECK(std::abs(band.start - (thumb.g0 + scale * startTick(s))) <= 1.5);
+    CHECK(std::abs(band.end - (thumb.g0 + scale * endTick(s))) <= 1.5);
+}
+
+TEST_CASE("Degenerate bands", "[navigation][2945-band]") {
+    const State s = LC_ScrollModel::compute({true, 0.0, 2000.0, 600.0, 800.0});
+    const SimThumb thumb = simThumbFor(s);
+    SECTION("no content, no band") {
+        CHECK(!LC_ScrollModel::bandPixels(thumb.geometry(), false, startTick(s), endTick(s)).visible);
+        const double nan = std::numeric_limits<double>::quiet_NaN();
+        CHECK(!LC_ScrollModel::bandPixels(thumb.geometry(), true, nan, endTick(s)).visible);
+        CHECK(!LC_ScrollModel::bandPixels(thumb.geometry(), true, 10.0, 5.0).visible);
+    }
+    SECTION("a zero-length drawing (a line along the other axis) still shows 3 px") {
+        const State line = LC_ScrollModel::compute({true, 500.0, 500.0, 5000.0, 800.0});
+        const Band band = bandFor(line, simThumbFor(line));
+        REQUIRE(band.visible);
+        CHECK(band.end - band.start >= 3);
+        CHECK(band.end - band.start <= 4);
+    }
+    SECTION("a squashed bar, an immovable thumb or an empty slider rect shows nothing") {
+        ThumbGeometry g = thumb.geometry();
+        g.travel = 0.0;
+        CHECK(!LC_ScrollModel::bandPixels(g, true, startTick(s), endTick(s)).visible);
+        ThumbGeometry tiny{0.0, 1.0, 3.0, s.maximum, s.pageStep};
+        CHECK(!LC_ScrollModel::bandPixels(tiny, true, startTick(s), endTick(s)).visible);
+        ThumbGeometry noThumb = thumb.geometry();
+        noThumb.length = 0.0;
+        CHECK(!LC_ScrollModel::bandPixels(noThumb, true, startTick(s), endTick(s)).visible);
+    }
 }

@@ -64,7 +64,91 @@ State compute(const Axis& axis) {
     state.singleStep = std::max(1, LC_ViewMath::saturatingRound(kLineStepPx / pixelsPerTick));
     state.value = std::clamp(LC_ViewMath::saturatingRound((viewStart - lo) / pixelsPerTick), 0, state.maximum);
     state.valid = true;
+    if (hasContent) {
+        state.hasContent = true;
+        state.contentMin = axis.contentMin;
+        state.contentMax = axis.contentMax;
+    }
     return state;
+}
+
+namespace {
+    // p(t): the thumb start at value t, linearly EXTRAPOLATED outside [0, maximum]
+    // (QStyle::sliderPositionFromValue clamps, which would break narrow content, where
+    // b - L < 0). With maximum 0 (region == view) the thumb is the whole groove, at
+    // length / pageStep pixels per tick.
+    double thumbStartAt(const ThumbGeometry& g, const double tick) {
+        if (g.maximum <= 0) {
+            return g.start0 + tick * (g.length / std::max(1, g.pageStep));
+        }
+        return g.start0 + tick * (g.travel / g.maximum);
+    }
+}
+
+Band bandPixels(const ThumbGeometry& g, const bool hasContent, const double a, const double b) {
+    Band band;
+    if (!hasContent || !std::isfinite(a) || !std::isfinite(b) || a > b || !(g.length > 0.0)
+        || !std::isfinite(g.start0) || !std::isfinite(g.travel)) {
+        return band;
+    }
+    if (g.maximum > 0 && g.travel <= 0.0) {
+        return band; // the thumb cannot move: nothing to relate the band to
+    }
+    const double grooveStart = g.start0;
+    const double grooveEnd = g.start0 + std::max(0.0, g.travel) + g.length;
+    if (grooveEnd - grooveStart < 2.0 * kMinBandPixels) {
+        return band; // squashed bar
+    }
+    double lo = thumbStartAt(g, a);
+    double hi;
+    bool outward;
+    if (g.maximum <= 0) {
+        hi = thumbStartAt(g, b);
+        outward = true;
+    } else {
+        const double pageStep = g.pageStep;
+        hi = thumbStartAt(g, b - pageStep) + g.length;
+        outward = b - a >= pageStep;
+    }
+    if (hi - lo < kMinBandPixels) {
+        const double mid = 0.5 * (lo + hi);
+        lo = mid - 0.5 * kMinBandPixels;
+        hi = mid + 0.5 * kMinBandPixels;
+        outward = true;
+    }
+    if (outward) {
+        lo = std::floor(lo);
+        hi = std::ceil(hi);
+    } else {
+        lo = std::ceil(lo);
+        hi = std::floor(hi);
+    }
+    // a minimum-length band at an end of the groove slides back inside it
+    if (hi - lo <= kMinBandPixels + 1.0) {
+        if (lo < grooveStart) {
+            hi += grooveStart - lo;
+            lo = grooveStart;
+        }
+        if (hi > grooveEnd) {
+            lo -= hi - grooveEnd;
+            hi = grooveEnd;
+        }
+    }
+    lo = std::clamp(lo, grooveStart, grooveEnd);
+    hi = std::clamp(hi, grooveStart, grooveEnd);
+    if (hi <= lo) {
+        return band;
+    }
+    band.visible = true;
+    band.start = static_cast<int>(lo);
+    band.end = static_cast<int>(hi);
+    return band;
+}
+
+bool bandIsInformative(const double a, const double b, const int value, const int pageStep) {
+    const double viewStart = value;
+    const double viewEnd = static_cast<double>(value) + pageStep;
+    return viewEnd <= a || b <= viewStart;
 }
 
 }
