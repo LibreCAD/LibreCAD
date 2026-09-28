@@ -126,7 +126,40 @@ QString LC_ActionModifyOffset::failureReason(const LC_OffsetSourceOutcome& sourc
         case LC_OffsetSourceStatus::OffsetFailed:
             break;
     }
+    return offsetFailureReason(source);
+}
+
+QString LC_ActionModifyOffset::stopReason(const LC_OffsetSourceOutcome& source) {
+    if (source.stoppedBy == LC_OffsetSourceStatus::OffsetFailed) {
+        return offsetFailureReason(source);
+    }
+    return tr("nothing is left at this distance");
+}
+
+QString LC_ActionModifyOffset::offsetFailureReason(const LC_OffsetSourceOutcome& source) {
+    switch (source.detail) {
+        case LC_OffsetFailureDetail::None:
+            break;
+        case LC_OffsetFailureDetail::ZeroLength:
+            return tr("it has no length");
+        case LC_OffsetFailureDetail::Unbounded:
+            return tr("it is unbounded");
+        case LC_OffsetFailureDetail::EllipticSegments:
+            return tr("it has elliptic segments");
+        case LC_OffsetFailureDetail::PolylineNotTrimmed:
+            return tr("its offset would cross itself, which polylines do not support yet");
+        case LC_OffsetFailureDetail::SourceRetraces:
+            return tr("it runs over itself");
+        case LC_OffsetFailureDetail::InvalidDistance:
+            return tr("the distance is not valid");
+        case LC_OffsetFailureDetail::AmbiguousSide:
+            return tr("the point does not show which side to offset to");
+    }
     switch (source.engineStatus) {
+        case LC_CurveOffsetStatus::InvalidSource:
+            return tr("it cannot be offset");
+        case LC_CurveOffsetStatus::UnsupportedNonPlanar:
+            return tr("it does not lie in the drawing plane");
         case LC_CurveOffsetStatus::AmbiguousSide:
             return tr("the point is on the curve, so it gives no side");
         case LC_CurveOffsetStatus::UndefinedTangent:
@@ -144,6 +177,7 @@ QString LC_ActionModifyOffset::failureReason(const LC_OffsetSourceOutcome& sourc
         case LC_CurveOffsetStatus::InvalidDistance:
             return tr("the distance is not valid");
         default:
+            // InvalidRequest among them: a programming error, not the user's
             return tr("the offset could not be made");
     }
 }
@@ -189,10 +223,15 @@ void LC_ActionModifyOffset::doTriggerCompletion(const bool success) {
     int failed = 0;
     int total = 0;
     QStringList reasons;
-    // sources that got fewer copies than asked for, and the copies of the last of them
+    // sources that got fewer copies than asked for, and the copies of the last
+    // of them: since nothing was left, or since a copy could not be made
     int shortOfCopies = 0;
     int made = 0;
     int requested = 0;
+    int stoppedByFailure = 0;
+    int stoppedMade = 0;
+    int stoppedRequested = 0;
+    QStringList stopReasons;
     if (m_pendingOutcome != nullptr) {
         for (const LC_OffsetSourceOutcome& source : std::as_const(m_pendingOutcome->sources)) {
             ++total;
@@ -204,9 +243,20 @@ void LC_ActionModifyOffset::doTriggerCompletion(const bool success) {
                 }
             }
             else if (!source.complete()) {
-                ++shortOfCopies;
-                made = source.copiesMade;
-                requested = source.copiesRequested;
+                if (source.stoppedBy == LC_OffsetSourceStatus::OffsetFailed) {
+                    ++stoppedByFailure;
+                    stoppedMade = source.copiesMade;
+                    stoppedRequested = source.copiesRequested;
+                    const QString reason = stopReason(source);
+                    if (!stopReasons.contains(reason)) {
+                        stopReasons.append(reason);
+                    }
+                }
+                else {
+                    ++shortOfCopies;
+                    made = source.copiesMade;
+                    requested = source.copiesRequested;
+                }
             }
         }
     }
@@ -227,6 +277,18 @@ void LC_ActionModifyOffset::doTriggerCompletion(const bool success) {
                           "their originals were kept")
                            .arg(shortOfCopies)
                            .arg(requested));
+    }
+    if (stoppedByFailure == 1) {
+        commandMessage(tr("Only %1 of %2 copies were made: %3; the original was kept")
+                           .arg(stoppedMade)
+                           .arg(stoppedRequested)
+                           .arg(stopReasons.join(QStringLiteral("; "))));
+    }
+    else if (stoppedByFailure > 1) {
+        commandMessage(tr("%1 selected entities got fewer than %2 copies: %3; their originals were kept")
+                           .arg(stoppedByFailure)
+                           .arg(stoppedRequested)
+                           .arg(stopReasons.join(QStringLiteral("; "))));
     }
     if (success) {
         finish();
@@ -272,6 +334,16 @@ void LC_ActionModifyOffset::previewOffset() {
             }
         }
         return;
+    }
+    if (isInfoCursorForModificationEnabled()) {
+        // some copies are drawn: say why the others are not
+        for (const LC_OffsetSourceOutcome& source : outcome.sources) {
+            if (!source.complete()) {
+                appendInfoCursorZoneMessage(source.succeeded() ? stopReason(source) : failureReason(source, true), 2,
+                                            false);
+                break;
+            }
+        }
     }
     if (static_cast<std::size_t>(ctx.entitiesToAdd.size()) <= maxPreviewDetail()) {
         if (ctx.setActivePen && m_document != nullptr) {

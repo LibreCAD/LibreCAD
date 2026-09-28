@@ -36,7 +36,9 @@
 #include <QCoreApplication>
 
 #include "lc_curveoffset.h"
+#include "lc_hyperbola.h"
 #include "lc_splinepoints.h"
+#include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_document.h"
 #include "rs_ellipse.h"
@@ -681,6 +683,120 @@ TEST_CASE("A polyline shrunk past its size vanishes and is kept", "[modification
     CHECK(outcome.sources.front().status == LC_OffsetSourceStatus::Vanished);
     CHECK(guard.ctx.entitiesToAdd.isEmpty());
     CHECK(guard.ctx.entitiesToDelete.isEmpty());
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A polyline series stops where nothing is left", "[modification][offset]") {
+    // M-M1: the rectangle at 1, 2 and 3; at 2 its legacy offset is a zero-area loop
+    const auto source = rectangle();
+    RS_OffsetData data = towards(RS_Vector{5.0, 1.5}, 1.0);
+    data.multipleCopies = true;
+    data.number = 3;
+    BatchGuard guard;
+    const LC_OffsetBatchOutcome outcome =
+        RS_Modification::offsetWithOutcome(data, {source.get()}, false, LC_OffsetBatchLimits{}, guard.ctx);
+    REQUIRE(outcome.sources.size() == 1);
+    const LC_OffsetSourceOutcome& result = outcome.sources.front();
+    CHECK(result.succeeded());
+    CHECK(result.copiesMade == 1);
+    CHECK(result.copiesRequested == 3);
+    CHECK(result.stoppedBy == LC_OffsetSourceStatus::Vanished);
+    REQUIRE(guard.ctx.entitiesToAdd.size() == 1);
+    const auto* copy = static_cast<const RS_Polyline*>(guard.ctx.entitiesToAdd.front());
+    CHECK(copy->getMin().distanceTo(RS_Vector{1, 1}) < 1e-9);
+    CHECK(copy->getMax().distanceTo(RS_Vector{9, 3}) < 1e-9);
+    CHECK(guard.ctx.entitiesToDelete.isEmpty()); // short of copies: the source stays
+}
+
+namespace {
+/**
+ * Straight arms exactly 10 apart (lc_curveoffset_trim_tests.cpp): between
+ * them, at 5, their offsets lie on one line, which the engine refuses to trim.
+ */
+std::unique_ptr<LC_SplinePoints> keyhole(const RS_Vector& shift = RS_Vector{0.0, 0.0}) {
+    LC_SplinePointsData d(false, false);
+    d.useControlPoints = true;
+    for (const RS_Vector& p : {RS_Vector{-20, 0}, RS_Vector{-10, 0}, RS_Vector{0, 0}, RS_Vector{10, -8},
+                               RS_Vector{24, -8}, RS_Vector{24, 18}, RS_Vector{10, 18}, RS_Vector{0, 10},
+                               RS_Vector{-10, 10}, RS_Vector{-20, 10}}) {
+        d.controlPoints.push_back(p + shift);
+    }
+    return std::make_unique<LC_SplinePoints>(nullptr, d);
+}
+} // namespace
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A failure after the first copy keeps the copies made", "[modification][offset]") {
+    const auto source = keyhole();
+    // between the arms, nearer the lower one: the left of the curve
+    RS_OffsetData data = towards(RS_Vector{-10.0, 2.0}, 2.5);
+    BatchGuard first;
+    const LC_OffsetBatchOutcome one =
+        RS_Modification::offsetWithOutcome(data, {source.get()}, false, LC_OffsetBatchLimits{}, first.ctx);
+    REQUIRE(one.sources.front().succeeded()); // 2.5 is regular
+    data.multipleCopies = true;
+    data.number = 2;
+    BatchGuard guard;
+    const LC_OffsetBatchOutcome outcome =
+        RS_Modification::offsetWithOutcome(data, {source.get()}, false, LC_OffsetBatchLimits{}, guard.ctx);
+    REQUIRE(outcome.sources.size() == 1);
+    const LC_OffsetSourceOutcome& result = outcome.sources.front();
+    CHECK(result.succeeded());
+    CHECK(result.copiesMade == 1);
+    CHECK(result.stoppedBy == LC_OffsetSourceStatus::OffsetFailed);
+    CHECK(result.engineStatus == LC_CurveOffsetStatus::AmbiguousTopology);
+    CHECK(guard.ctx.entitiesToAdd.size() == static_cast<qsizetype>(result.createdEntities.size()));
+    CHECK_FALSE(guard.ctx.entitiesToAdd.isEmpty());
+    CHECK(guard.ctx.entitiesToDelete.isEmpty());
+    CHECK_FALSE(result.sourceRemoved);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A zero-length line and an unbounded hyperbola are refused with their reasons", "[modification][offset]") {
+    RS_Line point{nullptr, RS_LineData{{1.0, 1.0}, {1.0, 1.0}}};
+    BatchGuard line;
+    const LC_OffsetBatchOutcome fromLine = RS_Modification::offsetWithOutcome(
+        towards(RS_Vector{1.0, 3.0}, 1.0), {&point}, false, LC_OffsetBatchLimits{}, line.ctx);
+    CHECK(fromLine.sources.front().status == LC_OffsetSourceStatus::OffsetFailed);
+    CHECK(fromLine.sources.front().detail == LC_OffsetFailureDetail::ZeroLength);
+    CHECK(line.ctx.entitiesToAdd.isEmpty());
+
+    // x^2/9 - y^2/4 = 1, the whole right branch
+    LC_Hyperbola branch{nullptr, LC_HyperbolaData{RS_Vector{0.0, 0.0}, RS_Vector{3.0, 0.0}, 2.0 / 3.0}};
+    REQUIRE(branch.isInfinite());
+    BatchGuard hyperbola;
+    const LC_OffsetBatchOutcome fromHyperbola = RS_Modification::offsetWithOutcome(
+        towards(RS_Vector{10.0, 0.0}, 1.0), {&branch}, false, LC_OffsetBatchLimits{}, hyperbola.ctx);
+    CHECK(fromHyperbola.sources.front().status == LC_OffsetSourceStatus::OffsetFailed);
+    CHECK(fromHyperbola.sources.front().detail == LC_OffsetFailureDetail::Unbounded);
+    CHECK(hyperbola.ctx.entitiesToAdd.isEmpty());
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("An arc shrunk past its radius vanishes, and an arc series stops", "[modification][offset]") {
+    // radius 5 about the origin, 0 to 90 degrees; (1, 1) is inside it
+    RS_Arc arc{nullptr, RS_ArcData{RS_Vector{0.0, 0.0}, 5.0, 0.0, M_PI_2, false}};
+    BatchGuard none;
+    const LC_OffsetBatchOutcome vanished = RS_Modification::offsetWithOutcome(
+        towards(RS_Vector{1.0, 1.0}, 6.0), {&arc}, false, LC_OffsetBatchLimits{}, none.ctx);
+    CHECK(vanished.sources.front().status == LC_OffsetSourceStatus::Vanished);
+    CHECK(none.ctx.entitiesToAdd.isEmpty());
+    CHECK(none.ctx.entitiesToDelete.isEmpty());
+
+    RS_OffsetData data = towards(RS_Vector{1.0, 1.0}, 2.0);
+    data.multipleCopies = true;
+    data.number = 3;
+    BatchGuard some;
+    const LC_OffsetBatchOutcome outcome =
+        RS_Modification::offsetWithOutcome(data, {&arc}, false, LC_OffsetBatchLimits{}, some.ctx);
+    const LC_OffsetSourceOutcome& result = outcome.sources.front();
+    CHECK(result.succeeded());
+    CHECK(result.copiesMade == 2);
+    CHECK(result.stoppedBy == LC_OffsetSourceStatus::Vanished);
+    REQUIRE(some.ctx.entitiesToAdd.size() == 2);
+    CHECK(static_cast<const RS_Arc*>(some.ctx.entitiesToAdd[0])->getRadius() == Catch::Approx(3.0));
+    CHECK(static_cast<const RS_Arc*>(some.ctx.entitiesToAdd[1])->getRadius() == Catch::Approx(1.0));
+    CHECK(some.ctx.entitiesToDelete.isEmpty());
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)

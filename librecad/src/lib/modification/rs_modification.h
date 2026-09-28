@@ -201,16 +201,26 @@ struct LC_OffsetSourceOutcome {
     /** Identity only: a source removed by a destructive offset must not be dereferenced. */
     const RS_Entity* source = nullptr;
     LC_OffsetSourceStatus status = LC_OffsetSourceStatus::InvalidSource;
-    /** Why the offset engine refused a spline, for OffsetFailed and LimitExceeded; Ok otherwise. */
+    /**
+     * Why the offset engine refused a spline, for OffsetFailed and LimitExceeded,
+     * or the copy that stopped a series; Ok otherwise.
+     */
     LC_CurveOffsetStatus engineStatus{};
     /** Why the pipeline refused the source, or the copy that stopped its series. */
     LC_OffsetFailureDetail detail = LC_OffsetFailureDetail::None;
+    /**
+     * Why a series stopped short of its copies: Vanished, nothing is left at
+     * the next distance, or OffsetFailed, the next copy could not be made, for
+     * the reason in engineStatus and detail. Succeeded while none is missing.
+     */
+    LC_OffsetSourceStatus stoppedBy = LC_OffsetSourceStatus::Succeeded;
     /** Owned by the batch once handed over. */
     QList<RS_Entity*> createdEntities;
     LC_OffsetOutputUsage usage{};
     /**
-     * Copies made and asked for. A copy with nothing left ends the series, so
-     * fewer may be made; the earlier copies are kept, and so is the source.
+     * Copies made and asked for. A copy with nothing left, or one that cannot
+     * be made for any reason but the output limits, ends the series, so fewer
+     * may be made; the earlier copies are kept, and so is the source.
      */
     int copiesMade = 0;
     int copiesRequested = 0;

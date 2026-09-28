@@ -33,6 +33,7 @@
 #include "lc_action_draw_line_parallel_through.h"
 #include "lc_action_modify_offset.h"
 #include "lc_actiontestsupport.h"
+#include "lc_cursoroverlayinfo.h"
 #include "lc_curveoffset.h"
 #include "lc_hyperbola.h"
 #include "lc_parabola.h"
@@ -86,6 +87,7 @@ public:
     using RS_PreviewActionInterface::deletePreviewAndHighlights;
     using RS_PreviewActionInterface::drawPreviewAndHighlights;
     using RS_PreviewActionInterface::m_preview;
+    using RS_Snapper::m_infoCursorOverlayData;
 };
 
 class ParallelThroughProbe final : public LC_ActionDrawLineParallelThrough {
@@ -162,6 +164,22 @@ struct OffsetFixture {
     LC_SplinePoints* addSplinePoints() {
         LC_SplinePointsData d(false, false);
         d.splinePoints = {{20, 0}, {23, 4}, {27, 3}, {30, 6}, {34, 2}};
+        return add(new LC_SplinePoints(&m_graphic, d));
+    }
+
+    /**
+     * Straight arms exactly 10 apart (lc_curveoffset_trim_tests.cpp): between
+     * them, at 5, their offsets lie on one line, which the engine refuses to
+     * trim; at 2.5 they do not meet.
+     */
+    LC_SplinePoints* addKeyhole(const RS_Vector& shift = RS_Vector{0.0, 0.0}) {
+        LC_SplinePointsData d(false, false);
+        d.useControlPoints = true;
+        for (const RS_Vector& p : {RS_Vector{-20, 0}, RS_Vector{-10, 0}, RS_Vector{0, 0}, RS_Vector{10, -8},
+                                   RS_Vector{24, -8}, RS_Vector{24, 18}, RS_Vector{10, 18}, RS_Vector{0, 10},
+                                   RS_Vector{-10, 10}, RS_Vector{-20, 10}}) {
+            d.controlPoints.push_back(p + shift);
+        }
         return add(new LC_SplinePoints(&m_graphic, d));
     }
 
@@ -615,6 +633,82 @@ TEST_CASE("A spline refused by the engine is reported with the reason", "[curve-
     CHECK_FALSE(spline->isDeleted());
     REQUIRE(f.m_context.messages.size() == 1);
     CHECK(f.m_context.messages.front().contains("no side"));
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A series stopped by a failure keeps its copies, and the message says why", "[offset][action]") {
+    SECTION("one source") {
+        OffsetFixture f;
+        LC_SplinePoints* keyhole = f.addKeyhole();
+        f.select({keyhole});
+        f.start(2.5, false);
+        f.m_action->setUseMultipleCopies(true);
+        f.m_action->setCopiesNumber(2);
+        f.clickAt(-10.0, 2.0); // between the arms: the copy at 5 cannot be trimmed
+
+        CHECK_FALSE(keyhole->isDeleted());
+        CHECK(f.liveCount(RS2::EntitySpline) == 1);
+        REQUIRE(f.m_context.messages.size() == 1);
+        CHECK(f.m_context.messages.front() ==
+              "Only 1 of 2 copies were made: the offset touches itself where it cannot be trimmed reliably; "
+              "the original was kept");
+    }
+    SECTION("several sources") {
+        OffsetFixture f;
+        LC_SplinePoints* first = f.addKeyhole();
+        LC_SplinePoints* second = f.addKeyhole(RS_Vector{1.0, 0.0});
+        f.select({first, second});
+        f.start(2.5, false);
+        f.m_action->setUseMultipleCopies(true);
+        f.m_action->setCopiesNumber(2);
+        f.clickAt(-10.0, 2.0); // between the arms of both
+
+        CHECK_FALSE(first->isDeleted());
+        CHECK_FALSE(second->isDeleted());
+        CHECK(f.liveCount(RS2::EntitySpline) == 2);
+        REQUIRE(f.m_context.messages.size() == 1);
+        CHECK(f.m_context.messages.front() ==
+              "2 selected entities got fewer than 2 copies: the offset touches itself where it cannot be trimmed "
+              "reliably; their originals were kept");
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A spline off the drawing plane is refused with the reason", "[offset][action]") {
+    OffsetFixture f;
+    RS_SplineData d(3, false);
+    d.controlPoints = {{0, 0, 0}, {4, 6, 1}, {8, -6, 0}, {12, 0, 0}};
+    d.knotslist = {0, 0, 0, 0, 1, 1, 1, 1};
+    d.weights.assign(4, 1.0);
+    RS_Spline* spline = f.add(new RS_Spline(&f.m_graphic, d));
+    f.select({spline});
+    f.start(0.75, false);
+    f.clickAt(6.0, 9.0);
+
+    CHECK_FALSE(spline->isDeleted());
+    REQUIRE(f.m_context.messages.size() == 1);
+    CHECK(f.m_context.messages.front() ==
+          "1 of 1 selected entities could not be offset: it does not lie in the drawing plane");
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("The preview says why a series stops, next to the copies it draws", "[offset][action]") {
+    OffsetFixture f;
+    // the fixture's own view, whatever the settings say
+    LC_InfoCursorOverlayPrefs* prefs = f.m_view.getInfoCursorOverlayPreferences();
+    prefs->enabled = true;
+    prefs->showEntityInfoOnModification = true;
+    LC_SplinePoints* keyhole = f.addKeyhole();
+    f.select({keyhole});
+    f.start(2.5, false);
+    f.m_action->setUseMultipleCopies(true);
+    f.m_action->setCopiesNumber(2);
+    f.m_action->m_infoCursorOverlayData->clear();
+    f.hoverAt(-10.0, 2.0);
+
+    CHECK(f.previewCount(RS2::EntitySpline) == 1); // the first copy
+    CHECK(f.m_action->m_infoCursorOverlayData->getZone2().contains(
+        "the offset touches itself where it cannot be trimmed reliably"));
 }
 
 

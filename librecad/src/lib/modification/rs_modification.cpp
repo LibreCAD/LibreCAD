@@ -37,6 +37,7 @@
 #include "lc_containertraverser.h"
 #include "lc_curveoffset.h"
 #include "lc_graphicviewport.h"
+#include "lc_hyperbola.h"
 #include "lc_linemath.h"
 #include "lc_offsetresultcheck.h"
 #include "lc_splinepoints.h"
@@ -1412,8 +1413,10 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcome(const RS_OffsetData& da
         }
     }
 
-    // The copies of one source, built in local ownership: all or nothing,
-    // except that a copy with nothing left ends the series.
+    // The copies of one source, built in local ownership. A copy with nothing
+    // left, or one that cannot be made, ends the series and the copies before
+    // it are kept; the first copy failing fails the source, and exceeding the
+    // output limits fails it whichever copy does.
     auto offsetOneSource = [&](RS_Entity& e, const std::size_t requestDeepLeft,
                                std::vector<std::unique_ptr<RS_Entity>>& roots,
                                LC_OffsetSourceOutcome& result) -> LC_OffsetSourceStatus {
@@ -1427,6 +1430,25 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcome(const RS_OffsetData& da
             }
             return measureOffsetOutput(all, budget.maxDeepEntities);
         };
+        // whether a copy that cannot be made ends the series rather than fails the source
+        auto stopsSeries = [&result]() {
+            if (result.copiesMade == 0) {
+                return false;
+            }
+            result.stoppedBy = LC_OffsetSourceStatus::OffsetFailed;
+            return true;
+        };
+
+        // causes known before anything is offset
+        if (e.rtti() == RS2::EntityLine && (e.getEndpoint() - e.getStartpoint()).magnitude() < RS_TOLERANCE) {
+            result.detail = LC_OffsetFailureDetail::ZeroLength;
+            return LC_OffsetSourceStatus::OffsetFailed;
+        }
+        if (const auto* hyperbola = dynamic_cast<const LC_Hyperbola*>(&e);
+            hyperbola != nullptr && hyperbola->isInfinite()) {
+            result.detail = LC_OffsetFailureDetail::Unbounded;
+            return LC_OffsetSourceStatus::OffsetFailed;
+        }
 
         if (LC_CurveOffset::isSupportedSource(e)) {
             // The side is resolved once, so no copy can land on another side.
@@ -1469,9 +1491,13 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcome(const RS_OffsetData& da
                 }
                 if (copy.status != LC_CurveOffsetStatus::Ok) {
                     result.engineStatus = copy.status;
+                    if (copy.status != LC_CurveOffsetStatus::LimitExceeded && stopsSeries()) {
+                        break;
+                    }
                     return engineFailure(copy.status);
                 }
                 if (copy.entities.empty()) {
+                    result.stoppedBy = LC_OffsetSourceStatus::Vanished;
                     break; // trimmed away entirely, as it is at any larger distance on this side
                 }
                 if (!addUsage(usage, copy.usage)) {
@@ -1505,7 +1531,11 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcome(const RS_OffsetData& da
                     std::unique_ptr<RS_Entity> clone{getClone(forPreviewOnly, &e)};
                     if (!clone->offset(data.coord, num * data.distance)) {
                         if (e.rtti() == RS2::EntityCircle || e.rtti() == RS2::EntityArc) {
+                            result.stoppedBy = LC_OffsetSourceStatus::Vanished;
                             break; // the radius would vanish, as it does at any larger distance inwards
+                        }
+                        if (stopsSeries()) {
+                            break;
                         }
                         return LC_OffsetSourceStatus::OffsetFailed;
                     }
@@ -1516,10 +1546,14 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcome(const RS_OffsetData& da
                         const LC_OffsetCheckReport check = checkLegacyPolylineOffset(
                             *polyline, static_cast<const RS_Polyline&>(*clone), num * data.distance);
                         if (check.verdict == LC_OffsetCheckVerdict::NothingLeft) {
+                            result.stoppedBy = LC_OffsetSourceStatus::Vanished;
                             break; // shrunk past its size, as it is at any larger distance
                         }
                         if (check.verdict == LC_OffsetCheckVerdict::Invalid) {
                             result.detail = LC_OffsetFailureDetail::PolylineNotTrimmed;
+                            if (stopsSeries()) {
+                                break;
+                            }
                             return LC_OffsetSourceStatus::OffsetFailed;
                         }
                     }
