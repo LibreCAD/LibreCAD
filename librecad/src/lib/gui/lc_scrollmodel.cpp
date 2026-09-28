@@ -39,18 +39,19 @@ State compute(const Axis& axis) {
     const bool hasContent = axis.hasContent && std::isfinite(axis.contentMin) && std::isfinite(axis.contentMax)
         && axis.contentMin <= axis.contentMax;
 
-    double lo;
-    double hi;
+    // the view +/- the margin, united with the drawing +/- the same margin when there is
+    // one: the bar can always take the view at least one margin further, in both
+    // directions, wherever it is, even in an empty drawing (a command's first point may be
+    // placed before any entity exists)
+    const double margin = kMarginFraction * length;
+    double first = viewStart;
+    double last = viewStart + length;
     if (hasContent) {
-        const double margin = kMarginFraction * length;
-        lo = std::floor(std::min(axis.contentMin - margin, viewStart));
-        hi = std::ceil(std::max(axis.contentMax + margin, viewStart + length));
-    } else {
-        // An empty drawing (or invalid content) has nothing to scroll to:
-        // region = view, so the bar shows a full-length thumb.
-        lo = std::floor(viewStart);
-        hi = std::ceil(viewStart + length);
+        first = std::min(axis.contentMin, first);
+        last = std::max(axis.contentMax, last);
     }
+    const double lo = std::floor(first - margin);
+    const double hi = std::ceil(last + margin);
     const double span = std::max(0.0, hi - lo - length);
     const double pixelsPerTick = std::max(1.0, span / kMaxTicks);
     if (!std::isfinite(lo) || !std::isfinite(span)) {

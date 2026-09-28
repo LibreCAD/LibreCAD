@@ -28,9 +28,18 @@
  * Positions are in "scroll space": view pixels along the bar, growing to the right
  * for the horizontal bar and downwards for the vertical one, with the UCS origin at 0.
  *
- * The scrollable region is (content extents +/- kMarginFraction * view length) united
- * with the current view, so a sync never has to clamp the view: setting the computed
- * value back into a scrollbar never moves the view.
+ * The scrollable region is (content extents +/- m) united with (the current view +/- m),
+ * m = kMarginFraction * view length:
+ *  - a sync never has to clamp the view: setting the computed value back into a scrollbar
+ *    never moves the view;
+ *  - the bar can always take the view at least m further in both directions, wherever the
+ *    view is. QG_GraphicView resyncs after each discrete bar step (arrow, trough click,
+ *    wheel over the bar) and on thumb release, so bar input alone scrolls on without limit,
+ *    past the drawing too, e.g. to place the next point of a command there;
+ *  - while the view lies inside the drawing the view's margin lies inside the drawing's, so
+ *    the thumb shows magnification (L / (E + L), E the drawing's length) and its position is
+ *    the view centre within the drawing. Once the view covers the drawing (zoom extents on
+ *    the axis that does not limit the fit, or zoomed out) the thumb is half the track.
  */
 namespace LC_ScrollModel {
     constexpr double kMarginFraction = 0.5;
@@ -40,7 +49,7 @@ namespace LC_ScrollModel {
     constexpr bool kContentBandDefault = true;
 
     struct Axis {
-        /** false for an empty drawing (or invalid content); the region is then just the view */
+        /** false for an empty drawing (or invalid content); the region is then the view +/- the margin */
         bool hasContent = false;
         /** content interval in scroll space */
         double contentMin = 0.0;
@@ -123,7 +132,7 @@ namespace LC_ScrollModel {
      *  2. for narrow content, the view covers the content => the thumb covers the band
      *     (unless the band was grown to its minimum length); the converse, again, only to
      *     within one thumb pixel.
-     * The band always stays inside the groove, as the scroll region is content +/- L/2.
+     * The band always stays inside the groove, as the scroll region contains content +/- L/2.
      *
      * QG_ScrollBar paints the band, with the thumb cut out, whenever it is switched on and
      * the drawing has content, so what shows is the part of the drawing's range outside

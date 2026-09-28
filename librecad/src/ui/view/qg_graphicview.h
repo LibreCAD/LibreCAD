@@ -262,6 +262,7 @@ private:
                                            int width, int height) const;
     void driveScrollAxis(LC_ScrollModel::State& axisState, int value,
                          const std::function<int(double)>& applyViewStart, int LC_ScrollViewportKey::* keyField);
+    void scheduleScrollResync();
 
     // Scrollbar state. The bars only display the viewport; they are updated under
     // QSignalBlocker and the per-axis snapshot maps bar values back to offsets.
@@ -275,6 +276,8 @@ private:
     LC_ScrollModel::State m_vScroll;
     //! the viewport state m_hScroll/m_vScroll were last built or rebased from
     LC_ScrollViewportKey m_scrollKey;
+    //! a resync after a discrete bar step is queued (scheduleScrollResync())
+    bool m_scrollResyncPending{false};
 };
 
 #endif

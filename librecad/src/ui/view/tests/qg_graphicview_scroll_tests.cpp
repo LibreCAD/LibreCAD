@@ -19,6 +19,7 @@
 // Issue #2945: the drawing view's scrollbars show where the view is in the drawing,
 // move the view with the thumb, and a wheel over a bar never zooms.
 
+#include <algorithm>
 #include <cmath>
 #include <cstdlib>
 
@@ -66,12 +67,22 @@ TEST_CASE("Both scrollbar thumbs shrink on zoom in and grow on zoom out", "[navi
         hPrevious = h;
         vPrevious = v;
     }
+    // back out to zoom extents (i == 2) the thumbs grow; zoomed out further, the view covers
+    // the drawing and the region is the view +/- half a view: both thumbs stay at half the track
     for (int i = 0; i < 5; ++i) {
         f.viewport()->zoomOut(2.0, centre);
         const int h = thumbLength(f.hBar);
         const int v = thumbLength(f.vBar);
-        CHECK(h > hPrevious);
-        CHECK(v > vPrevious);
+        INFO("zoom out step " << i);
+        if (i < 3) {
+            CHECK(h > hPrevious);
+            CHECK(v > vPrevious);
+        } else {
+            CHECK(h == hPrevious);
+            CHECK(v == vPrevious);
+            CHECK(std::abs(2 * h - (h + thumbTravel(f.hBar))) <= 2);
+            CHECK(std::abs(2 * v - (v + thumbTravel(f.vBar))) <= 2);
+        }
         hPrevious = h;
         vPrevious = v;
     }
@@ -116,9 +127,9 @@ TEST_CASE("The vertical scrollbar range is applied and tracks the view", "[navig
     REQUIRE(f.oy() == oy0 + 30);
     CHECK(f.vBar->value() == value0 + 30);
 
-    // a pan above the drawing: the region grows to hold the view, value 0 at its top
+    // a pan above the drawing: the region grows to hold the view and half a view above it
     f.viewport()->zoomPan(0, 5 * f.viewport()->getHeight());
-    CHECK(f.vBar->value() == 0);
+    CHECK(std::abs(f.vBar->value() - f.vBar->pageStep() / 2) <= 1);
     CHECK(f.vBar->maximum() > 0);
 }
 
@@ -141,11 +152,21 @@ TEST_CASE("A thumb drag moves the view the same way for one or many move events"
             const int value0 = bar()->value();
             const int thumb0 = thumbStart(bar());
             const double scale = pixelsPerThumbPixel(bar());
-            dragThumb(bar(), 1, 40 * direction);
+            // checked while the thumb is held: the release resyncs, and when the view has
+            // left the drawing the region then grows with it (the thumb re-lays out)
+            int thumbMoved = 0;
+            int valueMoved = 0;
+            int viewMoved = 0;
+            dragThumb(bar(), 1, 40 * direction, [&](int) {
+                thumbMoved = thumbStart(bar()) - thumb0;
+                valueMoved = bar()->value() - value0;
+                viewMoved = viewStart(f, bar()) - start;
+            });
             const int oneEvent = viewStart(f, bar()) - start;
-            CHECK(thumbStart(bar()) - thumb0 == 40 * direction);
+            CHECK(viewMoved == oneEvent);
+            CHECK(thumbMoved == 40 * direction);
             // the bar value is the view start: one tick is one view pixel
-            CHECK(bar()->value() - value0 == oneEvent);
+            CHECK(valueMoved == oneEvent);
 
             reset();
             REQUIRE(viewStart(f, bar()) == start);
@@ -169,11 +190,11 @@ TEST_CASE("The scrollbar range is frozen while the thumb is held and resynced on
     const int width = f.viewport()->getWidth();
     const int maximumNear = f.hBar->maximum();
 
-    // pan ten screens to the right: the region grows to hold the view
+    // pan ten screens to the right: the region grows to hold the view and half a view beyond
     f.viewport()->zoomPan(-10 * width, 0);
     const int maximumFar = f.hBar->maximum();
     REQUIRE(maximumFar > maximumNear);
-    REQUIRE(f.hBar->value() == maximumFar);
+    REQUIRE(std::abs(maximumFar - f.hBar->value() - f.hBar->pageStep() / 2) <= 1);
 
     // drag the thumb back to the left end
     bool frozen = true;
@@ -269,8 +290,9 @@ TEST_CASE("Modifier-wheel and trackpad pans over the drawing are not bounded by 
         wheel(QPoint(), QPoint(0, -120), Qt::ShiftModifier);
     }
     CHECK(std::abs(f.ox() - ox) == notches * 120);
-    // the bars follow: the region grew to hold the view
-    CHECK((f.hBar->value() == 0 || f.hBar->value() == f.hBar->maximum()));
+    // the bars follow: the region grew to hold the view, with half a view of room beyond it
+    const int room = std::min(f.hBar->value(), f.hBar->maximum() - f.hBar->value());
+    CHECK(std::abs(room - f.hBar->pageStep() / 2) <= 1);
 
     f.viewport()->zoomAuto(false, true);
     int oy = f.oy();
@@ -636,8 +658,13 @@ TEST_CASE("Survey-scale extents (5e6 m at f = 400) drag without clamping", "[nav
     REQUIRE(f.hBar->maximum() > 0);
 
     // drag the thumb to the far end of the (survey-scale) drawing
-    dragThumb(f.hBar, 1, thumbTravel(f.hBar));
-    CHECK(f.hBar->value() == f.hBar->maximum());
+    bool atEnd = false;
+    dragThumb(f.hBar, 1, thumbTravel(f.hBar), [&](int) {
+        atEnd = f.hBar->value() == f.hBar->maximum();
+    });
+    CHECK(atEnd);
+    // the release resync keeps half a view of room beyond the view
+    CHECK(std::abs(f.hBar->maximum() - f.hBar->value() - f.hBar->pageStep() / 2) <= 1);
     CHECK(static_cast<double>(-f.ox()) > 1073741824.0); // > the old (v1) kMaxViewPixel
     CHECK(static_cast<double>(-f.ox()) < LC_ViewMath::kMaxViewPixel);
 }

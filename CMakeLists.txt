@@ -2612,6 +2612,7 @@ if (BUILD_TESTS)
         librecad/src/lib/gui/tests/lc_graphicviewport_zoomauto_tests.cpp
         librecad/src/ui/view/tests/qg_graphicview_scroll_tests.cpp
         librecad/src/ui/view/tests/qg_scrollbar_band_tests.cpp
+        librecad/src/ui/view/tests/lc_scroll_beyond_tests.cpp
         librecad/src/main/tests/console_command_utils_tests.cpp
         librecad/src/main/tests/lc_pdfprintlooptests.cpp
         librecad/src/main/tests/lc_consoleimporttests.cpp

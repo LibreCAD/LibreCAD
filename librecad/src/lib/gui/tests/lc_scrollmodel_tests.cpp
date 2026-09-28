@@ -69,8 +69,15 @@ TEST_CASE("The thumb fraction is L/(E+L) and shrinks on zoom in", "[navigation][
         const double extent = 400.0 * factor;
         // view centred on the content
         const State s = LC_ScrollModel::compute({true, 0.0, extent, extent / 2 - 400.0, 800.0});
-        CHECK(thumbFraction(s) == Approx(800.0 / (extent + 800.0)).margin(1e-3));
-        CHECK(thumbFraction(s) < previous);
+        INFO("extent " << extent);
+        // the region is (content +/- L/2) united with (view +/- L/2): L / (E + L) while the
+        // drawing is longer than the view, and half the track while the view covers it
+        CHECK(thumbFraction(s) == Approx(800.0 / (std::max(extent, 800.0) + 800.0)).margin(1e-3));
+        if (extent > 800.0) {
+            CHECK(thumbFraction(s) < previous);
+        } else {
+            CHECK(thumbFraction(s) <= previous);
+        }
         previous = thumbFraction(s);
     }
     // worked example of the plan: 800 px view, 2000 px drawing
@@ -81,30 +88,67 @@ TEST_CASE("The thumb fraction is L/(E+L) and shrinks on zoom in", "[navigation][
 }
 
 TEST_CASE("The thumb position encodes the view centre", "[navigation][2945]") {
-    for (const double centre : {0.0, 250.0, 1000.0, 1999.0, 2000.0}) {
+    // exactly while the view lies inside the drawing (centre in [L/2, E - L/2])
+    for (const double centre : {400.0, 450.0, 1000.0, 1599.0, 1600.0}) {
         const State s = LC_ScrollModel::compute({true, 0.0, 2000.0, centre - 400.0, 800.0});
+        INFO("centre " << centre);
         CHECK(static_cast<double>(s.value) / s.maximum == Approx(centre / 2000.0).margin(1e-3));
+    }
+    // beyond that the region grows with the view, keeping half a view of room past it: the
+    // thumb still moves with the centre, never reaches an end, and never clamps the view
+    double previousPosition = -1.0;
+    for (const double centre : {-5000.0, -400.0, 0.0, 250.0, 400.0, 1000.0, 1600.0, 1999.0, 2000.0, 2400.0, 9000.0}) {
+        const State s = LC_ScrollModel::compute({true, 0.0, 2000.0, centre - 400.0, 800.0});
+        INFO("centre " << centre);
+        CHECK(s.value >= 400);
+        CHECK(s.maximum - s.value >= 400);
+        CHECK(s.viewStartFor(s.value) == centre - 400.0);
+        // moving right, the thumb moves right along the track
+        const double position = static_cast<double>(s.value) / s.maximum;
+        CHECK(position > previousPosition);
+        previousPosition = position;
     }
 }
 
-TEST_CASE("An empty drawing has nothing to scroll: the bar is full length", "[navigation][2945]") {
-    // v2: region = view (not a UCS-origin anchor with a margin, which invited scrolling
-    // into blank space): a full-length thumb wherever the view happens to be.
+TEST_CASE("The bar always has half a view of room beyond the view", "[navigation][2945-beyond]") {
+    // wherever the view is -- inside the drawing, at its edge, or far past it -- the bar can
+    // take it at least half a view further in both directions, so a discrete bar step at
+    // either end, followed by a resync, always has room again (sand1024's review of #2950)
+    for (const double viewStart : {-1.0e6, -5000.0, -800.0, -400.0, 0.0, 600.0, 1200.0, 1600.0, 2000.0, 5000.0,
+                                   1.0e6}) {
+        const State s = LC_ScrollModel::compute({true, 0.0, 2000.0, viewStart, 800.0});
+        INFO("view start " << viewStart);
+        REQUIRE(s.valid);
+        CHECK(s.value >= 400);
+        CHECK(s.maximum - s.value >= 400);
+        CHECK(s.viewStartFor(s.value) == viewStart);
+        // the drawing and its half-view margins stay inside the region too
+        CHECK(s.tickFor(0.0) >= 400.0);
+        CHECK(s.tickFor(2000.0) <= s.maximum + 400.0);
+    }
+}
+
+TEST_CASE("An empty drawing still has half a view of room each way", "[navigation][2945]") {
+    // no entity yet, but a command may already be waiting for a point off screen (review of
+    // #2950): the region is the view +/- half a view, wherever the view happens to be
     for (const double viewStart : {-400.0, 0.0, 1000.0, -12345.0, 987654.0}) {
         const State s = LC_ScrollModel::compute({false, 123.0, 456.0, viewStart, 800.0});
         INFO("view start " << viewStart);
         REQUIRE(s.valid);
-        CHECK(s.maximum == 0);
-        CHECK(s.value == 0);
-        CHECK(s.pageStep >= 1);
-        CHECK(s.viewStartFor(0) == viewStart);
+        CHECK(s.maximum == 800);
+        CHECK(s.value == 400);
+        CHECK(s.pageStep == 800);
+        CHECK(s.viewStartFor(s.value) == viewStart);
+        CHECK(!s.hasContent);
     }
     // invalid content (unordered or non-finite) is treated the same as no content
     const State unordered = LC_ScrollModel::compute({true, 500.0, -500.0, 0.0, 800.0});
-    CHECK(unordered.maximum == 0);
+    CHECK(unordered.maximum == 800);
+    CHECK(!unordered.hasContent);
     const double nan = std::numeric_limits<double>::quiet_NaN();
     const State nonFinite = LC_ScrollModel::compute({true, nan, 456.0, 0.0, 800.0});
-    CHECK(nonFinite.maximum == 0);
+    CHECK(nonFinite.maximum == 800);
+    CHECK(!nonFinite.hasContent);
 }
 
 TEST_CASE("Huge coordinates keep the scroll model int safe", "[navigation][2945]") {
@@ -124,11 +168,11 @@ TEST_CASE("Huge coordinates keep the scroll model int safe", "[navigation][2945]
     CHECK(!LC_ScrollModel::compute({true, 0.0, 10.0, 0.0, 0.0}).valid);
     CHECK(!LC_ScrollModel::compute({true, 0.0, 10.0, 0.0, -5.0}).valid);
     CHECK(!LC_ScrollModel::compute({true, 0.0, 10.0, inf, 800.0}).valid);
-    // non-finite content is treated as no content: region = view
+    // non-finite content is treated as no content: region = view +/- half a view
     const State noContent = LC_ScrollModel::compute({true, -inf, nan, 0.0, 800.0});
     CHECK(noContent.valid);
-    CHECK(noContent.origin == 0.0);
-    CHECK(noContent.maximum == 0);
+    CHECK(noContent.origin == -400.0);
+    CHECK(noContent.maximum == 800);
 
     CHECK(LC_ViewMath::saturatingRound(nan) == 0);
     CHECK(LC_ViewMath::saturatingRound(inf) == 0);
@@ -143,12 +187,18 @@ TEST_CASE("The vertical scroll axis grows as the view moves down", "[navigation]
     const double fy = 5.0;
     const int height = 600;
     int previous = -1;
-    // views that overlap the region, from above the drawing to below it
-    for (int oy = 100; oy <= 1100; oy += 100) {
+    // views from the drawing's top edge to below it (a view above the top grows the region
+    // with it, keeping half a view of room above: its value is always L/2 there)
+    for (int oy = 400; oy <= 1100; oy += 100) {
         const State s = LC_ScrollModel::compute({true, -50.0 * fy, 0.0, static_cast<double>(oy - height),
                                                  static_cast<double>(height)});
         CHECK(s.value > previous);
         previous = s.value;
+    }
+    for (int oy = 100; oy <= 300; oy += 100) {
+        const State s = LC_ScrollModel::compute({true, -50.0 * fy, 0.0, static_cast<double>(oy - height),
+                                                 static_cast<double>(height)});
+        CHECK(s.value == height / 2);
     }
 }
 
@@ -332,13 +382,17 @@ TEST_CASE("Far-panned views keep the tick interval exact and the band apart from
                 CHECK(band.end - band.start >= LC_ScrollModel::kMinBandPixels);
                 CHECK(band.start >= thumb.g0);
                 CHECK(band.end <= thumb.g0 + thumb.groove);
-                // disjoint, at the opposite end from the thumb
+                // disjoint, at the opposite end from the thumb; the thumb is half a view
+                // short of its end (the room beyond the view), not clamped there
+                const int room = LC_ViewMath::saturatingRound(0.5 * view / s.pixelsPerTick);
                 if (side > 0) {
                     CHECK(band.end <= thumbStart);
-                    CHECK(thumbEnd == thumb.g0 + thumb.groove);
+                    CHECK(std::abs(s.maximum - s.value - room) <= 1);
+                    CHECK(thumbEnd <= thumb.g0 + thumb.groove);
                 } else {
                     CHECK(band.start >= thumbEnd);
-                    CHECK(thumbStart == thumb.g0);
+                    CHECK(std::abs(s.value - room) <= 1);
+                    CHECK(thumbStart >= thumb.g0);
                 }
             }
         }

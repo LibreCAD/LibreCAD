@@ -1209,8 +1209,9 @@ LC_ScrollModel::State QG_GraphicView::computeAxisState(const bool isHorizontal, 
 /**
 * Called whenever the graphic view has changed.
 * Projects the viewport onto the scrollbars: the scrollable region is
-* (drawing extents +/- half a view) united with the current view, so the bars
-* never clamp or move the view. See LC_ScrollModel.
+* (drawing extents united with the current view) +/- half a view, so the bars never
+* clamp or move the view, and always have half a view of room beyond it. See LC_ScrollModel. Bar-driven changes are not synced while they run
+* (the frozen snapshot); scheduleScrollResync() and sliderReleased sync them after.
 */
 void QG_GraphicView::adjustOffsetControls() {
     if (!m_scrollbars || m_hScrollBar == nullptr || m_vScrollBar == nullptr || getDocument() == nullptr) {
@@ -1467,6 +1468,30 @@ void QG_GraphicView::driveScrollAxis(LC_ScrollModel::State& axisState, const int
     key.*keyField = applyViewStart(axisState.viewStartFor(value));
     axisState.value = value;
     m_scrollKey = key;
+    scheduleScrollResync();
+}
+
+/**
+ * A discrete bar step (an arrow, a trough click, a wheel notch over a bar) is not synced
+ * while it runs (the snapshot it maps through must not change under it), so the region
+ * would stay where it was: at its end, the next step would have no room. One resync is
+ * queued instead, coalescing the steps of one event-loop pass, so the region re-unions
+ * around the new view and the bar always has half a view of room beyond it: repeated
+ * steps scroll on without limit. A held thumb is left alone (the range stays frozen for
+ * a 1:1 drag); sliderReleased resyncs it. The resync never moves the view.
+ */
+void QG_GraphicView::scheduleScrollResync() {
+    if (m_scrollResyncPending || m_hScrollBar == nullptr || m_vScrollBar == nullptr) {
+        return;
+    }
+    if (m_hScrollBar->isSliderDown() || m_vScrollBar->isSliderDown()) {
+        return;
+    }
+    m_scrollResyncPending = true;
+    QTimer::singleShot(0, this, [this] {
+        m_scrollResyncPending = false;
+        adjustOffsetControls();
+    });
 }
 
 /**

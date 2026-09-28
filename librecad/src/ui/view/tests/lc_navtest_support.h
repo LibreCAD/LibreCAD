@@ -162,17 +162,21 @@ inline void addDefaultDrawing(RS_Graphic* graphic) {
  *
  * The window is placed away from the (offscreen) cursor: an Enter event on the view
  * resumes RS_ActionDefault, which would create the QC_ApplicationWindow singleton.
+ *
+ * \p Context is the view's action context; a test that needs the view to start actions
+ * by type (the middle-button pan, for one) passes a subclass that creates them.
  */
-struct ViewFixture {
+template <typename Context>
+struct BasicViewFixture {
     const bool qtReady{lc::test::application() != nullptr};
     RS_Graphic* graphic = nullptr;
-    LC_ActionContext context;
+    Context context;
     QWidget* parent = nullptr;
     QG_GraphicView* view = nullptr;
     QScrollBar* hBar = nullptr;
     QScrollBar* vBar = nullptr;
 
-    explicit ViewFixture(const QSize size = QSize(800, 600), const bool scrollbars = true,
+    explicit BasicViewFixture(const QSize size = QSize(800, 600), const bool scrollbars = true,
                          const std::function<void(RS_Graphic*)>& fill = addDefaultDrawing, QWidget* parentWidget = nullptr)
         : parent(parentWidget) {
         graphic = new RS_Graphic();
@@ -200,21 +204,23 @@ struct ViewFixture {
         }
     }
 
-    ~ViewFixture() {
+    ~BasicViewFixture() {
         view->hide();
         delete view;
         graphic->setGraphicView(nullptr);
         delete graphic;
     }
 
-    ViewFixture(const ViewFixture&) = delete;
-    ViewFixture& operator=(const ViewFixture&) = delete;
+    BasicViewFixture(const BasicViewFixture&) = delete;
+    BasicViewFixture& operator=(const BasicViewFixture&) = delete;
 
     LC_GraphicViewport* viewport() const { return view->getViewPort(); }
     int ox() const { return viewport()->getOffsetX(); }
     int oy() const { return viewport()->getOffsetY(); }
     double factor() const { return viewport()->getFactor().x; }
 };
+
+using ViewFixture = BasicViewFixture<LC_ActionContext>;
 
 } // namespace lc::navtest
 

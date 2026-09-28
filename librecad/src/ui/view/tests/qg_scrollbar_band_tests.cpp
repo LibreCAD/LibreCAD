@@ -475,12 +475,15 @@ TEST_CASE("Panned 50 widths away: a stripe at the far end, never thumb-shaped", 
             const auto [g0, g1] = span(bar, grooveRect(bar));
             const auto [gc0, gc1] = spanAcross(bar, grooveRect(bar));
             const auto [tc0, tc1] = spanAcross(bar, thumbRect(bar));
+            // the thumb sits half a view short of the far end (the room beyond the view)
+            const int room = side > 0 ? bar->maximum() - bar->value() : bar->value();
+            CHECK(std::abs(room - bar->pageStep() / 2) <= 1);
             if (side > 0) {
-                CHECK(t1 == g1);                    // thumb clamped at the far end
+                CHECK(t1 <= g1);
                 CHECK(*alongSet.rbegin() < t0 - 1); // the stripe at the other end
                 CHECK(*alongSet.begin() >= g0);
             } else {
-                CHECK(t0 == g0);
+                CHECK(t0 >= g0);
                 CHECK(*alongSet.begin() >= t1 + 1);
                 CHECK(*alongSet.rbegin() < g1);
             }
@@ -865,12 +868,15 @@ TEST_CASE("Far away, the band sits at the opposite end of the thumb", "[navigati
                 CHECK(b1 - b0 >= 3);
                 CHECK(b0 >= g0);
                 CHECK(b1 <= g1);
+                // the thumb sits half a view short of the far end (the room beyond the view)
+                const int room = side > 0 ? bar->maximum() - bar->value() : bar->value();
+                CHECK(std::abs(room - bar->pageStep() / 2) <= 1);
                 if (side > 0) {
                     CHECK(b1 <= t0);
-                    CHECK(t1 == g1);
+                    CHECK(t1 <= g1);
                 } else {
                     CHECK(b0 >= t1);
-                    CHECK(t0 == g0);
+                    CHECK(t0 >= g0);
                 }
                 checkPaintedBand(bar, expectedBand(f, bar));
             }
