@@ -28,6 +28,7 @@
 #include <cmath>
 #include <memory>
 
+#include <QSettings>
 #include <QStringList>
 
 #include "lc_action_draw_line_parallel_through.h"
@@ -239,7 +240,7 @@ struct OffsetFixture {
 
 } // namespace
 
-TEST_CASE("Modify Offset admits both spline types and names them", "[curve-offset][action]") {
+TEST_CASE("Modify Offset admits both spline types", "[curve-offset][action]") {
     OffsetFixture f;
     RS_Spline* spline = f.addSCurve();
     LC_SplinePoints* points = f.addSplinePoints();
@@ -255,10 +256,61 @@ TEST_CASE("Modify Offset admits both spline types and names them", "[curve-offse
     const auto& types = f.m_action->m_catchForSelectionEntityTypes;
     CHECK(types.indexOf(RS2::EntitySpline) > types.indexOf(RS2::EntityPolyline));
     CHECK(types.indexOf(RS2::EntitySplinePoints) > types.indexOf(RS2::EntityPolyline));
+}
 
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("The prompt asks for entities to offset", "[offset][action]") {
+    // #2944: a list of nine types, which every new type made longer
+    OffsetFixture f;
+    f.start(0.5, true);
     f.m_action->updateActionPromptForSelection();
-    CHECK(f.m_context.prompt.contains("spline"));
-    CHECK(f.m_context.prompt.contains("spline through points"));
+    CHECK(f.m_context.prompt.startsWith("Select entities to offset"));
+    CHECK_FALSE(f.m_context.prompt.contains("hyperbola"));
+}
+
+namespace {
+/** Modify Offset's saved Keep Originals, put back however the test ends. */
+class KeepOriginalsSetting {
+public:
+    KeepOriginalsSetting()
+        : m_existed(RS_SETTINGS->getSettings()->contains(fullKey())),
+          m_value(RS_SETTINGS->getSettings()->value(fullKey())) {}
+
+    ~KeepOriginalsSetting() {
+        const auto group = RS_SETTINGS->beginGroupGuard(QStringLiteral("ActionModifyOffset"));
+        RS_SETTINGS->remove(QStringLiteral("KeepOriginals")); // whatever the test left
+        if (m_existed) {
+            RS_SETTINGS->write(QStringLiteral("KeepOriginals"), m_value);
+        }
+    }
+
+    KeepOriginalsSetting(const KeepOriginalsSetting&) = delete;
+    KeepOriginalsSetting& operator=(const KeepOriginalsSetting&) = delete;
+
+    /** As on a first run: no value saved. */
+    void remove() const {
+        const auto group = RS_SETTINGS->beginGroupGuard(QStringLiteral("ActionModifyOffset"));
+        RS_SETTINGS->remove(QStringLiteral("KeepOriginals"));
+    }
+
+private:
+    static QString fullKey() { return QStringLiteral("/ActionModifyOffset/KeepOriginals"); }
+
+    bool m_existed;
+    QVariant m_value;
+};
+} // namespace
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Keep Originals is on by default", "[offset][action]") {
+    // as AutoCAD's "Erase source=No", LibreCAD 2.2.1, and the options widget before #2540
+    OffsetFixture f;
+    const KeepOriginalsSetting saved;
+    saved.remove();
+    f.m_action = std::make_unique<OffsetProbe>(&f.m_context);
+    f.m_action->setKeepOriginals(false);
+    f.m_action->loadOptions();
+    CHECK(f.m_action->isKeepOriginals());
 }
 
 TEST_CASE("Modify Offset takes a parabola and a hyperbola, and offsets them", "[curve-offset][action]") {
@@ -296,8 +348,7 @@ TEST_CASE("Modify Offset takes a parabola and a hyperbola, and offsets them", "[
     }
 
     f.m_action->updateActionPromptForSelection();
-    CHECK(f.m_context.prompt.contains("parabola"));
-    CHECK(f.m_context.prompt.contains("hyperbola"));
+    CHECK(f.m_context.prompt.startsWith("Select entities to offset")); // whatever their types
 }
 
 TEST_CASE("A selection window takes the spline, not the segments it is drawn with", "[curve-offset][action]") {

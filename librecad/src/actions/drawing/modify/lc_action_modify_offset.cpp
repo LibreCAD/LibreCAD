@@ -52,15 +52,6 @@ LC_ActionModifyOffset::LC_ActionModifyOffset(LC_ActionContext *actionContext)
     m_offsetData->useCurrentLayer = true;
 }
 
-// fixme - support remove originals mode
-// fixme - number of copies support
-// fixme - support attributes support
-// todo - basically, it seems that this action should be re-thought in general. There are several limitations (say,
-// todo - some entities like splines do not support offset.
-// todo - also, it seems that it's related to parallel/equidistant polyline actions...
-// todo - so probably either this action should be reworked, or existing actions should be extended to support
-// todo - selection and better offset operations...
-
 LC_ActionModifyOffset::~LC_ActionModifyOffset() = default;
 
 void LC_ActionModifyOffset::doSaveOptions() {
@@ -86,7 +77,8 @@ void LC_ActionModifyOffset::doLoadOptions() {
     const bool curAtts = loadBool("UseCurrentAttributes", true);
     setUseCurrentAttributes(curAtts);
 
-    const bool keepOriginals = loadBool("KeepOriginals", false);
+    // as AutoCAD's "Erase source=No": an offset adds to the drawing
+    const bool keepOriginals = loadBool("KeepOriginals", true);
     setKeepOriginals(keepOriginals);
 
     const bool multiCopy  = loadBool("MultipleCopies", false);
@@ -545,8 +537,8 @@ void LC_ActionModifyOffset::updateActionPromptForSelected(const int status) {
 }
 
 void LC_ActionModifyOffset::updateActionPromptForSelection() {
-    updatePromptTRCancel(tr("Select line, polyline, ellipse, circle, arc, spline, spline through points, parabola or hyperbola to create offset") + getSelectionCompletionHintMsg(),
-                              MOD_SHIFT_AND_CTRL(tr("Select contour"), tr("Offset immediately after selection")));
+    updatePromptTRCancel(tr("Select entities to offset") + getSelectionCompletionHintMsg(),
+                         MOD_SHIFT_AND_CTRL(tr("Select contour"), tr("Offset immediately after selection")));
 }
 
 LC_ModifyOperationFlags* LC_ActionModifyOffset::getModifyOperationFlags() {

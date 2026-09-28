@@ -323,9 +323,10 @@ QStringList RS_Settings::getChildKeys() const {
     return result;
 }
 
-void RS_Settings::remove(const QString& key) const {
+void RS_Settings::remove(const QString& key) {
     const QString fullName = getFullName(m_group, key);
     m_settings->remove(fullName);
+    m_cache.erase(fullName); // or the next read returns what was removed
 }
 
 int RS_Settings::readColorSingle(const QString& group, const QString &key, const int def) {
