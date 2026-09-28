@@ -55,6 +55,8 @@ RS_Grid::RS_Grid(LC_GraphicViewport* graphicView)
 {
 }
 
+RS_Grid::~RS_Grid() = default;
+
 /**
  * find the closest grid point
  *@return the closest grid to given point
@@ -125,28 +127,27 @@ void RS_Grid::loadSettings(){
      }
     LC_GROUP_END();
 
-    auto* gridOptions = new LC_GridSystem::LC_GridOptions();
-    gridOptions->drawMetaGrid = drawMetaGrid;
-    gridOptions->simpleGridRendering = simpleGridRendering;
-    gridOptions->gridWidthPx = gridWidthPx;
-    gridOptions->gridLineType = gridLineType;
-    gridOptions->drawGrid = drawGrid;
-    gridOptions->drawLines = linesGrid;
-    gridOptions->gridColorPoint = gridColorPoint;
-    gridOptions->gridColorLine = gridColorLines;
-    gridOptions->metaGridLineWidthPx  = metaGridWidthPx;
-    gridOptions->metaGridLineType = metagridLineType;
-    gridOptions->metaGridColor = metaGridColor;
-    gridOptions->disableGridOnPanning = disableGridOnPanning;
-    gridOptions->drawIsometricVerticalsAlways = drawIsoVerticalForTop;
-
-    delete m_gridSystem;
+    // the grid system copies these, so they can live on the stack
+    LC_GridSystem::LC_GridOptions gridOptions;
+    gridOptions.drawMetaGrid = drawMetaGrid;
+    gridOptions.simpleGridRendering = simpleGridRendering;
+    gridOptions.gridWidthPx = gridWidthPx;
+    gridOptions.gridLineType = gridLineType;
+    gridOptions.drawGrid = drawGrid;
+    gridOptions.drawLines = linesGrid;
+    gridOptions.gridColorPoint = gridColorPoint;
+    gridOptions.gridColorLine = gridColorLines;
+    gridOptions.metaGridLineWidthPx  = metaGridWidthPx;
+    gridOptions.metaGridLineType = metagridLineType;
+    gridOptions.metaGridColor = metaGridColor;
+    gridOptions.disableGridOnPanning = disableGridOnPanning;
+    gridOptions.drawIsometricVerticalsAlways = drawIsoVerticalForTop;
 
     if (m_isometric){
-        m_gridSystem = new LC_IsometricGrid(gridOptions, m_isoViewType);
+        m_gridSystem = std::make_unique<LC_IsometricGrid>(&gridOptions, m_isoViewType);
     }
     else{
-        m_gridSystem = new LC_OrthogonalGrid(gridOptions);
+        m_gridSystem = std::make_unique<LC_OrthogonalGrid>(&gridOptions);
     }
 }
 

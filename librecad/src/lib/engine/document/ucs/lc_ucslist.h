@@ -35,10 +35,15 @@ public:
 };
 
 
+/**
+ * The list owns every UCS it holds except the WCS, which m_wcs owns.
+ * add(), addNew() and tryAddUCS() take ownership of their argument: one the
+ * list does not keep (its name or geometry is already present) is deleted.
+ */
 class LC_UCSList{
 public:
     LC_UCSList();
-    virtual ~LC_UCSList() = default;
+    virtual ~LC_UCSList();
     void clear();
 
 /**
@@ -106,6 +111,8 @@ public:
     LC_UCS* getActive() const {return m_activeUCS;}
     void tryToSetActive(const LC_UCS *ucs);
 protected:
+    void deleteOwnedEntries();
+
     QList<LC_UCS *> m_ucsList;
     QList<LC_UCSListListener *> m_ucsListListeners;
     LC_UCS* m_activeUCS = nullptr;

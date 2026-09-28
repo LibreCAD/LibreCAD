@@ -2505,6 +2505,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/entities/tests/rs_text_alignment_tests.cpp
         librecad/src/lib/engine/document/container/tests/lc_container_ownership_tests.cpp
         librecad/src/lib/engine/document/container/tests/lc_copy_semantics_tests.cpp
+        librecad/src/lib/engine/document/ucs/tests/lc_ucslist_tests.cpp
         librecad/src/lib/engine/tests/rs_pen_tests.cpp
         librecad/src/lib/actions/tests/lc_snappercatchtests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_round_tests.cpp
@@ -2603,6 +2604,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/datastorage_tests.cpp
         librecad/src/lib/engine/settings/tests/rs_settings_migration_tests.cpp
         librecad/src/lib/gui/tests/rs_graphicview_close_tests.cpp
+        librecad/src/lib/gui/tests/rs_grid_tests.cpp
         librecad/src/lib/gui/tests/rs_painter_tests.cpp
         librecad/src/actions/drawing/draw/dimensions/tests/rs_actiondimleader_tests.cpp
         librecad/src/ui/dock_widgets/command_line/tests/qg_commandwidget_tests.cpp
