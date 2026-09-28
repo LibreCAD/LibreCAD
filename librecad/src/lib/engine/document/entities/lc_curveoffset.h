@@ -34,7 +34,8 @@
 #include "rs_vector.h"
 
 /**
- * Offsets of RS_Spline and LC_SplinePoints curves.
+ * Offsets of RS_Spline, LC_SplinePoints (LC_Parabola among them), bounded
+ * LC_Hyperbola and RS_Ellipse curves, whole ellipses and elliptic arcs.
  *
  * The offset of a curve C at signed distance d is Q(t) = C(t) + d N(t), with the
  * left unit normal N = (-C'y, C'x) / |C'|: a positive d lies to the left of the
@@ -296,8 +297,9 @@ inline constexpr std::size_t kDefaultMaxSamples = 65536;
 inline constexpr std::size_t kDefaultMaxOutputBranches = 256;
 inline constexpr std::size_t kDefaultMaxIntersectionPairs = std::size_t{1} << 20;
 
-/** Whether the entity is a curve the engine can offset: an RS_Spline or an
- *  LC_SplinePoints, subclasses included. */
+/** Whether the drawing tools offset the entity with the engine: an RS_Spline,
+ *  an LC_SplinePoints or an LC_Hyperbola, subclasses included (an unbounded
+ *  hyperbola is then refused as a source). */
 bool isSupportedSource(const RS_Entity& source);
 
 /**
