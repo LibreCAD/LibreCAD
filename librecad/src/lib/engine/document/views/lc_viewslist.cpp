@@ -22,12 +22,19 @@
 
 #include "lc_viewslist.h"
 
+#include <QtAlgorithms>
+
 LC_ViewList::LC_ViewList() {
     setModified(false);
 }
 
+LC_ViewList::~LC_ViewList() {
+    qDeleteAll(m_namedViews);
+}
+
 void LC_ViewList::clear() {
-    m_namedViews.clear(); // fixme - sand - shouldn't we delete items there???
+    qDeleteAll(m_namedViews);
+    m_namedViews.clear();
     setModified(false);
 }
 
@@ -36,10 +43,14 @@ void LC_ViewList::add(LC_View *view) {
         return;
     }
 
-    // check if layer already exists:
+    // check if view already exists:
     const LC_View *v = find(view->getName());
     if (v == nullptr) {
         m_namedViews.append(view);
+    }
+    else if (v != view) {
+        // the name is taken; we own view, so drop it
+        delete view;
     }
 }
 
@@ -48,11 +59,15 @@ void LC_ViewList::addNew(LC_View *view) {
         return;
     }
 
-    // check if layer already exists:
+    // check if view already exists:
     const LC_View *v = find(view->getName());
     if (v == nullptr) {
         m_namedViews.append(view);
         setModified(true);
+    }
+    else if (v != view) {
+        // the name is taken; we own view, so drop it
+        delete view;
     }
 }
 
