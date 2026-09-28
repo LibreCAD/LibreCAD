@@ -632,7 +632,22 @@ TEST_CASE("A spline refused by the engine is reported with the reason", "[curve-
 
     CHECK_FALSE(spline->isDeleted());
     REQUIRE(f.m_context.messages.size() == 1);
-    CHECK(f.m_context.messages.front().contains("no side"));
+    CHECK(f.m_context.messages.front().contains("the point does not show which side to offset to"));
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A reference point on a line, with a fixed distance, gives no side", "[offset][action]") {
+    OffsetFixture f;
+    RS_Line* line = f.add(new RS_Line(&f.m_graphic, RS_LineData{{0, 0}, {10, 0}}));
+    f.select({line});
+    f.start(3.0, false);
+    f.clickAt(5.0, 0.0); // on it: it used to go left
+
+    CHECK_FALSE(line->isDeleted());
+    CHECK(f.liveCount(RS2::EntityLine) == 1);
+    REQUIRE(f.m_context.messages.size() == 1);
+    CHECK(f.m_context.messages.front() ==
+          "1 of 1 selected entities could not be offset: the point does not show which side to offset to");
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
@@ -1251,6 +1266,7 @@ TEST_CASE("Offset segments leave the selection, and their polyline stays", "[off
 }
 
 TEST_CASE("A segment selected with its polyline fares as the polyline does", "[offset][polyline]") {
+    REQUIRE(lc::test::application() != nullptr); // RS_Graphic reads the settings, whichever test runs first
     RS_Graphic graphic;
     graphic.initForNewDocument();
     auto* polyline = new RS_Polyline(&graphic);

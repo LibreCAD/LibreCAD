@@ -161,7 +161,8 @@ QString LC_ActionModifyOffset::offsetFailureReason(const LC_OffsetSourceOutcome&
         case LC_CurveOffsetStatus::UnsupportedNonPlanar:
             return tr("it does not lie in the drawing plane");
         case LC_CurveOffsetStatus::AmbiguousSide:
-            return tr("the point is on the curve, so it gives no side");
+            // on the entity, or as near to sides that disagree
+            return tr("the point does not show which side to offset to");
         case LC_CurveOffsetStatus::UndefinedTangent:
             return tr("the curve does not move, or has a point where its direction cannot be found");
         case LC_CurveOffsetStatus::DiscontinuousNormal:

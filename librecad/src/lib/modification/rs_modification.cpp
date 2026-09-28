@@ -1294,6 +1294,53 @@ bool hasEllipticSegment(const RS_Polyline& polyline) {
     return std::any_of(polyline.begin(), polyline.end(),
                        [](const RS_Entity* child) { return child != nullptr && child->rtti() == RS2::EntityEllipse; });
 }
+
+/**
+ * The band, relative to the larger of a source's extent and the distance,
+ * within which an exact offset has nothing left: the curve-offset engine's
+ * tolerance and classification margin (lc_curveoffset.cpp, trimBranches()).
+ */
+constexpr double kOffsetVanishBand = 1.25e-6;
+
+/**
+ * Whether @p p lies on @p e, to rounding: on a line's infinite line, on a
+ * circle's or an arc's circle, on a polyline's nearest segment. Such a point
+ * gives no side. Only the types offset without the curve-offset engine,
+ * which judges its own sources, are known here.
+ */
+bool sideIsAmbiguous(const RS_Entity& e, const RS_Vector& p) {
+    if (!p.valid) {
+        return true;
+    }
+    const RS_Vector lo = e.getMin();
+    const RS_Vector hi = e.getMax();
+    const double extent = lo.valid && hi.valid ? lo.distanceTo(hi) : 0.0;
+    const double onIt = 1e-9 * std::max({1.0, p.magnitude(), extent});
+    switch (e.rtti()) {
+        case RS2::EntityLine: {
+            const RS_Vector a = e.getStartpoint();
+            const RS_Vector along = e.getEndpoint() - a;
+            const RS_Vector off = p - a;
+            const double length = std::hypot(along.x, along.y);
+            return length > 0.0 ? std::abs(along.x * off.y - along.y * off.x) / length <= onIt
+                                : p.distanceTo(a) <= onIt;
+        }
+        case RS2::EntityCircle:
+        case RS2::EntityArc:
+            return std::abs(p.distanceTo(e.getCenter()) - e.getRadius()) <= onIt;
+        case RS2::EntityPolyline:
+            for (const RS_Entity* child : static_cast<const RS_Polyline&>(e)) {
+                LC_OffsetSegment segment;
+                if (child != nullptr && makeOffsetSegment(*child, segment) &&
+                    pointSegmentDistance(p, segment) <= onIt) {
+                    return true;
+                }
+            }
+            return false;
+        default:
+            return false;
+    }
+}
 } // namespace
 
 LC_OffsetBatchLimits LC_OffsetBatchLimits::preview() {
@@ -1517,19 +1564,41 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcome(const RS_OffsetData& da
                 result.detail = LC_OffsetFailureDetail::EllipticSegments;
                 return LC_OffsetSourceStatus::OffsetFailed;
             }
+            // A point on the entity gives no side the user chose, and each
+            // type would settle it its own way (a line to the left, a circle
+            // inwards): the second click decides, and without one, nothing.
+            RS_Vector coord = data.coord;
+            if (sideIsAmbiguous(e, coord)) {
+                if (!data.sideFallback.valid || sideIsAmbiguous(e, data.sideFallback)) {
+                    result.engineStatus = LC_CurveOffsetStatus::AmbiguousSide;
+                    result.detail = LC_OffsetFailureDetail::AmbiguousSide;
+                    return LC_OffsetSourceStatus::OffsetFailed;
+                }
+                coord = data.sideFallback;
+            }
+            // Inwards, a circle or an arc has nothing left once its radius is
+            // within the band every exact offset vanishes in, relative to its size.
+            const bool circular = e.rtti() == RS2::EntityCircle || e.rtti() == RS2::EntityArc;
+            const bool inwards = circular && coord.distanceTo(e.getCenter()) < e.getRadius();
+            const double extent = e.getMin().valid && e.getMax().valid ? e.getMin().distanceTo(e.getMax()) : 0.0;
             for (int num = 1; num <= numberOfCopies; ++num) {
                 if (!isValidOffsetBudget(remainingBudget(budget, usage))) {
                     return LC_OffsetSourceStatus::LimitExceeded;
                 }
+                const double magnitude = std::abs(num * data.distance);
+                if (inwards && e.getRadius() - magnitude <= kOffsetVanishBand * std::max(extent, magnitude)) {
+                    result.stoppedBy = LC_OffsetSourceStatus::Vanished;
+                    break; // as it is at any larger distance inwards
+                }
                 std::vector<std::unique_ptr<RS_Entity>> copy;
                 // First try the type-changing path (e.g. ellipse → spline).
-                for (RS_Entity* off : e.createOffset(data.coord, num * data.distance)) {
+                for (RS_Entity* off : e.createOffset(coord, magnitude)) {
                     copy.emplace_back(off);
                 }
                 if (copy.empty()) {
                     // Fall back to the in-place clone+offset path.
                     std::unique_ptr<RS_Entity> clone{getClone(forPreviewOnly, &e)};
-                    if (!clone->offset(data.coord, num * data.distance)) {
+                    if (!clone->offset(coord, magnitude)) {
                         if (e.rtti() == RS2::EntityCircle || e.rtti() == RS2::EntityArc) {
                             result.stoppedBy = LC_OffsetSourceStatus::Vanished;
                             break; // the radius would vanish, as it does at any larger distance inwards
@@ -1543,8 +1612,8 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcome(const RS_OffsetData& da
                         // RS_Polyline::offset() joins neighbouring offsets and
                         // never trims a loop, and it always reports success:
                         // what it made is used only if it is a trimmed offset
-                        const LC_OffsetCheckReport check = checkLegacyPolylineOffset(
-                            *polyline, static_cast<const RS_Polyline&>(*clone), num * data.distance);
+                        const LC_OffsetCheckReport check =
+                            checkLegacyPolylineOffset(*polyline, static_cast<const RS_Polyline&>(*clone), magnitude);
                         if (check.verdict == LC_OffsetCheckVerdict::NothingLeft) {
                             result.stoppedBy = LC_OffsetSourceStatus::Vanished;
                             break; // shrunk past its size, as it is at any larger distance
@@ -1641,6 +1710,11 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcome(const RS_OffsetData& da
         }
         else if (!distancesFinite || !isValidOffsetBudget(limits.perSource)) {
             result.status = LC_OffsetSourceStatus::OffsetFailed;
+        }
+        else if (std::abs(data.distance) <= RS_TOLERANCE) {
+            // the distance is its size, whatever its sign; none makes a duplicate
+            result.status = LC_OffsetSourceStatus::OffsetFailed;
+            result.detail = LC_OffsetFailureDetail::InvalidDistance;
         }
         else if (requestDeepLeft == 0) {
             result.status = LC_OffsetSourceStatus::LimitExceeded; // not evaluated
