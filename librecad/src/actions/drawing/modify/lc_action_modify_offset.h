@@ -75,6 +75,10 @@ protected:
     void previewOffset();
     /** Why a source was not offset, for the command line and the info cursor. */
     static QString failureReason(const LC_OffsetSourceOutcome& source, bool preview);
+    /** Why a source that was offset got fewer copies than asked for. */
+    static QString stopReason(const LC_OffsetSourceOutcome& source);
+    /** Why an offset, or the copy that stopped a series, could not be made. */
+    static QString offsetFailureReason(const LC_OffsetSourceOutcome& source);
     /** Appearance/MaxPreview, read signed: a non-positive value means none in detail. */
     static std::size_t maxPreviewDetail();
     void finish() override;

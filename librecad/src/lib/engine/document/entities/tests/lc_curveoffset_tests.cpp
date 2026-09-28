@@ -1509,3 +1509,93 @@ TEST_CASE("A knot interval over which a spline stands still is skipped", "[curve
     }
     CHECK(materialize(uniform, LC_CurveOffsetSide::Right, 0.5).status == LC_CurveOffsetStatus::Ok);
 }
+
+namespace {
+/** The least radius of curvature of @p s over the source stretch [lo, hi]. */
+double minRadiusOfCurvature(const LC_SplinePoints& s, const double lo, const double hi, const int samples) {
+    double best = RS_MAXDOUBLE;
+    for (int i = 0; i <= samples; ++i) {
+        const double t = lo + (hi - lo) * i / samples;
+        LC_CurveJet j;
+        if (!s.tryEvaluateJet(t, LC_CurveEvaluationSide::Interior, j)) {
+            continue;
+        }
+        const double speed = j.first.magnitude();
+        const double turn = std::abs(j.first.x * j.second.y - j.first.y * j.second.x);
+        if (turn > 0.0) {
+            best = std::min(best, speed * speed * speed / turn);
+        }
+    }
+    return best;
+}
+} // namespace
+
+TEST_CASE("Three or more corners trimmed past their cusp distance in the same offset stay symmetric",
+          "[curve-offset][cusp][closed]") {
+    // removeLocalLoops resolves each trimmed corner's reversed loop in turn; a
+    // closed source needing only one or two corners trimmed (an ellipse's two
+    // vertices, say) is well covered elsewhere, but a source needing three or
+    // more forces the loop to fall back, more than once in a row, on the
+    // narrower "ring" resolution (the previous corner's own branches, merged
+    // into one, aliased as both neighbours of the next). A regular n-gon spun
+    // out of a closed LC_SplinePoints, offset past every vertex's own radius of
+    // curvature at once, is n-fold symmetric by construction; nothing in how
+    // removeLocalLoops walks and merges its branch list (in array order, not
+    // geometric order) is symmetric, so a wrongly-bounded search that only
+    // happens to work for one or two corners would show up here as a corner
+    // that lands somewhere other than its expected rotation of the others.
+    for (const int n : {3, 4, 5, 6, 7}) {
+        INFO("n " << n);
+        const double R = 20.0;
+        std::vector<RS_Vector> controls;
+        for (int i = 0; i < n; ++i) {
+            const double angle = 2.0 * M_PI * i / n;
+            controls.push_back(RS_Vector{R * std::cos(angle), R * std::sin(angle)});
+        }
+        const LC_SplinePoints polygon = fromControlPoints(controls, true);
+        double tightest = RS_MAXDOUBLE;
+        for (int i = 0; i < n; ++i) {
+            tightest = std::min(tightest, minRadiusOfCurvature(polygon, i - 0.45, i + 0.45, 2000));
+        }
+        // comfortably past every vertex's own cusp distance, well short of
+        // where the whole shape shrinks away
+        const double d = tightest * 1.05;
+        INFO("d " << d << " tightest " << tightest);
+        const LC_CurveOffsetOptions options = LC_CurveOffset::makeOffsetOptions(polygon, d);
+        const LC_CurveOffsetGeometryResult result = LC_CurveOffset::buildDirectBranches(
+            polygon, LC_CurveOffset::makeDirectionRequest(RS_Vector{0.0, 0.0}, d), options,
+            LC_CurveOffset::makeDirectSourceBudget());
+        REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+        // every one of the n loops removed: (n - 1) ordinary merges and, forced
+        // by the last one, a single ring resolution, three pieces each
+        CHECK(result.removedIntervals == static_cast<std::size_t>(3 * n));
+        REQUIRE(result.branches.size() == 1);
+        const LC_OffsetBranch& branch = result.branches.front();
+        CHECK(branch.closed);
+        // the corners: consecutive pieces whose source parameters do not run
+        // on, save for the closed source's own seam (t = n wrapping to t = 0,
+        // the same physical point, not a corner)
+        std::vector<RS_Vector> corners;
+        const size_t m = branch.cubicPieces.size();
+        for (size_t k = 0; k < m; ++k) {
+            const LC_OffsetCubicPiece& piece = branch.cubicPieces[k];
+            const LC_OffsetCubicPiece& next = branch.cubicPieces[(k + 1) % m];
+            const bool seam =
+                piece.provenance.sourceT1 == static_cast<double>(n) && next.provenance.sourceT0 == 0.0;
+            if (piece.provenance.sourceT1 != next.provenance.sourceT0 && !seam) {
+                corners.push_back(piece.bezier[3]);
+            }
+        }
+        REQUIRE(corners.size() == static_cast<size_t>(n));
+        // every corner, rotated by one n-th of a turn, lands on another
+        const double step = 2.0 * M_PI / n;
+        for (const RS_Vector& c : corners) {
+            const RS_Vector rotated = c.rotated(step);
+            double nearest = RS_MAXDOUBLE;
+            for (const RS_Vector& other : corners) {
+                nearest = std::min(nearest, rotated.distanceTo(other));
+            }
+            CHECK(nearest < 1e-6 * R);
+        }
+    }
+}

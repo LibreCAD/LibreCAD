@@ -546,7 +546,11 @@ RS_Polyline* LC_ActionDrawRectangleAbstract::createPolylineByVertexes(const RS_V
         polyline->addVertex(bottomRightCorner);
         polyline->addVertex(topRightCorner);
         polyline->addVertex(topLeftCorner);
-        polyline->addVertex(bottomLeftCorner);
+        // closed by its flag and the segment back to the first corner, as the
+        // simple and 3-point rectangles are: a last vertex on the start would
+        // leave it open, and its offset open at that corner
+        polyline->setClosed(true);
+        polyline->endPolyline();
     }
     return polyline;
 }

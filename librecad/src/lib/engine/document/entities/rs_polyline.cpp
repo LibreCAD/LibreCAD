@@ -425,7 +425,8 @@ RS_Vector RS_Polyline::doGetNearestSelectedRef(const RS_Vector& coord, double* d
   *@Author, Dongxu Li
   */
 bool RS_Polyline::offset(const RS_Vector& coord, double distance) {
-    double dist;
+    // getNearestEntity() reads it as the distance to beat
+    double dist = RS_MAXDOUBLE;
     //find the nearest one
     int length = count();
     std::vector<RS_Vector> intersections(length);

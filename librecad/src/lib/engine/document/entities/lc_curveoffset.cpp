@@ -32,6 +32,7 @@
 #include "lc_curvejet.h"
 #include "lc_hyperbola.h"
 #include "lc_splinepoints.h"
+#include "rs_ellipse.h"
 #include "rs_line.h"
 #include "rs_spline.h"
 
@@ -93,7 +94,18 @@ public:
     virtual bool cubicSpans() const {
         return false;
     }
+    /**
+     * True when nothing of the curve is left at @p signedDistance (positive to
+     * its left), to within @p band: a closed curve shrunk by its inradius or
+     * more. Known in closed form only for some curves; false where it is not.
+     */
+    virtual bool shrinksAway([[maybe_unused]] const double signedDistance, [[maybe_unused]] const double band) const {
+        return false;
+    }
 };
+
+/** cos over [a, b], rounded outward. */
+LC_Interval boundCos(double a, double b);
 
 class SplineSource final : public OffsetSource {
 public:
@@ -333,6 +345,236 @@ private:
     std::vector<RS_Vector> m_hull;
 };
 
+/**
+ * An ellipse or an elliptic arc, in its own parameter eta:
+ *   P(eta) = centre + M cos eta + m sin eta,
+ * with M the major axis vector (majorP) and m the minor one, a quarter turn
+ * from M scaled by the ratio, as RS_Ellipse::getEllipsePoint() has it.
+ * Neither is assumed the longer: an import may leave a ratio above 1. The
+ * adapter's parameter t >= 0 runs the way the curve does, eta = eta0 + s t,
+ * with s = -1 for a reversed one; a whole ellipse runs from eta0 = pi/4 over
+ * 2 pi. Its spans end at eta = pi/4 + k pi/2, between the vertices: an
+ * inward offset stalls at a vertex at the distance b^2/a, and a stall there
+ * must not fall on a join of spans. The derivatives are exact, and the
+ * bounds come from those of cos and sin over the interval.
+ */
+class EllipseSource final : public OffsetSource {
+public:
+    static std::unique_ptr<OffsetSource> make(const RS_Ellipse& ellipse) {
+        const RS_EllipseData& d = ellipse.getData();
+        const RS_Vector major{d.majorP.x, d.majorP.y};
+        const RS_Vector minor = RS_Vector{-d.majorP.y, d.majorP.x} * d.ratio;
+        if (!isFinite(d.center) || !isFinite(major) || !std::isfinite(d.ratio) || !(d.ratio > 0.0) ||
+            !(std::hypot(major.x, major.y) > 0.0) || !(std::hypot(minor.x, minor.y) > 0.0)) {
+            return nullptr;
+        }
+        const double s = d.reversed ? -1.0 : 1.0;
+        double start = M_PI_4;
+        double sweep = 2.0 * M_PI;
+        const bool closed = !ellipse.isEllipticArc();
+        if (!closed) {
+            // as RS_Ellipse keeps an arc: from angle1 towards angle2, the way it runs
+            start = d.angle1;
+            double end = d.angle2;
+            if (d.reversed) {
+                if (end > start) {
+                    end -= 2.0 * M_PI;
+                }
+            }
+            else if (end < start) {
+                end += 2.0 * M_PI;
+            }
+            sweep = std::min(std::abs(end - start), 2.0 * M_PI);
+            if (!std::isfinite(start) || !(sweep > RS_TOLERANCE_ANGLE)) {
+                return nullptr;
+            }
+        }
+        return std::unique_ptr<OffsetSource>(new EllipseSource(d.center, major, minor, s, start, sweep, closed));
+    }
+
+    bool closed() const override {
+        return m_closed;
+    }
+
+    const std::vector<double>& breaks() const override {
+        return m_breaks;
+    }
+
+    bool jet(double t, const LC_CurveEvaluationSide, LC_CurveJet& out) const override {
+        out = LC_CurveJet{};
+        if (!(t >= m_breaks.front() && t <= m_breaks.back())) {
+            return false;
+        }
+        if (m_closed && t == m_breaks.back()) {
+            t = m_breaks.front(); // the seam is one point
+        }
+        const double eta = m_start + m_s * t;
+        const double c = std::cos(eta);
+        const double sn = std::sin(eta);
+        out.point = m_centre + m_major * c + m_minor * sn;
+        out.first = (m_minor * c - m_major * sn) * m_s;
+        out.second = (m_major * c + m_minor * sn) * -1.0;
+        return isFinite(out.point) && isFinite(out.first) && isFinite(out.second);
+    }
+
+    bool boundJet(const double a, const double b, LC_CurveJetBounds& out) const override {
+        out = LC_CurveJetBounds{};
+        LC_Interval c;
+        LC_Interval sn;
+        if (!trigBounds(a, b, c, sn)) {
+            return false;
+        }
+        const auto along = [](const double p, const double q, const LC_Interval& u, const LC_Interval& v) {
+            return LC_Interval::point(p) * u + LC_Interval::point(q) * v;
+        };
+        const LC_Interval s = LC_Interval::point(m_s);
+        out.x = LC_Interval::point(m_centre.x) + along(m_major.x, m_minor.x, c, sn);
+        out.y = LC_Interval::point(m_centre.y) + along(m_major.y, m_minor.y, c, sn);
+        out.dx = s * along(-m_major.x, m_minor.x, sn, c);
+        out.dy = s * along(-m_major.y, m_minor.y, sn, c);
+        out.ddx = -along(m_major.x, m_minor.x, c, sn);
+        out.ddy = -along(m_major.y, m_minor.y, c, sn);
+        return out.isValid();
+    }
+
+    bool boundJetWithProducts(const double a, const double b, LC_CurveJetBounds& out) const override {
+        if (!boundJet(a, b, out)) {
+            return false;
+        }
+        LC_Interval c;
+        LC_Interval sn;
+        trigBounds(a, b, c, sn);
+        const LC_Interval mx = LC_Interval::point(m_major.x);
+        const LC_Interval my = LC_Interval::point(m_major.y);
+        const LC_Interval nx = LC_Interval::point(m_minor.x);
+        const LC_Interval ny = LC_Interval::point(m_minor.y);
+        // C' x C'' = s (M x m) whatever eta is; |C'|^2 = |m|^2 + (|M|^2 - |m|^2) sin^2 - 2 (M.m) sin cos,
+        // whose last term vanishes but for the rounding of m
+        out.crossProduct = LC_Interval::point(m_s) * (mx * ny - my * nx);
+        const LC_Interval majorSquared = sqr(mx) + sqr(my);
+        const LC_Interval minorSquared = sqr(nx) + sqr(ny);
+        out.speedSquaredProduct = minorSquared + (majorSquared - minorSquared) * sqr(sn) -
+                                  LC_Interval::point(2.0) * (mx * nx + my * ny) * (sn * c);
+        return out.isValid();
+    }
+
+    const std::vector<RS_Vector>& hull() const override {
+        return m_hull;
+    }
+
+    bool straightSegment(RS_Vector&, RS_Vector&) const override {
+        return false;
+    }
+
+    bool shrinksAway(const double signedDistance, const double band) const override {
+        if (!m_closed) {
+            return false;
+        }
+        // the inside is on the left of an ellipse that runs anticlockwise
+        const bool inwards = (signedDistance > 0.0) == (m_s * cross(m_major, m_minor) > 0.0);
+        if (!inwards) {
+            return false;
+        }
+        const double axis1 = std::hypot(m_major.x, m_major.y);
+        const double axis2 = std::hypot(m_minor.x, m_minor.y);
+        const double a = std::max(axis1, axis2);
+        const double b = std::min(axis1, axis2); // the minor semi-axis
+        const double d = std::abs(signedDistance);
+        if (d >= b) {
+            return true; // at or past the true vanishing distance: nothing at all is left
+        }
+        if (d < b * b / a) {
+            return false; // below the cusp: an untrimmed, full-sized offset survives
+        }
+        // Between the cusp and b the offset is trimmed to a closed curve with
+        // corners on the major axis, whose own half-extent there - not how
+        // close d is to b - measures how much survives: it is this, not d
+        // itself, that a highly eccentric ellipse's offset can still be large
+        // at even when d is a hair below b (A3 finding: a fixed band on d
+        // wrongly called a large surviving curve fully shrunk away).
+        const double half = std::sqrt((a - b) * (a + b)) * std::sqrt(std::max(0.0, 1.0 - (d / b) * (d / b)));
+        return half <= band;
+    }
+
+private:
+    EllipseSource(const RS_Vector& centre, const RS_Vector& major, const RS_Vector& minor, const double s,
+                  const double start, const double sweep, const bool closed)
+        : m_centre{centre.x, centre.y},
+          m_major{major},
+          m_minor{minor},
+          m_s{s},
+          m_start{start},
+          m_closed{closed} {
+        // the ends, and where eta crosses pi/4 + k pi/2 in between
+        m_breaks.push_back(0.0);
+        const double quarter = M_PI_2;
+        double first = std::fmod(s * (M_PI_4 - start), quarter);
+        if (first < 0.0) {
+            first += quarter;
+        }
+        const double margin = 1e-9 * std::max(1.0, sweep);
+        for (double t = first; t < sweep - margin; t += quarter) {
+            if (t > margin) {
+                m_breaks.push_back(t);
+            }
+        }
+        m_breaks.push_back(sweep);
+        // the corners of its exact box, padded for rounding
+        RS_Vector lo{false};
+        RS_Vector hi{false};
+        const auto include = [&](const double eta) {
+            const RS_Vector p = m_centre + m_major * std::cos(eta) + m_minor * std::sin(eta);
+            lo = lo.valid ? RS_Vector::minimum(lo, p) : p;
+            hi = hi.valid ? RS_Vector::maximum(hi, p) : p;
+        };
+        include(start);
+        include(start + s * sweep);
+        // where x or y is extreme: tan eta = m.x / M.x, m.y / M.y
+        for (const double base : {std::atan2(minor.x, major.x), std::atan2(minor.y, major.y)}) {
+            for (const double eta : {base, base + M_PI}) {
+                double along = std::fmod(s * (eta - start), 2.0 * M_PI);
+                if (along < 0.0) {
+                    along += 2.0 * M_PI;
+                }
+                if (closed || along <= sweep) {
+                    include(eta);
+                }
+            }
+        }
+        const double pad = 64.0 * g_eps *
+                           (std::abs(m_centre.x) + std::abs(m_centre.y) + std::hypot(major.x, major.y) +
+                            std::hypot(minor.x, minor.y));
+        lo = lo - RS_Vector{pad, pad};
+        hi = hi + RS_Vector{pad, pad};
+        m_hull = {{lo.x, lo.y}, {hi.x, lo.y}, {hi.x, hi.y}, {lo.x, hi.y}};
+    }
+
+    /** cos and sin of eta over the adapter's [a, b], rounded outward. */
+    bool trigBounds(const double a, const double b, LC_Interval& c, LC_Interval& sn) const {
+        if (!(a < b) || a < m_breaks.front() || b > m_breaks.back()) {
+            return false;
+        }
+        const double ea = m_start + m_s * a;
+        const double eb = m_start + m_s * b;
+        // eta itself is rounded: widen it by a few ulps of its size
+        const double slack = 4.0 * g_eps * std::max({1.0, std::abs(ea), std::abs(eb)});
+        const double lo = std::min(ea, eb) - slack;
+        const double hi = std::max(ea, eb) + slack;
+        c = boundCos(lo, hi);
+        sn = boundCos(lo - M_PI_2, hi - M_PI_2); // sin eta = cos(eta - pi/2)
+        return true;
+    }
+
+    RS_Vector m_centre;
+    RS_Vector m_major;
+    RS_Vector m_minor;
+    double m_s{1.0};
+    double m_start{0.0};
+    bool m_closed{false};
+    std::vector<double> m_breaks;
+    std::vector<RS_Vector> m_hull;
+};
+
 std::unique_ptr<OffsetSource> makeSource(const RS_Entity& entity) {
     if (const auto* spline = dynamic_cast<const RS_Spline*>(&entity)) {
         return std::make_unique<SplineSource>(*spline);
@@ -342,6 +584,9 @@ std::unique_ptr<OffsetSource> makeSource(const RS_Entity& entity) {
     }
     if (const auto* hyperbola = dynamic_cast<const LC_Hyperbola*>(&entity)) {
         return HyperbolaSource::make(*hyperbola);
+    }
+    if (const auto* ellipse = dynamic_cast<const RS_Ellipse*>(&entity)) {
+        return EllipseSource::make(*ellipse);
     }
     return nullptr;
 }
@@ -3349,9 +3594,28 @@ Visibility visibility(const OffsetSource& source, const std::vector<std::pair<do
 LC_CurveOffsetStatus removeLocalLoops(const OffsetSource& source, const double d, const double speedFloor,
                                       const LC_CurveOffsetOptions& options, std::vector<LC_OffsetBranch>& branches,
                                       std::size_t& removed) {
+    // A closed source's own domain wraps: a piece ending exactly at
+    // breaks().back() runs on, without a gap, into one starting at
+    // breaks().front() (the same seam OffsetCurves's own "shift" continues
+    // past, in buildDirectBranches). Kept 0 for an open source, where no
+    // stretch or parameter ever legitimately reaches either end.
+    const double period = source.closed() ? source.breaks().back() - source.breaks().front() : 0.0;
+    // a parameter stretch() carried past the seam, brought back into the
+    // source's own domain so it can be evaluated, or compared to a piece
+    const auto wrapSeam = [&source, period](double t) {
+        if (period > 0.0 && (t < source.breaks().front() || t > source.breaks().back())) {
+            t = source.breaks().front() + std::fmod(t - source.breaks().front(), period);
+            if (t < source.breaks().front()) {
+                t += period;
+            }
+        }
+        return t;
+    };
     // the source parameters of a branch's offset pieces next to one end, as long
-    // as they run on without a gap or a corner
-    const auto stretch = [](const LC_OffsetBranch& branch, const bool atEnd, double& from, double& to) {
+    // as they run on without a gap or a corner; continued, for a closed source,
+    // past its own seam rather than stopping there like any other gap
+    const auto stretch = [&source, period](const LC_OffsetBranch& branch, const bool atEnd, double& from,
+                                           double& to) {
         const std::vector<LC_OffsetCubicPiece>& pieces = branch.cubicPieces;
         const size_t n = pieces.size();
         const LC_OffsetCubicPiece& first = atEnd ? pieces[n - 1] : pieces[0];
@@ -3360,17 +3624,37 @@ LC_CurveOffsetStatus removeLocalLoops(const OffsetSource& source, const double d
         }
         from = first.provenance.sourceT0;
         to = first.provenance.sourceT1;
+        double shift = 0.0;
         for (size_t k = 1; k < n; ++k) {
             const LC_OffsetBranchProvenance& p = pieces[atEnd ? n - 1 - k : k].provenance;
-            if (p.arcCentre.valid || (atEnd ? p.sourceT1 != from : p.sourceT0 != to)) {
+            if (p.arcCentre.valid) {
                 break;
             }
-            (atEnd ? from : to) = atEnd ? p.sourceT0 : p.sourceT1;
+            if (atEnd) {
+                double t1 = p.sourceT1 + shift;
+                if (t1 != from) {
+                    if (!(period > 0.0 && from == source.breaks().front() && p.sourceT1 == source.breaks().back())) {
+                        break;
+                    }
+                    shift -= period;
+                }
+                from = p.sourceT0 + shift;
+            }
+            else {
+                double t0 = p.sourceT0 + shift;
+                if (t0 != to) {
+                    if (!(period > 0.0 && to == source.breaks().back() && p.sourceT0 == source.breaks().front())) {
+                        break;
+                    }
+                    shift += period;
+                }
+                to = p.sourceT1 + shift;
+            }
         }
         return true;
     };
     const auto offsetAt = [&](const double t, OffsetJet& q) {
-        return computeOffsetJet(source, d, speedFloor, t, LC_CurveEvaluationSide::Interior, q) ==
+        return computeOffsetJet(source, d, speedFloor, wrapSeam(t), LC_CurveEvaluationSide::Interior, q) ==
                LC_CurveOffsetStatus::Ok;
     };
     // the nearest point of the stretch [lo, hi] to p: the nearest of samples
@@ -3585,6 +3869,39 @@ LC_CurveOffsetStatus removeLocalLoops(const OffsetSource& source, const double d
                 loT = t;
             }
         }
+        // The forward pass above walks outward from the cusp at b0 in doubling
+        // steps; its very last pre-cap sample necessarily lands near the middle of
+        // [b0,b1], and the next (over-)step clips straight to b1. In the ring
+        // (before == after) resolution, b1 can itself be the exact point where a
+        // already runs out (the earlier loop's own splice, seen from this
+        // branch's far end), so sideAt(b1) is NaN and the forward pass gives up
+        // there -- even when the true crossing sits well inside [b0,b1], past
+        // that last sample. Mirror the same doubling idea from b1 inward, seeded
+        // with the sign the forward pass already established; this never looks
+        // outside [b0,b1]. Confined to the ring case, where this specific gap is
+        // known to occur - the ordinary (two-distinct-branch) path already has
+        // its full, un-consumed stretch on both sides and doesn't need it.
+        if (before == after && !found && sign != 0.0 && lo < b1) {
+            double t2 = t;
+            const double first2 = std::max(std::ldexp(b1 - lo, -40), 4.0 * options.tolerance.parameter);
+            for (double reach = first2; !found && reach < 2.0 * (b1 - lo); reach *= 2.0) {
+                const double u = std::max(lo, b1 - reach);
+                if (u >= b1) {
+                    continue;
+                }
+                RS_Vector point;
+                const double side = sideAt(u, t2, point);
+                if (std::isnan(side) || std::abs(side) <= options.tolerance.evaluation) {
+                    continue; // degenerate or too near to tell; widen reach and try again
+                }
+                if (std::signbit(side) != std::signbit(sign)) {
+                    hi = u;
+                    found = true;
+                }
+                // a same-signed sample here is farther from `lo` than `lo` already
+                // is, so it is discarded rather than used to move `lo` outward.
+            }
+        }
         const bool below = !found && !std::isnan(nearU) && sign != 0.0;
         if (!found && !below) {
             continue;
@@ -3668,7 +3985,7 @@ LC_CurveOffsetStatus removeLocalLoops(const OffsetSource& source, const double d
         if (before == after) {
             // the only other branch runs out of the loop and back into it: a ring
             LC_OffsetBranch ring = a;
-            if (!cut(ring, t, qa, true) || !cut(ring, u, qb, false)) {
+            if (!cut(ring, wrapSeam(t), qa, true) || !cut(ring, wrapSeam(u), qb, false)) {
                 continue;
             }
             ring.closed = true;
@@ -3680,7 +3997,7 @@ LC_CurveOffsetStatus removeLocalLoops(const OffsetSource& source, const double d
         }
         LC_OffsetBranch front = a;
         LC_OffsetBranch back = b;
-        if (!cut(front, t, qa, true) || !cut(back, u, qb, false)) {
+        if (!cut(front, wrapSeam(t), qa, true) || !cut(back, wrapSeam(u), qb, false)) {
             continue;
         }
         removed += 3; // the loop and its two wings
@@ -4633,7 +4950,7 @@ namespace LC_CurveOffset {
 bool isSupportedSource(const RS_Entity& source) {
     return dynamic_cast<const RS_Spline*>(&source) != nullptr ||
            dynamic_cast<const LC_SplinePoints*>(&source) != nullptr ||
-           dynamic_cast<const LC_Hyperbola*>(&source) != nullptr;
+           dynamic_cast<const LC_Hyperbola*>(&source) != nullptr || dynamic_cast<const RS_Ellipse*>(&source) != nullptr;
 }
 
 LC_CurveOffsetOptions makeDirectOptions(const RS_Entity& source, const double distanceMagnitude,
@@ -4644,9 +4961,10 @@ LC_CurveOffsetOptions makeDirectOptions(const RS_Entity& source, const double di
         !computeScale(*adapter, distanceMagnitude, scale) || adapter->breaks().size() < 2) {
         return {};
     }
-    const double requested = (requestedTolerance > 0.0)
-                                 ? requestedTolerance
-                                 : std::max(kDefaultRelativeOffsetTolerance * scale.feature, scale.numericFloor);
+    const double relative = dynamic_cast<const RS_Ellipse*>(&source) != nullptr ? kEllipseRelativeOffsetTolerance
+                                                                                 : kDefaultRelativeOffsetTolerance;
+    const double requested = (requestedTolerance > 0.0) ? requestedTolerance
+                                                        : std::max(relative * scale.feature, scale.numericFloor);
     if (!std::isfinite(requested) || !(requested > scale.numericFloor)) {
         return {}; // no tolerance the arithmetic can honour at this scale
     }
@@ -4817,6 +5135,16 @@ LC_CurveOffsetGeometryResult buildDirectBranches(const RS_Entity& source, const 
     }
     const double d = (side == LC_CurveOffsetSide::Left) ? request.distanceMagnitude : -request.distanceMagnitude;
     result.signedDistance = d;
+    const bool trimmed = options.mode == LC_CurveOffsetMode::Trimmed;
+    // Shrunk by its inradius or more, a closed curve has nothing left; within
+    // the band trimming decides in, as it does. Asked of the curve itself: a
+    // near-circle shrunk by about its radius barely moves anywhere, and the
+    // offset could not be proved regular in any number of boxes.
+    if (trimmed &&
+        adapter->shrinksAway(d, options.tolerance.requestedGeometry + options.tolerance.classification)) {
+        result.status = LC_CurveOffsetStatus::Ok;
+        return result;
+    }
 
     const std::vector<double>& breaks = curve.breaks();
     const double speedFloor = scale.numericFloor / (breaks.back() - breaks.front());
@@ -4825,7 +5153,6 @@ LC_CurveOffsetGeometryResult buildDirectBranches(const RS_Entity& source, const 
     LC_CurveOffsetStatus status =
         directBranches(curve, scale, d, options, budget, KinkPolicy::Round, branches, maxError,
                        result.exactSamples);
-    const bool trimmed = options.mode == LC_CurveOffsetMode::Trimmed;
     if (status == LC_CurveOffsetStatus::Ok && trimmed) {
         std::size_t removed = 0;
         status = removeLocalLoops(curve, d, speedFloor, options, branches, removed);

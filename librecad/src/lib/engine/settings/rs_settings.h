@@ -217,7 +217,7 @@ public:
     QStringList getAllKeys() const;
     QStringList getChildKeys() const;
 
-    void remove(const QString &key) const;
+    void remove(const QString &key);
 
 signals:
     void optionChanged(const QString& groupName, const QString &propertyName, QVariant oldValue, QVariant newValue);

@@ -29,8 +29,10 @@
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers_floating_point.hpp>
 
+#include "lc_curveoffset.h"
 #include "lc_splinepoints.h"
 #include "rs_ellipse.h"
+#include "rs_spline.h"
 #include "rs_line.h"
 #include "rs_vector.h"
 #include "rs_math.h"  // For M_PI if needed
@@ -584,24 +586,44 @@ TEST_CASE("Elliptic arc segment area", "[rs_ellipse]") {
 namespace {
 
 // Helper: signed distance from `p` to the ellipse, positive outside the
-// ellipse and negative inside. Uses brute-force sampling because
+// ellipse and negative inside. Brute-force sampling, refined by a ternary
+// search about the nearest sample, because
 // RS_Ellipse::getNearestPointOnEntity occasionally returns a far-side point
 // for query points strictly inside the ellipse.
 double signedDistanceToEllipse(const RS_Ellipse& ellipse, const RS_Vector& p) {
     const double a = ellipse.getMajorRadius();
     const double b = ellipse.getMinorRadius();
     const double majorAngle = ellipse.getMajorP().angle();
-
-    constexpr int kSamples = 4000;
-    double best = std::numeric_limits<double>::infinity();
-    for (int i = 0; i < kSamples; ++i) {
-        const double t = (2.0 * M_PI * i) / kSamples;
+    const auto at = [&](const double t) {
         RS_Vector q(a * std::cos(t), b * std::sin(t));
         q.rotate(majorAngle);
         q += ellipse.getCenter();
-        const double d = q.distanceTo(p);
-        if (d < best) best = d;
+        return q;
+    };
+
+    constexpr int kSamples = 4000;
+    double best = std::numeric_limits<double>::infinity();
+    int nearest = 0;
+    for (int i = 0; i < kSamples; ++i) {
+        const double d = at((2.0 * M_PI * i) / kSamples).distanceTo(p);
+        if (d < best) {
+            best = d;
+            nearest = i;
+        }
     }
+    double lo = 2.0 * M_PI * (nearest - 1) / kSamples;
+    double hi = 2.0 * M_PI * (nearest + 1) / kSamples;
+    for (int k = 0; k < 200; ++k) {
+        const double u = lo + (hi - lo) / 3.0;
+        const double v = hi - (hi - lo) / 3.0;
+        if (at(u).distanceTo(p) < at(v).distanceTo(p)) {
+            hi = v;
+        }
+        else {
+            lo = u;
+        }
+    }
+    best = std::min(best, at(0.5 * (lo + hi)).distanceTo(p));
 
     // Sign from the implicit form in the local frame.
     RS_Vector local = p - ellipse.getCenter();
@@ -610,88 +632,118 @@ double signedDistanceToEllipse(const RS_Ellipse& ellipse, const RS_Vector& p) {
     return (quad >= 1.0) ? best : -best;
 }
 
+/** The one spline @p offsets holds, with its parameter domain. */
+const RS_Spline& onlySpline(const std::vector<RS_Entity*>& offsets, double& t0, double& t1) {
+    REQUIRE(offsets.size() == 1);
+    const auto* spline = dynamic_cast<const RS_Spline*>(offsets.front());
+    REQUIRE(spline != nullptr);
+    REQUIRE(spline->getParameterDomain(t0, t1));
+    return *spline;
+}
+
+RS_Vector splinePoint(const RS_Spline& spline, const double t) {
+    LC_CurveJet jet;
+    REQUIRE(spline.tryEvaluateJet(t, LC_CurveEvaluationSide::Interior, jet));
+    return jet.point;
+}
+
+/** Every sampled point of @p spline at @p signedDistance from the ellipse, within @p tolerance. */
+void checkAtDistance(const RS_Ellipse& ellipse, const RS_Spline& spline, const double t0, const double t1,
+                     const double signedDistance, const double tolerance) {
+    for (int k = 0; k <= 400; ++k) {
+        const RS_Vector q = splinePoint(spline, t0 + (t1 - t0) * k / 400.0);
+        REQUIRE_THAT(signedDistanceToEllipse(ellipse, q), Catch::Matchers::WithinAbs(signedDistance, tolerance));
+    }
+}
+
+/** The geometric tolerance the engine offsets @p ellipse to at @p distance, doubled. */
+double twiceTolerance(const RS_Ellipse& ellipse, const double distance) {
+    return 2.0 * LC_CurveOffset::makeOffsetOptions(ellipse, distance).tolerance.requestedGeometry;
+}
+
 } // namespace
 
-TEST_CASE("RS_Ellipse::createOffset full ellipse outward") {
+TEST_CASE("RS_Ellipse::createOffset full ellipse outward", "[curve-offset][ellipse]") {
     RS_Ellipse ellipse(nullptr, {RS_Vector(0,0), RS_Vector(5,0), 0.4, 0.0, 0.0, false});
     const double d = 1.0;
     const RS_Vector outsidePoint(20.0, 0.0);
 
     auto offsets = ellipse.createOffset(outsidePoint, d);
-    REQUIRE(offsets.size() == 1);
-    auto* sp = dynamic_cast<LC_SplinePoints*>(offsets.front());
-    REQUIRE(sp != nullptr);
-    REQUIRE(sp->isClosed());
-
-    const auto& pts = sp->getPoints();
-    REQUIRE(pts.size() >= 16);
-
-    // Each spline point should sit at the requested distance from the source
-    // ellipse, on the outside. Allow looser tolerance than the planning
-    // 0.1% target because the chord-error budget bites at the major-axis
-    // tips (high curvature region) for eccentric ellipses.
-    for (const auto& q : pts) {
-        const double s = signedDistanceToEllipse(ellipse, q);
-        REQUIRE_THAT(s, Catch::Matchers::WithinAbs(d, 5.0e-2));
-    }
+    double t0 = 0.0;
+    double t1 = 0.0;
+    const RS_Spline& spline = onlySpline(offsets, t0, t1);
+    const double tolerance = twiceTolerance(ellipse, d);
+    // an open-typed spline whose ends meet
+    CHECK_FALSE(spline.isClosed());
+    CHECK(splinePoint(spline, t0).distanceTo(splinePoint(spline, t1)) <= tolerance);
+    checkAtDistance(ellipse, spline, t0, t1, d, tolerance);
 
     for (auto* o : offsets) delete o;
 }
 
-TEST_CASE("RS_Ellipse::createOffset full ellipse inward") {
+TEST_CASE("RS_Ellipse::createOffset full ellipse inward", "[curve-offset][ellipse]") {
     RS_Ellipse ellipse(nullptr, {RS_Vector(0,0), RS_Vector(5,0), 0.4, 0.0, 0.0, false});
-    const double d = 0.5;  // safely below cusp limit b^2/a = (2)^2/5 = 0.8
+    const double d = 0.5;  // below the cusp limit b^2/a = (2)^2/5 = 0.8
     const RS_Vector insidePoint(0.0, 0.0);
 
     auto offsets = ellipse.createOffset(insidePoint, d);
-    REQUIRE(offsets.size() == 1);
-    auto* sp = dynamic_cast<LC_SplinePoints*>(offsets.front());
-    REQUIRE(sp != nullptr);
-
-    for (const auto& q : sp->getPoints()) {
-        const double s = signedDistanceToEllipse(ellipse, q);
-        REQUIRE_THAT(s, Catch::Matchers::WithinAbs(-d, 5.0e-2));
-    }
+    double t0 = 0.0;
+    double t1 = 0.0;
+    const RS_Spline& spline = onlySpline(offsets, t0, t1);
+    checkAtDistance(ellipse, spline, t0, t1, -d, twiceTolerance(ellipse, d));
 
     for (auto* o : offsets) delete o;
 }
 
-TEST_CASE("RS_Ellipse::createOffset rejects cusp-exceeding inward offset") {
-    // a=5, b=2 → cusp limit b^2/a = 0.8. Asking for d=1.0 inward must fail.
+TEST_CASE("RS_Ellipse::createOffset trims an inward offset past the cusp limit", "[curve-offset][ellipse]") {
+    // a=5, b=2 → cusp limit b^2/a = 0.8. At d=1.0 inward the swallowtails at
+    // the major vertices are cut, leaving corners at (±c √(1 - d²/b²), 0), c = √21.
     RS_Ellipse ellipse(nullptr, {RS_Vector(0,0), RS_Vector(5,0), 0.4, 0.0, 0.0, false});
     const RS_Vector insidePoint(0.0, 0.0);
 
     auto offsets = ellipse.createOffset(insidePoint, 1.0);
-    REQUIRE(offsets.empty());
+    double t0 = 0.0;
+    double t1 = 0.0;
+    const RS_Spline& spline = onlySpline(offsets, t0, t1);
+    const double tolerance = twiceTolerance(ellipse, 1.0);
+    checkAtDistance(ellipse, spline, t0, t1, -1.0, tolerance);
+    const double x = std::sqrt(21.0) * std::sqrt(0.75); // 3.9686
+    for (const RS_Vector& corner : {RS_Vector(x, 0.0), RS_Vector(-x, 0.0)}) {
+        double nearest = std::numeric_limits<double>::infinity();
+        for (int k = 0; k <= 4000; ++k) {
+            nearest = std::min(nearest, splinePoint(spline, t0 + (t1 - t0) * k / 4000.0).distanceTo(corner));
+        }
+        CHECK(nearest <= tolerance);
+    }
+
+    for (auto* o : offsets) delete o;
 }
 
-TEST_CASE("RS_Ellipse::createOffset elliptic arc, half ellipse, open spline") {
+TEST_CASE("RS_Ellipse::createOffset elliptic arc, half ellipse, open spline", "[curve-offset][ellipse]") {
     RS_Ellipse ellipse(nullptr, {RS_Vector(0,0), RS_Vector(5,0), 0.4, 0.0, M_PI, false});
     const double d = 0.3;
     const RS_Vector outsidePoint(0.0, 20.0);
 
     auto offsets = ellipse.createOffset(outsidePoint, d);
-    REQUIRE(offsets.size() == 1);
-    auto* sp = dynamic_cast<LC_SplinePoints*>(offsets.front());
-    REQUIRE(sp != nullptr);
-    REQUIRE(sp->isClosed() == false);
+    double t0 = 0.0;
+    double t1 = 0.0;
+    const RS_Spline& spline = onlySpline(offsets, t0, t1);
+    const double tolerance = twiceTolerance(ellipse, d);
+    CHECK_FALSE(spline.isClosed());
 
-    const auto& pts = sp->getPoints();
-    REQUIRE(pts.size() >= 8);
-
-    // Endpoints should sit at the exact arc start/end displaced by d along
-    // the outward normal there. At angle 0: ellipse point = (5, 0); tangent
-    // (0, b·1) → outward normal +x. So offset endpoint ≈ (5+d, 0).
-    REQUIRE_THAT(pts.front().x, Catch::Matchers::WithinAbs(5.0 + d, 1.0e-9));
-    REQUIRE_THAT(pts.front().y, Catch::Matchers::WithinAbs(0.0, 1.0e-9));
-    // At angle π: ellipse point = (-5, 0); tangent (0, -b) → outward normal -x.
-    REQUIRE_THAT(pts.back().x, Catch::Matchers::WithinAbs(-5.0 - d, 1.0e-9));
-    REQUIRE_THAT(pts.back().y, Catch::Matchers::WithinAbs(0.0, 1.0e-9));
+    // Endpoints sit at the exact arc start/end displaced by d along the
+    // outward normal there: at angle 0 the ellipse point is (5, 0) with the
+    // outward normal +x, at angle π (-5, 0) with -x.
+    const RS_Vector start = splinePoint(spline, t0);
+    const RS_Vector end = splinePoint(spline, t1);
+    CHECK(start.distanceTo(RS_Vector(5.0 + d, 0.0)) <= tolerance);
+    CHECK(end.distanceTo(RS_Vector(-5.0 - d, 0.0)) <= tolerance);
+    checkAtDistance(ellipse, spline, t0, t1, d, tolerance);
 
     for (auto* o : offsets) delete o;
 }
 
-TEST_CASE("RS_Ellipse::createOffset reversed arc preserves geometry") {
+TEST_CASE("RS_Ellipse::createOffset reversed arc preserves geometry", "[curve-offset][ellipse]") {
     RS_Ellipse forward(nullptr, {RS_Vector(0,0), RS_Vector(5,0), 0.4, 0.0, M_PI, false});
     RS_Ellipse reversed(nullptr, {RS_Vector(0,0), RS_Vector(5,0), 0.4, M_PI, 0.0, true});
     const double d = 0.3;
@@ -699,26 +751,24 @@ TEST_CASE("RS_Ellipse::createOffset reversed arc preserves geometry") {
 
     auto fwd = forward.createOffset(outsidePoint, d);
     auto rev = reversed.createOffset(outsidePoint, d);
-    REQUIRE(fwd.size() == 1);
-    REQUIRE(rev.size() == 1);
-    auto* spF = dynamic_cast<LC_SplinePoints*>(fwd.front());
-    auto* spR = dynamic_cast<LC_SplinePoints*>(rev.front());
-    REQUIRE(spF != nullptr);
-    REQUIRE(spR != nullptr);
+    double f0 = 0.0;
+    double f1 = 0.0;
+    double r0 = 0.0;
+    double r1 = 0.0;
+    const RS_Spline& spF = onlySpline(fwd, f0, f1);
+    const RS_Spline& spR = onlySpline(rev, r0, r1);
+    const double tolerance = twiceTolerance(forward, d);
 
-    // Reversed arc samples the same geometric curve in reverse order: front
-    // and back endpoints should be swapped (modulo any small step-discretization
-    // differences in the interior).
-    REQUIRE_THAT(spF->getPoints().front().x,
-                 Catch::Matchers::WithinAbs(spR->getPoints().back().x, 1.0e-9));
-    REQUIRE_THAT(spF->getPoints().back().x,
-                 Catch::Matchers::WithinAbs(spR->getPoints().front().x, 1.0e-9));
+    // The reversed arc's offset runs the same curve the other way: its start
+    // and end are the forward one's end and start.
+    CHECK(splinePoint(spF, f0).distanceTo(splinePoint(spR, r1)) <= tolerance);
+    CHECK(splinePoint(spF, f1).distanceTo(splinePoint(spR, r0)) <= tolerance);
 
     for (auto* o : fwd) delete o;
     for (auto* o : rev) delete o;
 }
 
-TEST_CASE("RS_Ellipse::createOffset rejects degenerate inputs") {
+TEST_CASE("RS_Ellipse::createOffset rejects degenerate inputs", "[curve-offset][ellipse]") {
     // Zero distance.
     {
         RS_Ellipse e(nullptr, {RS_Vector(0,0), RS_Vector(5,0), 0.4, 0.0, 0.0, false});

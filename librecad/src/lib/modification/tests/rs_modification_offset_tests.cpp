@@ -36,13 +36,18 @@
 #include <QCoreApplication>
 
 #include "lc_curveoffset.h"
+#include "lc_hyperbola.h"
+#include "lc_offsetresultcheck.h"
 #include "lc_splinepoints.h"
+#include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_document.h"
+#include "rs_ellipse.h"
 #include "rs_graphic.h"
 #include "rs_layer.h"
 #include "rs_line.h"
 #include "rs_modification.h"
+#include "rs_polyline.h"
 #include "rs_settings.h"
 #include "rs_spline.h"
 #include "rs_vector.h"
@@ -612,4 +617,499 @@ TEST_CASE("A preview made through the cache is the preview made without it", "[m
     }
     CHECK(runs[1] == runs[0]); // filled the cache
     CHECK(runs[2] == runs[0]); // from the cache
+}
+
+// ---------------------------------------------------------------------------
+// Polylines: RS_Polyline::offset() joins neighbouring offsets and never trims,
+// so what it makes is checked before it is used.
+// ---------------------------------------------------------------------------
+namespace {
+/** A polyline through @p vertices, owned by the caller. */
+std::unique_ptr<RS_Polyline> polylineThrough(const std::vector<RS_Vector>& vertices, const bool closed) {
+    auto polyline = std::make_unique<RS_Polyline>(nullptr);
+    for (const RS_Vector& v : vertices) {
+        polyline->addVertex(v);
+    }
+    if (closed) {
+        polyline->setClosed(true);
+        polyline->endPolyline(); // adds the closing segment
+    }
+    return polyline;
+}
+
+/** Two 4 x 4 squares joined by a neck 1 high. */
+std::unique_ptr<RS_Polyline> dumbbell() {
+    return polylineThrough({{0, 0}, {4, 0}, {4, 1.5}, {8, 1.5}, {8, 0}, {12, 0}, {12, 4}, {8, 4}, {8, 2.5}, {4, 2.5},
+                            {4, 4}, {0, 4}},
+                           true);
+}
+
+std::unique_ptr<RS_Polyline> rectangle() {
+    return polylineThrough({{0, 0}, {10, 0}, {10, 4}, {0, 4}}, true);
+}
+} // namespace
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A polyline whose offset would cross itself is kept, and nothing is made", "[modification][offset]") {
+    // the dumbbell shrunk by 0.6: the legacy offset is one loop that crosses
+    // itself four times at the neck
+    const auto source = dumbbell();
+    BatchGuard guard;
+    const LC_OffsetBatchOutcome outcome = RS_Modification::offsetWithOutcome(
+        towards(RS_Vector{1.0, 2.0}, 0.6), {source.get()}, false, LC_OffsetBatchLimits{}, guard.ctx);
+    REQUIRE(outcome.sources.size() == 1);
+    CHECK(outcome.sources.front().status == LC_OffsetSourceStatus::OffsetFailed);
+    CHECK(outcome.sources.front().detail == LC_OffsetFailureDetail::PolylineNotTrimmed);
+    CHECK(guard.ctx.entitiesToAdd.isEmpty());
+    CHECK(guard.ctx.entitiesToDelete.isEmpty());
+    CHECK_FALSE(outcome.sources.front().sourceRemoved);
+
+    // at 0.4 the legacy offset is a proper ring, and is used
+    BatchGuard ring;
+    const LC_OffsetBatchOutcome kept = RS_Modification::offsetWithOutcome(
+        towards(RS_Vector{1.0, 2.0}, 0.4), {source.get()}, false, LC_OffsetBatchLimits{}, ring.ctx);
+    CHECK(kept.sources.front().succeeded());
+    REQUIRE(ring.ctx.entitiesToAdd.size() == 1);
+    CHECK(static_cast<const RS_Polyline*>(ring.ctx.entitiesToAdd.front())->count() == 12);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A polyline shrunk past its size vanishes and is kept", "[modification][offset]") {
+    // the 10 x 4 rectangle shrunk by 3: the legacy offset is an inverted 4 x 2 rectangle
+    const auto source = rectangle();
+    BatchGuard guard;
+    const LC_OffsetBatchOutcome outcome = RS_Modification::offsetWithOutcome(
+        towards(RS_Vector{5.0, 1.5}, 3.0), {source.get()}, false, LC_OffsetBatchLimits{}, guard.ctx);
+    REQUIRE(outcome.sources.size() == 1);
+    CHECK(outcome.sources.front().status == LC_OffsetSourceStatus::Vanished);
+    CHECK(guard.ctx.entitiesToAdd.isEmpty());
+    CHECK(guard.ctx.entitiesToDelete.isEmpty());
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A polyline series stops where nothing is left", "[modification][offset]") {
+    // M-M1: the rectangle at 1, 2 and 3; at 2 its legacy offset is a zero-area loop
+    const auto source = rectangle();
+    RS_OffsetData data = towards(RS_Vector{5.0, 1.5}, 1.0);
+    data.multipleCopies = true;
+    data.number = 3;
+    BatchGuard guard;
+    const LC_OffsetBatchOutcome outcome =
+        RS_Modification::offsetWithOutcome(data, {source.get()}, false, LC_OffsetBatchLimits{}, guard.ctx);
+    REQUIRE(outcome.sources.size() == 1);
+    const LC_OffsetSourceOutcome& result = outcome.sources.front();
+    CHECK(result.succeeded());
+    CHECK(result.copiesMade == 1);
+    CHECK(result.copiesRequested == 3);
+    CHECK(result.stoppedBy == LC_OffsetSourceStatus::Vanished);
+    REQUIRE(guard.ctx.entitiesToAdd.size() == 1);
+    const auto* copy = static_cast<const RS_Polyline*>(guard.ctx.entitiesToAdd.front());
+    CHECK(copy->getMin().distanceTo(RS_Vector{1, 1}) < 1e-9);
+    CHECK(copy->getMax().distanceTo(RS_Vector{9, 3}) < 1e-9);
+    CHECK(guard.ctx.entitiesToDelete.isEmpty()); // short of copies: the source stays
+}
+
+namespace {
+/**
+ * Straight arms exactly 10 apart (lc_curveoffset_trim_tests.cpp): between
+ * them, at 5, their offsets lie on one line, which the engine refuses to trim.
+ */
+std::unique_ptr<LC_SplinePoints> keyhole(const RS_Vector& shift = RS_Vector{0.0, 0.0}) {
+    LC_SplinePointsData d(false, false);
+    d.useControlPoints = true;
+    for (const RS_Vector& p : {RS_Vector{-20, 0}, RS_Vector{-10, 0}, RS_Vector{0, 0}, RS_Vector{10, -8},
+                               RS_Vector{24, -8}, RS_Vector{24, 18}, RS_Vector{10, 18}, RS_Vector{0, 10},
+                               RS_Vector{-10, 10}, RS_Vector{-20, 10}}) {
+        d.controlPoints.push_back(p + shift);
+    }
+    return std::make_unique<LC_SplinePoints>(nullptr, d);
+}
+} // namespace
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A failure after the first copy keeps the copies made", "[modification][offset]") {
+    const auto source = keyhole();
+    // between the arms, nearer the lower one: the left of the curve
+    RS_OffsetData data = towards(RS_Vector{-10.0, 2.0}, 2.5);
+    BatchGuard first;
+    const LC_OffsetBatchOutcome one =
+        RS_Modification::offsetWithOutcome(data, {source.get()}, false, LC_OffsetBatchLimits{}, first.ctx);
+    REQUIRE(one.sources.front().succeeded()); // 2.5 is regular
+    data.multipleCopies = true;
+    data.number = 2;
+    BatchGuard guard;
+    const LC_OffsetBatchOutcome outcome =
+        RS_Modification::offsetWithOutcome(data, {source.get()}, false, LC_OffsetBatchLimits{}, guard.ctx);
+    REQUIRE(outcome.sources.size() == 1);
+    const LC_OffsetSourceOutcome& result = outcome.sources.front();
+    CHECK(result.succeeded());
+    CHECK(result.copiesMade == 1);
+    CHECK(result.stoppedBy == LC_OffsetSourceStatus::OffsetFailed);
+    CHECK(result.engineStatus == LC_CurveOffsetStatus::AmbiguousTopology);
+    CHECK(guard.ctx.entitiesToAdd.size() == static_cast<qsizetype>(result.createdEntities.size()));
+    CHECK_FALSE(guard.ctx.entitiesToAdd.isEmpty());
+    CHECK(guard.ctx.entitiesToDelete.isEmpty());
+    CHECK_FALSE(result.sourceRemoved);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A zero-length line and an unbounded hyperbola are refused with their reasons", "[modification][offset]") {
+    RS_Line point{nullptr, RS_LineData{{1.0, 1.0}, {1.0, 1.0}}};
+    BatchGuard line;
+    const LC_OffsetBatchOutcome fromLine = RS_Modification::offsetWithOutcome(
+        towards(RS_Vector{1.0, 3.0}, 1.0), {&point}, false, LC_OffsetBatchLimits{}, line.ctx);
+    CHECK(fromLine.sources.front().status == LC_OffsetSourceStatus::OffsetFailed);
+    CHECK(fromLine.sources.front().detail == LC_OffsetFailureDetail::ZeroLength);
+    CHECK(line.ctx.entitiesToAdd.isEmpty());
+
+    // x^2/9 - y^2/4 = 1, the whole right branch
+    LC_Hyperbola branch{nullptr, LC_HyperbolaData{RS_Vector{0.0, 0.0}, RS_Vector{3.0, 0.0}, 2.0 / 3.0}};
+    REQUIRE(branch.isInfinite());
+    BatchGuard hyperbola;
+    const LC_OffsetBatchOutcome fromHyperbola = RS_Modification::offsetWithOutcome(
+        towards(RS_Vector{10.0, 0.0}, 1.0), {&branch}, false, LC_OffsetBatchLimits{}, hyperbola.ctx);
+    CHECK(fromHyperbola.sources.front().status == LC_OffsetSourceStatus::OffsetFailed);
+    CHECK(fromHyperbola.sources.front().detail == LC_OffsetFailureDetail::Unbounded);
+    CHECK(hyperbola.ctx.entitiesToAdd.isEmpty());
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("An arc shrunk past its radius vanishes, and an arc series stops", "[modification][offset]") {
+    // radius 5 about the origin, 0 to 90 degrees; (1, 1) is inside it
+    RS_Arc arc{nullptr, RS_ArcData{RS_Vector{0.0, 0.0}, 5.0, 0.0, M_PI_2, false}};
+    BatchGuard none;
+    const LC_OffsetBatchOutcome vanished = RS_Modification::offsetWithOutcome(
+        towards(RS_Vector{1.0, 1.0}, 6.0), {&arc}, false, LC_OffsetBatchLimits{}, none.ctx);
+    CHECK(vanished.sources.front().status == LC_OffsetSourceStatus::Vanished);
+    CHECK(none.ctx.entitiesToAdd.isEmpty());
+    CHECK(none.ctx.entitiesToDelete.isEmpty());
+
+    RS_OffsetData data = towards(RS_Vector{1.0, 1.0}, 2.0);
+    data.multipleCopies = true;
+    data.number = 3;
+    BatchGuard some;
+    const LC_OffsetBatchOutcome outcome =
+        RS_Modification::offsetWithOutcome(data, {&arc}, false, LC_OffsetBatchLimits{}, some.ctx);
+    const LC_OffsetSourceOutcome& result = outcome.sources.front();
+    CHECK(result.succeeded());
+    CHECK(result.copiesMade == 2);
+    CHECK(result.stoppedBy == LC_OffsetSourceStatus::Vanished);
+    REQUIRE(some.ctx.entitiesToAdd.size() == 2);
+    CHECK(static_cast<const RS_Arc*>(some.ctx.entitiesToAdd[0])->getRadius() == Catch::Approx(3.0));
+    CHECK(static_cast<const RS_Arc*>(some.ctx.entitiesToAdd[1])->getRadius() == Catch::Approx(1.0));
+    CHECK(some.ctx.entitiesToDelete.isEmpty());
+}
+
+namespace {
+/** Whether @p polyline's vertices are @p expected, in any order and from any start. */
+bool hasVertices(const RS_Polyline& polyline, const std::vector<RS_Vector>& expected) {
+    std::vector<RS_Vector> vertices{polyline.getStartpoint()};
+    for (const RS_Entity* segment : polyline) {
+        vertices.push_back(segment->getEndpoint());
+    }
+    if (polyline.isClosed() && vertices.size() > 1 && vertices.front().distanceTo(vertices.back()) < 1e-9) {
+        vertices.pop_back();
+    }
+    if (vertices.size() != expected.size()) {
+        return false;
+    }
+    return std::all_of(vertices.begin(), vertices.end(), [&expected](const RS_Vector& v) {
+        return std::any_of(expected.begin(), expected.end(), [&v](const RS_Vector& e) { return v.distanceTo(e) < 1e-9; });
+    });
+}
+
+/** The one entity @p guard's batch holds. */
+const RS_Entity& onlyAdded(const BatchGuard& guard) {
+    REQUIRE(guard.ctx.entitiesToAdd.size() == 1);
+    return *guard.ctx.entitiesToAdd.front();
+}
+} // namespace
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A zero distance is refused for every type", "[modification][offset]") {
+    RS_Line line{nullptr, RS_LineData{{0.0, 0.0}, {10.0, 0.0}}};
+    RS_Circle circle{nullptr, RS_CircleData{RS_Vector{0.0, 0.0}, 5.0}};
+    RS_Arc arc{nullptr, RS_ArcData{RS_Vector{0.0, 0.0}, 5.0, 0.0, M_PI_2, false}};
+    RS_Ellipse ellipse{nullptr, RS_EllipseData{RS_Vector{0.0, 0.0}, RS_Vector{10.0, 0.0}, 0.5, 0.0, 0.0, false}};
+    const auto polyline = rectangle();
+    std::unique_ptr<RS_Spline> spline{sCurve()};
+    for (RS_Entity* source : std::initializer_list<RS_Entity*>{&line, &circle, &arc, &ellipse, polyline.get(), spline.get()}) {
+        INFO("rtti " << source->rtti());
+        BatchGuard guard;
+        const LC_OffsetBatchOutcome outcome = RS_Modification::offsetWithOutcome(
+            towards(RS_Vector{1.0, 1.0}, 0.0), {source}, false, LC_OffsetBatchLimits{}, guard.ctx);
+        REQUIRE(outcome.sources.size() == 1);
+        CHECK(outcome.sources.front().status == LC_OffsetSourceStatus::OffsetFailed);
+        CHECK(outcome.sources.front().detail == LC_OffsetFailureDetail::InvalidDistance);
+        CHECK(guard.ctx.entitiesToAdd.isEmpty());
+        CHECK(guard.ctx.entitiesToDelete.isEmpty());
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A negative distance offsets by its size", "[modification][offset]") {
+    // the pick decides the side, not the sign: a line flipped over, and a
+    // polyline's segments went to alternating sides
+    RS_Line line{nullptr, RS_LineData{{0.0, 0.0}, {10.0, 0.0}}};
+    BatchGuard fromLine;
+    RS_Modification::offsetWithOutcome(towards(RS_Vector{5.0, 1.0}, -2.0), {&line}, false, LC_OffsetBatchLimits{},
+                                       fromLine.ctx);
+    const RS_Entity& parallel = onlyAdded(fromLine);
+    CHECK(parallel.getStartpoint().distanceTo(RS_Vector{0.0, 2.0}) < 1e-9);
+    CHECK(parallel.getEndpoint().distanceTo(RS_Vector{10.0, 2.0}) < 1e-9);
+
+    const auto l = polylineThrough({{0, 0}, {10, 0}, {10, 10}}, false);
+    BatchGuard fromPolyline;
+    RS_Modification::offsetWithOutcome(towards(RS_Vector{5.0, -1.0}, -1.0), {l.get()}, false, LC_OffsetBatchLimits{},
+                                       fromPolyline.ctx);
+    const RS_Entity& offset = onlyAdded(fromPolyline);
+    REQUIRE(offset.rtti() == RS2::EntityPolyline);
+    CHECK(hasVertices(static_cast<const RS_Polyline&>(offset), {{0, -1}, {11, -1}, {11, 10}}));
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A point on the entity takes its side from the second click", "[modification][offset]") {
+    const auto fromPoints = [](RS_Entity& source, const RS_Vector& reference, const RS_Vector& fallback,
+                               const double distance, BatchGuard& guard) {
+        RS_OffsetData data = towards(reference, distance);
+        data.sideFallback = fallback;
+        const LC_OffsetBatchOutcome outcome =
+            RS_Modification::offsetWithOutcome(data, {&source}, false, LC_OffsetBatchLimits{}, guard.ctx);
+        REQUIRE(outcome.sources.size() == 1);
+        CHECK(outcome.sources.front().succeeded());
+        return &onlyAdded(guard);
+    };
+    SECTION("a line") {
+        RS_Line line{nullptr, RS_LineData{{0.0, 0.0}, {10.0, 0.0}}};
+        BatchGuard guard;
+        const RS_Entity* parallel = fromPoints(line, {5.0, 0.0}, {5.0, -3.0}, 3.0, guard);
+        CHECK(parallel->getStartpoint().y == Catch::Approx(-3.0));
+        CHECK(parallel->getEndpoint().y == Catch::Approx(-3.0));
+    }
+    SECTION("a circle") {
+        RS_Circle circle{nullptr, RS_CircleData{RS_Vector{0.0, 0.0}, 5.0}};
+        BatchGuard guard;
+        const RS_Entity* offset = fromPoints(circle, {5.0, 0.0}, {8.0, 0.0}, 3.0, guard);
+        CHECK(offset->getRadius() == Catch::Approx(8.0));
+    }
+    SECTION("an arc") {
+        RS_Arc arc{nullptr, RS_ArcData{RS_Vector{0.0, 0.0}, 5.0, 0.0, M_PI_2, false}};
+        const double onIt = 5.0 * std::cos(M_PI_4);
+        BatchGuard guard;
+        const RS_Entity* offset = fromPoints(arc, {onIt, onIt}, {1.0, 1.0}, 1.0, guard);
+        CHECK(offset->getRadius() == Catch::Approx(4.0));
+    }
+    SECTION("a polyline") {
+        const auto source = rectangle();
+        struct Row {
+            RS_Vector fallback;
+            std::vector<RS_Vector> expected;
+        };
+        for (const Row& row : {Row{{5, 1}, {{1, 1}, {9, 1}, {9, 3}, {1, 3}}},
+                               Row{{5, -1}, {{-1, -1}, {11, -1}, {11, 5}, {-1, 5}}},
+                               Row{{9.5, 2}, {{1, 1}, {9, 1}, {9, 3}, {1, 3}}}}) { // nearer another segment
+            INFO("fallback " << row.fallback.x << ", " << row.fallback.y);
+            BatchGuard guard;
+            const RS_Entity* offset = fromPoints(*source, {5.0, 0.0}, row.fallback, 1.0, guard);
+            REQUIRE(offset->rtti() == RS2::EntityPolyline);
+            CHECK(hasVertices(*static_cast<const RS_Polyline*>(offset), row.expected));
+        }
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A point on a line with no second click gives no side", "[modification][offset]") {
+    RS_Line line{nullptr, RS_LineData{{0.0, 0.0}, {10.0, 0.0}}};
+    for (const RS_Vector& onIt : {RS_Vector{5.0, 0.0}, RS_Vector{15.0, 0.0}}) { // its line, beyond its end too
+        BatchGuard guard;
+        const LC_OffsetBatchOutcome outcome = RS_Modification::offsetWithOutcome(
+            towards(onIt, 3.0), {&line}, false, LC_OffsetBatchLimits{}, guard.ctx);
+        CHECK(outcome.sources.front().status == LC_OffsetSourceStatus::OffsetFailed);
+        CHECK(outcome.sources.front().engineStatus == LC_CurveOffsetStatus::AmbiguousSide);
+        CHECK(outcome.sources.front().detail == LC_OffsetFailureDetail::AmbiguousSide);
+        CHECK(guard.ctx.entitiesToAdd.isEmpty());
+        CHECK(guard.ctx.entitiesToDelete.isEmpty());
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A circle inside the vanish band vanishes", "[modification][offset]") {
+    // radius 5: its band is 1.25e-6 of its box's diagonal, 1.77e-5; a circle
+    // drawn as two bulges vanishes within the same band
+    RS_Circle circle{nullptr, RS_CircleData{RS_Vector{0.0, 0.0}, 5.0}};
+    for (const double left : {1e-9, 5e-6}) {
+        INFO("radius left " << left);
+        BatchGuard guard;
+        const LC_OffsetBatchOutcome outcome = RS_Modification::offsetWithOutcome(
+            inwardOffset(5.0 - left), {&circle}, false, LC_OffsetBatchLimits{}, guard.ctx);
+        CHECK(outcome.sources.front().status == LC_OffsetSourceStatus::Vanished);
+        CHECK(guard.ctx.entitiesToAdd.isEmpty());
+        CHECK(guard.ctx.entitiesToDelete.isEmpty());
+    }
+    BatchGuard guard;
+    const LC_OffsetBatchOutcome outcome = RS_Modification::offsetWithOutcome(
+        inwardOffset(5.0 - 1e-4), {&circle}, false, LC_OffsetBatchLimits{}, guard.ctx);
+    CHECK(outcome.sources.front().succeeded());
+    CHECK(onlyAdded(guard).getRadius() == Catch::Approx(1e-4).epsilon(1e-6));
+}
+
+// ---------------------------------------------------------------------------
+// Ellipses, offset by the curve-offset engine
+// ---------------------------------------------------------------------------
+namespace {
+/** Points along every entity @p guard holds, as closed polygons. */
+std::vector<std::vector<RS_Vector>> polygonsOf(const BatchGuard& guard, const int samples = 800) {
+    std::vector<std::vector<RS_Vector>> polygons;
+    for (const RS_Entity* e : guard.ctx.entitiesToAdd) {
+        const auto* spline = dynamic_cast<const RS_Spline*>(e);
+        REQUIRE(spline != nullptr);
+        double t0 = 0.0;
+        double t1 = 0.0;
+        REQUIRE(spline->getParameterDomain(t0, t1));
+        std::vector<RS_Vector> points;
+        for (int k = 0; k < samples; ++k) {
+            LC_CurveJet jet;
+            REQUIRE(spline->tryEvaluateJet(t0 + (t1 - t0) * k / samples, LC_CurveEvaluationSide::Interior, jet));
+            points.push_back(jet.point);
+        }
+        polygons.push_back(std::move(points));
+    }
+    return polygons;
+}
+
+double polygonArea(const std::vector<RS_Vector>& p) {
+    double area = 0.0;
+    for (std::size_t i = 0; i < p.size(); ++i) {
+        const RS_Vector& a = p[i];
+        const RS_Vector& b = p[(i + 1) % p.size()];
+        area += 0.5 * (a.x * b.y - b.x * a.y);
+    }
+    return area;
+}
+
+bool polygonsCross(const std::vector<RS_Vector>& p, const std::vector<RS_Vector>& q) {
+    for (std::size_t i = 0; i < p.size(); ++i) {
+        LC_OffsetSegment s;
+        s.a = p[i];
+        s.b = p[(i + 1) % p.size()];
+        for (std::size_t j = 0; j < q.size(); ++j) {
+            LC_OffsetSegment t;
+            t.a = q[j];
+            t.b = q[(j + 1) % q.size()];
+            if (segmentsIntersect(s, t, 0.0)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+/** The least distance from @p p to a closed polygon. */
+double nearestOnPolygon(const std::vector<RS_Vector>& polygon, const RS_Vector& p) {
+    double least = RS_MAXDOUBLE;
+    for (std::size_t i = 0; i < polygon.size(); ++i) {
+        LC_OffsetSegment side;
+        side.a = polygon[i];
+        side.b = polygon[(i + 1) % polygon.size()];
+        least = std::min(least, pointSegmentDistance(p, side));
+    }
+    return least;
+}
+} // namespace
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("An ellipse series keeps every copy, and the copies nest", "[modification][offset][curve-offset][ellipse]") {
+    // a = 5, b = 2 inwards by 0.3, three times: the sampler refused from
+    // 0.99 b^2/a = 0.79 on, and a refusal discarded the whole series
+    RS_Ellipse ellipse{nullptr, RS_EllipseData{RS_Vector{0.0, 0.0}, RS_Vector{5.0, 0.0}, 0.4, 0.0, 0.0, false}};
+    RS_OffsetData data = towards(RS_Vector{0.0, 0.0}, 0.3);
+    data.multipleCopies = true;
+    data.number = 3;
+    BatchGuard guard;
+    const LC_OffsetBatchOutcome outcome =
+        RS_Modification::offsetWithOutcome(data, {&ellipse}, false, LC_OffsetBatchLimits{}, guard.ctx);
+    REQUIRE(outcome.sources.front().succeeded());
+    CHECK(outcome.sources.front().complete());
+    REQUIRE(guard.ctx.entitiesToAdd.size() == 3);
+    const std::vector<std::vector<RS_Vector>> copies = polygonsOf(guard);
+    // the third, past b^2/a, has corners where its swallowtails were cut
+    const double x = std::sqrt(21.0) * std::sqrt(1.0 - 0.81 / 4.0); // 4.0924
+    CHECK(nearestOnPolygon(copies[2], {x, 0.0}) < 1e-2);
+    CHECK(nearestOnPolygon(copies[2], {-x, 0.0}) < 1e-2);
+    // P18: no copy crosses another, and each shrinks the area
+    for (std::size_t i = 0; i < copies.size(); ++i) {
+        for (std::size_t j = i + 1; j < copies.size(); ++j) {
+            INFO("copies " << i << " and " << j);
+            CHECK_FALSE(polygonsCross(copies[i], copies[j]));
+        }
+    }
+    const double source = M_PI * 5.0 * 2.0;
+    CHECK(std::abs(polygonArea(copies[0])) < source);
+    CHECK(std::abs(polygonArea(copies[1])) < std::abs(polygonArea(copies[0])));
+    CHECK(std::abs(polygonArea(copies[2])) < std::abs(polygonArea(copies[1])));
+    CHECK(guard.ctx.entitiesToDelete.size() == 1); // every copy made, originals not kept
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("An ellipse series stops where nothing is left", "[modification][offset][curve-offset][ellipse]") {
+    // a = 10, b = 5 inwards by 2, three times: nothing is left from b = 5 on
+    RS_Ellipse ellipse{nullptr, RS_EllipseData{RS_Vector{0.0, 0.0}, RS_Vector{10.0, 0.0}, 0.5, 0.0, 0.0, false}};
+    RS_OffsetData data = towards(RS_Vector{0.0, 0.0}, 2.0);
+    data.multipleCopies = true;
+    data.number = 3;
+    BatchGuard guard;
+    const LC_OffsetBatchOutcome outcome =
+        RS_Modification::offsetWithOutcome(data, {&ellipse}, false, LC_OffsetBatchLimits{}, guard.ctx);
+    const LC_OffsetSourceOutcome& result = outcome.sources.front();
+    CHECK(result.succeeded());
+    CHECK(result.copiesMade == 2);
+    CHECK(result.stoppedBy == LC_OffsetSourceStatus::Vanished);
+    CHECK(guard.ctx.entitiesToAdd.size() == 2);
+    CHECK(guard.ctx.entitiesToDelete.isEmpty()); // short of a copy: the source stays
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A point on an ellipse takes its side from the second click", "[modification][offset][curve-offset][ellipse]") {
+    RS_Ellipse ellipse{nullptr, RS_EllipseData{RS_Vector{0.0, 0.0}, RS_Vector{10.0, 0.0}, 0.5, 0.0, 0.0, false}};
+    const auto offsetFrom = [&ellipse](const RS_Vector& reference, const RS_Vector& fallback, BatchGuard& guard) {
+        RS_OffsetData data = towards(reference, 1.0);
+        data.sideFallback = fallback;
+        const LC_OffsetBatchOutcome outcome =
+            RS_Modification::offsetWithOutcome(data, {&ellipse}, false, LC_OffsetBatchLimits{}, guard.ctx);
+        REQUIRE(outcome.sources.front().succeeded());
+        return polygonsOf(guard);
+    };
+    SECTION("on it, at its vertex: the second click decides") {
+        BatchGuard out;
+        CHECK(nearestOnPolygon(offsetFrom({10.0, 0.0}, {12.0, 0.0}, out).front(), {11.0, 0.0}) < 1e-2);
+        BatchGuard in;
+        CHECK(nearestOnPolygon(offsetFrom({10.0, 0.0}, {8.0, 0.0}, in).front(), {9.0, 0.0}) < 1e-2);
+    }
+    SECTION("0.02 off it: its own side, however the second click lies") {
+        // drawn exactly, an ellipse has no drawing tolerance to be within
+        BatchGuard guard;
+        CHECK(nearestOnPolygon(offsetFrom({10.02, 0.0}, {8.0, 0.0}, guard).front(), {11.0, 0.0}) < 1e-2);
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A polyline with an elliptic segment is refused", "[modification][offset]") {
+    // as a non-uniform scale leaves one: a line, the lower half of an ellipse
+    // about (15, 0), 5 by 2.5, and a line
+    auto polyline = std::make_unique<RS_Polyline>(nullptr);
+    polyline->addVertex(RS_Vector{0, 0});
+    polyline->addVertex(RS_Vector{10, 0});
+    polyline->RS_EntityContainer::addEntity(new RS_Ellipse(
+        polyline.get(), RS_EllipseData{RS_Vector{15, 0}, RS_Vector{5, 0}, 0.5, M_PI, 2.0 * M_PI, false}));
+    polyline->setEndpoint(RS_Vector{20, 0});
+    polyline->addVertex(RS_Vector{30, 0});
+    REQUIRE(polyline->count() == 3);
+    BatchGuard guard;
+    const LC_OffsetBatchOutcome outcome = RS_Modification::offsetWithOutcome(
+        towards(RS_Vector{15.0, -6.0}, 1.0), {polyline.get()}, false, LC_OffsetBatchLimits{}, guard.ctx);
+    REQUIRE(outcome.sources.size() == 1);
+    CHECK(outcome.sources.front().status == LC_OffsetSourceStatus::OffsetFailed);
+    CHECK(outcome.sources.front().detail == LC_OffsetFailureDetail::EllipticSegments);
+    CHECK(guard.ctx.entitiesToAdd.isEmpty());
+    CHECK(guard.ctx.entitiesToDelete.isEmpty());
 }

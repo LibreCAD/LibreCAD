@@ -889,6 +889,8 @@ set (SHARED_SOURCES
      librecad/src/lib/engine/document/entities/lc_parametriccurveintersection.h
      librecad/src/lib/engine/document/entities/lc_offsetoutputbudget.cpp
      librecad/src/lib/engine/document/entities/lc_offsetoutputbudget.h
+     librecad/src/lib/engine/document/entities/lc_offsetresultcheck.cpp
+     librecad/src/lib/engine/document/entities/lc_offsetresultcheck.h
      librecad/src/lib/engine/document/entities/lc_splinehelper.cpp
      librecad/src/lib/engine/document/entities/lc_splinehelper.h
      librecad/src/lib/engine/document/entities/lc_splinepoints.cpp
@@ -2488,6 +2490,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/entities/tests/lc_parametriccurveintersection_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_curveoffset_trim_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_curveoffset_region_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_curveoffsetellipsetests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_curveoffset_backend_experiments.cpp
         librecad/src/lib/engine/document/entities/tests/lc_offsetoutputbudget_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_curveoffset_entity_tests.cpp
@@ -2506,6 +2509,7 @@ if (BUILD_TESTS)
         librecad/src/lib/actions/tests/lc_snappercatchtests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_round_tests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_offset_tests.cpp
+        librecad/src/actions/drawing/modify/tests/lc_offsetmatrixtests.cpp
         librecad/src/lib/filters/tests/dwg_pre_r13_codepage_tests.cpp
         librecad/src/lib/filters/tests/dwg_pre_r13_section_size_tests.cpp
         librecad/src/lib/filters/tests/dwg_pre_r13_record_layout_tests.cpp
@@ -2522,12 +2526,14 @@ if (BUILD_TESTS)
         librecad/src/lib/modification/tests/lc_division_tests.cpp
         librecad/src/lib/modification/tests/rs_modification_trim_tests.cpp
         librecad/src/lib/modification/tests/rs_modification_offset_tests.cpp
+        librecad/src/lib/modification/tests/lc_offsetresultchecktests.cpp
         librecad/src/lib/filters/tests/dwg_buffer_round_trip_tests.cpp
         librecad/src/lib/filters/tests/spline_offset_representation_tests.cpp
         librecad/src/lib/creation/tests/lc_action_draw_line_parallel_tests.cpp
         librecad/src/lib/creation/tests/lc_action_draw_fast_tests.cpp
         librecad/src/lib/creation/tests/lc_action_draw_polyline_tests.cpp
         librecad/src/lib/creation/tests/lc_action_draw_spline_tests.cpp
+        librecad/src/lib/creation/tests/lc_closedshapetoolstests.cpp
         librecad/src/cmd/tests/rs_commands_tests.cpp
         librecad/src/lib/engine/undo/tests/rs_undo_tests.cpp
         librecad/src/lib/filters/tests/dwg_entity_encode_round_trip_tests.cpp
