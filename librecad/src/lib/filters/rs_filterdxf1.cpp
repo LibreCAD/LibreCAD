@@ -54,7 +54,7 @@ RS_FilterDXF1::RS_FilterDXF1()
 		:RS_FilterInterface()
 		, graphic(nullptr)
 {
-	RS_DEBUG->print("Setting up DXF 1 filter...");
+	LC_LOG << "Setting up DXF 1 filter...";
 }
 
 /**
@@ -66,7 +66,7 @@ RS_FilterDXF1::RS_FilterDXF1()
  * taken to be stored in a file.
  */
 bool RS_FilterDXF1::fileImport(RS_Graphic& g, const QString& file, RS2::FormatType /*type*/) {
-    RS_DEBUG->print("DXF1 Filter: importing file '%s'...", file.toLatin1().data());
+    LC_LOG << "DXF1 Filter: importing file '" << file << "'...";
 
 	this->graphic = &g;
 
@@ -87,8 +87,7 @@ bool RS_FilterDXF1::fileImport(RS_Graphic& g, const QString& file, RS2::FormatTy
 
 bool RS_FilterDXF1::fileExport(RS_Graphic& /*g*/, const QString& /*file*/,
 	RS2::FormatType /*type*/) {
-	RS_DEBUG->print(RS_Debug::D_WARNING,
-					"Exporting of QCad 1.x file not implemented");
+	LC_LOG(RS_Debug::D_WARNING) << "Exporting of QCad 1.x file not implemented";
 	return false;
 }
 
@@ -96,7 +95,7 @@ bool RS_FilterDXF1::fileExport(RS_Graphic& /*g*/, const QString& /*file*/,
  * Reads a dxf1 file from buffer.
  */
 bool RS_FilterDXF1::readFromBuffer() {
-    RS_DEBUG->print( "\nDXF: Read from buffer" );
+    LC_LOG << "\nDXF: Read from buffer";
 
     bool      ret;                    // returned value
     QString   dxfLine;                // A line in the dxf file
@@ -124,12 +123,10 @@ bool RS_FilterDXF1::readFromBuffer() {
 
     //graphic->addLayer(DEF_DEFAULTLAYER);
 
-    //RS_DEBUG->print( "\nDefault layer added" );
-
     // Loaded graphics without unit information: load as unit less:
     //graphic->setUnit( None );
 
-    RS_DEBUG->print( "\nUnit set" );
+    LC_LOG << "\nUnit set";
 
     resetBufP();
 
@@ -141,7 +138,7 @@ bool RS_FilterDXF1::readFromBuffer() {
             dxfLine=getBufLine();
             pen = RS_Pen(RS_Color(RS2::FlagByLayer), RS2::WidthByLayer, RS2::LineByLayer);
 
-            LC_LOG << "\ndxfLine: \n" << dxfLine.toLatin1().data();
+            LC_LOG << "\ndxfLine: \n" << dxfLine;
 
             // $-Setting in the header of DXF found
             // RVT_PORT changed all occurenses of if (dxfline && ....) to if (dxfline.size() ......)
