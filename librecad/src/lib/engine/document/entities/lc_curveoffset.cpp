@@ -3594,9 +3594,28 @@ Visibility visibility(const OffsetSource& source, const std::vector<std::pair<do
 LC_CurveOffsetStatus removeLocalLoops(const OffsetSource& source, const double d, const double speedFloor,
                                       const LC_CurveOffsetOptions& options, std::vector<LC_OffsetBranch>& branches,
                                       std::size_t& removed) {
+    // A closed source's own domain wraps: a piece ending exactly at
+    // breaks().back() runs on, without a gap, into one starting at
+    // breaks().front() (the same seam OffsetCurves's own "shift" continues
+    // past, in buildDirectBranches). Kept 0 for an open source, where no
+    // stretch or parameter ever legitimately reaches either end.
+    const double period = source.closed() ? source.breaks().back() - source.breaks().front() : 0.0;
+    // a parameter stretch() carried past the seam, brought back into the
+    // source's own domain so it can be evaluated, or compared to a piece
+    const auto wrapSeam = [&source, period](double t) {
+        if (period > 0.0 && (t < source.breaks().front() || t > source.breaks().back())) {
+            t = source.breaks().front() + std::fmod(t - source.breaks().front(), period);
+            if (t < source.breaks().front()) {
+                t += period;
+            }
+        }
+        return t;
+    };
     // the source parameters of a branch's offset pieces next to one end, as long
-    // as they run on without a gap or a corner
-    const auto stretch = [](const LC_OffsetBranch& branch, const bool atEnd, double& from, double& to) {
+    // as they run on without a gap or a corner; continued, for a closed source,
+    // past its own seam rather than stopping there like any other gap
+    const auto stretch = [&source, period](const LC_OffsetBranch& branch, const bool atEnd, double& from,
+                                           double& to) {
         const std::vector<LC_OffsetCubicPiece>& pieces = branch.cubicPieces;
         const size_t n = pieces.size();
         const LC_OffsetCubicPiece& first = atEnd ? pieces[n - 1] : pieces[0];
@@ -3605,17 +3624,37 @@ LC_CurveOffsetStatus removeLocalLoops(const OffsetSource& source, const double d
         }
         from = first.provenance.sourceT0;
         to = first.provenance.sourceT1;
+        double shift = 0.0;
         for (size_t k = 1; k < n; ++k) {
             const LC_OffsetBranchProvenance& p = pieces[atEnd ? n - 1 - k : k].provenance;
-            if (p.arcCentre.valid || (atEnd ? p.sourceT1 != from : p.sourceT0 != to)) {
+            if (p.arcCentre.valid) {
                 break;
             }
-            (atEnd ? from : to) = atEnd ? p.sourceT0 : p.sourceT1;
+            if (atEnd) {
+                double t1 = p.sourceT1 + shift;
+                if (t1 != from) {
+                    if (!(period > 0.0 && from == source.breaks().front() && p.sourceT1 == source.breaks().back())) {
+                        break;
+                    }
+                    shift -= period;
+                }
+                from = p.sourceT0 + shift;
+            }
+            else {
+                double t0 = p.sourceT0 + shift;
+                if (t0 != to) {
+                    if (!(period > 0.0 && to == source.breaks().back() && p.sourceT0 == source.breaks().front())) {
+                        break;
+                    }
+                    shift += period;
+                }
+                to = p.sourceT1 + shift;
+            }
         }
         return true;
     };
     const auto offsetAt = [&](const double t, OffsetJet& q) {
-        return computeOffsetJet(source, d, speedFloor, t, LC_CurveEvaluationSide::Interior, q) ==
+        return computeOffsetJet(source, d, speedFloor, wrapSeam(t), LC_CurveEvaluationSide::Interior, q) ==
                LC_CurveOffsetStatus::Ok;
     };
     // the nearest point of the stretch [lo, hi] to p: the nearest of samples
@@ -3830,6 +3869,39 @@ LC_CurveOffsetStatus removeLocalLoops(const OffsetSource& source, const double d
                 loT = t;
             }
         }
+        // The forward pass above walks outward from the cusp at b0 in doubling
+        // steps; its very last pre-cap sample necessarily lands near the middle of
+        // [b0,b1], and the next (over-)step clips straight to b1. In the ring
+        // (before == after) resolution, b1 can itself be the exact point where a
+        // already runs out (the earlier loop's own splice, seen from this
+        // branch's far end), so sideAt(b1) is NaN and the forward pass gives up
+        // there -- even when the true crossing sits well inside [b0,b1], past
+        // that last sample. Mirror the same doubling idea from b1 inward, seeded
+        // with the sign the forward pass already established; this never looks
+        // outside [b0,b1]. Confined to the ring case, where this specific gap is
+        // known to occur - the ordinary (two-distinct-branch) path already has
+        // its full, un-consumed stretch on both sides and doesn't need it.
+        if (before == after && !found && sign != 0.0 && lo < b1) {
+            double t2 = t;
+            const double first2 = std::max(std::ldexp(b1 - lo, -40), 4.0 * options.tolerance.parameter);
+            for (double reach = first2; !found && reach < 2.0 * (b1 - lo); reach *= 2.0) {
+                const double u = std::max(lo, b1 - reach);
+                if (u >= b1) {
+                    continue;
+                }
+                RS_Vector point;
+                const double side = sideAt(u, t2, point);
+                if (std::isnan(side) || std::abs(side) <= options.tolerance.evaluation) {
+                    continue; // degenerate or too near to tell; widen reach and try again
+                }
+                if (std::signbit(side) != std::signbit(sign)) {
+                    hi = u;
+                    found = true;
+                }
+                // a same-signed sample here is farther from `lo` than `lo` already
+                // is, so it is discarded rather than used to move `lo` outward.
+            }
+        }
         const bool below = !found && !std::isnan(nearU) && sign != 0.0;
         if (!found && !below) {
             continue;
@@ -3913,7 +3985,7 @@ LC_CurveOffsetStatus removeLocalLoops(const OffsetSource& source, const double d
         if (before == after) {
             // the only other branch runs out of the loop and back into it: a ring
             LC_OffsetBranch ring = a;
-            if (!cut(ring, t, qa, true) || !cut(ring, u, qb, false)) {
+            if (!cut(ring, wrapSeam(t), qa, true) || !cut(ring, wrapSeam(u), qb, false)) {
                 continue;
             }
             ring.closed = true;
@@ -3925,7 +3997,7 @@ LC_CurveOffsetStatus removeLocalLoops(const OffsetSource& source, const double d
         }
         LC_OffsetBranch front = a;
         LC_OffsetBranch back = b;
-        if (!cut(front, t, qa, true) || !cut(back, u, qb, false)) {
+        if (!cut(front, wrapSeam(t), qa, true) || !cut(back, wrapSeam(u), qb, false)) {
             continue;
         }
         removed += 3; // the loop and its two wings

@@ -31,6 +31,7 @@
 #include <algorithm>
 #include <cmath>
 #include <memory>
+#include <tuple>
 #include <vector>
 
 #include "lc_curveoffset.h"
@@ -342,15 +343,13 @@ TEST_CASE("Ellipse offsets are trimmed past b^2/a and vanish from b", "[curve-of
         // a = 100, b = 1: shrinksAway() judged the whole ellipse shrunk away
         // from d alone being within its absolute tolerance band of b, but the
         // surviving curve's own half-extent there, sqrt(a^2-b^2)*sqrt(1-(d/b)^2),
-        // is about 19.9 units at d = 0.98 - not negligible. It must not again
-        // silently report Ok with nothing: the engine may still refuse this
-        // input for an unrelated reason (a separate, open limitation of the
-        // trimming machinery for very sharp cusps near the stall distance,
-        // not particular to this fix), but it must say so, not claim success.
+        // is about 19.9 units at d = 0.98 - not negligible. removeLocalLoops's
+        // ring path (both vertices trimmed past the cusp distance in the same
+        // offset) used to starve the second loop's search room and report
+        // AmbiguousTopology; fixed, it must find both corners exactly.
         const RS_Ellipse needleLike = ellipse(100.0, 0.01);
-        const Offset offset = offsetOf(needleLike, kLeft, 0.98);
-        const bool wronglyEmpty = offset.status == LC_CurveOffsetStatus::Ok && offset.chains.empty();
-        CHECK_FALSE(wronglyEmpty);
+        const double x = std::sqrt(100.0 * 100.0 - 1.0) * std::sqrt(1.0 - 0.98 * 0.98); // ~19.8988
+        checkOffset(offsetOf(needleLike, kLeft, 0.98), curveOf(needleLike), 0.98, {true}, {{x, 0.0}, {-x, 0.0}});
     }
     SECTION("a circle drawn as an ellipse, and a near circle") {
         const RS_Ellipse circle = ellipse(5.0, 1.0);
@@ -661,4 +660,28 @@ TEST_CASE("Thin and far ellipse offsets stay at the distance everywhere", "[curv
     checkOffset(offsetOf(needle, kRight, 10.0), curveOf(needle), 10.0, {true});
     const RS_Ellipse thin = ellipse(100.0, 0.03);
     checkOffset(offsetOf(thin, kRight, 0.1), curveOf(thin), 0.1, {true});
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Both vertices trimmed past the cusp distance in the same offset", "[curve-offset][ellipse]") {
+    // Where an eccentric ellipse's inward offset needs both major-axis
+    // vertices trimmed at once, removeLocalLoops resolves the two swallowtail
+    // loops in sequence; the second resolution runs through the self-referential
+    // "ring" path (before == after), which used to be starved of search room by
+    // the first resolution's own splice and wrongly reported AmbiguousTopology.
+    // Each corner sits at the closed form sqrt(a^2-b^2)*sqrt(1-(d/b)^2).
+    const std::vector<std::tuple<double, double, double>> cases{
+        {20.0, 2.0, 1.8}, {20.0, 2.0, 1.9}, {20.0, 2.0, 1.99},
+        {100.0, 1.0, 0.98},
+        {10.0, 3.0, 2.95}, {10.0, 3.0, 2.998},
+        {10.0, 2.5, 2.49}, {10.0, 2.5, 2.498},
+        {10.0, 4.0, 3.99}, {10.0, 4.0, 3.998},
+        {10.0, 2.0, 1.95},
+    };
+    for (const auto& [a, b, d] : cases) {
+        INFO("a = " << a << ", b = " << b << ", d = " << d);
+        const RS_Ellipse e = ellipse(a, b / a);
+        const double x = std::sqrt(a * a - b * b) * std::sqrt(1.0 - (d / b) * (d / b));
+        checkOffset(offsetOf(e, kLeft, d), curveOf(e), d, {true}, {{x, 0.0}, {-x, 0.0}});
+    }
 }
