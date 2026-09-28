@@ -135,16 +135,13 @@ bool RS_FilterDXF1::readFromBuffer() {
 
     if(fBuf) {
 
-        RS_DEBUG->print( "\nBuffer OK" );
-        RS_DEBUG->print( "\nBuffer: " );
-        LC_LOG << fBuf;
+        LC_LOG << "\nBuffer OK\n\nBuffer: \n" << fBuf;
 
         do {
             dxfLine=getBufLine();
             pen = RS_Pen(RS_Color(RS2::FlagByLayer), RS2::WidthByLayer, RS2::LineByLayer);
 
-            RS_DEBUG->print( "\ndxfLine: " );
-            LC_LOG << dxfLine.toLatin1().data();
+            LC_LOG << "\ndxfLine: \n" << dxfLine.toLatin1().data();
 
             // $-Setting in the header of DXF found
             // RVT_PORT changed all occurenses of if (dxfline && ....) to if (dxfline.size() ......)
