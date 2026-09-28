@@ -32,6 +32,8 @@
 #include <vector>
 
 #include "lc_action_draw_polygon_center_corner.h"
+#include "lc_action_draw_rectangle_1point.h"
+#include "lc_action_draw_rectangle_2points.h"
 #include "lc_action_draw_star.h"
 #include "lc_actiontestsupport.h"
 #include "rs_arc.h"
@@ -58,6 +60,47 @@ public:
     using LC_ActionDrawPolygonBase::PolygonInfo;
     using LC_ActionDrawPolygonBase::createShapePolyline;
 };
+
+class Rectangle1PointProbe final : public LC_ActionDrawRectangle1Point {
+public:
+    explicit Rectangle1PointProbe(LC_ActionContext* context) : LC_ActionDrawRectangle1Point(context) {}
+
+    using LC_ActionDrawRectangle1Point::createPolyline;
+};
+
+class Rectangle2PointsProbe final : public LC_ActionDrawRectangle2Points {
+public:
+    explicit Rectangle2PointsProbe(LC_ActionContext* context) : LC_ActionDrawRectangle2Points(context) {}
+
+    using LC_ActionDrawRectangle2Points::createPolyline;
+    using LC_ActionDrawRectangle2Points::m_corner1;
+};
+
+/** A 10 x 4 rectangle as the 1-point tool makes it about (5, 2), straight or with corners of radius 1. */
+std::unique_ptr<RS_Polyline> rectangle1Point(const int corners) {
+    lc::test::ActionFixture<Rectangle1PointProbe> f;
+    f.m_action->setInsertionPointSnapMode(LC_ActionDrawRectangle1Point::SNAP_MIDDLE);
+    f.m_action->setWidth(10.0);
+    f.m_action->setHeight(4.0);
+    f.m_action->setCornersMode(corners);
+    f.m_action->setCornerRadius(1.0);
+    std::unique_ptr<RS_Polyline> result{f.m_action->createPolyline(RS_Vector{5.0, 2.0}).resultingPolyline};
+    REQUIRE(result != nullptr);
+    result->setParent(nullptr); // outlives the drawing it was made for
+    return result;
+}
+
+/** The rectangle (0, 0)-(10, 4) as the 2-point tool makes it, straight or with corners of radius 1. */
+std::unique_ptr<RS_Polyline> rectangle2Points(const int corners) {
+    lc::test::ActionFixture<Rectangle2PointsProbe> f;
+    f.m_action->setCornersMode(corners);
+    f.m_action->setCornerRadius(1.0);
+    f.m_action->m_corner1 = RS_Vector{0.0, 0.0};
+    std::unique_ptr<RS_Polyline> result{f.m_action->createPolyline(RS_Vector{10.0, 4.0}).resultingPolyline};
+    REQUIRE(result != nullptr);
+    result->setParent(nullptr);
+    return result;
+}
 
 /**
  * A 5-ray star about the origin, as Draw > Star makes it: outer vertices
@@ -250,5 +293,30 @@ TEST_CASE("A star and a polygon are closed polylines, and their offsets close", 
                           {4.0876, -5.6261}, {0, -2.7817},      {-4.0876, -5.6261}, {-2.6456, -0.8596},
                           {-6.6139, 2.1490}, {-1.6350, 2.2505}},
                          1e-4));
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("The 1- and 2-point rectangles are closed polylines, and their offsets close", "[offset][rectangle]") {
+    using Corners = LC_ActionDrawRectangleAbstract::CornersMode;
+    SECTION("straight corners: four segments") {
+        for (const auto& shape : {rectangle1Point(Corners::CORNER_STRAIGHT), rectangle2Points(Corners::CORNER_STRAIGHT)}) {
+            checkClosed(*shape, 4);
+            CHECK(samePoints(verticesOf(*shape), {{0, 0}, {10, 0}, {10, 4}, {0, 4}}, 1e-9));
+        }
+    }
+    SECTION("rounded corners: closed, as they were") {
+        for (const auto& shape : {rectangle1Point(Corners::CORNER_RADIUS), rectangle2Points(Corners::CORNER_RADIUS)}) {
+            CHECK(shape->isClosed());
+            CHECK(shape->count() == 8);
+            CHECK(shape->last()->getEndpoint().distanceTo(shape->getStartpoint()) < 1e-9);
+        }
+    }
+    SECTION("grown by 1: one closed rectangle") {
+        auto shape = rectangle2Points(Corners::CORNER_STRAIGHT);
+        OffsetResult result;
+        offsetPolyline(*shape, {5.0, -1.0}, 1.0, result);
+        CHECK(result.polyline->isClosed());
+        CHECK(samePoints(verticesOf(*result.polyline), {{-1, -1}, {11, -1}, {11, 5}, {-1, 5}}, 1e-9));
     }
 }
