@@ -124,21 +124,31 @@ namespace LC_ScrollModel {
      *     (unless the band was grown to its minimum length); the converse, again, only to
      *     within one thumb pixel.
      * The band always stays inside the groove, as the scroll region is content +/- L/2.
+     *
+     * QG_ScrollBar paints the band, with the thumb cut out, whenever it is switched on and
+     * the drawing has content, so what shows is the part of the drawing's range outside
+     * the view: zoomed in, the track on both sides of the thumb up to the drawing's ends;
+     * at zoom extents (the view covers the drawing) little or nothing, as the band lies
+     * under the thumb; far away, a short stripe at the opposite end from the thumb.
      */
     Band bandPixels(const ThumbGeometry& g, bool hasContent, double a, double b);
 
+    /** where a content interval lies relative to the view along one axis */
+    enum class Placement {
+        Covered,  // the view spans all of the content
+        Overlaps, // some of the content is in view, some is not
+        Before,   // all of the content lies before the view's start (left, or below)
+        After     // all of the content lies after the view's end (right, or above)
+    };
+
     /**
-     * Whether the band for content ticks [\p a, \p b] tells the user anything at bar
-     * value \p value and page step \p pageStep: only once the view [value, value +
-     * pageStep] and the content are disjoint, i.e. the view has left the drawing along
-     * this bar. While any of the drawing is in view the user is not lost, and the band
-     * would mislead: with the view inside the content it is just "drawing +/- half a
-     * view", the same for every drawing and pan position, tinting most of the track
-     * when zoomed in; with the view covering the content it lies under the thumb; and
-     * with the view straddling an edge it covers about (1 - 1/zoom) of the track (99%
-     * at 100x), flashing on and off as the view crosses the edge by one pixel.
+     * Where the content [\p contentMin, \p contentMax] lies relative to the view
+     * [\p viewMin, \p viewMax], both in the same (increasing) coordinates. Touching
+     * counts as in view: content that ends exactly where the view starts has its edge on
+     * the view's border, so it Overlaps (or is Covered, when it has no length); it is
+     * Before only once it ends strictly before the view starts, and After likewise.
      */
-    bool bandIsInformative(double a, double b, int value, int pageStep);
+    Placement placement(double contentMin, double contentMax, double viewMin, double viewMax);
 }
 
 #endif

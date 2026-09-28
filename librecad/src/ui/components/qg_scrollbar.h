@@ -30,6 +30,7 @@
 #include <functional>
 
 #include <QColor>
+#include <QRegion>
 #include <QScrollBar>
 #include <QString>
 #include <QWheelEvent>
@@ -49,9 +50,10 @@ class QStyleOptionSlider;
  * along the groove's outer edge from the drawing's first to its last tick, mapped
  * through the style's own thumb geometry (LC_ScrollModel::bandPixels()), so that the
  * thumb lies inside the band whenever the view lies inside the drawing. It is painted
- * only once the view has left the drawing along the bar, after the style's own
- * painting, never over the thumb, and never changes hit-testing. A tooltip provider
- * can add the distance the clamped thumb can no longer show.
+ * whenever it is switched on and the drawing has content, after the style's own
+ * painting, with the thumb cut out, so it shows the parts of the drawing's range
+ * outside the view, on either side of the thumb; it never changes hit-testing. A
+ * tooltip provider can add the distance the clamped thumb can no longer show.
  */
 class QG_ScrollBar: public QScrollBar {
     Q_OBJECT
@@ -86,14 +88,15 @@ public:
         return m_bandEnabled;
     }
     /**
-     * The stripe in this bar's logical pixels, before the thumb is cut out of it and
-     * whether or not the view currently needs it; a null rect when there is no band
-     * (disabled, empty drawing, bar too small).
+     * The stripe in this bar's logical pixels, before the thumb is cut out of it; a null
+     * rect when there is no band (disabled, empty drawing, bar too small).
      */
     QRect contentBandRect() const;
     /**
-     * Whether the stripe is painted now: there is a band, and the view and the drawing
-     * are disjoint along the bar (LC_ScrollModel::bandIsInformative()).
+     * Whether any of the stripe is painted now: there is a band, and some of it lies
+     * outside the thumb cut-out (paintedBandRegion()). Zoomed in, that is the drawing's
+     * range on either side of the thumb; at zoom extents the band lies under the thumb
+     * and nothing is painted.
      */
     bool isContentBandPainted() const;
     /** the stripe colour for this bar's palette (cached, see contentBandColorFor()) */
@@ -105,9 +108,7 @@ public:
      * candidates are lightened first on a dark palette. Always opaque, 8 bits per channel.
      */
     static QColor contentBandColorFor(const QPalette& palette);
-    /** WCAG 2 contrast ratio of two opaque colours, 1..21 */
-    static double contrastRatio(const QColor& a, const QColor& b);
-    /** WCAG 2.1 minimum contrast for non-text graphics */
+    /** WCAG 2.1 minimum contrast for non-text graphics (see RS_Color::contrastRatio()) */
     static constexpr double kMinBandContrast = 3.0;
 
     /**
@@ -148,6 +149,12 @@ private:
     }
 
     QRectF contentBandStripe(const QStyleOptionSlider& option) const;
+    /**
+     * What paintEvent() paints of the band now: the stripe (returned in \p stripe) minus
+     * the thumb, grown one pixel along the bar on each side. Empty when nothing is
+     * painted; the setting and the content are checked before any style geometry.
+     */
+    QRegion paintedBandRegion(QRectF* stripe = nullptr) const;
 
     QSize m_sizeHintCache{};
     bool m_bandEnabled = kContentBandDefault;

@@ -99,7 +99,7 @@
              </sizepolicy>
             </property>
             <property name="toolTip">
-             <string>Marks where the drawing lies along a scrollbar once the view has left it, and gives its distance in the scrollbar's tooltip, so it can be found again when panned far away</string>
+             <string>Marks the drawing's range along each scrollbar where it lies outside the view, and gives the ranges and the drawing's distance in the scrollbar's tooltip, so the drawing can be found again when panned far away</string>
             </property>
             <property name="text">
              <string>Show drawing extents on scrollbars</string>

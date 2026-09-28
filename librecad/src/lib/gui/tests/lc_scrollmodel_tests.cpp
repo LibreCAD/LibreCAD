@@ -323,8 +323,6 @@ TEST_CASE("Far-panned views keep the tick interval exact and the band apart from
             INFO("widths " << widths << " side " << side << " pixelsPerTick " << s.pixelsPerTick);
             REQUIRE(s.valid);
             checkTicksReproduceContent(s, 0.0, extent);
-            // far away the band is always informative
-            CHECK(LC_ScrollModel::bandIsInformative(startTick(s), endTick(s), s.value, s.pageStep));
             for (const int minLength : {9, 20, 26, 34}) {
                 const SimThumb thumb = simThumbFor(s, minLength);
                 const Band band = bandFor(s, thumb);
@@ -439,44 +437,28 @@ TEST_CASE("View covers narrow content => thumb covers the band, and back within 
     CHECK(failures == 0);
 }
 
-TEST_CASE("The band is painted only once the view and the drawing are disjoint", "[navigation][2945-band]") {
-    using LC_ScrollModel::bandIsInformative;
-    // content ticks [400, 2400], page 800
-    CHECK(!bandIsInformative(400.0, 2400.0, 400, 800));   // inside, at the start edge
-    CHECK(!bandIsInformative(400.0, 2400.0, 1000, 800));  // inside
-    CHECK(!bandIsInformative(400.0, 2400.0, 1600, 800));  // inside, at the end edge
-    CHECK(!bandIsInformative(400.0, 2400.0, 399, 800));   // straddles the start
-    CHECK(!bandIsInformative(400.0, 2400.0, 1601, 800));  // straddles the end
-    CHECK(!bandIsInformative(400.0, 2400.0, -399, 800));  // one tick of the drawing in view
-    CHECK(!bandIsInformative(400.0, 2400.0, 2399, 800));
-    CHECK(bandIsInformative(400.0, 2400.0, -400, 800));   // the view ends where the drawing starts
-    CHECK(bandIsInformative(400.0, 2400.0, 2400, 800));   // the view starts where the drawing ends
-    CHECK(bandIsInformative(400.0, 2400.0, 5000, 800));   // past the end
-    CHECK(bandIsInformative(400.0, 2400.0, 0, 300));      // before the start
-    // narrow content [400, 500]: covered, straddled, then left
-    CHECK(!bandIsInformative(400.0, 500.0, 0, 800));
-    CHECK(!bandIsInformative(400.0, 500.0, 400, 100));    // exactly the view: inside and covers
-    CHECK(!bandIsInformative(400.0, 500.0, 450, 800));
-    CHECK(!bandIsInformative(400.0, 500.0, 350, 100));
-    CHECK(bandIsInformative(400.0, 500.0, 500, 100));
-    CHECK(bandIsInformative(400.0, 500.0, 200, 100));
-    // fractional ticks are not rounded
-    CHECK(bandIsInformative(1200.5, 2400.0, 400, 800));
-    CHECK(!bandIsInformative(1199.5, 2400.0, 400, 800));
-    CHECK(bandIsInformative(0.0, 399.5, 400, 800));
-    CHECK(!bandIsInformative(0.0, 400.5, 400, 800));
-    // the states compute() produces: suppressed while any of the drawing [0, 2000] is in
-    // view (inside, covered or straddled), shown once the view has left it
-    for (const double viewStart : {-799.0, -400.0, 0.0, 10.0, 600.0, 1200.0, 1600.0, 1999.0}) {
-        const State s = LC_ScrollModel::compute({true, 0.0, 2000.0, viewStart, 800.0});
-        INFO("view start " << viewStart);
-        CHECK(!bandIsInformative(startTick(s), endTick(s), s.value, s.pageStep));
-    }
-    for (const double viewStart : {-5000.0, -800.0, 2000.0, 2001.0, 9000.0}) {
-        const State s = LC_ScrollModel::compute({true, 0.0, 2000.0, viewStart, 800.0});
-        INFO("view start " << viewStart);
-        CHECK(bandIsInformative(startTick(s), endTick(s), s.value, s.pageStep));
-    }
+TEST_CASE("Placement of the content relative to the view; touching counts as in view", "[navigation][2945-band]") {
+    using LC_ScrollModel::Placement;
+    using LC_ScrollModel::placement;
+    // content [0, 100]
+    CHECK(placement(0.0, 100.0, -50.0, 150.0) == Placement::Covered);
+    CHECK(placement(0.0, 100.0, 0.0, 100.0) == Placement::Covered);    // exactly the view
+    CHECK(placement(0.0, 100.0, 20.0, 80.0) == Placement::Overlaps);   // the view inside it
+    CHECK(placement(0.0, 100.0, 50.0, 150.0) == Placement::Overlaps);  // straddles its end
+    CHECK(placement(0.0, 100.0, -50.0, 50.0) == Placement::Overlaps);  // straddles its start
+    // the view exactly touching either edge: the edge lies on the view's border, in view
+    CHECK(placement(0.0, 100.0, 100.0, 200.0) == Placement::Overlaps);
+    CHECK(placement(0.0, 100.0, -100.0, 0.0) == Placement::Overlaps);
+    // strictly past either edge
+    CHECK(placement(0.0, 100.0, 100.5, 200.0) == Placement::Before);
+    CHECK(placement(0.0, 100.0, 1.0e6, 1.0e6 + 100.0) == Placement::Before);
+    CHECK(placement(0.0, 100.0, -100.0, -0.5) == Placement::After);
+    CHECK(placement(0.0, 100.0, -1.0e6 - 100.0, -1.0e6) == Placement::After);
+    // zero-length content (a line along the other axis) on the view's border is covered
+    CHECK(placement(100.0, 100.0, 100.0, 200.0) == Placement::Covered);
+    CHECK(placement(100.0, 100.0, 0.0, 100.0) == Placement::Covered);
+    CHECK(placement(100.0, 100.0, 100.5, 200.0) == Placement::Before);
+    CHECK(placement(100.0, 100.0, 0.0, 99.5) == Placement::After);
 }
 
 TEST_CASE("The band is the linear projection while the thumb is proportional", "[navigation][2945-band]") {

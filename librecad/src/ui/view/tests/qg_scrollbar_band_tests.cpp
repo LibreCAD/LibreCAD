@@ -17,8 +17,8 @@
 **********************************************************************/
 
 // Issue #2945 (P18): each drawing-view scrollbar marks where the drawing lies along it,
-// with a thin stripe on the groove, painted only once the view has left the drawing along
-// that bar.
+// with a thin stripe on the groove, painted whenever the drawing has content, with the
+// thumb cut out: it shows the parts of the drawing's range outside the view.
 
 #include <algorithm>
 #include <cmath>
@@ -26,6 +26,7 @@
 #include <set>
 #include <vector>
 
+#include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 
 #include <QCheckBox>
@@ -39,6 +40,7 @@
 #include "qg_dlg_hatch.h"
 #include "qg_dlgoptionsgeneral.h"
 #include "qg_scrollbar.h"
+#include "rs_color.h"
 #include "rs_settings.h"
 #include "rs_units.h"
 
@@ -255,6 +257,42 @@ namespace {
         CHECK(identicalIn(off, on, thumbRect(bar)));
     }
 
+    /// band pixels along \p bar outside the thumb cut-out (the thumb, one pixel wider each side)
+    int bandPixelsOutsideThumb(QScrollBar* bar) {
+        const QRect bandRect = band(bar)->contentBandRect();
+        if (bandRect.isNull()) {
+            return 0;
+        }
+        const auto [b0, b1] = span(bar, bandRect);
+        const auto [t0, t1] = span(bar, thumbRect(bar));
+        int count = 0;
+        for (int c = b0; c < b1; ++c) {
+            count += c < t0 - 1 || c >= t1 + 1 ? 1 : 0;
+        }
+        return count;
+    }
+
+    /**
+     * The paint rule: the stripe is painted exactly when some of the band lies outside the
+     * thumb cut-out, and it is then the band minus the cut-out (checkPaintedBand()), within
+     * 1 px of the band formula; otherwise the bar is pixel-identical to the band disabled.
+     * \return whether it is painted
+     */
+    bool checkBandAsPainted(const ViewFixture& f, QScrollBar* bar) {
+        const auto expected = expectedBand(f, bar);
+        const auto actual = span(bar, band(bar)->contentBandRect());
+        CHECK(std::abs(actual.first - expected.first) <= 1);
+        CHECK(std::abs(actual.second - expected.second) <= 1);
+        const bool painted = bandPixelsOutsideThumb(bar) > 0;
+        CHECK(band(bar)->isContentBandPainted() == painted);
+        if (painted) {
+            checkPaintedBand(bar, actual);
+        } else {
+            checkUnpainted(bar);
+        }
+        return painted;
+    }
+
     bool viewInsideDrawing(const ViewFixture& f, const QScrollBar* bar) {
         const RS_Vector factor = f.viewport()->getFactor();
         if (horizontal(bar)) {
@@ -342,7 +380,7 @@ namespace {
     };
 }
 
-TEST_CASE("View inside the drawing: bar pixels identical to the band disabled", "[navigation][2945-band]") {
+TEST_CASE("Zoomed in: the stripe spans the drawing's range on both sides of the thumb", "[navigation][2945-band]") {
     const bool qtReady = lc::test::application() != nullptr;
     REQUIRE(qtReady);
     ViewFixture f;
@@ -354,24 +392,40 @@ TEST_CASE("View inside the drawing: bar pixels identical to the band disabled", 
         for (QScrollBar* bar : {f.hBar, f.vBar}) {
             INFO("zoom " << zoom << " bar " << (horizontal(bar) ? "H" : "V"));
             REQUIRE(viewInsideDrawing(f, bar));
-            // there is a band (the thumb lies inside it) ...
-            CHECK(!band(bar)->contentBandRect().isNull());
-            // ... but it tells nothing, so nothing is painted
-            checkUnpainted(bar);
+            const QRect bandRect = band(bar)->contentBandRect();
+            REQUIRE(!bandRect.isNull());
+            const auto [b0, b1] = span(bar, bandRect);
+            const auto [t0, t1] = span(bar, thumbRect(bar));
+            INFO("band [" << b0 << ", " << b1 << ") thumb [" << t0 << ", " << t1 << ")");
+            // the view is centred in the drawing: the band reaches past the thumb on both sides
+            CHECK(b0 < t0 - 1);
+            CHECK(b1 > t1 + 1);
+            REQUIRE(band(bar)->isContentBandPainted());
+            checkPaintedBand(bar, expectedBand(f, bar));
+            // painted on both sides of the thumb
+            const auto [off, on] = grabOffOn(bar);
+            bool before = false;
+            bool after = false;
+            for (const QPoint& p : changedPixels(off, on)) {
+                before = before || along(bar, p) < t0 - 1;
+                after = after || along(bar, p) >= t1 + 1;
+            }
+            CHECK(before);
+            CHECK(after);
         }
-        // panning around inside the drawing changes nothing either
+        // panning around inside the drawing keeps it painted
         f.viewport()->zoomPan(f.viewport()->getWidth() / 5, -f.viewport()->getHeight() / 5);
         pump();
         for (QScrollBar* bar : {f.hBar, f.vBar}) {
+            INFO("panned, zoom " << zoom << " bar " << (horizontal(bar) ? "H" : "V"));
             if (viewInsideDrawing(f, bar)) {
-                checkUnpainted(bar);
+                CHECK(checkBandAsPainted(f, bar));
             }
         }
     }
 }
 
-TEST_CASE("Zoom Extents (the view covers the drawing): bar pixels identical to the band disabled",
-          "[navigation][2945-band]") {
+TEST_CASE("Zoom Extents (the view covers the drawing): the band lies under the thumb", "[navigation][2945-band]") {
     const bool qtReady = lc::test::application() != nullptr;
     REQUIRE(qtReady);
     ViewFixture f;
@@ -385,7 +439,14 @@ TEST_CASE("Zoom Extents (the view covers the drawing): bar pixels identical to t
         for (QScrollBar* bar : {f.hBar, f.vBar}) {
             INFO("zoom out " << zoomOut << " bar " << (horizontal(bar) ? "H" : "V"));
             REQUIRE(viewCoversDrawing(f, bar));
-            checkUnpainted(bar);
+            const auto [b0, b1] = span(bar, band(bar)->contentBandRect());
+            const auto [t0, t1] = span(bar, thumbRect(bar));
+            INFO("band [" << b0 << ", " << b1 << ") thumb [" << t0 << ", " << t1 << ")");
+            CHECK(b1 > b0);
+            // the thumb covers the band (within the cut-out's extra pixel), so nothing shows
+            CHECK(b0 >= t0 - 1);
+            CHECK(b1 <= t1 + 1);
+            CHECK(!checkBandAsPainted(f, bar));
         }
     }
 }
@@ -437,13 +498,12 @@ TEST_CASE("Panned 50 widths away: a stripe at the far end, never thumb-shaped", 
     }
 }
 
-TEST_CASE("Straddling the right edge: bar pixels identical to the band disabled", "[navigation][2945-band]") {
+TEST_CASE("Straddling the right edge: the stripe runs from the drawing's start to the thumb",
+          "[navigation][2945-band]") {
     const bool qtReady = lc::test::application() != nullptr;
     REQUIRE(qtReady);
     ViewFixture f;
     useFusion(f);
-    // at high zoom a band would cover about (1 - 1/zoom) of the track here, and flash on and
-    // off as the view crosses the edge: part of the drawing is in view, so nothing is painted
     for (const double zoom : {4.0, 10.0, 100.0}) {
         f.viewport()->zoomAuto(false, true);
         f.viewport()->zoomIn(zoom, RS_Vector(100, 25)); // the right edge stays in view
@@ -453,18 +513,19 @@ TEST_CASE("Straddling the right edge: bar pixels identical to the band disabled"
         REQUIRE(!viewInsideDrawing(f, bar));
         REQUIRE(!viewCoversDrawing(f, bar));
         REQUIRE(!viewDisjointFromDrawing(f, bar));
-        // there is a band, reaching into the thumb ...
         const auto expected = expectedBand(f, bar);
         const auto [t0, t1] = span(bar, thumbRect(bar));
         INFO("band [" << expected.first << ", " << expected.second << ") thumb [" << t0 << ", " << t1 << ")");
-        CHECK(!band(bar)->contentBandRect().isNull());
+        // the drawing's range left of the view: the band starts left of the thumb and ends
+        // under it, never past it
         CHECK(expected.first < t0 - 1);
         CHECK(expected.second > t0);
-        // ... but none of it is painted
-        checkUnpainted(bar);
-        // the vertical bar: the view is inside the drawing's height, nothing painted
+        CHECK(expected.second <= t1 + 1);
+        REQUIRE(band(bar)->isContentBandPainted());
+        checkPaintedBand(bar, expected);
+        // the vertical bar: the view is inside the drawing's height, painted both sides
         REQUIRE(viewInsideDrawing(f, f.vBar));
-        checkUnpainted(f.vBar);
+        CHECK(checkBandAsPainted(f, f.vBar));
     }
 }
 
@@ -498,8 +559,8 @@ TEST_CASE("View entirely past the right edge: the stripe covers the drawing's ra
             }
             checkPaintedBand(bar, expected);
             // the vertical bar: the view is still inside the drawing's height
-            REQUIRE(!viewDisjointFromDrawing(f, f.vBar));
-            checkUnpainted(f.vBar);
+            REQUIRE(viewInsideDrawing(f, f.vBar));
+            CHECK(checkBandAsPainted(f, f.vBar));
         }
     }
 }
@@ -531,19 +592,13 @@ TEST_CASE("The painted stripe matches the band formula within 1 px", "[navigatio
         pump();
         for (QScrollBar* bar : {f.hBar, f.vBar}) {
             INFO(c.name << " bar " << (horizontal(bar) ? "H" : "V"));
-            const auto expected = expectedBand(f, bar);
-            const auto actual = span(bar, band(bar)->contentBandRect());
-            CHECK(std::abs(actual.first - expected.first) <= 1);
-            CHECK(std::abs(actual.second - expected.second) <= 1);
+            painted += checkBandAsPainted(f, bar) ? 1 : 0;
             if (viewDisjointFromDrawing(f, bar)) {
-                ++painted;
-                checkPaintedBand(bar, expected);
-            } else {
-                checkUnpainted(bar);
+                CHECK(band(bar)->isContentBandPainted());
             }
         }
     }
-    CHECK(painted >= 8);
+    CHECK(painted >= 10);
 }
 
 TEST_CASE("The thumb lies inside the band whenever the view lies inside the drawing",
@@ -593,9 +648,15 @@ TEST_CASE("The thumb lies inside the band whenever the view lies inside the draw
                 if (t0 >= b0 + 2 && t1 <= b1 - 2) {
                     CHECK(inside);
                 }
-                // the paint rule: painted exactly while the view has left the drawing
-                CHECK(band(bar)->isContentBandPainted() == viewDisjointFromDrawing(f, bar));
-                paintedSamples += band(bar)->isContentBandPainted() ? 1 : 0;
+                // the paint rule: painted exactly while some of the band lies outside the
+                // thumb cut-out; always so once the view has left the drawing, and while
+                // zoomed in with the view inside it
+                const bool painted = band(bar)->isContentBandPainted();
+                CHECK(painted == (bandPixelsOutsideThumb(bar) > 0));
+                if (viewDisjointFromDrawing(f, bar) || (inside && zoom > 1.0)) {
+                    CHECK(painted);
+                }
+                paintedSamples += painted ? 1 : 0;
                 f.viewport()->zoomPan(h ? -step : 0, h ? 0 : step);
             }
         }
@@ -697,11 +758,7 @@ TEST_CASE("Bar steps keep the band and the range in one tick space", "[navigatio
                                                                : QStyle::SC_ScrollBarAddLine).center());
             }
             INFO("bar " << (horizontal(bar) ? "H" : "V") << " step " << i << " value " << bar->value());
-            const auto expected = expectedBand(f, bar);
-            const auto actual = span(bar, band(bar)->contentBandRect());
-            CHECK(std::abs(actual.first - expected.first) <= 1);
-            CHECK(std::abs(actual.second - expected.second) <= 1);
-            CHECK(band(bar)->isContentBandPainted() == viewDisjointFromDrawing(f, bar));
+            checkBandAsPainted(f, bar);
         }
     }
 }
@@ -840,7 +897,7 @@ TEST_CASE("Stripe contrast is at least 3:1 against the groove, Fusion light and 
             const QColor expected = QG_ScrollBar::contentBandColorFor(palette);
             CHECK(band(bar)->contentBandColor() == expected);
             CHECK(expected.alpha() == 255);
-            CHECK(QG_ScrollBar::contrastRatio(expected, palette.color(QPalette::Window)) >= 3.0);
+            CHECK(RS_Color::contrastRatio(expected, palette.color(QPalette::Window)) >= 3.0);
 
             const QImage image = grabBar(bar);
             const QRect stripe = band(bar)->contentBandRect();
@@ -855,9 +912,9 @@ TEST_CASE("Stripe contrast is at least 3:1 against the groove, Fusion light and 
             const QColor grooveColor = image.pixelColor(static_cast<int>(groovePoint.x() * dpr),
                                                         static_cast<int>(groovePoint.y() * dpr));
             INFO("stripe " << stripeColor.name().toStdString() << " groove " << grooveColor.name().toStdString()
-                 << " contrast " << QG_ScrollBar::contrastRatio(stripeColor, grooveColor));
+                 << " contrast " << RS_Color::contrastRatio(stripeColor, grooveColor));
             CHECK(stripeColor == expected);
-            CHECK(QG_ScrollBar::contrastRatio(stripeColor, grooveColor) >= 3.0);
+            CHECK(RS_Color::contrastRatio(stripeColor, grooveColor) >= 3.0);
         }
         if (previous.isValid()) {
             CHECK(band(f.hBar)->contentBandColor() != previous);
@@ -882,7 +939,7 @@ TEST_CASE("The stripe colour keeps 3:1 contrast for any accent", "[navigation][2
             const QColor color = QG_ScrollBar::contentBandColorFor(palette);
             INFO((dark ? "dark " : "light ") << accent.name().toStdString() << " -> " << color.name().toStdString());
             CHECK(color.alpha() == 255);
-            CHECK(QG_ScrollBar::contrastRatio(color, palette.color(QPalette::Window)) >= 3.0);
+            CHECK(RS_Color::contrastRatio(color, palette.color(QPalette::Window)) >= 3.0);
         }
     }
     // a good accent is used as it is (light) and lightened (dark)
@@ -892,7 +949,7 @@ TEST_CASE("The stripe colour keeps 3:1 contrast for any accent", "[navigation][2
     light.setColor(QPalette::Accent, QColor(0, 90, 200));
 #endif
     CHECK(QG_ScrollBar::contentBandColorFor(light) == QColor(0, 90, 200));
-    CHECK(QG_ScrollBar::contrastRatio(Qt::black, Qt::white) == 21.0);
+    CHECK(RS_Color::contrastRatio(Qt::black, Qt::white) == Catch::Approx(21.0));
 }
 
 TEST_CASE("The tooltip gives both ranges and where the drawing is", "[navigation][2945-band]") {
@@ -936,7 +993,13 @@ TEST_CASE("The tooltip gives both ranges and where the drawing is", "[navigation
         QString h; // expected: a direction, or the whole where-text
         QString v;
     };
-    const QString covers = "view shows the whole drawing"; // at zoom extents, along the other axis
+    const QString covers = "covers"; // at zoom extents, along the other axis
+    auto coversText = [](const bool h) {
+        return h ? QString("view spans the drawing's X range") : QString("view spans the drawing's Y range");
+    };
+    auto inViewText = [](const bool h) {
+        return h ? QString("drawing's X range is in view") : QString("drawing's Y range is in view");
+    };
     const std::vector<Case> cases{
         {"view right", 5.0, 0.0, "to the left", covers},
         {"view left", -5.0, 0.0, "to the right", covers},
@@ -956,7 +1019,7 @@ TEST_CASE("The tooltip gives both ranges and where the drawing is", "[navigation
             const QString where = text.mid(expectedPrefix(h).size());
             const QString want = h ? c.h : c.v;
             if (want == covers) {
-                CHECK(where == covers);
+                CHECK(where == coversText(h));
                 continue;
             }
             ++distances;
@@ -965,7 +1028,8 @@ TEST_CASE("The tooltip gives both ranges and where the drawing is", "[navigation
             const double drawingMax = h ? 100.0 : 50.0;
             const double distance = (want == "to the left" || want == "down") ? v0 - drawingMax : drawingMin - v1;
             const QString lengths = h ? "view widths" : "view heights";
-            const QString prefix = "drawing is " + linear(distance) + " " + want + " (≈";
+            const QString prefix = QString(h ? "drawing's X range is " : "drawing's Y range is ") + linear(distance)
+                + " " + want + " (≈";
             CHECK(where.startsWith(prefix));
             CHECK(where.endsWith(" " + lengths + ")"));
             const double count = where.mid(prefix.size()).section(' ', 0, 0).toDouble();
@@ -982,18 +1046,19 @@ TEST_CASE("The tooltip gives both ranges and where the drawing is", "[navigation
         INFO(band(f.hBar)->providedToolTip().toStdString());
         CHECK((v0 - 100.0) / (v1 - v0) < 0.05);
         CHECK(band(f.hBar)->providedToolTip()
-              == expectedPrefix(true) + "drawing is " + linear(v0 - 100.0) + " to the left (less than 0.1 view widths)");
+              == expectedPrefix(true) + "drawing's X range is " + linear(v0 - 100.0)
+                     + " to the left (less than 0.1 view widths)");
     }
     // in view (inside the drawing) and covering it
     f.viewport()->zoomAuto(false, true);
     f.viewport()->zoomIn(4.0, RS_Vector(50, 25));
     pump();
-    CHECK(band(f.hBar)->providedToolTip() == expectedPrefix(true) + "drawing is in view");
-    CHECK(band(f.vBar)->providedToolTip() == expectedPrefix(false) + "drawing is in view");
+    CHECK(band(f.hBar)->providedToolTip() == expectedPrefix(true) + inViewText(true));
+    CHECK(band(f.vBar)->providedToolTip() == expectedPrefix(false) + inViewText(false));
     f.viewport()->zoomAuto(false, true);
     pump();
-    CHECK(band(f.hBar)->providedToolTip() == expectedPrefix(true) + "view shows the whole drawing");
-    CHECK(band(f.vBar)->providedToolTip() == expectedPrefix(false) + "view shows the whole drawing");
+    CHECK(band(f.hBar)->providedToolTip() == expectedPrefix(true) + coversText(true));
+    CHECK(band(f.vBar)->providedToolTip() == expectedPrefix(false) + coversText(false));
 
     // the bar answers QEvent::ToolTip itself
     QHelpEvent help(QEvent::ToolTip, f.hBar->rect().center(), f.hBar->mapToGlobal(f.hBar->rect().center()));
@@ -1019,11 +1084,106 @@ TEST_CASE("The tooltip gives both ranges and where the drawing is", "[navigation
     CHECK(!silent.isAccepted());
     LC_SET_ONE("Appearance", "ScrollBarContentBand", true);
     f.view->loadSettings();
-    CHECK(band(f.hBar)->providedToolTip().startsWith(expectedPrefix(true) + "drawing is "));
-    CHECK(band(f.vBar)->providedToolTip().startsWith(expectedPrefix(false) + "drawing is "));
+    CHECK(band(f.hBar)->providedToolTip().startsWith(expectedPrefix(true) + "drawing's X range is "));
+    CHECK(band(f.vBar)->providedToolTip().startsWith(expectedPrefix(false) + "drawing's Y range is "));
     // removing the provider
     f.view->setScrollBarToolTips(false);
     CHECK(band(f.hBar)->providedToolTip().isEmpty());
+}
+
+TEST_CASE("Tooltip: a view exactly touching the drawing's edge counts as in view, on each side",
+          "[navigation][2945-band]") {
+    const bool qtReady = lc::test::application() != nullptr;
+    REQUIRE(qtReady);
+    AppearanceSettingGuard guard("ScrollBarContentBand");
+    LC_SET_ONE("Appearance", "ScrollBarContentBand", true);
+    ViewFixture f;
+    f.view->loadSettings();
+    useFusion(f);
+    f.view->setScrollBarToolTips(true);
+    const RS2::Unit unit = f.graphic->getUnit();
+    const RS2::LinearFormat format = f.graphic->getLinearFormat();
+    const int precision = f.graphic->getLinearPrecision();
+    auto linear = [&](const double v) {
+        return RS_Units::formatLinear(v, unit, format, precision);
+    };
+    // 4 px per unit: the 100 x 50 drawing is 400 x 200 px, and every edge lands on a whole
+    // pixel, so a view edge can meet a drawing edge exactly
+    const double scale = 4.0;
+    const int width = f.viewport()->getWidth();
+    const int height = f.viewport()->getHeight();
+    const int ox0 = f.ox();
+    const int oy0 = f.oy();
+    struct Case {
+        const char* name;
+        bool horizontal;
+        int offset;       // offset x (H) or y (V); the other offset stays put
+        const char* where; // "in view", or the direction of the drawing's range
+        double distance;
+    };
+    const std::vector<Case> cases{
+        // the view starts exactly at the drawing's right edge (x = 100), then a pixel past it
+        {"touching the right edge", true, -400, "in view", 0.0},
+        {"a pixel past the right edge", true, -401, "to the left", 0.25},
+        // the view ends exactly at the drawing's left edge (x = 0), then a pixel before it
+        {"touching the left edge", true, width, "in view", 0.0},
+        {"a pixel before the left edge", true, width + 1, "to the right", 0.25},
+        // the view's bottom exactly at the drawing's top (y = 50), then a pixel above it
+        {"touching the top edge", false, -200, "in view", 0.0},
+        {"a pixel above the top edge", false, -201, "down", 0.25},
+        // the view's top exactly at the drawing's bottom (y = 0), then a pixel below it
+        {"touching the bottom edge", false, height, "in view", 0.0},
+        {"a pixel below the bottom edge", false, height + 1, "up", 0.25},
+    };
+    for (const Case& c : cases) {
+        f.viewport()->setOffsetAndFactor(c.horizontal ? c.offset : ox0, c.horizontal ? oy0 : c.offset, scale);
+        pump();
+        const QString text = f.view->scrollBarToolTip(c.horizontal);
+        INFO(c.name << ": " << text.toStdString());
+        // the view range: exactly on the drawing's edge (or a quarter unit past it)
+        const double viewMin = -(c.horizontal ? f.ox() : f.oy()) / scale;
+        const double viewMax = ((c.horizontal ? width : height) - (c.horizontal ? f.ox() : f.oy())) / scale;
+        const double drawingMax = c.horizontal ? 100.0 : 50.0;
+        const QString axis = c.horizontal ? "X" : "Y";
+        const QString where = QString(c.where) == "in view"
+            ? QString("drawing's " + axis + " range is in view")
+            : QString("drawing's " + axis + " range is " + linear(c.distance) + " " + c.where + " (less than 0.1 view "
+                      + (c.horizontal ? "widths" : "heights") + ")");
+        CHECK(text == "Drawing " + axis + " " + linear(0.0) + ".." + linear(drawingMax) + " · View " + axis + " "
+                          + linear(viewMin) + ".." + linear(viewMax) + " · " + where);
+        // the same rule as LC_ScrollModel::placement()
+        const auto placement = LC_ScrollModel::placement(0.0, drawingMax, viewMin, viewMax);
+        CHECK((placement == LC_ScrollModel::Placement::Overlaps) == (QString(c.where) == "in view"));
+    }
+}
+
+TEST_CASE("Tooltip: the drawing's extents are read when asked, not from the last bar sync",
+          "[navigation][2945-band]") {
+    const bool qtReady = lc::test::application() != nullptr;
+    REQUIRE(qtReady);
+    AppearanceSettingGuard guard("ScrollBarContentBand");
+    LC_SET_ONE("Appearance", "ScrollBarContentBand", true);
+    ViewFixture f(QSize(800, 600), true, nullptr);
+    f.view->loadSettings();
+    useFusion(f);
+    f.view->setScrollBarToolTips(true);
+    const RS2::Unit unit = f.graphic->getUnit();
+    const RS2::LinearFormat format = f.graphic->getLinearFormat();
+    const int precision = f.graphic->getLinearPrecision();
+    auto linear = [&](const double v) {
+        return RS_Units::formatLinear(v, unit, format, precision);
+    };
+    CHECK(f.view->scrollBarToolTip(true).startsWith("The drawing is empty · View X "));
+    CHECK(f.view->scrollBarToolTip(false).startsWith("The drawing is empty · View Y "));
+    // content added with no viewport change, so no bar resync (as on a load or an edit that
+    // does not redraw): the tooltip already describes it
+    addRectangle(f.graphic);
+    CHECK(f.view->scrollBarToolTip(true).startsWith("Drawing X " + linear(0.0) + ".." + linear(100.0) + " · View X "));
+    CHECK(f.view->scrollBarToolTip(false).startsWith("Drawing Y " + linear(0.0) + ".." + linear(50.0) + " · View Y "));
+    // and an edit that grows the drawing
+    addRectangle(f.graphic, RS_Vector(1000, 0), RS_Vector(1100, 500));
+    CHECK(f.view->scrollBarToolTip(true).startsWith("Drawing X " + linear(0.0) + ".." + linear(1100.0) + " · "));
+    CHECK(f.view->scrollBarToolTip(false).startsWith("Drawing Y " + linear(0.0) + ".." + linear(500.0) + " · "));
 }
 
 TEST_CASE("Live toggle via loadSettings does not move the view", "[navigation][2945-band]") {

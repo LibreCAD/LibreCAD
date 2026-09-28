@@ -30,6 +30,7 @@
 #include <QToolTip>
 
 #include "lc_scrollmodel.h"
+#include "rs_color.h"
 
 namespace {
     // stripe thickness as a share of the groove thickness, and its floor (logical px)
@@ -40,14 +41,6 @@ namespace {
     // styles shade the groove slightly off Window (Fusion light: #e6e6e6 on #efefef), so
     // contrast is also required against Window shaded this much (QColor::darker/lighter)
     constexpr int kGrooveShade = 106;
-
-    double relativeLuminance(const QColor& color) {
-        auto channel = [](const double c) {
-            return c <= 0.04045 ? c / 12.92 : std::pow((c + 0.055) / 1.055, 2.4);
-        };
-        const QColor rgb = color.toRgb();
-        return 0.2126 * channel(rgb.redF()) + 0.7152 * channel(rgb.greenF()) + 0.0722 * channel(rgb.blueF());
-    }
 
     QColor opaque(QColor color) {
         color.setAlpha(255);
@@ -83,12 +76,6 @@ void QG_ScrollBar::setContentBandEnabled(const bool enabled) {
     update();
 }
 
-double QG_ScrollBar::contrastRatio(const QColor& a, const QColor& b) {
-    const double la = relativeLuminance(a);
-    const double lb = relativeLuminance(b);
-    return (std::max(la, lb) + 0.05) / (std::min(la, lb) + 0.05);
-}
-
 QColor QG_ScrollBar::contentBandColorFor(const QPalette& palette) {
     const QColor window = opaque(palette.color(QPalette::Active, QPalette::Window));
     const bool dark = window.lightnessF() < 0.5;
@@ -98,7 +85,8 @@ QColor QG_ScrollBar::contentBandColorFor(const QPalette& palette) {
         return QColor((dark ? opaque(color).lighter(kLighterOnDark) : opaque(color)).rgb());
     };
     auto contrasts = [&window, &groove](const QColor& color) {
-        return std::min(contrastRatio(color, window), contrastRatio(color, groove)) >= kMinBandContrast;
+        return std::min(RS_Color::contrastRatio(color, window), RS_Color::contrastRatio(color, groove))
+            >= kMinBandContrast;
     };
     const QColor highlight = palette.color(QPalette::Active, QPalette::Highlight);
 #if QT_VERSION >= QT_VERSION_CHECK(6, 6, 0)
@@ -143,9 +131,29 @@ QRect QG_ScrollBar::contentBandRect() const {
 }
 
 bool QG_ScrollBar::isContentBandPainted() const {
-    return !contentBandRect().isNull()
-        && LC_ScrollModel::bandIsInformative(m_bandStart - minimum(), m_bandEnd - minimum(), value() - minimum(),
-                                             pageStep());
+    return !paintedBandRegion().isEmpty();
+}
+
+QRegion QG_ScrollBar::paintedBandRegion(QRectF* stripe) const {
+    if (!m_bandEnabled || !m_bandHasContent) {
+        return {};
+    }
+    QStyleOptionSlider option;
+    initStyleOption(&option);
+    const QRectF band = contentBandStripe(option);
+    if (band.isEmpty()) {
+        return {};
+    }
+    QRegion region(band.toAlignedRect());
+    const QRect thumb = style()->subControlRect(QStyle::CC_ScrollBar, &option, QStyle::SC_ScrollBarSlider, this);
+    if (thumb.isValid()) {
+        region -= orientation() == Qt::Horizontal ? QRect(thumb.left() - 1, 0, thumb.width() + 2, height())
+                                                  : QRect(0, thumb.top() - 1, width(), thumb.height() + 2);
+    }
+    if (stripe != nullptr) {
+        *stripe = band;
+    }
+    return region;
 }
 
 /**
@@ -239,28 +247,18 @@ void QG_ScrollBar::changeEvent(QEvent* event) {
  * sub-controls a style honours (a QScrollBar style sheet repaints the whole bar on every
  * sub-control call, windowsvista/windows11 may paint cached whole-bar images).
  *
- * Nothing is painted while any of the drawing is in view along the bar (the view lies
- * inside it, covers it or straddles one of its edges; LC_ScrollModel::bandIsInformative()):
- * the bar then looks exactly as without the band.
+ * The stripe is painted whenever the band is on and the drawing has content
+ * (paintedBandRegion()), so it shows the parts of the drawing's range outside the view:
+ * on both sides of the thumb when zoomed in, toward the drawing when it straddles an
+ * edge, at the far end when panned away. At zoom extents the band lies under the thumb,
+ * so little or nothing of it shows.
  */
 void QG_ScrollBar::paintEvent(QPaintEvent* event) {
     QScrollBar::paintEvent(event);
-    if (!m_bandEnabled || !m_bandHasContent
-        || !LC_ScrollModel::bandIsInformative(m_bandStart - minimum(), m_bandEnd - minimum(), value() - minimum(),
-                                              pageStep())) {
+    QRectF stripe;
+    QRegion clip = paintedBandRegion(&stripe);
+    if (clip.isEmpty()) {
         return;
-    }
-    QStyleOptionSlider option;
-    initStyleOption(&option);
-    const QRectF stripe = contentBandStripe(option);
-    if (stripe.isEmpty()) {
-        return;
-    }
-    const QRect thumb = style()->subControlRect(QStyle::CC_ScrollBar, &option, QStyle::SC_ScrollBarSlider, this);
-    QRegion clip(stripe.toAlignedRect());
-    if (thumb.isValid()) {
-        clip -= orientation() == Qt::Horizontal ? QRect(thumb.left() - 1, 0, thumb.width() + 2, height())
-                                                : QRect(0, thumb.top() - 1, width(), thumb.height() + 2);
     }
     clip &= event->region();
     if (clip.isEmpty()) {

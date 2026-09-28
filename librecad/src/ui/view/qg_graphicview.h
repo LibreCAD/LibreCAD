@@ -149,10 +149,11 @@ public:
     void setScrollBarToolTips(bool enabled);
     /**
      * The tooltip of the horizontal (\p horizontal) or vertical bar: the drawing's and the
-     * view's UCS range along it and where the drawing is, e.g. "Drawing X 0..100 · View X
-     * 1234.5..1336.8 · drawing is 1134.5 to the left (≈11.1 view widths)". The drawing's
-     * range is the one the bar last synced (so it matches the band); the view is current.
-     * Empty (no tooltip) while the band setting, Appearance/ScrollBarContentBand, is off.
+     * view's UCS range along that axis and where the drawing's range lies on it, e.g.
+     * "Drawing X 0..100 · View X 1234.5..1336.8 · drawing's X range is 1134.5 to the left
+     * (≈11.1 view widths)". Both ranges are computed when asked (the drawing's from the
+     * same extents the scroll range uses), never cached. It says nothing about the other
+     * axis. Empty (no tooltip) while the band setting, Appearance/ScrollBarContentBand, is off.
      */
     QString scrollBarToolTip(bool horizontal) const;
     void setCurrentQAction(QAction* q_action);
@@ -272,10 +273,6 @@ private:
     bool m_scrollSyncing{false};
     LC_ScrollModel::State m_hScroll;
     LC_ScrollModel::State m_vScroll;
-    //! the drawing's UCS box as the bars last showed it, for scrollBarToolTip()
-    bool m_scrollTipHasContent{false};
-    RS_Vector m_scrollTipUcsMin;
-    RS_Vector m_scrollTipUcsMax;
     //! the viewport state m_hScroll/m_vScroll were last built or rebased from
     LC_ScrollViewportKey m_scrollKey;
 };

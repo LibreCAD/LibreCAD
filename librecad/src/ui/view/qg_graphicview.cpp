@@ -1247,9 +1247,6 @@ void QG_GraphicView::adjustOffsetControls() {
     m_hScroll = computeAxisState(true, hasContent, ucsMin, ucsMax, factor, ox, oy, width, height);
     m_vScroll = computeAxisState(false, hasContent, ucsMin, ucsMax, factor, ox, oy, width, height);
     m_scrollKey = viewportKey(*viewport);
-    m_scrollTipHasContent = hasContent;
-    m_scrollTipUcsMin = ucsMin;
-    m_scrollTipUcsMax = ucsMax;
     if (m_hScroll.valid) {
         applyScrollState(m_hScrollBar, m_hScroll);
     }
@@ -1341,14 +1338,17 @@ LC_ScrollViewportKey QG_GraphicView::rebaseScrollIfStale() {
 }
 
 /**
- * Built on demand (QG_ScrollBar asks on QEvent::ToolTip), from the drawing's UCS box
- * cached at the last bar sync and the current view, in the drawing's units and linear
- * format. The view range follows computeAxisState()'s mapping: a UCS coordinate c is
- * the scroll-space pixel c * factor.x (x) or -c * factor.y (y). Empty, so no tooltip,
- * while the band is switched off (Appearance/ScrollBarContentBand).
+ * Built on demand (QG_ScrollBar asks on QEvent::ToolTip), from the current view and the
+ * drawing's UCS box computed now, from the same source as the scroll range
+ * (scrollContentExtents() + ucsBoundsOfWcsBox(), as in adjustOffsetControls()), so a load
+ * or an edit that has not resynced the bars yet is still described correctly. Values
+ * are in the drawing's units and linear format. The view range follows
+ * computeAxisState()'s mapping: a UCS coordinate c is the scroll-space pixel c * factor.x
+ * (x) or -c * factor.y (y). Every statement is about this bar's axis only. Empty, so no
+ * tooltip, while the band is switched off (Appearance/ScrollBarContentBand).
  */
 QString QG_GraphicView::scrollBarToolTip(const bool horizontal) const {
-    const auto* viewport = getViewPort();
+    auto* viewport = getViewPort();
     if (!m_scrollBarContentBand || viewport == nullptr) {
         return {};
     }
@@ -1369,15 +1369,21 @@ QString QG_GraphicView::scrollBarToolTip(const bool horizontal) const {
     auto linear = [unit, format, precision](const double value) {
         return RS_Units::formatLinear(value, unit, format, precision);
     };
-    const QString axis = horizontal ? QStringLiteral("X") : QStringLiteral("Y");
-    const QString separator = QStringLiteral(" · ");
-    const QString view = tr("View %1 %2..%3").arg(axis, linear(viewMin), linear(viewMax));
-    if (!m_scrollTipHasContent) {
-        return tr("The drawing is empty") + separator + view;
+    const QString view = horizontal ? tr("View X %1..%2").arg(linear(viewMin), linear(viewMax))
+                                    : tr("View Y %1..%2").arg(linear(viewMin), linear(viewMax));
+
+    RS_Vector wcsMin;
+    RS_Vector wcsMax;
+    if (!scrollContentExtents(wcsMin, wcsMax)) {
+        return tr("The drawing is empty · %1", "scrollbar tooltip: %1 is the view's range").arg(view);
     }
-    const double drawingMin = horizontal ? m_scrollTipUcsMin.x : m_scrollTipUcsMin.y;
-    const double drawingMax = horizontal ? m_scrollTipUcsMax.x : m_scrollTipUcsMax.y;
-    const QString drawing = tr("Drawing %1 %2..%3").arg(axis, linear(drawingMin), linear(drawingMax));
+    RS_Vector ucsMin;
+    RS_Vector ucsMax;
+    viewport->ucsBoundsOfWcsBox(wcsMin, wcsMax, ucsMin, ucsMax);
+    const double drawingMin = horizontal ? ucsMin.x : ucsMin.y;
+    const double drawingMax = horizontal ? ucsMax.x : ucsMax.y;
+    const QString drawing = horizontal ? tr("Drawing X %1..%2").arg(linear(drawingMin), linear(drawingMax))
+                                       : tr("Drawing Y %1..%2").arg(linear(drawingMin), linear(drawingMax));
 
     // distance in view lengths: one decimal while it is small, whole numbers beyond
     auto views = [horizontal, viewLength = viewMax - viewMin](const double distance) {
@@ -1390,20 +1396,28 @@ QString QG_GraphicView::scrollBarToolTip(const bool horizontal) const {
         return horizontal ? tr("≈%1 view widths").arg(number) : tr("≈%1 view heights").arg(number);
     };
     QString where;
-    if (viewMin <= drawingMin && drawingMax <= viewMax) {
-        where = tr("view shows the whole drawing");
-    } else if (drawingMax <= viewMin) {  // touching counts as off, as for the band (bandIsInformative)
-        const double distance = viewMin - drawingMax;
-        where = horizontal ? tr("drawing is %1 to the left (%2)").arg(linear(distance), views(distance))
-                           : tr("drawing is %1 down (%2)").arg(linear(distance), views(distance));
-    } else if (drawingMin >= viewMax) {
-        const double distance = drawingMin - viewMax;
-        where = horizontal ? tr("drawing is %1 to the right (%2)").arg(linear(distance), views(distance))
-                           : tr("drawing is %1 up (%2)").arg(linear(distance), views(distance));
-    } else {
-        where = tr("drawing is in view");
+    switch (LC_ScrollModel::placement(drawingMin, drawingMax, viewMin, viewMax)) {
+        case LC_ScrollModel::Placement::Covered:
+            where = horizontal ? tr("view spans the drawing's X range") : tr("view spans the drawing's Y range");
+            break;
+        case LC_ScrollModel::Placement::Overlaps:
+            where = horizontal ? tr("drawing's X range is in view") : tr("drawing's Y range is in view");
+            break;
+        case LC_ScrollModel::Placement::Before: {
+            const double distance = viewMin - drawingMax;
+            where = horizontal ? tr("drawing's X range is %1 to the left (%2)").arg(linear(distance), views(distance))
+                               : tr("drawing's Y range is %1 down (%2)").arg(linear(distance), views(distance));
+            break;
+        }
+        case LC_ScrollModel::Placement::After: {
+            const double distance = drawingMin - viewMax;
+            where = horizontal ? tr("drawing's X range is %1 to the right (%2)").arg(linear(distance), views(distance))
+                               : tr("drawing's Y range is %1 up (%2)").arg(linear(distance), views(distance));
+            break;
+        }
     }
-    return drawing + separator + view + separator + where;
+    return tr("%1 · %2 · %3", "scrollbar tooltip: the drawing's range, the view's range, where the drawing is")
+        .arg(drawing, view, where);
 }
 
 void QG_GraphicView::setScrollBarToolTips(const bool enabled) {

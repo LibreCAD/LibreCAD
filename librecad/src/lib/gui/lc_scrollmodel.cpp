@@ -145,10 +145,17 @@ Band bandPixels(const ThumbGeometry& g, const bool hasContent, const double a, c
     return band;
 }
 
-bool bandIsInformative(const double a, const double b, const int value, const int pageStep) {
-    const double viewStart = value;
-    const double viewEnd = static_cast<double>(value) + pageStep;
-    return viewEnd <= a || b <= viewStart;
+Placement placement(const double contentMin, const double contentMax, const double viewMin, const double viewMax) {
+    if (viewMin <= contentMin && contentMax <= viewMax) {
+        return Placement::Covered;
+    }
+    if (contentMax < viewMin) {
+        return Placement::Before;
+    }
+    if (contentMin > viewMax) {
+        return Placement::After;
+    }
+    return Placement::Overlaps;
 }
 
 }
