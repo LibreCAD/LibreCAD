@@ -39,10 +39,12 @@
 #include "lc_splinepoints.h"
 #include "rs_circle.h"
 #include "rs_document.h"
+#include "rs_ellipse.h"
 #include "rs_graphic.h"
 #include "rs_layer.h"
 #include "rs_line.h"
 #include "rs_modification.h"
+#include "rs_polyline.h"
 #include "rs_settings.h"
 #include "rs_spline.h"
 #include "rs_vector.h"
@@ -612,4 +614,93 @@ TEST_CASE("A preview made through the cache is the preview made without it", "[m
     }
     CHECK(runs[1] == runs[0]); // filled the cache
     CHECK(runs[2] == runs[0]); // from the cache
+}
+
+// ---------------------------------------------------------------------------
+// Polylines: RS_Polyline::offset() joins neighbouring offsets and never trims,
+// so what it makes is checked before it is used.
+// ---------------------------------------------------------------------------
+namespace {
+/** A polyline through @p vertices, owned by the caller. */
+std::unique_ptr<RS_Polyline> polylineThrough(const std::vector<RS_Vector>& vertices, const bool closed) {
+    auto polyline = std::make_unique<RS_Polyline>(nullptr);
+    for (const RS_Vector& v : vertices) {
+        polyline->addVertex(v);
+    }
+    if (closed) {
+        polyline->setClosed(true);
+        polyline->endPolyline(); // adds the closing segment
+    }
+    return polyline;
+}
+
+/** Two 4 x 4 squares joined by a neck 1 high. */
+std::unique_ptr<RS_Polyline> dumbbell() {
+    return polylineThrough({{0, 0}, {4, 0}, {4, 1.5}, {8, 1.5}, {8, 0}, {12, 0}, {12, 4}, {8, 4}, {8, 2.5}, {4, 2.5},
+                            {4, 4}, {0, 4}},
+                           true);
+}
+
+std::unique_ptr<RS_Polyline> rectangle() {
+    return polylineThrough({{0, 0}, {10, 0}, {10, 4}, {0, 4}}, true);
+}
+} // namespace
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A polyline whose offset would cross itself is kept, and nothing is made", "[modification][offset]") {
+    // the dumbbell shrunk by 0.6: the legacy offset is one loop that crosses
+    // itself four times at the neck
+    const auto source = dumbbell();
+    BatchGuard guard;
+    const LC_OffsetBatchOutcome outcome = RS_Modification::offsetWithOutcome(
+        towards(RS_Vector{1.0, 2.0}, 0.6), {source.get()}, false, LC_OffsetBatchLimits{}, guard.ctx);
+    REQUIRE(outcome.sources.size() == 1);
+    CHECK(outcome.sources.front().status == LC_OffsetSourceStatus::OffsetFailed);
+    CHECK(outcome.sources.front().detail == LC_OffsetFailureDetail::PolylineNotTrimmed);
+    CHECK(guard.ctx.entitiesToAdd.isEmpty());
+    CHECK(guard.ctx.entitiesToDelete.isEmpty());
+    CHECK_FALSE(outcome.sources.front().sourceRemoved);
+
+    // at 0.4 the legacy offset is a proper ring, and is used
+    BatchGuard ring;
+    const LC_OffsetBatchOutcome kept = RS_Modification::offsetWithOutcome(
+        towards(RS_Vector{1.0, 2.0}, 0.4), {source.get()}, false, LC_OffsetBatchLimits{}, ring.ctx);
+    CHECK(kept.sources.front().succeeded());
+    REQUIRE(ring.ctx.entitiesToAdd.size() == 1);
+    CHECK(static_cast<const RS_Polyline*>(ring.ctx.entitiesToAdd.front())->count() == 12);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A polyline shrunk past its size vanishes and is kept", "[modification][offset]") {
+    // the 10 x 4 rectangle shrunk by 3: the legacy offset is an inverted 4 x 2 rectangle
+    const auto source = rectangle();
+    BatchGuard guard;
+    const LC_OffsetBatchOutcome outcome = RS_Modification::offsetWithOutcome(
+        towards(RS_Vector{5.0, 1.5}, 3.0), {source.get()}, false, LC_OffsetBatchLimits{}, guard.ctx);
+    REQUIRE(outcome.sources.size() == 1);
+    CHECK(outcome.sources.front().status == LC_OffsetSourceStatus::Vanished);
+    CHECK(guard.ctx.entitiesToAdd.isEmpty());
+    CHECK(guard.ctx.entitiesToDelete.isEmpty());
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A polyline with an elliptic segment is refused", "[modification][offset]") {
+    // as a non-uniform scale leaves one: a line, the lower half of an ellipse
+    // about (15, 0), 5 by 2.5, and a line
+    auto polyline = std::make_unique<RS_Polyline>(nullptr);
+    polyline->addVertex(RS_Vector{0, 0});
+    polyline->addVertex(RS_Vector{10, 0});
+    polyline->RS_EntityContainer::addEntity(new RS_Ellipse(
+        polyline.get(), RS_EllipseData{RS_Vector{15, 0}, RS_Vector{5, 0}, 0.5, M_PI, 2.0 * M_PI, false}));
+    polyline->setEndpoint(RS_Vector{20, 0});
+    polyline->addVertex(RS_Vector{30, 0});
+    REQUIRE(polyline->count() == 3);
+    BatchGuard guard;
+    const LC_OffsetBatchOutcome outcome = RS_Modification::offsetWithOutcome(
+        towards(RS_Vector{15.0, -6.0}, 1.0), {polyline.get()}, false, LC_OffsetBatchLimits{}, guard.ctx);
+    REQUIRE(outcome.sources.size() == 1);
+    CHECK(outcome.sources.front().status == LC_OffsetSourceStatus::OffsetFailed);
+    CHECK(outcome.sources.front().detail == LC_OffsetFailureDetail::EllipticSegments);
+    CHECK(guard.ctx.entitiesToAdd.isEmpty());
+    CHECK(guard.ctx.entitiesToDelete.isEmpty());
 }

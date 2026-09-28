@@ -174,12 +174,37 @@ enum class LC_OffsetSourceStatus {
     LimitExceeded
 };
 
+/**
+ * Why a source, or a copy of it, could not be offset, where the engine's
+ * status does not say: a cause the pipeline knows before it offsets, or the
+ * check of what it made.
+ */
+enum class LC_OffsetFailureDetail {
+    None,
+    /** A line with no length has no direction to offset along. */
+    ZeroLength,
+    /** An unbounded hyperbola has no finite offset. */
+    Unbounded,
+    /** A polyline with elliptic segments, which only lines and arcs may be. */
+    EllipticSegments,
+    /** A polyline whose offset would cross itself, come too near, run backwards or break apart. */
+    PolylineNotTrimmed,
+    /** A source two of whose pieces run over each other. */
+    SourceRetraces,
+    /** A distance of RS_TOLERANCE or less. */
+    InvalidDistance,
+    /** The reference point is on the entity, and no second click shows the side. */
+    AmbiguousSide
+};
+
 struct LC_OffsetSourceOutcome {
     /** Identity only: a source removed by a destructive offset must not be dereferenced. */
     const RS_Entity* source = nullptr;
     LC_OffsetSourceStatus status = LC_OffsetSourceStatus::InvalidSource;
     /** Why the offset engine refused a spline, for OffsetFailed and LimitExceeded; Ok otherwise. */
     LC_CurveOffsetStatus engineStatus{};
+    /** Why the pipeline refused the source, or the copy that stopped its series. */
+    LC_OffsetFailureDetail detail = LC_OffsetFailureDetail::None;
     /** Owned by the batch once handed over. */
     QList<RS_Entity*> createdEntities;
     LC_OffsetOutputUsage usage{};

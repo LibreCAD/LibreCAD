@@ -38,6 +38,7 @@
 #include "lc_curveoffset.h"
 #include "lc_graphicviewport.h"
 #include "lc_linemath.h"
+#include "lc_offsetresultcheck.h"
 #include "lc_splinepoints.h"
 #include "rs_spline.h"
 #include "lc_undosection.h"
@@ -1286,6 +1287,12 @@ bool noLargerThan(const LC_OffsetSourceBudget& a, const LC_OffsetSourceBudget& b
     return a.maxCubicPieces <= b.maxCubicPieces && a.maxOutputEntities <= b.maxOutputEntities &&
            a.maxDeepEntities <= b.maxDeepEntities;
 }
+
+/** Whether @p polyline holds an elliptic segment, as a non-uniform scale makes. */
+bool hasEllipticSegment(const RS_Polyline& polyline) {
+    return std::any_of(polyline.begin(), polyline.end(),
+                       [](const RS_Entity* child) { return child != nullptr && child->rtti() == RS2::EntityEllipse; });
+}
 } // namespace
 
 LC_OffsetBatchLimits LC_OffsetBatchLimits::preview() {
@@ -1477,6 +1484,13 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcome(const RS_OffsetData& da
             }
         }
         else {
+            // RS_Polyline::offset() moves lines and arcs only: an elliptic
+            // segment would stay where it is, between offset neighbours.
+            const auto* const polyline = e.rtti() == RS2::EntityPolyline ? static_cast<const RS_Polyline*>(&e) : nullptr;
+            if (polyline != nullptr && hasEllipticSegment(*polyline)) {
+                result.detail = LC_OffsetFailureDetail::EllipticSegments;
+                return LC_OffsetSourceStatus::OffsetFailed;
+            }
             for (int num = 1; num <= numberOfCopies; ++num) {
                 if (!isValidOffsetBudget(remainingBudget(budget, usage))) {
                     return LC_OffsetSourceStatus::LimitExceeded;
@@ -1494,6 +1508,20 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcome(const RS_OffsetData& da
                             break; // the radius would vanish, as it does at any larger distance inwards
                         }
                         return LC_OffsetSourceStatus::OffsetFailed;
+                    }
+                    if (polyline != nullptr) {
+                        // RS_Polyline::offset() joins neighbouring offsets and
+                        // never trims a loop, and it always reports success:
+                        // what it made is used only if it is a trimmed offset
+                        const LC_OffsetCheckReport check = checkLegacyPolylineOffset(
+                            *polyline, static_cast<const RS_Polyline&>(*clone), num * data.distance);
+                        if (check.verdict == LC_OffsetCheckVerdict::NothingLeft) {
+                            break; // shrunk past its size, as it is at any larger distance
+                        }
+                        if (check.verdict == LC_OffsetCheckVerdict::Invalid) {
+                            result.detail = LC_OffsetFailureDetail::PolylineNotTrimmed;
+                            return LC_OffsetSourceStatus::OffsetFailed;
+                        }
                     }
                     copy.push_back(std::move(clone));
                 }

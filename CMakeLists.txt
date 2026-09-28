@@ -889,6 +889,8 @@ set (SHARED_SOURCES
      librecad/src/lib/engine/document/entities/lc_parametriccurveintersection.h
      librecad/src/lib/engine/document/entities/lc_offsetoutputbudget.cpp
      librecad/src/lib/engine/document/entities/lc_offsetoutputbudget.h
+     librecad/src/lib/engine/document/entities/lc_offsetresultcheck.cpp
+     librecad/src/lib/engine/document/entities/lc_offsetresultcheck.h
      librecad/src/lib/engine/document/entities/lc_splinehelper.cpp
      librecad/src/lib/engine/document/entities/lc_splinehelper.h
      librecad/src/lib/engine/document/entities/lc_splinepoints.cpp
@@ -2522,6 +2524,7 @@ if (BUILD_TESTS)
         librecad/src/lib/modification/tests/lc_division_tests.cpp
         librecad/src/lib/modification/tests/rs_modification_trim_tests.cpp
         librecad/src/lib/modification/tests/rs_modification_offset_tests.cpp
+        librecad/src/lib/modification/tests/lc_offsetresultchecktests.cpp
         librecad/src/lib/filters/tests/dwg_buffer_round_trip_tests.cpp
         librecad/src/lib/filters/tests/spline_offset_representation_tests.cpp
         librecad/src/lib/creation/tests/lc_action_draw_line_parallel_tests.cpp
