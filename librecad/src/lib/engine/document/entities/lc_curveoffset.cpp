@@ -472,9 +472,28 @@ public:
         }
         // the inside is on the left of an ellipse that runs anticlockwise
         const bool inwards = (signedDistance > 0.0) == (m_s * cross(m_major, m_minor) > 0.0);
-        const double inradius =
-            std::min(std::hypot(m_major.x, m_major.y), std::hypot(m_minor.x, m_minor.y)); // the minor semi-axis
-        return inwards && std::abs(signedDistance) >= inradius - band;
+        if (!inwards) {
+            return false;
+        }
+        const double axis1 = std::hypot(m_major.x, m_major.y);
+        const double axis2 = std::hypot(m_minor.x, m_minor.y);
+        const double a = std::max(axis1, axis2);
+        const double b = std::min(axis1, axis2); // the minor semi-axis
+        const double d = std::abs(signedDistance);
+        if (d >= b) {
+            return true; // at or past the true vanishing distance: nothing at all is left
+        }
+        if (d < b * b / a) {
+            return false; // below the cusp: an untrimmed, full-sized offset survives
+        }
+        // Between the cusp and b the offset is trimmed to a closed curve with
+        // corners on the major axis, whose own half-extent there - not how
+        // close d is to b - measures how much survives: it is this, not d
+        // itself, that a highly eccentric ellipse's offset can still be large
+        // at even when d is a hair below b (A3 finding: a fixed band on d
+        // wrongly called a large surviving curve fully shrunk away).
+        const double half = std::sqrt((a - b) * (a + b)) * std::sqrt(std::max(0.0, 1.0 - (d / b) * (d / b)));
+        return half <= band;
     }
 
 private:

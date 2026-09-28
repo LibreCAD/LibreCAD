@@ -338,6 +338,20 @@ TEST_CASE("Ellipse offsets are trimmed past b^2/a and vanish from b", "[curve-of
         CHECK(none.status == LC_CurveOffsetStatus::Ok);
         CHECK(none.chains.empty());
     }
+    SECTION("a 100:1 ellipse just inside b is not silently reported empty") {
+        // a = 100, b = 1: shrinksAway() judged the whole ellipse shrunk away
+        // from d alone being within its absolute tolerance band of b, but the
+        // surviving curve's own half-extent there, sqrt(a^2-b^2)*sqrt(1-(d/b)^2),
+        // is about 19.9 units at d = 0.98 - not negligible. It must not again
+        // silently report Ok with nothing: the engine may still refuse this
+        // input for an unrelated reason (a separate, open limitation of the
+        // trimming machinery for very sharp cusps near the stall distance,
+        // not particular to this fix), but it must say so, not claim success.
+        const RS_Ellipse needleLike = ellipse(100.0, 0.01);
+        const Offset offset = offsetOf(needleLike, kLeft, 0.98);
+        const bool wronglyEmpty = offset.status == LC_CurveOffsetStatus::Ok && offset.chains.empty();
+        CHECK_FALSE(wronglyEmpty);
+    }
     SECTION("a circle drawn as an ellipse, and a near circle") {
         const RS_Ellipse circle = ellipse(5.0, 1.0);
         const Offset tiny = offsetOf(circle, kLeft, 4.96);
