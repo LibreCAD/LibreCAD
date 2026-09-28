@@ -170,6 +170,8 @@ private:
     std::unique_ptr<QCursor> m_cursorDel;
     //! Select mouse cursor
     std::unique_ptr<QCursor> m_cursorSelect;
+    //! Selection pointer cursor
+    std::unique_ptr<QCursor> m_cursorSelectionPointer;
     //! Magnifying glass mouse cursor
     std::unique_ptr<QCursor> m_cursorMagnifier;
     //! Hand mouse cursor
@@ -182,7 +184,9 @@ private:
     std::unique_ptr<LC_UCSMarkOptions> m_ucsMarkOptions;
     bool m_scrollbars{false};
     bool m_cursorHiding{false};
+    bool m_useLibreCADSelectionPointer{false};
     bool m_selectCursorHiding{false};
+    RS2::CursorType m_currentCursorType{RS2::ArrowCursor};
     bool m_invertZoomDirection{false};
     bool m_invertHorizontalScroll {false};
     bool m_invertVerticalScroll {false};
