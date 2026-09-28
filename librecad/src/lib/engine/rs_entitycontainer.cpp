@@ -1615,7 +1615,7 @@ bool RS_EntityContainer::optimizeContours() {
             enList<<e1;
             continue;
         } else {
-            origVis[e1] = e1->isVisible();
+            origVis[e1] = e1->getFlag(RS2::FlagVisible);
             e1->setParent(this);
             e1->setVisible(true);
         }

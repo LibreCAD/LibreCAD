@@ -3176,6 +3176,7 @@ void RS_FilterDXFRW::setEntityAttributes(RS_Entity* entity,
     pen.setWidth(numberToWidth(attrib->lWeight));
 
     entity->setPen(pen);
+    entity->setVisible(attrib->visible);
     RS_DEBUG->print("RS_FilterDXF::setEntityAttributes: OK");
 }
 
@@ -3214,6 +3215,8 @@ void RS_FilterDXFRW::getEntityAttributes(DRW_Entity* ent, const RS_Entity* entit
     ent->color24 = exact_rgb;
     ent->lWeight = width;
     ent->lineType = lineType.toUtf8().data();
+    // Layer freeze must not become entity invisibility (DXF group 60).
+    ent->visible = entity->getFlag(RS2::FlagVisible);
 }
 
 

@@ -9951,7 +9951,7 @@ Do you want to replace it?</source>
         <translation>இடைவெளி=%1 காரணமாக ஹேட்சிங் தோல்வியடைந்தது (%2, %3) மற்றும் (%4, %5) இடையே</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="113"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="115"/>
         <source>Warning</source>
         <translation>எச்சரிக்கை</translation>
     </message>
@@ -12365,45 +12365,50 @@ Do you want to replace it?</source>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="76"/>
+        <source>LibreCAD 2.2.2-alpha development builds can read and write DWG files directly.</source>
+        <translation>LibreCAD 2.2.2-alpha பதிப்பின் மேம்பாட்டு உருவாக்கங்கள் DWG கோப்புகளை நேரடியாகப் படிக்கவும் எழுதவும் முடியும்.</translation>
+    </message>
+    <message>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="78"/>
         <source>If this file fails to open try an older DWG format</source>
         <translation>இந்தக் கோப்பைத் திறக்க முடியாவிட்டால், பழைய DWG வடிவமைப்பை முயற்சிக்கவும்</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="77"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="79"/>
         <source>or try to find a converter to make it a DXF file.</source>
         <translation>அல்லது அதை DXF கோப்பாக மாற்றும் மாற்றியைக் கண்டுபிடிக்க முயற்சிக்கவும்.</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="80"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="82"/>
         <source>Information</source>
         <translation>தகவல்</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="91"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="93"/>
         <source>Error</source>
         <comment>fileImport</comment>
         <translation>பிழை</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="92"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="94"/>
         <source>Import error:</source>
         <comment>fileImport</comment>
         <translation>இறக்குமதி பிழை:</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="107"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="109"/>
         <source>Anyhow, there are some entities identified.</source>
         <comment>dwgImport</comment>
         <translation>எப்படியிருந்தாலும், சில கூறுகள் அடையாளம் காணப்பட்டுள்ளன.</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="108"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="110"/>
         <source>If you open the file now, the drawing may be not complete or unusable.</source>
         <comment>dwgImport</comment>
         <translation>இப்போது நீங்கள் கோப்பைத் திறந்தால், வரைபடம் முழுமையடையாமல் அல்லது பயன்படுத்த முடியாததாக இருக்கலாம்.</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="110"/>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="112"/>
         <source>Ignore error and open the file?</source>
         <comment>dwgImport</comment>
         <translation>பிழையை புறக்கணித்து கோப்பைத் திறக்கவா?</translation>
