@@ -23,8 +23,8 @@
 // action: the source pre-selected, a fixed distance, one click at the pick,
 // Keep Originals off as the matrix was measured. Each row checks the outcome,
 // what was committed, the command line, and that the hover preview showed the
-// same (or said why nothing is shown). Rows marked "as measured" pin today's
-// behaviour and change when the phase that fixes them lands.
+// same (or said why nothing is shown). Rows that refuse a polyline pin the
+// interim safety net and change when polylines are offset by the engine.
 
 #include <catch2/catch_test_macros.hpp>
 
@@ -217,7 +217,6 @@ SourceMaker ellipse(const double from, const double to) {
 
 const QString kNothingLeft = QStringLiteral("nothing is left at this distance");
 const QString kNotTrimmed = QStringLiteral("its offset would cross itself, which polylines do not support yet");
-const QString kNotMade = QStringLiteral("the offset could not be made");
 
 QString refusal(const QString& reason) {
     return QStringLiteral("1 of 1 selected entities could not be offset: ") + reason;
@@ -607,52 +606,100 @@ TEST_CASE("Matrix M-M1: copies of the rectangle", "[offset][matrix]") {
     CHECK(run.previewInfo.contains(kNothingLeft)); // why the preview shows one copy
 }
 
+namespace {
+/** Whether the spline @p offset passes within @p tolerance of @p p. */
+bool passesThrough(const RS_Entity& offset, const RS_Vector& p, const double tolerance) {
+    const auto* spline = dynamic_cast<const RS_Spline*>(&offset);
+    REQUIRE(spline != nullptr);
+    double t0 = 0.0;
+    double t1 = 0.0;
+    REQUIRE(spline->getParameterDomain(t0, t1));
+    double least = RS_MAXDOUBLE;
+    for (int k = 0; k <= 20000; ++k) {
+        LC_CurveJet jet;
+        REQUIRE(spline->tryEvaluateJet(t0 + (t1 - t0) * k / 20000.0, LC_CurveEvaluationSide::Interior, jet));
+        least = std::min(least, jet.point.distanceTo(p));
+    }
+    return least <= tolerance;
+}
+
+bool endsMeet(const RS_Entity& offset) {
+    return offset.getStartpoint().distanceTo(offset.getEndpoint()) < 1e-6;
+}
+} // namespace
+
 // NOLINTNEXTLINE(readability-identifier-naming)
-TEST_CASE("Matrix M-E1: the ellipse, as measured", "[offset][matrix]") {
-    // a spline through points from RS_Ellipse::createOffset(), which refuses
-    // from 0.99 b^2/a of the whole ellipse on
+TEST_CASE("Matrix M-E1: the ellipse", "[offset][matrix]") {
+    // a = 10, b = 5: a spline by the curve-offset engine, trimmed past b^2/a
+    // = 2.5, nothing left from b = 5 on; the sampler refused from 0.99 b^2/a
     SECTION("regular inside and outside") {
         for (const RS_Vector& pick : {RS_Vector{0, 0}, RS_Vector{0, 7}, RS_Vector{8, 0}}) {
             INFO("pick " << pick.x << ", " << pick.y);
             MatrixFixture f(ellipse(0.0, 0.0));
-            CHECK(checkMade(f.run(pick, 1.0)).rtti() == RS2::EntitySplinePoints);
+            const RS_Entity& offset = checkMade(f.run(pick, 1.0));
+            CHECK(offset.rtti() == RS2::EntitySpline);
+            CHECK(endsMeet(offset));
         }
-        MatrixFixture near(ellipse(0.0, 0.0));
-        CHECK(checkMade(near.run({0, 0}, 2.45)).rtti() == RS2::EntitySplinePoints);
+        for (const double d : {2.45, 2.48}) {
+            INFO("d = " << d);
+            MatrixFixture f(ellipse(0.0, 0.0));
+            const RS_Entity& offset = checkMade(f.run({0, 0}, d));
+            CHECK(offset.rtti() == RS2::EntitySpline);
+            CHECK(endsMeet(offset));
+        }
     }
     SECTION("with Keep Originals on") {
         MatrixFixture f(ellipse(0.0, 0.0));
-        CHECK(checkMade(f.run({0, 0}, 1.0, 1, true), true).rtti() == RS2::EntitySplinePoints);
+        CHECK(checkMade(f.run({0, 0}, 1.0, 1, true), true).rtti() == RS2::EntitySpline);
     }
-    SECTION("refused from 0.99 b^2/a inside, whatever is left") {
-        for (const double d : {2.48, 2.5, 3.0, 5.0, 6.0}) {
+    SECTION("at b^2/a and past it: one closed chain, with corners at 3") {
+        MatrixFixture stall(ellipse(0.0, 0.0));
+        const RS_Entity& atStall = checkMade(stall.run({0, 0}, 2.5));
+        CHECK(endsMeet(atStall));
+        CHECK(passesThrough(atStall, {7.5, 0}, 1e-2));
+        MatrixFixture past(ellipse(0.0, 0.0));
+        const RS_Entity& cut = checkMade(past.run({0, 0}, 3.0));
+        CHECK(endsMeet(cut));
+        const double x = std::sqrt(75.0) * 0.8; // 6.9282
+        CHECK(passesThrough(cut, {x, 0}, 1e-2));
+        CHECK(passesThrough(cut, {-x, 0}, 1e-2));
+    }
+    SECTION("nothing is left from b on") {
+        for (const double d : {5.0, 6.0}) {
             INFO("d = " << d);
             MatrixFixture f(ellipse(0.0, 0.0));
-            checkNothingMade(f.run({0, 0}, d), LC_OffsetSourceStatus::OffsetFailed, kNotMade);
+            checkNothingMade(f.run({0, 0}, d), LC_OffsetSourceStatus::Vanished, kNothingLeft);
         }
     }
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
-TEST_CASE("Matrix M-E2: elliptic arcs, as measured", "[offset][matrix]") {
-    SECTION("M-E2a, -30 to 30 degrees: 1 inside, refused at 3") {
+TEST_CASE("Matrix M-E2: elliptic arcs", "[offset][matrix]") {
+    SECTION("M-E2a, -30 to 30 degrees: untrimmed at 1, a corner at 3") {
         MatrixFixture one(ellipse(-M_PI / 6.0, M_PI / 6.0));
         const RS_Entity& offset = checkMade(one.run({5, 0}, 1.0));
         CHECK(offset.getStartpoint().distanceTo({8.0056, -1.7441}) < 1e-4);
         CHECK(offset.getEndpoint().distanceTo({8.0056, 1.7441}) < 1e-4);
         MatrixFixture three(ellipse(-M_PI / 6.0, M_PI / 6.0));
-        checkNothingMade(three.run({5, 0}, 3.0), LC_OffsetSourceStatus::OffsetFailed, kNotMade);
+        const RS_Entity& corner = checkMade(three.run({5, 0}, 3.0));
+        CHECK(corner.getStartpoint().distanceTo({6.6963, -0.2322}) < 1e-4);
+        CHECK(corner.getEndpoint().distanceTo({6.6963, 0.2322}) < 1e-4);
+        CHECK(passesThrough(corner, {std::sqrt(75.0) * 0.8, 0}, 1e-3));
     }
-    SECTION("M-E2b and M-E2c, 60 to 120 degrees: 2 inside, refused at 3 and 10 although regular") {
-        MatrixFixture two(ellipse(M_PI / 3.0, 2.0 * M_PI / 3.0));
-        const RS_Entity& offset = checkMade(two.run({0, 2}, 2.0));
-        CHECK(offset.getStartpoint().distanceTo({4.4453, 2.4086}) < 1e-4);
-        CHECK(offset.getEndpoint().distanceTo({-4.4453, 2.4086}) < 1e-4);
-        for (const double d : {3.0, 10.0}) {
+    SECTION("M-E2b and M-E2c, 60 to 120 degrees: untrimmed at 2, 3 and 10") {
+        const std::vector<std::pair<double, RS_Vector>> rows{
+            {2.0, {4.4453, 2.4086}}, {3.0, {4.1679, 1.4478}}, {10.0, {2.2265, -5.2776}}};
+        for (const auto& [d, end] : rows) {
             INFO("d = " << d);
             MatrixFixture f(ellipse(M_PI / 3.0, 2.0 * M_PI / 3.0));
-            checkNothingMade(f.run({0, 2}, d), LC_OffsetSourceStatus::OffsetFailed, kNotMade);
+            const RS_Entity& offset = checkMade(f.run({0, 2}, d));
+            CHECK(offset.getStartpoint().distanceTo(end) < 1e-4);
+            CHECK(offset.getEndpoint().distanceTo({-end.x, end.y}) < 1e-4);
         }
+    }
+    SECTION("M-E2b with Keep Originals on") {
+        MatrixFixture f(ellipse(M_PI / 3.0, 2.0 * M_PI / 3.0));
+        CHECK(checkMade(f.run({0, 2}, 2.0, 1, true), true).rtti() == RS2::EntitySpline);
     }
 }
 

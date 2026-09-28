@@ -1062,14 +1062,26 @@ bool LC_OffsetBatchOutcome::anySourceSucceeded() const {
 }
 
 namespace {
+/** How near @p p may be to @p e and lie on it, to rounding: no drawing tolerance. */
+double onEntityTolerance(const RS_Entity& e, const RS_Vector& p) {
+    const RS_Vector lo = e.getMin();
+    const RS_Vector hi = e.getMax();
+    const double extent = lo.valid && hi.valid ? lo.distanceTo(hi) : 0.0;
+    return 1e-9 * std::max({1.0, p.magnitude(), extent});
+}
+
 /**
- * How far from its curve a point on @p source can be and still be on it as
- * the user sees it: an RS_Spline is drawn with chords within a thousandth of
- * its control points' extent (RS_Spline::fillDisplayPoints()), so a point
+ * How far from its curve a point @p p on @p source can be and still be on it
+ * as the user sees it: an RS_Spline is drawn with chords within a thousandth
+ * of its control points' extent (RS_Spline::fillDisplayPoints()), so a point
  * snapped onto its drawing lies that near the curve and gives no side the
- * user chose.
+ * user chose. An ellipse is drawn by the painter's own ellipse calls, exactly:
+ * a point near it is on it only to rounding.
  */
-double drawnCurveTolerance(const RS_Entity& source) {
+double drawnCurveTolerance(const RS_Entity& source, const RS_Vector& p) {
+    if (source.rtti() == RS2::EntityEllipse) {
+        return onEntityTolerance(source, p);
+    }
     RS_Vector lo = source.getMin();
     RS_Vector hi = source.getMax();
     if (const auto* spline = dynamic_cast<const RS_Spline*>(&source)) {
@@ -1312,10 +1324,7 @@ bool sideIsAmbiguous(const RS_Entity& e, const RS_Vector& p) {
     if (!p.valid) {
         return true;
     }
-    const RS_Vector lo = e.getMin();
-    const RS_Vector hi = e.getMax();
-    const double extent = lo.valid && hi.valid ? lo.distanceTo(hi) : 0.0;
-    const double onIt = 1e-9 * std::max({1.0, p.magnitude(), extent});
+    const double onIt = onEntityTolerance(e, p);
     switch (e.rtti()) {
         case RS2::EntityLine: {
             const RS_Vector a = e.getStartpoint();
@@ -1503,8 +1512,9 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcome(const RS_OffsetData& da
             LC_OffsetSideResolution side = LC_CurveOffset::resolveSide(e, data.coord, sideOptions);
             // a point on the curve, or on the segments it is drawn with, gives no
             // side the user chose: the fallback point decides, when it can
-            const bool onCurve = side.status == LC_CurveOffsetStatus::AmbiguousSide ||
-                                 (side.status == LC_CurveOffsetStatus::Ok && side.distance <= drawnCurveTolerance(e));
+            const bool onCurve =
+                side.status == LC_CurveOffsetStatus::AmbiguousSide ||
+                (side.status == LC_CurveOffsetStatus::Ok && side.distance <= drawnCurveTolerance(e, data.coord));
             if (onCurve && data.sideFallback.valid) {
                 const LC_OffsetSideResolution fallback = LC_CurveOffset::resolveSide(e, data.sideFallback, sideOptions);
                 if (fallback.status == LC_CurveOffsetStatus::Ok) {

@@ -657,6 +657,24 @@ TEST_CASE("A spline shrunk away keeps its source, and the message says why", "[c
     CHECK(f.m_context.messages.front().contains("nothing is left at this distance"));
 }
 
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("An ellipse shrunk past its minor axis says nothing is left", "[curve-offset][action][ellipse]") {
+    // a = 10, b = 5 inwards by 6: the sampler refused, saying the offset
+    // could not be made
+    OffsetFixture f;
+    RS_Ellipse* ellipse = f.add(
+        new RS_Ellipse(&f.m_graphic, RS_EllipseData{RS_Vector{0, 0}, RS_Vector{10, 0}, 0.5, 0.0, 0.0, false}));
+    f.select({ellipse});
+    f.start(6.0, false);
+    f.clickAt(0.0, 0.0);
+
+    CHECK_FALSE(ellipse->isDeleted());
+    CHECK(f.liveCount(RS2::EntitySpline) == 0);
+    REQUIRE(f.m_context.messages.size() == 1);
+    CHECK(f.m_context.messages.front() ==
+          "1 of 1 selected entities could not be offset: nothing is left at this distance");
+}
+
 TEST_CASE("Copies that stop short keep the source, and the message says how many fit", "[curve-offset][action]") {
     OffsetFixture f;
     RS_Spline* ring = f.addRing();

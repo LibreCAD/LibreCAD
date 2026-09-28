@@ -37,6 +37,7 @@
 
 #include "lc_curveoffset.h"
 #include "lc_hyperbola.h"
+#include "lc_offsetresultcheck.h"
 #include "lc_splinepoints.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
@@ -950,6 +951,145 @@ TEST_CASE("A circle inside the vanish band vanishes", "[modification][offset]") 
         inwardOffset(5.0 - 1e-4), {&circle}, false, LC_OffsetBatchLimits{}, guard.ctx);
     CHECK(outcome.sources.front().succeeded());
     CHECK(onlyAdded(guard).getRadius() == Catch::Approx(1e-4).epsilon(1e-6));
+}
+
+// ---------------------------------------------------------------------------
+// Ellipses, offset by the curve-offset engine
+// ---------------------------------------------------------------------------
+namespace {
+/** Points along every entity @p guard holds, as closed polygons. */
+std::vector<std::vector<RS_Vector>> polygonsOf(const BatchGuard& guard, const int samples = 800) {
+    std::vector<std::vector<RS_Vector>> polygons;
+    for (const RS_Entity* e : guard.ctx.entitiesToAdd) {
+        const auto* spline = dynamic_cast<const RS_Spline*>(e);
+        REQUIRE(spline != nullptr);
+        double t0 = 0.0;
+        double t1 = 0.0;
+        REQUIRE(spline->getParameterDomain(t0, t1));
+        std::vector<RS_Vector> points;
+        for (int k = 0; k < samples; ++k) {
+            LC_CurveJet jet;
+            REQUIRE(spline->tryEvaluateJet(t0 + (t1 - t0) * k / samples, LC_CurveEvaluationSide::Interior, jet));
+            points.push_back(jet.point);
+        }
+        polygons.push_back(std::move(points));
+    }
+    return polygons;
+}
+
+double polygonArea(const std::vector<RS_Vector>& p) {
+    double area = 0.0;
+    for (std::size_t i = 0; i < p.size(); ++i) {
+        const RS_Vector& a = p[i];
+        const RS_Vector& b = p[(i + 1) % p.size()];
+        area += 0.5 * (a.x * b.y - b.x * a.y);
+    }
+    return area;
+}
+
+bool polygonsCross(const std::vector<RS_Vector>& p, const std::vector<RS_Vector>& q) {
+    for (std::size_t i = 0; i < p.size(); ++i) {
+        LC_OffsetSegment s;
+        s.a = p[i];
+        s.b = p[(i + 1) % p.size()];
+        for (std::size_t j = 0; j < q.size(); ++j) {
+            LC_OffsetSegment t;
+            t.a = q[j];
+            t.b = q[(j + 1) % q.size()];
+            if (segmentsIntersect(s, t, 0.0)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+/** The least distance from @p p to a closed polygon. */
+double nearestOnPolygon(const std::vector<RS_Vector>& polygon, const RS_Vector& p) {
+    double least = RS_MAXDOUBLE;
+    for (std::size_t i = 0; i < polygon.size(); ++i) {
+        LC_OffsetSegment side;
+        side.a = polygon[i];
+        side.b = polygon[(i + 1) % polygon.size()];
+        least = std::min(least, pointSegmentDistance(p, side));
+    }
+    return least;
+}
+} // namespace
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("An ellipse series keeps every copy, and the copies nest", "[modification][offset][curve-offset][ellipse]") {
+    // a = 5, b = 2 inwards by 0.3, three times: the sampler refused from
+    // 0.99 b^2/a = 0.79 on, and a refusal discarded the whole series
+    RS_Ellipse ellipse{nullptr, RS_EllipseData{RS_Vector{0.0, 0.0}, RS_Vector{5.0, 0.0}, 0.4, 0.0, 0.0, false}};
+    RS_OffsetData data = towards(RS_Vector{0.0, 0.0}, 0.3);
+    data.multipleCopies = true;
+    data.number = 3;
+    BatchGuard guard;
+    const LC_OffsetBatchOutcome outcome =
+        RS_Modification::offsetWithOutcome(data, {&ellipse}, false, LC_OffsetBatchLimits{}, guard.ctx);
+    REQUIRE(outcome.sources.front().succeeded());
+    CHECK(outcome.sources.front().complete());
+    REQUIRE(guard.ctx.entitiesToAdd.size() == 3);
+    const std::vector<std::vector<RS_Vector>> copies = polygonsOf(guard);
+    // the third, past b^2/a, has corners where its swallowtails were cut
+    const double x = std::sqrt(21.0) * std::sqrt(1.0 - 0.81 / 4.0); // 4.0924
+    CHECK(nearestOnPolygon(copies[2], {x, 0.0}) < 1e-2);
+    CHECK(nearestOnPolygon(copies[2], {-x, 0.0}) < 1e-2);
+    // P18: no copy crosses another, and each shrinks the area
+    for (std::size_t i = 0; i < copies.size(); ++i) {
+        for (std::size_t j = i + 1; j < copies.size(); ++j) {
+            INFO("copies " << i << " and " << j);
+            CHECK_FALSE(polygonsCross(copies[i], copies[j]));
+        }
+    }
+    const double source = M_PI * 5.0 * 2.0;
+    CHECK(std::abs(polygonArea(copies[0])) < source);
+    CHECK(std::abs(polygonArea(copies[1])) < std::abs(polygonArea(copies[0])));
+    CHECK(std::abs(polygonArea(copies[2])) < std::abs(polygonArea(copies[1])));
+    CHECK(guard.ctx.entitiesToDelete.size() == 1); // every copy made, originals not kept
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("An ellipse series stops where nothing is left", "[modification][offset][curve-offset][ellipse]") {
+    // a = 10, b = 5 inwards by 2, three times: nothing is left from b = 5 on
+    RS_Ellipse ellipse{nullptr, RS_EllipseData{RS_Vector{0.0, 0.0}, RS_Vector{10.0, 0.0}, 0.5, 0.0, 0.0, false}};
+    RS_OffsetData data = towards(RS_Vector{0.0, 0.0}, 2.0);
+    data.multipleCopies = true;
+    data.number = 3;
+    BatchGuard guard;
+    const LC_OffsetBatchOutcome outcome =
+        RS_Modification::offsetWithOutcome(data, {&ellipse}, false, LC_OffsetBatchLimits{}, guard.ctx);
+    const LC_OffsetSourceOutcome& result = outcome.sources.front();
+    CHECK(result.succeeded());
+    CHECK(result.copiesMade == 2);
+    CHECK(result.stoppedBy == LC_OffsetSourceStatus::Vanished);
+    CHECK(guard.ctx.entitiesToAdd.size() == 2);
+    CHECK(guard.ctx.entitiesToDelete.isEmpty()); // short of a copy: the source stays
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A point on an ellipse takes its side from the second click", "[modification][offset][curve-offset][ellipse]") {
+    RS_Ellipse ellipse{nullptr, RS_EllipseData{RS_Vector{0.0, 0.0}, RS_Vector{10.0, 0.0}, 0.5, 0.0, 0.0, false}};
+    const auto offsetFrom = [&ellipse](const RS_Vector& reference, const RS_Vector& fallback, BatchGuard& guard) {
+        RS_OffsetData data = towards(reference, 1.0);
+        data.sideFallback = fallback;
+        const LC_OffsetBatchOutcome outcome =
+            RS_Modification::offsetWithOutcome(data, {&ellipse}, false, LC_OffsetBatchLimits{}, guard.ctx);
+        REQUIRE(outcome.sources.front().succeeded());
+        return polygonsOf(guard);
+    };
+    SECTION("on it, at its vertex: the second click decides") {
+        BatchGuard out;
+        CHECK(nearestOnPolygon(offsetFrom({10.0, 0.0}, {12.0, 0.0}, out).front(), {11.0, 0.0}) < 1e-2);
+        BatchGuard in;
+        CHECK(nearestOnPolygon(offsetFrom({10.0, 0.0}, {8.0, 0.0}, in).front(), {9.0, 0.0}) < 1e-2);
+    }
+    SECTION("0.02 off it: its own side, however the second click lies") {
+        // drawn exactly, an ellipse has no drawing tolerance to be within
+        BatchGuard guard;
+        CHECK(nearestOnPolygon(offsetFrom({10.02, 0.0}, {8.0, 0.0}, guard).front(), {11.0, 0.0}) < 1e-2);
+    }
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)

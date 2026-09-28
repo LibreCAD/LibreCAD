@@ -4859,7 +4859,7 @@ namespace LC_CurveOffset {
 bool isSupportedSource(const RS_Entity& source) {
     return dynamic_cast<const RS_Spline*>(&source) != nullptr ||
            dynamic_cast<const LC_SplinePoints*>(&source) != nullptr ||
-           dynamic_cast<const LC_Hyperbola*>(&source) != nullptr;
+           dynamic_cast<const LC_Hyperbola*>(&source) != nullptr || dynamic_cast<const RS_Ellipse*>(&source) != nullptr;
 }
 
 LC_CurveOffsetOptions makeDirectOptions(const RS_Entity& source, const double distanceMagnitude,
@@ -4870,9 +4870,10 @@ LC_CurveOffsetOptions makeDirectOptions(const RS_Entity& source, const double di
         !computeScale(*adapter, distanceMagnitude, scale) || adapter->breaks().size() < 2) {
         return {};
     }
-    const double requested = (requestedTolerance > 0.0)
-                                 ? requestedTolerance
-                                 : std::max(kDefaultRelativeOffsetTolerance * scale.feature, scale.numericFloor);
+    const double relative = dynamic_cast<const RS_Ellipse*>(&source) != nullptr ? kEllipseRelativeOffsetTolerance
+                                                                                 : kDefaultRelativeOffsetTolerance;
+    const double requested = (requestedTolerance > 0.0) ? requestedTolerance
+                                                        : std::max(relative * scale.feature, scale.numericFloor);
     if (!std::isfinite(requested) || !(requested > scale.numericFloor)) {
         return {}; // no tolerance the arithmetic can honour at this scale
     }
