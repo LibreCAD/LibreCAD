@@ -725,6 +725,26 @@ void LC_LayerTreeWidget::onCustomContextMenu(const QPoint &point){
                 if (layerItem->isVisible() && !layerItem->isLocked()){
                     addActionFunc("deselect_layer",tr("&Select Layer's Entities"), &LC_LayerTreeWidget::selectLayersEntities);
                 }
+
+                if (layerItem->isVisible() && !layerItem->isLocked() && m_graphic != nullptr) {
+                    QList<RS_Entity*> invisibleEntities;
+                    const RS_Layer* layer = layerItem->getLayer();
+                    if (layer != nullptr) {
+                        for (RS_Entity* entity : *m_graphic) {
+                            if (entity != nullptr && entity->getLayer(true) == layer &&
+                                !entity->getFlag(RS2::FlagVisible)) {
+                                invisibleEntities.append(entity);
+                            }
+                        }
+                    }
+                    if (!invisibleEntities.isEmpty()) {
+                        contextMenu->addAction(
+                            tr("Restore Model/Paper Space Entity Visibility..."), this,
+                            [this, layer, invisibleEntities]() {
+                                makeLayerEntitiesVisible(layer, invisibleEntities);
+                            });
+                    }
+                }
                 contextMenu->addSeparator();
                 addActionFunc("copy", tr("&Create Layer Copy"), &LC_LayerTreeWidget::createLayerCopy);
                 addActionFunc("paste", tr("&Duplicate Layer With Content"),  &LC_LayerTreeWidget::createLayerDuplicate);
@@ -1708,6 +1728,34 @@ void LC_LayerTreeWidget::doMoveSelectionToLayer(const LC_LayerTreeItem* layerIte
                                        doc->select(ctx.entitiesToAdd);
                                    });
     }
+    redrawView();
+}
+
+void LC_LayerTreeWidget::makeLayerEntitiesVisible(const RS_Layer* layer, const QList<RS_Entity*>& entities) {
+    if (layer == nullptr || entities.isEmpty() || m_graphic == nullptr || m_graphicView == nullptr) {
+        return;
+    }
+
+    const QString message = tr("Make %1 individually invisible model/paper-space entities on layer \"%2\" visible?\n\n"
+                               "This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entities "
+                               "that were intentionally hidden.")
+                                .arg(entities.size())
+                                .arg(layer->getName());
+    if (QMessageBox::warning(this, tr("Restore Entity Visibility"), message,
+                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No) != QMessageBox::Yes) {
+        return;
+    }
+
+    m_graphic->undoableModify(m_graphicView->getViewPort(),
+                              [entities](LC_DocumentModificationBatch& ctx) {
+                                  ctx.dontSetActiveLayerAndPen();
+                                  for (RS_Entity* entity : entities) {
+                                      RS_Entity* visibleEntity = entity->clone();
+                                      visibleEntity->setVisible(true);
+                                      ctx.replace(entity, visibleEntity);
+                                  }
+                                  return true;
+                              });
     redrawView();
 }
 
