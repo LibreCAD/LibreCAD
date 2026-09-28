@@ -103,6 +103,12 @@ RS_Settings *RS_Settings::instance() {
  *        with a "/". E.g. "/LibreCAD"
  */
 void RS_Settings::init(const QString &companyKey,const QString &appKey) {
+    // A repeated call replaces the singleton; the application calls this once,
+    // but every test file does. Free the old instance first: its QSettings
+    // writes out pending changes on destruction, before the new one reads.
+    delete INSTANCE;
+    INSTANCE = nullptr;
+
     auto* settings = new QSettings(companyKey, appKey);
 
     // First-run migration: if this is a versioned production store and

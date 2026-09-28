@@ -2603,6 +2603,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/dwg_tarch_tests.cpp
         librecad/src/lib/filters/tests/datastorage_tests.cpp
         librecad/src/lib/engine/settings/tests/rs_settings_migration_tests.cpp
+        librecad/src/lib/engine/settings/tests/lc_settings_init_tests.cpp
         librecad/src/lib/gui/tests/rs_graphicview_close_tests.cpp
         librecad/src/lib/gui/tests/lc_grid_tests.cpp
         librecad/src/lib/gui/tests/rs_painter_tests.cpp
