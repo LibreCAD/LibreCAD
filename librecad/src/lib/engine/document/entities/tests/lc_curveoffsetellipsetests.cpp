@@ -34,8 +34,12 @@
 #include <vector>
 
 #include "lc_curveoffset.h"
+#include "lc_hyperbola.h"
 #include "lc_offsetresultcheck.h"
+#include "lc_parabola.h"
+#include "rs_document.h"
 #include "rs_ellipse.h"
+#include "rs_modification.h"
 #include "rs_spline.h"
 
 namespace {
@@ -480,6 +484,159 @@ TEST_CASE("Elliptic arcs are judged on their own sweep", "[curve-offset][ellipse
         CHECK(ahead.chains.front().start().distanceTo({5.3, 0.0}) <= ahead.slack);
         CHECK(back.chains.front().start().distanceTo({-5.3, 0.0}) <= back.slack);
         CHECK(back.chains.front().end().distanceTo({5.3, 0.0}) <= back.slack);
+    }
+}
+
+namespace {
+/** y = x^2/4 from (-4, 4) to (4, 4), its vertex at the origin. */
+LC_ParabolaData bowl() {
+    return LC_ParabolaData{std::array<RS_Vector, 3>{RS_Vector{-4.0, 4.0}, RS_Vector{0.0, -4.0}, RS_Vector{4.0, 4.0}}};
+}
+
+/** The exact least distance from @p p to y = x^2/4 over x in [-4, 4]. */
+double distanceToBowl(const RS_Vector& p) {
+    const auto at = [](const double x) { return RS_Vector{x, x * x / 4.0}; };
+    constexpr int samples = 4000;
+    int best = 0;
+    double least = RS_MAXDOUBLE;
+    for (int i = 0; i <= samples; ++i) {
+        const double d = p.distanceTo(at(-4.0 + 8.0 * i / samples));
+        if (d < least) {
+            least = d;
+            best = i;
+        }
+    }
+    double lo = -4.0 + 8.0 * std::max(best - 1, 0) / samples;
+    double hi = -4.0 + 8.0 * std::min(best + 1, samples) / samples;
+    for (int k = 0; k < 200; ++k) {
+        const double u = lo + (hi - lo) / 3.0;
+        const double v = hi - (hi - lo) / 3.0;
+        if (p.distanceTo(at(u)) < p.distanceTo(at(v))) {
+            hi = v;
+        }
+        else {
+            lo = u;
+        }
+    }
+    return p.distanceTo(at(0.5 * (lo + hi)));
+}
+
+/** The one spline the pipeline made of @p source towards @p pick at @p d, checked at the distance. */
+struct PipelineOffset {
+    LC_DocumentModificationBatch ctx;
+    const RS_Spline* spline = nullptr;
+    double t0 = 0.0;
+    double t1 = 0.0;
+
+    ~PipelineOffset() {
+        qDeleteAll(ctx.entitiesToAdd);
+    }
+
+    RS_Vector at(const double t) const {
+        LC_CurveJet jet;
+        REQUIRE(spline->tryEvaluateJet(t, LC_CurveEvaluationSide::Interior, jet));
+        return jet.point;
+    }
+
+    double distanceFrom(const RS_Vector& p) const {
+        double least = RS_MAXDOUBLE;
+        for (int k = 0; k <= 20000; ++k) {
+            least = std::min(least, at(t0 + (t1 - t0) * k / 20000.0).distanceTo(p));
+        }
+        return least;
+    }
+};
+
+void offsetThroughPipeline(RS_Entity& source, const RS_Vector& pick, const double d, PipelineOffset& out) {
+    RS_OffsetData data;
+    data.coord = pick;
+    data.distance = d;
+    data.keepOriginals = true;
+    const LC_OffsetBatchOutcome outcome =
+        RS_Modification::offsetWithOutcome(data, {&source}, false, LC_OffsetBatchLimits{}, out.ctx);
+    REQUIRE(outcome.sources.size() == 1);
+    REQUIRE(outcome.sources.front().succeeded());
+    REQUIRE(out.ctx.entitiesToAdd.size() == 1);
+    out.spline = dynamic_cast<const RS_Spline*>(out.ctx.entitiesToAdd.front());
+    REQUIRE(out.spline != nullptr);
+    REQUIRE(out.spline->getParameterDomain(out.t0, out.t1));
+}
+} // namespace
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A parabola shrunk past its vertex's radius of curvature has a corner on its axis",
+          "[curve-offset][parabola]") {
+    // inside y = x^2/4 by 3 (its vertex's radius of curvature is 2): the
+    // offsets of its halves cross at (0, 3.25), 3 from (±√5, 5/4); the chain
+    // runs from the offset of one end to that of the other
+    LC_Parabola parabola(nullptr, bowl());
+    PipelineOffset offset;
+    offsetThroughPipeline(parabola, {0.0, 1.0}, 3.0, offset);
+    const double slack = 2.0 * LC_CurveOffset::makeOffsetOptions(parabola, 3.0).tolerance.requestedGeometry;
+    const RS_Vector rightEnd{4.0 - 6.0 / std::sqrt(5.0), 4.0 + 3.0 / std::sqrt(5.0)}; // (1.3167, 5.3416)
+    CHECK(offset.at(offset.t0).distanceTo({-rightEnd.x, rightEnd.y}) <= slack);
+    CHECK(offset.at(offset.t1).distanceTo(rightEnd) <= slack);
+    CHECK(offset.distanceFrom({0.0, 3.25}) <= slack);
+    for (int k = 0; k <= 200; ++k) {
+        const RS_Vector p = offset.at(offset.t0 + (offset.t1 - offset.t0) * k / 200.0);
+        CHECK(std::abs(distanceToBowl(p) - 3.0) <= slack);
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A reversed parabola is offset the way it now runs", "[curve-offset][parabola]") {
+    // revertDirection() swapped its end points but left the spline data the
+    // engine reads as it was, so the offset ran the old way
+    LC_Parabola parabola(nullptr, bowl());
+    parabola.revertDirection();
+    CHECK(parabola.getStartpoint().distanceTo({4.0, 4.0}) < 1e-12);
+    PipelineOffset offset;
+    offsetThroughPipeline(parabola, {0.0, 1.0}, 3.0, offset);
+    const double slack = 2.0 * LC_CurveOffset::makeOffsetOptions(parabola, 3.0).tolerance.requestedGeometry;
+    CHECK(offset.at(offset.t0).distanceTo({4.0 - 6.0 / std::sqrt(5.0), 4.0 + 3.0 / std::sqrt(5.0)}) <= slack);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A parabola cannot be offset in place", "[curve-offset][parabola]") {
+    // RS_Entity::offset() on a parabola moved its spline data and left the
+    // parabola behind; its offset is no parabola
+    LC_Parabola parabola(nullptr, bowl());
+    CHECK_FALSE(parabola.offset(RS_Vector{0.0, 1.0}, 1.0));
+    CHECK(parabola.getStartpoint().distanceTo({-4.0, 4.0}) < 1e-12);
+    CHECK(parabola.getEndpoint().distanceTo({4.0, 4.0}) < 1e-12);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A hyperbola past its vertex's radius of curvature has a corner on its axis", "[curve-offset][hyperbola]") {
+    // a = b = 3 (lc_curveoffset_tests.cpp): radius of curvature 3 at the
+    // vertex (3, 0). Towards the focus by 4 the halves' offsets cross at
+    // (5√2, 0), 4 from (5√2/2, ±√3.5); at 3 they stall there
+    const LC_Hyperbola hyperbola(nullptr, LC_HyperbolaData{RS_Vector{0.0, 0.0}, RS_Vector{3.0, 0.0}, 1.0, -1.5, 1.5, false});
+    const auto offsetBy = [&hyperbola](const double d) {
+        return LC_CurveOffset::createEntities(hyperbola, LC_CurveOffset::makeDirectionRequest(RS_Vector{10.0, 0.0}, d),
+                                              LC_CurveOffset::makeOffsetOptions(hyperbola, d),
+                                              LC_CurveOffset::makeDirectSourceBudget());
+    };
+    const LC_CurveOffsetMaterializationResult four = offsetBy(4.0);
+    REQUIRE(four.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(four.entities.size() == 1);
+    const auto* spline = dynamic_cast<const RS_Spline*>(four.entities.front().get());
+    REQUIRE(spline != nullptr);
+    double t0 = 0.0;
+    double t1 = 0.0;
+    REQUIRE(spline->getParameterDomain(t0, t1));
+    double least = RS_MAXDOUBLE;
+    for (int k = 0; k <= 20000; ++k) {
+        LC_CurveJet jet;
+        REQUIRE(spline->tryEvaluateJet(t0 + (t1 - t0) * k / 20000.0, LC_CurveEvaluationSide::Interior, jet));
+        least = std::min(least, jet.point.distanceTo({5.0 * std::sqrt(2.0), 0.0}));
+    }
+    CHECK(least <= 2.0 * LC_CurveOffset::makeOffsetOptions(hyperbola, 4.0).tolerance.requestedGeometry);
+    for (const double d : {3.0 * (1.0 - 1e-9), 3.0 * (1.0 + 1e-9)}) {
+        INFO("d = " << d);
+        const LC_CurveOffsetMaterializationResult atStall = offsetBy(d);
+        CHECK(atStall.status == LC_CurveOffsetStatus::Ok);
+        CHECK(atStall.entities.size() == 1);
     }
 }
 

@@ -571,6 +571,16 @@ void LC_Parabola::moveRef(const RS_Vector& ref, const RS_Vector& offset)
 void LC_Parabola::revertDirection()
 {
   std::swap(m_data.m_controlPoints.front(), m_data.m_controlPoints.back());
+  // the spline data the curve is read through follows, as for every other edit
+  update();
+}
+
+bool LC_Parabola::offset([[maybe_unused]] const RS_Vector& coord, [[maybe_unused]] const double distance)
+{
+  // an offset of a parabola is no parabola: only createOffset() makes one,
+  // and a same-type offset of the spline data alone would leave the
+  // parabola's own data behind
+  return false;
 }
 
 void LC_Parabola::update() {
