@@ -17545,6 +17545,281 @@ TEST_CASE("DWG entity sweep does not contain an orphan next to a stale owner",
 
 namespace {
 
+// A complete AC1018 entity frame whose object-size field marks the start of
+// the handle stream, as in a real R2004 file. The general frame builders above
+// set that field to the end of the body, which is enough for a typed parse (it
+// reads the handle stream in sequence) but leaves an owner unreadable to the
+// sweep, which reads it from bit objSize when the entity has no typed body.
+template <typename Entity>
+std::vector<std::uint8_t> makeRealisticAc1018Frame(Entity& entity) {
+    dwgBufferW dataOnly;
+    dwgBufferW handles;
+    if (!entity.encodeDwg(DRW::AC1018, &dataOnly, 0, nullptr, &handles))
+        return {};
+    // Everything before the handle stream.
+    const std::uint32_t dataBitCount = dataOnly.bitCount();
+    dwgBufferW body;
+    if (!entity.encodeDwg(DRW::AC1018, &body, 0, nullptr, nullptr)
+        || body.data().empty())
+        return {};
+    const std::uint8_t bsCode =
+        static_cast<std::uint8_t>((body.data().front() >> 6) & 0x03);
+    body.patchRawLong32AtBit(
+        bsCode == 0x01 ? 10 : bsCode == 0x00 ? 18 : 2, dataBitCount);
+    body.alignToByte();
+    dwgBufferW frame;
+    frame.putModularShort(static_cast<std::int32_t>(body.data().size()));
+    frame.putBytes(body.data().data(), body.data().size());
+    frame.putRawShort16(frame.crc16(0xC0C1, 0, frame.data().size()));
+    return frame.data();
+}
+
+struct SweepFrame {
+    std::uint32_t handle;
+    std::int16_t type;
+    std::vector<std::uint8_t> bytes;
+};
+
+struct SweepResult {
+    bool returned = false;
+    bool contained = false;
+    std::size_t failures = 0;
+    std::size_t orphans = 0;
+    std::size_t published = 0;
+    std::size_t inserts = 0;
+    std::size_t polylines = 0;
+    // Nothing of a rejected group stays behind: no frame in the object map, no
+    // staged compound state, every frame of the coverage report settled as
+    // failed or quarantined and none published.
+    bool nothingLeft = false;
+    bool allFramesRejected = false;
+};
+
+// Runs the entity sweep over `frames` (each at its own offset of one buffer)
+// for a drawing whose only block records are `blockRecords`.
+SweepResult sweepFrames(DRW::Version version, std::vector<SweepFrame> frames,
+                        const std::vector<std::uint32_t>& blockRecords) {
+    std::sort(frames.begin(), frames.end(),
+              [](const SweepFrame& lhs, const SweepFrame& rhs) {
+                  return lhs.handle < rhs.handle;
+              });
+    std::vector<std::uint8_t> objectData;
+    std::vector<std::uint32_t> offsets;
+    for (const SweepFrame& frame : frames) {
+        offsets.push_back(static_cast<std::uint32_t>(objectData.size()));
+        objectData.insert(objectData.end(), frame.bytes.cbegin(),
+                          frame.bytes.cend());
+    }
+    dwgBufferW handleEntries;
+    std::uint32_t previousHandle = 0;
+    std::int64_t previousOffset = 0;
+    for (std::size_t i = 0; i < frames.size(); ++i) {
+        REQUIRE(handleEntries.putUModularChar(frames[i].handle
+                                              - previousHandle));
+        REQUIRE(handleEntries.putModularChar(
+            static_cast<std::int64_t>(offsets[i]) - previousOffset));
+        previousHandle = frames[i].handle;
+        previousOffset = offsets[i];
+    }
+    std::vector<std::uint8_t> handleMap;
+    appendHandleMapPage(handleMap, handleEntries.data());
+    appendHandleMapPage(handleMap, {});
+
+    DwgEntityReaderProbe reader(std::make_unique<dwgBuffer>(
+        objectData.data(), objectData.size()));
+    reader.setVersionForTest(version);
+    for (const std::uint32_t record : blockRecords)
+        reader.addBlockRecordForTest(record);
+    dwgBuffer handleBuffer(handleMap.data(), handleMap.size());
+    REQUIRE(reader.readDwgHandles(
+        &handleBuffer, 0, handleMap.size(), objectData.size()));
+    dwgBuffer objectBuffer(objectData.data(), objectData.size());
+    DwgInsertReceiptProbe interface;
+
+    SweepResult result;
+    result.returned = reader.readDwgEntities(interface, &objectBuffer);
+    result.contained = reader.entitySweepFailureContained();
+    result.failures = reader.entityParseFailuresForTest();
+    result.orphans = reader.orphanedEntityDiagnosticsForTest().size();
+    result.published = interface.publications.size();
+    result.inserts = interface.inserts.size();
+    result.polylines = interface.polylineCount;
+    result.nothingLeft = reader.ObjectMap.empty()
+        && reader.stagedPendingInsertCountForTest() == 0u
+        && reader.stagedOrphanAttribCountForTest() == 0u
+        && reader.stagedSeqEndCountForTest() == 0u
+        && reader.stagedPendingPolylineCountForTest() == 0u
+        && reader.stagedOrphanPolylineVertexCountForTest() == 0u;
+    result.allFramesRejected =
+        reader.m_dwgSourceFrameLedger.size() == frames.size()
+        && std::all_of(
+            reader.m_dwgSourceFrameLedger.cbegin(),
+            reader.m_dwgSourceFrameLedger.cend(),
+            [](const DRW_DwgFrameCoverageEntry& entry) {
+                return (entry.m_disposition == DRW_DwgFrameDisposition::Failed
+                        || entry.m_disposition
+                            == DRW_DwgFrameDisposition::Quarantined)
+                    && entry.m_publicationCount == 0u;
+            });
+    return result;
+}
+
+// An INSERT with one ATTRIB and a SEQEND, all AC1018. The INSERT's frame is
+// built with `realisticOwner`: whether its object-size field marks the start
+// of the handle stream (a real file) or the end of the body.
+std::vector<SweepFrame> makeInsertGroupFrames(std::uint32_t insertHandle,
+                                              std::uint32_t owner,
+                                              bool realisticOwner) {
+    const std::uint32_t attribHandle = 0x101;
+    const std::uint32_t seqEndHandle = 0x102;
+    DwgInsertWriterProbe insert;
+    insert.handle = insertHandle;
+    insert.parentHandle = owner;
+    insert.setObjectType(dwgType::INSERT);
+    dwgHandle attrib;
+    attrib.ref = attribHandle;
+    insert.attribHandles.push_back(attrib);
+    insert.seqendH.ref = seqEndHandle;
+    std::vector<std::uint8_t> insertFrame;
+    if (realisticOwner) {
+        insertFrame = makeRealisticAc1018Frame(insert);
+    } else {
+        insertFrame = makeInsertWithChildrenFrame(insertHandle, owner,
+                                                  attribHandle, seqEndHandle);
+    }
+    REQUIRE(!insertFrame.empty());
+    const auto attribFrame = makeAttribFrame(attribHandle, insertHandle);
+    const auto seqEndFrame = makeSeqEndFrame(seqEndHandle, insertHandle);
+    REQUIRE(!attribFrame.empty());
+    REQUIRE(!seqEndFrame.empty());
+    return {{insertHandle, dwgType::INSERT, insertFrame},
+            {attribHandle, dwgType::ATTRIB, attribFrame},
+            {seqEndHandle, dwgType::SEQEND, seqEndFrame}};
+}
+
+// The POLYLINE, VERTEX and SEQEND of the polyline fixture (handles 0x100,
+// 0x101 and 0x102), sliced back into frames.
+std::vector<SweepFrame> makePolylineGroupFrames(DRW::Version version,
+                                                std::uint32_t owner) {
+    if (version == DRW::AC1018) {
+        auto vertex = std::make_shared<DwgVertexWriterProbe>();
+        vertex->handle = 0x101;
+        vertex->parentHandle = 0x100;
+        vertex->basePoint = DRW_Coord(10.0, 20.0, 0.0);
+        vertex->setDwgSubtype(DRW_Vertex::DwgSubtype::Vertex2D);
+        DwgPolylineWriterProbe polyline;
+        polyline.handle = 0x100;
+        polyline.parentHandle = owner;
+        polyline.appendVertex(vertex);
+        polyline.setDwgSeqEndHandle(0x102);
+        const auto polylineFrame = makeRealisticAc1018Frame(polyline);
+        dwgBufferW vertexBody;
+        REQUIRE(vertex->encodeDwg(DRW::AC1018, &vertexBody, 0, nullptr,
+                                  nullptr));
+        const auto vertexFrame = makeEntityFrame(vertexBody);
+        const auto seqEndFrame = makeSeqEndFrame(0x102, 0x100);
+        REQUIRE(!polylineFrame.empty());
+        REQUIRE(!vertexFrame.empty());
+        REQUIRE(!seqEndFrame.empty());
+        return {{0x100, dwgType::POLYLINE_2D, polylineFrame},
+                {0x101, dwgType::VERTEX_2D, vertexFrame},
+                {0x102, dwgType::SEQEND, seqEndFrame}};
+    }
+    const auto fixture = makePolylineFrameFixture(
+        false, false, false, false, 0.0, false, version,
+        DRW_Vertex::DwgSubtype::Vertex2D, owner);
+    REQUIRE(!fixture.bytes.empty());
+    const auto slice = [&fixture](std::size_t from, std::size_t to) {
+        return std::vector<std::uint8_t>(fixture.bytes.begin() + from,
+                                         fixture.bytes.begin() + to);
+    };
+    return {{0x100, dwgType::POLYLINE_2D, slice(0, fixture.vertexOffset)},
+            {0x101, dwgType::VERTEX_2D,
+             slice(fixture.vertexOffset, fixture.seqEndOffset)},
+            {0x102, dwgType::SEQEND,
+             slice(fixture.seqEndOffset, fixture.bytes.size())}};
+}
+
+} // namespace
+
+TEST_CASE("DWG entity sweep contains an INSERT group whose owner record does "
+          "not exist",
+          "[dwg][safety][compound]") {
+    // An INSERT with attributes in an erased block. The INSERT is classified
+    // like any owned entity: its owner names no BLOCK_RECORD, so it is
+    // rejected and counted. Its ATTRIB and SEQEND name the INSERT, not the
+    // block, so they are staged under it and terminalized when the sweep ends,
+    // each counted; nothing is published and nothing stays staged. Whether the
+    // parent comes first or last in the object map does not matter.
+    constexpr std::uint32_t erasedOwner = 0x501;
+    for (const std::uint32_t insertHandle : {0x100u, 0x120u}) {
+        DYNAMIC_SECTION("INSERT " << std::hex << insertHandle) {
+            const SweepResult result = sweepFrames(
+                DRW::AC1018,
+                makeInsertGroupFrames(insertHandle, erasedOwner, true), {});
+            CHECK_FALSE(result.returned);
+            CHECK(result.contained);
+            CHECK(result.orphans == 1u);
+            CHECK(result.failures >= 2u);
+            CHECK(result.published == 0u);
+            CHECK(result.inserts == 0u);
+            CHECK(result.nothingLeft);
+            CHECK(result.allFramesRejected);
+        }
+    }
+}
+
+TEST_CASE("DWG entity sweep contains a POLYLINE group whose owner record does "
+          "not exist",
+          "[dwg][safety][compound]") {
+    // The same for a POLYLINE with a VERTEX and a SEQEND, in every layout of
+    // the frames an owner can be read from: the R2004 handle stream that
+    // starts at bit objSize, and the R2010 and R2013 separate handle streams.
+    constexpr std::uint32_t erasedOwner = 0x501;
+    const DRW::Version version =
+        GENERATE(DRW::AC1018, DRW::AC1024, DRW::AC1027);
+    INFO("version " << static_cast<int>(version));
+    const SweepResult result = sweepFrames(
+        version, makePolylineGroupFrames(version, erasedOwner), {});
+    CHECK_FALSE(result.returned);
+    CHECK(result.contained);
+    CHECK(result.orphans == 1u);
+    CHECK(result.failures >= 2u);
+    CHECK(result.published == 0u);
+    CHECK(result.polylines == 0u);
+    CHECK(result.nothingLeft);
+    CHECK(result.allFramesRejected);
+}
+
+TEST_CASE("DWG entity sweep keeps a group structural when its owner is in "
+          "doubt",
+          "[dwg][safety][compound]") {
+    // An owner that exists but does not list the group, and an owner the
+    // sweep cannot read, are contradictions or unknowns, not an erased
+    // record: the group is rejected and the phase fails, as for any entity.
+    SECTION("the owner exists and does not list the polyline") {
+        const DRW::Version version = GENERATE(DRW::AC1024, DRW::AC1027);
+        const SweepResult result = sweepFrames(
+            version, makePolylineGroupFrames(version, 0x502), {0x502});
+        CHECK_FALSE(result.returned);
+        CHECK_FALSE(result.contained);
+        CHECK(result.orphans == 0u);
+        CHECK(result.published == 0u);
+    }
+    SECTION("the owner of an INSERT frame cannot be read") {
+        // The frame builders above set the object-size field to the end of
+        // the body: no handle stream can be located, so the owner is unknown.
+        const SweepResult result = sweepFrames(
+            DRW::AC1018, makeInsertGroupFrames(0x100, 0x501, false), {});
+        CHECK_FALSE(result.returned);
+        CHECK_FALSE(result.contained);
+        CHECK(result.orphans == 0u);
+        CHECK(result.published == 0u);
+    }
+}
+
+namespace {
+
 // Runs the phases a whole-file read runs, one at a time, so a test can change
 // what the table phase produced before the block and entity phases.
 class DwgOrphanChainReader32Probe final : public dwgReader32 {

@@ -149,7 +149,12 @@ enum class DwgIntegrityCheckKind : std::uint8_t {
     /// BLOCK_RECORD of the drawing: an erased block record whose entities were
     /// left in the file. Always a Warning; the entity is not published and is
     /// counted as an entity parse failure. `logicalHandle` is the entity,
-    /// `fileOffset` its frame and `expected` the absent owner.
+    /// `fileOffset` its frame and `expected` the absent owner. An INSERT or
+    /// POLYLINE with children is classified as one entity: its ATTRIB, VERTEX
+    /// and SEQEND frames name the group, not the block, so they are staged
+    /// under it and abandoned, each group counted as an entity parse failure,
+    /// when the sweep ends. An owner the sweep cannot read stays a structural
+    /// failure and gets no such diagnostic.
     EntityOwnerRecordMissing,
     /// An INSERT places a block record that BLOCK_CONTROL lists but the file
     /// does not hold (see TableControlDanglingHandle). Always an Error: the

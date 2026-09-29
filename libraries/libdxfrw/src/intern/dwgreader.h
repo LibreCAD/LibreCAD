@@ -1331,6 +1331,15 @@ protected:
   // anonymous dimension block) stayed in the file. Unlike an owner that exists
   // but does not list the entity, nothing is in doubt about where such an
   // entity belongs: nowhere. The sweep compares the counter across the walk.
+  // An INSERT or POLYLINE that heads a group is classified like any other
+  // entity; its ATTRIB, VERTEX and SEQEND children name the group, so they
+  // are not classified themselves: they stage as orphans of the rejected
+  // parent and are terminalized, each group counted once as an entity
+  // failure, when the sweep ends. That needs the owner to be readable: for
+  // R2000 and R2004 it is read from the handle stream that starts at bit
+  // objSize of the frame, and a frame whose object-size field does not mark
+  // that start has an unreadable owner and stays a structural failure, group
+  // or not.
   std::uint64_t m_orphanedEntityRejections{0};
   // Result of the last entity sweep, see entitySweepFailureContained().
   bool m_entitySweepContained{false};
