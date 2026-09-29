@@ -409,11 +409,16 @@ protected: //only for read dwg
 	std::uint8_t xDictFlag = 0;
 	std::int32_t numReactors = 0; //
 	bool commonLinkTailValidated = false;
-	std::uint32_t objSize;  //RL 32bits object data size in bits
+	// RL 32bits object data size in bits. R2000/R2004 read it first thing,
+	// R13/R14 only later in the common header (after the graphics data),
+	// and R2010+ derive it from the frame. Until it has been read every
+	// bound derived from it (proxyEntityEndBit) must see 0, which means "the
+	// whole frame": never leave it indeterminate.
+	std::uint32_t objSize{0};
 	// End of the common/entity data portion. R2007+ stores the string stream
 	// after this boundary but still includes it in objSize.
     std::uint64_t dwgDataEndBit = 0;
-    std::int16_t oType;
+    std::int16_t oType{0};
 	// Writer-only EED name resolutions. They are rebuilt by dwgWriter15 for
 	// every output entity after APPID/LAYER table handles are known.
 	std::vector<PendingHandleRef> dwgEedAppIdWriteRefs;

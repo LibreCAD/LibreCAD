@@ -3929,6 +3929,34 @@ dwgReader::DwgMappedEntityOutcome dwgReader::stageMappedInsertAggregate(
   }
 }
 
+namespace {
+// A pre-2004 entity that stores no next-entity link (nolinks) is followed by
+// the object with the next handle. For the parent of a POLYLINE or INSERT
+// group that is the first handle after the parent that is not one of the
+// group's own VERTEX/ATTRIB/SEQEND frames: they are usually allocated right
+// behind the parent, but a writer may put any of them elsewhere (SEQEND at
+// the end of the file, say), where the parent's own successor is still the
+// next entity of the block. Returns DRW::NoHandle when there is none.
+std::uint32_t nextHandleAfterLegacyGroup(std::uint32_t parent,
+                                         std::vector<std::uint32_t> members) {
+  constexpr std::uint32_t kMaxHandle = std::numeric_limits<std::uint32_t>::max();
+  if (parent == DRW::NoHandle || parent == kMaxHandle)
+    return DRW::NoHandle;
+  try {
+    std::sort(members.begin(), members.end());
+    std::uint32_t candidate = parent + 1u;
+    while (std::binary_search(members.cbegin(), members.cend(), candidate)) {
+      if (candidate == kMaxHandle)
+        return DRW::NoHandle;
+      ++candidate;
+    }
+    return candidate;
+  } catch (...) {
+    return DRW::NoHandle;
+  }
+}
+} // namespace
+
 dwgReader::DwgMappedEntityOutcome dwgReader::stageLegacyInsertAggregate(
     DRW_Insert &&insert, const DRW_DwgFramePublication &publication,
     dwgBuffer *dbuf, DRW_Interface &intfa,
@@ -4849,9 +4877,11 @@ dwgReader::stageLegacyPolylineChain(DRW_Polyline &&polyline,
     }
 
     restoreLinks();
-    if (haveNextLinks &&
-        sequenceHandle != std::numeric_limits<std::uint32_t>::max()) {
-      nextEntLink = sequenceHandle + 1u;
+    if (haveNextLinks) {
+      const std::uint32_t next =
+          nextHandleAfterLegacyGroup(parentHandle, discoveredHandles);
+      if (next != DRW::NoHandle)
+        nextEntLink = next;
     }
     return outcome;
   } catch (...) {
@@ -5604,9 +5634,21 @@ dwgReader::DwgMappedEntityOutcome dwgReader::deliverPreparedInsertCommit(
     return DwgMappedEntityOutcome::Rejected;
   }
 
-  if (version < DRW::AC1018 && pending.entity.haveNextLinks != 0 &&
-      sequenceHandle != std::numeric_limits<std::uint32_t>::max()) {
-    nextEntLink = sequenceHandle + 1;
+  if (version < DRW::AC1018 && pending.entity.haveNextLinks != 0) {
+    std::vector<std::uint32_t> members;
+    try {
+      members.push_back(sequenceHandle);
+      for (const StagedAttribState *attribute : prepared.orderedAttributes) {
+        if (attribute != nullptr && attribute->entity != nullptr)
+          members.push_back(attribute->entity->handle);
+      }
+    } catch (...) {
+      members.clear();
+    }
+    const std::uint32_t next =
+        nextHandleAfterLegacyGroup(handle, std::move(members));
+    if (next != DRW::NoHandle)
+      nextEntLink = next;
   }
   if (prepared.sequenceEnd != nullptr)
     m_stagedSeqEnds.erase(sequenceHandle);
@@ -9019,6 +9061,25 @@ bool dwgReader::preflightMappedPolylineOwnership(
   }
 }
 
+namespace {
+// The frames a pre-2004 POLYLINE claims as its own children. (A legacy
+// INSERT's ATTRIBs need no such care: an ATTRIB read first is staged as an
+// orphan until its INSERT arrives.)
+bool isLegacyCompoundChildType(std::int16_t type) noexcept {
+  switch (type) {
+  case dwgType::VERTEX_2D:
+  case dwgType::VERTEX_3D:
+  case dwgType::VERTEX_MESH:
+  case dwgType::VERTEX_PFACE:
+  case dwgType::VERTEX_PFACE_FACE:
+  case dwgType::SEQEND:
+    return true;
+  default:
+    return false;
+  }
+}
+} // namespace
+
 bool dwgReader::requiresLegacyCompoundHandling(
     dwgBuffer *dbuf, const objHandle &object,
     DwgFrameClassification *classification) {
@@ -9059,8 +9120,44 @@ bool dwgReader::readDwgEntities(DRW_Interface &intfa, dwgBuffer *dbuf,
   bool structuralFailure = false;
   const bool previousSweepPolicy = rejectOwnedEntityInSweep;
   rejectOwnedEntityInSweep = version > DRW::AC1015;
+
+  // A pre-2004 POLYLINE claims its VERTEX and SEQEND frames out of ObjectMap
+  // by following its own handle chain, so a child read on its own first is
+  // consumed (and refused) before the parent can reach it and the whole group
+  // is lost. ObjectMap is a hash map, so its order says nothing about which
+  // comes first; two files with the same content could even differ between
+  // standard libraries. Visit the frames in ascending handle order with every
+  // legacy VERTEX/SEQEND deferred until all the group parents have been
+  // visited. Whatever is still there then belongs to no readable group and
+  // fails exactly as it would have.
+  const bool parentsFirst = version < DRW::AC1018;
+  std::vector<std::uint32_t> sweepOrder;
+  std::vector<std::uint32_t> deferredChildren;
+  std::size_t sweepPos = 0;
+  bool childrenPhase = false;
+  if (parentsFirst) {
+    sweepOrder.reserve(ObjectMap.size());
+    for (const auto &item : ObjectMap)
+      sweepOrder.push_back(item.first);
+    std::sort(sweepOrder.begin(), sweepOrder.end());
+  }
   while (!ObjectMap.empty()) {
-    auto itB = ObjectMap.begin();
+    auto itB = ObjectMap.end();
+    if (parentsFirst) {
+      while (itB == ObjectMap.end() && sweepPos < sweepOrder.size())
+        itB = ObjectMap.find(sweepOrder[sweepPos++]);
+      if (itB == ObjectMap.end() && !childrenPhase) {
+        childrenPhase = true;
+        sweepOrder = std::move(deferredChildren);
+        deferredChildren.clear();
+        sweepPos = 0;
+        continue;
+      }
+    }
+    // Anything the ordered visit did not reach (a frame restored to the map
+    // by a rolled-back group) is taken in map order, as before.
+    if (itB == ObjectMap.end())
+      itB = ObjectMap.begin();
     if (m_quarantinedEntityHandles.find(itB->first) !=
         m_quarantinedEntityHandles.end()) {
       if (!discardDwgSourceFrame(ObjectMap, itB)) {
@@ -9073,6 +9170,11 @@ bool dwgReader::readDwgEntities(DRW_Interface &intfa, dwgBuffer *dbuf,
     bool read = false;
     DwgFrameClassification classification;
     if (requiresLegacyCompoundHandling(dbuf, itB->second, &classification)) {
+      if (parentsFirst && !childrenPhase &&
+          isLegacyCompoundChildType(classification.resolvedType)) {
+        deferredChildren.push_back(itB->first);
+        continue;
+      }
       DwgSourceFrameLease lease;
       if (!takeDwgSourceFrame(ObjectMap, itB, lease)) {
         structuralFailure = true;

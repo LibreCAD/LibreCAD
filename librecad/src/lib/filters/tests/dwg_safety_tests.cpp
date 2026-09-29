@@ -743,6 +743,10 @@ public:
         return m_pendingPolylineStates.size();
     }
 
+    [[nodiscard]] std::size_t entityParseFailuresForTest() const {
+        return m_entityParseFailures;
+    }
+
     [[nodiscard]] std::size_t stagedOrphanPolylineVertexCountForTest() const {
         return m_orphanPolylineVertexStates.size();
     }
@@ -1464,6 +1468,25 @@ public:
 class DwgLineReaderProbe final : public DRW_Line {
 public:
     using DRW_Line::parseDwg;
+};
+
+// Runs only the common entity prologue, like the reader's own owner probe, on
+// an entity that arrives with an object size left over from somewhere else --
+// what a stack or heap object holds when nothing initialised it. (The typed
+// parsers start by resetting their state, which zeroes it.)
+class DwgEntityPrologueProbe final : public DRW_Entity {
+public:
+    void applyExtrusion() override {}
+
+    bool parseDwg(DRW::Version version, dwgBuffer* buffer,
+                  std::uint32_t bodyBitSize = 0) override {
+        return DRW_Entity::parseDwg(version, buffer, nullptr, bodyBitSize)
+            && buffer != nullptr && buffer->isGood();
+    }
+
+    void setStaleObjectSize(std::uint32_t value) { objSize = value; }
+    std::uint32_t objectSize() const { return objSize; }
+    bool hasOwner() const { return ownerHandle; }
 };
 
 class DwgPointReaderProbe final : public DRW_Point {
@@ -9656,6 +9679,368 @@ TEST_CASE("DWG legacy POLYLINE block walk rejects a foreign VERTEX",
     CHECK(sweepInterface.polylineCount == 0u);
     CHECK(sweepInterface.unsupportedObjects.empty());
     CHECK(reader.ObjectMap.empty());
+}
+
+// ---------------------------------------------------------------------------
+// R13/R14 entities and the legacy (pre-2004) ENTITIES sweep.
+// ---------------------------------------------------------------------------
+
+namespace {
+
+// Body of an R13/R14 LINE, laid out as the ODA specification lists it: no
+// object-size field up front (the size in bits follows the graphics flag),
+// the "linetype is BYLAYER" bit and no lineweight or plot flags. Model-space
+// entities carry no owner handle; with nolinks set the next entity is the
+// next handle.
+std::vector<std::uint8_t> makeR14LineBody(std::uint32_t handle,
+                                          const DRW_Coord& start,
+                                          const DRW_Coord& end) {
+    dwgBufferW body;
+    body.putObjType(DRW::AC1014, dwgType::LINE);
+    body.putHandle(makeObjectHandle(handle));
+    body.putBitShort(0);     // no EED
+    body.putBit(0);          // no graphics
+    const std::size_t sizeBit = body.bitCount();
+    body.putRawLong32(0);    // object size in bits, patched below
+    body.put2Bits(2);        // entity mode: model space, no owner handle
+    body.putBitLong(0);      // no reactors
+    body.putBit(1);          // linetype is BYLAYER
+    body.putBit(1);          // nolinks
+    body.putBitShort(256);   // color BYLAYER
+    body.putBitDouble(1.0);  // linetype scale
+    body.putBitShort(0);     // visible
+    body.put3BitDouble(start);
+    body.put3BitDouble(end);
+    body.putThickness(0.0, false);
+    body.putExtrusion(DRW_Coord(0.0, 0.0, 1.0), false);
+    // The size field sits at a bit offset that patchRawLong32AtBit does not
+    // support (it needs the 2-bit remainder every R2000+ preamble leaves).
+    const std::uint32_t dataBits = body.bitCount();
+    const std::array<std::uint8_t, 4> sizeBytes = {
+        static_cast<std::uint8_t>(dataBits & 0xFFu),
+        static_cast<std::uint8_t>((dataBits >> 8) & 0xFFu),
+        static_cast<std::uint8_t>((dataBits >> 16) & 0xFFu),
+        static_cast<std::uint8_t>((dataBits >> 24) & 0xFFu)};
+    if (!body.patchRawBytesAtBit(sizeBit, sizeBytes.data(), sizeBytes.size()))
+        return {};
+    putOffsetHandle(body, 3, 0);  // extension dictionary
+    putOffsetHandle(body, 0, 0);  // layer
+    body.alignToByte();
+    return body.data();
+}
+
+class DwgLineCaptureProbe final : public DwgReadProbe {
+public:
+    std::vector<DRW_Line> lines;
+
+    void addLine(const DRW_Line& line) override { lines.push_back(line); }
+};
+
+struct LegacyObjectImage {
+    std::vector<std::uint8_t> bytes;
+    std::vector<objHandle> objects;
+
+    void add(std::int16_t type, std::uint32_t handle,
+             const std::vector<std::uint8_t>& frame) {
+        objects.emplace_back(type, handle,
+                             static_cast<std::uint32_t>(bytes.size()));
+        bytes.insert(bytes.end(), frame.cbegin(), frame.cend());
+    }
+};
+
+// POLYLINE, two VERTEX frames and SEQEND of one group, with independently
+// chosen handles.
+struct LegacyPolylineGroupFrames {
+    std::uint32_t polylineHandle = 0;
+    std::uint32_t firstVertexHandle = 0;
+    std::uint32_t lastVertexHandle = 0;
+    std::uint32_t seqEndHandle = 0;
+    std::vector<std::uint8_t> polyline;
+    std::vector<std::uint8_t> firstVertex;
+    std::vector<std::uint8_t> lastVertex;
+    std::vector<std::uint8_t> seqEnd;
+
+    bool valid() const {
+        return !polyline.empty() && !firstVertex.empty()
+            && !lastVertex.empty() && !seqEnd.empty();
+    }
+
+    void addTo(LegacyObjectImage& image) const {
+        image.add(dwgType::POLYLINE_2D, polylineHandle, polyline);
+        image.add(dwgType::VERTEX_2D, firstVertexHandle, firstVertex);
+        image.add(dwgType::VERTEX_2D, lastVertexHandle, lastVertex);
+        image.add(dwgType::SEQEND, seqEndHandle, seqEnd);
+    }
+};
+
+LegacyPolylineGroupFrames makeLegacyPolylineGroupFrames(
+    std::uint32_t polylineHandle, std::uint32_t firstVertexHandle,
+    std::uint32_t lastVertexHandle, std::uint32_t seqEndHandle) {
+    auto firstVertex = std::make_shared<DwgVertexWriterProbe>();
+    firstVertex->handle = firstVertexHandle;
+    firstVertex->parentHandle = polylineHandle;
+    firstVertex->basePoint = DRW_Coord(10.0, 20.0, 0.0);
+    firstVertex->setDwgSubtype(DRW_Vertex::DwgSubtype::Vertex2D);
+
+    auto lastVertex = std::make_shared<DwgVertexWriterProbe>();
+    lastVertex->handle = lastVertexHandle;
+    lastVertex->parentHandle = polylineHandle;
+    lastVertex->basePoint = DRW_Coord(30.0, 40.0, 0.0);
+    lastVertex->setDwgSubtype(DRW_Vertex::DwgSubtype::Vertex2D);
+
+    DwgPolylineWriterProbe polyline;
+    polyline.handle = polylineHandle;
+    polyline.appendVertex(firstVertex);
+    polyline.appendVertex(lastVertex);
+    polyline.setDwgSeqEndHandle(seqEndHandle);
+    dwgBufferW polylineBody;
+    if (!polyline.encodeDwg(DRW::AC1015, &polylineBody, 0, nullptr, nullptr))
+        return {};
+
+    LegacyPolylineGroupFrames frames;
+    frames.polylineHandle = polylineHandle;
+    frames.firstVertexHandle = firstVertexHandle;
+    frames.lastVertexHandle = lastVertexHandle;
+    frames.seqEndHandle = seqEndHandle;
+    frames.polyline = makeEntityFrame(polylineBody);
+    frames.firstVertex = makeLegacyVertexFrame(
+        firstVertexHandle, polylineHandle, lastVertexHandle);
+    frames.lastVertex = makeLegacyVertexFrame(
+        lastVertexHandle, polylineHandle, 0);
+    frames.seqEnd = makeSeqEndFrame(seqEndHandle, polylineHandle);
+    return frames;
+}
+
+} // namespace
+
+// The DWG object-size field is read at a version-dependent point: first for
+// R2000/R2004, derived for R2010+, and after the EED and the graphics data for
+// R13/R14. Its bound on the entity body is 0 ("the whole frame") until it has
+// been read, and the common prologue used to trust whatever an entity object
+// happened to hold there: a small stale value cut the prologue short, so the
+// owner probe of every model-space entity of a R13/R14 file failed and the
+// whole BLOCKS phase with it. Only the optimizer decided whether the
+// indeterminate value happened to be zero, so this test poisons it on purpose.
+TEST_CASE("DWG R14 entity prologue ignores a stale object size",
+          "[dwg][safety][r14]") {
+    constexpr std::uint32_t lineHandle = 0x83;
+    const auto body = makeR14LineBody(
+        lineHandle, DRW_Coord(50.0, 50.0, 0.0), DRW_Coord(100.0, 100.0, 0.0));
+    REQUIRE(!body.empty());
+
+    for (const std::uint32_t stale : {std::uint32_t{0}, std::uint32_t{8},
+                                      std::uint32_t{72},
+                                      std::uint32_t{0xAAAAAAAAu}}) {
+        INFO("stale object size " << stale);
+        DwgEntityPrologueProbe entity;
+        entity.setStaleObjectSize(stale);
+        dwgBuffer buffer(const_cast<std::uint8_t*>(body.data()), body.size());
+        REQUIRE(entity.parseDwg(DRW::AC1014, &buffer, /*bs=*/0));
+        CHECK(entity.handle == lineHandle);
+        CHECK_FALSE(entity.hasOwner());
+        CHECK(entity.layer == "0");
+        // R13/R14 read the size after the graphics data; it is the bit
+        // position where the handle stream starts.
+        CHECK(entity.objectSize() > 0u);
+        CHECK(entity.objectSize() < body.size() * 8u);
+    }
+}
+
+TEST_CASE("DWG R14 entities are delivered by the legacy sweep",
+          "[dwg][safety][r14]") {
+    constexpr std::uint32_t firstHandle = 0x83;
+    constexpr std::uint32_t lineCount = 6;
+    LegacyObjectImage image;
+    for (std::uint32_t index = 0; index < lineCount; ++index) {
+        const double offset = static_cast<double>(index);
+        const auto body = makeR14LineBody(
+            firstHandle + index, DRW_Coord(offset, 0.0, 0.0),
+            DRW_Coord(offset, 10.0, 0.0));
+        REQUIRE(!body.empty());
+        image.add(dwgType::LINE, firstHandle + index, makeObjectFrame(body));
+    }
+
+    DwgEntityReaderProbe reader(std::make_unique<dwgBuffer>(
+        const_cast<std::uint8_t*>(image.bytes.data()), image.bytes.size()));
+    reader.setVersionForTest(DRW::AC1014);
+    for (const objHandle& object : image.objects)
+        reader.ObjectMap.emplace(object.handle, object);
+
+    DwgLineCaptureProbe interface;
+    dwgBuffer buffer(
+        const_cast<std::uint8_t*>(image.bytes.data()), image.bytes.size());
+    REQUIRE(reader.readDwgEntities(interface, &buffer));
+    CHECK(reader.entityParseFailuresForTest() == 0u);
+    CHECK(reader.ObjectMap.empty());
+    REQUIRE(interface.lines.size() == lineCount);
+    // The legacy sweep visits the frames by ascending handle.
+    for (std::uint32_t index = 0; index < lineCount; ++index) {
+        CHECK(interface.lines[index].handle == firstHandle + index);
+        CHECK(interface.lines[index].basePoint.x
+              == static_cast<double>(index));
+        CHECK(interface.lines[index].secPoint.y == 10.0);
+    }
+}
+
+// The model-space walk reads every entity through the owner probe (an entity
+// with no owner handle is what makes it a model-space entity), which is the
+// one place the R13/R14 prologue is parsed on a bare entity object.
+TEST_CASE("DWG R14 model space chain is walked entity by entity",
+          "[dwg][safety][r14]") {
+    constexpr std::uint32_t firstHandle = 0x83;
+    constexpr std::uint32_t lineCount = 5;
+    LegacyObjectImage image;
+    for (std::uint32_t index = 0; index < lineCount; ++index) {
+        const double offset = static_cast<double>(index);
+        const auto body = makeR14LineBody(
+            firstHandle + index, DRW_Coord(offset, 0.0, 0.0),
+            DRW_Coord(offset, 10.0, 0.0));
+        REQUIRE(!body.empty());
+        image.add(dwgType::LINE, firstHandle + index, makeObjectFrame(body));
+    }
+
+    DwgEntityReaderProbe reader(std::make_unique<dwgBuffer>(
+        const_cast<std::uint8_t*>(image.bytes.data()), image.bytes.size()));
+    reader.setVersionForTest(DRW::AC1014);
+    for (const objHandle& object : image.objects)
+        reader.ObjectMap.emplace(object.handle, object);
+
+    DRW_Block_Record record;
+    record.name = "*MODEL_SPACE";
+    DwgBlockOwnershipTestAccess::setLegacyEntityChain(
+        record, firstHandle, firstHandle + lineCount - 1u);
+    DwgLineCaptureProbe interface;
+    dwgBuffer buffer(
+        const_cast<std::uint8_t*>(image.bytes.data()), image.bytes.size());
+    REQUIRE(reader.walkBlockRecordEntities(&record, &buffer, interface));
+    CHECK(reader.entityParseFailuresForTest() == 0u);
+    CHECK(reader.ObjectMap.empty());
+    REQUIRE(interface.lines.size() == lineCount);
+    for (std::uint32_t index = 0; index < lineCount; ++index) {
+        CHECK(interface.lines[index].handle == firstHandle + index);
+        CHECK(interface.lines[index].secPoint.y == 10.0);
+    }
+}
+
+// A pre-2004 POLYLINE claims its VERTEX and SEQEND frames out of ObjectMap by
+// following its own handle chain. A child read on its own first is consumed
+// (and refused), and the group is lost with it; ObjectMap is a hash map, so
+// which comes first used to be up to the standard library. Whichever way the
+// handles run, every group must arrive whole.
+TEST_CASE("DWG legacy sweep hands each POLYLINE its own VERTEX and SEQEND frames",
+          "[dwg][safety][compound]") {
+    constexpr std::uint32_t groupCount = 24;
+    LegacyObjectImage image;
+    std::vector<std::uint32_t> polylineHandles;
+    for (std::uint32_t index = 0; index < groupCount; ++index) {
+        const std::uint32_t base = 0x1000u + index * 0x10u;
+        // Half of the groups own children with lower handles than the parent.
+        const bool childrenFirst = index % 2u == 0u;
+        const auto group = makeLegacyPolylineGroupFrames(
+            childrenFirst ? base + 4u : base,
+            childrenFirst ? base : base + 1u,
+            childrenFirst ? base + 1u : base + 2u,
+            childrenFirst ? base + 2u : base + 3u);
+        REQUIRE(group.valid());
+        group.addTo(image);
+        polylineHandles.push_back(group.polylineHandle);
+    }
+
+    DwgEntityReaderProbe reader(std::make_unique<dwgBuffer>(
+        const_cast<std::uint8_t*>(image.bytes.data()), image.bytes.size()));
+    reader.setVersionForTest(DRW::AC1015);
+    for (const objHandle& object : image.objects)
+        reader.ObjectMap.emplace(object.handle, object);
+
+    DwgCompoundWriteProbe interface;
+    dwgBuffer buffer(
+        const_cast<std::uint8_t*>(image.bytes.data()), image.bytes.size());
+    REQUIRE(reader.readDwgEntities(interface, &buffer));
+    CHECK(reader.entityParseFailuresForTest() == 0u);
+    CHECK(reader.ObjectMap.empty());
+    CHECK(reader.stagedPendingPolylineCountForTest() == 0u);
+    CHECK(reader.stagedOrphanPolylineVertexCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+    REQUIRE(interface.polylines.size() == polylineHandles.size());
+    for (const DRW_Polyline& polyline : interface.polylines)
+        CHECK(polyline.vertlist.size() == 2u);
+    // Deterministic: the groups are delivered in ascending parent-handle order.
+    std::vector<std::uint32_t> delivered;
+    for (const DRW_Polyline& polyline : interface.polylines)
+        delivered.push_back(polyline.handle);
+    std::vector<std::uint32_t> expected = polylineHandles;
+    std::sort(expected.begin(), expected.end());
+    CHECK(delivered == expected);
+}
+
+TEST_CASE("DWG legacy sweep still fails a VERTEX whose POLYLINE is not there",
+          "[dwg][safety][compound]") {
+    const auto group = makeLegacyPolylineGroupFrames(0x300, 0x301, 0x302, 0x303);
+    REQUIRE(group.valid());
+    LegacyObjectImage image;
+    // The POLYLINE and the second VERTEX are missing.
+    image.add(dwgType::VERTEX_2D, group.firstVertexHandle, group.firstVertex);
+    image.add(dwgType::SEQEND, group.seqEndHandle, group.seqEnd);
+
+    DwgEntityReaderProbe reader(std::make_unique<dwgBuffer>(
+        const_cast<std::uint8_t*>(image.bytes.data()), image.bytes.size()));
+    reader.setVersionForTest(DRW::AC1015);
+    for (const objHandle& object : image.objects)
+        reader.ObjectMap.emplace(object.handle, object);
+
+    DwgCompoundWriteProbe interface;
+    dwgBuffer buffer(
+        const_cast<std::uint8_t*>(image.bytes.data()), image.bytes.size());
+    (void)reader.readDwgEntities(interface, &buffer);
+    CHECK(interface.polylines.empty());
+    CHECK(reader.ObjectMap.empty());
+    CHECK(reader.entityParseFailuresForTest() == 2u);
+}
+
+// A legacy entity with nolinks set stores no next-entity handle: the next
+// entity of the block is the object with the next handle. For a POLYLINE that
+// is the first handle behind it that is not one of its own children, and a
+// writer may put the children right behind it or anywhere else.
+TEST_CASE("DWG legacy block walk continues past a POLYLINE group",
+          "[dwg][safety][compound]") {
+    const bool adjacent = GENERATE(true, false);
+    INFO("children " << (adjacent ? "right behind" : "far from")
+                     << " the parent");
+    constexpr std::uint32_t firstPolyline = 0x100;
+    const std::uint32_t secondPolyline = adjacent ? 0x104u : 0x101u;
+    const auto first = makeLegacyPolylineGroupFrames(
+        firstPolyline, adjacent ? 0x101u : 0x500u, adjacent ? 0x102u : 0x501u,
+        adjacent ? 0x103u : 0x502u);
+    const auto second = makeLegacyPolylineGroupFrames(
+        secondPolyline, adjacent ? 0x105u : 0x510u, adjacent ? 0x106u : 0x511u,
+        adjacent ? 0x107u : 0x512u);
+    REQUIRE(first.valid());
+    REQUIRE(second.valid());
+
+    LegacyObjectImage image;
+    first.addTo(image);
+    second.addTo(image);
+    DwgEntityReaderProbe reader(std::make_unique<dwgBuffer>(
+        const_cast<std::uint8_t*>(image.bytes.data()), image.bytes.size()));
+    reader.setVersionForTest(DRW::AC1015);
+    for (const objHandle& object : image.objects)
+        reader.ObjectMap.emplace(object.handle, object);
+
+    DRW_Block_Record record;
+    record.name = "TWO_POLYLINES";
+    DwgBlockOwnershipTestAccess::setLegacyEntityChain(
+        record, firstPolyline, secondPolyline);
+    DwgCompoundWriteProbe interface;
+    dwgBuffer objectBuffer(
+        const_cast<std::uint8_t*>(image.bytes.data()), image.bytes.size());
+    REQUIRE(reader.walkBlockRecordEntities(&record, &objectBuffer, interface));
+    REQUIRE(interface.polylines.size() == 2u);
+    CHECK(interface.polylines[0].handle == firstPolyline);
+    CHECK(interface.polylines[1].handle == secondPolyline);
+    CHECK(interface.polylines[0].vertlist.size() == 2u);
+    CHECK(interface.polylines[1].vertlist.size() == 2u);
+    CHECK(reader.ObjectMap.empty());
+    CHECK(reader.entityParseFailuresForTest() == 0u);
 }
 
 TEST_CASE("DWG MLINE nested counts are bounded",

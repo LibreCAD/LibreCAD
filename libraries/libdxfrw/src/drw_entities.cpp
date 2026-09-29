@@ -3295,6 +3295,14 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
     if (buf == nullptr)
         return false;
 
+    // The object size in bits is read at a version-dependent point: first
+    // for R2000/R2004, derived for R2010+, and only after the EED and the
+    // graphics data for R13/R14. Every bound computed before that point
+    // spells "unknown" as 0 (the whole frame), so start from it instead of
+    // whatever an earlier parse of this object, or the construction of a
+    // probe entity, left behind.
+    objSize = 0;
+
     DRW_DBG("\n***************************** parsing entity *********************************************\n");
     oType = buf->getObjType(version);
     if (!buf->isGood())
