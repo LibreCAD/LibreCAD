@@ -28,6 +28,7 @@
 
 #include "rs_color.h"
 
+#include <algorithm>
 #include <cmath>
 #include <iostream>
 
@@ -86,6 +87,20 @@ int RS_Color::colorDistance(const RS_Color& c) const {
                                    + std::pow(c.green() - green(), 2) * 4
                                    + std::pow(c.blue() - blue(), 2) * (767 - redMean) / 256)
                         / 7.64834);
+}
+
+double RS_Color::relativeLuminance(const QColor& color) {
+    auto channel = [](const double c) {
+        return c <= 0.04045 ? c / 12.92 : std::pow((c + 0.055) / 1.055, 2.4);
+    };
+    const QColor rgb = color.toRgb();
+    return 0.2126 * channel(rgb.redF()) + 0.7152 * channel(rgb.greenF()) + 0.0722 * channel(rgb.blueF());
+}
+
+double RS_Color::contrastRatio(const QColor& a, const QColor& b) {
+    const double la = relativeLuminance(a);
+    const double lb = relativeLuminance(b);
+    return (std::max(la, lb) + 0.05) / (std::min(la, lb) + 0.05);
 }
 
 std::ostream& operator << (std::ostream& os, const RS_Color& c) {

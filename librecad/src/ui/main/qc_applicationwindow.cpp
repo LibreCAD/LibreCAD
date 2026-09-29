@@ -821,6 +821,7 @@ QG_GraphicView* QC_ApplicationWindow::setupNewGraphicView(const QC_MDIWindow* w)
     view->setDeviceName(LC_GET_ONE_STR("Hardware", "Device", "Mouse"));
     if (showScrollbars) {
         view->addScrollbars();
+        view->setScrollBarToolTips(true);
     }
      connect(view, &QG_GraphicView::gridStatusChanged, this, &QC_ApplicationWindow::updateGridStatus);
      connect(view, &RS_GraphicView::currentActionChanged, this, &QC_ApplicationWindow::onViewCurrentActionChanged);
