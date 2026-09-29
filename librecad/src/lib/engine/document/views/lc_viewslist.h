@@ -34,10 +34,17 @@ public:
 };
 
 
+/**
+ * List of named views. The list owns the views it holds: it frees them on
+ * clear(), remove() and destruction, and add()/addNew() free a view that is
+ * rejected because its name is already taken.
+ */
 class LC_ViewList {
 public:
     LC_ViewList();
-    virtual ~LC_ViewList() = default;
+    virtual ~LC_ViewList();
+    LC_ViewList(const LC_ViewList&) = delete;
+    LC_ViewList& operator=(const LC_ViewList&) = delete;
     void clear();
 
 /**
