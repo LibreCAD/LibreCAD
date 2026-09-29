@@ -174,18 +174,53 @@ enum class LC_OffsetSourceStatus {
     LimitExceeded
 };
 
+/**
+ * Why a source, or a copy of it, could not be offset, where the engine's
+ * status does not say: a cause the pipeline knows before it offsets, or the
+ * check of what it made.
+ */
+enum class LC_OffsetFailureDetail {
+    None,
+    /** A line with no length has no direction to offset along. */
+    ZeroLength,
+    /** An unbounded hyperbola has no finite offset. */
+    Unbounded,
+    /** A polyline with elliptic segments, which only lines and arcs may be. */
+    EllipticSegments,
+    /** A polyline whose offset would cross itself, come too near, run backwards or break apart. */
+    PolylineNotTrimmed,
+    /** A source two of whose pieces run over each other. */
+    SourceRetraces,
+    /** A distance of RS_TOLERANCE or less. */
+    InvalidDistance,
+    /** The reference point is on the entity, and no second click shows the side. */
+    AmbiguousSide
+};
+
 struct LC_OffsetSourceOutcome {
     /** Identity only: a source removed by a destructive offset must not be dereferenced. */
     const RS_Entity* source = nullptr;
     LC_OffsetSourceStatus status = LC_OffsetSourceStatus::InvalidSource;
-    /** Why the offset engine refused a spline, for OffsetFailed and LimitExceeded; Ok otherwise. */
+    /**
+     * Why the offset engine refused a spline, for OffsetFailed and LimitExceeded,
+     * or the copy that stopped a series; Ok otherwise.
+     */
     LC_CurveOffsetStatus engineStatus{};
+    /** Why the pipeline refused the source, or the copy that stopped its series. */
+    LC_OffsetFailureDetail detail = LC_OffsetFailureDetail::None;
+    /**
+     * Why a series stopped short of its copies: Vanished, nothing is left at
+     * the next distance, or OffsetFailed, the next copy could not be made, for
+     * the reason in engineStatus and detail. Succeeded while none is missing.
+     */
+    LC_OffsetSourceStatus stoppedBy = LC_OffsetSourceStatus::Succeeded;
     /** Owned by the batch once handed over. */
     QList<RS_Entity*> createdEntities;
     LC_OffsetOutputUsage usage{};
     /**
-     * Copies made and asked for. A copy with nothing left ends the series, so
-     * fewer may be made; the earlier copies are kept, and so is the source.
+     * Copies made and asked for. A copy with nothing left, or one that cannot
+     * be made for any reason but the output limits, ends the series, so fewer
+     * may be made; the earlier copies are kept, and so is the source.
      */
     int copiesMade = 0;
     int copiesRequested = 0;

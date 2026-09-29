@@ -28,6 +28,8 @@
 #ifndef RS_GRID_H
 #define RS_GRID_H
 
+#include <memory>
+
 #include <QString>
 
 #include "rs.h"
@@ -55,6 +57,7 @@ using LC_Rect = lc::geo::Area;
 class RS_Grid {
 public:
     explicit RS_Grid(LC_GraphicViewport* graphicView);
+    ~RS_Grid();
     void calculateGrid();
     void calculateSnapSettings();
     void invalidate(bool gridOn);
@@ -107,7 +110,7 @@ private:
     RS_Vector m_userGrid;
     int m_minGridSpacing;
     int m_metaGridEvery{10};
-    LC_GridSystem* m_gridSystem{nullptr};
+    std::unique_ptr<LC_GridSystem> m_gridSystem;
     RS_Vector prepareGridWidth();
 };
 

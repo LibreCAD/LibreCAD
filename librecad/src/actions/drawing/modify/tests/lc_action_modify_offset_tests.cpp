@@ -28,11 +28,13 @@
 #include <cmath>
 #include <memory>
 
+#include <QSettings>
 #include <QStringList>
 
 #include "lc_action_draw_line_parallel_through.h"
 #include "lc_action_modify_offset.h"
 #include "lc_actiontestsupport.h"
+#include "lc_cursoroverlayinfo.h"
 #include "lc_curveoffset.h"
 #include "lc_hyperbola.h"
 #include "lc_parabola.h"
@@ -86,6 +88,7 @@ public:
     using RS_PreviewActionInterface::deletePreviewAndHighlights;
     using RS_PreviewActionInterface::drawPreviewAndHighlights;
     using RS_PreviewActionInterface::m_preview;
+    using RS_Snapper::m_infoCursorOverlayData;
 };
 
 class ParallelThroughProbe final : public LC_ActionDrawLineParallelThrough {
@@ -165,6 +168,22 @@ struct OffsetFixture {
         return add(new LC_SplinePoints(&m_graphic, d));
     }
 
+    /**
+     * Straight arms exactly 10 apart (lc_curveoffset_trim_tests.cpp): between
+     * them, at 5, their offsets lie on one line, which the engine refuses to
+     * trim; at 2.5 they do not meet.
+     */
+    LC_SplinePoints* addKeyhole(const RS_Vector& shift = RS_Vector{0.0, 0.0}) {
+        LC_SplinePointsData d(false, false);
+        d.useControlPoints = true;
+        for (const RS_Vector& p : {RS_Vector{-20, 0}, RS_Vector{-10, 0}, RS_Vector{0, 0}, RS_Vector{10, -8},
+                                   RS_Vector{24, -8}, RS_Vector{24, 18}, RS_Vector{10, 18}, RS_Vector{0, 10},
+                                   RS_Vector{-10, 10}, RS_Vector{-20, 10}}) {
+            d.controlPoints.push_back(p + shift);
+        }
+        return add(new LC_SplinePoints(&m_graphic, d));
+    }
+
     void select(const std::initializer_list<RS_Entity*> entities) {
         const RS_Selection selection(&m_graphic, m_view.getViewPort());
         for (RS_Entity* e : entities) {
@@ -221,7 +240,7 @@ struct OffsetFixture {
 
 } // namespace
 
-TEST_CASE("Modify Offset admits both spline types and names them", "[curve-offset][action]") {
+TEST_CASE("Modify Offset admits both spline types", "[curve-offset][action]") {
     OffsetFixture f;
     RS_Spline* spline = f.addSCurve();
     LC_SplinePoints* points = f.addSplinePoints();
@@ -237,10 +256,61 @@ TEST_CASE("Modify Offset admits both spline types and names them", "[curve-offse
     const auto& types = f.m_action->m_catchForSelectionEntityTypes;
     CHECK(types.indexOf(RS2::EntitySpline) > types.indexOf(RS2::EntityPolyline));
     CHECK(types.indexOf(RS2::EntitySplinePoints) > types.indexOf(RS2::EntityPolyline));
+}
 
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("The prompt asks for entities to offset", "[offset][action]") {
+    // #2944: a list of nine types, which every new type made longer
+    OffsetFixture f;
+    f.start(0.5, true);
     f.m_action->updateActionPromptForSelection();
-    CHECK(f.m_context.prompt.contains("spline"));
-    CHECK(f.m_context.prompt.contains("spline through points"));
+    CHECK(f.m_context.prompt.startsWith("Select entities to offset"));
+    CHECK_FALSE(f.m_context.prompt.contains("hyperbola"));
+}
+
+namespace {
+/** Modify Offset's saved Keep Originals, put back however the test ends. */
+class KeepOriginalsSetting {
+public:
+    KeepOriginalsSetting()
+        : m_existed(RS_SETTINGS->getSettings()->contains(fullKey())),
+          m_value(RS_SETTINGS->getSettings()->value(fullKey())) {}
+
+    ~KeepOriginalsSetting() {
+        const auto group = RS_SETTINGS->beginGroupGuard(QStringLiteral("ActionModifyOffset"));
+        RS_SETTINGS->remove(QStringLiteral("KeepOriginals")); // whatever the test left
+        if (m_existed) {
+            RS_SETTINGS->write(QStringLiteral("KeepOriginals"), m_value);
+        }
+    }
+
+    KeepOriginalsSetting(const KeepOriginalsSetting&) = delete;
+    KeepOriginalsSetting& operator=(const KeepOriginalsSetting&) = delete;
+
+    /** As on a first run: no value saved. */
+    void remove() const {
+        const auto group = RS_SETTINGS->beginGroupGuard(QStringLiteral("ActionModifyOffset"));
+        RS_SETTINGS->remove(QStringLiteral("KeepOriginals"));
+    }
+
+private:
+    static QString fullKey() { return QStringLiteral("/ActionModifyOffset/KeepOriginals"); }
+
+    bool m_existed;
+    QVariant m_value;
+};
+} // namespace
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Keep Originals is on by default", "[offset][action]") {
+    // as AutoCAD's "Erase source=No", LibreCAD 2.2.1, and the options widget before #2540
+    OffsetFixture f;
+    const KeepOriginalsSetting saved;
+    saved.remove();
+    f.m_action = std::make_unique<OffsetProbe>(&f.m_context);
+    f.m_action->setKeepOriginals(false);
+    f.m_action->loadOptions();
+    CHECK(f.m_action->isKeepOriginals());
 }
 
 TEST_CASE("Modify Offset takes a parabola and a hyperbola, and offsets them", "[curve-offset][action]") {
@@ -278,8 +348,7 @@ TEST_CASE("Modify Offset takes a parabola and a hyperbola, and offsets them", "[
     }
 
     f.m_action->updateActionPromptForSelection();
-    CHECK(f.m_context.prompt.contains("parabola"));
-    CHECK(f.m_context.prompt.contains("hyperbola"));
+    CHECK(f.m_context.prompt.startsWith("Select entities to offset")); // whatever their types
 }
 
 TEST_CASE("A selection window takes the spline, not the segments it is drawn with", "[curve-offset][action]") {
@@ -588,6 +657,24 @@ TEST_CASE("A spline shrunk away keeps its source, and the message says why", "[c
     CHECK(f.m_context.messages.front().contains("nothing is left at this distance"));
 }
 
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("An ellipse shrunk past its minor axis says nothing is left", "[curve-offset][action][ellipse]") {
+    // a = 10, b = 5 inwards by 6: the sampler refused, saying the offset
+    // could not be made
+    OffsetFixture f;
+    RS_Ellipse* ellipse = f.add(
+        new RS_Ellipse(&f.m_graphic, RS_EllipseData{RS_Vector{0, 0}, RS_Vector{10, 0}, 0.5, 0.0, 0.0, false}));
+    f.select({ellipse});
+    f.start(6.0, false);
+    f.clickAt(0.0, 0.0);
+
+    CHECK_FALSE(ellipse->isDeleted());
+    CHECK(f.liveCount(RS2::EntitySpline) == 0);
+    REQUIRE(f.m_context.messages.size() == 1);
+    CHECK(f.m_context.messages.front() ==
+          "1 of 1 selected entities could not be offset: nothing is left at this distance");
+}
+
 TEST_CASE("Copies that stop short keep the source, and the message says how many fit", "[curve-offset][action]") {
     OffsetFixture f;
     RS_Spline* ring = f.addRing();
@@ -614,7 +701,98 @@ TEST_CASE("A spline refused by the engine is reported with the reason", "[curve-
 
     CHECK_FALSE(spline->isDeleted());
     REQUIRE(f.m_context.messages.size() == 1);
-    CHECK(f.m_context.messages.front().contains("no side"));
+    CHECK(f.m_context.messages.front().contains("the point does not show which side to offset to"));
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A reference point on a line, with a fixed distance, gives no side", "[offset][action]") {
+    OffsetFixture f;
+    RS_Line* line = f.add(new RS_Line(&f.m_graphic, RS_LineData{{0, 0}, {10, 0}}));
+    f.select({line});
+    f.start(3.0, false);
+    f.clickAt(5.0, 0.0); // on it: it used to go left
+
+    CHECK_FALSE(line->isDeleted());
+    CHECK(f.liveCount(RS2::EntityLine) == 1);
+    REQUIRE(f.m_context.messages.size() == 1);
+    CHECK(f.m_context.messages.front() ==
+          "1 of 1 selected entities could not be offset: the point does not show which side to offset to");
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A series stopped by a failure keeps its copies, and the message says why", "[offset][action]") {
+    SECTION("one source") {
+        OffsetFixture f;
+        LC_SplinePoints* keyhole = f.addKeyhole();
+        f.select({keyhole});
+        f.start(2.5, false);
+        f.m_action->setUseMultipleCopies(true);
+        f.m_action->setCopiesNumber(2);
+        f.clickAt(-10.0, 2.0); // between the arms: the copy at 5 cannot be trimmed
+
+        CHECK_FALSE(keyhole->isDeleted());
+        CHECK(f.liveCount(RS2::EntitySpline) == 1);
+        REQUIRE(f.m_context.messages.size() == 1);
+        CHECK(f.m_context.messages.front() ==
+              "Only 1 of 2 copies were made: the offset touches itself where it cannot be trimmed reliably; "
+              "the original was kept");
+    }
+    SECTION("several sources") {
+        OffsetFixture f;
+        LC_SplinePoints* first = f.addKeyhole();
+        LC_SplinePoints* second = f.addKeyhole(RS_Vector{1.0, 0.0});
+        f.select({first, second});
+        f.start(2.5, false);
+        f.m_action->setUseMultipleCopies(true);
+        f.m_action->setCopiesNumber(2);
+        f.clickAt(-10.0, 2.0); // between the arms of both
+
+        CHECK_FALSE(first->isDeleted());
+        CHECK_FALSE(second->isDeleted());
+        CHECK(f.liveCount(RS2::EntitySpline) == 2);
+        REQUIRE(f.m_context.messages.size() == 1);
+        CHECK(f.m_context.messages.front() ==
+              "2 selected entities got fewer than 2 copies: the offset touches itself where it cannot be trimmed "
+              "reliably; their originals were kept");
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A spline off the drawing plane is refused with the reason", "[offset][action]") {
+    OffsetFixture f;
+    RS_SplineData d(3, false);
+    d.controlPoints = {{0, 0, 0}, {4, 6, 1}, {8, -6, 0}, {12, 0, 0}};
+    d.knotslist = {0, 0, 0, 0, 1, 1, 1, 1};
+    d.weights.assign(4, 1.0);
+    RS_Spline* spline = f.add(new RS_Spline(&f.m_graphic, d));
+    f.select({spline});
+    f.start(0.75, false);
+    f.clickAt(6.0, 9.0);
+
+    CHECK_FALSE(spline->isDeleted());
+    REQUIRE(f.m_context.messages.size() == 1);
+    CHECK(f.m_context.messages.front() ==
+          "1 of 1 selected entities could not be offset: it does not lie in the drawing plane");
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("The preview says why a series stops, next to the copies it draws", "[offset][action]") {
+    OffsetFixture f;
+    // the fixture's own view, whatever the settings say
+    LC_InfoCursorOverlayPrefs* prefs = f.m_view.getInfoCursorOverlayPreferences();
+    prefs->enabled = true;
+    prefs->showEntityInfoOnModification = true;
+    LC_SplinePoints* keyhole = f.addKeyhole();
+    f.select({keyhole});
+    f.start(2.5, false);
+    f.m_action->setUseMultipleCopies(true);
+    f.m_action->setCopiesNumber(2);
+    f.m_action->m_infoCursorOverlayData->clear();
+    f.hoverAt(-10.0, 2.0);
+
+    CHECK(f.previewCount(RS2::EntitySpline) == 1); // the first copy
+    CHECK(f.m_action->m_infoCursorOverlayData->getZone2().contains(
+        "the offset touches itself where it cannot be trimmed reliably"));
 }
 
 
@@ -1157,6 +1335,7 @@ TEST_CASE("Offset segments leave the selection, and their polyline stays", "[off
 }
 
 TEST_CASE("A segment selected with its polyline fares as the polyline does", "[offset][polyline]") {
+    REQUIRE(lc::test::application() != nullptr); // RS_Graphic reads the settings, whichever test runs first
     RS_Graphic graphic;
     graphic.initForNewDocument();
     auto* polyline = new RS_Polyline(&graphic);

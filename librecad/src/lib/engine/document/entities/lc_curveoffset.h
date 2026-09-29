@@ -34,7 +34,8 @@
 #include "rs_vector.h"
 
 /**
- * Offsets of RS_Spline and LC_SplinePoints curves.
+ * Offsets of RS_Spline, LC_SplinePoints (LC_Parabola among them), bounded
+ * LC_Hyperbola and RS_Ellipse curves, whole ellipses and elliptic arcs.
  *
  * The offset of a curve C at signed distance d is Q(t) = C(t) + d N(t), with the
  * left unit normal N = (-C'y, C'x) / |C'|: a positive d lies to the left of the
@@ -290,14 +291,22 @@ namespace LC_CurveOffset {
  * the larger of the source's extent and the offset distance.
  */
 inline constexpr double kDefaultRelativeOffsetTolerance = 1e-6;
+/**
+ * The relative tolerance of an RS_Ellipse's offset when the caller gives
+ * none. The default made more than twice the handles of the spline through
+ * points the old sampler made, to 1e-3 of the major radius, which this is
+ * still several times tighter than.
+ */
+inline constexpr double kEllipseRelativeOffsetTolerance = 1e-4;
 inline constexpr double kDefaultOffsetAngleTolerance = 1e-3;
 inline constexpr unsigned kDefaultMaxSubdivisionDepth = 20;
 inline constexpr std::size_t kDefaultMaxSamples = 65536;
 inline constexpr std::size_t kDefaultMaxOutputBranches = 256;
 inline constexpr std::size_t kDefaultMaxIntersectionPairs = std::size_t{1} << 20;
 
-/** Whether the entity is a curve the engine can offset: an RS_Spline or an
- *  LC_SplinePoints, subclasses included. */
+/** Whether the drawing tools offset the entity with the engine: an RS_Spline,
+ *  an LC_SplinePoints, an LC_Hyperbola or an RS_Ellipse, subclasses included
+ *  (an unbounded hyperbola is then refused as a source). */
 bool isSupportedSource(const RS_Entity& source);
 
 /**

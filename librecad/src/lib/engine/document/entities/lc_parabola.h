@@ -160,6 +160,8 @@ public:
 
     void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
     void revertDirection() override;
+    /** Refused: the offset of a parabola is no parabola; createOffset() makes it. */
+    bool offset(const RS_Vector& coord, double distance) override;
     double getLength() const override;
 
     /**

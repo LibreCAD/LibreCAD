@@ -37,7 +37,9 @@
 #include "lc_containertraverser.h"
 #include "lc_curveoffset.h"
 #include "lc_graphicviewport.h"
+#include "lc_hyperbola.h"
 #include "lc_linemath.h"
+#include "lc_offsetresultcheck.h"
 #include "lc_splinepoints.h"
 #include "rs_spline.h"
 #include "lc_undosection.h"
@@ -1060,14 +1062,26 @@ bool LC_OffsetBatchOutcome::anySourceSucceeded() const {
 }
 
 namespace {
+/** How near @p p may be to @p e and lie on it, to rounding: no drawing tolerance. */
+double onEntityTolerance(const RS_Entity& e, const RS_Vector& p) {
+    const RS_Vector lo = e.getMin();
+    const RS_Vector hi = e.getMax();
+    const double extent = lo.valid && hi.valid ? lo.distanceTo(hi) : 0.0;
+    return 1e-9 * std::max({1.0, p.magnitude(), extent});
+}
+
 /**
- * How far from its curve a point on @p source can be and still be on it as
- * the user sees it: an RS_Spline is drawn with chords within a thousandth of
- * its control points' extent (RS_Spline::fillDisplayPoints()), so a point
+ * How far from its curve a point @p p on @p source can be and still be on it
+ * as the user sees it: an RS_Spline is drawn with chords within a thousandth
+ * of its control points' extent (RS_Spline::fillDisplayPoints()), so a point
  * snapped onto its drawing lies that near the curve and gives no side the
- * user chose.
+ * user chose. An ellipse is drawn by the painter's own ellipse calls, exactly:
+ * a point near it is on it only to rounding.
  */
-double drawnCurveTolerance(const RS_Entity& source) {
+double drawnCurveTolerance(const RS_Entity& source, const RS_Vector& p) {
+    if (source.rtti() == RS2::EntityEllipse) {
+        return onEntityTolerance(source, p);
+    }
     RS_Vector lo = source.getMin();
     RS_Vector hi = source.getMax();
     if (const auto* spline = dynamic_cast<const RS_Spline*>(&source)) {
@@ -1286,6 +1300,56 @@ bool noLargerThan(const LC_OffsetSourceBudget& a, const LC_OffsetSourceBudget& b
     return a.maxCubicPieces <= b.maxCubicPieces && a.maxOutputEntities <= b.maxOutputEntities &&
            a.maxDeepEntities <= b.maxDeepEntities;
 }
+
+/** Whether @p polyline holds an elliptic segment, as a non-uniform scale makes. */
+bool hasEllipticSegment(const RS_Polyline& polyline) {
+    return std::any_of(polyline.begin(), polyline.end(),
+                       [](const RS_Entity* child) { return child != nullptr && child->rtti() == RS2::EntityEllipse; });
+}
+
+/**
+ * The band, relative to the larger of a source's extent and the distance,
+ * within which an exact offset has nothing left: the curve-offset engine's
+ * tolerance and classification margin (lc_curveoffset.cpp, trimBranches()).
+ */
+constexpr double kOffsetVanishBand = 1.25e-6;
+
+/**
+ * Whether @p p lies on @p e, to rounding: on a line's infinite line, on a
+ * circle's or an arc's circle, on a polyline's nearest segment. Such a point
+ * gives no side. Only the types offset without the curve-offset engine,
+ * which judges its own sources, are known here.
+ */
+bool sideIsAmbiguous(const RS_Entity& e, const RS_Vector& p) {
+    if (!p.valid) {
+        return true;
+    }
+    const double onIt = onEntityTolerance(e, p);
+    switch (e.rtti()) {
+        case RS2::EntityLine: {
+            const RS_Vector a = e.getStartpoint();
+            const RS_Vector along = e.getEndpoint() - a;
+            const RS_Vector off = p - a;
+            const double length = std::hypot(along.x, along.y);
+            return length > 0.0 ? std::abs(along.x * off.y - along.y * off.x) / length <= onIt
+                                : p.distanceTo(a) <= onIt;
+        }
+        case RS2::EntityCircle:
+        case RS2::EntityArc:
+            return std::abs(p.distanceTo(e.getCenter()) - e.getRadius()) <= onIt;
+        case RS2::EntityPolyline:
+            for (const RS_Entity* child : static_cast<const RS_Polyline&>(e)) {
+                LC_OffsetSegment segment;
+                if (child != nullptr && makeOffsetSegment(*child, segment) &&
+                    pointSegmentDistance(p, segment) <= onIt) {
+                    return true;
+                }
+            }
+            return false;
+        default:
+            return false;
+    }
+}
 } // namespace
 
 LC_OffsetBatchLimits LC_OffsetBatchLimits::preview() {
@@ -1405,8 +1469,10 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcome(const RS_OffsetData& da
         }
     }
 
-    // The copies of one source, built in local ownership: all or nothing,
-    // except that a copy with nothing left ends the series.
+    // The copies of one source, built in local ownership. A copy with nothing
+    // left, or one that cannot be made, ends the series and the copies before
+    // it are kept; the first copy failing fails the source, and exceeding the
+    // output limits fails it whichever copy does.
     auto offsetOneSource = [&](RS_Entity& e, const std::size_t requestDeepLeft,
                                std::vector<std::unique_ptr<RS_Entity>>& roots,
                                LC_OffsetSourceOutcome& result) -> LC_OffsetSourceStatus {
@@ -1420,6 +1486,25 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcome(const RS_OffsetData& da
             }
             return measureOffsetOutput(all, budget.maxDeepEntities);
         };
+        // whether a copy that cannot be made ends the series rather than fails the source
+        auto stopsSeries = [&result]() {
+            if (result.copiesMade == 0) {
+                return false;
+            }
+            result.stoppedBy = LC_OffsetSourceStatus::OffsetFailed;
+            return true;
+        };
+
+        // causes known before anything is offset
+        if (e.rtti() == RS2::EntityLine && (e.getEndpoint() - e.getStartpoint()).magnitude() < RS_TOLERANCE) {
+            result.detail = LC_OffsetFailureDetail::ZeroLength;
+            return LC_OffsetSourceStatus::OffsetFailed;
+        }
+        if (const auto* hyperbola = dynamic_cast<const LC_Hyperbola*>(&e);
+            hyperbola != nullptr && hyperbola->isInfinite()) {
+            result.detail = LC_OffsetFailureDetail::Unbounded;
+            return LC_OffsetSourceStatus::OffsetFailed;
+        }
 
         if (LC_CurveOffset::isSupportedSource(e)) {
             // The side is resolved once, so no copy can land on another side.
@@ -1427,8 +1512,9 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcome(const RS_OffsetData& da
             LC_OffsetSideResolution side = LC_CurveOffset::resolveSide(e, data.coord, sideOptions);
             // a point on the curve, or on the segments it is drawn with, gives no
             // side the user chose: the fallback point decides, when it can
-            const bool onCurve = side.status == LC_CurveOffsetStatus::AmbiguousSide ||
-                                 (side.status == LC_CurveOffsetStatus::Ok && side.distance <= drawnCurveTolerance(e));
+            const bool onCurve =
+                side.status == LC_CurveOffsetStatus::AmbiguousSide ||
+                (side.status == LC_CurveOffsetStatus::Ok && side.distance <= drawnCurveTolerance(e, data.coord));
             if (onCurve && data.sideFallback.valid) {
                 const LC_OffsetSideResolution fallback = LC_CurveOffset::resolveSide(e, data.sideFallback, sideOptions);
                 if (fallback.status == LC_CurveOffsetStatus::Ok) {
@@ -1462,9 +1548,13 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcome(const RS_OffsetData& da
                 }
                 if (copy.status != LC_CurveOffsetStatus::Ok) {
                     result.engineStatus = copy.status;
+                    if (copy.status != LC_CurveOffsetStatus::LimitExceeded && stopsSeries()) {
+                        break;
+                    }
                     return engineFailure(copy.status);
                 }
                 if (copy.entities.empty()) {
+                    result.stoppedBy = LC_OffsetSourceStatus::Vanished;
                     break; // trimmed away entirely, as it is at any larger distance on this side
                 }
                 if (!addUsage(usage, copy.usage)) {
@@ -1477,23 +1567,74 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcome(const RS_OffsetData& da
             }
         }
         else {
+            // RS_Polyline::offset() moves lines and arcs only: an elliptic
+            // segment would stay where it is, between offset neighbours.
+            const auto* const polyline = e.rtti() == RS2::EntityPolyline ? static_cast<const RS_Polyline*>(&e) : nullptr;
+            if (polyline != nullptr && hasEllipticSegment(*polyline)) {
+                result.detail = LC_OffsetFailureDetail::EllipticSegments;
+                return LC_OffsetSourceStatus::OffsetFailed;
+            }
+            // A point on the entity gives no side the user chose, and each
+            // type would settle it its own way (a line to the left, a circle
+            // inwards): the second click decides, and without one, nothing.
+            RS_Vector coord = data.coord;
+            if (sideIsAmbiguous(e, coord)) {
+                if (!data.sideFallback.valid || sideIsAmbiguous(e, data.sideFallback)) {
+                    result.engineStatus = LC_CurveOffsetStatus::AmbiguousSide;
+                    result.detail = LC_OffsetFailureDetail::AmbiguousSide;
+                    return LC_OffsetSourceStatus::OffsetFailed;
+                }
+                coord = data.sideFallback;
+            }
+            // Inwards, a circle or an arc has nothing left once its radius is
+            // within the band every exact offset vanishes in, relative to its size.
+            const bool circular = e.rtti() == RS2::EntityCircle || e.rtti() == RS2::EntityArc;
+            const bool inwards = circular && coord.distanceTo(e.getCenter()) < e.getRadius();
+            const double extent = e.getMin().valid && e.getMax().valid ? e.getMin().distanceTo(e.getMax()) : 0.0;
             for (int num = 1; num <= numberOfCopies; ++num) {
                 if (!isValidOffsetBudget(remainingBudget(budget, usage))) {
                     return LC_OffsetSourceStatus::LimitExceeded;
                 }
+                const double magnitude = std::abs(num * data.distance);
+                if (inwards && e.getRadius() - magnitude <= kOffsetVanishBand * std::max(extent, magnitude)) {
+                    result.stoppedBy = LC_OffsetSourceStatus::Vanished;
+                    break; // as it is at any larger distance inwards
+                }
                 std::vector<std::unique_ptr<RS_Entity>> copy;
                 // First try the type-changing path (e.g. ellipse → spline).
-                for (RS_Entity* off : e.createOffset(data.coord, num * data.distance)) {
+                for (RS_Entity* off : e.createOffset(coord, magnitude)) {
                     copy.emplace_back(off);
                 }
                 if (copy.empty()) {
                     // Fall back to the in-place clone+offset path.
                     std::unique_ptr<RS_Entity> clone{getClone(forPreviewOnly, &e)};
-                    if (!clone->offset(data.coord, num * data.distance)) {
+                    if (!clone->offset(coord, magnitude)) {
                         if (e.rtti() == RS2::EntityCircle || e.rtti() == RS2::EntityArc) {
+                            result.stoppedBy = LC_OffsetSourceStatus::Vanished;
                             break; // the radius would vanish, as it does at any larger distance inwards
                         }
+                        if (stopsSeries()) {
+                            break;
+                        }
                         return LC_OffsetSourceStatus::OffsetFailed;
+                    }
+                    if (polyline != nullptr) {
+                        // RS_Polyline::offset() joins neighbouring offsets and
+                        // never trims a loop, and it always reports success:
+                        // what it made is used only if it is a trimmed offset
+                        const LC_OffsetCheckReport check =
+                            checkLegacyPolylineOffset(*polyline, static_cast<const RS_Polyline&>(*clone), magnitude);
+                        if (check.verdict == LC_OffsetCheckVerdict::NothingLeft) {
+                            result.stoppedBy = LC_OffsetSourceStatus::Vanished;
+                            break; // shrunk past its size, as it is at any larger distance
+                        }
+                        if (check.verdict == LC_OffsetCheckVerdict::Invalid) {
+                            result.detail = LC_OffsetFailureDetail::PolylineNotTrimmed;
+                            if (stopsSeries()) {
+                                break;
+                            }
+                            return LC_OffsetSourceStatus::OffsetFailed;
+                        }
                     }
                     copy.push_back(std::move(clone));
                 }
@@ -1579,6 +1720,11 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcome(const RS_OffsetData& da
         }
         else if (!distancesFinite || !isValidOffsetBudget(limits.perSource)) {
             result.status = LC_OffsetSourceStatus::OffsetFailed;
+        }
+        else if (std::abs(data.distance) <= RS_TOLERANCE) {
+            // the distance is its size, whatever its sign; none makes a duplicate
+            result.status = LC_OffsetSourceStatus::OffsetFailed;
+            result.detail = LC_OffsetFailureDetail::InvalidDistance;
         }
         else if (requestDeepLeft == 0) {
             result.status = LC_OffsetSourceStatus::LimitExceeded; // not evaluated

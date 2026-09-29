@@ -413,6 +413,7 @@ HEADERS += \
     lib/engine/document/entities/lc_curveoffset.h \
     lib/engine/document/entities/lc_parametriccurveintersection.h \
     lib/engine/document/entities/lc_offsetoutputbudget.h \
+    lib/engine/document/entities/lc_offsetresultcheck.h \
     lib/engine/document/entities/lc_splinehelper.h \
     lib/engine/document/entities/lc_tolerance.h \
     lib/engine/document/entities/support/lc_arrow_box.h \
@@ -975,6 +976,7 @@ SOURCES += \
     lib/engine/document/entities/lc_curveoffset.cpp \
     lib/engine/document/entities/lc_parametriccurveintersection.cpp \
     lib/engine/document/entities/lc_offsetoutputbudget.cpp \
+    lib/engine/document/entities/lc_offsetresultcheck.cpp \
     lib/engine/document/entities/lc_splinehelper.cpp \
     lib/engine/document/entities/lc_tolerance.cpp \
     lib/engine/document/entities/support/lc_arrow_box.cpp \

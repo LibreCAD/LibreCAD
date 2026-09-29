@@ -425,9 +425,6 @@ RS_Polyline *LC_ActionDrawPolygonBase::createShapePolyline(PolygonInfo &polygonI
 
             // now all preparations completed, and we'll create shape
 
-            // the very first vertex from which shape creation begins.
-            RS_Vector startingVertex;
-
             // create all necessary segments one by one. Here we'll draw 2 edges - from outer point to inner and from inner point to next outer point of rays
               for (int i=0; i < m_edgesNumber; ++i) {
 
@@ -436,10 +433,6 @@ RS_Polyline *LC_ActionDrawPolygonBase::createShapePolyline(PolygonInfo &polygonI
                    // definition of vertexes. Vertexes rounding join points
                    RS_Vector start = centerPoint.relative(joinPointDistance, baseVertexAngle + vertexAngleCorrection);
                    RS_Vector end = centerPoint.relative(joinPointDistance, baseVertexAngle + segmentAngle - vertexAngleCorrection);
-
-                   if (i == 0){ // store starting vertex for later use
-                       startingVertex = start;
-                   }
 
                    result->addVertex(start);
                    result->addVertex(end);
@@ -452,17 +445,21 @@ RS_Polyline *LC_ActionDrawPolygonBase::createShapePolyline(PolygonInfo &polygonI
                        previewRefPoint(centerPoint.relative(vertexDistance, baseVertexAngle));
                    }
                }
-               // complete polyline and close it to starting vertex
-               result->addVertex(startingVertex);
+               // close it: the flag, and the last rounding arc back to the starting vertex
+               result->setClosed(true);
+               result->endPolyline();
         }
     }
     if (!drawRounded){
-        for (int i = 0; i <= m_edgesNumber; ++i) {
+        for (int i = 0; i < m_edgesNumber; ++i) {
             const RS_Vector&vertex = centerPoint +
                                       RS_Vector::polar(vertexDistance, vertexStartAngle + i * segmentAngle);
 
             result->addVertex(vertex, bulge, false);
         }
+        // close it: the flag, and the last edge back to the first vertex
+        result->setClosed(true);
+        result->endPolyline();
     }
 
     // update inner radius
