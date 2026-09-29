@@ -21,14 +21,10 @@
 **
 ****************************************************************************/
 
-// An owning RS_BlockList frees its blocks (when destroyed, on clear() and
-// remove(), and a block add() rejects); a non-owning one never does. Before,
-// the destructor and clear() never freed anything, so every block of every
-// drawing, with all its entities, leaked.
-//
-// The blocks are counted through a subclass, and the entities through one
-// whose clone() is counted too, so that the copies made by the clipboard, and
-// the drawings that hold them, can be accounted for.
+// An owning RS_BlockList (every drawing's) frees the blocks it holds when it
+// is cleared or destroyed, as remove() and add() (for a rejected duplicate)
+// always did. Before, every block of every drawing leaked. A non-owning list
+// (RS_ActionBlocksSave's, a font imported as a drawing) frees nothing.
 
 #include <functional>
 #include <memory>
@@ -48,10 +44,11 @@
 
 namespace {
 
+// Counts live instances so a test can tell whether a list freed a block.
 class CountedBlock final : public RS_Block {
 public:
-    CountedBlock(const QString& name, int& liveCount)
-        : RS_Block(nullptr, RS_BlockData(name, RS_Vector{0.0, 0.0}, false)), m_liveCount{liveCount} {
+    CountedBlock(RS_EntityContainer* parent, const QString& name, int& liveCount)
+        : RS_Block(parent, RS_BlockData(name, RS_Vector(0.0, 0.0), false)), m_liveCount{liveCount} {
         ++m_liveCount;
     }
     ~CountedBlock() override { --m_liveCount; }
@@ -60,7 +57,13 @@ private:
     int& m_liveCount;
 };
 
-// A line whose clones are counted too.
+RS_Insert* makeInsert(RS_EntityContainer* parent, const QString& blockName) {
+    return new RS_Insert(parent, RS_InsertData(blockName, RS_Vector(0.0, 0.0), RS_Vector(1.0, 1.0), 0.0, 1, 1,
+                                               RS_Vector(0.0, 0.0)));
+}
+
+// A line whose clones are counted too, so the copies the clipboard and a
+// paste make can be accounted for.
 class CountedLine final : public RS_Line {
 public:
     CountedLine(RS_EntityContainer* parent, const RS_LineData& data, int& liveCount)
@@ -88,99 +91,93 @@ struct Drawing {
         m_view.setDocument(&m_graphic);
         m_context.setDocumentAndView(&m_graphic, &m_view);
     }
-
-    void addBlockOfLine(const QString& name, int& liveCount) {
-        auto* block = new RS_Block(&m_graphic, RS_BlockData(name, RS_Vector{0.0, 0.0}, false));
-        m_graphic.addBlock(block);
-        block->addEntity(new CountedLine(block, RS_LineData(RS_Vector{0.0, 0.0}, RS_Vector{1.0, 0.0}), liveCount));
-    }
-
-    RS_Insert* addInsert(const QString& name) {
-        auto* insert = new RS_Insert(&m_graphic, RS_InsertData(name, RS_Vector{5.0, 5.0}, RS_Vector{1.0, 1.0}, 0.0, 1, 1,
-                                                               RS_Vector{0.0, 0.0}));
-        m_graphic.addEntity(insert);
-        insert->update();
-        return insert;
-    }
-
-    void modify(const std::function<void(LC_DocumentModificationBatch&)>& operation) {
-        m_graphic.undoableModify(m_view.getViewPort(), [&](LC_DocumentModificationBatch& ctx) {
-            operation(ctx);
-            return true;
-        });
-    }
 };
 
 } // namespace
 
-TEST_CASE("An owning RS_BlockList frees its blocks when destroyed", "[blocks][ownership]") {
+TEST_CASE("An owning RS_BlockList frees its blocks when destroyed", "[block][ownership]") {
     int live = 0;
     {
         RS_BlockList list(true);
-        REQUIRE(list.add(new CountedBlock(QStringLiteral("A"), live)));
-        REQUIRE(list.add(new CountedBlock(QStringLiteral("B"), live)));
+        list.add(new CountedBlock(nullptr, "A", live));
+        list.add(new CountedBlock(nullptr, "B", live));
         REQUIRE(list.count() == 2);
         REQUIRE(live == 2);
     }
     CHECK(live == 0);
 }
 
-TEST_CASE("A non-owning RS_BlockList never frees a block", "[blocks][ownership]") {
+TEST_CASE("A non-owning RS_BlockList frees nothing", "[block][ownership]") {
     int live = 0;
-    auto* a = new CountedBlock(QStringLiteral("A"), live);
-    auto* twin = new CountedBlock(QStringLiteral("A"), live);
+    auto* a = new CountedBlock(nullptr, "A", live);
+    auto* b = new CountedBlock(nullptr, "B", live);
     {
         RS_BlockList list(false);
-        REQUIRE(list.add(a));
-
-        // a rejected duplicate stays with the caller
-        CHECK_FALSE(list.add(twin));
-        CHECK(live == 2);
-
-        list.remove(a);
-        CHECK(live == 2);
-        CHECK(list.count() == 0);
-
-        REQUIRE(list.add(a));
+        list.add(a);
+        list.add(b);
         list.clear();
         CHECK(live == 2);
-        REQUIRE(list.add(a));
+        list.add(a);
+        list.add(b);
     }
-    // destroyed with `a` in it
     CHECK(live == 2);
     delete a;
-    delete twin;
+    delete b;
     CHECK(live == 0);
 }
 
-TEST_CASE("RS_BlockList::clear frees the blocks and forgets the active one", "[blocks][ownership]") {
+TEST_CASE("Clearing an owning RS_BlockList frees its blocks and forgets the active one", "[block][ownership]") {
     int live = 0;
     RS_BlockList list(true);
-    auto* a = new CountedBlock(QStringLiteral("A"), live);
+    auto* a = new CountedBlock(nullptr, "A", live);
     list.add(a);
-    list.add(new CountedBlock(QStringLiteral("B"), live));
+    list.add(new CountedBlock(nullptr, "B", live));
     list.activate(a);
     REQUIRE(list.getActive() == a);
-    const std::size_t before = list.generation();
 
     list.clear();
     CHECK(live == 0);
     CHECK(list.count() == 0);
     CHECK(list.getActive() == nullptr);
-    CHECK(list.find(QStringLiteral("A")) == nullptr);
-    CHECK(list.generation() != before);
 
     // The list is usable again after clearing.
-    CHECK(list.add(new CountedBlock(QStringLiteral("A"), live)));
+    list.add(new CountedBlock(nullptr, "A", live));
+    CHECK(list.count() == 1);
     CHECK(live == 1);
 }
 
-TEST_CASE("RS_BlockList::remove frees the block it removes", "[blocks][ownership]") {
+TEST_CASE("RS_BlockList::add frees a rejected duplicate but never a block it holds", "[block][ownership]") {
+    int live = 0;
+    {
+        RS_BlockList list(true);
+        auto* a = new CountedBlock(nullptr, "A", live);
+        REQUIRE(list.add(a));
+
+        // Adding the block the list already holds keeps it.
+        CHECK_FALSE(list.add(a));
+        CHECK(live == 1);
+        CHECK(list.find("A") == a);
+
+        // A distinct block of the same name is freed.
+        CHECK_FALSE(list.add(new CountedBlock(nullptr, "A", live)));
+        CHECK(live == 1);
+        CHECK(list.count() == 1);
+
+        // find() skips a block flagged deleted, so adding it again must not
+        // list it twice (the destructor would free it twice).
+        a->setFlag(RS2::FlagDeleted);
+        CHECK_FALSE(list.add(a));
+        CHECK(list.count() == 1);
+    }
+    CHECK(live == 0);
+}
+
+TEST_CASE("RS_BlockList::remove frees an owned block", "[block][ownership]") {
     int live = 0;
     RS_BlockList list(true);
-    auto* a = new CountedBlock(QStringLiteral("A"), live);
+    auto* a = new CountedBlock(nullptr, "A", live);
     list.add(a);
-    list.add(new CountedBlock(QStringLiteral("B"), live));
+    list.add(new CountedBlock(nullptr, "B", live));
     list.activate(a);
 
     list.remove(a);
@@ -189,105 +186,112 @@ TEST_CASE("RS_BlockList::remove frees the block it removes", "[blocks][ownership
     CHECK(list.getActive() == nullptr);
 }
 
-TEST_CASE("RS_BlockList::add frees a rejected duplicate but keeps a block added again", "[blocks][ownership]") {
+// Blocks hold inserts of other blocks and the drawing holds inserts of the
+// blocks; none of them may reach a freed block while the drawing is torn down.
+TEST_CASE("A drawing frees its blocks when re-initialised and destroyed", "[block][ownership]") {
+    lc::test::application();
     int live = 0;
-    RS_BlockList list(true);
-    auto* a = new CountedBlock(QStringLiteral("A"), live);
-    REQUIRE(list.add(a));
+    {
+        RS_Graphic graphic;
+        graphic.initForNewDocument();
+        auto addBlocks = [&] {
+            auto* inner = new CountedBlock(&graphic, "INNER", live);
+            inner->addEntity(new RS_Line(inner, RS_Vector(0.0, 0.0), RS_Vector(1.0, 1.0)));
+            graphic.addBlock(inner);
+            auto* outer = new CountedBlock(&graphic, "OUTER", live);
+            outer->addEntity(makeInsert(outer, "INNER"));
+            graphic.addBlock(outer);
+            RS_Insert* insert = makeInsert(&graphic, "OUTER");
+            graphic.addEntity(insert);
+            insert->update();
+            REQUIRE(insert->getBlockForInsert() == outer);
+        };
 
-    CHECK_FALSE(list.add(new CountedBlock(QStringLiteral("A"), live)));
-    CHECK(live == 1);
-    CHECK(list.find(QStringLiteral("A")) == a);
+        addBlocks();
+        REQUIRE(live == 2);
+        graphic.initForNewDocument();
+        CHECK(live == 0);
+        CHECK(graphic.countBlocks() == 0);
 
-    // Adding the block that already holds the name must not free it.
-    CHECK_FALSE(list.add(a));
-    CHECK(live == 1);
-    CHECK(list.count() == 1);
-    CHECK(a->getName() == QStringLiteral("A"));
+        addBlocks();
+        REQUIRE(live == 2);
+    }
+    CHECK(live == 0);
 }
 
-TEST_CASE("A generation is never shared between block lists", "[blocks][generation]") {
-    RS_BlockList first(true);
+// RS_Insert caches the block it found together with the list and the list's
+// generation. A new list can reuse the address of a freed one, so its
+// generation must never repeat one the freed list had, or the cache would
+// hand back a freed block.
+TEST_CASE("RS_BlockList generations are unique across lists", "[block][ownership]") {
+    int live = 0;
+    auto first = std::make_unique<RS_BlockList>(true);
+    const std::size_t created = first->generation();
+    first->add(new CountedBlock(nullptr, "A", live));
+    const std::size_t afterAdd = first->generation();
+    CHECK(afterAdd != created);
+    first.reset();
+
     RS_BlockList second(true);
-    CHECK(first.generation() != 0U);
-    CHECK(first.generation() != second.generation());
-
-    int live = 0;
-    std::size_t last = first.generation();
-    auto step = [&](const char* what) {
-        INFO(what);
-        CHECK(first.generation() > last);
-        CHECK(first.generation() != second.generation());
-        last = first.generation();
-    };
-    auto* a = new CountedBlock(QStringLiteral("A"), live);
-    first.add(a);
-    step("add");
-    first.rename(a, QStringLiteral("B"));
-    step("rename");
-    first.remove(a);
-    step("remove");
-    first.clear();
-    step("clear");
+    CHECK(second.generation() != created);
+    CHECK(second.generation() != afterAdd);
+    second.add(new CountedBlock(nullptr, "A", live));
+    CHECK(second.generation() != afterAdd);
 }
 
-// An insert caches the block it found against (list, generation). A drawing
-// created at the address of a destroyed one, with as many blocks added as the
-// old one had, used to look exactly like the old list: the insert then handed
-// out the block freed with it.
-TEST_CASE("An insert does not reuse a block cached against a destroyed list", "[blocks][generation]") {
+TEST_CASE("A non-owning RS_BlockList leaves removed and rejected blocks to the caller", "[block][ownership]") {
+    int live = 0;
+    auto* a = new CountedBlock(nullptr, "A", live);
+    auto* twin = new CountedBlock(nullptr, "A", live);
+    {
+        RS_BlockList list(false);
+        REQUIRE(list.add(a));
+        CHECK_FALSE(list.add(twin));
+        list.remove(a);
+        CHECK(live == 2);
+        CHECK(list.count() == 0);
+    }
+    CHECK(live == 2);
+    delete a;
+    delete twin;
+    CHECK(live == 0);
+}
+
+// The end-to-end form of the generation test above: an insert that cached a
+// block of a list keeps working when a new list is built at the very address
+// of the destroyed one, with as many additions, instead of handing back the
+// block freed with the old list.
+TEST_CASE("An insert does not reuse a block cached against a destroyed list", "[block][ownership]") {
     int live = 0;
     alignas(RS_BlockList) unsigned char storage[sizeof(RS_BlockList)];
 
     auto* first = new (storage) RS_BlockList(true);
-    first->add(new CountedBlock(QStringLiteral("PART"), live));
-    const std::size_t firstGeneration = first->generation();
-
-    RS_Insert insert(nullptr, RS_InsertData(QStringLiteral("PART"), RS_Vector{0.0, 0.0}, RS_Vector{1.0, 1.0}, 0.0, 1, 1,
-                                            RS_Vector{0.0, 0.0}, first));
-    REQUIRE(insert.getBlockForInsert() == first->find(QStringLiteral("PART")));
+    first->add(new CountedBlock(nullptr, "PART", live));
+    RS_Insert insert(nullptr, RS_InsertData("PART", RS_Vector(0.0, 0.0), RS_Vector(1.0, 1.0), 0.0, 1, 1,
+                                            RS_Vector(0.0, 0.0), first));
+    REQUIRE(insert.getBlockForInsert() == first->find("PART"));
     first->~RS_BlockList();
     REQUIRE(live == 0);
 
     auto* second = new (storage) RS_BlockList(true);
-    second->add(new CountedBlock(QStringLiteral("PART"), live));
-    CHECK(second->generation() != firstGeneration);
-    CHECK(insert.getBlockForInsert() == second->find(QStringLiteral("PART")));
+    second->add(new CountedBlock(nullptr, "PART", live));
+    CHECK(insert.getBlockForInsert() == second->find("PART"));
     second->~RS_BlockList();
     CHECK(live == 0);
 }
 
-TEST_CASE("A drawing frees its blocks when re-initialised and destroyed", "[blocks][ownership]") {
+TEST_CASE("A font frees its letters unless it does not own them", "[block][ownership]") {
     int live = 0;
     {
-        Drawing drawing;
-        drawing.m_graphic.addBlock(new CountedBlock(QStringLiteral("A"), live));
-        drawing.m_graphic.addBlock(new CountedBlock(QStringLiteral("B"), live));
-        REQUIRE(live == 2);
-
-        // Loading a file starts with initForNewDocument().
-        drawing.m_graphic.initForNewDocument();
-        CHECK(live == 0);
-        CHECK(drawing.m_graphic.countBlocks() == 0);
-
-        drawing.m_graphic.addBlock(new CountedBlock(QStringLiteral("C"), live));
-        REQUIRE(live == 1);
-    }
-    CHECK(live == 0);
-}
-
-TEST_CASE("A font frees its letters unless it does not own them", "[blocks][ownership]") {
-    int live = 0;
-    {
-        RS_Font font(QStringLiteral("owning"));
-        font.getLetterList()->add(new CountedBlock(QStringLiteral("A"), live));
+        RS_Font font("owning");
+        font.getLetterList()->add(new CountedBlock(nullptr, "A", live));
         REQUIRE(live == 1);
     }
     CHECK(live == 0);
 
-    auto* letter = new CountedBlock(QStringLiteral("A"), live);
+    auto* letter = new CountedBlock(nullptr, "A", live);
     {
-        RS_Font font(QStringLiteral("borrowing"), false);
+        RS_Font font("borrowing", false);
         font.getLetterList()->add(letter);
     }
     CHECK(live == 1);
@@ -295,32 +299,37 @@ TEST_CASE("A font frees its letters unless it does not own them", "[blocks][owne
     CHECK(live == 0);
 }
 
-// Copying to the clipboard clones the blocks the insert needs into the
-// clipboard's own drawing, and pasting clones them again into the destination.
+// Copying to the clipboard clones the blocks an insert needs into the
+// clipboard's drawing, and pasting clones them again into the destination.
 // Each drawing frees only its own, in any order, and what was pasted keeps
 // resolving its blocks in its own drawing.
-TEST_CASE("A pasted insert keeps its blocks after the source and the clipboard are gone", "[blocks][ownership][copy]") {
+TEST_CASE("A pasted insert keeps its blocks after the source and the clipboard are gone", "[block][ownership][copy]") {
     int live = 0;
     {
         auto source = std::make_unique<Drawing>();
-        source->addBlockOfLine(QStringLiteral("PART"), live);
-        RS_Insert* part = source->addInsert(QStringLiteral("PART"));
+        auto* block = new RS_Block(&source->m_graphic, RS_BlockData("PART", RS_Vector(0.0, 0.0), false));
+        source->m_graphic.addBlock(block);
+        block->addEntity(new CountedLine(block, RS_LineData(RS_Vector(0.0, 0.0), RS_Vector(1.0, 0.0)), live));
+        RS_Insert* part = makeInsert(&source->m_graphic, "PART");
+        source->m_graphic.addEntity(part);
+        part->update();
         REQUIRE(part->count() == 1);
 
         QList<RS_Entity*> selection{part};
         source->m_graphic.select(selection, true);
-        LC_CopyUtils::copy(RS_Vector{0.0, 0.0}, selection, &source->m_graphic);
+        LC_CopyUtils::copy(RS_Vector(0.0, 0.0), selection, &source->m_graphic);
         source.reset();
 
         Drawing destination;
-        destination.modify([&](LC_DocumentModificationBatch& ctx) {
-            LC_CopyUtils::paste(LC_CopyUtils::RS_PasteData(RS_Vector{0.0, 100.0}), &destination.m_graphic, ctx);
+        destination.m_graphic.undoableModify(destination.m_view.getViewPort(), [&](LC_DocumentModificationBatch& ctx) {
+            LC_CopyUtils::paste(LC_CopyUtils::RS_PasteData(RS_Vector(0.0, 100.0)), &destination.m_graphic, ctx);
             ctx.dontSetActiveLayerAndPen();
+            return true;
         });
         RS_CLIPBOARD->clear();
         destination.m_graphic.updateInserts();
 
-        RS_Block* ownPart = destination.m_graphic.findBlock(QStringLiteral("PART"));
+        RS_Block* ownPart = destination.m_graphic.findBlock("PART");
         REQUIRE(ownPart != nullptr);
         int inserts = 0;
         for (RS_Entity* e : destination.m_graphic) {

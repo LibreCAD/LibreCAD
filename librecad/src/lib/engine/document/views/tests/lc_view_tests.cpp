@@ -102,17 +102,6 @@ LC_View* makeView(const QString& name, int& liveCount) {
     return view;
 }
 
-// Frees an exported drawing whether LC_LayerExportData holds it as a raw
-// owning pointer or as a std::unique_ptr.
-[[maybe_unused]] void freeExportGraphic(RS_Graphic*& graphic) {
-    delete graphic;
-    graphic = nullptr;
-}
-
-[[maybe_unused]] void freeExportGraphic(std::unique_ptr<RS_Graphic>& graphic) {
-    graphic.reset();
-}
-
 void checkRotatedUCS(const LC_UCS* ucs) {
     REQUIRE(ucs != nullptr);
     CHECK(ucs->isUCS());
@@ -280,14 +269,14 @@ TEST_CASE("Exported named views do not share the source view's UCS", "[views][ow
         exporter.exportLayers(&options, &source, exported);
         REQUIRE(exported.size() == 1);
 
-        RS_Graphic* exportGraphic = &*exported.front().graphic;
+        const RS_Graphic* exportGraphic = exported.front().graphic.get();
         const LC_View* exportedView = exportGraphic->findNamedView(QStringLiteral("A"));
         REQUIRE(exportedView != nullptr);
         const LC_View* sourceView = source.findNamedView(QStringLiteral("A"));
         CHECK(exportedView->getUCS() != sourceView->getUCS());
         checkRotatedUCS(exportedView->getUCS());
 
-        freeExportGraphic(exported.front().graphic);
+        exported.front().graphic.reset();
         CHECK(live == 1);
         checkRotatedUCS(sourceView->getUCS());
     }

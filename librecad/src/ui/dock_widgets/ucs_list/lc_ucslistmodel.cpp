@@ -38,6 +38,7 @@ LC_UCSListModel::LC_UCSListModel(LC_UCSListOptions *modelOptions, QObject *paren
 }
 
 LC_UCSListModel::~LC_UCSListModel() {
+    qDeleteAll(m_ucss);
     m_ucss.clear();
 }
 
@@ -46,6 +47,7 @@ void LC_UCSListModel::setUCSList(LC_UCSList *ucsList, LC_Formatter* formatter) {
     m_formatter = formatter;
     beginResetModel();
 
+    qDeleteAll(m_ucss);
     m_ucss.clear();
     if (ucsList != nullptr) {
         for (unsigned i=0; i < ucsList->count(); ++i) {

@@ -20,6 +20,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "rs_actionblockssave.h"
 
+#include <memory>
+#include <unordered_set>
+
 #include <QApplication>
 
 #include "lc_containertraverser.h"
@@ -38,30 +41,48 @@ class RS_Block;
 RS_ActionBlocksSave::RS_ActionBlocksSave(LC_ActionContext *actionContext)
         :RS_ActionInterface("Edit Block", actionContext, RS2::ActionBlocksSave) {}
 
-/*recursive add blocks in graphic*/
-void RS_ActionBlocksSave::addBlock(const RS_Insert* in, RS_Graphic *g) {
-    for (const auto e: *in) {
-        if (e->rtti() == RS2::EntityInsert) {
-            const auto *insert = static_cast<RS_Insert *>(e);
-            addBlock(insert, g);
-            g->addBlock(insert->getBlockForInsert());
+namespace {
+/**
+ * Lists on @p target the block @p insert inserts, and the blocks that block
+ * inserts in turn. @p insert must still belong to the source drawing: that is
+ * where its block name resolves. @p done holds the blocks already listed, which
+ * also ends a cycle of blocks that insert each other.
+ */
+void addInsertedBlocks(const RS_Insert* insert, RS_Graphic* target, std::unordered_set<const RS_Block*>& done) {
+    RS_Block* block = insert->getBlockForInsert();
+    if (block == nullptr || !done.insert(block).second) {
+        return;
+    }
+    target->addBlock(block, false);
+    for (const RS_Entity* e : *block) {
+        if (e != nullptr && e->rtti() == RS2::EntityInsert && !e->getFlag(RS2::FlagDeleted)) {
+            addInsertedBlocks(static_cast<const RS_Insert*>(e), target, done);
         }
     }
 }
+}
 
 // fixme - sand - investigate why layers from this block are not added to graphic..
-RS_Graphic* RS_ActionBlocksSave::createGraphicForBlock(const RS_Block *activeBlock){
-    auto* result = new RS_Graphic();
-    result->setOwner(false);
+std::unique_ptr<RS_Graphic> RS_ActionBlocksSave::createGraphicForBlock(const RS_Block *activeBlock){
+    auto result = std::make_unique<RS_Graphic>();
+    // The blocks the entities insert stay the source drawing's: they are listed
+    // here so the file gets them, but this list must not free them.
     result->getBlockList()->setOwner(false);
     result->clearLayers();
 
-    for (RS_Entity* e : lc::LC_ContainerTraverser{*activeBlock, RS2::ResolveNone}.entities()) {
-        result->addEntity(e);
+    std::unordered_set<const RS_Block*> insertedBlocks;
+    for (const RS_Entity* e : lc::LC_ContainerTraverser{*activeBlock, RS2::ResolveNone}.entities()) {
+        if (e->getFlag(RS2::FlagDeleted)) {
+            continue; // deleted in the block editor, kept in the list as undo history
+        }
+        // A copy: this drawing is deleted as soon as the file is written, and
+        // adding the block's own entity would re-parent it to this drawing.
+        if (RS_Entity* copy = e->clone()) {
+            result->addEntity(copy);
+        }
         if (e->rtti() == RS2::EntityInsert) {
-            const auto *insert = static_cast<RS_Insert *>(e);
-            result->addBlock(insert->getBlockForInsert());
-            addBlock(insert,result);
+            // through the original, whose block name resolves in the source drawing
+            addInsertedBlocks(static_cast<const RS_Insert*>(e), result.get(), insertedBlocks);
         }
     }
     return result;
@@ -85,13 +106,12 @@ void RS_ActionBlocksSave::trigger() {
             }
             else {
                 QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
-                RS_Graphic* graphic = createGraphicForBlock(activeBlock);
+                const std::unique_ptr<RS_Graphic> graphic = createGraphicForBlock(activeBlock);
                 graphic->setModified(true);
 
                 LC_DocumentsStorage storage;
-                storage.saveBlockAs(graphic, fileName);
+                storage.saveBlockAs(graphic.get(), fileName);
 
-                delete graphic;
                 QApplication::restoreOverrideCursor();
             }
         } else {

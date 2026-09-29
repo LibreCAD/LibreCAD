@@ -136,23 +136,12 @@ void LC_CopyUtils::doCopyEntity(RS_Entity* e, const RS_Vector& ref, RS_Graphic* 
         insert->update();
     }
 
-    // add entity to clipboard:
+    // add entity to clipboard. An insert keeps its whole transform (angle, scale, mirror, array):
+    // its children are its derived expansion, which RS_Insert::move() and the paste's transform
+    // edit the insert's data for, and update() rebuilds from that data and the block, so nothing
+    // is applied twice (issues #1616 and #2957).
     RS_Entity* clone = e->clone();
     clone->move(-ref);
-
-    // issue #1616: copy&paste a rotated block results in a double rotated block
-    // At this point the copied block entities are already rotated, but at
-    // pasting, RS_Insert::update() would still rotate the entities again and
-    // cause double rotation.
-
-    const double angle = isInsert ? insert->getAngle() : 0.;
-    // issue #1616: A quick fix: rotate back all block entities in the clipboard back by the
-    // rotation angle before pasting
-    if (isInsert && std::abs(std::remainder(angle, 2. * M_PI)) > RS_TOLERANCE_ANGLE) {
-        auto* insertClone = static_cast<RS_Insert*>(clone);
-        //insert->rotate(insert->getData().insertionPoint, - angle);
-        insertClone->setAngle(0.);
-    }
 
     clipboardGraphic->addEntity(clone);
     clone->reparent(clipboardGraphic);

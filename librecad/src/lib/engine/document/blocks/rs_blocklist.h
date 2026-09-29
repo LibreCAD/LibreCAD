@@ -38,11 +38,6 @@ class RS_BlockListListener;
 /**
  * List of blocks.
  *
- * An owning list (see the constructor) frees the blocks it holds: when it is
- * destroyed, on clear() and remove(), and add() frees a block it rejects
- * because the name is taken. A non-owning list never frees a block. Either
- * way a list is not copyable, as a copy would free the same blocks twice.
- *
  * @see RS_Block
  *
  * @author Andrew Mustun
@@ -115,10 +110,9 @@ public:
     bool isModified() const;
 
     /**
-     * Monotonically increases whenever name-to-block resolution can change.
-     * A value is never used by two lists, or twice by one, so a lookup cached
-     * against (list, generation) can't be mistaken for one against a later
-     * list that reuses the address of a destroyed one.
+     * Changes whenever name-to-block resolution can change. Values are unique
+     * across all block lists, so a (list, generation) pair cached by an
+     * RS_Insert never matches a later list that reuses a freed list's address.
      */
     [[nodiscard]] std::size_t generation() const noexcept {
         return m_generation;

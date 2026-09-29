@@ -31,22 +31,18 @@
 #include <QtAlgorithms>
 #include <atomic>
 #include <iostream>
-#include <utility>
 
 #include "rs_block.h"
 #include "rs_blocklistlistener.h"
 #include "rs_debug.h"
 
 namespace {
-
-// Generations are drawn from one counter, so no two lists ever share a value.
-// Starting at 1 keeps 0 free to mean "no lookup cached" (see RS_Insert).
+/** Next generation value, unique across all block lists (see generation()). */
 std::size_t nextGeneration() {
     static std::atomic<std::size_t> counter{0U};
-    return counter.fetch_add(1U, std::memory_order_relaxed) + 1U;
+    return ++counter;
 }
-
-} // namespace
+}
 
 /**
  * Constructor.
@@ -55,31 +51,28 @@ std::size_t nextGeneration() {
  *              If so, the blocks will be deleted when the block
  *              list is deleted.
  */
-RS_BlockList::RS_BlockList(const bool owner) : m_generation{nextGeneration()} {
-    m_owner = owner;
-    m_activeBlock = nullptr;
+RS_BlockList::RS_BlockList(const bool owner)
+    : m_owner{owner}, m_generation{nextGeneration()} {
     setModified(false);
 }
 
 RS_BlockList::~RS_BlockList() {
-    // Empty the list first, so it is consistent while the blocks are destroyed.
-    const QList<RS_Block*> blocks = std::exchange(m_blocks, {});
     if (m_owner) {
-        qDeleteAll(blocks);
+        qDeleteAll(m_blocks);
     }
 }
 
 /**
- * Removes all blocks in the blocklist and, if the list owns them, frees them.
+ * Removes all blocks in the blocklist, and deletes them if the list owns them.
  */
 void RS_BlockList::clear() {
-    const QList<RS_Block*> blocks = std::exchange(m_blocks, {});
+    if (m_owner) {
+        qDeleteAll(m_blocks);
+    }
+    m_blocks.clear();
     m_activeBlock = nullptr;
     m_generation = nextGeneration();
     setModified(true);
-    if (m_owner) {
-        qDeleteAll(blocks);
-    }
 }
 
 /**
@@ -117,6 +110,11 @@ bool RS_BlockList::add(RS_Block* block, const bool notify) {
     if (block == nullptr) {
         return false;
     }
+    // Already listed: keep it, and don't list it twice (find() skips blocks
+    // flagged deleted, so the name check below would miss those).
+    if (m_blocks.contains(block)) {
+        return false;
+    }
 
     // check if block already exists:
     const RS_Block* b = find(block->getName());
@@ -131,8 +129,7 @@ bool RS_BlockList::add(RS_Block* block, const bool notify) {
 
         return true;
     }
-    // A block added again to the list that already holds it is not ours to free.
-    if (m_owner && b != block) {
+    if (m_owner) {
         delete block;
     }
     return false;

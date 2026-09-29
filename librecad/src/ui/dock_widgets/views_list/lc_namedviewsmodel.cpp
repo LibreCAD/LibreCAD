@@ -49,6 +49,7 @@ void LC_NamedViewsModel::setViewsList(LC_ViewList* viewsList, LC_Formatter* form
     this->m_viewsList = viewsList;
     beginResetModel();
 
+    qDeleteAll(m_views);
     m_views.clear();
     if (viewsList != nullptr) {
         for (unsigned i = 0; i < viewsList->count(); ++i) {
@@ -292,6 +293,7 @@ void LC_NamedViewsModel::updateViewsUCSNames(LC_UCSList* ucsList) {
 }
 
 void LC_NamedViewsModel::clear() {
+    qDeleteAll(m_views);
     m_views.clear();
 }
 

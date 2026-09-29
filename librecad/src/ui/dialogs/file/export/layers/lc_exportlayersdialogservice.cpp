@@ -68,15 +68,14 @@ void LC_ExportLayersService::doExportLayers(LC_LayersExportOptions& exportOption
         const size_t exportFilesCount = exportResultList.size();
 
         for (size_t currentExportLayerIndex = 0; currentExportLayerIndex < exportFilesCount; currentExportLayerIndex++){
-            const auto exportData = exportResultList[currentExportLayerIndex];
-            const auto graphicToSave = exportData.graphic;
+            auto& exportData = exportResultList[currentExportLayerIndex];
+            RS_Graphic* graphicToSave = exportData.graphic.get();
             QString actualFileName = createExportDocumentFileName(exportOptions.createSeparateDocumentPerLayer,
                                           fileInfo, exportFilesCount, currentExportLayerIndex, exportData.name);
             [[maybe_unused]]bool saveWasSuccessful = storage.exportGraphics(graphicToSave, actualFileName, fileInfo.fileType);
 
-            graphicToSave->setGraphicView(nullptr);
-            graphicToSave->setParent(nullptr);
-            graphicToSave->initForNewDocument();
+            // free each export drawing once it is saved, not after the whole loop
+            exportData.graphic.reset();
 
             /*                if (saveWasSuccessful){
                     RS_DIALOGFACTORY->commandMessage(
