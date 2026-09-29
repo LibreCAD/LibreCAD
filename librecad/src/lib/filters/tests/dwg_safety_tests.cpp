@@ -639,6 +639,11 @@ public:
         classesmap.at(classNumber)->className = "AcDbFieldList";
     }
 
+    void addDictionaryWithDefaultObjectClass(std::uint16_t classNumber) {
+        addCustomObjectClass(classNumber, "ACDBDICTIONARYWDFLT");
+        classesmap.at(classNumber)->className = "AcDbDictionaryWithDefault";
+    }
+
     void addFieldObjectClass(std::uint16_t classNumber) {
         addCustomObjectClass(classNumber, "FIELD");
         classesmap.at(classNumber)->className = "AcDbField";
@@ -13979,6 +13984,56 @@ TEST_CASE("DWG DICTIONARYWDFLT receipt preflight rejects a missing class ordinal
     CHECK(reader.m_dwgSourceFrameLedger.front().m_reason
           == DRW_DwgFrameCoverageReason::ReceiptFailure);
     CHECK(reader.m_dwgSourceFrameLedger.front().m_publicationCount == 0u);
+}
+
+// DICTIONARYWDFLT is a R13/R14 object as well (its parser and encoder both
+// handle those layouts), unlike FIELD and FIELDLIST, which R2000 introduced:
+// the receipt gate must let it through instead of failing every R14 file that
+// carries the ACAD_PLOTSTYLENAME dictionary.
+TEST_CASE("DWG R14 DICTIONARYWDFLT passes the receipt gate",
+          "[dwg][safety][dictionary-wdflt][r14]") {
+    constexpr std::uint16_t classNumber =
+        DRW_DictionaryWithDefault::kDwgClassNum;
+    constexpr std::uint32_t objectHandle = 0x860u;
+    const auto body = makeR14DictionaryWithDefaultBody();
+    REQUIRE(!body.empty());
+    const auto frame = makeObjectFrame(body);
+    REQUIRE(!frame.empty());
+
+    dwgBufferW handleEntries;
+    REQUIRE(handleEntries.putUModularChar(objectHandle));
+    REQUIRE(handleEntries.putModularChar(0));
+    std::vector<std::uint8_t> handleMap;
+    appendHandleMapPage(handleMap, handleEntries.data());
+    appendHandleMapPage(handleMap, {});
+
+    DwgEntityReaderProbe reader(std::make_unique<dwgBuffer>(
+        const_cast<std::uint8_t*>(frame.data()), frame.size()));
+    reader.setVersionForTest(DRW::AC1014);
+    reader.addDictionaryWithDefaultObjectClass(classNumber);
+    reader.setClassStreamOrdinalForTest(classNumber, 1u);
+    dwgBuffer handleBuffer(handleMap.data(), handleMap.size());
+    REQUIRE(reader.readDwgHandles(
+        &handleBuffer, 0, handleMap.size(), frame.size()));
+
+    DwgDictionaryWithDefaultReceiptProbe interface;
+    dwgBuffer objectBuffer(
+        const_cast<std::uint8_t*>(frame.data()), frame.size());
+    REQUIRE(reader.readDwgEntities(interface, &objectBuffer));
+    REQUIRE(reader.objObjectMap.size() == 1u);
+    REQUIRE(reader.readDwgObjects(interface, &objectBuffer));
+
+    REQUIRE(interface.dictionaries.size() == 1u);
+    CHECK(interface.dictionaries.front().handle == objectHandle);
+    CHECK(interface.dictionaries.front().parentHandle == 0x0Cu);
+    CHECK(interface.dictionaries.front().cloning == 1);
+    CHECK(interface.dictionaries.front().m_defaultEntryHandle == 0x1202u);
+    REQUIRE(interface.typedReferences.size() == 1u);
+    CHECK(interface.typedReferences.front().m_targetHandle == 0x1202u);
+    REQUIRE(reader.m_dwgSourceFrameLedger.size() == 1u);
+    CHECK(reader.m_dwgSourceFrameLedger.front().m_disposition
+          == DRW_DwgFrameDisposition::Published);
+    CHECK(reader.m_dwgSourceFrameLedger.front().m_publicationCount == 1u);
 }
 
 TEST_CASE("DWG FIELDLIST callbacks are receipt-gated",

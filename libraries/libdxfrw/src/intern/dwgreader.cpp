@@ -1921,7 +1921,10 @@ bool dwgReader::validateDwgFramePublicationStaticArtifacts(
             DRW::NoHandle ||
         dictionaryWithDefaultMembership->m_entries.size() >
             DRW_Dictionary::kMaxEntries ||
-        publication.m_version < DRW::AC1015 || !dictionaryWithDefault) {
+        !dictionaryWithDefault) {
+      // (No lower version bound: unlike FIELD and FIELDLIST, which R2000
+      // introduced, DICTIONARYWDFLT is a R13/R14 object too, and its parser
+      // and encoder both handle those layouts.)
       return false;
     }
     for (const DRW_DwgDictionaryWithDefaultMembership::Entry &entry :
