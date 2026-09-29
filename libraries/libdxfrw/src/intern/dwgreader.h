@@ -962,7 +962,23 @@ protected:
                          DwgFrameClassification &classification);
   [[nodiscard]] bool isMappedInsertSequenceEnd(dwgBuffer *dbuf,
                                                const objHandle &object);
-  [[nodiscard]] bool preflightMappedPolylineOwnership(
+  //! What the pass over the POLYLINE ownership lists of `records` found (see
+  //! preflightMappedPolylineOwnership).
+  enum class DwgOwnershipPreflight : std::uint8_t {
+    //! Every POLYLINE declares children of its own.
+    Clean,
+    //! Some POLYLINEs declare a child that another POLYLINE declares as well.
+    //! They were rejected whole (staged nothing, quarantined every frame they
+    //! declare, counted one failure each) and no other frame was touched.
+    ContainedRejection,
+    //! Some POLYLINE is malformed by itself (a null or repeated child, no
+    //! SEQEND). It was rejected as above, but the section fails.
+    Structural
+  };
+  //! Reject, before any walk stages anything, the mapped POLYLINEs whose
+  //! ownership lists cannot all be honoured: two of them that declare the same
+  //! child (whichever block they are in), and any that is malformed by itself.
+  [[nodiscard]] DwgOwnershipPreflight preflightMappedPolylineOwnership(
       const std::vector<const DRW_Block_Record *> &records, dwgBuffer *dbuf);
   [[nodiscard]] static bool
   classificationsMatch(const DwgFrameClassification &expected,
@@ -1104,6 +1120,9 @@ protected:
   //! declares was consumed, so a child that names it later is not one.
   void noteCommittedOwner(std::uint32_t handle) noexcept;
   [[nodiscard]] bool isCommittedOwner(std::uint32_t handle) const noexcept;
+  //! `handle` is a child (or SEQEND) that a group other than the one asking
+  //! holds: consumed by a committed group, or claimed by a rejected one.
+  [[nodiscard]] bool isClaimedByAnotherGroup(std::uint32_t handle) const noexcept;
   struct ForeignChildOwners {
     //! (owner the child is staged under, child handle), in declaration order.
     std::vector<std::pair<std::uint32_t, std::uint32_t>> children;
@@ -1411,6 +1430,14 @@ protected:
   // staged, so a child rejected in the meantime must not reject it under the
   // aggregate's feet.
   std::uint32_t m_aggregatingGroup{DRW::NoHandle};
+  // Per BLOCK_RECORD handle: how many POLYLINEs of the block the ownership
+  // pass rejected. The pass runs over every block before any of them is
+  // walked, so a block's walk learns from here that it lost groups.
+  std::unordered_map<std::uint32_t, std::size_t> m_preflightRejectedGroups;
+  // The frames of those groups (parents and declared children): quarantined and
+  // removed from the object map, though the entity lists of their blocks still
+  // name them.
+  std::unordered_set<std::uint32_t> m_preflightRejectedHandles;
   // INSERTs and POLYLINEs that were committed in this read (see
   // noteCommittedOwner).
   std::unordered_set<std::uint32_t> m_committedCompoundOwners;

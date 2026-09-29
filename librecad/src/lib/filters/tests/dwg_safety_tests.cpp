@@ -27258,3 +27258,648 @@ TEST_CASE("DWG legacy entity sweep rejects an ATTRIB naming a committed INSERT",
     checkPublishedOnce(reader.m_dwgSourceFrameLedger,
                        {insert, attrib, seqEnd, lineHandle});
 }
+
+namespace {
+
+// One block of a modern file: its BLOCK_RECORD, BLOCK and ENDBLK handles, its
+// name, the owner of its entities (NoHandle for model/paper space) and the walk
+// order of its entity list.
+struct ModernBlockSpec {
+    std::uint32_t recordHandle;
+    std::uint32_t blockHandle;
+    std::uint32_t endBlockHandle;
+    UTF8STRING name;
+    std::uint32_t owner;
+    std::vector<std::uint32_t> walkOrder;
+};
+
+// Several modern (AC1018) BLOCK_RECORDs run through readDwgBlocks, which walks
+// each one through the journalled block scope when it can. The handles of all
+// the frames must be distinct; the frames may be given in any order.
+std::unique_ptr<JournalledBlockRun> runModernBlocks(
+    const std::vector<ModernBlockSpec>& blocks,
+    const std::vector<FramePair>& entityFrames) {
+    auto run = std::make_unique<JournalledBlockRun>();
+    std::vector<FramePair> frames = entityFrames;
+    for (const ModernBlockSpec& block : blocks) {
+        frames.push_back({block.recordHandle, {0u}});
+        frames.push_back({block.blockHandle,
+                          makeBlockFrame(block.blockHandle, block.owner, false,
+                                         block.name)});
+        frames.push_back({block.endBlockHandle,
+                          makeBlockFrame(block.endBlockHandle, block.owner,
+                                         true)});
+    }
+    std::sort(frames.begin(), frames.end(),
+              [](const FramePair& left, const FramePair& right) {
+                  return left.first < right.first;
+              });
+    const MappedFrameSet set = makeMappedFrameSet(frames);
+    REQUIRE(set.valid);
+    run->bytes = set.bytes;
+    run->handleMap = set.handleMap;
+
+    run->reader = std::make_unique<DwgEntityReaderProbe>(
+        std::make_unique<dwgBuffer>(run->bytes.data(), run->bytes.size()));
+    DwgEntityReaderProbe& reader = *run->reader;
+    reader.setVersionForTest(DRW::AC1018);
+    reader.setCodePageForTest("ANSI_1252");
+    dwgBuffer handleBuffer(run->handleMap.data(), run->handleMap.size());
+    REQUIRE(reader.readDwgHandles(
+        &handleBuffer, 0, run->handleMap.size(), run->bytes.size()));
+
+    for (const ModernBlockSpec& block : blocks) {
+        auto recordPublication = reader.publicationForTest(block.recordHandle);
+        recordPublication.m_version = DRW::AC1018;
+        recordPublication.m_encodedType = DRW::DwgBlockRecordObjectType;
+        recordPublication.m_resolvedType = DRW::DwgBlockRecordObjectType;
+        recordPublication.setCommonLinkEvidence(
+            DRW_DwgCommonLinkEvidence::ValidatedAbsent);
+        REQUIRE(reader.publishFrameForTest(run->interface, recordPublication));
+        reader.ObjectMap.erase(block.recordHandle);
+
+        auto* record = new DRW_Block_Record();
+        DwgBlockOwnershipTestAccess::setHandle(*record, block.recordHandle);
+        record->name = block.name;
+        DwgBlockOwnershipTestAccess::setHandles(
+            *record, block.blockHandle, block.endBlockHandle, block.walkOrder);
+        REQUIRE(reader.blockRecordmap.emplace(block.recordHandle, record)
+                    .second);
+    }
+
+    run->objectBuffer =
+        std::make_unique<dwgBuffer>(run->bytes.data(), run->bytes.size());
+    run->readBlocks = reader.readDwgBlocks(run->interface,
+                                           run->objectBuffer.get());
+    dwgBuffer sweepBuffer(run->bytes.data(), run->bytes.size());
+    run->readEntities = reader.readDwgEntities(run->sweepInterface, &sweepBuffer);
+    return run;
+}
+
+// Which child the two POLYLINEs of a conflict declare in common.
+enum class SharedChild { Vertex, SeqEnd };
+
+const char* sharedChildName(SharedChild child) {
+    return child == SharedChild::Vertex ? "VERTEX" : "SEQEND";
+}
+
+// Handles of the two conflicting POLYLINEs of the tests below and what they
+// declare: POLYLINE 1 declares its own VERTEX (and a shared one, or a shared
+// SEQEND), POLYLINE 2 the same, so that they share exactly one child.
+struct SharedChildGroups {
+    std::uint32_t polyline1, own1, seqEnd1;
+    std::uint32_t polyline2, own2, seqEnd2;
+    std::uint32_t shared;
+    SharedChild kind;
+
+    // The vertices and the SEQEND POLYLINE 1 / 2 declare.
+    std::vector<std::uint32_t> vertices1() const {
+        return kind == SharedChild::Vertex
+            ? std::vector<std::uint32_t>{own1, shared}
+            : std::vector<std::uint32_t>{own1};
+    }
+    std::vector<std::uint32_t> vertices2() const {
+        return kind == SharedChild::Vertex
+            ? std::vector<std::uint32_t>{own2, shared}
+            : std::vector<std::uint32_t>{own2};
+    }
+    std::uint32_t declaredSeqEnd1() const {
+        return kind == SharedChild::SeqEnd ? shared : seqEnd1;
+    }
+    std::uint32_t declaredSeqEnd2() const {
+        return kind == SharedChild::SeqEnd ? shared : seqEnd2;
+    }
+    // Every frame of the two groups.
+    std::vector<std::uint32_t> handles() const {
+        std::vector<std::uint32_t> all = {polyline1, own1, polyline2, own2,
+                                          shared};
+        if (kind == SharedChild::Vertex) {
+            all.push_back(seqEnd1);
+            all.push_back(seqEnd2);
+        }
+        return all;
+    }
+};
+
+// The frames of the two POLYLINEs and everything they declare, for `version`.
+// `sharedOwner` is what the shared child names as its owner.
+std::vector<FramePair> sharedChildFrames(
+    DRW::Version version, const SharedChildGroups& groups,
+    std::uint32_t blockOwner, std::uint32_t sharedOwner) {
+    std::vector<FramePair> frames = {
+        {groups.polyline1, makeMappedPolylineParentFrame(
+             version, groups.polyline1, blockOwner, groups.vertices1(),
+             groups.declaredSeqEnd1())},
+        {groups.own1, makeMappedVertexFrame(version, groups.own1,
+                                            groups.polyline1)},
+        {groups.polyline2, makeMappedPolylineParentFrame(
+             version, groups.polyline2, blockOwner, groups.vertices2(),
+             groups.declaredSeqEnd2())},
+        {groups.own2, makeMappedVertexFrame(version, groups.own2,
+                                            groups.polyline2)}};
+    if (groups.kind == SharedChild::Vertex) {
+        frames.push_back({groups.shared, makeMappedVertexFrame(
+                                             version, groups.shared,
+                                             sharedOwner)});
+        frames.push_back({groups.seqEnd1, makeMappedSeqEndFrame(
+                                              version, groups.seqEnd1,
+                                              groups.polyline1)});
+        frames.push_back({groups.seqEnd2, makeMappedSeqEndFrame(
+                                              version, groups.seqEnd2,
+                                              groups.polyline2)});
+    } else {
+        frames.push_back({groups.shared, makeMappedSeqEndFrame(
+                                             version, groups.shared,
+                                             sharedOwner)});
+    }
+    return frames;
+}
+
+} // namespace
+
+// Two POLYLINEs that declare the same child. Each declaration is consistent by
+// itself; the conflict is between them, and the child's own owner field does
+// not decide it (it may name either group, or neither). No group can win, so
+// both are rejected whole -- with every frame each of them declares, the shared
+// child included -- whichever comes first in a walk, and everything else in the
+// block is read on its own merits. The rejection is contained: the walk reports
+// it, the read goes on.
+TEST_CASE("DWG mapped POLYLINEs that declare the same child are both rejected",
+          "[dwg][safety][compound][mapped-owner][shared-child]") {
+    constexpr std::uint32_t recordHandle = 0xC00;
+    constexpr std::uint32_t otherHandle = 0xC0F; // no group
+    constexpr std::uint32_t polyline3 = 0xC10;
+    constexpr std::uint32_t vertex3 = 0xC11;
+    constexpr std::uint32_t seqEnd3 = 0xC12;
+    constexpr std::uint32_t lineHandle = 0xC13;
+    const DRW::Version version = GENERATE(
+        DRW::AC1018, DRW::AC1021, DRW::AC1024, DRW::AC1027);
+    const SharedChild kind = GENERATE(SharedChild::Vertex, SharedChild::SeqEnd);
+    const int sharedOwnerChoice = GENERATE(0, 1, 2);
+    const bool childrenFirst = GENERATE(false, true);
+    SharedChildGroups groups{0xC01, 0xC02, 0xC03, 0xC04, 0xC05, 0xC06, 0xC07,
+                             kind};
+    const std::uint32_t sharedOwner = sharedOwnerChoice == 0
+        ? groups.polyline1
+        : sharedOwnerChoice == 1 ? groups.polyline2 : otherHandle;
+    INFO("version " << static_cast<int>(version) << ", shared "
+         << sharedChildName(kind) << " names "
+         << (sharedOwnerChoice == 0 ? "the first POLYLINE"
+                                    : sharedOwnerChoice == 1
+                                          ? "the second POLYLINE" : "no group")
+         << ", " << (childrenFirst ? "children first" : "parents first"));
+    const bool withLine = version == DRW::AC1018;
+
+    std::vector<FramePair> frames =
+        sharedChildFrames(version, groups, recordHandle, sharedOwner);
+    frames.push_back({polyline3, makeMappedPolylineParentFrame(
+                                     version, polyline3, recordHandle,
+                                     {vertex3}, seqEnd3)});
+    frames.push_back({vertex3, makeMappedVertexFrame(version, vertex3,
+                                                     polyline3)});
+    frames.push_back({seqEnd3, makeMappedSeqEndFrame(version, seqEnd3,
+                                                     polyline3)});
+    std::vector<std::uint32_t> walk;
+    for (const std::uint32_t polyline : {groups.polyline1, groups.polyline2}) {
+        const bool first = polyline == groups.polyline1;
+        // The entity list names every frame once: the shared child is listed
+        // with the first group.
+        std::vector<std::uint32_t> children = {
+            first ? groups.own1 : groups.own2};
+        if (first)
+            children.push_back(groups.shared);
+        if (kind == SharedChild::Vertex)
+            children.push_back(first ? groups.seqEnd1 : groups.seqEnd2);
+        if (childrenFirst) {
+            walk.insert(walk.end(), children.cbegin(), children.cend());
+            walk.push_back(polyline);
+        } else {
+            walk.push_back(polyline);
+            walk.insert(walk.end(), children.cbegin(), children.cend());
+        }
+    }
+    walk.insert(walk.end(), {polyline3, vertex3, seqEnd3});
+    if (withLine) {
+        frames.push_back({lineHandle, makeLineFrame(lineHandle, recordHandle)});
+        walk.push_back(lineHandle);
+    }
+    for (const FramePair& frame : frames)
+        REQUIRE(!frame.second.empty());
+
+    const auto run = runMappedWalk(version, recordHandle, frames, walk);
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK_FALSE(run->walked);
+    CHECK(run->outcome
+          == DwgEntityReaderProbe::DwgBlockWalkOutcome::ContainedGroupRejection);
+    REQUIRE(run->interface.polylineHandles.size() == 1u);
+    CHECK(run->interface.polylineHandles.front() == polyline3);
+    CHECK(run->interface.lineCount == (withLine ? 1u : 0u));
+    CHECK(reader.m_entityParseFailures >= 2u);
+    CHECK(reader.m_invalidPolylineOwners.count(groups.polyline1) == 1u);
+    CHECK(reader.m_invalidPolylineOwners.count(groups.polyline2) == 1u);
+    CHECK(reader.stagedPendingPolylineCountForTest() == 0u);
+    CHECK(reader.stagedOrphanPolylineVertexCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+    checkGroupNeverPublished(reader.m_dwgSourceFrameLedger, groups.handles());
+    checkPublishedOnce(reader.m_dwgSourceFrameLedger,
+                       {polyline3, vertex3, seqEnd3});
+    if (withLine)
+        checkPublishedOnce(reader.m_dwgSourceFrameLedger, {lineHandle});
+    CHECK(run->swept);
+    CHECK(run->sweepInterface.polylineCount == 0u);
+    CHECK(reader.ObjectMap.empty());
+}
+
+// The conflict does not depend on where the two POLYLINEs are: in two blocks,
+// each block loses its group, keeps everything else, and the file reads.
+TEST_CASE("DWG modern blocks lose POLYLINEs that declare the same child",
+          "[dwg][safety][compound][journal][mapped-owner][shared-child]") {
+    constexpr std::uint32_t firstRecord = 0xC20;
+    constexpr std::uint32_t secondRecord = 0xC21;
+    constexpr std::uint32_t polyline3 = 0xC40;
+    constexpr std::uint32_t vertex3 = 0xC41;
+    constexpr std::uint32_t seqEnd3 = 0xC42;
+    constexpr std::uint32_t firstLine = 0xC43;
+    constexpr std::uint32_t secondLine = 0xC44;
+    const SharedChild kind = GENERATE(SharedChild::Vertex, SharedChild::SeqEnd);
+    const bool modelSpace = GENERATE(false, true);
+    INFO("shared " << sharedChildName(kind) << ", first block is "
+         << (modelSpace ? "model space" : "a named block"));
+    const DRW::Version version = DRW::AC1018;
+    SharedChildGroups groups{0xC30, 0xC31, 0xC32, 0xC33, 0xC34, 0xC35, 0xC36,
+                             kind};
+    const std::uint32_t firstOwner = modelSpace ? DRW::NoHandle : firstRecord;
+
+    // POLYLINE 1 and its own VERTEX live in the first block, POLYLINE 2 and its
+    // own in the second, with a group and a LINE of their own each.
+    std::vector<FramePair> frames =
+        sharedChildFrames(version, groups, firstOwner, groups.polyline1);
+    frames[2].second = makeMappedPolylineParentFrame(
+        version, groups.polyline2, secondRecord, groups.vertices2(),
+        groups.declaredSeqEnd2());
+    frames.push_back({polyline3, makeMappedPolylineParentFrame(
+                                     version, polyline3, secondRecord,
+                                     {vertex3}, seqEnd3)});
+    frames.push_back({vertex3, makeMappedVertexFrame(version, vertex3,
+                                                     polyline3)});
+    frames.push_back({seqEnd3, makeMappedSeqEndFrame(version, seqEnd3,
+                                                     polyline3)});
+    frames.push_back({firstLine, makeLineFrame(firstLine, firstOwner)});
+    frames.push_back({secondLine, makeLineFrame(secondLine, secondRecord)});
+
+    std::vector<std::uint32_t> firstWalk = {groups.polyline1, groups.own1};
+    std::vector<std::uint32_t> secondWalk = {groups.polyline2, groups.own2,
+                                             polyline3, vertex3, seqEnd3};
+    if (kind == SharedChild::Vertex) {
+        firstWalk.insert(firstWalk.end(), {groups.shared, groups.seqEnd1});
+        secondWalk.push_back(groups.seqEnd2);
+    } else {
+        firstWalk.push_back(groups.shared);
+    }
+    firstWalk.push_back(firstLine);
+    secondWalk.push_back(secondLine);
+
+    const auto run = runModernBlocks(
+        {{firstRecord, 0xC22, 0xC23,
+          modelSpace ? "*Model_Space" : "FIRST_BLOCK", firstOwner, firstWalk},
+         {secondRecord, 0xC24, 0xC25, "SECOND_BLOCK", secondRecord,
+          secondWalk}},
+        frames);
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK(run->readBlocks);
+    CHECK(run->readEntities);
+    CHECK(run->interface.blockCount == 2u);
+    CHECK(run->interface.lineCount == 2u);
+    // Neither block certifies reachability for an entity list it lost a group
+    // of; the second block, which delivered its own group, publishes it.
+    CHECK(run->interface.reachabilities.empty());
+    REQUIRE(run->interface.polylineHandles.size() == 1u);
+    CHECK(run->interface.polylineHandles.front() == polyline3);
+    CHECK(reader.m_entityParseFailures >= 2u);
+    CHECK(reader.ObjectMap.empty());
+    CHECK(reader.stagedPendingPolylineCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+    checkGroupNeverPublished(reader.m_dwgSourceFrameLedger, groups.handles());
+    checkPublishedOnce(reader.m_dwgSourceFrameLedger,
+                       {polyline3, vertex3, seqEnd3, firstLine, secondLine});
+}
+
+// One block through the journalled block scope: it cannot be journalled (a
+// group of it was rejected before the walk), so it takes the established
+// staged path, keeps everything else and certifies no reachability.
+TEST_CASE("DWG journalled block keeps its other entities when POLYLINEs share a "
+          "child",
+          "[dwg][safety][journal][mapped-owner][shared-child]") {
+    constexpr std::uint32_t recordHandle = 0xC50;
+    constexpr std::uint32_t blockHandle = 0xC51;
+    constexpr std::uint32_t endBlockHandle = 0xC6F;
+    constexpr std::uint32_t polyline3 = 0xC60;
+    constexpr std::uint32_t vertex3 = 0xC61;
+    constexpr std::uint32_t seqEnd3 = 0xC62;
+    constexpr std::uint32_t lineHandle = 0xC63;
+    const SharedChild kind = GENERATE(SharedChild::Vertex, SharedChild::SeqEnd);
+    const bool modelSpace = GENERATE(false, true);
+    INFO("shared " << sharedChildName(kind) << ", "
+         << (modelSpace ? "model space" : "named block"));
+    const DRW::Version version = DRW::AC1018;
+    const std::uint32_t blockOwner = modelSpace ? DRW::NoHandle : recordHandle;
+    SharedChildGroups groups{0xC53, 0xC54, 0xC55, 0xC56, 0xC57, 0xC58, 0xC59,
+                             kind};
+
+    std::vector<FramePair> frames =
+        sharedChildFrames(version, groups, blockOwner, groups.polyline1);
+    frames.push_back({polyline3, makeMappedPolylineParentFrame(
+                                     version, polyline3, blockOwner, {vertex3},
+                                     seqEnd3)});
+    frames.push_back({vertex3, makeMappedVertexFrame(version, vertex3,
+                                                     polyline3)});
+    frames.push_back({seqEnd3, makeMappedSeqEndFrame(version, seqEnd3,
+                                                     polyline3)});
+    frames.push_back({lineHandle, makeLineFrame(lineHandle, blockOwner)});
+    std::sort(frames.begin(), frames.end(),
+              [](const FramePair& left, const FramePair& right) {
+                  return left.first < right.first;
+              });
+
+    std::vector<std::uint32_t> walk = {groups.polyline1, groups.own1,
+                                       groups.polyline2, groups.own2};
+    if (kind == SharedChild::Vertex) {
+        walk.insert(walk.end(),
+                    {groups.shared, groups.seqEnd1, groups.seqEnd2});
+    } else {
+        walk.push_back(groups.shared);
+    }
+    walk.insert(walk.end(), {polyline3, vertex3, seqEnd3, lineHandle});
+
+    const auto run = runJournalledBlock(
+        recordHandle, blockHandle, endBlockHandle,
+        modelSpace ? "*Model_Space" : "JOURNALLED_SHARED_CHILD", blockOwner,
+        frames, walk);
+    const DwgEntityReaderProbe& reader = *run->reader;
+    const DwgGroupRejectionProbe& interface = run->interface;
+
+    CHECK(run->readBlocks);
+    CHECK(run->readEntities);
+    CHECK(interface.blockCount == 1u);
+    CHECK(interface.polylineHandles
+          == std::vector<std::uint32_t>{polyline3});
+    CHECK(interface.lineCount == 1u);
+    CHECK(interface.reachabilities.empty());
+    const std::vector<std::string> expectedCallbacks =
+        modelSpace
+            ? std::vector<std::string>{"block", "endBlock", "polyline", "line"}
+            : std::vector<std::string>{"block", "polyline", "line", "endBlock"};
+    CHECK(interface.callbacks == expectedCallbacks);
+    CHECK(reader.ObjectMap.empty());
+    checkGroupNeverPublished(reader.m_dwgSourceFrameLedger, groups.handles());
+    checkPublishedOnce(reader.m_dwgSourceFrameLedger,
+                       {polyline3, vertex3, seqEnd3, lineHandle});
+}
+
+// Two separate conflicts in one block: four POLYLINEs, all rejected, each
+// counted, and the rest of the block read.
+TEST_CASE("DWG mapped block rejects two pairs of POLYLINEs that share children",
+          "[dwg][safety][compound][mapped-owner][shared-child]") {
+    constexpr std::uint32_t recordHandle = 0xC70;
+    constexpr std::uint32_t lineHandle = 0xC7F;
+    const DRW::Version version = DRW::AC1018;
+    SharedChildGroups vertexPair{0xC71, 0xC72, 0xC73, 0xC74, 0xC75, 0xC76,
+                                 0xC77, SharedChild::Vertex};
+    SharedChildGroups seqEndPair{0xC81, 0xC82, 0xC83, 0xC84, 0xC85, 0xC86,
+                                 0xC87, SharedChild::SeqEnd};
+
+    std::vector<FramePair> frames = sharedChildFrames(
+        version, vertexPair, recordHandle, vertexPair.polyline1);
+    const std::vector<FramePair> others = sharedChildFrames(
+        version, seqEndPair, recordHandle, seqEndPair.polyline2);
+    frames.insert(frames.end(), others.cbegin(), others.cend());
+    frames.push_back({lineHandle, makeLineFrame(lineHandle, recordHandle)});
+    std::vector<std::uint32_t> walk;
+    for (const std::uint32_t handle : vertexPair.handles())
+        walk.push_back(handle);
+    for (const std::uint32_t handle : seqEndPair.handles())
+        walk.push_back(handle);
+    walk.push_back(lineHandle);
+
+    const auto run = runMappedWalk(version, recordHandle, frames, walk);
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK_FALSE(run->walked);
+    CHECK(run->outcome
+          == DwgEntityReaderProbe::DwgBlockWalkOutcome::ContainedGroupRejection);
+    CHECK(run->interface.polylineCount == 0u);
+    CHECK(run->interface.lineCount == 1u);
+    CHECK(reader.m_entityParseFailures >= 4u);
+    std::vector<std::uint32_t> rejected = vertexPair.handles();
+    const std::vector<std::uint32_t> moreRejected = seqEndPair.handles();
+    rejected.insert(rejected.end(), moreRejected.cbegin(), moreRejected.cend());
+    checkGroupNeverPublished(reader.m_dwgSourceFrameLedger, rejected);
+    checkPublishedOnce(reader.m_dwgSourceFrameLedger, {lineHandle});
+    CHECK(run->swept);
+    CHECK(reader.ObjectMap.empty());
+}
+
+// The containment is for a conflict between declarations and nothing else: a
+// POLYLINE that is malformed by itself -- here, one that lists a VERTEX twice --
+// is still rejected as a structural failure, beside the conflicting pair.
+TEST_CASE("DWG mapped POLYLINE malformed by itself stays a structural failure "
+          "beside a shared child",
+          "[dwg][safety][compound][mapped-owner][shared-child]") {
+    constexpr std::uint32_t recordHandle = 0xC90;
+    constexpr std::uint32_t duplicating = 0xC98;
+    constexpr std::uint32_t duplicated = 0xC99;
+    constexpr std::uint32_t duplicatingSeqEnd = 0xC9A;
+    const DRW::Version version = DRW::AC1018;
+    const bool withConflict = GENERATE(false, true);
+    INFO((withConflict ? "beside a conflicting pair" : "alone"));
+    SharedChildGroups groups{0xC91, 0xC92, 0xC93, 0xC94, 0xC95, 0xC96, 0xC97,
+                             SharedChild::Vertex};
+
+    std::vector<FramePair> frames;
+    std::vector<std::uint32_t> walk;
+    if (withConflict) {
+        frames = sharedChildFrames(version, groups, recordHandle,
+                                   groups.polyline1);
+        walk = groups.handles();
+    }
+    frames.push_back({duplicating, makeMappedPolylineParentFrame(
+                                       version, duplicating, recordHandle,
+                                       {duplicated, duplicated},
+                                       duplicatingSeqEnd)});
+    frames.push_back({duplicated, makeMappedVertexFrame(version, duplicated,
+                                                        duplicating)});
+    frames.push_back({duplicatingSeqEnd, makeMappedSeqEndFrame(
+                                             version, duplicatingSeqEnd,
+                                             duplicating)});
+    walk.insert(walk.end(), {duplicating, duplicated, duplicatingSeqEnd});
+    for (const FramePair& frame : frames)
+        REQUIRE(!frame.second.empty());
+
+    const auto run = runMappedWalk(version, recordHandle, frames, walk);
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK_FALSE(run->walked);
+    CHECK(run->outcome == DwgEntityReaderProbe::DwgBlockWalkOutcome::Structural);
+    CHECK(run->interface.polylineCount == 0u);
+    CHECK(reader.m_invalidPolylineOwners.count(duplicating) == 1u);
+    std::vector<std::uint32_t> rejected = {duplicating, duplicated,
+                                           duplicatingSeqEnd};
+    if (withConflict) {
+        const std::vector<std::uint32_t> pair = groups.handles();
+        rejected.insert(rejected.end(), pair.cbegin(), pair.cend());
+    }
+    checkGroupNeverPublished(reader.m_dwgSourceFrameLedger, rejected);
+    CHECK(reader.ObjectMap.empty());
+}
+
+// Two INSERTs that declare the same ATTRIB. There is no pass over INSERT
+// ownership lists, so which group meets the child first matters: the group that
+// finds it consumed by a group that was committed, or held by a group that was
+// rejected, is rejected as a contained conflict, and nothing is published twice.
+TEST_CASE("DWG mapped INSERTs that declare the same ATTRIB are rejected without "
+          "failing the walk",
+          "[dwg][safety][compound][mapped-owner][shared-child]") {
+    constexpr std::uint32_t recordHandle = 0xCA0;
+    constexpr std::uint32_t insertA = 0xCA1;
+    constexpr std::uint32_t sharedAttrib = 0xCA2;
+    constexpr std::uint32_t seqEndA = 0xCA3;
+    constexpr std::uint32_t insertB = 0xCA4;
+    constexpr std::uint32_t seqEndB = 0xCA5;
+    constexpr std::uint32_t lineHandle = 0xCA6;
+    const bool aFirst = GENERATE(false, true);
+    const bool childrenFirst = GENERATE(false, true);
+    INFO((aFirst ? "the group the ATTRIB names comes first"
+                 : "the other group comes first")
+         << ", " << (childrenFirst ? "children first" : "parents first"));
+
+    // The ATTRIB names A; both declare it.
+    std::vector<std::uint32_t> walk;
+    const auto appendGroup = [&](std::uint32_t parent,
+                                 std::vector<std::uint32_t> children) {
+        if (childrenFirst) {
+            walk.insert(walk.end(), children.cbegin(), children.cend());
+            walk.push_back(parent);
+        } else {
+            walk.push_back(parent);
+            walk.insert(walk.end(), children.cbegin(), children.cend());
+        }
+    };
+    if (aFirst) {
+        appendGroup(insertA, {sharedAttrib, seqEndA});
+        appendGroup(insertB, {seqEndB});
+    } else {
+        appendGroup(insertB, {seqEndB});
+        appendGroup(insertA, {sharedAttrib, seqEndA});
+    }
+    walk.push_back(lineHandle);
+
+    const auto run = runMappedWalk(
+        DRW::AC1018, recordHandle,
+        {{insertA, makeInsertWithAttributesFrame(
+              insertA, recordHandle, {sharedAttrib}, seqEndA)},
+         {sharedAttrib, makeAttribFrame(sharedAttrib, insertA)},
+         {seqEndA, makeSeqEndFrame(seqEndA, insertA)},
+         {insertB, makeInsertWithAttributesFrame(
+              insertB, recordHandle, {sharedAttrib}, seqEndB)},
+         {seqEndB, makeSeqEndFrame(seqEndB, insertB)},
+         {lineHandle, makeLineFrame(lineHandle, recordHandle)}},
+        walk);
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK_FALSE(run->walked);
+    CHECK(run->outcome
+          == DwgEntityReaderProbe::DwgBlockWalkOutcome::ContainedGroupRejection);
+    CHECK(run->interface.lineCount == 1u);
+    CHECK(reader.m_entityParseFailures >= 1u);
+    CHECK(reader.stagedPendingInsertCountForTest() == 0u);
+    CHECK(reader.stagedOrphanAttribCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+    // B never publishes: its ATTRIB is A's. A publishes when it meets the
+    // ATTRIB first, exactly once.
+    checkGroupNeverPublished(reader.m_dwgSourceFrameLedger,
+                             {insertB, seqEndB});
+    if (aFirst) {
+        REQUIRE(run->interface.inserts.size() == 1u);
+        CHECK(run->interface.inserts.front().handle == insertA);
+        CHECK(run->interface.inserts.front().attlist.size() == 1u);
+        checkPublishedOnce(reader.m_dwgSourceFrameLedger,
+                           {insertA, sharedAttrib, seqEndA, lineHandle});
+    } else {
+        CHECK(run->interface.inserts.empty());
+        checkGroupNeverPublished(reader.m_dwgSourceFrameLedger,
+                                 {insertA, sharedAttrib, seqEndA});
+        checkPublishedOnce(reader.m_dwgSourceFrameLedger, {lineHandle});
+    }
+    CHECK(run->swept);
+    CHECK(reader.ObjectMap.empty());
+}
+
+namespace {
+
+// A legacy (R13-R2000) POLYLINE frame that declares `first` and `last` as the
+// ends of its vertex chain and `seqEnd` as its SEQEND.
+std::vector<std::uint8_t> makeLegacyPolylineParentFrame(
+    std::uint32_t handle, std::uint32_t first, std::uint32_t last,
+    std::uint32_t seqEnd) {
+    auto firstVertex = std::make_shared<DwgVertexWriterProbe>();
+    firstVertex->handle = first;
+    firstVertex->setDwgSubtype(DRW_Vertex::DwgSubtype::Vertex2D);
+    auto lastVertex = std::make_shared<DwgVertexWriterProbe>();
+    lastVertex->handle = last;
+    lastVertex->setDwgSubtype(DRW_Vertex::DwgSubtype::Vertex2D);
+    DwgPolylineWriterProbe parent;
+    parent.handle = handle;
+    parent.appendVertex(firstVertex);
+    parent.appendVertex(lastVertex);
+    parent.setDwgSeqEndHandle(seqEnd);
+    dwgBufferW body;
+    if (!parent.encodeDwg(DRW::AC1015, &body, 0, nullptr, nullptr))
+        return {};
+    return makeEntityFrame(body);
+}
+
+} // namespace
+
+// The legacy chains: the second group's chain runs into a link that the first
+// group consumed. That group is declared by both and cannot be completed; it is
+// rejected as a contained conflict, the first group stays published, and the
+// block's chain goes on after the rejected group.
+TEST_CASE("DWG legacy POLYLINEs whose chains share a link reject the second "
+          "group",
+          "[dwg][safety][compound][shared-child]") {
+    // First group: POLYLINE 0x10, VERTICES 0x11 and 0x12, SEQEND 0x13.
+    // Second group: POLYLINE 0x14 declaring 0x12 (the first group's) and its
+    // own VERTEX 0x15 as the ends of its chain, SEQEND 0x16.
+    constexpr std::uint32_t lineHandle = 0x17;
+    std::vector<FramePair> frames = makeLegacyPolylineGroupFrames(
+        0x10, 0x10, 0x10, 0x10);
+    frames.push_back({0x14, makeLegacyPolylineParentFrame(0x14, 0x12, 0x15,
+                                                          0x16)});
+    frames.push_back({0x15, makeLegacyVertexFrame(0x15, 0x14, 0)});
+    frames.push_back({0x16, makeSeqEndFrame(0x16, 0x14)});
+    frames.push_back({lineHandle, makeLegacyLineFrame(lineHandle)});
+
+    const auto run = runLegacyWalk(frames, 0x10, lineHandle);
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK_FALSE(run->walked);
+    CHECK(run->outcome
+          == DwgEntityReaderProbe::DwgBlockWalkOutcome::ContainedGroupRejection);
+    REQUIRE(run->interface.polylineHandles.size() == 1u);
+    CHECK(run->interface.polylineHandles.front() == 0x10u);
+    CHECK(run->interface.lineCount == 1u);
+    CHECK(reader.m_entityParseFailures >= 1u);
+    CHECK(reader.stagedPendingPolylineCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+    checkPublishedOnce(reader.m_dwgSourceFrameLedger,
+                       {0x10, 0x11, 0x12, 0x13, lineHandle});
+    // The second group is not published; what is left of its chain goes down
+    // with it in the sweep, without failing the phase.
+    checkGroupNeverPublished(reader.m_dwgSourceFrameLedger,
+                             {0x14, 0x15, 0x16});
+    CHECK(run->swept);
+    CHECK(run->sweepInterface.polylineCount == 0u);
+    CHECK(reader.ObjectMap.empty());
+}
