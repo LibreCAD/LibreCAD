@@ -1510,6 +1510,14 @@ protected:
     return m_dwgWriteKnownHandles.count(sourceHandle) != 0;
   }
 
+  //! True when the source drawing carries some record, object, or entity
+  //! under this handle, whether or not this export can emit it. Unlike the
+  //! known-handle set (emittable targets only) this tells a reference to a
+  //! missing object from a reference to one that exists but is not written.
+  bool hasDwgWriteSourceKind(std::uint32_t sourceHandle) const {
+    return m_dwgWriteSourceKinds.count(sourceHandle) != 0;
+  }
+
   bool hasDwgWriteHandleRemap(std::uint32_t sourceHandle) const {
     return m_dwgWriteHandleRemap.count(sourceHandle) != 0;
   }
@@ -2747,11 +2755,22 @@ private:
               LC_DwgAdvancedMetadata::DwgFieldListSourceAuthorizationStatus::
                   NotDwgSource;
       DRW_FieldList payload;
+      //! One flag per payload member: true when the member names no object at
+      //! all (see prepareDwgFieldWritePlan) and is left out of the emitted
+      //! FIELDLIST.  The payload itself stays the source-faithful record so
+      //! the frozen-plan comparison against the metadata keeps working.
+      std::vector<bool> memberDropped;
+      //! For each kept, non-null member in payload order, the index of its
+      //! FIELD candidate.
       std::vector<std::size_t> fieldCandidateIndexes;
       bool classAdmitted = false;
       bool objectEmitted = false;
       std::uint32_t outputHandle = 0;
       DRW::DwgObjectFrameReceipt frame;
+
+      bool isMemberDropped(std::size_t ordinal) const {
+        return ordinal < memberDropped.size() && memberDropped[ordinal];
+      }
     };
 
     DRW::Version version = DRW::UNKNOWNV;

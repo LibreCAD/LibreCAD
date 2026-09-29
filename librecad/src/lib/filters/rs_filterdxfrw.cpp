@@ -15676,14 +15676,45 @@ bool RS_FilterDXFRW::prepareDwgFieldWritePlan() {
         plan.valid = false;
         break;
       }
+      // Each member is a soft pointer to a FIELD. A member that resolves to
+      // an emitted FIELD candidate is written as such. A member that names
+      // nothing at all is dropped with a warning, exactly as every other
+      // dangling soft pointer of this writer is (dictionary entries, XRECORD
+      // handle values, evaluation-graph expressions, view references): the
+      // emitted list never carries a pointer that cannot be resolved, and a
+      // pointer to an object that is not there cannot be honoured anyway. A
+      // member that names something that does exist -- a FIELD record this
+      // export cannot write, another kind of object, an ambiguous or
+      // suppressed identity -- is different: leaving it out would silently
+      // lose part of the document, and pointing it at a non-FIELD would
+      // write a misleading list, so the export is refused as before.
+      const auto isDanglingMember = [this](std::uint32_t handle) {
+        return resolveDwgWriteObjectHandle(handle) ==
+                   DwgWriteReferenceStatus::Missing &&
+               !hasDwgWriteSourceKind(handle);
+      };
+      candidate.memberDropped.assign(candidate.payload.m_fieldHandles.size(),
+                                     false);
       candidate.fieldCandidateIndexes.reserve(candidate.payload.m_fieldHandles.size());
-      for (std::uint32_t fieldHandle : candidate.payload.m_fieldHandles) {
+      for (std::size_t ordinal = 0;
+           ordinal < candidate.payload.m_fieldHandles.size(); ++ordinal) {
+        const std::uint32_t fieldHandle =
+            candidate.payload.m_fieldHandles[ordinal];
         if (fieldHandle == DRW::NoHandle)
           continue;
         const auto field = plan.fieldCandidateIndexes.find(fieldHandle);
         if (field == plan.fieldCandidateIndexes.cend()) {
-          plan.valid = false;
-          break;
+          if (!isDanglingMember(fieldHandle)) {
+            plan.valid = false;
+            break;
+          }
+          RS_DEBUG->print(
+              RS_Debug::D_WARNING,
+              "RS_FilterDXFRW: dropping dangling DWG FIELDLIST field target "
+              "0x%X",
+              fieldHandle);
+          candidate.memberDropped[ordinal] = true;
+          continue;
         }
         candidate.fieldCandidateIndexes.push_back(field->second);
       }
@@ -15774,9 +15805,15 @@ bool RS_FilterDXFRW::validateDwgFieldWritePlan(
         indexIt->second != candidateIndex) {
       return false;
     }
+    if (candidate.memberDropped.size() !=
+        candidate.payload.m_fieldHandles.size()) {
+      return false;
+    }
     std::size_t referenceIndex = 0;
-    for (std::uint32_t fieldHandle : candidate.payload.m_fieldHandles) {
-      if (fieldHandle == DRW::NoHandle)
+    for (std::size_t ordinal = 0;
+         ordinal < candidate.payload.m_fieldHandles.size(); ++ordinal) {
+      const std::uint32_t fieldHandle = candidate.payload.m_fieldHandles[ordinal];
+      if (fieldHandle == DRW::NoHandle || candidate.isMemberDropped(ordinal))
         continue;
       if (referenceIndex >= candidate.fieldCandidateIndexes.size() ||
           candidate.fieldCandidateIndexes[referenceIndex] >=
@@ -15970,7 +16007,7 @@ bool RS_FilterDXFRW::validateDwgFieldWriteReceipts() const {
     for (std::size_t ordinal = 0;
          ordinal < candidate.payload.m_fieldHandles.size(); ++ordinal) {
       const std::uint32_t sourceHandle = candidate.payload.m_fieldHandles[ordinal];
-      if (sourceHandle == DRW::NoHandle)
+      if (sourceHandle == DRW::NoHandle || candidate.isMemberDropped(ordinal))
         continue;
       if (referenceIndex >= candidate.fieldCandidateIndexes.size())
         return false;
@@ -25219,6 +25256,9 @@ void RS_FilterDXFRW::writeObjects() {
             fieldHandles.push_back(DRW::NoHandle);
             continue;
           }
+          // Pruned when the plan was frozen: the member names no object.
+          if (candidate.isMemberDropped(ordinal))
+            continue;
           if (fieldReferenceIndex >= candidate.fieldCandidateIndexes.size()) {
             fieldsValid = false;
             break;

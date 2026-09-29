@@ -14976,6 +14976,11 @@ TEST_CASE("RS_FilterDXFRW does not replay dictionary count diagnostics",
   std::remove(path.c_str());
 }
 
+// A soft pointer that names no object is dropped, not written and not a
+// reason to refuse the export. This holds for every typed family here,
+// FIELDLIST members included; the FIELDLIST cases that are still refused (a
+// member that names an existing object) are covered by the FIELDLIST tests
+// further down.
 TEST_CASE("RS_FilterDXFRW removes dangling typed object references",
           "[dwg-write][objects][filter][raw-replay]") {
   ensureQtSettings();
@@ -23075,24 +23080,161 @@ TEST_CASE("RS_FilterDXFRW rejects duplicate FIELD handles for DWG",
   std::remove(path.c_str());
 }
 
-TEST_CASE("RS_FilterDXFRW rejects unresolved FIELDLIST members for DWG",
+// FIELDLIST members are soft pointers to FIELD objects. The export takes
+// three different positions on a member that is not a FIELD it writes:
+//  - it names no object at all (dangling): the member is dropped with a
+//    warning, as for every other dangling soft pointer of the DWG writer
+//    (see "removes dangling typed object references"). The emitted list never
+//    carries a pointer that cannot be resolved, and nothing of the document is
+//    lost, because there is no object behind the pointer;
+//  - it names an object that exists but is not a FIELD this export writes:
+//    the export is refused, because leaving the member out would silently
+//    lose part of the document and keeping it would point the list at
+//    something that is not a FIELD.
+// This test used to require the first case to be refused too, which
+// contradicted "removes dangling typed object references" for the same shape;
+// the pair is now consistent, and the second case keeps its own test below.
+TEST_CASE("RS_FilterDXFRW drops dangling FIELDLIST members for DWG",
           "[dwg-write][fieldlist][filter]") {
   ensureQtSettings();
 
   RS_Graphic source;
   source.initForNewDocument();
+
+  DRW_Field field;
+  field.handle = 0xB7Cu;
+  field.parentHandle = DRW::DwgNamedObjectsDictionaryHandle;
+  field.m_evaluatorId = "AcDbBlockEval";
+  field.m_fieldCode = "%<\\AcDbBlock>%";
+  field.m_value.m_dataType = 0;
+  field.m_value.m_value.addInt(91, 1);
+  field.m_value.m_unitType = 12;
+  source.dwgAdvancedMetadata().addField(field);
+
   DRW_FieldList fieldList;
   fieldList.handle = 0xB7Du;
   fieldList.parentHandle = DRW::DwgNamedObjectsDictionaryHandle;
-  fieldList.m_fieldHandles = {DRW::NoHandle, 0xB7Eu};
+  // A live FIELD, an explicit null slot, and a handle that names nothing.
+  fieldList.m_fieldHandles = {field.handle, DRW::NoHandle, 0xB7Eu};
   source.dwgAdvancedMetadata().addFieldList(fieldList);
 
-  const std::string path = tempPath("filter_fieldlist_missing_field.dwg");
+  const std::string path = tempPath("filter_fieldlist_dangling_member.dwg");
+  std::remove(path.c_str());
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(source, QString::fromStdString(path),
+                              RS2::FormatDWG2013));
+  }
+
+  RS_Graphic imported;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(imported, QString::fromStdString(path),
+                              RS2::FormatDWG));
+  }
+  const auto &fieldLists = imported.dwgAdvancedMetadata().fieldLists();
+  const auto it = std::find_if(
+      fieldLists.begin(), fieldLists.end(),
+      [handle = fieldList.handle](
+          const LC_DwgAdvancedMetadata::FieldListRecord &record) {
+        return record.handle == handle;
+      });
+  REQUIRE(it != fieldLists.end());
+  // The dangling member is gone; the live FIELD and the null slot are kept,
+  // in order.
+  CHECK(it->fieldHandles ==
+        std::vector<std::uint32_t>{field.handle, DRW::NoHandle});
+  std::remove(path.c_str());
+}
+
+TEST_CASE("RS_FilterDXFRW rejects FIELDLIST members that name another object "
+          "for DWG",
+          "[dwg-write][fieldlist][filter]") {
+  ensureQtSettings();
+
+  RS_Graphic source;
+  source.initForNewDocument();
+
+  // An object that exists in the drawing but is not a FIELD.
+  DRW_XRecord xrecord;
+  xrecord.handle = 0xB7Eu;
+  xrecord.parentHandle = DRW::DwgNamedObjectsDictionaryHandle;
+  source.dwgAdvancedMetadata().addXRecord(xrecord);
+
+  DRW_FieldList fieldList;
+  fieldList.handle = 0xB7Du;
+  fieldList.parentHandle = DRW::DwgNamedObjectsDictionaryHandle;
+  fieldList.m_fieldHandles = {DRW::NoHandle, xrecord.handle};
+  source.dwgAdvancedMetadata().addFieldList(fieldList);
+
+  const std::string path = tempPath("filter_fieldlist_foreign_member.dwg");
   std::remove(path.c_str());
   RS_FilterDXFRW filter;
   CHECK_FALSE(filter.fileExport(source, QString::fromStdString(path),
                                 RS2::FormatDWG2013));
+  CHECK_FALSE(std::filesystem::exists(path));
   std::remove(path.c_str());
+}
+
+TEST_CASE("RS_FilterDXFRW rejects FIELDLIST members naming an unwritable FIELD "
+          "for DWG",
+          "[dwg-write][fieldlist][filter]") {
+  ensureQtSettings();
+
+  const auto populate = [](RS_Graphic &source, bool listReferencesField) {
+    source.initForNewDocument();
+
+    DRW_Field field;
+    field.handle = 0xB7Cu;
+    field.parentHandle = DRW::DwgNamedObjectsDictionaryHandle;
+    field.m_evaluatorId = "AcDbBlockEval";
+    field.m_fieldCode = "%<\\AcDbBlock>%";
+    field.m_value.m_dataType = 0;
+    field.m_value.m_value.addInt(91, 1);
+    field.m_value.m_unitType = 12;
+    source.dwgAdvancedMetadata().addField(field);
+    // An edited FIELD is no longer replayable, so the export does not write
+    // it (and reports the record as diagnostic-only).
+    const_cast<std::vector<LC_DwgAdvancedMetadata::FieldRecord> &>(
+        source.dwgAdvancedMetadata().fields())
+        .front()
+        .replayState = LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated;
+
+    DRW_FieldList fieldList;
+    fieldList.handle = 0xB7Du;
+    fieldList.parentHandle = DRW::DwgNamedObjectsDictionaryHandle;
+    if (listReferencesField)
+      fieldList.m_fieldHandles = {field.handle};
+    source.dwgAdvancedMetadata().addFieldList(fieldList);
+  };
+
+  // The FIELD is there, so a list that points at it cannot simply lose the
+  // member: the export is refused.
+  {
+    RS_Graphic source;
+    populate(source, true);
+    const std::string path = tempPath("filter_fieldlist_unwritable_field.dwg");
+    std::remove(path.c_str());
+    RS_FilterDXFRW filter;
+    CHECK_FALSE(filter.fileExport(source, QString::fromStdString(path),
+                                  RS2::FormatDWG2013));
+    CHECK_FALSE(std::filesystem::exists(path));
+    std::remove(path.c_str());
+  }
+
+  // Control: the same drawing without the pointer exports, so the refusal
+  // above is about the member and not about the unwritable FIELD itself.
+  {
+    RS_Graphic source;
+    populate(source, false);
+    const std::string path =
+        tempPath("filter_fieldlist_unwritable_field_control.dwg");
+    std::remove(path.c_str());
+    RS_FilterDXFRW filter;
+    CHECK(filter.fileExport(source, QString::fromStdString(path),
+                            RS2::FormatDWG2013));
+    std::remove(path.c_str());
+  }
 }
 
 TEST_CASE("RS_FilterDXFRW rejects stale FIELDLIST DWG receipts",
