@@ -2013,8 +2013,11 @@ TEST_CASE("DWG Extruder2: erased dimension blocks are skipped, the rest reads",
   CHECK(count("DIM_DIAMETRIC") == 6);
   CHECK(count("DIM_ALIGNED") == 4);
 
-  // Every leftover is counted and reported; nothing else is.
+  // Every leftover is counted and reported; nothing else is. The import
+  // filter tells the user about the erased records from these two counts.
   CHECK(reader.getEntityParseFailures() == 474u);
+  CHECK(reader.getDanglingBlockRecords() == 1u);
+  CHECK(reader.getOrphanedEntities() == 474u);
   std::size_t danglingControlEntries = 0;
   std::size_t orphans = 0;
   std::set<std::uint64_t> erasedOwners;

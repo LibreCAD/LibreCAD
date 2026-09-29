@@ -205,10 +205,17 @@ public:
   void reset() {
     DRW_TableEntry::reset();
     handlesList.clear();
+    phantomHandles.clear();
   }
   bool parseDwg(DRW::Version version, dwgBuffer *buf,
                 std::uint32_t bs = 0) override;
+  // Every non-null record the control lists, in file order.
   std::list<std::uint32_t> handlesList;
+  // The non-null handles of the entries the table always lists besides its
+  // counted ones (they are also in handlesList): the model and paper space
+  // records of the block table, the BYLAYER and BYBLOCK linetypes of the
+  // linetype table. Empty for the other controls.
+  std::list<std::uint32_t> phantomHandles;
 };
 
 class dwgReader {
@@ -608,13 +615,22 @@ protected:
       bool hasValues = false) noexcept;
   void recordObjectFrameFailure(const objHandle &object,
                                 DwgIntegrityAddressSpace offsetSpace) noexcept;
-  // Warning-level observations of an erased record's leftovers, see
-  // DwgIntegrityCheckKind::TableControlDanglingHandle and
-  // DwgIntegrityCheckKind::EntityOwnerRecordMissing.
+  // Observations of an erased block record and of what it left behind, see
+  // DwgIntegrityCheckKind::TableControlDanglingHandle,
+  // DwgIntegrityCheckKind::EntityOwnerRecordMissing (both warnings) and
+  // DwgIntegrityCheckKind::EntityBlockRecordErased (an error).
   void recordDanglingControlHandle(std::uint32_t controlHandle,
                                    std::uint32_t recordHandle) noexcept;
   void recordOrphanedEntity(const objHandle &object, std::uint32_t ownerHandle,
                             DwgIntegrityAddressSpace offsetSpace) noexcept;
+  void recordErasedBlockReference(const objHandle &object,
+                                  std::uint32_t blockRecordHandle,
+                                  DwgIntegrityAddressSpace offsetSpace) noexcept;
+  // True when `handle` is a block record the block table lists but the object
+  // map does not hold (see m_danglingBlockRecords).
+  [[nodiscard]] bool isDanglingBlockRecord(std::uint32_t handle) const {
+    return m_danglingBlockRecords.find(handle) != m_danglingBlockRecords.end();
+  }
   void
   recordEntityFailure(const objHandle &object, std::int16_t type,
                       DwgEntityFailurePhase phase,
@@ -1318,6 +1334,15 @@ protected:
   std::uint64_t m_orphanedEntityRejections{0};
   // Result of the last entity sweep, see entitySweepFailureContained().
   bool m_entitySweepContained{false};
+  // BLOCK_RECORD handles the block table (BLOCK_CONTROL) lists although the
+  // object map holds no object for them: records the producer erased without
+  // taking them out of the list. Only the block table tolerates such an entry
+  // (see readDwgTables); every other table fails the phase for it. The set is
+  // published only by a table phase that succeeded, and its size is the count
+  // dwgRW::getDanglingBlockRecords() reports. An INSERT that places one of
+  // these records is not published (see the INSERT case of the entity reader):
+  // its block is gone, so the drawing is inconsistent, not merely incomplete.
+  std::unordered_set<std::uint32_t> m_danglingBlockRecords;
 
   struct DwgEntityFramePublicationCapture {
     DRW_DwgFramePublication publication;

@@ -35,6 +35,7 @@
 #include <limits>
 #include <map>
 #include <memory>
+#include <set>
 #include <string>
 #include <unordered_map>
 #include <utility>
@@ -519,10 +520,30 @@ public:
     }
 
     // A BLOCK_RECORD that lists no entity.
-    void addBlockRecordForTest(std::uint32_t handle) {
+    void addBlockRecordForTest(std::uint32_t handle,
+                               const std::string& name = std::string()) {
         auto record = std::make_unique<DRW_Block_Record>();
         record->handle = handle;
+        record->name = name;
         blockRecordmap.emplace(handle, record.release());
+    }
+
+    // A block record the block table lists but the file does not hold.
+    void addDanglingBlockRecordForTest(std::uint32_t handle) {
+        m_danglingBlockRecords.insert(handle);
+    }
+
+    std::vector<DwgIntegrityDiagnostic> erasedBlockReferenceDiagnosticsForTest()
+        const {
+        std::vector<DwgIntegrityDiagnostic> result;
+        std::copy_if(
+            m_integrityDiagnostics.cbegin(), m_integrityDiagnostics.cend(),
+            std::back_inserter(result),
+            [](const DwgIntegrityDiagnostic& diagnostic) {
+                return diagnostic.kind
+                    == DwgIntegrityCheckKind::EntityBlockRecordErased;
+            });
+        return result;
     }
 
     std::size_t entityParseFailuresForTest() const {
@@ -1084,7 +1105,9 @@ public:
             || type == DRW::DwgDimStyleControlObjectType
             || type == DRW::DwgVPortControlObjectType
             || type == DRW::DwgBlockControlObjectType
-            || type == DRW::DwgAppIdControlObjectType;
+            || type == DRW::DwgAppIdControlObjectType
+            || type == DRW::DwgViewControlObjectType
+            || type == DRW::DwgUcsControlObjectType;
     }
 
     void seedTableStateForTest() {
@@ -1108,6 +1131,26 @@ public:
     std::size_t layerCountForTest() const { return layermap.size(); }
     std::size_t blockRecordCountForTest() const {
         return blockRecordmap.size();
+    }
+    bool hasBlockRecordForTest(std::uint32_t handle) const {
+        return blockRecordmap.find(handle) != blockRecordmap.end();
+    }
+    bool findBlockRecordForTest(const std::string& name,
+                                std::uint32_t& handle) const {
+        for (const auto& item : blockRecordmap) {
+            if (item.second != nullptr && item.second->name == name) {
+                handle = item.first;
+                return true;
+            }
+        }
+        return false;
+    }
+    // The erased block records the last successful table phase skipped.
+    std::size_t danglingBlockRecordCountForTest() const {
+        return m_danglingBlockRecords.size();
+    }
+    bool hasDanglingBlockRecordForTest(std::uint32_t handle) const {
+        return isDanglingBlockRecord(handle);
     }
     bool hasLinetypeForTest(std::uint32_t handle) const {
         return ltypemap.find(handle) != ltypemap.end();
@@ -17513,6 +17556,42 @@ public:
     DwgOrphanChainReader32Probe(std::unique_ptr<dwgBuffer> buffer, dwgRW* owner)
         : dwgReader32(std::move(buffer), owner) {}
 
+    // The handle of the first block record whose name starts with `prefix`.
+    bool findBlockRecordForTest(const std::string& prefix,
+                                std::uint32_t& handle) const {
+        for (const auto& item : blockRecordmap) {
+            if (item.second != nullptr
+                && item.second->name.compare(0, prefix.size(), prefix) == 0) {
+                handle = item.first;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Takes an object out of the object map, as if the file did not hold it.
+    void removeObjectForTest(std::uint32_t handle) { ObjectMap.erase(handle); }
+
+    std::size_t danglingBlockRecordCountForTest() const {
+        return m_danglingBlockRecords.size();
+    }
+
+    bool hasDanglingBlockRecordForTest(std::uint32_t handle) const {
+        return isDanglingBlockRecord(handle);
+    }
+
+    std::vector<DwgIntegrityDiagnostic> danglingDiagnosticsForTest() const {
+        std::vector<DwgIntegrityDiagnostic> result;
+        std::copy_if(
+            m_integrityDiagnostics.cbegin(), m_integrityDiagnostics.cend(),
+            std::back_inserter(result),
+            [](const DwgIntegrityDiagnostic& diagnostic) {
+                return diagnostic.kind
+                    == DwgIntegrityCheckKind::TableControlDanglingHandle;
+            });
+        return result;
+    }
+
     // Forgets the first block record whose name starts with `prefix`, as if
     // the drawing's table never listed it.
     bool eraseBlockRecordForTest(const std::string& prefix,
@@ -17561,6 +17640,7 @@ public:
 };
 
 struct DwgOrphanChainResult {
+    // The BLOCK_RECORD of the fixture's anonymous dimension block.
     std::uint32_t erasedOwner = 0;
     bool entitiesRead = false;
     bool contained = false;
@@ -17568,14 +17648,28 @@ struct DwgOrphanChainResult {
     std::size_t entities = 0;
     std::size_t blocks = 0;
     std::vector<DwgIntegrityDiagnostic> orphans;
+    std::size_t danglingRecords = 0;
+    bool erasedRecordIsDangling = false;
+    std::vector<DwgIntegrityDiagnostic> danglingDiagnostics;
 };
 
-// Reads the R2018 fixture phase by phase; with `eraseDimensionBlock` the
-// BLOCK_RECORD of its anonymous dimension block is forgotten after the table
-// phase.
+enum class DwgBlockErasure {
+    None,
+    // The table phase reads the record, which is then forgotten, as if the
+    // drawing's table never listed it.
+    ForgetRecordAfterTables,
+    // The record's object is not in the object map when the table phase runs
+    // while BLOCK_CONTROL still lists it: what an erased record leaves.
+    RemoveRecordObject
+};
+
+// Reads the R2018 fixture phase by phase. `erasure` says what happens to the
+// BLOCK_RECORD of its anonymous dimension block; for RemoveRecordObject
+// `record` is that record's handle (learned from a read without erasure).
 DwgOrphanChainResult runDwgOrphanChain(const std::filesystem::path& path,
                                        std::vector<std::uint8_t>& bytes,
-                                       bool eraseDimensionBlock) {
+                                       DwgBlockErasure erasure,
+                                       std::uint32_t record = 0) {
     DwgOrphanChainResult result;
     dwgRW owner(path.string().c_str());
     (void)owner.getPreview();
@@ -17589,11 +17683,22 @@ DwgOrphanChainResult runDwgOrphanChain(const std::filesystem::path& path,
     REQUIRE(reader.readDwgHeader(header));
     REQUIRE(reader.readDwgClasses());
     REQUIRE(reader.readDwgHandles());
+    if (erasure == DwgBlockErasure::RemoveRecordObject) {
+        REQUIRE(record != 0u);
+        result.erasedOwner = record;
+        reader.removeObjectForTest(record);
+    }
     REQUIRE(reader.readDwgTables(header));
     REQUIRE(reader.publishDeferredTableFramePublications(interface));
-    if (eraseDimensionBlock) {
+    if (erasure == DwgBlockErasure::ForgetRecordAfterTables) {
         REQUIRE(reader.eraseBlockRecordForTest("*D", result.erasedOwner));
+    } else if (erasure == DwgBlockErasure::None) {
+        REQUIRE(reader.findBlockRecordForTest("*D", result.erasedOwner));
     }
+    result.danglingRecords = reader.danglingBlockRecordCountForTest();
+    result.erasedRecordIsDangling =
+        reader.hasDanglingBlockRecordForTest(result.erasedOwner);
+    result.danglingDiagnostics = reader.danglingDiagnosticsForTest();
     REQUIRE(reader.readDwgBlocks(interface));
     result.entitiesRead = reader.readDwgEntities(interface);
     result.contained = reader.entitySweepFailureContained();
@@ -17621,14 +17726,16 @@ TEST_CASE("DWG entities of an erased block record are contained orphans",
 
     // Control: the untouched drawing rejects nothing.
     const DwgOrphanChainResult intact =
-        runDwgOrphanChain(path, bytes, false);
+        runDwgOrphanChain(path, bytes, DwgBlockErasure::None);
     CHECK(intact.entitiesRead);
     CHECK_FALSE(intact.contained);
     CHECK(intact.failures == 0u);
     CHECK(intact.orphans.empty());
+    CHECK(intact.danglingRecords == 0u);
     REQUIRE(intact.entities > 0u);
 
-    const DwgOrphanChainResult erased = runDwgOrphanChain(path, bytes, true);
+    const DwgOrphanChainResult erased = runDwgOrphanChain(
+        path, bytes, DwgBlockErasure::ForgetRecordAfterTables);
     // A direct caller sees the rejection; the file's read goes on.
     CHECK_FALSE(erased.entitiesRead);
     CHECK(erased.contained);
@@ -17857,6 +17964,42 @@ TEST_CASE("DWG malformed table records roll back the table phase",
     CHECK(source->m_reason == DRW_DwgFrameCoverageReason::None);
 }
 
+TEST_CASE("DWG missing table records roll back the table phase",
+          "[dwg][safety][table][fixture]") {
+    auto bytes = readFile(std::filesystem::path(LIBRECAD_TEST_DIR) /
+                          "ordinary_enc_AC1015.dwg");
+    REQUIRE(!bytes.empty());
+
+    DwgTableStateReaderProbe reader(std::make_unique<dwgBuffer>(
+        bytes.data(), bytes.size()));
+    reader.setVersionForTest(DRW::AC1015);
+    REQUIRE(reader.readFileHeader());
+
+    DRW_Header header;
+    REQUIRE(reader.readDwgHeader(header));
+    REQUIRE(reader.readDwgClasses());
+    REQUIRE(reader.readDwgHandles());
+
+    std::uint32_t recordHandle = 0;
+    std::uint64_t unusedOffset = 0;
+    REQUIRE(reader.firstLinetypeRecordForTest(recordHandle, unusedOffset));
+    reader.removeObjectForTest(recordHandle);
+    const auto objectMapAfterRemoval = reader.ObjectMap;
+
+    dwgBuffer tableBuffer(bytes.data(), bytes.size());
+    CHECK_FALSE(reader.readDwgTables(header, &tableBuffer));
+    CHECK(reader.tableStateEmptyForTest());
+    REQUIRE(reader.ObjectMap.size() == objectMapAfterRemoval.size());
+    for (const auto& entry : objectMapAfterRemoval) {
+        const auto restored = reader.ObjectMap.find(entry.first);
+        REQUIRE(restored != reader.ObjectMap.end());
+        CHECK(restored->second.type == entry.second.type);
+        CHECK(restored->second.handle == entry.second.handle);
+        CHECK(restored->second.loc == entry.second.loc);
+    }
+    CHECK(reader.ObjectMap.find(recordHandle) == reader.ObjectMap.end());
+}
+
 namespace {
 
 // Reads the header, classes and handle map of the R2000 fixture into `reader`
@@ -17868,33 +18011,6 @@ void prepareAc1015TableReader(DwgTableStateReaderProbe& reader,
     REQUIRE(reader.readDwgHeader(header));
     REQUIRE(reader.readDwgClasses());
     REQUIRE(reader.readDwgHandles());
-}
-
-class DwgTableChainProbe final : public DwgReadProbe {
-public:
-    std::size_t lineCount = 0;
-    void addLine(const DRW_Line&) override { ++lineCount; }
-};
-
-struct DwgRemainingPhases {
-    bool blocks = false;
-    bool entities = false;
-    bool objects = false;
-    std::size_t blockCount = 0;
-    std::size_t lineCount = 0;
-};
-
-// The phases a whole-file read runs after the table phase.
-DwgRemainingPhases readRemainingPhases(DwgTableStateReaderProbe& reader) {
-    DwgTableChainProbe interface;
-    DwgRemainingPhases result;
-    REQUIRE(reader.publishDeferredTableFramePublications(interface));
-    result.blocks = reader.readDwgBlocks(interface);
-    result.entities = reader.readDwgEntities(interface);
-    result.objects = reader.readDwgObjects(interface);
-    result.blockCount = interface.blockCount;
-    result.lineCount = interface.lineCount;
-    return result;
 }
 
 std::vector<DwgIntegrityDiagnostic> danglingControlDiagnostics(
@@ -17911,146 +18027,15 @@ std::vector<DwgIntegrityDiagnostic> danglingControlDiagnostics(
 
 } // namespace
 
-TEST_CASE("DWG table controls skip an erased record and report it",
-          "[dwg][safety][table][fixture]") {
-    // A drawing can keep the handle of an erased record in its table
-    // control's list while the record itself is gone from the object map
-    // (Extruder2.dwg does). That is not a malformed table: the entry is
-    // skipped, every other record of the table is read, and the skipped entry
-    // is reported as a warning.
-    auto bytes = readFile(std::filesystem::path(LIBRECAD_TEST_DIR) /
-                          "ordinary_enc_AC1015.dwg");
-    REQUIRE(!bytes.empty());
-
-    DwgTableStateReaderProbe untouched(std::make_unique<dwgBuffer>(
-        bytes.data(), bytes.size()));
-    DRW_Header untouchedHeader;
-    prepareAc1015TableReader(untouched, untouchedHeader);
-    dwgBuffer untouchedBuffer(bytes.data(), bytes.size());
-    REQUIRE(untouched.readDwgTables(untouchedHeader, &untouchedBuffer));
-    REQUIRE(untouched.linetypeCountForTest() >= 2u);
-    CHECK(danglingControlDiagnostics(untouched.integrityDiagnosticsForTest())
-              .empty());
-    // The table state as the table phase leaves it, before later phases
-    // consume the deferred receipts.
-    const std::size_t untouchedReceipts =
-        untouched.deferredTableFrameCountForTest();
-    const std::size_t untouchedBlockRecords =
-        untouched.blockRecordCountForTest();
-    const DwgRemainingPhases untouchedPhases = readRemainingPhases(untouched);
-    REQUIRE(untouchedPhases.blocks);
-    REQUIRE(untouchedPhases.entities);
-    REQUIRE(untouchedPhases.objects);
-
-    DwgTableStateReaderProbe reader(std::make_unique<dwgBuffer>(
-        bytes.data(), bytes.size()));
-    DRW_Header header;
-    prepareAc1015TableReader(reader, header);
-    std::uint32_t recordHandle = 0;
-    std::uint64_t unusedOffset = 0;
-    REQUIRE(reader.firstLinetypeRecordForTest(recordHandle, unusedOffset));
-    REQUIRE(untouched.hasLinetypeForTest(recordHandle));
-    const auto controlHandles = reader.controlHandlesForTest();
-    REQUIRE(controlHandles.count(DRW::DwgLTypeControlObjectType) == 1u);
-    reader.removeObjectForTest(recordHandle);
-
-    dwgBuffer tableBuffer(bytes.data(), bytes.size());
-    REQUIRE(reader.readDwgTables(header, &tableBuffer));
-
-    const std::size_t receipts = reader.deferredTableFrameCountForTest();
-    const std::size_t blockRecords = reader.blockRecordCountForTest();
-
-    // The drawing reads on: what the erased record does not own is untouched.
-    const DwgRemainingPhases phases = readRemainingPhases(reader);
-    CHECK(phases.blocks);
-    CHECK(phases.entities);
-    CHECK(phases.objects);
-    CHECK(phases.blockCount == untouchedPhases.blockCount);
-    CHECK(phases.lineCount == untouchedPhases.lineCount);
-    CHECK(reader.entityParseFailuresForTest() == 0u);
-
-    // Only the erased record is missing.
-    CHECK_FALSE(reader.hasLinetypeForTest(recordHandle));
-    CHECK(reader.linetypeCountForTest()
-          == untouched.linetypeCountForTest() - 1u);
-    CHECK(reader.layerCountForTest() == untouched.layerCountForTest());
-    CHECK(blockRecords == untouchedBlockRecords);
-    // Every control publishes a receipt and so does every record read; the
-    // erased record has none.
-    CHECK(receipts == untouchedReceipts - 1u);
-
-    // The record keeps its slot in the proxy-graphics index space.
-    const auto& order = reader.linetypeNameOrderForTest();
-    const auto& untouchedOrder = untouched.linetypeNameOrderForTest();
-    REQUIRE(order.size() == untouchedOrder.size());
-    CHECK(order.front().empty());
-    CHECK_FALSE(untouchedOrder.front().empty());
-    for (std::size_t i = 1; i < order.size(); ++i)
-        CHECK(order[i] == untouchedOrder[i]);
-
-    const auto dangling =
-        danglingControlDiagnostics(reader.integrityDiagnosticsForTest());
-    REQUIRE(dangling.size() == 1u);
-    CHECK(dangling.front().severity == DwgIntegritySeverity::Warning);
-    CHECK(dangling.front().hasLogicalHandle);
-    CHECK(dangling.front().logicalHandle == recordHandle);
-    CHECK(dangling.front().hasExpected);
-    CHECK(dangling.front().expected
-          == controlHandles.at(DRW::DwgLTypeControlObjectType));
-}
-
-TEST_CASE("DWG table phase rolls back after skipping an erased record",
-          "[dwg][safety][table][fixture]") {
-    // A failure later in the phase still restores every handle the phase
-    // consumed and leaves no table state, whatever it skipped before.
-    auto bytes = readFile(std::filesystem::path(LIBRECAD_TEST_DIR) /
-                          "ordinary_enc_AC1015.dwg");
-    REQUIRE(!bytes.empty());
-
-    DwgTableStateReaderProbe reader(std::make_unique<dwgBuffer>(
-        bytes.data(), bytes.size()));
-    DRW_Header header;
-    prepareAc1015TableReader(reader, header);
-
-    std::uint32_t erasedHandle = 0;
-    std::uint64_t unusedOffset = 0;
-    REQUIRE(reader.firstLinetypeRecordForTest(erasedHandle, unusedOffset));
-    std::uint32_t layerHandle = 0;
-    std::uint64_t layerOffset = 0;
-    REQUIRE(reader.firstTableRecordForTest(
-        DRW::DwgLayerControlObjectType, layerHandle, layerOffset));
-    REQUIRE(layerOffset < bytes.size());
-    reader.removeObjectForTest(erasedHandle);
-    const auto objectMapAfterRemoval = reader.ObjectMap;
-
-    // Corrupt a LAYER record's frame, which the phase reads after the
-    // linetype control that lists the erased record.
-    bytes[static_cast<std::size_t>(layerOffset)] ^= 0x80u;
-
-    dwgBuffer tableBuffer(bytes.data(), bytes.size());
-    CHECK_FALSE(reader.readDwgTables(header, &tableBuffer));
-    CHECK(reader.tableStateEmptyForTest());
-    REQUIRE(reader.ObjectMap.size() == objectMapAfterRemoval.size());
-    for (const auto& entry : objectMapAfterRemoval) {
-        const auto restored = reader.ObjectMap.find(entry.first);
-        REQUIRE(restored != reader.ObjectMap.end());
-        CHECK(restored->second.type == entry.second.type);
-        CHECK(restored->second.handle == entry.second.handle);
-        CHECK(restored->second.loc == entry.second.loc);
-    }
-    CHECK(reader.ObjectMap.find(erasedHandle) == reader.ObjectMap.end());
-    CHECK(reader.ObjectMap.find(layerHandle) != reader.ObjectMap.end());
-    // What was observed before the failure stays reported.
-    CHECK(danglingControlDiagnostics(reader.integrityDiagnosticsForTest())
-              .size() == 1u);
-}
-
 namespace {
 
-// Seven table controls and nothing else: enough for the table phase to run
-// from the first control to the last. The records the controls list are not in
-// the object map.
+// The table controls and nothing else: enough for the table phase to run from
+// the first control to the last. `listed` names the records each control
+// lists; none of them is in the object map. A control that has phantom
+// entries (LTYPE, BLOCK) also lists its two null entries.
 struct DwgControlOnlyDrawing {
+    using Listed = std::map<std::int16_t, std::vector<std::uint32_t>>;
+
     std::map<std::int16_t, std::uint32_t> controls;
     std::vector<std::uint8_t> bytes;
     std::vector<objHandle> objects;
@@ -18059,32 +18044,55 @@ struct DwgControlOnlyDrawing {
         return controls.at(controlType);
     }
 
-    void add(std::uint16_t type, std::uint16_t entryCount,
-             const std::vector<std::uint32_t>& owned) {
-        const std::uint32_t handle = handleOf(static_cast<std::int16_t>(type));
-        const auto frame = makeTableControlFrame(type, handle, entryCount,
-                                                 owned);
+    void add(std::int16_t type, std::vector<std::uint32_t> listed,
+             const std::vector<std::uint32_t>& blockPhantoms) {
+        const std::uint16_t entryCount =
+            static_cast<std::uint16_t>(listed.size());
+        if (type == DRW::DwgBlockControlObjectType) {
+            // The model and paper space records.
+            listed.insert(listed.end(), blockPhantoms.cbegin(),
+                          blockPhantoms.cend());
+        } else if (type == DRW::DwgLTypeControlObjectType) {
+            // The BYLAYER and BYBLOCK linetypes.
+            listed.push_back(0u);
+            listed.push_back(0u);
+        }
+        const std::uint32_t handle = handleOf(type);
+        const auto frame = makeTableControlFrame(
+            static_cast<std::uint16_t>(type), handle, entryCount, listed);
         REQUIRE(!frame.empty());
-        objects.emplace_back(type, handle, bytes.size());
+        objects.emplace_back(static_cast<std::uint16_t>(type), handle,
+                             bytes.size());
         bytes.insert(bytes.end(), frame.cbegin(), frame.cend());
     }
 
-    // `controlHandles` are the handles the header names for the controls;
-    // `layerOwned` is what the LAYER control lists. The other controls list
-    // one absent record each (the LTYPE and BLOCK controls also their two
-    // phantom entries).
+    static const std::vector<std::int16_t>& tableOrder() {
+        static const std::vector<std::int16_t> order{
+            DRW::DwgLTypeControlObjectType, DRW::DwgLayerControlObjectType,
+            DRW::DwgStyleControlObjectType, DRW::DwgDimStyleControlObjectType,
+            DRW::DwgVPortControlObjectType, DRW::DwgBlockControlObjectType,
+            DRW::DwgAppIdControlObjectType, DRW::DwgViewControlObjectType,
+            DRW::DwgUcsControlObjectType};
+        return order;
+    }
+
+    // `controlHandles` are the handles the header names for the controls.
+    // `blockPhantoms` are the two handles the block control lists after its
+    // counted entries, the model and paper space records: null unless a test
+    // says otherwise (a null entry is dropped when the control is decoded).
     explicit DwgControlOnlyDrawing(
         const std::map<std::int16_t, std::uint32_t>& controlHandles,
-        const std::vector<std::uint32_t>& layerOwned = {0x9010u})
+        const Listed& listed = Listed(),
+        const std::vector<std::uint32_t>& blockPhantoms =
+            std::vector<std::uint32_t>(2, 0u))
         : controls(controlHandles) {
-        add(DRW::DwgLTypeControlObjectType, 1, {0x9001u, 0x9002u, 0x9003u});
-        add(DRW::DwgLayerControlObjectType,
-            static_cast<std::uint16_t>(layerOwned.size()), layerOwned);
-        add(DRW::DwgStyleControlObjectType, 0, {});
-        add(DRW::DwgDimStyleControlObjectType, 1, {0x9020u});
-        add(DRW::DwgVPortControlObjectType, 0, {});
-        add(DRW::DwgBlockControlObjectType, 0, {0x9030u, 0x9031u});
-        add(DRW::DwgAppIdControlObjectType, 0, {});
+        for (const std::int16_t type : tableOrder()) {
+            const auto it = listed.find(type);
+            add(type,
+                it == listed.end() ? std::vector<std::uint32_t>()
+                                   : it->second,
+                blockPhantoms);
+        }
     }
 
     void fill(DwgTableStateReaderProbe& reader) const {
@@ -18107,16 +18115,31 @@ struct DwgControlOnlyHeader {
             bytes.data(), bytes.size()));
         prepareAc1015TableReader(source, header);
         controls = source.controlHandlesForTest();
-        REQUIRE(controls.size() == 7u);
+        REQUIRE(controls.size() == DwgControlOnlyDrawing::tableOrder().size());
     }
 };
 
+void checkTablePhaseRolledBack(DwgTableStateReaderProbe& reader,
+                               const DwgControlOnlyDrawing& drawing) {
+    CHECK(reader.tableStateEmptyForTest());
+    CHECK(reader.danglingBlockRecordCountForTest() == 0u);
+    REQUIRE(reader.ObjectMap.size() == drawing.objects.size());
+    for (const objHandle& object : drawing.objects) {
+        const auto restored = reader.ObjectMap.find(object.handle);
+        REQUIRE(restored != reader.ObjectMap.end());
+        CHECK(restored->second.type == object.type);
+        CHECK(restored->second.loc == object.loc);
+    }
+}
+
 } // namespace
 
-TEST_CASE("DWG table controls skip every absent entry they list",
+TEST_CASE("DWG block control skips every absent entry it lists",
           "[dwg][safety][table]") {
     DwgControlOnlyHeader fixture;
-    DwgControlOnlyDrawing drawing(fixture.controls);
+    DwgControlOnlyDrawing drawing(
+        fixture.controls,
+        {{DRW::DwgBlockControlObjectType, {0x9030u, 0x9031u, 0x9032u}}});
     DwgTableStateReaderProbe reader(std::make_unique<dwgBuffer>(
         drawing.bytes.data(), drawing.bytes.size()));
     drawing.fill(reader);
@@ -18127,15 +18150,12 @@ TEST_CASE("DWG table controls skip every absent entry they list",
     // Every control was consumed and published as a receipt; no record was
     // read because none exists.
     CHECK(reader.ObjectMap.empty());
-    CHECK(reader.deferredTableFrameCountForTest() == 7u);
-    CHECK(reader.linetypeCountForTest() == 0u);
-    CHECK(reader.layerCountForTest() == 0u);
+    CHECK(reader.deferredTableFrameCountForTest()
+          == DwgControlOnlyDrawing::tableOrder().size());
     CHECK(reader.blockRecordCountForTest() == 0u);
-    // The linetype and layer records keep their slots in the proxy index
-    // spaces, so a later record does not shift.
-    CHECK(reader.linetypeNameOrderForTest().size() == 3u);
-    CHECK(reader.layerNameOrderForTest().size() == 1u);
 
+    // All three are counted and each is reported against the block control.
+    CHECK(reader.danglingBlockRecordCountForTest() == 3u);
     std::vector<std::pair<std::uint32_t, std::uint64_t>> reported;
     for (const auto& diagnostic : danglingControlDiagnostics(
              reader.integrityDiagnosticsForTest())) {
@@ -18145,58 +18165,576 @@ TEST_CASE("DWG table controls skip every absent entry they list",
         REQUIRE(diagnostic.hasExpected);
         reported.emplace_back(diagnostic.logicalHandle, diagnostic.expected);
     }
-    const auto control = [&drawing](std::int16_t type) {
-        return static_cast<std::uint64_t>(drawing.handleOf(type));
-    };
+    const std::uint64_t control =
+        drawing.handleOf(DRW::DwgBlockControlObjectType);
     const std::vector<std::pair<std::uint32_t, std::uint64_t>> expected{
-        {0x9001u, control(DRW::DwgLTypeControlObjectType)},
-        {0x9002u, control(DRW::DwgLTypeControlObjectType)},
-        {0x9003u, control(DRW::DwgLTypeControlObjectType)},
-        {0x9010u, control(DRW::DwgLayerControlObjectType)},
-        {0x9020u, control(DRW::DwgDimStyleControlObjectType)},
-        {0x9030u, control(DRW::DwgBlockControlObjectType)},
-        {0x9031u, control(DRW::DwgBlockControlObjectType)}};
+        {0x9030u, control}, {0x9031u, control}, {0x9032u, control}};
     CHECK(reported == expected);
+    for (const std::uint32_t handle : {0x9030u, 0x9031u, 0x9032u})
+        CHECK(reader.hasDanglingBlockRecordForTest(handle));
+}
+
+TEST_CASE("DWG table phase rolls back after skipping an erased block record",
+          "[dwg][safety][table]") {
+    // A failure later in the phase still restores every handle the phase
+    // consumed, leaves no table state and publishes no erased record, whatever
+    // it skipped before: the block control lists an absent record and skips it,
+    // the APPID control that follows lists one too and fails the phase.
+    DwgControlOnlyHeader fixture;
+    DwgControlOnlyDrawing drawing(
+        fixture.controls, {{DRW::DwgBlockControlObjectType, {0x9030u}},
+                           {DRW::DwgAppIdControlObjectType, {0x9001u}}});
+    DwgTableStateReaderProbe reader(std::make_unique<dwgBuffer>(
+        drawing.bytes.data(), drawing.bytes.size()));
+    drawing.fill(reader);
+
+    dwgBuffer buffer(drawing.bytes.data(), drawing.bytes.size());
+    CHECK_FALSE(reader.readDwgTables(fixture.header, &buffer));
+    checkTablePhaseRolledBack(reader, drawing);
+    // What was observed before the failure stays reported.
+    CHECK(danglingControlDiagnostics(reader.integrityDiagnosticsForTest())
+              .size() == 1u);
+}
+
+TEST_CASE("DWG block control rejects an absent model or paper space record",
+          "[dwg][safety][table]") {
+    // The two records the block control lists apart from its counted entries
+    // are the model and paper space. A drawing that lacks one is not a
+    // drawing with an erased block, so only the counted entries are skipped.
+    DwgControlOnlyHeader fixture;
+    struct Case {
+        const char* name;
+        std::vector<std::uint32_t> phantoms;
+    };
+    const Case cases[] = {{"model space", {0x9040u, 0u}},
+                          {"paper space", {0u, 0x9041u}},
+                          {"both", {0x9040u, 0x9041u}}};
+    for (const Case& scenario : cases) {
+        DYNAMIC_SECTION(scenario.name) {
+            DwgControlOnlyDrawing drawing(fixture.controls,
+                                          DwgControlOnlyDrawing::Listed(),
+                                          scenario.phantoms);
+            DwgTableStateReaderProbe reader(std::make_unique<dwgBuffer>(
+                drawing.bytes.data(), drawing.bytes.size()));
+            drawing.fill(reader);
+
+            dwgBuffer buffer(drawing.bytes.data(), drawing.bytes.size());
+            CHECK_FALSE(reader.readDwgTables(fixture.header, &buffer));
+            checkTablePhaseRolledBack(reader, drawing);
+            CHECK(danglingControlDiagnostics(
+                      reader.integrityDiagnosticsForTest()).empty());
+        }
+    }
+}
+
+TEST_CASE("DWG every table but the block table rejects an absent record",
+          "[dwg][safety][table]") {
+    // A record that a control lists and the object map lacks is tolerated only
+    // for the block table. In every other table it would leave an object that
+    // names the record (an entity on the layer, in the style, of the
+    // linetype) resolved to nothing with no report, so the phase fails and
+    // rolls back, as it did before the block table's exception.
+    DwgControlOnlyHeader fixture;
+    struct Case {
+        const char* name;
+        std::int16_t control;
+    };
+    const Case cases[] = {
+        {"LTYPE", DRW::DwgLTypeControlObjectType},
+        {"LAYER", DRW::DwgLayerControlObjectType},
+        {"STYLE", DRW::DwgStyleControlObjectType},
+        {"DIMSTYLE", DRW::DwgDimStyleControlObjectType},
+        {"VPORT", DRW::DwgVPortControlObjectType},
+        {"APPID", DRW::DwgAppIdControlObjectType},
+        {"VIEW", DRW::DwgViewControlObjectType},
+        {"UCS", DRW::DwgUcsControlObjectType}};
+    for (const Case& scenario : cases) {
+        DYNAMIC_SECTION(scenario.name) {
+            DwgControlOnlyDrawing drawing(
+                fixture.controls, {{scenario.control, {0x9001u}}});
+            DwgTableStateReaderProbe reader(std::make_unique<dwgBuffer>(
+                drawing.bytes.data(), drawing.bytes.size()));
+            drawing.fill(reader);
+
+            dwgBuffer buffer(drawing.bytes.data(), drawing.bytes.size());
+            CHECK_FALSE(reader.readDwgTables(fixture.header, &buffer));
+            checkTablePhaseRolledBack(reader, drawing);
+            // Nothing was skipped, so nothing is reported.
+            CHECK(danglingControlDiagnostics(
+                      reader.integrityDiagnosticsForTest()).empty());
+        }
+    }
+
+    // The same drawing with the block table listing the record instead: the
+    // one table that reads on.
+    DwgControlOnlyDrawing tolerated(
+        fixture.controls, {{DRW::DwgBlockControlObjectType, {0x9001u}}});
+    DwgTableStateReaderProbe reader(std::make_unique<dwgBuffer>(
+        tolerated.bytes.data(), tolerated.bytes.size()));
+    tolerated.fill(reader);
+    dwgBuffer buffer(tolerated.bytes.data(), tolerated.bytes.size());
+    CHECK(reader.readDwgTables(fixture.header, &buffer));
 }
 
 TEST_CASE("DWG table controls still reject contradictory claims",
           "[dwg][safety][table]") {
     DwgControlOnlyHeader fixture;
-    const auto layerOwned = [&fixture](std::int16_t controlType) {
-        return std::vector<std::uint32_t>{fixture.controls.at(controlType)};
-    };
     struct Case {
         const char* name;
-        std::vector<std::uint32_t> layerOwned;
+        DwgControlOnlyDrawing::Listed listed;
     };
-    // The LAYER control lists an object another control owns, or an entry the
-    // LTYPE control already claimed. Neither is an erased record: two owners
+    // The block control lists an object another control owns, or an entry
+    // another control claimed. Neither is an erased record: two owners
     // contradict each other, so the phase fails and rolls back.
     const Case cases[] = {
         {"a control that came before",
-         layerOwned(DRW::DwgLTypeControlObjectType)},
-        {"a control that follows", layerOwned(DRW::DwgStyleControlObjectType)},
-        {"an entry an earlier control claimed", {0x9001u}}};
+         {{DRW::DwgBlockControlObjectType,
+           {fixture.controls.at(DRW::DwgLTypeControlObjectType)}}}},
+        {"a control that follows",
+         {{DRW::DwgBlockControlObjectType,
+           {fixture.controls.at(DRW::DwgAppIdControlObjectType)}}}},
+        {"an entry the block control claimed",
+         {{DRW::DwgBlockControlObjectType, {0x9030u}},
+          {DRW::DwgAppIdControlObjectType, {0x9030u}}}}};
     for (const Case& scenario : cases) {
         DYNAMIC_SECTION(scenario.name) {
-            DwgControlOnlyDrawing drawing(fixture.controls,
-                                          scenario.layerOwned);
+            DwgControlOnlyDrawing drawing(fixture.controls, scenario.listed);
             DwgTableStateReaderProbe reader(std::make_unique<dwgBuffer>(
                 drawing.bytes.data(), drawing.bytes.size()));
             drawing.fill(reader);
-            const auto originalObjectMap = reader.ObjectMap;
 
             dwgBuffer buffer(drawing.bytes.data(), drawing.bytes.size());
             CHECK_FALSE(reader.readDwgTables(fixture.header, &buffer));
-            CHECK(reader.tableStateEmptyForTest());
-            REQUIRE(reader.ObjectMap.size() == originalObjectMap.size());
-            for (const auto& entry : originalObjectMap) {
-                const auto restored = reader.ObjectMap.find(entry.first);
-                REQUIRE(restored != reader.ObjectMap.end());
-                CHECK(restored->second.type == entry.second.type);
-                CHECK(restored->second.loc == entry.second.loc);
-            }
+            checkTablePhaseRolledBack(reader, drawing);
         }
+    }
+}
+
+TEST_CASE("DWG erased block record that its table still lists is skipped and "
+          "its leftovers are contained",
+          "[dwg][safety][fixture]") {
+    // The whole erased-record shape in the R2018 fixture: the object of its
+    // anonymous dimension block's BLOCK_RECORD is not in the object map,
+    // while BLOCK_CONTROL still lists it (the table phase skips and reports
+    // the entry), and the block's BLOCK, ENDBLK and contents are still in the
+    // file, owned by the record that no longer exists (the entity sweep
+    // contains them). The rest of the drawing is delivered.
+    const auto path = std::filesystem::path(LIBRECAD_TEST_DIR) /
+                      "large_radial.dwg";
+    auto bytes = readFile(path);
+    REQUIRE(!bytes.empty());
+
+    const DwgOrphanChainResult intact =
+        runDwgOrphanChain(path, bytes, DwgBlockErasure::None);
+    REQUIRE(intact.erasedOwner != 0u);
+    CHECK(intact.danglingRecords == 0u);
+    CHECK(intact.danglingDiagnostics.empty());
+
+    const DwgOrphanChainResult forgotten = runDwgOrphanChain(
+        path, bytes, DwgBlockErasure::ForgetRecordAfterTables);
+    const DwgOrphanChainResult removed = runDwgOrphanChain(
+        path, bytes, DwgBlockErasure::RemoveRecordObject, intact.erasedOwner);
+
+    // The table phase skipped the absent record, counted it, and said so.
+    CHECK(removed.danglingRecords == 1u);
+    CHECK(removed.erasedRecordIsDangling);
+    REQUIRE(removed.danglingDiagnostics.size() == 1u);
+    CHECK(removed.danglingDiagnostics.front().severity
+          == DwgIntegritySeverity::Warning);
+    CHECK(removed.danglingDiagnostics.front().logicalHandle
+          == intact.erasedOwner);
+
+    // What it left behind is contained exactly as when only the table forgot
+    // the record.
+    CHECK_FALSE(removed.entitiesRead);
+    CHECK(removed.contained);
+    CHECK(removed.blocks == forgotten.blocks);
+    CHECK(removed.entities == forgotten.entities);
+    CHECK(removed.failures == forgotten.failures);
+    CHECK(removed.orphans.size() == forgotten.orphans.size());
+    CHECK(removed.failures > 0u);
+    REQUIRE(removed.entities > 0u);
+    REQUIRE(removed.entities < intact.entities);
+    for (const auto& diagnostic : removed.orphans)
+        CHECK(diagnostic.expected == intact.erasedOwner);
+}
+
+namespace {
+
+class DwgLineCountingProbe final : public DwgReadProbe {
+public:
+    std::size_t lineCount = 0;
+    void addLine(const DRW_Line&) override { ++lineCount; }
+};
+
+std::uint32_t readLittleEndian32(const std::vector<std::uint8_t>& bytes,
+                                 std::size_t at) {
+    return static_cast<std::uint32_t>(bytes[at])
+        | static_cast<std::uint32_t>(bytes[at + 1]) << 8
+        | static_cast<std::uint32_t>(bytes[at + 2]) << 16
+        | static_cast<std::uint32_t>(bytes[at + 3]) << 24;
+}
+
+void writeLittleEndian32(std::vector<std::uint8_t>& bytes, std::size_t at,
+                         std::uint32_t value) {
+    for (std::size_t i = 0; i < 4; ++i)
+        bytes[at + i] = static_cast<std::uint8_t>(value >> (8u * i));
+}
+
+// Rebuilds the object map (the HANDLES section) of an R2000 file without the
+// given handles, leaving every other byte in place: the section shrinks, the
+// gap it leaves is zero-filled, and the size in the section locator and the
+// file-header CRC that covers the locator are patched. What comes out is a
+// well-formed R2000 file that lacks those objects, which is the state an
+// erased record leaves behind.
+bool eraseR2000Objects(std::vector<std::uint8_t>& bytes,
+                       const std::set<std::uint32_t>& erased) {
+    constexpr std::size_t locatorCountAt = 0x15;
+    constexpr std::size_t locatorRecordsAt = 0x19;
+    constexpr std::uint32_t handlesRecordNumber = 2;
+    constexpr std::size_t maxPageEntryBytes = 2000;
+    if (bytes.size() < locatorRecordsAt)
+        return false;
+    const std::uint32_t count = readLittleEndian32(bytes, locatorCountAt);
+    std::uint16_t crcMask = 0;
+    switch (count) {
+    case 3: crcMask = 0xA598; break;
+    case 4: crcMask = 0x8101; break;
+    case 5: crcMask = 0x3CC4; break;
+    case 6: crcMask = 0x8461; break;
+    default: return false;
+    }
+    const std::size_t recordsEnd = locatorRecordsAt + 9u * count;
+    if (bytes.size() < recordsEnd + 2u)
+        return false;
+    std::size_t handlesRecord = 0;
+    for (std::uint32_t i = 0; i < count; ++i) {
+        const std::size_t at = locatorRecordsAt + 9u * i;
+        if (bytes[at] == handlesRecordNumber)
+            handlesRecord = at;
+    }
+    if (handlesRecord == 0)
+        return false;
+    const std::uint32_t seek = readLittleEndian32(bytes, handlesRecord + 1);
+    const std::uint32_t size = readLittleEndian32(bytes, handlesRecord + 5);
+    if (seek > bytes.size() || size > bytes.size() - seek)
+        return false;
+
+    // The object map as the reader decodes it, without the erased handles.
+    DwgEntityReaderProbe reader(std::make_unique<dwgBuffer>(
+        bytes.data(), bytes.size()));
+    dwgBuffer buffer(bytes.data(), bytes.size());
+    if (!reader.readDwgHandles(&buffer, seek, size, bytes.size()))
+        return false;
+    std::vector<std::pair<std::uint32_t, std::uint32_t>> entries;
+    for (const auto& item : reader.ObjectMap) {
+        if (erased.count(item.first) == 0)
+            entries.emplace_back(item.first, item.second.loc);
+    }
+    std::sort(entries.begin(), entries.end());
+
+    // Pages of entries, the deltas restarting on every page, and the empty
+    // page that ends the section.
+    std::vector<std::uint8_t> section;
+    std::vector<std::uint8_t> page;
+    std::uint32_t lastHandle = 0;
+    std::int64_t lastLocation = 0;
+    const auto encode = [](std::uint32_t handleDelta,
+                           std::int64_t locationDelta,
+                           std::vector<std::uint8_t>& out) {
+        dwgBufferW encoded;
+        if (!encoded.putUModularChar(handleDelta)
+            || !encoded.putModularChar(locationDelta))
+            return false;
+        out = encoded.data();
+        return true;
+    };
+    for (const auto& entry : entries) {
+        std::vector<std::uint8_t> encoded;
+        if (!encode(entry.first - lastHandle,
+                    static_cast<std::int64_t>(entry.second) - lastLocation,
+                    encoded))
+            return false;
+        if (!page.empty() && page.size() + encoded.size() > maxPageEntryBytes) {
+            appendHandleMapPage(section, page);
+            page.clear();
+            lastHandle = 0;
+            lastLocation = 0;
+            if (!encode(entry.first, static_cast<std::int64_t>(entry.second),
+                        encoded))
+                return false;
+        }
+        page.insert(page.end(), encoded.cbegin(), encoded.cend());
+        lastHandle = entry.first;
+        lastLocation = entry.second;
+    }
+    if (!page.empty())
+        appendHandleMapPage(section, page);
+    appendHandleMapPage(section, {});
+    if (section.size() > size)
+        return false;
+
+    std::vector<std::uint8_t> patched(bytes.begin(), bytes.begin() + seek);
+    patched.insert(patched.end(), section.cbegin(), section.cend());
+    patched.insert(patched.end(), size - section.size(), 0u);
+    patched.insert(patched.end(), bytes.begin() + seek + size, bytes.end());
+    writeLittleEndian32(patched, handlesRecord + 5,
+                        static_cast<std::uint32_t>(section.size()));
+    dwgBuffer crcBuffer(patched.data(), patched.size());
+    const std::uint16_t crc = static_cast<std::uint16_t>(
+        crcBuffer.crc8(0, 0, static_cast<std::int32_t>(recordsEnd)) ^ crcMask);
+    patched[recordsEnd] = static_cast<std::uint8_t>(crc & 0xFFu);
+    patched[recordsEnd + 1] = static_cast<std::uint8_t>(crc >> 8);
+    bytes = std::move(patched);
+    return true;
+}
+
+struct DwgErasedObjectRead {
+    bool ok = false;
+    DRW::error error = DRW::BAD_UNKNOWN;
+    std::size_t lines = 0;
+    std::size_t blocks = 0;
+    std::size_t entityFailures = 0;
+    std::size_t danglingRecords = 0;
+    std::size_t orphanedEntities = 0;
+};
+
+// Reads `bytes` as a whole file.
+DwgErasedObjectRead readWholeDwg(const std::vector<std::uint8_t>& bytes,
+                                 const char* name) {
+    const auto path = std::filesystem::temp_directory_path() / name;
+    std::filesystem::remove(path);
+    {
+        std::ofstream output(path, std::ios::binary);
+        REQUIRE(output.good());
+        output.write(reinterpret_cast<const char*>(bytes.data()),
+                     static_cast<std::streamsize>(bytes.size()));
+        REQUIRE(output.good());
+    }
+    DwgErasedObjectRead result;
+    {
+        dwgRW reader(path.string().c_str());
+        DwgLineCountingProbe interface;
+        result.ok = reader.read(&interface, /*ext=*/false);
+        result.error = reader.getError();
+        result.lines = interface.lineCount;
+        result.blocks = interface.blockCount;
+        result.entityFailures = reader.getEntityParseFailures();
+        result.danglingRecords = reader.getDanglingBlockRecords();
+        result.orphanedEntities = reader.getOrphanedEntities();
+    }
+    std::filesystem::remove(path);
+    return result;
+}
+
+// The handle of the first record the table control of the given type lists in
+// the R2000 fixture.
+std::uint32_t firstRecordOfTable(const std::vector<std::uint8_t>& bytes,
+                                 std::int16_t controlType) {
+    DwgTableStateReaderProbe reader(std::make_unique<dwgBuffer>(
+        const_cast<std::uint8_t*>(bytes.data()), bytes.size()));
+    DRW_Header header;
+    prepareAc1015TableReader(reader, header);
+    std::uint32_t handle = 0;
+    std::uint64_t offset = 0;
+    REQUIRE(reader.firstTableRecordForTest(controlType, handle, offset));
+    return handle;
+}
+
+// The handle of the block record called `name` in the R2000 fixture.
+std::uint32_t blockRecordNamed(const std::vector<std::uint8_t>& bytes,
+                               const std::string& name) {
+    DwgTableStateReaderProbe reader(std::make_unique<dwgBuffer>(
+        const_cast<std::uint8_t*>(bytes.data()), bytes.size()));
+    DRW_Header header;
+    prepareAc1015TableReader(reader, header);
+    dwgBuffer tableBuffer(const_cast<std::uint8_t*>(bytes.data()),
+                          bytes.size());
+    REQUIRE(reader.readDwgTables(header, &tableBuffer));
+    std::uint32_t handle = 0;
+    REQUIRE(reader.findBlockRecordForTest(name, handle));
+    return handle;
+}
+
+} // namespace
+
+TEST_CASE("DWG R2000 file with a rebuilt object map reads as before",
+          "[dwg][safety][table][fixture]") {
+    // The control for the file-level erasure tests below: rebuilding the
+    // object map without dropping anything changes no result, so a change in
+    // the result is the erased record's.
+    auto bytes = readFile(std::filesystem::path(LIBRECAD_TEST_DIR) /
+                          "ordinary_enc_AC1015.dwg");
+    REQUIRE(!bytes.empty());
+    const DwgErasedObjectRead pristine =
+        readWholeDwg(bytes, "libdxfrw_erased_control_original.dwg");
+    REQUIRE(pristine.ok);
+    REQUIRE(pristine.lines > 0u);
+
+    REQUIRE(eraseR2000Objects(bytes, {}));
+    const DwgErasedObjectRead rebuilt =
+        readWholeDwg(bytes, "libdxfrw_erased_control_rebuilt.dwg");
+    CHECK(rebuilt.ok);
+    CHECK(rebuilt.error == DRW::BAD_NONE);
+    CHECK(rebuilt.lines == pristine.lines);
+    CHECK(rebuilt.blocks == pristine.blocks);
+    CHECK(rebuilt.entityFailures == pristine.entityFailures);
+    CHECK(rebuilt.danglingRecords == 0u);
+}
+
+TEST_CASE("DWG file that lists an erased record is rejected",
+          "[dwg][safety][table][fixture]") {
+    // The state an erased record leaves in a whole R2000 file: its table
+    // control still lists it and the object map no longer holds it. Only an
+    // ordinary block record may be missing (the R2018 fixture and the
+    // control-only drawings above cover that; this R2000 fixture has none).
+    // For every other record the read fails at the table phase, as before: the
+    // objects that name the record (entities on an erased layer, in an erased
+    // style, in an erased model space) would otherwise open as if nothing were
+    // wrong, on the default layer or style.
+    const auto original = readFile(std::filesystem::path(LIBRECAD_TEST_DIR) /
+                                   "ordinary_enc_AC1015.dwg");
+    REQUIRE(!original.empty());
+
+    struct Case {
+        const char* name;
+        std::int16_t control;
+        const char* blockName;
+    };
+    const Case cases[] = {
+        {"LTYPE", DRW::DwgLTypeControlObjectType, nullptr},
+        {"LAYER", DRW::DwgLayerControlObjectType, nullptr},
+        {"STYLE", DRW::DwgStyleControlObjectType, nullptr},
+        {"DIMSTYLE", DRW::DwgDimStyleControlObjectType, nullptr},
+        {"VPORT", DRW::DwgVPortControlObjectType, nullptr},
+        {"APPID", DRW::DwgAppIdControlObjectType, nullptr},
+        {"model space", 0, "*Model_Space"},
+        {"paper space", 0, "*Paper_Space"}};
+    for (const Case& scenario : cases) {
+        DYNAMIC_SECTION(scenario.name) {
+            auto bytes = original;
+            const std::uint32_t record =
+                scenario.blockName != nullptr
+                    ? blockRecordNamed(original, scenario.blockName)
+                    : firstRecordOfTable(original, scenario.control);
+            REQUIRE(eraseR2000Objects(bytes, {record}));
+            const DwgErasedObjectRead read =
+                readWholeDwg(bytes, "libdxfrw_erased_table_record.dwg");
+            CHECK_FALSE(read.ok);
+            CHECK(read.error == DRW::BAD_READ_TABLES);
+            CHECK(read.lines == 0u);
+            CHECK(read.danglingRecords == 0u);
+        }
+    }
+}
+
+TEST_CASE("DWG INSERT that places an erased block record is rejected",
+          "[dwg][safety][table][compound]") {
+    // BLOCK_CONTROL lists a record the file does not hold, and an INSERT
+    // places it. Reading the INSERT as a block named "" would open the
+    // drawing as if nothing were wrong; the INSERT is rejected whole instead,
+    // reported, and fails the phase that reads it. The same INSERT placing a
+    // record that exists is read and named after that record.
+    constexpr std::uint32_t insertHandle = 0x100;
+    constexpr std::uint32_t erasedBlock = 0x600;
+    constexpr std::uint32_t liveBlock = 0x601;
+    const bool placesErasedBlock = GENERATE(true, false);
+    INFO((placesErasedBlock ? "places the erased record"
+                            : "places a record that exists"));
+
+    DwgInsertWriterProbe insert;
+    insert.handle = insertHandle;
+    insert.setObjectType(dwgType::INSERT);
+    insert.blockRecH.ref = placesErasedBlock ? erasedBlock : liveBlock;
+    dwgBufferW body;
+    REQUIRE(insert.encodeDwg(DRW::AC1018, &body, 0, nullptr, nullptr));
+    const auto frame = makeEntityFrame(body);
+    REQUIRE(!frame.empty());
+
+    dwgBufferW handleEntries;
+    REQUIRE(handleEntries.putUModularChar(insertHandle));
+    REQUIRE(handleEntries.putModularChar(0));
+    std::vector<std::uint8_t> handleMap;
+    appendHandleMapPage(handleMap, handleEntries.data());
+    appendHandleMapPage(handleMap, {});
+
+    const auto makeReader = [&frame, &handleMap]() {
+        auto reader = std::make_unique<DwgEntityReaderProbe>(
+            std::make_unique<dwgBuffer>(
+                const_cast<std::uint8_t*>(frame.data()), frame.size()));
+        reader->setVersionForTest(DRW::AC1018);
+        reader->addBlockRecordForTest(liveBlock, "PLACED");
+        reader->addDanglingBlockRecordForTest(erasedBlock);
+        dwgBuffer handleBuffer(handleMap.data(), handleMap.size());
+        REQUIRE(reader->readDwgHandles(
+            &handleBuffer, 0, handleMap.size(), frame.size()));
+        return reader;
+    };
+
+    SECTION("in a block walk") {
+        auto reader = makeReader();
+        DRW_Block_Record record;
+        record.name = "OWNER";
+        DwgBlockOwnershipTestAccess::setHandles(record, 0, 0, {insertHandle});
+        DwgInsertReceiptProbe interface;
+        dwgBuffer objectBuffer(
+            const_cast<std::uint8_t*>(frame.data()), frame.size());
+        DwgEntityReaderProbe::DwgBlockWalkOutcome outcome =
+            DwgEntityReaderProbe::DwgBlockWalkOutcome::Complete;
+        const bool walked = reader->walkBlockRecordEntities(
+            &record, &objectBuffer, interface, DRW::NoHandle, DRW::NoHandle,
+            DwgIntegrityAddressSpace::DecodedBuffer, &outcome);
+        if (placesErasedBlock) {
+            CHECK_FALSE(walked);
+            CHECK(outcome
+                  == DwgEntityReaderProbe::DwgBlockWalkOutcome::Structural);
+            CHECK(interface.inserts.empty());
+            CHECK(interface.publications.empty());
+            REQUIRE(reader->m_dwgSourceFrameLedger.size() == 1u);
+            CHECK(reader->m_dwgSourceFrameLedger.front().m_disposition
+                  == DRW_DwgFrameDisposition::Failed);
+        } else {
+            CHECK(walked);
+            REQUIRE(interface.inserts.size() == 1u);
+            CHECK(interface.inserts.front().name == "PLACED");
+        }
+    }
+
+    SECTION("in the entity sweep") {
+        auto reader = makeReader();
+        DwgInsertReceiptProbe interface;
+        dwgBuffer objectBuffer(
+            const_cast<std::uint8_t*>(frame.data()), frame.size());
+        const bool swept = reader->readDwgEntities(interface, &objectBuffer);
+        if (placesErasedBlock) {
+            CHECK_FALSE(swept);
+            CHECK_FALSE(reader->entitySweepFailureContained());
+            CHECK(interface.inserts.empty());
+            CHECK(interface.publications.empty());
+        } else {
+            CHECK(swept);
+            REQUIRE(interface.inserts.size() == 1u);
+            CHECK(interface.inserts.front().name == "PLACED");
+        }
+    }
+
+    // Either way the rejection is reported: an error that names the INSERT,
+    // its frame and the absent record.
+    auto reader = makeReader();
+    DwgInsertReceiptProbe interface;
+    dwgBuffer objectBuffer(
+        const_cast<std::uint8_t*>(frame.data()), frame.size());
+    (void)reader->readDwgEntities(interface, &objectBuffer);
+    const auto diagnostics = reader->erasedBlockReferenceDiagnosticsForTest();
+    if (placesErasedBlock) {
+        REQUIRE(diagnostics.size() == 1u);
+        CHECK(diagnostics.front().severity == DwgIntegritySeverity::Error);
+        CHECK(diagnostics.front().logicalHandle == insertHandle);
+        CHECK(diagnostics.front().hasFileOffset);
+        CHECK(diagnostics.front().fileOffset == 0u);
+        CHECK(diagnostics.front().expected == erasedBlock);
+    } else {
+        CHECK(diagnostics.empty());
     }
 }
 

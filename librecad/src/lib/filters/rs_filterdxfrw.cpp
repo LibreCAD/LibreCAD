@@ -4160,6 +4160,24 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
               .arg(parseFailures == 1 ? QObject::tr("entity")
                                       : QObject::tr("entities")));
     }
+    // A drawing that keeps the entries or the leftovers of erased block
+    // records is readable, but it is not a clean one: say so, rather than
+    // leaving the user to wonder why the entity count above is not zero.
+    const size_t danglingBlockRecords = dwgr.getDanglingBlockRecords();
+    if (danglingBlockRecords > 0) {
+      RS_DIALOGFACTORY->commandMessage(
+          QObject::tr("DWG load: the block table lists %n block record(s) "
+                      "that the file does not contain (erased). They were "
+                      "skipped.",
+                      "", static_cast<int>(danglingBlockRecords)));
+    }
+    const size_t orphanedEntities = dwgr.getOrphanedEntities();
+    if (orphanedEntities > 0) {
+      RS_DIALOGFACTORY->commandMessage(
+          QObject::tr("DWG load: %n entity(ies) belonged to block records "
+                      "that no longer exist (erased) and were skipped.",
+                      "", static_cast<int>(orphanedEntities)));
+    }
     // Vendor-extension custom classes (AutoCAD Mechanical AmgStdPart aka
     // STDPART2D, AcmBomRow, etc.) whose proprietary geometry libdxfrw
     // can't decode.  Surface the top breakdown so the user knows what's

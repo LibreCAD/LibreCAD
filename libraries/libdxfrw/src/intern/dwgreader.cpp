@@ -647,6 +647,28 @@ void dwgReader::recordOrphanedEntity(
   }
 }
 
+void dwgReader::recordErasedBlockReference(
+    const objHandle &object, std::uint32_t blockRecordHandle,
+    DwgIntegrityAddressSpace offsetSpace) noexcept {
+  try {
+    DwgIntegrityDiagnostic diagnostic;
+    diagnostic.severity = DwgIntegritySeverity::Error;
+    diagnostic.offsetSpace = offsetSpace;
+    diagnostic.phase = DwgIntegrityPhase::ObjectFrame;
+    diagnostic.kind = DwgIntegrityCheckKind::EntityBlockRecordErased;
+    diagnostic.logicalSectionId = secEnum::OBJECTS;
+    diagnostic.fileOffset = object.loc;
+    diagnostic.hasFileOffset = true;
+    diagnostic.logicalHandle = object.handle;
+    diagnostic.hasLogicalHandle = true;
+    diagnostic.expected = blockRecordHandle;
+    diagnostic.hasExpected = true;
+    addIntegrityDiagnostic(std::move(diagnostic));
+  } catch (...) {
+    // Integrity reporting is optional and must never alter parsing.
+  }
+}
+
 void dwgReader::recordEntityFailure(const objHandle &object, std::int16_t type,
                                     DwgEntityFailurePhase phase,
                                     std::uint32_t blockRecordHandle) noexcept {
@@ -6557,6 +6579,7 @@ bool dwgReader::readDwgTables(DRW_Header &hdr, dwgBuffer *dbuf,
     m_ltypeNameOrder.clear();
     m_deferredRawObjects.clear();
     m_deferredTableFramePublications.clear();
+    m_danglingBlockRecords.clear();
   };
   const auto eraseObject = [&](DwgObjectMap::iterator it) {
     if (it == ObjectMap.end()) {
@@ -6687,33 +6710,73 @@ bool dwgReader::readDwgTables(DRW_Header &hdr, dwgBuffer *dbuf,
     // schema; they are not the standard object owner/reactor tail.
     return true;
   };
-  // Every handle a control lists is claimed exactly once across all controls.
-  // A listed handle that has no entry in the object map is an erased (purged)
-  // record the producer left in the control's list (Extruder2.dwg's
-  // BLOCK_CONTROL carries one next to null entries), so it is skipped with a
-  // warning instead of failing the table phase. A handle another control
-  // object already consumed, or another control already claimed, is still a
-  // contradiction between two owners and fails.
+  // Every handle a control lists is claimed exactly once across all controls,
+  // and a listed record must exist: a table whose control names a record the
+  // file does not hold is inconsistent, and every reference to that record
+  // (an entity's layer, style or linetype, a dimension's style) would resolve
+  // to nothing without a word, so the phase fails.
+  //
+  // The one exception, `skipAbsent`, is the block table, on the evidence of
+  // one file. Extruder2.dwg (AC1018) lists 62 entries in its BLOCK_CONTROL:
+  // 58 block records, three null handles (dropped when the control is
+  // decoded), and 0x64FD, which no object of the file carries; the file holds
+  // 60 BLOCK_HEADER objects, and it also holds the BLOCK, ENDBLK and contents
+  // of 40 further block records that do not exist (see the entity sweep).
+  // Nothing live refers to an erased block record, so its entry is skipped and
+  // reported: an integrity diagnostic, and the count of
+  // dwgRW::getDanglingBlockRecords(). An INSERT that does place such a record
+  // is a live reference to nothing and is rejected by the entity reader. The
+  // exception covers ordinary entries only: the model and paper space records
+  // are listed apart from the counted entries (phantomHandles), and a drawing
+  // that lacks one is not a drawing with an erased block, so it fails. No
+  // file supports the same tolerance for another table, and it would hide
+  // damage there: an object that names an erased layer, style or linetype
+  // would be moved to the default one with no report.
+  //
+  // A handle another control already claimed, or that names a control object
+  // another table already consumed, is a contradiction between two owners and
+  // fails in every table.
+  std::vector<std::uint32_t> absentBlockRecords;
   const std::unordered_set<std::uint32_t> controlObjectHandles{
       hdr.linetypeCtrl, hdr.layerCtrl,  hdr.styleCtrl, hdr.dimstyleCtrl,
       hdr.vportCtrl,    hdr.blockCtrl,  hdr.appidCtrl, hdr.viewCtrl,
       hdr.ucsCtrl,      hdr.vpEntHeaderCtrl};
-  const auto claimControlHandles = [&](const DRW_ObjControl &control) {
+  const auto claimControlHandles = [&](const DRW_ObjControl &control,
+                                       bool skipAbsent = false) {
     for (const std::uint32_t handle : control.handlesList) {
       if (!claimedTableHandles.insert(handle).second) {
         return false;
       }
       if (ObjectMap.find(handle) != ObjectMap.end())
         continue;
+      if (!skipAbsent) {
+        DRW_DBG("WARNING: control handle not found ");
+        DRW_DBGH(handle);
+        DRW_DBG("\n");
+        return false;
+      }
       if (controlObjectHandles.find(handle) != controlObjectHandles.end()) {
         DRW_DBG("WARNING: control handle already consumed ");
         DRW_DBGH(handle);
         DRW_DBG("\n");
         return false;
       }
-      DRW_DBG("WARNING: control lists an absent (erased) record ");
+      if (std::find(control.phantomHandles.cbegin(),
+                    control.phantomHandles.cend(),
+                    handle) != control.phantomHandles.cend()) {
+        DRW_DBG("WARNING: block control lacks a model or paper space record ");
+        DRW_DBGH(handle);
+        DRW_DBG("\n");
+        return false;
+      }
+      DRW_DBG("WARNING: block control lists an absent (erased) record ");
       DRW_DBGH(handle);
       DRW_DBG("\n");
+      try {
+        absentBlockRecords.push_back(handle);
+      } catch (...) {
+        return false;
+      }
       recordDanglingControlHandle(control.handle, handle);
     }
     return true;
@@ -7154,7 +7217,7 @@ bool dwgReader::readDwgTables(DRW_Header &hdr, dwgBuffer *dbuf,
     eraseObject(mit);
     DRW_ObjControl blockControl;
     ret2 = parseControl(oc, kBlockTable, blockControl);
-    ret2 = ret2 && claimControlHandles(blockControl);
+    ret2 = ret2 && claimControlHandles(blockControl, /*skipAbsent=*/true);
     ret2 = ret2 && stageControlReceipt(oc, kBlockTable, blockControl);
     if (!ret2) {
       blockControl.handlesList.clear();
@@ -7409,6 +7472,19 @@ bool dwgReader::readDwgTables(DRW_Header &hdr, dwgBuffer *dbuf,
     parseAttribs(item.second);
   for (auto &item : ucsmap)
     parseAttribs(item.second);
+
+  if (ret) {
+    // Publish the erased block records the phase skipped only now that it
+    // has succeeded, like every other product of the phase.
+    try {
+      m_danglingBlockRecords.clear();
+      m_danglingBlockRecords.insert(absentBlockRecords.cbegin(),
+                                    absentBlockRecords.cend());
+    } catch (...) {
+      m_danglingBlockRecords.clear();
+      ret = false;
+    }
+  }
 
   if (ret) {
     m_deferredRawObjects.clear();
@@ -9936,6 +10012,21 @@ bool dwgReader::readDwgEntityWithOutput(dwgBuffer *dbuf, objHandle &obj,
           compoundFrameHandled = true;
           if (!entryParse(e, buff, bs, ret)) {
             terminalizeOrphanAttribOwner(obj.handle);
+            ret = false;
+            break;
+          }
+          if (isDanglingBlockRecord(e.blockRecH.ref)) {
+            // The block table lists the record this INSERT places, but the
+            // file holds no such record (see readDwgTables). Publishing the
+            // INSERT would place a block named "" and the drawing would open
+            // as if nothing were wrong, so it is a link failure like any
+            // other: rejected whole, nothing published, and it fails the
+            // phase that reads it. An erased block nothing places is
+            // tolerated; one that is placed is not.
+            parsedEntityOwnerMismatch = true;
+            m_currentEntityFailurePhase = DwgEntityFailurePhase::Identity;
+            recordErasedBlockReference(obj, e.blockRecH.ref, offsetSpace);
+            terminalizeOrphanAttribOwner(e.handle);
             ret = false;
             break;
           }
@@ -12693,6 +12784,7 @@ bool DRW_ObjControl::parseDwg(DRW::Version version, dwgBuffer *buf,
   const std::uint64_t childHandleCount =
       static_cast<std::uint64_t>(numEntries) + phantomEntryCount;
   std::list<std::uint32_t> parsedHandles;
+  std::list<std::uint32_t> parsedPhantoms;
   std::unordered_set<std::uint32_t> seenHandles;
 
   for (std::uint64_t i = 0; i < childHandleCount; i++) {
@@ -12702,6 +12794,8 @@ bool DRW_ObjControl::parseDwg(DRW::Version version, dwgBuffer *buf,
       if (!seenHandles.insert(objectH.ref).second)
         return fail();
       parsedHandles.push_back(objectH.ref);
+      if (i >= numEntries)
+        parsedPhantoms.push_back(objectH.ref);
     }
     DRW_DBG(" objectH Handle: ");
     DRW_DBGHL(objectH.code, objectH.size, objectH.ref);
@@ -12722,5 +12816,6 @@ bool DRW_ObjControl::parseDwg(DRW::Version version, dwgBuffer *buf,
     DRW_DBG("\n");
   }
   handlesList = std::move(parsedHandles);
+  phantomHandles = std::move(parsedPhantoms);
   return buf->isGood() && hBuf->isGood() ? true : fail();
 }
