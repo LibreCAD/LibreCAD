@@ -26,6 +26,7 @@
 #ifndef QC_MDIWINDOW_H
 #define QC_MDIWINDOW_H
 #include <QMdiSubWindow>
+#include <QPointer>
 
 #include "rs_graphic.h"
 
@@ -113,6 +114,10 @@ protected:
     bool m_owner = false;
     // List of known child windows that show blocks of the same drawing.
     QList<QC_MDIWindow *> m_childWindows;
+    // The child windows not destroyed yet, including closed ones that are no
+    // longer in m_childWindows: they point into this window's document, so
+    // the destructor destroys them first.
+    QList<QPointer<QC_MDIWindow>> m_dependentWindows;
     //  Pointer to parent window which needs to know if this window is closed or NULL.
     QC_MDIWindow *m_parentWindow{nullptr};
     QMdiArea *m_cadMdiArea = nullptr;

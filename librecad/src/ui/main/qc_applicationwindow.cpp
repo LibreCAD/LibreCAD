@@ -161,6 +161,28 @@ QC_ApplicationWindow::QC_ApplicationWindow() {
 QC_ApplicationWindow::~QC_ApplicationWindow() {
     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow");
 
+    // Quitting closes every drawing through doClose(), and the windows' deferred
+    // deletes run as the event loop ends. Should a window be left, destroy it
+    // (and its drawing) now, detached from the widgets and while the action
+    // context and dialog factory it uses still exist: as a child widget it would
+    // be destroyed after them.
+    setupWidgetsByWindow(nullptr);
+    m_actionHandler->setDocumentAndView(nullptr, nullptr);
+    QList<QPointer<QC_MDIWindow>> leftWindows;
+    for (QMdiSubWindow* subWindow : m_mdiAreaCAD->subWindowList()) {
+        auto* w = qobject_cast<QC_MDIWindow*>(subWindow);
+        if (w != nullptr) {
+            // the views' signals must not reach this half-destroyed window
+            w->getGraphicView()->disconnect(this);
+            leftWindows.append(w);
+        }
+    }
+    for (const QPointer<QC_MDIWindow>& w : std::as_const(leftWindows)) {
+        // null if its parent window already destroyed it
+        delete w.data();
+    }
+    m_windowList.clear();
+
 #ifdef _WINDOWS
     qt_ntfs_permission_lookup--; // turn it off again
 #endif
@@ -328,7 +350,9 @@ void QC_ApplicationWindow::doClose(QC_MDIWindow* w, const bool activateNext) {
         graphic->removeLayerListListener(view);
     }
 
-    for (auto && child : std::as_const(w->getChildWindows())) {
+    // doClose(child) removes the child from this list: iterate over a copy
+    const QList<QC_MDIWindow*> children = w->getChildWindows();
+    for (const auto child : children) {
         // block editors and print previews; just force these closed
         doClose(child, false); // they belong to the document (changes already saved there)
     }
@@ -634,6 +658,16 @@ void QC_ApplicationWindow::doWindowActivated(QMdiSubWindow* w, const bool forced
         emit windowsChanged(false);
         activeMDIWindowChanged(nullptr);
         return;
+    }
+
+    // doClose() has detached the widgets from a closed window, whose document
+    // is freed with it: do not attach them again.
+    const auto* activatedMdiWindow = qobject_cast<QC_MDIWindow*>(w);
+    if (activatedMdiWindow != nullptr) {
+        const QG_GraphicView* activatedView = activatedMdiWindow->getGraphicView();
+        if (activatedView == nullptr || activatedView->isClosing()) {
+            return;
+        }
     }
 
     if (w == m_activeMdiSubWindow) {
@@ -1312,8 +1346,12 @@ void QC_ApplicationWindow::closeWindow(QC_MDIWindow* win) {
 bool QC_ApplicationWindow::doCloseAllFiles() {
     bool hasParent(false);
     QC_MDIWindow::SaveOnClosePolicy policy = QC_MDIWindow::SaveOnClosePolicy::ASK;
-    for (const auto w : std::as_const(m_windowList)) {
-        if (w != nullptr) {
+    // doClose() removes windows from m_windowList, a parent's block editors
+    // too, and processEvents() below may already destroy them: iterate over a
+    // copy, and skip a window once it is no longer listed.
+    const QList<QC_MDIWindow*> windows = m_windowList;
+    for (const auto w : windows) {
+        if (w != nullptr && m_windowList.contains(w)) {
             hasParent = w->getParentWindow() != nullptr;
             if (w->isModified() && !hasParent && policy == QC_MDIWindow::SaveOnClosePolicy::ASK) {
                 doActivate(w);

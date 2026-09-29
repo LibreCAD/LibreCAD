@@ -44,6 +44,8 @@
 #include "rs_fileio.h"
 #include "rs_graphic.h"
 #include "rs_insert.h"
+#include "rs_layer.h"
+#include "rs_layerlist.h"
 #include "rs_line.h"
 
 namespace {
@@ -226,4 +228,75 @@ TEST_CASE("Save Block finishes when blocks insert each other", "[block][save]") 
     CHECK(temporary->countBlocks() == 2);
     CHECK(temporary->findBlock("PING") == ping);
     CHECK(temporary->findBlock("PONG") == pong);
+}
+
+// The copies used to keep naming the source drawing's layers, which the
+// temporary drawing does not have: getLayer() resolves a layer of another
+// drawing to none, so every entity was written on layer "0", and the file had
+// no layer table of its own (the old fixme). Nested blocks were not copied at
+// all, so their entities fared the same.
+TEST_CASE("Save Block writes the layers the block's entities are on", "[block][save][layers]") {
+    Drawing source;
+    auto addLayer = [&](const QString& name, const RS_Color& color) {
+        auto* layer = new RS_Layer(name);
+        layer->setPen(RS_Pen(color, RS2::Width05, RS2::DashLine));
+        source.m_graphic.addLayer(layer);
+        return source.m_graphic.findLayer(name);
+    };
+    RS_Layer* walls = addLayer("WALLS", RS_Color(255, 0, 0));
+    RS_Layer* doors = addLayer("DOORS", RS_Color(0, 0, 255));
+    source.m_outerLine->setLayer(walls);
+    for (RS_Entity* e : *source.m_mid) {
+        if (e->rtti() == RS2::EntityCircle) {
+            e->setLayer(doors);
+        }
+    }
+    // A layer nothing in the saved block is on stays out of the file.
+    addLayer("UNUSED", RS_Color(0, 255, 0));
+
+    QTemporaryDir dir;
+    REQUIRE(dir.isValid());
+    const QString path = dir.filePath("outer.dxf");
+    {
+        const std::unique_ptr<RS_Graphic> temporary = RS_ActionBlocksSave::createGraphicForBlock(source.m_outer);
+        temporary->setModified(true);
+        LC_DocumentsStorage storage;
+        REQUIRE(storage.saveBlockAs(temporary.get(), path));
+    }
+
+    RS_Graphic saved;
+    saved.initForNewDocument();
+    REQUIRE(RS_FileIO::instance()->fileImport(saved, path, RS2::FormatDXFRW));
+
+    RS_Layer* savedWalls = saved.findLayer("WALLS");
+    REQUIRE(savedWalls != nullptr);
+    CHECK(savedWalls->getPen().getColor() == RS_Color(255, 0, 0));
+    RS_Layer* savedDoors = saved.findLayer("DOORS");
+    REQUIRE(savedDoors != nullptr);
+    CHECK(savedDoors->getPen().getColor() == RS_Color(0, 0, 255));
+    CHECK(saved.findLayer("UNUSED") == nullptr);
+
+    unsigned onWalls = 0;
+    for (RS_Entity* e : saved) {
+        if (e->rtti() == RS2::EntityLine) {
+            CHECK(e->getLayer() == savedWalls);
+            ++onWalls;
+        }
+    }
+    CHECK(onWalls == 1);
+
+    RS_Block* mid = saved.findBlock("MID");
+    REQUIRE(mid != nullptr);
+    unsigned onDoors = 0;
+    for (RS_Entity* e : *mid) {
+        if (e->rtti() == RS2::EntityCircle) {
+            CHECK(e->getLayer() == savedDoors);
+            ++onDoors;
+        }
+    }
+    CHECK(onDoors == 1);
+
+    // The source drawing is untouched.
+    CHECK(source.m_outerLine->getLayer() == walls);
+    CHECK(source.m_graphic.findLayer("WALLS") == walls);
 }

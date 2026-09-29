@@ -27,7 +27,7 @@
 #include "lc_linemath.h"
 #include "rs_math.h"
 
-LC_UCS LC_WCS::instance = LC_WCS();
+LC_WCS LC_WCS::instance;
 
 LC_UCS::LC_UCS() {}
 

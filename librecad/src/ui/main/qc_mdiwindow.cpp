@@ -90,28 +90,59 @@ QC_MDIWindow::QC_MDIWindow(RS_Document* doc, QWidget* parent, const bool printPr
 /**
  * Destructor.
  *
- * Deletes the document associated with this window.
+ * Deletes the document associated with this window, if the window owns it.
+ *
+ * Everything that points into the document goes first:
+ * - the child windows: a print preview shares this document, and a block
+ *   editor's document is one of its blocks. A closed child is normally
+ *   destroyed before its parent, because doClose() closes the children first
+ *   and deferred deletes run in order; this also covers any other order;
+ * - this window's registrations on the document;
+ * - the graphic view, with its actions, viewport and renderer, and the layout
+ *   tab bar, which polls the drawing. Qt would destroy these child widgets
+ *   only after this destructor.
+ *
+ * The widgets of the application window are detached in
+ * QC_ApplicationWindow::doClose(), before this window is deleted.
  */
 QC_MDIWindow::~QC_MDIWindow() {
     try {
-        // Always unregister as a modification listener, regardless of
-        // isCleanUp(): RS_GraphicView::beginClose() sets that flag
-        // unconditionally on every window close (not just full application
-        // shutdown, which is what the guard below is actually meant to
-        // detect), so gating this on it left a dangling QC_MDIWindow*
-        // in RS_Document::m_modificationListeners on every normal close.
-        // For a print-preview window - which shares its parent's document -
-        // the very next print-preview open then walks that list and derefs
-        // the freed pointer. See issue #2764.
+        for (const QPointer<QC_MDIWindow>& dependent : std::as_const(m_dependentWindows)) {
+            delete dependent.data();
+        }
+        m_dependentWindows.clear();
+        m_childWindows.clear();
+        // the parent outlives this window (see above)
+        if (m_parentWindow != nullptr) {
+            m_parentWindow->removeChildWindow(this);
+        }
+
+        // Also unregister when the view is closing: RS_GraphicView::beginClose()
+        // runs on every close, and a dangling listener here crashed the next
+        // print preview of the same drawing (issue #2764).
         removeWidgetsListeners();
 
-        if (!(m_graphicView != nullptr && m_graphicView->isCleanUp())) {
-            //do not clear layer/block lists, if application is being closed
-            if (m_owner) {
-                delete m_document;
+        if (m_document != nullptr) {
+            RS_Graphic* graphic = m_document->getGraphic();
+            if (graphic != nullptr) {
+                graphic->removeLayerListListener(m_graphicView);
             }
-            m_document = nullptr;
+            // The view registers itself as its document's view, so a print
+            // preview takes over its parent's document: hand it back.
+            if (m_document->getGraphicView() == m_graphicView) {
+                const bool sharedWithParent = m_parentWindow != nullptr && m_parentWindow->getDocument() == m_document;
+                m_document->setGraphicView(sharedWithParent ? m_parentWindow->getGraphicView() : nullptr);
+            }
         }
+
+        delete widget();
+        m_graphicView = nullptr;
+        m_layoutTabBar = nullptr;
+
+        if (m_owner) {
+            delete m_document;
+        }
+        m_document = nullptr;
     }
     catch (...) {
         LC_ERR << __func__ << "(): received exception";
@@ -207,6 +238,8 @@ RS_Graphic* QC_MDIWindow::getGraphic() const {
  */
 void QC_MDIWindow::addChildWindow(QC_MDIWindow* w) {
     m_childWindows.append(w);
+    m_dependentWindows.removeIf([](const QPointer<QC_MDIWindow>& dependent) { return dependent.isNull(); });
+    m_dependentWindows.append(w);
     w->setParentWindow(this);
 
     const size_t size = m_childWindows.count();
