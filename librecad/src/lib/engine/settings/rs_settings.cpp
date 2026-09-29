@@ -103,14 +103,22 @@ RS_Settings *RS_Settings::instance() {
  *        with a "/". E.g. "/LibreCAD"
  */
 void RS_Settings::init(const QString &companyKey,const QString &appKey) {
-    auto* settings = new QSettings(companyKey, appKey);
+    // The application calls this once; every test file calls it again. A repeat
+    // keeps the singleton and swaps its backing store, so the pointers and
+    // signal connections held to it stay valid. Flush the old store first so
+    // the new one reads what it wrote.
+    if (INSTANCE != nullptr) {
+        INSTANCE->m_settings->sync();
+    }
+
+    auto settings = std::make_unique<QSettings>(companyKey, appKey);
 
     // First-run migration: if this is a versioned production store and
     // it's empty, look for a prior-major sibling and copy its contents.
     // Test app names (e.g. "LibreCAD-tests") skip migration so test
     // runs don't inherit real user settings from prior majors.
     if (isVersionedAppName(appKey) && isStoreEmpty(*settings)) {
-        migrateFromPriorMajor(companyKey, settings,
+        migrateFromPriorMajor(companyKey, settings.get(),
                               LC_SETTINGS_SCHEMA_MAJOR);
     }
 
@@ -125,7 +133,12 @@ void RS_Settings::init(const QString &companyKey,const QString &appKey) {
     //  here as: if (schemaMinor < 1) { ...; schemaMinor = 1; })
     settings->setValue(QLatin1String(G_KEY_SCHEMA_MINOR), schemaMinor);
 
-    INSTANCE = new RS_Settings(settings);
+    if (INSTANCE == nullptr) {
+        INSTANCE = new RS_Settings(settings.release());
+    }
+    else {
+        INSTANCE->replaceStore(settings.release());
+    }
 }
 
 void RS_Settings::copyAll(QSettings* src, QSettings* dst) {
@@ -190,6 +203,16 @@ RS_Settings::RS_Settings(QSettings *qsettings) {
 
 RS_Settings::~RS_Settings() {
     delete m_settings;
+    m_cache.clear();
+}
+
+// Points the singleton at a new store. The cache and the open group belong to
+// the old store, so they go with it; keeping them would answer reads for the
+// new store with the old store's values.
+void RS_Settings::replaceStore(QSettings* qsettings) {
+    const std::unique_ptr<QSettings> previous{m_settings};
+    m_settings = qsettings;
+    m_group.clear();
     m_cache.clear();
 }
 

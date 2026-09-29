@@ -19,8 +19,10 @@
 
 // Tests for RS_Settings cross-major migration helpers (copyAll and
 // migrateFromPriorMajor). The unit-under-test is the static helpers on
-// RS_Settings, not RS_Settings::init() — init() owns a global singleton
-// that can't be safely re-initialised between Catch2 cases.
+// RS_Settings, not RS_Settings::init(): init() points the process-wide
+// singleton at the store it is given, and these cases use throwaway stores
+// that the rest of the suite must not be left reading. init() has its own
+// tests in lc_settings_init_tests.cpp.
 //
 // copyAll() works on arbitrary QSettings pairs so we drive it with
 // QSettings(filePath, QSettings::IniFormat) instances under a
