@@ -21,14 +21,18 @@
 **
 ****************************************************************************/
 
-// RS_Settings::init() replaces the process-wide settings singleton. Every test
-// file that needs settings calls it once, so a test run calls it many times;
-// the instance it replaces must be freed, not orphaned along with its cache.
+// RS_Settings::init() is called once by the application and once per test file
+// by the test helpers. A repeat call must keep the singleton (the application
+// connects to it and holds it for its whole life) and switch it to the new
+// store: the replaced QSettings is freed, and the old store's cache and open
+// group do not carry over.
 
 #include <catch2/catch_test_macros.hpp>
 
 #include <QApplication>
+#include <QObject>
 #include <QPointer>
+#include <QSettings>
 
 #include "rs_settings.h"
 
@@ -38,6 +42,8 @@ namespace {
 // in the state those files expect.
 constexpr auto testOrganization = "LibreCAD";
 constexpr auto testApplication = "LibreCAD-tests";
+
+constexpr auto testGroup = "LcSettingsInitTest";
 
 QApplication& application() {
     static int argc = 1;
@@ -57,31 +63,84 @@ QApplication& application() {
     return *app;
 }
 
+// Removes what the tests wrote and closes any group they left open, whether
+// or not a check failed, so later tests see the settings they expect.
+class StoreCleanup final {
+public:
+    ~StoreCleanup() {
+        RS_Settings::instance()->endGroup();
+        QSettings store(testOrganization, testApplication);
+        store.remove(testGroup);
+        store.remove("GroupProbe");
+        store.sync();
+    }
+};
+
 } // namespace
 
-TEST_CASE("RS_Settings::init frees the instance it replaces", "[settings][ownership]") {
+TEST_CASE("RS_Settings::init keeps the singleton and swaps its store", "[settings][ownership]") {
     application();
+    const StoreCleanup cleanup;
     RS_Settings::init(testOrganization, testApplication);
-    const QPointer<RS_Settings> first = RS_Settings::instance();
-    REQUIRE(!first.isNull());
+    RS_Settings* settings = RS_Settings::instance();
+    REQUIRE(settings != nullptr);
 
-    RS_Settings::init(testOrganization, testApplication);
-    RS_Settings* second = RS_Settings::instance();
+    // A QPointer, not an address comparison: a destroyed instance and its
+    // replacement often share an address, and only the QPointer notices.
+    const QPointer<RS_Settings> tracked = settings;
+    const QPointer<QSettings> firstStore = settings->getSettings();
+    REQUIRE(!firstStore.isNull());
 
-    CHECK(first.isNull());
-    REQUIRE(second != nullptr);
+    SECTION("the instance and its signal connections survive") {
+        int optionsChangedCount = 0;
+        // the context object drops the connection before the counter goes away
+        QObject context;
+        QObject::connect(settings, &RS_Settings::optionsChanged, &context,
+                         [&optionsChangedCount] { ++optionsChangedCount; });
 
-    SECTION("the replacement is live") {
-        const auto group = second->beginGroupGuard(QStringLiteral("LcSettingsInitTest"));
-        REQUIRE(second->write(QStringLiteral("Key"), QStringLiteral("value")));
-        CHECK(second->readStr(QStringLiteral("Key")) == QStringLiteral("value"));
-        second->remove(QStringLiteral("Key"));
+        for (int i = 0; i < 3; ++i) {
+            RS_Settings::init(testOrganization, testApplication);
+        }
+
+        CHECK(!tracked.isNull());
+        CHECK(RS_Settings::instance() == settings);
+        settings->emitOptionsChanged();
+        CHECK(optionsChangedCount == 1);
     }
 
-    SECTION("a third call replaces the second the same way") {
-        const QPointer<RS_Settings> tracked = second;
+    SECTION("the replaced backing store is freed") {
         RS_Settings::init(testOrganization, testApplication);
-        CHECK(tracked.isNull());
-        CHECK(RS_Settings::instance() != nullptr);
+
+        CHECK(firstStore.isNull());
+        REQUIRE(settings->getSettings() != nullptr);
+        CHECK(settings->getSettings()->applicationName() == QString::fromLatin1(testApplication));
+    }
+
+    SECTION("the cache is dropped, so reads see the new store") {
+        settings->beginGroup(testGroup);
+        REQUIRE(settings->write("Key", QStringLiteral("v1")));
+        // proves the value is cached: the store below changes and this read does not
+        REQUIRE(settings->readStr("Key") == QStringLiteral("v1"));
+
+        {
+            QSettings other(testOrganization, testApplication);
+            other.setValue(QStringLiteral("/%1/Key").arg(testGroup), QStringLiteral("v2"));
+            other.sync();
+        }
+        CHECK(settings->readStr("Key") == QStringLiteral("v1"));
+
+        RS_Settings::init(testOrganization, testApplication);
+        settings->beginGroup(testGroup);
+        CHECK(settings->readStr("Key") == QStringLiteral("v2"));
+    }
+
+    SECTION("an open group does not carry over") {
+        settings->beginGroup(testGroup);
+        RS_Settings::init(testOrganization, testApplication);
+
+        REQUIRE(settings->write("GroupProbe", QStringLiteral("x")));
+        QSettings store(testOrganization, testApplication);
+        CHECK(store.value(QStringLiteral("GroupProbe")).toString() == QStringLiteral("x"));
+        CHECK(!store.contains(QStringLiteral("%1/GroupProbe").arg(testGroup)));
     }
 }
