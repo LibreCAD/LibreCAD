@@ -28,11 +28,25 @@
 
 #include <QRegularExpression>
 #include <QSet>
+#include <QtAlgorithms>
+#include <atomic>
 #include <iostream>
+#include <utility>
 
 #include "rs_block.h"
 #include "rs_blocklistlistener.h"
 #include "rs_debug.h"
+
+namespace {
+
+// Generations are drawn from one counter, so no two lists ever share a value.
+// Starting at 1 keeps 0 free to mean "no lookup cached" (see RS_Insert).
+std::size_t nextGeneration() {
+    static std::atomic<std::size_t> counter{0U};
+    return counter.fetch_add(1U, std::memory_order_relaxed) + 1U;
+}
+
+} // namespace
 
 /**
  * Constructor.
@@ -41,20 +55,31 @@
  *              If so, the blocks will be deleted when the block
  *              list is deleted.
  */
-RS_BlockList::RS_BlockList(const bool owner) {
+RS_BlockList::RS_BlockList(const bool owner) : m_generation{nextGeneration()} {
     m_owner = owner;
     m_activeBlock = nullptr;
     setModified(false);
 }
 
+RS_BlockList::~RS_BlockList() {
+    // Empty the list first, so it is consistent while the blocks are destroyed.
+    const QList<RS_Block*> blocks = std::exchange(m_blocks, {});
+    if (m_owner) {
+        qDeleteAll(blocks);
+    }
+}
+
 /**
- * Removes all blocks in the blocklist.
+ * Removes all blocks in the blocklist and, if the list owns them, frees them.
  */
 void RS_BlockList::clear() {
-    m_blocks.clear();
+    const QList<RS_Block*> blocks = std::exchange(m_blocks, {});
     m_activeBlock = nullptr;
-    ++m_generation;
+    m_generation = nextGeneration();
     setModified(true);
+    if (m_owner) {
+        qDeleteAll(blocks);
+    }
 }
 
 /**
@@ -97,7 +122,7 @@ bool RS_BlockList::add(RS_Block* block, const bool notify) {
     const RS_Block* b = find(block->getName());
     if (b == nullptr) {
         m_blocks.append(block);
-        ++m_generation;
+        m_generation = nextGeneration();
 
         if (notify) {
             addNotification();
@@ -106,7 +131,8 @@ bool RS_BlockList::add(RS_Block* block, const bool notify) {
 
         return true;
     }
-    if (m_owner) {
+    // A block added again to the list that already holds it is not ours to free.
+    if (m_owner && b != block) {
         delete block;
     }
     return false;
@@ -133,7 +159,7 @@ void RS_BlockList::remove(RS_Block* block) {
 
     // here the block is removed from the list but not deleted
     if (m_blocks.removeOne(block)) {
-        ++m_generation;
+        m_generation = nextGeneration();
     }
 
     for (const auto l : std::as_const(m_blockListListeners)) {
@@ -168,7 +194,7 @@ bool RS_BlockList::rename(RS_Block* block, const QString& name) {
         if (find(name) == nullptr) {
             const QString oldName = block->getName();
             block->setName(name);
-            ++m_generation;
+            m_generation = nextGeneration();
             setModified(true);
 
             // when the renamed block is nested within other block, we need to rename its inserts as well
