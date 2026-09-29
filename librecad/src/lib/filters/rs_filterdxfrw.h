@@ -2755,6 +2755,10 @@ private:
               LC_DwgAdvancedMetadata::DwgFieldListSourceAuthorizationStatus::
                   NotDwgSource;
       DRW_FieldList payload;
+      //! For a list read from a DWG: the ordinals of the members its receipt
+      //! proves name no object frame of the source file, the only members the
+      //! plan may drop from such a list.
+      std::vector<std::uint32_t> framelessMembers;
       //! One flag per payload member: true when the member names no object at
       //! all (see prepareDwgFieldWritePlan) and is left out of the emitted
       //! FIELDLIST.  The payload itself stays the source-faithful record so

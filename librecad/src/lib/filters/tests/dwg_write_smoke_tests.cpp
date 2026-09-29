@@ -10141,6 +10141,46 @@ public:
   }
 };
 
+// A FIELD and a FIELDLIST written straight through the low-level writer, which
+// does not check that a member names an object. It produces the source file
+// for the DWG-sourced FIELDLIST tests: a real drawing whose FIELDLIST has a
+// member that points at nothing (or at something that is not a FIELD), read
+// back with its receipts like any DWG the filter opens.
+class SourcedFieldListIface : public EmptyIface {
+public:
+  static constexpr std::uint32_t kFieldHandle = 0x9D1u;
+  static constexpr std::uint32_t kListHandle = 0x9D2u;
+
+  dwgRW *m_writer{nullptr};
+  DRW_Field m_field;
+  DRW_FieldList m_fieldList;
+
+  explicit SourcedFieldListIface(std::vector<std::uint32_t> members) {
+    m_field.handle = kFieldHandle;
+    m_field.parentHandle = 0xCu;
+    m_field.m_evaluatorId = "AcDbBlockEval";
+    m_field.m_fieldCode = "%<\\AcDbBlock>%";
+    m_field.m_value.m_dataType = 0;
+    m_field.m_value.m_value.addInt(91, 1);
+    m_field.m_value.m_unitType = 12;
+    m_fieldList.handle = kListHandle;
+    m_fieldList.parentHandle = 0xCu;
+    m_fieldList.m_fieldHandles = std::move(members);
+  }
+
+  void writeDwgClasses() override {
+    REQUIRE(m_writer != nullptr);
+    REQUIRE(m_writer->registerFieldObjectClass(&m_field));
+    REQUIRE(m_writer->registerFieldListObjectClass(&m_fieldList));
+  }
+
+  void writeObjects() override {
+    REQUIRE(m_writer != nullptr);
+    REQUIRE(m_writer->writeField(&m_field));
+    REQUIRE(m_writer->writeFieldList(&m_fieldList));
+  }
+};
+
 } // namespace
 
 TEST_CASE("dwgRW writes POINT/LINE/CIRCLE/ARC and reader recovers them",
@@ -20324,6 +20364,103 @@ TEST_CASE("LC_DwgAdvancedMetadata authorizes FIELDLIST membership exactly",
     checkStatus(complete.authorizeDwgFieldListSource(completeRecord),
                 Status::Authorized);
   }
+
+  // The strict proof above answers "does the receipt show every member's FIELD
+  // frame?". The exporter asks a narrower question: is anything wrong beyond
+  // members that point at no frame of the source file at all? Such a member
+  // proves and disproves nothing, and the exporter may drop it; every other
+  // deviation still refuses.
+  SECTION("the export proof tolerates only members that name no source frame") {
+    const auto exportProof = [](const Graph &metadata,
+                                const Graph::FieldListRecord &record) {
+      return metadata.authorizeDwgFieldListSourceForExport(record);
+    };
+
+    // No FIELD frame for the member, and no frame of any kind in the coverage
+    // report: the member points at nothing. Strict: refused. Export: allowed,
+    // and the member is reported.
+    Graph frameless;
+    addFrames(frameless, {listPublication});
+    const auto &framelessRecord = addRecord(frameless, list);
+    frameless.addDwgFieldListMembership(membership);
+    checkStatus(frameless.authorizeDwgFieldListSource(framelessRecord),
+                Status::MissingFieldEndpoint);
+    CHECK(frameless.authorizeDwgFieldListSource(framelessRecord)
+              .framelessMembers.empty());
+    const auto tolerated = exportProof(frameless, framelessRecord);
+    checkStatus(tolerated, Status::Authorized);
+    CHECK(tolerated.framelessMembers == std::vector<std::uint32_t>{0u});
+
+    // With every member resolved, both proofs agree and report nothing.
+    Graph complete;
+    addFrames(complete, {listPublication, fieldPublication});
+    const auto &completeRecord = addRecord(complete, list);
+    complete.addDwgFieldListMembership(membership);
+    checkStatus(exportProof(complete, completeRecord), Status::Authorized);
+    CHECK(exportProof(complete, completeRecord).framelessMembers.empty());
+
+    // The coverage report names a frame for the member although no FIELD
+    // frame was published for it: the file has something there that the
+    // reader did not turn into a FIELD. That is a real problem, not a
+    // dangling pointer.
+    Graph unpublished;
+    unpublished.addDwgFramePublication(listPublication);
+    DRW_DwgFrameCoverageReport unpublishedReport;
+    unpublishedReport.m_status = DRW_DwgFrameCoverageStatus::FinalizedComplete;
+    unpublishedReport.m_complete = true;
+    unpublishedReport.m_entries = {makeCoverage(listPublication),
+                                   makeCoverage(fieldPublication)};
+    unpublished.addDwgFrameCoverageReport(unpublishedReport);
+    const auto &unpublishedRecord = addRecord(unpublished, list);
+    unpublished.addDwgFieldListMembership(membership);
+    checkStatus(exportProof(unpublished, unpublishedRecord),
+                Status::MissingFieldEndpoint);
+
+    // A member whose frame exists but is not a FIELD, an ambiguous frame, and
+    // a member mixed in with a valid one that is refused for its own reason.
+    Graph invalidEndpoint;
+    auto invalidField = fieldPublication;
+    invalidField.m_className = "AcDbNotAField";
+    addFrames(invalidEndpoint, {listPublication, invalidField});
+    const auto &invalidEndpointRecord = addRecord(invalidEndpoint, list);
+    invalidEndpoint.addDwgFieldListMembership(membership);
+    checkStatus(exportProof(invalidEndpoint, invalidEndpointRecord),
+                Status::InvalidFieldEndpoint);
+
+    Graph duplicateEndpoint;
+    auto duplicateField = fieldPublication;
+    ++duplicateField.m_sourceOffset;
+    addFrames(duplicateEndpoint,
+              {listPublication, fieldPublication, duplicateField});
+    const auto &duplicateEndpointRecord = addRecord(duplicateEndpoint, list);
+    duplicateEndpoint.addDwgFieldListMembership(membership);
+    checkStatus(exportProof(duplicateEndpoint, duplicateEndpointRecord),
+                Status::DuplicateFieldEndpoint);
+
+    // A frameless member does not excuse the rest of the receipt: the list
+    // must still match what was read, and the coverage must be complete.
+    Graph changedList;
+    addFrames(changedList, {listPublication});
+    const auto &changedListRecord = addRecord(changedList, list);
+    auto changedMembership = membership;
+    changedMembership.m_entries.front().m_fieldHandle = DRW::NoHandle;
+    changedList.addDwgFieldListMembership(changedMembership);
+    checkStatus(exportProof(changedList, changedListRecord),
+                Status::MismatchedMembership);
+
+    Graph partial;
+    addFrames(partial, {listPublication},
+              DRW_DwgFrameCoverageStatus::FinalizedPartial, false);
+    const auto &partialRecord = addRecord(partial, list);
+    partial.addDwgFieldListMembership(membership);
+    checkStatus(exportProof(partial, partialRecord),
+                Status::FrameCoverageIncomplete);
+
+    // A list that was not read from a DWG is not affected either way.
+    Graph newList;
+    const auto &newRecord = addRecord(newList, list);
+    checkStatus(exportProof(newList, newRecord), Status::NotDwgSource);
+  }
 }
 
 TEST_CASE("RS_FilterDXFRW preserves only unchanged DWG FIELD graphs",
@@ -23235,6 +23372,139 @@ TEST_CASE("RS_FilterDXFRW rejects FIELDLIST members naming an unwritable FIELD "
                             RS2::FormatDWG2013));
     std::remove(path.c_str());
   }
+}
+
+// A FIELDLIST read from a DWG carries receipts for what the file held. A member
+// that names no object frame of that file at all -- no FIELD frame, no frame of
+// any kind -- is a dangling pointer: dropped with a warning, and the export goes
+// through, exactly as for a list that never came from a file. Everything else
+// about the receipt still has to hold: a member that names a frame that is not
+// a FIELD, a list that no longer matches what was read, a member whose frame the
+// file has but the reader could not turn into a FIELD.
+TEST_CASE("RS_FilterDXFRW drops FIELDLIST members that name no frame of the "
+          "source DWG",
+          "[dwg-write][fieldlist][filter][source]") {
+  ensureQtSettings();
+  using Status = LC_DwgAdvancedMetadata::DwgFieldListSourceAuthorizationStatus;
+  constexpr std::uint32_t kDangling = 0x9DFu;
+  const std::string sourcePath = tempPath("filter_fieldlist_sourced_frameless.dwg");
+  const std::string outputPath = tempPath("filter_fieldlist_sourced_pruned.dwg");
+  std::remove(sourcePath.c_str());
+  std::remove(outputPath.c_str());
+
+  {
+    SourcedFieldListIface iface{
+        {SourcedFieldListIface::kFieldHandle, DRW::NoHandle, kDangling}};
+    dwgRW writer(sourcePath.c_str());
+    iface.m_writer = &writer;
+    REQUIRE(writer.write(&iface, DRW::AC1027, /*bin=*/false));
+  }
+
+  RS_Graphic imported;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(imported, QString::fromStdString(sourcePath),
+                              RS2::FormatDWG));
+  }
+  const auto &metadata = imported.dwgAdvancedMetadata();
+  REQUIRE(metadata.fieldLists().size() == 1u);
+  const auto &record = metadata.fieldLists().front();
+  CHECK(record.fieldHandles ==
+        std::vector<std::uint32_t>{SourcedFieldListIface::kFieldHandle,
+                                   DRW::NoHandle, kDangling});
+  // The strict receipt proof cannot show the member's FIELD; the export proof
+  // authorizes the list and reports exactly that member.
+  CHECK(metadata.authorizeDwgFieldListSource(record).status ==
+        Status::MissingFieldEndpoint);
+  const auto proof = metadata.authorizeDwgFieldListSourceForExport(record);
+  CHECK(proof.authorized());
+  CHECK(proof.framelessMembers == std::vector<std::uint32_t>{2u});
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(imported, QString::fromStdString(outputPath),
+                              RS2::FormatDWG2013));
+  }
+  RS_Graphic reopened;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(reopened, QString::fromStdString(outputPath),
+                              RS2::FormatDWG));
+  }
+  REQUIRE(reopened.dwgAdvancedMetadata().fieldLists().size() == 1u);
+  CHECK(reopened.dwgAdvancedMetadata().fieldLists().front().fieldHandles ==
+        std::vector<std::uint32_t>{SourcedFieldListIface::kFieldHandle,
+                                   DRW::NoHandle});
+  CHECK(reopened.dwgAdvancedMetadata().fields().size() == 1u);
+
+  std::remove(sourcePath.c_str());
+  std::remove(outputPath.c_str());
+}
+
+TEST_CASE("RS_FilterDXFRW still refuses a DWG-sourced FIELDLIST whose receipt "
+          "does not hold",
+          "[dwg-write][fieldlist][filter][source]") {
+  ensureQtSettings();
+  constexpr std::uint32_t kDangling = 0x9DFu;
+  const std::string sourcePath =
+      tempPath("filter_fieldlist_sourced_refused.dwg");
+  const std::string outputPath =
+      tempPath("filter_fieldlist_sourced_refused_out.dwg");
+
+  const auto writeSource = [&](std::vector<std::uint32_t> members) {
+    std::remove(sourcePath.c_str());
+    SourcedFieldListIface iface{std::move(members)};
+    dwgRW writer(sourcePath.c_str());
+    iface.m_writer = &writer;
+    REQUIRE(writer.write(&iface, DRW::AC1027, /*bin=*/false));
+  };
+  const auto importSource = [&](RS_Graphic &graphic) {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(sourcePath),
+                              RS2::FormatDWG));
+  };
+  const auto exportRefused = [&](RS_Graphic &graphic) {
+    std::remove(outputPath.c_str());
+    RS_FilterDXFRW filter;
+    CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(outputPath),
+                                  RS2::FormatDWG2013));
+    CHECK_FALSE(std::filesystem::exists(outputPath));
+  };
+
+  SECTION("a member that names a frame of another kind") {
+    // The root dictionary is a real object frame of the file, and not a FIELD.
+    writeSource({SourcedFieldListIface::kFieldHandle,
+                 DRW::DwgNamedObjectsDictionaryHandle});
+    RS_Graphic imported;
+    importSource(imported);
+    exportRefused(imported);
+  }
+
+  SECTION("a dangling member does not excuse a member of another kind") {
+    writeSource({kDangling, DRW::DwgNamedObjectsDictionaryHandle});
+    RS_Graphic imported;
+    importSource(imported);
+    exportRefused(imported);
+  }
+
+  SECTION("a list edited since it was read") {
+    writeSource({SourcedFieldListIface::kFieldHandle, kDangling});
+    RS_Graphic imported;
+    importSource(imported);
+    // Sanity: as read, the list exports (the dangling member is dropped).
+    const auto &fieldLists = imported.dwgAdvancedMetadata().fieldLists();
+    REQUIRE(fieldLists.size() == 1u);
+    // The user drops the member from the list themselves: it no longer
+    // matches the membership receipt, so the source proof does not hold.
+    const_cast<std::vector<LC_DwgAdvancedMetadata::FieldListRecord> &>(
+        fieldLists)
+        .front()
+        .fieldHandles = {SourcedFieldListIface::kFieldHandle};
+    exportRefused(imported);
+  }
+
+  std::remove(sourcePath.c_str());
+  std::remove(outputPath.c_str());
 }
 
 TEST_CASE("RS_FilterDXFRW rejects stale FIELDLIST DWG receipts",

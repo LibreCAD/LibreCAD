@@ -298,6 +298,11 @@ public:
   struct DwgFieldListSourceAuthorization {
     DwgFieldListSourceAuthorizationStatus status =
         DwgFieldListSourceAuthorizationStatus::NotDwgSource;
+    //! Ordinals of the members that name no object frame of the file the
+    //! list was read from. Only the export-tolerant authorization fills it
+    //! (authorizeDwgFieldListSourceForExport); the strict one refuses such a
+    //! member as MissingFieldEndpoint.
+    std::vector<std::uint32_t> framelessMembers;
 
     bool isDwgSource() const noexcept {
       return status != DwgFieldListSourceAuthorizationStatus::NotDwgSource;
@@ -6258,8 +6263,30 @@ public:
                          return publication.m_handle == handle;
                        });
   }
+  //! Strict receipt proof: every non-null member must have a source FIELD
+  //! frame, exactly as read.
   DwgFieldListSourceAuthorization
   authorizeDwgFieldListSource(const FieldListRecord &record) const {
+    return authorizeDwgFieldListSourceImpl(record, false);
+  }
+
+  //! The proof the exporter needs. Identical to the strict one except for a
+  //! member whose handle names no object frame of the source file at all: no
+  //! FIELD frame published for it and no frame of any kind in the coverage
+  //! report. Such a member points at nothing, so it neither proves nor
+  //! disproves anything about the list; the exporter may drop it (it is
+  //! reported in framelessMembers). Everything else still refuses: a member
+  //! that has a frame but not a valid FIELD one, an ambiguous frame, a
+  //! receipt that does not match the record, incomplete coverage.
+  DwgFieldListSourceAuthorization
+  authorizeDwgFieldListSourceForExport(const FieldListRecord &record) const {
+    return authorizeDwgFieldListSourceImpl(record, true);
+  }
+
+private:
+  DwgFieldListSourceAuthorization
+  authorizeDwgFieldListSourceImpl(const FieldListRecord &record,
+                                  bool tolerateFramelessMembers) const {
     const auto publicationMatches =
         [&record](const DRW_DwgFramePublication &value) {
           return value.m_handle == record.handle;
@@ -6355,6 +6382,7 @@ public:
         membership.m_entries.size() != record.fieldHandles.size()) {
       return {DwgFieldListSourceAuthorizationStatus::MismatchedMembership};
     }
+    std::vector<std::uint32_t> framelessMembers;
     for (std::size_t ordinal = 0; ordinal < membership.m_entries.size();
          ++ordinal) {
       const DRW_DwgFieldListMembership::Entry &entry =
@@ -6373,6 +6401,21 @@ public:
           fields.push_back(&candidate);
       }
       if (fields.empty()) {
+        // No FIELD frame was published for the member. It names no object
+        // frame of the file when the coverage report -- which lists every
+        // frame of the file, published or not -- has no entry for it either.
+        // A frame that exists but was never published is a real problem (a
+        // FIELD that could not be read), not a dangling pointer: refused.
+        const bool namesAFrame = std::any_of(
+            m_dwgFrameCoverageReport.m_entries.cbegin(),
+            m_dwgFrameCoverageReport.m_entries.cend(),
+            [&entry](const DRW_DwgFrameCoverageEntry &coverage) {
+              return coverage.m_handle == entry.m_fieldHandle;
+            });
+        if (tolerateFramelessMembers && !namesAFrame) {
+          framelessMembers.push_back(static_cast<std::uint32_t>(ordinal));
+          continue;
+        }
         return {DwgFieldListSourceAuthorizationStatus::MissingFieldEndpoint};
       }
       if (fields.size() != 1u) {
@@ -6387,10 +6430,12 @@ public:
     if (!m_dwgFramePublicationCoverageComplete) {
       return {DwgFieldListSourceAuthorizationStatus::FrameCoverageIncomplete};
     }
-    return {DwgFieldListSourceAuthorizationStatus::Authorized};
+    DwgFieldListSourceAuthorization authorization;
+    authorization.status = DwgFieldListSourceAuthorizationStatus::Authorized;
+    authorization.framelessMembers = std::move(framelessMembers);
+    return authorization;
   }
 
-private:
   static bool sameDwgFieldVariant(const DRW_Variant &left,
                                   const DRW_Variant &right) {
     if (left.code() != right.code() || left.type() != right.type() ||

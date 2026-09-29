@@ -3094,7 +3094,10 @@ bool canWriteDwgFieldListRecord(
     const LC_DwgAdvancedMetadata::FieldListRecord &record,
     const DRW_FieldList &fieldList,
     DRW::Version version) {
-  const auto sourceAuthorization = metadata.authorizeDwgFieldListSource(record);
+  // The export-tolerant proof: a member that names no object frame of the
+  // source file does not refuse the list (the plan drops it).
+  const auto sourceAuthorization =
+      metadata.authorizeDwgFieldListSourceForExport(record);
   return !hasDxfTableAppDataUnsupportedByDwg(fieldList) &&
          fieldList.isDwgPayloadValid(version) &&
          (sourceAuthorization.status ==
@@ -15668,8 +15671,12 @@ bool RS_FilterDXFRW::prepareDwgFieldWritePlan() {
       candidate.metadataIndex = index;
       candidate.sourceHandle = record.handle;
       candidate.replayState = record.replayState;
-      candidate.sourceAuthorization =
-          metadata.authorizeDwgFieldListSource(record).status;
+      {
+        const auto authorization =
+            metadata.authorizeDwgFieldListSourceForExport(record);
+        candidate.sourceAuthorization = authorization.status;
+        candidate.framelessMembers = authorization.framelessMembers;
+      }
       candidate.payload = fieldListFromMetadata(record);
       if (!canWriteDwgFieldListRecord(metadata, record, candidate.payload,
                                       plan.version)) {
@@ -15688,10 +15695,32 @@ bool RS_FilterDXFRW::prepareDwgFieldWritePlan() {
       // suppressed identity -- is different: leaving it out would silently
       // lose part of the document, and pointing it at a non-FIELD would
       // write a misleading list, so the export is refused as before.
-      const auto isDanglingMember = [this](std::uint32_t handle) {
-        return resolveDwgWriteObjectHandle(handle) ==
-                   DwgWriteReferenceStatus::Missing &&
-               !hasDwgWriteSourceKind(handle);
+      //
+      // A list read from a DWG adds a second condition. The receipts record
+      // what the source file held, so a member of such a list is dropped only
+      // if the receipt proves that it names no object frame of that file (no
+      // FIELD frame published for it, no frame of any kind in the coverage
+      // report; see authorizeDwgFieldListSourceForExport). The registry alone
+      // does not decide it there: a member whose frame the file does have,
+      // but that the export cannot resolve, is a real problem to refuse, not
+      // a dangling pointer to forget.
+      const bool sourceBacked =
+          candidate.sourceAuthorization !=
+          LC_DwgAdvancedMetadata::DwgFieldListSourceAuthorizationStatus::
+              NotDwgSource;
+      const auto isDanglingMember = [this, &candidate,
+                                     sourceBacked](std::uint32_t handle,
+                                                   std::size_t ordinal) {
+        if (resolveDwgWriteObjectHandle(handle) !=
+                DwgWriteReferenceStatus::Missing ||
+            hasDwgWriteSourceKind(handle)) {
+          return false;
+        }
+        return !sourceBacked ||
+               std::find(candidate.framelessMembers.cbegin(),
+                         candidate.framelessMembers.cend(),
+                         static_cast<std::uint32_t>(ordinal)) !=
+                   candidate.framelessMembers.cend();
       };
       candidate.memberDropped.assign(candidate.payload.m_fieldHandles.size(),
                                      false);
@@ -15704,7 +15733,7 @@ bool RS_FilterDXFRW::prepareDwgFieldWritePlan() {
           continue;
         const auto field = plan.fieldCandidateIndexes.find(fieldHandle);
         if (field == plan.fieldCandidateIndexes.cend()) {
-          if (!isDanglingMember(fieldHandle)) {
+          if (!isDanglingMember(fieldHandle, ordinal)) {
             plan.valid = false;
             break;
           }
@@ -15792,9 +15821,14 @@ bool RS_FilterDXFRW::validateDwgFieldWritePlan(
             candidate.sourceHandle ||
         metadata.fieldLists()[candidate.metadataIndex].replayState !=
             candidate.replayState ||
-        metadata.authorizeDwgFieldListSource(
+        metadata
+                .authorizeDwgFieldListSourceForExport(
                     metadata.fieldLists()[candidate.metadataIndex])
                 .status != candidate.sourceAuthorization ||
+        metadata
+                .authorizeDwgFieldListSourceForExport(
+                    metadata.fieldLists()[candidate.metadataIndex])
+                .framelessMembers != candidate.framelessMembers ||
         !LC_DwgAdvancedMetadata::matchesDwgFieldListRecord(
             metadata.fieldLists()[candidate.metadataIndex], candidate.payload)) {
       return false;
