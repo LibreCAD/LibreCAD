@@ -9527,6 +9527,17 @@ bool DRW_Table::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
         return fail();
     m_content.m_tableStyleHandle = m_tableStyleHandle;
     m_semanticContentComplete = true;
+    // Decode the cell grid on independent cursors, as the R2010+ path does for
+    // TABLECONTENT. Everything read so far (base point, block record, owned
+    // attributes, grid geometry, table style) is validated, so a cell this
+    // reader cannot decode costs the semantic grid and nothing else: the
+    // anonymous *T block that the INSERT part refers to still draws the table.
+    // A failing cell used to invalidate the shared cursors, and the closing
+    // isGood() check then rejected the whole entity, which fails the block
+    // that owns it. The cursors are adopted only when the whole grid decoded.
+    dwgBuffer contentBuf = buf->forkIndependent();
+    dwgBuffer contentStringBuf = sBuf->forkIndependent();
+    dwgBuffer contentHandleBuf = hBuff.forkIndependent();
     // For <=AC1018 (R2000/R2004) there is no separate R2007+ string stream:
     // DRW_Entity::parseDwg only seeks sBuf when version > AC1018 (see the
     // `strBuf != NULL && version > DRW::AC1018` guard there), so legacy cell
@@ -9534,7 +9545,7 @@ bool DRW_Table::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
     // text from the wrong position and desync `buf`.  Pass nullptr so the
     // cell readers' `textBuf = strBuf ? strBuf : buf` falls back to the
     // inline `buf`.  R2007 (AC1021) keeps the separate sBuf stream.
-    dwgBuffer *cellStrBuf = (version > DRW::AC1018) ? sBuf : nullptr;
+    dwgBuffer *cellStrBuf = (version > DRW::AC1018) ? &contentStringBuf : nullptr;
     TableDwgBounds tableBounds;
     tableBounds.bodyEndBit = bodyEndBit;
     tableBounds.stringEndBit = cellStrBuf == nullptr
@@ -9542,7 +9553,8 @@ bool DRW_Table::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
     tableBounds.handleEndBit = handleEndBit;
     for (std::uint32_t row = 0; row < rows && m_semanticContentComplete; ++row) {
         for (std::uint32_t column = 0; column < columns; ++column) {
-            if (!parseR2007TableCell(version, buf, cellStrBuf, &hBuff,
+            if (!parseR2007TableCell(version, &contentBuf, cellStrBuf,
+                                     &contentHandleBuf,
                                      m_content.m_rows[row].m_cells[column],
                                      &m_content.m_subrecordRanges,
                                      tableBounds)) {
@@ -9554,10 +9566,21 @@ bool DRW_Table::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
 
     if (m_semanticContentComplete)
         m_semanticContentComplete = skipR2007TableOverrides(
-            version, buf, cellStrBuf, &hBuff, &m_content.m_subrecordRanges,
-            tableBounds);
-    if (!m_semanticContentComplete)
+            version, &contentBuf, cellStrBuf, &contentHandleBuf,
+            &m_content.m_subrecordRanges, tableBounds);
+    if (m_semanticContentComplete
+        && (!contentBuf.isGood()
+            || (cellStrBuf != nullptr && !contentStringBuf.isGood())
+            || !contentHandleBuf.isGood()))
+        m_semanticContentComplete = false;
+    if (m_semanticContentComplete) {
+        *buf = contentBuf;
+        if (cellStrBuf != nullptr)
+            *sBuf = contentStringBuf;
+        hBuff = contentHandleBuf;
+    } else {
         DRW_DBG("R2007 TABLE cell parse incomplete; anonymous block insert kept\n");
+    }
 
     if (!buf->isGood() || !sBuf->isGood() || !hBuff.isGood())
         return fail();

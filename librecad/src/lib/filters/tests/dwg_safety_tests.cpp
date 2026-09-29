@@ -3647,6 +3647,9 @@ struct R2007TableCellSpec {
     std::int32_t dataType = 512;
     // The kGeneral payload: UTF-16LE text plus a terminating NUL, in the data stream.
     std::string generalText;
+    // When not negative, the byte count written for the kGeneral payload in place
+    // of the real one (with no bytes behind it): a corrupt cell.
+    std::int32_t declaredPayloadSize = -1;
     double number = 0.0;
     // TV 302, in the string stream.
     std::string valueString;
@@ -3746,6 +3749,10 @@ std::vector<std::uint8_t> makeR2007TableFrame(
                 } else if (cell.dataType == 512) {
                     const std::size_t byteCount =
                         cell.generalText.size() * 2u + 2u;
+                    if (cell.declaredPayloadSize >= 0) {
+                        body.putBitLong(cell.declaredPayloadSize);
+                        continue;
+                    }
                     body.putBitLong(static_cast<std::int32_t>(byteCount));
                     for (const char c : cell.generalText) {
                         body.putRawChar8(static_cast<std::uint8_t>(c));
@@ -10735,6 +10742,55 @@ TEST_CASE("DWG R2007 ACAD_TABLE decodes UTF-16 cell text and value payloads",
     CHECK(secondRow[0].m_contents[0].m_text == "2.50");
     REQUIRE(secondRow[1].m_contents.size() == 1u);
     CHECK(secondRow[1].m_contents[0].m_text.empty());
+}
+
+// The cell grid is the optional part of an R2007 table: the INSERT part and the
+// anonymous *T block it names still draw the table. A cell this reader cannot
+// decode must cost the semantic grid, not the entity, or it fails the block
+// that owns the table.
+TEST_CASE("DWG R2007 ACAD_TABLE keeps the table when a cell cannot be decoded",
+          "[dwg][safety][table][r2007]") {
+    constexpr std::uint16_t classNumber = 507;
+    constexpr std::uint32_t tableHandle = 0x2A2u;
+
+    R2007TableCellSpec title;
+    title.generalText = "TITLE";
+    title.valueString = "TITLE";
+    R2007TableCellSpec corrupt;
+    // A payload size no table can have: reading it invalidates the cursor.
+    corrupt.declaredPayloadSize = 0x7FFFFFFF;
+    R2007TableCellSpec plain;
+    plain.generalText = "X";
+    plain.valueString = "X";
+
+    const auto frame = makeR2007TableFrame(
+        tableHandle, classNumber, {{title, corrupt}, {plain, plain}});
+    REQUIRE(!frame.empty());
+
+    DwgEntityReaderProbe reader(std::make_unique<dwgBuffer>(
+        const_cast<std::uint8_t*>(frame.data()), frame.size()));
+    reader.setVersionForTest(DRW::AC1021);
+    reader.setCodePageForTest("UTF-16");
+    reader.addCustomEntityClass(classNumber, "ACAD_TABLE");
+    dwgBuffer buffer(const_cast<std::uint8_t*>(frame.data()), frame.size());
+    objHandle entity(classNumber, tableHandle, 0);
+    DwgTableCaptureProbe interface;
+    REQUIRE(reader.readDwgEntity(&buffer, entity, interface));
+    REQUIRE(interface.tables.size() == 1u);
+    const DRW_Table& table = interface.tables.front();
+
+    // The shell is intact: geometry, block record, table style, grid size.
+    CHECK(table.basePoint.x == Catch::Approx(7.0));
+    CHECK(table.blockRecH.ref == r2007TableBlockRecord);
+    CHECK(table.m_tableStyleHandle == r2007TableStyle);
+    CHECK(table.m_content.m_columns.size() == 2u);
+    CHECK(table.m_content.m_rows.size() == 2u);
+    CHECK(table.m_hasSemanticContent);
+    // The grid says it is incomplete, and what decoded before the failure stays.
+    CHECK_FALSE(table.m_semanticContentComplete);
+    REQUIRE(table.m_content.m_rows[0].m_cells[0].m_contents.size() == 1u);
+    CHECK(table.m_content.m_rows[0].m_cells[0].m_contents[0].m_text == "TITLE");
+    CHECK(reader.m_entityParseFailures == 0u);
 }
 
 TEST_CASE("DWG table-entry common header rejects null buffer",
