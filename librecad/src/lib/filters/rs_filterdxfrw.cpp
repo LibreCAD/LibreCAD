@@ -34,6 +34,7 @@
 #include <cstdint>
 #include <cstdlib>
 #include <cstring>
+#include <functional>
 #include <iomanip>
 #include <iostream>
 #include <limits>
@@ -4834,8 +4835,32 @@ bool RS_FilterDXFRW::embedXref(RS_Block *block, const QString &xrefPath,
     }
   }
 
-  // Per-entity clone helper: clone @p src, redirect layer pointer to the
-  // host's namespaced layer, and (if it's an INSERT) rewrite its block
+  // Points @p entity and its children at the host's namespaced copies of
+  // the XREF's layers. This reads the raw layer pointer: once an entity is
+  // parented into the host, getLayer() only answers layers of the host's
+  // own list, so it would report none for the XREF's layers and leave them
+  // in place. No pointer to an XREF layer may survive: they are freed with
+  // `ext` when this function returns.
+  std::function<void(RS_Entity *)> redirectLayers = [&](RS_Entity *entity) {
+    RS_Layer *extLyr = entity->getLayer(false);
+    if (extLyr != nullptr) {
+      RS_Layer *hostLyr = nullptr;
+      if (hostLayers && extLayers && extLayers->contains(extLyr)) {
+        hostLyr = hostLayers->find(blockName + "|" + extLyr->getName());
+      }
+      entity->setLayer(hostLyr);
+    }
+    if (entity->isContainer() &&
+        static_cast<RS_EntityContainer *>(entity)->isOwner()) {
+      for (RS_Entity *child : *static_cast<RS_EntityContainer *>(entity)) {
+        if (child != nullptr)
+          redirectLayers(child);
+      }
+    }
+  };
+
+  // Per-entity clone helper: clone @p src, redirect its layer pointers to
+  // the host's namespaced layers, and (if it's an INSERT) rewrite its block
   // name reference to the namespaced form. Returns the cloned entity
   // owned by no parent yet; caller adds it to the target container.
   auto cloneAndRedirect = [&](const RS_Entity *src,
@@ -4846,12 +4871,7 @@ bool RS_FilterDXFRW::embedXref(RS_Block *block, const QString &xrefPath,
     if (!cloned)
       return nullptr;
     cloned->setParent(target);
-    if (hostLayers && cloned->getLayer()) {
-      const QString lyrNs = blockName + "|" + cloned->getLayer()->getName();
-      if (auto *hostLyr = hostLayers->find(lyrNs)) {
-        cloned->setLayer(hostLyr);
-      }
-    }
+    redirectLayers(cloned);
     if (cloned->rtti() == RS2::EntityInsert) {
       auto *ins = static_cast<RS_Insert *>(cloned);
       const QString ref = ins->getName();

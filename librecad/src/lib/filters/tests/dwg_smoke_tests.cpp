@@ -41,6 +41,7 @@
 #include <algorithm>
 #include <filesystem>
 #include <fstream>
+#include <functional>
 #include <iomanip>
 #include <iostream>
 #include <iterator>
@@ -3853,6 +3854,83 @@ TEST_CASE("RS_FilterDXFRW: XREF A->B->A cycle terminates", "[xref][filter]") {
 
   std::filesystem::remove(pathA);
   std::filesystem::remove(pathB);
+}
+
+// embedXref loads the XREF into a local drawing that is destroyed when it
+// returns, so the entities it copies into the host must end up on the
+// host's namespaced copies of the XREF's layers ("PART|WALLS"), children of
+// containers included. It used to look the layer up after parenting the
+// clone into the host, where getLayer() only answers the host's own layers,
+// so every copied entity kept a pointer to a freed layer of the XREF.
+TEST_CASE("RS_FilterDXFRW: XREF entities land on the host's namespaced layers",
+          "[xref][filter][layers]") {
+  static int qargc = 1;
+  static char qarg0[] = "librecad_tests";
+  static char *qargv[] = {qarg0, nullptr};
+  static QCoreApplication *qapp = QCoreApplication::instance()
+                                      ? QCoreApplication::instance()
+                                      : new QCoreApplication(qargc, qargv);
+  static bool settingsReady = [] {
+    QCoreApplication::setOrganizationName("LibreCAD");
+    QCoreApplication::setApplicationName("LibreCAD-tests");
+    RS_Settings::init("LibreCAD", "LibreCAD-tests");
+    return true;
+  }();
+  (void)qapp;
+  (void)settingsReady;
+
+  const auto xrefPath =
+      std::filesystem::temp_directory_path() / "librecad_xref_layers_part.dxf";
+  const auto hostPath =
+      std::filesystem::temp_directory_path() / "librecad_xref_layers_host.dxf";
+  writeFile(xrefPath.string(),
+            "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1015\n0\nENDSEC\n"
+            "0\nSECTION\n2\nTABLES\n"
+            "0\nTABLE\n2\nLAYER\n70\n2\n"
+            "0\nLAYER\n5\n10\n2\n0\n70\n0\n62\n7\n6\nCONTINUOUS\n"
+            "0\nLAYER\n5\n11\n2\nWALLS\n70\n0\n62\n1\n6\nCONTINUOUS\n"
+            "0\nENDTAB\n0\nENDSEC\n"
+            "0\nSECTION\n2\nENTITIES\n"
+            "0\nLINE\n5\n30\n8\nWALLS\n10\n0.0\n20\n0.0\n30\n0.0\n"
+            "11\n10.0\n21\n0.0\n31\n0.0\n"
+            "0\nLWPOLYLINE\n5\n31\n8\nWALLS\n90\n3\n70\n0\n"
+            "10\n0.0\n20\n5.0\n10\n5.0\n20\n5.0\n10\n5.0\n20\n10.0\n"
+            "0\nENDSEC\n0\nEOF\n");
+  writeFile(hostPath.string(), buildCycleDxf("PART", xrefPath.string()));
+
+  RS_Graphic graphic;
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(hostPath.string()),
+                            RS2::FormatDXFRW));
+
+  RS_LayerList *layers = graphic.getLayerList();
+  RS_Layer *walls = layers->find("PART|WALLS");
+  REQUIRE(walls != nullptr);
+  CHECK(walls->getPen().getColor() == RS_Color(255, 0, 0));
+  const RS_Block *part = graphic.getBlockList()->find("PART");
+  REQUIRE(part != nullptr);
+  REQUIRE(part->count() == 2);
+
+  int onWalls = 0;
+  std::function<void(const RS_EntityContainer &)> check =
+      [&](const RS_EntityContainer &container) {
+        for (const RS_Entity *e : container) {
+          RS_Layer *layer = e->getLayer(false);
+          // Compare pointers only: a leftover XREF layer is already freed.
+          CHECK((layer == nullptr || layers->contains(layer)));
+          if (layer == walls) {
+            ++onWalls;
+          }
+          if (e->isContainer()) {
+            check(*static_cast<const RS_EntityContainer *>(e));
+          }
+        }
+      };
+  check(*part);
+  CHECK(onWalls >= 2);
+
+  std::filesystem::remove(xrefPath);
+  std::filesystem::remove(hostPath);
 }
 
 // Cross-check: load the source XREF (gripper_assembly_new.dwg) and report
