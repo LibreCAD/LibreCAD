@@ -660,11 +660,20 @@ protected:
   //    broken chain, unclearable compound state, ...).  The section fails.
   // The value is Structural until the walk reaches its normal exit, so every
   // early return reports the conservative answer.
+  //
+  // The type is public although the walk is not: a class that exposes the
+  // protected walk to a test (a probe deriving from dwgReader) re-exports it
+  // with a using-declaration, and MSVC rejects the enumerators named through
+  // such a using-declaration of a protected scoped enum (C2248), where GCC and
+  // Clang accept them.
+public:
   enum class DwgBlockWalkOutcome : std::uint8_t {
     Complete,
     ContainedGroupRejection,
     Structural
   };
+
+protected:
   bool walkBlockRecordEntities(DRW_Block_Record *bkr, dwgBuffer *dbuf,
                                DRW_Interface &intfa,
                                std::uint32_t expectedOwner = DRW::NoHandle,
