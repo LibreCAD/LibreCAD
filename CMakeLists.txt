@@ -2627,6 +2627,7 @@ if (BUILD_TESTS)
         librecad/src/ui/dock_widgets/views_list/tests/lc_namedviewsmodel_tests.cpp
         librecad/src/lib/generators/layers/tests/lc_layersexporter_tests.cpp
         librecad/src/ui/main/persistence/tests/lc_documentsstorage_tests.cpp
+        librecad/src/ui/main/tests/lc_mdiwindow_close_tests.cpp
         librecad/src/plugins/tests/qc_actiongetselect_tests.cpp
         librecad/src/lib/gui/tests/lc_graphicviewrenderer_tests.cpp
         librecad/src/lib/gui/tests/lc_scrollmodel_tests.cpp
