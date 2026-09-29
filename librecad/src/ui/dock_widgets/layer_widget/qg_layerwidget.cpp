@@ -380,11 +380,13 @@ void QG_LayerWidget::updateWidget() {
         RS_DEBUG->print(RS_Debug::D_ERROR, "QG_LayerWidget::update: nullptr layerView");
         return;
     }
+    // Rebuild the model first: it lists layers by pointer, and the rows it has now may name layers
+    // that are gone (a view sizing rows asks the model about them), as happened when a file was
+    // loaded into the drawing the widget was attached to (#2969).
     const int yPos = m_layerView->verticalScrollBar()->value();
+    m_layerModel->setLayerList(m_layerList); // allow a null layerList; this clears the widget
     m_layerView->resizeRowsToContents();
     m_layerView->verticalScrollBar()->setValue(yPos);
-
-    m_layerModel->setLayerList(m_layerList); // allow a null layerList; this clears the widget
 
     if (m_layerList == nullptr) {
         RS_DEBUG->print(RS_Debug::D_NOTICE, "QG_LayerWidget::update: nullptr layerList");

@@ -64,6 +64,13 @@ public:
     virtual void blockToggled(RS_Block*) {}
 
     /**
+     * Called when every block was removed from the list (RS_BlockList::clear(), which loading a
+     * file begins with), after the list was emptied and before the blocks are deleted. A
+     * listener that keeps blocks, or rows for them, must drop them here: they are freed next.
+     */
+    virtual void blockListCleared() {blockListModified(true);}
+
+    /**
      * Called when block list is modified.
      */
     virtual void blockListModified(bool) {}

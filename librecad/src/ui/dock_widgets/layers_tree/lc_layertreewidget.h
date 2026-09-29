@@ -57,6 +57,8 @@ public:
     void layerAdded(RS_Layer* layer) override;
     void layerEdited(RS_Layer*) override;
     void layerRemoved(RS_Layer*) override;
+    /// the layers are about to be freed: rebuild the tree without them
+    void layerListCleared() override;
     void layerToggled(RS_Layer*) override;
     void layerToggledLock(RS_Layer*) override;
     void layerToggledPrint(RS_Layer*) override;

@@ -36,6 +36,7 @@
 #include "lc_copyutils.h"
 #include "rs_block.h"
 #include "rs_blocklist.h"
+#include "rs_blocklistlistener.h"
 #include "rs_clipboard.h"
 #include "rs_font.h"
 #include "rs_graphic.h"
@@ -121,6 +122,70 @@ TEST_CASE("A non-owning RS_BlockList frees nothing", "[block][ownership]") {
         list.add(b);
     }
     CHECK(live == 2);
+    delete a;
+    delete b;
+    CHECK(live == 0);
+}
+
+namespace {
+
+/// what a block list looks like when it tells its listeners that it was cleared
+class BlockClearRecorder final : public RS_BlockListListener {
+public:
+    BlockClearRecorder(const RS_BlockList& list, const int& live) : m_list{list}, m_live{live} {}
+    void blockListCleared() override {
+        ++m_cleared;
+        m_count = m_list.count();
+        m_liveInCallback = m_live;
+    }
+    void blockListModified(const bool) override { ++m_modified; }
+    const RS_BlockList& m_list;
+    const int& m_live;
+    int m_cleared = 0;
+    int m_count = 99;
+    int m_liveInCallback = -1;
+    int m_modified = 0;
+};
+
+}
+
+TEST_CASE("Clearing a block list tells the listeners once, with the list empty and the blocks alive", "[block][ownership][2969]") {
+    int live = 0;
+    RS_BlockList list(true);
+    list.add(new CountedBlock(nullptr, "A", live));
+    list.add(new CountedBlock(nullptr, "B", live));
+    BlockClearRecorder recorder(list, live);
+    list.addListener(&recorder);
+    recorder.m_modified = 0;
+
+    list.clear();
+    list.removeListener(&recorder);
+
+    CHECK(recorder.m_cleared == 1);
+    CHECK(recorder.m_count == 0);
+    // told before they are freed
+    CHECK(recorder.m_liveInCallback == 2);
+    CHECK(live == 0);
+    // and a listener that only knows blockListModified() hears it too
+    CHECK(recorder.m_modified >= 1);
+}
+
+TEST_CASE("Clearing a non-owning block list tells the listeners and frees nothing", "[block][ownership][2969]") {
+    int live = 0;
+    auto* a = new CountedBlock(nullptr, "A", live);
+    auto* b = new CountedBlock(nullptr, "B", live);
+    {
+        RS_BlockList list(false);
+        list.add(a);
+        list.add(b);
+        BlockClearRecorder recorder(list, live);
+        list.addListener(&recorder);
+        list.clear();
+        list.removeListener(&recorder);
+        CHECK(recorder.m_cleared == 1);
+        CHECK(recorder.m_count == 0);
+        CHECK(live == 2);
+    }
     delete a;
     delete b;
     CHECK(live == 0);

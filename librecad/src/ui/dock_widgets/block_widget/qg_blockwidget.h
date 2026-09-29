@@ -100,6 +100,10 @@ public:
     void blockRemoved(RS_Block*) override{
         updateWidget();
     }
+    /// the blocks are about to be freed: drop the model's rows for them
+    void blockListCleared() override{
+        updateWidget();
+    }
     void blockToggled(RS_Block*) override{
         updateWidget();
     }

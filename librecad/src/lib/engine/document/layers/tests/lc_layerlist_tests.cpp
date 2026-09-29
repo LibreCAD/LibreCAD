@@ -47,6 +47,7 @@
 #include "rs_insert.h"
 #include "rs_layer.h"
 #include "rs_layerlist.h"
+#include "rs_layerlistlistener.h"
 #include "rs_line.h"
 #include "rs_modification.h"
 
@@ -185,6 +186,70 @@ TEST_CASE("Clearing a drawing's layers frees them and forgets the active one", "
     // The list is usable again after clearing.
     drawing.addLayer(QStringLiteral("0"));
     CHECK(layers->count() == 1);
+}
+
+namespace {
+
+/// what a layer list looks like when it tells its listeners that it was cleared
+class ClearRecorder final : public RS_LayerListListener {
+public:
+    ClearRecorder(RS_Graphic& graphic, const QList<RS_Layer*>& layers) : m_graphic{graphic}, m_layers{layers} {}
+    void layerListCleared() override {
+        ++m_cleared;
+        m_count = m_graphic.countLayers();
+        m_active = m_graphic.getActiveLayer();
+        // the layers are about to be freed: they must still be readable (ASan fails if one was already)
+        for (const RS_Layer* layer : std::as_const(m_layers)) {
+            m_names << layer->getName();
+        }
+    }
+    RS_Graphic& m_graphic;
+    QList<RS_Layer*> m_layers;
+    int m_cleared = 0;
+    unsigned m_count = 99;
+    const RS_Layer* m_active = nullptr;
+    QStringList m_names;
+};
+
+/// a listener that only knows layerListModified()
+class ModifiedCounter final : public RS_LayerListListener {
+public:
+    void layerListModified(const bool) override { ++m_modified; }
+    int m_modified = 0;
+};
+
+}
+
+TEST_CASE("Clearing a drawing's layers tells the listeners once, with the list empty and the layers alive", "[layers][ownership][2969]") {
+    Drawing drawing;
+    RS_Layer* walls = drawing.addLayer(QStringLiteral("WALLS"));
+    drawing.addLayer(QStringLiteral("DOORS"));
+    drawing.m_graphic.activateLayer(walls);
+    QList<RS_Layer*> layers;
+    for (unsigned i = 0; i < drawing.m_graphic.countLayers(); ++i) {
+        layers << drawing.m_graphic.layerAt(i);
+    }
+    REQUIRE(layers.size() == 3);
+
+    ClearRecorder recorder(drawing.m_graphic, layers);
+    drawing.m_graphic.addLayerListListener(&recorder);
+    drawing.m_graphic.clearLayers();
+    drawing.m_graphic.removeLayerListListener(&recorder);
+
+    CHECK(recorder.m_cleared == 1);
+    CHECK(recorder.m_count == 0);
+    CHECK(recorder.m_active == nullptr);
+    recorder.m_names.sort();
+    CHECK(recorder.m_names == QStringList{QStringLiteral("0"), QStringLiteral("DOORS"), QStringLiteral("WALLS")});
+}
+
+TEST_CASE("A layer listener that only knows layerListModified() hears a clear", "[layers][ownership][2969]") {
+    Drawing drawing;
+    ModifiedCounter counter;
+    drawing.m_graphic.addLayerListListener(&counter);
+    drawing.m_graphic.clearLayers();
+    drawing.m_graphic.removeLayerListListener(&counter);
+    CHECK(counter.m_modified == 1);
 }
 
 TEST_CASE("A drawing frees its layers when re-initialised and destroyed", "[layers][ownership]") {

@@ -80,6 +80,13 @@ public:
     virtual void layerToggledConstruction(RS_Layer*) {layerListModified(true);}
 
     /**
+     * Called when every layer was removed from the list (RS_LayerList::clear(), which loading a
+     * file begins with), after the list was emptied and before the layers are deleted. A
+     * listener that keeps layers, or rows for them, must drop them here: they are freed next.
+     */
+    virtual void layerListCleared() {layerListModified(true);}
+
+    /**
      * Called when layer list is modified.
      */
     virtual void layerListModified(bool) {}

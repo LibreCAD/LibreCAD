@@ -1037,6 +1037,11 @@ void LC_LayerTreeWidget::layerRemoved(RS_Layer *){
     update();
 }
 
+void LC_LayerTreeWidget::layerListCleared() {
+    RS_DEBUG->print("LC_LayerTreeWidget::layerListCleared()");
+    update();
+}
+
 void LC_LayerTreeWidget::layerToggled(RS_Layer *){
     RS_DEBUG->print("LC_LayerTreeWidget::layerToggled()");
     update();

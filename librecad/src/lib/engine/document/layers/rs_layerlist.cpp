@@ -51,13 +51,20 @@ RS_LayerList::~RS_LayerList() {
 /**
  * Removes all layers in the layerlist and frees them: the list owns its
  * layers, as remove() and add() (for a rejected duplicate) always assumed.
+ * Listeners are told once the list is empty and before the layers are freed,
+ * as remove() does for one layer: a dock's table model lists layers by
+ * pointer, and reading a freed one crashed (#2969).
  */
 void RS_LayerList::clear() {
-    qDeleteAll(m_layers);
-    m_layers.clear();
+    QList<RS_Layer*> removed;
+    removed.swap(m_layers);
     m_layerSet.clear();
     m_activeLayer = nullptr;
     setModified(true);
+    for (const auto l : std::as_const(m_layerListListeners)) {
+        l->layerListCleared();
+    }
+    qDeleteAll(removed);
 }
 
 QList<RS_Layer*>::iterator RS_LayerList::begin() {

@@ -64,15 +64,22 @@ RS_BlockList::~RS_BlockList() {
 
 /**
  * Removes all blocks in the blocklist, and deletes them if the list owns them.
+ * Listeners are told once the list is empty and before the blocks are freed,
+ * as remove() does for one block: a dock's table model lists blocks by
+ * pointer, and reading a freed one crashed (#2969).
  */
 void RS_BlockList::clear() {
-    if (m_owner) {
-        qDeleteAll(m_blocks);
-    }
-    m_blocks.clear();
+    QList<RS_Block*> removed;
+    removed.swap(m_blocks);
     m_activeBlock = nullptr;
     m_generation = nextGeneration();
     setModified(true);
+    for (const auto l : std::as_const(m_blockListListeners)) {
+        l->blockListCleared();
+    }
+    if (m_owner) {
+        qDeleteAll(removed);
+    }
 }
 
 /**
