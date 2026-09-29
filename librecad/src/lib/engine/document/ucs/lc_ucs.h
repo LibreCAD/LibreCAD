@@ -98,7 +98,7 @@ public:
     LC_UCS* clone() const override;
     bool isUCS() const override {return false;}
 
-    static LC_UCS instance;
+    static LC_WCS instance;
 };
 
 #endif

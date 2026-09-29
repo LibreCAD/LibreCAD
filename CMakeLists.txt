@@ -2511,6 +2511,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/container/tests/lc_copy_semantics_tests.cpp
         librecad/src/lib/engine/tests/rs_color_tests.cpp
         librecad/src/lib/engine/document/ucs/tests/lc_ucslist_tests.cpp
+        librecad/src/lib/engine/document/ucs/tests/lc_wcs_tests.cpp
         librecad/src/lib/engine/document/views/tests/lc_view_tests.cpp
         librecad/src/lib/engine/tests/rs_pen_tests.cpp
         librecad/src/lib/actions/tests/lc_snappercatchtests.cpp

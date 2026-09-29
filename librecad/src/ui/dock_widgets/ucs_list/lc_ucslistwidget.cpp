@@ -274,8 +274,7 @@ void LC_UCSListWidget::updateData(const bool restoreSelectionIfPossible) {
         }
         else {
             // are we in block?
-            const auto ucs =  LC_WCS::instance;
-            updateCurrentUCSWidget(&ucs);
+            updateCurrentUCSWidget(&LC_WCS::instance);
         }
     }
     emit ucsListChanged();
@@ -448,7 +447,7 @@ void LC_UCSListWidget::editUCS() {
 void LC_UCSListWidget::setWCS() const {
     if (m_viewport != nullptr) {
         if (m_currentUCSList == nullptr) { // block is edited
-            m_viewport->applyUCS(new LC_WCS());
+            m_viewport->applyUCS(&LC_WCS::instance);
         }
         else {
             m_viewport->applyUCS(m_currentUCSList->getWCS());
