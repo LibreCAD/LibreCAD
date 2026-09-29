@@ -208,7 +208,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="243"/>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="247"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="246"/>
@@ -296,7 +296,7 @@ or [%2]</source>
         <location filename="../src/actions/lc_actiondrawlinepoints.cpp" line="516"/>
         <location filename="../src/actions/lc_actiondrawlinepoints.cpp" line="521"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawlinepoints.cpp" line="516"/>
@@ -360,7 +360,7 @@ or [%2]</source>
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="474"/>
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="486"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="448"/>
@@ -417,7 +417,7 @@ or [%2]</source>
         <location filename="../src/actions/lc_actiondrawparabola4points.cpp" line="284"/>
         <location filename="../src/actions/lc_actiondrawparabola4points.cpp" line="289"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawparabola4points.cpp" line="278"/>
@@ -457,7 +457,7 @@ or [%2]</source>
         <location filename="../src/actions/lc_actiondrawparabolaFD.cpp" line="301"/>
         <location filename="../src/actions/lc_actiondrawparabolaFD.cpp" line="306"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawparabolaFD.cpp" line="300"/>
@@ -519,7 +519,7 @@ or [%2]</source>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="276"/>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="282"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="281"/>
@@ -1636,7 +1636,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actionsnapmiddlemanual.cpp" line="306"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
 </context>
 <context>
@@ -1749,7 +1749,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="53"/>
         <source>Save</source>
-        <translation>Save</translation>
+        <translation>ਸੰਭਾਲੋ</translation>
     </message>
 </context>
 <context>
@@ -2564,7 +2564,7 @@ or [%2]</source>
     </message>
     <message>
         <source>radius</source>
-        <translation type="vanished">radius</translation>
+        <translation type="vanished">ਰੇਡੀਅਸ</translation>
     </message>
     <message>
         <source>Closed</source>
@@ -2839,7 +2839,7 @@ or [%2]</source>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="349"/>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="352"/>
         <source>Save</source>
-        <translation>Save</translation>
+        <translation>ਸੰਭਾਲੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="363"/>
@@ -2955,9 +2955,9 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
 
 Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">Ang lokasyon ng file ng mga panulat ay nabago, mangyaring i-restart ang aplikasyon upang magamit ang bagong file ng mga panulat.
+        <translation type="vanished">ਪੈਨ ਫਾਈਲ ਦੀ ਥਾਂ ਬਦਲੀ ਗਈ ਹੈ, ਕਿਰਪਾ ਕਰਕੇ ਐਪਲੀਕੇਸ਼ਨ ਰੀਸਟਾਰਟ ਕਰੋ ਤਾਂ ਜੋ ਨਵੀਂ ਪੈਨ ਫਾਈਲ ਵਰਤੀ ਜਾ ਸਕੇ।
 
-Pakitandaan na kung ise-save mo ang panulat sa pamamagitan ng editor nang hindi nagre-restart, ang kasalukuyang mga panulat mula sa palette ay ise-save sa bagong file at samakatuwid ay mapapalitan ang kasalukuyang nilalaman nito.</translation>
+ਨੋਟ: ਜੇ ਤੁਸੀਂ ਰੀਸਟਾਰਟ ਤੋਂ ਬਿਨਾਂ ਐਡੀਟਰ ਰਾਹੀਂ ਪੈਨ ਸੰਭਾਲਦੇ ਹੋ ਤਾਂ ਪੈਲੈਟ ਤੋਂ ਮੌਜੂਦਾ ਪੈਨ ਨਵੀਂ ਫਾਈਲ ਵਿੱਚ ਸੰਭਾਲੇ ਜਾਣਗੇ ਅਤੇ ਇਸ ਕਰਕੇ ਉਸ ਫਾਈਲ ਦੀ ਮੌਜੂਦਾ ਸਮੱਗਰੀ ਓਵਰਰਾਈਟ ਹੋ ਜਾਵੇਗੀ।</translation>
     </message>
 </context>
 <context>
@@ -4391,17 +4391,17 @@ Please check its existence and permissions.</source>
     <message>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
-        <translation type="vanished">takasan</translation>
+        <translation type="vanished">ਐਸਕੇਪ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1275"/>
         <source>Spacebar: restored snapping mode to normal</source>
-        <translation>Spacebar: ibinalik ang normal na snapping mode</translation>
+        <translation>ਸਪੇਸਬਾਰ: ਸਨੈਪਿੰਗ ਮੋਡ ਸਧਾਰਨ ਵਿੱਚ ਬਹਾਲ ਕੀਤਾ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1276"/>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
-        <translation>Spacebar: pansamantalang itinakda ang snapping mode sa libreng snapping</translation>
+        <translation>ਸਪੇਸਬਾਰ: ਸਨੈਪਿੰਗ ਮੋਡ ਅਸਥਾਈ ਤੌਰ &apos;ਤੇ ਫ੍ਰੀ ਸਨੈਪਿੰਗ ਲਈ ਸੈੱਟ ਕੀਤਾ</translation>
     </message>
 </context>
 <context>
@@ -4409,7 +4409,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/ui/forms/qg_activelayername.ui" line="32"/>
         <source>Selection</source>
-        <translation>Pagpili</translation>
+        <translation>ਚੋਣ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_activelayername.ui" line="71"/>
@@ -4419,7 +4419,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/ui/forms/qg_activelayername.ui" line="80"/>
         <source>Current Layer</source>
-        <translation>Kasalukuyang Layer</translation>
+        <translation>ਮੌਜੂਦਾ ਲੇਅਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_activelayername.ui" line="105"/>
@@ -4432,7 +4432,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Pangalan ng Kasalukuyang Aktibong Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;ਮੌਜੂਦਾ ਐਕਟਿਵ ਲੇਅਰ ਦਾ ਨਾਮ&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -4540,32 +4540,32 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="180"/>
         <source>Create Block</source>
-        <translation>Lumikha ng Block</translation>
+        <translation>ਬਲਾਕ ਬਣਾਓ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="187"/>
         <source>Add an empty block</source>
-        <translation>Magdagdag ng isang walang laman na block</translation>
+        <translation>ਇੱਕ ਖਾਲੀ ਬਲਾਕ ਸ਼ਾਮਲ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="216"/>
         <source>save the active block to a file</source>
-        <translation>i-save ang aktibong block sa isang file</translation>
+        <translation>ਸਰਗਰਮ ਬਲਾਕ ਨੂੰ ਫਾਈਲ ਵਿੱਚ ਸੰਭਾਲੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="194"/>
         <source>Remove block</source>
-        <translation>Alisin ang bloke</translation>
+        <translation>ਬਲਾਕ ਹਟਾਓ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="230"/>
         <source>Filter</source>
-        <translation>Salain</translation>
+        <translation>ਫਿਲਟਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="232"/>
         <source>Looking for matching block names</source>
-        <translation>Naghanap ng mga tugmang pangalan ng bloke</translation>
+        <translation>ਮਿਲਦੇ ਬਲਾਕ ਨਾਮ ਲੱਭ ਰਿਹਾ ਹੈ</translation>
     </message>
 </context>
 <context>
@@ -4634,54 +4634,54 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="119"/>
         <source>Dark Red</source>
-        <translation>Madilim na Pula</translation>
+        <translation>ਗੂੜ੍ਹਾ ਲਾਲ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="121"/>
         <source>Dark Yellow</source>
-        <translation>Madilim na Dilaw</translation>
+        <translation>ਗੂੜ੍ਹਾ ਪੀਲਾ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="123"/>
         <source>Dark Green</source>
-        <translation>Madilim na Berde</translation>
+        <translation>ਗੂੜ੍ਹਾ ਹਰਾ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="125"/>
         <source>Dark Cyan</source>
-        <translation>Madilim na Siyan</translation>
+        <translation>ਗੂੜ੍ਹਾ ਸਿਆਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="127"/>
         <source>Dark Blue</source>
-        <translation>Madilim na Asul</translation>
+        <translation>ਗੂੜ੍ਹਾ ਨੀਲਾ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="129"/>
         <source>Dark Magenta</source>
-        <translation>Madilim na Magenta</translation>
+        <translation>ਗੂੜ੍ਹਾ ਕਿਰਮਚੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="138"/>
         <source>Dark Gray</source>
-        <translation>Madilim na Abo</translation>
+        <translation>ਗੂੜ੍ਹਾ ਸਲੇਟੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="111"/>
         <location filename="../src/ui/qg_colorbox.cpp" line="322"/>
         <source>Custom</source>
-        <translation>Pasadyado</translation>
+        <translation>ਕਸਟਮ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="159"/>
         <location filename="../src/ui/qg_colorbox.cpp" line="171"/>
         <source>/ColorBox</source>
-        <translation>/ColorBox</translation>
+        <translation>/ਰੰਗ ਬਾਕਸ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="165"/>
         <source>Custom Picked</source>
-        <translation>Pinili na Pasadyado</translation>
+        <translation>ਕਸਟਮ ਚੁਣਿਆ ਹੋਇਆ</translation>
     </message>
 </context>
 <context>
@@ -4689,7 +4689,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="303"/>
         <source>clear</source>
-        <translation>linisin</translation>
+        <translation>ਸਾਫ਼</translation>
     </message>
 </context>
 <context>
@@ -4697,17 +4697,17 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_commandhistory.cpp" line="38"/>
         <source>&amp;Copy</source>
-        <translation>&amp;Kopyahin</translation>
+        <translation>&amp;ਕਾਪੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_commandhistory.cpp" line="45"/>
         <source>Select &amp;All</source>
-        <translation>Piliin ang &amp;Lahat</translation>
+        <translation>&amp;ਸਭ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_commandhistory.cpp" line="50"/>
         <source>Clear</source>
-        <translation>Linisin</translation>
+        <translation>ਸਾਫ਼ ਕਰੋ</translation>
     </message>
 </context>
 <context>
@@ -4726,22 +4726,22 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="210"/>
         <source>Unknown command: %1</source>
-        <translation>Hindi kilalang utos: %1</translation>
+        <translation>ਅਣਜਾਣ ਕਮਾਂਡ: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="44"/>
         <source>Command history and output</source>
-        <translation>Kasaysayan ng utos at output</translation>
+        <translation>ਕਮਾਂਡ ਅਤੀਤ ਅਤੇ ਆਉਟਪੁੱਟ</translation>
     </message>
     <message>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
-        <translation type="vanished">lumabas</translation>
+        <translation type="vanished">ਐਸਕੇਪ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="132"/>
         <source>...</source>
-        <translation>translation 1</translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="94"/>
@@ -4752,12 +4752,12 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="344"/>
         <source>Float</source>
-        <translation>Lumulutang</translation>
+        <translation>ਫਲੋਟ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="345"/>
         <source>Command line</source>
-        <translation>Linya ng utos</translation>
+        <translation>ਕਮਾਂਡ ਲਾਈਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="345"/>
@@ -4831,17 +4831,17 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="150"/>
         <source>⌀ (Diameter)</source>
-        <translation>⌀ (Diameter)</translation>
+        <translation>⌀ (ਡਾਇਮੀਟਰ)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="165"/>
         <source>π (Pi)</source>
-        <translation>π (Pi)</translation>
+        <translation>π (ਪਾਈ)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="93"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Format of the dimension text, &amp;lt;&amp;gt; can be used as a placeholder for the dimension measurement value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Format ng teksto ng dimensyon, ang &amp;lt;&amp;gt; ay maaaring gamitin bilang placeholder para sa halaga ng pagsukat ng dimensyon&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ਡਾਇਮੈਂਸ਼ਨ ਟੈਕਸਟ ਦਾ ਫਾਰਮਿਟ, &amp;lt;&amp;gt; ਨੂੰ ਡਾਇਮੈਂਸ਼ਨ ਮਾਪ ਮੁੱਲ ਲਈ ਪਲੇਸਹੋਲਡਰ ਵਜੋਂ ਵਰਤਿਆ ਜਾ ਸਕਦਾ ਹੈ&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.cpp" line="75"/>
@@ -4921,13 +4921,13 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="69"/>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
-        <translation>Ilapat ang mga katangian sa lahat ng mga sub-entity ng napiling INSERT.
-Binabago nito ang lahat ng mga entity ng mismong Block.</translation>
+        <translation>ਚੁਣੇ ਹੋਏ INSERT ਦੀਆਂ ਸਾਰੀਆਂ ਸਬ-ਐਂਟੀਟੀਆਂ ਉੱਤੇ ਵੀ ਐਟ੍ਰੀਬਿਊਟ ਲਾਗੂ ਕਰੋ।
+ਇਹ ਬਲਾਕ ਦੀਆਂ ਖੁਦ ਦੀਆਂ ਸਾਰੀਆਂ ਐਂਟੀਟੀਆਂ ਨੂੰ ਰੀਕਰਸਿਵ ਤੌਰ &apos;ਤੇ ਬਦਲਦਾ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="73"/>
         <source>Apply attributes Block-deep</source>
-        <translation>Ilapat ang mga katangian sa buong Block</translation>
+        <translation>ਐਟ੍ਰੀਬਿਊਟ ਬਲਾਕ ਦੇ ਅੰਦਰ ਤੱਕ ਲਾਗੂ ਕਰੋ</translation>
     </message>
 </context>
 <context>
@@ -5105,57 +5105,57 @@ Binabago nito ang lahat ng mga entity ng mismong Block.</translation>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="26"/>
         <source>Image</source>
-        <translation>Larawan</translation>
+        <translation>ਚਿੱਤਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="44"/>
         <source>Layer:</source>
-        <translation>Layer:</translation>
+        <translation>ਲੇਅਰ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="80"/>
         <source>Geometry</source>
-        <translation>Geometry</translation>
+        <translation>ਜੁਮੈਟਰੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="253"/>
         <source>Width:</source>
-        <translation>Lapad:</translation>
+        <translation>ਚੌੜਾਈ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="93"/>
         <source>Height:</source>
-        <translation>Taas:</translation>
+        <translation>ਉਚਾਈ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="203"/>
         <source>insert (x):</source>
-        <translation>ipasok (x):</translation>
+        <translation>ਸ਼ਾਮਲ (x):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="226"/>
         <source>Scale:</source>
-        <translation>Scale:</translation>
+        <translation>ਪੈਮਾਨਾ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="153"/>
         <source>Size (px):</source>
-        <translation>Laki (px):</translation>
+        <translation>ਸਾਈਜ਼ (px):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="196"/>
         <source>path:</source>
-        <translation>landas:</translation>
+        <translation>ਪਾਥ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="110"/>
         <source>insert (y):</source>
-        <translation>ipasok (y):</translation>
+        <translation>ਸ਼ਾਮਲ (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="86"/>
         <source>Angle:</source>
-        <translation>Anggulo:</translation>
+        <translation>ਕੋਣ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="246"/>
@@ -5165,7 +5165,7 @@ Binabago nito ang lahat ng mga entity ng mismong Block.</translation>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="270"/>
         <source>Select an image file</source>
-        <translation>Pumili ng isang file ng imahe</translation>
+        <translation>ਇੱਕ ਚਿੱਤਰ ਫਾਈਲ ਚੁਣੋ</translation>
     </message>
 </context>
 <context>
@@ -5197,10 +5197,11 @@ Binabago nito ang lahat ng mga entity ng mismong Block.</translation>
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 (You can changes these settings later.)</source>
-        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Maligayang pagdating sa LibreCAD&lt;/b&gt;&lt;/font&gt;
+        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;LibreCAD ਵਿੱਚ ਜੀ ਆਇਆਂ ਨੂੰ&lt;/b&gt;
+&lt;/font&gt;
 &lt;br&gt;
-Mangyaring piliin ang yunit na gusto mong gamitin para sa mga bagong guhit at ang iyong ginustong wika.&lt;br&gt;
-(Maaari mong baguhin ang mga setting na ito sa ibang pagkakataon.)</translation>
+ਕਿਰਪਾ ਕਰਕੇ ਨਵੀਆਂ ਡਰਾਇੰਗਾਂ ਲਈ ਵਰਤਣ ਵਾਲੀ ਇਕਾਈ ਅਤੇ ਆਪਣੀ ਪਸੰਦੀਦਾ ਭਾਸ਼ਾ ਚੁਣੋ।&lt;br&gt;
+(ਤੁਸੀਂ ਇਹ ਸੈਟਿੰਗਾਂ ਬਾਅਦ ਵਿੱਚ ਬਦਲ ਸਕਦੇ ਹੋ।)</translation>
     </message>
 </context>
 <context>
@@ -5258,12 +5259,12 @@ Mangyaring piliin ang yunit na gusto mong gamitin para sa mga bagong guhit at an
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="159"/>
         <source>Scale X:</source>
-        <translation>Scale X:</translation>
+        <translation>X ਪੈਮਾਨਾ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="179"/>
         <source>Scale Y:</source>
-        <translation>Scale Y:</translation>
+        <translation>Y ਪੈਮਾਨਾ:</translation>
     </message>
 </context>
 <context>
@@ -5306,7 +5307,7 @@ Mangyaring piliin ang yunit na gusto mong gamitin para sa mga bagong guhit at an
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="35"/>
         <source>ID: </source>
-        <translation>ID:</translation>
+        <translation>ਆਈਡੀ: </translation>
     </message>
 </context>
 <context>
@@ -5314,22 +5315,22 @@ Mangyaring piliin ang yunit na gusto mong gamitin para sa mga bagong guhit at an
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="14"/>
         <source>MText</source>
-        <translation>MText</translation>
+        <translation>ਐੱਮ ਟੈਕਸਟ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="45"/>
         <source>Layer:</source>
-        <translation>Layer:</translation>
+        <translation>ਲੇਅਰ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="223"/>
         <source>&amp;Height:</source>
-        <translation>Taas:</translation>
+        <translation>ਉਚਾਈ(&amp;H):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="132"/>
         <source>&amp;Default line spacing</source>
-        <translation>Default na pagitan ng linya</translation>
+        <translation>&amp;ਮੂਲ ਲਾਈਨ ਸਪੇਸਿੰਗ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="135"/>
@@ -5339,77 +5340,77 @@ Mangyaring piliin ang yunit na gusto mong gamitin para sa mga bagong guhit at an
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="298"/>
         <source>Alignment</source>
-        <translation>Pagkakahanay</translation>
+        <translation>ਇਕਸਾਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="316"/>
         <source>Top Right</source>
-        <translation>Itaas na Kanan</translation>
+        <translation>ਉਪਰ ਸੱਜੇ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="348"/>
         <source>Top Left</source>
-        <translation>Itaas na Kaliwa</translation>
+        <translation>ਉੱਪਰੇ ਖੱਬੇ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="380"/>
         <source>Middle Left</source>
-        <translation>Gitnang Kaliwa</translation>
+        <translation>ਮੱਧ ਖੱਬੇ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="412"/>
         <source>Middle Center</source>
-        <translation>Gitnang Sentro</translation>
+        <translation>ਮੱਧ ਕੇਂਦਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="444"/>
         <source>Middle Right</source>
-        <translation>Gitnang Kanan</translation>
+        <translation>ਮੱਧ ਸੱਜਾ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="476"/>
         <source>Bottom Left</source>
-        <translation>Ibaba Kaliwa</translation>
+        <translation>ਹੇਠਾਂ ਖੱਬੇ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="508"/>
         <source>Bottom Right</source>
-        <translation>Ibaba Kanan</translation>
+        <translation>ਹੇਠਾਂ ਸੱਜੇ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="540"/>
         <source>Bottom Center</source>
-        <translation>Ibaba Sentro</translation>
+        <translation>ਮੱਧ ਕੇਂਦਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="572"/>
         <source>Top Center</source>
-        <translation>Itaas Sentro</translation>
+        <translation>ਉੱਪਰ ਕੇਂਦਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="607"/>
         <source>Angle</source>
-        <translation>Anggulo</translation>
+        <translation>ਕੋਣ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="691"/>
         <source>Text:</source>
-        <translation>Teksto:</translation>
+        <translation>ਪਾਠ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="717"/>
         <source>Clear Text</source>
-        <translation>Linisin ang Teksto</translation>
+        <translation>ਪਾਠ ਸਾਫ਼</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="731"/>
         <source>Load Text From File</source>
-        <translation>I-load ang Teksto mula sa File</translation>
+        <translation>ਫਾਇਲ ਤੋਂ ਪਾਠ ਲੋਡ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="745"/>
         <source>Save Text To File</source>
-        <translation>I-save ang Teksto sa File</translation>
+        <translation>ਪਾਠ ਫਾਇਲ ਵਿੱਚ ਸੰਭਾਲੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="759"/>
@@ -5424,667 +5425,667 @@ Mangyaring piliin ang yunit na gusto mong gamitin para sa mga bagong guhit at an
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="787"/>
         <source>Paste</source>
-        <translation>Idikit</translation>
+        <translation>ਚੇਪੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="834"/>
         <source>Insert Symbol</source>
-        <translation>Ipasok ang Simbolo</translation>
+        <translation>ਨਿਸ਼ਾਨ ਸ਼ਾਮਿਲ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="852"/>
         <source>Degree (°)</source>
-        <translation>Degree (°)</translation>
+        <translation>ਡਿਗਰੀ (°)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="857"/>
         <source>Plus / Minus (±)</source>
-        <translation>Plus / Minus (±)</translation>
+        <translation>ਜੋੜ / ਘਟਾਓ (±)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="862"/>
         <source>At (@)</source>
-        <translation>Sa (@)</translation>
+        <translation>ਐਟ (@)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="867"/>
         <source>Hash (#)</source>
-        <translation>Hash (#)</translation>
+        <translation>ਹੈਂਸ਼ (#)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="872"/>
         <source>Dollar ($)</source>
-        <translation>Dolyar ($)</translation>
+        <translation>ਡਾਲਰ ($)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="877"/>
         <source>Copyright (©)</source>
-        <translation>Copyright (©)</translation>
+        <translation>ਕਾਪੀਰਾਈਟ (©)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="882"/>
         <source>Registered (®)</source>
-        <translation>Nakarehistro (®)</translation>
+        <translation>ਰਜਿਸਟਰਡ (®)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="887"/>
         <source>Paragraph (§)</source>
-        <translation>Talata (§)</translation>
+        <translation>ਪੈਰਾ (§)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="892"/>
         <source>Pi (π)</source>
-        <translation>Pi (π)</translation>
+        <translation>ਪਾਈ (π)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="897"/>
         <source>Pound (£)</source>
-        <translation>Pound (£)</translation>
+        <translation>ਪਾਊਂਡ (£)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="902"/>
         <source>Yen (¥)</source>
-        <translation>Yen (¥)</translation>
+        <translation>ਯੇਨ (¥)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="907"/>
         <source>Times (×)</source>
-        <translation>Times (×)</translation>
+        <translation>ਗੁਣਾ (×)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="912"/>
         <source>Division (÷)</source>
-        <translation>Paghati (÷)</translation>
+        <translation>ਭਾਗ (÷)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="923"/>
         <source>Insert Unicode</source>
-        <translation>Ipasok ang Unicode</translation>
+        <translation>ਯੂਨੀਕੋਡ ਸ਼ਾਮਿਲ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="929"/>
         <source>Page:</source>
-        <translation>Pahina:</translation>
+        <translation>ਸਫ਼ਾ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="939"/>
         <source>Char:</source>
-        <translation>Karakter:</translation>
+        <translation>ਅੱਖਰ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="962"/>
         <source>[0000-007F] Basic Latin</source>
-        <translation>[0000-007F] Pangunahing Latin</translation>
+        <translation>[0000-007F] ਮੂਲ ਲੈਟਿਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="967"/>
         <source>[0080-00FF] Latin-1 Supplementary</source>
-        <translation>[0080-00FF] 1. [KONTEKSTO: QG_DlgMText] [0080-00FF] Latin-1 Supplementary</translation>
+        <translation>[0080-00FF] ਲੈਟਿਨ-1 ਹੋਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="972"/>
         <source>[0100-017F] Latin Extended-A</source>
-        <translation>[0100-017F] 2. [KONTEKSTO: QG_DlgMText] [0100-017F] Latin Extended-A</translation>
+        <translation>[0100-017F] ਲੈਟਿਨ ਵਿਸਤ੍ਰਿਤ-A</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="977"/>
         <source>[0180-024F] Latin Extended-B</source>
-        <translation>[0180-024F] 3. [KONTEKSTO: QG_DlgMText] [0180-024F] Latin Extended-B</translation>
+        <translation>[0180-024F] ਲੈਟਿਨ ਵਿਸਤ੍ਰਿਤ-B</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="982"/>
         <source>[0250-02AF] IPA Extensions</source>
-        <translation>[0250-02AF] Mga Ekstensyon ng IPA</translation>
+        <translation>[0250-02AF] IPA ਐਕਸਟੈਂਸ਼ਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="987"/>
         <source>[02B0-02FF] Spacing Modifier Letters</source>
-        <translation>[02B0-02FF] Mga Titik na Nagbabago ng Pagitan</translation>
+        <translation>[02B0-02FF] ਸਪੇਸਿੰਗ ਮੋਡੀਫਾਇਰ ਅੱਖਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="992"/>
         <source>[0300-036F] Combining Diacritical Marks</source>
-        <translation>[0300-036F] Mga Pinagsamang Markang Diacritical</translation>
+        <translation>[0300-036F] ਕੰਬਾਈਨਿੰਗ ਡਾਇਆਕ੍ਰਿਟੀਕਲ ਚਿੰਨ੍ਹ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="997"/>
         <source>[0370-03FF] Greek and Coptic</source>
-        <translation>[0370-03FF] Griyego at Coptic</translation>
+        <translation>[0370-03FF] ਯੂਨਾਨੀ ਅਤੇ ਕੌਪਟਿਕ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1002"/>
         <source>[0400-04FF] Cyrillic</source>
-        <translation>[0400-04FF] 4. [KONTEKSTO: QG_DlgMText] [0400-04FF] Cyrillic</translation>
+        <translation>[0400-04FF] ਸਿਰਿਲਿਕ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1007"/>
         <source>[0500-052F] Cyrillic Supplementary</source>
-        <translation>[0500-052F] 5. [KONTEKSTO: QG_DlgMText] [0500-052F] Cyrillic Supplementary</translation>
+        <translation>[0500-052F] ਸਿਰਿਲਿਕ ਹੋਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1012"/>
         <source>[0530-058F] Armenian</source>
-        <translation>[0530-058F] 6. [KONTEKSTO: QG_DlgMText] [0530-058F] Armenian</translation>
+        <translation>[0530-058F] ਅਰਮੀਨੀਆਈ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1017"/>
         <source>[0590-05FF] Hebrew</source>
-        <translation>[0590-05FF] 7. [KONTEKSTO: QG_DlgMText] [0590-05FF] Hebrew</translation>
+        <translation>[0590-05FF] ਹਿਬਰੂ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1022"/>
         <source>[0600-06FF] Arabic</source>
-        <translation>[0600-06FF] 8. [KONTEKSTO: QG_DlgMText] [0600-06FF] Arabic</translation>
+        <translation>[0600-06FF] ਅਰਬੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1027"/>
         <source>[0700-074F] Syriac</source>
-        <translation>[0700-074F] 9. [KONTEKSTO: QG_DlgMText] [0700-074F] Syriac</translation>
+        <translation>[0700-074F] ਸੀਰੀਆਕ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1032"/>
         <source>[0780-07BF] Thaana</source>
-        <translation>[0780-07BF] 10. [KONTEKSTO: QG_DlgMText] [0780-07BF] Thaana</translation>
+        <translation>[0780-07BF] ਥਾਨਾ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1037"/>
         <source>[0900-097F] Devanagari</source>
-        <translation>[0900-097F] Devanagari</translation>
+        <translation>[0900-097F] ਦੇਵਨਾਗਰੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1042"/>
         <source>[0980-09FF] Bengali</source>
-        <translation>[0980-09FF] Bengali</translation>
+        <translation>[0980-09FF] ਬੰਗਾਲੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1047"/>
         <source>[0A00-0A7F] Gurmukhi</source>
-        <translation>[0A00-0A7F] Gurmukhi</translation>
+        <translation>[0A00-0A7F] ਗੁਰਮੁਖੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1052"/>
         <source>[0A80-0AFF] Gujarati</source>
-        <translation>[0A80-0AFF] Gujarati</translation>
+        <translation>[0A80-0AFF] ਗੁਜਰਾਤੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1057"/>
         <source>[0B00-0B7F] Oriya</source>
-        <translation>[0B00-0B7F] Oriya</translation>
+        <translation>[0B00-0B7F] ਉੜੀਆ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1062"/>
         <source>[0B80-0BFF] Tamil</source>
-        <translation>[0B80-0BFF] Tamil</translation>
+        <translation>[0B80-0BFF] ਤਾਮਿਲ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1067"/>
         <source>[0C00-0C7F] Telugu</source>
-        <translation>[0C00-0C7F] Telugu</translation>
+        <translation>[0C00-0C7F] ਤੇਲਗੂ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1072"/>
         <source>[0C80-0CFF] Kannada</source>
-        <translation>[0C80-0CFF] Kannada</translation>
+        <translation>[0C80-0CFF] ਕੰਨੜ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1077"/>
         <source>[0D00-0D7F] Malayalam</source>
-        <translation>[0D00-0D7F] Malayalam</translation>
+        <translation>[0D00-0D7F] ਮਲਿਆਲਮ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1082"/>
         <source>[0D80-0DFF] Sinhala</source>
-        <translation>[0D80-0DFF] Sinhala</translation>
+        <translation>[0D80-0DFF] ਸਿੰਹਾਲਾ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1087"/>
         <source>[0E00-0E7F] Thai</source>
-        <translation>[0E00-0E7F] 1. [KONTEKSTO: QG_DlgMText] [0E00-0E7F] Thai</translation>
+        <translation>[0E00-0E7F] ਥਾਈ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1092"/>
         <source>[0E80-0EFF] Lao</source>
-        <translation>[0E80-0EFF] 2. [KONTEKSTO: QG_DlgMText] [0E80-0EFF] Lao</translation>
+        <translation>[0E80-0EFF] ਲਾਓ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1097"/>
         <source>[0F00-0FFF] Tibetan</source>
-        <translation>[0F00-0FFF] 3. [KONTEKSTO: QG_DlgMText] [0F00-0FFF] Tibetan</translation>
+        <translation>[0F00-0FFF] ਤਿੱਬਤੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1102"/>
         <source>[1000-109F] Myanmar</source>
-        <translation>[1000-109F] 4. [KONTEKSTO: QG_DlgMText] [1000-109F] Myanmar</translation>
+        <translation>[1000-109F] ਮਿਆਂਮਾਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1107"/>
         <source>[10A0-10FF] Georgian</source>
-        <translation>[10A0-10FF] 5. [KONTEKSTO: QG_DlgMText] [10A0-10FF] Georgian</translation>
+        <translation>[10A0-10FF] ਜਾਰਜੀਆਈ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1112"/>
         <source>[1100-11FF] Hangul Jamo</source>
-        <translation>[1100-11FF] 6. [KONTEKSTO: QG_DlgMText] [1100-11FF] Hangul Jamo</translation>
+        <translation>[1100-11FF] ਹਾਂਗੁਲ ਜਾਮੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1117"/>
         <source>[1200-137F] Ethiopic</source>
-        <translation>[1200-137F] 7. [KONTEKSTO: QG_DlgMText] [1200-137F] Ethiopic</translation>
+        <translation>[1200-137F] ਇਥੋਪਿਕ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1122"/>
         <source>[13A0-13FF] Cherokee</source>
-        <translation>[13A0-13FF] 8. [KONTEKSTO: QG_DlgMText] [13A0-13FF] Cherokee</translation>
+        <translation>[13A0-13FF] ਚੈਰੋਕੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1127"/>
         <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
-        <translation>[1400-167F] Pinag-isang Canadian Aboriginal Syllabic</translation>
+        <translation>[1400-167F] ਸੰਯੁਕਤ ਕੈਨੇਡੀਅਨ ਆਦਿਵਾਸੀ ਸਿਲੇਬਿਕ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1132"/>
         <source>[1680-169F] Ogham</source>
-        <translation>[1680-169F] 9. [KONTEKSTO: QG_DlgMText] [1680-169F] Ogham</translation>
+        <translation>[1680-169F] ਓਘਮ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1137"/>
         <source>[16A0-16FF] Runic</source>
-        <translation>[16A0-16FF] 10. [KONTEKSTO: QG_DlgMText] [16A0-16FF] Runic</translation>
+        <translation>[16A0-16FF] ਰੂਨਿਕ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1142"/>
         <source>[1700-171F] Tagalog</source>
-        <translation>[1700-171F] Tagalog</translation>
+        <translation>[1700-171F] ਤਗਾਲੋਗ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1147"/>
         <source>[1720-173F] Hanunoo</source>
-        <translation>[1720-173F] Hanunoo</translation>
+        <translation>[1720-173F] ਹਾਨੂਨੂ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1152"/>
         <source>[1740-175F] Buhid</source>
-        <translation>[1740-175F] Buhid</translation>
+        <translation>[1740-175F] ਬੁਹਿਦ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1157"/>
         <source>[1760-177F] Tagbanwa</source>
-        <translation>[1760-177F] Tagbanwa</translation>
+        <translation>[1760-177F] ਤਗਬਨਵਾ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1162"/>
         <source>[1780-17FF] Khmer</source>
-        <translation>[1780-17FF] Khmer</translation>
+        <translation>[1780-17FF] ਖਮੇਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1167"/>
         <source>[1800-18AF] Mongolian</source>
-        <translation>[1800-18AF] Mongolian</translation>
+        <translation>[1800-18AF] ਮੰਗੋਲੀਆਈ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1172"/>
         <source>[1E00-1EFF] Latin Extended Additional</source>
-        <translation>[1E00-1EFF] Latin Extended Additional</translation>
+        <translation>[1E00-1EFF] ਲੈਟਿਨ ਵਿਸਤ੍ਰਿਤ ਵਾਧੂ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1177"/>
         <source>[1F00-1FFF] Greek Extended</source>
-        <translation>[1F00-1FFF] Greek Extended</translation>
+        <translation>[1F00-1FFF] ਯੂਨਾਨੀ ਵਿਸਤ੍ਰਿਤ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1182"/>
         <source>[2000-206F] General Punctuation</source>
-        <translation>[2000-206F] Pangkalahatang Bantas</translation>
+        <translation>[2000-206F] ਆਮ ਵਿਰਾਮ ਚਿੰਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1187"/>
         <source>[2070-209F] Superscripts and Subscripts</source>
-        <translation>[2070-209F] Mga Superscript at Subscript</translation>
+        <translation>[2070-209F] ਸੁਪਰਸਕ੍ਰਿਪਟ ਅਤੇ ਸਬਸਕ੍ਰਿਪਟ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1192"/>
         <source>[20A0-20CF] Currency Symbols</source>
-        <translation>[20A0-20CF] Mga Simbolo ng Pera</translation>
+        <translation>[20A0-20CF] ਮੁਦਰਾ ਨਿਸ਼ਾਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1197"/>
         <source>[20D0-20FF] Combining Marks for Symbols</source>
-        <translation>[20D0-20FF] Mga Pinagsamang Marka para sa mga Simbolo</translation>
+        <translation>[20D0-20FF] ਨਿਸ਼ਾਨਾਂ ਲਈ ਕੰਬਾਈਨਿੰਗ ਚਿੰਨ੍ਹ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1202"/>
         <source>[2100-214F] Letterlike Symbols</source>
-        <translation>[2100-214F] Mga Simbolong Katulad ng Titik</translation>
+        <translation>[2100-214F] ਅੱਖਰ-ਵਰਗੇ ਨਿਸ਼ਾਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1207"/>
         <source>[2150-218F] Number Forms</source>
-        <translation>[2150-218F] Mga Pormat ng Numero</translation>
+        <translation>[2150-218F] ਨੰਬਰ ਫਾਰਮ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1212"/>
         <source>[2190-21FF] Arrows</source>
-        <translation>[2190-21FF] Mga Palaso</translation>
+        <translation>[2190-21FF] ਤੀਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1217"/>
         <source>[2200-22FF] Mathematical Operators</source>
-        <translation>[2200-22FF] Mga Operator sa Matematika</translation>
+        <translation>[2200-22FF]  ਗਣਿਤ ਓਪਰੇਟਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1222"/>
         <source>[2300-23FF] Miscellaneous Technical</source>
-        <translation>[2300-23FF] Iba&apos;t Ibang Teknikal</translation>
+        <translation>[2300-23FF] ਫੁਟਕਲ ਤਕਨੀਕੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1227"/>
         <source>[2400-243F] Control Pictures</source>
-        <translation>[2400-243F] Mga Larawan ng Kontrol</translation>
+        <translation>[2400-243F] ਕੰਟਰੋਲ ਤਸਵੀਰਾਂ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1232"/>
         <source>[2440-245F] Optical Character Recognition</source>
-        <translation>[2440-245F] Pagkilala sa Karakter sa Pamamagitan ng Optika</translation>
+        <translation>[2440-245F] ਆਪਟੀਕਲ ਅੱਖਰ ਪਛਾਣ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1237"/>
         <source>[2460-24FF] Enclosed Alphanumerics</source>
-        <translation>[2460-24FF] Mga Nakapaloob na Alpabetikong Numero</translation>
+        <translation>[2460-24FF] ਘਿਰੇ ਹੋਏ ਅੱਖਰ-ਅੰਕ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1242"/>
         <source>[2500-257F] Box Drawing</source>
-        <translation>[2500-257F] Paglikha ng mga Kahon</translation>
+        <translation>[2500-257F] ਬਾਕਸ ਡਰਾਇੰਗ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1247"/>
         <source>[2580-259F] Block Elements</source>
-        <translation>[2580-259F] Mga Elemento ng Bloke</translation>
+        <translation>[2580-259F] ਬਲਾਕ ਤੱਤ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1252"/>
         <source>[25A0-25FF] Geometric Shapes</source>
-        <translation>[25A0-25FF] Mga Hugis na Heometrikal</translation>
+        <translation>[25A0-25FF] ਜੁਮੈਟਰੀ ਸ਼ਕਲਾਂ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1257"/>
         <source>[2600-26FF] Miscellaneous Symbols</source>
-        <translation>[2600-26FF] Iba&apos;t ibang Simbolo</translation>
+        <translation>[2600-26FF] ਫੁਟਕਲ ਨਿਸ਼ਾਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1262"/>
         <source>[2700-27BF] Dingbats</source>
-        <translation>[2700-27BF] Mga Dingbat</translation>
+        <translation>[2700-27BF] ਡਿੰਗਬੈਟਸ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1267"/>
         <source>[27C0-27EF] Miscellaneous Mathematical Symbols-A</source>
-        <translation>[27C0-27EF] Iba&apos;t ibang Simbolo sa Matematika-A</translation>
+        <translation>[27C0-27EF] ਫੁਟਕਲ ਗਣਿਤ ਨਿਸ਼ਾਨ-A</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1272"/>
         <source>[27F0-27FF] Supplemental Arrows-A</source>
-        <translation>[27F0-27FF] Mga Karagdagang Palaso-A</translation>
+        <translation>[27F0-27FF] ਪੂਰਕ ਤੀਰ-A</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1277"/>
         <source>[2800-28FF] Braille Patterns</source>
-        <translation>[2800-28FF] Mga Pattern ng Braille</translation>
+        <translation>[2800-28FF] ਬ੍ਰੇਲ ਤਰਤੀਬਾਂ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1282"/>
         <source>[2900-297F] Supplemental Arrows-B</source>
-        <translation>[2900-297F] Mga Karagdagang Palaso-B</translation>
+        <translation>[2900-297F] ਪੂਰਕ ਤੀਰ-B</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1287"/>
         <source>[2980-29FF] Miscellaneous Mathematical Symbols-B</source>
-        <translation>[2980-29FF] Iba&apos;t ibang Simbolo sa Matematika-B</translation>
+        <translation>[2980-29FF] ਫੁਟਕਲ ਗਣਿਤ ਨਿਸ਼ਾਨ-B</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1292"/>
         <source>[2A00-2AFF] Supplemental Mathematical Operators</source>
-        <translation>[2A00-2AFF] Mga Karagdagang Operator sa Matematika</translation>
+        <translation>[2A00-2AFF] ਪੂਰਕ ਗਣਿਤ ਓਪਰੇਟਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1297"/>
         <source>[2E80-2EFF] CJK Radicals Supplement</source>
-        <translation>[2E80-2EFF] Karagdagang mga Radikal ng CJK</translation>
+        <translation>[2E80-2EFF] CJK ਰੈਡੀਕਲ ਪੂਰਕ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1302"/>
         <source>[2F00-2FDF] Kangxi Radicals</source>
-        <translation>[2F00-2FDF] Mga Radikal ng Kangxi</translation>
+        <translation>[2F00-2FDF] ਕਾਂਗਸ਼ੀ ਰੈਡੀਕਲ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1307"/>
         <source>[2FF0-2FFF] Ideographic Description Characters</source>
-        <translation>[2FF0-2FFF] Mga Karakter ng Ideograpikong Paglalarawan</translation>
+        <translation>[2FF0-2FFF] ਚਿੱਤਰ-ਲਿਪੀ ਵੇਰਵਾ ਅੱਖਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1312"/>
         <source>[3000-303F] CJK Symbols and Punctuation</source>
-        <translation>[3000-303F] Mga Simbolo at Bantas ng CJK</translation>
+        <translation>[3000-303F] CJK ਨਿਸ਼ਾਨ ਅਤੇ ਵਿਰਾਮ ਚਿੰਨ੍ਹ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1317"/>
         <source>[3040-309F] Hiragana</source>
-        <translation>[3040-309F] Hiragana</translation>
+        <translation>[3040-309F] ਹੀਰਾਗਾਨਾ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1322"/>
         <source>[30A0-30FF] Katakana</source>
-        <translation>[30A0-30FF] Katakana</translation>
+        <translation>[30A0-30FF] ਕਾਤਾਕਾਨਾ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1327"/>
         <source>[3100-312F] Bopomofo</source>
-        <translation>[3100-312F] Bopomofo</translation>
+        <translation>[3100-312F] ਬੋਪੋਮੋਫੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1332"/>
         <source>[3130-318F] Hangul Compatibility Jamo</source>
-        <translation>[3130-318F] Hangul Compatibility Jamo</translation>
+        <translation>[3130-318F] ਹੰਗੁਲ ਅਨੁਕੂਲਤਾ ਜਾਮੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1337"/>
         <source>[3190-319F] Kanbun</source>
-        <translation>[3190-319F] Kanbun</translation>
+        <translation>[3190-319F] ਕਾਨਬੁਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1342"/>
         <source>[31A0-31BF] Bopomofo Extended</source>
-        <translation>[31A0-31BF] Bopomofo Extended</translation>
+        <translation>[31A0-31BF] ਬੋਪੋਮੋਫੋ ਐਕਸਟੈਂਡਡ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1347"/>
         <source>[3200-32FF] Enclosed CJK Letters and Months</source>
-        <translation>[3200-32FF] Mga Nakapaloob na Titik at Buwan ng CJK</translation>
+        <translation>[3200-32FF] ਘਿਰੇ ਹੋਏ CJK ਅੱਖਰ ਅਤੇ ਮਹੀਨੇ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1352"/>
         <source>[3300-33FF] CJK Compatibility</source>
-        <translation>[3300-33FF] Pagkatugma ng CJK</translation>
+        <translation>[3300-33FF] CJK ਅਨੁਕੂਲਤਾ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1357"/>
         <source>[3400-4DBF] CJK Unified Ideographs Extension A</source>
-        <translation>[3400-4DBF] Pinag-isang mga karakter ng CJK, Extension A</translation>
+        <translation>[3400-4DBF] CJK ਸੰਯੁਕਤ ਚਿੱਤਰ-ਲਿਪੀ ਐਕਸਟੈਂਸ਼ਨ A</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1362"/>
         <source>[4E00-9FAF] CJK Unified Ideographs</source>
-        <translation>[4E00-9FAF] Pinag-isang mga karakter ng CJK</translation>
+        <translation>[4E00-9FAF] CJK ਸੰਯੁਕਤ ਚਿੱਤਰ-ਲਿਪੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1367"/>
         <source>[A000-A48F] Yi Syllables</source>
-        <translation>[A000-A48F] Mga pantig ng Yi</translation>
+        <translation>[A000-A48F] ਯੀ ਸ਼ਬਦਾਂਸ਼</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1372"/>
         <source>[A490-A4CF] Yi Radicals</source>
-        <translation>[A490-A4CF] Mga radikal ng Yi</translation>
+        <translation>[A490-A4CF] ਯੀ ਰੈਡੀਕਲ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1377"/>
         <source>[AC00-D7AF] Hangul Syllables</source>
-        <translation>[AC00-D7AF] Mga pantig ng Hangul</translation>
+        <translation>[AC00-D7AF] ਹੰਗੁਲ ਸ਼ਬਦਾਂਸ਼</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1382"/>
         <source>[D800-DBFF] High Surrogates</source>
-        <translation>[D800-DBFF] Mataas na mga surrogate</translation>
+        <translation>[D800-DBFF] ਉੱਚ ਸਰੋਗੇਟ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1387"/>
         <source>[DC00-DFFF] Low Surrogate Area</source>
-        <translation>[DC00-DFFF] Mababang lugar ng surrogate</translation>
+        <translation>[DC00-DFFF] ਹੇਠਲਾ ਸਰੋਗੇਟ ਖੇਤਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1392"/>
         <source>[E000-F8FF] Private Use Area</source>
-        <translation>[E000-F8FF] Lugar para sa pribadong paggamit</translation>
+        <translation>[E000-F8FF] ਨਿੱਜੀ ਵਰਤੋਂ ਖੇਤਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1397"/>
         <source>[F900-FAFF] CJK Compatibility Ideographs</source>
-        <translation>[F900-FAFF] Mga karakter ng CJK para sa pagiging tugma</translation>
+        <translation>[F900-FAFF] CJK ਅਨੁਕੂਲਤਾ ਚਿੱਤਰ-ਲਿਪੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1402"/>
         <source>[FB00-FB4F] Alphabetic Presentation Forms</source>
-        <translation>[FB00-FB4F] Mga anyo ng alpabetikong presentasyon</translation>
+        <translation>[FB00-FB4F] ਵਰਣਮਾਲਾ ਪੇਸ਼ਕਾਰੀ ਫਾਰਮ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1407"/>
         <source>[FB50-FDFF] Arabic Presentation Forms-A</source>
-        <translation>[FB50-FDFF] Arabic Presentation Forms-A</translation>
+        <translation>[FB50-FDFF] ਅਰਬੀ ਪੇਸ਼ਕਾਰੀ ਫਾਰਮ-A</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1412"/>
         <source>[FE00-FE0F] Variation Selectors</source>
-        <translation>[FE00-FE0F] Variation Selectors</translation>
+        <translation>[FE00-FE0F] ਭਿੰਨਤਾ ਚੋਣਕਾਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1417"/>
         <source>[FE20-FE2F] Combining Half Marks</source>
-        <translation>[FE20-FE2F] Combining Half Marks</translation>
+        <translation>[FE20-FE2F] ਜੋੜਨ ਵਾਲੇ ਅੱਧੇ ਨਿਸ਼ਾਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1422"/>
         <source>[FE30-FE4F] CJK Compatibility Forms</source>
-        <translation>[FE30-FE4F] CJK Compatibility Forms</translation>
+        <translation>[FE30-FE4F] CJK ਅਨੁਕੂਲਤਾ ਫਾਰਮ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1427"/>
         <source>[FE50-FE6F] Small Form Variants</source>
-        <translation>[FE50-FE6F] Small Form Variants</translation>
+        <translation>[FE50-FE6F] ਛੋਟੇ ਫਾਰਮ ਭਿੰਨਤਾਵਾਂ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1432"/>
         <source>[FE70-FEFF] Arabic Presentation Forms-B</source>
-        <translation>[FE70-FEFF] Arabic Presentation Forms-B</translation>
+        <translation>[FE70-FEFF] ਅਰਬੀ ਪੇਸ਼ਕਾਰੀ ਫਾਰਮ-B</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1437"/>
         <source>[FF00-FFEF] Halfwidth and Fullwidth Forms</source>
-        <translation>[FF00-FFEF] Mga hugis na kalahating lapad at buong lapad</translation>
+        <translation>[FF00-FFEF] ਅੱਧੀ ਚੌੜਾਈ ਅਤੇ ਪੂਰੀ ਚੌੜਾਈ ਫਾਰਮ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1442"/>
         <source>[FFF0-FFFF] Specials</source>
-        <translation>[FFF0-FFFF] Mga espesyal na karakter</translation>
+        <translation>[FFF0-FFFF] ਖਾਸ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1447"/>
         <source>[10300-1032F] Old Italic</source>
-        <translation>[10300-1032F] Lumang istilong italics</translation>
+        <translation>[10300-1032F] ਪੁਰਾਣੀ ਇਟੈਲਿਕ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1452"/>
         <source>[10330-1034F] Gothic</source>
-        <translation>[10330-1034F] Gothic</translation>
+        <translation>[10330-1034F] ਗੋਥਿਕ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1457"/>
         <source>[10400-1044F] Deseret</source>
-        <translation>[10400-1044F] Deseret</translation>
+        <translation>[10400-1044F] ਡੈਜ਼ਰੇਟ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1462"/>
         <source>[1D000-1D0FF] Byzantine Musical Symbols</source>
-        <translation>[1D000-1D0FF] Mga Simbolo ng Musika ng Byzantine</translation>
+        <translation>[1D000-1D0FF] ਬਿਜ਼ੰਤੀਨੀ ਸੰਗੀਤਕ ਨਿਸ਼ਾਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1467"/>
         <source>[1D100-1D1FF] Musical Symbols</source>
-        <translation>[1D100-1D1FF] Mga Simbolo ng Musika</translation>
+        <translation>[1D100-1D1FF] ਸੰਗੀਤਕ ਨਿਸ਼ਾਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1472"/>
         <source>[1D400-1D7FF] Mathematical Alphanumeric Symbols</source>
-        <translation>[1D400-1D7FF] Mga Simbolo ng Matematikal na Alfanumeriko</translation>
+        <translation>[1D400-1D7FF] ਗਣਿਤ ਅੱਖਰ-ਅੰਕੀ ਨਿਸ਼ਾਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1477"/>
         <source>[20000-2A6DF] CJK Unified Ideographs Extension B</source>
-        <translation>[20000-2A6DF] Pinagsamang mga Ideograpong CJK Extension B</translation>
+        <translation>[20000-2A6DF] CJK ਸੰਯੁਕਤ ਚਿੱਤਰ-ਲਿਪੀ ਐਕਸਟੈਂਸ਼ਨ B</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1482"/>
         <source>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</source>
-        <translation>[2F800-2FA1F] Mga Karagdagang Ideograpong CJK para sa Pagkatugma</translation>
+        <translation>[2F800-2FA1F] CJK ਅਨੁਕੂਲਤਾ ਚਿੱਤਰ-ਲਿਪੀ ਪੂਰਕ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1487"/>
         <source>[E0000-E007F] Tags</source>
-        <translation>[E0000-E007F] Mga Tag</translation>
+        <translation>[E0000-E007F] ਟੈਗ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1492"/>
         <source>[F0000-FFFFD] Supplementary Private Use Area-A</source>
-        <translation>[F0000-FFFFD] Karagdagang Pribadong Lugar ng Paggamit-A</translation>
+        <translation>[F0000-FFFFD] ਪੂਰਕ ਨਿੱਜੀ ਵਰਤੋਂ ਖੇਤਰ-A</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1497"/>
         <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
-        <translation>[100000-10FFFD] Karagdagang Pribadong Lugar ng Paggamit-B</translation>
+        <translation>[100000-10FFFD] ਵਾਧੂ ਨਿੱਜੀ ਵਰਤੋਂ ਖੇਤਰ-B</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="847"/>
         <source>Diameter (⌀)</source>
-        <translation>Diyametro (⌀)</translation>
+        <translation>ਡਾਇਮੀਟਰ (⌀)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="113"/>
         <source>&amp;Line spacing:</source>
-        <translation>Pagitan ng mga linya:</translation>
+        <translation>&amp;ਲਾਈਨ ਸਪੇਸਿੰਗ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="104"/>
         <source>Font Settings</source>
-        <translation>Mga Setting ng Font</translation>
+        <translation>ਫੌਂਟ ਸੈਟਿੰਗਾਂ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="246"/>
         <source>Font:</source>
-        <translation>Font:</translation>
+        <translation>ਫੌਂਟ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="645"/>
         <source>Text Direction</source>
-        <translation>Direksyon ng Teksto</translation>
+        <translation>ਟੈਕਸਟ ਦਿਸ਼ਾ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="657"/>
         <source>Left to right</source>
-        <translation>Mula kaliwa hanggang kanan</translation>
+        <translation>ਖੱਬੇ ਤੋਂ ਸੱਜੇ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="670"/>
         <source>Right to left</source>
-        <translation>Mula kanan hanggang kaliwa</translation>
+        <translation>ਸੱਜੇ ਤੋਂ ਖੱਬੇ</translation>
     </message>
 </context>
 <context>
@@ -6165,12 +6166,12 @@ Mangyaring piliin ang yunit na gusto mong gamitin para sa mga bagong guhit at an
     <message>
         <location filename="../src/ui/forms/qg_dlgmove.ui" line="26"/>
         <source>Move/Copy Options</source>
-        <translation>Mga Opsyon para sa Paglipat/Pagkopya</translation>
+        <translation>ਹਿਲਾਓ/ਕਾਪੀ ਚੋਣ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmove.ui" line="95"/>
         <source>Number of copies. Maximum 100</source>
-        <translation>Bilang ng mga kopya. Pinakamataas na 100</translation>
+        <translation>ਨਕਲਾਂ ਦੀ ਗਿਣਤੀ। ਵੱਧ ਤੋਂ ਵੱਧ 100</translation>
     </message>
 </context>
 <context>
@@ -6218,7 +6219,7 @@ Mangyaring piliin ang yunit na gusto mong gamitin para sa mga bagong guhit at an
     <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="41"/>
         <source>...</source>
-        <translation>translation 1</translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="54"/>
@@ -6445,12 +6446,12 @@ Mangyaring piliin ang yunit na gusto mong gamitin para sa mga bagong guhit at an
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="720"/>
         <source>Crosshair</source>
-        <translation>Crosshair</translation>
+        <translation>ਕਰਾਸਹੇਅਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="654"/>
         <source>Left crosshair with isometric grid</source>
-        <translation>Kaliwang crosshair na may isometric grid</translation>
+        <translation>ਆਈਸੋਮੈਟ੍ਰਿਕ ਗਰਿੱਡ ਵਾਲਾ ਖੱਬਾ ਕਰਾਸਹੇਅਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="152"/>
@@ -6462,7 +6463,7 @@ Mangyaring piliin ang yunit na gusto mong gamitin para sa mga bagong guhit at an
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="676"/>
         <source>Top crosshair with isometric grid</source>
-        <translation>Itaas na crosshair na may isometric grid</translation>
+        <translation>ਆਈਸੋਮੈਟ੍ਰਿਕ ਗਰਿੱਡ ਵਾਲਾ ਉੱਪਰਲਾ ਕਰਾਸਹੇਅਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="195"/>
@@ -6474,69 +6475,69 @@ Mangyaring piliin ang yunit na gusto mong gamitin para sa mga bagong guhit at an
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="698"/>
         <source>Right crosshair with isometric grid</source>
-        <translation>Kanang crosshair na may isometric grid</translation>
+        <translation>ਆਈਸੋਮੈਟ੍ਰਿਕ ਗਰਿੱਡ ਵਾਲਾ ਸੱਜਾ ਕਰਾਸਹੇਅਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="178"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="205"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="701"/>
         <source>Right</source>
-        <translation>Kanan</translation>
+        <translation>ਸੱਜਾ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="595"/>
         <source>Use orthogonal grid</source>
-        <translation>Gamitin ang orthogonal grid</translation>
+        <translation>ਆਰਥੋਗੋਨਲ ਗਰਿੱਡ ਦੀ ਵਰਤੋਂ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="598"/>
         <source>Orthogonal Grid</source>
-        <translation>Ortogonal na Grid</translation>
+        <translation>ਆਰਥੋਗੋਨਲ ਗਰਿੱਡ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="608"/>
         <source>Use isometric grid</source>
-        <translation>Gamitin ang isometric grid</translation>
+        <translation>ਆਈਸੋਮੈਟ੍ਰਿਕ ਗਰਿੱਡ ਦੀ ਵਰਤੋਂ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="611"/>
         <source>Isometric Grid</source>
-        <translation>Isometric Grid</translation>
+        <translation>ਆਈਸੋਮੈਟ੍ਰਿਕ ਗਰਿੱਡ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1047"/>
         <source>Tick size:</source>
-        <translation>Laki ng marka:</translation>
+        <translation>ਟਿਕ ਸਾਈਜ਼:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1116"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Laki ng marka ng dimensyon. Kung itatakda sa 0, hindi gagana ang marka ng dimensyon. Hindi iguguhit ang arrow ng dimensyon kapag naka-enable ang marka ng dimensyon.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ਮਾਪ ਟਿਕ ਸਾਈਜ਼। ਇਸ ਨੂੰ 0 ਸੈੱਟ ਕਰਨ ਨਾਲ ਮਾਪ ਟਿਕ ਅਸਮਰੱਥ ਹੋ ਜਾਵੇਗਾ। ਜਦੋਂ ਮਾਪ ਟਿਕ ਸਮਰੱਥ ਹੋਵੇ ਤਾਂ ਮਾਪ ਤੀਰ ਨਹੀਂ ਬਣਾਇਆ ਜਾਵੇਗਾ।&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1461"/>
         <source>Horizontal</source>
-        <translation>Pahalang</translation>
+        <translation>ਹਰੀਜ਼ੋਂਟਲ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1233"/>
         <source>General Scale:</source>
-        <translation>Pangkalahatang Sukat:</translation>
+        <translation>ਆਮ ਪੈਮਾਨਾ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="969"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Sukat na imu-multiply sa lahat ng halaga ng dimensyon.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ਸਾਰੇ ਮਾਪ ਮੁੱਲਾਂ ਨੂੰ ਗੁਣਾ ਕਰਨ ਲਈ ਪੈਮਾਨਾ।&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1178"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension geometries.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Sukat na imu-multiply sa lahat ng geometry ng dimensyon.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ਸਾਰੀਆਂ ਮਾਪ ਜੁਮੈਟਰੀਆਂ ਨੂੰ ਗੁਣਾ ਕਰਨ ਲਈ ਪੈਮਾਨਾ।&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="885"/>
         <source>Text style:</source>
-        <translation>Estilo ng teksto:</translation>
+        <translation>ਪਾਠ ਸਟਾਈਲ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="893"/>
@@ -6551,191 +6552,191 @@ Mangyaring piliin ang yunit na gusto mong gamitin para sa mga bagong guhit at an
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="906"/>
         <source>Decimal separator:</source>
-        <translation>Decimal na separator:</translation>
+        <translation>ਦਸ਼ਮਲਵ ਵਿਭਾਜਕ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="933"/>
         <source>Linear units:</source>
-        <translation>Mga yunit ng linear:</translation>
+        <translation>ਰੇਖਿਕ ਇਕਾਈਆਂ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="949"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1384"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1571"/>
         <source>Color:</source>
-        <translation>Kulay:</translation>
+        <translation>ਰੰਗ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="959"/>
         <source>Length Factor:</source>
-        <translation>Factor ng haba:</translation>
+        <translation>ਲੰਬਾਈ ਫੈਕਟਰ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1086"/>
         <source>Angular units:</source>
-        <translation>Mga yunit ng angular:</translation>
+        <translation>ਕੋਣੀ ਇਕਾਈਆਂ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1109"/>
         <source>Linear zeros:</source>
-        <translation>Mga linear na zero:</translation>
+        <translation>ਰੇਖਿਕ ਜ਼ੀਰੋ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1146"/>
         <source>Format units</source>
-        <translation>Mga yunit ng format</translation>
+        <translation>ਫਾਰਮਿਟ ਇਕਾਈਆਂ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1153"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Distance gap around text&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Distansya sa pagitan ng teksto&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ਪਾਠ ਦੇ ਆਲੇ-ਦੁਆਲੇ ਖਾਲੀ ਥਾਂ ਦੀ ਦੂਰੀ&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1226"/>
         <source>Text size &amp; position</source>
-        <translation>Laki at posisyon ng teksto</translation>
+        <translation>ਪਾਠ ਸਾਈਜ਼ ਅਤੇ ਟਿਕਾਣਾ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1271"/>
         <source>Length to enlarge over dimension line</source>
-        <translation>Haba para palakihin sa dimensyon na linya</translation>
+        <translation>ਮਾਪ ਰੇਖਾ ਤੋਂ ਅੱਗੇ ਵਧਾਉਣ ਲਈ ਲੰਬਾਈ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1296"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Laki ng arrow ng dimensyon. Walang epekto kapag ang laki ng tick ay iba sa 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ਮਾਪ ਤੀਰ ਸਾਈਜ਼। &lt;a name=&quot;result_box&quot;/&gt;ਟਿਕ ਸਾਈਜ਼ &lt;a name=&quot;result_box&quot;/&gt;0 ਤੋਂ ਵੱਖਰਾ ਹੋਣ ਦੀ ਸੂਰਤ ਵਿੱਚ ਇਸ ਦਾ ਕੋਈ ਪ੍ਰਭਾਵ ਨਹੀਂ ਪੈਂਦਾ&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1350"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1578"/>
         <source>Width:</source>
-        <translation>Lapad:</translation>
+        <translation>ਚੌੜਾਈ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1370"/>
         <source>Dimension lines, arrows &amp; ticks</source>
-        <translation>Mga linya, arrow at tick ng dimensyon</translation>
+        <translation>ਮਾਪ ਰੇਖਾਵਾਂ, ਤੀਰ ਅਤੇ ਟਿਕ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1377"/>
         <source>Angular zeros:</source>
-        <translation>Mga angular zero:</translation>
+        <translation>ਕੋਣੀ ਜ਼ੀਰੋ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1391"/>
         <source>Angular precision:</source>
-        <translation>Angular precision:</translation>
+        <translation>ਕੋਣੀ ਸ਼ੁੱਧਤਾ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1404"/>
         <source>Enlarge:</source>
-        <translation>Palakihin:</translation>
+        <translation>ਵਾਧਾ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1414"/>
         <source>Offset:</source>
-        <translation>Offset:</translation>
+        <translation>ਆਫਸੈੱਟ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1427"/>
         <source>Linear precision:</source>
-        <translation>Linear precision:</translation>
+        <translation>ਰੇਖਿਕ ਸ਼ੁੱਧਤਾ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1446"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Tekstong pagkakahanay &lt;a name=&quot;result_box&quot;/&gt;kaugnay ng linya ng dimensyon.</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ਪਾਠ ਇਕਸਾਰ &lt;a name=&quot;result_box&quot;/&gt;ਮਾਪ ਰੇਖਾ ਦੇ ਅਨੁਸਾਰੀ।&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1456"/>
         <source>Aligned</source>
-        <translation>Nakahahanay</translation>
+        <translation>ਅਲਾਈਨਡ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1502"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Offset from origin point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pagkakalayo mula sa pinagmulan.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ਮੂਲ ਬਿੰਦੂ ਤੋਂ ਆਫਸੈੱਟ।&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1534"/>
         <source>Text alignment:</source>
-        <translation>Tekstong pagkakahanay:</translation>
+        <translation>ਪਾਠ ਇਕਸਾਰ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1554"/>
         <source>Extension lines</source>
-        <translation>Mga linya ng pagpapalawig</translation>
+        <translation>ਐਕਸਟੈਂਸ਼ਨ ਰੇਖਾਵਾਂ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1561"/>
         <source>Fixed length:</source>
-        <translation>Nakapirming haba:</translation>
+        <translation>ਫਿਕਸਡ ਲੰਬਾਈ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="44"/>
         <source>Format</source>
-        <translation>Format</translation>
+        <translation>ਫਾਰਮਿਟ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="66"/>
         <source>&amp;Height:</source>
-        <translation>&amp;Taas:</translation>
+        <translation>ਉਚਾਈ(&amp;H):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="82"/>
         <source>&amp;Width:</source>
-        <translation>&amp;Lapad:</translation>
+        <translation>ਚੌੜਾਈ(&amp;W):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="102"/>
         <source>Orientation</source>
-        <translation>Oryentasyon</translation>
+        <translation>ਓਰੀਐਂਟੇਸ਼ਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="138"/>
         <source>Margins</source>
-        <translation>Mga Margin</translation>
+        <translation>ਹਾਸ਼ੀਏ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="165"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="185"/>
         <source>Bottom</source>
-        <translation>Sa ibaba</translation>
+        <translation>ਹੇਠਾਂ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="240"/>
         <source>Number of pages</source>
-        <translation>Bilang ng mga pahina</translation>
+        <translation>ਸਫ਼ਿਆਂ ਦੀ ਗਿਣਤੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="246"/>
         <source>Horizontally:</source>
-        <translation>Pahiga:</translation>
+        <translation>ਹਰੀਜ਼ੋਂਟਲ ਤੌਰ &apos;ਤੇ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="263"/>
         <source>Vertically:</source>
-        <translation>Patayo:</translation>
+        <translation>ਵਰਟੀਕਲ ਤੌਰ &apos;ਤੇ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1598"/>
         <source>fixed extension line length</source>
-        <translation>nakatakdang haba ng linya ng pagpapalawig</translation>
+        <translation>ਫਿਕਸਡ ਐਕਸਟੈਂਸ਼ਨ ਲਾਈਨ ਲੰਬਾਈ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1609"/>
         <source>&amp;Splines</source>
-        <translation>&amp;Mga Spline</translation>
+        <translation>ਸਪਲਾਈਨ(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1683"/>
         <source>&amp;Points</source>
-        <translation>&amp;Mga Punto</translation>
+        <translation>&amp;ਬਿੰਦੂ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1692"/>
         <source>Point Style</source>
-        <translation>Estilo ng Punto</translation>
+        <translation>ਬਿੰਦੂ ਸਟਾਈਲ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1733"/>
@@ -6764,43 +6765,43 @@ Mangyaring piliin ang yunit na gusto mong gamitin para sa mga bagong guhit at an
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="2557"/>
         <source>Point Size</source>
-        <translation>Laki ng Punto</translation>
+        <translation>ਬਿੰਦੂ ਸਾਈਜ਼</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="2592"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="1108"/>
         <source>Dwg Units</source>
-        <translation>Mga Yunit ng Pagguhit</translation>
+        <translation>DWG ਇਕਾਈਆਂ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="2629"/>
         <source>Size relative to screen</source>
-        <translation>Laki na may kaugnayan sa screen</translation>
+        <translation>ਸਕ੍ਰੀਨ ਦੇ ਅਨੁਸਾਰੀ ਸਾਈਜ਼</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="2642"/>
         <source>Size in drawing units</source>
-        <translation>Laki sa mga yunit ng pagguhit</translation>
+        <translation>ਡਰਾਇੰਗ ਇਕਾਈਆਂ ਵਿੱਚ ਸਾਈਜ਼</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="2669"/>
         <source>(0 =&gt; 5% relative to screen size)</source>
-        <translation>(0 =&gt; 5% na may kaugnayan sa laki ng screen)</translation>
+        <translation>(0 =&gt; 5% ਸਕ੍ਰੀਨ ਸਾਈਜ਼ ਦੇ ਅਨੁਸਾਰੀ)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="122"/>
         <source>Architectural (metric)</source>
-        <translation>Arkitektura (metriko)</translation>
+        <translation>ਆਰਚੀਟੈਕਚਰਕਲ (ਮੀਟ੍ਰਿਕ)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="505"/>
         <source>For the length format &apos;Architectural (metric)&apos;, the unit must be set to Meter.</source>
-        <translation>Para sa format ng haba na &apos;Arkitektura (metriko)&apos;, dapat itakda ang yunit sa Metro.</translation>
+        <translation>&apos;ਆਰਚੀਟੈਕਚਰਕਲ (ਮੀਟ੍ਰਿਕ)&apos; ਲੰਬਾਈ ਫਾਰਮਿਟ ਲਈ ਇਕਾਈ ਮੀਟਰ ਹੀ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="1106"/>
         <source>Screen %</source>
-        <translation>Porsyento ng Screen</translation>
+        <translation>ਸਕ੍ਰੀਨ %</translation>
     </message>
 </context>
 <context>
@@ -6928,87 +6929,87 @@ Mangyaring piliin ang yunit na gusto mong gamitin para sa mga bagong guhit at an
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="996"/>
         <source>Program Defaults</source>
-        <translation>Mga Default na Programa</translation>
+        <translation>ਪ੍ਰੋਗਰਾਮ ਡਿਫੌਲਟ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1218"/>
         <source>Drawing unit.</source>
-        <translation>Yunit ng pagguhit.</translation>
+        <translation>ਡਰਾਇੰਗ ਇਕਾਈ।</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1021"/>
         <source>Time between automatic saving of the document in minutes.</source>
-        <translation>Ang oras sa pagitan ng awtomatikong pag-save ng dokumento sa mga minuto.</translation>
+        <translation>ਦਸਤਾਵੇਜ਼ ਦੇ ਆਟੋਮੈਟਿਕ ਸੇਵ ਵਿਚਾਲੇ ਸਮਾਂ (ਮਿੰਟਾਂ ਵਿੱਚ)।</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1002"/>
         <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
-        <translation>Kapag nakatakda, awtomatikong gagawa ang LibreCAD ng backup ng iyong kasalukuyang drawing.</translation>
+        <translation>ਜਦੋਂ ਸੈੱਟ ਕੀਤਾ ਹੋਵੇ, ਤਾਂ LibreCAD ਤੁਹਾਡੀ ਮੌਜੂਦਾ ਡਰਾਇੰਗ ਦਾ ਬੈਕਅੱਪ ਆਪਣੇ ਆਪ ਬਣਾਏਗਾ।</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1005"/>
         <source>Auto backup</source>
-        <translation>Awtomatikong backup</translation>
+        <translation>ਆਟੋ ਬੈਕਅੱਪ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="867"/>
         <source>Template:</source>
-        <translation>Template:</translation>
+        <translation>ਟੈਮਪਲੇਟ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="683"/>
         <source>St&amp;art Handle Color:</source>
-        <translation>Kulay ng panimulang handle:</translation>
+        <translation>&amp;ਸ਼ੁਰੂ ਹੈਂਡਲ ਰੰਗ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="767"/>
         <source>&amp;Handle Color:</source>
-        <translation>Kulay ng handle:</translation>
+        <translation>&amp;ਹੈਂਡਲ ਰੰਗ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="378"/>
         <source>&amp;End Handle Color:</source>
-        <translation>Kulay ng pangwakas na handle:</translation>
+        <translation>&amp;ਅੰਤ ਹੈਂਡਲ ਰੰਗ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="354"/>
         <source>Graphic Colors</source>
-        <translation>Mga kulay ng graphics</translation>
+        <translation>ਗ੍ਰਾਫਿਕ ਰੰਗ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="777"/>
         <source>Snap indicator:</source>
-        <translation>Tagapagpahiwatig ng snap:</translation>
+        <translation>ਸਨੈਪ ਇੰਡੀਕੇਟਰ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="199"/>
         <source>Anti-aliasing</source>
-        <translation>Anti-aliasing</translation>
+        <translation>ਐਂਟੀ-ਏਲੀਆਸਿੰਗ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1263"/>
         <source>Modify layer of selected entities, at  layer activation</source>
-        <translation>Baguhin ang layer ng mga napiling entity, sa pag-activate ng layer</translation>
+        <translation>ਚੁਣੀਆਂ ਐਂਟੀਟੀਆਂ ਦੀ ਲੇਅਰ ਬਦਲੋ, ਲੇਅਰ  ਐਕਟੀਵੇਸ਼ਨ ਤੇ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1089"/>
         <source>Clear Settings</source>
-        <translation>I-clear ang mga Setting</translation>
+        <translation>ਸੈਟਿੰਗਾਂ ਸਾਫ਼ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1101"/>
         <source>restores program geometry/layout to original state</source>
-        <translation>Ibinabalik ang geometry/layout ng programa sa orihinal na estado</translation>
+        <translation>ਪ੍ਰੋਗਰਾਮ ਦੀ ਜੁਮੈਟਰੀ/ਲੇਆਉਟ ਨੂੰ ਮੂਲ ਹਾਲਤ ਵਿੱਚ ਬਹਾਲ ਕਰਦਾ ਹੈ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1104"/>
         <source>Layout</source>
-        <translation>Layout</translation>
+        <translation>ਲੇਆਉਟ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1117"/>
         <source>restores the program to its original state</source>
-        <translation>Ibinabalik ang programa sa orihinal nitong estado</translation>
+        <translation>ਪ੍ਰੋਗਰਾਮ ਨੂੰ ਉਸਦੀ ਮੂਲ ਹਾਲਤ ਵਿੱਚ ਬਹਾਲ ਕਰਦਾ ਹੈ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1120"/>
@@ -7018,52 +7019,52 @@ Mangyaring piliin ang yunit na gusto mong gamitin para sa mga bagong guhit at an
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="192"/>
         <source>Scrollbars</source>
-        <translation>Mga Scrollbar</translation>
+        <translation>ਸਕ੍ਰੋਲਬਾਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="275"/>
         <source>Snap indicator lines</source>
-        <translation>Mga linya ng tagapagpahiwatig ng pag-snap</translation>
+        <translation>ਸਨੈਪ ਇੰਡੀਕੇਟਰ ਲਾਈਨਾਂ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="131"/>
         <source>Snap indicator shape</source>
-        <translation>Hugis ng tagapagpahiwatig ng pag-snap</translation>
+        <translation>ਸਨੈਪ ਇੰਡੀਕੇਟਰ ਸ਼ਕਲ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="185"/>
         <source>Hide cursor when snapping</source>
-        <translation>Itago ang cursor kapag nag-snap</translation>
+        <translation>ਸਨੈਪਿੰਗ ਦੌਰਾਨ ਕਰਸਰ ਲੁਕਾਓ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1143"/>
         <source>Start in tab mode</source>
-        <translation>Magsimula sa tab mode</translation>
+        <translation>ਟੈਬ ਮੋਡ ਵਿੱਚ ਸ਼ੁਰੂ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1130"/>
         <source>Startup</source>
-        <translation>Paglunsad</translation>
+        <translation>ਸਟਾਰਟਅੱਪ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1136"/>
         <source>Display loading screen</source>
-        <translation>Ipakita ang loading screen</translation>
+        <translation>ਲੋਡਿੰਗ ਸਕ੍ਰੀਨ ਵਿਖਾਓ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1150"/>
         <source>Start with main window maximized</source>
-        <translation>Magsimula na naka-maximize ang pangunahing window</translation>
+        <translation>ਮੁੱਖ ਵਿੰਡੋ ਮੈਕਸੀਮਾਈਜ਼ਡ ਨਾਲ ਸ਼ੁਰੂ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1164"/>
         <source>Enable CAD dockwidgets</source>
-        <translation>I-enable ang CAD dockwidgets</translation>
+        <translation>CAD ਡੌਕਵਿਜੈੱਟ ਸਮਰੱਥ ਬਣਾਓ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1171"/>
         <source>Enable CAD toolbars</source>
-        <translation>I-enable ang CAD toolbars</translation>
+        <translation>CAD ਟੂਲਬਾਰ ਸਮਰੱਥ ਬਣਾਓ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="799"/>
@@ -7073,47 +7074,47 @@ Mangyaring piliin ang yunit na gusto mong gamitin para sa mga bagong guhit at an
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="409"/>
         <source>Clear settings</source>
-        <translation>I-clear ang mga setting</translation>
+        <translation>ਸੈਟਿੰਗਾਂ ਸਾਫ਼ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="410"/>
         <source>This will also include custom menus and toolbars. Continue?</source>
-        <translation>Kasama rin dito ang mga custom na menu at toolbar. Ipagpatuloy?</translation>
+        <translation>ਇਸ ਵਿੱਚ ਕਸਟਮ ਮੀਨੂ ਅਤੇ ਟੂਲਬਾਰ ਵੀ ਸ਼ਾਮਲ ਹੋਣਗੇ। ਜਾਰੀ ਰੱਖੀਏ?</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1260"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kapag naka-enable, ang pag-activate ng isang layer ay magbabago sa lahat ng napiling entity sa bagong layer na iyon. Upang baguhin ang layer ng maraming entity: una, piliin ang mga kinakailangang entity; pagkatapos ay i-activate ang isang layer sa layer widget. Ginagawa nitong lahat ng napiling entity na nabibilang sa bagong layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ਜਦੋਂ ਸਮਰੱਥ ਹੋਵੇ, ਤਾਂ ਇੱਕ ਲੇਅਰ ਐਕਟਿਵ ਕਰਨ ਨਾਲ ਸਾਰੀਆਂ ਚੁਣੀਆਂ ਐਂਟੀਟੀਆਂ ਉਸ ਨਵੀਂ ਲੇਅਰ ਵਿੱਚ ਬਦਲ ਜਾਣਗੀਆਂ। ਕਈ ਐਂਟੀਟੀਆਂ ਦੀ ਲੇਅਰ ਬਦਲਣ ਲਈ: ਪਹਿਲਾਂ ਲੋੜੀਂਦੀਆਂ ਐਂਟੀਟੀਆਂ ਚੁਣੋ; ਲੇਅਰ ਵਿਜੈੱਟ ਵਿੱਚ ਇੱਕ ਲੇਅਰ ਐਕਟਿਵ ਕਰੋ। ਇਸ ਨਾਲ ਸਾਰੀਆਂ ਚੁਣੀਆਂ ਐਂਟੀਟੀਆਂ ਨਵੀਂ ਲੇਅਰ ਨਾਲ ਸਬੰਧਤ ਹੋ ਜਾਣਗੀਆਂ।&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="834"/>
         <source>Variable File:</source>
-        <translation>Variable File:</translation>
+        <translation>ਵੇਰੀਏਬਲ ਫਾਈਲ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="322"/>
         <source>Minimal Grid Spacing (p&amp;x):</source>
-        <translation>Pinakamababang pagitan ng grid (p&amp;x):</translation>
+        <translation>ਘੱਟੋ-ਘੱਟ ਗ੍ਰਿਡ ਸਪੇਸਿੰਗ (p&amp;x):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="118"/>
         <source>N&amp;umber of preview entities:</source>
-        <translation>Dami ng mga entity sa preview:</translation>
+        <translation>ਝਲਕ ਐਂਟੀਟੀਆਂ ਦੀ &amp;ਗਿਣਤੀ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1036"/>
         <source>Don&apos;t use native OS file open dialog</source>
-        <translation>Huwag gumamit ng katutubong dialog ng pagbubukas ng file ng OS</translation>
+        <translation>OS ਦਾ ਨੇਟਿਵ ਫਾਈਲ ਖੋਲ੍ਹਣ ਡਾਇਲਾਗ ਨਾ ਵਰਤੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="111"/>
         <source>Auto-panning</source>
-        <translation>Awtomatikong pag-pan</translation>
+        <translation>ਆਟੋ-ਪੈਨਿੰਗ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="265"/>
         <source>Hide the relative-&amp;zero marker</source>
-        <translation>Itago ang marker ng relatibong-zero</translation>
+        <translation>ਅਨੁਸਾਰੀ-&amp;ਜ਼ੀਰੋ ਨਿਸ਼ਾਨ ਲੁਕਾਓ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="268"/>
@@ -7123,92 +7124,92 @@ Mangyaring piliin ang yunit na gusto mong gamitin para sa mga bagong guhit at an
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="335"/>
         <source>Visualize the entity under the cursor</source>
-        <translation>Ipakita ang entity sa ilalim ng cursor</translation>
+        <translation>ਕਰਸਰ ਹੇਠਲੀ ਐਂਟੀਟੀ ਵੇਖਾਓ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="338"/>
         <source>Mouse-over effects</source>
-        <translation>Mga epekto sa pag-hover ng mouse</translation>
+        <translation>ਮਾਊਸ-ਓਵਰ ਪ੍ਰਭਾਵ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="388"/>
         <source>&amp;Relative-Zero Marker Color:</source>
-        <translation>Kulay ng marker ng relatibong-zero:</translation>
+        <translation>&amp;ਅਨੁਸਾਰੀ-ਜ਼ੀਰੋ ਨਿਸ਼ਾਨ ਰੰਗ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1014"/>
         <source>Auto save time (minutes):</source>
-        <translation>Awtomatikong oras ng pag-save (minuto):</translation>
+        <translation>ਆਟੋ ਸੇਵ ਸਮਾਂ (ਮਿੰਟ):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1043"/>
         <source>Inverts scrolling direction when using mouse wheel with Shift key.</source>
-        <translation>Binabaliktad ang direksyon ng pag-scroll kapag ginagamit ang mouse wheel kasama ang Shift key.</translation>
+        <translation>ਜਦੋਂ Shift ਕੁੰਜੀ ਨਾਲ ਮਾਊਸ ਵ੍ਹੀਲ ਵਰਤੀ ਜਾਵੇ ਤਾਂ ਸਕ੍ਰੋਲਿੰਗ ਦਿਸ਼ਾ ਉਲਟਾਉਂਦਾ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1046"/>
         <source>Invert horizontal scrolling direction</source>
-        <translation>Baliktarin ang pahalang na direksyon ng pag-scroll</translation>
+        <translation>ਹਰੀਜ਼ੋਂਟਲ ਸਕ੍ਰੋਲਿੰਗ ਦਿਸ਼ਾ ਉਲਟਾਓ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1053"/>
         <source>Inverts scrolling direction when using mouse wheel with Ctrl key.</source>
-        <translation>Binabaliktad ang direksyon ng pag-scroll kapag ginagamit ang mouse wheel kasama ang Ctrl key.</translation>
+        <translation>ਜਦੋਂ Ctrl ਕੁੰਜੀ ਨਾਲ ਮਾਊਸ ਵ੍ਹੀਲ ਵਰਤੀ ਜਾਵੇ ਤਾਂ ਸਕ੍ਰੋਲਿੰਗ ਦਿਸ਼ਾ ਉਲਟਾਉਂਦਾ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1056"/>
         <source>Invert vertical scrolling direction</source>
-        <translation>Baliktarin ang patayong direksyon ng pag-scroll</translation>
+        <translation>ਵਰਟੀਕਲ ਸਕ੍ਰੋਲਿੰਗ ਦਿਸ਼ਾ ਉਲਟਾਓ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1063"/>
         <source>Inverts zoom direction when using mouse wheel.</source>
-        <translation>Binabaliktad ang direksyon ng pag-zoom kapag ginagamit ang mouse wheel.</translation>
+        <translation>ਜਦੋਂ ਮਾਊਸ ਵ੍ਹੀਲ ਵਰਤੀ ਜਾਵੇ ਤਾਂ ਜ਼ੂਮ ਦਿਸ਼ਾ ਉਲਟਾਉਂਦਾ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1066"/>
         <source>Invert zoom direction</source>
-        <translation>Baliktarin ang direksyon ng pag-zoom</translation>
+        <translation>ਜ਼ੂਮ ਦਿਸ਼ਾ ਉਲਟਾਓ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1228"/>
         <source>Keyboard Settings</source>
-        <translation>Mga Setting ng Keyboard</translation>
+        <translation>ਕੀਬੋਰਡ ਸੈਟਿੰਗਾਂ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1234"/>
         <source>Evaluate commands when SPACE BAR is pressed</source>
-        <translation>Suriin ang mga utos kapag pinindot ang SPACE BAR</translation>
+        <translation>ਜਦੋਂ ਸਪੇਸ ਬਾਰ ਦਬਾਈ ਜਾਵੇ ਤਾਂ ਕਮਾਂਡਾਂ ਚਲਾਓ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1244"/>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
-        <translation>I-toggle ang libreng mode ng pag-snap kapag pinindot ang SPACE BAR</translation>
+        <translation>ਜਦੋਂ ਸਪੇਸ ਬਾਰ ਦਬਾਈ ਜਾਵੇ ਤਾਂ ਫ੍ਰੀ ਸਨੈਪ ਮੋਡ ਬਦਲੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1254"/>
         <source>CAD Preferences</source>
-        <translation>Mga Kagustuhan ng CAD</translation>
+        <translation>CAD ਪਸੰਦ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1270"/>
         <source>Automatically zoom drawing when opening</source>
-        <translation>Awtomatikong mag-zoom sa pagguhit kapag binuksan</translation>
+        <translation>ਖੋਲ੍ਹਣ ਵੇਲੇ ਡਰਾਇੰਗ ਨੂੰ ਆਪਣੇ ਆਪ ਜ਼ੂਮ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="880"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Folder ng aklatan ng mga bahagi. Ang mga file ng dxf ng aklatan ng mga simbolo ay dapat na nasa mga subdirektoryo ng folder na ito. Ang mga pangalan ng mga subfolder ay ipapakita sa Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Mga Widget &amp;gt; Mga Dock Widget &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;ਪਾਰਟ ਲਾਇਬ੍ਰੇਰੀ ਫੋਲਡਰ। ਸਿੰਬਲ ਲਾਇਬ੍ਰੇਰੀ ਦੀਆਂ dxf ਫਾਈਲਾਂ ਇਸ ਫੋਲਡਰ ਦੀਆਂ ਸਬ-ਡਾਇਰੈਕਟਰੀਆਂ ਵਿੱਚ ਹੋਣੀਆਂ ਚਾਹੀਦੀਆਂ ਹਨ। ਸਬਫੋਲਡਰ ਨਾਮ ਲਾਇਬ੍ਰੇਰੀ ਬ੍ਰਾਊਜ਼ਰ ਵਿੱਚ ਦਿਖਾਏ ਜਾਣਗੇ।&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( ਮੀਨੂ: ਵਿਜੈੱਟ &amp;gt; ਡੌਕ ਵਿਜੈੱਟ &amp;gt; ਲਾਇਬ੍ਰੇਰੀ ਬ੍ਰਾਊਜ਼ਰ)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1157"/>
         <source>Open last opened files</source>
-        <translation>Buksan ang mga huling binuksang file</translation>
+        <translation>ਆਖਰੀ ਖੋਲ੍ਹੀਆਂ ਫਾਈਲਾਂ ਖੋਲ੍ਹੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1241"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pansamantalang i-toggle ang libreng pag-snap kapag pinindot ang spacebar at aktibo ang window ng command&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ਜਦੋਂ ਸਪੇਸ ਬਾਰ ਦਬਾਈ ਜਾਵੇ ਅਤੇ ਕਮਾਂਡ ਵਿੰਡੋ ਐਕਟਿਵ ਹੋਵੇ ਤਾਂ ਫ੍ਰੀ ਸਨੈਪਿੰਗ ਨੂੰ ਆਰਜ਼ੀ ਤੌਰ &apos;ਤੇ ਬਦਲੋ&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -7216,130 +7217,138 @@ Mangyaring piliin ang yunit na gusto mong gamitin para sa mga bagong guhit at an
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="38"/>
         <source>Layers</source>
-        <translation>Mga Layer</translation>
+        <translation>ਲੇਅਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="73"/>
         <source>Export invisible layers</source>
-        <translation>I-export ang mga hindi nakikitang layer</translation>
+        <translation>ਅਦਿੱਖ ਲੇਅਰ ਐਕਸਪੋਰਟ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="80"/>
         <source>Export visible construction layers</source>
-        <translation>I-export ang mga nakikitang layer ng konstruksyon</translation>
+        <translation>ਦਿਖਾਈ ਦੇ ਰਹੇ ਕੰਸਟ੍ਰਕਸ਼ਨ ਲੇਅਰ ਐਕਸਪੋਰਟ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="92"/>
         <source>Blocks</source>
-        <translation>Mga Bloke</translation>
+        <translation>ਬਲਾਕ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="100"/>
         <source>Convert blocks to safe inline SVG content</source>
-        <translation>I-convert ang mga bloke sa ligtas na inline na nilalaman ng SVG</translation>
+        <translation>ਬਲਾਕ ਨੂੰ ਸੁਰੱਖਿਅਤ ਇਨਲਾਈਨ SVG ਸਮੱਗਰੀ ਵਿੱਚ ਬਦਲੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="115"/>
         <source>Ellipses / Ellipse arcs</source>
-        <translation>Mga ellipse / mga arko ng ellipse</translation>
+        <translation>ਐਲਿਪਸ / ਐਲਿਪਸ ਆਰਕ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="123"/>
         <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
-        <translation>Tantyahin ang mga ellipse at mga arko ng ellipse gamit ang mga cubic Bézier</translation>
+        <translation>ਐਲਿਪਸ ਅਤੇ ਐਲਿਪਸ ਆਰਕ ਨੂੰ ਕਿਊਬਿਕ ਬੇਜ਼ੀਅਰ ਨਾਲ ਅਨੁਮਾਨਿਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="20"/>
         <source>Export as CAM/plain SVG</source>
-        <translation>I-export bilang CAM/plain SVG</translation>
+        <translation>CAM/ਪਲੇਨ SVG ਵਜੋਂ ਐਕਸਪੋਰਟ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="48"/>
         <source>Default width of elements, mm</source>
-        <translation>Default na lapad ng mga elemento, mm</translation>
+        <translation>ਐਲੀਮੈਂਟਾਂ ਦੀ ਡਿਫੌਲਟ ਚੌੜਾਈ, mm</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="135"/>
         <source>Images</source>
-        <translation>Mga Larawan</translation>
+        <translation>ਚਿੱਤਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="143"/>
         <source>Raster Image export</source>
-        <translation>I-export ang raster image</translation>
+        <translation>ਰਾਸਟਰ ਚਿੱਤਰ ਐਕਸਪੋਰਟ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="155"/>
         <source>Dash/Dot Lines</source>
-        <translation>Mga guhit na may dash/dot</translation>
+        <translation>ਡੈਸ਼/ਡਾਟ ਲਾਈਨਾਂ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="165"/>
         <source>Length of the pattern, mm</source>
-        <translation>Haba ng pattern, mm</translation>
+        <translation>ਤਰਤੀਬ ਦੀ ਲੰਬਾਈ, mm</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="187"/>
         <source>Bake dash/dot lines to SVG path</source>
-        <translation>I-bake ang mga guhit na may dash/dot sa SVG path</translation>
+        <translation>ਡੈਸ਼/ਡਾਟ ਲਾਈਨਾਂ ਨੂੰ SVG ਪਾਥ ਵਿੱਚ ਬਦਲੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="33"/>
         <source>MakerCAM as of November 2014 does not hide SVG content 
 that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
-        <translation>Ang MakerCAM noong Nobyembre 2014 ay hindi nagtatago ng nilalamang SVG na itinakda bilang hindi nakikita (&quot;display: none&quot; o &quot;visibility: hidden&quot;).</translation>
+        <translation>MakerCAM ਨਵੰਬਰ 2014 ਤੱਕ ਉਸ SVG ਸਮੱਗਰੀ ਨੂੰ ਲੁਕਾਉਂਦਾ ਨਹੀਂ 
+ਜਿਸਨੂੰ ਅਦਿੱਖ ਸੈੱਟ ਕੀਤਾ ਗਿਆ ਹੋਵੇ (&quot;display: none&quot; ਜਾਂ &quot;visibility: hidden&quot;)।</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="34"/>
         <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
 because it does not take into account the reference point in the &lt;use&gt;.</source>
-        <translation>Ang MakerCAM noong Nobyembre 2014 ay hindi kayang pangasiwaan nang tama ang mga bloke, dahil hindi nito isinasaalang-alang ang punto ng sanggunian sa &lt;use&gt;.</translation>
+        <translation>MakerCAM ਨਵੰਬਰ 2014 ਤੱਕ ਬਲਾਕ ਨੂੰ ਠੀਕ ਤਰ੍ਹਾਂ ਹੈਂਡਲ ਨਹੀਂ ਕਰ ਸਕਦਾ,
+ਕਿਉਂਕਿ ਇਹ &lt;use&gt; ਵਿੱਚ ਹਵਾਲਾ ਬਿੰਦੂ ਨੂੰ ਧਿਆਨ ਵਿੱਚ ਨਹੀਂ ਰੱਖਦਾ।</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="35"/>
         <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
 when they are created using the &lt;ellipse&gt; tag  with a rotation in 
 the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation>Ang MakerCAM noong Marso 2015 ay hindi kayang ipakita nang tama ang mga ellipse at mga arko ng ellipse, kapag ginawa ang mga ito gamit ang tag na &lt;ellipse&gt; na may pag-ikot sa attribute na &lt;transform&gt; o bilang &lt;path&gt; gamit ang mga segment ng arko ng ellipse.</translation>
+        <translation>MakerCAM ਮਾਰਚ 2015 ਤੱਕ ਐਲਿਪਸ ਅਤੇ ਐਲਿਪਸ ਆਰਕ ਨੂੰ ਠੀਕ ਤਰ੍ਹਾਂ ਪ੍ਰਦਰਸ਼ਿਤ ਨਹੀਂ ਕਰ ਸਕਦਾ, 
+ਜਦੋਂ ਇਹ &lt;ellipse&gt; ਟੈਗ  ਵਿੱਚ ਰੋਟੇਸ਼ਨ ਨਾਲ 
+&lt;transform&gt; ਐਟ੍ਰੀਬਿਊਟ ਵਿੱਚ ਜਾਂ &lt;path&gt; ਵਜੋਂ ਇਲਿਪਟਿਕ ਆਰਕ ਸੈਗਮੈਂਟ ਵਰਤ ਕੇ ਬਣਾਏ ਜਾਂਦੇ ਹਨ।</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="36"/>
         <source>Exported images can be useful in SVG editors (Inkscape, etc), 
 but avoided in some CAM&apos;s.</source>
-        <translation>Ang mga in-export na imahe ay maaaring maging kapaki-pakinabang sa mga SVG editor (Inkscape, atbp.), ngunit hindi ginagamit sa ilang CAM.</translation>
+        <translation>ਐਕਸਪੋਰਟ ਕੀਤੇ ਚਿੱਤਰ SVG ਐਡੀਟਰਾਂ (Inkscape, ਆਦਿ) ਵਿੱਚ ਲਾਭਦਾਇਕ ਹੋ ਸਕਦੇ ਹਨ, 
+ਪਰ ਕੁਝ CAM ਵਿੱਚ ਟਾਲੇ ਜਾਂਦੇ ਹਨ।</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="37"/>
         <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
-        <translation>Maraming CAM (MakerCAM, EleskCAM, LaserWeb) ang hindi pinapansin ang estilo ng guhit na may tuldok o guhit, na maaaring maging kapaki-pakinabang sa pag-ukit ng laser sa kahoy o para sa papercraft.</translation>
+        <translation>ਬਹੁਤ ਸਾਰੇ CAM (MakerCAM, EleskCAM, LaserWeb) ਡੈਸ਼ਡ/ਡਾਟਡ ਲਾਈਨ ਸਟਾਈਲ ਨੂੰ ਅਣਡਿੱਠਾ ਕਰਦੇ ਹਨ, 
+ਜੋ ਪਲਾਈਵੁੱਡ ਦੇ ਲੇਜ਼ਰਕੱਟ ਵਿੱਚ ਜਾਂ ਪੇਪਰਕ੍ਰਾਫਟ ਲਈ ਲਾਭਦਾਇਕ ਹੋ ਸਕਦਾ ਹੈ। </translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="38"/>
         <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
 but ignored by other</source>
-        <translation>Ang default na lapad ng mga elemento ay maaaring makaapekto sa ilang CAM/SVG Editor, ngunit hindi pinapansin ng iba.</translation>
+        <translation>ਐਲੀਮੈਂਟਾਂ ਦੀ ਡਿਫੌਲਟ ਚੌੜਾਈ ਕੁਝ CAM/SVG ਐਡੀਟਰਾਂ ਨੂੰ ਪ੍ਰਭਾਵਿਤ ਕਰ ਸਕਦੀ ਹੈ, 
+ਪਰ ਹੋਰਾਂ ਦੁਆਰਾ ਅਣਡਿੱਠਾ ਕੀਤੀ ਜਾਂਦੀ ਹੈ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="39"/>
         <source>Length of line pattern related to zoom, 
 so default step value required for baking</source>
-        <translation>Ang haba ng pattern ng linya ay nauugnay sa pag-zoom, kaya kinakailangan ang default na halaga ng hakbang para sa pag-bake.</translation>
+        <translation>ਲਾਈਨ ਤਰਤੀਬ ਦੀ ਲੰਬਾਈ ਜ਼ੂਮ ਨਾਲ ਸਬੰਧਤ ਹੈ, 
+ਇਸ ਲਈ ਬਦਲਣ ਲਈ ਡਿਫੌਲਟ ਸਟੈੱਪ ਮੁੱਲ ਲੋੜੀਂਦਾ ਹੈ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="199"/>
         <source>Points</source>
-        <translation>Mga Punto</translation>
+        <translation>ਬਿੰਦੂ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="207"/>
         <source>Export Points</source>
-        <translation>I-export ang mga Punto</translation>
+        <translation>ਬਿੰਦੂ ਐਕਸਪੋਰਟ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="40"/>
         <source>Whether to export points</source>
-        <translation>Kung i-export ang mga punto</translation>
+        <translation>ਕੀ ਬਿੰਦੂ ਐਕਸਪੋਰਟ ਕਰਨੇ ਹਨ</translation>
     </message>
 </context>
 <context>
@@ -7410,22 +7419,22 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="26"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>ਪੌਲੀਲਾਈਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="44"/>
         <source>Layer:</source>
-        <translation>Layer:</translation>
+        <translation>ਲੇਅਰ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="77"/>
         <source>Geometry</source>
-        <translation>Geometry</translation>
+        <translation>ਜੁਮੈਟਰੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="115"/>
         <source>Closed</source>
-        <translation>Sarado</translation>
+        <translation>ਬੰਦ ਕੀਤਾ</translation>
     </message>
 </context>
 <context>
@@ -7574,12 +7583,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="136"/>
         <source>Scale by the same factor at both x- and y- directions</source>
-        <translation>I-scale sa parehong factor sa parehong x- at y-direksyon</translation>
+        <translation>x ਅਤੇ y ਦੋਵੇਂ ਦਿਸ਼ਾਵਾਂ ਵਿੱਚ ਇੱਕੋ ਫੈਕਟਰ ਨਾਲ ਸਕੇਲ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="139"/>
         <source>Isotropic Scaling</source>
-        <translation>Isotropic Scaling</translation>
+        <translation>ਆਈਸੋਟ੍ਰੋਪਿਕ ਸਕੇਲਿੰਗ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="153"/>
@@ -7594,7 +7603,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="203"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Find the scaling ratios around the center by a reference point and a target point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Hanapin ang mga ratio ng pag-scale sa paligid ng gitna sa pamamagitan ng isang punto ng sanggunian at isang target na punto.</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ਹਵਾਲਾ ਬਿੰਦੂ ਅਤੇ ਨਿਸ਼ਾਨਾ ਬਿੰਦੂ ਰਾਹੀਂ ਕੇਂਦਰ ਦੁਆਲੇ ਸਕੇਲਿੰਗ ਅਨੁਪਾਤ ਲੱਭੋ।&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -7735,7 +7744,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="853"/>
         <source>At (@)</source>
-        <translation>Sa (@)</translation>
+        <translation>ਐਟ (@)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="858"/>
@@ -7815,67 +7824,67 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="963"/>
         <source>[0100-017F] Latin Extended-A</source>
-        <translation>[0100-017F] Latin Extended-A</translation>
+        <translation>[0100-017F] ਲੈਟਿਨ ਵਿਸਤ੍ਰਿਤ-A</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="968"/>
         <source>[0180-024F] Latin Extended-B</source>
-        <translation>[0180-024F] Latin Extended-B</translation>
+        <translation>[0180-024F] ਲੈਟਿਨ ਵਿਸਤ੍ਰਿਤ-B</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="973"/>
         <source>[0250-02AF] IPA Extensions</source>
-        <translation>[0250-02AF] Mga Ekstensyon ng IPA</translation>
+        <translation>[0250-02AF] IPA ਐਕਸਟੈਂਸ਼ਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="978"/>
         <source>[02B0-02FF] Spacing Modifier Letters</source>
-        <translation>[02B0-02FF] Mga Titik na Nagbabago ng Pagitan</translation>
+        <translation>[02B0-02FF] ਸਪੇਸਿੰਗ ਮੋਡੀਫਾਇਰ ਅੱਖਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="983"/>
         <source>[0300-036F] Combining Diacritical Marks</source>
-        <translation>[0300-036F] Mga Markang Diacritical na Pinagsasama</translation>
+        <translation>[0300-036F] ਕੰਬਾਈਨਿੰਗ ਡਾਇਆਕ੍ਰਿਟੀਕਲ ਚਿੰਨ੍ਹ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="988"/>
         <source>[0370-03FF] Greek and Coptic</source>
-        <translation>[0370-03FF] Griyego at Coptic</translation>
+        <translation>[0370-03FF] ਯੂਨਾਨੀ ਅਤੇ ਕੌਪਟਿਕ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="993"/>
         <source>[0400-04FF] Cyrillic</source>
-        <translation>[0400-04FF] Cyrillic</translation>
+        <translation>[0400-04FF] ਸਿਰਿਲਿਕ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="998"/>
         <source>[0500-052F] Cyrillic Supplementary</source>
-        <translation>[0500-052F] Karagdagang Cyrillic</translation>
+        <translation>[0500-052F] ਸਿਰਿਲਿਕ ਹੋਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1003"/>
         <source>[0530-058F] Armenian</source>
-        <translation>[0530-058F] Armeniano</translation>
+        <translation>[0530-058F] ਅਰਮੀਨੀਆਈ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1008"/>
         <source>[0590-05FF] Hebrew</source>
-        <translation>[0590-05FF] Hebreo</translation>
+        <translation>[0590-05FF] ਹਿਬਰੂ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1013"/>
         <source>[0600-06FF] Arabic</source>
-        <translation>[0600-06FF] Arabe</translation>
+        <translation>[0600-06FF] ਅਰਬੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1018"/>
         <source>[0700-074F] Syriac</source>
-        <translation>[0700-074F] Siriako</translation>
+        <translation>[0700-074F] ਸੀਰੀਆਕ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1023"/>
         <source>[0780-07BF] Thaana</source>
-        <translation>[0780-07BF] Thaana</translation>
+        <translation>[0780-07BF] ਥਾਨਾ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1028"/>
@@ -7925,102 +7934,102 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1073"/>
         <source>[0D80-0DFF] Sinhala</source>
-        <translation>[0D80-0DFF] Sinhala</translation>
+        <translation>[0D80-0DFF] ਸਿੰਹਾਲਾ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1078"/>
         <source>[0E00-0E7F] Thai</source>
-        <translation>[0E00-0E7F] Thai</translation>
+        <translation>[0E00-0E7F] ਥਾਈ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1083"/>
         <source>[0E80-0EFF] Lao</source>
-        <translation>[0E80-0EFF] Lao</translation>
+        <translation>[0E80-0EFF] ਲਾਓ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1088"/>
         <source>[0F00-0FFF] Tibetan</source>
-        <translation>[0F00-0FFF] Tibetano</translation>
+        <translation>[0F00-0FFF] ਤਿੱਬਤੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1093"/>
         <source>[1000-109F] Myanmar</source>
-        <translation>[1000-109F] Myanmar</translation>
+        <translation>[1000-109F] ਮਿਆਂਮਾਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1098"/>
         <source>[10A0-10FF] Georgian</source>
-        <translation>[10A0-10FF] 1. [CONTEXT: QG_DlgText] [10A0-10FF] Georgian</translation>
+        <translation>[10A0-10FF] ਜਾਰਜੀਆਈ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1103"/>
         <source>[1100-11FF] Hangul Jamo</source>
-        <translation>[1100-11FF] 2. [CONTEXT: QG_DlgText] [1100-11FF] Hangul Jamo</translation>
+        <translation>[1100-11FF] ਹਾਂਗੁਲ ਜਾਮੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1108"/>
         <source>[1200-137F] Ethiopic</source>
-        <translation>[1200-137F] 3. [CONTEXT: QG_DlgText] [1200-137F] Ethiopic</translation>
+        <translation>[1200-137F] ਇਥੋਪਿਕ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1113"/>
         <source>[13A0-13FF] Cherokee</source>
-        <translation>[13A0-13FF] 4. [CONTEXT: QG_DlgText] [13A0-13FF] Cherokee</translation>
+        <translation>[13A0-13FF] ਚੈਰੋਕੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1118"/>
         <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
-        <translation>[1400-167F] Pinag-isang Canadian Aboriginal Syllabic</translation>
+        <translation>[1400-167F] ਸੰਯੁਕਤ ਕੈਨੇਡੀਅਨ ਆਦਿਵਾਸੀ ਸਿਲੇਬਿਕ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1123"/>
         <source>[1680-169F] Ogham</source>
-        <translation>[1680-169F] 5. [CONTEXT: QG_DlgText] [1680-169F] Ogham</translation>
+        <translation>[1680-169F] ਓਘਮ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1128"/>
         <source>[16A0-16FF] Runic</source>
-        <translation>[16A0-16FF] 6. [CONTEXT: QG_DlgText] [16A0-16FF] Runic</translation>
+        <translation>[16A0-16FF] ਰੂਨਿਕ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1133"/>
         <source>[1700-171F] Tagalog</source>
-        <translation>[1700-171F] 7. [CONTEXT: QG_DlgText] [1700-171F] Tagalog</translation>
+        <translation>[1700-171F] ਤਗਾਲੋਗ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1138"/>
         <source>[1720-173F] Hanunoo</source>
-        <translation>[1720-173F] 8. [CONTEXT: QG_DlgText] [1720-173F] Hanunoo</translation>
+        <translation>[1720-173F] ਹਾਨੂਨੂ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1143"/>
         <source>[1740-175F] Buhid</source>
-        <translation>[1740-175F] 9. [CONTEXT: QG_DlgText] [1740-175F] Buhid</translation>
+        <translation>[1740-175F] ਬੁਹਿਦ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1148"/>
         <source>[1760-177F] Tagbanwa</source>
-        <translation>[1760-177F] 10. [CONTEXT: QG_DlgText] [1760-177F] Tagbanwa</translation>
+        <translation>[1760-177F] ਤਗਬਨਵਾ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1153"/>
         <source>[1780-17FF] Khmer</source>
-        <translation>[1780-17FF] 1. [KONTEKSTO: QG_DlgText] [1780-17FF] Khmer</translation>
+        <translation>[1780-17FF] ਖਮੇਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1158"/>
         <source>[1800-18AF] Mongolian</source>
-        <translation>[1800-18AF] 2. [KONTEKSTO: QG_DlgText] [1800-18AF] Mongolian</translation>
+        <translation>[1800-18AF] ਮੰਗੋਲੀਆਈ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1163"/>
         <source>[1E00-1EFF] Latin Extended Additional</source>
-        <translation>[1E00-1EFF] 3. [KONTEKSTO: QG_DlgText] [1E00-1EFF] Latin Extended Additional</translation>
+        <translation>[1E00-1EFF] ਲੈਟਿਨ ਵਿਸਤ੍ਰਿਤ ਵਾਧੂ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1168"/>
         <source>[1F00-1FFF] Greek Extended</source>
-        <translation>[1F00-1FFF] 4. [KONTEKSTO: QG_DlgText] [1F00-1FFF] Greek Extended</translation>
+        <translation>[1F00-1FFF] ਯੂਨਾਨੀ ਵਿਸਤ੍ਰਿਤ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1173"/>
@@ -8030,22 +8039,22 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1178"/>
         <source>[2070-209F] Superscripts and Subscripts</source>
-        <translation>[2070-209F] 5. [KONTEKSTO: QG_DlgText] [2070-209F] Superscripts and Subscripts</translation>
+        <translation>[2070-209F] ਸੁਪਰਸਕ੍ਰਿਪਟ ਅਤੇ ਸਬਸਕ੍ਰਿਪਟ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1183"/>
         <source>[20A0-20CF] Currency Symbols</source>
-        <translation>[20A0-20CF] Mga Simbolo ng Pera</translation>
+        <translation>[20A0-20CF] ਮੁਦਰਾ ਨਿਸ਼ਾਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1188"/>
         <source>[20D0-20FF] Combining Marks for Symbols</source>
-        <translation>[20D0-20FF] Mga Markang Pinagsasama para sa mga Simbolo</translation>
+        <translation>[20D0-20FF] ਨਿਸ਼ਾਨਾਂ ਲਈ ਕੰਬਾਈਨਿੰਗ ਚਿੰਨ੍ਹ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1193"/>
         <source>[2100-214F] Letterlike Symbols</source>
-        <translation>[2100-214F] Mga Simbolong Katulad ng Titik</translation>
+        <translation>[2100-214F] ਅੱਖਰ-ਵਰਗੇ ਨਿਸ਼ਾਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1198"/>
@@ -8075,22 +8084,22 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1223"/>
         <source>[2440-245F] Optical Character Recognition</source>
-        <translation>[2440-245F] 6. [KONTEKSTO: QG_DlgText] [2440-245F] Optical Character Recognition</translation>
+        <translation>[2440-245F] ਆਪਟੀਕਲ ਅੱਖਰ ਪਛਾਣ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1228"/>
         <source>[2460-24FF] Enclosed Alphanumerics</source>
-        <translation>[2460-24FF] Nakapalibot na Alpabetikong Numero</translation>
+        <translation>[2460-24FF] ਘਿਰੇ ਹੋਏ ਅੱਖਰ-ਅੰਕ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1233"/>
         <source>[2500-257F] Box Drawing</source>
-        <translation>[2500-257F] Paglikha ng Kahon</translation>
+        <translation>[2500-257F] ਬਾਕਸ ਡਰਾਇੰਗ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1238"/>
         <source>[2580-259F] Block Elements</source>
-        <translation>[2580-259F] Mga Elemento ng Bloke</translation>
+        <translation>[2580-259F] ਬਲਾਕ ਤੱਤ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1243"/>
@@ -8105,227 +8114,227 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1253"/>
         <source>[2700-27BF] Dingbats</source>
-        <translation>[2700-27BF] Mga Dingbat</translation>
+        <translation>[2700-27BF] ਡਿੰਗਬੈਟਸ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1258"/>
         <source>[27C0-27EF] Miscellaneous Mathematical Symbols-A</source>
-        <translation>[27C0-27EF] Iba&apos;t ibang Simbolo ng Matematika-A</translation>
+        <translation>[27C0-27EF] ਫੁਟਕਲ ਗਣਿਤ ਨਿਸ਼ਾਨ-A</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1263"/>
         <source>[27F0-27FF] Supplemental Arrows-A</source>
-        <translation>[27F0-27FF] Mga Karagdagang Palaso-A</translation>
+        <translation>[27F0-27FF] ਪੂਰਕ ਤੀਰ-A</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1268"/>
         <source>[2800-28FF] Braille Patterns</source>
-        <translation>[2800-28FF] Mga Pattern ng Braille</translation>
+        <translation>[2800-28FF] ਬ੍ਰੇਲ ਤਰਤੀਬਾਂ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1273"/>
         <source>[2900-297F] Supplemental Arrows-B</source>
-        <translation>[2900-297F] Mga Karagdagang Palaso-B</translation>
+        <translation>[2900-297F] ਪੂਰਕ ਤੀਰ-B</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1278"/>
         <source>[2980-29FF] Miscellaneous Mathematical Symbols-B</source>
-        <translation>[2980-29FF] Iba&apos;t ibang Simbolo ng Matematika-B</translation>
+        <translation>[2980-29FF] ਫੁਟਕਲ ਗਣਿਤ ਨਿਸ਼ਾਨ-B</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1283"/>
         <source>[2A00-2AFF] Supplemental Mathematical Operators</source>
-        <translation>[2A00-2AFF] Mga Karagdagang Operator ng Matematika</translation>
+        <translation>[2A00-2AFF] ਪੂਰਕ ਗਣਿਤ ਓਪਰੇਟਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1288"/>
         <source>[2E80-2EFF] CJK Radicals Supplement</source>
-        <translation>[2E80-2EFF] CJK Radicals Supplemen</translation>
+        <translation>[2E80-2EFF] CJK ਰੈਡੀਕਲ ਪੂਰਕ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1293"/>
         <source>[2F00-2FDF] Kangxi Radicals</source>
-        <translation>[2F00-2FDF] 7. [KONTEKSTO: QG_DlgText] [2F00-2FDF] Kangxi Radicals</translation>
+        <translation>[2F00-2FDF] ਕਾਂਗਸ਼ੀ ਰੈਡੀਕਲ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1298"/>
         <source>[2FF0-2FFF] Ideographic Description Characters</source>
-        <translation>[2FF0-2FFF] Mga Karakter ng Ideograpikong Paglalarawan</translation>
+        <translation>[2FF0-2FFF] ਚਿੱਤਰ-ਲਿਪੀ ਵੇਰਵਾ ਅੱਖਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1303"/>
         <source>[3000-303F] CJK Symbols and Punctuation</source>
-        <translation>[3000-303F] Mga Simbolo at Bantas ng CJK</translation>
+        <translation>[3000-303F] CJK ਨਿਸ਼ਾਨ ਅਤੇ ਵਿਰਾਮ ਚਿੰਨ੍ਹ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1308"/>
         <source>[3040-309F] Hiragana</source>
-        <translation>[3040-309F] 8. [KONTEKSTO: QG_DlgText] [3040-309F] Hiragana</translation>
+        <translation>[3040-309F] ਹੀਰਾਗਾਨਾ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1313"/>
         <source>[30A0-30FF] Katakana</source>
-        <translation>[30A0-30FF] 9. [KONTEKSTO: QG_DlgText] [30A0-30FF] Katakana</translation>
+        <translation>[30A0-30FF] ਕਾਤਾਕਾਨਾ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1318"/>
         <source>[3100-312F] Bopomofo</source>
-        <translation>[3100-312F] 10. [KONTEKSTO: QG_DlgText] [3100-312F] Bopomofo</translation>
+        <translation>[3100-312F] ਬੋਪੋਮੋਫੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1323"/>
         <source>[3130-318F] Hangul Compatibility Jamo</source>
-        <translation>[3130-318F] Hangul Compatibility Jamo</translation>
+        <translation>[3130-318F] ਹੰਗੁਲ ਅਨੁਕੂਲਤਾ ਜਾਮੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1328"/>
         <source>[3190-319F] Kanbun</source>
-        <translation>[3190-319F] Kanbun</translation>
+        <translation>[3190-319F] ਕਾਨਬੁਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1333"/>
         <source>[31A0-31BF] Bopomofo Extended</source>
-        <translation>[31A0-31BF] Bopomofo Extended</translation>
+        <translation>[31A0-31BF] ਬੋਪੋਮੋਫੋ ਐਕਸਟੈਂਡਡ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1338"/>
         <source>[3200-32FF] Enclosed CJK Letters and Months</source>
-        <translation>[3200-32FF] Mga Nakapaloob na CJK na Titik at Buwan</translation>
+        <translation>[3200-32FF] ਘਿਰੇ ਹੋਏ CJK ਅੱਖਰ ਅਤੇ ਮਹੀਨੇ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1343"/>
         <source>[3300-33FF] CJK Compatibility</source>
-        <translation>[3300-33FF] CJK Compatibility</translation>
+        <translation>[3300-33FF] CJK ਅਨੁਕੂਲਤਾ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1348"/>
         <source>[3400-4DBF] CJK Unified Ideographs Extension A</source>
-        <translation>[3400-4DBF] CJK Unified Ideographs Extension A</translation>
+        <translation>[3400-4DBF] CJK ਸੰਯੁਕਤ ਚਿੱਤਰ-ਲਿਪੀ ਐਕਸਟੈਂਸ਼ਨ A</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1353"/>
         <source>[4E00-9FAF] CJK Unified Ideographs</source>
-        <translation>[4E00-9FAF] CJK Unified Ideographs</translation>
+        <translation>[4E00-9FAF] CJK ਸੰਯੁਕਤ ਚਿੱਤਰ-ਲਿਪੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1358"/>
         <source>[A000-A48F] Yi Syllables</source>
-        <translation>[A000-A48F] Yi Syllables</translation>
+        <translation>[A000-A48F] ਯੀ ਸ਼ਬਦਾਂਸ਼</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1363"/>
         <source>[A490-A4CF] Yi Radicals</source>
-        <translation>[A490-A4CF] Yi Radicals</translation>
+        <translation>[A490-A4CF] ਯੀ ਰੈਡੀਕਲ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1368"/>
         <source>[AC00-D7AF] Hangul Syllables</source>
-        <translation>[AC00-D7AF] Hangul Syllables</translation>
+        <translation>[AC00-D7AF] ਹੰਗੁਲ ਸ਼ਬਦਾਂਸ਼</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1373"/>
         <source>[D800-DBFF] High Surrogates</source>
-        <translation>[D800-DBFF] Mataas na Surrogates</translation>
+        <translation>[D800-DBFF] ਉੱਚ ਸਰੋਗੇਟ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1378"/>
         <source>[DC00-DFFF] Low Surrogate Area</source>
-        <translation>[DC00-DFFF] Mababang Surrogates</translation>
+        <translation>[DC00-DFFF] ਹੇਠਲਾ ਸਰੋਗੇਟ ਖੇਤਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1383"/>
         <source>[E000-F8FF] Private Use Area</source>
-        <translation>[E000-F8FF] Pribadong Lugar ng Paggamit</translation>
+        <translation>[E000-F8FF] ਨਿੱਜੀ ਵਰਤੋਂ ਖੇਤਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1388"/>
         <source>[F900-FAFF] CJK Compatibility Ideographs</source>
-        <translation>[F900-FAFF] F900-FAFF] CJK Compatibility Ideographs</translation>
+        <translation>[F900-FAFF] CJK ਅਨੁਕੂਲਤਾ ਚਿੱਤਰ-ਲਿਪੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1393"/>
         <source>[FB00-FB4F] Alphabetic Presentation Forms</source>
-        <translation>[FB00-FB4F] Mga Anyo ng Alpabetikong Pagpapakita</translation>
+        <translation>[FB00-FB4F] ਵਰਣਮਾਲਾ ਪੇਸ਼ਕਾਰੀ ਫਾਰਮ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1398"/>
         <source>[FB50-FDFF] Arabic Presentation Forms-A</source>
-        <translation>[FB50-FDFF] Arabic Presentation Forms-A</translation>
+        <translation>[FB50-FDFF] ਅਰਬੀ ਪੇਸ਼ਕਾਰੀ ਫਾਰਮ-A</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1403"/>
         <source>[FE00-FE0F] Variation Selectors</source>
-        <translation>[FE00-FE0F] Pagpili ng mga Baryasyon</translation>
+        <translation>[FE00-FE0F] ਭਿੰਨਤਾ ਚੋਣਕਾਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1408"/>
         <source>[FE20-FE2F] Combining Half Marks</source>
-        <translation>[FE20-FE2F]Combining Half Marks</translation>
+        <translation>[FE20-FE2F] ਜੋੜਨ ਵਾਲੇ ਅੱਧੇ ਨਿਸ਼ਾਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1413"/>
         <source>[FE30-FE4F] CJK Compatibility Forms</source>
-        <translation>[FE30-FE4F] Mga Anyo ng Pagkatugma ng CJK</translation>
+        <translation>[FE30-FE4F] CJK ਅਨੁਕੂਲਤਾ ਫਾਰਮ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1418"/>
         <source>[FE50-FE6F] Small Form Variants</source>
-        <translation>[FE50-FE6F] Mga Maliit na Baryasyon ng Anyo</translation>
+        <translation>[FE50-FE6F] ਛੋਟੇ ਫਾਰਮ ਭਿੰਨਤਾਵਾਂ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1423"/>
         <source>[FE70-FEFF] Arabic Presentation Forms-B</source>
-        <translation>[FE70-FEFF] Mga Anyo ng Presentasyon-B ng Arabe</translation>
+        <translation>[FE70-FEFF] ਅਰਬੀ ਪੇਸ਼ਕਾਰੀ ਫਾਰਮ-B</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1428"/>
         <source>[FF00-FFEF] Halfwidth and Fullwidth Forms</source>
-        <translation>[FF00-FFEF] Mga Anyo ng Kalahating Lapad at Buong Lapad</translation>
+        <translation>[FF00-FFEF] ਅੱਧੀ ਚੌੜਾਈ ਅਤੇ ਪੂਰੀ ਚੌੜਾਈ ਫਾਰਮ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1433"/>
         <source>[FFF0-FFFF] Specials</source>
-        <translation>[FFF0-FFFF] Mga Espesyal</translation>
+        <translation>[FFF0-FFFF] ਖਾਸ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1438"/>
         <source>[10300-1032F] Old Italic</source>
-        <translation>[10300-1032F] Lumang Italic</translation>
+        <translation>[10300-1032F] ਪੁਰਾਣੀ ਇਟੈਲਿਕ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1443"/>
         <source>[10330-1034F] Gothic</source>
-        <translation>[10330-1034F] Gotiko</translation>
+        <translation>[10330-1034F] ਗੋਥਿਕ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1448"/>
         <source>[10400-1044F] Deseret</source>
-        <translation>[10400-1044F] Deseret</translation>
+        <translation>[10400-1044F] ਡੈਜ਼ਰੇਟ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1453"/>
         <source>[1D000-1D0FF] Byzantine Musical Symbols</source>
-        <translation>[1D000-1D0FF] Mga Simbolo ng Musika ng Byzantine</translation>
+        <translation>[1D000-1D0FF] ਬਿਜ਼ੰਤੀਨੀ ਸੰਗੀਤਕ ਨਿਸ਼ਾਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1458"/>
         <source>[1D100-1D1FF] Musical Symbols</source>
-        <translation>[1D100-1D1FF] Mga Simbolo ng Musika</translation>
+        <translation>[1D100-1D1FF] ਸੰਗੀਤਕ ਨਿਸ਼ਾਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1463"/>
         <source>[1D400-1D7FF] Mathematical Alphanumeric Symbols</source>
-        <translation>[1D400-1D7FF] Mga Simbolo ng Matematikal na Alpabetiko</translation>
+        <translation>[1D400-1D7FF] ਗਣਿਤ ਅੱਖਰ-ਅੰਕੀ ਨਿਸ਼ਾਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1468"/>
         <source>[20000-2A6DF] CJK Unified Ideographs Extension B</source>
-        <translation>[20000-2A6DF] Pinagsamang mga Ideograpong CJK Extension B</translation>
+        <translation>[20000-2A6DF] CJK ਸੰਯੁਕਤ ਚਿੱਤਰ-ਲਿਪੀ ਐਕਸਟੈਂਸ਼ਨ B</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1473"/>
         <source>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</source>
-        <translation>[2F800-2FA1F] Mga Karagdagang Ideograpong CJK</translation>
+        <translation>[2F800-2FA1F] CJK ਅਨੁਕੂਲਤਾ ਚਿੱਤਰ-ਲਿਪੀ ਪੂਰਕ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1478"/>
@@ -8335,12 +8344,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1483"/>
         <source>[F0000-FFFFD] Supplementary Private Use Area-A</source>
-        <translation>[F0000-FFFFD] Karagdagang Pribadong Lugar ng Paggamit-A</translation>
+        <translation>[F0000-FFFFD] ਪੂਰਕ ਨਿੱਜੀ ਵਰਤੋਂ ਖੇਤਰ-A</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1488"/>
         <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
-        <translation>[100000-10FFFD] Karagdagang Pribadong Lugar ng Paggamit-B</translation>
+        <translation>[100000-10FFFD] ਵਾਧੂ ਨਿੱਜੀ ਵਰਤੋਂ ਖੇਤਰ-B</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="256"/>
@@ -8350,37 +8359,37 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="175"/>
         <source>Layer:</source>
-        <translation>Layer:</translation>
+        <translation>ਲੇਅਰ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="234"/>
         <source>Font settings</source>
-        <translation>Mga setting ng font</translation>
+        <translation>ਫੌਂਟ ਸੈਟਿੰਗਾਂ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="269"/>
         <source>Angle:</source>
-        <translation>Anggulo:</translation>
+        <translation>ਕੋਣ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="318"/>
         <source>Oblique:</source>
-        <translation>Oblique:</translation>
+        <translation>ਤਿਰਛਾ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="328"/>
         <source>Width factor:</source>
-        <translation>Lapad na Factor:</translation>
+        <translation>ਚੌੜਾਈ ਫੈਕਟਰ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="335"/>
         <source>Font:</source>
-        <translation>Font:</translation>
+        <translation>ਫੌਂਟ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="565"/>
         <source>Baseline Left</source>
-        <translation>Baseline Kaliwa</translation>
+        <translation>ਬੇਸਲਾਈਨ ਖੱਬੇ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="568"/>
@@ -8392,12 +8401,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="623"/>
         <source>Baseline Right</source>
-        <translation>Baseline Kanan</translation>
+        <translation>ਬੇਸਲਾਈਨ ਸੱਜੇ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="646"/>
         <source>Baseline Center</source>
-        <translation>Baseline Gitna</translation>
+        <translation>ਬੇਸਲਾਈਨ ਕੇਂਦਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="774"/>
@@ -8407,17 +8416,17 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="838"/>
         <source>Diameter (⌀)</source>
-        <translation>Diameter (⌀)</translation>
+        <translation>ਡਾਇਮੀਟਰ (⌀)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="784"/>
         <source>A&amp;ligned</source>
-        <translation>Naka-align</translation>
+        <translation>&amp;ਅਲਾਈਨਡ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="794"/>
         <source>&amp;Middle</source>
-        <translation>&amp;Gitna</translation>
+        <translation>&amp;ਮੱਧ</translation>
     </message>
 </context>
 <context>
@@ -8430,7 +8439,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_exitdialog.ui" line="44"/>
         <source>again Still No Text supplied.</source>
-        <translation>muli pa rin, walang ibinigay na teksto.</translation>
+        <translation>ਦੁਬਾਰਾ ਹਾਲੇ ਵੀ ਕੋਈ ਟੈਕਸਟ ਨਹੀਂ ਦਿੱਤਾ ਗਿਆ।</translation>
     </message>
     <message>
         <source>Close</source>
@@ -8439,12 +8448,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_exitdialog.cpp" line="116"/>
         <source>Discard All</source>
-        <translation>Itapon Lahat</translation>
+        <translation>ਸਭ ਖਾਰਜ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_exitdialog.cpp" line="116"/>
         <source>Discard</source>
-        <translation>Itapon</translation>
+        <translation>ਖਾਰਜ ਕਰੋ</translation>
     </message>
 </context>
 <context>
@@ -8452,84 +8461,84 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="127"/>
         <source>Drawing Exchange DXF 2000 %1</source>
-        <translation>Pagpapalitan ng Guhit DXF 2000 %1</translation>
+        <translation>ਡਰਾਇੰਗ ਐਕਸਚੇਂਜ DXF 2000 %1</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="129"/>
         <source>Drawing Exchange DXF R12 %1</source>
-        <translation>Pagpapalitan ng Guhit DXF R12 %1</translation>
+        <translation>ਡਰਾਇੰਗ ਐਕਸ਼ਚੇਜ਼ DXF R12 %1</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="132"/>
         <source>LFF Font %1</source>
-        <translation>LFF Font %1</translation>
+        <translation>LFF ਫੌਂਟ %1</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="136"/>
         <source>QCad Font %1</source>
-        <translation>QCad Font %1</translation>
+        <translation>QCad ਫੌਂਟ %1</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="137"/>
         <source>Jww Drawing %1</source>
-        <translation>Jww Drawing %1</translation>
+        <translation>Jww ਡਰਾਇੰਗ %1</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="130"/>
         <source>Drawing Exchange %1</source>
-        <translation>Pagpapalitan ng Guhit %1</translation>
+        <translation>ਡਰਾਇੰਗ ਐਕਸ਼ਚੇਜ਼ %1</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="138"/>
         <source>QCad 1.x file %1</source>
-        <translation>QCad 1.x file %1</translation>
+        <translation>QCad 1.x ਫਾਇਲ %1</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="125"/>
         <source>Drawing Exchange DXF 2007 %1</source>
-        <translation>Drawing Exchange DXF 2007 %1</translation>
+        <translation>ਡਰਾਇੰਗ ਐਕਸ਼ਚੇਜ਼ DXF 2007 %1</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="126"/>
         <source>Drawing Exchange DXF 2004 %1</source>
-        <translation>Drawing Exchange DXF 2004 %1</translation>
+        <translation>ਡਰਾਇੰਗ ਐਕਸ਼ਚੇਜ਼ DXF 2004 %1</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="128"/>
         <source>Drawing Exchange DXF R14 %1</source>
-        <translation>Pag-guhit ng Exchange DXF R14 %1</translation>
+        <translation>ਡਰਾਇੰਗ ਐਕਸ਼ਚੇਜ਼ DXF R14 %1</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="141"/>
         <source>Block</source>
         <comment>block file</comment>
-        <translation>Blok</translation>
+        <translation>ਬਲਾਕ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="144"/>
         <source>Drawing</source>
         <comment>drawing file</comment>
-        <translation>Guhit</translation>
+        <translation>ਡਰਾਇੰਗ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="167"/>
         <source>Open %1</source>
-        <translation>Buksan ang %1</translation>
+        <translation>%1 ਖੋਲ੍ਹੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="257"/>
         <source>Save %1 As</source>
-        <translation>I-save ang %1 Bilang</translation>
+        <translation>%1 ਸੰਭਾਲੋ ਜਿਵੇਂ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="134"/>
         <source>dwg Drawing %1</source>
-        <translation>dwg Guhit %1</translation>
+        <translation>dwg ਡਰਾਇੰਗ %1</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="238"/>
         <source>Untitled</source>
-        <translation>Walang Pamagat</translation>
+        <translation>ਬਿਨਾਂ ਨਾਮ</translation>
     </message>
 </context>
 <context>
@@ -8537,12 +8546,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/qg_graphicview.cpp" line="572"/>
         <source>Edit Properties</source>
-        <translation>I-edit ang mga Katangian</translation>
+        <translation>ਗੁਣ ਸੰਪਾਦਿਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_graphicview.cpp" line="569"/>
         <source>Edit Block</source>
-        <translation>I-edit ang Block</translation>
+        <translation>ਬਲਾਕ ਸੰਪਾਦਿਤ ਕਰੋ</translation>
     </message>
 </context>
 <context>
@@ -8590,42 +8599,42 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="258"/>
         <source>Colouring</source>
-        <translation>Pagkulay</translation>
+        <translation>ਰੰਗਾਈ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="264"/>
         <source>Black / White</source>
-        <translation>Itim / Puti</translation>
+        <translation>ਕਾਲਾ / ਚਿੱਟਾ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="274"/>
         <source>Coloured</source>
-        <translation>May Kulay</translation>
+        <translation>ਰੰਗਦਾਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="310"/>
         <source>Borders</source>
-        <translation>Mga Border</translation>
+        <translation>ਹਾਸ਼ੀਏ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="326"/>
         <source>Top / Bottom - Border:</source>
-        <translation>Itaas / Ibaba - Border:</translation>
+        <translation>ਉੱਪਰ / ਹੇਠਾਂ - ਹਾਸ਼ੀਆ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="333"/>
         <source>Left / Right - Border:</source>
-        <translation>Kaliwa / Kanan - Border:</translation>
+        <translation>ਖੱਬਾ / ਸੱਜਾ - ਹਾਸ਼ੀਆ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="353"/>
         <source>set same size</source>
-        <translation>Itakda ang parehong laki</translation>
+        <translation>ਇੱਕੋ ਸਾਈਜ਼ ਸੈੱਟ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="219"/>
         <source>B&amp;lack</source>
-        <translation>Itim</translation>
+        <translation>&amp;ਕਾਲਾ</translation>
     </message>
 </context>
 <context>
@@ -8657,13 +8666,13 @@ so default step value required for baking</source>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="29"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Ang isang Construction Layer ay naglalaman ng mga entidad ng walang hanggang tuwid na linya na nilayon para gamitin sa geometric na konstruksyon.
-Ang mga nilalaman ng isang Construction Layer ay hindi dapat lumabas sa printout.</translation>
+        <translation>ਇੱਕ ਕੰਸਟ੍ਰਕਸ਼ਨ ਲੇਅਰ ਵਿੱਚ ਅਨੰਤ ਸਿੱਧੀਆਂ ਲਾਈਨਾਂ ਵਾਲੀਆਂ ਐਂਟੀਟੀਆਂ ਹੁੰਦੀਆਂ ਹਨ, ਜਿਨ੍ਹਾਂ ਨੂੰ ਜਿਓਮੈਟ੍ਰਿਕ ਕੰਸਟ੍ਰਕਸ਼ਨ ਲਈ ਵਰਤਿਆ ਜਾਣਾ ਹੈ।
+ਕੰਸਟ੍ਰਕਸ਼ਨ ਲੇਅਰ ਦੀ ਸਮੱਗਰੀ ਪ੍ਰਿੰਟਆਊਟ ਵਿੱਚ ਨਹੀਂ ਦਿਖਾਈ ਦੇਣੀ ਚਾਹੀਦੀ।</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="33"/>
         <source>Construction Layer</source>
-        <translation>Layer ng Konstruksyon</translation>
+        <translation>ਕੰਸਟ੍ਰਕਸ਼ਨ ਲੇਅਰ</translation>
     </message>
 </context>
 <context>
@@ -8716,72 +8725,72 @@ Ang mga nilalaman ng isang Construction Layer ay hindi dapat lumabas sa printout
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="278"/>
         <source>Looking for matching layer names</source>
-        <translation>Naghahanap ng mga magkatugmang pangalan ng layer</translation>
+        <translation>ਮਿਲਦੇ ਲੇਅਰ ਨਾਮ ਲੱਭ ਰਿਹਾ ਹੈ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="584"/>
         <source>Edit Layer &amp;Attributes</source>
-        <translation>I-edit ang Layer &amp; Attributes</translation>
+        <translation>ਲੇਅਰ &amp;ਐਟ੍ਰੀਬਿਊਟ ਸੰਪਾਦਿਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="570"/>
         <source>Toggle Layer &amp;Visibility</source>
-        <translation>I-toggle ang Layer &amp; Visibility</translation>
+        <translation>ਲੇਅਰ &amp;ਦਿਖਾਈ ਬਦਲੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="574"/>
         <source>Toggle Layer &amp;Printing</source>
-        <translation>I-toggle ang Layer &amp; Printing</translation>
+        <translation>ਲੇਅਰ &amp;ਪ੍ਰਿੰਟਿੰਗ ਬਦਲੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="576"/>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>I-toggle ang &amp; Construction Layer</translation>
+        <translation>&amp;ਕੰਸਟ੍ਰਕਸ਼ਨ ਲੇਅਰ ਬਦਲੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="241"/>
         <source>Unlock all layers</source>
-        <translation>I-unlock ang lahat ng layer</translation>
+        <translation>ਸਾਰੀਆਂ ਲੇਅਰਾਂ ਅਨਲਾਕ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="248"/>
         <source>Lock all layers</source>
-        <translation>I-lock ang lahat ng layer</translation>
+        <translation>ਸਾਰੀਆਂ ਲੇਅਰਾਂ ਲਾਕ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="262"/>
         <source>Remove layer</source>
-        <translation>Alisin ang layer</translation>
+        <translation>ਲੇਅਰ ਹਟਾਓ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="276"/>
         <source>Filter</source>
-        <translation>Salain</translation>
+        <translation>ਫਿਲਟਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="563"/>
         <source>&amp;Unlock all Layers</source>
-        <translation>I-unlock ang lahat ng Layer</translation>
+        <translation>&amp;ਸਭ ਲੇਅਰਾਂ ਅਨਲਾਕ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="565"/>
         <source>&amp;Lock all Layers</source>
-        <translation>I-lock ang lahat ng Layer</translation>
+        <translation>&amp;ਸਭ ਲੇਅਰਾਂ ਲਾਕ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="572"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>Palitan ang Layer Lock</translation>
+        <translation>ਲੇਅਰ ਲਾਕ ਬਦਲੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="589"/>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>I-export ang mga napiling Layer</translation>
+        <translation>&amp;ਚੁਣੇ ਲੇਅਰ ਐਕਸਪੋਰਟ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="592"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>I-export ang mga nakikitang Layer</translation>
+        <translation>ਦਿਖਾਈ ਦੇ ਰਹੇ ਲੇਅਰ ਐਕਸਪੋਰਟ ਕਰੋ</translation>
     </message>
 </context>
 <context>
@@ -8799,12 +8808,12 @@ Ang mga nilalaman ng isang Construction Layer ay hindi dapat lumabas sa printout
     <message>
         <location filename="../src/ui/qg_librarywidget.cpp" line="93"/>
         <source>Refresh</source>
-        <translation>I-refresh</translation>
+        <translation>ਤਾਜ਼ਾ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_librarywidget.cpp" line="95"/>
         <source>Rebuild</source>
-        <translation>Muling buuin</translation>
+        <translation>ਮੁੜ ਬਣਾਓ</translation>
     </message>
 </context>
 <context>
@@ -8928,32 +8937,32 @@ Ang mga nilalaman ng isang Construction Layer ay hindi dapat lumabas sa printout
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="85"/>
         <source>Dot (tiny)</source>
-        <translation>Tuldok (maliit)</translation>
+        <translation>ਬਿੰਦੀ (ਨਿੱਕੀ)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="89"/>
         <source>Dash (tiny)</source>
-        <translation>Guhit (maliit)</translation>
+        <translation>ਡੈਸ਼ (ਨਿੱਕੀ)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="93"/>
         <source>Dash Dot (tiny)</source>
-        <translation>Dash Dot (maliit)</translation>
+        <translation>ਡੈਸ਼ ਡਾਟ (ਨਿੱਕੀ)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="97"/>
         <source>Divide (tiny)</source>
-        <translation>Divide (maliit)</translation>
+        <translation>ਭਾਗ (ਨਿੱਕੀ)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="101"/>
         <source>Center (tiny)</source>
-        <translation>Gitna (maliit)</translation>
+        <translation>ਕੇਂਦਰ (ਨਿੱਕਾ)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="105"/>
         <source>Border (tiny)</source>
-        <translation>Border (maliit)</translation>
+        <translation>ਹਾਸ਼ੀਆ (ਨਿੱਕਾ)</translation>
     </message>
 </context>
 <context>
@@ -8984,7 +8993,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Pahiwatig tungkol sa mga aksyon ng kaliwa/kanang pindutan ng mouse&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;ਖੱਬੇ/ਸੱਜੇ ਮਾਊਸ ਬਟਨ ਦੇ ਐਕਸ਼ਨ ਬਾਰੇ ਸੰਕੇਤ&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -8992,17 +9001,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_pentoolbar.cpp" line="44"/>
         <source>Line color</source>
-        <translation>Kulay ng linya</translation>
+        <translation>ਲਾਈਨ ਰੰਗ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_pentoolbar.cpp" line="48"/>
         <source>Line width</source>
-        <translation>Lapad ng linya</translation>
+        <translation>ਲਾਈਨ ਚੌੜਾਈ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_pentoolbar.cpp" line="52"/>
         <source>Line type</source>
-        <translation>Uri ng linya</translation>
+        <translation>ਲਾਈਨ ਟਾਈਪ</translation>
     </message>
 </context>
 <context>
@@ -9010,7 +9019,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.cpp" line="103"/>
         <source>wrong action type</source>
-        <translation>Maling uri ng aksyon</translation>
+        <translation>ਗਲਤ ਐਕਸ਼ਨ ਟਾਈਪ</translation>
     </message>
 </context>
 <context>
@@ -9018,7 +9027,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_recentfiles.cpp" line="181"/>
         <source>&amp;%1 %2</source>
-        <translation>Kamakailang mga File: %1 %2</translation>
+        <translation>&amp;%1 %2</translation>
     </message>
 </context>
 <context>
@@ -9031,12 +9040,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_selectionwidget.ui" line="80"/>
         <source>Selected</source>
-        <translation>Napili</translation>
+        <translation>ਚੁਣਿਆ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_selectionwidget.ui" line="114"/>
         <source>Total Length</source>
-        <translation>Kabuuang Haba</translation>
+        <translation>ਕੁੱਲ ਲੰਬਾਈ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_selectionwidget.ui" line="139"/>
@@ -9045,7 +9054,11 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Bilang ng mga napiling bagay</translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;ਚੁਣੀਆਂ ਐਂਟੀਟੀਆਂ ਦੀ ਗਿਣਤੀ&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_selectionwidget.ui" line="177"/>
@@ -9054,7 +9067,11 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Kabuuang haba ng mga napiling bagay</translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;ਚੁਣੀਆਂ ਐਂਟੀਟੀਆਂ ਦੀ ਕੁੱਲ ਲੰਬਾਈ&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -9067,157 +9084,157 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="47"/>
         <source>Snap to Endpoints</source>
-        <translation>I-snap sa mga dulo</translation>
+        <translation>ਅੰਤ ਬਿੰਦੂਆਂ ਤੱਕ ਸਨੈਪ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="64"/>
         <source>Snap to equidistant points of entity</source>
-        <translation>I-snap sa pantay-pantay na mga punto ng bagay</translation>
+        <translation>ਐਂਟੀਟੀ ਦੇ ਬਰਾਬਰ ਦੂਰੀ ਵਾਲੇ ਬਿੰਦੂਆਂ ਤੱਕ ਸਨੈਪ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="81"/>
         <source>Snap to center points</source>
-        <translation>I-snap sa mga gitnang punto</translation>
+        <translation>ਸੈਂਟਰ ਬਿੰਦੂਆਂ ਤੱਕ ਸਨੈਪ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="98"/>
         <source>Snap to intersections automatically</source>
-        <translation>Awtomatikong i-snap sa mga interseksyon</translation>
+        <translation>ਕਟਾਵਾਂ ਤੱਕ ਸਵੈ-ਚਾਲਤ ਸਨੈਪ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="115"/>
         <source>Snap to closest point on entity</source>
-        <translation>I-snap sa pinakamalapit na punto sa bagay</translation>
+        <translation>ਐਂਟੀਟੀ ਉੱਤੇ ਸਭ ਤੋਂ ਨਜ਼ਦੀਕੀ ਬਿੰਦੂ ਤੱਕ ਸਨੈਪ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="132"/>
         <source>Snap to point with given distance to endpoint</source>
-        <translation>I-snap sa punto na may ibinigay na distansya sa dulo</translation>
+        <translation>ਅੰਤ ਬਿੰਦੂ ਤੋਂ ਦਿੱਤੀ ਦੂਰੀ ਵਾਲੇ ਬਿੰਦੂ ਤੱਕ ਸਨੈਪ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="149"/>
         <source>Snap to intersections manually</source>
-        <translation>Manu-manong i-snap sa mga interseksyon</translation>
+        <translation>ਕਟਾਵਾਂ ਤੱਕ ਦਸਤੀ ਸਨੈਪ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="166"/>
         <source>Snap to grid</source>
-        <translation>I-snap sa grid</translation>
+        <translation>ਗ੍ਰਿਡ ਤੱਕ ਸਨੈਪ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="183"/>
         <source>Restrict Horizontally</source>
-        <translation>Limitahan nang pahalang</translation>
+        <translation>ਹਰੀਜ਼ੋਂਟਲੀ ਸੀਮਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="200"/>
         <source>Restrict Vertically</source>
-        <translation>Limitahan nang patayo</translation>
+        <translation>ਵਰਟੀਕਲੀ ਸੀਮਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="217"/>
         <source>Move relative Zero</source>
-        <translation>Ilipat ang relatibong zero</translation>
+        <translation>ਅਨੁਸਾਰੀ ਜ਼ੀਰੋ ਭੇਜੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="234"/>
         <source>Lock relative Zero</source>
-        <translation>I-lock ang relatibong zero</translation>
+        <translation>ਅਨੁਸਾਰੀ ਜ਼ੀਰੋ ਲਾਕ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="58"/>
         <source>Free Snap</source>
-        <translation>Malayang I-snap</translation>
+        <translation>ਫ੍ਰੀ ਸਨੈਪ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="63"/>
         <source>Snap on grid</source>
-        <translation>I-snap sa grid</translation>
+        <translation>ਗ੍ਰਿਡ ਉੱਤੇ ਸਨੈਪ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="68"/>
         <source>Snap on Endpoints</source>
-        <translation>I-snap sa mga dulo</translation>
+        <translation>ਅੰਤ ਬਿੰਦੂਆਂ ਉੱਤੇ ਸਨੈਪ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="73"/>
         <source>Snap on Entity</source>
-        <translation>I-snap sa Entity</translation>
+        <translation>ਐਂਟੀਟੀ ਉੱਤੇ ਸਨੈਪ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="78"/>
         <source>Snap Center</source>
-        <translation>I-snap sa Gitna</translation>
+        <translation>ਸਨੈਪ ਸੈਂਟਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="83"/>
         <source>Snap Middle</source>
-        <translation>I-snap sa Kalagitnaan</translation>
+        <translation>ਸਨੈਪ ਮੱਧ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="88"/>
         <source>Snap Distance</source>
-        <translation>I-snap sa Distansya</translation>
+        <translation>ਸਨੈਪ ਦੂਰੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="93"/>
         <source>Snap Intersection</source>
-        <translation>I-snap sa Interseksyon</translation>
+        <translation>ਸਨੈਪ ਕਟਾਅ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="102"/>
         <source>Restrict Horizontal</source>
-        <translation>Limitahan ang Pahalang</translation>
+        <translation>ਹਰੀਜ਼ੋਂਟਲ ਸੀਮਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="108"/>
         <source>Restrict Vertical</source>
-        <translation>Limitahan ang Patayo</translation>
+        <translation>ਵਰਟੀਕਲ ਸੀਮਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="115"/>
         <source>Restrict Orthogonal</source>
-        <translation>Limitahan ang Orthogonal</translation>
+        <translation>ਆਰਥੋਗੋਨਲ ਸੀਮਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="123"/>
         <source>Restrict Nothing</source>
-        <translation>Walang Limitasyon</translation>
+        <translation>ਕੁਝ ਵੀ ਸੀਮਤ ਨਾ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="130"/>
         <source>Set relative zero position</source>
-        <translation>Itakda ang kamag-anak na posisyon ng zero</translation>
+        <translation>ਅਨੁਸਾਰੀ ਜ਼ੀਰੋ ਸਥਿਤੀ ਦਿਓ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="138"/>
         <source>Lock relative zero position</source>
-        <translation>I-lock ang kamag-anak na posisyon ng zero</translation>
+        <translation>ਅਨੁਸਾਰੀ ਜ਼ੀਰੋ ਸਥਿਤੀ ਲਾਕ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="43"/>
         <source>Exclusive Snap Mode</source>
-        <translation>Eksklusibong Mode ng Pag-snap</translation>
+        <translation>ਵਿਸ਼ੇਸ਼ ਸਨੈਪ ਮੋਡ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="224"/>
         <source>Relative zero position is %1</source>
-        <translation>Ang kamag-anak na posisyon ng zero ay %1</translation>
+        <translation>ਅਨੁਸਾਰੀ ਜ਼ੀਰੋ ਸਥਿਤੀ %1 ਹੈ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="224"/>
         <source>locked</source>
-        <translation>nakakandado</translation>
+        <translation>ਲਾਕ ਕੀਤਾ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="224"/>
         <source>unlocked</source>
-        <translation>hindi nakakandado</translation>
+        <translation>ਅਨਲਾਕ ਕੀਤਾ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="52"/>
         <source>Snap Middle Manual</source>
-        <translation>Manu-manong Pag-snap sa Gitna</translation>
+        <translation>ਸਨੈਪ ਮੱਧ ਦਸਤੀ</translation>
     </message>
 </context>
 <context>
@@ -9414,13 +9431,14 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/qg_dialogfactory.cpp" line="311"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>Aalisin ang layer na &quot;%1&quot; at lahat ng entity na nasa loob nito. Hindi na ito maibabalik.</translation>
+        <translation>ਲੇਅਰ &quot;%1&quot; ਅਤੇ ਇਸ ਉੱਤੇ ਮੌਜੂਦ ਸਭ ਐਂਟੀਟੀਆਂ ਨੂੰ ਹਟਾ ਦਿੱਤਾ ਜਾਵੇਗਾ।
+ਇਹ ਐਕਸ਼ਨ ਅਣਡੰਨਾ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ।</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1762"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="385"/>
         <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>Hindi maaaring alisin ang layer na &quot;0&quot;.</translation>
+        <translation>ਲੇਅਰ &quot;0&quot; ਨੂੰ ਕਦੇ ਵੀ ਹਟਾਇਆ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ।</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1810"/>
@@ -9435,24 +9453,24 @@ This action can NOT be undone.</source>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1811"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="399"/>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>Aalisin ang mga nakalistang layer at lahat ng entity na nasa loob ng mga ito.</translation>
+        <translation>ਸੂਚੀਬੱਧ ਲੇਅਰ ਅਤੇ ਉਹਨਾਂ ਉੱਤੇ ਮੌਜੂਦ ਸਭ ਐਂਟੀਟੀਆਂ ਨੂੰ ਹਟਾ ਦਿੱਤਾ ਜਾਵੇਗਾ।</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1812"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="401"/>
         <source>Warning: this action can NOT be undone!</source>
-        <translation>Babala: Hindi na mababawi ang aksyon na ito!</translation>
+        <translation>ਚੇਤਾਵਨੀ: ਇਹ ਐਕਸ਼ਨ ਅਣਡੰਨਾ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ!</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="406"/>
         <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>Babala: Hindi maaaring tanggalin ang layer na &quot;0&quot;.</translation>
+        <translation>ਚੇਤਾਵਨੀ: ਪਰਤ &quot;0&quot; ਨੂੰ ਕਦੇ ਵੀ ਹਟਾਇਆ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1813"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="410"/>
         <source>Layers for removal:</source>
-        <translation>Mga layer na tatanggalin:</translation>
+        <translation>ਹਟਾਉਣ ਲਈ ਲੇਅਰ:</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/qg_dialogfactory.cpp" line="640"/>
@@ -9465,221 +9483,227 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="644"/>
         <source>Listed blocks and all their entities will be removed.</source>
-        <translation>Ang mga nakalistang bloke at lahat ng kanilang mga entity ay tatanggalin.</translation>
+        <translation>ਸੂਚੀਬੱਧ ਬਲਾਕ ਅਤੇ ਉਹਨਾਂ ਦੀਆਂ ਸਭ ਐਂਟੀਟੀਆਂ ਨੂੰ ਹਟਾ ਦਿੱਤਾ ਜਾਵੇਗਾ।</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="648"/>
         <source>Blocks for removal:</source>
-        <translation>Mga bloke na tatanggalin:</translation>
+        <translation>ਹਟਾਉਣ ਲਈ ਬਲਾਕ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="214"/>
         <source>Layer empty name is not allowed.</source>
-        <translation>Hindi pinapayagan ang walang laman na pangalan ng layer.</translation>
+        <translation>ਲੇਅਰ ਦਾ ਖਾਲੀ ਨਾਮ ਮਨਜ਼ੂਰ ਨਹੀਂ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="278"/>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation>Sinusubukang gumawa ng layer na may parehong pangalan. Ang duplicated na pangalan ng layer ay \n[%1].
-Mangyaring tukuyin ang ibang pangalan.</translation>
+        <translation>ਡੁਪਲੀਕੇਟ ਨਾਂ ਨਾਲ ਲੇਅਰ ਬਣਾਉਣ ਦੀ ਕੋਸ਼ਿਸ਼ ਕੀਤੀ ਗਈ। ਡੁਪਲੀਕੇਟ ਲੇਅਰ ਨਾਂ ਹੈ 
+[%1]।
+ਕਿਰਪਾ ਕਰਕੇ ਵੱਖਰਾ ਨਾਂ ਦਿਓ।</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="153"/>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="191"/>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="215"/>
         <source>Error</source>
-        <translation>Error</translation>
+        <translation>ਗਲਤੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="154"/>
         <source>Layer list separator string is empty. It will not be possible to build layers tree.
 Please specify a different value.</source>
-        <translation>Ang string ng separator ng listahan ng layer ay walang laman. Hindi magiging posible na buuin ang puno ng mga layer.
-Mangyaring tukuyin ang ibang halaga.</translation>
+        <translation>ਲੇਅਰ ਲਿਸਟ ਵਿਭਾਜਕ ਸਟ੍ਰਿੰਗ ਖਾਲੀ ਹੈ। ਲੇਅਰ ਟ੍ਰੀ ਬਣਾਉਣਾ ਸੰਭਵ ਨਹੀਂ ਹੋਵੇਗਾ।
+ਕਿਰਪਾ ਕਰਕੇ ਵੱਖਰਾ ਮੁੱਲ ਦਿਓ।</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="192"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>Hindi wastong halaga ang ibinigay para sa kulay na %1.
-Mangyaring tukuyin ang ibang halaga.</translation>
+        <translation>%1 ਰੰਗ ਲਈ ਗਲਤ ਮੁੱਲ ਦਿੱਤਾ ਗਿਆ ਹੈ।
+ਕਿਰਪਾ ਕਰਕੇ ਵੱਖਰਾ ਮੁੱਲ ਦਿਓ।</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="980"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="990"/>
         <source>Remove empty layers</source>
-        <translation>Alisin ang mga walang laman na layer</translation>
+        <translation>ਖਾਲੀ ਲੇਅਰਾਂ ਹਟਾਓ</translation>
     </message>
     <message>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 Clear filtering mask and repeat.</source>
-        <translation type="vanished">Natagpuan ang layer(s) na walang mga entity, ngunit naka-filter ang mga ito at hindi nakikita.
-Linisin ang filter mask at ulitin.</translation>
+        <translation type="vanished">ਬਿਨਾਂ ਐਂਟੀਟੀਆਂ ਦੇ ਲੇਅਰ ਮਿਲੇ, ਪਰ ਉਹ ਫਿਲਟਰ ਕੀਤੇ ਹੋਏ ਹਨ ਅਤੇ ਦਿਖਾਈ ਨਹੀਂ ਦਿੰਦੇ।
+ਫਿਲਟਰ ਮਾਸਕ ਸਾਫ਼ ਕਰੋ ਅਤੇ ਦੁਹਰਾਓ।</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="991"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>Walang natagpuang layer na walang mga entity, walang aalisin.</translation>
+        <translation>ਬਿਨਾਂ ਐਂਟੀਟੀਆਂ ਦੇ ਕੋਈ ਲੇਅਰ ਨਹੀਂ ਮਿਲਿਆ, ਹਟਾਉਣ ਲਈ ਕੁਝ ਨਹੀਂ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1131"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1176"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1184"/>
         <source>Add Layer</source>
-        <translation>Magdagdag ng Layer</translation>
+        <translation>ਲੇਅਰ ਸ਼ਾਮਲ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1132"/>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation>Mayroon nang ganoong child layer para sa 
-[%1].
-Mangyaring tukuyin ang ibang pangalan.</translation>
+        <translation>ਅਜਿਹੀ ਚਾਈਲਡ ਲੇਅਰ 
+[%1] ਲਈ ਪਹਿਲਾਂ ਹੀ ਮੌਜੂਦ ਹੈ।
+ਕਿਰਪਾ ਕਰਕੇ ਵੱਖਰਾ ਨਾਂ ਦਿਓ।</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1177"/>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation>Mayroon nang ganoong child layer para sa 
-[%1].</translation>
+        <translation>ਅਜਿਹੀ ਚਾਈਲਡ ਲੇਅਰ 
+[%1] ਲਈ ਪਹਿਲਾਂ ਹੀ ਮੌਜੂਦ ਹੈ।
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1185"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>Ang dimensional layer ay maaari lamang idagdag para sa normal na aktibong layer.</translation>
+        <translation>ਡਾਇਮੈਂਸ਼ਨਲ ਲੇਅਰ ਸਿਰਫ ਨੌਰਮਲ ਐਕਟਿਵ ਲੇਅਰ ਲਈ ਹੀ ਸ਼ਾਮਲ ਕੀਤੀ ਜਾ ਸਕਦੀ ਹੈ।
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1248"/>
         <source>Move Selection</source>
-        <translation>Ilipat ang Pagpili</translation>
+        <translation>ਚੋਣ ਭੇਜੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1255"/>
         <source>Duplicate Selection</source>
-        <translation>Kopyahin ang Pagpili</translation>
+        <translation>ਚੋਣ ਡੁਪਲੀਕੇਟ ਕਰੋ</translation>
     </message>
     <message>
         <source>Replace &quot;By Layer&quot; value to source layers values?
 If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">Palitan ba ang halaga ng &quot;Sa Pamamagitan ng Layer&quot; sa mga halaga ng pinagmulang mga layer?
-Kung Oo - ang mga entity na may &quot;Sa Pamamagitan ng Layer&quot; na mga panulat ay lilitaw sa bagong layer nang eksakto tulad ng sa mga nakaraang layer, at ang halaga ng &quot;Sa Pamamagitan ng Layer&quot; ay papalitan ng mga nalutas na panulat.
-Kung Hindi - ang mga halaga ng &quot;Sa Pamamagitan ng Layer&quot; ay mananatili, at ang panulat ng target na layer ang magtatakda ng panulat para sa mga entity na iyon.</translation>
+        <translation type="vanished">&quot;ਪਰਤ ਨਾਲ&quot; ਮੁੱਲ ਨੂੰ ਸਰੋਤ ਲੇਅਰਾਂ ਦੇ ਮੁੱਲਾਂ ਨਾਲ ਬਦਲਣਾ ਹੈ?
+ਜੇ ਹਾਂ - &quot;ਪਰਤ ਨਾਲ&quot; ਪੈਨ ਵਾਲੀਆਂ ਐਂਟੀਟੀਆਂ ਨਵੀਂ ਲੇਅਰ ਉੱਤੇ ਬਿਲਕੁਲ ਉਸੇ ਤਰ੍ਹਾਂ ਦਿਖਣਗੀਆਂ ਜਿਵੇਂ ਪਿਛਲੀਆਂ ਲੇਅਰਾਂ ਉੱਤੇ ਦਿਖਦੀਆਂ ਸਨ ਅਤੇ &quot;ਪਰਤ ਨਾਲ&quot; ਮੁੱਲ ਨੂੰ ਹੱਲ ਕੀਤੀਆਂ ਪੈਨਾਂ ਨਾਲ ਬਦਲ ਦਿੱਤਾ ਜਾਵੇਗਾ।
+ਜੇ ਨਹੀਂ - &quot;ਪਰਤ ਨਾਲ&quot; ਮੁੱਲ ਬਣੇ ਰਹਿਣਗੇ ਅਤੇ ਇਸ ਲਈ ਨਿਸ਼ਾਨਾ ਲੇਅਰ ਦੀ ਪੈਨ ਹੀ ਅਜਿਹੀਆਂ ਐਂਟੀਟੀਆਂ ਲਈ ਪੈਨ ਨਿਰਧਾਰਤ ਕਰੇਗੀ।</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1828"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1879"/>
         <source>Layer DialogEx</source>
-        <translation>Dialog ng LayerEx</translation>
+        <translation>ਲੇਅਰ DialogEx</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="216"/>
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
-        <translation>Hindi wastong halaga ang ibinigay para sa kulay ng %1.
-Mangyaring tukuyin ang ibang halaga.</translation>
+        <translation>%1 ਰੰਗ ਲਈ ਗਲਤ ਮੁੱਲ ਦਿੱਤਾ ਗਿਆ ਹੈ।
+ਕਿਰਪਾ ਕਰਕੇ ਵੱਖਰਾ ਮੁੱਲ ਦਿਓ।</translation>
     </message>
     <message>
         <source>Invalid path to pens file.
 %1 
 Please specify a different value.</source>
-        <translation type="vanished">Hindi wastong landas sa file ng mga panulat.
-%1 Mangyaring tukuyin ang ibang halaga.</translation>
+        <translation type="vanished">ਗਲਤ ਪੈਨ ਫਾਈਲ ਪਾਥ।
+%1 
+ਕਿਰਪਾ ਕਰਕੇ ਵੱਖਰਾ ਮੁੱਲ ਦਿਓ।</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1292"/>
         <source>Remove pen</source>
-        <translation>Alisin ang panulat</translation>
+        <translation>ਪੈਨ ਹਟਾਓ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1293"/>
         <source>Pen will be removed from palette, drawing entities will not be affected.</source>
-        <translation>Aalisin ang panulat mula sa palette, ngunit hindi maaapektuhan ang mga entity na iginuhit.</translation>
+        <translation>ਪੈਨ ਨੂੰ ਪੈਲੈਟ ਤੋਂ ਹਟਾ ਦਿੱਤਾ ਜਾਵੇਗਾ, ਡ੍ਰਾਇੰਗ ਐਂਟੀਟੀਆਂ ਪ੍ਰਭਾਵਿਤ ਨਹੀਂ ਹੋਣਗੀਆਂ।</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1294"/>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1313"/>
         <source>Are you sure you&apos;d like to proceed?</source>
-        <translation>Sigurado ka bang gusto mong magpatuloy?</translation>
+        <translation>ਕੀ ਤੁਹਾਨੂੰ ਯਕੀਨ ਹੈ ਕਿ ਤੁਸੀਂ ਜਾਰੀ ਰੱਖਣਾ ਚਾਹੁੰਦੇ ਹੋ?</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1295"/>
         <source>Pen for removal:</source>
-        <translation>Panulat na aalisin:</translation>
+        <translation>ਹਟਾਉਣ ਲਈ ਪੈਨ:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1311"/>
         <source>Remove pens</source>
-        <translation>Alisin ang mga panulat</translation>
+        <translation>ਪੈਨ ਹਟਾਓ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1312"/>
         <source>Pens will be removed from palette, drawing entities will not be affected.</source>
-        <translation>Aalisin ang mga panulat mula sa palette, ngunit hindi maaapektuhan ang mga entity na iginuhit.</translation>
+        <translation>ਪੈਨ ਪੈਲੈਟ ਤੋਂ ਹਟਾਈਆਂ ਜਾਣਗੀਆਂ, ਡਰਾਇੰਗ ਐਂਟੀਟੀਆਂ ਪ੍ਰਭਾਵਿਤ ਨਹੀਂ ਹੋਣਗੀਆਂ।</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1314"/>
         <source>Pens for removal:</source>
-        <translation>Mga panulat para sa pagtanggal:</translation>
+        <translation>ਹਟਾਉਣ ਲਈ ਪੈਨ:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1335"/>
         <source>Select Entities </source>
-        <translation>Piliin ang mga Entity</translation>
+        <translation>ਐਂਟੀਟੀ ਚੁਣੋ </translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1336"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>Walang mga entity na tumutugma sa panulat sa mga nakikitang layer.</translation>
+        <translation>ਦਿਖਾਈ ਦੇ ਰਹੀਆਂ ਲੇਅਰਾਂ ਉੱਤੇ ਪੈਨ ਨਾਲ ਮਿਲਦੀ ਕੋਈ ਐਂਟੀਟੀ ਨਹੀਂ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1337"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>May mga entity na ganito sa mga naka-freeze na layer.</translation>
+        <translation>ਅਜਿਹੀਆਂ ਐਂਟੀਟੀਆਂ ਫ੍ਰੀਜ਼ ਕੀਤੀਆਂ ਲੇਅਰਾਂ ਉੱਤੇ ਮੌਜੂਦ ਹਨ।
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1338"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>May mga entity na ganito sa mga naka-lock na layer.</translation>
+        <translation>ਅਜਿਹੀਆਂ ਐਂਟੀਟੀਆਂ ਲਾਕ ਕੀਤੀਆਂ ਲੇਅਰਾਂ ਉੱਤੇ ਮੌਜੂਦ ਹਨ।
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1339"/>
         <source>Please use different pen attributes.</source>
-        <translation>Mangyaring gumamit ng iba&apos;t ibang katangian ng panulat.</translation>
+        <translation>ਕਿਰਪਾ ਕਰਕੇ ਵੱਖਰੇ ਪੈਨ ਐਟ੍ਰੀਬਿਊਟ ਵਰਤੋ।</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1348"/>
         <source>Set pen by entity</source>
-        <translation>Itakda ang panulat ayon sa entity</translation>
+        <translation>ਐਂਟੀਟੀ ਰਾਹੀਂ ਪੈਨ ਸੈੱਟ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1349"/>
         <source>Please select only one entity to pick pen setting.</source>
-        <translation>Mangyaring pumili lamang ng isang entity upang piliin ang mga setting ng panulat.</translation>
+        <translation>ਕਿਰਪਾ ਕਰਕੇ ਪੈਨ ਸੈਟਿੰਗ ਚੁਣਨ ਲਈ ਸਿਰਫ਼ ਇੱਕ ਐਂਟੀਟੀ ਚੁਣੋ।</translation>
     </message>
     <message>
         <source>Saving Pens Data</source>
-        <translation type="vanished">Pag-save ng Data ng Panulat</translation>
+        <translation type="vanished">ਪੈਨ ਡਾਟਾ ਸੰਭਾਲਿਆ ਜਾ ਰਿਹਾ ਹੈ</translation>
     </message>
     <message>
         <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation type="vanished">Hindi ma-save ang data ng panulat sa tinukoy na file ng panulat. Nais mo bang tukuyin ang tamang landas sa file?</translation>
+        <translation type="vanished">ਨਿਰਧਾਰਤ ਪੈਨ ਫਾਈਲ ਵਿੱਚ ਪੈਨ ਡਾਟਾ ਸੰਭਾਲਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ। ਕੀ ਤੁਸੀਂ ਫਾਈਲ ਲਈ ਸਹੀ ਪਾਥ ਦੱਸਣਾ ਚਾਹੁੰਦੇ ਹੋ?</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="981"/>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
 Clear filtering mask and repeat.</source>
-        <translation>Walang nakitang mga bagay sa layer, ngunit naka-filter pa rin ito at hindi nakikita.
+        <translation>ਬਿਨਾਂ ਐਂਟੀਟੀਆਂ ਦੇ ਲੇਅਰ ਮਿਲੇ, ਪਰ ਉਹ ਫਿਲਟਰ ਕੀਤੇ ਹੋਏ ਹਨ ਅਤੇ ਦਿਖਾਈ ਨਹੀਂ ਦਿੰਦੇ।
 
-Linisin ang filter at ulitin.</translation>
+ਫਿਲਟਰ ਮਾਸਕ ਸਾਫ਼ ਕਰੋ ਅਤੇ ਦੁਹਰਾਓ।</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1272"/>
@@ -9688,11 +9712,11 @@ Linisin ang filter at ulitin.</translation>
 If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation>Palitan ang halaga ng &quot;Sa Pamamagitan ng Layer&quot; sa mga halaga ng pinagmulang layer?
+        <translation>&quot;ਪਰਤ ਨਾਲ&quot; ਮੁੱਲ ਨੂੰ ਸਰੋਤ ਲੇਅਰਾਂ ਦੇ ਮੁੱਲਾਂ ਨਾਲ ਬਦਲਣਾ ਹੈ?
 
-Kung Oo - ang mga entidad na may mga panulat na &quot;Sa Pamamagitan ng Layer&quot; ay magpapakita sa bagong layer nang eksakto tulad ng sa mga nakaraang layer, at ang halaga ng &quot;Sa Pamamagitan ng Layer&quot; ay papalitan ng mga nalutas na panulat.
+ਜੇ ਹਾਂ - &quot;ਪਰਤ ਨਾਲ&quot; ਪੈਨ ਵਾਲੀਆਂ ਐਂਟੀਟੀਆਂ ਨਵੀਂ ਲੇਅਰ ਉੱਤੇ ਬਿਲਕੁਲ ਉਸੇ ਤਰ੍ਹਾਂ ਦਿਖਣਗੀਆਂ ਜਿਵੇਂ ਪਿਛਲੀਆਂ ਲੇਅਰਾਂ ਉੱਤੇ ਦਿਖਦੀਆਂ ਸਨ ਅਤੇ &quot;ਪਰਤ ਨਾਲ&quot; ਮੁੱਲ ਨੂੰ ਹੱਲ ਕੀਤੀਆਂ ਪੈਨਾਂ ਨਾਲ ਬਦਲ ਦਿੱਤਾ ਜਾਵੇਗਾ।
 
-Kung Hindi - ang mga halaga ng &quot;Sa Pamamagitan ng Layer&quot; ay mananatili, at ang panulat ng target na layer ay magtatakda ng panulat para sa mga naturang entidad.</translation>
+ਜੇ ਨਹੀਂ - &quot;ਪਰਤ ਨਾਲ&quot; ਮੁੱਲ ਬਣੇ ਰਹਿਣਗੇ ਅਤੇ ਇਸ ਲਈ ਨਿਸ਼ਾਨਾ ਲੇਅਰ ਦੀ ਪੈਨ ਹੀ ਅਜਿਹੀਆਂ ਐਂਟੀਟੀਆਂ ਲਈ ਪੈਨ ਨਿਰਧਾਰਤ ਕਰੇਗੀ।</translation>
     </message>
 </context>
 <context>
@@ -9723,47 +9747,47 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1793"/>
         <source>Windows Bitmap</source>
-        <translation>Windows Bitmap</translation>
+        <translation>ਵਿੰਡੋਜ਼ ਬਿਟਮੈਪ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1795"/>
         <source>Joint Photographic Experts Group</source>
-        <translation>Joint Photographic Experts Group</translation>
+        <translation>ਜੁਆਇੰਟ ਫੋਟੋਗ੍ਰਾਫਿਕ ਐਕਸਪਰਟਸ ਗਰੁੱਪ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1799"/>
         <source>Multiple-image Network Graphics</source>
-        <translation>Maraming larawang Network Graphics</translation>
+        <translation>ਮਲਟੀਪਲ-ਚਿੱਤਰ ਨੈੱਟਵਰਕ ਗ੍ਰਾਫਿਕਸ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1801"/>
         <source>Portable Bit Map</source>
-        <translation>Portable Bit Map</translation>
+        <translation>ਪੋਰਟੇਬਲ ਬਿੱਟ ਮੈਪ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1803"/>
         <source>Portable Grey Map</source>
-        <translation>Portable Grey Map</translation>
+        <translation>ਪੋਰਟੇਬਲ ਸਲੇਟੀ ਮੈਪ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1805"/>
         <source>Portable Network Graphic</source>
-        <translation>Portable Network Graphic</translation>
+        <translation>ਪੋਰਟੇਬਲ ਨੈੱਟਵਰਕ ਗਰਾਫਿਕ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1807"/>
         <source>Portable Pixel Map</source>
-        <translation>Portable Pixel Map</translation>
+        <translation>ਪੋਰਟੇਬਲ ਪਿਕਸਲ ਮੈਪ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1809"/>
         <source>X Bitmap Format</source>
-        <translation>X Bitmap Format</translation>
+        <translation>X ਬਿਟਮੈਪ ਫਾਰਮਿਟ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1811"/>
         <source>X Pixel Map</source>
-        <translation>X Pixel Map</translation>
+        <translation>X ਪਿਕਸਲ ਮੈਪ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="704"/>
@@ -9773,7 +9797,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1797"/>
         <source>Graphics Interchange Format</source>
-        <translation>Graphics Interchange Format</translation>
+        <translation>ਗ੍ਰਾਫਿਕਸ ਇੰਟਰਚੇਂਜ ਫਾਰਮਿਟ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="455"/>
@@ -9827,31 +9851,31 @@ Do you want to replace it?</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="212"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="268"/>
         <source>Millimeter</source>
-        <translation>milimetro</translation>
+        <translation>ਮਿਲੀਮੀਟਰ</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="214"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="270"/>
         <source>Centimeter</source>
-        <translation>sentimetro</translation>
+        <translation>ਸੈਂਟੀਮੀਟਰ</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="216"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="272"/>
         <source>Meter</source>
-        <translation>metro</translation>
+        <translation>ਮੀਟਰ</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="218"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="274"/>
         <source>Kilometer</source>
-        <translation>kilometro</translation>
+        <translation>ਕਿਲੋਮੀਟਰ</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="220"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="276"/>
         <source>Microinch</source>
-        <translation>mikropulgada</translation>
+        <translation>ਮਾਈਕ੍ਰੋਇੰਚ</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="222"/>
@@ -9869,93 +9893,93 @@ Do you want to replace it?</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="226"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="282"/>
         <source>Angstrom</source>
-        <translation>Angstrom</translation>
+        <translation>ਐਂਗਸਟ੍ਰੋਮ</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="228"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="284"/>
         <source>Nanometer</source>
-        <translation>Nanometer</translation>
+        <translation>ਨੈਨੋਮੀਟਰ</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="230"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="286"/>
         <source>Micron</source>
-        <translation>Micron</translation>
+        <translation>ਮਾਈਕ੍ਰੋਨ</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="232"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="288"/>
         <source>Decimeter</source>
-        <translation>Decimeter</translation>
+        <translation>ਡੈਸੀਮੀਟਰ</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="234"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="290"/>
         <source>Decameter</source>
-        <translation>Decameter</translation>
+        <translation>ਡੈਕਾਮੀਟਰ</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="236"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="292"/>
         <source>Hectometer</source>
-        <translation>Hectometer</translation>
+        <translation>ਹੈਕਟੋਮੀਟਰ</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="238"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="294"/>
         <source>Gigameter</source>
-        <translation>Gigameter</translation>
+        <translation>ਗੀਗਾਮੀਟਰ</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="240"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="296"/>
         <source>Astro</source>
-        <translation>Astro</translation>
+        <translation>ਖਗੋਲੀ ਇਕਾਈ</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="242"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="298"/>
         <source>Lightyear</source>
-        <translation>Lightyear</translation>
+        <translation>ਪ੍ਰਕਾਸ਼ ਸਾਲ</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="244"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="300"/>
         <source>Parsec</source>
-        <translation>Parsec</translation>
+        <translation>ਪਾਰਸੈਕ</translation>
     </message>
     <message>
         <location filename="../src/main/main.cpp" line="325"/>
         <source>Loading...</source>
-        <translation>Naglo-load...</translation>
+        <translation>ਲੋਡ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ...</translation>
     </message>
     <message>
         <location filename="../src/main/doc_plugin_interface.cpp" line="1354"/>
         <source>enter an integer number</source>
-        <translation>ipasok ang isang integer na numero</translation>
+        <translation>ਇੱਕ ਪੂਰਨ ਅੰਕ ਦਾਖਲ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/main/doc_plugin_interface.cpp" line="1358"/>
         <location filename="../src/main/doc_plugin_interface.cpp" line="1376"/>
         <location filename="../src/main/doc_plugin_interface.cpp" line="1393"/>
         <source>LibreCAD query</source>
-        <translation>LibreCAD query</translation>
+        <translation>LibreCAD ਪੁੱਛਗਿੱਛ</translation>
     </message>
     <message>
         <location filename="../src/main/doc_plugin_interface.cpp" line="1372"/>
         <source>enter a number</source>
-        <translation>ipasok ang isang numero</translation>
+        <translation>ਇੱਕ ਨੰਬਰ ਦਾਖਲ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/main/doc_plugin_interface.cpp" line="1389"/>
         <source>enter text</source>
-        <translation>ipasok ang teksto</translation>
+        <translation>ਪਾਠ ਦਿਓ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="461"/>
         <source>LFF Font %1</source>
-        <translation>LFF Font %1</translation>
+        <translation>LFF ਫੌਂਟ %1</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="463"/>
@@ -9965,32 +9989,32 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1813"/>
         <source>Scalable Vector Graphics</source>
-        <translation>Scalable Vector Graphics</translation>
+        <translation>ਸਕੇਲੇਬਲ ਵੈਕਟਰ ਗਰਾਫਿਕਸ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1815"/>
         <source>SGI Black &amp; White</source>
-        <translation>SGI Black &amp; White</translation>
+        <translation>SGI ਕਾਲਾ ਅਤੇ ਚਿੱਟਾ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1817"/>
         <source>Encapsulated PostScript</source>
-        <translation>Encapsulated PostScript</translation>
+        <translation>ਇਨਕੈਪਸੂਲੇਟਿਡ ਪੋਸਟਸਕ੍ਰਿਪਟ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1819"/>
         <source>Encapsulated PostScript Format</source>
-        <translation>Naka-encapsulate na PostScript Format</translation>
+        <translation>ਇਨਕੈਪਸੂਲੇਟਿਡ ਪੋਸਟਸਕ੍ਰਿਪਟ ਫਾਰਮਿਟ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1821"/>
         <source>Encapsulated PostScript Interchange</source>
-        <translation>Naka-encapsulate na PostScript Interchange</translation>
+        <translation>ਇਨਕੈਪਸੂਲੇਟਿਡ ਪੋਸਟਸਕ੍ਰਿਪਟ ਇੰਟਰਚੇਂਜ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1823"/>
         <source>Windows Icon</source>
-        <translation>Windows Icon</translation>
+        <translation>ਵਿੰਡੋਜ਼ ਆਈਕਾਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1825"/>
@@ -10000,123 +10024,123 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1827"/>
         <source>ZSoft Paintbrush</source>
-        <translation>ZSoft Paintbrush</translation>
+        <translation>ਜ਼ੈੱਡਸੌਫਟ ਪੇਂਟਬਰੱਸ਼</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1829"/>
         <source>PC Paint</source>
-        <translation>PC Paint</translation>
+        <translation>ਪੀਸੀ ਪੇਂਟ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1831"/>
         <source>SGI-Bilddatei</source>
-        <translation>SGI-Bilddatei</translation>
+        <translation>SGI ਚਿੱਤਰ ਫਾਈਲ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1833"/>
         <source>Targa Image File</source>
-        <translation>Targa Image File</translation>
+        <translation>ਟਾਰਗਾ ਚਿੱਤਰ ਫਾਈਲ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1835"/>
         <source>Tagged Image File Format</source>
-        <translation>Tagged Image File Format</translation>
+        <translation>ਟੈਗ ਕੀਤਾ ਚਿੱਤਰ ਫਾਈਲ ਫਾਰਮਿਟ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="454"/>
         <source>Old Drawing Exchange %1</source>
-        <translation>Lumang Drawing Exchange %1</translation>
+        <translation>ਪੁਰਾਣਾ ਡਰਾਇੰਗ ਐਕਸ਼ਚੇਜ਼ %1</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="179"/>
         <source>Opened dwg file version %1.</source>
-        <translation>Binuksan ang dwg file na bersyon %1.</translation>
+        <translation>dwg ਫਾਈਲ ਵਰਜਨ %1 ਖੋਲ੍ਹਿਆ ਗਿਆ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4146"/>
         <source>unknown error opening dwg file</source>
-        <translation>Hindi kilalang error sa pagbubukas ng dwg file.</translation>
+        <translation>DWG ਫਾਈਲ ਖੋਲ੍ਹਣ ਵੇਲੇ ਅਣਜਾਣ ਗਲਤੀ</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4150"/>
         <source>can&apos;t open this dwg file</source>
-        <translation>Hindi mabuksan ang dwg file na ito.</translation>
+        <translation>ਇਹ dwg ਫਾਈਲ ਖੋਲ੍ਹੀ ਨਹੀਂ ਜਾ ਸਕਦੀ</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4154"/>
         <source>unsupported dwg version</source>
-        <translation>Hindi suportadong bersyon ng dwg.</translation>
+        <translation>ਗੈਰ-ਸਮਰਥਿਤ DWG ਵਰਜਨ</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4162"/>
         <source>error reading file header in dwg file</source>
-        <translation>Error sa pagbabasa ng header ng file sa dwg file.</translation>
+        <translation>dwg ਫਾਈਲ ਦਾ ਹੈਡਰ ਪੜ੍ਹਨ ਵਿੱਚ ਗਲਤੀ</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4166"/>
         <source>error reading header vars in dwg file</source>
-        <translation>Error sa pagbabasa ng mga variable ng header sa dwg file.</translation>
+        <translation>dwg ਫਾਈਲ ਦੇ ਹੈਡਰ ਵੇਰੀਏਬਲ ਪੜ੍ਹਨ ਵਿੱਚ ਗਲਤੀ</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4170"/>
         <source>error reading classes in dwg file</source>
-        <translation>Error sa pagbabasa ng mga klase sa dwg file.</translation>
+        <translation>dwg ਫਾਈਲ ਦੀਆਂ ਕਲਾਸਾਂ ਪੜ੍ਹਨ ਵਿੱਚ ਗਲਤੀ</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4174"/>
         <source>error reading offsets in dwg file</source>
-        <translation>Error sa pagbabasa ng mga offset sa dwg file.</translation>
+        <translation>dwg ਫਾਈਲ ਦੇ ਆਫਸੈੱਟ ਪੜ੍ਹਨ ਵਿੱਚ ਗਲਤੀ</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4178"/>
         <source>error reading tables in dwg file</source>
-        <translation>Error sa pagbabasa ng mga talahanayan sa dwg file.</translation>
+        <translation>dwg ਫਾਈਲ ਦੇ ਟੇਬਲ ਪੜ੍ਹਨ ਵਿੱਚ ਗਲਤੀ</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4186"/>
         <source>error reading entities in dwg file</source>
-        <translation>Error sa pagbabasa ng mga entity sa dwg file.</translation>
+        <translation>dwg ਫਾਈਲ ਦੀਆਂ ਐਂਟੀਟੀਆਂ ਪੜ੍ਹਨ ਵਿੱਚ ਗਲਤੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="458"/>
         <source>dwg Drawing %1</source>
-        <translation>dwg Drawing %1</translation>
+        <translation>dwg ਡਰਾਇੰਗ %1</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_graphic.cpp" line="350"/>
         <source>File on disk modified. Please save to another file to avoid data loss! File modified: %1</source>
-        <translation>Ang file sa disk ay binago. Mangyaring i-save sa ibang file upang maiwasan ang pagkawala ng data! Ang file na binago: %1</translation>
+        <translation>ਡਿਸਕ ਉੱਤੇ ਫਾਈਲ ਬਦਲੀ ਗਈ ਹੈ। ਡਾਟਾ ਗੁਆਚਣ ਤੋਂ ਬਚਣ ਲਈ ਕਿਰਪਾ ਕਰਕੇ ਕਿਸੇ ਹੋਰ ਫਾਈਲ ਵਿੱਚ ਸੰਭਾਲੋ! ਬਦਲੀ ਗਈ ਫਾਈਲ: %1</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_entitycontainer.cpp" line="1652"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation>Nabigo ang pag-hatch dahil sa agwat=%1 sa pagitan ng (%2, %3) at (%4, %5)</translation>
+        <translation>(%2, %3) ਅਤੇ (%4, %5) ਵਿਚਾਲੇ ਗੈਪ=%1 ਹੋਣ ਕਾਰਨ ਹੈਚ ਅਸਫ਼ਲ ਰਿਹਾ</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="115"/>
         <source>Warning</source>
-        <translation>Babala</translation>
+        <translation>ਚੇਤਾਵਨੀ</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4182"/>
         <source>error reading blocks in dwg file</source>
-        <translation>error sa pagbabasa ng mga bloke sa dwg file</translation>
+        <translation>dwg ਫਾਈਲ ਦੇ ਬਲਾਕ ਪੜ੍ਹਨ ਵਿੱਚ ਗਲਤੀ</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4190"/>
         <source>error reading objects in dwg file</source>
-        <translation>error sa pagbabasa ng mga bagay sa dwg file</translation>
+        <translation>dwg ਫਾਈਲ ਦੇ ਆਬਜੈਕਟ ਪੜ੍ਹਨ ਵਿੱਚ ਗਲਤੀ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="87"/>
         <source>: duplicated command: %1 is already taken by %2</source>
-        <translation>: duplicated command: %1 ay ginagamit na ng %2</translation>
+        <translation>: ਡੁਪਲੀਕੇਟ ਕਮਾਂਡ: %1 ਪਹਿਲਾਂ ਹੀ %2 ਵੱਲੋਂ ਵਰਤੀ ਜਾ ਚੁੱਕੀ ਹੈ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="878"/>
         <source>point</source>
         <comment>draw point</comment>
-        <translation>tuldok</translation>
+        <translation>ਬਿੰਦੂ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="879"/>
@@ -10146,7 +10170,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="547"/>
         <source>polyline</source>
         <comment>draw polyline</comment>
-        <translation>polyline</translation>
+        <translation>ਪੌਲੀਲਾਈਨ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="548"/>
@@ -10170,7 +10194,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="473"/>
         <source>spline</source>
         <comment>draw spline</comment>
-        <translation>spline</translation>
+        <translation>ਸਪਲਾਈਨ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="475"/>
@@ -10182,7 +10206,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="480"/>
         <source>spline2</source>
         <comment>spline through points</comment>
-        <translation>spline2</translation>
+        <translation>ਸਪਲਾਈਨ-ਬਿੰਦੂਆਂ-ਰਾਹੀਂ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="482"/>
@@ -10200,7 +10224,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="329"/>
         <source>bisect</source>
         <comment>angle bisector</comment>
-        <translation>bisect</translation>
+        <translation>ਬਾਈਸੈਕਟ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="328"/>
@@ -10212,13 +10236,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="336"/>
         <source>tanpc</source>
         <comment>tangent point and circle</comment>
-        <translation>tanpc</translation>
+        <translation>ਟੈਨਜੈਂਟ-ਬਿੰਦੂ-ਸਰਕਲ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="355"/>
         <source>ortho</source>
         <comment>perpendicular line</comment>
-        <translation>ortho</translation>
+        <translation>ਆਰਥੋ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="229"/>
@@ -10230,19 +10254,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="381"/>
         <source>polygon2v</source>
         <comment>polygon by 2 vertices</comment>
-        <translation>polygon2v</translation>
+        <translation>ਬਹੁਭੁਜ-2-ਕੋਨੇ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="383"/>
         <source>poly2</source>
         <comment>polygon by 2 vertices</comment>
-        <translation>poly2</translation>
+        <translation>ਬਹੁਭੁਜ2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="390"/>
         <source>circle</source>
         <comment>draw circle</comment>
-        <translation>circle</translation>
+        <translation>ਸਰਕਲ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="391"/>
@@ -10254,31 +10278,31 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="398"/>
         <source>c2</source>
         <comment>circle 2 points</comment>
-        <translation>c2</translation>
+        <translation>ਸਰਕਲ2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="411"/>
         <source>c3</source>
         <comment>circle 3 points</comment>
-        <translation>c3</translation>
+        <translation>ਸਰਕਲ3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="447"/>
         <source>tan3</source>
         <comment>circle tangent to 3</comment>
-        <translation>tan3</translation>
+        <translation>ਟੈਨਜੈਂਟੀਅਲ-3-ਸਰਕਲ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="446"/>
         <source>ct3</source>
         <comment>circle tangent to 3</comment>
-        <translation>ct3</translation>
+        <translation>ਸਟ3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="538"/>
         <source>ellipseinscribed</source>
         <comment>inscribed ellipse</comment>
-        <translation>ellipseinscribed</translation>
+        <translation>ਐਲਿਪਸ-ਇਨਸਕ੍ਰਾਈਬਡ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="539"/>
@@ -10296,7 +10320,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="872"/>
         <source>hatch</source>
         <comment>draw hatch</comment>
-        <translation>hatch</translation>
+        <translation>ਹੈਚ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="873"/>
@@ -10332,13 +10356,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1018"/>
         <source>regen</source>
         <comment>zoom - redraw</comment>
-        <translation>muling likhain</translation>
+        <translation>ਮੁੜ-ਬਣਾਓ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1019"/>
         <source>redraw</source>
         <comment>zoom - redraw</comment>
-        <translation>muling iguhit</translation>
+        <translation>ਮੁੜ-ਡ੍ਰਾਅ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1020"/>
@@ -10356,7 +10380,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1038"/>
         <source>zoomwindow</source>
         <comment>zoom - window</comment>
-        <translation>zoomwindow</translation>
+        <translation>ਵਿੰਡੋ-ਜ਼ੂਮ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1039"/>
@@ -10368,7 +10392,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1026"/>
         <source>zoomauto</source>
         <comment>zoom - auto</comment>
-        <translation>zoomauto</translation>
+        <translation>ਆਟੋ-ਜ਼ੂਮ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1027"/>
@@ -10380,7 +10404,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1044"/>
         <source>zoompan</source>
         <comment>zoom - pan</comment>
-        <translation>zoompan</translation>
+        <translation>ਜ਼ੂਮ-ਪੈਨਿੰਗ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1045"/>
@@ -10392,7 +10416,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1032"/>
         <source>zoomprevious</source>
         <comment>zoom - previous</comment>
-        <translation>zoomprevious</translation>
+        <translation>ਪਿਛਲਾ-ਜ਼ੂਮ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1033"/>
@@ -10440,13 +10464,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="638"/>
         <source>dimaligned</source>
         <comment>dimension - aligned</comment>
-        <translation>dimaligned</translation>
+        <translation>ਡਿਮਅਲਾਈਨਡ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="650"/>
         <source>dimhorizontal</source>
         <comment>dimension - horizontal</comment>
-        <translation>dimhorizontal</translation>
+        <translation>ਡਿਮਹਰੀਜ਼ੋਂਟਲ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="651"/>
@@ -10458,7 +10482,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="656"/>
         <source>dimvertical</source>
         <comment>dimension - vertical</comment>
-        <translation>dimvertical</translation>
+        <translation>ਡਿਮਵਰਟੀਕਲ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="657"/>
@@ -10470,7 +10494,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="644"/>
         <source>dimlinear</source>
         <comment>dimension - linear</comment>
-        <translation>dimlinear</translation>
+        <translation>ਡਿਮਰੇਖਿਕ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="645"/>
@@ -10482,7 +10506,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="676"/>
         <source>dimangular</source>
         <comment>dimension - angular</comment>
-        <translation>dimangular</translation>
+        <translation>ਡਿਮਕੋਣੀ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="678"/>
@@ -10494,19 +10518,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="663"/>
         <source>dimradial</source>
         <comment>dimension - radial</comment>
-        <translation>dimradial</translation>
+        <translation>ਡਿਮਰੇਡੀਅਲ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="671"/>
         <source>dimdiametric</source>
         <comment>dimension - diametric</comment>
-        <translation>dimdiametric</translation>
+        <translation>ਡਿਮਡਾਇਮੀਟ੍ਰਿਕ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="669"/>
         <source>dimdiameter</source>
         <comment>dimension - diametric</comment>
-        <translation>dimdiameter</translation>
+        <translation>ਡਿਮਡਾਇਮੀਟਰ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="670"/>
@@ -10530,13 +10554,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="689"/>
         <source>dimregen</source>
         <comment>dimension - regenerate</comment>
-        <translation>dimregen</translation>
+        <translation>ਡਿਮਮੁੜਬਣਾਓ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="960"/>
         <source>restrictnothing</source>
         <comment>restrict - nothing</comment>
-        <translation>restrictnothing</translation>
+        <translation>ਬਿਨਾਂ-ਪਾਬੰਦੀ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="961"/>
@@ -10548,7 +10572,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="966"/>
         <source>restrictorthogonal</source>
         <comment>restrict - orthogonal</comment>
-        <translation>restrictorthogonal</translation>
+        <translation>ਆਰਥੋਗੋਨਲ-ਪਾਬੰਦੀ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="967"/>
@@ -10560,7 +10584,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="972"/>
         <source>restricthorizontal</source>
         <comment>restrict - horizontal</comment>
-        <translation>pahigpitan ang pahalang</translation>
+        <translation>ਹਰੀਜ਼ੋਂਟਲ-ਪਾਬੰਦੀ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="973"/>
@@ -10572,7 +10596,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="978"/>
         <source>restrictvertical</source>
         <comment>restrict - vertical</comment>
-        <translation>pahigpitan ang patayo</translation>
+        <translation>ਵਰਟੀਕਲ-ਪਾਬੰਦੀ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="979"/>
@@ -10686,7 +10710,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="893"/>
         <source>snapfree</source>
         <comment>snap - free</comment>
-        <translation>snapfree</translation>
+        <translation>ਮੁਕਤ-ਸਨੈਪ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="895"/>
@@ -10698,7 +10722,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="900"/>
         <source>snapcenter</source>
         <comment>snap - center</comment>
-        <translation>snapcenter</translation>
+        <translation>ਕੇਂਦਰ-ਸਨੈਪ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="901"/>
@@ -10710,7 +10734,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="906"/>
         <source>snapdist</source>
         <comment>snap - distance to endpoints</comment>
-        <translation>snapdist</translation>
+        <translation>ਸਨੈਪ-ਦੂਰੀ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="907"/>
@@ -10722,7 +10746,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="912"/>
         <source>snapend</source>
         <comment>snap - end points</comment>
-        <translation>snapend</translation>
+        <translation>ਅੰਤ-ਸਨੈਪ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="913"/>
@@ -10734,7 +10758,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="918"/>
         <source>snapgrid</source>
         <comment>snap - grid</comment>
-        <translation>snapgrid</translation>
+        <translation>ਗਰਿੱਡ-ਸਨੈਪ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="919"/>
@@ -10746,7 +10770,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="924"/>
         <source>snapintersection</source>
         <comment>snap - intersection</comment>
-        <translation>snapintersection</translation>
+        <translation>ਅੰਤਰ-ਖੰਡ-ਸਨੈਪ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="925"/>
@@ -10758,7 +10782,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="930"/>
         <source>snapmiddle</source>
         <comment>snap - middle points</comment>
-        <translation>snapmiddle</translation>
+        <translation>ਮੱਧ-ਸਨੈਪ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="931"/>
@@ -10770,7 +10794,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="936"/>
         <source>snaponentity</source>
         <comment>snap - on entity</comment>
-        <translation>snaponentity</translation>
+        <translation>ਇਕਾਈ-ਸਨੈਪ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="937"/>
@@ -10788,7 +10812,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="954"/>
         <source>setrelativezero</source>
         <comment>set relative zero position</comment>
-        <translation>setrelativezero</translation>
+        <translation>ਅਨੁਸਾਰੀ-ਜ਼ੀਰੋ-ਦਿਓ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="955"/>
@@ -10800,7 +10824,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="616"/>
         <source>selectall</source>
         <comment>Select all entities</comment>
-        <translation>piliin lahat</translation>
+        <translation>ਸਭ-ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="617"/>
@@ -10812,7 +10836,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="622"/>
         <source>deselectall</source>
         <comment>deselect all entities</comment>
-        <translation>huwag piliin lahat</translation>
+        <translation>ਸਭਅਣਚੁਣਾ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="624"/>
@@ -10860,7 +10884,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1096"/>
         <location filename="../src/cmd/rs_commands.cpp" line="1189"/>
         <source>angle</source>
-        <translation>anggulo</translation>
+        <translation>ਕੋਣ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1097"/>
@@ -10871,46 +10895,46 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1098"/>
         <location filename="../src/cmd/rs_commands.cpp" line="1201"/>
         <source>close</source>
-        <translation>isara</translation>
+        <translation>ਬੰਦ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1099"/>
         <location filename="../src/cmd/rs_commands.cpp" line="1197"/>
         <source>chord length</source>
-        <translation>haba ng chord</translation>
+        <translation>ਵਤਰ ਲੰਬਾਈ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1100"/>
         <location filename="../src/cmd/rs_commands.cpp" line="1204"/>
         <source>columns</source>
-        <translation>mga haligi</translation>
+        <translation>ਕਾਲਮ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1101"/>
         <source>columnspacing</source>
-        <translation>pagitan ng mga haligi</translation>
+        <translation>ਕਾਲਮਸਪੇਸਿੰਗ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1103"/>
         <location filename="../src/cmd/rs_commands.cpp" line="1212"/>
         <source>factor</source>
-        <translation>salik</translation>
+        <translation>ਫੈਕਟਰ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1104"/>
         <source>length</source>
-        <translation>haba</translation>
+        <translation>ਲੰਬਾਈ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1107"/>
         <source>number</source>
-        <translation>bilang</translation>
+        <translation>ਨੰਬਰ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1108"/>
         <location filename="../src/cmd/rs_commands.cpp" line="1239"/>
         <source>radius</source>
-        <translation>radius</translation>
+        <translation>ਰੇਡੀਅਸ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1109"/>
@@ -10920,13 +10944,13 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1110"/>
         <source>rowspacing</source>
-        <translation>pagitan ng mga hilera</translation>
+        <translation>ਕਤਾਰ-ਦੂਰੀ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1111"/>
         <location filename="../src/cmd/rs_commands.cpp" line="1254"/>
         <source>through</source>
-        <translation>sa pamamagitan ng</translation>
+        <translation>ਰਾਹੀਂ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1112"/>
@@ -10948,7 +10972,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1193"/>
         <source>center</source>
-        <translation>gitna</translation>
+        <translation>ਕੇਂਦਰ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1194"/>
@@ -10990,13 +11014,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1208"/>
         <source>columnspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation>pagitan ng mga haligi</translation>
+        <translation>ਕਾਲਮਸਪੇਸਿੰਗ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1209"/>
         <source>colspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation>pagitan ng haligi</translation>
+        <translation>ਕਾਲਮਸਪੇਸ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1210"/>
@@ -11031,7 +11055,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1223"/>
         <source>length</source>
         <comment>length</comment>
-        <translation>haba</translation>
+        <translation>ਲੰਬਾਈ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1224"/>
@@ -11049,43 +11073,43 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1227"/>
         <source>length1</source>
         <comment>length1</comment>
-        <translation>haba1</translation>
+        <translation>ਲੰਬਾਈ1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1228"/>
         <source>len1</source>
         <comment>length1</comment>
-        <translation>haba1</translation>
+        <translation>ਲੰਬਾ1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1229"/>
         <source>l1</source>
         <comment>length1</comment>
-        <translation>h1</translation>
+        <translation>ਲੰ1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1231"/>
         <source>length2</source>
         <comment>length2</comment>
-        <translation>haba2</translation>
+        <translation>ਲੰਬਾਈ2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1232"/>
         <source>len2</source>
         <comment>length2</comment>
-        <translation>haba2</translation>
+        <translation>ਲੰਬਾ2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1233"/>
         <source>l2</source>
         <comment>length2</comment>
-        <translation>h2</translation>
+        <translation>ਲੰ2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1235"/>
         <source>number</source>
         <comment>number</comment>
-        <translation>numero</translation>
+        <translation>ਨੰਬਰ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1236"/>
@@ -11097,7 +11121,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1237"/>
         <source>n</source>
         <comment>number</comment>
-        <translation>n</translation>
+        <translation>ਗਿਣਤੀ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1240"/>
@@ -11109,7 +11133,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1242"/>
         <source>reversed</source>
         <comment>reversed</comment>
-        <translation>binaliktad</translation>
+        <translation>ਉਲਟ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1243"/>
@@ -11128,7 +11152,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1248"/>
         <source>rowspacing</source>
         <comment>rowspacing for inserts</comment>
-        <translation>pagitan ng hanay</translation>
+        <translation>ਕਤਾਰ-ਦੂਰੀ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1249"/>
@@ -11189,37 +11213,37 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1269"/>
         <source>paperoffset</source>
-        <translation>offset ng papel</translation>
+        <translation>ਪੇਪਰ-ਆਫਸੈੱਟ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1270"/>
         <source>graphoffset</source>
-        <translation>offset ng graph</translation>
+        <translation>ਗ੍ਰਾਫ-ਆਫਸੈੱਟ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1392"/>
         <source>Command: %1 (%2)</source>
-        <translation>Utos: %1 (%2)</translation>
+        <translation>ਕਮਾਂਡ: %1 (%2)</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1399"/>
         <source>RS_Commands:: command not found: %1</source>
-        <translation>RS_Commands:: Hindi natagpuan ang utos: %1</translation>
+        <translation>RS_Commands:: ਕਮਾਂਡ ਨਹੀਂ ਮਿਲੀ: %1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1453"/>
         <source>Command not found: %1</source>
-        <translation>Hindi natagpuan ang utos: %1</translation>
+        <translation>ਕਮਾਂਡ ਨਹੀਂ ਮਿਲੀ: %1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1439"/>
         <source>Accepted keycode: %1</source>
-        <translation>Tinatanggap na keycode: %1</translation>
+        <translation>ਮਨਜ਼ੂਰ ਕੀਕੋਡ: %1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1503"/>
         <source>Available commands:</source>
-        <translation>Mga magagamit na utos:</translation>
+        <translation>ਉਪਲਬਧ ਕਮਾਂਡਾਂ:</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="204"/>
@@ -11230,12 +11254,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4158"/>
         <source>error reading file metadata in dwg file</source>
-        <translation>error sa pagbabasa ng metadata ng file sa dwg file</translation>
+        <translation>dwg ਫਾਈਲ ਦਾ ਮੈਟਾਡਾਟਾ ਪੜ੍ਹਨ ਵਿੱਚ ਗਲਤੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="216"/>
         <source>Calculator error for input: </source>
-        <translation>error sa calculator para sa input:</translation>
+        <translation>ਇੰਪੁੱਟ ਲਈ ਕੈਲਕੁਲੇਟਰ ਗਲਤੀ: </translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1266"/>
@@ -11245,12 +11269,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1267"/>
         <source>blackwhite</source>
-        <translation>itim at puti</translation>
+        <translation>ਕਾਲਾਚਿੱਟਾ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1268"/>
         <source>color</source>
-        <translation>kulay</translation>
+        <translation>ਰੰਗ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="782"/>
@@ -11273,17 +11297,17 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="64"/>
         <source>Block</source>
-        <translation>Bloke</translation>
+        <translation>ਬਲਾਕ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="65"/>
         <source>Circle</source>
-        <translation>Bilog</translation>
+        <translation>ਚੱਕਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="66"/>
         <source>Curve</source>
-        <translation>Kurba</translation>
+        <translation>ਕਰਵ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="67"/>
@@ -11293,7 +11317,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="68"/>
         <source>Ellipse</source>
-        <translation>Elipse</translation>
+        <translation>ਐਲਿਪਸ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="69"/>
@@ -11304,7 +11328,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="70"/>
         <source>Dimension</source>
-        <translation>Dimensyon</translation>
+        <translation>ਮਾਪ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="71"/>
@@ -11314,7 +11338,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="72"/>
         <source>Layer</source>
-        <translation>Layer</translation>
+        <translation>ਲੇਅਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="73"/>
@@ -11324,33 +11348,33 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="74"/>
         <source>Modify</source>
-        <translation>Baguhin</translation>
+        <translation>ਬਦਲੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="75"/>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="89"/>
         <source>Options</source>
-        <translation>Mga Opsyon</translation>
+        <translation>ਚੋਣ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="76"/>
         <source>Other</source>
-        <translation>Iba pa</translation>
+        <translation>ਹੋਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="77"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>ਪੌਲੀਲਾਈਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="78"/>
         <source>Restriction</source>
-        <translation>Paghihigpit</translation>
+        <translation>ਪਾਬੰਦੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="79"/>
         <source>Select</source>
-        <translation>Piliin</translation>
+        <translation>ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="80"/>
@@ -11360,7 +11384,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="81"/>
         <source>Snap Extras</source>
-        <translation>Mga Karagdagang Snap</translation>
+        <translation>ਵਾਧੂ ਸਨੈਪ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="82"/>
@@ -11370,12 +11394,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="83"/>
         <source>Widgets</source>
-        <translation>Mga Widget</translation>
+        <translation>ਵਿਜੈੱਟ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="498"/>
         <source>Creators</source>
-        <translation>Mga Tagalikha</translation>
+        <translation>ਰਚਨਾਕਾਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/widgetcreator.cpp" line="59"/>
@@ -11387,69 +11411,69 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1983"/>
         <source>Invalid objects removed:</source>
-        <translation>Tinanggal ang mga hindi wastong bagay:</translation>
+        <translation>ਗਲਤ ਆਬਜੈਕਟ ਹਟਾਏ ਗਏ:</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="149"/>
         <source>Pen Wizard</source>
-        <translation>Wizard ng Panulat</translation>
+        <translation>ਪੈਨ ਵਿਜ਼ਾਰਡ</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/colorwizard.cpp" line="54"/>
         <source>Select objects</source>
-        <translation>Piliin ang mga bagay</translation>
+        <translation>ਆਬਜੈਕਟ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/colorwizard.cpp" line="58"/>
         <source>Apply to selected</source>
-        <translation>Ilapat sa mga napili</translation>
+        <translation>ਚੁਣੇ ਹੋਏ ਉੱਤੇ ਲਾਗੂ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/colorwizard.cpp" line="62"/>
         <source>Remove</source>
-        <translation>Alisin</translation>
+        <translation>ਹਟਾਓ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="138"/>
         <source>You must input a distance first.</source>
-        <translation>Kailangan mo munang maglagay ng distansya.</translation>
+        <translation>ਤੁਹਾਨੂੰ ਪਹਿਲਾਂ ਦੂਰੀ ਦਾਖਲ ਕਰਨੀ ਪਵੇਗੀ।</translation>
     </message>
     <message>
         <source>cal</source>
-        <translation type="vanished">cal</translation>
+        <translation type="vanished">ਕੈਲ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="315"/>
         <source>Calculator mode: On</source>
-        <translation>Calculator mode: Naka-on</translation>
+        <translation>ਕੈਲਕੁਲੇਟਰ ਮੋਡ: ਚਾਲੂ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="317"/>
         <source>Calculator mode: Off</source>
-        <translation>Calculator mode: Naka-off</translation>
+        <translation>ਕੈਲਕੁਲੇਟਰ ਮੋਡ: ਬੰਦ</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3836"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="937"/>
         <source>License</source>
-        <translation>Lisensya</translation>
+        <translation>ਲਾਇਸੈਂਸ</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actionlayersexport.cpp" line="178"/>
         <source>No %1 layers found</source>
-        <translation>Walang natagpuang %1 layer</translation>
+        <translation>ਕੋਈ %1 ਲੇਅਰਾਂ ਨਹੀਂ ਮਿਲੀਆਂ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="180"/>
         <source>line2p</source>
         <comment>draw line</comment>
-        <translation>line2p</translation>
+        <translation>ਲਾਈਨ-2-ਬਿੰਦੂ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="209"/>
         <source>lineang</source>
         <comment>angled line</comment>
-        <translation>lineang</translation>
+        <translation>ਲਾਈਨ-ਕੋਣ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="210"/>
@@ -11461,7 +11485,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="215"/>
         <source>linehor</source>
         <comment>horizontal line</comment>
-        <translation>linya pahalang</translation>
+        <translation>ਲਾਈਨ-ਹਰੀਜ਼ੋਂਟਲ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="216"/>
@@ -11473,7 +11497,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="221"/>
         <source>linever</source>
         <comment>vertical line</comment>
-        <translation>linya patayo</translation>
+        <translation>ਲਾਈਨ-ਵਰਟੀਕਲ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="222"/>
@@ -11485,7 +11509,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="227"/>
         <source>linerec</source>
         <comment>draw rectangle</comment>
-        <translation>linyang parihaba</translation>
+        <translation>ਆਇਤ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="228"/>
@@ -11497,13 +11521,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="312"/>
         <source>linepar</source>
         <comment>create parallel</comment>
-        <translation>linyang paralel</translation>
+        <translation>ਲਾਈਨ-ਪੈਰਲਲ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="313"/>
         <source>lineoff</source>
         <comment>create parallel</comment>
-        <translation>linyang naka-off</translation>
+        <translation>ਲਾਈਨ-ਆਫਸੈੱਟ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="314"/>
@@ -11521,7 +11545,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="320"/>
         <source>lineparthro</source>
         <comment>parallel through point</comment>
-        <translation>lineparthro</translation>
+        <translation>ਲਾਈਨ-ਪੈਰਲਲ-ਬਿੰਦੂ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="321"/>
@@ -11533,7 +11557,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="327"/>
         <source>linebisect</source>
         <comment>angle bisector</comment>
-        <translation>linebisect</translation>
+        <translation>ਲਾਈਨ-ਬਾਈਸੈਕਟਰ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="334"/>
@@ -11707,7 +11731,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="425"/>
         <source>circletan2cp</source>
         <comment>circle 2 tangent point</comment>
-        <translation>circletan2cp</translation>
+        <translation>ਸਰਕਲਟੈਨ2ਸੀਪੀ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="426"/>
@@ -11719,7 +11743,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="431"/>
         <source>circletan2p</source>
         <comment>circle tangent 2 points</comment>
-        <translation>circletan2p</translation>
+        <translation>ਸਰਕਲਟੈਨ2ਪੀ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="432"/>
@@ -11731,7 +11755,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="437"/>
         <source>circletan2cr</source>
         <comment>circle 2 tangent radius</comment>
-        <translation>circletan2cr</translation>
+        <translation>ਸਰਕਲਟੈਨ2ਸੀਆਰ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="438"/>
@@ -11743,13 +11767,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="444"/>
         <source>circletan3</source>
         <comment>circle tangent to 3</comment>
-        <translation>circletan3</translation>
+        <translation>ਸਰਕਲਟੈਨ3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="445"/>
         <source>t3</source>
         <comment>circle tangent to 3</comment>
-        <translation>t3</translation>
+        <translation>ਟੈਨ3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="454"/>
@@ -11851,31 +11875,31 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="526"/>
         <source>ellipse4p</source>
         <comment>ellipse 4 point</comment>
-        <translation>ellipse4p</translation>
+        <translation>ਐਲਿਪਸ-4-ਬਿੰਦੂ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="527"/>
         <source>e4</source>
         <comment>ellipse 4 point</comment>
-        <translation>e4</translation>
+        <translation>ਐ4</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="532"/>
         <source>ellipsec3p</source>
         <comment>ellipse center 3 point</comment>
-        <translation>ellipsec3p</translation>
+        <translation>ਐਲਿਪਸ-ਸੈਂਟਰ-3-ਬਿੰਦੂ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="533"/>
         <source>e3</source>
         <comment>ellipse center 3 point</comment>
-        <translation>e3</translation>
+        <translation>ਐ3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="572"/>
         <source>plineadd</source>
         <comment>pl add node</comment>
-        <translation>plineadd</translation>
+        <translation>ਪੌਲੀਲਾਈਨ-ਨੋਡ-ਸ਼ਾਮਲ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="573"/>
@@ -11947,7 +11971,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="608"/>
         <source>plinejoin</source>
         <comment>pl join</comment>
-        <translation>plinejoin</translation>
+        <translation>ਪੌਲੀਲਾਈਨ-ਜੋੜੋ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="609"/>
@@ -11965,7 +11989,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="629"/>
         <source>invertselect</source>
         <comment>invert select</comment>
-        <translation>invertselect</translation>
+        <translation>ਚੋਣ-ਉਲਟਾਓ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="630"/>
@@ -11983,7 +12007,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="662"/>
         <source>dimradius</source>
         <comment>dimension - radial</comment>
-        <translation>dimradius</translation>
+        <translation>ਡਿਮਰੇਡੀਅਸ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="664"/>
@@ -12007,31 +12031,31 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="697"/>
         <source>modmove</source>
         <comment>modify - move (copy)</comment>
-        <translation>ilipat</translation>
+        <translation>ਸੋਧ-ਭੇਜੋ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="703"/>
         <source>modrotate</source>
         <comment>modify - rotate</comment>
-        <translation>ikot</translation>
+        <translation>ਸੋਧ-ਘੁਮਾਓ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="709"/>
         <source>modscale</source>
         <comment>modify - scale</comment>
-        <translation>sukat</translation>
+        <translation>ਸੋਧ-ਸਕੇਲ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="715"/>
         <source>modmirror</source>
         <comment>modify -  mirror</comment>
-        <translation>salamin</translation>
+        <translation>ਸੋਧ-ਮਿਰਰ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="721"/>
         <source>modmovrot</source>
         <comment>modify - move rotate</comment>
-        <translation>ilipat at ikot</translation>
+        <translation>ਸੋਧ-ਭੇਜੋ-ਘੁਮਾਓ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="722"/>
@@ -12043,19 +12067,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="727"/>
         <source>mod2rot</source>
         <comment>modify - rotate2</comment>
-        <translation>ikot2</translation>
+        <translation>ਸੋਧ-ਦੋ-ਘੁਮਾਓ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="728"/>
         <source>r2</source>
         <comment>modify - rotate2</comment>
-        <translation>r2</translation>
+        <translation>ਘੁਮਾਓ2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="733"/>
         <source>modrevert</source>
         <comment>modify -  revert direction</comment>
-        <translation>ibalik</translation>
+        <translation>ਸੋਧ-ਦਿਸ਼ਾ-ਉਲਟਾਓ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="734"/>
@@ -12067,25 +12091,25 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="740"/>
         <source>modtrim</source>
         <comment>modify - trim (extend)</comment>
-        <translation>modtrim</translation>
+        <translation>ਸੋਧ-ਟ੍ਰਿਮ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="746"/>
         <source>modtrim2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation>modtrim2</translation>
+        <translation>ਸੋਧ-ਬਹੁ-ਟ੍ਰਿਮ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="753"/>
         <source>modlengthen</source>
         <comment>modify - lengthen</comment>
-        <translation>modlengthen</translation>
+        <translation>ਸੋਧ-ਲੰਮਾ-ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="759"/>
         <source>modoffset</source>
         <comment>modify - offset</comment>
-        <translation>modoffset</translation>
+        <translation>ਸੋਧ-ਆਫਸੈੱਟ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="760"/>
@@ -12103,43 +12127,43 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="766"/>
         <source>modbevel</source>
         <comment>modify - bevel</comment>
-        <translation>modbevel</translation>
+        <translation>ਸੋਧ-ਬੈਵਲ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="773"/>
         <source>modfillet</source>
         <comment>modify - fillet</comment>
-        <translation>modfillet</translation>
+        <translation>ਸੋਧ-ਫਿਲੈਟ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="779"/>
         <source>moddivide</source>
         <comment>modify - divide (cut)</comment>
-        <translation>moddivide</translation>
+        <translation>ਸੋਧ-ਵੰਡੋ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="787"/>
         <source>modstretch</source>
         <comment>modify - stretch</comment>
-        <translation>modstretch</translation>
+        <translation>ਸੋਧ-ਸਟ੍ਰੈਚ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="793"/>
         <source>modproperties</source>
         <comment>modify properties</comment>
-        <translation>modproperties</translation>
+        <translation>ਸੋਧ-ਗੁਣ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="800"/>
         <source>modattr</source>
         <comment>modify attribute</comment>
-        <translation>modattr</translation>
+        <translation>ਸੋਧ-ਐਟ੍ਰੀਬਿਊਟ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="807"/>
         <source>modexpltext</source>
         <comment>explode text strings</comment>
-        <translation>modexpltext</translation>
+        <translation>ਸੋਧ-ਟੈਕਸਟ-ਫਟਾਓ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="808"/>
@@ -12151,19 +12175,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="813"/>
         <source>modexplode</source>
         <comment>explode block/polyline into entities</comment>
-        <translation>modexplode</translation>
+        <translation>ਸੋਧ-ਫਟਾਓ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="819"/>
         <source>moddelete</source>
         <comment>modify - delete (erase)</comment>
-        <translation>moddelete</translation>
+        <translation>ਸੋਧ-ਮਿਟਾਓ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="828"/>
         <source>infodistance</source>
         <comment>distance point to point</comment>
-        <translation>infodistance</translation>
+        <translation>ਇਨਫੋ-ਦੂਰੀ-ਬਿੰਦੂ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="829"/>
@@ -12175,7 +12199,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="836"/>
         <source>infodistep</source>
         <comment>distance entity to point</comment>
-        <translation>infodistep</translation>
+        <translation>ਇਨਫੋ-ਦੂਰੀ-ਐਂਟੀਟੀ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="837"/>
@@ -12193,7 +12217,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="843"/>
         <source>infoangle</source>
         <comment>measure angle</comment>
-        <translation>infoangle</translation>
+        <translation>ਇਨਫੋ-ਕੋਣ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="844"/>
@@ -12205,7 +12229,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="850"/>
         <source>infoarea</source>
         <comment>measure area</comment>
-        <translation>infoarea</translation>
+        <translation>ਇਨਫੋ-ਖੇਤਰ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="851"/>
@@ -12253,7 +12277,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1010"/>
         <source>drawpref</source>
         <comment>drawing preferences</comment>
-        <translation>guhit na kagustuhan</translation>
+        <translation>ਡ੍ਰਾਇੰਗਤਰਜੀਹਾਂ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1011"/>
@@ -12265,19 +12289,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1102"/>
         <location filename="../src/cmd/rs_commands.cpp" line="1216"/>
         <source>equation</source>
-        <translation>ekuasyon</translation>
+        <translation>ਸਮੀਕਰਨ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1105"/>
         <source>length1</source>
         <comment>bevel/fillet length1</comment>
-        <translation>haba1</translation>
+        <translation>ਲੰਬਾਈ1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1106"/>
         <source>length2</source>
         <comment>bevel/fillet length2</comment>
-        <translation>haba2</translation>
+        <translation>ਲੰਬਾਈ2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1217"/>
@@ -12295,7 +12319,7 @@ Do you want to replace it?</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="936"/>
         <source>Custom</source>
         <comment>Paper format</comment>
-        <translation>Pasadyang</translation>
+        <translation>ਕਸਟਮ</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="938"/>
@@ -12331,73 +12355,73 @@ Do you want to replace it?</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="946"/>
         <source>Letter / ANSI A</source>
         <comment>Paper format</comment>
-        <translation>Liham / ANSI A</translation>
+        <translation>ਲੈਟਰ / ANSI ਏ</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="947"/>
         <source>Legal</source>
         <comment>Paper format</comment>
-        <translation>Legal</translation>
+        <translation>ਲੀਗਲ</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="948"/>
         <source>Tabloid / ANSI B</source>
         <comment>Paper format</comment>
-        <translation>Tabloid / ANSI B</translation>
+        <translation>ਟੈਬਲਾਇਡ / ANSI B</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="952"/>
         <source>ANSI C</source>
         <comment>Paper format</comment>
-        <translation>ANSI C</translation>
+        <translation>ANSI ਸੀ</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="953"/>
         <source>ANSI D</source>
         <comment>Paper format</comment>
-        <translation>ANSI D</translation>
+        <translation>ANSI ਡੀ</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="954"/>
         <source>ANSI E</source>
         <comment>Paper format</comment>
-        <translation>ANSI E</translation>
+        <translation>ANSI ਈ</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="956"/>
         <source>Arch A</source>
         <comment>Paper format</comment>
-        <translation>Arkitektura A</translation>
+        <translation>ਆਰਚ ਏ</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="957"/>
         <source>Arch B</source>
         <comment>Paper format</comment>
-        <translation>Arkitektura B</translation>
+        <translation>ਆਰਚ ਬੀ</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="958"/>
         <source>Arch C</source>
         <comment>Paper format</comment>
-        <translation>Arkitektura C</translation>
+        <translation>ਆਰਚ ਸੀ</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="959"/>
         <source>Arch D</source>
         <comment>Paper format</comment>
-        <translation>Arkitektura D</translation>
+        <translation>ਆਰਚ ਡੀ</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="960"/>
         <source>Arch E</source>
         <comment>Paper format</comment>
-        <translation>Arkitektura E</translation>
+        <translation>ਆਰਚ ਈ</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="978"/>
         <source>custom</source>
         <comment>Paper format</comment>
-        <translation>pasadyang</translation>
+        <translation>ਕਸਟਮ</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="981"/>
@@ -12433,72 +12457,72 @@ Do you want to replace it?</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="994"/>
         <source>letter</source>
         <comment>Paper format</comment>
-        <translation>letra</translation>
+        <translation>ਲੈਟਰ</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="996"/>
         <source>legal</source>
         <comment>Paper format</comment>
-        <translation>legal</translation>
+        <translation>ਲੀਗਲ</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="998"/>
         <source>tabloid</source>
         <comment>Paper format</comment>
-        <translation>tabloid</translation>
+        <translation>ਟੈਬਲੌਇਡ</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1005"/>
         <source>ansi c</source>
         <comment>Paper format</comment>
-        <translation>ANSI C</translation>
+        <translation>ANSI ਸੀ</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1007"/>
         <source>ansi d</source>
         <comment>Paper format</comment>
-        <translation>ANSI D</translation>
+        <translation>ANSI ਡੀ</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1009"/>
         <source>ansi e</source>
         <comment>Paper format</comment>
-        <translation>ANSI E</translation>
+        <translation>ANSI ਈ</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1012"/>
         <source>arch a</source>
         <comment>Paper format</comment>
-        <translation>arch A</translation>
+        <translation>ਆਰਚ ਏ</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1014"/>
         <source>arch b</source>
         <comment>Paper format</comment>
-        <translation>arch B</translation>
+        <translation>ਆਰਚ ਬੀ</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1016"/>
         <source>arch c</source>
         <comment>Paper format</comment>
-        <translation>arkitektura c</translation>
+        <translation>ਆਰਚ ਸੀ</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1018"/>
         <source>arch d</source>
         <comment>Paper format</comment>
-        <translation>arkitektura d</translation>
+        <translation>ਆਰਚ ਡੀ</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1020"/>
         <source>arch e</source>
         <comment>Paper format</comment>
-        <translation>arkitektura e</translation>
+        <translation>ਆਰਚ ਈ</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="74"/>
         <source>DWG support is not complete!</source>
-        <translation>Ang suporta para sa DWG ay hindi pa kumpleto!</translation>
+        <translation>DWG ਸਮਰਥਨ ਮੁਕੰਮਲ ਨਹੀਂ ਹੈ!</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="76"/>
@@ -12508,229 +12532,229 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="78"/>
         <source>If this file fails to open try an older DWG format</source>
-        <translation>Kung hindi mabuksan ang file na ito, subukan ang mas lumang format ng DWG</translation>
+        <translation>ਜੇ ਇਹ ਫਾਈਲ ਖੁੱਲ੍ਹਣ ਵਿੱਚ ਅਸਫ਼ਲ ਰਹੇ ਤਾਂ ਪੁਰਾਣਾ DWG ਫਾਰਮਿਟ ਟ੍ਰਾਈ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="79"/>
         <source>or try to find a converter to make it a DXF file.</source>
-        <translation>o subukang maghanap ng converter upang gawin itong isang DXF file.</translation>
+        <translation>ਜਾਂ ਇਸ ਨੂੰ DXF ਫਾਈਲ ਬਣਾਉਣ ਲਈ ਇੱਕ ਕਨਵਰਟਰ ਲੱਭਣ ਦੀ ਕੋਸ਼ਿਸ਼ ਕਰੋ।</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="82"/>
         <source>Information</source>
-        <translation>Impormasyon</translation>
+        <translation>ਜਾਣਕਾਰੀ</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="93"/>
         <source>Error</source>
         <comment>fileImport</comment>
-        <translation>Error</translation>
+        <translation>ਗਲਤੀ</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="94"/>
         <source>Import error:</source>
         <comment>fileImport</comment>
-        <translation>Error sa pag-import:</translation>
+        <translation>ਇੰਪੋਰਟ ਗਲਤੀ:</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="109"/>
         <source>Anyhow, there are some entities identified.</source>
         <comment>dwgImport</comment>
-        <translation>Sa anumang kaso, may ilang mga entity na natukoy.</translation>
+        <translation>ਫਿਰ ਵੀ, ਕੁਝ ਐਂਟੀਟੀਆਂ ਪਛਾਣੀਆਂ ਗਈਆਂ ਹਨ।</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="110"/>
         <source>If you open the file now, the drawing may be not complete or unusable.</source>
         <comment>dwgImport</comment>
-        <translation>Kung bubuksan mo ang file ngayon, maaaring hindi kumpleto o hindi magagamit ang pagguhit.</translation>
+        <translation>ਜੇ ਤੁਸੀਂ ਹੁਣੇ ਫਾਈਲ ਖੋਲ੍ਹਦੇ ਹੋ ਤਾਂ ਹੋ ਸਕਦਾ ਹੈ ਕਿ ਡਰਾਇੰਗ ਅਧੂਰੀ ਜਾਂ ਵਰਤੋਂ ਦੇ ਅਯੋਗ ਹੋਵੇ।</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="112"/>
         <source>Ignore error and open the file?</source>
         <comment>dwgImport</comment>
-        <translation>Balewalain ang error at buksan ang file?</translation>
+        <translation>ਕੀ ਗਲਤੀ ਨੂੰ ਅਣਡਿੱਠ ਕਰਕੇ ਫਾਈਲ ਖੋਲ੍ਹਣੀ ਹੈ?</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="105"/>
         <source>no DXF/DWG error</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>walang DXF/DWG error</translation>
+        <translation>ਕੋਈ DXF/DWG ਗਲਤੀ ਨਹੀਂ</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="107"/>
         <source>error opening DXF/DWG file</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error sa pagbubukas ng DXF/DWG file</translation>
+        <translation>DXF/DWG ਫਾਈਲ ਖੋਲ੍ਹਣ ਵਿੱਚ ਗਲਤੀ</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="109"/>
         <source>unsupported DXF/DWG file version</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>hindi suportadong bersyon ng DXF/DWG file</translation>
+        <translation>ਗੈਰ-ਸਮਰਥਿਤ DXF/DWG ਫਾਈਲ ਵਰਜਨ</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="111"/>
         <source>error reading DXF/DWG meta data</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error sa pagbabasa ng DXF/DWG meta data</translation>
+        <translation>DXF/DWG ਮੈਟਾ ਡਾਟਾ ਪੜ੍ਹਨ ਵਿੱਚ ਗਲਤੀ</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="113"/>
         <source>error reading DXF/DWG file header</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error sa pagbabasa ng DXF/DWG file header</translation>
+        <translation>DXF/DWG ਫਾਈਲ ਹੈਡਰ ਪੜ੍ਹਨ ਵਿੱਚ ਗਲਤੀ</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="115"/>
         <source>error reading DXF/DWG header dara</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error sa pagbabasa ng DXF/DWG header data</translation>
+        <translation>DXF/DWG ਹੈਡਰ ਡਾਟਾ ਪੜ੍ਹਨ ਵਿੱਚ ਗਲਤੀ</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="117"/>
         <source>error reading DXF/DWG object map</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error sa pagbabasa ng DXF/DWG object map</translation>
+        <translation>DXF/DWG ਆਬਜੈਕਟ ਮੈਪ ਪੜ੍ਹਨ ਵਿੱਚ ਗਲਤੀ</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="119"/>
         <source>error reading DXF/DWG classes</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error sa pagbabasa ng DXF/DWG classes</translation>
+        <translation>DXF/DWG ਕਲਾਸਾਂ ਪੜ੍ਹਨ ਵਿੱਚ ਗਲਤੀ</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="121"/>
         <source>error reading DXF/DWG tables</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error sa pagbasa ng mga DXF/DWG table</translation>
+        <translation>DXF/DWG ਟੇਬਲ ਪੜ੍ਹਨ ਵਿੱਚ ਗਲਤੀ</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="123"/>
         <source>error reading DXF/DWG blocks</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error sa pagbasa ng mga DXF/DWG block</translation>
+        <translation>DXF/DWG ਬਲਾਕ ਪੜ੍ਹਨ ਵਿੱਚ ਗਲਤੀ</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="125"/>
         <source>error reading DXF/DWG entities</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error sa pagbasa ng mga DXF/DWG entity</translation>
+        <translation>DXF/DWG ਐਂਟੀਟੀਆਂ ਪੜ੍ਹਨ ਵਿੱਚ ਗਲਤੀ</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="127"/>
         <source>error reading DXF/DWG objects</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error sa pagbasa ng mga DXF/DWG object</translation>
+        <translation>DXF/DWG ਆਬਜੈਕਟ ਪੜ੍ਹਨ ਵਿੱਚ ਗਲਤੀ</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="129"/>
         <source>error reading DXF/DWG sections</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error sa pagbasa ng mga DXF/DWG section</translation>
+        <translation>DXF/DWG ਸੈਕਸ਼ਨ ਪੜ੍ਹਨ ਵਿੱਚ ਗਲਤੀ</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="131"/>
         <source>error reading DXF/DWG code</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>error sa pagbasa ng DXF/DWG code</translation>
+        <translation>DXF/DWG ਕੋਡ ਪੜ੍ਹਨ ਵਿੱਚ ਗਲਤੀ</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterinterface.h" line="92"/>
         <source>undefined error</source>
         <comment>RS_FilterInterface</comment>
-        <translation>hindi natukoy na error</translation>
+        <translation>ਅਣਪਛਾਤੀ ਗਲਤੀ</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="67"/>
         <source>usage: </source>
-        <translation>paggamit:</translation>
+        <translation>ਵਰਤੋਂ: </translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="67"/>
         <source> [options] &lt;dxf_files&gt;</source>
-        <translation>[options] [mga opsyon] &lt;mga dxf_file&gt;</translation>
+        <translation> [ਆਪਸ਼ਨ] &lt;dxf_ਫਾਇਲਾਂ&gt;</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="74"/>
         <source> *.dxf</source>
-        <translation>*.dxf</translation>
+        <translation> *.dxf (ਉਦਾਹਰਨ)</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="75"/>
         <source>-- print all dxf files to pdf files with the same names.</source>
-        <translation>Lahat ng mga file ng DXF ay i-print sa mga file ng PDF na may parehong mga pangalan.</translation>
+        <translation>-- ਸਾਰੀਆਂ dxf ਫਾਇਲਾਂ ਨੂੰ ਇੱਕੋ ਨਾਂ ਵਾਲੀਆਂ pdf ਫਾਇਲਾਂ ਵਿੱਚ ਪ੍ਰਿੰਟ ਕਰੋ।</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="77"/>
         <source> -o some.pdf *.dxf</source>
-        <translation>-o some.pdf *.dxf</translation>
+        <translation> -o some.pdf *.dxf (ਉਦਾਹਰਨ)</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="78"/>
         <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation>Lahat ng mga file ng DXF ay i-print sa file na &apos;some.pdf&apos;.</translation>
+        <translation>-- ਸਾਰੀਆਂ dxf ਫਾਇਲਾਂ ਨੂੰ &apos;some.pdf&apos; ਫਾਇਲ ਵਿੱਚ ਪ੍ਰਿੰਟ ਕਰੋ।</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="85"/>
         <source>Auto fit and center drawing to page.</source>
-        <translation>Awtomatikong ayusin at isentro ang pagguhit sa pahina.</translation>
+        <translation>ਡਰਾਇੰਗ ਨੂੰ ਸਫ਼ੇ ਮੁਤਾਬਕ ਆਟੋ ਫਿੱਟ ਅਤੇ ਸੈਂਟਰ ਕਰੋ।</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="89"/>
         <source>Auto center drawing on page.</source>
-        <translation>Awtomatikong isentro ang pagguhit sa pahina.</translation>
+        <translation>ਡਰਾਇੰਗ ਨੂੰ ਸਫ਼ੇ ਉੱਤੇ ਆਟੋ ਸੈਂਟਰ ਕਰੋ।</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="93"/>
         <source>Print grayscale.</source>
-        <translation>I-print sa grayscale.</translation>
+        <translation>ਗ੍ਰੇਸਕੇਲ ਵਿੱਚ ਛਾਪੋ।</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="97"/>
         <source>Print monochrome (black/white).</source>
-        <translation>I-print sa monochrome (itim/puti).</translation>
+        <translation>ਮੋਨੋਕ੍ਰੋਮ (ਕਾਲਾ/ਚਿੱਟਾ) ਵਿੱਚ ਛਾਪੋ।</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="101"/>
         <source>Paper size (Width x Height) in mm.</source>
-        <translation type="unfinished">Laki ng papel (Lapad x Taas) sa mm.</translation>
+        <translation type="unfinished">ਪੇਪਰ ਸਾਈਜ਼ (ਚੌੜਾਈ x ਉਚਾਈ) mm ਵਿੱਚ।</translation>
     </message>
     <message>
         <source>Paper size (Width x Height) in mm.</source>
         <comment>WxH</comment>
-        <translation type="vanished">Laki ng papel (Lapad x Taas) sa mm.</translation>
+        <translation type="vanished">ਪੇਪਰ ਸਾਈਜ਼ (ਚੌੜਾਈ x ਉਚਾਈ) mm ਵਿੱਚ।</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>
         <source>Output resolution (DPI).</source>
         <comment>integer</comment>
-        <translation>Resolusyon ng output (DPI).</translation>
+        <translation>ਆਉਟਪੁੱਟ ਰੈਜ਼ੋਲੇਸ਼ਨ (DPI)।</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="109"/>
         <source>Output scale. E.g.: 0.01 (for 1:100 scale).</source>
-        <translation>Output scale. Halimbawa: 0.01 (para sa 1:100 scale).</translation>
+        <translation>ਆਉਟਪੁੱਟ ਪੈਮਾਨਾ। ਉਦਾਹਰਨ ਲਈ: 0.01 (1:100 ਪੈਮਾਨੇ ਲਈ)।</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="113"/>
         <source>Paper margins in mm (integer or float).</source>
-        <translation>Papel na mga margin sa mm (integer o float).</translation>
+        <translation>ਪੇਪਰ ਹਾਸ਼ੀਏ mm ਵਿੱਚ (ਪੂਰਨ ਅੰਕ ਜਾਂ ਦਸ਼ਮਲਵ)।</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="117"/>
         <source>Print on multiple pages (Horiz. x Vert.).</source>
-        <translation>I-print sa maraming pahina (Pahalang x Patayo).</translation>
+        <translation>ਕਈ ਸਫ਼ਿਆਂ ਉੱਤੇ ਛਾਪੋ (ਹਰੀਜ਼ੋਂਟਲ x ਵਰਟੀਕਲ)।</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="121"/>
         <source>Output PDF file.</source>
         <comment>file</comment>
-        <translation>Output PDF file.</translation>
+        <translation>ਆਉਟਪੁੱਟ PDF ਫਾਈਲ।</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="125"/>
         <source>Target output directory.</source>
-        <translation>Target na output directory.</translation>
+        <translation>ਆਉਟਪੁੱਟ ਲਈ ਮੰਜ਼ਿਲ ਡਾਇਰੈਕਟਰੀ।</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="128"/>
@@ -12740,32 +12764,32 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="128"/>
         <source>Input DXF file(s)</source>
-        <translation>Mga file ng DXF na ipapasok</translation>
+        <translation>ਇੰਪੁੱਟ DXF ਫਾਈਲ/ਫਾਈਲਾਂ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="68"/>
         <source>Keycode mode</source>
-        <translation>Mode ng Keycode</translation>
+        <translation>ਕੀਕੋਡ ਮੋਡ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="81"/>
         <source>Load command file</source>
-        <translation>I-load ang command file</translation>
+        <translation>ਕਮਾਂਡ ਫਾਈਲ ਲੋਡ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="85"/>
         <source>Paste multiple commands</source>
-        <translation>I-paste ang maraming command</translation>
+        <translation>ਕਈ ਕਮਾਂਡਾਂ ਪੇਸਟ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_filedialogservice.cpp" line="221"/>
         <source>Combine all layers</source>
-        <translation>Pagsamahin ang lahat ng mga layer</translation>
+        <translation>ਸਾਰੀਆਂ ਲੇਅਰਾਂ ਮਿਲਾਓ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_filedialogservice.cpp" line="252"/>
         <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation>Ang file na &quot;%1&quot; ay mayroon na. Gusto mo bang palitan ito?</translation>
+        <translation>ਫਾਈਲ &quot;%1&quot; ਪਹਿਲਾਂ ਹੀ ਮੌਜੂਦ ਹੈ। ਕੀ ਇਸ ਨੂੰ ਤਬਦੀਲ ਕਰਨਾ ਹੈ?</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="42"/>
@@ -12775,13 +12799,13 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="43"/>
         <source>Custom Picked</source>
-        <translation>Piniling Kulay</translation>
+        <translation>ਕਸਟਮ ਚੁਣਿਆ ਹੋਇਆ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="236"/>
         <source>noname</source>
         <comment>default layer name</comment>
-        <translation>walang pangalan</translation>
+        <translation>ਬਿਨਾਂ-ਨਾਂ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimension.cpp" line="34"/>
@@ -12793,7 +12817,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="188"/>
         <source>sline</source>
         <comment>draw snake line</comment>
-        <translation>sline</translation>
+        <translation>ਸੱਪ-ਲਾਈਨ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="189"/>
@@ -12811,7 +12835,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="195"/>
         <source>slinex</source>
         <comment>draw snake line (X)</comment>
-        <translation>slinex</translation>
+        <translation>ਸੱਪ-ਲਾਈਨ-ਐਕਸ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="196"/>
@@ -12829,7 +12853,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="202"/>
         <source>sliney</source>
         <comment>draw snake line (Y)</comment>
-        <translation>sliney</translation>
+        <translation>ਸੱਪ-ਲਾਈਨ-ਵਾਈ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="203"/>
@@ -12847,43 +12871,43 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="234"/>
         <source>rect1</source>
         <comment>draw rectangle (1 Point)</comment>
-        <translation>rect1</translation>
+        <translation>ਆਇਤ-1-ਬਿੰਦੂ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="235"/>
         <source>re1</source>
         <comment>draw rectangle (1 Point)</comment>
-        <translation>re1</translation>
+        <translation>ਆਇਤ1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="240"/>
         <source>rect2</source>
         <comment>draw rectangle (2 Points)</comment>
-        <translation>rect2</translation>
+        <translation>ਆਇਤ-2-ਬਿੰਦੂ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="241"/>
         <source>re2</source>
         <comment>draw rectangle (2 Points)</comment>
-        <translation>re2</translation>
+        <translation>ਆਇਤ2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="246"/>
         <source>rect3</source>
         <comment>draw rectangle (3 Points)</comment>
-        <translation>rect3</translation>
+        <translation>ਆਇਤ-3-ਬਿੰਦੂ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="247"/>
         <source>re3</source>
         <comment>draw rectangle (3 Points)</comment>
-        <translation>re3</translation>
+        <translation>ਆਇਤ3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="252"/>
         <source>slicel</source>
         <comment>slice/divide line</comment>
-        <translation>slicel</translation>
+        <translation>ਸਲਾਈਸ-ਲਾਈਨ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="253"/>
@@ -12895,7 +12919,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="258"/>
         <source>slicec</source>
         <comment>slice/divide circle/arc</comment>
-        <translation>slicec</translation>
+        <translation>ਸਲਾਈਸ-ਸਰਕਲ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="259"/>
@@ -12919,7 +12943,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="270"/>
         <source>cross</source>
         <comment>draw cross for circle</comment>
-        <translation>krus</translation>
+        <translation>ਕਰਾਸ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="271"/>
@@ -12931,19 +12955,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="276"/>
         <source>linepoints</source>
         <comment>draw line of points</comment>
-        <translation>mga punto ng linya</translation>
+        <translation>ਬਿੰਦੂਆਂ-ਦੀ-ਲਾਈਨ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="277"/>
         <source>lpoints</source>
         <comment>draw line of points</comment>
-        <translation>mga punto</translation>
+        <translation>ਬਿੰਦੂਆਂ-ਲਾਈਨ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="282"/>
         <source>criclebyarc</source>
         <comment>draw circle by arc</comment>
-        <translation>criclebyarc</translation>
+        <translation>ਸਰਕਲਆਰਕਰਾਹੀਂ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="283"/>
@@ -12955,7 +12979,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="288"/>
         <source>duplicate</source>
         <comment>duplicate entity</comment>
-        <translation>duplikado</translation>
+        <translation>ਡੁਪਲੀਕੇਟ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="289"/>
@@ -12967,7 +12991,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="294"/>
         <source>linejoin</source>
         <comment>lines join</comment>
-        <translation>linejoin</translation>
+        <translation>ਲਾਈਨ-ਜੁਆਇਨ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="295"/>
@@ -12979,7 +13003,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="300"/>
         <source>breakdivide</source>
         <comment>break or divide entity</comment>
-        <translation>breakdivide</translation>
+        <translation>ਤੋੜੋਵੰਡੋ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="301"/>
@@ -12991,7 +13015,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="306"/>
         <source>gapline</source>
         <comment>line gap</comment>
-        <translation>gapline</translation>
+        <translation>ਲਾਈਨ-ਗੈਪ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="307"/>
@@ -13028,13 +13052,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="554"/>
         <source>angleline</source>
         <comment>draw angle from line</comment>
-        <translation>angleline</translation>
+        <translation>ਕੋਣਲਾਈਨ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="559"/>
         <source>rortoline</source>
         <comment>draw orthogonal</comment>
-        <translation>rortoline</translation>
+        <translation>ਆਰਥੋਗੋਨਲ-ਤੋਂ-ਲਾਈਨ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="560"/>
@@ -13046,25 +13070,25 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="565"/>
         <source>point2line</source>
         <comment>draw line from point to line</comment>
-        <translation>point2line</translation>
+        <translation>ਬਿੰਦੂ-ਤੋਂ-ਲਾਈਨ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="566"/>
         <source>p2l</source>
         <comment>draw line from point to line</comment>
-        <translation>p2l</translation>
+        <translation>ਬਿੰਦੂਲਾਈਨ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="945"/>
         <source>snapmiddlemanual</source>
         <comment>snap middle manual</comment>
-        <translation>snapmiddlemanual</translation>
+        <translation>ਮੱਧ-ਦਸਤੀ-ਸਨੈਪ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="946"/>
         <source>snapmanual</source>
         <comment>snap middle manual</comment>
-        <translation>snapmanual</translation>
+        <translation>ਦਸਤੀ-ਸਨੈਪ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="947"/>
@@ -13090,37 +13114,37 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1118"/>
         <source>anglerel</source>
-        <translation>anglerel</translation>
+        <translation>ਕੋਣਰਿਲੇਟਿਵ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1119"/>
         <source>start</source>
-        <translation>simulan</translation>
+        <translation>ਸ਼ੁਰੂ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1122"/>
         <source>offset</source>
-        <translation>offset</translation>
+        <translation>ਆਫਸੈੱਟ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1123"/>
         <source>linesnap</source>
-        <translation>linesnap</translation>
+        <translation>ਲਾਈਨ-ਸਨੈਪ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1124"/>
         <source>ticksnap</source>
-        <translation>ticksnap</translation>
+        <translation>ਟਿਕ-ਸਨੈਪ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1127"/>
         <source>width</source>
-        <translation>lapad</translation>
+        <translation>ਚੌੜਾਈ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1128"/>
         <source>height</source>
-        <translation>taas</translation>
+        <translation>ਉਚਾਈ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1129"/>
@@ -13136,22 +13160,22 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1131"/>
         <location filename="../src/cmd/rs_commands.cpp" line="1137"/>
         <source>bevels</source>
-        <translation>mga bevel</translation>
+        <translation>ਬੈਵਲ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1132"/>
         <source>nopoly</source>
-        <translation>walang polygon</translation>
+        <translation>ਨਾ-ਪੌਲੀ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1133"/>
         <source>usepoly</source>
-        <translation>gumamit ng polygon</translation>
+        <translation>ਪੌਲੀਲਾਈਨ-ਵਰਤੋ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1134"/>
         <source>corners</source>
-        <translation>mga sulok</translation>
+        <translation>ਕੋਨੇ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1135"/>
@@ -13161,7 +13185,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1136"/>
         <source>round</source>
-        <translation>bilog</translation>
+        <translation>ਗੋਲ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1138"/>
@@ -13191,47 +13215,47 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1143"/>
         <source>middle</source>
-        <translation>gitna</translation>
+        <translation>ਮੱਧ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1144"/>
         <source>right</source>
-        <translation>kanan</translation>
+        <translation>ਸੱਜਾ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1145"/>
         <source>bottoml</source>
-        <translation>ibaba sa kaliwa</translation>
+        <translation>ਹੇਠਾਂਖੱਬਾ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1146"/>
         <source>bottom</source>
-        <translation>ibaba</translation>
+        <translation>ਹੇਠਾਂ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1147"/>
         <source>bottomr</source>
-        <translation>ibaba sa kanan</translation>
+        <translation>ਹੇਠਾਂਸੱਜਾ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1148"/>
         <source>snapcorner</source>
-        <translation>sulok</translation>
+        <translation>ਕੋਨਾ-ਸਨੈਪ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1149"/>
         <source>snapshift</source>
-        <translation>paglilipat</translation>
+        <translation>ਸਨੈਪ-ਸ਼ਿਫਟ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1150"/>
         <source>sizein</source>
-        <translation>laki sa loob</translation>
+        <translation>ਅੰਦਰੂਨੀ-ਆਕਾਰ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1151"/>
         <source>sizeout</source>
-        <translation>laki sa labas</translation>
+        <translation>ਬਾਹਰੀ-ਆਕਾਰ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1152"/>
@@ -13246,22 +13270,22 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1156"/>
         <source>snap2</source>
-        <translation>snap2</translation>
+        <translation>ਸਨੈਪ2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1157"/>
         <source>corner</source>
-        <translation>sulok</translation>
+        <translation>ਕੋਨਾ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1158"/>
         <source>mid-vert</source>
-        <translation>gitnang-patayo</translation>
+        <translation>ਮੱਧ-ਵਰਟੀਕਲ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1159"/>
         <source>mid-hor</source>
-        <translation>gitnang-pahalang</translation>
+        <translation>ਮੱਧ-ਹਰੀਜ਼ੋਂਟਲ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1161"/>
@@ -13271,37 +13295,37 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1162"/>
         <source>noquad</source>
-        <translation>walang quad</translation>
+        <translation>ਨਾ-ਕੁਆਡ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1163"/>
         <source>angle_inner</source>
-        <translation>panloob na anggulo</translation>
+        <translation>ਕੋਣ_ਅੰਦਰੂਨੀ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1166"/>
         <source>edges</source>
-        <translation>mga gilid</translation>
+        <translation>ਕਿਨਾਰੇ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1167"/>
         <source>edge-none</source>
-        <translation>walang gilid</translation>
+        <translation>ਕਿਨਾਰਾ-ਕੋਈ-ਨਹੀਂ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1168"/>
         <source>edge-both</source>
-        <translation>parehong gilid</translation>
+        <translation>ਕਿਨਾਰਾ-ਦੋਵੇਂ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1169"/>
         <source>edge-start</source>
-        <translation>simula ng gilid</translation>
+        <translation>ਕਿਨਾਰਾ-ਸ਼ੁਰੂ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1170"/>
         <source>edge-end</source>
-        <translation>dulo ng gilid</translation>
+        <translation>ਕਿਨਾਰਾ-ਅੰਤ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1171"/>
@@ -13326,22 +13350,22 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1175"/>
         <source>nofit</source>
-        <translation>hindi angkop</translation>
+        <translation>ਨਾ-ਫਿੱਟ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1176"/>
         <source>dist_fixed</source>
-        <translation>nakatakdang distansya</translation>
+        <translation>ਦੂਰੀ_ਫਿਕਸਡ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1177"/>
         <source>dist_flex</source>
-        <translation>nababagong distansya</translation>
+        <translation>ਦੂਰੀ_ਲਚਕੀਲੀ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1178"/>
         <source>distance</source>
-        <translation>distansya</translation>
+        <translation>ਦੂਰੀ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1182"/>
@@ -13351,17 +13375,17 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1183"/>
         <source>nosym</source>
-        <translation>hindi simetriko</translation>
+        <translation>ਅਸਮਮਿਤ</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="63"/>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
-        <translation>Hatch:: walang natagpuang pattern. Mangyaring itakda ang landas ng pattern sa mga kagustuhan ng aplikasyon</translation>
+        <translation>ਹੈਚ:: ਕੋਈ ਪੈਟਰਨ ਨਹੀਂ ਮਿਲਿਆ। ਕਿਰਪਾ ਕਰਕੇ ਐਪਲੀਕੇਸ਼ਨ ਤਰਜੀਹਾਂ ਵਿੱਚ ਪੈਟਰਨ ਪਾਥ ਸੈੱਟ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="85"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>Hatch:: nabigo ang pag-load ng pattern: %1</translation>
+        <translation>ਹੈਚ:: ਪੈਟਰਨ ਲੋਡ ਕਰਨਾ ਅਸਫ਼ਲ ਰਿਹਾ: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="84"/>
@@ -13371,67 +13395,67 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_peninforegistry.cpp" line="204"/>
         <source>By Layer</source>
-        <translation>Sa pamamagitan ng Layer</translation>
+        <translation>ਪਰਤ ਨਾਲ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_peninforegistry.cpp" line="207"/>
         <source>By Block</source>
-        <translation>Sa pamamagitan ng Block</translation>
+        <translation>ਬਲਾਕ ਨਾਲ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_peninforegistry.cpp" line="210"/>
         <source>- Unchanged -</source>
-        <translation>- Hindi Nabago -</translation>
+        <translation>- ਨਾ-ਤਬਦੀਲ -</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="44"/>
         <source>User Color</source>
-        <translation>Kulay ng Gumagamit</translation>
+        <translation>ਯੂਜ਼ਰ ਰੰਗ</translation>
     </message>
     <message>
         <source>cal </source>
         <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">cal</translation>
+        <translation type="vanished">ਕੈਲ </translation>
     </message>
     <message>
         <source>calculate </source>
         <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">kalkulahin</translation>
+        <translation type="vanished">ਕੈਲਕੁਲੇਟ </translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="35"/>
         <source>-Unchanged-</source>
-        <translation>-Hindi Nabago-</translation>
+        <translation>-ਨਾ-ਤਬਦੀਲ-</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="37"/>
         <source>ByLayer</source>
-        <translation>ByLayer</translation>
+        <translation>ਪਰਤ ਨਾਲ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="39"/>
         <source>ByBlock</source>
-        <translation>ByBlock</translation>
+        <translation>ਬਲਾਕ ਨਾਲ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="41"/>
         <source>Default</source>
-        <translation>Default</translation>
+        <translation>ਮੂਲ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="43"/>
         <source>0.00mm</source>
-        <translation>0.00mm</translation>
+        <translation>0.00ਮਿਮੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="45"/>
         <source>0.05mm</source>
-        <translation>0.05mm</translation>
+        <translation>0.05ਮਿਮੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="47"/>
         <source>0.09mm</source>
-        <translation>0.09mm</translation>
+        <translation>0.09ਮਿਮੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="49"/>
@@ -13441,7 +13465,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="51"/>
         <source>0.15mm</source>
-        <translation>0.15mm</translation>
+        <translation>0.15ਮਿਮੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="53"/>
@@ -13486,7 +13510,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="69"/>
         <source>0.60mm</source>
-        <translation>0.60mm</translation>
+        <translation>0.60ਮਿਮੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="71"/>
@@ -13496,12 +13520,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="73"/>
         <source>0.80mm</source>
-        <translation>0.80mm</translation>
+        <translation>0.80ਮਿਮੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="75"/>
         <source>0.90mm</source>
-        <translation>0.90mm</translation>
+        <translation>0.90ਮਿਮੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="77"/>
@@ -13511,12 +13535,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="79"/>
         <source>1.06mm</source>
-        <translation>1.06mm</translation>
+        <translation>1.06ਮਿਮੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="81"/>
         <source>1.20mm</source>
-        <translation>1.20mm</translation>
+        <translation>1.20ਮਿਮੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="83"/>
@@ -13526,7 +13550,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="85"/>
         <source>1.58mm</source>
-        <translation>1.58mm</translation>
+        <translation>1.58ਮਿਮੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="87"/>
@@ -13536,7 +13560,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="89"/>
         <source>2.11mm</source>
-        <translation>2.11mm</translation>
+        <translation>2.11ਮਿਮੀ</translation>
     </message>
 </context>
 <context>
@@ -13607,19 +13631,21 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/actions/rs_actionblocksinsert.cpp" line="74"/>
         <source>Block cannot contain an insert of itself.</source>
-        <translation>Hindi maaaring maglaman ang bloke ng pagpasok ng sarili nito.</translation>
+        <translation>ਬਲਾਕ ਵਿੱਚ ਆਪਣਾ ਹੀ ਇਨਸਰਟ ਨਹੀਂ ਹੋ ਸਕਦਾ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionblocksinsert.cpp" line="80"/>
         <source> has nested insert of current block in:
 </source>
-        <translation>may nested na pagpasok ng kasalukuyang bloke sa:</translation>
+        <translation> ਵਿੱਚ ਮੌਜੂਦਾ ਬਲਾਕ ਦਾ ਨੈਸਟਡ ਇਨਸਰਟ ਮੌਜੂਦ ਹੈ:
+</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionblocksinsert.cpp" line="82"/>
         <source>
 This block cannot be inserted.</source>
-        <translation>Hindi maaaring ipasok ang blokeng ito.</translation>
+        <translation>
+ਇਹ ਬਲਾਕ ਸ਼ਾਮਲ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ।</translation>
     </message>
 </context>
 <context>
@@ -13627,7 +13653,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionblockssave.cpp" line="96"/>
         <source>No block activated to save</source>
-        <translation>Walang aktibong bloke upang i-save.</translation>
+        <translation>ਸੰਭਾਲਣ ਲਈ ਕੋਈ ਬਲਾਕ ਸਰਗਰਮ ਨਹੀਂ</translation>
     </message>
 </context>
 <context>
@@ -13640,7 +13666,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondefault.cpp" line="501"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
 </context>
 <context>
@@ -13664,7 +13690,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="258"/>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="263"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="262"/>
@@ -13790,7 +13816,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="289"/>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="294"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="293"/>
@@ -13880,7 +13906,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="352"/>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="356"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="343"/>
@@ -13900,7 +13926,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="347"/>
         <source>Specify end angle or [angle/chord length]</source>
-        <translation>Tukuyin ang huling anggulo o [anggulo/haba ng chord].</translation>
+        <translation>ਅੰਤ ਕੋਣ ਨਿਰਧਾਰਤ ਕਰੋ ਜਾਂ [ਕੋਣ/ਵਤਰ ਲੰਬਾਈ]</translation>
     </message>
 </context>
 <context>
@@ -13924,7 +13950,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawarc3p.cpp" line="238"/>
         <location filename="../src/actions/rs_actiondrawarc3p.cpp" line="242"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc3p.cpp" line="242"/>
@@ -13934,7 +13960,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawarc3p.cpp" line="233"/>
         <source>Specify startpoint or [center]</source>
-        <translation>Tukuyin ang panimulang punto o [gitna]</translation>
+        <translation>ਸ਼ੁਰੂਆਤੀ ਬਿੰਦੂ ਨਿਰਧਾਰਤ ਕਰੋ ਜਾਂ [ਕੇਂਦਰ]</translation>
     </message>
 </context>
 <context>
@@ -13958,12 +13984,12 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="232"/>
         <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="235"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="235"/>
         <source>Specify end point</source>
-        <translation>Tukuyin ang huling punto</translation>
+        <translation>ਅੰਤਿਮ ਬਿੰਦੂ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
 </context>
 <context>
@@ -13986,12 +14012,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle.cpp" line="176"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle.cpp" line="176"/>
         <source>Specify point on circle</source>
-        <translation>Tukuyin ang isang punto sa bilog</translation>
+        <translation>ਚੱਕਰ ਉੱਤੇ ਬਿੰਦੂ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle.cpp" line="215"/>
@@ -14029,7 +14055,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle2p.cpp" line="188"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
 </context>
 <context>
@@ -14058,7 +14084,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawcircle3p.cpp" line="191"/>
         <location filename="../src/actions/rs_actiondrawcircle3p.cpp" line="195"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle3p.cpp" line="194"/>
@@ -14091,22 +14117,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcirclecr.cpp" line="228"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcirclecr.cpp" line="106"/>
         <source>radius=%1 is invalid (expression)</source>
-        <translation>radius=%1 ay hindi wasto (ekspresyon)</translation>
+        <translation>ਰੇਡੀਅਸ=%1 ਗਲਤ ਹੈ (ਸਮੀਕਰਨ)</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcirclecr.cpp" line="108"/>
         <source>radius=%1 is invalid (negative)</source>
-        <translation>radius=%1 ay hindi wasto (negatibo)</translation>
+        <translation>ਰੇਡੀਅਸ=%1 ਗਲਤ ਹੈ (ਮਨਫ਼ੀ)</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcirclecr.cpp" line="111"/>
         <source>radius=%1 is invalid (zero)</source>
-        <translation>radius=%1 ay hindi wasto (sero)</translation>
+        <translation>ਰੇਡੀਅਸ=%1 ਗਲਤ ਹੈ (ਜ਼ੀਰੋ)</translation>
     </message>
 </context>
 <context>
@@ -14114,28 +14140,28 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircleinscribe.cpp" line="269"/>
         <source>Specify the first line</source>
-        <translation>Tukuyin ang unang linya</translation>
+        <translation>ਪਹਿਲੀ ਰੇਖਾ ਦਿਓ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircleinscribe.cpp" line="270"/>
         <source>Cancel</source>
-        <translation>Kanselahin</translation>
+        <translation>ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircleinscribe.cpp" line="274"/>
         <source>Specify the second line</source>
-        <translation>Tukuyin ang pangalawang linya</translation>
+        <translation>ਦੂਜੀ ਰੇਖਾ ਦਿਓ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircleinscribe.cpp" line="275"/>
         <location filename="../src/actions/rs_actiondrawcircleinscribe.cpp" line="280"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircleinscribe.cpp" line="279"/>
         <source>Specify the third line</source>
-        <translation>Tukuyin ang ikatlong linya</translation>
+        <translation>ਤੀਜੀ ਰੇਖਾ ਦਿਓ</translation>
     </message>
 </context>
 <context>
@@ -14143,34 +14169,34 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="426"/>
         <source>Cancel</source>
-        <translation>Kanselahin</translation>
+        <translation>ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="430"/>
         <source>Specify the first point on the tangent circle</source>
-        <translation>Tukuyin ang unang punto sa tangenteng bilog</translation>
+        <translation>ਟੈਨਜੈਂਟ ਚੱਕਰ ਉੱਤੇ ਪਹਿਲਾ ਬਿੰਦੂ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="431"/>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="436"/>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="440"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="435"/>
         <source>Specify the second point on the tangent circle</source>
-        <translation>Tukuyin ang pangalawang punto sa tangenteng bilog</translation>
+        <translation>ਟੈਨਜੈਂਟ ਚੱਕਰ ਉੱਤੇ ਦੂਜਾ ਬਿੰਦੂ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="439"/>
         <source>Select the center of the tangent circle</source>
-        <translation>Piliin ang sentro ng tangenteng bilog</translation>
+        <translation>ਟੈਨਜੈਂਟ ਚੱਕਰ ਦਾ ਕੇਂਦਰ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="425"/>
         <source>Specify a line/arc/circle</source>
-        <translation>Tukuyin ang isang linya/arko/bilog</translation>
+        <translation>ਇੱਕ ਰੇਖਾ/ਚਾਪ/ਚੱਕਰ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
 </context>
 <context>
@@ -14178,53 +14204,53 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="326"/>
         <source>Specify the first line/arc/circle</source>
-        <translation>Tukuyin ang unang linya/arko/bilog</translation>
+        <translation>ਪਹਿਲੀ ਰੇਖਾ/ਚਾਪ/ਚੱਕਰ ਦਿਓ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="327"/>
         <source>Cancel</source>
-        <translation>Kanselahin</translation>
+        <translation>ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="331"/>
         <source>Specify the second line/arc/circle</source>
-        <translation>Tukuyin ang pangalawang linya/arko/bilog</translation>
+        <translation>ਦੂਜੀ ਲਾਈਨ/ਆਰਕ/ਸਰਕਲ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="332"/>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="337"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="336"/>
         <source>Select the center of the tangent circle</source>
-        <translation>Piliin ang gitna ng tangent circle</translation>
+        <translation>ਟੈਨਜੈਂਟ ਚੱਕਰ ਦਾ ਕੇਂਦਰ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="154"/>
         <source>Invalid expression &apos;%1&apos; for radius</source>
-        <translation>Hindi wastong ekspresyon &apos;%1&apos; para sa radius</translation>
+        <translation>ਰੇਡੀਅਸ ਲਈ ਸਮੀਕਰਨ &apos;%1&apos; ਗਲਤ ਹੈ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="156"/>
         <source>Invalid negative radius &apos;%1&apos;</source>
-        <translation>Hindi wastong negatibong radius &apos;%1&apos;</translation>
+        <translation>ਗਲਤ ਮਨਫ਼ੀ ਰੇਡੀਅਸ &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="159"/>
         <source>Invalid zero radius &apos;%1&apos;</source>
-        <translation>Hindi wastong zero radius &apos;%1&apos;</translation>
+        <translation>ਗਲਤ ਜ਼ੀਰੋ ਰੇਡੀਅਸ &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="167"/>
         <source>No tangent circle possible for radius &apos;%1&apos;</source>
-        <translation>Walang posibleng tangent circle para sa radius &apos;%1&apos;</translation>
+        <translation>ਰੇਡੀਅਸ &apos;%1&apos; ਲਈ ਕੋਈ ਟੈਨਜੈਂਟ ਚੱਕਰ ਸੰਭਵ ਨਹੀਂ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="181"/>
         <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation>Walang karaniwang tangent circle para sa radius &apos;%1&apos;</translation>
+        <translation>ਰੇਡੀਅਸ &apos;%1&apos; ਲਈ ਕੋਈ ਸਾਂਝਾ ਟੈਨਜੈਂਟੀਅਲ ਚੱਕਰ ਨਹੀਂ</translation>
     </message>
 </context>
 <context>
@@ -14232,34 +14258,34 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="333"/>
         <source>Specify a line/arc/circle</source>
-        <translation>Tukuyin ang isang linya/arc/circle</translation>
+        <translation>ਇੱਕ ਰੇਖਾ/ਚਾਪ/ਚੱਕਰ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="334"/>
         <source>Cancel</source>
-        <translation>Kanselahin</translation>
+        <translation>ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="338"/>
         <source>Specify the another arc/circle</source>
-        <translation>Tukuyin ang isa pang arc/circle</translation>
+        <translation>ਇੱਕ ਹੋਰ ਆਰਕ/ਸਰਕਲ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="339"/>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="344"/>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="348"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="343"/>
         <source>Specify a point on the tangent circle</source>
-        <translation>Tukuyin ang isang punto sa tangent circle</translation>
+        <translation>ਟੈਨਜੈਂਟ ਸਰਕਲ ਉੱਤੇ ਇੱਕ ਬਿੰਦੂ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="347"/>
         <source>Select the center of the tangent circle</source>
-        <translation>Piliin ang gitna ng tangent circle</translation>
+        <translation>ਟੈਨਜੈਂਟ ਚੱਕਰ ਦਾ ਕੇਂਦਰ ਚੁਣੋ</translation>
     </message>
 </context>
 <context>
@@ -14267,34 +14293,34 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="464"/>
         <source>Cancel</source>
-        <translation>Kanselahin</translation>
+        <translation>ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="469"/>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="473"/>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="478"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="477"/>
         <source>Select the center of the tangent circle</source>
-        <translation>Piliin ang gitna ng tangent circle</translation>
+        <translation>ਟੈਨਜੈਂਟ ਚੱਕਰ ਦਾ ਕੇਂਦਰ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="463"/>
         <source>Specify the first line/arc/circle</source>
-        <translation>Tukuyin ang unang linya/arc/circle</translation>
+        <translation>ਪਹਿਲੀ ਰੇਖਾ/ਚਾਪ/ਚੱਕਰ ਦਿਓ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="468"/>
         <source>Specify the second line/arc/circle</source>
-        <translation>Tukuyin ang pangalawang linya/arc/circle</translation>
+        <translation>ਦੂਜੀ ਲਾਈਨ/ਆਰਕ/ਸਰਕਲ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="472"/>
         <source>Specify the third line/arc/circle</source>
-        <translation>Tukuyin ang pangatlong linya/arc/circle</translation>
+        <translation>ਤੀਜੀ ਲਾਈਨ/ਆਰਕ/ਸਰਕਲ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
 </context>
 <context>
@@ -14302,39 +14328,39 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="284"/>
         <source>Specify the first point on ellipse</source>
-        <translation>Tukuyin ang unang punto sa ellipse</translation>
+        <translation>ਐਲਿਪਸ ਉੱਤੇ ਪਹਿਲਾ ਬਿੰਦੂ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="285"/>
         <source>Cancel</source>
-        <translation>Kanselahin</translation>
+        <translation>ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="289"/>
         <source>Specify the second point on ellipse</source>
-        <translation>Tukuyin ang pangalawang punto sa ellipse</translation>
+        <translation>ਐਲਿਪਸ ਉੱਤੇ ਦੂਜਾ ਬਿੰਦੂ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="290"/>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="295"/>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="300"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="294"/>
         <source>Specify the third point on ellipse</source>
-        <translation>Tukuyin ang pangatlong punto sa ellipse</translation>
+        <translation>ਐਲਿਪਸ ਉੱਤੇ ਤੀਜਾ ਬਿੰਦੂ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="299"/>
         <source>Specify the fourth point on ellipse</source>
-        <translation>Tukuyin ang pang-apat na punto sa ellipse</translation>
+        <translation>ਐਲਿਪਸ ਉੱਤੇ ਚੌਥਾ ਬਿੰਦੂ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="156"/>
         <source>Can not determine uniquely an ellipse</source>
-        <translation>Hindi matukoy nang natatangi ang isang ellipse</translation>
+        <translation>ਇੱਕ ਐਲਿਪਸ ਨੂੰ ਵਿਲੱਖਣ ਢੰਗ ਨਾਲ ਨਿਰਧਾਰਤ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ</translation>
     </message>
 </context>
 <context>
@@ -14367,7 +14393,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawellipseaxis.cpp" line="367"/>
         <location filename="../src/actions/rs_actiondrawellipseaxis.cpp" line="372"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseaxis.cpp" line="361"/>
@@ -14390,34 +14416,34 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="282"/>
         <source>Specify the center of ellipse</source>
-        <translation>Tukuyin ang gitna ng ellipse</translation>
+        <translation>ਐਲਿਪਸ ਦਾ ਸੈਂਟਰ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="283"/>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="288"/>
         <source>Cancel</source>
-        <translation>Kanselahin</translation>
+        <translation>ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="287"/>
         <source>Specify the first point on ellipse</source>
-        <translation>Tukuyin ang unang punto sa ellipse</translation>
+        <translation>ਐਲਿਪਸ ਉੱਤੇ ਪਹਿਲਾ ਬਿੰਦੂ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="291"/>
         <source>Specify the second point on ellipse</source>
-        <translation>Tukuyin ang pangalawang punto sa ellipse</translation>
+        <translation>ਐਲਿਪਸ ਉੱਤੇ ਦੂਜਾ ਬਿੰਦੂ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="292"/>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="297"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="296"/>
         <source>Specify the third point on ellipse</source>
-        <translation>Tukuyin ang ikatlong punto sa ellipse</translation>
+        <translation>ਐਲਿਪਸ ਉੱਤੇ ਤੀਜਾ ਬਿੰਦੂ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
 </context>
 <context>
@@ -14425,43 +14451,43 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="223"/>
         <source>Not a valid expression</source>
-        <translation>Hindi ito isang wastong ekspresyon</translation>
+        <translation>ਠੀਕ ਸਮੀਕਰਨ ਨਹੀਂ ਹੈ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="238"/>
         <source>Specify first focus of ellipse</source>
-        <translation>Tukuyin ang unang focus ng ellipse</translation>
+        <translation>ਐਲਿਪਸ ਦਾ ਪਹਿਲਾ ਫੋਕਸ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="239"/>
         <source>Cancel</source>
-        <translation>Kanselahin</translation>
+        <translation>ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="243"/>
         <source>Specify second focus of ellipse</source>
-        <translation>Tukuyin ang pangalawang focus ng ellipse</translation>
+        <translation>ਐਲਿਪਸ ਦਾ ਦੂਜਾ ਫੋਕਸ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="244"/>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="250"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="249"/>
         <source>Specify a point on ellipse or total distance to foci</source>
-        <translation>Tukuyin ang isang punto sa ellipse o ang kabuuang distansya sa mga foci</translation>
+        <translation>ਐਲਿਪਸ ਉੱਤੇ ਇੱਕ ਬਿੰਦੂ ਜਾਂ ਫੋਸੀ ਤੱਕ ਕੁੱਲ ਦੂਰੀ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="207"/>
         <source>specify a point on ellipse, or total distance to foci</source>
-        <translation>tukuyin ang isang punto sa ellipse, o ang kabuuang distansya sa mga foci</translation>
+        <translation>ਐਲਿਪਸ ਉੱਤੇ ਇੱਕ ਬਿੰਦੂ, ਜਾਂ ਫੋਸੀ ਤੱਕ ਕੁੱਲ ਦੂਰੀ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="221"/>
         <source>Total distance %1 is smaller than distance between foci</source>
-        <translation>Ang kabuuang distansya %1 ay mas maliit kaysa sa distansya sa pagitan ng mga foci</translation>
+        <translation>ਕੁੱਲ ਦੂਰੀ %1 ਫੋਸੀ ਵਿਚਾਲੇ ਦੀ ਦੂਰੀ ਤੋਂ ਘੱਟ ਹੈ</translation>
     </message>
 </context>
 <context>
@@ -14469,39 +14495,39 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="279"/>
         <source>Specify the first line</source>
-        <translation>Tukuyin ang unang linya</translation>
+        <translation>ਪਹਿਲੀ ਰੇਖਾ ਦਿਓ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="280"/>
         <source>Cancel</source>
-        <translation>Kanselahin</translation>
+        <translation>ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="284"/>
         <source>Specify the second line</source>
-        <translation>Tukuyin ang pangalawang linya</translation>
+        <translation>ਦੂਜੀ ਰੇਖਾ ਦਿਓ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="285"/>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="290"/>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="295"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="289"/>
         <source>Specify the third line</source>
-        <translation>Tukuyin ang pangatlong linya</translation>
+        <translation>ਤੀਜੀ ਰੇਖਾ ਦਿਓ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="294"/>
         <source>Specify the fourth line</source>
-        <translation>Tukuyin ang pang-apat na linya</translation>
+        <translation>ਚੌਥੀ ਲਾਈਨ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="157"/>
         <source>Can not determine uniquely an ellipse</source>
-        <translation>Hindi matukoy nang natatangi ang isang ellipse</translation>
+        <translation>ਇੱਕ ਐਲਿਪਸ ਨੂੰ ਵਿਲੱਖਣ ਢੰਗ ਨਾਲ ਨਿਰਧਾਰਤ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ</translation>
     </message>
 </context>
 <context>
@@ -14519,32 +14545,32 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="153"/>
         <source>Hatch Error: Invalid contour found!</source>
-        <translation>Error sa Hatch: Natagpuang hindi wastong contour!</translation>
+        <translation>ਹੈਚ ਗਲਤੀ: ਗਲਤ ਕੰਟੂਰ ਮਿਲਿਆ!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="157"/>
         <source>Hatch Error: Pattern not found!</source>
-        <translation>Error sa Hatch: Hindi natagpuang pattern!</translation>
+        <translation>ਹੈਚ ਗਲਤੀ: ਪੈਟਰਨ ਨਹੀਂ ਮਿਲਿਆ!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="160"/>
         <source>Hatch Error: Contour or pattern too small!</source>
-        <translation>Error sa Hatch: Masyadong maliit ang contour o pattern!</translation>
+        <translation>ਹੈਚ ਗਲਤੀ: ਕੰਟੂਰ ਜਾਂ ਪੈਟਰਨ ਬਹੁਤ ਛੋਟਾ ਹੈ!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="163"/>
         <source>Hatch Error: Contour too big!</source>
-        <translation>Hatch Error: Ang contour ay masyadong malaki!</translation>
+        <translation>ਹੈਚ ਗਲਤੀ: ਕੰਟੂਰ ਬਹੁਤ ਵੱਡਾ ਹੈ!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="166"/>
         <source>Hatch Error: Undefined Error!</source>
-        <translation>Hatch Error: Hindi natukoy na error!</translation>
+        <translation>ਹੈਚ ਗਲਤੀ: ਅਣਪਰਿਭਾਸ਼ਿਤ ਗਲਤੀ!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="171"/>
         <source>Total hatch area = %1</source>
-        <translation>Kabuuang lugar ng hatch = %1</translation>
+        <translation>ਕੁੱਲ ਹੈਚ ਖੇਤਰ = %1</translation>
     </message>
 </context>
 <context>
@@ -14579,7 +14605,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawimage.cpp" line="320"/>
         <source>Enter dpi:</source>
-        <translation>Ipasok ang dpi:</translation>
+        <translation>dpi ਦਾਖਲ ਕਰੋ:</translation>
     </message>
 </context>
 <context>
@@ -14603,7 +14629,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="338"/>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="342"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="341"/>
@@ -14613,17 +14639,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="389"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
-        <translation>Hindi maaring isara ang pagkakasunud-sunod ng mga linya: Hindi pa sapat ang mga entity na tinukoy, o nakasara na.</translation>
+        <translation>ਲਾਈਨਾਂ ਦੀ ਲੜੀ ਬੰਦ ਨਹੀਂ ਕੀਤੀ ਜਾ ਸਕਦੀ: ਅਜੇ ਲੋੜੀਂਦੀਆਂ ਐਂਟੀਟੀਆਂ ਤੋਂ ਘੱਟ ਹਨ, ਜਾਂ ਪਹਿਲਾਂ ਹੀ ਬੰਦ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="443"/>
         <source>Cannot undo: Begin of history reached</source>
-        <translation>Hindi maaring i-undo: Naabot na ang simula ng kasaysayan.</translation>
+        <translation>ਅਣਡੰਨਾ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ: ਹਿਸਟਰੀ ਦੀ ਸ਼ੁਰੂਆਤ ਤੱਕ ਪਹੁੰਚ ਚੁੱਕੇ ਹੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="478"/>
         <source>Cannot redo: End of history reached</source>
-        <translation>Hindi maaring i-redo: Naabot na ang dulo ng kasaysayan.</translation>
+        <translation>ਮੁੜ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ: ਹਿਸਟਰੀ ਦੇ ਅੰਤ ਤੱਕ ਪਹੁੰਚ ਚੁੱਕੇ ਹੋ</translation>
     </message>
 </context>
 <context>
@@ -14653,7 +14679,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlineangle.cpp" line="305"/>
         <location filename="../src/actions/rs_actiondrawlineangle.cpp" line="309"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineangle.cpp" line="309"/>
@@ -14689,7 +14715,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="297"/>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="301"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="296"/>
@@ -14705,7 +14731,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="251"/>
         <source>Number sector lines not in range: </source>
         <comment>number of bisector to create must be in [1, 200]</comment>
-        <translation>Ang bilang ng mga linya ng sektor ay wala sa saklaw:</translation>
+        <translation>ਸੈਕਟਰ ਲਾਈਨਾਂ ਦੀ ਗਿਣਤੀ ਸੀਮਾ ਵਿੱਚ ਨਹੀਂ ਹੈ: </translation>
     </message>
 </context>
 <context>
@@ -14741,7 +14767,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinehorvert.cpp" line="162"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
 </context>
 <context>
@@ -14749,22 +14775,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlineorthtan.cpp" line="185"/>
         <source>Select a line</source>
-        <translation>Pumili ng isang linya</translation>
+        <translation>ਇੱਕ ਲਾਈਨ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineorthtan.cpp" line="186"/>
         <source>Cancel</source>
-        <translation>Kanselahin</translation>
+        <translation>ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineorthtan.cpp" line="189"/>
         <source>Select circle, arc or ellipse</source>
-        <translation>Piliin ang bilog, arko, o ellipse</translation>
+        <translation>ਚੱਕਰ, ਚਾਪ ਜਾਂ ਅੰਡਾਕਾਰ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineorthtan.cpp" line="190"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
 </context>
 <context>
@@ -14817,7 +14843,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlineparallelthrough.cpp" line="181"/>
         <location filename="../src/actions/rs_actiondrawlineparallelthrough.cpp" line="185"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineparallelthrough.cpp" line="185"/>
@@ -14840,27 +14866,27 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon.cpp" line="138"/>
         <source>Specify center</source>
-        <translation>Tukuyin ang gitna</translation>
+        <translation>ਕੇਂਦਰ ਦਿਓ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon.cpp" line="143"/>
         <source>Specify a corner</source>
-        <translation>Tukuyin ang isang sulok</translation>
+        <translation>ਇੱਕ ਕੋਨਾ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon.cpp" line="147"/>
         <source>Enter number:</source>
-        <translation>Ipasok ang numero:</translation>
+        <translation>ਨੰਬਰ ਦਿਓ:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon.cpp" line="197"/>
         <source>Not a valid number. Try 1..9999</source>
-        <translation>Hindi ito isang wastong numero. Subukan ang 1..9999</translation>
+        <translation>ਵੈਧ ਨੰਬਰ ਨਹੀਂ। 1..9999 ਤੋਂ ਟ੍ਰਾਈ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon.cpp" line="200"/>
         <source>Not a valid expression</source>
-        <translation>Hindi ito isang wastong ekspresyon</translation>
+        <translation>ਠੀਕ ਸਮੀਕਰਨ ਨਹੀਂ ਹੈ</translation>
     </message>
 </context>
 <context>
@@ -14868,38 +14894,38 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="144"/>
         <source>Specify first corner</source>
-        <translation>Tukuyin ang unang sulok</translation>
+        <translation>ਪਹਿਲਾਂ ਕੋਨਾ ਦਿਓ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="145"/>
         <source>Cancel</source>
-        <translation>Kanselahin</translation>
+        <translation>ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="149"/>
         <source>Specify second corner</source>
-        <translation>Tukuyin ang pangalawang sulok</translation>
+        <translation>ਦੂਜਾ ਕੋਨਾ ਦਿਓ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="150"/>
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="154"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="154"/>
         <source>Number:</source>
-        <translation>Numero:</translation>
+        <translation>ਨੰਬਰ:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="208"/>
         <source>Not a valid number. Try 1..9999</source>
-        <translation>Hindi ito isang wastong numero. Subukan ang 1..9999</translation>
+        <translation>ਵੈਧ ਨੰਬਰ ਨਹੀਂ। 1..9999 ਤੋਂ ਟ੍ਰਾਈ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="211"/>
         <source>Not a valid expression.</source>
-        <translation>Hindi ito isang wastong ekspresyon.</translation>
+        <translation>ਠੀਕ ਸਮੀਕਰਨ ਨਹੀਂ ਹੈ।</translation>
     </message>
 </context>
 <context>
@@ -14922,7 +14948,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinerectangle.cpp" line="160"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
 </context>
 <context>
@@ -14951,7 +14977,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinerelangle.cpp" line="279"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
 </context>
 <context>
@@ -14974,7 +15000,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="187"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
 </context>
 <context>
@@ -14988,22 +15014,22 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="287"/>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="291"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="282"/>
         <source>Select first circle/ellipse/parabola</source>
-        <translation>Piliin ang unang bilog/ellipse/parabola</translation>
+        <translation>ਪਹਿਲਾ ਸਰਕਲ/ਐਲਿਪਸ/ਪੈਰਾਬੋਲਾ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="286"/>
         <source>Select second circle/ellipse/parabola</source>
-        <translation>Piliin ang pangalawang bilog/ellipse/parabola</translation>
+        <translation>ਦੂਜਾ ਸਰਕਲ/ਐਲਿਪਸ/ਪੈਰਾਬੋਲਾ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="290"/>
         <source>Select the tangent line closest to cursor</source>
-        <translation>Piliin ang tangent line na pinakamalapit sa cursor</translation>
+        <translation>ਕਰਸਰ ਦੇ ਸਭ ਤੋਂ ਨੇੜੇ ਟੈਨਜੈਂਟ ਲਾਈਨ ਚੁਣੋ</translation>
     </message>
 </context>
 <context>
@@ -15011,22 +15037,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawmtext.cpp" line="255"/>
         <source>Specify insertion point</source>
-        <translation>Tukuyin ang puntong paglalagay</translation>
+        <translation>ਸ਼ਾਮਿਲ ਬਿੰਦੂ ਦਿਓ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawmtext.cpp" line="256"/>
         <source>Cancel</source>
-        <translation>Kanselahin</translation>
+        <translation>ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawmtext.cpp" line="260"/>
         <source>Enter text:</source>
-        <translation>Ipasok ang teksto:</translation>
+        <translation>ਪਾਠ ਦਿਓ:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawmtext.cpp" line="261"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
 </context>
 <context>
@@ -15047,60 +15073,60 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="678"/>
         <source>Specify first point</source>
-        <translation>Tukuyin ang unang punto</translation>
+        <translation>ਪਹਿਲਾਂ ਬਿੰਦੂ ਦਿਓ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="679"/>
         <source>Cancel</source>
-        <translation>Kanselahin</translation>
+        <translation>ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="694"/>
         <source>Specify next point or [%1]</source>
-        <translation>Tukuyin ang susunod na punto o [%1]</translation>
+        <translation>ਅਗਲਾ ਬਿੰਦੂ ਜਾਂ [%1] ਦਿਓ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="695"/>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="699"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="698"/>
         <source>Specify next point</source>
-        <translation>Tukuyin ang susunod na punto</translation>
+        <translation>ਅਗਲਾ ਬਿੰਦੂ ਦਿਓ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="745"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation>Hindi maaaring isara ang pagkakasunud-sunod ng mga linya: Hindi pa sapat ang mga entity na tinukoy.</translation>
+        <translation>ਲਾਈਨਾਂ ਦੀ ਲੜੀ ਬੰਦ ਨਹੀਂ ਕੀਤੀ ਜਾ ਸਕਦੀ: ਅਜੇ ਲੋੜੀਂਦੀਆਂ ਐਂਟੀਟੀਆਂ ਤੋਂ ਘੱਟ ਹਨ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="772"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>Hindi maaaring i-undo: Hindi pa sapat ang mga entity na tinukoy.</translation>
+        <translation>ਵਾਪਸੀ ਨਹੀਂ: ਹਾਲੇ ਲੋੜੀਦੀਆਂ ਇਕਾਈਆਂ ਨਹੀਂ ਦਿੱਤੀਆਂ ਹਨ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="340"/>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="509"/>
         <source>Enter the end point x</source>
-        <translation>Ipasok ang dulo ng punto x</translation>
+        <translation>ਅੰਤ ਬਿੰਦੂ x ਦਾਖਲ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="375"/>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="520"/>
         <source>Enter number of polylines</source>
-        <translation>Ipasok ang bilang ng mga polyline</translation>
+        <translation>ਪੌਲੀਲਾਈਨਾਂ ਦੀ ਗਿਣਤੀ ਦਾਖਲ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="459"/>
         <source>equation</source>
-        <translation>ekweysyon</translation>
+        <translation>ਸਮੀਕਰਨ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="461"/>
         <source>Enter an equation, f(x)</source>
-        <translation>Ipas ang ekweysyon, f(x)</translation>
+        <translation>ਇੱਕ ਸਮੀਕਰਨ, f(x) ਦਾਖਲ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="479"/>
@@ -15110,22 +15136,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="487"/>
         <source>Enter the start point x</source>
-        <translation>Ipas ang panimulang punto x</translation>
+        <translation>ਸ਼ੁਰੂਆਤੀ ਬਿੰਦੂ x ਦਾਖਲ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="495"/>
         <source>The entered x is invalid.</source>
-        <translation>Ang ipinas na x ay hindi wasto.</translation>
+        <translation>ਦਾਖਲ ਕੀਤਾ x ਗਲਤ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="541"/>
         <source>The step size entered is invalid.</source>
-        <translation>Ang ipinas na laki ng hakbang ay hindi wasto.</translation>
+        <translation>ਦਾਖਲ ਕੀਤਾ ਸਟੈੱਪ ਸਾਈਜ਼ ਗਲਤ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="575"/>
         <source>The value x entered is invalid.</source>
-        <translation>Ang ipinas na halaga ng x ay hindi wasto.</translation>
+        <translation>ਦਾਖਲ ਕੀਤਾ ਮੁੱਲ x ਗਲਤ ਹੈ।</translation>
     </message>
 </context>
 <context>
@@ -15149,7 +15175,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="291"/>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="295"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="294"/>
@@ -15188,12 +15214,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawtext.cpp" line="291"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawtext.cpp" line="285"/>
         <source>Specify second point</source>
-        <translation>Tukuyin ang pangalawang punto</translation>
+        <translation>ਦੂਜਾ ਬਿੰਦੂ ਦਿਓ</translation>
     </message>
 </context>
 <context>
@@ -15227,12 +15253,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioneditundo.cpp" line="65"/>
         <source>Nothing to undo!</source>
-        <translation>Walang maaaring i-undo!</translation>
+        <translation>ਅਣਡੰਨਾ ਕਰਨ ਲਈ ਕੁਝ ਨਹੀਂ ਹੈ!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioneditundo.cpp" line="68"/>
         <source>Nothing to redo!</source>
-        <translation>Walang maaaring i-redo!</translation>
+        <translation>ਮੁੜ ਕਰਨ ਲਈ ਕੁਝ ਨਹੀਂ ਹੈ!</translation>
     </message>
 </context>
 <context>
@@ -15260,12 +15286,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfoangle.cpp" line="145"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfoangle.cpp" line="94"/>
         <source>Angle: %1</source>
-        <translation>Angulo: %1</translation>
+        <translation>ਕੋਣ: %1</translation>
     </message>
 </context>
 <context>
@@ -15299,12 +15325,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfoarea.cpp" line="137"/>
         <source>Closing Point: %1/%2</source>
-        <translation>Punto ng Pagsasara: %1/%2</translation>
+        <translation>ਬੰਦ ਕਰਨ ਵਾਲਾ ਬਿੰਦੂ: %1/%2</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfoarea.cpp" line="93"/>
         <source>Area: %1 %2^2</source>
-        <translation>Lugar: %1 %2^2</translation>
+        <translation>ਖੇਤਰ: %1 %2^2</translation>
     </message>
 </context>
 <context>
@@ -15327,12 +15353,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfodist.cpp" line="175"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfodist.cpp" line="80"/>
         <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
-        <translation>Distansya: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</translation>
+        <translation>ਦੂਰੀ: %1 ਕਾਰਟੀਜ਼ੀਅਨ: (%2 , %3), ਪੋਲਰ: (%4&lt;%5)</translation>
     </message>
 </context>
 <context>
@@ -15360,7 +15386,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfodist2.cpp" line="161"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
 </context>
 <context>
@@ -15474,7 +15500,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="281"/>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="285"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="280"/>
@@ -15523,12 +15549,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="150"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="110"/>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation>Ang entidad ay dapat na isang linya, arko, bilog, elipse, o interpolation spline.</translation>
+        <translation>ਐਂਟੀਟੀ ਲਾਈਨ, ਆਰਕ, ਸਰਕਲ, ਐਲਿਪਸ ਜਾਂ ਇੰਟਰਪੋਲੇਸ਼ਨ ਸਪਲਾਈਨ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ।</translation>
     </message>
 </context>
 <context>
@@ -15551,7 +15577,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="177"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="106"/>
@@ -15571,27 +15597,27 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="112"/>
         <source>Parent of second entity is nullptr</source>
-        <translation>Ang magulang ng pangalawang entidad ay nullptr.</translation>
+        <translation>ਦੂਜੀ ਐਂਟੀਟੀ ਦਾ ਪੇਰੈਂਟ nullptr ਹੈ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="115"/>
         <source>One of the chosen entities is nullptr</source>
-        <translation>Ang isa sa mga piniling entidad ay nullptr.</translation>
+        <translation>ਚੁਣੀਆਂ ਐਂਟੀਟੀਆਂ ਵਿੱਚੋਂ ਇੱਕ nullptr ਹੈ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="142"/>
         <source>Parent of first entity is nullptr</source>
-        <translation>Ang magulang ng unang entidad ay nullptr.</translation>
+        <translation>ਪਹਿਲੀ ਐਂਟੀਟੀ ਦਾ ਪੇਰੈਂਟ nullptr ਹੈ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="146"/>
         <source>First entity is nullptr</source>
-        <translation>Ang unang entidad ay nullptr.</translation>
+        <translation>ਪਹਿਲੀ ਐਂਟੀਟੀ nullptr ਹੈ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="158"/>
         <source>Second entity is nullptr</source>
-        <translation>Ang pangalawang entidad ay nullptr.</translation>
+        <translation>ਦੂਜੀ ਐਂਟੀਟੀ nullptr ਹੈ</translation>
     </message>
 </context>
 <context>
@@ -15612,12 +15638,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyentity.cpp" line="109"/>
         <source>Click on entity to modify</source>
-        <translation>I-click ang entity upang baguhin</translation>
+        <translation>ਬਦਲਣ ਲਈ ਐਂਟੀਟੀ ਉੱਤੇ ਕਲਿੱਕ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyentity.cpp" line="109"/>
         <source>Cancel</source>
-        <translation>Kanselahin</translation>
+        <translation>ਰੱਦ ਕਰੋ</translation>
     </message>
 </context>
 <context>
@@ -15640,7 +15666,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="167"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
 </context>
 <context>
@@ -15663,12 +15689,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifymove.cpp" line="175"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymove.cpp" line="150"/>
         <source>Invalid number of copies, use %1 </source>
-        <translation>Hindi wastong bilang ng mga kopya, gamitin ang %1</translation>
+        <translation>ਕਾਪੀਆਂ ਦੀ ਗਿਣਤੀ ਗਲਤ ਹੈ, %1 ਵਰਤੋ </translation>
     </message>
 </context>
 <context>
@@ -15697,7 +15723,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifymoverotate.cpp" line="240"/>
         <location filename="../src/actions/rs_actionmodifymoverotate.cpp" line="244"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymoverotate.cpp" line="243"/>
@@ -15710,12 +15736,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyoffset.cpp" line="101"/>
         <source>Specify direction of offset</source>
-        <translation>Tukuyin ang direksyon ng offset</translation>
+        <translation>ਆਫਸੈੱਟ ਦੀ ਦਿਸ਼ਾ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyoffset.cpp" line="101"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
 </context>
 <context>
@@ -15730,17 +15756,17 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifyrotate.cpp" line="150"/>
         <location filename="../src/actions/rs_actionmodifyrotate.cpp" line="154"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyrotate.cpp" line="144"/>
         <source>Specify rotation center</source>
-        <translation>Tukuyin ang sentro ng pag-ikot</translation>
+        <translation>ਘੁਮਾਉਣ ਦਾ ਸੈਂਟਰ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyrotate.cpp" line="153"/>
         <source>Specify target point to rotate to</source>
-        <translation>Tukuyin ang target na punto upang i-ikot</translation>
+        <translation>ਘੁਮਾਉਣ ਲਈ ਨਿਸ਼ਾਨਾ ਬਿੰਦੂ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
 </context>
 <context>
@@ -15763,7 +15789,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyrotate2.cpp" line="153"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
 </context>
 <context>
@@ -15778,7 +15804,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="420"/>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="424"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="423"/>
@@ -15798,7 +15824,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="419"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation>Tukuyin ang unang entity o ipasok ang radius &lt;%1&gt;</translation>
+        <translation>ਪਹਿਲੀ ਐਂਟੀਟੀ ਨਿਰਧਾਰਤ ਕਰੋ ਜਾਂ ਰੇਡੀਅਸ &lt;%1&gt; ਦਾਖਲ ਕਰੋ</translation>
     </message>
 </context>
 <context>
@@ -15818,12 +15844,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyscale.cpp" line="238"/>
         <source>Specify scale center</source>
-        <translation>Tukuyin ang sentro ng pag-scale</translation>
+        <translation>ਸਕੇਲ ਸੈਂਟਰ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyscale.cpp" line="247"/>
         <source>Specify target point</source>
-        <translation>Tukuyin ang target na punto</translation>
+        <translation>ਨਿਸ਼ਾਨਾ ਬਿੰਦੂ ਦਿਓ</translation>
     </message>
 </context>
 <context>
@@ -15848,7 +15874,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifystretch.cpp" line="184"/>
         <location filename="../src/actions/rs_actionmodifystretch.cpp" line="188"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifystretch.cpp" line="183"/>
@@ -15883,7 +15909,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="181"/>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="190"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="186"/>
@@ -15926,7 +15952,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="187"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
 </context>
 <context>
@@ -15934,17 +15960,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionorder.cpp" line="124"/>
         <source>No Entity found.</source>
-        <translation>Walang natagpuang entity.</translation>
+        <translation>ਕੋਈ ਇੰਦਰਾਜ਼ ਨਹੀਂ ਮਿਲਿਆ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionorder.cpp" line="150"/>
         <source>Choose entity for order</source>
-        <translation>Piliin ang entity para sa order.</translation>
+        <translation>ਆਰਡਰ ਲਈ ਐਂਟੀਟੀ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionorder.cpp" line="151"/>
         <source>Cancel</source>
-        <translation>Kanselahin</translation>
+        <translation>ਰੱਦ ਕਰੋ</translation>
     </message>
 </context>
 <context>
@@ -15953,42 +15979,42 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="105"/>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="121"/>
         <source>No Entity found.</source>
-        <translation>Walang natagpuang entity.</translation>
+        <translation>ਕੋਈ ਇੰਦਰਾਜ਼ ਨਹੀਂ ਮਿਲਿਆ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="109"/>
         <source>Entity must be a polyline.</source>
-        <translation>Ang entity ay dapat na isang polyline.</translation>
+        <translation>ਐਂਟੀਟੀ ਪੌਲੀਲਾਈਨ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="123"/>
         <source>Adding point is invalid.</source>
-        <translation>Hindi wasto ang pagdaragdag ng punto.</translation>
+        <translation>ਜੋੜਨ ਵਾਲਾ ਬਿੰਦੂ ਗਲਤ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="131"/>
         <source>Adding point is not on entity.</source>
-        <translation>Ang pagdaragdag ng punto ay hindi nasa entity.</translation>
+        <translation>ਜੋੜਨ ਵਾਲਾ ਬਿੰਦੂ ਐਂਟੀਟੀ ਉੱਤੇ ਨਹੀਂ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="157"/>
         <source>Specify polyline to add nodes</source>
-        <translation>Tukuyin ang polyline upang magdagdag ng mga node.</translation>
+        <translation>ਨੋਡ ਜੋੜਨ ਲਈ ਪੌਲੀਲਾਈਨ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="158"/>
         <source>Cancel</source>
-        <translation>Kanselahin</translation>
+        <translation>ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="161"/>
         <source>Specify adding node&apos;s point</source>
-        <translation>Tukuyin ang puntong idaragdag.</translation>
+        <translation>ਨੋਡ ਜੋੜਨ ਦਾ ਬਿੰਦੂ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="162"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
 </context>
 <context>
@@ -15996,53 +16022,53 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="91"/>
         <source>No Entity found.</source>
-        <translation>Walang natagpuang entity.</translation>
+        <translation>ਕੋਈ ਇੰਦਰਾਜ਼ ਨਹੀਂ ਮਿਲਿਆ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="95"/>
         <source>Entity must be a polyline.</source>
-        <translation>Ang entity ay dapat na isang polyline.</translation>
+        <translation>ਐਂਟੀਟੀ ਪੌਲੀਲਾਈਨ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="119"/>
         <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation>Mag-click sa isang lugar malapit sa simula o dulo ng umiiral na polyline.</translation>
+        <translation>ਮੌਜੂਦਾ ਪੌਲੀਲਾਈਨ ਦੀ ਸ਼ੁਰੂਆਤ ਜਾਂ ਅੰਤ ਦੇ ਨੇੜੇ ਕਿਤੇ ਕਲਿੱਕ ਕਰੋ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="191"/>
         <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation>Tukuyin ang polyline sa isang lugar malapit sa simula o dulo.</translation>
+        <translation>ਸ਼ੁਰੂਆਤੀ ਜਾਂ ਅੰਤ ਬਿੰਦੂ ਦੇ ਨੇੜੇ ਕਿਤੇ ਪੌਲੀਲਾਈਨ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="192"/>
         <source>Cancel</source>
-        <translation>Kanselahin</translation>
+        <translation>ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="207"/>
         <source>Specify next point or [%1]</source>
-        <translation>Tukuyin ang susunod na punto o [%1]</translation>
+        <translation>ਅਗਲਾ ਬਿੰਦੂ ਜਾਂ [%1] ਦਿਓ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="208"/>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="212"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="211"/>
         <source>Specify next point</source>
-        <translation>Tukuyin ang susunod na punto</translation>
+        <translation>ਅਗਲਾ ਬਿੰਦੂ ਦਿਓ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="99"/>
         <source>Can not append nodes in a closed polyline.</source>
-        <translation>Hindi maaaring magdagdag ng mga node sa isang saradong polyline.</translation>
+        <translation>ਬੰਦ ਪੌਲੀਲਾਈਨ ਵਿੱਚ ਨੋਡ ਜੋੜੇ ਨਹੀਂ ਜਾ ਸਕਦੇ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="230"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>Hindi maaring i-undo: Hindi pa sapat ang bilang ng mga entity na tinukoy.</translation>
+        <translation>ਵਾਪਸੀ ਨਹੀਂ: ਹਾਲੇ ਲੋੜੀਦੀਆਂ ਇਕਾਈਆਂ ਨਹੀਂ ਦਿੱਤੀਆਂ ਹਨ।</translation>
     </message>
 </context>
 <context>
@@ -16051,42 +16077,42 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="108"/>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="127"/>
         <source>No Entity found.</source>
-        <translation>Walang entity na natagpuan.</translation>
+        <translation>ਕੋਈ ਇੰਦਰਾਜ਼ ਨਹੀਂ ਮਿਲਿਆ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="112"/>
         <source>Entity must be a polyline.</source>
-        <translation>Ang entity ay dapat na isang polyline.</translation>
+        <translation>ਐਂਟੀਟੀ ਪੌਲੀਲਾਈਨ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="158"/>
         <source>Specify polyline to delete node</source>
-        <translation>Tukuyin ang polyline upang tanggalin ang node.</translation>
+        <translation>ਨੋਡ ਮਿਟਾਉਣ ਲਈ ਪੌਲੀਲਾਈਨ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="159"/>
         <source>Cancel</source>
-        <translation>Kanselahin</translation>
+        <translation>ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="162"/>
         <source>Specify deleting node&apos;s point</source>
-        <translation>Tukuyin ang puntong tatanggalin.</translation>
+        <translation>ਨੋਡ ਮਿਟਾਉਣ ਦਾ ਬਿੰਦੂ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="163"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="129"/>
         <source>Deleting point is invalid.</source>
-        <translation>Hindi wasto ang pagtanggal ng punto.</translation>
+        <translation>ਮਿਟਾਉਣ ਵਾਲਾ ਬਿੰਦੂ ਗਲਤ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="132"/>
         <source>Deleting point is not on entity.</source>
-        <translation>Ang puntong tinatanggal ay wala sa entity.</translation>
+        <translation>ਮਿਟਾਉਣ ਵਾਲਾ ਬਿੰਦੂ ਐਂਟੀਟੀ ਉੱਤੇ ਨਹੀਂ ਹੈ।</translation>
     </message>
 </context>
 <context>
@@ -16096,50 +16122,50 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="144"/>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="157"/>
         <source>No Entity found.</source>
-        <translation>Walang entity na natagpuan.</translation>
+        <translation>ਕੋਈ ਇੰਦਰਾਜ਼ ਨਹੀਂ ਮਿਲਿਆ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="123"/>
         <source>Entity must be a polyline.</source>
-        <translation>Ang entidad ay dapat na isang polyline.</translation>
+        <translation>ਐਂਟੀਟੀ ਪੌਲੀਲਾਈਨ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="149"/>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="162"/>
         <source>Deleting point is not on entity.</source>
-        <translation>Ang puntong tinatanggal ay wala sa entidad.</translation>
+        <translation>ਮਿਟਾਉਣ ਵਾਲਾ ਬਿੰਦੂ ਐਂਟੀਟੀ ਉੱਤੇ ਨਹੀਂ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="189"/>
         <source>Specify polyline to delete between two nodes</source>
-        <translation>Tukuyin ang polyline kung saan tatanggalin ang mga punto sa pagitan ng dalawang node.</translation>
+        <translation>ਦੋ ਨੋਡਾਂ ਵਿਚਾਲੇ ਮਿਟਾਉਣ ਲਈ ਪੌਲੀਲਾਈਨ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="190"/>
         <source>Cancel</source>
-        <translation>Kanselahin</translation>
+        <translation>ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="193"/>
         <source>Specify first node</source>
-        <translation>Tukuyin ang unang node.</translation>
+        <translation>ਪਹਿਲਾ ਨੋਡ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="194"/>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="198"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="197"/>
         <source>Specify second node</source>
-        <translation>Tukuyin ang pangalawang node.</translation>
+        <translation>ਦੂਜਾ ਨੋਡ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="146"/>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="159"/>
         <source>Deleting point is invalid.</source>
-        <translation>Hindi wasto ang puntong tinatanggal.</translation>
+        <translation>ਮਿਟਾਉਣ ਵਾਲਾ ਬਿੰਦੂ ਗਲਤ ਹੈ।</translation>
     </message>
 </context>
 <context>
@@ -16147,22 +16173,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="305"/>
         <source>No Entity found.</source>
-        <translation>Walang natagpuang entidad.</translation>
+        <translation>ਕੋਈ ਇੰਦਰਾਜ਼ ਨਹੀਂ ਮਿਲਿਆ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="309"/>
         <source>Entity must be a polyline.</source>
-        <translation>Ang entidad ay dapat na isang polyline.</translation>
+        <translation>ਐਂਟੀਟੀ ਪੌਲੀਲਾਈਨ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="369"/>
         <source>Choose the original polyline</source>
-        <translation>Piliin ang orihinal na polyline</translation>
+        <translation>ਅਸਲੀ ਪੌਲੀਲਾਈਨ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="370"/>
         <source>Cancel</source>
-        <translation>Kanselahin</translation>
+        <translation>ਰੱਦ ਕਰੋ</translation>
     </message>
 </context>
 <context>
@@ -16170,28 +16196,28 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="312"/>
         <source>No Entity found.</source>
-        <translation>Walang natagpuang entity.</translation>
+        <translation>ਕੋਈ ਇੰਦਰਾਜ਼ ਨਹੀਂ ਮਿਲਿਆ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="356"/>
         <source>Choose one of the segments on the original polyline</source>
-        <translation>Piliin ang isa sa mga segment sa orihinal na polyline</translation>
+        <translation>ਅਸਲੀ ਪੌਲੀਲਾਈਨ ਉੱਤੇ ਸੈਗਮੈਂਟਾਂ ਵਿੱਚੋਂ ਇੱਕ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="357"/>
         <source>Cancel</source>
-        <translation>Kanselahin</translation>
+        <translation>ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="315"/>
         <source>Entity can not be a closed polyline.</source>
-        <translation>Ang entity ay hindi maaaring maging isang saradong polyline.</translation>
+        <translation>ਐਂਟੀਟੀ ਬੰਦ ਪੌਲੀਲਾਈਨ ਨਹੀਂ ਹੋ ਸਕਦੀ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="66"/>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="87"/>
         <source>Polyline created</source>
-        <translation>Nalikha ang polyline</translation>
+        <translation>ਪੌਲੀਲਾਈਨ ਬਣਾਈ ਗਈ</translation>
     </message>
 </context>
 <context>
@@ -16201,50 +16227,50 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="124"/>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="143"/>
         <source>No Entity found.</source>
-        <translation>Walang natagpuang entity.</translation>
+        <translation>ਕੋਈ ਇੰਦਰਾਜ਼ ਨਹੀਂ ਮਿਲਿਆ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="110"/>
         <source>Entity must be a polyline.</source>
-        <translation>Ang entity ay dapat na isang polyline.</translation>
+        <translation>ਐਂਟੀਟੀ ਪੌਲੀਲਾਈਨ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="126"/>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="145"/>
         <source>Specifying point is invalid.</source>
-        <translation>Hindi wasto ang pagtukoy ng punto.</translation>
+        <translation>ਨਿਰਧਾਰਤ ਕੀਤਾ ਬਿੰਦੂ ਗਲਤ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="129"/>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="148"/>
         <source>No Segment found on entity.</source>
-        <translation>Walang segment na natagpuan sa entity.</translation>
+        <translation>ਐਂਟੀਟੀ ਉੱਤੇ ਕੋਈ ਸੈਗਮੈਂਟ ਨਹੀਂ ਮਿਲਿਆ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="181"/>
         <source>Specify polyline to trim</source>
-        <translation>Tukuyin ang polyline na itatrim.</translation>
+        <translation>ਟ੍ਰਿਮ ਕਰਨ ਲਈ ਪੌਲੀਲਾਈਨ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="182"/>
         <source>Cancel</source>
-        <translation>Kanselahin</translation>
+        <translation>ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="185"/>
         <source>Specify first segment</source>
-        <translation>Tukuyin ang unang segment.</translation>
+        <translation>ਪਹਿਲਾ ਸੈਗਮੈਂਟ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="186"/>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="190"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="189"/>
         <source>Specify second segment</source>
-        <translation>Tukuyin ang pangalawang segment.</translation>
+        <translation>ਦੂਜਾ ਸੈਗਮੈਂਟ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
 </context>
 <context>
@@ -16252,57 +16278,57 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="278"/>
         <source>RS_ActionPrintPreview::fit(): Invalid paper size</source>
-        <translation>Hindi wastong laki ng papel.</translation>
+        <translation>RS_ActionPrintPreview::fit(): ਗਲਤ ਪੇਪਰ ਸਾਈਜ਼</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="144"/>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
-        <translation>Ang offset ng printout sa mga coordinate ng papel ay (%1, %2).</translation>
+        <translation>ਪੇਪਰ ਕੋਆਰਡੀਨੇਟ ਵਿੱਚ ਪ੍ਰਿੰਟਆਊਟ ਆਫਸੈੱਟ (%1, %2) ਰਾਹੀਂ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="147"/>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
-        <translation>Ang offset ng printout sa mga coordinate ng graph ay (%1, %2).</translation>
+        <translation>ਗ੍ਰਾਫ ਕੋਆਰਡੀਨੇਟ ਵਿੱਚ ਪ੍ਰਿੰਟਆਊਟ ਆਫਸੈੱਟ (%1, %2) ਰਾਹੀਂ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="174"/>
         <source>Printout offset in graph coordinates</source>
-        <translation>Ang offset ng printout sa mga coordinate ng graph.</translation>
+        <translation>ਗ੍ਰਾਫ ਕੋਆਰਡੀਨੇਟ ਵਿੱਚ ਪ੍ਰਿੰਟਆਊਟ ਆਫਸੈੱਟ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="179"/>
         <source>Printout offset in paper coordinates</source>
-        <translation>Pagpi-print na offset sa mga coordinate ng papel</translation>
+        <translation>ਪੇਪਰ ਕੋਆਰਡੀਨੇਟ ਵਿੱਚ ਪ੍ਰਿੰਟਆਊਟ ਆਫਸੈੱਟ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="184"/>
         <source>: select printout offset coordinates</source>
-        <translation>: piliin ang mga coordinate ng pagpi-print na offset</translation>
+        <translation>: ਪ੍ਰਿੰਟਆਊਟ ਆਫਸੈੱਟ ਕੋਆਰਡੀਨੇਟ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="185"/>
         <source>type in offset from command line to offset printout</source>
-        <translation>i-type ang offset mula sa command line upang i-offset ang pagpi-print</translation>
+        <translation>ਪ੍ਰਿੰਟਆਊਟ ਆਫਸੈੱਟ ਕਰਨ ਲਈ ਕਮਾਂਡ ਲਾਈਨ ਤੋਂ ਆਫਸੈੱਟ ਟਾਈਪ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="193"/>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>Ang pagpi-print na offset ay hindi isinasaalang-alang ang kamag-anak na zero. Hindi isinasaalang-alang ang &apos;@&apos;</translation>
+        <translation>ਪ੍ਰਿੰਟਆਊਟ ਆਫਸੈੱਟ ਅਨੁਸਾਰੀ ਜ਼ੀਰੋ ਨੂੰ ਨਜ਼ਰਅੰਦਾਜ਼ ਕਰਦਾ ਹੈ। &apos;@&apos; ਨਜ਼ਰਅੰਦਾਜ਼ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="164"/>
         <source>Printout in Black/White</source>
-        <translation>Pagpi-print sa Itim/Puti</translation>
+        <translation>ਪ੍ਰਿੰਟਆਊਟ ਕਾਲੇ/ਚਿੱਟੇ ਵਿੱਚ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="169"/>
         <source>Printout in color</source>
-        <translation>Pagpi-print sa kulay</translation>
+        <translation>ਪ੍ਰਿੰਟਆਊਟ ਰੰਗ ਵਿੱਚ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="365"/>
         <source>RS_ActionPrintPreview::calcPagesNum(): Limit of pages has been exceeded.</source>
-        <translation>RS_ActionPrintPreview::calcPagesNum(): Nalampasan na ang limitasyon ng mga pahina.</translation>
+        <translation>RS_ActionPrintPreview::calcPagesNum(): ਸਫ਼ਿਆਂ ਦੀ ਸੀਮਾ ਪਾਰ ਹੋ ਗਈ ਹੈ।</translation>
     </message>
 </context>
 <context>
@@ -16310,7 +16336,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="83"/>
         <source>Select to modify attributes</source>
-        <translation>Piliin upang baguhin ang mga katangian</translation>
+        <translation>ਐਟ੍ਰੀਬਿਊਟ ਬਦਲਣ ਲਈ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="83"/>
@@ -16331,57 +16357,57 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionselect.cpp" line="128"/>
         <location filename="../src/actions/rs_actionselect.cpp" line="131"/>
         <source>Cancel</source>
-        <translation>Kanselahin</translation>
+        <translation>ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="89"/>
         <source>Select to delete</source>
-        <translation>Piliin upang tanggalin</translation>
+        <translation>ਮਿਟਾਉਣ ਲਈ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="92"/>
         <source>Select to delete immediately</source>
-        <translation>Piliin upang agad na burahin</translation>
+        <translation>ਤੁਰੰਤ ਮਿਟਾਉਣ ਲਈ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="95"/>
         <source>Select to move</source>
-        <translation>Piliin upang ilipat</translation>
+        <translation>ਭੇਜਣ ਲਈ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="107"/>
         <source>Select to rotate</source>
-        <translation>Piliin upang paikutin</translation>
+        <translation>ਘੁਮਾਉਣ ਲਈ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="110"/>
         <source>Select to scale</source>
-        <translation>Piliin upang baguhin ang laki</translation>
+        <translation>ਸਕੇਲ ਕਰਨ ਲਈ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="113"/>
         <source>Select to mirror</source>
-        <translation>Piliin upang salaminin</translation>
+        <translation>ਮਿਰਰ ਕਰਨ ਲਈ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="116"/>
         <source>Select to move and rotate</source>
-        <translation>Piliin upang ilipat at paikutin</translation>
+        <translation>ਭੇਜਣ ਅਤੇ ਘੁਮਾਉਣ ਲਈ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="122"/>
         <source>Select for two axis rotation</source>
-        <translation>Piliin para sa pag-ikot sa dalawang axis</translation>
+        <translation>ਦੋ-ਧੁਰੀ ਘੁਮਾਉਣ ਲਈ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="125"/>
         <source>Select to explode text</source>
-        <translation>Piliin upang paghiwalayin ang teksto</translation>
+        <translation>ਟੈਕਸਟ ਫਟਾਉਣ ਲਈ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="131"/>
         <source>Select to create block</source>
-        <translation>Piliin upang lumikha ng bloke</translation>
+        <translation>ਬਲਾਕ ਬਣਾਉਣ ਲਈ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="135"/>
@@ -16392,37 +16418,37 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="98"/>
         <source>Select to copy</source>
-        <translation>Piliin upang kopyahin</translation>
+        <translation>ਕਾਪੀ ਕਰਨ ਲਈ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="101"/>
         <source>Select to cut</source>
-        <translation>Piliin upang putulin</translation>
+        <translation>ਕੱਟਣ ਲਈ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="75"/>
         <source>No entity selected!</source>
-        <translation>Walang napiling entity!</translation>
+        <translation>ਕੋਈ ਐਂਟੀਟੀ ਨਹੀਂ ਚੁਣੀ ਗਈ!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="119"/>
         <source>Select to create offset</source>
-        <translation>Piliin upang lumikha ng offset</translation>
+        <translation>ਆਫਸੈੱਟ ਬਣਾਉਣ ਲਈ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="86"/>
         <source>Select entities to order</source>
-        <translation>Piliin ang mga entity upang ayusin</translation>
+        <translation>ਆਰਡਰ ਲਈ ਐਂਟੀਟੀਆਂ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="128"/>
         <source>Select to explode block</source>
-        <translation>Piliin upang i-explode ang block</translation>
+        <translation>ਬਲਾਕ ਫਟਾਉਣ ਲਈ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="104"/>
         <source>Select to revert direction</source>
-        <translation>Piliin upang ibalik ang direksyon</translation>
+        <translation>ਦਿਸ਼ਾ ਉਲਟਾਉਣ ਲਈ ਚੁਣੋ</translation>
     </message>
 </context>
 <context>
@@ -16453,7 +16479,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselectintersected.cpp" line="143"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
 </context>
 <context>
@@ -16471,12 +16497,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselectwindow.cpp" line="184"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselectwindow.cpp" line="181"/>
         <source>Click and drag for the selection window</source>
-        <translation>I-click at i-drag para sa window ng pagpili</translation>
+        <translation>ਚੋਣ ਵਿੰਡੋ ਲਈ ਦਬਾਉ ਅਤੇ ਖਿੱਚੋ</translation>
     </message>
 </context>
 <context>
@@ -16494,7 +16520,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionsetrelativezero.cpp" line="50"/>
         <source>Set &amp;Relative Zero</source>
-        <translation>Itakda ang &amp;Relatibong Zero</translation>
+        <translation>&amp;ਰਿਲੇਟਿਵ ਜ਼ੀਰੋ ਸੈੱਟ ਕਰੋ</translation>
     </message>
 </context>
 <context>
@@ -16513,7 +16539,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="183"/>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="187"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="186"/>
@@ -16539,18 +16565,18 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="127"/>
         <source>Click and drag to pan zoom</source>
-        <translation>I-click at i-drag upang mag-pan at mag-zoom</translation>
+        <translation>ਜ਼ੂਮ ਪੈਨ ਕਰਨ ਲਈ ਦਬਾਉ ਅਤੇ ਖਿੱਚੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="128"/>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="132"/>
         <source>Cancel</source>
-        <translation>Kanselahin</translation>
+        <translation>ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="131"/>
         <source>Zoom panning</source>
-        <translation>Mag-zoom at mag-pan</translation>
+        <translation>ਜ਼ੂਮ ਪੈਨਿੰਗ</translation>
     </message>
 </context>
 <context>
@@ -16573,7 +16599,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionzoomwindow.cpp" line="154"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>ਪਿੱਛੇ</translation>
     </message>
 </context>
 <context>
@@ -16581,7 +16607,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/lib/gui/rs_graphicview.cpp" line="1550"/>
         <source>Draft</source>
-        <translation>Draft</translation>
+        <translation>ਡ੍ਰਾਫਟ</translation>
     </message>
 </context>
 <context>
@@ -16589,7 +16615,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/generic/textfileviewer.ui" line="14"/>
         <source>Frame</source>
-        <translation>Frame</translation>
+        <translation>ਫਰੇਮ</translation>
     </message>
 </context>
 <context>
@@ -16597,17 +16623,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_arcoptions.ui" line="26"/>
         <source>Arc Options</source>
-        <translation>Mga Opsyon ng Arc</translation>
+        <translation>ਆਰਕ ਆਪਸ਼ਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_arcoptions.ui" line="77"/>
         <source>Counterclockwise</source>
-        <translation>Counterclockwise</translation>
+        <translation>ਘੜੀ ਦੀ ਉਲਟ ਦਿਸ਼ਾ ਵਿੱਚ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_arcoptions.ui" line="122"/>
         <source>Clockwise</source>
-        <translation>Clockwise</translation>
+        <translation>ਘੜੀ ਦੀ ਦਿਸ਼ਾ ਵਿੱਚ</translation>
     </message>
 </context>
 <context>
@@ -16615,29 +16641,29 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="26"/>
         <source>Tangential Arc Options</source>
-        <translation>Mga Opsyon ng Tangential Arc</translation>
+        <translation>ਟੈਨਜੈਂਟੀਅਲ ਆਰਕ ਆਪਸ਼ਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="66"/>
         <source>Radius of the tangential arc</source>
-        <translation>Radius ng tangential arc</translation>
+        <translation>ਟੈਨਜੈਂਟੀਅਲ ਆਰਕ ਦਾ ਰੇਡੀਅਸ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="85"/>
         <source>Total subtending angle of the tangential arc</source>
-        <translation>Kabuuang anggulo ng tangential arc</translation>
+        <translation>ਟੈਨਜੈਂਟੀਅਲ ਆਰਕ ਦਾ ਕੁੱਲ ਸਬਟੈਂਡਿੰਗ ਕੋਣ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="98"/>
         <source>Radius</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation>Radius</translation>
+        <translation>ਰੇਡੀਅਸ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="120"/>
         <source>Angle</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation>Angulo</translation>
+        <translation>ਕੋਣ</translation>
     </message>
 </context>
 <context>
@@ -16645,12 +16671,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="32"/>
         <source>Bevel Options</source>
-        <translation>Mga Opsyon sa Bevel</translation>
+        <translation>ਬੈਵਲ ਆਪਸ਼ਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="53"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation>Lagyan ng tsek upang putulin ang parehong entidad sa bevel</translation>
+        <translation>ਦੋਵੇਂ ਐਂਟੀਟੀਆਂ ਨੂੰ ਬੈਵਲ ਤੱਕ ਟ੍ਰਿਮ ਕਰਨ ਲਈ ਨਿਸ਼ਾਨ ਲਗਾਓ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="56"/>
@@ -16660,12 +16686,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="79"/>
         <source>Length 1:</source>
-        <translation>Haba 1:</translation>
+        <translation>ਲੰਬਾਈ 1:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="92"/>
         <source>Length 2:</source>
-        <translation>Haba 2:</translation>
+        <translation>ਲੰਬਾਈ 2:</translation>
     </message>
 </context>
 <context>
@@ -16673,12 +16699,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_circleoptions.ui" line="32"/>
         <source>Circle Options</source>
-        <translation>Mga Opsyon sa Bilog</translation>
+        <translation>ਸਰਕਲ ਆਪਸ਼ਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_circleoptions.ui" line="50"/>
         <source>Radius:</source>
-        <translation>Radius:</translation>
+        <translation>ਰੇਡੀਅਸ:</translation>
     </message>
 </context>
 <context>
@@ -16686,22 +16712,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="32"/>
         <source>Circle Tangential2 Options</source>
-        <translation>Mga Opsyon sa Bilog na Tangential2</translation>
+        <translation>ਸਰਕਲ ਟੈਨਜੈਂਟੀਅਲ2 ਆਪਸ਼ਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="56"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius ng bilog na tangential na iguguhit&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ਖਿੱਚੇ ਜਾਣ ਵਾਲੇ ਟੈਨਜੈਂਟੀਅਲ ਸਰਕਲ ਦਾ ਰੇਡੀਅਸ&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="59"/>
         <source>Radius:</source>
-        <translation>Radius:</translation>
+        <translation>ਰੇਡੀਅਸ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="69"/>
         <source>Radius of tangential circle</source>
-        <translation>Tangential na bilog na radius</translation>
+        <translation>ਟੈਨਜੈਂਟੀਅਲ ਸਰਕਲ ਦਾ ਰੇਡੀਅਸ</translation>
     </message>
 </context>
 <context>
@@ -16709,12 +16735,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_dimlinearoptions.ui" line="32"/>
         <source>Linear Dimension Options</source>
-        <translation>Mga Opsyon sa Linear na Dimensyon</translation>
+        <translation>ਲੀਨੀਅਰ ਡਾਇਮੈਂਸ਼ਨ ਆਪਸ਼ਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimlinearoptions.ui" line="68"/>
         <source>Angle:</source>
-        <translation>Anggulo:</translation>
+        <translation>ਕੋਣ:</translation>
     </message>
 </context>
 <context>
@@ -16722,12 +16748,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_dimoptions.ui" line="32"/>
         <source>Dimension Options</source>
-        <translation>Mga Opsyon sa Dimensyon</translation>
+        <translation>ਡਾਇਮੈਂਸ਼ਨ ਆਪਸ਼ਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimoptions.ui" line="62"/>
         <source>Label:</source>
-        <translation>Label:</translation>
+        <translation>ਨਾਂ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimoptions.ui" line="109"/>
@@ -16771,27 +16797,27 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_imageoptions.ui" line="32"/>
         <source>Insert Options</source>
-        <translation>Mga Opsyon sa Pagpasok</translation>
+        <translation>ਸ਼ਾਮਲ ਆਪਸ਼ਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_imageoptions.ui" line="53"/>
         <source>Angle:</source>
-        <translation>Anggulo:</translation>
+        <translation>ਕੋਣ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_imageoptions.ui" line="63"/>
         <source>Rotation Angle</source>
-        <translation>Anggulo ng Pag-ikot</translation>
+        <translation>ਘੁੰਮਾਉ ਕੋਣ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_imageoptions.ui" line="70"/>
         <source>Factor:</source>
-        <translation>Salik:</translation>
+        <translation>ਫੈਕਟਰ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_imageoptions.ui" line="86"/>
         <source>Scale Factor</source>
-        <translation>Salik ng Pag-scale</translation>
+        <translation>ਸਕੇਲ ਫੈਕਟਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_imageoptions.ui" line="93"/>
@@ -16801,7 +16827,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_imageoptions.ui" line="100"/>
         <source>DPI of Image</source>
-        <translation>DPI ng Larawan</translation>
+        <translation>ਚਿੱਤਰ ਦਾ DPI</translation>
     </message>
 </context>
 <context>
@@ -16809,57 +16835,57 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="32"/>
         <source>Insert Options</source>
-        <translation>Mga Opsyon sa Pagpasok</translation>
+        <translation>ਸ਼ਾਮਲ ਆਪਸ਼ਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="65"/>
         <source>Angle:</source>
-        <translation>Anggulo:</translation>
+        <translation>ਕੋਣ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="87"/>
         <source>Rotation Angle</source>
-        <translation>Anggulo ng Pag-ikot</translation>
+        <translation>ਘੁੰਮਾਉ ਕੋਣ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="106"/>
         <source>Factor:</source>
-        <translation>Salik:</translation>
+        <translation>ਫੈਕਟਰ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="128"/>
         <source>Scale Factor</source>
-        <translation>Salik ng Pag-iiba</translation>
+        <translation>ਸਕੇਲ ਫੈਕਟਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="163"/>
         <source>Array:</source>
-        <translation>Array:</translation>
+        <translation>ਐਰੇ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="185"/>
         <source>Number of Columns</source>
-        <translation>Bilang ng mga Haligi</translation>
+        <translation>ਕਾਲਮਾਂ ਦੀ ਗਿਣਤੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="210"/>
         <source>Number of Rows</source>
-        <translation>Bilang ng mga Hanay</translation>
+        <translation>ਕਤਾਰਾਂ ਦੀ ਗਿਣਤੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="235"/>
         <source>Spacing:</source>
-        <translation>Pagitan:</translation>
+        <translation>ਸਪੇਸਿੰਗ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="257"/>
         <source>Column Spacing</source>
-        <translation>Pagitan ng mga Haligi</translation>
+        <translation>ਕਾਲਮ ਖਾਲੀ ਥਾਂ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="276"/>
         <source>Row Spacing</source>
-        <translation>Pagitan ng mga Row</translation>
+        <translation>ਕਤਾਰ ਖਾਲੀ ਥਾਂ</translation>
     </message>
 </context>
 <context>
@@ -16867,27 +16893,27 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_libraryinsertoptions.ui" line="32"/>
         <source>Library Insert Options</source>
-        <translation>Mga Opsyon sa Pagpasok ng Library</translation>
+        <translation>ਲਾਇਬ੍ਰੇਰੀ ਸ਼ਾਮਲ ਆਪਸ਼ਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_libraryinsertoptions.ui" line="53"/>
         <source>Angle:</source>
-        <translation>Anggulo:</translation>
+        <translation>ਕੋਣ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_libraryinsertoptions.ui" line="63"/>
         <source>Rotation Angle</source>
-        <translation>Anggulo ng Pag-ikot</translation>
+        <translation>ਘੁੰਮਾਉ ਕੋਣ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_libraryinsertoptions.ui" line="70"/>
         <source>Factor:</source>
-        <translation>Factor:</translation>
+        <translation>ਫੈਕਟਰ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_libraryinsertoptions.ui" line="80"/>
         <source>Scale Factor</source>
-        <translation>Factor ng Pag-scale</translation>
+        <translation>ਸਕੇਲ ਫੈਕਟਰ</translation>
     </message>
 </context>
 <context>
@@ -16895,42 +16921,42 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="32"/>
         <source>Line Angle Options</source>
-        <translation>Mga Opsyon sa Anggulo ng Linya</translation>
+        <translation>ਲਾਈਨ ਐਂਗਲ ਆਪਸ਼ਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="65"/>
         <source>Angle:</source>
-        <translation>Anggulo:</translation>
+        <translation>ਕੋਣ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="90"/>
         <source>Line angle</source>
-        <translation>Anggulo ng linya</translation>
+        <translation>ਲਾਈਨ ਕੋਣ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="109"/>
         <source>Length:</source>
-        <translation>Haba:</translation>
+        <translation>ਲੰਬਾਈ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="134"/>
         <source>Length of line</source>
-        <translation>Haba ng linya</translation>
+        <translation>ਲਾਈਨ ਦੀ ਲੰਬਾਈ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="147"/>
         <source>Snap Point:</source>
-        <translation>Snap Point:</translation>
+        <translation>ਸਨੈਪ ਬਿੰਦੂ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="170"/>
         <source>Start</source>
-        <translation>Simula</translation>
+        <translation>ਸ਼ੁਰੂ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="175"/>
         <source>Middle</source>
-        <translation>Gitna</translation>
+        <translation>ਮੱਧ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="180"/>
@@ -16943,27 +16969,27 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_linebisectoroptions.ui" line="32"/>
         <source>Line Bisector Options</source>
-        <translation>Mga Opsyon sa Line Bisector</translation>
+        <translation>ਲਾਈਨ ਬਾਈਸੈਕਟਰ ਆਪਸ਼ਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linebisectoroptions.ui" line="56"/>
         <source>Length:</source>
-        <translation>Haba:</translation>
+        <translation>ਲੰਬਾਈ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linebisectoroptions.ui" line="66"/>
         <source>Length of bisector</source>
-        <translation>Haba ng bisector</translation>
+        <translation>ਬਾਈਸੈਕਟਰ ਦੀ ਲੰਬਾਈ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linebisectoroptions.ui" line="73"/>
         <source>Number:</source>
-        <translation>Bilang:</translation>
+        <translation>ਨੰਬਰ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linebisectoroptions.ui" line="83"/>
         <source>Number of bisectors to create</source>
-        <translation>Bilang ng mga bisector na gagawin</translation>
+        <translation>ਬਣਾਏ ਜਾਣ ਵਾਲੇ ਬਾਈਸੈਕਟਰਾਂ ਦੀ ਗਿਣਤੀ</translation>
     </message>
 </context>
 <context>
@@ -16971,22 +16997,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="32"/>
         <source>Line Options</source>
-        <translation>Mga Opsyon sa Linya</translation>
+        <translation>ਲਾਈਨ ਆਪਸ਼ਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="53"/>
         <source>Form a closed contour from lines drawn</source>
-        <translation>Bumuo ng isang saradong hugis mula sa mga iginuhit na linya</translation>
+        <translation>ਖਿੱਚੀਆਂ ਲਾਈਨਾਂ ਤੋਂ ਬੰਦ ਕੰਟੂਰ ਬਣਾਓ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="56"/>
         <source>Close</source>
-        <translation>Isara</translation>
+        <translation>ਬੰਦ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="72"/>
         <source>Undo the last line drawing</source>
-        <translation>I-undo ang huling pagguhit ng linya</translation>
+        <translation>ਆਖਰੀ ਲਾਈਨ ਖਿੱਚਣ ਨੂੰ ਅਣਡੰਨਾ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="75"/>
@@ -16996,7 +17022,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="82"/>
         <source>Redo the last line drawing</source>
-        <translation>I-redo ang huling pagguhit ng linya</translation>
+        <translation>ਆਖਰੀ ਲਾਈਨ ਖਿੱਚਣ ਨੂੰ ਮੁੜ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="85"/>
@@ -17009,17 +17035,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="32"/>
         <source>Line Options</source>
-        <translation>Mga Opsyon sa Linya</translation>
+        <translation>ਲਾਈਨ ਆਪਸ਼ਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="56"/>
         <source>Direction:</source>
-        <translation>Direksyon:</translation>
+        <translation>ਦਿਸ਼ਾ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="103"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>ਪੌਲੀਲਾਈਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="122"/>
@@ -17029,7 +17055,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="141"/>
         <source>Angle</source>
-        <translation>Anggulo</translation>
+        <translation>ਕੋਣ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="160"/>
@@ -17044,7 +17070,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="224"/>
         <source>Undo the last line drawing</source>
-        <translation>I-undo ang huling pagguhit ng linya</translation>
+        <translation>ਆਖਰੀ ਲਾਈਨ ਖਿੱਚਣ ਨੂੰ ਅਣਡੰਨਾ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="227"/>
@@ -17054,17 +17080,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="234"/>
         <source>Form a closed contour from lines drawn</source>
-        <translation>Bumuo ng isang saradong hugis mula sa mga iginuhit na linya</translation>
+        <translation>ਖਿੱਚੀਆਂ ਲਾਈਨਾਂ ਤੋਂ ਬੰਦ ਕੰਟੂਰ ਬਣਾਓ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="237"/>
         <source>Close</source>
-        <translation>Isara</translation>
+        <translation>ਬੰਦ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="253"/>
         <source>Redo the last line drawing</source>
-        <translation>I-redo ang huling pagguhit ng linya</translation>
+        <translation>ਆਖਰੀ ਲਾਈਨ ਖਿੱਚਣ ਨੂੰ ਮੁੜ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="256"/>
@@ -17074,7 +17100,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="297"/>
         <source>Point</source>
-        <translation>Tuldok</translation>
+        <translation>ਬਿੰਦੂ</translation>
     </message>
 </context>
 <context>
@@ -17082,27 +17108,27 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineparalleloptions.ui" line="32"/>
         <source>Line Parallel Options</source>
-        <translation>Mga Opsyon para sa Linya na Magkaparalelo</translation>
+        <translation>ਲਾਈਨ ਪੈਰਲਲ ਆਪਸ਼ਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineparalleloptions.ui" line="56"/>
         <source>Distance:</source>
-        <translation>Distansya:</translation>
+        <translation>ਦੂਰੀ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineparalleloptions.ui" line="72"/>
         <source>Distance to original entity</source>
-        <translation>Distansya sa orihinal na entidad</translation>
+        <translation>ਅਸਲੀ ਐਂਟੀਟੀ ਤੋਂ ਦੂਰੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineparalleloptions.ui" line="85"/>
         <source>Number:</source>
-        <translation>Bilang:</translation>
+        <translation>ਨੰਬਰ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineparalleloptions.ui" line="95"/>
         <source>Number of parallels to create</source>
-        <translation>Bilang ng mga linyang magkaparalelo na gagawin</translation>
+        <translation>ਬਣਾਏ ਜਾਣ ਵਾਲੇ ਪੈਰਲਲਾਂ ਦੀ ਗਿਣਤੀ</translation>
     </message>
 </context>
 <context>
@@ -17110,17 +17136,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineparallelthroughoptions.ui" line="32"/>
         <source>Line Parallel Through Options</source>
-        <translation>Mga Opsyon para sa Linya na Magkaparalelo at Dumadaan</translation>
+        <translation>ਲਾਈਨ ਪੈਰਲਲ ਬਿੰਦੂ ਰਾਹੀਂ ਆਪਸ਼ਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineparallelthroughoptions.ui" line="56"/>
         <source>Number:</source>
-        <translation>Bilang:</translation>
+        <translation>ਨੰਬਰ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineparallelthroughoptions.ui" line="66"/>
         <source>Number of parallels to create</source>
-        <translation>Bilang ng mga linyang magkaparalelo na gagawin</translation>
+        <translation>ਬਣਾਏ ਜਾਣ ਵਾਲੇ ਪੈਰਲਲਾਂ ਦੀ ਗਿਣਤੀ</translation>
     </message>
 </context>
 <context>
@@ -17128,17 +17154,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_linepolygon2options.ui" line="32"/>
         <source>Polygon Options</source>
-        <translation>Mga Opsyon para sa Polygon</translation>
+        <translation>ਬਹੁਭੁਜ ਆਪਸ਼ਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linepolygon2options.ui" line="56"/>
         <source>Number:</source>
-        <translation>Bilang:</translation>
+        <translation>ਨੰਬਰ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linepolygon2options.ui" line="66"/>
         <source>Number of edges</source>
-        <translation>Bilang ng mga gilid</translation>
+        <translation>ਕਿਨਾਰਿਆਂ ਦੀ ਗਿਣਤੀ</translation>
     </message>
 </context>
 <context>
@@ -17146,17 +17172,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_linepolygonoptions.ui" line="32"/>
         <source>Polygon Options</source>
-        <translation>Mga Opsyon sa Polygon</translation>
+        <translation>ਬਹੁਭੁਜ ਆਪਸ਼ਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linepolygonoptions.ui" line="56"/>
         <source>Number:</source>
-        <translation>Bilang:</translation>
+        <translation>ਨੰਬਰ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linepolygonoptions.ui" line="66"/>
         <source>Number of edges</source>
-        <translation>Bilang ng mga gilid</translation>
+        <translation>ਕਿਨਾਰਿਆਂ ਦੀ ਗਿਣਤੀ</translation>
     </message>
 </context>
 <context>
@@ -17164,27 +17190,27 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_linerelangleoptions.ui" line="32"/>
         <source>Line Relative Angle Options</source>
-        <translation>Mga Opsyon sa Relatibong Anggulo ng Linya</translation>
+        <translation>ਲਾਈਨ ਰਿਲੇਟਿਵ ਐਂਗਲ ਆਪਸ਼ਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linerelangleoptions.ui" line="56"/>
         <source>Angle:</source>
-        <translation>Anggulo:</translation>
+        <translation>ਕੋਣ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linerelangleoptions.ui" line="72"/>
         <source>Line angle</source>
-        <translation>Anggulo ng linya</translation>
+        <translation>ਲਾਈਨ ਕੋਣ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linerelangleoptions.ui" line="85"/>
         <source>Length:</source>
-        <translation>Haba:</translation>
+        <translation>ਲੰਬਾਈ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linerelangleoptions.ui" line="101"/>
         <source>Length of line</source>
-        <translation>Haba ng linya</translation>
+        <translation>ਲਾਈਨ ਦੀ ਲੰਬਾਈ</translation>
     </message>
 </context>
 <context>
@@ -17192,17 +17218,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_mtextoptions.ui" line="32"/>
         <source>Text Options</source>
-        <translation>Mga Opsyon sa Teksto</translation>
+        <translation>ਟੈਕਸਟ ਆਪਸ਼ਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_mtextoptions.ui" line="53"/>
         <source>Text:</source>
-        <translation>Teksto:</translation>
+        <translation>ਪਾਠ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_mtextoptions.ui" line="91"/>
         <source>Angle:</source>
-        <translation>Anggulo:</translation>
+        <translation>ਕੋਣ:</translation>
     </message>
 </context>
 <context>
@@ -17210,17 +17236,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_modifyoffsetoptions.ui" line="32"/>
         <source>Modify Offset Options</source>
-        <translation>Mga Opsyon sa Pagbabago ng Offset</translation>
+        <translation>ਸੋਧ ਆਫਸੈੱਟ ਆਪਸ਼ਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_modifyoffsetoptions.ui" line="56"/>
         <source>Distance:</source>
-        <translation>Distansya:</translation>
+        <translation>ਦੂਰੀ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_modifyoffsetoptions.ui" line="72"/>
         <source>Offset from original entity</source>
-        <translation>Offset mula sa orihinal na entidad</translation>
+        <translation>ਅਸਲੀ ਐਂਟੀਟੀ ਤੋਂ ਆਫਸੈੱਟ</translation>
     </message>
 </context>
 <context>
@@ -17228,12 +17254,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_moverotateoptions.ui" line="32"/>
         <source>Move Rotate Options</source>
-        <translation>Mga Opsyon sa Paglipat at Pag-ikot</translation>
+        <translation>ਭੇਜੋ ਅਤੇ ਘੁਮਾਓ ਆਪਸ਼ਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_moverotateoptions.ui" line="50"/>
         <source>Angle:</source>
-        <translation>Anggulo:</translation>
+        <translation>ਕੋਣ:</translation>
     </message>
 </context>
 <context>
@@ -17241,12 +17267,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="32"/>
         <source>Polyline Options</source>
-        <translation>Mga Opsyon sa Polyline</translation>
+        <translation>ਪੌਲੀਲਾਈਨ ਆਪਸ਼ਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="53"/>
         <source>Close</source>
-        <translation>Isara</translation>
+        <translation>ਬੰਦ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="60"/>
@@ -17261,37 +17287,37 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="85"/>
         <source>Tangential</source>
-        <translation>Tangential</translation>
+        <translation>ਟੈਨਜੈਂਟੀਅਲ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="90"/>
         <source>Tan Radius</source>
-        <translation>Radius ng Tangent</translation>
+        <translation>ਟੈਨ ਰੇਡੀਅਸ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="95"/>
         <source>Angle</source>
-        <translation>Anggulo</translation>
+        <translation>ਕੋਣ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="103"/>
         <source>Radius:</source>
-        <translation>Radius:</translation>
+        <translation>ਰੇਡੀਅਸ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="126"/>
         <source>Angle:</source>
-        <translation>Anggulo:</translation>
+        <translation>ਕੋਣ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="181"/>
         <source>Counter Clockwise</source>
-        <translation>Counter Clockwise</translation>
+        <translation>ਘੜੀ ਦੀ ਉਲਟ ਦਿਸ਼ਾ ਵਿੱਚ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="204"/>
         <source>Clockwise</source>
-        <translation>Clockwise</translation>
+        <translation>ਘੜੀ ਦੀ ਦਿਸ਼ਾ ਵਿੱਚ</translation>
     </message>
 </context>
 <context>
@@ -17299,47 +17325,47 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="20"/>
         <source>Print Preview Options</source>
-        <translation>Mga Opsyon sa Pag-preview ng Pag-print</translation>
+        <translation>ਪ੍ਰਿੰਟ ਪ੍ਰੀਵਿਊ ਆਪਸ਼ਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="87"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Ang sukat ng pag-print ay nakatakda sa kasalukuyang halaga</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ਪ੍ਰਿੰਟ ਸਕੇਲ ਮੌਜੂਦਾ ਮੁੱਲ ਉੱਤੇ ਲਾਕ ਹੈ&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="90"/>
         <source>fixed</source>
-        <translation>nakatakda</translation>
+        <translation>ਫਿਕਸਡ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="145"/>
         <source>Toggle Black / White mode</source>
-        <translation>Palitan ang itim/puting mode</translation>
+        <translation>ਕਾਲਾ / ਚਿੱਟਾ ਮੋਡ ਬਦਲੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="174"/>
         <source>Center to page</source>
-        <translation>I-sentro sa pahina</translation>
+        <translation>ਸਫ਼ੇ ਦੇ ਕੇਂਦਰ ਵਿੱਚ ਰੱਖੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="200"/>
         <source>Fit to page</source>
-        <translation>Iangkop sa pahina</translation>
+        <translation>ਸਫ਼ੇ ਵਿੱਚ ਫਿੱਟ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="116"/>
         <source>Apply Print Scale to line width</source>
-        <translation>Ilapat ang sukat ng pag-print sa lapad ng linya</translation>
+        <translation>ਲਾਈਨ ਚੌੜਾਈ ਉੱਤੇ ਪ੍ਰਿੰਟ ਸਕੇਲ ਲਾਗੂ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="226"/>
         <source>Calculate number of pages needed to contain the drawing</source>
-        <translation>Kalkulahin ang bilang ng mga pahina na kinakailangan upang maglaman ang guhit</translation>
+        <translation>ਡ੍ਰਾਇੰਗ ਨੂੰ ਸਮਾਉਣ ਲਈ ਲੋੜੀਂਦੇ ਸਫ਼ਿਆਂ ਦੀ ਗਿਣਤੀ ਦੀ ਗਣਨਾ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="56"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;printed size : drawing size&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;nakalimbag na sukat: sukat ng guhit&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ਛਾਪਿਆ ਗਿਆ ਸਾਈਜ਼ : ਡ੍ਰਾਇੰਗ ਸਾਈਜ਼&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -17347,12 +17373,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="32"/>
         <source>Round Options</source>
-        <translation>Mga Opsyon sa Pag-ikot</translation>
+        <translation>ਗੋਲ ਆਪਸ਼ਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="53"/>
         <source>Check to trim both edges to the rounding</source>
-        <translation>Lagyan ng tsek upang putulin ang parehong gilid sa pag-ikot</translation>
+        <translation>ਦੋਵੇਂ ਕਿਨਾਰਿਆਂ ਨੂੰ ਗੋਲਾਈ ਤੱਕ ਟ੍ਰਿਮ ਕਰਨ ਲਈ ਨਿਸ਼ਾਨ ਲਗਾਓ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="56"/>
@@ -17362,7 +17388,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="79"/>
         <source>Radius:</source>
-        <translation>Radius:</translation>
+        <translation>ਰੇਡੀਅਸ:</translation>
     </message>
 </context>
 <context>
@@ -17370,12 +17396,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_snapdistoptions.ui" line="32"/>
         <source>Snap Distance Options</source>
-        <translation>Mga Opsyon sa Distansya ng Pag-snap</translation>
+        <translation>ਸਨੈਪ ਦੂਰੀ ਆਪਸ਼ਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapdistoptions.ui" line="50"/>
         <source>Distance:</source>
-        <translation>Distansya:</translation>
+        <translation>ਦੂਰੀ:</translation>
     </message>
 </context>
 <context>
@@ -17383,17 +17409,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="35"/>
         <source>Snap Distance Options</source>
-        <translation>Mga Opsyon sa Distansya ng Pag-snap</translation>
+        <translation>ਸਨੈਪ ਦੂਰੀ ਆਪਸ਼ਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="47"/>
         <source>Middle Points:</source>
-        <translation>Mga Gitnang Punto:</translation>
+        <translation>ਮੱਧ ਬਿੰਦੂ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="63"/>
         <source>Number of equidistant division points</source>
-        <translation>Bilang ng mga puntong pantay-pantay ang pagitan</translation>
+        <translation>ਬਰਾਬਰ ਦੂਰੀ ਵਾਲੇ ਵੰਡ ਬਿੰਦੂਆਂ ਦੀ ਗਿਣਤੀ</translation>
     </message>
 </context>
 <context>
@@ -17401,17 +17427,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="32"/>
         <source>Spline Options</source>
-        <translation>Mga Opsyon sa Spline</translation>
+        <translation>ਸਪਲਾਈਨ ਆਪਸ਼ਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="56"/>
         <source>Degree:</source>
-        <translation>Degree:</translation>
+        <translation>ਡਿਗਰੀ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="91"/>
         <source>Closed</source>
-        <translation>Nakasara</translation>
+        <translation>ਬੰਦ ਕੀਤਾ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="104"/>
@@ -17424,17 +17450,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_textoptions.ui" line="32"/>
         <source>Text Options</source>
-        <translation>Mga Opsyon sa Teksto</translation>
+        <translation>ਟੈਕਸਟ ਆਪਸ਼ਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_textoptions.ui" line="53"/>
         <source>Text:</source>
-        <translation>Teksto:</translation>
+        <translation>ਪਾਠ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_textoptions.ui" line="91"/>
         <source>Angle:</source>
-        <translation>Anggulo:</translation>
+        <translation>ਕੋਣ:</translation>
     </message>
 </context>
 <context>
@@ -17442,27 +17468,27 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="20"/>
         <source>Trim Amount Options</source>
-        <translation>Mga Opsyon sa Dami ng Pagputol</translation>
+        <translation>ਟ੍ਰਿਮ ਮਾਤਰਾ ਆਪਸ਼ਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="23"/>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation>Distansya. Ang mga negatibong halaga ay para sa pagputol, at ang mga positibong halaga ay para sa pagpapahaba.</translation>
+        <translation>ਦੂਰੀ। ਟ੍ਰਿਮ ਕਰਨ ਲਈ ਨੈਗੇਟਿਵ ਮੁੱਲ, ਐਕਸਟੈਂਡ ਕਰਨ ਲਈ ਪੌਜ਼ੀਟਿਵ ਮੁੱਲ।</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="56"/>
         <source>Length:</source>
-        <translation>Haba:</translation>
+        <translation>ਲੰਬਾਈ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="78"/>
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation>Distansya. Ang mga negatibong halaga ay para sa pagputol, at ang mga positibong halaga ay para sa pagpapahaba. Ang negatibong tanda ay hindi isinasaalang-alang kapag pinuputol sa huling kabuuang haba.</translation>
+        <translation>ਦੂਰੀ। ਟ੍ਰਿਮ ਕਰਨ ਲਈ ਨੈਗੇਟਿਵ ਮੁੱਲ, ਐਕਸਟੈਂਡ ਕਰਨ ਲਈ ਪੌਜ਼ੀਟਿਵ ਮੁੱਲ। ਜਦੋਂ ਅੰਤਿਮ ਕੁੱਲ ਲੰਬਾਈ ਤੱਕ ਟ੍ਰਿਮ ਕੀਤਾ ਜਾਂਦਾ ਹੈ ਤਾਂ ਨੈਗੇਟਿਵ ਚਿੰਨ੍ਹ ਨੂੰ ਅਣਡਿੱਠਾ ਕੀਤਾ ਜਾਂਦਾ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="97"/>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation>Ang ipinasok na haba ay ginagamit bilang kabuuang haba pagkatapos ng pagputol, sa halip na pagtaas ng haba.</translation>
+        <translation>ਦਾਖਲ ਕੀਤੀ ਲੰਬਾਈ, ਲੰਬਾਈ ਵਧਾਉਣ ਦੀ ਬਜਾਏ, ਟ੍ਰਿਮ ਕਰਨ ਤੋਂ ਬਾਅਦ ਦੀ ਕੁੱਲ ਲੰਬਾਈ ਵਜੋਂ ਵਰਤੀ ਜਾਂਦੀ ਹੈ</translation>
     </message>
 </context>
 <context>
@@ -17528,7 +17554,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>radius</source>
-        <translation type="vanished">radius</translation>
+        <translation type="vanished">ਰੇਡੀਅਸ</translation>
     </message>
     <message>
         <source>Closed</source>
