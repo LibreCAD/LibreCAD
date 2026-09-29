@@ -693,7 +693,8 @@ protected:
   //    frame of the walk was read on its own merits, so the enclosing section
   //    may continue.
   //  - Structural: anything else (unreadable frame, handle identity mismatch,
-  //    broken chain, unclearable compound state, ...).  The section fails.
+  //    broken chain, unclearable compound state, a group that names itself
+  //    among the frames it declares, ...).  The section fails.
   // The value is Structural until the walk reaches its normal exit, so every
   // early return reports the conservative answer.
   //
@@ -1091,6 +1092,15 @@ protected:
   //! the record cannot be kept, a group that declares the child fails as a
   //! plain (structural) rejection instead of a contained one.
   void noteDisownedChild(std::uint32_t handle) noexcept;
+  //! A group that is being rejected claims a frame it declared, so no other
+  //! group can have it (the same record as noteDisownedChild). A group never
+  //! claims itself: one that names itself among its frames is malformed by
+  //! itself, not in conflict with another group. A walk decides whether a
+  //! failed read is contained by asking isDisownedChild about the handle of
+  //! the entity it just read, so recording the group's own handle would make
+  //! its plain (structural) rejection look like that of a child rejected on
+  //! its own.
+  void claimDeclaredChild(std::uint32_t child, std::uint32_t group) noexcept;
   [[nodiscard]] bool isDisownedChild(std::uint32_t handle) const noexcept;
   //! A child was rejected because the owner it names does not declare it. The
   //! owner is left alone; the child is recorded as disowned and every pending

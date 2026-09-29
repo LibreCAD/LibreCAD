@@ -27951,3 +27951,379 @@ TEST_CASE("DWG legacy walk continues past a rejected group whose children are "
     CHECK(run->sweepInterface.polylineCount == 0u);
     CHECK(reader.ObjectMap.empty());
 }
+
+namespace {
+
+// The ways a compound group can name ITSELF among the frames it declares. A
+// group that does is malformed by itself: it is not in conflict with any other
+// group, so the rejection is structural and never the contained rejection the
+// walks reserve for a child that names a foreign owner, a child no group
+// declares, or two groups that declare one child.
+enum class SelfReference {
+    PolylineVertex, // a mapped POLYLINE that lists itself as a VERTEX
+    PolylineSeqEnd, // ... as its SEQEND
+    InsertAttrib,   // a mapped INSERT that lists itself as an ATTRIB
+    InsertSeqEnd,   // ... as its SEQEND
+    LegacyInsertFirst,     // a legacy INSERT whose first ATTRIB is itself
+    LegacyInsertLast,      // ... whose last ATTRIB is itself
+    LegacyInsertSeqEnd,    // ... whose SEQEND is itself
+    LegacyPolylineFirst,   // a legacy POLYLINE whose first VERTEX is itself
+    LegacyPolylineLast,    // ... whose last VERTEX is itself
+    LegacyPolylineSeqEnd,  // ... whose SEQEND is itself
+};
+
+const char* selfReferenceName(SelfReference kind) {
+    switch (kind) {
+    case SelfReference::PolylineVertex: return "POLYLINE lists itself as a VERTEX";
+    case SelfReference::PolylineSeqEnd: return "POLYLINE lists itself as its SEQEND";
+    case SelfReference::InsertAttrib: return "INSERT lists itself as an ATTRIB";
+    case SelfReference::InsertSeqEnd: return "INSERT lists itself as its SEQEND";
+    case SelfReference::LegacyInsertFirst: return "legacy INSERT: first ATTRIB is itself";
+    case SelfReference::LegacyInsertLast: return "legacy INSERT: last ATTRIB is itself";
+    case SelfReference::LegacyInsertSeqEnd: return "legacy INSERT: SEQEND is itself";
+    case SelfReference::LegacyPolylineFirst: return "legacy POLYLINE: first VERTEX is itself";
+    case SelfReference::LegacyPolylineLast: return "legacy POLYLINE: last VERTEX is itself";
+    case SelfReference::LegacyPolylineSeqEnd: return "legacy POLYLINE: SEQEND is itself";
+    }
+    return "";
+}
+
+struct SelfReferencingGroup {
+    std::vector<FramePair> frames;
+    // The handles of the group's frames, parent first, in the order a block
+    // lists them.
+    std::vector<std::uint32_t> handles;
+};
+
+bool isPolylineSelfReference(SelfReference kind) {
+    return kind == SelfReference::PolylineVertex
+        || kind == SelfReference::PolylineSeqEnd;
+}
+
+// The group at `parent`, `parent` + 1 and `parent` + 2 (a legacy group has a
+// fourth frame at `parent` + 3: its chain runs through consecutive handles).
+// Everything but the self reference is well formed: each child names the group
+// as its owner, so the group's only fault is naming itself. `version` is for
+// the mapped POLYLINEs; the INSERT frames of the helpers are AC1018 ones.
+SelfReferencingGroup makeSelfReferencingGroup(
+    SelfReference kind, std::uint32_t parent, std::uint32_t owner,
+    DRW::Version version = DRW::AC1018) {
+    const std::uint32_t first = parent + 1u;
+    const std::uint32_t last = parent + 2u;
+    const std::uint32_t seqEnd = parent + 3u;
+    SelfReferencingGroup group;
+    switch (kind) {
+    case SelfReference::PolylineVertex:
+        group.frames = {
+            {parent, makeMappedPolylineParentFrame(version, parent, owner,
+                                                   {first, parent}, last)},
+            {first, makeMappedVertexFrame(version, first, parent)},
+            {last, makeMappedSeqEndFrame(version, last, parent)}};
+        group.handles = {parent, first, last};
+        break;
+    case SelfReference::PolylineSeqEnd:
+        group.frames = {
+            {parent, makeMappedPolylineParentFrame(version, parent, owner,
+                                                   {first}, parent)},
+            {first, makeMappedVertexFrame(version, first, parent)}};
+        group.handles = {parent, first};
+        break;
+    case SelfReference::InsertAttrib:
+        group.frames = {
+            {parent, makeInsertWithAttributesFrame(parent, owner,
+                                                   {first, parent}, last)},
+            {first, makeAttribFrame(first, parent)},
+            {last, makeSeqEndFrame(last, parent)}};
+        group.handles = {parent, first, last};
+        break;
+    case SelfReference::InsertSeqEnd:
+        group.frames = {
+            {parent, makeInsertWithAttributesFrame(parent, owner, {first},
+                                                   parent)},
+            {first, makeAttribFrame(first, parent)}};
+        group.handles = {parent, first};
+        break;
+    case SelfReference::LegacyInsertFirst:
+    case SelfReference::LegacyInsertLast:
+    case SelfReference::LegacyInsertSeqEnd:
+        group.frames = {
+            {parent, makeLegacyInsertParentFrame(
+                         parent,
+                         kind == SelfReference::LegacyInsertFirst ? parent
+                                                                  : first,
+                         kind == SelfReference::LegacyInsertLast ? parent
+                                                                 : last,
+                         kind == SelfReference::LegacyInsertSeqEnd ? parent
+                                                                   : seqEnd)},
+            {first, makeLegacyAttribFrame(first, parent)},
+            {last, makeLegacyAttribFrame(last, parent)},
+            {seqEnd, makeSeqEndFrame(seqEnd, parent)}};
+        group.handles = {parent, first, last, seqEnd};
+        break;
+    case SelfReference::LegacyPolylineFirst:
+    case SelfReference::LegacyPolylineLast:
+    case SelfReference::LegacyPolylineSeqEnd:
+        group.frames = {
+            {parent, makeLegacyPolylineParentFrame(
+                         parent,
+                         kind == SelfReference::LegacyPolylineFirst ? parent
+                                                                    : first,
+                         kind == SelfReference::LegacyPolylineLast ? parent
+                                                                   : last,
+                         kind == SelfReference::LegacyPolylineSeqEnd
+                             ? parent
+                             : seqEnd)},
+            {first, makeLegacyVertexFrame(first, parent, last)},
+            {last, makeLegacyVertexFrame(last, parent, 0)},
+            {seqEnd, makeSeqEndFrame(seqEnd, parent)}};
+        group.handles = {parent, first, last, seqEnd};
+        break;
+    }
+    for (const FramePair& frame : group.frames)
+        REQUIRE(!frame.second.empty());
+    return group;
+}
+
+bool isLegacySelfReference(SelfReference kind) {
+    return kind >= SelfReference::LegacyInsertFirst;
+}
+
+// No compound state may outlive the read of a rejected group.
+void checkNoStagedCompoundState(const DwgEntityReaderProbe& reader) {
+    CHECK(reader.stagedPendingInsertCountForTest() == 0u);
+    CHECK(reader.stagedOrphanAttribCountForTest() == 0u);
+    CHECK(reader.stagedPendingPolylineCountForTest() == 0u);
+    CHECK(reader.stagedOrphanPolylineVertexCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+}
+
+} // namespace
+
+// The containment of a group's rejection is decided from the handle of the
+// entity being read: a child that names a group that does not declare it is
+// recorded as disowned, and a walk that finds the entity it just read among the
+// disowned children takes its failure for that child's own. A rejected group
+// claims the frames it declared so that no other group can have them, but it
+// must never claim itself: a group that names itself would then be taken for a
+// child rejected on its own, and a malformed group would fail as a contained
+// conflict, letting a whole BLOCKS section through instead of failing it.
+TEST_CASE("DWG walk fails structurally for a group that names itself",
+          "[dwg][safety][compound][self-reference]") {
+    constexpr std::uint32_t recordHandle = 0xD00;
+    constexpr std::uint32_t lineBefore = 0xD01;
+    constexpr std::uint32_t groupHandle = 0xD10;
+    constexpr std::uint32_t lineAfter = 0xD20;
+    const SelfReference kind = GENERATE(
+        SelfReference::PolylineVertex, SelfReference::PolylineSeqEnd,
+        SelfReference::InsertAttrib, SelfReference::InsertSeqEnd,
+        SelfReference::LegacyInsertFirst, SelfReference::LegacyInsertLast,
+        SelfReference::LegacyInsertSeqEnd, SelfReference::LegacyPolylineFirst,
+        SelfReference::LegacyPolylineLast,
+        SelfReference::LegacyPolylineSeqEnd);
+    const DRW::Version generated = GENERATE(
+        DRW::AC1018, DRW::AC1021, DRW::AC1024, DRW::AC1027);
+    const DRW::Version version =
+        isPolylineSelfReference(kind) ? generated : DRW::AC1018;
+    INFO(selfReferenceName(kind) << ", version " << static_cast<int>(version));
+    const bool legacy = isLegacySelfReference(kind);
+    const SelfReferencingGroup group =
+        makeSelfReferencingGroup(kind, groupHandle, recordHandle, version);
+
+    std::vector<FramePair> frames = group.frames;
+    std::unique_ptr<MappedWalkRun> run;
+    if (legacy) {
+        // The chain of a legacy block runs through consecutive handles: the
+        // group, then a LINE.
+        const std::uint32_t line = groupHandle + 4u;
+        frames.push_back({line, makeLegacyLineFrame(line)});
+        run = runLegacyWalk(frames, groupHandle, line);
+    } else {
+        frames.push_back({lineBefore, makeLineFrame(lineBefore, recordHandle)});
+        frames.push_back({lineAfter, makeLineFrame(lineAfter, recordHandle)});
+        std::vector<std::uint32_t> walk = {lineBefore};
+        walk.insert(walk.end(), group.handles.cbegin(), group.handles.cend());
+        walk.push_back(lineAfter);
+        run = runMappedWalk(version, recordHandle, frames, walk);
+    }
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK_FALSE(run->walked);
+    CHECK(run->outcome == DwgEntityReaderProbe::DwgBlockWalkOutcome::Structural);
+    // The group did not claim itself.
+    CHECK(reader.m_disownedChildHandles.count(groupHandle) == 0u);
+    CHECK(reader.m_entityParseFailures >= 1u);
+    CHECK(run->interface.polylineCount == 0u);
+    CHECK(run->interface.inserts.empty());
+    checkGroupNeverPublished(reader.m_dwgSourceFrameLedger, group.handles);
+    if (legacy) {
+        checkPublishedOnce(reader.m_dwgSourceFrameLedger, {groupHandle + 4u});
+    } else if (isPolylineSelfReference(kind)) {
+        // The ownership pass rejects a POLYLINE that names itself before the
+        // walk reads anything, as it does one that lists a VERTEX twice: the
+        // block fails whole. The LINEs are still never published twice.
+        for (const std::uint32_t line : {lineBefore, lineAfter}) {
+            for (const DRW_DwgFrameCoverageEntry& entry
+                 : reader.m_dwgSourceFrameLedger) {
+                if (entry.m_handle == line)
+                    CHECK(entry.m_publicationCount <= 1u);
+            }
+        }
+    } else {
+        // An INSERT is rejected by its aggregate and the rest of the block is
+        // read on.
+        checkPublishedOnce(reader.m_dwgSourceFrameLedger,
+                           {lineBefore, lineAfter});
+    }
+    checkNoStagedCompoundState(reader);
+    CHECK(reader.ObjectMap.empty());
+}
+
+// The journalled scope: the block rolls back, as it does for every structural
+// failure, and nothing of it reaches the interface -- not even the LINE that
+// was read before the group.
+TEST_CASE("DWG journalled block rolls back for a group that names itself",
+          "[dwg][safety][journal][compound][self-reference]") {
+    constexpr std::uint32_t recordHandle = 0xD40;
+    constexpr std::uint32_t blockHandle = 0xD41;
+    constexpr std::uint32_t lineBefore = 0xD42;
+    constexpr std::uint32_t groupHandle = 0xD50;
+    constexpr std::uint32_t lineAfter = 0xD60;
+    constexpr std::uint32_t endBlockHandle = 0xD6F;
+    // A legacy (R13-R2000) block is never journalled: its walk is the staged
+    // one, tested above.
+    const SelfReference kind = GENERATE(
+        SelfReference::PolylineVertex, SelfReference::PolylineSeqEnd,
+        SelfReference::InsertAttrib, SelfReference::InsertSeqEnd);
+    const bool modelSpace = GENERATE(false, true);
+    INFO(selfReferenceName(kind) << ", "
+         << (modelSpace ? "model space" : "named block"));
+    const std::uint32_t blockOwner = modelSpace ? DRW::NoHandle : recordHandle;
+    const SelfReferencingGroup group =
+        makeSelfReferencingGroup(kind, groupHandle, blockOwner);
+
+    std::vector<FramePair> frames = {
+        {lineBefore, makeLineFrame(lineBefore, blockOwner)}};
+    frames.insert(frames.end(), group.frames.cbegin(), group.frames.cend());
+    frames.push_back({lineAfter, makeLineFrame(lineAfter, blockOwner)});
+    std::vector<std::uint32_t> walk = {lineBefore};
+    walk.insert(walk.end(), group.handles.cbegin(), group.handles.cend());
+    walk.push_back(lineAfter);
+
+    const auto run = runJournalledBlock(
+        recordHandle, blockHandle, endBlockHandle,
+        modelSpace ? "*Model_Space" : "JOURNALLED_SELF_REFERENCE", blockOwner,
+        frames, walk);
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK_FALSE(run->readBlocks);
+    CHECK(reader.m_disownedChildHandles.count(groupHandle) == 0u);
+    CHECK(run->interface.callbacks.empty());
+    CHECK(run->interface.inserts.empty());
+    CHECK(run->interface.polylineHandles.empty());
+    CHECK(run->interface.lineCount == 0u);
+    CHECK(run->interface.reachabilities.empty());
+    checkNoStagedCompoundState(reader);
+    if (isPolylineSelfReference(kind)) {
+        // The ownership pass fails the section before any block is entered
+        // (see the staged walk above): what the harness's ENTITIES phase
+        // makes of the frames afterwards is beside the point.
+        checkGroupNeverPublished(reader.m_dwgSourceFrameLedger, group.handles);
+        return;
+    }
+    CHECK(reader.ObjectMap.empty());
+    for (const DRW_DwgFrameCoverageEntry& entry : reader.m_dwgSourceFrameLedger) {
+        if (entry.m_handle == recordHandle)
+            continue; // the BLOCK_RECORD table frame was published up front
+        INFO("handle 0x" << std::hex << entry.m_handle);
+        CHECK(entry.m_publicationCount == 0u);
+        CHECK((entry.m_disposition == DRW_DwgFrameDisposition::Failed
+               || entry.m_disposition == DRW_DwgFrameDisposition::Quarantined));
+    }
+}
+
+// A group that no block lists is read by the ENTITIES sweep, which ends the
+// phase for it just the same: the sweep only lets a child rejected on its own
+// through.
+TEST_CASE("DWG entity sweep fails for a group that names itself",
+          "[dwg][safety][compound][self-reference]") {
+    constexpr std::uint32_t recordHandle = 0xD80;
+    constexpr std::uint32_t groupHandle = 0xD90;
+    const SelfReference kind = GENERATE(
+        SelfReference::PolylineVertex, SelfReference::PolylineSeqEnd,
+        SelfReference::InsertAttrib, SelfReference::InsertSeqEnd,
+        SelfReference::LegacyInsertFirst, SelfReference::LegacyInsertLast,
+        SelfReference::LegacyInsertSeqEnd, SelfReference::LegacyPolylineFirst,
+        SelfReference::LegacyPolylineLast,
+        SelfReference::LegacyPolylineSeqEnd);
+    const DRW::Version generated = GENERATE(
+        DRW::AC1018, DRW::AC1021, DRW::AC1024, DRW::AC1027);
+    const DRW::Version version =
+        isPolylineSelfReference(kind) ? generated : DRW::AC1018;
+    INFO(selfReferenceName(kind) << ", version " << static_cast<int>(version));
+    const SelfReferencingGroup group =
+        makeSelfReferencingGroup(kind, groupHandle, recordHandle, version);
+
+    // The block lists nothing: the group is left to the sweep.
+    const auto run = isLegacySelfReference(kind)
+        ? runLegacyWalk(group.frames, 0, 0)
+        : runMappedWalk(version, recordHandle, group.frames, {});
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK(run->walked);
+    CHECK_FALSE(run->swept);
+    CHECK(reader.m_disownedChildHandles.count(groupHandle) == 0u);
+    CHECK(run->sweepInterface.polylineCount == 0u);
+    CHECK(run->sweepInterface.inserts.empty());
+    checkGroupNeverPublished(reader.m_dwgSourceFrameLedger, group.handles);
+    checkNoStagedCompoundState(reader);
+    CHECK(reader.ObjectMap.empty());
+}
+
+// The file-wide ownership pass rejects the POLYLINEs that declare one child, as
+// a contained conflict. A POLYLINE that also names itself is malformed by
+// itself: it is no party to a conflict between declarations, so it stays a
+// structural failure whether or not it declares a child another POLYLINE
+// declares.
+TEST_CASE("DWG mapped POLYLINE that names itself stays a structural failure "
+          "beside a shared child",
+          "[dwg][safety][compound][mapped-owner][shared-child][self-reference]") {
+    constexpr std::uint32_t recordHandle = 0xDA0;
+    constexpr std::uint32_t selfNaming = 0xDB0;
+    const SelfReference kind = GENERATE(SelfReference::PolylineVertex,
+                                        SelfReference::PolylineSeqEnd);
+    const DRW::Version version = GENERATE(
+        DRW::AC1018, DRW::AC1021, DRW::AC1024, DRW::AC1027);
+    const bool withConflict = GENERATE(false, true);
+    INFO(selfReferenceName(kind) << ", version " << static_cast<int>(version)
+         << (withConflict ? ", beside a conflicting pair" : ", alone"));
+    SharedChildGroups groups{0xDA1, 0xDA2, 0xDA3, 0xDA4, 0xDA5, 0xDA6, 0xDA7,
+                             SharedChild::Vertex};
+    const SelfReferencingGroup group =
+        makeSelfReferencingGroup(kind, selfNaming, recordHandle, version);
+
+    std::vector<FramePair> frames = group.frames;
+    std::vector<std::uint32_t> rejected = group.handles;
+    std::vector<std::uint32_t> walk;
+    if (withConflict) {
+        const std::vector<FramePair> pair =
+            sharedChildFrames(version, groups, recordHandle, groups.polyline1);
+        frames.insert(frames.end(), pair.cbegin(), pair.cend());
+        walk = groups.handles();
+        const std::vector<std::uint32_t> pairHandles = groups.handles();
+        rejected.insert(rejected.end(), pairHandles.cbegin(),
+                        pairHandles.cend());
+    }
+    walk.insert(walk.end(), group.handles.cbegin(), group.handles.cend());
+
+    const auto run = runMappedWalk(version, recordHandle, frames, walk);
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK_FALSE(run->walked);
+    CHECK(run->outcome == DwgEntityReaderProbe::DwgBlockWalkOutcome::Structural);
+    CHECK(run->interface.polylineCount == 0u);
+    CHECK(reader.m_invalidPolylineOwners.count(selfNaming) == 1u);
+    CHECK(reader.m_disownedChildHandles.count(selfNaming) == 0u);
+    checkGroupNeverPublished(reader.m_dwgSourceFrameLedger, rejected);
+    checkNoStagedCompoundState(reader);
+    CHECK(reader.ObjectMap.empty());
+}

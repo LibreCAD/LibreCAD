@@ -3650,6 +3650,12 @@ void dwgReader::noteDisownedChild(std::uint32_t handle) noexcept {
   }
 }
 
+void dwgReader::claimDeclaredChild(std::uint32_t child,
+                                   std::uint32_t group) noexcept {
+  if (child != group)
+    noteDisownedChild(child);
+}
+
 bool dwgReader::isDisownedChild(std::uint32_t handle) const noexcept {
   return handle != DRW::NoHandle &&
          m_disownedChildHandles.find(handle) != m_disownedChildHandles.end();
@@ -4126,9 +4132,10 @@ dwgReader::DwgMappedEntityOutcome dwgReader::stageMappedInsertAggregate(
     terminalizeInsertGroup(insertHandle,
                            DwgInsertTerminalReason::MalformedGroup);
     // The frames this group declared are claimed by it, and it is rejected: no
-    // other group can have them either (see noteDisownedChild).
+    // other group can have them either (see noteDisownedChild). Not itself,
+    // should it name itself (see claimDeclaredChild).
     for (const std::uint32_t handle : discoveredHandles) {
-      noteDisownedChild(handle);
+      claimDeclaredChild(handle, insertHandle);
       (void)quarantineMappedDwgSourceFrame(handle);
     }
     return DwgMappedEntityOutcome::Rejected;
@@ -4347,9 +4354,9 @@ dwgReader::DwgMappedEntityOutcome dwgReader::stageLegacyInsertAggregate(
   std::vector<std::uint32_t> discoveredHandles;
   std::unordered_set<std::uint32_t> visitedHandles;
   bool foreignChildOwner = false;
-  const auto quarantineDiscovered = [this, &discoveredHandles]() {
+  const auto quarantineDiscovered = [this, insertHandle, &discoveredHandles]() {
     for (const std::uint32_t handle : discoveredHandles) {
-      noteDisownedChild(handle);
+      claimDeclaredChild(handle, insertHandle);
       (void)quarantineMappedDwgSourceFrame(handle);
     }
   };
@@ -4619,13 +4626,14 @@ dwgReader::DwgMappedEntityOutcome dwgReader::stageMappedPolylineAggregate(
       // The source frames below still cannot be republished.
     }
     // The frames this group declared are claimed by it, and it is rejected: no
-    // other group can have them either (see noteDisownedChild).
+    // other group can have them either (see noteDisownedChild). Not itself,
+    // should it name itself (see claimDeclaredChild).
     for (const std::uint32_t handle : discoveredHandles) {
-      noteDisownedChild(handle);
+      claimDeclaredChild(handle, polylineHandle);
       (void)discardChild(handle);
     }
     for (const std::uint32_t handle : declaredChildHandles) {
-      noteDisownedChild(handle);
+      claimDeclaredChild(handle, polylineHandle);
       (void)discardChild(handle);
     }
     return DwgMappedEntityOutcome::Rejected;
@@ -5117,9 +5125,9 @@ dwgReader::stageLegacyPolylineChain(DRW_Polyline &&polyline,
   std::vector<std::uint32_t> discoveredHandles;
   std::unordered_set<std::uint32_t> visitedHandles;
   bool foreignChildOwner = false;
-  const auto quarantineDiscovered = [this, &discoveredHandles]() {
+  const auto quarantineDiscovered = [this, parentHandle, &discoveredHandles]() {
     for (const std::uint32_t handle : discoveredHandles) {
-      noteDisownedChild(handle);
+      claimDeclaredChild(handle, parentHandle);
       (void)quarantineMappedDwgSourceFrame(handle);
     }
   };
@@ -9627,15 +9635,18 @@ dwgReader::DwgOwnershipPreflight dwgReader::preflightMappedPolylineOwnership(
         parentClaims.children.reserve(polyline.hadlesList.size() + 1u);
         std::unordered_set<std::uint32_t> seenChildren;
         seenChildren.reserve(polyline.hadlesList.size() + 1u);
+        // A POLYLINE that names itself as a child is malformed by itself as
+        // well, whatever else it declares: it is no party to a conflict.
         for (const std::uint32_t child : polyline.hadlesList) {
-          if (child == DRW::NoHandle || !seenChildren.insert(child).second) {
+          if (child == DRW::NoHandle || child == parentHandle ||
+              !seenChildren.insert(child).second) {
             invalidParents.insert(parentHandle);
             continue;
           }
           parentClaims.children.push_back(child);
         }
         const std::uint32_t sequenceEnd = polyline.seqEndH.ref;
-        if (sequenceEnd == DRW::NoHandle ||
+        if (sequenceEnd == DRW::NoHandle || sequenceEnd == parentHandle ||
             !seenChildren.insert(sequenceEnd).second) {
           invalidParents.insert(parentHandle);
         } else {
@@ -9683,7 +9694,7 @@ dwgReader::DwgOwnershipPreflight dwgReader::preflightMappedPolylineOwnership(
       (void)discardSource(parentClaims.parent);
       m_preflightRejectedHandles.insert(parentClaims.parent);
       for (const std::uint32_t child : parentClaims.children) {
-        noteDisownedChild(child);
+        claimDeclaredChild(child, parentClaims.parent);
         m_preflightRejectedHandles.insert(child);
         (void)discardSource(child);
       }
