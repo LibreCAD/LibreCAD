@@ -2471,11 +2471,20 @@ if (BUILD_TESTS)
         endif()
     endif()
 
+    # A Catch2 listener that gives each test process a settings store of its own
+    # (see librecad/src/test/lc_testsettingsisolation.h). It registers itself
+    # through a static object, so every test executable that links the
+    # application library lists this file among its sources rather than
+    # reaching it through an archive.
+    set(LIBRECAD_TEST_SETTINGS_ISOLATION_SOURCE
+        librecad/src/test/lc_testsettingsisolation.cpp)
+
     # The complete test executable is a milestone/release target. Keep it out
     # of the default build so ordinary incremental application and library
     # builds do not compile every unrelated test translation unit.
     qt_add_executable(librecad_tests
 	EXCLUDE_FROM_ALL
+	${LIBRECAD_TEST_SETTINGS_ISOLATION_SOURCE}
 	# this is needed to allow testing methods used by main()
 	# main() is excluded when BUILD_TEST=ON
 	${MAIN_SOURCES}
@@ -2617,6 +2626,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/datastorage_tests.cpp
         librecad/src/lib/engine/settings/tests/rs_settings_migration_tests.cpp
         librecad/src/lib/engine/settings/tests/lc_settings_init_tests.cpp
+        librecad/src/lib/engine/settings/tests/lc_settings_isolation_tests.cpp
         librecad/src/lib/gui/tests/rs_graphicview_close_tests.cpp
         librecad/src/lib/gui/tests/lc_grid_tests.cpp
         librecad/src/lib/gui/tests/rs_painter_tests.cpp
@@ -2697,6 +2707,7 @@ if (BUILD_TESTS)
     qt_add_executable(librecad_fast_tests
         EXCLUDE_FROM_ALL
         ${MAIN_SOURCES}
+        ${LIBRECAD_TEST_SETTINGS_ISOLATION_SOURCE}
         ${LIBRECAD_FAST_TEST_SOURCES}
     )
     target_include_directories(librecad_fast_tests PRIVATE ${SHARED_INCLUDES})
@@ -2743,6 +2754,7 @@ if (BUILD_TESTS)
     add_executable(librecad_dwg_fast_tests
         EXCLUDE_FROM_ALL
         librecad/src/main/lc_release_label.cpp
+        ${LIBRECAD_TEST_SETTINGS_ISOLATION_SOURCE}
         ${LIBRECAD_DWG_FAST_TEST_SOURCES}
     )
     set_target_properties(librecad_dwg_fast_tests PROPERTIES
@@ -2778,6 +2790,7 @@ if (BUILD_TESTS)
     add_executable(librecad_dwg_write_fast_tests
         EXCLUDE_FROM_ALL
         librecad/src/main/lc_release_label.cpp
+        ${LIBRECAD_TEST_SETTINGS_ISOLATION_SOURCE}
         librecad/src/lib/filters/tests/dwg_write_smoke_tests.cpp
     )
     set_target_properties(librecad_dwg_write_fast_tests PROPERTIES
@@ -2819,6 +2832,7 @@ if (BUILD_TESTS)
     add_executable(librecad_dxf_fast_tests
         EXCLUDE_FROM_ALL
         librecad/src/main/lc_release_label.cpp
+        ${LIBRECAD_TEST_SETTINGS_ISOLATION_SOURCE}
         ${LIBRECAD_DXF_FAST_TEST_SOURCES}
     )
     set_target_properties(librecad_dxf_fast_tests PROPERTIES
@@ -2857,6 +2871,7 @@ if (BUILD_TESTS)
         add_executable(${target}
             EXCLUDE_FROM_ALL
             librecad/src/main/lc_release_label.cpp
+            ${LIBRECAD_TEST_SETTINGS_ISOLATION_SOURCE}
             "${source}"
         )
         set_target_properties(${target} PROPERTIES
@@ -2910,6 +2925,7 @@ if (BUILD_TESTS)
     add_executable(librecad_console_command_utils_tests
         EXCLUDE_FROM_ALL
         librecad/src/main/lc_release_label.cpp
+        ${LIBRECAD_TEST_SETTINGS_ISOLATION_SOURCE}
         librecad/src/main/console_command_utils.cpp
         librecad/src/main/tests/console_command_utils_tests.cpp
     )

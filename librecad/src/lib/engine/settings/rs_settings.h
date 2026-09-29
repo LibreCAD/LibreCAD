@@ -151,6 +151,10 @@ public:
      * dropping its cache and open group; pointers to the instance and
      * signal connections made to it stay valid.
      *
+     * The store is opened in QSettings::defaultFormat(): the native store
+     * (registry, plist or .conf file) unless the program chose another format
+     * before the call.
+     *
      * @param companyKey Company Key
      * @param appKey Application key
      */

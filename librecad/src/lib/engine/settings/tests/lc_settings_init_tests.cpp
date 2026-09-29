@@ -34,6 +34,7 @@
 #include <QPointer>
 #include <QSettings>
 
+#include "lc_testsettingsisolation.h"
 #include "rs_settings.h"
 
 namespace {
@@ -69,7 +70,7 @@ class StoreCleanup final {
 public:
     ~StoreCleanup() {
         RS_Settings::instance()->endGroup();
-        QSettings store(testOrganization, testApplication);
+        QSettings store = lc::test::openSettings(testOrganization, testApplication);
         store.remove(testGroup);
         store.remove("GroupProbe");
         store.sync();
@@ -123,7 +124,7 @@ TEST_CASE("RS_Settings::init keeps the singleton and swaps its store", "[setting
         REQUIRE(settings->readStr("Key") == QStringLiteral("v1"));
 
         {
-            QSettings other(testOrganization, testApplication);
+            QSettings other = lc::test::openSettings(testOrganization, testApplication);
             other.setValue(QStringLiteral("/%1/Key").arg(testGroup), QStringLiteral("v2"));
             other.sync();
         }
@@ -139,7 +140,7 @@ TEST_CASE("RS_Settings::init keeps the singleton and swaps its store", "[setting
         RS_Settings::init(testOrganization, testApplication);
 
         REQUIRE(settings->write("GroupProbe", QStringLiteral("x")));
-        QSettings store(testOrganization, testApplication);
+        QSettings store = lc::test::openSettings(testOrganization, testApplication);
         CHECK(store.value(QStringLiteral("GroupProbe")).toString() == QStringLiteral("x"));
         CHECK(!store.contains(QStringLiteral("%1/GroupProbe").arg(testGroup)));
     }
