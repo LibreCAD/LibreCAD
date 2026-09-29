@@ -2446,6 +2446,13 @@ public:
     }
 };
 
+class DwgTableCaptureProbe final : public DwgReadProbe {
+public:
+    std::vector<DRW_Table> tables;
+
+    void addTable(const DRW_Table& table) override { tables.push_back(table); }
+};
+
 class DwgThrowingBlockJournalProbe final : public DwgBlockJournalProbe {
 public:
     bool throwProxyCarrier = false;
@@ -3630,6 +3637,146 @@ std::vector<std::uint8_t> makeMalformedTableBody(
     body.putBit(1); // has attributes
     body.putBitLong(ownedAttributeCount);
     return body.data();
+}
+
+// One cell of the AC1021 ACAD_TABLE fixture.
+struct R2007TableCellSpec {
+    // CadValue flags: bit 0 alone marks the value payload absent.
+    std::int32_t valueFlags = 6;
+    // 2 = double, 512 = kGeneral bytes.
+    std::int32_t dataType = 512;
+    // The kGeneral payload: UTF-16LE text plus a terminating NUL, in the data stream.
+    std::string generalText;
+    double number = 0.0;
+    // TV 302, in the string stream.
+    std::string valueString;
+    // Whether the count of valueString includes a terminating NUL unit. AutoCAD
+    // does not count one; this library's own writer does.
+    bool terminateValueString = false;
+    // The cell overrides its alignment (a BS in the file).
+    bool alignmentOverride = false;
+};
+
+// An R2007+ TV: a BS count of UTF-16LE code units, then two bytes per unit.
+void putR2007Text(dwgBufferW& out, const std::string& ascii, bool terminated) {
+    if (ascii.empty()) {
+        out.putBitShort(0);
+        return;
+    }
+    out.putBitShort(static_cast<std::uint16_t>(ascii.size()
+                                               + (terminated ? 1u : 0u)));
+    for (const char c : ascii) {
+        out.putRawChar8(static_cast<std::uint8_t>(c));
+        out.putRawChar8(0);
+    }
+    if (terminated) {
+        out.putRawChar8(0);
+        out.putRawChar8(0);
+    }
+}
+
+constexpr std::uint32_t r2007TableBlockRecord = 0x2A0u;
+constexpr std::uint32_t r2007TableStyle = 0x2B0u;
+
+dwgHandle makeCodedHandle(std::uint8_t code, std::uint32_t ref) {
+    dwgHandle handle;
+    handle.code = code;
+    handle.ref = ref;
+    return handle;
+}
+
+// A whole AC1021 ACAD_TABLE frame, laid out as AutoCAD writes it: entity data
+// and the R2007 cell grid in the data stream, the cell strings in the string
+// stream that ends the data section, the block record, table style and one
+// text-style handle per cell in the handle stream.
+std::vector<std::uint8_t> makeR2007TableFrame(
+    std::uint32_t handle, std::uint16_t classNumber,
+    const std::vector<std::vector<R2007TableCellSpec>>& cells) {
+    if (cells.empty() || cells.front().empty())
+        return {};
+    const std::size_t rows = cells.size();
+    const std::size_t columns = cells.front().size();
+
+    DwgInsertWriterProbe table;
+    table.handle = handle;
+    table.setObjectType(static_cast<std::int16_t>(classNumber));
+
+    dwgBufferW body;
+    dwgBufferW strings;
+    dwgBufferW handles;
+    if (!table.encodeDwgCommon(DRW::AC1021, &body))
+        return {};
+    body.put3BitDouble(DRW_Coord(7.0, 8.0, 0.0)); // insertion point
+    body.put2Bits(3); // unit scales
+    body.putBitDouble(0.0); // rotation
+    body.putExtrusion(DRW_Coord(0.0, 0.0, 1.0), false);
+    body.putBit(0); // no attributes
+    body.putBitShort(22); // table value flags
+    body.put3BitDouble(DRW_Coord(1.0, 0.0, 0.0));
+    body.putBitLong(static_cast<std::int32_t>(columns));
+    body.putBitLong(static_cast<std::int32_t>(rows));
+    for (std::size_t column = 0; column < columns; ++column)
+        body.putBitDouble(10.0 + static_cast<double>(column));
+    for (std::size_t row = 0; row < rows; ++row)
+        body.putBitDouble(5.0 + static_cast<double>(row));
+
+    for (const auto& row : cells) {
+        if (row.size() != columns)
+            return {};
+        for (const R2007TableCellSpec& cell : row) {
+            body.putBitShort(1); // text cell
+            body.putRawChar8(0); // edge flags
+            body.putBit(0); // merged
+            body.putBit(0); // autofit
+            body.putBitLong(1); // merged width
+            body.putBitLong(1); // merged height
+            body.putBitDouble(0.0); // rotation
+            body.putBit(cell.alignmentOverride ? 1 : 0);
+            if (cell.alignmentOverride) {
+                body.putBitLong(0x1); // cell flag override: alignment
+                body.putRawChar8(0); // virtual edge flags
+                body.putBitShort(5); // alignment
+            }
+            body.putBitLong(0); // unknown BL before the value
+            body.putBitLong(cell.valueFlags);
+            body.putBitLong(cell.dataType);
+            if ((cell.valueFlags & 1) == 0) {
+                if (cell.dataType == 2) {
+                    body.putBitDouble(cell.number);
+                } else if (cell.dataType == 512) {
+                    const std::size_t byteCount =
+                        cell.generalText.size() * 2u + 2u;
+                    body.putBitLong(static_cast<std::int32_t>(byteCount));
+                    for (const char c : cell.generalText) {
+                        body.putRawChar8(static_cast<std::uint8_t>(c));
+                        body.putRawChar8(0);
+                    }
+                    body.putRawChar8(0);
+                    body.putRawChar8(0);
+                }
+            }
+            body.putBitLong(0); // unit type
+            putR2007Text(strings, std::string(), false); // format string
+            putR2007Text(strings, cell.valueString, cell.terminateValueString);
+        }
+    }
+    for (int mask = 0; mask < 4; ++mask)
+        body.putBit(0); // no table, border colour, weight or visibility overrides
+
+    if (!table.encodeDwgEntHandle(DRW::AC1021, &body, &handles))
+        return {};
+    handles.putHandle(makeCodedHandle(5, r2007TableBlockRecord));
+    handles.putHandle(makeCodedHandle(5, r2007TableStyle));
+    for (std::size_t cell = 0; cell < rows * columns; ++cell)
+        handles.putHandle(makeCodedHandle(5, 0)); // no text style
+
+    body.alignToByte();
+    strings.alignToByte();
+    if (!DwgStringFooterWriterProbe::appendR2007StringStream(body, strings, false))
+        return {};
+    body.alignToByte();
+    handles.alignToByte();
+    return makeR2007EntityFrame(body, handles);
 }
 
 std::vector<std::uint8_t> makeMalformedMLineFrame(
@@ -10512,6 +10659,82 @@ TEST_CASE("DWG ACAD_TABLE rejects null and invalid grid input",
     dwgBuffer reader(body.data().data(), body.data().size());
     CHECK_FALSE(table.parseDwg(DRW::AC1018, &reader));
     CHECK_FALSE(reader.isGood());
+}
+
+// The reference is a real AutoCAD 2007 file (blocks_and_tables_-_metric.dwg):
+// both of its tables, 81 and 90 cells, decode to the end of the data, string
+// and handle streams once the three points below are read as the file stores
+// them. Each made the table entity fail, and with it the paper space block
+// that owns it.
+TEST_CASE("DWG R2007 ACAD_TABLE decodes UTF-16 cell text and value payloads",
+          "[dwg][safety][table][r2007]") {
+    constexpr std::uint16_t classNumber = 507;
+    constexpr std::uint32_t tableHandle = 0x2A1u;
+
+    R2007TableCellSpec title;
+    title.valueFlags = 6; // bit 1 set: the payload is present
+    title.generalText = "DOOR SCHEDULE";
+    title.valueString = "DOOR SCHEDULE"; // 13 units, no terminating NUL counted
+    title.alignmentOverride = true; // a BS, followed by more cells
+    R2007TableCellSpec merged;
+    merged.valueFlags = 2; // bit 1 set, bit 0 clear: the payload is present
+    merged.generalText = "AB";
+    merged.valueString = "AB";
+    merged.terminateValueString = true; // 3 units, the last one a NUL
+    R2007TableCellSpec number;
+    number.valueFlags = 2;
+    number.dataType = 2;
+    number.number = 2.5;
+    number.valueString = "2.50";
+    R2007TableCellSpec empty;
+    empty.valueFlags = 3; // bit 0 set: no payload
+    empty.valueString = "";
+
+    const auto frame = makeR2007TableFrame(
+        tableHandle, classNumber, {{title, merged}, {number, empty}});
+    REQUIRE(!frame.empty());
+
+    DwgEntityReaderProbe reader(std::make_unique<dwgBuffer>(
+        const_cast<std::uint8_t*>(frame.data()), frame.size()));
+    reader.setVersionForTest(DRW::AC1021);
+    reader.setCodePageForTest("UTF-16");
+    reader.addCustomEntityClass(classNumber, "ACAD_TABLE");
+    dwgBuffer buffer(const_cast<std::uint8_t*>(frame.data()), frame.size());
+    objHandle entity(classNumber, tableHandle, 0);
+    DwgTableCaptureProbe interface;
+    REQUIRE(reader.readDwgEntity(&buffer, entity, interface));
+    REQUIRE(interface.tables.size() == 1u);
+    const DRW_Table& table = interface.tables.front();
+
+    CHECK(table.basePoint.x == Catch::Approx(7.0));
+    CHECK(table.basePoint.y == Catch::Approx(8.0));
+    CHECK(table.blockRecH.ref == r2007TableBlockRecord);
+    CHECK(table.m_tableStyleHandle == r2007TableStyle);
+    REQUIRE(table.m_content.m_columns.size() == 2u);
+    REQUIRE(table.m_content.m_rows.size() == 2u);
+    CHECK(table.m_content.m_columns[1].m_width == Catch::Approx(11.0));
+    CHECK(table.m_content.m_rows[1].m_height == Catch::Approx(6.0));
+
+    // Every cell decoded: the grid ends exactly where the data does.
+    CHECK(table.m_hasSemanticContent);
+    CHECK(table.m_semanticContentComplete);
+    CHECK(reader.m_entityParseFailures == 0u);
+
+    const auto& firstRow = table.m_content.m_rows[0].m_cells;
+    const auto& secondRow = table.m_content.m_rows[1].m_cells;
+    REQUIRE(firstRow[0].m_contents.size() == 1u);
+    CHECK(firstRow[0].m_overrideFlags == 0x1u);
+    CHECK(firstRow[0].m_contents[0].m_text == "DOOR SCHEDULE");
+    CHECK(firstRow[0].m_contents[0].m_value.m_valueString == "DOOR SCHEDULE");
+    REQUIRE(firstRow[1].m_contents.size() == 1u);
+    CHECK(firstRow[1].m_contents[0].m_text == "AB");
+    CHECK(firstRow[1].m_contents[0].m_value.m_valueString == "AB");
+    REQUIRE(secondRow[0].m_contents.size() == 1u);
+    CHECK(secondRow[0].m_contents[0].m_value.m_dataType == 2);
+    CHECK(secondRow[0].m_contents[0].m_value.m_value.d_val() == Catch::Approx(2.5));
+    CHECK(secondRow[0].m_contents[0].m_text == "2.50");
+    REQUIRE(secondRow[1].m_contents.size() == 1u);
+    CHECK(secondRow[1].m_contents[0].m_text.empty());
 }
 
 TEST_CASE("DWG table-entry common header rejects null buffer",
