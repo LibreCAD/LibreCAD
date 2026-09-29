@@ -87,9 +87,9 @@ void LC_LayersExporter::exportLayersToIndividualDocuments(const LC_LayersExportO
         exportViewsList(options, originalGraphic, exportGraphics);
 
         auto exportData = LC_LayerExportData();
-        exportData.graphic = exportGraphics;
+        exportData.graphic.reset(exportGraphics);
         exportData.name = originalLayer->getName();
-        exportResultList.push_back(exportData);
+        exportResultList.push_back(std::move(exportData));
     }
 
     bool hasBlocks = false;
@@ -205,10 +205,10 @@ void LC_LayersExporter::exportLayersToSingleDocument(const LC_LayersExportOption
     usedBlocksSet.clear();
 
     auto exportData = LC_LayerExportData();
-    exportData.graphic = exportGraphic;
+    exportData.graphic.reset(exportGraphic);
     exportData.name.clear();
 
-    exportResultList.push_back(exportData);
+    exportResultList.push_back(std::move(exportData));
 }
 
 void LC_LayersExporter::exportUCSList(const LC_LayersExportOptions* options, RS_Graphic* originalGraphic, RS_Graphic* graphicToExport) {
