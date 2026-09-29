@@ -29,6 +29,7 @@
 
 #include <cmath>
 #include <memory>
+#include <utility>
 #include <vector>
 
 #include "lc_action_draw_polygon_center_corner.h"
@@ -76,6 +77,20 @@ public:
     using LC_ActionDrawRectangle2Points::m_corner1;
 };
 
+/**
+ * The shapes outlive the drawing they were made for, which frees its layers
+ * with it: cut every tie to it, the parent and the layers.
+ */
+std::unique_ptr<RS_Polyline> detached(std::unique_ptr<RS_Polyline> shape) {
+    REQUIRE(shape != nullptr);
+    shape->setParent(nullptr);
+    shape->setLayer(nullptr);
+    for (RS_Entity* segment : *shape) {
+        segment->setLayer(nullptr);
+    }
+    return shape;
+}
+
 /** A 10 x 4 rectangle as the 1-point tool makes it about (5, 2), straight or with corners of radius 1. */
 std::unique_ptr<RS_Polyline> rectangle1Point(const int corners) {
     lc::test::ActionFixture<Rectangle1PointProbe> f;
@@ -85,9 +100,7 @@ std::unique_ptr<RS_Polyline> rectangle1Point(const int corners) {
     f.m_action->setCornersMode(corners);
     f.m_action->setCornerRadius(1.0);
     std::unique_ptr<RS_Polyline> result{f.m_action->createPolyline(RS_Vector{5.0, 2.0}).resultingPolyline};
-    REQUIRE(result != nullptr);
-    result->setParent(nullptr); // outlives the drawing it was made for
-    return result;
+    return detached(std::move(result));
 }
 
 /** The rectangle (0, 0)-(10, 4) as the 2-point tool makes it, straight or with corners of radius 1. */
@@ -97,9 +110,7 @@ std::unique_ptr<RS_Polyline> rectangle2Points(const int corners) {
     f.m_action->setCornerRadius(1.0);
     f.m_action->m_corner1 = RS_Vector{0.0, 0.0};
     std::unique_ptr<RS_Polyline> result{f.m_action->createPolyline(RS_Vector{10.0, 4.0}).resultingPolyline};
-    REQUIRE(result != nullptr);
-    result->setParent(nullptr);
-    return result;
+    return detached(std::move(result));
 }
 
 /**
@@ -121,9 +132,7 @@ std::unique_ptr<RS_Polyline> star(const bool outerRounded = false, const bool in
     std::unique_ptr<RS_Polyline> result{
         f.m_action->createShapePolyline(inner, references, StarProbe::SetInnerPoint, false)};
     qDeleteAll(references);
-    REQUIRE(result != nullptr);
-    result->setParent(nullptr); // outlives the drawing it was made for
-    return result;
+    return detached(std::move(result));
 }
 
 /** A regular pentagon of circumradius 10 about the origin, a vertex at 90 degrees. */
@@ -137,8 +146,7 @@ std::unique_ptr<RS_Polyline> pentagon(const bool rounded = false) {
     info.startingAngle = M_PI_2;
     info.vertexRadius = 10.0;
     std::unique_ptr<RS_Polyline> result{f.m_action->createShapePolyline(info, false)};
-    REQUIRE(result != nullptr);
-    return result;
+    return detached(std::move(result));
 }
 
 /** Closed by its flag, the last segment ending on the start, none of no length. */

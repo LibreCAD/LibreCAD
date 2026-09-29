@@ -30,6 +30,7 @@
 #include<iostream>
 
 #include <QSet>
+#include <QtAlgorithms>
 
 #include "rs_debug.h"
 #include "rs_layer.h"
@@ -44,13 +45,15 @@ RS_LayerList::RS_LayerList() {
 }
 
 RS_LayerList::~RS_LayerList() {
-    // LC_ERR << "LayerList destructor";
+    qDeleteAll(m_layers);
 }
 
 /**
- * Removes all layers in the layerlist.
+ * Removes all layers in the layerlist and frees them: the list owns its
+ * layers, as remove() and add() (for a rejected duplicate) always assumed.
  */
 void RS_LayerList::clear() {
+    qDeleteAll(m_layers);
     m_layers.clear();
     m_layerSet.clear();
     m_activeLayer = nullptr;
@@ -156,6 +159,10 @@ void RS_LayerList::add(RS_Layer* layerToAdd) {
         // if there was no active layer so far, activate this one.
         if (m_activeLayer == nullptr) {
             activate(existingLayer);
+        }
+        if (existingLayer == layerToAdd) {
+            // already listed: nothing to merge, and it must not be freed
+            return;
         }
 
         existingLayer->freeze(layerToAdd->isFrozen());
