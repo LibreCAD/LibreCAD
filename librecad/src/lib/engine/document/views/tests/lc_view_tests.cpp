@@ -269,14 +269,14 @@ TEST_CASE("Exported named views do not share the source view's UCS", "[views][ow
         exporter.exportLayers(&options, &source, exported);
         REQUIRE(exported.size() == 1);
 
-        RS_Graphic* exportGraphic = exported.front().graphic;
+        const RS_Graphic* exportGraphic = exported.front().graphic.get();
         const LC_View* exportedView = exportGraphic->findNamedView(QStringLiteral("A"));
         REQUIRE(exportedView != nullptr);
         const LC_View* sourceView = source.findNamedView(QStringLiteral("A"));
         CHECK(exportedView->getUCS() != sourceView->getUCS());
         checkRotatedUCS(exportedView->getUCS());
 
-        delete exportGraphic;
+        exported.front().graphic.reset();
         CHECK(live == 1);
         checkRotatedUCS(sourceView->getUCS());
     }
