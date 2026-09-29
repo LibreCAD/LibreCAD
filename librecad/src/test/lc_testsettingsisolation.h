@@ -45,14 +45,19 @@ namespace lc::test {
  * opens its store in, and points it at a private temporary directory, so the
  * registry and the user's preferences are left alone on every platform: the
  * store starts empty, sees only what this process writes, and end() removes
- * it. (QSettings(organization, application) ignores the default format and
- * always opens the native store; tests that open a store themselves use
- * openSettings() below.) The store is still shared by the tests of the one process, in order, as
- * before: a value one test file writes is what the next one reads.
+ * it when the process exits. (QSettings(organization, application) ignores the
+ * default format and always opens the native store; tests that open a store
+ * themselves use openSettings() below.) The store is still shared by the tests
+ * of the one process, in order, as before: a value one test file writes is
+ * what the next one reads.
  *
  * A Catch2 listener in lc_testsettingsisolation.cpp calls begin() before the
- * first test case and end() after the last, so it applies to every executable
- * that lists that file among its sources and no test has to ask for it.
+ * first test case, so it applies to every executable that lists that file
+ * among its sources and no test has to ask for it. Nothing ends the isolation
+ * when the last test case does: objects that a test case created, the
+ * QC_ApplicationWindow singleton above all, are destroyed while the process exits and
+ * write settings as they go, which puts the directory back. begin() registers
+ * an exit handler that removes it after those destructors have run.
  */
 class SettingsIsolation {
 public:
@@ -64,8 +69,10 @@ public:
 
     /**
      * Removes the private store. QSettings opened after the call have no
-     * store to read; the process is expected to be done with them. Does nothing
-     * when not active, so it is safe to call from exit handlers as well.
+     * store to read, and one that writes recreates the directory, so nothing
+     * may use settings afterwards; the exit handler begin() registers is the
+     * only caller, and it runs after the static destructors of everything a
+     * test case created. Does nothing when not active.
      */
     static void end();
 

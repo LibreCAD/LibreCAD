@@ -25,14 +25,19 @@
 // lc_testsettingsisolation.h), so what a test reads does not depend on which
 // other process wrote to the per-user store last, and nothing a test writes
 // reaches the next run. The second case runs this executable again to check
-// that across two real processes.
+// that across two real processes, and that a process which writes settings
+// while it exits, as the application window singleton does, leaves no
+// directory behind.
 
 #include <catch2/catch_test_macros.hpp>
+
+#include <utility>
 
 #include <QCoreApplication>
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
+#include <QHash>
 #include <QProcess>
 #include <QProcessEnvironment>
 #include <QSettings>
@@ -69,6 +74,39 @@ public:
 
 bool isInside(const QString& path, const QString& directory) {
     return QDir::cleanPath(path).startsWith(QDir::cleanPath(directory) + QLatin1Char('/'));
+}
+
+// Runs this executable again for the hidden probe case with the given tag.
+// The probe reports what it saw in the file at reportPath.
+void runProbeProcess(const QString& probeTag, const QString& reportPath) {
+    QProcessEnvironment environment = QProcessEnvironment::systemEnvironment();
+    environment.insert(QLatin1String(reportVariable), reportPath);
+    QProcess child;
+    child.setProcessEnvironment(environment);
+    child.setProcessChannelMode(QProcess::MergedChannels);
+    child.start(QCoreApplication::applicationFilePath(), QStringList{probeTag});
+    REQUIRE(child.waitForStarted(30000));
+    const bool finished = child.waitForFinished(120000);
+    const QString childOutput = QString::fromLocal8Bit(child.readAllStandardOutput());
+    INFO("output of the child process:\n" << childOutput.toStdString());
+    REQUIRE(finished);
+    REQUIRE(child.exitStatus() == QProcess::NormalExit);
+    REQUIRE(child.exitCode() == 0);
+}
+
+// The name=value lines of a probe's report.
+QHash<QString, QString> readReport(const QString& reportPath) {
+    QHash<QString, QString> report;
+    QFile reportFile(reportPath);
+    REQUIRE(reportFile.open(QIODevice::ReadOnly | QIODevice::Text));
+    while (!reportFile.atEnd()) {
+        const QString line = QString::fromUtf8(reportFile.readLine()).trimmed();
+        const qsizetype split = line.indexOf(QLatin1Char('='));
+        if (split > 0) {
+            report.insert(line.left(split), line.mid(split + 1));
+        }
+    }
+    return report;
 }
 
 } // namespace
@@ -109,46 +147,13 @@ TEST_CASE("a test process does not see what another test process writes",
     QTemporaryDir reportDirectory;
     REQUIRE(reportDirectory.isValid());
     const QString reportPath = reportDirectory.filePath(QStringLiteral("report.txt"));
+    runProbeProcess(QStringLiteral("[settings_isolation_probe]"), reportPath);
 
-    QProcessEnvironment environment = QProcessEnvironment::systemEnvironment();
-    environment.insert(QLatin1String(reportVariable), reportPath);
-    QProcess child;
-    child.setProcessEnvironment(environment);
-    child.setProcessChannelMode(QProcess::MergedChannels);
-    child.start(QCoreApplication::applicationFilePath(),
-                QStringList{QStringLiteral("[settings_isolation_probe]")});
-    REQUIRE(child.waitForStarted(30000));
-    const bool finished = child.waitForFinished(120000);
-    const QString childOutput = QString::fromLocal8Bit(child.readAllStandardOutput());
-    INFO("output of the child process:\n" << childOutput.toStdString());
-    REQUIRE(finished);
-    REQUIRE(child.exitStatus() == QProcess::NormalExit);
-    REQUIRE(child.exitCode() == 0);
-
-    QFile reportFile(reportPath);
-    REQUIRE(reportFile.open(QIODevice::ReadOnly | QIODevice::Text));
-    QString childDirectory;
-    QString childStore;
-    QString sawParent;
-    QString sawChild;
-    while (!reportFile.atEnd()) {
-        const QString line = QString::fromUtf8(reportFile.readLine()).trimmed();
-        const qsizetype split = line.indexOf(QLatin1Char('='));
-        const QString name = line.left(split);
-        const QString value = line.mid(split + 1);
-        if (name == QLatin1String("directory")) {
-            childDirectory = value;
-        }
-        else if (name == QLatin1String("store")) {
-            childStore = value;
-        }
-        else if (name == QLatin1String("sawParentMarker")) {
-            sawParent = value;
-        }
-        else if (name == QLatin1String("wroteChildMarker")) {
-            sawChild = value;
-        }
-    }
+    const QHash<QString, QString> report = readReport(reportPath);
+    const QString childDirectory = report.value(QStringLiteral("directory"));
+    const QString childStore = report.value(QStringLiteral("store"));
+    const QString sawParent = report.value(QStringLiteral("sawParentMarker"));
+    const QString sawChild = report.value(QStringLiteral("wroteChildMarker"));
 
     const QString parentDirectory = lc::test::SettingsIsolation::directory();
     REQUIRE_FALSE(childDirectory.isEmpty());
@@ -198,4 +203,75 @@ TEST_CASE("settings isolation probe run by the test of another process",
         << "store=" << settings->getSettings()->fileName() << '\n'
         << "sawParentMarker=" << (sawParentMarker ? 1 : 0) << '\n'
         << "wroteChildMarker=" << (wroteChildMarker ? 1 : 0) << '\n';
+}
+
+// The application window is a function-local static that a test creates, so it
+// is destroyed while the process exits, after the last test case has ended.
+// Its widgets write settings from their destructors (ColorWizard opens a
+// default-constructed QSettings, QG_CommandWidget writes through RS_Settings),
+// which puts the store's directory and file back. The directory must therefore
+// be removed after every static destructor of an object created by a test, not
+// when the run ends.
+TEST_CASE("a test process that writes settings while it exits leaves no directory behind",
+          "[settings][isolation][process]") {
+    QTemporaryDir reportDirectory;
+    REQUIRE(reportDirectory.isValid());
+    const QString reportPath = reportDirectory.filePath(QStringLiteral("report.txt"));
+    runProbeProcess(QStringLiteral("[settings_isolation_exit_probe]"), reportPath);
+
+    const QHash<QString, QString> report = readReport(reportPath);
+    const QString childDirectory = report.value(QStringLiteral("directory"));
+    REQUIRE_FALSE(childDirectory.isEmpty());
+    CHECK(childDirectory != lc::test::SettingsIsolation::directory());
+
+    // the exit-time writer ran, and what it wrote went to the private directory
+    // (otherwise the check below would say nothing about the leak)
+    REQUIRE(report.value(QStringLiteral("lateWriteRan")) == QStringLiteral("1"));
+    CHECK(report.value(QStringLiteral("lateWriteReachedDirectory")) == QStringLiteral("1"));
+
+    CHECK_FALSE(QFileInfo::exists(childDirectory));
+}
+
+// Run by the case above, in a process of its own; does nothing when run by hand.
+TEST_CASE("settings isolation exit probe run by the test of another process",
+          "[.][settings_isolation_exit_probe]") {
+    const QString reportPath = qEnvironmentVariable(reportVariable);
+    if (reportPath.isEmpty()) {
+        return;
+    }
+    (void)lc::test::application();
+    REQUIRE(lc::test::SettingsIsolation::isActive());
+
+    // Stands in for the application window: created by a test, so destroyed
+    // by exit() after the test run has ended and its listener has been told.
+    class WritesSettingsWhenDestroyed final {
+    public:
+        explicit WritesSettingsWhenDestroyed(QString reportFile)
+            : m_reportFile{std::move(reportFile)} {}
+
+        ~WritesSettingsWhenDestroyed() {
+            RS_Settings::instance()->writeSingle(QLatin1String(probeGroup), QLatin1String(childMarkerKey),
+                                                 QStringLiteral("written while exiting"));
+            QSettings plain;
+            plain.setValue(fullKey(parentMarkerKey), 1);
+            plain.sync();
+
+            QFile report(m_reportFile);
+            if (report.open(QIODevice::Append | QIODevice::Text)) {
+                QTextStream out(&report);
+                out << "lateWriteRan=1\n"
+                    << "lateWriteReachedDirectory=" << (QFileInfo::exists(plain.fileName()) ? 1 : 0) << '\n';
+            }
+        }
+
+    private:
+        QString m_reportFile;
+    };
+    static const WritesSettingsWhenDestroyed writer{reportPath};
+    (void)writer;
+
+    QFile report(reportPath);
+    REQUIRE(report.open(QIODevice::WriteOnly | QIODevice::Text));
+    QTextStream out(&report);
+    out << "directory=" << lc::test::SettingsIsolation::directory() << '\n';
 }

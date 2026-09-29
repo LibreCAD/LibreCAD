@@ -67,8 +67,16 @@ void SettingsIsolation::begin() {
     }
     settingsDirectory = std::move(directory);
 
-    // The listener removes the directory when the run ends; this covers a
-    // process that leaves through exit() instead.
+    // The directory is removed by this handler, when the process exits, and by
+    // nothing earlier. exit() runs atexit handlers and the destructors of
+    // statics in reverse order of their construction, so a handler registered
+    // here, before any test case has created anything, runs after the
+    // destructor of every object a test case created. That matters: the
+    // application window is a function-local static that a test creates, its
+    // widgets write settings from their destructors (ColorWizard opens a
+    // QSettings, QG_CommandWidget writes through RS_Settings), and every one of
+    // those writes creates the store's directory again. Removing it any
+    // sooner, when the last test case ends, leaves that directory behind.
     static const bool exitHandlerRegistered = [] {
         return std::atexit(&SettingsIsolation::end) == 0;
     }();
@@ -89,14 +97,15 @@ QString SettingsIsolation::directory() {
 
 namespace {
 
-// Catch2 runs a listener around the whole run, so no test file has to ask for
-// the isolation and none can forget to.
+// Catch2 starts a listener before the first test case, so no test file has to
+// ask for the isolation and none can forget to. There is deliberately no
+// testRunEnded(): the directory is removed by the exit handler begin()
+// registers, see there.
 class SettingsIsolationListener final : public Catch::EventListenerBase {
 public:
     using Catch::EventListenerBase::EventListenerBase;
 
     void testRunStarting(const Catch::TestRunInfo&) override { SettingsIsolation::begin(); }
-    void testRunEnded(const Catch::TestRunStats&) override { SettingsIsolation::end(); }
 };
 
 } // namespace
