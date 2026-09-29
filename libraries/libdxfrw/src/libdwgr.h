@@ -135,7 +135,13 @@ enum class DwgIntegrityCheckKind : std::uint8_t {
     ObjectMapCrc,
     ObjectMapDuplicateOffset,
     ObjectFrameBounds,
-    FrameLedgerTransition
+    FrameLedgerTransition,
+    /// A table control object lists an owned record that has no entry in the
+    /// object map: an erased or purged record that the producer left in the
+    /// list. Always a Warning; the entry is skipped and every other record of
+    /// the table is read normally. `logicalHandle` is the absent record and
+    /// `expected` is the handle of the control that lists it.
+    TableControlDanglingHandle
 };
 
 /// Version of the field and enum contract carried by DwgIntegrityDiagnostic.

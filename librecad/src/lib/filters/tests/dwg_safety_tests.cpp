@@ -33,6 +33,7 @@
 #include <fstream>
 #include <iterator>
 #include <limits>
+#include <map>
 #include <memory>
 #include <string>
 #include <unordered_map>
@@ -945,6 +946,7 @@ public:
     using dwgReader15::readDwgHandles;
     using dwgReader15::readDwgHeader;
     using dwgReader15::readFileHeader;
+    using dwgReader::publishDeferredTableFramePublications;
     using dwgReader::readDwgTables;
 
     explicit DwgTableStateReaderProbe(std::unique_ptr<dwgBuffer> buffer)
@@ -961,12 +963,20 @@ public:
 
     bool firstLinetypeRecordForTest(std::uint32_t& handle,
                                     std::uint64_t& offset) {
+        return firstTableRecordForTest(DRW::DwgLTypeControlObjectType, handle,
+                                       offset);
+    }
+
+    // The first record the control of the given type lists that has a frame.
+    bool firstTableRecordForTest(std::int16_t controlType,
+                                 std::uint32_t& handle,
+                                 std::uint64_t& offset) {
         for (const auto& entry : ObjectMap) {
             DwgObjectFrame frame;
             if (!frame.readAt(*fileBuf, version, entry.second.loc))
                 continue;
             dwgBuffer buffer(frame.body().data(), frame.body().size(), &decoder);
-            if (buffer.getObjType(version) != DRW::DwgLTypeControlObjectType)
+            if (buffer.getObjType(version) != controlType)
                 continue;
             buffer.resetPosition();
             DRW_ObjControl control;
@@ -1026,12 +1036,65 @@ public:
         return false;
     }
 
+    // Control-object handle by control type, for every table control the
+    // object map holds a decodable frame of.
+    std::map<std::int16_t, std::uint32_t> controlHandlesForTest() {
+        std::map<std::int16_t, std::uint32_t> result;
+        for (const auto& entry : ObjectMap) {
+            DwgObjectFrame frame;
+            if (!frame.readAt(*fileBuf, version, entry.second.loc))
+                continue;
+            dwgBuffer buffer(frame.body().data(), frame.body().size(), &decoder);
+            const std::int16_t type = buffer.getObjType(version);
+            if (buffer.isGood() && isTableControlType(type))
+                result.emplace(type, entry.first);
+        }
+        return result;
+    }
+
+    static bool isTableControlType(std::int16_t type) {
+        return type == DRW::DwgLTypeControlObjectType
+            || type == DRW::DwgLayerControlObjectType
+            || type == DRW::DwgStyleControlObjectType
+            || type == DRW::DwgDimStyleControlObjectType
+            || type == DRW::DwgVPortControlObjectType
+            || type == DRW::DwgBlockControlObjectType
+            || type == DRW::DwgAppIdControlObjectType;
+    }
+
     void seedTableStateForTest() {
         ltypemap.emplace(0x100u, new DRW_LType());
         layermap.emplace(0x101u, new DRW_Layer());
         m_ltypeNameOrder.emplace_back("stale linetype");
         m_layerNameOrder.emplace_back("stale layer");
         m_deferredRawObjects.emplace_back();
+    }
+
+    const std::vector<DwgIntegrityDiagnostic>& integrityDiagnosticsForTest()
+        const {
+        return m_integrityDiagnostics;
+    }
+
+    std::size_t entityParseFailuresForTest() const {
+        return m_entityParseFailures;
+    }
+
+    std::size_t linetypeCountForTest() const { return ltypemap.size(); }
+    std::size_t layerCountForTest() const { return layermap.size(); }
+    std::size_t blockRecordCountForTest() const {
+        return blockRecordmap.size();
+    }
+    bool hasLinetypeForTest(std::uint32_t handle) const {
+        return ltypemap.find(handle) != ltypemap.end();
+    }
+    const std::vector<std::string>& linetypeNameOrderForTest() const {
+        return m_ltypeNameOrder;
+    }
+    const std::vector<std::string>& layerNameOrderForTest() const {
+        return m_layerNameOrder;
+    }
+    std::size_t deferredTableFrameCountForTest() const {
+        return m_deferredTableFramePublications.size();
     }
 
     bool tableStateEmptyForTest() const {
@@ -5352,6 +5415,45 @@ std::vector<std::uint8_t> makeDuplicateBitShortControlBody() {
     body.putHandle(makeObjectHandle(0x621u)); // phantom entry
     body.putHandle(makeObjectHandle(0x622u)); // phantom entry
     return body.data();
+}
+
+// One complete R2000 table control frame (modular-short size, body, CRC).
+// `owned` is every owned handle in file order, the phantom entries of the
+// LTYPE and BLOCK controls included; `entryCount` is the declared count of
+// real entries (the phantom entries are not part of it).
+std::vector<std::uint8_t> makeTableControlFrame(
+    std::uint16_t controlType, std::uint32_t handle,
+    std::uint16_t entryCount, const std::vector<std::uint32_t>& owned) {
+    const bool bitShortCount =
+        controlType == DRW::DwgLTypeControlObjectType
+        || controlType == DRW::DwgUcsControlObjectType
+        || controlType == DRW::DwgVPortControlObjectType
+        || controlType == DRW::DwgAppIdControlObjectType
+        || controlType == DRW::DwgDimStyleControlObjectType;
+
+    dwgBufferW body;
+    body.putObjType(DRW::AC1015, controlType);
+    body.putRawLong32(0);  // R2000 object-size field
+    body.putHandle(makeObjectHandle(handle));
+    body.putBitShort(0);   // no EED
+    body.putBitLong(0);    // no reactors
+    if (bitShortCount)
+        body.putBitShort(entryCount);
+    else
+        body.putBitLong(entryCount);
+    if (controlType == DRW::DwgDimStyleControlObjectType)
+        body.putRawChar8(0);  // the unknown hard-handle counter
+    body.putHandle(makeObjectHandle(0));  // null control handle
+    body.putHandle(makeObjectHandle(0));  // null extension-dictionary handle
+    for (const std::uint32_t ownedHandle : owned)
+        body.putHandle(makeObjectHandle(ownedHandle));
+    body.alignToByte();
+
+    dwgBufferW frame;
+    frame.putModularShort(static_cast<std::int32_t>(body.data().size()));
+    frame.putBytes(body.data().data(), body.data().size());
+    frame.putRawShort16(frame.crc16(0xC0C1, 0, frame.data().size()));
+    return frame.data();
 }
 
 std::vector<std::uint8_t> makeNegativeClassInstanceBody() {
@@ -17424,27 +17526,175 @@ TEST_CASE("DWG malformed table records roll back the table phase",
     CHECK(source->m_reason == DRW_DwgFrameCoverageReason::None);
 }
 
-TEST_CASE("DWG missing table records roll back the table phase",
+namespace {
+
+// Reads the header, classes and handle map of the R2000 fixture into `reader`
+// so that its table phase can run.
+void prepareAc1015TableReader(DwgTableStateReaderProbe& reader,
+                              DRW_Header& header) {
+    reader.setVersionForTest(DRW::AC1015);
+    REQUIRE(reader.readFileHeader());
+    REQUIRE(reader.readDwgHeader(header));
+    REQUIRE(reader.readDwgClasses());
+    REQUIRE(reader.readDwgHandles());
+}
+
+class DwgTableChainProbe final : public DwgReadProbe {
+public:
+    std::size_t lineCount = 0;
+    void addLine(const DRW_Line&) override { ++lineCount; }
+};
+
+struct DwgRemainingPhases {
+    bool blocks = false;
+    bool entities = false;
+    bool objects = false;
+    std::size_t blockCount = 0;
+    std::size_t lineCount = 0;
+};
+
+// The phases a whole-file read runs after the table phase.
+DwgRemainingPhases readRemainingPhases(DwgTableStateReaderProbe& reader) {
+    DwgTableChainProbe interface;
+    DwgRemainingPhases result;
+    REQUIRE(reader.publishDeferredTableFramePublications(interface));
+    result.blocks = reader.readDwgBlocks(interface);
+    result.entities = reader.readDwgEntities(interface);
+    result.objects = reader.readDwgObjects(interface);
+    result.blockCount = interface.blockCount;
+    result.lineCount = interface.lineCount;
+    return result;
+}
+
+std::vector<DwgIntegrityDiagnostic> danglingControlDiagnostics(
+    const std::vector<DwgIntegrityDiagnostic>& diagnostics) {
+    std::vector<DwgIntegrityDiagnostic> result;
+    std::copy_if(diagnostics.cbegin(), diagnostics.cend(),
+                 std::back_inserter(result),
+                 [](const DwgIntegrityDiagnostic& diagnostic) {
+                     return diagnostic.kind
+                         == DwgIntegrityCheckKind::TableControlDanglingHandle;
+                 });
+    return result;
+}
+
+} // namespace
+
+TEST_CASE("DWG table controls skip an erased record and report it",
           "[dwg][safety][table][fixture]") {
+    // A drawing can keep the handle of an erased record in its table
+    // control's list while the record itself is gone from the object map
+    // (Extruder2.dwg does). That is not a malformed table: the entry is
+    // skipped, every other record of the table is read, and the skipped entry
+    // is reported as a warning.
+    auto bytes = readFile(std::filesystem::path(LIBRECAD_TEST_DIR) /
+                          "ordinary_enc_AC1015.dwg");
+    REQUIRE(!bytes.empty());
+
+    DwgTableStateReaderProbe untouched(std::make_unique<dwgBuffer>(
+        bytes.data(), bytes.size()));
+    DRW_Header untouchedHeader;
+    prepareAc1015TableReader(untouched, untouchedHeader);
+    dwgBuffer untouchedBuffer(bytes.data(), bytes.size());
+    REQUIRE(untouched.readDwgTables(untouchedHeader, &untouchedBuffer));
+    REQUIRE(untouched.linetypeCountForTest() >= 2u);
+    CHECK(danglingControlDiagnostics(untouched.integrityDiagnosticsForTest())
+              .empty());
+    // The table state as the table phase leaves it, before later phases
+    // consume the deferred receipts.
+    const std::size_t untouchedReceipts =
+        untouched.deferredTableFrameCountForTest();
+    const std::size_t untouchedBlockRecords =
+        untouched.blockRecordCountForTest();
+    const DwgRemainingPhases untouchedPhases = readRemainingPhases(untouched);
+    REQUIRE(untouchedPhases.blocks);
+    REQUIRE(untouchedPhases.entities);
+    REQUIRE(untouchedPhases.objects);
+
+    DwgTableStateReaderProbe reader(std::make_unique<dwgBuffer>(
+        bytes.data(), bytes.size()));
+    DRW_Header header;
+    prepareAc1015TableReader(reader, header);
+    std::uint32_t recordHandle = 0;
+    std::uint64_t unusedOffset = 0;
+    REQUIRE(reader.firstLinetypeRecordForTest(recordHandle, unusedOffset));
+    REQUIRE(untouched.hasLinetypeForTest(recordHandle));
+    const auto controlHandles = reader.controlHandlesForTest();
+    REQUIRE(controlHandles.count(DRW::DwgLTypeControlObjectType) == 1u);
+    reader.removeObjectForTest(recordHandle);
+
+    dwgBuffer tableBuffer(bytes.data(), bytes.size());
+    REQUIRE(reader.readDwgTables(header, &tableBuffer));
+
+    const std::size_t receipts = reader.deferredTableFrameCountForTest();
+    const std::size_t blockRecords = reader.blockRecordCountForTest();
+
+    // The drawing reads on: what the erased record does not own is untouched.
+    const DwgRemainingPhases phases = readRemainingPhases(reader);
+    CHECK(phases.blocks);
+    CHECK(phases.entities);
+    CHECK(phases.objects);
+    CHECK(phases.blockCount == untouchedPhases.blockCount);
+    CHECK(phases.lineCount == untouchedPhases.lineCount);
+    CHECK(reader.entityParseFailuresForTest() == 0u);
+
+    // Only the erased record is missing.
+    CHECK_FALSE(reader.hasLinetypeForTest(recordHandle));
+    CHECK(reader.linetypeCountForTest()
+          == untouched.linetypeCountForTest() - 1u);
+    CHECK(reader.layerCountForTest() == untouched.layerCountForTest());
+    CHECK(blockRecords == untouchedBlockRecords);
+    // Every control publishes a receipt and so does every record read; the
+    // erased record has none.
+    CHECK(receipts == untouchedReceipts - 1u);
+
+    // The record keeps its slot in the proxy-graphics index space.
+    const auto& order = reader.linetypeNameOrderForTest();
+    const auto& untouchedOrder = untouched.linetypeNameOrderForTest();
+    REQUIRE(order.size() == untouchedOrder.size());
+    CHECK(order.front().empty());
+    CHECK_FALSE(untouchedOrder.front().empty());
+    for (std::size_t i = 1; i < order.size(); ++i)
+        CHECK(order[i] == untouchedOrder[i]);
+
+    const auto dangling =
+        danglingControlDiagnostics(reader.integrityDiagnosticsForTest());
+    REQUIRE(dangling.size() == 1u);
+    CHECK(dangling.front().severity == DwgIntegritySeverity::Warning);
+    CHECK(dangling.front().hasLogicalHandle);
+    CHECK(dangling.front().logicalHandle == recordHandle);
+    CHECK(dangling.front().hasExpected);
+    CHECK(dangling.front().expected
+          == controlHandles.at(DRW::DwgLTypeControlObjectType));
+}
+
+TEST_CASE("DWG table phase rolls back after skipping an erased record",
+          "[dwg][safety][table][fixture]") {
+    // A failure later in the phase still restores every handle the phase
+    // consumed and leaves no table state, whatever it skipped before.
     auto bytes = readFile(std::filesystem::path(LIBRECAD_TEST_DIR) /
                           "ordinary_enc_AC1015.dwg");
     REQUIRE(!bytes.empty());
 
     DwgTableStateReaderProbe reader(std::make_unique<dwgBuffer>(
         bytes.data(), bytes.size()));
-    reader.setVersionForTest(DRW::AC1015);
-    REQUIRE(reader.readFileHeader());
-
     DRW_Header header;
-    REQUIRE(reader.readDwgHeader(header));
-    REQUIRE(reader.readDwgClasses());
-    REQUIRE(reader.readDwgHandles());
+    prepareAc1015TableReader(reader, header);
 
-    std::uint32_t recordHandle = 0;
+    std::uint32_t erasedHandle = 0;
     std::uint64_t unusedOffset = 0;
-    REQUIRE(reader.firstLinetypeRecordForTest(recordHandle, unusedOffset));
-    reader.removeObjectForTest(recordHandle);
+    REQUIRE(reader.firstLinetypeRecordForTest(erasedHandle, unusedOffset));
+    std::uint32_t layerHandle = 0;
+    std::uint64_t layerOffset = 0;
+    REQUIRE(reader.firstTableRecordForTest(
+        DRW::DwgLayerControlObjectType, layerHandle, layerOffset));
+    REQUIRE(layerOffset < bytes.size());
+    reader.removeObjectForTest(erasedHandle);
     const auto objectMapAfterRemoval = reader.ObjectMap;
+
+    // Corrupt a LAYER record's frame, which the phase reads after the
+    // linetype control that lists the erased record.
+    bytes[static_cast<std::size_t>(layerOffset)] ^= 0x80u;
 
     dwgBuffer tableBuffer(bytes.data(), bytes.size());
     CHECK_FALSE(reader.readDwgTables(header, &tableBuffer));
@@ -17457,7 +17707,166 @@ TEST_CASE("DWG missing table records roll back the table phase",
         CHECK(restored->second.handle == entry.second.handle);
         CHECK(restored->second.loc == entry.second.loc);
     }
-    CHECK(reader.ObjectMap.find(recordHandle) == reader.ObjectMap.end());
+    CHECK(reader.ObjectMap.find(erasedHandle) == reader.ObjectMap.end());
+    CHECK(reader.ObjectMap.find(layerHandle) != reader.ObjectMap.end());
+    // What was observed before the failure stays reported.
+    CHECK(danglingControlDiagnostics(reader.integrityDiagnosticsForTest())
+              .size() == 1u);
+}
+
+namespace {
+
+// Seven table controls and nothing else: enough for the table phase to run
+// from the first control to the last. The records the controls list are not in
+// the object map.
+struct DwgControlOnlyDrawing {
+    std::map<std::int16_t, std::uint32_t> controls;
+    std::vector<std::uint8_t> bytes;
+    std::vector<objHandle> objects;
+
+    std::uint32_t handleOf(std::int16_t controlType) const {
+        return controls.at(controlType);
+    }
+
+    void add(std::uint16_t type, std::uint16_t entryCount,
+             const std::vector<std::uint32_t>& owned) {
+        const std::uint32_t handle = handleOf(static_cast<std::int16_t>(type));
+        const auto frame = makeTableControlFrame(type, handle, entryCount,
+                                                 owned);
+        REQUIRE(!frame.empty());
+        objects.emplace_back(type, handle, bytes.size());
+        bytes.insert(bytes.end(), frame.cbegin(), frame.cend());
+    }
+
+    // `controlHandles` are the handles the header names for the controls;
+    // `layerOwned` is what the LAYER control lists. The other controls list
+    // one absent record each (the LTYPE and BLOCK controls also their two
+    // phantom entries).
+    explicit DwgControlOnlyDrawing(
+        const std::map<std::int16_t, std::uint32_t>& controlHandles,
+        const std::vector<std::uint32_t>& layerOwned = {0x9010u})
+        : controls(controlHandles) {
+        add(DRW::DwgLTypeControlObjectType, 1, {0x9001u, 0x9002u, 0x9003u});
+        add(DRW::DwgLayerControlObjectType,
+            static_cast<std::uint16_t>(layerOwned.size()), layerOwned);
+        add(DRW::DwgStyleControlObjectType, 0, {});
+        add(DRW::DwgDimStyleControlObjectType, 1, {0x9020u});
+        add(DRW::DwgVPortControlObjectType, 0, {});
+        add(DRW::DwgBlockControlObjectType, 0, {0x9030u, 0x9031u});
+        add(DRW::DwgAppIdControlObjectType, 0, {});
+    }
+
+    void fill(DwgTableStateReaderProbe& reader) const {
+        reader.setVersionForTest(DRW::AC1015);
+        for (const objHandle& object : objects)
+            reader.ObjectMap.emplace(object.handle, object);
+    }
+};
+
+// The control handles the R2000 fixture's header names, and the header.
+struct DwgControlOnlyHeader {
+    DRW_Header header;
+    std::map<std::int16_t, std::uint32_t> controls;
+
+    DwgControlOnlyHeader() {
+        auto bytes = readFile(std::filesystem::path(LIBRECAD_TEST_DIR) /
+                              "ordinary_enc_AC1015.dwg");
+        REQUIRE(!bytes.empty());
+        DwgTableStateReaderProbe source(std::make_unique<dwgBuffer>(
+            bytes.data(), bytes.size()));
+        prepareAc1015TableReader(source, header);
+        controls = source.controlHandlesForTest();
+        REQUIRE(controls.size() == 7u);
+    }
+};
+
+} // namespace
+
+TEST_CASE("DWG table controls skip every absent entry they list",
+          "[dwg][safety][table]") {
+    DwgControlOnlyHeader fixture;
+    DwgControlOnlyDrawing drawing(fixture.controls);
+    DwgTableStateReaderProbe reader(std::make_unique<dwgBuffer>(
+        drawing.bytes.data(), drawing.bytes.size()));
+    drawing.fill(reader);
+
+    dwgBuffer buffer(drawing.bytes.data(), drawing.bytes.size());
+    REQUIRE(reader.readDwgTables(fixture.header, &buffer));
+
+    // Every control was consumed and published as a receipt; no record was
+    // read because none exists.
+    CHECK(reader.ObjectMap.empty());
+    CHECK(reader.deferredTableFrameCountForTest() == 7u);
+    CHECK(reader.linetypeCountForTest() == 0u);
+    CHECK(reader.layerCountForTest() == 0u);
+    CHECK(reader.blockRecordCountForTest() == 0u);
+    // The linetype and layer records keep their slots in the proxy index
+    // spaces, so a later record does not shift.
+    CHECK(reader.linetypeNameOrderForTest().size() == 3u);
+    CHECK(reader.layerNameOrderForTest().size() == 1u);
+
+    std::vector<std::pair<std::uint32_t, std::uint64_t>> reported;
+    for (const auto& diagnostic : danglingControlDiagnostics(
+             reader.integrityDiagnosticsForTest())) {
+        CHECK(diagnostic.severity == DwgIntegritySeverity::Warning);
+        CHECK(diagnostic.phase == DwgIntegrityPhase::SectionParser);
+        REQUIRE(diagnostic.hasLogicalHandle);
+        REQUIRE(diagnostic.hasExpected);
+        reported.emplace_back(diagnostic.logicalHandle, diagnostic.expected);
+    }
+    const auto control = [&drawing](std::int16_t type) {
+        return static_cast<std::uint64_t>(drawing.handleOf(type));
+    };
+    const std::vector<std::pair<std::uint32_t, std::uint64_t>> expected{
+        {0x9001u, control(DRW::DwgLTypeControlObjectType)},
+        {0x9002u, control(DRW::DwgLTypeControlObjectType)},
+        {0x9003u, control(DRW::DwgLTypeControlObjectType)},
+        {0x9010u, control(DRW::DwgLayerControlObjectType)},
+        {0x9020u, control(DRW::DwgDimStyleControlObjectType)},
+        {0x9030u, control(DRW::DwgBlockControlObjectType)},
+        {0x9031u, control(DRW::DwgBlockControlObjectType)}};
+    CHECK(reported == expected);
+}
+
+TEST_CASE("DWG table controls still reject contradictory claims",
+          "[dwg][safety][table]") {
+    DwgControlOnlyHeader fixture;
+    const auto layerOwned = [&fixture](std::int16_t controlType) {
+        return std::vector<std::uint32_t>{fixture.controls.at(controlType)};
+    };
+    struct Case {
+        const char* name;
+        std::vector<std::uint32_t> layerOwned;
+    };
+    // The LAYER control lists an object another control owns, or an entry the
+    // LTYPE control already claimed. Neither is an erased record: two owners
+    // contradict each other, so the phase fails and rolls back.
+    const Case cases[] = {
+        {"a control that came before",
+         layerOwned(DRW::DwgLTypeControlObjectType)},
+        {"a control that follows", layerOwned(DRW::DwgStyleControlObjectType)},
+        {"an entry an earlier control claimed", {0x9001u}}};
+    for (const Case& scenario : cases) {
+        DYNAMIC_SECTION(scenario.name) {
+            DwgControlOnlyDrawing drawing(fixture.controls,
+                                          scenario.layerOwned);
+            DwgTableStateReaderProbe reader(std::make_unique<dwgBuffer>(
+                drawing.bytes.data(), drawing.bytes.size()));
+            drawing.fill(reader);
+            const auto originalObjectMap = reader.ObjectMap;
+
+            dwgBuffer buffer(drawing.bytes.data(), drawing.bytes.size());
+            CHECK_FALSE(reader.readDwgTables(fixture.header, &buffer));
+            CHECK(reader.tableStateEmptyForTest());
+            REQUIRE(reader.ObjectMap.size() == originalObjectMap.size());
+            for (const auto& entry : originalObjectMap) {
+                const auto restored = reader.ObjectMap.find(entry.first);
+                REQUIRE(restored != reader.ObjectMap.end());
+                CHECK(restored->second.type == entry.second.type);
+                CHECK(restored->second.loc == entry.second.loc);
+            }
+        }
+    }
 }
 
 TEST_CASE("DWG TABLES rejects a mismatched control type before record parsing",

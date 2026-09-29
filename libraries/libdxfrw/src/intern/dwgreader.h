@@ -599,6 +599,10 @@ protected:
       bool hasValues = false) noexcept;
   void recordObjectFrameFailure(const objHandle &object,
                                 DwgIntegrityAddressSpace offsetSpace) noexcept;
+  // Warning-level observation of an erased record a table control still lists,
+  // see DwgIntegrityCheckKind::TableControlDanglingHandle.
+  void recordDanglingControlHandle(std::uint32_t controlHandle,
+                                   std::uint32_t recordHandle) noexcept;
   void
   recordEntityFailure(const objHandle &object, std::int16_t type,
                       DwgEntityFailurePhase phase,

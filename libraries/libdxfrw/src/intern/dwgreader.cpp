@@ -606,6 +606,25 @@ void dwgReader::recordObjectFrameFailure(
       object.handle != DRW::NoHandle);
 }
 
+void dwgReader::recordDanglingControlHandle(
+    std::uint32_t controlHandle, std::uint32_t recordHandle) noexcept {
+  try {
+    DwgIntegrityDiagnostic diagnostic;
+    diagnostic.severity = DwgIntegritySeverity::Warning;
+    diagnostic.phase = DwgIntegrityPhase::SectionParser;
+    diagnostic.kind = DwgIntegrityCheckKind::TableControlDanglingHandle;
+    diagnostic.logicalSectionId = secEnum::OBJECTS;
+    diagnostic.sectionName = "AcDb:AcDbObjects";
+    diagnostic.logicalHandle = recordHandle;
+    diagnostic.hasLogicalHandle = true;
+    diagnostic.expected = controlHandle;
+    diagnostic.hasExpected = true;
+    addIntegrityDiagnostic(std::move(diagnostic));
+  } catch (...) {
+    // Integrity reporting is optional and must never alter parsing.
+  }
+}
+
 void dwgReader::recordEntityFailure(const objHandle &object, std::int16_t type,
                                     DwgEntityFailurePhase phase,
                                     std::uint32_t blockRecordHandle) noexcept {
@@ -6627,17 +6646,34 @@ bool dwgReader::readDwgTables(DRW_Header &hdr, dwgBuffer *dbuf,
     // schema; they are not the standard object owner/reactor tail.
     return true;
   };
+  // Every handle a control lists is claimed exactly once across all controls.
+  // A listed handle that has no entry in the object map is an erased (purged)
+  // record the producer left in the control's list (Extruder2.dwg's
+  // BLOCK_CONTROL carries one next to null entries), so it is skipped with a
+  // warning instead of failing the table phase. A handle another control
+  // object already consumed, or another control already claimed, is still a
+  // contradiction between two owners and fails.
+  const std::unordered_set<std::uint32_t> controlObjectHandles{
+      hdr.linetypeCtrl, hdr.layerCtrl,  hdr.styleCtrl, hdr.dimstyleCtrl,
+      hdr.vportCtrl,    hdr.blockCtrl,  hdr.appidCtrl, hdr.viewCtrl,
+      hdr.ucsCtrl,      hdr.vpEntHeaderCtrl};
   const auto claimControlHandles = [&](const DRW_ObjControl &control) {
     for (const std::uint32_t handle : control.handlesList) {
-      if (ObjectMap.find(handle) == ObjectMap.end()) {
-        DRW_DBG("WARNING: control handle not found ");
-        DRW_DBGH(handle);
-        DRW_DBG("\\n");
-        return false;
-      }
       if (!claimedTableHandles.insert(handle).second) {
         return false;
       }
+      if (ObjectMap.find(handle) != ObjectMap.end())
+        continue;
+      if (controlObjectHandles.find(handle) != controlObjectHandles.end()) {
+        DRW_DBG("WARNING: control handle already consumed ");
+        DRW_DBGH(handle);
+        DRW_DBG("\n");
+        return false;
+      }
+      DRW_DBG("WARNING: control lists an absent (erased) record ");
+      DRW_DBGH(handle);
+      DRW_DBG("\n");
+      recordDanglingControlHandle(control.handle, handle);
     }
     return true;
   };
