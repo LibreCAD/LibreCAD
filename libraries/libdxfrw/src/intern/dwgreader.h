@@ -684,11 +684,14 @@ protected:
   // (optional) says how far that failure reaches:
   //  - Complete: no failure; the walk returned true.
   //  - ContainedGroupRejection: the only failures were child-owner mismatches
-  //    inside INSERT/POLYLINE groups (legacy or mapped).  Each group was
-  //    rejected as a whole (staged state terminalized, discovered frames
-  //    quarantined, one entity failure counted) and every other frame of the
-  //    walk was read on its own merits, so the enclosing section may
-  //    continue.
+  //    inside INSERT/POLYLINE groups (legacy or mapped): a child that names a
+  //    foreign owner, or that names an owner which does not declare it.  A
+  //    group with such a child was rejected as a whole (staged state
+  //    terminalized, discovered frames quarantined, one entity failure
+  //    counted); a child rejected for naming an owner that does not declare it
+  //    was rejected on its own and the owner was left alone.  Every other
+  //    frame of the walk was read on its own merits, so the enclosing section
+  //    may continue.
   //  - Structural: anything else (unreadable frame, handle identity mismatch,
   //    broken chain, unclearable compound state, ...).  The section fails.
   // The value is Structural until the walk reaches its normal exit, so every
@@ -719,7 +722,8 @@ protected:
   // rejections that leave the block's other entities sound, which the walk
   // counts in `containedGroups` and goes on:
   //  - a contained group rejection (see DwgBlockWalkOutcome): the group was
-  //    rejected as a whole before anything of it reached the journal;
+  //    rejected as a whole before anything of it reached the journal (and a
+  //    child rejected on its own never reached it);
   //  - a simple entity whose typed body does not decode although its frame,
   //    handle and owner are sound: its frame is Failed and unpublished and its
   //    journal events are dropped.
@@ -1066,10 +1070,37 @@ protected:
   //! foreign owner: counts the conflict and marks the entity read as an owner
   //! mismatch.
   void noteGroupOwnerConflict() noexcept;
+  //! Record a compound child (ATTRIB, VERTEX, SEQEND) rejected on its own
+  //! because it names an owner that does not declare it. Best effort: when
+  //! the record cannot be kept, a group that declares the child fails as a
+  //! plain (structural) rejection instead of a contained one.
+  void noteDisownedChild(std::uint32_t handle) noexcept;
+  [[nodiscard]] bool isDisownedChild(std::uint32_t handle) const noexcept;
+  //! A child was rejected because the owner it names does not declare it. The
+  //! owner is left alone; the child is recorded as disowned and every pending
+  //! group that does declare it is rejected whole (a declared child that names
+  //! a foreign owner). Returns Rejected, for the stager that found the child.
+  [[nodiscard]] DwgMappedEntityOutcome disownChild(std::uint32_t handle);
+  //! Reject the pending groups that declare `child`, each as a group with a
+  //! child that names a foreign owner. The group whose aggregate is running
+  //! (m_aggregatingGroup) is left to its aggregate, which recognizes the child
+  //! as disowned once every declared child was staged.
+  void rejectPendingGroupsDeclaring(std::uint32_t child);
+  //! Dispose of staged orphan ATTRIBs of `owner` that the group does not
+  //! declare. False when a frame could not be abandoned; the caller then
+  //! rejects the whole owner.
+  [[nodiscard]] bool disposeUndeclaredOrphanAttributes(
+      std::uint32_t owner, const std::vector<std::uint32_t> &handles);
+  //! The same for staged orphan VERTICEs of a POLYLINE.
+  [[nodiscard]] bool disposeUndeclaredOrphanVertices(
+      std::uint32_t owner, const std::vector<std::uint32_t> &handles);
   struct ForeignChildOwners {
     //! (owner the child is staged under, child handle), in declaration order.
     std::vector<std::pair<std::uint32_t, std::uint32_t>> children;
     bool seqEnd{false};
+    //! A declared child was rejected on its own because the owner it names
+    //! does not declare it (see noteDisownedChild).
+    bool disowned{false};
   };
   //! After every declared child of the group `groupHandle` has been staged and
   //! the group still cannot commit: true when the only reason is that some of
@@ -1206,6 +1237,16 @@ public:
   // parents must never be published later by an out-of-order child.
   std::unordered_set<std::uint32_t> m_invalidInsertOwners;
   std::unordered_set<std::uint32_t> m_invalidPolylineOwners;
+  // Compound children rejected on their own because the owner they name does
+  // not declare them (an ATTRIB naming an INSERT whose attribute list does not
+  // hold it, ...). Rejecting the child is all that is done to the owner it
+  // names: the owner may be a real group whose own children are all present,
+  // and it stays intact. A group that declares such a child cannot be
+  // completed and is rejected as one whose child names a foreign owner; this
+  // set is how it recognizes the child after the fact, however the frames were
+  // ordered. A walk compares the size of the set across an entity read to see
+  // that the read disposed of a child (see walkBlockRecordEntities).
+  std::unordered_set<std::uint32_t> m_disownedChildHandles;
   // Children of a BLOCK_RECORD whose header or scope delimiters failed
   // validation must not be republished by the later catch-all entity sweep.
   std::unordered_set<std::uint32_t> m_quarantinedEntityHandles;
@@ -1324,6 +1365,8 @@ protected:
   // or handle mismatch nothing about the surrounding walk is in doubt. The
   // per-entity flags above are reset by every nested read, so a walk compares
   // this counter across one entity read instead (see noteGroupOwnerConflict).
+  // A child rejected on its own is counted differently, by
+  // m_disownedChildHandles.
   std::uint64_t m_groupOwnerConflicts{0};
   // Counts the entities the recovery sweep rejected because their common
   // owner handle names no BLOCK_RECORD of the drawing: the owner was erased or
@@ -1352,6 +1395,12 @@ protected:
   // these records is not published (see the INSERT case of the entity reader):
   // its block is gone, so the drawing is inconsistent, not merely incomplete.
   std::unordered_set<std::uint32_t> m_danglingBlockRecords;
+  // The INSERT or POLYLINE whose aggregate is staging its declared children
+  // right now (NoHandle: none). Its children are read one after the other by
+  // the aggregate itself, which decides the group's fate when all of them were
+  // staged, so a child rejected in the meantime must not reject it under the
+  // aggregate's feet.
+  std::uint32_t m_aggregatingGroup{DRW::NoHandle};
 
   struct DwgEntityFramePublicationCapture {
     DRW_DwgFramePublication publication;

@@ -29911,6 +29911,147 @@ TEST_CASE("RS_FilterDXFRW contains a serialized group's foreign child owner",
   std::remove(malformedPath.c_str());
 }
 
+namespace {
+
+// Two serialized INSERT groups for the R2000 file tests: INSERT 0x201 with the
+// ATTRIBs 0x202 and 0x203 and the SEQEND 0x204, then INSERT 0x205 with the
+// ATTRIB 0x206 and the SEQEND 0x207, all in model space.
+class SerializedTwoInsertGroupsIface : public EmptyIface {
+public:
+  dwgRW *m_writer{nullptr};
+  std::vector<DRW_Insert> m_inserts;
+  std::vector<DRW_DwgFramePublication> m_framePublications;
+  DRW_DwgFrameCoverageReport m_frameCoverage;
+  bool m_receivedFrameCoverage{false};
+
+  void writeEntities() override {
+    REQUIRE(m_writer != nullptr);
+    const auto makeAttrib = [](std::uint32_t handle) {
+      auto attrib = std::make_shared<DRW_Attrib>();
+      attrib->handle = handle;
+      attrib->styleH.ref = 0x13;
+      attrib->basePoint = DRW_Coord{2.0, 3.0, 0.0};
+      attrib->secPoint = attrib->basePoint;
+      attrib->extPoint = DRW_Coord{0.0, 0.0, 1.0};
+      attrib->height = 2.5;
+      attrib->text = "attribute";
+      attrib->tag = "TAG";
+      attrib->attribFlags = 1;
+      return attrib;
+    };
+    DRW_Insert first;
+    first.handle = 0x201;
+    first.blockRecH.ref = DRW::DwgModelSpaceBlockRecordHandle;
+    first.seqendH.ref = 0x204;
+    first.attlist.push_back(makeAttrib(0x202));
+    first.attlist.push_back(makeAttrib(0x203));
+    REQUIRE(m_writer->writeInsert(&first));
+
+    DRW_Insert second;
+    second.handle = 0x205;
+    second.blockRecH.ref = DRW::DwgModelSpaceBlockRecordHandle;
+    second.seqendH.ref = 0x207;
+    second.attlist.push_back(makeAttrib(0x206));
+    REQUIRE(m_writer->writeInsert(&second));
+  }
+
+  void addInsert(const DRW_Insert &insert) override {
+    m_inserts.push_back(insert);
+  }
+
+  void
+  addDwgFramePublication(const DRW_DwgFramePublication &publication) override {
+    m_framePublications.push_back(publication);
+  }
+
+  void
+  addDwgFrameCoverageReport(const DRW_DwgFrameCoverageReport &report) override {
+    m_frameCoverage = report;
+    m_receivedFrameCoverage = true;
+  }
+};
+
+} // namespace
+
+// The whole-file view of a group whose child names another group of the file.
+// The declaring group is dropped as one counted entity failure and the file
+// still reads; the group the child names, which the child only claims to belong
+// to, is read on its own merits and reaches the graph.
+TEST_CASE("RS_FilterDXFRW contains a serialized group whose child names another "
+          "group",
+          "[dwg-write][filter-roundtrip][insert][safety][external]") {
+  ensureQtSettings();
+  const bool foreignFirst = GENERATE(false, true);
+  INFO("the " << (foreignFirst ? "first" : "last")
+       << " ATTRIB of the first group names the second group");
+  const std::string validPath = tempPath("external_named_group_valid_r2000.dwg");
+  const std::string malformedPath =
+      tempPath("external_named_group_mismatch_r2000.dwg");
+  std::remove(validPath.c_str());
+  std::remove(malformedPath.c_str());
+
+  {
+    dwgRW writer(validPath.c_str());
+    SerializedTwoInsertGroupsIface writeIface;
+    writeIface.m_writer = &writer;
+    REQUIRE(writer.write(&writeIface, DRW::AC1015, /*bin=*/false));
+  }
+  rewriteLegacyOwner(validPath, malformedPath, foreignFirst ? 0x202 : 0x203,
+                     /*ATTRIB*/ 2, 0x201, 0x205);
+
+  SerializedTwoInsertGroupsIface lowLevelRead;
+  {
+    dwgRW reader(malformedPath.c_str());
+    REQUIRE(reader.read(&lowLevelRead, /*ext=*/false));
+    CHECK(reader.getError() == DRW::BAD_NONE);
+    CHECK(reader.getEntityParseFailures() >= 1);
+  }
+  REQUIRE(lowLevelRead.m_inserts.size() == 1u);
+  CHECK(lowLevelRead.m_inserts.front().handle == 0x205u);
+  CHECK(lowLevelRead.m_inserts.front().attlist.size() == 1u);
+  REQUIRE(lowLevelRead.m_receivedFrameCoverage);
+  CHECK(lowLevelRead.m_frameCoverage.m_status ==
+        DRW_DwgFrameCoverageStatus::FinalizedPartial);
+  const auto coverageFor = [&](std::uint32_t handle) {
+    return std::find_if(lowLevelRead.m_frameCoverage.m_entries.cbegin(),
+                        lowLevelRead.m_frameCoverage.m_entries.cend(),
+                        [handle](const DRW_DwgFrameCoverageEntry &entry) {
+                          return entry.m_handle == handle;
+                        });
+  };
+  for (const std::uint32_t handle : {0x201u, 0x202u, 0x203u, 0x204u}) {
+    const auto entry = coverageFor(handle);
+    REQUIRE(entry != lowLevelRead.m_frameCoverage.m_entries.cend());
+    CHECK(entry->m_disposition != DRW_DwgFrameDisposition::Published);
+    CHECK(entry->m_publicationCount == 0u);
+  }
+  for (const std::uint32_t handle : {0x205u, 0x206u, 0x207u}) {
+    const auto entry = coverageFor(handle);
+    REQUIRE(entry != lowLevelRead.m_frameCoverage.m_entries.cend());
+    CHECK(entry->m_disposition == DRW_DwgFrameDisposition::Published);
+    CHECK(entry->m_publicationCount == 1u);
+  }
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(malformedPath),
+                              RS2::FormatDWG));
+  }
+  CHECK_FALSE(
+      graphic.dwgAdvancedMetadata().dwgFramePublicationCoverageComplete());
+  std::size_t inserts = 0;
+  for (RS_Entity *entity :
+       lc::LC_ContainerTraverser{graphic, RS2::ResolveNone}.entities()) {
+    if (entity != nullptr && entity->rtti() == RS2::EntityInsert)
+      ++inserts;
+  }
+  CHECK(inserts == 1u);
+
+  std::remove(validPath.c_str());
+  std::remove(malformedPath.c_str());
+}
+
 TEST_CASE("RS_FilterDXFRW preserves reflected MINSERT source fields across DWG "
           "versions",
           "[dwg-write][filter-roundtrip][insert][extrusion]") {

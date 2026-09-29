@@ -3639,6 +3639,123 @@ void dwgReader::noteGroupOwnerConflict() noexcept {
     ++m_groupOwnerConflicts;
 }
 
+void dwgReader::noteDisownedChild(std::uint32_t handle) noexcept {
+  if (handle == DRW::NoHandle)
+    return;
+  try {
+    m_disownedChildHandles.insert(handle);
+  } catch (...) {
+    // Without the record a group declaring this child fails as a plain
+    // rejection instead of a contained one: the safe direction.
+  }
+}
+
+bool dwgReader::isDisownedChild(std::uint32_t handle) const noexcept {
+  return handle != DRW::NoHandle &&
+         m_disownedChildHandles.find(handle) != m_disownedChildHandles.end();
+}
+
+dwgReader::DwgMappedEntityOutcome dwgReader::disownChild(std::uint32_t handle) {
+  noteDisownedChild(handle);
+  rejectPendingGroupsDeclaring(handle);
+  return DwgMappedEntityOutcome::Rejected;
+}
+
+void dwgReader::rejectPendingGroupsDeclaring(std::uint32_t child) {
+  if (child == DRW::NoHandle)
+    return;
+  std::vector<std::uint32_t> inserts;
+  std::vector<std::uint32_t> polylines;
+  try {
+    for (const auto &item : m_pendingInsertStates) {
+      if (item.first == m_aggregatingGroup)
+        continue;
+      const DRW_Insert &insert = item.second.entity;
+      if (insert.seqendH.ref == child ||
+          std::any_of(insert.attribHandles.cbegin(),
+                      insert.attribHandles.cend(),
+                      [child](const dwgHandle &declared) {
+                        return declared.ref == child;
+                      })) {
+        inserts.push_back(item.first);
+      }
+    }
+    for (const auto &item : m_pendingPolylineStates) {
+      if (item.first == m_aggregatingGroup)
+        continue;
+      const DRW_Polyline &polyline = item.second.entity;
+      if (polyline.seqEndH.ref == child ||
+          std::find(polyline.hadlesList.cbegin(), polyline.hadlesList.cend(),
+                    child) != polyline.hadlesList.cend()) {
+        polylines.push_back(item.first);
+      }
+    }
+  } catch (...) {
+    // The groups stay pending; whatever is left of them is terminalized as an
+    // unresolved compound state, which is a structural failure.
+    return;
+  }
+  for (const std::uint32_t handle : inserts) {
+    terminalizeInsertGroup(handle, DwgInsertTerminalReason::MalformedGroup);
+    if (m_pendingInsertStates.find(handle) == m_pendingInsertStates.end())
+      noteGroupOwnerConflict();
+  }
+  for (const std::uint32_t handle : polylines) {
+    terminalizePendingPolylineState(handle,
+                                    DwgInsertTerminalReason::MalformedGroup);
+    if (m_pendingPolylineStates.find(handle) == m_pendingPolylineStates.end())
+      noteGroupOwnerConflict();
+  }
+}
+
+bool dwgReader::disposeUndeclaredOrphanAttributes(
+    std::uint32_t owner, const std::vector<std::uint32_t> &handles) {
+  const auto bucketIt = m_orphanAttribStates.find(owner);
+  if (bucketIt == m_orphanAttribStates.end())
+    return true;
+  std::vector<StagedAttribState> &attributes = bucketIt->second.attributes;
+  for (const std::uint32_t handle : handles) {
+    const auto attributeIt = std::find_if(
+        attributes.begin(), attributes.end(),
+        [handle](const StagedAttribState &attribute) {
+          return attribute.entity != nullptr && attribute.entity->handle == handle;
+        });
+    if (attributeIt == attributes.end())
+      continue;
+    if (!abandonStagedFrame(attributeIt->frame))
+      return false;
+    noteDisownedChild(handle);
+    attributes.erase(attributeIt);
+    ++m_entityParseFailures;
+    rejectPendingGroupsDeclaring(handle);
+  }
+  return true;
+}
+
+bool dwgReader::disposeUndeclaredOrphanVertices(
+    std::uint32_t owner, const std::vector<std::uint32_t> &handles) {
+  const auto bucketIt = m_orphanPolylineVertexStates.find(owner);
+  if (bucketIt == m_orphanPolylineVertexStates.end())
+    return true;
+  std::vector<StagedVertexState> &vertices = bucketIt->second.vertices;
+  for (const std::uint32_t handle : handles) {
+    const auto vertexIt = std::find_if(
+        vertices.begin(), vertices.end(),
+        [handle](const StagedVertexState &vertex) {
+          return vertex.entity.handle == handle;
+        });
+    if (vertexIt == vertices.end())
+      continue;
+    if (!abandonStagedFrame(vertexIt->frame))
+      return false;
+    noteDisownedChild(handle);
+    vertices.erase(vertexIt);
+    ++m_entityParseFailures;
+    rejectPendingGroupsDeclaring(handle);
+  }
+  return true;
+}
+
 bool dwgReader::declaredChildrenNameForeignOwner(
     std::uint32_t groupHandle, const std::vector<std::uint32_t> &children,
     std::uint32_t sequenceHandle, bool polyline,
@@ -3702,6 +3819,12 @@ bool dwgReader::declaredChildrenNameForeignOwner(
           }
         }
       }
+      // Rejected on its own because the owner it names does not declare it
+      // (see noteDisownedChild): nothing of it is staged any more.
+      if (!accountedFor && isDisownedChild(child)) {
+        foreign.disowned = true;
+        accountedFor = true;
+      }
       // A declared child that is staged nowhere is a missing or unreadable
       // frame, not a foreign owner: the group is incomplete, which stays a
       // structural failure.
@@ -3712,16 +3835,21 @@ bool dwgReader::declaredChildrenNameForeignOwner(
     }
     if (sequenceHandle != DRW::NoHandle) {
       const auto sequenceIt = m_stagedSeqEnds.find(sequenceHandle);
-      if (sequenceIt == m_stagedSeqEnds.cend())
-        return false;
-      if (sequenceIt->second.owner != groupHandle)
+      if (sequenceIt == m_stagedSeqEnds.cend()) {
+        if (!isDisownedChild(sequenceHandle)) {
+          foreign = ForeignChildOwners{};
+          return false;
+        }
+        foreign.disowned = true;
+      } else if (sequenceIt->second.owner != groupHandle) {
         foreign.seqEnd = true;
+      }
     }
   } catch (...) {
     foreign = ForeignChildOwners{};
     return false;
   }
-  return !foreign.children.empty() || foreign.seqEnd;
+  return !foreign.children.empty() || foreign.seqEnd || foreign.disowned;
 }
 
 void dwgReader::disposeForeignOwnedChildren(const ForeignChildOwners &foreign,
@@ -3783,15 +3911,19 @@ dwgReader::stagePendingInsert(DRW_Insert &&insert,
   const auto orphanIt = m_orphanAttribStates.find(insert.handle);
   if (orphanIt != m_orphanAttribStates.end()) {
     std::vector<std::uint32_t> handles;
+    // ATTRIBs that name this INSERT but that it does not declare. They are not
+    // members of the group; the INSERT does not answer for them (see
+    // noteDisownedChild).
+    std::vector<std::uint32_t> undeclared;
     try {
       handles.reserve(orphanIt->second.attributes.size());
+      undeclared.reserve(orphanIt->second.attributes.size());
     } catch (...) {
       terminalizeOrphanAttribOwner(insert.handle);
       return DwgMappedEntityOutcome::Rejected;
     }
     for (const StagedAttribState &attribute : orphanIt->second.attributes) {
       if (attribute.entity == nullptr ||
-          !isExpectedAttribute(insert, *attribute.entity, version) ||
           std::find(handles.cbegin(), handles.cend(),
                     attribute.entity->handle) != handles.cend()) {
         terminalizeOrphanAttribOwner(insert.handle);
@@ -3799,6 +3931,14 @@ dwgReader::stagePendingInsert(DRW_Insert &&insert,
         return DwgMappedEntityOutcome::Rejected;
       }
       handles.push_back(attribute.entity->handle);
+      if (!isExpectedAttribute(insert, *attribute.entity, version))
+        undeclared.push_back(attribute.entity->handle);
+    }
+    if (!undeclared.empty() &&
+        !disposeUndeclaredOrphanAttributes(insert.handle, undeclared)) {
+      terminalizeOrphanAttribOwner(insert.handle);
+      (void)reportDwgFrameTransitionFailure(DwgSourceFrameId{insert.handle});
+      return DwgMappedEntityOutcome::Rejected;
     }
   }
 
@@ -3856,6 +3996,27 @@ dwgReader::stagePendingInsert(DRW_Insert &&insert,
   return tryCommitPendingInsert(inserted->first, intfa);
 }
 
+namespace {
+
+// Names the group whose aggregate is staging its declared children for as long
+// as the aggregate runs (see dwgReader::m_aggregatingGroup).
+class AggregatingGroupScope {
+public:
+  AggregatingGroupScope(std::uint32_t &slot, std::uint32_t handle) noexcept
+      : m_slot(slot), m_previous(slot) {
+    m_slot = handle;
+  }
+  ~AggregatingGroupScope() { m_slot = m_previous; }
+  AggregatingGroupScope(const AggregatingGroupScope &) = delete;
+  AggregatingGroupScope &operator=(const AggregatingGroupScope &) = delete;
+
+private:
+  std::uint32_t &m_slot;
+  std::uint32_t m_previous;
+};
+
+} // namespace
+
 dwgReader::DwgMappedEntityOutcome dwgReader::stageMappedInsertAggregate(
     DRW_Insert &&insert, const DRW_DwgFramePublication &publication,
     dwgBuffer *dbuf, DRW_Interface &intfa,
@@ -3868,6 +4029,8 @@ dwgReader::DwgMappedEntityOutcome dwgReader::stageMappedInsertAggregate(
   }
 
   const std::uint32_t insertHandle = insert.handle;
+  const AggregatingGroupScope aggregatingScope(m_aggregatingGroup,
+                                               insertHandle);
   std::vector<std::uint32_t> discoveredHandles;
   const auto reject = [this, insertHandle, &discoveredHandles]() {
     terminalizeInsertGroup(insertHandle,
@@ -3972,12 +4135,16 @@ dwgReader::DwgMappedEntityOutcome dwgReader::stageMappedInsertAggregate(
 
     // The INSERT handle list defines ATTRIB order. The set above is only
     // for duplicate detection; iterating it would reorder the callback.
+    // A declared child rejected on its own (it names an owner that does not
+    // declare it) does not end the loop: the group is rejected below, with
+    // every other declared child accounted for.
     for (const std::uint32_t declared : declaredAttributeHandles) {
-      if (!stageDeclaredChild(declared))
+      if (!stageDeclaredChild(declared) && !isDisownedChild(declared))
         return reject();
     }
     if (sequenceHandle != DRW::NoHandle &&
-        !stageDeclaredChild(sequenceHandle)) {
+        !stageDeclaredChild(sequenceHandle) &&
+        !isDisownedChild(sequenceHandle)) {
       return reject();
     }
 
@@ -4073,6 +4240,7 @@ dwgReader::DwgMappedEntityOutcome dwgReader::stageLegacyInsertAggregate(
   const std::uint32_t firstHandle = insert.attribHandles.front().ref;
   const std::uint32_t lastHandle = insert.attribHandles.back().ref;
   const std::uint32_t sequenceHandle = insert.seqendH.ref;
+  const bool haveNextLinks = insert.haveNextLinks != 0;
   const bool emptyAttributeRange = firstHandle == DRW::NoHandle &&
                                    lastHandle == DRW::NoHandle;
   if ((firstHandle == DRW::NoHandle) != (lastHandle == DRW::NoHandle))
@@ -4089,6 +4257,21 @@ dwgReader::DwgMappedEntityOutcome dwgReader::stageLegacyInsertAggregate(
     terminalizeInsertGroup(insertHandle, DwgInsertTerminalReason::MalformedGroup);
     quarantineDiscovered();
     return DwgMappedEntityOutcome::Rejected;
+  };
+  // A group rejected for a child that names a foreign owner is claimed whole,
+  // SEQEND included, so the block's chain goes on after it exactly as it does
+  // after a committed group. Without this the chain would run into the
+  // quarantined ATTRIB and end there, and the rest of the block would be left
+  // to the ENTITIES sweep, which publishes it outside the block.
+  const auto rejectContained = [this, &reject, haveNextLinks,
+                                sequenceHandle]() {
+    noteGroupOwnerConflict();
+    const DwgMappedEntityOutcome rejected = reject();
+    if (haveNextLinks &&
+        sequenceHandle != std::numeric_limits<std::uint32_t>::max()) {
+      nextEntLink = sequenceHandle + 1u;
+    }
+    return rejected;
   };
 
   try {
@@ -4150,10 +4333,9 @@ dwgReader::DwgMappedEntityOutcome dwgReader::stageLegacyInsertAggregate(
     if (!reachedLast)
       return reject();
     if (foreignChildOwner) {
-      noteGroupOwnerConflict();
       // The SEQEND belongs to the rejected group as well.
       discoveredHandles.push_back(sequenceHandle);
-      return reject();
+      return rejectContained();
     }
 
     // Handle maps are visited by handle, so a valid legacy SEQEND can be
@@ -4202,10 +4384,8 @@ dwgReader::DwgMappedEntityOutcome dwgReader::stageLegacyInsertAggregate(
         parsedEntityHandleMismatch = true;
       return reject();
     }
-    if (sequenceEnd.parentHandle != insertHandle) {
-      noteGroupOwnerConflict();
-      return reject();
-    }
+    if (sequenceEnd.parentHandle != insertHandle)
+      return rejectContained();
     const DRW_DwgFramePublication sequencePublication =
         makeTypedEntityFramePublication(version, borrowedSequence.object,
                                         dwgType::SEQEND, sequenceEnd);
@@ -4292,6 +4472,8 @@ dwgReader::DwgMappedEntityOutcome dwgReader::stageMappedPolylineAggregate(
   }
 
   const std::uint32_t polylineHandle = polyline.handle;
+  const AggregatingGroupScope aggregatingScope(m_aggregatingGroup,
+                                               polylineHandle);
   std::vector<std::uint32_t> discoveredHandles;
   std::vector<std::uint32_t> declaredChildHandles;
   const auto reject = [this, polylineHandle, &discoveredHandles,
@@ -4419,12 +4601,17 @@ dwgReader::DwgMappedEntityOutcome dwgReader::stageMappedPolylineAggregate(
           return false;
         };
 
+    // A declared child rejected on its own (it names an owner that does not
+    // declare it) does not end the loop: the group is rejected below, with
+    // every other declared child accounted for.
     for (const std::uint32_t declared : declaredVertexHandles) {
-      if (!stageDeclaredChild(declared))
+      if (!stageDeclaredChild(declared) && !isDisownedChild(declared))
         return reject();
     }
-    if (!stageDeclaredChild(sequenceHandle))
+    if (!stageDeclaredChild(sequenceHandle) &&
+        !isDisownedChild(sequenceHandle)) {
       return reject();
+    }
 
     if (m_pendingPolylineStates.find(polylineHandle) ==
         m_pendingPolylineStates.end()) {
@@ -4456,20 +4643,29 @@ dwgReader::stagePendingAttribute(std::shared_ptr<DRW_Attrib> attribute,
                                  const DRW_DwgFramePublication &publication,
                                  DRW_Interface &intfa) {
   if (attribute == nullptr || attribute->handle == DRW::NoHandle ||
-      attribute->parentHandle == DRW::NoHandle ||
-      m_invalidInsertOwners.find(attribute->parentHandle) !=
-          m_invalidInsertOwners.end()) {
+      attribute->parentHandle == DRW::NoHandle) {
     (void)reportDwgFrameTransitionFailure(
         DwgSourceFrameId{attribute ? attribute->handle : DRW::NoHandle});
     return DwgMappedEntityOutcome::Rejected;
+  }
+  // The INSERT it names was rejected: the ATTRIB can never be one of its
+  // members. Nothing about the ATTRIB itself is in doubt beyond that, so it is
+  // rejected on its own.
+  if (m_invalidInsertOwners.find(attribute->parentHandle) !=
+      m_invalidInsertOwners.end()) {
+    return disownChild(attribute->handle);
   }
 
   const std::uint32_t owner = attribute->parentHandle;
   const auto pendingIt = m_pendingInsertStates.find(owner);
   if (pendingIt != m_pendingInsertStates.end()) {
     PendingInsertState &pending = pendingIt->second;
-    if (!isExpectedAttribute(pending.entity, *attribute, version) ||
-        std::any_of(pending.attributes.cbegin(), pending.attributes.cend(),
+    // The INSERT this ATTRIB names does not declare it: the ATTRIB claims a
+    // membership nobody granted. The INSERT is left alone, the ATTRIB is
+    // rejected on its own (and so is any group that does declare it).
+    if (!isExpectedAttribute(pending.entity, *attribute, version))
+      return disownChild(attribute->handle);
+    if (std::any_of(pending.attributes.cbegin(), pending.attributes.cend(),
                     [&attribute](const StagedAttribState &current) {
                       return current.entity != nullptr &&
                              current.entity->handle == attribute->handle;
@@ -4543,26 +4739,27 @@ dwgReader::stagePendingSeqEnd(std::uint32_t handle, std::uint32_t owner,
   if (handle == DRW::NoHandle || owner == DRW::NoHandle ||
       publication.m_handle != handle ||
       m_invalidSeqEndHandles.find(handle) != m_invalidSeqEndHandles.end() ||
-      m_invalidPolylineOwners.find(owner) != m_invalidPolylineOwners.end() ||
       m_consumedSeqEndHandles.find(handle) != m_consumedSeqEndHandles.end() ||
       m_stagedSeqEnds.find(handle) != m_stagedSeqEnds.end()) {
     (void)reportDwgFrameTransitionFailure(DwgSourceFrameId{handle});
     return DwgMappedEntityOutcome::Rejected;
   }
+  // The group it names was rejected: the SEQEND can never complete it.
+  if (m_invalidPolylineOwners.find(owner) != m_invalidPolylineOwners.end() ||
+      m_invalidInsertOwners.find(owner) != m_invalidInsertOwners.end()) {
+    return disownChild(handle);
+  }
   const auto pendingIt = m_pendingInsertStates.find(owner);
+  // A SEQEND the pending group does not declare claims a membership nobody
+  // granted: the group is left alone, the SEQEND is rejected on its own.
   if (pendingIt != m_pendingInsertStates.end() &&
       pendingIt->second.entity.seqendH.ref != handle) {
-    terminalizeInsertGroup(owner, DwgInsertTerminalReason::MalformedGroup);
-    (void)reportDwgFrameTransitionFailure(DwgSourceFrameId{handle});
-    return DwgMappedEntityOutcome::Rejected;
+    return disownChild(handle);
   }
   const auto polylineIt = m_pendingPolylineStates.find(owner);
   if (polylineIt != m_pendingPolylineStates.end() &&
       polylineIt->second.entity.seqEndH.ref != handle) {
-    terminalizePendingPolylineState(owner,
-                                    DwgInsertTerminalReason::MalformedGroup);
-    (void)reportDwgFrameTransitionFailure(DwgSourceFrameId{handle});
-    return DwgMappedEntityOutcome::Rejected;
+    return disownChild(handle);
   }
   try {
     m_stagedSeqEnds.reserve(m_stagedSeqEnds.size() + 1u);
@@ -4625,18 +4822,35 @@ dwgReader::stagePendingPolyline(DRW_Polyline &&polyline,
 
   const auto orphanIt = m_orphanPolylineVertexStates.find(handle);
   if (orphanIt != m_orphanPolylineVertexStates.end()) {
-    const auto isExpectedExactlyOnce = [&polyline](
-                                           const StagedVertexState &vertex) {
-      return std::count(polyline.hadlesList.cbegin(),
-                        polyline.hadlesList.cend(), vertex.entity.handle) == 1;
-    };
-    const bool invalidOrphan = std::any_of(
-        orphanIt->second.vertices.cbegin(), orphanIt->second.vertices.cend(),
-        [&polyline, &isExpectedExactlyOnce](const StagedVertexState &vertex) {
-          return !isExpectedExactlyOnce(vertex) ||
-                 !polyline.isDwgVertexCompatible(vertex.entity);
-        });
+    // A VERTEX that names this POLYLINE but that it does not declare is not a
+    // member of the group; the POLYLINE does not answer for it (see
+    // noteDisownedChild). A declared VERTEX that cannot be a member (listed
+    // twice, or of a kind the POLYLINE cannot hold) is a malformed group.
+    std::vector<std::uint32_t> undeclared;
+    bool invalidOrphan = false;
+    try {
+      undeclared.reserve(orphanIt->second.vertices.size());
+      for (const StagedVertexState &vertex : orphanIt->second.vertices) {
+        const auto declared =
+            std::count(polyline.hadlesList.cbegin(), polyline.hadlesList.cend(),
+                       vertex.entity.handle);
+        if (declared == 0) {
+          undeclared.push_back(vertex.entity.handle);
+        } else if (declared != 1 ||
+                   !polyline.isDwgVertexCompatible(vertex.entity)) {
+          invalidOrphan = true;
+        }
+      }
+    } catch (...) {
+      invalidOrphan = true;
+    }
     if (invalidOrphan) {
+      terminalizeOrphanPolylineVertexOwner(handle);
+      (void)reportDwgFrameTransitionFailure(DwgSourceFrameId{handle});
+      return DwgMappedEntityOutcome::Rejected;
+    }
+    if (!undeclared.empty() &&
+        !disposeUndeclaredOrphanVertices(handle, undeclared)) {
       terminalizeOrphanPolylineVertexOwner(handle);
       (void)reportDwgFrameTransitionFailure(DwgSourceFrameId{handle});
       return DwgMappedEntityOutcome::Rejected;
@@ -4774,6 +4988,18 @@ dwgReader::stageLegacyPolylineChain(DRW_Polyline &&polyline,
     quarantineDiscovered();
     return DwgMappedEntityOutcome::Rejected;
   };
+  // See stageLegacyInsertAggregate: the chain goes on after a group that was
+  // rejected for a child that names a foreign owner.
+  const auto rejectContained = [this, &reject, haveNextLinks,
+                                sequenceHandle]() {
+    noteGroupOwnerConflict();
+    const DwgMappedEntityOutcome rejected = reject();
+    if (haveNextLinks &&
+        sequenceHandle != std::numeric_limits<std::uint32_t>::max()) {
+      nextEntLink = sequenceHandle + 1u;
+    }
+    return rejected;
+  };
 
   try {
     if (parentHandle == DRW::NoHandle || sequenceHandle == DRW::NoHandle)
@@ -4856,8 +5082,7 @@ dwgReader::stageLegacyPolylineChain(DRW_Polyline &&polyline,
       return reject();
     if (foreignChildOwner) {
       // The SEQEND was claimed with the group up front.
-      noteGroupOwnerConflict();
-      return reject();
+      return rejectContained();
     }
 
     const auto sequenceIt = ObjectMap.find(sequenceHandle);
@@ -4889,10 +5114,8 @@ dwgReader::stageLegacyPolylineChain(DRW_Polyline &&polyline,
         parsedEntityHandleMismatch = true;
       return reject();
     }
-    if (sequenceEnd.parentHandle != parentHandle) {
-      noteGroupOwnerConflict();
-      return reject();
-    }
+    if (sequenceEnd.parentHandle != parentHandle)
+      return rejectContained();
     const DRW_DwgFramePublication sequencePublication =
         makeTypedEntityFramePublication(version, borrowedSequence.object,
                                         dwgType::SEQEND, sequenceEnd);
@@ -4979,14 +5202,29 @@ dwgReader::DwgMappedEntityOutcome dwgReader::stagePendingPolylineVertex(
     DRW_Interface &intfa) {
   const std::uint32_t handle = vertex.handle;
   const std::uint32_t owner = vertex.parentHandle;
-  if (handle == DRW::NoHandle || owner == DRW::NoHandle ||
-      m_invalidPolylineOwners.find(owner) != m_invalidPolylineOwners.end()) {
+  if (handle == DRW::NoHandle || owner == DRW::NoHandle) {
     (void)reportDwgFrameTransitionFailure(DwgSourceFrameId{handle});
     return DwgMappedEntityOutcome::Rejected;
   }
+  // The POLYLINE it names was rejected: the VERTEX can never be one of its
+  // members, and nothing about the VERTEX itself is in doubt beyond that.
+  if (m_invalidPolylineOwners.find(owner) != m_invalidPolylineOwners.end())
+    return disownChild(handle);
 
   const auto pendingIt = m_pendingPolylineStates.find(owner);
   if (pendingIt != m_pendingPolylineStates.end()) {
+    PendingPolylineState &pending = pendingIt->second;
+    const bool expected = std::find(pending.entity.hadlesList.cbegin(),
+                                    pending.entity.hadlesList.cend(),
+                                    handle) != pending.entity.hadlesList.cend();
+    // The POLYLINE this VERTEX names does not declare it: the VERTEX claims a
+    // membership nobody granted. The POLYLINE is left alone, the VERTEX is
+    // rejected on its own (and so is any group that does declare it).
+    if (!expected)
+      return disownChild(handle);
+
+    // Declared by the POLYLINE it names and by another pending POLYLINE as
+    // well: two declarations of one child, which no group can win.
     std::vector<std::uint32_t> conflictingOwners;
     try {
       for (const auto &candidate : m_pendingPolylineStates) {
@@ -5009,24 +5247,17 @@ dwgReader::DwgMappedEntityOutcome dwgReader::stagePendingPolylineVertex(
         terminalizePendingPolylineState(
             conflictingOwner, DwgInsertTerminalReason::MalformedGroup);
       }
-      // The vertex is declared by one pending polyline and names another as
-      // its owner: a foreign owner for both groups, which are rejected whole.
       noteGroupOwnerConflict();
       (void)reportDwgFrameTransitionFailure(DwgSourceFrameId{handle});
       return DwgMappedEntityOutcome::Rejected;
     }
 
-    PendingPolylineState &pending = pendingIt->second;
-    const bool expected = std::find(pending.entity.hadlesList.cbegin(),
-                                    pending.entity.hadlesList.cend(),
-                                    handle) != pending.entity.hadlesList.cend();
     const bool duplicate =
         std::any_of(pending.vertices.cbegin(), pending.vertices.cend(),
                     [handle](const StagedVertexState &current) {
                       return current.entity.handle == handle;
                     });
-    if (!expected || duplicate ||
-        !pending.entity.isDwgVertexCompatible(vertex)) {
+    if (duplicate || !pending.entity.isDwgVertexCompatible(vertex)) {
       terminalizePendingPolylineState(owner,
                                       DwgInsertTerminalReason::MalformedGroup);
       (void)reportDwgFrameTransitionFailure(DwgSourceFrameId{handle});
@@ -5062,13 +5293,10 @@ dwgReader::DwgMappedEntityOutcome dwgReader::stagePendingPolylineVertex(
       });
   if (declaredParent != m_pendingPolylineStates.cend()) {
     // The vertex is declared by a pending polyline but names an owner that is
-    // not that polyline: a foreign owner, and the declaring group is rejected
-    // whole.
-    terminalizePendingPolylineState(declaredParent->first,
-                                    DwgInsertTerminalReason::MalformedGroup);
-    noteGroupOwnerConflict();
-    (void)reportDwgFrameTransitionFailure(DwgSourceFrameId{handle});
-    return DwgMappedEntityOutcome::Rejected;
+    // not that polyline: a foreign owner. The vertex is rejected and the
+    // declaring group is rejected whole (by its aggregate, when that is what
+    // is staging the vertex). The owner the vertex names is not touched.
+    return disownChild(handle);
   }
 
   auto orphanIt = m_orphanPolylineVertexStates.find(owner);
@@ -8216,6 +8444,31 @@ bool dwgReader::walkBlockRecordEntities(DRW_Block_Record *bkr, dwgBuffer *dbuf,
   if (outcome != nullptr)
     *outcome = DwgBlockWalkOutcome::Structural;
   objHandle oc;
+  // Sorts out the entity read that just ended. A failed compound read is a
+  // contained rejection only when it failed because of an ownership conflict
+  // and for nothing else: the aggregate that rejected its group for a child
+  // that names a foreign owner counted the conflict, and a child rejected on
+  // its own because the owner it names does not declare it is recorded as
+  // disowned. A read that succeeded but disposed of a staged child for that
+  // reason (the child arrived before the owner it names) is a contained
+  // rejection too, though nothing about the read itself failed. Any other
+  // failure of the read stays structural, whatever else was counted meanwhile.
+  const auto classifyRead = [this, &ret, &groupRejected](
+                                std::uint64_t conflictsBefore,
+                                std::size_t disownedBefore,
+                                std::uint32_t handle, bool read,
+                                bool frameFailure) {
+    const bool identityFailure =
+        parsedEntityHandleMismatch || parsedEntityOwnerMismatch;
+    const bool ownerConflict =
+        m_groupOwnerConflicts != conflictsBefore || isDisownedChild(handle);
+    const bool containedGroup = identityFailure && ownerConflict &&
+                                !frameFailure && !parsedEntityHandleMismatch;
+    const bool disposedChild =
+        read && !identityFailure && m_disownedChildHandles.size() != disownedBefore;
+    groupRejected = groupRejected || containedGroup || disposedChild;
+    ret = !frameFailure && (!identityFailure || containedGroup) && ret;
+  };
   const std::uint32_t previousOwner = expectedBlockEntityOwner;
   const std::uint32_t previousRawOwner = rawBlockEntityOwner;
   const bool previousOwnerlessSpaceWalk = ownerlessSpaceWalk;
@@ -8371,6 +8624,7 @@ bool dwgReader::walkBlockRecordEntities(DRW_Block_Record *bkr, dwgBuffer *dbuf,
         bool frameFailure = false;
         bool read = false;
         const std::uint64_t conflictsBefore = m_groupOwnerConflicts;
+        const std::size_t disownedBefore = m_disownedChildHandles.size();
         DwgFrameClassification classification;
         if (requiresLegacyCompoundHandling(dbuf, mit->second,
                                            &classification)) {
@@ -8401,13 +8655,8 @@ bool dwgReader::walkBlockRecordEntities(DRW_Block_Record *bkr, dwgBuffer *dbuf,
         if (!read) {
           ++m_entityParseFailures;
         }
-        const bool identityFailure =
-            parsedEntityHandleMismatch || parsedEntityOwnerMismatch;
-        const bool containedGroup =
-            identityFailure && m_groupOwnerConflicts != conflictsBefore &&
-            !frameFailure && !parsedEntityHandleMismatch;
-        groupRejected = groupRejected || containedGroup;
-        ret = !frameFailure && (!identityFailure || containedGroup) && ret;
+        classifyRead(conflictsBefore, disownedBefore, oc.handle, read,
+                     frameFailure);
         if (nextH == bkr->lastEH)
           nextH = 0; // redundant, but prevent read errors
         else if (nextEntLinkImplicit && nextEntLink > bkr->lastEH)
@@ -8449,6 +8698,7 @@ bool dwgReader::walkBlockRecordEntities(DRW_Block_Record *bkr, dwgBuffer *dbuf,
         bool frameFailure = false;
         bool read = false;
         const std::uint64_t conflictsBefore = m_groupOwnerConflicts;
+        const std::size_t disownedBefore = m_disownedChildHandles.size();
         DwgFrameClassification classification;
         if (requiresLegacyCompoundHandling(dbuf, mit->second,
                                            &classification)) {
@@ -8490,13 +8740,8 @@ bool dwgReader::walkBlockRecordEntities(DRW_Block_Record *bkr, dwgBuffer *dbuf,
                             DwgEntityFailurePhase::TypedBody);
           ++m_entityParseFailures;
         }
-        const bool identityFailure =
-            parsedEntityHandleMismatch || parsedEntityOwnerMismatch;
-        const bool containedGroup =
-            identityFailure && m_groupOwnerConflicts != conflictsBefore &&
-            !frameFailure && !parsedEntityHandleMismatch;
-        groupRejected = groupRejected || containedGroup;
-        ret = !frameFailure && (!identityFailure || containedGroup) && ret;
+        classifyRead(conflictsBefore, disownedBefore, oc.handle, read,
+                     frameFailure);
       }
     }
     if (hasPendingCompoundStateForBlock(*bkr)) {
@@ -8633,6 +8878,7 @@ bool dwgReader::walkJournalledBlockRecordEntities(
       bool frameFailure = false;
       const std::uint64_t conflictsBefore = m_groupOwnerConflicts;
       const std::size_t eventsBefore = transaction.output().size();
+      const std::size_t disownedBefore = m_disownedChildHandles.size();
       const bool parsed = readMappedDwgEntity(
           dbuf, lease, intfa, &frameFailure, offsetSpace, &transaction.output(),
           DwgMappedEntityCompletion::Journal, &transaction);
@@ -8644,10 +8890,13 @@ bool dwgReader::walkJournalledBlockRecordEntities(
         // A group rejected only because a child names a foreign owner was
         // removed whole by its stager: a group reaches the journal only when
         // it commits, none of its sources is adopted, and no staged state of
-        // it is left. The block goes on with its other entities.
+        // it is left. So was a child rejected on its own because the owner it
+        // names does not declare it. The block goes on with its other
+        // entities.
         const bool contained =
             !parsed && !frameFailure && !parsedEntityHandleMismatch &&
-            m_groupOwnerConflicts != conflictsBefore;
+            (m_groupOwnerConflicts != conflictsBefore ||
+             isDisownedChild(handle));
         // A simple entity whose frame, handle and owner are sound but whose
         // typed body does not decode is one bad entity, not a bad block: the
         // walk that has no journal (walkBlockRecordEntities) and the sweep
@@ -8677,6 +8926,11 @@ bool dwgReader::walkJournalledBlockRecordEntities(
         restoreState();
         return false;
       }
+      // The read succeeded but disposed of a staged child that names an owner
+      // that does not declare it (the child arrived before that owner): the
+      // block lost an entity, so it publishes no reachability receipt.
+      if (m_disownedChildHandles.size() != disownedBefore)
+        ++rejectedGroups;
     }
     if (hasPendingCompoundStateForBlock(*bkr)) {
       restoreState();
@@ -9346,6 +9600,7 @@ bool dwgReader::readDwgEntities(DRW_Interface &intfa, dwgBuffer *dbuf,
     }
     bool frameFailure = false;
     bool read = false;
+    const std::uint32_t entityHandle = itB->first;
     DwgFrameClassification classification;
     if (requiresLegacyCompoundHandling(dbuf, itB->second, &classification)) {
       if (parentsFirst && !childrenPhase &&
@@ -9377,8 +9632,15 @@ bool dwgReader::readDwgEntities(DRW_Interface &intfa, dwgBuffer *dbuf,
     if (!read) {
       ++failures;
     }
-    structuralFailure = structuralFailure || frameFailure ||
-                        parsedEntityHandleMismatch || parsedEntityOwnerMismatch;
+    // A child rejected on its own because the owner it names does not declare
+    // it was rejected atomically, and nothing else about it is in doubt: it
+    // ends that entity, not the phase (see walkBlockRecordEntities).
+    const bool containedRejection =
+        parsedEntityOwnerMismatch && !frameFailure &&
+        !parsedEntityHandleMismatch && isDisownedChild(entityHandle);
+    structuralFailure =
+        structuralFailure || frameFailure || parsedEntityHandleMismatch ||
+        (parsedEntityOwnerMismatch && !containedRejection);
   }
   rejectOwnedEntityInSweep = previousSweepPolicy;
   if (failures > 0) {
