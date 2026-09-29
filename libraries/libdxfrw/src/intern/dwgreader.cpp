@@ -3803,6 +3803,7 @@ dwgReader::DwgMappedEntityOutcome dwgReader::stageLegacyInsertAggregate(
   std::vector<ParsedAttrib> attributes;
   std::vector<std::uint32_t> discoveredHandles;
   std::unordered_set<std::uint32_t> visitedHandles;
+  bool foreignChildOwner = false;
   const auto quarantineDiscovered = [this, &discoveredHandles]() {
     for (const std::uint32_t handle : discoveredHandles)
       (void)quarantineMappedDwgSourceFrame(handle);
@@ -3848,10 +3849,12 @@ dwgReader::DwgMappedEntityOutcome dwgReader::stageLegacyInsertAggregate(
           parsedEntityHandleMismatch = true;
         return reject();
       }
-      if (attribute->parentHandle != insertHandle) {
-        parsedEntityOwnerMismatch = true;
-        return reject();
-      }
+      // A foreign owner rejects the whole group, but only once the rest of
+      // its declared range has been read: the group is rejected atomically,
+      // so every frame it owns is claimed and quarantined together instead
+      // of being left for the sweep to stage as orphans of an invalid owner.
+      if (attribute->parentHandle != insertHandle)
+        foreignChildOwner = true;
       parseAttribs(attribute.get());
 
       ParsedAttrib parsed;
@@ -3869,6 +3872,13 @@ dwgReader::DwgMappedEntityOutcome dwgReader::stageLegacyInsertAggregate(
     }
     if (!reachedLast)
       return reject();
+    if (foreignChildOwner) {
+      parsedEntityOwnerMismatch = true;
+      parsedGroupOwnerMismatch = true;
+      // The SEQEND belongs to the rejected group as well.
+      discoveredHandles.push_back(sequenceHandle);
+      return reject();
+    }
 
     // Handle maps are visited by handle, so a valid legacy SEQEND can be
     // staged before its INSERT.  The empty-range form has no ATTRIB frames to
@@ -3918,6 +3928,7 @@ dwgReader::DwgMappedEntityOutcome dwgReader::stageLegacyInsertAggregate(
     }
     if (sequenceEnd.parentHandle != insertHandle) {
       parsedEntityOwnerMismatch = true;
+      parsedGroupOwnerMismatch = true;
       return reject();
     }
     const DRW_DwgFramePublication sequencePublication =
@@ -4463,6 +4474,7 @@ dwgReader::stageLegacyPolylineChain(DRW_Polyline &&polyline,
   std::vector<ParsedVertex> vertices;
   std::vector<std::uint32_t> discoveredHandles;
   std::unordered_set<std::uint32_t> visitedHandles;
+  bool foreignChildOwner = false;
   const auto quarantineDiscovered = [this, &discoveredHandles]() {
     for (const std::uint32_t handle : discoveredHandles)
       (void)quarantineMappedDwgSourceFrame(handle);
@@ -4527,10 +4539,12 @@ dwgReader::stageLegacyPolylineChain(DRW_Polyline &&polyline,
           parsedEntityHandleMismatch = true;
         return reject();
       }
+      // A foreign owner rejects the whole group, but only once the rest of
+      // the chain has been read, so every frame the group owns is claimed and
+      // quarantined together (see stageLegacyInsertAggregate).
       if (vertex.parentHandle != DRW::NoHandle &&
           vertex.parentHandle != parentHandle) {
-        parsedEntityOwnerMismatch = true;
-        return reject();
+        foreignChildOwner = true;
       }
       // The chain walker bypasses entryParse() so it can preserve the
       // parent walk's next-link state. Keep its EED reference
@@ -4553,6 +4567,12 @@ dwgReader::stageLegacyPolylineChain(DRW_Polyline &&polyline,
     }
     if (!reachedLast)
       return reject();
+    if (foreignChildOwner) {
+      // The SEQEND was claimed with the group up front.
+      parsedEntityOwnerMismatch = true;
+      parsedGroupOwnerMismatch = true;
+      return reject();
+    }
 
     const auto sequenceIt = ObjectMap.find(sequenceHandle);
     if (sequenceIt == ObjectMap.end())
@@ -4585,6 +4605,7 @@ dwgReader::stageLegacyPolylineChain(DRW_Polyline &&polyline,
     }
     if (sequenceEnd.parentHandle != parentHandle) {
       parsedEntityOwnerMismatch = true;
+      parsedGroupOwnerMismatch = true;
       return reject();
     }
     const DRW_DwgFramePublication sequencePublication =
@@ -7648,10 +7669,16 @@ bool dwgReader::readDwgBlocks(DRW_Interface &intfa, dwgBuffer *dbuf,
       bkr->name = bk.name;
 
       if (!deferredEntityWalk) {
+        DwgBlockWalkOutcome walkOutcome = DwgBlockWalkOutcome::Structural;
         const bool walked = walkBlockRecordEntities(
-            bkr, dbuf, intfa, bk.parentHandle, bkr->handle, offsetSpace);
+            bkr, dbuf, intfa, bk.parentHandle, bkr->handle, offsetSpace,
+            &walkOutcome);
         blockEntityWalkSucceeded = walked;
-        ret = walked && ret;
+        // A rejected INSERT/POLYLINE group is contained: the scope below is
+        // still failed and quarantined, but the section goes on.
+        ret = (walked ||
+               walkOutcome == DwgBlockWalkOutcome::ContainedGroupRejection) &&
+              ret;
         blockScopeFailure = blockScopeFailure || !walked;
       }
     } catch (...) {
@@ -7675,10 +7702,14 @@ bool dwgReader::readDwgBlocks(DRW_Interface &intfa, dwgBuffer *dbuf,
       // currentBlock has just been reset to the interface's modelspace
       // container; dispatched entities flow there.
       try {
+        DwgBlockWalkOutcome walkOutcome = DwgBlockWalkOutcome::Structural;
         const bool walked = walkBlockRecordEntities(
-            bkr, dbuf, intfa, DRW::NoHandle, bkr->handle, offsetSpace);
+            bkr, dbuf, intfa, DRW::NoHandle, bkr->handle, offsetSpace,
+            &walkOutcome);
         blockEntityWalkSucceeded = walked;
-        ret = walked && ret;
+        ret = (walked ||
+               walkOutcome == DwgBlockWalkOutcome::ContainedGroupRejection) &&
+              ret;
         blockScopeFailure = blockScopeFailure || !walked;
       } catch (...) {
         ret = false;
@@ -7762,12 +7793,24 @@ bool dwgReader::walkBlockRecordEntities(DRW_Block_Record *bkr, dwgBuffer *dbuf,
                                         DRW_Interface &intfa,
                                         std::uint32_t expectedOwner,
                                         std::uint32_t rawBlockOwner,
-                                        DwgIntegrityAddressSpace offsetSpace) {
+                                        DwgIntegrityAddressSpace offsetSpace,
+                                        DwgBlockWalkOutcome *outcome) {
   // Per-entity parseDwg failures are warnings, not section failures —
   // we keep walking so a single bad entity doesn't drop the rest of
   // the block. Structural failures (entity-not-found in ObjectMap)
   // remain in `ret` so the caller knows the block walk was incomplete.
+  //
+  // `ret` tracks structural failures only. A legacy INSERT/POLYLINE group
+  // whose child names a foreign owner is rejected atomically by its
+  // aggregate stager, so it does not clear `ret`; it is remembered in
+  // `groupRejected` instead. The function still reports it -- it returns
+  // false, so a direct caller sees the violation -- but `outcome` tells
+  // the block reader that the failure is confined to that group (see
+  // DwgBlockWalkOutcome).
   bool ret = true;
+  bool groupRejected = false;
+  if (outcome != nullptr)
+    *outcome = DwgBlockWalkOutcome::Structural;
   objHandle oc;
   const std::uint32_t previousOwner = expectedBlockEntityOwner;
   const std::uint32_t previousRawOwner = rawBlockEntityOwner;
@@ -7955,7 +7998,11 @@ bool dwgReader::walkBlockRecordEntities(DRW_Block_Record *bkr, dwgBuffer *dbuf,
         }
         const bool identityFailure =
             parsedEntityHandleMismatch || parsedEntityOwnerMismatch;
-        ret = !frameFailure && !identityFailure && ret;
+        const bool containedGroup =
+            identityFailure && parsedGroupOwnerMismatch && !frameFailure &&
+            !parsedEntityHandleMismatch;
+        groupRejected = groupRejected || containedGroup;
+        ret = !frameFailure && (!identityFailure || containedGroup) && ret;
         if (nextH == bkr->lastEH)
           nextH = 0; // redundant, but prevent read errors
         else if (nextEntLinkImplicit && nextEntLink > bkr->lastEH)
@@ -8039,7 +8086,11 @@ bool dwgReader::walkBlockRecordEntities(DRW_Block_Record *bkr, dwgBuffer *dbuf,
         }
         const bool identityFailure =
             parsedEntityHandleMismatch || parsedEntityOwnerMismatch;
-        ret = !frameFailure && !identityFailure && ret;
+        const bool containedGroup =
+            identityFailure && parsedGroupOwnerMismatch && !frameFailure &&
+            !parsedEntityHandleMismatch;
+        groupRejected = groupRejected || containedGroup;
+        ret = !frameFailure && (!identityFailure || containedGroup) && ret;
       }
     }
     if (hasPendingCompoundStateForBlock(*bkr)) {
@@ -8058,7 +8109,13 @@ bool dwgReader::walkBlockRecordEntities(DRW_Block_Record *bkr, dwgBuffer *dbuf,
       }
     }
     restoreState();
-    return ret;
+    if (outcome != nullptr) {
+      *outcome = !ret ? DwgBlockWalkOutcome::Structural
+                      : groupRejected
+                            ? DwgBlockWalkOutcome::ContainedGroupRejection
+                            : DwgBlockWalkOutcome::Complete;
+    }
+    return ret && !groupRejected;
   } catch (...) {
     restoreState();
     return false;
@@ -8843,6 +8900,7 @@ bool dwgReader::readDwgEntityWithOutput(dwgBuffer *dbuf, objHandle &obj,
   expectedParsedEntityHandle = obj.handle;
   parsedEntityHandleMismatch = false;
   parsedEntityOwnerMismatch = false;
+  parsedGroupOwnerMismatch = false;
   if (frameFailure)
     *frameFailure = false;
 

@@ -29190,6 +29190,14 @@ public:
 
 } // namespace
 
+// Whole-file view of a legacy INSERT whose ATTRIB names a foreign owner. The
+// group is rejected atomically -- no INSERT, no ATTRIB, no SEQEND is
+// published, the frames are not "Published" in the coverage report, the
+// failure is counted -- but the rest of the file still reads. The low-level
+// view of the same shape is "DWG legacy INSERT rejects a foreign ATTRIB owner
+// atomically" (dwg_safety_tests.cpp): there the block walk itself reports the
+// violation (returns false) with outcome ContainedGroupRejection, and it is
+// the BLOCKS phase that decides that such a failure does not end the read.
 TEST_CASE("RS_FilterDXFRW rejects a serialized INSERT child-owner mismatch "
           "atomically",
           "[dwg-write][filter-roundtrip][insert][safety][external]") {

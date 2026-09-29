@@ -646,12 +646,32 @@ protected:
   // both named blocks (entities go into the active block) and modelspace /
   // paperspace (called post-endBlock so entities go into the interface's
   // modelspace container).
+  //
+  // The walk returns false whenever it saw an identity violation, so a direct
+  // caller can never mistake a malformed block for a clean one.  `outcome`
+  // (optional) says how far that failure reaches:
+  //  - Complete: no failure; the walk returned true.
+  //  - ContainedGroupRejection: the only failures were child-owner mismatches
+  //    inside a legacy INSERT/POLYLINE group.  The group was rejected as a
+  //    whole (staged state terminalized, discovered frames quarantined, one
+  //    entity failure counted) and every other frame of the walk was read on
+  //    its own merits, so the enclosing section may continue.
+  //  - Structural: anything else (unreadable frame, handle identity mismatch,
+  //    broken chain, unclearable compound state, ...).  The section fails.
+  // The value is Structural until the walk reaches its normal exit, so every
+  // early return reports the conservative answer.
+  enum class DwgBlockWalkOutcome : std::uint8_t {
+    Complete,
+    ContainedGroupRejection,
+    Structural
+  };
   bool walkBlockRecordEntities(DRW_Block_Record *bkr, dwgBuffer *dbuf,
                                DRW_Interface &intfa,
                                std::uint32_t expectedOwner = DRW::NoHandle,
                                std::uint32_t rawBlockOwner = DRW::NoHandle,
                                DwgIntegrityAddressSpace offsetSpace =
-                                   DwgIntegrityAddressSpace::DecodedBuffer);
+                                   DwgIntegrityAddressSpace::DecodedBuffer,
+                               DwgBlockWalkOutcome *outcome = nullptr);
   bool walkJournalledBlockRecordEntities(
       DRW_Block_Record *bkr, dwgBuffer *dbuf, DRW_Interface &intfa,
       DwgBlockScopeTransaction &transaction,
@@ -1213,6 +1233,12 @@ protected:
   std::uint32_t expectedParsedEntityHandle{DRW::NoHandle};
   bool parsedEntityHandleMismatch{false};
   bool parsedEntityOwnerMismatch{false};
+  // Set together with parsedEntityOwnerMismatch when the mismatch is a child
+  // of a legacy INSERT/POLYLINE group naming an owner other than the group
+  // itself, found while the group's aggregate stager still held the group.
+  // The stager rejects such a group atomically, so unlike a bare owner or
+  // handle mismatch nothing about the surrounding walk is in doubt.
+  bool parsedGroupOwnerMismatch{false};
 
   struct DwgEntityFramePublicationCapture {
     DRW_DwgFramePublication publication;

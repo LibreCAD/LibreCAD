@@ -21,6 +21,7 @@
 
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/generators/catch_generators.hpp>
 
 #include <algorithm>
 #include <array>
@@ -482,6 +483,7 @@ public:
 class DwgEntityReaderProbe final : public dwgReader15 {
 public:
     using dwgReader::DwgBlockJournalOutput;
+    using dwgReader::DwgBlockWalkOutcome;
     using dwgReader::DwgBlockScopeTransaction;
     using dwgReader::DwgFrameMapLease;
     using dwgReader::abandonDeferredCompoundState;
@@ -5168,7 +5170,7 @@ struct LegacyInsertFrameFixture {
 };
 
 LegacyInsertFrameFixture makeLegacyInsertFrameFixture(
-    bool wrongLastAttribOwner = false) {
+    bool wrongLastAttribOwner = false, bool wrongFirstAttribOwner = false) {
     constexpr std::uint32_t insertHandle = 0x720;
     constexpr std::uint32_t firstAttribHandle = 0x721;
     constexpr std::uint32_t secondAttribHandle = 0x722;
@@ -5188,7 +5190,9 @@ LegacyInsertFrameFixture makeLegacyInsertFrameFixture(
     const auto makeAttribute = [=](std::uint32_t handle) {
         DwgAttribWriterProbe attribute;
         attribute.handle = handle;
-        attribute.parentHandle = wrongLastAttribOwner && handle == lastAttribHandle
+        attribute.parentHandle =
+            (wrongLastAttribOwner && handle == lastAttribHandle)
+                    || (wrongFirstAttribOwner && handle == firstAttribHandle)
             ? insertHandle + 1u : insertHandle;
         attribute.text = "value";
         attribute.tag = "TAG";
@@ -8511,7 +8515,12 @@ TEST_CASE("DWG legacy INSERT rejects a foreign ATTRIB owner atomically",
     constexpr std::uint32_t secondAttribHandle = 0x722;
     constexpr std::uint32_t lastAttribHandle = 0x723;
     constexpr std::uint32_t seqEndHandle = 0x724;
-    const auto fixture = makeLegacyInsertFrameFixture(true);
+    // Which ATTRIB names the foreign owner must not matter: the rest of the
+    // group is claimed and quarantined with it.
+    const bool foreignFirst = GENERATE(false, true);
+    INFO("foreign owner on the " << (foreignFirst ? "first" : "last")
+                                 << " ATTRIB");
+    const auto fixture = makeLegacyInsertFrameFixture(!foreignFirst, foreignFirst);
     REQUIRE(!fixture.bytes.empty());
 
     DwgEntityReaderProbe reader(std::make_unique<dwgBuffer>(
@@ -8550,7 +8559,18 @@ TEST_CASE("DWG legacy INSERT rejects a foreign ATTRIB owner atomically",
     dwgBuffer objectBuffer(
         const_cast<std::uint8_t*>(fixture.bytes.data()), fixture.bytes.size());
 
-    CHECK_FALSE(reader.walkBlockRecordEntities(&record, &objectBuffer, interface));
+    // The walk reports the violation, so a direct caller never mistakes this
+    // block for a clean one. Its outcome says the failure is confined to the
+    // rejected group (which the whole-file read treats as one counted entity
+    // failure, see "RS_FilterDXFRW rejects a serialized INSERT child-owner
+    // mismatch atomically"); it is not a structural failure of the walk.
+    DwgEntityReaderProbe::DwgBlockWalkOutcome outcome =
+        DwgEntityReaderProbe::DwgBlockWalkOutcome::Complete;
+    CHECK_FALSE(reader.walkBlockRecordEntities(
+        &record, &objectBuffer, interface, DRW::NoHandle, DRW::NoHandle,
+        DwgIntegrityAddressSpace::DecodedBuffer, &outcome));
+    CHECK(outcome
+          == DwgEntityReaderProbe::DwgBlockWalkOutcome::ContainedGroupRejection);
     CHECK(interface.inserts.empty());
     CHECK(interface.publications.empty());
     CHECK(reader.stagedPendingInsertCountForTest() == 0u);
@@ -8560,6 +8580,12 @@ TEST_CASE("DWG legacy INSERT rejects a foreign ATTRIB owner atomically",
     CHECK(reader.m_quarantinedEntityHandles.count(firstAttribHandle) == 1u);
     CHECK(reader.m_quarantinedEntityHandles.count(secondAttribHandle) == 1u);
     CHECK(reader.m_quarantinedEntityHandles.count(lastAttribHandle) == 1u);
+    CHECK(reader.m_quarantinedEntityHandles.count(seqEndHandle) == 1u);
+    // Nothing of the group is left for the sweep to decode (and to stage as
+    // orphans of the rejected INSERT).
+    for (const auto& item : reader.ObjectMap) {
+        CHECK(reader.m_quarantinedEntityHandles.count(item.first) == 1u);
+    }
     REQUIRE(reader.m_dwgSourceFrameLedger.size() == 5u);
     CHECK(reader.m_dwgSourceFrameLedger[0].m_disposition
           == DRW_DwgFrameDisposition::Failed);
@@ -8664,8 +8690,13 @@ TEST_CASE("DWG legacy INSERT rejects malformed empty ATTRIB boundaries",
         dwgBuffer objectBuffer(
             const_cast<std::uint8_t*>(fixture.bytes.data()), fixture.bytes.size());
 
-        CHECK_FALSE(reader.walkBlockRecordEntities(&record, &objectBuffer,
-                                                   interface));
+        // Rejected, but not for a foreign child owner: not contained.
+        DwgEntityReaderProbe::DwgBlockWalkOutcome outcome =
+            DwgEntityReaderProbe::DwgBlockWalkOutcome::Complete;
+        CHECK_FALSE(reader.walkBlockRecordEntities(
+            &record, &objectBuffer, interface, DRW::NoHandle, DRW::NoHandle,
+            DwgIntegrityAddressSpace::DecodedBuffer, &outcome));
+        CHECK(outcome == DwgEntityReaderProbe::DwgBlockWalkOutcome::Structural);
         CHECK(interface.inserts.empty());
         CHECK(interface.publications.empty());
         CHECK(reader.ObjectMap.empty());
@@ -9139,7 +9170,14 @@ TEST_CASE("DWG legacy POLYLINE block walk rejects a non-VERTEX tail",
     DwgInsertReceiptProbe interface;
     dwgBuffer objectBuffer(
         const_cast<std::uint8_t*>(fixture.bytes.data()), fixture.bytes.size());
-    CHECK_FALSE(reader.walkBlockRecordEntities(&record, &objectBuffer, interface));
+    // A group rejected for any reason other than a foreign child owner is not
+    // contained: the walk stays a structural failure.
+    DwgEntityReaderProbe::DwgBlockWalkOutcome outcome =
+        DwgEntityReaderProbe::DwgBlockWalkOutcome::Complete;
+    CHECK_FALSE(reader.walkBlockRecordEntities(
+        &record, &objectBuffer, interface, DRW::NoHandle, DRW::NoHandle,
+        DwgIntegrityAddressSpace::DecodedBuffer, &outcome));
+    CHECK(outcome == DwgEntityReaderProbe::DwgBlockWalkOutcome::Structural);
     CHECK(interface.polylineCount == 0u);
     CHECK(interface.publications.empty());
     CHECK(reader.stagedPendingPolylineCountForTest() == 0u);
@@ -9207,7 +9245,13 @@ TEST_CASE("DWG legacy POLYLINE block walk rejects a foreign SEQEND",
     DwgInsertReceiptProbe interface;
     dwgBuffer objectBuffer(
         const_cast<std::uint8_t*>(fixture.bytes.data()), fixture.bytes.size());
-    CHECK_FALSE(reader.walkBlockRecordEntities(&record, &objectBuffer, interface));
+    DwgEntityReaderProbe::DwgBlockWalkOutcome outcome =
+        DwgEntityReaderProbe::DwgBlockWalkOutcome::Complete;
+    CHECK_FALSE(reader.walkBlockRecordEntities(
+        &record, &objectBuffer, interface, DRW::NoHandle, DRW::NoHandle,
+        DwgIntegrityAddressSpace::DecodedBuffer, &outcome));
+    CHECK(outcome
+          == DwgEntityReaderProbe::DwgBlockWalkOutcome::ContainedGroupRejection);
     CHECK(interface.polylineCount == 0u);
     CHECK(interface.publications.empty());
     CHECK(reader.stagedPendingPolylineCountForTest() == 0u);
@@ -9276,7 +9320,13 @@ TEST_CASE("DWG legacy POLYLINE block walk rejects a foreign VERTEX",
     DwgInsertReceiptProbe interface;
     dwgBuffer objectBuffer(
         const_cast<std::uint8_t*>(fixture.bytes.data()), fixture.bytes.size());
-    CHECK_FALSE(reader.walkBlockRecordEntities(&record, &objectBuffer, interface));
+    DwgEntityReaderProbe::DwgBlockWalkOutcome outcome =
+        DwgEntityReaderProbe::DwgBlockWalkOutcome::Complete;
+    CHECK_FALSE(reader.walkBlockRecordEntities(
+        &record, &objectBuffer, interface, DRW::NoHandle, DRW::NoHandle,
+        DwgIntegrityAddressSpace::DecodedBuffer, &outcome));
+    CHECK(outcome
+          == DwgEntityReaderProbe::DwgBlockWalkOutcome::ContainedGroupRejection);
     CHECK(interface.polylineCount == 0u);
     CHECK(interface.publications.empty());
     CHECK(reader.stagedPendingPolylineCountForTest() == 0u);
