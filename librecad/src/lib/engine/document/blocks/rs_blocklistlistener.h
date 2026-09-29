@@ -71,6 +71,17 @@ public:
     virtual void blockListCleared() {blockListModified(true);}
 
     /**
+     * Called once, from the destructor of the list (its drawing is being destroyed), after the list
+     * was emptied and its listeners were unregistered, and before the blocks are deleted. The list
+     * and its drawing are partly destroyed: forget them (drop the pointer to the list, and any row
+     * or pointer for a block) and do not read, add to or remove from either (unregistering yourself
+     * is harmless: the list no longer holds you; registering is not: nothing would unregister). Nothing
+     * is forwarded to blockListModified(): a listener that keeps nothing needs no override. A list that
+     * does not own its blocks is told too, and frees nothing.
+     */
+    virtual void blockListDestroyed() {}
+
+    /**
      * Called when block list is modified.
      */
     virtual void blockListModified(bool) {}

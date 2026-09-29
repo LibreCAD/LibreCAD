@@ -83,6 +83,8 @@ public:
 
     void addListener(RS_LayerListListener* listener);
     void removeListener(RS_LayerListListener* listener);
+    /// how many listeners are registered (a widget that is destroyed while attached must have unregistered)
+    int listenerCount() const {return static_cast<int>(m_layerListListeners.size());}
     /**
      * Sets the layer lists modified status to 'm'.
      */

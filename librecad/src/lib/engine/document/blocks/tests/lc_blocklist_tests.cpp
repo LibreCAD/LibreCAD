@@ -27,6 +27,7 @@
 // (RS_ActionBlocksSave's, a font imported as a drawing) frees nothing.
 
 #include <functional>
+#include <initializer_list>
 #include <memory>
 #include <new>
 
@@ -189,6 +190,117 @@ TEST_CASE("Clearing a non-owning block list tells the listeners and frees nothin
     delete a;
     delete b;
     CHECK(live == 0);
+}
+
+namespace {
+
+/// what a block list tells its listeners when it is destroyed
+class BlockDestroyRecorder final : public RS_BlockListListener {
+public:
+    /// \p list is only read to check that it is empty: a listener must not read it (the list is in its destructor)
+    explicit BlockDestroyRecorder(const int& live, const RS_BlockList* list = nullptr) : m_live{live}, m_list{list} {}
+    void blockListDestroyed() override {
+        ++m_destroyed;
+        m_liveInCallback = m_live;
+        if (m_list != nullptr) {
+            m_count = m_list->count();
+        }
+    }
+    void blockListModified(const bool) override { ++m_modified; }
+    void blockListCleared() override { ++m_cleared; }
+    const int& m_live;
+    const RS_BlockList* m_list;
+    int m_count = 99;
+    int m_destroyed = 0;
+    int m_liveInCallback = -1;
+    int m_modified = 0;
+    int m_cleared = 0;
+};
+
+/// unregisters itself from the list in the callback
+class BlockSelfRemoving final : public RS_BlockListListener {
+public:
+    explicit BlockSelfRemoving(RS_BlockList& list) : m_list{list} {}
+    void blockListDestroyed() override {
+        ++m_destroyed;
+        m_list.removeListener(this);
+    }
+    RS_BlockList& m_list;
+    int m_destroyed = 0;
+};
+
+}
+
+TEST_CASE("A block list tells its listeners once when it is destroyed, before it frees the blocks", "[block][ownership][2969]") {
+    int live = 0;
+    auto list = std::make_unique<RS_BlockList>(true);
+    list->add(new CountedBlock(nullptr, "A", live));
+    list->add(new CountedBlock(nullptr, "B", live));
+    BlockDestroyRecorder recorder(live, list.get());
+    list->addListener(&recorder);
+    list.reset();
+
+    CHECK(recorder.m_destroyed == 1);
+    CHECK(recorder.m_count == 0); // the list is empty when it tells them
+    CHECK(recorder.m_liveInCallback == 2); // told before they are freed
+    CHECK(live == 0);
+    CHECK(recorder.m_modified == 0);
+    CHECK(recorder.m_cleared == 0);
+}
+
+TEST_CASE("A non-owning block list tells its listeners when it is destroyed and frees nothing", "[block][ownership][2969]") {
+    int live = 0;
+    auto* a = new CountedBlock(nullptr, "A", live);
+    auto* b = new CountedBlock(nullptr, "B", live);
+    auto list = std::make_unique<RS_BlockList>(false);
+    list->add(a);
+    list->add(b);
+    BlockDestroyRecorder recorder(live, list.get());
+    list->addListener(&recorder);
+    list.reset();
+    CHECK(recorder.m_destroyed == 1);
+    CHECK(recorder.m_count == 0);
+    CHECK(recorder.m_liveInCallback == 2); // nothing was freed, before or after
+    CHECK(live == 2);
+    delete a;
+    delete b;
+    CHECK(live == 0);
+}
+
+TEST_CASE("A block list is destroyed without listeners, and after they unregistered", "[block][ownership][2969]") {
+    int live = 0;
+    { RS_BlockList empty(true); }
+    auto list = std::make_unique<RS_BlockList>(true);
+    list->add(new CountedBlock(nullptr, "A", live));
+    BlockDestroyRecorder recorder(live);
+    list->addListener(&recorder);
+    CHECK(list->listenerCount() == 1);
+    list->addListener(&recorder); // listed once
+    CHECK(list->listenerCount() == 1);
+    list->removeListener(&recorder);
+    CHECK(list->listenerCount() == 0);
+    list.reset();
+    CHECK(recorder.m_destroyed == 0);
+    CHECK(live == 0);
+}
+
+TEST_CASE("A block listener that unregisters itself when its list is destroyed does not make the next one miss it", "[block][ownership][2969]") {
+    int live = 0;
+    // one that removes itself from the middle of the list: a loop over the list itself would then
+    // skip the next listener and call the last one twice
+    auto list = std::make_unique<RS_BlockList>(true);
+    BlockDestroyRecorder before(live);
+    BlockSelfRemoving removing(*list);
+    BlockDestroyRecorder afterOne(live);
+    BlockDestroyRecorder afterTwo(live);
+    for (RS_BlockListListener* listener : std::initializer_list<RS_BlockListListener*>{&before, &removing, &afterOne, &afterTwo}) {
+        list->addListener(listener);
+    }
+    list.reset();
+    CHECK(before.m_destroyed == 1);
+    CHECK(removing.m_destroyed == 1);
+    CHECK(afterOne.m_destroyed == 1);
+    CHECK(afterTwo.m_destroyed == 1);
 }
 
 TEST_CASE("Clearing an owning RS_BlockList frees its blocks and forgets the active one", "[block][ownership]") {

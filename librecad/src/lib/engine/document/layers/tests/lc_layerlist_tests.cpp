@@ -33,6 +33,7 @@
 // source drawing destroyed before its entities are used again.
 
 #include <functional>
+#include <initializer_list>
 #include <memory>
 
 #include <catch2/catch_test_macros.hpp>
@@ -250,6 +251,109 @@ TEST_CASE("A layer listener that only knows layerListModified() hears a clear", 
     drawing.m_graphic.clearLayers();
     drawing.m_graphic.removeLayerListListener(&counter);
     CHECK(counter.m_modified == 1);
+}
+
+namespace {
+
+/// what a layer list tells its listeners when it is destroyed
+class DestroyRecorder final : public RS_LayerListListener {
+public:
+    /// \p list is only read to check that it is empty: a listener must not read it (the list is in its destructor)
+    explicit DestroyRecorder(const QList<RS_Layer*>& layers, const RS_LayerList* list = nullptr) : m_layers{layers}, m_list{list} {}
+    void layerListDestroyed() override {
+        ++m_destroyed;
+        if (m_list != nullptr) {
+            m_count = m_list->count();
+            m_active = m_list->getActive();
+        }
+        // the layers are freed after the callback: they must still be readable (ASan fails if not)
+        for (const RS_Layer* layer : std::as_const(m_layers)) {
+            m_names << layer->getName();
+        }
+    }
+    void layerListModified(const bool) override { ++m_modified; }
+    void layerListCleared() override { ++m_cleared; }
+    QList<RS_Layer*> m_layers;
+    const RS_LayerList* m_list;
+    unsigned m_count = 99;
+    const RS_Layer* m_active = nullptr;
+    int m_destroyed = 0;
+    int m_modified = 0;
+    int m_cleared = 0;
+    QStringList m_names;
+};
+
+/// unregisters itself from the list in the callback
+class SelfRemoving final : public RS_LayerListListener {
+public:
+    explicit SelfRemoving(RS_LayerList& list) : m_list{list} {}
+    void layerListDestroyed() override {
+        ++m_destroyed;
+        m_list.removeListener(this);
+    }
+    RS_LayerList& m_list;
+    int m_destroyed = 0;
+};
+
+}
+
+TEST_CASE("A layer list tells its listeners once when it is destroyed, before it frees the layers", "[layers][ownership][2969]") {
+    auto list = std::make_unique<RS_LayerList>();
+    list->add(new RS_Layer(QStringLiteral("WALLS")));
+    list->add(new RS_Layer(QStringLiteral("DOORS")));
+    QList<RS_Layer*> layers;
+    for (unsigned i = 0; i < list->count(); ++i) {
+        layers << list->at(i);
+    }
+    REQUIRE(layers.size() == 2);
+
+    REQUIRE(list->getActive() != nullptr);
+    DestroyRecorder recorder(layers, list.get());
+    list->addListener(&recorder);
+    list.reset();
+
+    CHECK(recorder.m_destroyed == 1);
+    // the list is empty when it tells them
+    CHECK(recorder.m_count == 0);
+    CHECK(recorder.m_active == nullptr);
+    recorder.m_names.sort();
+    CHECK(recorder.m_names == QStringList{QStringLiteral("DOORS"), QStringLiteral("WALLS")});
+    // a listener that only knows layerListModified() hears nothing from a destruction
+    CHECK(recorder.m_modified == 0);
+    CHECK(recorder.m_cleared == 0);
+}
+
+TEST_CASE("A listener that unregisters itself when its list is destroyed does not make the next one miss it", "[layers][ownership][2969]") {
+    // one that removes itself from the middle of the list: a loop over the list itself would then
+    // skip the next listener and call the last one twice
+    auto list = std::make_unique<RS_LayerList>();
+    DestroyRecorder before({});
+    SelfRemoving removing(*list);
+    DestroyRecorder afterOne({});
+    DestroyRecorder afterTwo({});
+    for (RS_LayerListListener* listener : std::initializer_list<RS_LayerListListener*>{&before, &removing, &afterOne, &afterTwo}) {
+        list->addListener(listener);
+    }
+    list.reset();
+    CHECK(before.m_destroyed == 1);
+    CHECK(removing.m_destroyed == 1);
+    CHECK(afterOne.m_destroyed == 1);
+    CHECK(afterTwo.m_destroyed == 1);
+}
+
+TEST_CASE("A layer list is destroyed without listeners, and after they unregistered", "[layers][ownership][2969]") {
+    { RS_LayerList empty; }
+    auto list = std::make_unique<RS_LayerList>();
+    list->add(new RS_Layer(QStringLiteral("WALLS")));
+    DestroyRecorder recorder({});
+    list->addListener(&recorder);
+    CHECK(list->listenerCount() == 1);
+    list->addListener(&recorder); // listed once
+    CHECK(list->listenerCount() == 1);
+    list->removeListener(&recorder);
+    CHECK(list->listenerCount() == 0);
+    list.reset();
+    CHECK(recorder.m_destroyed == 0);
 }
 
 TEST_CASE("A drawing frees its layers when re-initialised and destroyed", "[layers][ownership]") {

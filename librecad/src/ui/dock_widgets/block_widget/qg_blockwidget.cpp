@@ -487,6 +487,25 @@ void QG_BlockWidget::setGraphicView(RS_GraphicView* gv){
     }
 }
 
+/**
+ * Unregisters from the block list this widget still shows, if it does: the list would call a
+ * destroyed listener.
+ */
+QG_BlockWidget::~QG_BlockWidget() {
+    if (m_blockList != nullptr) {
+        m_blockList->removeListener(this);
+    }
+}
+
+/**
+ * The block list is being destroyed with its drawing, which was not detached from this widget first:
+ * the list has already dropped this listener, so forget it and clear the model.
+ */
+void QG_BlockWidget::blockListDestroyed() {
+    m_blockList = nullptr;
+    updateWidget();
+}
+
 void QG_BlockWidget::setBlockList(RS_BlockList* blockList) {
     if (m_blockList != nullptr) {
         m_blockList->removeListener(this);

@@ -28,6 +28,7 @@
 #include "rs_layerlist.h"
 
 #include<iostream>
+#include <utility>
 
 #include <QSet>
 #include <QtAlgorithms>
@@ -44,8 +45,22 @@ RS_LayerList::RS_LayerList() {
     setModified(false);
 }
 
+/**
+ * Frees the layers, after telling the listeners that still listen (see
+ * RS_LayerListListener::layerListDestroyed()): a dock attached to the list has a pointer to it, and
+ * rows for the layers. The listeners are moved out first, so one that unregisters itself in the
+ * callback cannot make the loop skip the next.
+ */
 RS_LayerList::~RS_LayerList() {
-    qDeleteAll(m_layers);
+    QList<RS_Layer*> removed;
+    removed.swap(m_layers);
+    m_layerSet.clear();
+    m_activeLayer = nullptr;
+    const QList<RS_LayerListListener*> listeners = std::exchange(m_layerListListeners, {});
+    for (const auto l : listeners) {
+        l->layerListDestroyed();
+    }
+    qDeleteAll(removed);
 }
 
 /**

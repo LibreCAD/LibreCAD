@@ -28,6 +28,8 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+#include <memory>
+
 #include <QAbstractItemModel>
 #include <QCoreApplication>
 #include <QScrollBar>
@@ -42,6 +44,7 @@
 #include "lc_propertysheetwidget.h"
 #include "qg_blockwidget.h"
 #include "qg_layerwidget.h"
+#include "qg_pentoolbar.h"
 #include "rs_block.h"
 #include "rs_graphic.h"
 #include "rs_layer.h"
@@ -299,4 +302,167 @@ TEST_CASE("The property sheet fills for a drawing with no active layer", "[gui][
     provider.fillDocumentProperties(&container, &graphic);
     // nothing to show about a layer that does not exist
     CHECK_FALSE(container.hasChildProperties());
+}
+
+// --- the drawing is destroyed while a dock is still attached to it (the destructors of the lists)
+
+TEST_CASE("A layer widget outlives the drawing it shows", "[gui][layers][2969]") {
+    (void)lc::test::application();
+    LC_ActionGroupManager actions(nullptr);
+    QG_LayerWidget widget(&actions, nullptr, nullptr); // first, so that it is destroyed after the drawings
+    auto graphic = std::make_unique<RS_Graphic>();
+    graphic->initForNewDocument();
+    graphic->addLayer(frozenLayer(QStringLiteral("Walls")));
+    graphic->addLayer(frozenLayer(QStringLiteral("Doors")));
+    lc::test::TestGraphicView view;
+    view.setDocument(graphic.get());
+    widget.setGraphicView(&view);
+    QAbstractItemModel* model = modelOf<QTableView>(widget);
+    REQUIRE(model != nullptr);
+    REQUIRE(model->rowCount(QModelIndex{}) == 3);
+
+    // the drawing goes with the widget still attached to it (the view is not used again)
+    graphic.reset();
+    REQUIRE(model->rowCount(QModelIndex{}) == 0);
+    CHECK(readAllRows(*model) == 0);
+    // typing in the filter has no drawing to filter
+    widget.slotUpdateLayerList();
+    // and activating a layer has no drawing to activate it in (it would reach the freed one)
+    RS_Layer stray(QStringLiteral("Stray"));
+    widget.activateLayer(&stray);
+    // detaching finds nothing of the destroyed list to unregister from
+    widget.setGraphicView(nullptr);
+    CHECK(model->rowCount(QModelIndex{}) == 0);
+
+    // and the widget shows another drawing
+    RS_Graphic second;
+    second.initForNewDocument();
+    second.addLayer(frozenLayer(QStringLiteral("Roof")));
+    lc::test::TestGraphicView secondView;
+    secondView.setDocument(&second);
+    widget.setGraphicView(&secondView);
+    REQUIRE(model->rowCount(QModelIndex{}) == 2);
+    CHECK(readAllRows(*model) > 0);
+    // (the second drawing is destroyed before the widget, still attached to it)
+}
+
+TEST_CASE("A layer tree outlives the drawing it shows", "[gui][layers][2969]") {
+    (void)lc::test::application();
+    LC_LayerTreeWidget widget(nullptr, nullptr);
+    auto graphic = std::make_unique<RS_Graphic>();
+    graphic->initForNewDocument();
+    graphic->addLayer(new RS_Layer("Walls"));
+    graphic->addLayer(new RS_Layer("Doors"));
+    lc::test::TestGraphicView view;
+    view.setDocument(graphic.get());
+    widget.setGraphicView(&view);
+    QAbstractItemModel* model = modelOf<QTreeView>(widget);
+    REQUIRE(model != nullptr);
+    REQUIRE(model->rowCount(QModelIndex{}) == 3);
+
+    graphic.reset();
+    REQUIRE(model->rowCount(QModelIndex{}) == 0);
+    // the buttons that act on all layers have no drawing to act on (they read the freed one)
+    widget.showAllLayers();
+    widget.hideAllLayers();
+    widget.setGraphicView(nullptr);
+    CHECK(model->rowCount(QModelIndex{}) == 0);
+
+    RS_Graphic second;
+    second.initForNewDocument();
+    second.addLayer(new RS_Layer("Roof"));
+    lc::test::TestGraphicView secondView;
+    secondView.setDocument(&second);
+    widget.setGraphicView(&secondView);
+    CHECK(model->rowCount(QModelIndex{}) == 2);
+}
+
+TEST_CASE("A block widget outlives the drawing it shows", "[gui][blocks][2969]") {
+    (void)lc::test::application();
+    LC_ActionGroupManager actions(nullptr);
+    QG_BlockWidget widget(&actions, nullptr, nullptr);
+    auto graphic = std::make_unique<RS_Graphic>();
+    graphic->initForNewDocument();
+    addBlock(*graphic, "Door");
+    addBlock(*graphic, "Window");
+    lc::test::TestGraphicView view;
+    view.setDocument(graphic.get());
+    widget.setGraphicView(&view);
+    QAbstractItemModel* model = modelOf<QTableView>(widget);
+    REQUIRE(model != nullptr);
+    REQUIRE(model->rowCount(QModelIndex{}) == 2);
+    REQUIRE(readAllRows(*model) > 0);
+
+    graphic.reset();
+    REQUIRE(model->rowCount(QModelIndex{}) == 0);
+    CHECK(readAllRows(*model) == 0);
+    CHECK(widget.getBlockList() == nullptr);
+    // a stray block has no drawing to be activated in
+    RS_Block stray(nullptr, RS_BlockData(QStringLiteral("Stray"), RS_Vector{0, 0}, false));
+    widget.activateBlock(&stray);
+    widget.setGraphicView(nullptr);
+    CHECK(model->rowCount(QModelIndex{}) == 0);
+
+    RS_Graphic second;
+    second.initForNewDocument();
+    addBlock(second, "Roof");
+    lc::test::TestGraphicView secondView;
+    secondView.setDocument(&second);
+    widget.setGraphicView(&secondView);
+    REQUIRE(model->rowCount(QModelIndex{}) == 1);
+    CHECK(readAllRows(*model) > 0);
+}
+
+TEST_CASE("A pen tool bar outlives the drawing it follows", "[gui][layers][2969]") {
+    (void)lc::test::application();
+    QG_PenToolBar bar(QStringLiteral("Pen"));
+    auto graphic = std::make_unique<RS_Graphic>();
+    graphic->initForNewDocument();
+    lc::test::TestGraphicView view;
+    view.setDocument(graphic.get());
+    bar.setGraphicView(&view);
+
+    graphic.reset();
+    // detaching finds nothing of the destroyed list to unregister from
+    bar.setGraphicView(nullptr);
+
+    RS_Graphic second;
+    second.initForNewDocument();
+    lc::test::TestGraphicView secondView;
+    secondView.setDocument(&second);
+    bar.setGraphicView(&secondView);
+}
+
+TEST_CASE("Widgets destroyed before the drawing they show leave nothing registered on it", "[gui][layers][blocks][2969]") {
+    (void)lc::test::application();
+    LC_ActionGroupManager actions(nullptr);
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    addBlock(graphic, "Door");
+    lc::test::TestGraphicView view;
+    view.setDocument(&graphic);
+    const int layerListeners = graphic.getLayerList()->listenerCount();
+    const int blockListeners = graphic.getBlockList()->listenerCount();
+    {
+        QG_LayerWidget layers(&actions, nullptr, nullptr);
+        LC_LayerTreeWidget tree(nullptr, nullptr);
+        QG_BlockWidget blocks(&actions, nullptr, nullptr);
+        QG_PenToolBar pen(QStringLiteral("Pen"));
+        layers.setGraphicView(&view);
+        tree.setGraphicView(&view);
+        blocks.setGraphicView(&view);
+        pen.setGraphicView(&view);
+        // the layer widget, the tree and the tool bar listen to the layers, the block widget to the blocks
+        CHECK(graphic.getLayerList()->listenerCount() == layerListeners + 3);
+        CHECK(graphic.getBlockList()->listenerCount() == blockListeners + 1);
+    }
+    // each unregistered when it was destroyed: the lists hold none of them
+    CHECK(graphic.getLayerList()->listenerCount() == layerListeners);
+    CHECK(graphic.getBlockList()->listenerCount() == blockListeners);
+    // so clearing the lists, and destroying them at the end of the test, reach no destroyed widget
+    // (the tool bar has nothing else to observe: under ASan it fails if one is still listed)
+    graphic.clearLayers();
+    graphic.clearBlocks();
+    graphic.addLayer(new RS_Layer("0"));
+    addBlock(graphic, "Window");
 }

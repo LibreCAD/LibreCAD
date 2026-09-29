@@ -311,6 +311,27 @@ QG_LayerWidget::QG_LayerWidget(LC_ActionGroupManager* actionGroupManager, const 
 }
 
 /**
+ * Unregisters from the layer list this widget still shows, if it does: the list would call a
+ * destroyed listener.
+ */
+QG_LayerWidget::~QG_LayerWidget() {
+    if (m_layerList != nullptr) {
+        m_layerList->removeListener(this);
+    }
+}
+
+/**
+ * The layer list is being destroyed with its drawing, which was not detached from this widget first:
+ * the list has already dropped this listener, so forget it and the drawing, and clear the model.
+ */
+void QG_LayerWidget::layerListDestroyed() {
+    m_layerList = nullptr;
+    m_graphic = nullptr;
+    m_lastLayer = nullptr;
+    updateWidget();
+}
+
+/**
  * Sets the layerlist this layer widget should show.
  *
  * @param layerList
@@ -555,6 +576,9 @@ void QG_LayerWidget::slotSelectionChanged(
  * Called when reg-expresion matchLayerName->text changed
  */
 void QG_LayerWidget::slotUpdateLayerList() {
+    if (m_layerList == nullptr) {
+        return; // no drawing: nothing to filter
+    }
     const QRegularExpression rx = QRegularExpression::fromWildcard(m_matchLayerName->text());
 
     for (unsigned i = 0; i < m_layerList->count(); i++) {

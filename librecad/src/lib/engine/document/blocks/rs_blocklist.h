@@ -89,6 +89,8 @@ public:
 
     void addListener(RS_BlockListListener* listener);
     void removeListener(RS_BlockListListener* listener);
+    /// how many listeners are registered (a widget that is destroyed while attached must have unregistered)
+    int listenerCount() const {return static_cast<int>(m_blockListListeners.size());}
 
     bool isOwner() const {
         return m_owner;

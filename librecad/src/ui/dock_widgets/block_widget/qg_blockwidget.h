@@ -104,6 +104,9 @@ public:
     void blockListCleared() override{
         updateWidget();
     }
+    /// the list is being destroyed: forget it
+    void blockListDestroyed() override;
+    ~QG_BlockWidget() override;
     void blockToggled(RS_Block*) override{
         updateWidget();
     }

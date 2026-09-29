@@ -121,7 +121,7 @@ class QG_LayerWidget : public LC_GraphicViewAwareWidget, public RS_LayerListList
 public:
     QG_LayerWidget(LC_ActionGroupManager* actionGroupManager, const QG_ActionHandler* ah, QWidget* parent, const char* name = nullptr,
                    Qt::WindowFlags f = {});
-    ~QG_LayerWidget() override = default;
+    ~QG_LayerWidget() override;
 
     void updateWidget();
     void activateLayer(RS_Layer* layer, bool updateScroll = true) const;
@@ -137,6 +137,8 @@ public:
     void layerListCleared() override {
         updateWidget();
     }
+    /// the list is being destroyed: forget it and its drawing
+    void layerListDestroyed() override;
 
     void layerToggled(RS_Layer*) override {
         updateWidget();

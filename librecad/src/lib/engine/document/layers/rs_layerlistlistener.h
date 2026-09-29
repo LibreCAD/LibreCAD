@@ -87,6 +87,19 @@ public:
     virtual void layerListCleared() {layerListModified(true);}
 
     /**
+     * Called once, from the destructor of the list (its drawing is being destroyed), after the list
+     * was emptied and its listeners were unregistered, and before the layers are deleted. The list
+     * and its drawing are partly destroyed: forget them (drop the pointer to the list, and any row
+     * or pointer for a layer) and do not read, add to or remove from either (unregistering yourself
+     * is harmless: the list no longer holds you; registering is not: nothing would unregister). Nothing
+     * is forwarded to layerListModified(): a listener that keeps nothing needs no override. A listener
+     * that keeps the drawing, not the list (LC_PropertySheetWidget), or neither (QG_GraphicView), is
+     * not told anything it can use here: it must be detached before its drawing is destroyed, as
+     * QC_ApplicationWindow does.
+     */
+    virtual void layerListDestroyed() {}
+
+    /**
      * Called when layer list is modified.
      */
     virtual void layerListModified(bool) {}

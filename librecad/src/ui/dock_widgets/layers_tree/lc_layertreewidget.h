@@ -51,7 +51,7 @@ public:
     };
 
     LC_LayerTreeWidget(const QG_ActionHandler* ah, QWidget* parent, const char* name = nullptr, Qt::WindowFlags f = {});
-    ~LC_LayerTreeWidget() override = default;
+    ~LC_LayerTreeWidget() override;
     void activateLayer(RS_Layer* layer) const;
     void layerActivated(RS_Layer* layer) override;
     void layerAdded(RS_Layer* layer) override;
@@ -59,6 +59,8 @@ public:
     void layerRemoved(RS_Layer*) override;
     /// the layers are about to be freed: rebuild the tree without them
     void layerListCleared() override;
+    /// the list is being destroyed: forget it and its drawing
+    void layerListDestroyed() override;
     void layerToggled(RS_Layer*) override;
     void layerToggledLock(RS_Layer*) override;
     void layerToggledPrint(RS_Layer*) override;

@@ -31,6 +31,7 @@
 #include <QtAlgorithms>
 #include <atomic>
 #include <iostream>
+#include <utility>
 
 #include "rs_block.h"
 #include "rs_blocklistlistener.h"
@@ -56,9 +57,22 @@ RS_BlockList::RS_BlockList(const bool owner)
     setModified(false);
 }
 
+/**
+ * Frees the blocks if the list owns them, after telling the listeners that still listen (see
+ * RS_BlockListListener::blockListDestroyed()): a dock attached to the list has a pointer to it, and
+ * rows for the blocks. The listeners are moved out first, so one that unregisters itself in the
+ * callback cannot make the loop skip the next.
+ */
 RS_BlockList::~RS_BlockList() {
+    QList<RS_Block*> removed;
+    removed.swap(m_blocks);
+    m_activeBlock = nullptr;
+    const QList<RS_BlockListListener*> listeners = std::exchange(m_blockListListeners, {});
+    for (const auto l : listeners) {
+        l->blockListDestroyed();
+    }
     if (m_owner) {
-        qDeleteAll(m_blocks);
+        qDeleteAll(removed);
     }
 }
 
