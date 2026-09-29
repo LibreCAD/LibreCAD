@@ -9816,6 +9816,72 @@ LegacyPolylineGroupFrames makeLegacyPolylineGroupFrames(
     return frames;
 }
 
+// INSERT, three ATTRIB frames and SEQEND of one group, with independently
+// chosen handles (the ATTRIBs must be consecutive: their own chain is implicit).
+struct LegacyInsertGroupFrames {
+    std::uint32_t insertHandle = 0;
+    std::uint32_t firstAttribHandle = 0;
+    std::uint32_t seqEndHandle = 0;
+    std::vector<std::uint8_t> insert;
+    std::vector<std::vector<std::uint8_t>> attribs;
+    std::vector<std::uint8_t> seqEnd;
+
+    bool valid() const {
+        return !insert.empty() && attribs.size() == 3u && !seqEnd.empty()
+            && std::none_of(attribs.cbegin(), attribs.cend(),
+                            [](const std::vector<std::uint8_t>& frame) {
+                                return frame.empty();
+                            });
+    }
+
+    void addTo(LegacyObjectImage& image) const {
+        image.add(dwgType::INSERT, insertHandle, insert);
+        for (std::size_t index = 0; index < attribs.size(); ++index) {
+            image.add(dwgType::ATTRIB,
+                      firstAttribHandle + static_cast<std::uint32_t>(index),
+                      attribs[index]);
+        }
+        image.add(dwgType::SEQEND, seqEndHandle, seqEnd);
+    }
+};
+
+LegacyInsertGroupFrames makeLegacyInsertGroupFrames(
+    std::uint32_t insertHandle, std::uint32_t firstAttribHandle,
+    std::uint32_t seqEndHandle) {
+    DwgInsertWriterProbe insert;
+    insert.handle = insertHandle;
+    insert.setObjectType(dwgType::INSERT);
+    dwgHandle first;
+    first.ref = firstAttribHandle;
+    dwgHandle last;
+    last.ref = firstAttribHandle + 2u;
+    insert.attribHandles = {first, last};
+    insert.seqendH.ref = seqEndHandle;
+
+    LegacyInsertGroupFrames frames;
+    frames.insertHandle = insertHandle;
+    frames.firstAttribHandle = firstAttribHandle;
+    frames.seqEndHandle = seqEndHandle;
+    dwgBufferW insertBody;
+    if (!insert.encodeDwg(DRW::AC1015, &insertBody, 0, nullptr, nullptr))
+        return {};
+    frames.insert = makeEntityFrame(insertBody);
+    for (std::uint32_t index = 0; index < 3u; ++index) {
+        DwgAttribWriterProbe attribute;
+        attribute.handle = firstAttribHandle + index;
+        attribute.parentHandle = insertHandle;
+        attribute.text = "value";
+        attribute.tag = "TAG";
+        attribute.height = 1.0;
+        dwgBufferW body;
+        if (!attribute.encodeDwg(DRW::AC1015, &body, 0, nullptr, nullptr))
+            return {};
+        frames.attribs.push_back(makeEntityFrame(body));
+    }
+    frames.seqEnd = makeSeqEndFrame(seqEndHandle, insertHandle);
+    return frames;
+}
+
 } // namespace
 
 // The DWG object-size field is read at a version-dependent point: first for
@@ -10044,6 +10110,46 @@ TEST_CASE("DWG legacy block walk continues past a POLYLINE group",
     CHECK(interface.polylines[1].handle == secondPolyline);
     CHECK(interface.polylines[0].vertlist.size() == 2u);
     CHECK(interface.polylines[1].vertlist.size() == 2u);
+    CHECK(reader.ObjectMap.empty());
+    CHECK(reader.entityParseFailuresForTest() == 0u);
+}
+
+TEST_CASE("DWG legacy block walk continues past an INSERT group",
+          "[dwg][safety][compound]") {
+    const bool adjacent = GENERATE(true, false);
+    INFO("children " << (adjacent ? "right behind" : "far from")
+                     << " the parent");
+    constexpr std::uint32_t firstInsert = 0x100;
+    const std::uint32_t secondInsert = adjacent ? 0x105u : 0x101u;
+    const auto first = makeLegacyInsertGroupFrames(
+        firstInsert, adjacent ? 0x101u : 0x600u, adjacent ? 0x104u : 0x603u);
+    const auto second = makeLegacyInsertGroupFrames(
+        secondInsert, adjacent ? 0x106u : 0x610u, adjacent ? 0x109u : 0x613u);
+    REQUIRE(first.valid());
+    REQUIRE(second.valid());
+
+    LegacyObjectImage image;
+    first.addTo(image);
+    second.addTo(image);
+    DwgEntityReaderProbe reader(std::make_unique<dwgBuffer>(
+        const_cast<std::uint8_t*>(image.bytes.data()), image.bytes.size()));
+    reader.setVersionForTest(DRW::AC1015);
+    for (const objHandle& object : image.objects)
+        reader.ObjectMap.emplace(object.handle, object);
+
+    DRW_Block_Record record;
+    record.name = "TWO_INSERTS";
+    DwgBlockOwnershipTestAccess::setLegacyEntityChain(
+        record, firstInsert, secondInsert);
+    DwgInsertReceiptProbe interface;
+    dwgBuffer objectBuffer(
+        const_cast<std::uint8_t*>(image.bytes.data()), image.bytes.size());
+    REQUIRE(reader.walkBlockRecordEntities(&record, &objectBuffer, interface));
+    REQUIRE(interface.inserts.size() == 2u);
+    CHECK(interface.inserts[0].handle == firstInsert);
+    CHECK(interface.inserts[1].handle == secondInsert);
+    CHECK(interface.inserts[0].attlist.size() == 3u);
+    CHECK(interface.inserts[1].attlist.size() == 3u);
     CHECK(reader.ObjectMap.empty());
     CHECK(reader.entityParseFailuresForTest() == 0u);
 }
