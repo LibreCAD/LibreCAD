@@ -35,6 +35,7 @@
 
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/generators/catch_generators.hpp>
 
 #include <algorithm>
 #include <array>
@@ -29630,6 +29631,278 @@ TEST_CASE("RS_FilterDXFRW rejects a serialized INSERT child-owner mismatch "
     if (entity == nullptr)
       continue;
     CHECK(entity->rtti() != RS2::EntityInsert);
+    CHECK(entity->rtti() != RS2::EntityText);
+    CHECK(entity->rtti() != RS2::EntityMText);
+  }
+
+  std::remove(validPath.c_str());
+  std::remove(malformedPath.c_str());
+}
+
+namespace {
+
+// A serialized POLYLINE group for the R2000 file tests: POLYLINE 0x201 with the
+// VERTEXes 0x202 and 0x203; the writer mints the SEQEND.
+class SerializedMalformedPolylineIface : public EmptyIface {
+public:
+  dwgRW *m_writer{nullptr};
+  std::vector<DRW_Polyline> m_polylines;
+  std::vector<DRW_DwgFramePublication> m_framePublications;
+  DRW_DwgFrameCoverageReport m_frameCoverage;
+  bool m_receivedFrameCoverage{false};
+
+  void writeEntities() override {
+    REQUIRE(m_writer != nullptr);
+    DRW_Polyline polyline;
+    polyline.handle = 0x201;
+    double x = 0.0;
+    for (const std::uint32_t handle : {0x202u, 0x203u}) {
+      DRW_Vertex vertex(x, 0.0, 0.0, 0.0);
+      vertex.handle = handle;
+      polyline.addVertex(vertex);
+      x += 10.0;
+    }
+    REQUIRE(m_writer->writePolyline(&polyline));
+  }
+
+  void addPolyline(const DRW_Polyline &polyline) override {
+    m_polylines.push_back(polyline);
+  }
+
+  void
+  addDwgFramePublication(const DRW_DwgFramePublication &publication) override {
+    m_framePublications.push_back(publication);
+  }
+
+  void
+  addDwgFrameCoverageReport(const DRW_DwgFrameCoverageReport &report) override {
+    m_frameCoverage = report;
+    m_receivedFrameCoverage = true;
+  }
+};
+
+// Rewrites, in place, the owner handle of one legacy (R2000) entity frame of
+// the file at `sourcePath` and stores the result at `targetPath`. The owner is
+// the first handle of the frame's handle stream; the replacement has the same
+// encoded size, so the frame keeps its size.
+void rewriteLegacyOwner(const std::string &sourcePath,
+                        const std::string &targetPath,
+                        std::uint32_t objectHandle, int expectedObjectType,
+                        std::uint32_t expectedOwner, std::uint32_t newOwner) {
+  auto bytes = slurp(sourcePath);
+  REQUIRE(!bytes.empty());
+  const LegacyDwgSection handles = legacyDwgSection(bytes, 2);
+  REQUIRE(handles.address > 0);
+  REQUIRE(handles.size > 0);
+
+  DwgHandleReaderProbe handleReader(
+      std::make_unique<dwgBuffer>(bytes.data(), bytes.size()));
+  dwgBuffer handleBuffer(bytes.data(), bytes.size());
+  REQUIRE(handleReader.readDwgHandles(&handleBuffer, handles.address,
+                                      handles.size));
+  const auto objectIt = handleReader.ObjectMap.find(objectHandle);
+  REQUIRE(objectIt != handleReader.ObjectMap.end());
+  const std::uint32_t offset = objectIt->second.loc;
+  REQUIRE(offset < bytes.size());
+
+  DwgObjectFrame sourceFrame;
+  dwgBuffer sourceBuffer(bytes.data(), bytes.size());
+  REQUIRE(sourceFrame.readAt(sourceBuffer, DRW::AC1015, offset));
+
+  dwgBuffer frameSizeBuffer(bytes.data(), bytes.size());
+  REQUIRE(frameSizeBuffer.setPosition(offset));
+  const std::int32_t bodySize = frameSizeBuffer.getModularShort();
+  REQUIRE(frameSizeBuffer.isGood());
+  REQUIRE(bodySize >= 0);
+  const std::size_t framePrefixSize =
+      static_cast<std::size_t>(frameSizeBuffer.getPosition()) - offset;
+  const std::size_t frameSize = framePrefixSize +
+                                static_cast<std::size_t>(bodySize) +
+                                sizeof(std::uint16_t);
+  REQUIRE(offset <= bytes.size() - frameSize);
+
+  dwgBuffer bodyHeader(sourceFrame.body().data(), sourceFrame.body().size());
+  REQUIRE(bodyHeader.getObjType(DRW::AC1015) == expectedObjectType);
+  const std::uint32_t dataBitSize = bodyHeader.getRawLong32();
+  REQUIRE(bodyHeader.isGood());
+  REQUIRE(dataBitSize < sourceFrame.body().size() * 8u);
+
+  dwgBuffer ownerReader(sourceFrame.body().data(), sourceFrame.body().size());
+  REQUIRE(ownerReader.setPosition(dataBitSize / 8u));
+  ownerReader.setBitPos(static_cast<std::uint8_t>(dataBitSize % 8u));
+  const std::uint64_t ownerStartBit =
+      ownerReader.getPosition() * 8u + ownerReader.getBitPos();
+  const dwgHandle owner = ownerReader.getHandle();
+  const std::uint64_t ownerEndBit =
+      ownerReader.getPosition() * 8u + ownerReader.getBitPos();
+  REQUIRE(ownerReader.isGood());
+  REQUIRE(owner.code == 4);
+  REQUIRE(owner.ref == expectedOwner);
+  REQUIRE(ownerEndBit > ownerStartBit);
+
+  dwgHandle replacement = owner;
+  replacement.ref = newOwner;
+  replacement.ref64 = newOwner;
+  dwgBufferW replacementWriter;
+  replacementWriter.putHandle(replacement);
+  dwgBuffer replacementReader(replacementWriter.data().data(),
+                              replacementWriter.data().size());
+  dwgBuffer sourceBits(sourceFrame.body().data(), sourceFrame.body().size());
+  dwgBufferW rebuiltBody;
+  const std::uint64_t totalBodyBits =
+      static_cast<std::uint64_t>(sourceFrame.body().size()) * 8u;
+  for (std::uint64_t bit = 0; bit < totalBodyBits; ++bit) {
+    const std::uint8_t sourceValue = sourceBits.getBit();
+    rebuiltBody.putBit(bit >= ownerStartBit && bit < ownerEndBit
+                           ? replacementReader.getBit()
+                           : sourceValue);
+  }
+  rebuiltBody.alignToByte();
+  REQUIRE(rebuiltBody.data().size() == sourceFrame.body().size());
+  REQUIRE(rebuiltBody.data() != sourceFrame.body());
+  const auto malformedFrame = makeLegacyEntityFrame(rebuiltBody.data());
+  REQUIRE(malformedFrame.size() == frameSize);
+  std::copy(malformedFrame.cbegin(), malformedFrame.cend(),
+            bytes.begin() + offset);
+  std::ofstream output(targetPath, std::ios::binary);
+  REQUIRE(output.good());
+  output.write(reinterpret_cast<const char *>(bytes.data()),
+               static_cast<std::streamsize>(bytes.size()));
+  REQUIRE(output.good());
+}
+
+} // namespace
+
+// The same whole-file view for every shape the group rejection covers: an
+// INSERT or a POLYLINE group whose first child, last child or SEQEND names a
+// foreign owner. Whichever child it is, the whole group is dropped as one
+// counted entity failure and the file still reads; nothing of the group is
+// published, in the callbacks, the coverage report or the graph.
+TEST_CASE("RS_FilterDXFRW contains a serialized group's foreign child owner",
+          "[dwg-write][filter-roundtrip][insert][polyline][safety][external]") {
+  ensureQtSettings();
+  enum class Child { First, Last, SeqEnd };
+  const bool polyline = GENERATE(false, true);
+  const Child foreign = GENERATE(Child::First, Child::Last, Child::SeqEnd);
+  const char *const childName = foreign == Child::First  ? "first child"
+                                : foreign == Child::Last ? "last child"
+                                                         : "SEQEND";
+  INFO((polyline ? "POLYLINE" : "INSERT") << ", foreign owner on the "
+       << childName);
+  const std::string validPath = tempPath("external_group_valid_r2000.dwg");
+  const std::string malformedPath = tempPath("external_group_mismatch_r2000.dwg");
+  std::remove(validPath.c_str());
+  std::remove(malformedPath.c_str());
+
+  // Write the valid group and learn its SEQEND handle.
+  std::uint32_t seqEndHandle = 0x204;
+  if (polyline) {
+    dwgRW writer(validPath.c_str());
+    SerializedMalformedPolylineIface writeIface;
+    writeIface.m_writer = &writer;
+    REQUIRE(writer.write(&writeIface, DRW::AC1015, /*bin=*/false));
+    dwgRW reader(validPath.c_str());
+    SerializedMalformedPolylineIface readIface;
+    REQUIRE(reader.read(&readIface, /*ext=*/false));
+    REQUIRE(readIface.m_polylines.size() == 1u);
+    const auto seqEnd = std::find_if(
+        readIface.m_framePublications.cbegin(),
+        readIface.m_framePublications.cend(),
+        [](const DRW_DwgFramePublication &publication) {
+          return publication.m_isEntity &&
+                 publication.m_resolvedType == dwgType::SEQEND;
+        });
+    REQUIRE(seqEnd != readIface.m_framePublications.cend());
+    seqEndHandle = seqEnd->m_handle;
+  } else {
+    dwgRW writer(validPath.c_str());
+    SerializedMalformedInsertIface writeIface;
+    writeIface.m_writer = &writer;
+    REQUIRE(writer.write(&writeIface, DRW::AC1015, /*bin=*/false));
+  }
+
+  constexpr std::uint32_t kGroup = 0x201;
+  constexpr std::uint32_t kFirst = 0x202;
+  constexpr std::uint32_t kLast = 0x203;
+  const int childType = polyline ? dwgType::VERTEX_2D : dwgType::ATTRIB;
+  switch (foreign) {
+  case Child::First:
+    rewriteLegacyOwner(validPath, malformedPath, kFirst, childType, kGroup,
+                       seqEndHandle);
+    break;
+  case Child::Last:
+    rewriteLegacyOwner(validPath, malformedPath, kLast, childType, kGroup,
+                       seqEndHandle);
+    break;
+  case Child::SeqEnd:
+    rewriteLegacyOwner(validPath, malformedPath, seqEndHandle, dwgType::SEQEND,
+                       kGroup, kFirst);
+    break;
+  }
+
+  const std::vector<std::uint32_t> groupHandles = {kGroup, kFirst, kLast,
+                                                   seqEndHandle};
+  const auto checkCoverage = [&](const DRW_DwgFrameCoverageReport &report,
+                                 bool received) {
+    REQUIRE(received);
+    CHECK(report.m_status == DRW_DwgFrameCoverageStatus::FinalizedPartial);
+    CHECK_FALSE(report.m_complete);
+    for (const std::uint32_t handle : groupHandles) {
+      const auto entry = std::find_if(
+          report.m_entries.cbegin(), report.m_entries.cend(),
+          [handle](const DRW_DwgFrameCoverageEntry &coverage) {
+            return coverage.m_handle == handle;
+          });
+      REQUIRE(entry != report.m_entries.cend());
+      CHECK(entry->m_disposition != DRW_DwgFrameDisposition::Published);
+      CHECK(entry->m_publicationCount == 0u);
+    }
+  };
+  const auto checkNoGroupPublication =
+      [&](const std::vector<DRW_DwgFramePublication> &publications) {
+        for (const DRW_DwgFramePublication &publication : publications) {
+          CHECK_FALSE((publication.m_isEntity &&
+                       std::find(groupHandles.cbegin(), groupHandles.cend(),
+                                 publication.m_handle) != groupHandles.cend()));
+        }
+      };
+
+  if (polyline) {
+    SerializedMalformedPolylineIface lowLevelRead;
+    dwgRW reader(malformedPath.c_str());
+    REQUIRE(reader.read(&lowLevelRead, /*ext=*/false));
+    CHECK(reader.getError() == DRW::BAD_NONE);
+    CHECK(reader.getEntityParseFailures() >= 1);
+    CHECK(lowLevelRead.m_polylines.empty());
+    checkCoverage(lowLevelRead.m_frameCoverage,
+                  lowLevelRead.m_receivedFrameCoverage);
+    checkNoGroupPublication(lowLevelRead.m_framePublications);
+  } else {
+    SerializedMalformedInsertIface lowLevelRead;
+    dwgRW reader(malformedPath.c_str());
+    REQUIRE(reader.read(&lowLevelRead, /*ext=*/false));
+    CHECK(reader.getError() == DRW::BAD_NONE);
+    CHECK(reader.getEntityParseFailures() >= 1);
+    CHECK(lowLevelRead.m_inserts.empty());
+    checkCoverage(lowLevelRead.m_frameCoverage,
+                  lowLevelRead.m_receivedFrameCoverage);
+    checkNoGroupPublication(lowLevelRead.m_framePublications);
+  }
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(malformedPath),
+                              RS2::FormatDWG));
+  }
+  CHECK_FALSE(
+      graphic.dwgAdvancedMetadata().dwgFramePublicationCoverageComplete());
+  for (RS_Entity *entity :
+       lc::LC_ContainerTraverser{graphic, RS2::ResolveNone}.entities()) {
+    if (entity == nullptr)
+      continue;
+    CHECK(entity->rtti() != RS2::EntityInsert);
+    CHECK(entity->rtti() != RS2::EntityPolyline);
     CHECK(entity->rtti() != RS2::EntityText);
     CHECK(entity->rtti() != RS2::EntityMText);
   }

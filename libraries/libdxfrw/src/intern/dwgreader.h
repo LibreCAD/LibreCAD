@@ -652,10 +652,11 @@ protected:
   // (optional) says how far that failure reaches:
   //  - Complete: no failure; the walk returned true.
   //  - ContainedGroupRejection: the only failures were child-owner mismatches
-  //    inside a legacy INSERT/POLYLINE group.  The group was rejected as a
-  //    whole (staged state terminalized, discovered frames quarantined, one
-  //    entity failure counted) and every other frame of the walk was read on
-  //    its own merits, so the enclosing section may continue.
+  //    inside INSERT/POLYLINE groups (legacy or mapped).  Each group was
+  //    rejected as a whole (staged state terminalized, discovered frames
+  //    quarantined, one entity failure counted) and every other frame of the
+  //    walk was read on its own merits, so the enclosing section may
+  //    continue.
   //  - Structural: anything else (unreadable frame, handle identity mismatch,
   //    broken chain, unclearable compound state, ...).  The section fails.
   // The value is Structural until the walk reaches its normal exit, so every
@@ -681,13 +682,19 @@ protected:
                                DwgIntegrityAddressSpace offsetSpace =
                                    DwgIntegrityAddressSpace::DecodedBuffer,
                                DwgBlockWalkOutcome *outcome = nullptr);
+  // Walks a modern block into one journalled transaction. Any failure returns
+  // false and the caller rolls the whole transaction back, except a contained
+  // group rejection (see DwgBlockWalkOutcome): that group was rejected as a
+  // whole before anything of it reached the journal, so the walk goes on with
+  // the block's other entities and counts it in `containedGroups`.
   bool walkJournalledBlockRecordEntities(
       DRW_Block_Record *bkr, dwgBuffer *dbuf, DRW_Interface &intfa,
       DwgBlockScopeTransaction &transaction,
       std::uint32_t expectedOwner = DRW::NoHandle,
       std::uint32_t rawBlockOwner = DRW::NoHandle,
       DwgIntegrityAddressSpace offsetSpace =
-          DwgIntegrityAddressSpace::DecodedBuffer);
+          DwgIntegrityAddressSpace::DecodedBuffer,
+      std::size_t *containedGroups = nullptr);
 
   struct DwgSourceFrameLease {
     objHandle object;
@@ -1014,6 +1021,32 @@ protected:
   void terminalizePendingPolylineState(std::uint32_t handle,
                                        DwgInsertTerminalReason reason);
   void terminalizeOrphanPolylineVertexOwner(std::uint32_t owner);
+  //! Abandon a staged SEQEND that belongs to a group being rejected.
+  void terminalizeStagedSeqEnd(std::uint32_t handle);
+  //! Record that a compound group is being rejected because a child names a
+  //! foreign owner: counts the conflict and marks the entity read as an owner
+  //! mismatch.
+  void noteGroupOwnerConflict() noexcept;
+  struct ForeignChildOwners {
+    //! (owner the child is staged under, child handle), in declaration order.
+    std::vector<std::pair<std::uint32_t, std::uint32_t>> children;
+    bool seqEnd{false};
+  };
+  //! After every declared child of the group `groupHandle` has been staged and
+  //! the group still cannot commit: true when the only reason is that some of
+  //! those children are staged under another owner (every declared child is
+  //! staged, in the group or under a foreign owner). Fills the children and
+  //! the SEQEND flag the rejection has to dispose of.
+  [[nodiscard]] bool declaredChildrenNameForeignOwner(
+      std::uint32_t groupHandle, const std::vector<std::uint32_t> &children,
+      std::uint32_t sequenceHandle, bool polyline,
+      ForeignChildOwners &foreign) const;
+  //! Dispose of the foreign-owned children a rejected group declared: each of
+  //! them is abandoned (quarantined) on its own. The owner they named is not
+  //! touched -- it may be a real group whose own children are staged next to
+  //! them, or the foreign owner of other rejected groups.
+  void disposeForeignOwnedChildren(const ForeignChildOwners &foreign,
+                                   std::uint32_t sequenceHandle, bool polyline);
   [[nodiscard]] bool
   readMappedDwgEntity(dwgBuffer *dbuf, DwgFrameMapLease &lease,
                       DRW_Interface &intfa, bool *frameFailure,
@@ -1242,12 +1275,15 @@ protected:
   std::uint32_t expectedParsedEntityHandle{DRW::NoHandle};
   bool parsedEntityHandleMismatch{false};
   bool parsedEntityOwnerMismatch{false};
-  // Set together with parsedEntityOwnerMismatch when the mismatch is a child
-  // of a legacy INSERT/POLYLINE group naming an owner other than the group
-  // itself, found while the group's aggregate stager still held the group.
-  // The stager rejects such a group atomically, so unlike a bare owner or
-  // handle mismatch nothing about the surrounding walk is in doubt.
-  bool parsedGroupOwnerMismatch{false};
+  // Counts the groups (INSERT + ATTRIBs + SEQEND, POLYLINE + VERTICEs +
+  // SEQEND) rejected because a child of the group names an owner other than
+  // the group that declares it. The stager that found the conflict rejects the
+  // whole group atomically -- staged state terminalized, every frame it
+  // touched quarantined, one entity failure counted -- so unlike a bare owner
+  // or handle mismatch nothing about the surrounding walk is in doubt. The
+  // per-entity flags above are reset by every nested read, so a walk compares
+  // this counter across one entity read instead (see noteGroupOwnerConflict).
+  std::uint64_t m_groupOwnerConflicts{0};
 
   struct DwgEntityFramePublicationCapture {
     DRW_DwgFramePublication publication;
