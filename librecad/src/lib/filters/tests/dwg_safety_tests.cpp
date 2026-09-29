@@ -489,6 +489,7 @@ public:
     using dwgReader::DwgBlockScopeTransaction;
     using dwgReader::DwgFrameMapLease;
     using dwgReader::abandonDeferredCompoundState;
+    using dwgReader::entitySweepFailureContained;
     using dwgReader::readDwgHandles;
     using dwgReader::readDwgBlocks;
     using dwgReader::readDwgEntities;
@@ -515,6 +516,30 @@ public:
         auto layer = std::make_unique<DRW_Layer>();
         layer->name = name;
         layermap.emplace(handle, layer.release());
+    }
+
+    // A BLOCK_RECORD that lists no entity.
+    void addBlockRecordForTest(std::uint32_t handle) {
+        auto record = std::make_unique<DRW_Block_Record>();
+        record->handle = handle;
+        blockRecordmap.emplace(handle, record.release());
+    }
+
+    std::size_t entityParseFailuresForTest() const {
+        return m_entityParseFailures;
+    }
+
+    std::vector<DwgIntegrityDiagnostic> orphanedEntityDiagnosticsForTest()
+        const {
+        std::vector<DwgIntegrityDiagnostic> result;
+        std::copy_if(
+            m_integrityDiagnostics.cbegin(), m_integrityDiagnostics.cend(),
+            std::back_inserter(result),
+            [](const DwgIntegrityDiagnostic& diagnostic) {
+                return diagnostic.kind
+                    == DwgIntegrityCheckKind::EntityOwnerRecordMissing;
+            });
+        return result;
     }
 
     void setCodePageForTest(const std::string& value) {
@@ -17315,6 +17340,312 @@ TEST_CASE("DWG block owner mismatch does not publish a raw entity",
     DwgReadProbe sweepInterface;
     CHECK_FALSE(sweepReader.readDwgEntities(sweepInterface, &sweepBuffer));
     CHECK(sweepInterface.unsupportedObjects.empty());
+}
+
+namespace {
+
+// A complete AC1018 LINE frame owned by `owner`. As in a real R2004 file the
+// frame's object-size field marks the end of the object data, where the
+// handle stream that holds the owner begins.
+std::vector<std::uint8_t> makeOwnedAc1018LineFrame(std::uint32_t handle,
+                                                   std::uint32_t owner) {
+    DwgLineWriterProbe line;
+    line.handle = handle;
+    line.parentHandle = owner;
+    line.basePoint = DRW_Coord(1.0, 2.0, 0.0);
+    line.secPoint = DRW_Coord(3.0, 4.0, 0.0);
+    line.extPoint = DRW_Coord(0.0, 0.0, 1.0);
+    line.setObjectType(dwgType::LINE);
+    dwgBufferW body;
+    if (!line.encodeDwgCommon(DRW::AC1018, &body))
+        return {};
+    body.putBit(1);
+    body.putRawDouble(line.basePoint.x);
+    body.putDefaultDouble(line.basePoint.x, line.secPoint.x);
+    body.putRawDouble(line.basePoint.y);
+    body.putDefaultDouble(line.basePoint.y, line.secPoint.y);
+    body.putThickness(line.thickness, true);
+    body.putExtrusion(line.extPoint, true);
+    const std::uint32_t dataBitCount = body.bitCount();
+    if (!line.encodeDwgEntHandle(DRW::AC1018, &body) || body.data().empty())
+        return {};
+    const std::uint8_t bsCode =
+        static_cast<std::uint8_t>((body.data().front() >> 6) & 0x03);
+    body.patchRawLong32AtBit(
+        bsCode == 0x01 ? 10 : bsCode == 0x00 ? 18 : 2, dataBitCount);
+    body.alignToByte();
+    dwgBufferW frame;
+    frame.putModularShort(static_cast<std::int32_t>(body.data().size()));
+    frame.putBytes(body.data().data(), body.data().size());
+    frame.putRawShort16(frame.crc16(0xC0C1, 0, frame.data().size()));
+    return frame.data();
+}
+
+} // namespace
+
+TEST_CASE("DWG entity sweep contains an entity whose owner record does not exist",
+          "[dwg][safety]") {
+    // The BLOCK_RECORD of an anonymous dimension block was erased but the
+    // block's entities were left in the file. Their owner names nothing, so
+    // they belong nowhere: each is rejected on its own, counted, and not
+    // published, and the rest of the file is not in doubt.
+    constexpr std::uint32_t erasedOwner = 0x501;
+    constexpr std::uint32_t firstHandle = 0x2C6;
+    constexpr std::uint32_t secondHandle = 0x2C7;
+
+    auto frame = makeOwnedAc1018LineFrame(firstHandle, erasedOwner);
+    REQUIRE(!frame.empty());
+    const std::size_t secondOffset = frame.size();
+    const auto secondFrame = makeOwnedAc1018LineFrame(secondHandle,
+                                                      erasedOwner);
+    REQUIRE(!secondFrame.empty());
+    frame.insert(frame.end(), secondFrame.cbegin(), secondFrame.cend());
+
+    DwgEntityReaderProbe reader(std::make_unique<dwgBuffer>(
+        frame.data(), frame.size()));
+    reader.setVersionForTest(DRW::AC1018);
+    reader.ObjectMap.emplace(
+        firstHandle, objHandle(dwgType::LINE, firstHandle, 0));
+    reader.ObjectMap.emplace(
+        secondHandle, objHandle(dwgType::LINE, secondHandle, secondOffset));
+    dwgBuffer buffer(frame.data(), frame.size());
+    DwgReadProbe interface;
+
+    // A direct caller still sees the rejection, exactly as for any owner
+    // mismatch; only the policy that runs the phases reads it as contained.
+    CHECK_FALSE(reader.readDwgEntities(interface, &buffer));
+    CHECK(reader.entitySweepFailureContained());
+    CHECK(reader.entityParseFailuresForTest() == 2u);
+    CHECK(interface.unsupportedObjects.empty());
+    CHECK(interface.framePublications.empty());
+    CHECK(reader.ObjectMap.empty());
+
+    // Each rejection is reported as a warning that names the entity, the
+    // absent owner and the frame.
+    auto orphans = reader.orphanedEntityDiagnosticsForTest();
+    REQUIRE(orphans.size() == 2u);
+    std::sort(orphans.begin(), orphans.end(),
+              [](const DwgIntegrityDiagnostic& lhs,
+                 const DwgIntegrityDiagnostic& rhs) {
+                  return lhs.logicalHandle < rhs.logicalHandle;
+              });
+    for (const auto& diagnostic : orphans) {
+        CHECK(diagnostic.severity == DwgIntegritySeverity::Warning);
+        CHECK(diagnostic.hasLogicalHandle);
+        CHECK(diagnostic.hasExpected);
+        CHECK(diagnostic.expected == erasedOwner);
+        CHECK(diagnostic.hasFileOffset);
+    }
+    CHECK(orphans[0].logicalHandle == firstHandle);
+    CHECK(orphans[0].fileOffset == 0u);
+    CHECK(orphans[1].logicalHandle == secondHandle);
+    CHECK(orphans[1].fileOffset == secondOffset);
+}
+
+TEST_CASE("DWG entity sweep keeps a stale owner structural",
+          "[dwg][safety]") {
+    // The owner exists but does not list the entity: that is a contradiction
+    // in the ownership graph, not an erased record, and it fails the phase.
+    constexpr std::uint32_t existingOwner = 0x501;
+    constexpr std::uint32_t entityHandle = 0x2C6;
+
+    const auto frame = makeOwnedAc1018LineFrame(entityHandle, existingOwner);
+    REQUIRE(!frame.empty());
+    DwgEntityReaderProbe reader(std::make_unique<dwgBuffer>(
+        const_cast<std::uint8_t*>(frame.data()), frame.size()));
+    reader.setVersionForTest(DRW::AC1018);
+    reader.addBlockRecordForTest(existingOwner);
+    reader.ObjectMap.emplace(
+        entityHandle, objHandle(dwgType::LINE, entityHandle, 0));
+    dwgBuffer buffer(const_cast<std::uint8_t*>(frame.data()), frame.size());
+    DwgReadProbe interface;
+
+    CHECK_FALSE(reader.readDwgEntities(interface, &buffer));
+    CHECK_FALSE(reader.entitySweepFailureContained());
+    CHECK(interface.unsupportedObjects.empty());
+    CHECK(interface.framePublications.empty());
+    CHECK(reader.orphanedEntityDiagnosticsForTest().empty());
+}
+
+TEST_CASE("DWG entity sweep does not contain an orphan next to a stale owner",
+          "[dwg][safety]") {
+    // One contained orphan cannot excuse a structural failure in the same
+    // sweep: the phase is contained only when every rejection is.
+    constexpr std::uint32_t existingOwner = 0x501;
+    constexpr std::uint32_t erasedOwner = 0x502;
+    constexpr std::uint32_t orphanHandle = 0x2C6;
+    constexpr std::uint32_t staleHandle = 0x2C7;
+
+    auto frame = makeOwnedAc1018LineFrame(orphanHandle, erasedOwner);
+    REQUIRE(!frame.empty());
+    const std::size_t staleOffset = frame.size();
+    const auto staleFrame = makeOwnedAc1018LineFrame(staleHandle,
+                                                     existingOwner);
+    REQUIRE(!staleFrame.empty());
+    frame.insert(frame.end(), staleFrame.cbegin(), staleFrame.cend());
+
+    DwgEntityReaderProbe reader(std::make_unique<dwgBuffer>(
+        frame.data(), frame.size()));
+    reader.setVersionForTest(DRW::AC1018);
+    reader.addBlockRecordForTest(existingOwner);
+    reader.ObjectMap.emplace(
+        orphanHandle, objHandle(dwgType::LINE, orphanHandle, 0));
+    reader.ObjectMap.emplace(
+        staleHandle, objHandle(dwgType::LINE, staleHandle, staleOffset));
+    dwgBuffer buffer(frame.data(), frame.size());
+    DwgReadProbe interface;
+
+    CHECK_FALSE(reader.readDwgEntities(interface, &buffer));
+    CHECK_FALSE(reader.entitySweepFailureContained());
+    CHECK(interface.framePublications.empty());
+}
+
+namespace {
+
+// Runs the phases a whole-file read runs, one at a time, so a test can change
+// what the table phase produced before the block and entity phases.
+class DwgOrphanChainReader32Probe final : public dwgReader32 {
+public:
+    using dwgReader::entitySweepFailureContained;
+    using dwgReader::publishDeferredTableFramePublications;
+
+    // `owner` is only asked for the file's version by readMetaData.
+    DwgOrphanChainReader32Probe(std::unique_ptr<dwgBuffer> buffer, dwgRW* owner)
+        : dwgReader32(std::move(buffer), owner) {}
+
+    // Forgets the first block record whose name starts with `prefix`, as if
+    // the drawing's table never listed it.
+    bool eraseBlockRecordForTest(const std::string& prefix,
+                                 std::uint32_t& handle) {
+        for (auto it = blockRecordmap.begin(); it != blockRecordmap.end();
+             ++it) {
+            if (it->second == nullptr
+                || it->second->name.compare(0, prefix.size(), prefix) != 0)
+                continue;
+            handle = it->first;
+            delete it->second;
+            blockRecordmap.erase(it);
+            return true;
+        }
+        return false;
+    }
+
+    std::size_t entityParseFailuresForTest() const {
+        return m_entityParseFailures;
+    }
+
+    std::vector<DwgIntegrityDiagnostic> orphanDiagnosticsForTest() const {
+        std::vector<DwgIntegrityDiagnostic> result;
+        std::copy_if(
+            m_integrityDiagnostics.cbegin(), m_integrityDiagnostics.cend(),
+            std::back_inserter(result),
+            [](const DwgIntegrityDiagnostic& diagnostic) {
+                return diagnostic.kind
+                    == DwgIntegrityCheckKind::EntityOwnerRecordMissing;
+            });
+        return result;
+    }
+};
+
+class DwgEntityCountingProbe final : public DwgReadProbe {
+public:
+    std::size_t entityCount = 0;
+    void addPoint(const DRW_Point&) override { ++entityCount; }
+    void addLine(const DRW_Line&) override { ++entityCount; }
+    void addSolid(const DRW_Solid&) override { ++entityCount; }
+    void addMText(const DRW_MText& text) override {
+        DwgReadProbe::addMText(text);
+        ++entityCount;
+    }
+    void addDimRadial(const DRW_DimRadial*) override { ++entityCount; }
+};
+
+struct DwgOrphanChainResult {
+    std::uint32_t erasedOwner = 0;
+    bool entitiesRead = false;
+    bool contained = false;
+    std::size_t failures = 0;
+    std::size_t entities = 0;
+    std::size_t blocks = 0;
+    std::vector<DwgIntegrityDiagnostic> orphans;
+};
+
+// Reads the R2018 fixture phase by phase; with `eraseDimensionBlock` the
+// BLOCK_RECORD of its anonymous dimension block is forgotten after the table
+// phase.
+DwgOrphanChainResult runDwgOrphanChain(const std::filesystem::path& path,
+                                       std::vector<std::uint8_t>& bytes,
+                                       bool eraseDimensionBlock) {
+    DwgOrphanChainResult result;
+    dwgRW owner(path.string().c_str());
+    (void)owner.getPreview();
+    REQUIRE(owner.getVersion() == DRW::AC1032);
+    DwgOrphanChainReader32Probe reader(std::make_unique<dwgBuffer>(
+        bytes.data(), bytes.size()), &owner);
+    DwgEntityCountingProbe interface;
+    DRW_Header header;
+    REQUIRE(reader.readMetaData());
+    REQUIRE(reader.readFileHeader());
+    REQUIRE(reader.readDwgHeader(header));
+    REQUIRE(reader.readDwgClasses());
+    REQUIRE(reader.readDwgHandles());
+    REQUIRE(reader.readDwgTables(header));
+    REQUIRE(reader.publishDeferredTableFramePublications(interface));
+    if (eraseDimensionBlock) {
+        REQUIRE(reader.eraseBlockRecordForTest("*D", result.erasedOwner));
+    }
+    REQUIRE(reader.readDwgBlocks(interface));
+    result.entitiesRead = reader.readDwgEntities(interface);
+    result.contained = reader.entitySweepFailureContained();
+    result.failures = reader.entityParseFailuresForTest();
+    result.entities = interface.entityCount;
+    result.blocks = interface.blockCount;
+    result.orphans = reader.orphanDiagnosticsForTest();
+    return result;
+}
+
+} // namespace
+
+TEST_CASE("DWG entities of an erased block record are contained orphans",
+          "[dwg][safety][fixture]") {
+    // The R2018 fixture has an anonymous dimension block (*D<n>) that holds
+    // the geometry of its radial dimension. Forgetting that block's
+    // BLOCK_RECORD leaves its BLOCK, ENDBLK and contents owned by a record
+    // that does not exist: the state an erased dimension leaves in a real
+    // file. They are rejected one by one, counted and reported, and the rest
+    // of the drawing is delivered.
+    const auto path = std::filesystem::path(LIBRECAD_TEST_DIR) /
+                      "large_radial.dwg";
+    auto bytes = readFile(path);
+    REQUIRE(!bytes.empty());
+
+    // Control: the untouched drawing rejects nothing.
+    const DwgOrphanChainResult intact =
+        runDwgOrphanChain(path, bytes, false);
+    CHECK(intact.entitiesRead);
+    CHECK_FALSE(intact.contained);
+    CHECK(intact.failures == 0u);
+    CHECK(intact.orphans.empty());
+    REQUIRE(intact.entities > 0u);
+
+    const DwgOrphanChainResult erased = runDwgOrphanChain(path, bytes, true);
+    // A direct caller sees the rejection; the file's read goes on.
+    CHECK_FALSE(erased.entitiesRead);
+    CHECK(erased.contained);
+    // The block's contents are no longer delivered, and the rest still is.
+    CHECK(erased.blocks + 1u == intact.blocks);
+    REQUIRE(erased.entities < intact.entities);
+    REQUIRE(erased.entities > 0u);
+    // Every frame of the block is counted and reported: its contents, and its
+    // BLOCK and ENDBLK.
+    const std::size_t leftovers = intact.entities - erased.entities + 2u;
+    CHECK(erased.failures == leftovers);
+    REQUIRE(erased.orphans.size() == leftovers);
+    for (const auto& diagnostic : erased.orphans) {
+        CHECK(diagnostic.severity == DwgIntegritySeverity::Warning);
+        CHECK(diagnostic.hasExpected);
+        CHECK(diagnostic.expected == erased.erasedOwner);
+    }
 }
 
 TEST_CASE("DWG dictionaries bound counts and honor legacy WDFLT fields",

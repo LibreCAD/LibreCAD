@@ -508,6 +508,15 @@ protected:
   [[nodiscard]] virtual bool readDwgBlocks(DRW_Interface &intfa) = 0;
   [[nodiscard]] virtual bool readDwgEntities(DRW_Interface &intfa) = 0;
   [[nodiscard]] virtual bool readDwgObjects(DRW_Interface &intfa) = 0;
+  // True when the last readDwgEntities returned false only because it
+  // rejected orphaned entities: entities whose owner names no BLOCK_RECORD of
+  // the drawing (see m_orphanedEntityRejections). Each was rejected on its own
+  // -- nothing published, frame failed, one entity failure counted -- so the
+  // caller may go on with the rest of the file. A direct caller still sees
+  // false, exactly as for any other rejected owner.
+  [[nodiscard]] bool entitySweepFailureContained() const noexcept {
+    return m_entitySweepContained;
+  }
 
   [[nodiscard]] virtual bool
   readDwgEntity(dwgBuffer *dbuf, objHandle &obj, DRW_Interface &intfa,
@@ -599,10 +608,13 @@ protected:
       bool hasValues = false) noexcept;
   void recordObjectFrameFailure(const objHandle &object,
                                 DwgIntegrityAddressSpace offsetSpace) noexcept;
-  // Warning-level observation of an erased record a table control still lists,
-  // see DwgIntegrityCheckKind::TableControlDanglingHandle.
+  // Warning-level observations of an erased record's leftovers, see
+  // DwgIntegrityCheckKind::TableControlDanglingHandle and
+  // DwgIntegrityCheckKind::EntityOwnerRecordMissing.
   void recordDanglingControlHandle(std::uint32_t controlHandle,
                                    std::uint32_t recordHandle) noexcept;
+  void recordOrphanedEntity(const objHandle &object, std::uint32_t ownerHandle,
+                            DwgIntegrityAddressSpace offsetSpace) noexcept;
   void
   recordEntityFailure(const objHandle &object, std::int16_t type,
                       DwgEntityFailurePhase phase,
@@ -1273,7 +1285,9 @@ protected:
   std::uint32_t expectedBlockEntityOwner{DRW::NoHandle};
   // Modern ObjectMap leftovers must not escape their BLOCK_RECORD.  A
   // nonzero common owner is structural evidence that the block walk missed
-  // the entity, not a free-standing top-level entity.
+  // the entity, not a free-standing top-level entity -- unless the owner
+  // names no BLOCK_RECORD at all, which is a contained orphan (see
+  // m_orphanedEntityRejections).
   bool rejectOwnedEntityInSweep{false};
   // BLOCK_RECORD reachability context for opaque raw entities. This remains
   // set for model/paper-space walks even when expectedBlockEntityOwner is 0.
@@ -1295,6 +1309,15 @@ protected:
   // per-entity flags above are reset by every nested read, so a walk compares
   // this counter across one entity read instead (see noteGroupOwnerConflict).
   std::uint64_t m_groupOwnerConflicts{0};
+  // Counts the entities the recovery sweep rejected because their common
+  // owner handle names no BLOCK_RECORD of the drawing: the owner was erased or
+  // purged while the entity (typically the BLOCK/ENDBLK and contents of an
+  // anonymous dimension block) stayed in the file. Unlike an owner that exists
+  // but does not list the entity, nothing is in doubt about where such an
+  // entity belongs: nowhere. The sweep compares the counter across the walk.
+  std::uint64_t m_orphanedEntityRejections{0};
+  // Result of the last entity sweep, see entitySweepFailureContained().
+  bool m_entitySweepContained{false};
 
   struct DwgEntityFramePublicationCapture {
     DRW_DwgFramePublication publication;

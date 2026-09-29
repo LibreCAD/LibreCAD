@@ -3379,7 +3379,10 @@ bool dwgRW::processDwg() {
             ret = false;
         }
     }
-    if (ret && !ret2) {
+    // An entity sweep that only rejected orphaned entities (owner erased,
+    // entity left behind) counted each one as an entity failure; the file
+    // is read on like any file with skipped entities.
+    if (ret && !ret2 && !reader->entitySweepFailureContained()) {
         error = DRW::BAD_READ_ENTITIES;
         ret = ret2;
     }

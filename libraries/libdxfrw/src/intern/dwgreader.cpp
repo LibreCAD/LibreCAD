@@ -625,6 +625,28 @@ void dwgReader::recordDanglingControlHandle(
   }
 }
 
+void dwgReader::recordOrphanedEntity(
+    const objHandle &object, std::uint32_t ownerHandle,
+    DwgIntegrityAddressSpace offsetSpace) noexcept {
+  try {
+    DwgIntegrityDiagnostic diagnostic;
+    diagnostic.severity = DwgIntegritySeverity::Warning;
+    diagnostic.offsetSpace = offsetSpace;
+    diagnostic.phase = DwgIntegrityPhase::ObjectFrame;
+    diagnostic.kind = DwgIntegrityCheckKind::EntityOwnerRecordMissing;
+    diagnostic.logicalSectionId = secEnum::OBJECTS;
+    diagnostic.fileOffset = object.loc;
+    diagnostic.hasFileOffset = true;
+    diagnostic.logicalHandle = object.handle;
+    diagnostic.hasLogicalHandle = true;
+    diagnostic.expected = ownerHandle;
+    diagnostic.hasExpected = true;
+    addIntegrityDiagnostic(std::move(diagnostic));
+  } catch (...) {
+    // Integrity reporting is optional and must never alter parsing.
+  }
+}
+
 void dwgReader::recordEntityFailure(const objHandle &object, std::int16_t type,
                                     DwgEntityFailurePhase phase,
                                     std::uint32_t blockRecordHandle) noexcept {
@@ -2540,6 +2562,25 @@ struct ProxyHostEntity : public DRW_Entity {
            b->isGood();
   }
   bool hasOwnerHandle() const noexcept { return ownerHandle; }
+  // R2000 and R2004 keep the handle stream after the object data, which ends
+  // at bit objSize; when the entity has an owner it is the first handle of
+  // that stream. `buffer` must be a fresh cursor on the same frame body.
+  // Later versions read the whole handle tail through parseDwgEntHandle.
+  bool readLegacyOwnerHandle(dwgBuffer &buffer, std::uint32_t &owner) const {
+    const std::uint64_t totalBits =
+        static_cast<std::uint64_t>(buffer.size()) * 8u;
+    if (!ownerHandle || objSize == 0 || objSize >= totalBits ||
+        !buffer.setPosition(objSize >> 3))
+      return false;
+    buffer.setBitPos(static_cast<std::uint8_t>(objSize & 7u));
+    if (!buffer.isGood())
+      return false;
+    const dwgHandle value = buffer.getOffsetHandle(handle);
+    if (!buffer.isGood())
+      return false;
+    owner = value.ref;
+    return true;
+  }
 };
 
 // The R2007 dynamic-block parameter/grip range has no typed body parser,
@@ -9177,6 +9218,8 @@ bool dwgReader::readDwgEntities(DRW_Interface &intfa, dwgBuffer *dbuf,
   // and must fail the ENTITIES phase without publishing that entity.
   size_t failures = 0;
   bool structuralFailure = false;
+  const std::uint64_t orphansBefore = m_orphanedEntityRejections;
+  m_entitySweepContained = false;
   const bool previousSweepPolicy = rejectOwnedEntityInSweep;
   rejectOwnedEntityInSweep = version > DRW::AC1015;
 
@@ -9282,7 +9325,13 @@ bool dwgReader::readDwgEntities(DRW_Interface &intfa, dwgBuffer *dbuf,
   if (!abandonDeferredCompoundState())
     structuralFailure = true;
 
-  return !structuralFailure;
+  // Orphaned entities were each rejected atomically and counted above, so on
+  // their own they do not make the ENTITIES phase structurally unsound. The
+  // return value still reports them to a direct caller; only the policy that
+  // runs the phases (see entitySweepFailureContained) reads them as contained.
+  const bool orphaned = m_orphanedEntityRejections != orphansBefore;
+  m_entitySweepContained = orphaned && !structuralFailure;
+  return !structuralFailure && !orphaned;
 }
 
 bool dwgReader::validateDeferredCompoundState() {
@@ -9579,7 +9628,30 @@ bool dwgReader::readDwgEntityWithOutput(dwgBuffer *dbuf, objHandle &obj,
             // authoritative for R2004+; a stale or missing block
             // record must not turn an owned entity into a top-level
             // callback during the recovery sweep.
-            parsedEntityOwnerMismatch = true;
+            std::uint32_t owner = DRW::NoHandle;
+            bool ownerKnown = false;
+            if (version > DRW::AC1018) {
+              ownerKnown = parsedHandles;
+              owner = ownerProbe.parentHandle;
+            } else {
+              dwgBuffer handleBuffer = buff.forkIndependent();
+              ownerKnown = ownerProbe.readLegacyOwnerHandle(handleBuffer, owner);
+            }
+            if (ownerKnown && blockRecordmap.find(owner) ==
+                                  blockRecordmap.end()) {
+              // The owner names no BLOCK_RECORD of the drawing (an erased
+              // record whose entities were left in the file), so the entity
+              // belongs nowhere. It is rejected on its own and counted;
+              // the sweep, not this read, decides what that means for the
+              // file. An owner that exists but does not list the entity, or
+              // that cannot be read, stays a structural mismatch below.
+              if (m_orphanedEntityRejections !=
+                  std::numeric_limits<std::uint64_t>::max())
+                ++m_orphanedEntityRejections;
+              recordOrphanedEntity(obj, owner, offsetSpace);
+            } else {
+              parsedEntityOwnerMismatch = true;
+            }
             m_currentEntityFailurePhase = DwgEntityFailurePhase::Identity;
             recordEntityFailure(obj, oType, m_currentEntityFailurePhase);
             return false;

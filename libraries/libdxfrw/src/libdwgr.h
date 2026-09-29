@@ -141,7 +141,13 @@ enum class DwgIntegrityCheckKind : std::uint8_t {
     /// list. Always a Warning; the entry is skipped and every other record of
     /// the table is read normally. `logicalHandle` is the absent record and
     /// `expected` is the handle of the control that lists it.
-    TableControlDanglingHandle
+    TableControlDanglingHandle,
+    /// The entity sweep rejected an entity whose owner handle names no
+    /// BLOCK_RECORD of the drawing: an erased block record whose entities were
+    /// left in the file. Always a Warning; the entity is not published and is
+    /// counted as an entity parse failure. `logicalHandle` is the entity,
+    /// `fileOffset` its frame and `expected` the absent owner.
+    EntityOwnerRecordMissing
 };
 
 /// Version of the field and enum contract carried by DwgIntegrityDiagnostic.
