@@ -3756,6 +3756,78 @@ bool dwgReader::disposeUndeclaredOrphanVertices(
   return true;
 }
 
+void dwgReader::noteCommittedOwner(std::uint32_t handle) noexcept {
+  if (handle == DRW::NoHandle)
+    return;
+  try {
+    m_committedCompoundOwners.insert(handle);
+  } catch (...) {
+    // Without the record a child that names this group after it committed is
+    // staged as an orphan, which the end-of-walk sweep rejects.
+  }
+}
+
+bool dwgReader::isCommittedOwner(std::uint32_t handle) const noexcept {
+  return handle != DRW::NoHandle &&
+         m_committedCompoundOwners.find(handle) !=
+             m_committedCompoundOwners.end();
+}
+
+std::size_t dwgReader::disposeStagedSeqEndsOfFinishedGroups() {
+  // A SEQEND that was staged under a group before the group arrived, and that
+  // the group does not declare, stays staged when the group commits (it only
+  // consumes the SEQEND it declares). It is no member of the group and no
+  // group will ever come for it. Neither is a SEQEND staged under a group that
+  // was rejected in the meantime. Groups still to come, and pending ones, are
+  // not finished: their SEQENDs are waiting.
+  std::vector<std::uint32_t> undeclared;
+  try {
+    for (const auto &item : m_stagedSeqEnds) {
+      const std::uint32_t owner = item.second.owner;
+      if (m_pendingInsertStates.find(owner) != m_pendingInsertStates.end() ||
+          m_pendingPolylineStates.find(owner) !=
+              m_pendingPolylineStates.end()) {
+        continue;
+      }
+      if (isCommittedOwner(owner) ||
+          m_invalidInsertOwners.find(owner) != m_invalidInsertOwners.end() ||
+          m_invalidPolylineOwners.find(owner) !=
+              m_invalidPolylineOwners.end()) {
+        undeclared.push_back(item.first);
+      }
+    }
+  } catch (...) {
+    return 0;
+  }
+  std::size_t disposed = 0;
+  for (const std::uint32_t handle : undeclared) {
+    terminalizeStagedSeqEnd(handle);
+    if (m_stagedSeqEnds.find(handle) != m_stagedSeqEnds.end())
+      continue;
+    noteDisownedChild(handle);
+    ++m_entityParseFailures;
+    ++disposed;
+  }
+  return disposed;
+}
+
+bool dwgReader::disposeStrayOrphanAttributes(std::uint32_t owner) {
+  const auto bucketIt = m_orphanAttribStates.find(owner);
+  if (bucketIt == m_orphanAttribStates.end())
+    return true;
+  std::vector<std::uint32_t> handles;
+  try {
+    handles.reserve(bucketIt->second.attributes.size());
+    for (const StagedAttribState &attribute : bucketIt->second.attributes) {
+      if (attribute.entity != nullptr)
+        handles.push_back(attribute.entity->handle);
+    }
+  } catch (...) {
+    return false;
+  }
+  return disposeUndeclaredOrphanAttributes(owner, handles);
+}
+
 bool dwgReader::declaredChildrenNameForeignOwner(
     std::uint32_t groupHandle, const std::vector<std::uint32_t> &children,
     std::uint32_t sequenceHandle, bool polyline,
@@ -4342,6 +4414,12 @@ dwgReader::DwgMappedEntityOutcome dwgReader::stageLegacyInsertAggregate(
     // staged before its INSERT.  The empty-range form has no ATTRIB frames to
     // move, and the pending INSERT commit can consume that staged SEQEND
     // directly.
+    // The group is its chain: the aggregate reads every member itself, so an
+    // ATTRIB staged under this INSERT beforehand is no member of it (the
+    // pending group would otherwise take it for one, since a legacy INSERT
+    // names only the first and the last ATTRIB of its chain).
+    if (!disposeStrayOrphanAttributes(insertHandle))
+      return reject();
     const auto preStagedSequenceIt = m_stagedSeqEnds.find(sequenceHandle);
     if (preStagedSequenceIt != m_stagedSeqEnds.end()) {
       if (preStagedSequenceIt->second.owner != insertHandle ||
@@ -4658,6 +4736,10 @@ dwgReader::stagePendingAttribute(std::shared_ptr<DRW_Attrib> attribute,
 
   const std::uint32_t owner = attribute->parentHandle;
   const auto pendingIt = m_pendingInsertStates.find(owner);
+  // The INSERT it names was published already, with every member it declares:
+  // this ATTRIB is not one of them, and no group will ever come for it.
+  if (pendingIt == m_pendingInsertStates.end() && isCommittedOwner(owner))
+    return disownChild(attribute->handle);
   if (pendingIt != m_pendingInsertStates.end()) {
     PendingInsertState &pending = pendingIt->second;
     // The INSERT this ATTRIB names does not declare it: the ATTRIB claims a
@@ -4744,9 +4826,11 @@ dwgReader::stagePendingSeqEnd(std::uint32_t handle, std::uint32_t owner,
     (void)reportDwgFrameTransitionFailure(DwgSourceFrameId{handle});
     return DwgMappedEntityOutcome::Rejected;
   }
-  // The group it names was rejected: the SEQEND can never complete it.
+  // The group it names was rejected, or was published already with every
+  // member it declares: the SEQEND can never complete it.
   if (m_invalidPolylineOwners.find(owner) != m_invalidPolylineOwners.end() ||
-      m_invalidInsertOwners.find(owner) != m_invalidInsertOwners.end()) {
+      m_invalidInsertOwners.find(owner) != m_invalidInsertOwners.end() ||
+      isCommittedOwner(owner)) {
     return disownChild(handle);
   }
   const auto pendingIt = m_pendingInsertStates.find(owner);
@@ -5212,6 +5296,10 @@ dwgReader::DwgMappedEntityOutcome dwgReader::stagePendingPolylineVertex(
     return disownChild(handle);
 
   const auto pendingIt = m_pendingPolylineStates.find(owner);
+  // The POLYLINE it names was published already with every member it declares:
+  // this VERTEX is not one of them, and no group will ever come for it.
+  if (pendingIt == m_pendingPolylineStates.end() && isCommittedOwner(owner))
+    return disownChild(handle);
   if (pendingIt != m_pendingPolylineStates.end()) {
     PendingPolylineState &pending = pendingIt->second;
     const bool expected = std::find(pending.entity.hadlesList.cbegin(),
@@ -5561,6 +5649,7 @@ dwgReader::journalPreparedPolylineCommit(std::uint32_t handle,
   }
   m_stagedSeqEnds.erase(sequenceHandle);
   m_pendingPolylineStates.erase(handle);
+  noteCommittedOwner(handle);
   return DwgMappedEntityOutcome::CommittedCompound;
 }
 
@@ -5614,6 +5703,7 @@ dwgReader::DwgMappedEntityOutcome dwgReader::deliverPreparedPolylineCommit(
   }
   m_stagedSeqEnds.erase(sequenceHandle);
   m_pendingPolylineStates.erase(handle);
+  noteCommittedOwner(handle);
   return DwgMappedEntityOutcome::CommittedCompound;
 }
 
@@ -5898,6 +5988,7 @@ dwgReader::journalPreparedInsertCommit(std::uint32_t handle,
   if (prepared.sequenceEnd != nullptr)
     m_stagedSeqEnds.erase(sequenceHandle);
   m_pendingInsertStates.erase(handle);
+  noteCommittedOwner(handle);
   return DwgMappedEntityOutcome::CommittedCompound;
 }
 
@@ -5966,6 +6057,7 @@ dwgReader::DwgMappedEntityOutcome dwgReader::deliverPreparedInsertCommit(
   if (prepared.sequenceEnd != nullptr)
     m_stagedSeqEnds.erase(sequenceHandle);
   m_pendingInsertStates.erase(handle);
+  noteCommittedOwner(handle);
   return DwgMappedEntityOutcome::CommittedCompound;
 }
 
@@ -8744,6 +8836,11 @@ bool dwgReader::walkBlockRecordEntities(DRW_Block_Record *bkr, dwgBuffer *dbuf,
                      frameFailure);
       }
     }
+    // A SEQEND that the walk staged under a group that turned out not to
+    // declare it: rejected on its own, like every other child that names a
+    // group that does not declare it.
+    if (disposeStagedSeqEndsOfFinishedGroups() != 0)
+      groupRejected = true;
     if (hasPendingCompoundStateForBlock(*bkr)) {
       // A leftover compound state (e.g. an ATTRIB whose INSERT never
       // showed up, or whose owner handle was corrupted to point at
@@ -8932,6 +9029,7 @@ bool dwgReader::walkJournalledBlockRecordEntities(
       if (m_disownedChildHandles.size() != disownedBefore)
         ++rejectedGroups;
     }
+    rejectedGroups += disposeStagedSeqEndsOfFinishedGroups();
     if (hasPendingCompoundStateForBlock(*bkr)) {
       restoreState();
       return false;

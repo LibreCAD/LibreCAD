@@ -1094,6 +1094,16 @@ protected:
   //! The same for staged orphan VERTICEs of a POLYLINE.
   [[nodiscard]] bool disposeUndeclaredOrphanVertices(
       std::uint32_t owner, const std::vector<std::uint32_t> &handles);
+  //! Dispose of the SEQENDs staged under a group that committed or was
+  //! rejected: the group does not declare them. Returns how many.
+  std::size_t disposeStagedSeqEndsOfFinishedGroups();
+  //! Dispose of every ATTRIB staged under `owner`: a legacy aggregate reads
+  //! its members itself, so none of them can be a member.
+  [[nodiscard]] bool disposeStrayOrphanAttributes(std::uint32_t owner);
+  //! Record that the INSERT / POLYLINE `handle` was committed: every member it
+  //! declares was consumed, so a child that names it later is not one.
+  void noteCommittedOwner(std::uint32_t handle) noexcept;
+  [[nodiscard]] bool isCommittedOwner(std::uint32_t handle) const noexcept;
   struct ForeignChildOwners {
     //! (owner the child is staged under, child handle), in declaration order.
     std::vector<std::pair<std::uint32_t, std::uint32_t>> children;
@@ -1401,6 +1411,9 @@ protected:
   // staged, so a child rejected in the meantime must not reject it under the
   // aggregate's feet.
   std::uint32_t m_aggregatingGroup{DRW::NoHandle};
+  // INSERTs and POLYLINEs that were committed in this read (see
+  // noteCommittedOwner).
+  std::unordered_set<std::uint32_t> m_committedCompoundOwners;
 
   struct DwgEntityFramePublicationCapture {
     DRW_DwgFramePublication publication;
