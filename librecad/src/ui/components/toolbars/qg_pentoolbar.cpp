@@ -57,15 +57,7 @@ QG_PenToolBar::QG_PenToolBar(const QString& title, QWidget* parent)
 /**
  * Destructor
  */
-/**
- * Unregisters from the layer list this tool bar still follows, if it does: the list would call a
- * destroyed listener.
- */
-QG_PenToolBar::~QG_PenToolBar() {
-    if (m_layerList != nullptr) {
-        m_layerList->removeListener(this);
-    }
-}
+QG_PenToolBar::~QG_PenToolBar() = default;
 
 /**
  * The layer list is being destroyed with its drawing, which was not detached from this tool bar first:

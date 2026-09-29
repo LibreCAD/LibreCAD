@@ -1057,16 +1057,6 @@ void LC_LayerTreeWidget::layerListDestroyed() {
     update();
 }
 
-/**
- * Unregisters from the layer list this widget still shows, if it does: the list would call a
- * destroyed listener.
- */
-LC_LayerTreeWidget::~LC_LayerTreeWidget() {
-    if (m_layerList != nullptr) {
-        m_layerList->removeListener(this);
-    }
-}
-
 void LC_LayerTreeWidget::layerToggled(RS_Layer *){
     RS_DEBUG->print("LC_LayerTreeWidget::layerToggled()");
     update();

@@ -51,7 +51,7 @@ public:
     };
 
     LC_LayerTreeWidget(const QG_ActionHandler* ah, QWidget* parent, const char* name = nullptr, Qt::WindowFlags f = {});
-    ~LC_LayerTreeWidget() override;
+    ~LC_LayerTreeWidget() override = default;
     void activateLayer(RS_Layer* layer) const;
     void layerActivated(RS_Layer* layer) override;
     void layerAdded(RS_Layer* layer) override;

@@ -31,6 +31,8 @@
 #include <QList>
 #include <QSet>
 
+#include "lc_trackedlistener.h"
+
 class RS_Layer;
 class RS_LayerListListener;
 
@@ -143,7 +145,7 @@ private:
     //! mutation point (add/remove/clear) -- sort() never changes membership.
     QSet<RS_Layer*> m_layerSet;
     //! List of registered LayerListListeners
-    QList<RS_LayerListListener*> m_layerListListeners;
+    LC_ListenerList<RS_LayerListListener, RS_LayerList> m_layerListListeners{this};
     RS_Layer* m_activeLayer = nullptr;
     /** Flag set if the layer list was modified and not yet saved. */
     bool m_modified = false;

@@ -989,6 +989,7 @@ set (SHARED_SOURCES
      librecad/src/lib/engine/document/layers/rs_layerlistlistener.h
      librecad/src/lib/engine/document/lc_graphicvariables.cpp
      librecad/src/lib/engine/document/lc_graphicvariables.h
+     librecad/src/lib/engine/document/lc_trackedlistener.h
      librecad/src/lib/engine/document/patterns/rs_pattern.cpp
      librecad/src/lib/engine/document/patterns/rs_pattern.h
      librecad/src/lib/engine/document/patterns/rs_patternlist.cpp
@@ -2514,6 +2515,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/container/tests/lc_copy_semantics_tests.cpp
         librecad/src/lib/engine/tests/rs_color_tests.cpp
         librecad/src/lib/engine/document/layers/tests/lc_layerlist_tests.cpp
+        librecad/src/lib/engine/document/tests/lc_trackedlistener_tests.cpp
         librecad/src/lib/engine/document/blocks/tests/lc_blocklist_tests.cpp
         librecad/src/lib/engine/document/ucs/tests/lc_ucslist_tests.cpp
         librecad/src/lib/engine/document/ucs/tests/lc_wcs_tests.cpp

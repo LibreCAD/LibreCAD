@@ -28,9 +28,15 @@
 
 LC_SelectedSet::LC_SelectedSet() = default;
 
+/**
+ * Tells the listeners that still listen (see LC_SelectedSetListener::selectedSetDestroyed()): a dock
+ * attached to the selection keeps its drawing, which this is the last part of.
+ */
 LC_SelectedSet::~LC_SelectedSet() {
     m_entitiesList.clear();
-    m_listeners.clear();
+    m_listeners.drain([](LC_SelectedSetListener* listener) {
+        listener->selectedSetDestroyed();
+    });
 }
 
 void LC_SelectedSet::clear() {
@@ -74,19 +80,12 @@ void LC_SelectedSet::replaceBy(QList<RS_Entity*>& entities) {
 }
 
 void LC_SelectedSet::addListener(LC_SelectedSetListener* listener) {
-    if (listener == nullptr) {
-        return;
-    }
-    for (const auto l : std::as_const(m_listeners)) {
-        if (l == listener) {
-            return;
-        }
-    }
-    m_listeners.append(listener);
+    // added only once; the listener removes itself when it is destroyed
+    m_listeners.add(listener);
 }
 
 void LC_SelectedSet::removeListener(LC_SelectedSetListener* listener) {
-    m_listeners.removeOne(listener);
+    m_listeners.remove(listener);
 }
 
 void LC_SelectedSet::fireSelectionChanged() {

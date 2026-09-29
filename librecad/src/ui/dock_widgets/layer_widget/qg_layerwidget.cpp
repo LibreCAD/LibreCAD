@@ -311,16 +311,6 @@ QG_LayerWidget::QG_LayerWidget(LC_ActionGroupManager* actionGroupManager, const 
 }
 
 /**
- * Unregisters from the layer list this widget still shows, if it does: the list would call a
- * destroyed listener.
- */
-QG_LayerWidget::~QG_LayerWidget() {
-    if (m_layerList != nullptr) {
-        m_layerList->removeListener(this);
-    }
-}
-
-/**
  * The layer list is being destroyed with its drawing, which was not detached from this widget first:
  * the list has already dropped this listener, so forget it and the drawing, and clear the model.
  */

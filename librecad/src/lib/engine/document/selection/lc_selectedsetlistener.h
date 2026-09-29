@@ -24,10 +24,23 @@
 #ifndef LC_SELECTEDSETLISTENER_H
 #define LC_SELECTEDSETLISTENER_H
 
-class LC_SelectedSetListener {
+#include "lc_trackedlistener.h"
+
+class LC_SelectedSetListener : public LC_TrackedListener<LC_SelectedSetListener> {
 public:
     virtual ~LC_SelectedSetListener() = default;
     LC_SelectedSetListener() = default;
     virtual void selectionChanged() = 0;
+    /**
+     * Called once, from the destructor of the selection (its drawing is being destroyed: the selection
+     * is the last part of it to go), after the selection was emptied and this listener was unregistered
+     * from it (the listeners not told yet are still listed, and unregister themselves if a callback
+     * deletes them). The drawing is partly destroyed, and the entities that were
+     * selected are still there but their layers and blocks are not: forget the drawing (drop any
+     * pointer to it, and to the selected entities) and do not read it, call selectionChanged() logic
+     * that does, or list yourself with the selection again. (A listener that is destroyed while listed
+     * needs nothing: see LC_TrackedListener.)
+     */
+    virtual void selectedSetDestroyed() {}
 };
 #endif

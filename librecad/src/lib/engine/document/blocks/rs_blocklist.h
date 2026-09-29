@@ -31,6 +31,8 @@
 
 #include <QList>
 
+#include "lc_trackedlistener.h"
+
 class QString;
 class RS_Block;
 class RS_BlockListListener;
@@ -128,7 +130,7 @@ private:
     //! Blocks in the graphic
     QList<RS_Block*> m_blocks;
     //! List of registered BlockListListeners
-    QList<RS_BlockListListener*> m_blockListListeners;
+    LC_ListenerList<RS_BlockListListener, RS_BlockList> m_blockListListeners{this};
     //! Currently active block
     RS_Block* m_activeBlock = nullptr;
     /** Flag set if the block list was modified and not yet saved. */

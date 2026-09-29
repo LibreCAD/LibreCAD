@@ -28,7 +28,6 @@
 #include "rs_layerlist.h"
 
 #include<iostream>
-#include <utility>
 
 #include <QSet>
 #include <QtAlgorithms>
@@ -48,18 +47,18 @@ RS_LayerList::RS_LayerList() {
 /**
  * Frees the layers, after telling the listeners that still listen (see
  * RS_LayerListListener::layerListDestroyed()): a dock attached to the list has a pointer to it, and
- * rows for the layers. The listeners are moved out first, so one that unregisters itself in the
- * callback cannot make the loop skip the next.
+ * rows for the layers. The listeners are unlisted one at a time, oldest first, each before it is told,
+ * so one that unregisters itself in the callback, or deletes another, cannot make the loop skip or
+ * repeat one.
  */
 RS_LayerList::~RS_LayerList() {
     QList<RS_Layer*> removed;
     removed.swap(m_layers);
     m_layerSet.clear();
     m_activeLayer = nullptr;
-    const QList<RS_LayerListListener*> listeners = std::exchange(m_layerListListeners, {});
-    for (const auto l : listeners) {
-        l->layerListDestroyed();
-    }
+    m_layerListListeners.drain([](RS_LayerListListener* listener) {
+        listener->layerListDestroyed();
+    });
     qDeleteAll(removed);
 }
 
@@ -581,23 +580,15 @@ void RS_LayerList::ensureActiveLayerIsVisible() {
  * Typical listeners are: layer list widgets, pen toolbar, graphic view
  */
 void RS_LayerList::addListener(RS_LayerListListener* listener) {
-    // ensure that listener is added only once
-    if (listener == nullptr) {
-        return;
-    }
-    for (const auto l : std::as_const(m_layerListListeners)) {
-        if (l == listener) {
-            return;
-        }
-    }
-    m_layerListListeners.append(listener);
+    // added only once; the listener is told which lists have it, and removes itself when destroyed
+    m_layerListListeners.add(listener);
 }
 
 /**
  * removes a LayerListListener from the list of listeners.
  */
 void RS_LayerList::removeListener(RS_LayerListListener* listener) {
-    m_layerListListeners.removeOne(listener);
+    m_layerListListeners.remove(listener);
 }
 
 /**

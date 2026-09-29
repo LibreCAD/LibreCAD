@@ -121,7 +121,7 @@ class QG_LayerWidget : public LC_GraphicViewAwareWidget, public RS_LayerListList
 public:
     QG_LayerWidget(LC_ActionGroupManager* actionGroupManager, const QG_ActionHandler* ah, QWidget* parent, const char* name = nullptr,
                    Qt::WindowFlags f = {});
-    ~QG_LayerWidget() override;
+    ~QG_LayerWidget() override = default;
 
     void updateWidget();
     void activateLayer(RS_Layer* layer, bool updateScroll = true) const;
