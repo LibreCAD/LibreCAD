@@ -101,7 +101,7 @@ TEST_CASE("RS_LayerList::find: NFC layer matches NFD lookup",
 
 TEST_CASE("RS_BlockList::find: NFC block matches NFD lookup",
           "[i18n][nfc][blocks]") {
-    RS_BlockList list;
+    RS_BlockList list(true);
     const QString nfc = QString::fromUtf8("Bl\xC3\xB6" "ck");
     RS_BlockData data(nfc, RS_Vector{0, 0, 0}, false);
     list.add(new RS_Block(nullptr, data));

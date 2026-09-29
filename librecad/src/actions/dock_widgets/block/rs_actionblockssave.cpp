@@ -31,10 +31,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "qc_mdiwindow.h"
 #include "qg_blockwidget.h"
 #include "qg_filedialog.h"
+#include "lc_copyutils.h"
 #include "rs_block.h"
 #include "rs_debug.h"
 #include "rs_graphic.h"
 #include "rs_insert.h"
+#include "rs_layer.h"
+#include "rs_layerlist.h"
 
 class RS_Block;
 // fixme - sand - files - refactor action, move the logic outside as it might be reused
@@ -43,32 +46,63 @@ RS_ActionBlocksSave::RS_ActionBlocksSave(LC_ActionContext *actionContext)
 
 namespace {
 /**
- * Lists on @p target the block @p insert inserts, and the blocks that block
- * inserts in turn. @p insert must still belong to the source drawing: that is
- * where its block name resolves. @p done holds the blocks already listed, which
- * also ends a cycle of blocks that insert each other.
+ * Adds to @p target a copy of every layer of @p sourceLayers that the live
+ * entities of @p container are on, unless it has one of that name already.
+ * The entities are not touched: they stay the source drawing's, and still name
+ * its layers. The file only needs the layer table to hold those names.
  */
-void addInsertedBlocks(const RS_Insert* insert, RS_Graphic* target, std::unordered_set<const RS_Block*>& done) {
+void addLayersOf(const RS_EntityContainer& container, const RS_LayerList* sourceLayers, RS_Graphic* target) {
+    for (const RS_Entity* e : container) {
+        if (e == nullptr || e->getFlag(RS2::FlagDeleted)) {
+            continue;
+        }
+        RS_Layer* layer = e->getLayer(false);
+        if (layer != nullptr && sourceLayers != nullptr && sourceLayers->contains(layer)
+            && target->findLayer(layer->getName()) == nullptr) {
+            target->addLayer(layer->clone());
+        }
+        // an insert's children are its cached expansion, not entities of its own
+        if (e->isContainer() && e->rtti() != RS2::EntityInsert) {
+            addLayersOf(*static_cast<const RS_EntityContainer*>(e), sourceLayers, target);
+        }
+    }
+}
+
+/**
+ * Lists on @p target the block @p insert inserts, and the blocks that block
+ * inserts in turn, with the layers their entities are on. @p insert must still
+ * belong to the source drawing: that is where its block name resolves. @p done
+ * holds the blocks already listed, which also ends a cycle of blocks that
+ * insert each other.
+ */
+void addInsertedBlocks(const RS_Insert* insert, RS_Graphic* target, const RS_LayerList* sourceLayers,
+                       std::unordered_set<const RS_Block*>& done) {
     RS_Block* block = insert->getBlockForInsert();
     if (block == nullptr || !done.insert(block).second) {
         return;
     }
     target->addBlock(block, false);
+    addLayersOf(*block, sourceLayers, target);
     for (const RS_Entity* e : *block) {
         if (e != nullptr && e->rtti() == RS2::EntityInsert && !e->getFlag(RS2::FlagDeleted)) {
-            addInsertedBlocks(static_cast<const RS_Insert*>(e), target, done);
+            addInsertedBlocks(static_cast<const RS_Insert*>(e), target, sourceLayers, done);
         }
     }
 }
 }
 
-// fixme - sand - investigate why layers from this block are not added to graphic..
 std::unique_ptr<RS_Graphic> RS_ActionBlocksSave::createGraphicForBlock(const RS_Block *activeBlock){
     auto result = std::make_unique<RS_Graphic>();
     // The blocks the entities insert stay the source drawing's: they are listed
     // here so the file gets them, but this list must not free them.
     result->getBlockList()->setOwner(false);
-    result->clearLayers();
+
+    // The file gets the layers the block's entities are on, and layer "0",
+    // which every drawing has.
+    RS_Graphic* source = activeBlock->getGraphic();
+    const RS_LayerList* sourceLayers = source != nullptr ? source->getLayerList() : nullptr;
+    const RS_Layer* sourceZero = source != nullptr ? source->findLayer("0") : nullptr;
+    result->addLayer(sourceZero != nullptr ? sourceZero->clone() : new RS_Layer("0"));
 
     std::unordered_set<const RS_Block*> insertedBlocks;
     for (const RS_Entity* e : lc::LC_ContainerTraverser{*activeBlock, RS2::ResolveNone}.entities()) {
@@ -79,10 +113,13 @@ std::unique_ptr<RS_Graphic> RS_ActionBlocksSave::createGraphicForBlock(const RS_
         // adding the block's own entity would re-parent it to this drawing.
         if (RS_Entity* copy = e->clone()) {
             result->addEntity(copy);
+            // the copy still names the source drawing's layers: put it on this
+            // drawing's own copies of them, which the file gets
+            LC_CopyUtils::doCopyEntityLayer(copy, result.get(), source);
         }
         if (e->rtti() == RS2::EntityInsert) {
             // through the original, whose block name resolves in the source drawing
-            addInsertedBlocks(static_cast<const RS_Insert*>(e), result.get(), insertedBlocks);
+            addInsertedBlocks(static_cast<const RS_Insert*>(e), result.get(), sourceLayers, insertedBlocks);
         }
     }
     return result;

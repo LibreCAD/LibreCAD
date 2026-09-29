@@ -26,13 +26,18 @@
 // always did. Before, every block of every drawing leaked. A non-owning list
 // (RS_ActionBlocksSave's, a font imported as a drawing) frees nothing.
 
+#include <functional>
 #include <memory>
+#include <new>
 
 #include <catch2/catch_test_macros.hpp>
 
 #include "lc_actiontestsupport.h"
+#include "lc_copyutils.h"
 #include "rs_block.h"
 #include "rs_blocklist.h"
+#include "rs_clipboard.h"
+#include "rs_font.h"
 #include "rs_graphic.h"
 #include "rs_insert.h"
 #include "rs_line.h"
@@ -56,6 +61,37 @@ RS_Insert* makeInsert(RS_EntityContainer* parent, const QString& blockName) {
     return new RS_Insert(parent, RS_InsertData(blockName, RS_Vector(0.0, 0.0), RS_Vector(1.0, 1.0), 0.0, 1, 1,
                                                RS_Vector(0.0, 0.0)));
 }
+
+// A line whose clones are counted too, so the copies the clipboard and a
+// paste make can be accounted for.
+class CountedLine final : public RS_Line {
+public:
+    CountedLine(RS_EntityContainer* parent, const RS_LineData& data, int& liveCount)
+        : RS_Line(parent, data), m_liveCount{liveCount} {
+        ++m_liveCount;
+    }
+    CountedLine(const CountedLine& other) : RS_Line(other), m_liveCount{other.m_liveCount} { ++m_liveCount; }
+    ~CountedLine() override { --m_liveCount; }
+    RS_Entity* clone() const override { return new CountedLine(*this); }
+
+private:
+    int& m_liveCount;
+};
+
+struct Drawing {
+    // first, so the settings RS_Graphic reads are set up before it is built
+    const bool m_qtReady{lc::test::application() != nullptr};
+    RS_Graphic m_graphic;
+    lc::test::TestGraphicView m_view;
+    LC_ActionContext m_context;
+
+    Drawing() {
+        m_graphic.initForNewDocument();
+        m_graphic.onLoadingCompleted();
+        m_view.setDocument(&m_graphic);
+        m_context.setDocumentAndView(&m_graphic, &m_view);
+    }
+};
 
 } // namespace
 
@@ -201,4 +237,112 @@ TEST_CASE("RS_BlockList generations are unique across lists", "[block][ownership
     CHECK(second.generation() != afterAdd);
     second.add(new CountedBlock(nullptr, "A", live));
     CHECK(second.generation() != afterAdd);
+}
+
+TEST_CASE("A non-owning RS_BlockList leaves removed and rejected blocks to the caller", "[block][ownership]") {
+    int live = 0;
+    auto* a = new CountedBlock(nullptr, "A", live);
+    auto* twin = new CountedBlock(nullptr, "A", live);
+    {
+        RS_BlockList list(false);
+        REQUIRE(list.add(a));
+        CHECK_FALSE(list.add(twin));
+        list.remove(a);
+        CHECK(live == 2);
+        CHECK(list.count() == 0);
+    }
+    CHECK(live == 2);
+    delete a;
+    delete twin;
+    CHECK(live == 0);
+}
+
+// The end-to-end form of the generation test above: an insert that cached a
+// block of a list keeps working when a new list is built at the very address
+// of the destroyed one, with as many additions, instead of handing back the
+// block freed with the old list.
+TEST_CASE("An insert does not reuse a block cached against a destroyed list", "[block][ownership]") {
+    int live = 0;
+    alignas(RS_BlockList) unsigned char storage[sizeof(RS_BlockList)];
+
+    auto* first = new (storage) RS_BlockList(true);
+    first->add(new CountedBlock(nullptr, "PART", live));
+    RS_Insert insert(nullptr, RS_InsertData("PART", RS_Vector(0.0, 0.0), RS_Vector(1.0, 1.0), 0.0, 1, 1,
+                                            RS_Vector(0.0, 0.0), first));
+    REQUIRE(insert.getBlockForInsert() == first->find("PART"));
+    first->~RS_BlockList();
+    REQUIRE(live == 0);
+
+    auto* second = new (storage) RS_BlockList(true);
+    second->add(new CountedBlock(nullptr, "PART", live));
+    CHECK(insert.getBlockForInsert() == second->find("PART"));
+    second->~RS_BlockList();
+    CHECK(live == 0);
+}
+
+TEST_CASE("A font frees its letters unless it does not own them", "[block][ownership]") {
+    int live = 0;
+    {
+        RS_Font font("owning");
+        font.getLetterList()->add(new CountedBlock(nullptr, "A", live));
+        REQUIRE(live == 1);
+    }
+    CHECK(live == 0);
+
+    auto* letter = new CountedBlock(nullptr, "A", live);
+    {
+        RS_Font font("borrowing", false);
+        font.getLetterList()->add(letter);
+    }
+    CHECK(live == 1);
+    delete letter;
+    CHECK(live == 0);
+}
+
+// Copying to the clipboard clones the blocks an insert needs into the
+// clipboard's drawing, and pasting clones them again into the destination.
+// Each drawing frees only its own, in any order, and what was pasted keeps
+// resolving its blocks in its own drawing.
+TEST_CASE("A pasted insert keeps its blocks after the source and the clipboard are gone", "[block][ownership][copy]") {
+    int live = 0;
+    {
+        auto source = std::make_unique<Drawing>();
+        auto* block = new RS_Block(&source->m_graphic, RS_BlockData("PART", RS_Vector(0.0, 0.0), false));
+        source->m_graphic.addBlock(block);
+        block->addEntity(new CountedLine(block, RS_LineData(RS_Vector(0.0, 0.0), RS_Vector(1.0, 0.0)), live));
+        RS_Insert* part = makeInsert(&source->m_graphic, "PART");
+        source->m_graphic.addEntity(part);
+        part->update();
+        REQUIRE(part->count() == 1);
+
+        QList<RS_Entity*> selection{part};
+        source->m_graphic.select(selection, true);
+        LC_CopyUtils::copy(RS_Vector(0.0, 0.0), selection, &source->m_graphic);
+        source.reset();
+
+        Drawing destination;
+        destination.m_graphic.undoableModify(destination.m_view.getViewPort(), [&](LC_DocumentModificationBatch& ctx) {
+            LC_CopyUtils::paste(LC_CopyUtils::RS_PasteData(RS_Vector(0.0, 100.0)), &destination.m_graphic, ctx);
+            ctx.dontSetActiveLayerAndPen();
+            return true;
+        });
+        RS_CLIPBOARD->clear();
+        destination.m_graphic.updateInserts();
+
+        RS_Block* ownPart = destination.m_graphic.findBlock("PART");
+        REQUIRE(ownPart != nullptr);
+        int inserts = 0;
+        for (RS_Entity* e : destination.m_graphic) {
+            if (e != nullptr && !e->isDeleted() && e->rtti() == RS2::EntityInsert) {
+                auto* insert = static_cast<RS_Insert*>(e);
+                insert->update();
+                CHECK(insert->getBlockForInsert() == ownPart);
+                CHECK(insert->count() == 1);
+                ++inserts;
+            }
+        }
+        CHECK(inserts == 1);
+    }
+    RS_CLIPBOARD->clear();
+    CHECK(live == 0);
 }
