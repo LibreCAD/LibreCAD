@@ -28,11 +28,21 @@
 
 #include <QRegularExpression>
 #include <QSet>
+#include <QtAlgorithms>
+#include <atomic>
 #include <iostream>
 
 #include "rs_block.h"
 #include "rs_blocklistlistener.h"
 #include "rs_debug.h"
+
+namespace {
+/** Next generation value, unique across all block lists (see generation()). */
+std::size_t nextGeneration() {
+    static std::atomic<std::size_t> counter{0U};
+    return ++counter;
+}
+}
 
 /**
  * Constructor.
@@ -41,19 +51,27 @@
  *              If so, the blocks will be deleted when the block
  *              list is deleted.
  */
-RS_BlockList::RS_BlockList(const bool owner) {
-    m_owner = owner;
-    m_activeBlock = nullptr;
+RS_BlockList::RS_BlockList(const bool owner)
+    : m_owner{owner}, m_generation{nextGeneration()} {
     setModified(false);
 }
 
+RS_BlockList::~RS_BlockList() {
+    if (m_owner) {
+        qDeleteAll(m_blocks);
+    }
+}
+
 /**
- * Removes all blocks in the blocklist.
+ * Removes all blocks in the blocklist, and deletes them if the list owns them.
  */
 void RS_BlockList::clear() {
+    if (m_owner) {
+        qDeleteAll(m_blocks);
+    }
     m_blocks.clear();
     m_activeBlock = nullptr;
-    ++m_generation;
+    m_generation = nextGeneration();
     setModified(true);
 }
 
@@ -92,12 +110,17 @@ bool RS_BlockList::add(RS_Block* block, const bool notify) {
     if (block == nullptr) {
         return false;
     }
+    // Already listed: keep it, and don't list it twice (find() skips blocks
+    // flagged deleted, so the name check below would miss those).
+    if (m_blocks.contains(block)) {
+        return false;
+    }
 
     // check if block already exists:
     const RS_Block* b = find(block->getName());
     if (b == nullptr) {
         m_blocks.append(block);
-        ++m_generation;
+        m_generation = nextGeneration();
 
         if (notify) {
             addNotification();
@@ -133,7 +156,7 @@ void RS_BlockList::remove(RS_Block* block) {
 
     // here the block is removed from the list but not deleted
     if (m_blocks.removeOne(block)) {
-        ++m_generation;
+        m_generation = nextGeneration();
     }
 
     for (const auto l : std::as_const(m_blockListListeners)) {
@@ -168,7 +191,7 @@ bool RS_BlockList::rename(RS_Block* block, const QString& name) {
         if (find(name) == nullptr) {
             const QString oldName = block->getName();
             block->setName(name);
-            ++m_generation;
+            m_generation = nextGeneration();
             setModified(true);
 
             // when the renamed block is nested within other block, we need to rename its inserts as well

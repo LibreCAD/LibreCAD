@@ -45,7 +45,9 @@ class RS_BlockListListener;
 class RS_BlockList {
 public:
     explicit RS_BlockList(bool owner = false);
-    virtual ~RS_BlockList() = default;
+    virtual ~RS_BlockList();
+    RS_BlockList(const RS_BlockList&) = delete;
+    RS_BlockList& operator=(const RS_BlockList&) = delete;
 
     void clear();
     /**
@@ -108,7 +110,9 @@ public:
     bool isModified() const;
 
     /**
-     * Monotonically increases whenever name-to-block resolution can change.
+     * Changes whenever name-to-block resolution can change. Values are unique
+     * across all block lists, so a (list, generation) pair cached by an
+     * RS_Insert never matches a later list that reuses a freed list's address.
      */
     [[nodiscard]] std::size_t generation() const noexcept {
         return m_generation;

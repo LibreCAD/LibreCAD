@@ -91,10 +91,10 @@ struct SourceDrawing {
         addLine(m_layerA, 10.0);
         addLine(m_layerB, 20.0);
 
-        // Blocks are copied into each export drawing, and RS_BlockList does not
-        // free its blocks, so the block holds an uncounted line.
+        // The block is copied into the export drawing that gets the insert,
+        // and the insert expands a copy of the block's line.
         m_block = new RS_Block(&m_graphic, RS_BlockData("BLK", RS_Vector(0.0, 0.0), false));
-        m_block->addEntity(new RS_Line(m_block, RS_Vector(0.0, 0.0), RS_Vector(1.0, 1.0)));
+        m_block->addEntity(new CountedLine(m_block, RS_Vector(0.0, 0.0), RS_Vector(1.0, 1.0), m_liveLines));
         m_graphic.addBlock(m_block);
         auto* insert = new RS_Insert(&m_graphic, RS_InsertData("BLK", RS_Vector(30.0, 0.0), RS_Vector(1.0, 1.0),
                                                                0.0, 1, 1, RS_Vector(0.0, 0.0)));
@@ -152,7 +152,9 @@ TEST_CASE("Dropping layer export data frees the exported drawings", "[layers][ex
     CAPTURE(separateDocuments, originalLayers);
 
     SourceDrawing source;
-    REQUIRE(source.m_liveLines == 3);
+    // three lines, the block's line and the insert's copy of it
+    const int sourceLines = source.m_liveLines;
+    REQUIRE(sourceLines == 5);
     const LC_LayersExportOptions options = source.options(separateDocuments, originalLayers);
 
     {
@@ -161,18 +163,22 @@ TEST_CASE("Dropping layer export data frees the exported drawings", "[layers][ex
 
         REQUIRE(results.size() == (separateDocuments ? 3u : 1u));
         unsigned exportedLines = 0;
+        unsigned exportedBlocks = 0;
         for (const auto& result : results) {
             REQUIRE(result.graphic != nullptr);
             CHECK(&*result.graphic != &source.m_graphic);
             exportedLines += countLines(&*result.graphic);
+            exportedBlocks += result.graphic->countBlocks();
             CHECK(result.graphic->getViewList()->count() == 1);
         }
         CHECK(exportedLines == 3);
-        CHECK(source.m_liveLines == 6);
+        CHECK(exportedBlocks == 1);
+        // the lines, the block's line and the insert with its expansion
+        CHECK(source.m_liveLines == sourceLines + 5);
     }
 
-    // Every copy is gone once the export data is.
-    CHECK(source.m_liveLines == 3);
+    // Every copy is gone once the export data is: drawings, blocks included.
+    CHECK(source.m_liveLines == sourceLines);
 }
 
 TEST_CASE("Freeing exported drawings leaves the source drawing intact", "[layers][export][ownership]") {

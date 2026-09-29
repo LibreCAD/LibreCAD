@@ -43,6 +43,8 @@ class RS_LayerList {
 public:
     explicit RS_LayerList();
     virtual ~RS_LayerList();
+    RS_LayerList(const RS_LayerList&) = delete;
+    RS_LayerList& operator=(const RS_LayerList&) = delete;
     /**
      * @return Number of layers in the list.
      */
