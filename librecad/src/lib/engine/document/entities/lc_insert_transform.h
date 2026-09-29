@@ -66,6 +66,24 @@ struct LC_InsertTransformParts {
 struct LC_InsertTransform {
     static constexpr double Zero = 0.0;
     static constexpr double IdentityScale = 1.0;
+    /**
+     * How far, relative to the columns' lengths, a transform's columns may be from
+     * perpendicular (its |dot| over col0 * col1) and still count as a rotation with scale
+     * factors. Composing a few rotations, or rebuilding the angle and scale factors from a
+     * matrix, leaves a few ulps (about 4e-16) of that, and a nested block's expansion is
+     * refused as a whole when it is rejected, so this is many orders above the rounding.
+     * A real shear (a non-uniform scale under a rotated block) is far above it. What is
+     * accepted at the limit is a position error of 1e-9 times the distance of a point of the
+     * block from the block's origin: a nanometre on a metre.
+     */
+    static constexpr double ShearTolerance = 1e-9;
+    /**
+     * How far apart, relative to the larger, a transform's two scale factors may be and still
+     * count as one scale: an arc or circle then stays one, with a radius off by that much,
+     * instead of becoming an ellipse. The same rounding as ShearTolerance leaves them a few
+     * ulps apart.
+     */
+    static constexpr double UniformScaleTolerance = 1e-9;
 
     double a = IdentityScale;
     double b = Zero;

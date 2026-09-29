@@ -2503,6 +2503,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/entities/tests/lc_dimarrowtests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_hatch_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_image_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_insert_transform_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_textbidi_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_mtext_bidi_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_text_bidi_tests.cpp
@@ -2530,6 +2531,7 @@ if (BUILD_TESTS)
         librecad/src/actions/print_preview/tests/rs_actionprintpreview_tests.cpp
         librecad/src/lib/printing/tests/lc_printingtests.cpp
         librecad/src/lib/modification/tests/lc_copy_identity_tests.cpp
+        librecad/src/lib/modification/tests/lc_copy_insert_transform_tests.cpp
         librecad/src/lib/modification/tests/lc_division_tests.cpp
         librecad/src/lib/modification/tests/rs_modification_trim_tests.cpp
         librecad/src/lib/modification/tests/rs_modification_offset_tests.cpp
