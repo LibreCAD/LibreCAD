@@ -3787,9 +3787,11 @@ std::vector<std::uint8_t> makeR2007TableFrame(
 }
 
 std::vector<std::uint8_t> makeMalformedMLineFrame(
-    std::uint16_t vertexCount, std::uint16_t parameterCount) {
+    std::uint16_t vertexCount, std::uint16_t parameterCount,
+    std::uint32_t handle = 0x230u, std::uint32_t owner = DRW::NoHandle) {
     DwgMLineWriterProbe mline;
-    mline.handle = 0x230u;
+    mline.handle = handle;
+    mline.parentHandle = owner;
     mline.numLines = 1;
     mline.setObjectType(47);
 
@@ -21382,6 +21384,117 @@ TEST_CASE("DWG journalled block rolls back cleanly after a contained INSERT "
     for (const DRW_DwgFrameCoverageEntry& entry : reader.m_dwgSourceFrameLedger) {
         if (entry.m_handle == recordHandle)
             continue;
+        INFO("handle 0x" << std::hex << entry.m_handle);
+        CHECK(entry.m_publicationCount == 0u);
+    }
+}
+
+// A simple entity whose frame, handle and owner are sound but whose body does
+// not decode is one bad entity, not a bad block. The walk without a journal and
+// the sweep after BLOCKS both count such an entity and go on; the journalled
+// walk used to roll the whole block back and fail the file with
+// BAD_READ_BLOCKS, so one unreadable entity (an ACAD_TABLE whose cell grid could
+// not be decoded, in a real R2007 file) cost the drawing every other entity of
+// its block.
+TEST_CASE("DWG journalled block commits around an undecodable entity",
+          "[dwg][safety][journal]") {
+    constexpr std::uint32_t recordHandle = 0x7F0;
+    constexpr std::uint32_t blockHandle = 0x7F1;
+    constexpr std::uint32_t firstLineHandle = 0x7F2;
+    constexpr std::uint32_t undecodableHandle = 0x7F3;
+    constexpr std::uint32_t lastLineHandle = 0x7F4;
+    constexpr std::uint32_t endBlockHandle = 0x7F5;
+    const bool modelSpace = GENERATE(false, true);
+    INFO((modelSpace ? "model space" : "named block"));
+    const std::uint32_t blockOwner = modelSpace ? DRW::NoHandle : recordHandle;
+
+    const auto run = runJournalledBlock(
+        recordHandle, blockHandle, endBlockHandle,
+        modelSpace ? "*Model_Space" : "JOURNALLED_UNDECODABLE", blockOwner,
+        {{firstLineHandle, makeLineFrame(firstLineHandle, blockOwner)},
+         // An MLINE that declares more vertices than the reader accepts.
+         {undecodableHandle,
+          makeMalformedMLineFrame(5001, 0, undecodableHandle, blockOwner)},
+         {lastLineHandle, makeLineFrame(lastLineHandle, blockOwner)}},
+        {firstLineHandle, undecodableHandle, lastLineHandle});
+    const DwgEntityReaderProbe& reader = *run->reader;
+    const DwgGroupRejectionProbe& interface = run->interface;
+
+    // The block is not lost, the file read goes on, and the phase after BLOCKS
+    // still runs.
+    CHECK(run->readBlocks);
+    CHECK(run->readEntities);
+    CHECK(interface.blockCount == 1u);
+    CHECK(interface.lineCount == 2u);
+    CHECK(interface.mlineCount == 0u);
+    CHECK(run->sweepInterface.mlineCount == 0u);
+    CHECK(reader.ObjectMap.empty());
+    std::vector<std::string> expectedCallbacks =
+        modelSpace ? std::vector<std::string>{"block", "endBlock"}
+                   : std::vector<std::string>{"block"};
+    expectedCallbacks.emplace_back("line");
+    expectedCallbacks.emplace_back("line");
+    if (!modelSpace)
+        expectedCallbacks.emplace_back("endBlock");
+    // The block delivered what it could and does not claim to have reached
+    // every entity of its record.
+    CHECK(interface.callbacks == expectedCallbacks);
+    CHECK(interface.reachabilities.empty());
+
+    // One failure, counted once and attributed to the entity.
+    CHECK(reader.m_entityParseFailures == 1u);
+    checkGroupNeverPublished(reader.m_dwgSourceFrameLedger,
+                             {undecodableHandle});
+    for (const DRW_DwgFrameCoverageEntry& entry : reader.m_dwgSourceFrameLedger) {
+        if (entry.m_handle == undecodableHandle)
+            continue;
+        INFO("handle 0x" << std::hex << entry.m_handle);
+        CHECK(entry.m_disposition == DRW_DwgFrameDisposition::Published);
+        CHECK(entry.m_publicationCount == 1u);
+    }
+}
+
+// The transaction is still all or nothing around such an entity: when it cannot
+// take what the block did deliver, nothing of the block reaches the interface.
+TEST_CASE("DWG journalled block rolls back cleanly after an undecodable "
+          "entity when the journal fails",
+          "[dwg][safety][journal]") {
+    constexpr std::uint32_t recordHandle = 0x7F8;
+    constexpr std::uint32_t blockHandle = 0x7F9;
+    constexpr std::uint32_t firstLineHandle = 0x7FA;
+    constexpr std::uint32_t undecodableHandle = 0x7FB;
+    constexpr std::uint32_t lastLineHandle = 0x7FC;
+    constexpr std::uint32_t endBlockHandle = 0x7FD;
+    const bool failReservation = GENERATE(false, true);
+    INFO((failReservation ? "reservation fails" : "adoption fails"));
+
+    const auto run = runJournalledBlock(
+        recordHandle, blockHandle, endBlockHandle, "JOURNALLED_UNDECODABLE_FAULT",
+        recordHandle,
+        {{firstLineHandle, makeLineFrame(firstLineHandle, recordHandle)},
+         {undecodableHandle,
+          makeMalformedMLineFrame(5001, 0, undecodableHandle, recordHandle)},
+         {lastLineHandle, makeLineFrame(lastLineHandle, recordHandle)}},
+        {firstLineHandle, undecodableHandle, lastLineHandle},
+        [failReservation](DwgEntityReaderProbe& reader) {
+            // The block delimiters take the first two admissions, the first LINE
+            // the third; the undecodable entity is reserved but never adopted, so
+            // the last LINE is the fifth reservation and the fourth adoption.
+            if (failReservation)
+                reader.failBlockJournalReservationForTest(5u);
+            else
+                reader.failBlockJournalAdoptionForTest(4u);
+        });
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK_FALSE(run->readBlocks);
+    CHECK(run->interface.callbacks.empty());
+    CHECK(run->interface.lineCount == 0u);
+    CHECK(run->interface.reachabilities.empty());
+    CHECK(reader.ObjectMap.empty());
+    for (const DRW_DwgFrameCoverageEntry& entry : reader.m_dwgSourceFrameLedger) {
+        if (entry.m_handle == recordHandle)
+            continue; // the BLOCK_RECORD table frame was published up front
         INFO("handle 0x" << std::hex << entry.m_handle);
         CHECK(entry.m_publicationCount == 0u);
     }

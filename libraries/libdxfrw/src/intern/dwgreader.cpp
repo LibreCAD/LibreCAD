@@ -7791,11 +7791,12 @@ bool dwgReader::readDwgBlocks(DRW_Interface &intfa, dwgBuffer *dbuf,
           journalled = transaction.output().appendEndBlock();
         }
         std::optional<DRW_DwgBlockReachability> reachability;
-        // A block that lost a group to a contained rejection commits what it
-        // delivered, but it cannot certify that its entity list was reached
-        // in full: it publishes no reachability receipt (the receipt is the
-        // claim that every entity of the record was published), and the
-        // rejected group's frames stay Failed/Quarantined in the coverage.
+        // A block that lost a group or an undecodable entity to a contained
+        // rejection commits what it delivered, but it cannot certify that its
+        // entity list was reached in full: it publishes no reachability
+        // receipt (the receipt is the claim that every entity of the record
+        // was published), and the rejected frames stay Failed/Quarantined in
+        // the coverage.
         if (journalled && containedGroups == 0) {
           const auto receiptSource = [this](const DwgSourceFrameId &source)
               -> std::optional<DRW_DwgSourceFrame> {
@@ -8461,7 +8462,9 @@ bool dwgReader::walkJournalledBlockRecordEntities(
         restoreState();
         return false;
       }
-      if (!requiresAggregateDelivery(classification.resolvedType) &&
+      const bool aggregateEntity =
+          requiresAggregateDelivery(classification.resolvedType);
+      if (!aggregateEntity &&
           !transaction.reserveAdmission(1u, 3u, classification.bodyByteSize)) {
         restoreState();
         return false;
@@ -8476,6 +8479,7 @@ bool dwgReader::walkJournalledBlockRecordEntities(
       lease.classification.emplace(std::move(classification));
       bool frameFailure = false;
       const std::uint64_t conflictsBefore = m_groupOwnerConflicts;
+      const std::size_t eventsBefore = transaction.output().size();
       const bool parsed = readMappedDwgEntity(
           dbuf, lease, intfa, &frameFailure, offsetSpace, &transaction.output(),
           DwgMappedEntityCompletion::Journal, &transaction);
@@ -8487,15 +8491,31 @@ bool dwgReader::walkJournalledBlockRecordEntities(
         // A group rejected only because a child names a foreign owner was
         // removed whole by its stager: a group reaches the journal only when
         // it commits, none of its sources is adopted, and no staged state of
-        // it is left. The block goes on with its other entities. Any other
-        // failure ends the walk and the caller rolls the transaction back.
+        // it is left. The block goes on with its other entities.
         const bool contained =
             !parsed && !frameFailure && !parsedEntityHandleMismatch &&
             m_groupOwnerConflicts != conflictsBefore;
-        if (!contained) {
+        // A simple entity whose frame, handle and owner are sound but whose
+        // typed body does not decode is one bad entity, not a bad block: the
+        // walk that has no journal (walkBlockRecordEntities) and the sweep
+        // (readDwgEntities) count it and go on, and so does this one. The
+        // entity is atomic: its frame is Failed and unpublished, and whatever
+        // it put in the journal is dropped so that replay never sees an event
+        // of a source that was not adopted. Aggregates are left out: a child
+        // that does not decode leaves its group incomplete, which the pending
+        // state check below fails as before.
+        const bool undecodable =
+            !contained && !aggregateEntity && !parsed && !frameFailure &&
+            !parsedEntityHandleMismatch && !parsedEntityOwnerMismatch &&
+            m_currentEntityFailurePhase == DwgEntityFailurePhase::TypedBody;
+        // Any other failure ends the walk and the caller rolls the
+        // transaction back.
+        if (!contained && !undecodable) {
           restoreState();
           return false;
         }
+        if (undecodable)
+          transaction.output().truncate(eventsBefore);
         ++rejectedGroups;
         continue;
       }

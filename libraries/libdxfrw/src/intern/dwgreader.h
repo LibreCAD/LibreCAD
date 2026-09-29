@@ -683,10 +683,17 @@ protected:
                                    DwgIntegrityAddressSpace::DecodedBuffer,
                                DwgBlockWalkOutcome *outcome = nullptr);
   // Walks a modern block into one journalled transaction. Any failure returns
-  // false and the caller rolls the whole transaction back, except a contained
-  // group rejection (see DwgBlockWalkOutcome): that group was rejected as a
-  // whole before anything of it reached the journal, so the walk goes on with
-  // the block's other entities and counts it in `containedGroups`.
+  // false and the caller rolls the whole transaction back, except two per-item
+  // rejections that leave the block's other entities sound, which the walk
+  // counts in `containedGroups` and goes on:
+  //  - a contained group rejection (see DwgBlockWalkOutcome): the group was
+  //    rejected as a whole before anything of it reached the journal;
+  //  - a simple entity whose typed body does not decode although its frame,
+  //    handle and owner are sound: its frame is Failed and unpublished and its
+  //    journal events are dropped.
+  // A block that lost an item this way commits what it delivered but claims no
+  // reachability, because the receipt says every entity of the record was
+  // published.
   bool walkJournalledBlockRecordEntities(
       DRW_Block_Record *bkr, dwgBuffer *dbuf, DRW_Interface &intfa,
       DwgBlockScopeTransaction &transaction,
