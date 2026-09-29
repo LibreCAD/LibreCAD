@@ -32,6 +32,7 @@
 
 #include "lc_actioncontext.h"
 #include "lc_graphicviewrenderer.h"
+#include "lc_settingguard.h"
 #include "rs_actionprintpreview.h"
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
@@ -39,6 +40,8 @@
 #include "rs_settings.h"
 
 namespace {
+
+using lc::test::SettingGuard;
 
 QApplication& application() {
     static int argc = 1;
@@ -57,40 +60,6 @@ QApplication& application() {
     (void)settingsReady;
     return *app;
 }
-
-class SettingGuard {
-public:
-    SettingGuard(RS_Settings* settings, QString group, QString key)
-        : m_settings(settings), m_group(std::move(group)), m_key(std::move(key)),
-          m_fullKey(QString("/%1/%2").arg(m_group, m_key)),
-          m_existed(settings->getSettings()->contains(m_fullKey)),
-          m_value(settings->getSettings()->value(m_fullKey)) {}
-
-    ~SettingGuard() {
-        auto groupGuard = m_settings->beginGroupGuard(m_group);
-        if (m_existed) {
-            m_settings->write(m_key, m_value);
-        }
-        else {
-            m_settings->write(m_key, QVariant{});
-            m_settings->remove(m_key);
-        }
-    }
-
-    void set(const bool value) const { m_settings->writeSingle(m_group, m_key, value); }
-    void set(const double value) const { m_settings->writeSingle(m_group, m_key, value); }
-
-    SettingGuard(const SettingGuard&) = delete;
-    SettingGuard& operator=(const SettingGuard&) = delete;
-
-private:
-    RS_Settings* m_settings;
-    QString m_group;
-    QString m_key;
-    QString m_fullKey;
-    bool m_existed;
-    QVariant m_value;
-};
 
 class PrintPreviewTestView final : public RS_GraphicView {
 public:
@@ -159,6 +128,17 @@ TEST_CASE("automatic print preview fits once after loading options",
     legacyFixed.set(true);
     currentFixed.set(false);
     savedScale.set(0.125);
+
+    // The page of a new drawing comes from these two settings. Fitting a
+    // drawing to a page of a few millionths of a unit gives a scale that
+    // getPaperScale() takes for "no scale" and reports as 1, so the test
+    // fixes the page it measures instead of taking whatever is stored.
+    SettingGuard unit{RS_SETTINGS, "Defaults", "Unit"};
+    SettingGuard paperWidth{RS_SETTINGS, "Print", "PaperSizeX"};
+    SettingGuard paperHeight{RS_SETTINGS, "Print", "PaperSizeY"};
+    unit.set(QStringLiteral("Millimeter"));
+    paperWidth.set(210.0);
+    paperHeight.set(297.0);
 
     RS_Graphic graphic;
     graphic.initForNewDocument();
