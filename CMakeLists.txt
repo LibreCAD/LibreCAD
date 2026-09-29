@@ -1138,6 +1138,9 @@ set (SHARED_SOURCES
      librecad/src/lib/gui/lc_graphicviewport.h
      librecad/src/lib/gui/lc_graphicviewportlistener.h
      librecad/src/lib/gui/lc_latecompletionrequestor.h
+     librecad/src/lib/gui/lc_scrollmodel.cpp
+     librecad/src/lib/gui/lc_scrollmodel.h
+     librecad/src/lib/gui/lc_viewmath.h
      librecad/src/lib/gui/render/headless/lc_printviewportrenderer.cpp
      librecad/src/lib/gui/render/headless/lc_printviewportrenderer.h
      librecad/src/lib/gui/render/lc_graphicviewportrenderer.cpp
@@ -1450,6 +1453,7 @@ set (SHARED_SOURCES
      librecad/src/ui/components/pen/qg_widgetpen.h
      librecad/src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.h
      librecad/src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp
+     librecad/src/ui/components/qg_scrollbar.cpp
      librecad/src/ui/components/qg_scrollbar.h
      librecad/src/ui/components/status_bar/lc_anglesbasiswidget.cpp
      librecad/src/ui/components/status_bar/lc_anglesbasiswidget.h
@@ -2505,7 +2509,9 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/entities/tests/rs_text_alignment_tests.cpp
         librecad/src/lib/engine/document/container/tests/lc_container_ownership_tests.cpp
         librecad/src/lib/engine/document/container/tests/lc_copy_semantics_tests.cpp
+        librecad/src/lib/engine/tests/rs_color_tests.cpp
         librecad/src/lib/engine/document/ucs/tests/lc_ucslist_tests.cpp
+        librecad/src/lib/engine/document/views/tests/lc_view_tests.cpp
         librecad/src/lib/engine/tests/rs_pen_tests.cpp
         librecad/src/lib/actions/tests/lc_snappercatchtests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_round_tests.cpp
@@ -2614,6 +2620,11 @@ if (BUILD_TESTS)
         librecad/src/ui/main/persistence/tests/lc_documentsstorage_tests.cpp
         librecad/src/plugins/tests/qc_actiongetselect_tests.cpp
         librecad/src/lib/gui/tests/lc_graphicviewrenderer_tests.cpp
+        librecad/src/lib/gui/tests/lc_scrollmodel_tests.cpp
+        librecad/src/lib/gui/tests/lc_graphicviewport_zoomauto_tests.cpp
+        librecad/src/ui/view/tests/qg_graphicview_scroll_tests.cpp
+        librecad/src/ui/view/tests/qg_scrollbar_band_tests.cpp
+        librecad/src/ui/view/tests/lc_scroll_beyond_tests.cpp
         librecad/src/main/tests/console_command_utils_tests.cpp
         librecad/src/main/tests/lc_pdfprintlooptests.cpp
         librecad/src/main/tests/lc_consoleimporttests.cpp

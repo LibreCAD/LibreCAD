@@ -23,13 +23,22 @@
 #ifndef LC_VIEW_H
 #define LC_VIEW_H
 
+#include <memory>
+
 #include "lc_ucs.h"
 #include "rs_vector.h"
 
+/**
+ * A named view. The view owns the UCS it holds (if any): setUCS() takes
+ * ownership, and clone() gives the copy its own UCS.
+ */
 class LC_View{
 public:
     LC_View();
     explicit LC_View(const QString &name);
+    ~LC_View();
+    LC_View(const LC_View&) = delete;
+    LC_View& operator=(const LC_View&) = delete;
 
     LC_View* clone() const;
     QString getName()const {return m_name;}
@@ -59,6 +68,9 @@ public:
     int getFlags() const;
     void setViewMode(int i);
     int getViewMode() const;
+    /**
+     * Takes ownership of pUcs (which may be nullptr) and frees the UCS held before.
+     */
     void setUCS(LC_UCS *pUcs);
     LC_UCS* getUCS() const;
     bool isForPaperView() const {return  (m_flags & 1) != 0;}
@@ -87,7 +99,7 @@ protected:
     RS_Vector m_size{false};
     RS_Vector m_targetPoint{false};
     RS_Vector m_viewDirection{false};
-    LC_UCS* m_ucs {nullptr};
+    std::unique_ptr<LC_UCS> m_ucs;
 };
 
 #endif

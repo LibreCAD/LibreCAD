@@ -690,7 +690,10 @@ void LC_GraphicViewport::doZoomAuto(const RS_Vector& min, const RS_Vector& max, 
         RS_Vector ucsMin;
         RS_Vector ucsMax;
 
-        ucsBoundingBox(min, max, ucsMin, ucsMax);
+        // Issue #2131: the old two-corner ucsBoundingBox() can be narrower than the WCS
+        // box's true UCS extent under a rotated UCS; ucsBoundsOfWcsBox() transforms all
+        // four corners, matching what the scrollbars already frame (adjustOffsetControls()).
+        ucsBoundsOfWcsBox(min, max, ucsMin, ucsMax);
 
         const RS_Vector ucsSize = ucsMax - ucsMin;
 
@@ -1156,9 +1159,9 @@ void LC_GraphicViewport::doUpdateViewByGraphicView(LC_View *view) const {
 
     view->setTargetPoint({0, 0, 0});
 
+    // the view takes ownership of the UCS set here and frees the one it held
     LC_UCS* viewUCS = getCurrentUCS();
     if (viewUCS != nullptr) {
-        view->setUCS(viewUCS);
         if (m_graphic != nullptr) {
             LC_UCSList *ucsList = m_graphic->getUCSList();
 
@@ -1168,6 +1171,7 @@ void LC_GraphicViewport::doUpdateViewByGraphicView(LC_View *view) const {
                 viewUCS->setName(ucsName);
             }
         }
+        view->setUCS(viewUCS);
     }
     else{
         // this is WCS

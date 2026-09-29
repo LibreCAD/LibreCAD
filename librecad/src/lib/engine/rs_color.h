@@ -93,6 +93,19 @@ public:
     void fromIntColor(int co);
     int colorDistance(const RS_Color& c) const;
 
+    /**
+     * WCAG 2 relative luminance of \p color: its sRGB channels linearised and weighted
+     * 0.2126 R + 0.7152 G + 0.0722 B, from 0 (black) to 1 (white). Alpha is ignored.
+     */
+    static double relativeLuminance(const QColor& color);
+    /**
+     * WCAG 2 contrast ratio of two colours, (L1 + 0.05) / (L2 + 0.05) with L1 the
+     * relative luminance of the lighter one: from 1 (equal luminance) to 21 (black and
+     * white), symmetric in its arguments. Alpha is ignored, so pass the opaque colours as
+     * painted. WCAG 2.1 asks for at least 3 for graphics and large text, 4.5 for text.
+     */
+    static double contrastRatio(const QColor& a, const QColor& b);
+
     enum {
         Black = 0,
         /**
