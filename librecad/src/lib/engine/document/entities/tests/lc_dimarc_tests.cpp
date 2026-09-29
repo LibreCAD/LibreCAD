@@ -36,42 +36,14 @@
 
 #include "lc_actiontestsupport.h"
 #include "lc_dimarc.h"
+#include "lc_heapprobe.h"
 #include "rs_arc.h"
 #include "rs_filterdxfrw.h"
 #include "rs_graphic.h"
 #include "rs_line.h"
 #include "rs_mtext.h"
 
-#if defined(__has_feature)
-#if __has_feature(address_sanitizer)
-#define LC_DIMARC_TEST_ASAN 1
-#endif
-#endif
-#if !defined(LC_DIMARC_TEST_ASAN) && defined(__SANITIZE_ADDRESS__)
-#define LC_DIMARC_TEST_ASAN 1
-#endif
-
-#if defined(LC_DIMARC_TEST_ASAN)
-#include <sanitizer/allocator_interface.h>
-#elif defined(__APPLE__)
-#include <malloc/malloc.h>
-#endif
-
 namespace {
-
-// Bytes the heap holds right now, where the allocator can tell us; otherwise
-// the leak checks below are skipped and only the drawing is checked.
-std::optional<std::size_t> heapBytesInUse() {
-#if defined(LC_DIMARC_TEST_ASAN)
-    return __sanitizer_get_current_allocated_bytes();
-#elif defined(__APPLE__)
-    malloc_statistics_t stats{};
-    malloc_zone_statistics(nullptr, &stats);
-    return stats.size_in_use;
-#else
-    return std::nullopt;
-#endif
-}
 
 // Rebuilds the dimension many times: once it has been drawn, a rebuild frees
 // everything it allocates, so the heap must not grow and the dimension must
@@ -81,11 +53,11 @@ void checkRebuildsLeaveNothingBehind(LC_DimArc& dimension) {
     const unsigned parts = dimension.count();
     REQUIRE(parts > 0);
 
-    const std::optional<std::size_t> before = heapBytesInUse();
+    const std::optional<std::size_t> before = lc::test::heapBytesInUse();
     for (int i = 0; i < 50; ++i) {
         dimension.update();
     }
-    const std::optional<std::size_t> after = heapBytesInUse();
+    const std::optional<std::size_t> after = lc::test::heapBytesInUse();
 
     if (before.has_value() && after.has_value()) {
         CHECK(*after <= *before);

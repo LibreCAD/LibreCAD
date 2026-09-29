@@ -2501,6 +2501,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/entities/tests/lc_circletests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_arctests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_dimarc_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_polylineclosing_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_dimarrowtests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_hatch_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_image_tests.cpp
