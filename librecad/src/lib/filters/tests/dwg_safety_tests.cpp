@@ -27899,3 +27899,55 @@ TEST_CASE("DWG legacy POLYLINEs whose chains share a link reject the second "
     CHECK(run->sweepInterface.polylineCount == 0u);
     CHECK(reader.ObjectMap.empty());
 }
+
+// A rejected group is left the way a committed one is: the entity after it is
+// the first handle behind its parent that is not one of the group's own frames
+// (a legacy entity without links is followed by the object with the next
+// handle), wherever the group's children sit. When the children are far from
+// the parent, the handle behind the SEQEND is no longer the next entity of the
+// block, and stopping there would leave the rest of the block to the ENTITIES
+// sweep, which publishes it outside the block.
+TEST_CASE("DWG legacy walk continues past a rejected group whose children are "
+          "elsewhere",
+          "[dwg][safety][compound][named-group]") {
+    const bool polyline = GENERATE(false, true);
+    INFO((polyline ? "POLYLINE group" : "INSERT group"));
+    constexpr std::uint32_t wrongOwner = 0x99;
+    constexpr std::uint32_t parent = 0x10;
+    constexpr std::uint32_t lineHandle = 0x11;
+
+    std::vector<FramePair> frames;
+    std::vector<std::uint32_t> group;
+    if (!polyline) {
+        frames = {{parent, makeLegacyInsertParentFrame(parent, 0x60, 0x60, 0x61)},
+                  {0x60, makeLegacyAttribFrame(0x60, wrongOwner)},
+                  {0x61, makeSeqEndFrame(0x61, parent)}};
+        group = {parent, 0x60, 0x61};
+    } else {
+        frames = {{parent, makeLegacyPolylineParentFrame(parent, 0x60, 0x61,
+                                                         0x62)},
+                  {0x60, makeLegacyVertexFrame(0x60, wrongOwner, 0x61)},
+                  {0x61, makeLegacyVertexFrame(0x61, parent, 0)},
+                  {0x62, makeSeqEndFrame(0x62, parent)}};
+        group = {parent, 0x60, 0x61, 0x62};
+    }
+    frames.push_back({lineHandle, makeLegacyLineFrame(lineHandle)});
+
+    const auto run = runLegacyWalk(std::move(frames), parent, lineHandle);
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK_FALSE(run->walked);
+    CHECK(run->outcome
+          == DwgEntityReaderProbe::DwgBlockWalkOutcome::ContainedGroupRejection);
+    CHECK(run->interface.inserts.empty());
+    CHECK(run->interface.polylineHandles.empty());
+    // The walk published the LINE itself; it was not left to the sweep.
+    CHECK(run->interface.lineCount == 1u);
+    CHECK(reader.m_entityParseFailures >= 1u);
+    checkGroupNeverPublished(reader.m_dwgSourceFrameLedger, group);
+    checkPublishedOnce(reader.m_dwgSourceFrameLedger, {lineHandle});
+    CHECK(run->swept);
+    CHECK(run->sweepInterface.inserts.empty());
+    CHECK(run->sweepInterface.polylineCount == 0u);
+    CHECK(reader.ObjectMap.empty());
+}

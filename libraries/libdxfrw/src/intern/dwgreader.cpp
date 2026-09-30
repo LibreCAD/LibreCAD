@@ -4360,16 +4360,27 @@ dwgReader::DwgMappedEntityOutcome dwgReader::stageLegacyInsertAggregate(
   };
   // A group rejected for a child that names a foreign owner is claimed whole,
   // SEQEND included, so the block's chain goes on after it exactly as it does
-  // after a committed group. Without this the chain would run into the
-  // quarantined ATTRIB and end there, and the rest of the block would be left
-  // to the ENTITIES sweep, which publishes it outside the block.
-  const auto rejectContained = [this, &reject, haveNextLinks,
-                                sequenceHandle]() {
+  // after a committed group: at the first handle behind the INSERT that is not
+  // one of the group's own frames (see nextHandleAfterLegacyGroup). Without
+  // this the chain would run into the quarantined ATTRIB and end there, and
+  // the rest of the block would be left to the ENTITIES sweep, which publishes
+  // it outside the block.
+  const auto rejectContained = [this, &reject, haveNextLinks, insertHandle,
+                                firstHandle, lastHandle, sequenceHandle,
+                                &discoveredHandles]() {
     noteGroupOwnerConflict();
+    // The frames discovered so far and the ones the INSERT names: the group
+    // may be rejected before its whole chain was read.
+    std::vector<std::uint32_t> members = discoveredHandles;
+    members.push_back(firstHandle);
+    members.push_back(lastHandle);
+    members.push_back(sequenceHandle);
     const DwgMappedEntityOutcome rejected = reject();
-    if (haveNextLinks &&
-        sequenceHandle != std::numeric_limits<std::uint32_t>::max()) {
-      nextEntLink = sequenceHandle + 1u;
+    if (haveNextLinks) {
+      const std::uint32_t next =
+          nextHandleAfterLegacyGroup(insertHandle, std::move(members));
+      if (next != DRW::NoHandle)
+        nextEntLink = next;
     }
     return rejected;
   };
@@ -5121,14 +5132,19 @@ dwgReader::stageLegacyPolylineChain(DRW_Polyline &&polyline,
     return DwgMappedEntityOutcome::Rejected;
   };
   // See stageLegacyInsertAggregate: the chain goes on after a group that was
-  // rejected for a child that names a foreign owner.
-  const auto rejectContained = [this, &reject, haveNextLinks,
-                                sequenceHandle]() {
+  // rejected for a child that names a foreign owner, at the first handle behind
+  // the POLYLINE that is not one of the group's own frames.
+  const auto rejectContained = [this, &reject, haveNextLinks, parentHandle,
+                                sequenceHandle, &discoveredHandles]() {
     noteGroupOwnerConflict();
+    std::vector<std::uint32_t> members = discoveredHandles;
+    members.push_back(sequenceHandle);
     const DwgMappedEntityOutcome rejected = reject();
-    if (haveNextLinks &&
-        sequenceHandle != std::numeric_limits<std::uint32_t>::max()) {
-      nextEntLink = sequenceHandle + 1u;
+    if (haveNextLinks) {
+      const std::uint32_t next =
+          nextHandleAfterLegacyGroup(parentHandle, std::move(members));
+      if (next != DRW::NoHandle)
+        nextEntLink = next;
     }
     return rejected;
   };
