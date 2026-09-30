@@ -26,7 +26,6 @@
 
 #include <QVariant>
 
-// fixme - sand - no copy assignment operator!
 struct LC_PropertyViewDescriptor {
     QByteArray viewName;
     using Attributes = QMap<QByteArray, QVariant>;
@@ -34,6 +33,7 @@ struct LC_PropertyViewDescriptor {
 
     LC_PropertyViewDescriptor() = default;
     LC_PropertyViewDescriptor(const LC_PropertyViewDescriptor& other);
+    LC_PropertyViewDescriptor& operator=(const LC_PropertyViewDescriptor&) = default;
     explicit LC_PropertyViewDescriptor(const QByteArray& name, const Attributes& attributes = Attributes());
     LC_PropertyViewDescriptor(const Attributes& attributes);
 

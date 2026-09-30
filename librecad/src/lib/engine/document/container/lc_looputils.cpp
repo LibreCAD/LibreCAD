@@ -676,7 +676,7 @@ void LoopSorter::findParent(RS_EntityContainer* loop, const std::multimap<double
 
     // LC_Loops implementation
 
-    LC_Loops::LC_Loops(std::shared_ptr<RS_EntityContainer> loop, bool ownsEntities) : m_loop(loop) {
+    LC_Loops::LC_Loops(std::shared_ptr<RS_EntityContainer> loop, bool) : m_loop(loop) {
         // Ownership managed via shared_ptr; autoDelete assumed true
     }
 

@@ -1200,7 +1200,7 @@ void LC_Hyperbola::revertDirection() {
 //=====================================================================
 // Minimal overrides
 //=====================================================================
-RS_Vector LC_Hyperbola::doGetNearestCenter(const RS_Vector& coord, double* dist, RS_Entity** entity) const {
+RS_Vector LC_Hyperbola::doGetNearestCenter(const RS_Vector& coord, double* dist, RS_Entity**) const {
   if (!m_valid || !coord.valid) {
     if (dist)
       *dist = RS_MAXDOUBLE;
@@ -1211,7 +1211,7 @@ RS_Vector LC_Hyperbola::doGetNearestCenter(const RS_Vector& coord, double* dist,
   return m_data.center;
 }
 
-RS_Vector LC_Hyperbola::doGetNearestEndpoint(const RS_Vector &coord, double *dist, RS_Entity** entity) const {
+RS_Vector LC_Hyperbola::doGetNearestEndpoint(const RS_Vector &coord, double *dist, RS_Entity**) const {
   if (dist)
     *dist = RS_MAXDOUBLE;
   if (!m_valid || !coord.valid) {

@@ -47,7 +47,6 @@ void LC_FontFileViewer::drawFontChars() const {
         columnCount = INT_MAX;
     }
     int currentColumn = 0;
-    int currentRow = 0;
 
     int currentLetterY = 0;
     double maxLetterHeight = 0;
@@ -59,12 +58,9 @@ void LC_FontFileViewer::drawFontChars() const {
         maxLetterWidth = std::max(maxLetterWidth, ch->getSize().x);
     }
 
-    double currentLetterX  = 0;
-
     for (int i=0; i<bl->count(); ++i) {
         const RS_Block* ch = bl->at(i);
         RS_InsertData data(ch->getName(), RS_Vector(currentColumn*sep,currentLetterY), RS_Vector(1,1), 0, 1, 1, RS_Vector(0,0));
-        currentLetterX += maxLetterWidth + sep;
         const auto in = new RS_Insert(m_document, data);
         m_document->addEntity(in);
         // the code is "[hhhh]", but a code point above U+FFFF needs 5 or 6 digits
@@ -81,8 +77,6 @@ void LC_FontFileViewer::drawFontChars() const {
         currentColumn ++;
         if (currentColumn == columnCount) {
             currentColumn = 0;
-            currentLetterX = 0;
-            currentRow ++;
             currentLetterY -= maxLetterHeight*1.5;
         }
     }

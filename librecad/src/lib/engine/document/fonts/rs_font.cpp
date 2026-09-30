@@ -198,7 +198,9 @@ bool RS_Font::loadFont() {
 
 void RS_Font::readCXF(const QString& path) {
     QFile f(path);
-    f.open(QIODevice::ReadOnly);
+    if (!f.open(QIODevice::ReadOnly)) {
+        return;
+    }
     QTextStream ts(&f);
 
     // Read line by line until we find a new letter:
@@ -349,7 +351,9 @@ QString letterNameToHexUnicodeCode(const QString& originalName) {
 void RS_Font::readLFF(const QString& path) {
     QFile f(path);
     m_encoding = "UTF-8";
-    f.open(QIODevice::ReadOnly);
+    if (!f.open(QIODevice::ReadOnly)) {
+        return;
+    }
     QTextStream ts(&f);
 
     // Read line by line until we find a new letter:

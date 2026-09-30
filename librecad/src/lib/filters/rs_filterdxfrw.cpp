@@ -579,7 +579,7 @@ bool parseDwgUnderlaySidecar(const RS_Entity *entity,
   if (!sawApplication || stringOrdinal != 2 || !parsed.gotPosition ||
       scalarCount != expectedScalars || displayValueCount != 3 ||
       parsed.value.definitionHandle == 0 ||
-      parsed.noClip && parsed.hasOriginalClip ||
+      (parsed.noClip && parsed.hasOriginalClip) ||
       !std::isfinite(parsed.value.rotation) ||
       std::abs(parsed.value.scale.x) <= RS_TOLERANCE ||
       std::abs(parsed.value.scale.y) <= RS_TOLERANCE)
@@ -3882,11 +3882,6 @@ approximateDrwSpline(RS_EntityContainer *parent, const DRW_Spline *data) {
 
   return std::make_unique<LC_SplinePoints>(parent, std::move(sampled));
 }
-// convert DRW_Coord to RS_Vector
-RS_Vector coordToVector(const std::shared_ptr<DRW_Coord> &c) {
-  return c ? RS_Vector(c->x, c->y) : RS_Vector(false);
-}
-
 } // namespace
 
 /**
@@ -9861,7 +9856,6 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
     hatchLoop->setLayer(nullptr);
     hatch->addEntity(hatchLoop);
 
-    RS_Entity *e = nullptr;
     if ((loop->type & 2) == 2) { // polyline, convert to lines & arcs
       if (loop->objlist.empty())
         continue;
@@ -12699,8 +12693,6 @@ void RS_FilterDXFRW::writeBlocks() {
   }
 #endif
 
-  RS_Block *blk;
-
   if (m_version > 1009)
     installDxfBlockRecordRemap();
 
@@ -13271,7 +13263,7 @@ bool RS_FilterDXFRW::prepareDwgDataStorageReplayPlan(DRW::Version version) {
                carrier.capabilityMaxVersion == capability.maxVersion;
       };
   const auto carrierCapabilityAvailable =
-      [this, version,
+      [version,
        &writerCapabilityMatches](const DwgDataStorageCarrier &carrier) {
         if (carrier.capability ==
                 DwgDataStorageCarrier::WriterCapability::None ||
@@ -13346,7 +13338,7 @@ bool RS_FilterDXFRW::prepareDwgDataStorageReplayPlan(DRW::Version version) {
     return false;
 
   const auto findMatchingRawSection =
-      [&, invalidIndex](const std::string &name, DRW::Version rawVersion) {
+      [&](const std::string &name, DRW::Version rawVersion) {
         std::size_t match = invalidIndex;
         for (std::size_t index = 0; index < metadata.rawDwgSections().size();
              ++index) {
@@ -20072,7 +20064,7 @@ void RS_FilterDXFRW::writeVports() {
       return outputHandle;
     };
     auto remapViewportHeaderReference =
-        [this, &remapHandle, &viewportHeaderHandles,
+        [&remapHandle, &viewportHeaderHandles,
          &dropReason](std::uint32_t sourceHandle, const char *referenceKind,
                       std::vector<PendingOptionalDrop> &drops) {
           if (sourceHandle == DRW::NoHandle)
@@ -21018,20 +21010,6 @@ void RS_FilterDXFRW::writeObjects() {
           handles = std::move(remapped);
           return true;
         };
-    const auto sanitizeOptionalCommonList =
-        [&sanitizeOptionalCommonHandle](std::vector<std::uint32_t> &handles,
-                                        const char *kind) {
-          std::vector<std::uint32_t> kept;
-          kept.reserve(handles.size());
-          for (std::size_t ordinal = 0; ordinal < handles.size(); ++ordinal) {
-            std::uint32_t handle = handles[ordinal];
-            sanitizeOptionalCommonHandle(handle, kind,
-                                         static_cast<std::uint32_t>(ordinal));
-            if (handle != 0)
-              kept.push_back(handle);
-          }
-          handles = std::move(kept);
-        };
     auto remapEntityHandle = [this](std::uint32_t sourceHandle,
                                     const char *referenceKind) {
       std::uint32_t outputHandle = 0;
@@ -21316,7 +21294,7 @@ void RS_FilterDXFRW::writeObjects() {
                                        DRW::DwgSoftPointer);
         };
     auto remapTableHandle =
-        [this, &referenceContext, &recordOptionalDrop,
+        [&referenceContext, &recordOptionalDrop,
          &recordRetainedReference](
             std::uint32_t sourceHandle, const std::string &sourceName,
             const std::map<std::string, std::uint32_t> &outputHandles,
@@ -21974,7 +21952,6 @@ void RS_FilterDXFRW::writeObjects() {
     int nativeDbColorObjects = 0;
     int nativeDimensionAssociationObjects = 0;
     int nativeEvaluationGraphObjects = 0;
-    int nativeBlockRepresentationObjects = 0;
     int nativeRasterVariablesObjects = 0;
     int nativeWipeoutVariablesObjects = 0;
     int nativeGeoDataObjects = 0;
@@ -23717,13 +23694,11 @@ void RS_FilterDXFRW::writeObjects() {
           ++blockedWriterRejected;
           continue;
         }
-        if (writeDwgObject(RS_FilterDXFRW_DwgWriteIdentityRegistry::
-                               DwgWriteSourceKind::Object,
-                           record.handle, [&data, this] {
-                             return m_dwgW->writeBlockRepresentationData(&data);
-                           })) {
-          ++nativeBlockRepresentationObjects;
-        } else {
+        if (!writeDwgObject(RS_FilterDXFRW_DwgWriteIdentityRegistry::
+                                DwgWriteSourceKind::Object,
+                            record.handle, [&data, this] {
+                              return m_dwgW->writeBlockRepresentationData(&data);
+                            })) {
           hasBlockedReplay = true;
           ++blockedWriterRejected;
         }

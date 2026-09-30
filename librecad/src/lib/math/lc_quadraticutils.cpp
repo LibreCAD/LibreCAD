@@ -315,7 +315,7 @@ RS_Entity* createDegeneratePointOrIntersecting(
 // ---------------------------------------------------------------------------
 // 1. Ellipse / Circle
 // ---------------------------------------------------------------------------
-RS_Entity* createEllipseOrCircle(const LC_Quadratic& q,
+RS_Entity* createEllipseOrCircle(const LC_Quadratic&,
                                  const RS_Vector& center,
                                  double valueAtCenter,
                                  double Ap,
@@ -405,7 +405,7 @@ RS_Entity* createParabola(const LC_Quadratic& q,
 // ---------------------------------------------------------------------------
 // 3. Hyperbola (both branches)
 // ---------------------------------------------------------------------------
-RS_Entity* createHyperbola(const LC_Quadratic& q,
+RS_Entity* createHyperbola(const LC_Quadratic&,
                            const RS_Vector& center,
                            double valueAtCenter,
                            double Ap,

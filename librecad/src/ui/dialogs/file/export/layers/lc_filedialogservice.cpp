@@ -107,14 +107,6 @@ namespace {
         "/Save" /* ExportLayersVisible mode   */
     };
 
-    constexpr int DEFAULT_FILTERS_INDICES[] =
-    {
-        /* List of save modes. */
-        0, /* SaveDrawing mode           */
-        0, /* ExportLayersSelected mode  */
-        0 /* ExportLayersVisible mode   */
-    };
-
     const QStringList FILE_DIALOG_TITLES =
     {
         /* List of save modes. */

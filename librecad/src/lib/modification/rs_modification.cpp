@@ -128,14 +128,6 @@ namespace {
      * @param entity - entity, could be nullptr
      * @return std::string - "ID/typeID", or an empty string, if the input entity is nullptr
      */
-    // fixme - sand - function is not used!!
-    std::string getIdFlagString(const RS_Entity* entity) {
-        if (entity == nullptr) {
-            return {};
-        }
-        return std::to_string(entity->getId()) + "/" + std::to_string(entity->rtti());
-    }
-
     // Support fillet trimming for whole ellipses
     RS_AtomicEntity* trimEllipseForRound(RS_AtomicEntity* entity, const RS_Arc& arcFillet) {
         if (entity == nullptr) {
@@ -2419,7 +2411,7 @@ LC_BevelResult RS_Modification::bevel(const RS_Vector& coord1, RS_AtomicEntity* 
             indexInPolylineToInsert = entity1IndexInPolyline;
 
             // insert bevel at the right position:
-            if (entity1IndexInPolyline == 0 && entity2IndexInPolyline == polylineSegmentsCount - 1 && polylineSegmentsCount > 2) {
+            if (entity1IndexInPolyline == 0 && static_cast<unsigned int>(entity2IndexInPolyline) == polylineSegmentsCount - 1 && polylineSegmentsCount > 2) {
                 //bevel are from last and first segments, add at the end
                 if (LC_LineMath::isMeaningfulDistance(trimmed2->getEndpoint(), bevel->getStartpoint())) {
                     bevel->reverse();
@@ -2559,7 +2551,7 @@ LC_RoundResult RS_Modification::round(const RS_Vector& coord, const RS_Vector& c
                     samePolyline->getStartpoint(), samePolyline->getEndpoint());
 
                 int delta = std::abs(entity1IndexInPolyline - entity2IndexInPolyline);
-                bool adjacentSegments = (delta == 1 ) || (polylineIsClosedOrEndpointsAreTheSame && delta == polylineSegmentsCount - 1);
+                bool adjacentSegments = (delta == 1 ) || (polylineIsClosedOrEndpointsAreTheSame && static_cast<unsigned int>(delta) == polylineSegmentsCount - 1);
 
                 if (adjacentSegments) {
                 }
@@ -2618,7 +2610,7 @@ LC_RoundResult RS_Modification::round(const RS_Vector& coord, const RS_Vector& c
             indexInPolylineToInsert = entity1IndexInPolyline;
 
             // insert bevel at the right position:
-            if (entity1IndexInPolyline == 0 && entity2IndexInPolyline == polylineSegmentsCount - 1 && polylineSegmentsCount > 2) {
+            if (entity1IndexInPolyline == 0 && static_cast<unsigned int>(entity2IndexInPolyline) == polylineSegmentsCount - 1 && polylineSegmentsCount > 2) {
                 //bevel are from last and first segments, add at the end
                 if (LC_LineMath::isMeaningfulDistance(trimmed2->getEndpoint(), arc->getStartpoint())) {
                     arc->reverse();

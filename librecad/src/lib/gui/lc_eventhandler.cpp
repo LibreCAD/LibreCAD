@@ -515,17 +515,8 @@ void LC_EventHandler::setSnapMode(const RS_SnapMode sm) const {
     }
 }
 
-/**
- * Sets the snap restriction for all currently active actions.
- */
-void LC_EventHandler::setSnapRestriction(const RS2::SnapRestriction sr) const {
-    if (isActive(m_currentAction)) {
-        m_currentAction->setSnapRestriction(sr);
-    }
-
-    if (m_defaultAction) {
-        m_defaultAction->setSnapRestriction(sr);
-    }
+/** Retained for the legacy view API; action-level snap restrictions are no-ops. */
+void LC_EventHandler::setSnapRestriction(const RS2::SnapRestriction) const {
 }
 
 QAction* LC_EventHandler::getQAction() const {

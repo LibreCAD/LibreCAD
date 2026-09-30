@@ -2760,10 +2760,9 @@ private:
  */
 class Materializer {
 public:
-    Materializer(const OffsetSource& source, const double d, const LC_CurveOffsetOptions& options,
+    Materializer(const OffsetSource& source, const LC_CurveOffsetOptions& options,
                  const std::size_t maxPieces, const double speedFloor, const std::size_t samplesUsed)
         : m_source{source},
-          m_d{d},
           m_options{options},
           m_maxPieces{maxPieces},
           m_speedFloor{speedFloor},
@@ -3002,7 +3001,6 @@ private:
     }
 
     const OffsetSource& m_source;
-    const double m_d;
     const LC_CurveOffsetOptions& m_options;
     const std::size_t m_maxPieces;
     const double m_speedFloor;
@@ -5247,7 +5245,7 @@ LC_CurveOffsetMaterializationResult materializeBranches(const RS_Entity& source,
     std::size_t samples = geometry.exactSamples; // the limit is per source, over all branches
     for (const LC_OffsetBranch& branch : geometry.branches) {
         const std::size_t left = budget.maxCubicPieces - std::min(budget.maxCubicPieces, pieceCount);
-        Materializer materializer{*adapter, geometry.signedDistance, options, left, scale.numericFloor / domain,
+        Materializer materializer{*adapter, options, left, scale.numericFloor / domain,
                                   samples};
         std::vector<LC_OffsetCubicPiece> pieces;
         double branchError = 0.0;

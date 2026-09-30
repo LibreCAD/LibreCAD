@@ -1007,23 +1007,6 @@ void LC_PropertiesProviderDimBase::createPrimaryUnitsSection(LC_PropertyContaine
                      pattern->setSuffix(v);
                  }, list, cont, true);
 
-    // fixme - sand - review!
-    auto funPositiveDoubleSpinMetric = [](RS_Dimension* dimension, LC_PropertyViewDescriptor& descriptor)-> bool {
-        descriptor.attributes[LC_PropertyDoubleSpinBoxView::ATTR_MIN] = 0.0;
-        descriptor.attributes[LC_PropertyDoubleSpinBoxView::ATTR_STEP] = 0.01;
-        const auto dimStyle = dimension->getEffectiveCachedDimStyle();
-        const bool readonly = dimStyle->linearFormat()->isPrimaryMetric();
-        return readonly;
-    };
-
-    auto funPositiveDoubleSpinNonMetric = [](RS_Dimension* dimension, LC_PropertyViewDescriptor& descriptor)-> bool {
-        descriptor.attributes[LC_PropertyDoubleSpinBoxView::ATTR_MIN] = 0.0;
-        descriptor.attributes[LC_PropertyDoubleSpinBoxView::ATTR_STEP] = 0.01;
-        const auto dimStyle = dimension->getEffectiveCachedDimStyle();
-        const bool readonly = !dimStyle->linearFormat()->isPrimaryMetric();
-        return readonly;
-    };
-
     auto funPositiveDoubleSpin = []([[maybe_unused]] RS_Dimension* dimension, LC_PropertyViewDescriptor& descriptor)-> bool {
         descriptor.attributes[LC_PropertyDoubleSpinBoxView::ATTR_MIN] = 0.0;
         descriptor.attributes[LC_PropertyDoubleSpinBoxView::ATTR_STEP] = 0.01;
@@ -1056,8 +1039,7 @@ void LC_PropertiesProviderDimBase::createPrimaryUnitsSection(LC_PropertyContaine
             addDouble_DS(
                 {"dimPrimarySubUnitsScale", tr("Dim sub-units scale"),
                  tr("Specifies sub-units scale factor for all applicable linear dimensions")},
-                [](const LC_DimStyle* ds) -> double {
-                    auto suppression = ds->zerosSuppression();
+                [](const LC_DimStyle*) -> double {
                     return /*suppression->roundTo();*/ 0.0; // fixme - sand - where from it's obtained from dxf point of view?
                 },
                 [](double& /*v*/, const LC_DimStyle* /* ds*/) -> void {

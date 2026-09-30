@@ -591,7 +591,7 @@ void LC_EntityTypePropertiesProvider::addIntSpinbox(const LC_Property::Names& na
         property->setViewDescriptor(descriptor);
 
         auto valueStorage = new LC_EntityPropertyValueDelegate<int, EntityClass>();
-        valueStorage->setup(entity, m_widget, funGet, funSet, [this, funGet](int& v, EntityClass* e) -> bool {
+        valueStorage->setup(entity, m_widget, funGet, funSet, [funGet](int& v, EntityClass* e) -> bool {
             return v == funGet(e);
         });
         property->setValueStorage(valueStorage, true);

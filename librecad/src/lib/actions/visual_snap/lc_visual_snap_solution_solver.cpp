@@ -572,7 +572,7 @@ void LC_VisualSnapSolutionSolver::addGuideEntitiesForDocumentEntity(const RS_Vec
     double dist;
     if (docEntityRef->guidingEntity != nullptr) {
         const auto entity = docEntityRef->guidingEntity.get();
-        RS_Vector v = entity->getNearestPointOnEntity(wcsPos, true, &dist);
+        entity->getNearestPointOnEntity(wcsPos, true, &dist);
         const bool withinSnapRange = dist < m_wcsSnapRange;
         if (withinSnapRange || m_options->showNotSnappableGuides) {
             RS_Entity* clone = entity->clone();

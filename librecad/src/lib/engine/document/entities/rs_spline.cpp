@@ -53,11 +53,6 @@ constexpr int g_minimumDisplaySegments = 32;
 constexpr size_t g_maximumDisplaySegments = 4096;
 constexpr double g_displayRelativeTolerance = 1e-3;
 
-    // fixme - sand - function is not used!
-bool compareVector(const RS_Vector &va, const RS_Vector &vb, const double tol = RS_TOLERANCE) {
-  return va.distanceTo(vb) <= tol;
-}
-
 /// Solves the dense linear system for spline interpolation (internal control
 /// points). Wraps RS_Math::linearSolver with proper augmented matrix
 /// construction. Returns true on success (unique solution), false if singular
@@ -877,7 +872,7 @@ RS_Vector RS_Spline::doGetNearestEndpoint(const RS_Vector &coord, double *dist, 
   }
   return nearest;
 }
-RS_Vector RS_Spline::doGetNearestCenter(const RS_Vector &, double *, RS_Entity** centerEntity) const {
+RS_Vector RS_Spline::doGetNearestCenter(const RS_Vector &, double *, RS_Entity**) const {
   return RS_Vector(false);
 }
 const RS_Spline::ArcLengthTable &RS_Spline::arcLengthTable() const {
@@ -1862,7 +1857,7 @@ bool RS_Spline::tryBoundJet(const double a, const double b, LC_CurveJetBounds &b
   if (equalWeights) {
     // a polynomial curve: C = A / w with constant w
     const LC_Interval w = LC_Interval::point(m_data.weights[span - p]);
-    result = {ax / w, ay / w, ax1 / w, ay1 / w, ax2 / w, ay2 / w};
+    result = {ax / w, ay / w, ax1 / w, ay1 / w, ax2 / w, ay2 / w, {}, {}};
     if (products) {
       // |C'|^2 and C' x C'' from the products of the derivatives' nets, which
       // cancel only by rounding where C' and C'' are parallel

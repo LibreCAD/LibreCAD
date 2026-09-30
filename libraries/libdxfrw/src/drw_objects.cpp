@@ -832,17 +832,6 @@ bool readCmColorWithinBounds(dwgBuffer *buf, dwgBuffer *stringBuf,
     return true;
 }
 
-bool readCmColorWithinBody(dwgBuffer *buf, dwgBuffer *stringBuf,
-                           DRW::Version version, std::uint32_t objSize,
-                           std::uint32_t& value, std::int32_t *rgb24 = nullptr,
-                           UTF8STRING *outName = nullptr,
-                           UTF8STRING *outBookName = nullptr,
-                           bool *hasRgbColor = nullptr) {
-    return readCmColorWithinBounds(buf, stringBuf, version, objSize, objSize,
-                                   value, rgb24, outName, outBookName,
-                                   hasRgbColor);
-}
-
 bool readHandleWithinBody(dwgBuffer *buf, DRW::Version version,
                           std::uint32_t objSize, std::uint32_t baseHandle,
                           bool offset, dwgHandle& value) {
@@ -4043,15 +4032,15 @@ bool DRW_Block_Record::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint3
         || !readBitWithinBody(bodyBuf, version, bodyEnd, blockIsXref)
         || !readBitWithinBody(bodyBuf, version, bodyEnd, xrefOverlaid))
         return fail();
-    parsedFlags |= isAnonymous; //if is anonymous block (*U) block code 70, bit 1 (1)
-    parsedFlags |= hasAttributes << 1; //if block contains attdefs, block code 70, bit 2 (2)
-    parsedFlags |= blockIsXref << 2; //if is a Xref, block code 70, bit 3 (4)
-    parsedFlags |= xrefOverlaid << 3; //if is a overlaid Xref, block code 70, bit 4 (8)
+    parsedFlags |= static_cast<int>(isAnonymous); //if is anonymous block (*U) block code 70, bit 1 (1)
+    parsedFlags |= static_cast<int>(hasAttributes) << 1; //if block contains attdefs, block code 70, bit 2 (2)
+    parsedFlags |= static_cast<int>(blockIsXref) << 2; //if is a Xref, block code 70, bit 3 (4)
+    parsedFlags |= static_cast<int>(xrefOverlaid) << 3; //if is a overlaid Xref, block code 70, bit 4 (8)
     if (version > DRW::AC1014) {//2000+
         bool xrefLoaded = false;
         if (!readBitWithinBody(bodyBuf, version, bodyEnd, xrefLoaded))
             return fail();
-        parsedFlags |= xrefLoaded << 5; //if is a loaded Xref, block code 70, bit 6 (32)
+        parsedFlags |= static_cast<int>(xrefLoaded) << 5; //if is a loaded Xref, block code 70, bit 6 (32)
     }
     // Per ODA spec / libreDWG dwg.spec (SINCE R_2004a), num_owned is only
     // present when the block_record is neither an xref nor an overlaid xref.
@@ -4673,10 +4662,6 @@ bool DRW_Vport::validatePayloadFields() const {
     const auto finite3D = [](const DRW_Coord& point) {
         return std::isfinite(point.x) && std::isfinite(point.y)
             && std::isfinite(point.z);
-    };
-    const auto fitsSignedShort = [](int value) {
-        return value >= static_cast<int>(std::numeric_limits<std::int16_t>::min())
-            && value <= static_cast<int>(std::numeric_limits<std::int16_t>::max());
     };
     const auto fitsByte = [](int value) {
         return value >= 0
@@ -8079,7 +8064,7 @@ bool DRW_Dictionary::parseDwgImpl(DRW::Version version, dwgBuffer *buf,
         bodyEnd = static_cast<std::uint32_t>(stringStartBit);
         stringEnd = static_cast<std::uint32_t>(stringEndBit);
     }
-    const auto bodyFits = [version, this, buf, sBuf, bodyEnd, stringEnd]() {
+    const auto bodyFits = [version, buf, sBuf, bodyEnd, stringEnd]() {
         return version < DRW::AC1012
             || (objectBodyFitsSize(currentObjectDwgBit(buf), bodyEnd)
                 && objectBodyFitsSize(currentObjectDwgBit(sBuf), stringEnd));
@@ -18109,11 +18094,11 @@ bool DRW_SpatialFilter::parseCode(int code, const std::unique_ptr<dxfReader>& re
     // AcDbSpatialFilter / AcDbFilter DXF: the clip boundary polygon, the OCS
     // normal + origin, clip flags/distances, and the two 4x3 transform matrices.
     constexpr std::size_t kMatrixValueCount = 24;
-    auto parseCode40Stream = [this, kMatrixValueCount]() {
-        if (m_dxfCode40Values.size() < kMatrixValueCount)
+    auto parseCode40Stream = [this, matrixValueCount = kMatrixValueCount]() {
+        if (m_dxfCode40Values.size() < matrixValueCount)
             return true;
         const std::size_t matrixStart =
-            m_dxfCode40Values.size() - kMatrixValueCount;
+            m_dxfCode40Values.size() - matrixValueCount;
         std::vector<double> inverse;
         std::vector<double> insert;
         if (!DRW::reserve(inverse, 12) || !DRW::reserve(insert, 12))
@@ -22526,7 +22511,7 @@ bool DRW_DynamicBlockObject::parseDwg(DRW::Version version, dwgBuffer *buf, std:
             buf, version > DRW::AC1018 ? sBuf : buf, value);
     };
 
-    auto readPropertyInfo = [this, buf, sBuf, version, dynamicBodyEnd,
+    auto readPropertyInfo = [buf, sBuf, version, dynamicBodyEnd,
                              dynamicStringEnd,
                              &readDynamicText](
                                 std::int32_t& count,

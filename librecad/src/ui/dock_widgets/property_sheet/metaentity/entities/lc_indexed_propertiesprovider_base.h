@@ -179,16 +179,16 @@ void LC_IndexedPropertiesProviderBase::createIndexedDoubleProperty(LC_PropertyCo
 
     auto vertexValueStorage = new LC_EntityPropertyValueDelegate<double, EntityClass>();
     vertexValueStorage->setup(entity, this->m_widget,
-                              [this,propertyPointIndex, funGetValueByIndex]([[maybe_unused]] EntityClass* e) -> double {
+                              [propertyPointIndex, funGetValueByIndex]([[maybe_unused]] EntityClass* e) -> double {
                                   const int index = propertyPointIndex->value();
                                   const double result = funGetValueByIndex(index);
                                   return result;
-                              }, [this,propertyPointIndex, funSetValueByIndex](const double &v,
+                              }, [propertyPointIndex, funSetValueByIndex](const double &v,
                                                                                [[maybe_unused]] LC_PropertyChangeReason reason,
                                                                                [[maybe_unused]] EntityClass* e) -> void {
                                   const int index = propertyPointIndex->value();
                                   funSetValueByIndex(index, v);
-                              }, [this, propertyPointIndex,funGetValueByIndex](const double &v, [[maybe_unused]] EntityClass* e) -> bool {
+                              }, [propertyPointIndex,funGetValueByIndex](const double &v, [[maybe_unused]] EntityClass* e) -> bool {
                                   const int index = propertyPointIndex->value();
                                   const double originalValue = funGetValueByIndex(index);
                                   const bool valuesAreEqual = LC_LineMath::isNotMeaningful(originalValue - v);
