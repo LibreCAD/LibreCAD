@@ -149,20 +149,18 @@ void LC_PropertySheetWidget::saveCollapsedSections() {
 }
 
 void LC_PropertySheetWidget::setGraphicView(RS_GraphicView* gv) {
+    if (gv != m_graphicView) {
+        // an edit that was begun and not applied yet (its 30 ms timer is pending) belongs to the drawing that is being left
+        forgetEditedEntities();
+    }
     // remove tracking of relative point from old view
     if (m_graphicView != nullptr) {
         disconnect(m_graphicView, &RS_GraphicView::relativeZeroChanged, this, &LC_PropertySheetWidget::onRelativeZeroChanged);
         disconnect(m_graphicView, &RS_GraphicView::ucsChanged, this, &LC_PropertySheetWidget::onUcsChanged);
         disconnect(m_graphicView, &RS_GraphicView::defaultActionActivated, this, &LC_PropertySheetWidget::onViewDefaultActionActivated);
-        if (m_document != nullptr) {
-            m_document->getSelection()->removeListener(this);
-            if (!m_document->is(RS2::EntityBlock)) {
-                m_document->getUCSList()->removeListener(this);
-                m_document->getLayerList()->removeListener(this);
-                m_document->getViewList()->removeListener(this);
-            }
-        }
+        disconnect(m_graphicView, &QObject::destroyed, this, &LC_PropertySheetWidget::onViewDestroyed);
     }
+    unregisterFromDocument();
 
     m_graphicView = gv;
 
@@ -173,6 +171,7 @@ void LC_PropertySheetWidget::setGraphicView(RS_GraphicView* gv) {
         connect(m_graphicView, &RS_GraphicView::relativeZeroChanged, this, &LC_PropertySheetWidget::onRelativeZeroChanged);
         connect(m_graphicView, &RS_GraphicView::ucsChanged, this, &LC_PropertySheetWidget::onUcsChanged);
         connect(m_graphicView, &RS_GraphicView::defaultActionActivated, this, &LC_PropertySheetWidget::onViewDefaultActionActivated);
+        connect(m_graphicView, &QObject::destroyed, this, &LC_PropertySheetWidget::onViewDestroyed);
         viewport = gv->getViewPort();
         doc = gv->getDocument();
         m_document = doc;
@@ -196,20 +195,81 @@ void LC_PropertySheetWidget::setGraphicView(RS_GraphicView* gv) {
     else {
         m_viewport = nullptr;
         m_document = nullptr;
-        ui->cbSelection->blockSignals(true);
-        ui->propertySheet->blockSignals(true);
-        ui->cbSelection->clear();
-        const auto previousContainer = ui->propertySheet->propertyContainer();
-        if (previousContainer != nullptr) {
-            m_entityContainerProvider->clearEntities();
-            previousContainer->clearChildProperties();
-            previousContainer->deleteLater();
-            ui->propertySheet->setPropertyContainer(nullptr);
-        }
-        ui->cbSelection->blockSignals(false);
-        ui->propertySheet->blockSignals(false);
-        setEnabled(false);
+        clearSheet();
     }
+}
+
+/**
+ * Empties the sheet and disables it, reading nothing of the drawing or the view.
+ */
+void LC_PropertySheetWidget::clearSheet() {
+    forgetEditedEntities();
+    ui->cbSelection->blockSignals(true);
+    ui->propertySheet->blockSignals(true);
+    ui->cbSelection->clear();
+    const auto previousContainer = ui->propertySheet->propertyContainer();
+    if (previousContainer != nullptr) {
+        m_entityContainerProvider->clearEntities();
+        previousContainer->clearChildProperties();
+        previousContainer->deleteLater();
+        ui->propertySheet->setPropertyContainer(nullptr);
+    }
+    ui->cbSelection->blockSignals(false);
+    ui->propertySheet->blockSignals(false);
+    setEnabled(false);
+}
+
+/**
+ * Drops the entities recorded for an edit that has not been applied: the originals and the clones of
+ * them. Only the lists are emptied, whatever the entities are: the originals may belong to a drawing
+ * that is destroyed, and must not be read (clearContextEntities() reads them), or reach the next
+ * drawing an edit is applied to. The clones were never added to a drawing.
+ */
+void LC_PropertySheetWidget::forgetEditedEntities() {
+    m_orginalEntities.clear();
+    m_modifiedEntities.clear();
+}
+
+/**
+ * Unregisters from the four sources of the drawing the sheet shows, if it shows one.
+ */
+void LC_PropertySheetWidget::unregisterFromDocument() {
+    if (m_document != nullptr) {
+        m_document->getSelection()->removeListener(this);
+        if (!m_document->is(RS2::EntityBlock)) {
+            m_document->getUCSList()->removeListener(this);
+            m_document->getLayerList()->removeListener(this);
+            m_document->getViewList()->removeListener(this);
+        }
+    }
+}
+
+/**
+ * The drawing is being destroyed while the sheet is attached to it (QC_ApplicationWindow::doClose()
+ * detaches it first, and no flow found skips that). One of its selection, UCS list, layer list and
+ * view list, which are destroyed in turn, has told the sheet, and has dropped it: forget the drawing
+ * and its viewport, and clear the sheet without reading either. The sources that are left drop the
+ * sheet as they go.
+ */
+void LC_PropertySheetWidget::onDocumentDestroyed() {
+    if (m_document == nullptr) {
+        return; // told by another of the four already
+    }
+    m_document = nullptr;
+    m_viewport = nullptr;
+    clearSheet();
+}
+
+/**
+ * The view is destroyed while the sheet is attached to it (the drawing is not: a destroyed drawing
+ * tells the sheet itself). Nothing can be disconnected from the view any more, and its viewport is
+ * gone with it: leave the drawing and clear the sheet.
+ */
+void LC_PropertySheetWidget::onViewDestroyed() {
+    unregisterFromDocument();
+    m_document = nullptr;
+    m_viewport = nullptr;
+    clearSheet();
 }
 
 void LC_PropertySheetWidget::stopInplaceEdit() const {
@@ -219,8 +279,8 @@ void LC_PropertySheetWidget::stopInplaceEdit() const {
 void LC_PropertySheetWidget::refill() {
     // LC_ERR << "On Selection Changed!";
     stopInplaceEdit();
-    if (m_actionContext->getDocument() == nullptr) {
-        return;
+    if (m_document == nullptr || m_actionContext->getDocument() == nullptr) {
+        return; // detached: the drawing or the view is gone
     }
     if (m_operationMode == MODE_SELECTION) {
         if (m_handleSelectionChange) {
@@ -270,6 +330,9 @@ void LC_PropertySheetWidget::updateFormats() {
 }
 
 void LC_PropertySheetWidget::doProcessLateRequest(const LC_ActionContext::InteractiveInputInfo& interactiveInputInfo) {
+    if (m_viewport == nullptr) {
+        return; // detached
+    }
     const auto inputType = interactiveInputInfo.inputType;
     switch (inputType) {
         case LC_ActionContext::InteractiveInputInfo::DISTANCE: {
@@ -318,7 +381,7 @@ void LC_PropertySheetWidget::onLateRequestCompleted(const bool shouldBeSkipped) 
                 // delayed call, as we may be in pick action and property sheet could be empty (without tool options properties)
                 LC_ActionContext::InteractiveInputInfo inputCopy;
                 interactiveInputInfo->copyTo(inputCopy);
-                QTimer::singleShot(10, [inputCopy, this]() -> void {
+                QTimer::singleShot(10, this, [inputCopy, this]() -> void {
                     doProcessLateRequest(inputCopy);
                 });
             }
@@ -440,8 +503,12 @@ void LC_PropertySheetWidget::onPropertyEdited(LC_Property* property) {
     }
 
     // fixme - add delayed modification method
-    QTimer::singleShot(30, [this, layerHidden]()-> void {
+    QTimer::singleShot(30, this, [this, layerHidden]()-> void {
         // LC_ERR << "On Edited - " << propertyName;
+        if (m_document == nullptr || m_viewport == nullptr) {
+            forgetEditedEntities();
+            return; // detached in the meantime
+        }
         m_document->undoableModify(m_viewport, [this](LC_DocumentModificationBatch& ctx)-> bool {
                                        ctx.entitiesToAdd.append(m_modifiedEntities);
                                        ctx.entitiesToDelete.append(m_orginalEntities);
@@ -498,6 +565,9 @@ LC_PropertyContainer* LC_PropertySheetWidget::prepareToolOptionsContainer(
 }
 
 void LC_PropertySheetWidget::collectEntitiesToModify(RS2::EntityType entityType, QList<RS_Entity*>& entitiesToModify) const {
+    if (m_document == nullptr) {
+        return;
+    }
     if (entityType == RS2::EntityUnknown || entityType == RS2::EntityContainer) {
         m_document->collectSelected(entitiesToModify);
     }
@@ -522,7 +592,9 @@ LC_PropertyContainer* LC_PropertySheetWidget::createPropertiesContainer(const RS
 
 void LC_PropertySheetWidget::destroyContainer(LC_PropertyContainer* previousContainer) const {
     m_entityContainerProvider->cleanup();
-    m_viewport->clearLocationsHighlight();
+    if (m_viewport != nullptr) {
+        m_viewport->clearLocationsHighlight();
+    }
     previousContainer->deleteLater();
 }
 
@@ -716,7 +788,7 @@ void LC_PropertySheetWidget::onActivePropertyChanged(LC_Property* activeProperty
 }
 
 void LC_PropertySheetWidget::highlightVectorPropertyPosition(const LC_PropertyRSVector* vectorProperty) const {
-    if (!vectorProperty->isMultiValue()) {
+    if (m_viewport != nullptr && !vectorProperty->isMultiValue()) {
         const RS_Vector ucsPosition = vectorProperty->value();
         const auto wcsPosition = m_viewport->toWorld(ucsPosition);
         m_viewport->highlightLocation(wcsPosition);

@@ -1037,6 +1037,26 @@ void LC_LayerTreeWidget::layerRemoved(RS_Layer *){
     update();
 }
 
+void LC_LayerTreeWidget::layerListCleared() {
+    RS_DEBUG->print("LC_LayerTreeWidget::layerListCleared()");
+    update();
+}
+
+/**
+ * The layer list is being destroyed with its drawing, which was not detached from this widget first:
+ * the list has already dropped this listener, so forget it and the drawing, and clear the tree.
+ */
+void LC_LayerTreeWidget::layerListDestroyed() {
+    RS_DEBUG->print("LC_LayerTreeWidget::layerListDestroyed()");
+    // the state of setGraphicView(nullptr): the handlers of the buttons test m_graphicView, and
+    // then use m_graphic
+    m_layerList = nullptr;
+    m_graphic = nullptr;
+    m_document = nullptr;
+    m_graphicView = nullptr;
+    update();
+}
+
 void LC_LayerTreeWidget::layerToggled(RS_Layer *){
     RS_DEBUG->print("LC_LayerTreeWidget::layerToggled()");
     update();

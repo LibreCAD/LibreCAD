@@ -28,8 +28,18 @@ LC_ViewList::LC_ViewList() {
     setModified(false);
 }
 
+/**
+ * Frees the views, after telling the listeners that still listen (see
+ * LC_ViewListListener::viewsListDestroyed()): a dock attached to the list has a pointer to it, and
+ * rows for the views.
+ */
 LC_ViewList::~LC_ViewList() {
-    qDeleteAll(m_namedViews);
+    QList<LC_View*> removed;
+    removed.swap(m_namedViews);
+    m_viewListListeners.drain([](LC_ViewListListener* listener) {
+        listener->viewsListDestroyed();
+    });
+    qDeleteAll(removed);
 }
 
 void LC_ViewList::clear() {

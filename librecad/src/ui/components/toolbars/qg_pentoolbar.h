@@ -52,6 +52,8 @@ public:
     // Methods from RS_LayerListListener Interface:
     void layerActivated(RS_Layer*) override;
     void layerEdited(RS_Layer*) override;
+    /// the list is being destroyed: forget it
+    void layerListDestroyed() override;
 
     void setLayerColor(const RS_Color& color, bool updateSelection);
     void setLayerWidth(RS2::LineWidth width, bool updateSelection);
