@@ -26,6 +26,9 @@
 
 #include <float.h>
 
+#include <algorithm>
+#include <cmath>
+
 #include "lc_quadratic.h"
 #include "rs_debug.h"
 #include "rs_entitycontainer.h"
@@ -34,68 +37,76 @@
 #include "rs_math.h"
 
 /**
-//create Ellipse with center and 3 points
+//create Ellipse with axes in x-/y- directions from 4 points
 *
 *
 *@author Dongxu Li
 */
 bool LC_CreationEllipse::createEllipseFrom4P(const RS_VectorSolutions& sol, RS_EllipseData& data) {
-    if (sol.getNumber() < 3) {
-        return false; //need one center and 3 points on ellipse
+    if (sol.getNumber() != 4) {
+        return false; //only do 4 points
     }
-    std::vector<std::vector<double>> mt;
-    size_t solSize = sol.getNumber() - 1;
-    if ((sol.get(solSize) - sol.get(solSize - 1)).squared() < RS_TOLERANCE15) {
-        //remove the last point
-        solSize--;
+    constexpr size_t mSize = 4;
+    // The points relative to their centroid, which lies inside an ellipse through them, in units of their
+    // spread. The equation has 1 on its right, so it cannot describe an ellipse through the origin; and
+    // with the origin at the centroid and the unit the spread its coefficients and its tolerances no
+    // longer depend on where the ellipse is and how big, and a system that is singular (the four corners
+    // of a rectangle have a family of ellipses) is singular to the same tolerance whatever the size.
+    RS_Vector centroid{0., 0.};
+    for (size_t i = 0; i < mSize; i++) {
+        centroid.x += 0.25 * sol.get(i).x;
+        centroid.y += 0.25 * sol.get(i).y;
     }
-
-    mt.resize(solSize);
-    std::vector<double> dn(solSize);
-    switch (solSize) {
-        case 2:
-            for (size_t i = 0; i < solSize; i++) {
-                //form the linear equation
-                mt[i].resize(solSize + 1);
-                const RS_Vector vp(sol.get(i + 1) - sol.get(0)); //the first vector is center
-                mt[i][0] = vp.x * vp.x;
-                mt[i][1] = vp.y * vp.y;
-                mt[i][2] = 1.;
-            }
-            if (!RS_Math::linearSolver(mt, dn)) {
-                return false;
-            }
-            if (dn[0] < RS_TOLERANCE15 || dn[1] < RS_TOLERANCE15) {
-                return false;
-            }
-            data.majorP = RS_Vector(1. / sqrt(dn[0]), 0.);
-            data.ratio = sqrt(dn[0] / dn[1]);
-            data.setAngle1(0.);
-            data.setAngle2(0.);
-            data.center = sol.get(0);
-            return true;
-
-        case 3:
-            for (size_t i = 0; i < solSize; i++) {
-                //form the linear equation
-                mt[i].resize(solSize + 1);
-                const RS_Vector vp(sol.get(i + 1) - sol.get(0)); //the first vector is center
-                mt[i][0] = vp.x * vp.x;
-                mt[i][1] = vp.x * vp.y;
-                mt[i][2] = vp.y * vp.y;
-                mt[i][3] = 1.;
-            }
-            if (!RS_Math::linearSolver(mt, dn)) {
-                return false;
-            }
-            data.center = sol.get(0);
-            return createEllipseFromQuadratic(dn,data);
-        default:
-            return false;
+    double spread = 0.;
+    for (size_t i = 0; i < mSize; i++) {
+        if (!std::isfinite(sol.get(i).x) || !std::isfinite(sol.get(i).y)) {
+            return false; //not numbers
+        }
+        spread = std::max({spread, std::abs(sol.get(i).x - centroid.x), std::abs(sol.get(i).y - centroid.y)});
     }
-    return false; // only for compiler warning
+    if (!std::isfinite(spread) || !(spread > 0.)) {
+        return false; //one point
+    }
+    std::vector<std::vector<double>> mt(mSize);
+    std::vector<double> dn(mSize);
+    for (size_t i = 0; i < mSize; i++) {
+        //form the linear equation, c0 x^2 + c1 x + c2 y^2 + c3 y = 1
+        mt[i].resize(mSize + 1);
+        const RS_Vector vp = (sol.get(i) - centroid) / spread;
+        mt[i][0] = vp.x * vp.x;
+        mt[i][1] = vp.x;
+        mt[i][2] = vp.y * vp.y;
+        mt[i][3] = vp.y;
+        mt[i][4] = 1.;
+    }
+    if (!RS_Math::linearSolver(mt, dn)) {
+        return false;
+    }
+    if (std::abs(dn[0]) < RS_TOLERANCE15 || std::abs(dn[2]) < RS_TOLERANCE15) {
+        return false; //ellipse not defined
+    }
+    // c0 (x - x0)^2 + c2 (y - y0)^2 = d
+    const double d = 1. + (0.25 * ((dn[1] * dn[1] / dn[0]) + (dn[3] * dn[3] / dn[2])));
+    if (d / dn[0] < RS_TOLERANCE15 || d / dn[2] < RS_TOLERANCE15) {
+        return false; //ellipse not defined
+    }
+    const double semiAxisX = spread * std::sqrt(d / dn[0]);
+    const double semiAxisY = spread * std::sqrt(d / dn[2]);
+    data.center.set(centroid.x - (0.5 * spread * dn[1] / dn[0]), centroid.y - (0.5 * spread * dn[3] / dn[2]));
+    // the major axis is the longer one
+    if (semiAxisX >= semiAxisY) {
+        data.majorP.set(semiAxisX, 0.);
+        data.ratio = semiAxisY / semiAxisX;
+    }
+    else {
+        data.majorP.set(0., semiAxisY);
+        data.ratio = semiAxisX / semiAxisY;
+    }
+    data.reversed = false;
+    data.setAngle1(0.);
+    data.setAngle2(0.);
+    return true;
 }
-
 
 /**
 //create Ellipse with center and 3 points

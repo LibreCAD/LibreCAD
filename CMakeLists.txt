@@ -2547,6 +2547,7 @@ if (BUILD_TESTS)
         librecad/src/lib/math/tests/lc_quadratic_tests.cpp
         librecad/src/lib/math/tests/lc_interval_tests.cpp
         librecad/src/lib/creation/tests/rs_creation_null_entity_tests.cpp
+        librecad/src/lib/creation/tests/lc_creation_ellipse_tests.cpp
         librecad/src/actions/print_preview/tests/rs_actionprintpreview_tests.cpp
         librecad/src/lib/printing/tests/lc_printingtests.cpp
         librecad/src/lib/modification/tests/lc_copy_identity_tests.cpp
