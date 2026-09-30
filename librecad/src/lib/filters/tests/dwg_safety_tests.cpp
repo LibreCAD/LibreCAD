@@ -800,10 +800,6 @@ public:
         return m_pendingPolylineStates.size();
     }
 
-    [[nodiscard]] std::size_t entityParseFailuresForTest() const {
-        return m_entityParseFailures;
-    }
-
     [[nodiscard]] std::size_t stagedOrphanPolylineVertexCountForTest() const {
         return m_orphanPolylineVertexStates.size();
     }
@@ -26246,7 +26242,7 @@ namespace {
 // A legacy (R13-R2000) POLYLINE group: the POLYLINE, two VERTICES chained by
 // their next links, and the SEQEND, at consecutive handles from `polyline`.
 // The owner of each child is the caller's choice.
-std::vector<FramePair> makeLegacyPolylineGroupFrames(
+std::vector<FramePair> makeLegacyPolylineGroupFramePairs(
     std::uint32_t polyline, std::uint32_t firstOwner, std::uint32_t lastOwner,
     std::uint32_t seqEndOwner) {
     const std::uint32_t first = polyline + 1u;
@@ -26405,12 +26401,12 @@ TEST_CASE("DWG legacy POLYLINE rejects a group whose child names another group",
     constexpr std::uint32_t lineHandle = 0x18;
 
     const auto run = runLegacyWalk(
-        concatenated({makeLegacyPolylineGroupFrames(
+        concatenated({makeLegacyPolylineGroupFramePairs(
                           rejected,
                           foreign == ForeignChild::First ? named : rejected,
                           foreign == ForeignChild::Last ? named : rejected,
                           foreign == ForeignChild::SeqEnd ? named : rejected),
-                      makeLegacyPolylineGroupFrames(named, named, named, named),
+                      makeLegacyPolylineGroupFramePairs(named, named, named, named),
                       {{lineHandle, makeLegacyLineFrame(lineHandle)}}}),
         0x10, lineHandle);
     const DwgEntityReaderProbe& reader = *run->reader;
@@ -26470,8 +26466,8 @@ TEST_CASE("DWG legacy walk rejects two groups in one block and reads the rest",
     }
     constexpr std::uint32_t lineHandle = 0x18;
     const auto run = runLegacyWalk(
-        concatenated({makeLegacyPolylineGroupFrames(0x10, wrongOwner, 0x10, 0x10),
-                      makeLegacyPolylineGroupFrames(0x14, 0x14, wrongOwner, 0x14),
+        concatenated({makeLegacyPolylineGroupFramePairs(0x10, wrongOwner, 0x10, 0x10),
+                      makeLegacyPolylineGroupFramePairs(0x14, 0x14, wrongOwner, 0x14),
                       {{lineHandle, makeLegacyLineFrame(lineHandle)}}}),
         0x10, lineHandle);
     CHECK_FALSE(run->walked);
@@ -27873,7 +27869,7 @@ TEST_CASE("DWG legacy POLYLINEs whose chains share a link reject the second "
     // Second group: POLYLINE 0x14 declaring 0x12 (the first group's) and its
     // own VERTEX 0x15 as the ends of its chain, SEQEND 0x16.
     constexpr std::uint32_t lineHandle = 0x17;
-    std::vector<FramePair> frames = makeLegacyPolylineGroupFrames(
+    std::vector<FramePair> frames = makeLegacyPolylineGroupFramePairs(
         0x10, 0x10, 0x10, 0x10);
     frames.push_back({0x14, makeLegacyPolylineParentFrame(0x14, 0x12, 0x15,
                                                           0x16)});
