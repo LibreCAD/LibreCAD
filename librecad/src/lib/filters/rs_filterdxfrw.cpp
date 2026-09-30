@@ -3094,7 +3094,10 @@ bool canWriteDwgFieldListRecord(
     const LC_DwgAdvancedMetadata::FieldListRecord &record,
     const DRW_FieldList &fieldList,
     DRW::Version version) {
-  const auto sourceAuthorization = metadata.authorizeDwgFieldListSource(record);
+  // The export-tolerant proof: a member that names no object frame of the
+  // source file does not refuse the list (the plan drops it).
+  const auto sourceAuthorization =
+      metadata.authorizeDwgFieldListSourceForExport(record);
   return !hasDxfTableAppDataUnsupportedByDwg(fieldList) &&
          fieldList.isDwgPayloadValid(version) &&
          (sourceAuthorization.status ==
@@ -4156,6 +4159,24 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
               .arg(parseFailures)
               .arg(parseFailures == 1 ? QObject::tr("entity")
                                       : QObject::tr("entities")));
+    }
+    // A drawing that keeps the entries or the leftovers of erased block
+    // records is readable, but it is not a clean one: say so, rather than
+    // leaving the user to wonder why the entity count above is not zero.
+    const size_t danglingBlockRecords = dwgr.getDanglingBlockRecords();
+    if (danglingBlockRecords > 0) {
+      RS_DIALOGFACTORY->commandMessage(
+          QObject::tr("DWG load: the block table lists %n block record(s) "
+                      "that the file does not contain (erased). They were "
+                      "skipped.",
+                      "", static_cast<int>(danglingBlockRecords)));
+    }
+    const size_t orphanedEntities = dwgr.getOrphanedEntities();
+    if (orphanedEntities > 0) {
+      RS_DIALOGFACTORY->commandMessage(
+          QObject::tr("DWG load: %n entity(ies) belonged to block records "
+                      "that no longer exist (erased) and were skipped.",
+                      "", static_cast<int>(orphanedEntities)));
     }
     // Vendor-extension custom classes (AutoCAD Mechanical AmgStdPart aka
     // STDPART2D, AcmBomRow, etc.) whose proprietary geometry libdxfrw
@@ -15668,22 +15689,79 @@ bool RS_FilterDXFRW::prepareDwgFieldWritePlan() {
       candidate.metadataIndex = index;
       candidate.sourceHandle = record.handle;
       candidate.replayState = record.replayState;
-      candidate.sourceAuthorization =
-          metadata.authorizeDwgFieldListSource(record).status;
+      {
+        const auto authorization =
+            metadata.authorizeDwgFieldListSourceForExport(record);
+        candidate.sourceAuthorization = authorization.status;
+        candidate.framelessMembers = authorization.framelessMembers;
+      }
       candidate.payload = fieldListFromMetadata(record);
       if (!canWriteDwgFieldListRecord(metadata, record, candidate.payload,
                                       plan.version)) {
         plan.valid = false;
         break;
       }
+      // Each member is a soft pointer to a FIELD. A member that resolves to
+      // an emitted FIELD candidate is written as such. A member that names
+      // nothing at all is dropped with a warning, exactly as every other
+      // dangling soft pointer of this writer is (dictionary entries, XRECORD
+      // handle values, evaluation-graph expressions, view references): the
+      // emitted list never carries a pointer that cannot be resolved, and a
+      // pointer to an object that is not there cannot be honoured anyway. A
+      // member that names something that does exist -- a FIELD record this
+      // export cannot write, another kind of object, an ambiguous or
+      // suppressed identity -- is different: leaving it out would silently
+      // lose part of the document, and pointing it at a non-FIELD would
+      // write a misleading list, so the export is refused as before.
+      //
+      // A list read from a DWG adds a second condition. The receipts record
+      // what the source file held, so a member of such a list is dropped only
+      // if the receipt proves that it names no object frame of that file (no
+      // FIELD frame published for it, no frame of any kind in the coverage
+      // report; see authorizeDwgFieldListSourceForExport). The registry alone
+      // does not decide it there: a member whose frame the file does have,
+      // but that the export cannot resolve, is a real problem to refuse, not
+      // a dangling pointer to forget.
+      const bool sourceBacked =
+          candidate.sourceAuthorization !=
+          LC_DwgAdvancedMetadata::DwgFieldListSourceAuthorizationStatus::
+              NotDwgSource;
+      const auto isDanglingMember = [this, &candidate,
+                                     sourceBacked](std::uint32_t handle,
+                                                   std::size_t ordinal) {
+        if (resolveDwgWriteObjectHandle(handle) !=
+                DwgWriteReferenceStatus::Missing ||
+            hasDwgWriteSourceKind(handle)) {
+          return false;
+        }
+        return !sourceBacked ||
+               std::find(candidate.framelessMembers.cbegin(),
+                         candidate.framelessMembers.cend(),
+                         static_cast<std::uint32_t>(ordinal)) !=
+                   candidate.framelessMembers.cend();
+      };
+      candidate.memberDropped.assign(candidate.payload.m_fieldHandles.size(),
+                                     false);
       candidate.fieldCandidateIndexes.reserve(candidate.payload.m_fieldHandles.size());
-      for (std::uint32_t fieldHandle : candidate.payload.m_fieldHandles) {
+      for (std::size_t ordinal = 0;
+           ordinal < candidate.payload.m_fieldHandles.size(); ++ordinal) {
+        const std::uint32_t fieldHandle =
+            candidate.payload.m_fieldHandles[ordinal];
         if (fieldHandle == DRW::NoHandle)
           continue;
         const auto field = plan.fieldCandidateIndexes.find(fieldHandle);
         if (field == plan.fieldCandidateIndexes.cend()) {
-          plan.valid = false;
-          break;
+          if (!isDanglingMember(fieldHandle, ordinal)) {
+            plan.valid = false;
+            break;
+          }
+          RS_DEBUG->print(
+              RS_Debug::D_WARNING,
+              "RS_FilterDXFRW: dropping dangling DWG FIELDLIST field target "
+              "0x%X",
+              fieldHandle);
+          candidate.memberDropped[ordinal] = true;
+          continue;
         }
         candidate.fieldCandidateIndexes.push_back(field->second);
       }
@@ -15761,9 +15839,14 @@ bool RS_FilterDXFRW::validateDwgFieldWritePlan(
             candidate.sourceHandle ||
         metadata.fieldLists()[candidate.metadataIndex].replayState !=
             candidate.replayState ||
-        metadata.authorizeDwgFieldListSource(
+        metadata
+                .authorizeDwgFieldListSourceForExport(
                     metadata.fieldLists()[candidate.metadataIndex])
                 .status != candidate.sourceAuthorization ||
+        metadata
+                .authorizeDwgFieldListSourceForExport(
+                    metadata.fieldLists()[candidate.metadataIndex])
+                .framelessMembers != candidate.framelessMembers ||
         !LC_DwgAdvancedMetadata::matchesDwgFieldListRecord(
             metadata.fieldLists()[candidate.metadataIndex], candidate.payload)) {
       return false;
@@ -15774,9 +15857,15 @@ bool RS_FilterDXFRW::validateDwgFieldWritePlan(
         indexIt->second != candidateIndex) {
       return false;
     }
+    if (candidate.memberDropped.size() !=
+        candidate.payload.m_fieldHandles.size()) {
+      return false;
+    }
     std::size_t referenceIndex = 0;
-    for (std::uint32_t fieldHandle : candidate.payload.m_fieldHandles) {
-      if (fieldHandle == DRW::NoHandle)
+    for (std::size_t ordinal = 0;
+         ordinal < candidate.payload.m_fieldHandles.size(); ++ordinal) {
+      const std::uint32_t fieldHandle = candidate.payload.m_fieldHandles[ordinal];
+      if (fieldHandle == DRW::NoHandle || candidate.isMemberDropped(ordinal))
         continue;
       if (referenceIndex >= candidate.fieldCandidateIndexes.size() ||
           candidate.fieldCandidateIndexes[referenceIndex] >=
@@ -15970,7 +16059,7 @@ bool RS_FilterDXFRW::validateDwgFieldWriteReceipts() const {
     for (std::size_t ordinal = 0;
          ordinal < candidate.payload.m_fieldHandles.size(); ++ordinal) {
       const std::uint32_t sourceHandle = candidate.payload.m_fieldHandles[ordinal];
-      if (sourceHandle == DRW::NoHandle)
+      if (sourceHandle == DRW::NoHandle || candidate.isMemberDropped(ordinal))
         continue;
       if (referenceIndex >= candidate.fieldCandidateIndexes.size())
         return false;
@@ -25219,6 +25308,9 @@ void RS_FilterDXFRW::writeObjects() {
             fieldHandles.push_back(DRW::NoHandle);
             continue;
           }
+          // Pruned when the plan was frozen: the member names no object.
+          if (candidate.isMemberDropped(ordinal))
+            continue;
           if (fieldReferenceIndex >= candidate.fieldCandidateIndexes.size()) {
             fieldsValid = false;
             break;

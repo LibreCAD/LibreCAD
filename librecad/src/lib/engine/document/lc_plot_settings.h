@@ -127,7 +127,16 @@ public:
     void setCurrentStyleName(const QString& name);
 
     RS_Vector getPaperSize() const;
+    /**
+     * Sets the paper size of the drawing, in its units, and remembers it as the
+     * paper size of new drawings.
+     */
     void setPaperSize(const RS_Vector& s) const;
+    /**
+     * Sets the paper size of the drawing, in its units, and nothing else: the
+     * paper size the settings remember for new drawings stays as it is.
+     */
+    void setDrawingPaperSize(const RS_Vector& s) const;
     RS_Vector getPrintAreaSize(bool total = true) const;
 
     //if set to true, will refuse to modify paper scale

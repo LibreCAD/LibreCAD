@@ -1965,6 +1965,79 @@ TEST_CASE("DWG R2007 stored-page: usa_dollar100_front.dwg reads tables",
   CHECK(iface.layers == 1);
 }
 
+// Extruder2.dwg (AC1018, ~/doc/dwg) was BAD_READ_TABLES.
+// Its BLOCK_CONTROL still lists the handle of an erased BLOCK_RECORD (0x64FD),
+// and the BLOCK, ENDBLK and contents of 40 erased anonymous dimension blocks
+// (*D27 ... *D73) were left in the file with owners that no longer exist.
+// dwgread 0.14 agrees: 100 BLOCK entities but 60 BLOCK_HEADER objects. What the
+// file holds in live blocks is what dwgread reports minus those leftovers
+// (dwgread: 8621 LINE, 135 MTEXT, 180 POINT, 168 SOLID, 100 BLOCK; the leftovers
+// are 170 LINE, 54 MTEXT, 90 POINT, 80 SOLID, 40 BLOCK, 40 ENDBLK). Hidden and
+// developer-local: the file is not shipped.
+TEST_CASE("DWG Extruder2: erased dimension blocks are skipped, the rest reads",
+          "[.dwg_extruder2]") {
+  const char *home = std::getenv("HOME");
+  if (!home) {
+    SKIP("HOME not set; skipping");
+  }
+  const std::string path = std::string(home) + "/doc/dwg/Extruder2.dwg";
+  if (!std::filesystem::is_regular_file(path)) {
+    SKIP("Extruder2.dwg not present; skipping");
+  }
+
+  TypeTrackingIface iface;
+  dwgR reader(path.c_str());
+  REQUIRE(reader.read(&iface, true));
+  REQUIRE(reader.getError() == DRW::BAD_NONE); // was BAD_READ_TABLES
+  CHECK(reader.getVersion() == DRW::AC1018);
+
+  CHECK(iface.layers == 9);
+  CHECK(iface.blocks == 60);
+  const auto count = [&iface](const char *type) {
+    const auto it = iface.typeCounts.find(type);
+    return it == iface.typeCounts.end() ? 0 : it->second;
+  };
+  CHECK(count("LINE") == 8621 - 170);
+  CHECK(count("ARC") == 4130);
+  CHECK(count("CIRCLE") == 302);
+  CHECK(count("TEXT") == 497);
+  CHECK(count("MTEXT") == 135 - 54);
+  CHECK(count("POINT") == 180 - 90);
+  CHECK(count("SOLID") == 168 - 80);
+  CHECK(count("LWPOLYLINE") == 131);
+  CHECK(count("INSERT") == 76);
+  CHECK(count("HATCH") == 19);
+  CHECK(count("ELLIPSE") == 18);
+  CHECK(count("SPLINE") == 14);
+  CHECK(count("DIM_LINEAR") == 31);
+  CHECK(count("DIM_DIAMETRIC") == 6);
+  CHECK(count("DIM_ALIGNED") == 4);
+
+  // Every leftover is counted and reported; nothing else is. The import
+  // filter tells the user about the erased records from these two counts.
+  CHECK(reader.getEntityParseFailures() == 474u);
+  CHECK(reader.getDanglingBlockRecords() == 1u);
+  CHECK(reader.getOrphanedEntities() == 474u);
+  std::size_t danglingControlEntries = 0;
+  std::size_t orphans = 0;
+  std::set<std::uint64_t> erasedOwners;
+  for (const DwgIntegrityDiagnostic &diagnostic :
+       reader.getIntegrityDiagnostics()) {
+    CHECK(diagnostic.severity == DwgIntegritySeverity::Warning);
+    if (diagnostic.kind == DwgIntegrityCheckKind::TableControlDanglingHandle) {
+      ++danglingControlEntries;
+      CHECK(diagnostic.logicalHandle == 0x64FDu);
+    } else if (diagnostic.kind ==
+               DwgIntegrityCheckKind::EntityOwnerRecordMissing) {
+      ++orphans;
+      erasedOwners.insert(diagnostic.expected);
+    }
+  }
+  CHECK(danglingControlEntries == 1u);
+  CHECK(orphans == 474u);
+  CHECK(erasedOwners.size() == 40u);
+}
+
 TEST_CASE("DWG XLINE reads as typed construction line across LibreDWG versions",
           "[dwg][xline]") {
   struct Fixture {

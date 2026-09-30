@@ -21,6 +21,7 @@
 
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/generators/catch_generators.hpp>
 
 #include <algorithm>
 #include <array>
@@ -28,10 +29,14 @@
 #include <cstdint>
 #include <cstdlib>
 #include <filesystem>
+#include <functional>
 #include <fstream>
+#include <initializer_list>
 #include <iterator>
 #include <limits>
+#include <map>
 #include <memory>
+#include <set>
 #include <string>
 #include <unordered_map>
 #include <utility>
@@ -482,9 +487,11 @@ public:
 class DwgEntityReaderProbe final : public dwgReader15 {
 public:
     using dwgReader::DwgBlockJournalOutput;
+    using dwgReader::DwgBlockWalkOutcome;
     using dwgReader::DwgBlockScopeTransaction;
     using dwgReader::DwgFrameMapLease;
     using dwgReader::abandonDeferredCompoundState;
+    using dwgReader::entitySweepFailureContained;
     using dwgReader::readDwgHandles;
     using dwgReader::readDwgBlocks;
     using dwgReader::readDwgEntities;
@@ -511,6 +518,50 @@ public:
         auto layer = std::make_unique<DRW_Layer>();
         layer->name = name;
         layermap.emplace(handle, layer.release());
+    }
+
+    // A BLOCK_RECORD that lists no entity.
+    void addBlockRecordForTest(std::uint32_t handle,
+                               const std::string& name = std::string()) {
+        auto record = std::make_unique<DRW_Block_Record>();
+        record->handle = handle;
+        record->name = name;
+        blockRecordmap.emplace(handle, record.release());
+    }
+
+    // A block record the block table lists but the file does not hold.
+    void addDanglingBlockRecordForTest(std::uint32_t handle) {
+        m_danglingBlockRecords.insert(handle);
+    }
+
+    std::vector<DwgIntegrityDiagnostic> erasedBlockReferenceDiagnosticsForTest()
+        const {
+        std::vector<DwgIntegrityDiagnostic> result;
+        std::copy_if(
+            m_integrityDiagnostics.cbegin(), m_integrityDiagnostics.cend(),
+            std::back_inserter(result),
+            [](const DwgIntegrityDiagnostic& diagnostic) {
+                return diagnostic.kind
+                    == DwgIntegrityCheckKind::EntityBlockRecordErased;
+            });
+        return result;
+    }
+
+    std::size_t entityParseFailuresForTest() const {
+        return m_entityParseFailures;
+    }
+
+    std::vector<DwgIntegrityDiagnostic> orphanedEntityDiagnosticsForTest()
+        const {
+        std::vector<DwgIntegrityDiagnostic> result;
+        std::copy_if(
+            m_integrityDiagnostics.cbegin(), m_integrityDiagnostics.cend(),
+            std::back_inserter(result),
+            [](const DwgIntegrityDiagnostic& diagnostic) {
+                return diagnostic.kind
+                    == DwgIntegrityCheckKind::EntityOwnerRecordMissing;
+            });
+        return result;
     }
 
     void setCodePageForTest(const std::string& value) {
@@ -636,6 +687,11 @@ public:
         classesmap.at(classNumber)->className = "AcDbFieldList";
     }
 
+    void addDictionaryWithDefaultObjectClass(std::uint16_t classNumber) {
+        addCustomObjectClass(classNumber, "ACDBDICTIONARYWDFLT");
+        classesmap.at(classNumber)->className = "AcDbDictionaryWithDefault";
+    }
+
     void addFieldObjectClass(std::uint16_t classNumber) {
         addCustomObjectClass(classNumber, "FIELD");
         classesmap.at(classNumber)->className = "AcDbField";
@@ -714,6 +770,10 @@ public:
         }
         return m_pendingInsertStates.emplace(
             insert.handle, std::move(pending)).second;
+    }
+
+    [[nodiscard]] std::uint64_t groupOwnerConflictsForTest() const {
+        return m_groupOwnerConflicts;
     }
 
     [[nodiscard]] std::size_t stagedPendingInsertCountForTest() const {
@@ -808,6 +868,29 @@ public:
         });
     }
 
+    bool stagePolylineForTest(DRW_Polyline polyline,
+                              const DRW_DwgFramePublication& publication,
+                              DRW_Interface& intfa, bool& committed) {
+        return withActiveFrameForTest(polyline.handle, [&]() {
+            const DwgMappedEntityOutcome outcome = stagePendingPolyline(
+                std::move(polyline), publication, intfa);
+            committed = outcome == DwgMappedEntityOutcome::CommittedCompound;
+            return outcome != DwgMappedEntityOutcome::Rejected;
+        });
+    }
+
+    bool stageVertexForTest(DRW_Vertex vertex,
+                            const DRW_DwgFramePublication& publication,
+                            DRW_Interface& intfa, bool& committed) {
+        const std::uint32_t handle = vertex.handle;
+        return withActiveFrameForTest(handle, [&]() {
+            const DwgMappedEntityOutcome outcome = stagePendingPolylineVertex(
+                std::move(vertex), publication, intfa);
+            committed = outcome == DwgMappedEntityOutcome::CommittedCompound;
+            return outcome != DwgMappedEntityOutcome::Rejected;
+        });
+    }
+
     void failBeforeSeqEndTerminalizerMarkerForTest() {
         setTerminalizerFailurePointForTest(
             DwgTerminalizerFailurePoint::BeforeSeqEndMarker);
@@ -883,6 +966,10 @@ public:
         return abandonStagedCompoundState();
     }
 
+    std::size_t disposeFinishedGroupSeqEndsForTest() {
+        return disposeStagedSeqEndsOfFinishedGroups();
+    }
+
     bool journalMappedEntityForTest(
         dwgBuffer* buffer, std::uint32_t handle, DRW_Interface& intfa,
         DwgBlockScopeTransaction& transaction,
@@ -933,6 +1020,7 @@ public:
     using dwgReader15::readDwgHandles;
     using dwgReader15::readDwgHeader;
     using dwgReader15::readFileHeader;
+    using dwgReader::publishDeferredTableFramePublications;
     using dwgReader::readDwgTables;
 
     explicit DwgTableStateReaderProbe(std::unique_ptr<dwgBuffer> buffer)
@@ -949,12 +1037,20 @@ public:
 
     bool firstLinetypeRecordForTest(std::uint32_t& handle,
                                     std::uint64_t& offset) {
+        return firstTableRecordForTest(DRW::DwgLTypeControlObjectType, handle,
+                                       offset);
+    }
+
+    // The first record the control of the given type lists that has a frame.
+    bool firstTableRecordForTest(std::int16_t controlType,
+                                 std::uint32_t& handle,
+                                 std::uint64_t& offset) {
         for (const auto& entry : ObjectMap) {
             DwgObjectFrame frame;
             if (!frame.readAt(*fileBuf, version, entry.second.loc))
                 continue;
             dwgBuffer buffer(frame.body().data(), frame.body().size(), &decoder);
-            if (buffer.getObjType(version) != DRW::DwgLTypeControlObjectType)
+            if (buffer.getObjType(version) != controlType)
                 continue;
             buffer.resetPosition();
             DRW_ObjControl control;
@@ -1014,12 +1110,87 @@ public:
         return false;
     }
 
+    // Control-object handle by control type, for every table control the
+    // object map holds a decodable frame of.
+    std::map<std::int16_t, std::uint32_t> controlHandlesForTest() {
+        std::map<std::int16_t, std::uint32_t> result;
+        for (const auto& entry : ObjectMap) {
+            DwgObjectFrame frame;
+            if (!frame.readAt(*fileBuf, version, entry.second.loc))
+                continue;
+            dwgBuffer buffer(frame.body().data(), frame.body().size(), &decoder);
+            const std::int16_t type = buffer.getObjType(version);
+            if (buffer.isGood() && isTableControlType(type))
+                result.emplace(type, entry.first);
+        }
+        return result;
+    }
+
+    static bool isTableControlType(std::int16_t type) {
+        return type == DRW::DwgLTypeControlObjectType
+            || type == DRW::DwgLayerControlObjectType
+            || type == DRW::DwgStyleControlObjectType
+            || type == DRW::DwgDimStyleControlObjectType
+            || type == DRW::DwgVPortControlObjectType
+            || type == DRW::DwgBlockControlObjectType
+            || type == DRW::DwgAppIdControlObjectType
+            || type == DRW::DwgViewControlObjectType
+            || type == DRW::DwgUcsControlObjectType;
+    }
+
     void seedTableStateForTest() {
         ltypemap.emplace(0x100u, new DRW_LType());
         layermap.emplace(0x101u, new DRW_Layer());
         m_ltypeNameOrder.emplace_back("stale linetype");
         m_layerNameOrder.emplace_back("stale layer");
         m_deferredRawObjects.emplace_back();
+    }
+
+    const std::vector<DwgIntegrityDiagnostic>& integrityDiagnosticsForTest()
+        const {
+        return m_integrityDiagnostics;
+    }
+
+    std::size_t entityParseFailuresForTest() const {
+        return m_entityParseFailures;
+    }
+
+    std::size_t linetypeCountForTest() const { return ltypemap.size(); }
+    std::size_t layerCountForTest() const { return layermap.size(); }
+    std::size_t blockRecordCountForTest() const {
+        return blockRecordmap.size();
+    }
+    bool hasBlockRecordForTest(std::uint32_t handle) const {
+        return blockRecordmap.find(handle) != blockRecordmap.end();
+    }
+    bool findBlockRecordForTest(const std::string& name,
+                                std::uint32_t& handle) const {
+        for (const auto& item : blockRecordmap) {
+            if (item.second != nullptr && item.second->name == name) {
+                handle = item.first;
+                return true;
+            }
+        }
+        return false;
+    }
+    // The erased block records the last successful table phase skipped.
+    std::size_t danglingBlockRecordCountForTest() const {
+        return m_danglingBlockRecords.size();
+    }
+    bool hasDanglingBlockRecordForTest(std::uint32_t handle) const {
+        return isDanglingBlockRecord(handle);
+    }
+    bool hasLinetypeForTest(std::uint32_t handle) const {
+        return ltypemap.find(handle) != ltypemap.end();
+    }
+    const std::vector<std::string>& linetypeNameOrderForTest() const {
+        return m_ltypeNameOrder;
+    }
+    const std::vector<std::string>& layerNameOrderForTest() const {
+        return m_layerNameOrder;
+    }
+    std::size_t deferredTableFrameCountForTest() const {
+        return m_deferredTableFramePublications.size();
     }
 
     bool tableStateEmptyForTest() const {
@@ -1461,6 +1632,25 @@ public:
 class DwgLineReaderProbe final : public DRW_Line {
 public:
     using DRW_Line::parseDwg;
+};
+
+// Runs only the common entity prologue, like the reader's own owner probe, on
+// an entity that arrives with an object size left over from somewhere else --
+// what a stack or heap object holds when nothing initialised it. (The typed
+// parsers start by resetting their state, which zeroes it.)
+class DwgEntityPrologueProbe final : public DRW_Entity {
+public:
+    void applyExtrusion() override {}
+
+    bool parseDwg(DRW::Version version, dwgBuffer* buffer,
+                  std::uint32_t bodyBitSize = 0) override {
+        return DRW_Entity::parseDwg(version, buffer, nullptr, bodyBitSize)
+            && buffer != nullptr && buffer->isGood();
+    }
+
+    void setStaleObjectSize(std::uint32_t value) { objSize = value; }
+    std::uint32_t objectSize() const { return objSize; }
+    bool hasOwner() const { return ownerHandle; }
 };
 
 class DwgPointReaderProbe final : public DRW_Point {
@@ -2370,6 +2560,56 @@ public:
         callbacks.emplace_back("reachability");
         reachabilities.push_back(reachability);
     }
+};
+
+// Records what a block walk delivers, in order: block scopes, entities, and
+// the frame publications and reachability receipts behind them.
+class DwgGroupRejectionProbe final : public DwgReadProbe {
+public:
+    std::vector<std::string> callbacks;
+    std::size_t lineCount = 0;
+    std::vector<DRW_DwgFramePublication> publications;
+    std::vector<DRW_DwgBlockReachability> reachabilities;
+
+    void addBlock(const DRW_Block& block) override {
+        callbacks.emplace_back("block");
+        DwgReadProbe::addBlock(block);
+    }
+
+    void endBlock() override { callbacks.emplace_back("endBlock"); }
+
+    void addLine(const DRW_Line&) override {
+        callbacks.emplace_back("line");
+        ++lineCount;
+    }
+
+    void addInsert(const DRW_Insert& insert) override {
+        callbacks.emplace_back("insert");
+        DwgReadProbe::addInsert(insert);
+    }
+
+    void addPolyline(const DRW_Polyline& polyline) override {
+        callbacks.emplace_back("polyline");
+        DwgReadProbe::addPolyline(polyline);
+    }
+
+    void addDwgFramePublication(
+        const DRW_DwgFramePublication& publication) override {
+        publications.push_back(publication);
+    }
+
+    void addDwgBlockReachability(
+        const DRW_DwgBlockReachability& reachability) override {
+        callbacks.emplace_back("reachability");
+        reachabilities.push_back(reachability);
+    }
+};
+
+class DwgTableCaptureProbe final : public DwgReadProbe {
+public:
+    std::vector<DRW_Table> tables;
+
+    void addTable(const DRW_Table& table) override { tables.push_back(table); }
 };
 
 class DwgThrowingBlockJournalProbe final : public DwgBlockJournalProbe {
@@ -3499,22 +3739,32 @@ std::vector<std::uint8_t> makeMalformedInsertFrame(
     return frame.data();
 }
 
-std::vector<std::uint8_t> makeInsertWithChildrenFrame(
+std::vector<std::uint8_t> makeInsertWithAttributesFrame(
     std::uint32_t handle, std::uint32_t owner,
-    std::uint32_t attribHandle, std::uint32_t seqendHandle) {
+    const std::vector<std::uint32_t>& attribHandles,
+    std::uint32_t seqendHandle) {
     DwgInsertWriterProbe insert;
     insert.handle = handle;
     insert.parentHandle = owner;
     insert.setObjectType(dwgType::INSERT);
-    dwgHandle attrib;
-    attrib.ref = attribHandle;
-    insert.attribHandles.push_back(attrib);
+    for (const std::uint32_t attribHandle : attribHandles) {
+        dwgHandle attrib;
+        attrib.ref = attribHandle;
+        insert.attribHandles.push_back(attrib);
+    }
     insert.seqendH.ref = seqendHandle;
 
     dwgBufferW body;
     if (!insert.encodeDwg(DRW::AC1018, &body, 0, nullptr, nullptr))
         return {};
     return makeEntityFrame(body);
+}
+
+std::vector<std::uint8_t> makeInsertWithChildrenFrame(
+    std::uint32_t handle, std::uint32_t owner,
+    std::uint32_t attribHandle, std::uint32_t seqendHandle) {
+    return makeInsertWithAttributesFrame(handle, owner, {attribHandle},
+                                         seqendHandle);
 }
 
 std::vector<std::uint8_t> makeInsertFrame(
@@ -3548,10 +3798,159 @@ std::vector<std::uint8_t> makeMalformedTableBody(
     return body.data();
 }
 
+// One cell of the AC1021 ACAD_TABLE fixture.
+struct R2007TableCellSpec {
+    // CadValue flags: bit 0 alone marks the value payload absent.
+    std::int32_t valueFlags = 6;
+    // 2 = double, 512 = kGeneral bytes.
+    std::int32_t dataType = 512;
+    // The kGeneral payload: UTF-16LE text plus a terminating NUL, in the data stream.
+    std::string generalText;
+    // When not negative, the byte count written for the kGeneral payload in place
+    // of the real one (with no bytes behind it): a corrupt cell.
+    std::int32_t declaredPayloadSize = -1;
+    double number = 0.0;
+    // TV 302, in the string stream.
+    std::string valueString;
+    // Whether the count of valueString includes a terminating NUL unit. AutoCAD
+    // does not count one; this library's own writer does.
+    bool terminateValueString = false;
+    // The cell overrides its alignment (a BS in the file).
+    bool alignmentOverride = false;
+};
+
+// An R2007+ TV: a BS count of UTF-16LE code units, then two bytes per unit.
+void putR2007Text(dwgBufferW& out, const std::string& ascii, bool terminated) {
+    if (ascii.empty()) {
+        out.putBitShort(0);
+        return;
+    }
+    out.putBitShort(static_cast<std::uint16_t>(ascii.size()
+                                               + (terminated ? 1u : 0u)));
+    for (const char c : ascii) {
+        out.putRawChar8(static_cast<std::uint8_t>(c));
+        out.putRawChar8(0);
+    }
+    if (terminated) {
+        out.putRawChar8(0);
+        out.putRawChar8(0);
+    }
+}
+
+constexpr std::uint32_t r2007TableBlockRecord = 0x2A0u;
+constexpr std::uint32_t r2007TableStyle = 0x2B0u;
+
+dwgHandle makeCodedHandle(std::uint8_t code, std::uint32_t ref) {
+    dwgHandle handle;
+    handle.code = code;
+    handle.ref = ref;
+    return handle;
+}
+
+// A whole AC1021 ACAD_TABLE frame, laid out as AutoCAD writes it: entity data
+// and the R2007 cell grid in the data stream, the cell strings in the string
+// stream that ends the data section, the block record, table style and one
+// text-style handle per cell in the handle stream.
+std::vector<std::uint8_t> makeR2007TableFrame(
+    std::uint32_t handle, std::uint16_t classNumber,
+    const std::vector<std::vector<R2007TableCellSpec>>& cells) {
+    if (cells.empty() || cells.front().empty())
+        return {};
+    const std::size_t rows = cells.size();
+    const std::size_t columns = cells.front().size();
+
+    DwgInsertWriterProbe table;
+    table.handle = handle;
+    table.setObjectType(static_cast<std::int16_t>(classNumber));
+
+    dwgBufferW body;
+    dwgBufferW strings;
+    dwgBufferW handles;
+    if (!table.encodeDwgCommon(DRW::AC1021, &body))
+        return {};
+    body.put3BitDouble(DRW_Coord(7.0, 8.0, 0.0)); // insertion point
+    body.put2Bits(3); // unit scales
+    body.putBitDouble(0.0); // rotation
+    body.putExtrusion(DRW_Coord(0.0, 0.0, 1.0), false);
+    body.putBit(0); // no attributes
+    body.putBitShort(22); // table value flags
+    body.put3BitDouble(DRW_Coord(1.0, 0.0, 0.0));
+    body.putBitLong(static_cast<std::int32_t>(columns));
+    body.putBitLong(static_cast<std::int32_t>(rows));
+    for (std::size_t column = 0; column < columns; ++column)
+        body.putBitDouble(10.0 + static_cast<double>(column));
+    for (std::size_t row = 0; row < rows; ++row)
+        body.putBitDouble(5.0 + static_cast<double>(row));
+
+    for (const auto& row : cells) {
+        if (row.size() != columns)
+            return {};
+        for (const R2007TableCellSpec& cell : row) {
+            body.putBitShort(1); // text cell
+            body.putRawChar8(0); // edge flags
+            body.putBit(0); // merged
+            body.putBit(0); // autofit
+            body.putBitLong(1); // merged width
+            body.putBitLong(1); // merged height
+            body.putBitDouble(0.0); // rotation
+            body.putBit(cell.alignmentOverride ? 1 : 0);
+            if (cell.alignmentOverride) {
+                body.putBitLong(0x1); // cell flag override: alignment
+                body.putRawChar8(0); // virtual edge flags
+                body.putBitShort(5); // alignment
+            }
+            body.putBitLong(0); // unknown BL before the value
+            body.putBitLong(cell.valueFlags);
+            body.putBitLong(cell.dataType);
+            if ((cell.valueFlags & 1) == 0) {
+                if (cell.dataType == 2) {
+                    body.putBitDouble(cell.number);
+                } else if (cell.dataType == 512) {
+                    const std::size_t byteCount =
+                        cell.generalText.size() * 2u + 2u;
+                    if (cell.declaredPayloadSize >= 0) {
+                        body.putBitLong(cell.declaredPayloadSize);
+                        continue;
+                    }
+                    body.putBitLong(static_cast<std::int32_t>(byteCount));
+                    for (const char c : cell.generalText) {
+                        body.putRawChar8(static_cast<std::uint8_t>(c));
+                        body.putRawChar8(0);
+                    }
+                    body.putRawChar8(0);
+                    body.putRawChar8(0);
+                }
+            }
+            body.putBitLong(0); // unit type
+            putR2007Text(strings, std::string(), false); // format string
+            putR2007Text(strings, cell.valueString, cell.terminateValueString);
+        }
+    }
+    for (int mask = 0; mask < 4; ++mask)
+        body.putBit(0); // no table, border colour, weight or visibility overrides
+
+    if (!table.encodeDwgEntHandle(DRW::AC1021, &body, &handles))
+        return {};
+    handles.putHandle(makeCodedHandle(5, r2007TableBlockRecord));
+    handles.putHandle(makeCodedHandle(5, r2007TableStyle));
+    for (std::size_t cell = 0; cell < rows * columns; ++cell)
+        handles.putHandle(makeCodedHandle(5, 0)); // no text style
+
+    body.alignToByte();
+    strings.alignToByte();
+    if (!DwgStringFooterWriterProbe::appendR2007StringStream(body, strings, false))
+        return {};
+    body.alignToByte();
+    handles.alignToByte();
+    return makeR2007EntityFrame(body, handles);
+}
+
 std::vector<std::uint8_t> makeMalformedMLineFrame(
-    std::uint16_t vertexCount, std::uint16_t parameterCount) {
+    std::uint16_t vertexCount, std::uint16_t parameterCount,
+    std::uint32_t handle = 0x230u, std::uint32_t owner = DRW::NoHandle) {
     DwgMLineWriterProbe mline;
-    mline.handle = 0x230u;
+    mline.handle = handle;
+    mline.parentHandle = owner;
     mline.numLines = 1;
     mline.setObjectType(47);
 
@@ -5114,6 +5513,45 @@ std::vector<std::uint8_t> makeDuplicateBitShortControlBody() {
     return body.data();
 }
 
+// One complete R2000 table control frame (modular-short size, body, CRC).
+// `owned` is every owned handle in file order, the phantom entries of the
+// LTYPE and BLOCK controls included; `entryCount` is the declared count of
+// real entries (the phantom entries are not part of it).
+std::vector<std::uint8_t> makeTableControlFrame(
+    std::uint16_t controlType, std::uint32_t handle,
+    std::uint16_t entryCount, const std::vector<std::uint32_t>& owned) {
+    const bool bitShortCount =
+        controlType == DRW::DwgLTypeControlObjectType
+        || controlType == DRW::DwgUcsControlObjectType
+        || controlType == DRW::DwgVPortControlObjectType
+        || controlType == DRW::DwgAppIdControlObjectType
+        || controlType == DRW::DwgDimStyleControlObjectType;
+
+    dwgBufferW body;
+    body.putObjType(DRW::AC1015, controlType);
+    body.putRawLong32(0);  // R2000 object-size field
+    body.putHandle(makeObjectHandle(handle));
+    body.putBitShort(0);   // no EED
+    body.putBitLong(0);    // no reactors
+    if (bitShortCount)
+        body.putBitShort(entryCount);
+    else
+        body.putBitLong(entryCount);
+    if (controlType == DRW::DwgDimStyleControlObjectType)
+        body.putRawChar8(0);  // the unknown hard-handle counter
+    body.putHandle(makeObjectHandle(0));  // null control handle
+    body.putHandle(makeObjectHandle(0));  // null extension-dictionary handle
+    for (const std::uint32_t ownedHandle : owned)
+        body.putHandle(makeObjectHandle(ownedHandle));
+    body.alignToByte();
+
+    dwgBufferW frame;
+    frame.putModularShort(static_cast<std::int32_t>(body.data().size()));
+    frame.putBytes(body.data().data(), body.data().size());
+    frame.putRawShort16(frame.crc16(0xC0C1, 0, frame.data().size()));
+    return frame.data();
+}
+
 std::vector<std::uint8_t> makeNegativeClassInstanceBody() {
     dwgBufferW body;
     body.putBitShort(500);
@@ -5168,7 +5606,7 @@ struct LegacyInsertFrameFixture {
 };
 
 LegacyInsertFrameFixture makeLegacyInsertFrameFixture(
-    bool wrongLastAttribOwner = false) {
+    bool wrongLastAttribOwner = false, bool wrongFirstAttribOwner = false) {
     constexpr std::uint32_t insertHandle = 0x720;
     constexpr std::uint32_t firstAttribHandle = 0x721;
     constexpr std::uint32_t secondAttribHandle = 0x722;
@@ -5188,7 +5626,9 @@ LegacyInsertFrameFixture makeLegacyInsertFrameFixture(
     const auto makeAttribute = [=](std::uint32_t handle) {
         DwgAttribWriterProbe attribute;
         attribute.handle = handle;
-        attribute.parentHandle = wrongLastAttribOwner && handle == lastAttribHandle
+        attribute.parentHandle =
+            (wrongLastAttribOwner && handle == lastAttribHandle)
+                    || (wrongFirstAttribOwner && handle == firstAttribHandle)
             ? insertHandle + 1u : insertHandle;
         attribute.text = "value";
         attribute.tag = "TAG";
@@ -5367,7 +5807,8 @@ PolylineFrameFixture makePolylineFrameFixture(bool corruptVertex,
                                               DRW::Version version = DRW::AC1018,
                                               DRW_Vertex::DwgSubtype vertexSubtype =
                                                   DRW_Vertex::DwgSubtype::Vertex2D,
-                                              std::uint32_t owner = DRW::NoHandle) {
+                                              std::uint32_t owner = DRW::NoHandle,
+                                              bool wrongSecondVertexOwner = false) {
     constexpr std::uint32_t polylineHandle = 0x100;
     constexpr std::uint32_t vertexHandle = 0x101;
     constexpr std::uint32_t secondVertexHandle = 0x102;
@@ -5391,7 +5832,9 @@ PolylineFrameFixture makePolylineFrameFixture(bool corruptVertex,
     if (includeSecondVertex) {
         secondVertex = std::make_shared<DwgVertexWriterProbe>();
         secondVertex->handle = secondVertexHandle;
-        secondVertex->parentHandle = polylineHandle;
+        secondVertex->parentHandle = wrongSecondVertexOwner
+                                         ? polylineHandle + 1
+                                         : polylineHandle;
         secondVertex->basePoint = DRW_Coord(30.0, 40.0, elevation);
         secondVertex->setDwgSubtype(DRW_Vertex::DwgSubtype::Vertex2D);
         polyline.appendVertex(secondVertex);
@@ -6038,6 +6481,348 @@ bool refreshAc1018PageChecksum(std::vector<std::uint8_t>& bytes,
         return true;
     }
     return false;
+}
+
+struct MappedFrameSet {
+    std::vector<std::uint8_t> bytes;
+    std::vector<std::uint8_t> handleMap;
+    bool valid = false;
+};
+
+// Lays the frames out back to back in the order given (ascending by handle, as
+// a HANDLE map lists them) and builds the HANDLE map that locates them.
+MappedFrameSet makeMappedFrameSet(
+    const std::vector<std::pair<std::uint32_t, std::vector<std::uint8_t>>>&
+        frames) {
+    MappedFrameSet set;
+    dwgBufferW entries;
+    std::uint32_t previousHandle = 0;
+    std::uint32_t previousOffset = 0;
+    for (const auto& frame : frames) {
+        if (frame.second.empty() || frame.first <= previousHandle)
+            return {};
+        const auto offset = static_cast<std::uint32_t>(set.bytes.size());
+        if (!entries.putUModularChar(frame.first - previousHandle)
+            || !entries.putModularChar(static_cast<std::int64_t>(offset)
+                                       - previousOffset)) {
+            return {};
+        }
+        previousHandle = frame.first;
+        previousOffset = offset;
+        set.bytes.insert(set.bytes.end(), frame.second.cbegin(),
+                         frame.second.cend());
+    }
+    appendHandleMapPage(set.handleMap, entries.data());
+    appendHandleMapPage(set.handleMap, {});
+    set.valid = true;
+    return set;
+}
+
+// Which child of a compound group names a foreign owner (None: a control).
+enum class ForeignChild { None, First, Last, SeqEnd };
+
+const char* foreignChildName(ForeignChild child) {
+    switch (child) {
+    case ForeignChild::None: return "no foreign owner";
+    case ForeignChild::First: return "first child";
+    case ForeignChild::Last: return "last child";
+    case ForeignChild::SeqEnd: return "SEQEND";
+    }
+    return "";
+}
+
+// One modern (AC1018) BLOCK_RECORD run through readDwgBlocks, which walks it
+// through the journalled block scope. The BLOCK_RECORD table frame itself is
+// published up front, as a genuine read would have done.
+struct JournalledBlockRun {
+    std::vector<std::uint8_t> bytes;
+    std::vector<std::uint8_t> handleMap;
+    std::unique_ptr<DwgEntityReaderProbe> reader;
+    std::unique_ptr<dwgBuffer> objectBuffer;
+    DwgGroupRejectionProbe interface;
+    DwgReadProbe sweepInterface;
+    bool readBlocks = false;
+    // The ENTITIES phase that follows BLOCKS in a whole-file read.
+    bool readEntities = false;
+};
+
+std::unique_ptr<JournalledBlockRun> runJournalledBlock(
+    std::uint32_t recordHandle, std::uint32_t blockHandle,
+    std::uint32_t endBlockHandle, const UTF8STRING& name,
+    std::uint32_t blockOwner,
+    const std::vector<std::pair<std::uint32_t, std::vector<std::uint8_t>>>&
+        entityFrames,
+    const std::vector<std::uint32_t>& walkOrder,
+    const std::function<void(DwgEntityReaderProbe&)>& beforeRead = nullptr) {
+    auto run = std::make_unique<JournalledBlockRun>();
+    std::vector<std::pair<std::uint32_t, std::vector<std::uint8_t>>> frames;
+    frames.push_back({recordHandle, {0u}});
+    frames.push_back({blockHandle,
+                      makeBlockFrame(blockHandle, blockOwner, false, name)});
+    for (const auto& frame : entityFrames)
+        frames.push_back(frame);
+    frames.push_back({endBlockHandle,
+                      makeBlockFrame(endBlockHandle, blockOwner, true)});
+    const MappedFrameSet set = makeMappedFrameSet(frames);
+    REQUIRE(set.valid);
+    run->bytes = set.bytes;
+    run->handleMap = set.handleMap;
+
+    run->reader = std::make_unique<DwgEntityReaderProbe>(
+        std::make_unique<dwgBuffer>(run->bytes.data(), run->bytes.size()));
+    DwgEntityReaderProbe& reader = *run->reader;
+    reader.setVersionForTest(DRW::AC1018);
+    reader.setCodePageForTest("ANSI_1252");
+    dwgBuffer handleBuffer(run->handleMap.data(), run->handleMap.size());
+    REQUIRE(reader.readDwgHandles(
+        &handleBuffer, 0, run->handleMap.size(), run->bytes.size()));
+
+    auto recordPublication = reader.publicationForTest(recordHandle);
+    recordPublication.m_version = DRW::AC1018;
+    recordPublication.m_encodedType = DRW::DwgBlockRecordObjectType;
+    recordPublication.m_resolvedType = DRW::DwgBlockRecordObjectType;
+    recordPublication.setCommonLinkEvidence(
+        DRW_DwgCommonLinkEvidence::ValidatedAbsent);
+    REQUIRE(reader.publishFrameForTest(run->interface, recordPublication));
+    reader.ObjectMap.erase(recordHandle);
+
+    auto* record = new DRW_Block_Record();
+    DwgBlockOwnershipTestAccess::setHandle(*record, recordHandle);
+    record->name = name;
+    DwgBlockOwnershipTestAccess::setHandles(*record, blockHandle,
+                                            endBlockHandle, walkOrder);
+    REQUIRE(reader.blockRecordmap.emplace(recordHandle, record).second);
+
+    run->objectBuffer =
+        std::make_unique<dwgBuffer>(run->bytes.data(), run->bytes.size());
+    if (beforeRead)
+        beforeRead(reader);
+    run->readBlocks = reader.readDwgBlocks(run->interface,
+                                           run->objectBuffer.get());
+    dwgBuffer sweepBuffer(run->bytes.data(), run->bytes.size());
+    run->readEntities = reader.readDwgEntities(run->sweepInterface, &sweepBuffer);
+    return run;
+}
+
+// A rejected group is never published: every ledger entry of its frames is
+// either Failed or Quarantined and has no publication.
+void checkGroupNeverPublished(
+    const std::vector<DRW_DwgFrameCoverageEntry>& ledger,
+    const std::vector<std::uint32_t>& group) {
+    for (const DRW_DwgFrameCoverageEntry& entry : ledger) {
+        if (std::find(group.cbegin(), group.cend(), entry.m_handle)
+            == group.cend()) {
+            continue;
+        }
+        INFO("handle 0x" << std::hex << entry.m_handle);
+        CHECK((entry.m_disposition == DRW_DwgFrameDisposition::Failed
+               || entry.m_disposition == DRW_DwgFrameDisposition::Quarantined));
+        CHECK(entry.m_publicationCount == 0u);
+    }
+}
+
+
+// One frame of a fixture: (object handle, encoded frame).
+using FramePair = std::pair<std::uint32_t, std::vector<std::uint8_t>>;
+
+// Mapped POLYLINE, VERTEX and SEQEND frames with the handles and owners the
+// caller chooses. The POLYLINE frame declares its vertices and its SEQEND by
+// handle, as every R2004+ POLYLINE does; what a VERTEX or SEQEND frame names
+// as its owner is independent of what declares it.
+std::vector<std::uint8_t> makeMappedPolylineParentFrame(
+    DRW::Version version, std::uint32_t handle, std::uint32_t owner,
+    const std::vector<std::uint32_t>& declaredVertices,
+    std::uint32_t seqEndHandle) {
+    DwgPolylineWriterProbe polyline;
+    polyline.handle = handle;
+    polyline.parentHandle = owner;
+    for (const std::uint32_t vertexHandle : declaredVertices) {
+        auto vertex = std::make_shared<DwgVertexWriterProbe>();
+        vertex->handle = vertexHandle;
+        vertex->basePoint = DRW_Coord(1.0, 2.0, 0.0);
+        vertex->setDwgSubtype(DRW_Vertex::DwgSubtype::Vertex2D);
+        polyline.appendVertex(vertex);
+    }
+    polyline.setDwgSeqEndHandle(seqEndHandle);
+
+    dwgBufferW body;
+    dwgBufferW handles;
+    if (!polyline.encodeDwg(version, &body, 0, nullptr,
+                            version > DRW::AC1018 ? &handles : nullptr)) {
+        return {};
+    }
+    return makeModernEntityFrame(version, body, handles);
+}
+
+std::vector<std::uint8_t> makeMappedVertexFrame(
+    DRW::Version version, std::uint32_t handle, std::uint32_t owner) {
+    DwgVertexWriterProbe vertex;
+    vertex.handle = handle;
+    vertex.parentHandle = owner;
+    vertex.basePoint = DRW_Coord(1.0, 2.0, 0.0);
+    vertex.setDwgSubtype(DRW_Vertex::DwgSubtype::Vertex2D);
+
+    dwgBufferW body;
+    dwgBufferW handles;
+    if (!vertex.encodeDwg(version, &body, 0, nullptr,
+                          version > DRW::AC1018 ? &handles : nullptr)) {
+        return {};
+    }
+    return makeModernEntityFrame(version, body, handles);
+}
+
+std::vector<std::uint8_t> makeMappedSeqEndFrame(
+    DRW::Version version, std::uint32_t handle, std::uint32_t owner) {
+    DwgSequenceWriterProbe seqEnd;
+    seqEnd.handle = handle;
+    seqEnd.parentHandle = owner;
+
+    dwgBufferW body;
+    dwgBufferW handles;
+    if (!seqEnd.encodeDwg(version, &body, 0, nullptr,
+                          version > DRW::AC1018 ? &handles : nullptr)) {
+        return {};
+    }
+    return makeModernEntityFrame(version, body, handles);
+}
+
+// One mapped BLOCK_RECORD's entities laid out in a buffer with the HANDLE map
+// that locates them, ready for a block walk. `frames` may be given in any
+// order (a HANDLE map lists ascending handles); `walkOrder` is the record's
+// entity list.
+struct MappedWalkRun {
+    std::vector<std::uint8_t> bytes;
+    std::vector<std::uint8_t> handleMap;
+    std::unique_ptr<DwgEntityReaderProbe> reader;
+    DRW_Block_Record record;
+    DwgGroupRejectionProbe interface;
+    bool walked = false;
+    DwgEntityReaderProbe::DwgBlockWalkOutcome outcome =
+        DwgEntityReaderProbe::DwgBlockWalkOutcome::Complete;
+    // The ENTITIES phase that follows BLOCKS in a whole-file read.
+    DwgReadProbe sweepInterface;
+    bool swept = false;
+};
+
+std::unique_ptr<MappedWalkRun> runMappedWalk(
+    DRW::Version version, std::uint32_t recordHandle,
+    std::vector<FramePair> frames, const std::vector<std::uint32_t>& walkOrder,
+    const char* name = "MAPPED_GROUPS") {
+    auto run = std::make_unique<MappedWalkRun>();
+    std::sort(frames.begin(), frames.end(),
+              [](const FramePair& left, const FramePair& right) {
+                  return left.first < right.first;
+              });
+    const MappedFrameSet set = makeMappedFrameSet(frames);
+    REQUIRE(set.valid);
+    run->bytes = set.bytes;
+    run->handleMap = set.handleMap;
+
+    run->reader = std::make_unique<DwgEntityReaderProbe>(
+        std::make_unique<dwgBuffer>(run->bytes.data(), run->bytes.size()));
+    DwgEntityReaderProbe& reader = *run->reader;
+    reader.setVersionForTest(version);
+    dwgBuffer handleBuffer(run->handleMap.data(), run->handleMap.size());
+    REQUIRE(reader.readDwgHandles(
+        &handleBuffer, 0, run->handleMap.size(), run->bytes.size()));
+
+    DwgBlockOwnershipTestAccess::setHandle(run->record, recordHandle);
+    run->record.name = name;
+    DwgBlockOwnershipTestAccess::setHandles(run->record, 0, 0, walkOrder);
+    dwgBuffer objectBuffer(run->bytes.data(), run->bytes.size());
+    run->walked = reader.walkBlockRecordEntities(
+        &run->record, &objectBuffer, run->interface, recordHandle,
+        recordHandle, DwgIntegrityAddressSpace::DecodedBuffer, &run->outcome);
+    dwgBuffer sweepBuffer(run->bytes.data(), run->bytes.size());
+    run->swept = reader.readDwgEntities(run->sweepInterface, &sweepBuffer);
+    return run;
+}
+
+
+// Legacy (R13-R2000) frames: an INSERT names only the first and the last ATTRIB
+// of its chain; the frames carry no prev/next links, so the chain of a block
+// runs through consecutive handles.
+std::vector<std::uint8_t> makeLegacyInsertParentFrame(
+    std::uint32_t handle, std::uint32_t firstAttrib, std::uint32_t lastAttrib,
+    std::uint32_t seqEndHandle) {
+    DwgInsertWriterProbe insert;
+    insert.handle = handle;
+    insert.setObjectType(dwgType::INSERT);
+    dwgHandle first;
+    first.ref = firstAttrib;
+    dwgHandle last;
+    last.ref = lastAttrib;
+    insert.attribHandles = {first, last};
+    insert.seqendH.ref = seqEndHandle;
+
+    dwgBufferW body;
+    if (!insert.encodeDwg(DRW::AC1015, &body, 0, nullptr, nullptr))
+        return {};
+    return makeEntityFrame(body);
+}
+
+std::vector<std::uint8_t> makeLegacyAttribFrame(std::uint32_t handle,
+                                                std::uint32_t owner) {
+    DwgAttribWriterProbe attribute;
+    attribute.handle = handle;
+    attribute.parentHandle = owner;
+    attribute.text = "value";
+    attribute.tag = "TAG";
+    attribute.height = 1.0;
+
+    dwgBufferW body;
+    if (!attribute.encodeDwg(DRW::AC1015, &body, 0, nullptr, nullptr))
+        return {};
+    return makeEntityFrame(body);
+}
+
+std::vector<std::uint8_t> makeLegacyLineFrame(std::uint32_t handle) {
+    DwgLineWriterProbe line;
+    line.handle = handle;
+    line.basePoint = DRW_Coord(1.0, 2.0, 0.0);
+    line.secPoint = DRW_Coord(3.0, 4.0, 0.0);
+    line.extPoint = DRW_Coord(0.0, 0.0, 1.0);
+
+    dwgBufferW body;
+    if (!line.encodeDwg(DRW::AC1015, &body, 0, nullptr, nullptr))
+        return {};
+    return makeEntityFrame(body);
+}
+
+// One legacy BLOCK_RECORD run through walkBlockRecordEntities: the frames are
+// laid out in handle order and the record's chain runs from `firstEH` to
+// `lastEH`.
+std::unique_ptr<MappedWalkRun> runLegacyWalk(
+    std::vector<FramePair> frames, std::uint32_t firstEH, std::uint32_t lastEH,
+    const char* name = "LEGACY_GROUPS") {
+    auto run = std::make_unique<MappedWalkRun>();
+    std::sort(frames.begin(), frames.end(),
+              [](const FramePair& left, const FramePair& right) {
+                  return left.first < right.first;
+              });
+    const MappedFrameSet set = makeMappedFrameSet(frames);
+    REQUIRE(set.valid);
+    run->bytes = set.bytes;
+    run->handleMap = set.handleMap;
+
+    run->reader = std::make_unique<DwgEntityReaderProbe>(
+        std::make_unique<dwgBuffer>(run->bytes.data(), run->bytes.size()));
+    DwgEntityReaderProbe& reader = *run->reader;
+    reader.setVersionForTest(DRW::AC1015);
+    dwgBuffer handleBuffer(run->handleMap.data(), run->handleMap.size());
+    REQUIRE(reader.readDwgHandles(
+        &handleBuffer, 0, run->handleMap.size(), run->bytes.size()));
+
+    run->record.name = name;
+    DwgBlockOwnershipTestAccess::setLegacyEntityChain(run->record, firstEH,
+                                                      lastEH);
+    dwgBuffer objectBuffer(run->bytes.data(), run->bytes.size());
+    run->walked = reader.walkBlockRecordEntities(
+        &run->record, &objectBuffer, run->interface, DRW::NoHandle,
+        DRW::NoHandle, DwgIntegrityAddressSpace::DecodedBuffer, &run->outcome);
+    dwgBuffer sweepBuffer(run->bytes.data(), run->bytes.size());
+    run->swept = reader.readDwgEntities(run->sweepInterface, &sweepBuffer);
+    return run;
 }
 
 } // namespace
@@ -7988,6 +8773,117 @@ TEST_CASE("DWG modern POLYLINE rejects foreign children through R2013",
     }
 }
 
+// A mapped POLYLINE group is POLYLINE + VERTEX... + SEQEND. The foreign owner
+// sits on the first VERTEX, the last VERTEX or the SEQEND; the children come
+// after or before the POLYLINE in the walk order. Like the INSERT group, the
+// POLYLINE group is rejected as a whole and the failure is contained.
+TEST_CASE("DWG mapped POLYLINE contains a foreign child owner to its group",
+          "[dwg][safety][compound][mapped-owner]") {
+    constexpr std::uint32_t polylineHandle = 0x100;
+    constexpr std::uint32_t firstVertexHandle = 0x101;
+    constexpr std::uint32_t lastVertexHandle = 0x102;
+    constexpr std::uint32_t seqEndHandle = 0x103;
+    constexpr std::uint32_t lineHandle = 0x110;
+    const DRW::Version version = GENERATE(
+        DRW::AC1018, DRW::AC1021, DRW::AC1024, DRW::AC1027);
+    const ForeignChild foreign =
+        GENERATE(ForeignChild::First, ForeignChild::Last, ForeignChild::SeqEnd);
+    const bool childFirst = GENERATE(false, true);
+    INFO("version " << static_cast<int>(version) << ", foreign owner on the "
+         << foreignChildName(foreign) << ", children "
+         << (childFirst ? "before" : "after") << " the POLYLINE");
+    // The LINE frame is AC1018-encoded, so it only rides along there.
+    const bool withLine = version == DRW::AC1018;
+
+    auto fixture = makePolylineFrameFixture(
+        false, false, foreign == ForeignChild::SeqEnd,
+        foreign == ForeignChild::First, 0.0, true, version,
+        DRW_Vertex::DwgSubtype::Vertex2D, DRW::NoHandle,
+        foreign == ForeignChild::Last);
+    REQUIRE(!fixture.bytes.empty());
+    std::uint32_t lineOffset = 0;
+    if (withLine) {
+        const auto lineFrame = makeLineFrame(lineHandle, DRW::NoHandle);
+        REQUIRE(!lineFrame.empty());
+        lineOffset = static_cast<std::uint32_t>(fixture.bytes.size());
+        fixture.bytes.insert(fixture.bytes.end(), lineFrame.cbegin(),
+                             lineFrame.cend());
+    }
+
+    dwgBufferW handleEntries;
+    REQUIRE(handleEntries.putUModularChar(polylineHandle));
+    REQUIRE(handleEntries.putModularChar(0));
+    REQUIRE(handleEntries.putUModularChar(firstVertexHandle - polylineHandle));
+    REQUIRE(handleEntries.putModularChar(fixture.vertexOffset));
+    REQUIRE(handleEntries.putUModularChar(
+        lastVertexHandle - firstVertexHandle));
+    REQUIRE(handleEntries.putModularChar(
+        static_cast<std::int64_t>(fixture.secondVertexOffset)
+        - fixture.vertexOffset));
+    REQUIRE(handleEntries.putUModularChar(seqEndHandle - lastVertexHandle));
+    REQUIRE(handleEntries.putModularChar(
+        static_cast<std::int64_t>(fixture.seqEndOffset)
+        - fixture.secondVertexOffset));
+    if (withLine) {
+        REQUIRE(handleEntries.putUModularChar(lineHandle - seqEndHandle));
+        REQUIRE(handleEntries.putModularChar(
+            static_cast<std::int64_t>(lineOffset) - fixture.seqEndOffset));
+    }
+    std::vector<std::uint8_t> handleMap;
+    appendHandleMapPage(handleMap, handleEntries.data());
+    appendHandleMapPage(handleMap, {});
+
+    DwgEntityReaderProbe reader(std::make_unique<dwgBuffer>(
+        const_cast<std::uint8_t*>(fixture.bytes.data()), fixture.bytes.size()));
+    reader.setVersionForTest(version);
+    dwgBuffer handleBuffer(handleMap.data(), handleMap.size());
+    REQUIRE(reader.readDwgHandles(
+        &handleBuffer, 0, handleMap.size(), fixture.bytes.size()));
+
+    std::vector<std::uint32_t> entities =
+        childFirst ? std::vector<std::uint32_t>{firstVertexHandle,
+                                                lastVertexHandle, seqEndHandle,
+                                                polylineHandle}
+                   : std::vector<std::uint32_t>{polylineHandle,
+                                                firstVertexHandle,
+                                                lastVertexHandle, seqEndHandle};
+    if (withLine)
+        entities.push_back(lineHandle);
+    DRW_Block_Record record;
+    record.name = "MAPPED_POLYLINE_FOREIGN_CHILD_OWNER";
+    DwgBlockOwnershipTestAccess::setHandles(record, 0, 0, entities);
+    DwgGroupRejectionProbe interface;
+    dwgBuffer objectBuffer(
+        const_cast<std::uint8_t*>(fixture.bytes.data()), fixture.bytes.size());
+    DwgEntityReaderProbe::DwgBlockWalkOutcome outcome =
+        DwgEntityReaderProbe::DwgBlockWalkOutcome::Complete;
+    CHECK_FALSE(reader.walkBlockRecordEntities(
+        &record, &objectBuffer, interface, DRW::NoHandle, DRW::NoHandle,
+        DwgIntegrityAddressSpace::DecodedBuffer, &outcome));
+    CHECK(outcome
+          == DwgEntityReaderProbe::DwgBlockWalkOutcome::ContainedGroupRejection);
+    CHECK(interface.polylineCount == 0u);
+    CHECK(interface.lineCount == (withLine ? 1u : 0u));
+    CHECK(reader.m_entityParseFailures >= 1u);
+    CHECK(reader.stagedPendingPolylineCountForTest() == 0u);
+    CHECK(reader.stagedOrphanPolylineVertexCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+    for (const auto& item : reader.ObjectMap) {
+        CHECK(reader.m_quarantinedEntityHandles.count(item.first) == 1u);
+    }
+    checkGroupNeverPublished(
+        reader.m_dwgSourceFrameLedger,
+        {polylineHandle, firstVertexHandle, lastVertexHandle, seqEndHandle});
+
+    DwgReadProbe sweepInterface;
+    dwgBuffer sweepBuffer(
+        const_cast<std::uint8_t*>(fixture.bytes.data()), fixture.bytes.size());
+    REQUIRE(reader.readDwgEntities(sweepInterface, &sweepBuffer));
+    CHECK(sweepInterface.polylineCount == 0u);
+    CHECK(reader.stagedOrphanPolylineVertexCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+}
+
 TEST_CASE("DWG modern POLYLINE rejects duplicate declarations through R2013",
           "[dwg][safety][compound]") {
     constexpr std::uint32_t polylineHandle = 0x100;
@@ -8511,7 +9407,12 @@ TEST_CASE("DWG legacy INSERT rejects a foreign ATTRIB owner atomically",
     constexpr std::uint32_t secondAttribHandle = 0x722;
     constexpr std::uint32_t lastAttribHandle = 0x723;
     constexpr std::uint32_t seqEndHandle = 0x724;
-    const auto fixture = makeLegacyInsertFrameFixture(true);
+    // Which ATTRIB names the foreign owner must not matter: the rest of the
+    // group is claimed and quarantined with it.
+    const bool foreignFirst = GENERATE(false, true);
+    INFO("foreign owner on the " << (foreignFirst ? "first" : "last")
+                                 << " ATTRIB");
+    const auto fixture = makeLegacyInsertFrameFixture(!foreignFirst, foreignFirst);
     REQUIRE(!fixture.bytes.empty());
 
     DwgEntityReaderProbe reader(std::make_unique<dwgBuffer>(
@@ -8550,7 +9451,18 @@ TEST_CASE("DWG legacy INSERT rejects a foreign ATTRIB owner atomically",
     dwgBuffer objectBuffer(
         const_cast<std::uint8_t*>(fixture.bytes.data()), fixture.bytes.size());
 
-    CHECK_FALSE(reader.walkBlockRecordEntities(&record, &objectBuffer, interface));
+    // The walk reports the violation, so a direct caller never mistakes this
+    // block for a clean one. Its outcome says the failure is confined to the
+    // rejected group (which the whole-file read treats as one counted entity
+    // failure, see "RS_FilterDXFRW rejects a serialized INSERT child-owner
+    // mismatch atomically"); it is not a structural failure of the walk.
+    DwgEntityReaderProbe::DwgBlockWalkOutcome outcome =
+        DwgEntityReaderProbe::DwgBlockWalkOutcome::Complete;
+    CHECK_FALSE(reader.walkBlockRecordEntities(
+        &record, &objectBuffer, interface, DRW::NoHandle, DRW::NoHandle,
+        DwgIntegrityAddressSpace::DecodedBuffer, &outcome));
+    CHECK(outcome
+          == DwgEntityReaderProbe::DwgBlockWalkOutcome::ContainedGroupRejection);
     CHECK(interface.inserts.empty());
     CHECK(interface.publications.empty());
     CHECK(reader.stagedPendingInsertCountForTest() == 0u);
@@ -8560,6 +9472,12 @@ TEST_CASE("DWG legacy INSERT rejects a foreign ATTRIB owner atomically",
     CHECK(reader.m_quarantinedEntityHandles.count(firstAttribHandle) == 1u);
     CHECK(reader.m_quarantinedEntityHandles.count(secondAttribHandle) == 1u);
     CHECK(reader.m_quarantinedEntityHandles.count(lastAttribHandle) == 1u);
+    CHECK(reader.m_quarantinedEntityHandles.count(seqEndHandle) == 1u);
+    // Nothing of the group is left for the sweep to decode (and to stage as
+    // orphans of the rejected INSERT).
+    for (const auto& item : reader.ObjectMap) {
+        CHECK(reader.m_quarantinedEntityHandles.count(item.first) == 1u);
+    }
     REQUIRE(reader.m_dwgSourceFrameLedger.size() == 5u);
     CHECK(reader.m_dwgSourceFrameLedger[0].m_disposition
           == DRW_DwgFrameDisposition::Failed);
@@ -8664,8 +9582,13 @@ TEST_CASE("DWG legacy INSERT rejects malformed empty ATTRIB boundaries",
         dwgBuffer objectBuffer(
             const_cast<std::uint8_t*>(fixture.bytes.data()), fixture.bytes.size());
 
-        CHECK_FALSE(reader.walkBlockRecordEntities(&record, &objectBuffer,
-                                                   interface));
+        // Rejected, but not for a foreign child owner: not contained.
+        DwgEntityReaderProbe::DwgBlockWalkOutcome outcome =
+            DwgEntityReaderProbe::DwgBlockWalkOutcome::Complete;
+        CHECK_FALSE(reader.walkBlockRecordEntities(
+            &record, &objectBuffer, interface, DRW::NoHandle, DRW::NoHandle,
+            DwgIntegrityAddressSpace::DecodedBuffer, &outcome));
+        CHECK(outcome == DwgEntityReaderProbe::DwgBlockWalkOutcome::Structural);
         CHECK(interface.inserts.empty());
         CHECK(interface.publications.empty());
         CHECK(reader.ObjectMap.empty());
@@ -9139,7 +10062,14 @@ TEST_CASE("DWG legacy POLYLINE block walk rejects a non-VERTEX tail",
     DwgInsertReceiptProbe interface;
     dwgBuffer objectBuffer(
         const_cast<std::uint8_t*>(fixture.bytes.data()), fixture.bytes.size());
-    CHECK_FALSE(reader.walkBlockRecordEntities(&record, &objectBuffer, interface));
+    // A group rejected for any reason other than a foreign child owner is not
+    // contained: the walk stays a structural failure.
+    DwgEntityReaderProbe::DwgBlockWalkOutcome outcome =
+        DwgEntityReaderProbe::DwgBlockWalkOutcome::Complete;
+    CHECK_FALSE(reader.walkBlockRecordEntities(
+        &record, &objectBuffer, interface, DRW::NoHandle, DRW::NoHandle,
+        DwgIntegrityAddressSpace::DecodedBuffer, &outcome));
+    CHECK(outcome == DwgEntityReaderProbe::DwgBlockWalkOutcome::Structural);
     CHECK(interface.polylineCount == 0u);
     CHECK(interface.publications.empty());
     CHECK(reader.stagedPendingPolylineCountForTest() == 0u);
@@ -9207,7 +10137,13 @@ TEST_CASE("DWG legacy POLYLINE block walk rejects a foreign SEQEND",
     DwgInsertReceiptProbe interface;
     dwgBuffer objectBuffer(
         const_cast<std::uint8_t*>(fixture.bytes.data()), fixture.bytes.size());
-    CHECK_FALSE(reader.walkBlockRecordEntities(&record, &objectBuffer, interface));
+    DwgEntityReaderProbe::DwgBlockWalkOutcome outcome =
+        DwgEntityReaderProbe::DwgBlockWalkOutcome::Complete;
+    CHECK_FALSE(reader.walkBlockRecordEntities(
+        &record, &objectBuffer, interface, DRW::NoHandle, DRW::NoHandle,
+        DwgIntegrityAddressSpace::DecodedBuffer, &outcome));
+    CHECK(outcome
+          == DwgEntityReaderProbe::DwgBlockWalkOutcome::ContainedGroupRejection);
     CHECK(interface.polylineCount == 0u);
     CHECK(interface.publications.empty());
     CHECK(reader.stagedPendingPolylineCountForTest() == 0u);
@@ -9276,7 +10212,13 @@ TEST_CASE("DWG legacy POLYLINE block walk rejects a foreign VERTEX",
     DwgInsertReceiptProbe interface;
     dwgBuffer objectBuffer(
         const_cast<std::uint8_t*>(fixture.bytes.data()), fixture.bytes.size());
-    CHECK_FALSE(reader.walkBlockRecordEntities(&record, &objectBuffer, interface));
+    DwgEntityReaderProbe::DwgBlockWalkOutcome outcome =
+        DwgEntityReaderProbe::DwgBlockWalkOutcome::Complete;
+    CHECK_FALSE(reader.walkBlockRecordEntities(
+        &record, &objectBuffer, interface, DRW::NoHandle, DRW::NoHandle,
+        DwgIntegrityAddressSpace::DecodedBuffer, &outcome));
+    CHECK(outcome
+          == DwgEntityReaderProbe::DwgBlockWalkOutcome::ContainedGroupRejection);
     CHECK(interface.polylineCount == 0u);
     CHECK(interface.publications.empty());
     CHECK(reader.stagedPendingPolylineCountForTest() == 0u);
@@ -9300,6 +10242,474 @@ TEST_CASE("DWG legacy POLYLINE block walk rejects a foreign VERTEX",
     CHECK(sweepInterface.polylineCount == 0u);
     CHECK(sweepInterface.unsupportedObjects.empty());
     CHECK(reader.ObjectMap.empty());
+}
+
+// ---------------------------------------------------------------------------
+// R13/R14 entities and the legacy (pre-2004) ENTITIES sweep.
+// ---------------------------------------------------------------------------
+
+namespace {
+
+// Body of an R13/R14 LINE, laid out as the ODA specification lists it: no
+// object-size field up front (the size in bits follows the graphics flag),
+// the "linetype is BYLAYER" bit and no lineweight or plot flags. Model-space
+// entities carry no owner handle; with nolinks set the next entity is the
+// next handle.
+std::vector<std::uint8_t> makeR14LineBody(std::uint32_t handle,
+                                          const DRW_Coord& start,
+                                          const DRW_Coord& end) {
+    dwgBufferW body;
+    body.putObjType(DRW::AC1014, dwgType::LINE);
+    body.putHandle(makeObjectHandle(handle));
+    body.putBitShort(0);     // no EED
+    body.putBit(0);          // no graphics
+    const std::size_t sizeBit = body.bitCount();
+    body.putRawLong32(0);    // object size in bits, patched below
+    body.put2Bits(2);        // entity mode: model space, no owner handle
+    body.putBitLong(0);      // no reactors
+    body.putBit(1);          // linetype is BYLAYER
+    body.putBit(1);          // nolinks
+    body.putBitShort(256);   // color BYLAYER
+    body.putBitDouble(1.0);  // linetype scale
+    body.putBitShort(0);     // visible
+    body.put3BitDouble(start);
+    body.put3BitDouble(end);
+    body.putThickness(0.0, false);
+    body.putExtrusion(DRW_Coord(0.0, 0.0, 1.0), false);
+    // The size field sits at a bit offset that patchRawLong32AtBit does not
+    // support (it needs the 2-bit remainder every R2000+ preamble leaves).
+    const std::uint32_t dataBits = body.bitCount();
+    const std::array<std::uint8_t, 4> sizeBytes = {
+        static_cast<std::uint8_t>(dataBits & 0xFFu),
+        static_cast<std::uint8_t>((dataBits >> 8) & 0xFFu),
+        static_cast<std::uint8_t>((dataBits >> 16) & 0xFFu),
+        static_cast<std::uint8_t>((dataBits >> 24) & 0xFFu)};
+    if (!body.patchRawBytesAtBit(sizeBit, sizeBytes.data(), sizeBytes.size()))
+        return {};
+    putOffsetHandle(body, 3, 0);  // extension dictionary
+    putOffsetHandle(body, 0, 0);  // layer
+    body.alignToByte();
+    return body.data();
+}
+
+class DwgLineCaptureProbe final : public DwgReadProbe {
+public:
+    std::vector<DRW_Line> lines;
+
+    void addLine(const DRW_Line& line) override { lines.push_back(line); }
+};
+
+struct LegacyObjectImage {
+    std::vector<std::uint8_t> bytes;
+    std::vector<objHandle> objects;
+
+    void add(std::int16_t type, std::uint32_t handle,
+             const std::vector<std::uint8_t>& frame) {
+        objects.emplace_back(type, handle,
+                             static_cast<std::uint32_t>(bytes.size()));
+        bytes.insert(bytes.end(), frame.cbegin(), frame.cend());
+    }
+};
+
+// POLYLINE, two VERTEX frames and SEQEND of one group, with independently
+// chosen handles.
+struct LegacyPolylineGroupFrames {
+    std::uint32_t polylineHandle = 0;
+    std::uint32_t firstVertexHandle = 0;
+    std::uint32_t lastVertexHandle = 0;
+    std::uint32_t seqEndHandle = 0;
+    std::vector<std::uint8_t> polyline;
+    std::vector<std::uint8_t> firstVertex;
+    std::vector<std::uint8_t> lastVertex;
+    std::vector<std::uint8_t> seqEnd;
+
+    bool valid() const {
+        return !polyline.empty() && !firstVertex.empty()
+            && !lastVertex.empty() && !seqEnd.empty();
+    }
+
+    void addTo(LegacyObjectImage& image) const {
+        image.add(dwgType::POLYLINE_2D, polylineHandle, polyline);
+        image.add(dwgType::VERTEX_2D, firstVertexHandle, firstVertex);
+        image.add(dwgType::VERTEX_2D, lastVertexHandle, lastVertex);
+        image.add(dwgType::SEQEND, seqEndHandle, seqEnd);
+    }
+};
+
+LegacyPolylineGroupFrames makeLegacyPolylineGroupFrames(
+    std::uint32_t polylineHandle, std::uint32_t firstVertexHandle,
+    std::uint32_t lastVertexHandle, std::uint32_t seqEndHandle) {
+    auto firstVertex = std::make_shared<DwgVertexWriterProbe>();
+    firstVertex->handle = firstVertexHandle;
+    firstVertex->parentHandle = polylineHandle;
+    firstVertex->basePoint = DRW_Coord(10.0, 20.0, 0.0);
+    firstVertex->setDwgSubtype(DRW_Vertex::DwgSubtype::Vertex2D);
+
+    auto lastVertex = std::make_shared<DwgVertexWriterProbe>();
+    lastVertex->handle = lastVertexHandle;
+    lastVertex->parentHandle = polylineHandle;
+    lastVertex->basePoint = DRW_Coord(30.0, 40.0, 0.0);
+    lastVertex->setDwgSubtype(DRW_Vertex::DwgSubtype::Vertex2D);
+
+    DwgPolylineWriterProbe polyline;
+    polyline.handle = polylineHandle;
+    polyline.appendVertex(firstVertex);
+    polyline.appendVertex(lastVertex);
+    polyline.setDwgSeqEndHandle(seqEndHandle);
+    dwgBufferW polylineBody;
+    if (!polyline.encodeDwg(DRW::AC1015, &polylineBody, 0, nullptr, nullptr))
+        return {};
+
+    LegacyPolylineGroupFrames frames;
+    frames.polylineHandle = polylineHandle;
+    frames.firstVertexHandle = firstVertexHandle;
+    frames.lastVertexHandle = lastVertexHandle;
+    frames.seqEndHandle = seqEndHandle;
+    frames.polyline = makeEntityFrame(polylineBody);
+    frames.firstVertex = makeLegacyVertexFrame(
+        firstVertexHandle, polylineHandle, lastVertexHandle);
+    frames.lastVertex = makeLegacyVertexFrame(
+        lastVertexHandle, polylineHandle, 0);
+    frames.seqEnd = makeSeqEndFrame(seqEndHandle, polylineHandle);
+    return frames;
+}
+
+// INSERT, three ATTRIB frames and SEQEND of one group, with independently
+// chosen handles (the ATTRIBs must be consecutive: their own chain is implicit).
+struct LegacyInsertGroupFrames {
+    std::uint32_t insertHandle = 0;
+    std::uint32_t firstAttribHandle = 0;
+    std::uint32_t seqEndHandle = 0;
+    std::vector<std::uint8_t> insert;
+    std::vector<std::vector<std::uint8_t>> attribs;
+    std::vector<std::uint8_t> seqEnd;
+
+    bool valid() const {
+        return !insert.empty() && attribs.size() == 3u && !seqEnd.empty()
+            && std::none_of(attribs.cbegin(), attribs.cend(),
+                            [](const std::vector<std::uint8_t>& frame) {
+                                return frame.empty();
+                            });
+    }
+
+    void addTo(LegacyObjectImage& image) const {
+        image.add(dwgType::INSERT, insertHandle, insert);
+        for (std::size_t index = 0; index < attribs.size(); ++index) {
+            image.add(dwgType::ATTRIB,
+                      firstAttribHandle + static_cast<std::uint32_t>(index),
+                      attribs[index]);
+        }
+        image.add(dwgType::SEQEND, seqEndHandle, seqEnd);
+    }
+};
+
+LegacyInsertGroupFrames makeLegacyInsertGroupFrames(
+    std::uint32_t insertHandle, std::uint32_t firstAttribHandle,
+    std::uint32_t seqEndHandle) {
+    DwgInsertWriterProbe insert;
+    insert.handle = insertHandle;
+    insert.setObjectType(dwgType::INSERT);
+    dwgHandle first;
+    first.ref = firstAttribHandle;
+    dwgHandle last;
+    last.ref = firstAttribHandle + 2u;
+    insert.attribHandles = {first, last};
+    insert.seqendH.ref = seqEndHandle;
+
+    LegacyInsertGroupFrames frames;
+    frames.insertHandle = insertHandle;
+    frames.firstAttribHandle = firstAttribHandle;
+    frames.seqEndHandle = seqEndHandle;
+    dwgBufferW insertBody;
+    if (!insert.encodeDwg(DRW::AC1015, &insertBody, 0, nullptr, nullptr))
+        return {};
+    frames.insert = makeEntityFrame(insertBody);
+    for (std::uint32_t index = 0; index < 3u; ++index) {
+        DwgAttribWriterProbe attribute;
+        attribute.handle = firstAttribHandle + index;
+        attribute.parentHandle = insertHandle;
+        attribute.text = "value";
+        attribute.tag = "TAG";
+        attribute.height = 1.0;
+        dwgBufferW body;
+        if (!attribute.encodeDwg(DRW::AC1015, &body, 0, nullptr, nullptr))
+            return {};
+        frames.attribs.push_back(makeEntityFrame(body));
+    }
+    frames.seqEnd = makeSeqEndFrame(seqEndHandle, insertHandle);
+    return frames;
+}
+
+} // namespace
+
+// The DWG object-size field is read at a version-dependent point: first for
+// R2000/R2004, derived for R2010+, and after the EED and the graphics data for
+// R13/R14. Its bound on the entity body is 0 ("the whole frame") until it has
+// been read, and the common prologue used to trust whatever an entity object
+// happened to hold there: a small stale value cut the prologue short, so the
+// owner probe of every model-space entity of a R13/R14 file failed and the
+// whole BLOCKS phase with it. Only the optimizer decided whether the
+// indeterminate value happened to be zero, so this test poisons it on purpose.
+TEST_CASE("DWG R14 entity prologue ignores a stale object size",
+          "[dwg][safety][r14]") {
+    constexpr std::uint32_t lineHandle = 0x83;
+    const auto body = makeR14LineBody(
+        lineHandle, DRW_Coord(50.0, 50.0, 0.0), DRW_Coord(100.0, 100.0, 0.0));
+    REQUIRE(!body.empty());
+
+    for (const std::uint32_t stale : {std::uint32_t{0}, std::uint32_t{8},
+                                      std::uint32_t{72},
+                                      std::uint32_t{0xAAAAAAAAu}}) {
+        INFO("stale object size " << stale);
+        DwgEntityPrologueProbe entity;
+        entity.setStaleObjectSize(stale);
+        dwgBuffer buffer(const_cast<std::uint8_t*>(body.data()), body.size());
+        REQUIRE(entity.parseDwg(DRW::AC1014, &buffer, /*bs=*/0));
+        CHECK(entity.handle == lineHandle);
+        CHECK_FALSE(entity.hasOwner());
+        CHECK(entity.layer == "0");
+        // R13/R14 read the size after the graphics data; it is the bit
+        // position where the handle stream starts.
+        CHECK(entity.objectSize() > 0u);
+        CHECK(entity.objectSize() < body.size() * 8u);
+    }
+}
+
+TEST_CASE("DWG R14 entities are delivered by the legacy sweep",
+          "[dwg][safety][r14]") {
+    constexpr std::uint32_t firstHandle = 0x83;
+    constexpr std::uint32_t lineCount = 6;
+    LegacyObjectImage image;
+    for (std::uint32_t index = 0; index < lineCount; ++index) {
+        const double offset = static_cast<double>(index);
+        const auto body = makeR14LineBody(
+            firstHandle + index, DRW_Coord(offset, 0.0, 0.0),
+            DRW_Coord(offset, 10.0, 0.0));
+        REQUIRE(!body.empty());
+        image.add(dwgType::LINE, firstHandle + index, makeObjectFrame(body));
+    }
+
+    DwgEntityReaderProbe reader(std::make_unique<dwgBuffer>(
+        const_cast<std::uint8_t*>(image.bytes.data()), image.bytes.size()));
+    reader.setVersionForTest(DRW::AC1014);
+    for (const objHandle& object : image.objects)
+        reader.ObjectMap.emplace(object.handle, object);
+
+    DwgLineCaptureProbe interface;
+    dwgBuffer buffer(
+        const_cast<std::uint8_t*>(image.bytes.data()), image.bytes.size());
+    REQUIRE(reader.readDwgEntities(interface, &buffer));
+    CHECK(reader.entityParseFailuresForTest() == 0u);
+    CHECK(reader.ObjectMap.empty());
+    REQUIRE(interface.lines.size() == lineCount);
+    // The legacy sweep visits the frames by ascending handle.
+    for (std::uint32_t index = 0; index < lineCount; ++index) {
+        CHECK(interface.lines[index].handle == firstHandle + index);
+        CHECK(interface.lines[index].basePoint.x
+              == static_cast<double>(index));
+        CHECK(interface.lines[index].secPoint.y == 10.0);
+    }
+}
+
+// The model-space walk reads every entity through the owner probe (an entity
+// with no owner handle is what makes it a model-space entity), which is the
+// one place the R13/R14 prologue is parsed on a bare entity object.
+TEST_CASE("DWG R14 model space chain is walked entity by entity",
+          "[dwg][safety][r14]") {
+    constexpr std::uint32_t firstHandle = 0x83;
+    constexpr std::uint32_t lineCount = 5;
+    LegacyObjectImage image;
+    for (std::uint32_t index = 0; index < lineCount; ++index) {
+        const double offset = static_cast<double>(index);
+        const auto body = makeR14LineBody(
+            firstHandle + index, DRW_Coord(offset, 0.0, 0.0),
+            DRW_Coord(offset, 10.0, 0.0));
+        REQUIRE(!body.empty());
+        image.add(dwgType::LINE, firstHandle + index, makeObjectFrame(body));
+    }
+
+    DwgEntityReaderProbe reader(std::make_unique<dwgBuffer>(
+        const_cast<std::uint8_t*>(image.bytes.data()), image.bytes.size()));
+    reader.setVersionForTest(DRW::AC1014);
+    for (const objHandle& object : image.objects)
+        reader.ObjectMap.emplace(object.handle, object);
+
+    DRW_Block_Record record;
+    record.name = "*MODEL_SPACE";
+    DwgBlockOwnershipTestAccess::setLegacyEntityChain(
+        record, firstHandle, firstHandle + lineCount - 1u);
+    DwgLineCaptureProbe interface;
+    dwgBuffer buffer(
+        const_cast<std::uint8_t*>(image.bytes.data()), image.bytes.size());
+    REQUIRE(reader.walkBlockRecordEntities(&record, &buffer, interface));
+    CHECK(reader.entityParseFailuresForTest() == 0u);
+    CHECK(reader.ObjectMap.empty());
+    REQUIRE(interface.lines.size() == lineCount);
+    for (std::uint32_t index = 0; index < lineCount; ++index) {
+        CHECK(interface.lines[index].handle == firstHandle + index);
+        CHECK(interface.lines[index].secPoint.y == 10.0);
+    }
+}
+
+// A pre-2004 POLYLINE claims its VERTEX and SEQEND frames out of ObjectMap by
+// following its own handle chain. A child read on its own first is consumed
+// (and refused), and the group is lost with it; ObjectMap is a hash map, so
+// which comes first used to be up to the standard library. Whichever way the
+// handles run, every group must arrive whole.
+TEST_CASE("DWG legacy sweep hands each POLYLINE its own VERTEX and SEQEND frames",
+          "[dwg][safety][compound]") {
+    constexpr std::uint32_t groupCount = 24;
+    LegacyObjectImage image;
+    std::vector<std::uint32_t> polylineHandles;
+    for (std::uint32_t index = 0; index < groupCount; ++index) {
+        const std::uint32_t base = 0x1000u + index * 0x10u;
+        // Half of the groups own children with lower handles than the parent.
+        const bool childrenFirst = index % 2u == 0u;
+        const auto group = makeLegacyPolylineGroupFrames(
+            childrenFirst ? base + 4u : base,
+            childrenFirst ? base : base + 1u,
+            childrenFirst ? base + 1u : base + 2u,
+            childrenFirst ? base + 2u : base + 3u);
+        REQUIRE(group.valid());
+        group.addTo(image);
+        polylineHandles.push_back(group.polylineHandle);
+    }
+
+    DwgEntityReaderProbe reader(std::make_unique<dwgBuffer>(
+        const_cast<std::uint8_t*>(image.bytes.data()), image.bytes.size()));
+    reader.setVersionForTest(DRW::AC1015);
+    for (const objHandle& object : image.objects)
+        reader.ObjectMap.emplace(object.handle, object);
+
+    DwgCompoundWriteProbe interface;
+    dwgBuffer buffer(
+        const_cast<std::uint8_t*>(image.bytes.data()), image.bytes.size());
+    REQUIRE(reader.readDwgEntities(interface, &buffer));
+    CHECK(reader.entityParseFailuresForTest() == 0u);
+    CHECK(reader.ObjectMap.empty());
+    CHECK(reader.stagedPendingPolylineCountForTest() == 0u);
+    CHECK(reader.stagedOrphanPolylineVertexCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+    REQUIRE(interface.polylines.size() == polylineHandles.size());
+    for (const DRW_Polyline& polyline : interface.polylines)
+        CHECK(polyline.vertlist.size() == 2u);
+    // Deterministic: the groups are delivered in ascending parent-handle order.
+    std::vector<std::uint32_t> delivered;
+    for (const DRW_Polyline& polyline : interface.polylines)
+        delivered.push_back(polyline.handle);
+    std::vector<std::uint32_t> expected = polylineHandles;
+    std::sort(expected.begin(), expected.end());
+    CHECK(delivered == expected);
+}
+
+TEST_CASE("DWG legacy sweep still fails a VERTEX whose POLYLINE is not there",
+          "[dwg][safety][compound]") {
+    const auto group = makeLegacyPolylineGroupFrames(0x300, 0x301, 0x302, 0x303);
+    REQUIRE(group.valid());
+    LegacyObjectImage image;
+    // The POLYLINE and the second VERTEX are missing.
+    image.add(dwgType::VERTEX_2D, group.firstVertexHandle, group.firstVertex);
+    image.add(dwgType::SEQEND, group.seqEndHandle, group.seqEnd);
+
+    DwgEntityReaderProbe reader(std::make_unique<dwgBuffer>(
+        const_cast<std::uint8_t*>(image.bytes.data()), image.bytes.size()));
+    reader.setVersionForTest(DRW::AC1015);
+    for (const objHandle& object : image.objects)
+        reader.ObjectMap.emplace(object.handle, object);
+
+    DwgCompoundWriteProbe interface;
+    dwgBuffer buffer(
+        const_cast<std::uint8_t*>(image.bytes.data()), image.bytes.size());
+    (void)reader.readDwgEntities(interface, &buffer);
+    CHECK(interface.polylines.empty());
+    CHECK(reader.ObjectMap.empty());
+    CHECK(reader.entityParseFailuresForTest() == 2u);
+}
+
+// A legacy entity with nolinks set stores no next-entity handle: the next
+// entity of the block is the object with the next handle. For a POLYLINE that
+// is the first handle behind it that is not one of its own children, and a
+// writer may put the children right behind it or anywhere else.
+TEST_CASE("DWG legacy block walk continues past a POLYLINE group",
+          "[dwg][safety][compound]") {
+    const bool adjacent = GENERATE(true, false);
+    INFO("children " << (adjacent ? "right behind" : "far from")
+                     << " the parent");
+    constexpr std::uint32_t firstPolyline = 0x100;
+    const std::uint32_t secondPolyline = adjacent ? 0x104u : 0x101u;
+    const auto first = makeLegacyPolylineGroupFrames(
+        firstPolyline, adjacent ? 0x101u : 0x500u, adjacent ? 0x102u : 0x501u,
+        adjacent ? 0x103u : 0x502u);
+    const auto second = makeLegacyPolylineGroupFrames(
+        secondPolyline, adjacent ? 0x105u : 0x510u, adjacent ? 0x106u : 0x511u,
+        adjacent ? 0x107u : 0x512u);
+    REQUIRE(first.valid());
+    REQUIRE(second.valid());
+
+    LegacyObjectImage image;
+    first.addTo(image);
+    second.addTo(image);
+    DwgEntityReaderProbe reader(std::make_unique<dwgBuffer>(
+        const_cast<std::uint8_t*>(image.bytes.data()), image.bytes.size()));
+    reader.setVersionForTest(DRW::AC1015);
+    for (const objHandle& object : image.objects)
+        reader.ObjectMap.emplace(object.handle, object);
+
+    DRW_Block_Record record;
+    record.name = "TWO_POLYLINES";
+    DwgBlockOwnershipTestAccess::setLegacyEntityChain(
+        record, firstPolyline, secondPolyline);
+    DwgCompoundWriteProbe interface;
+    dwgBuffer objectBuffer(
+        const_cast<std::uint8_t*>(image.bytes.data()), image.bytes.size());
+    REQUIRE(reader.walkBlockRecordEntities(&record, &objectBuffer, interface));
+    REQUIRE(interface.polylines.size() == 2u);
+    CHECK(interface.polylines[0].handle == firstPolyline);
+    CHECK(interface.polylines[1].handle == secondPolyline);
+    CHECK(interface.polylines[0].vertlist.size() == 2u);
+    CHECK(interface.polylines[1].vertlist.size() == 2u);
+    CHECK(reader.ObjectMap.empty());
+    CHECK(reader.entityParseFailuresForTest() == 0u);
+}
+
+TEST_CASE("DWG legacy block walk continues past an INSERT group",
+          "[dwg][safety][compound]") {
+    const bool adjacent = GENERATE(true, false);
+    INFO("children " << (adjacent ? "right behind" : "far from")
+                     << " the parent");
+    constexpr std::uint32_t firstInsert = 0x100;
+    const std::uint32_t secondInsert = adjacent ? 0x105u : 0x101u;
+    const auto first = makeLegacyInsertGroupFrames(
+        firstInsert, adjacent ? 0x101u : 0x600u, adjacent ? 0x104u : 0x603u);
+    const auto second = makeLegacyInsertGroupFrames(
+        secondInsert, adjacent ? 0x106u : 0x610u, adjacent ? 0x109u : 0x613u);
+    REQUIRE(first.valid());
+    REQUIRE(second.valid());
+
+    LegacyObjectImage image;
+    first.addTo(image);
+    second.addTo(image);
+    DwgEntityReaderProbe reader(std::make_unique<dwgBuffer>(
+        const_cast<std::uint8_t*>(image.bytes.data()), image.bytes.size()));
+    reader.setVersionForTest(DRW::AC1015);
+    for (const objHandle& object : image.objects)
+        reader.ObjectMap.emplace(object.handle, object);
+
+    DRW_Block_Record record;
+    record.name = "TWO_INSERTS";
+    DwgBlockOwnershipTestAccess::setLegacyEntityChain(
+        record, firstInsert, secondInsert);
+    DwgInsertReceiptProbe interface;
+    dwgBuffer objectBuffer(
+        const_cast<std::uint8_t*>(image.bytes.data()), image.bytes.size());
+    REQUIRE(reader.walkBlockRecordEntities(&record, &objectBuffer, interface));
+    REQUIRE(interface.inserts.size() == 2u);
+    CHECK(interface.inserts[0].handle == firstInsert);
+    CHECK(interface.inserts[1].handle == secondInsert);
+    CHECK(interface.inserts[0].attlist.size() == 3u);
+    CHECK(interface.inserts[1].attlist.size() == 3u);
+    CHECK(reader.ObjectMap.empty());
+    CHECK(reader.entityParseFailuresForTest() == 0u);
 }
 
 TEST_CASE("DWG MLINE nested counts are bounded",
@@ -9660,6 +11070,131 @@ TEST_CASE("DWG ACAD_TABLE rejects null and invalid grid input",
     dwgBuffer reader(body.data().data(), body.data().size());
     CHECK_FALSE(table.parseDwg(DRW::AC1018, &reader));
     CHECK_FALSE(reader.isGood());
+}
+
+// The reference is a real AutoCAD 2007 file (blocks_and_tables_-_metric.dwg):
+// both of its tables, 81 and 90 cells, decode to the end of the data, string
+// and handle streams once the three points below are read as the file stores
+// them. Each made the table entity fail, and with it the paper space block
+// that owns it.
+TEST_CASE("DWG R2007 ACAD_TABLE decodes UTF-16 cell text and value payloads",
+          "[dwg][safety][table][r2007]") {
+    constexpr std::uint16_t classNumber = 507;
+    constexpr std::uint32_t tableHandle = 0x2A1u;
+
+    R2007TableCellSpec title;
+    title.valueFlags = 6; // bit 1 set: the payload is present
+    title.generalText = "DOOR SCHEDULE";
+    title.valueString = "DOOR SCHEDULE"; // 13 units, no terminating NUL counted
+    title.alignmentOverride = true; // a BS, followed by more cells
+    R2007TableCellSpec merged;
+    merged.valueFlags = 2; // bit 1 set, bit 0 clear: the payload is present
+    merged.generalText = "AB";
+    merged.valueString = "AB";
+    merged.terminateValueString = true; // 3 units, the last one a NUL
+    R2007TableCellSpec number;
+    number.valueFlags = 2;
+    number.dataType = 2;
+    number.number = 2.5;
+    number.valueString = "2.50";
+    R2007TableCellSpec empty;
+    empty.valueFlags = 3; // bit 0 set: no payload
+    empty.valueString = "";
+
+    const auto frame = makeR2007TableFrame(
+        tableHandle, classNumber, {{title, merged}, {number, empty}});
+    REQUIRE(!frame.empty());
+
+    DwgEntityReaderProbe reader(std::make_unique<dwgBuffer>(
+        const_cast<std::uint8_t*>(frame.data()), frame.size()));
+    reader.setVersionForTest(DRW::AC1021);
+    reader.setCodePageForTest("UTF-16");
+    reader.addCustomEntityClass(classNumber, "ACAD_TABLE");
+    dwgBuffer buffer(const_cast<std::uint8_t*>(frame.data()), frame.size());
+    objHandle entity(classNumber, tableHandle, 0);
+    DwgTableCaptureProbe interface;
+    REQUIRE(reader.readDwgEntity(&buffer, entity, interface));
+    REQUIRE(interface.tables.size() == 1u);
+    const DRW_Table& table = interface.tables.front();
+
+    CHECK(table.basePoint.x == Catch::Approx(7.0));
+    CHECK(table.basePoint.y == Catch::Approx(8.0));
+    CHECK(table.blockRecH.ref == r2007TableBlockRecord);
+    CHECK(table.m_tableStyleHandle == r2007TableStyle);
+    REQUIRE(table.m_content.m_columns.size() == 2u);
+    REQUIRE(table.m_content.m_rows.size() == 2u);
+    CHECK(table.m_content.m_columns[1].m_width == Catch::Approx(11.0));
+    CHECK(table.m_content.m_rows[1].m_height == Catch::Approx(6.0));
+
+    // Every cell decoded: the grid ends exactly where the data does.
+    CHECK(table.m_hasSemanticContent);
+    CHECK(table.m_semanticContentComplete);
+    CHECK(reader.m_entityParseFailures == 0u);
+
+    const auto& firstRow = table.m_content.m_rows[0].m_cells;
+    const auto& secondRow = table.m_content.m_rows[1].m_cells;
+    REQUIRE(firstRow[0].m_contents.size() == 1u);
+    CHECK(firstRow[0].m_overrideFlags == 0x1u);
+    CHECK(firstRow[0].m_contents[0].m_text == "DOOR SCHEDULE");
+    CHECK(firstRow[0].m_contents[0].m_value.m_valueString == "DOOR SCHEDULE");
+    REQUIRE(firstRow[1].m_contents.size() == 1u);
+    CHECK(firstRow[1].m_contents[0].m_text == "AB");
+    CHECK(firstRow[1].m_contents[0].m_value.m_valueString == "AB");
+    REQUIRE(secondRow[0].m_contents.size() == 1u);
+    CHECK(secondRow[0].m_contents[0].m_value.m_dataType == 2);
+    CHECK(secondRow[0].m_contents[0].m_value.m_value.d_val() == Catch::Approx(2.5));
+    CHECK(secondRow[0].m_contents[0].m_text == "2.50");
+    REQUIRE(secondRow[1].m_contents.size() == 1u);
+    CHECK(secondRow[1].m_contents[0].m_text.empty());
+}
+
+// The cell grid is the optional part of an R2007 table: the INSERT part and the
+// anonymous *T block it names still draw the table. A cell this reader cannot
+// decode must cost the semantic grid, not the entity, or it fails the block
+// that owns the table.
+TEST_CASE("DWG R2007 ACAD_TABLE keeps the table when a cell cannot be decoded",
+          "[dwg][safety][table][r2007]") {
+    constexpr std::uint16_t classNumber = 507;
+    constexpr std::uint32_t tableHandle = 0x2A2u;
+
+    R2007TableCellSpec title;
+    title.generalText = "TITLE";
+    title.valueString = "TITLE";
+    R2007TableCellSpec corrupt;
+    // A payload size no table can have: reading it invalidates the cursor.
+    corrupt.declaredPayloadSize = 0x7FFFFFFF;
+    R2007TableCellSpec plain;
+    plain.generalText = "X";
+    plain.valueString = "X";
+
+    const auto frame = makeR2007TableFrame(
+        tableHandle, classNumber, {{title, corrupt}, {plain, plain}});
+    REQUIRE(!frame.empty());
+
+    DwgEntityReaderProbe reader(std::make_unique<dwgBuffer>(
+        const_cast<std::uint8_t*>(frame.data()), frame.size()));
+    reader.setVersionForTest(DRW::AC1021);
+    reader.setCodePageForTest("UTF-16");
+    reader.addCustomEntityClass(classNumber, "ACAD_TABLE");
+    dwgBuffer buffer(const_cast<std::uint8_t*>(frame.data()), frame.size());
+    objHandle entity(classNumber, tableHandle, 0);
+    DwgTableCaptureProbe interface;
+    REQUIRE(reader.readDwgEntity(&buffer, entity, interface));
+    REQUIRE(interface.tables.size() == 1u);
+    const DRW_Table& table = interface.tables.front();
+
+    // The shell is intact: geometry, block record, table style, grid size.
+    CHECK(table.basePoint.x == Catch::Approx(7.0));
+    CHECK(table.blockRecH.ref == r2007TableBlockRecord);
+    CHECK(table.m_tableStyleHandle == r2007TableStyle);
+    CHECK(table.m_content.m_columns.size() == 2u);
+    CHECK(table.m_content.m_rows.size() == 2u);
+    CHECK(table.m_hasSemanticContent);
+    // The grid says it is incomplete, and what decoded before the failure stays.
+    CHECK_FALSE(table.m_semanticContentComplete);
+    REQUIRE(table.m_content.m_rows[0].m_cells[0].m_contents.size() == 1u);
+    CHECK(table.m_content.m_rows[0].m_cells[0].m_contents[0].m_text == "TITLE");
+    CHECK(reader.m_entityParseFailures == 0u);
 }
 
 TEST_CASE("DWG table-entry common header rejects null buffer",
@@ -13240,6 +14775,56 @@ TEST_CASE("DWG DICTIONARYWDFLT receipt preflight rejects a missing class ordinal
     CHECK(reader.m_dwgSourceFrameLedger.front().m_publicationCount == 0u);
 }
 
+// DICTIONARYWDFLT is a R13/R14 object as well (its parser and encoder both
+// handle those layouts), unlike FIELD and FIELDLIST, which R2000 introduced:
+// the receipt gate must let it through instead of failing every R14 file that
+// carries the ACAD_PLOTSTYLENAME dictionary.
+TEST_CASE("DWG R14 DICTIONARYWDFLT passes the receipt gate",
+          "[dwg][safety][dictionary-wdflt][r14]") {
+    constexpr std::uint16_t classNumber =
+        DRW_DictionaryWithDefault::kDwgClassNum;
+    constexpr std::uint32_t objectHandle = 0x860u;
+    const auto body = makeR14DictionaryWithDefaultBody();
+    REQUIRE(!body.empty());
+    const auto frame = makeObjectFrame(body);
+    REQUIRE(!frame.empty());
+
+    dwgBufferW handleEntries;
+    REQUIRE(handleEntries.putUModularChar(objectHandle));
+    REQUIRE(handleEntries.putModularChar(0));
+    std::vector<std::uint8_t> handleMap;
+    appendHandleMapPage(handleMap, handleEntries.data());
+    appendHandleMapPage(handleMap, {});
+
+    DwgEntityReaderProbe reader(std::make_unique<dwgBuffer>(
+        const_cast<std::uint8_t*>(frame.data()), frame.size()));
+    reader.setVersionForTest(DRW::AC1014);
+    reader.addDictionaryWithDefaultObjectClass(classNumber);
+    reader.setClassStreamOrdinalForTest(classNumber, 1u);
+    dwgBuffer handleBuffer(handleMap.data(), handleMap.size());
+    REQUIRE(reader.readDwgHandles(
+        &handleBuffer, 0, handleMap.size(), frame.size()));
+
+    DwgDictionaryWithDefaultReceiptProbe interface;
+    dwgBuffer objectBuffer(
+        const_cast<std::uint8_t*>(frame.data()), frame.size());
+    REQUIRE(reader.readDwgEntities(interface, &objectBuffer));
+    REQUIRE(reader.objObjectMap.size() == 1u);
+    REQUIRE(reader.readDwgObjects(interface, &objectBuffer));
+
+    REQUIRE(interface.dictionaries.size() == 1u);
+    CHECK(interface.dictionaries.front().handle == objectHandle);
+    CHECK(interface.dictionaries.front().parentHandle == 0x0Cu);
+    CHECK(interface.dictionaries.front().cloning == 1);
+    CHECK(interface.dictionaries.front().m_defaultEntryHandle == 0x1202u);
+    REQUIRE(interface.typedReferences.size() == 1u);
+    CHECK(interface.typedReferences.front().m_targetHandle == 0x1202u);
+    REQUIRE(reader.m_dwgSourceFrameLedger.size() == 1u);
+    CHECK(reader.m_dwgSourceFrameLedger.front().m_disposition
+          == DRW_DwgFrameDisposition::Published);
+    CHECK(reader.m_dwgSourceFrameLedger.front().m_publicationCount == 1u);
+}
+
 TEST_CASE("DWG FIELDLIST callbacks are receipt-gated",
           "[dwg][safety][fieldlist]") {
     constexpr std::uint16_t classNumber = DRW_FieldList::kDwgClassNum;
@@ -16032,6 +17617,651 @@ TEST_CASE("DWG block owner mismatch does not publish a raw entity",
     CHECK(sweepInterface.unsupportedObjects.empty());
 }
 
+namespace {
+
+// A complete AC1018 LINE frame owned by `owner`. As in a real R2004 file the
+// frame's object-size field marks the end of the object data, where the
+// handle stream that holds the owner begins.
+std::vector<std::uint8_t> makeOwnedAc1018LineFrame(std::uint32_t handle,
+                                                   std::uint32_t owner) {
+    DwgLineWriterProbe line;
+    line.handle = handle;
+    line.parentHandle = owner;
+    line.basePoint = DRW_Coord(1.0, 2.0, 0.0);
+    line.secPoint = DRW_Coord(3.0, 4.0, 0.0);
+    line.extPoint = DRW_Coord(0.0, 0.0, 1.0);
+    line.setObjectType(dwgType::LINE);
+    dwgBufferW body;
+    if (!line.encodeDwgCommon(DRW::AC1018, &body))
+        return {};
+    body.putBit(1);
+    body.putRawDouble(line.basePoint.x);
+    body.putDefaultDouble(line.basePoint.x, line.secPoint.x);
+    body.putRawDouble(line.basePoint.y);
+    body.putDefaultDouble(line.basePoint.y, line.secPoint.y);
+    body.putThickness(line.thickness, true);
+    body.putExtrusion(line.extPoint, true);
+    const std::uint32_t dataBitCount = body.bitCount();
+    if (!line.encodeDwgEntHandle(DRW::AC1018, &body) || body.data().empty())
+        return {};
+    const std::uint8_t bsCode =
+        static_cast<std::uint8_t>((body.data().front() >> 6) & 0x03);
+    body.patchRawLong32AtBit(
+        bsCode == 0x01 ? 10 : bsCode == 0x00 ? 18 : 2, dataBitCount);
+    body.alignToByte();
+    dwgBufferW frame;
+    frame.putModularShort(static_cast<std::int32_t>(body.data().size()));
+    frame.putBytes(body.data().data(), body.data().size());
+    frame.putRawShort16(frame.crc16(0xC0C1, 0, frame.data().size()));
+    return frame.data();
+}
+
+} // namespace
+
+TEST_CASE("DWG entity sweep contains an entity whose owner record does not exist",
+          "[dwg][safety]") {
+    // The BLOCK_RECORD of an anonymous dimension block was erased but the
+    // block's entities were left in the file. Their owner names nothing, so
+    // they belong nowhere: each is rejected on its own, counted, and not
+    // published, and the rest of the file is not in doubt.
+    constexpr std::uint32_t erasedOwner = 0x501;
+    constexpr std::uint32_t firstHandle = 0x2C6;
+    constexpr std::uint32_t secondHandle = 0x2C7;
+
+    auto frame = makeOwnedAc1018LineFrame(firstHandle, erasedOwner);
+    REQUIRE(!frame.empty());
+    const std::size_t secondOffset = frame.size();
+    const auto secondFrame = makeOwnedAc1018LineFrame(secondHandle,
+                                                      erasedOwner);
+    REQUIRE(!secondFrame.empty());
+    frame.insert(frame.end(), secondFrame.cbegin(), secondFrame.cend());
+
+    DwgEntityReaderProbe reader(std::make_unique<dwgBuffer>(
+        frame.data(), frame.size()));
+    reader.setVersionForTest(DRW::AC1018);
+    reader.ObjectMap.emplace(
+        firstHandle, objHandle(dwgType::LINE, firstHandle, 0));
+    reader.ObjectMap.emplace(
+        secondHandle, objHandle(dwgType::LINE, secondHandle, secondOffset));
+    dwgBuffer buffer(frame.data(), frame.size());
+    DwgReadProbe interface;
+
+    // A direct caller still sees the rejection, exactly as for any owner
+    // mismatch; only the policy that runs the phases reads it as contained.
+    CHECK_FALSE(reader.readDwgEntities(interface, &buffer));
+    CHECK(reader.entitySweepFailureContained());
+    CHECK(reader.entityParseFailuresForTest() == 2u);
+    CHECK(interface.unsupportedObjects.empty());
+    CHECK(interface.framePublications.empty());
+    CHECK(reader.ObjectMap.empty());
+
+    // Each rejection is reported as a warning that names the entity, the
+    // absent owner and the frame.
+    auto orphans = reader.orphanedEntityDiagnosticsForTest();
+    REQUIRE(orphans.size() == 2u);
+    std::sort(orphans.begin(), orphans.end(),
+              [](const DwgIntegrityDiagnostic& lhs,
+                 const DwgIntegrityDiagnostic& rhs) {
+                  return lhs.logicalHandle < rhs.logicalHandle;
+              });
+    for (const auto& diagnostic : orphans) {
+        CHECK(diagnostic.severity == DwgIntegritySeverity::Warning);
+        CHECK(diagnostic.hasLogicalHandle);
+        CHECK(diagnostic.hasExpected);
+        CHECK(diagnostic.expected == erasedOwner);
+        CHECK(diagnostic.hasFileOffset);
+    }
+    CHECK(orphans[0].logicalHandle == firstHandle);
+    CHECK(orphans[0].fileOffset == 0u);
+    CHECK(orphans[1].logicalHandle == secondHandle);
+    CHECK(orphans[1].fileOffset == secondOffset);
+}
+
+TEST_CASE("DWG entity sweep keeps a stale owner structural",
+          "[dwg][safety]") {
+    // The owner exists but does not list the entity: that is a contradiction
+    // in the ownership graph, not an erased record, and it fails the phase.
+    constexpr std::uint32_t existingOwner = 0x501;
+    constexpr std::uint32_t entityHandle = 0x2C6;
+
+    const auto frame = makeOwnedAc1018LineFrame(entityHandle, existingOwner);
+    REQUIRE(!frame.empty());
+    DwgEntityReaderProbe reader(std::make_unique<dwgBuffer>(
+        const_cast<std::uint8_t*>(frame.data()), frame.size()));
+    reader.setVersionForTest(DRW::AC1018);
+    reader.addBlockRecordForTest(existingOwner);
+    reader.ObjectMap.emplace(
+        entityHandle, objHandle(dwgType::LINE, entityHandle, 0));
+    dwgBuffer buffer(const_cast<std::uint8_t*>(frame.data()), frame.size());
+    DwgReadProbe interface;
+
+    CHECK_FALSE(reader.readDwgEntities(interface, &buffer));
+    CHECK_FALSE(reader.entitySweepFailureContained());
+    CHECK(interface.unsupportedObjects.empty());
+    CHECK(interface.framePublications.empty());
+    CHECK(reader.orphanedEntityDiagnosticsForTest().empty());
+}
+
+TEST_CASE("DWG entity sweep does not contain an orphan next to a stale owner",
+          "[dwg][safety]") {
+    // One contained orphan cannot excuse a structural failure in the same
+    // sweep: the phase is contained only when every rejection is.
+    constexpr std::uint32_t existingOwner = 0x501;
+    constexpr std::uint32_t erasedOwner = 0x502;
+    constexpr std::uint32_t orphanHandle = 0x2C6;
+    constexpr std::uint32_t staleHandle = 0x2C7;
+
+    auto frame = makeOwnedAc1018LineFrame(orphanHandle, erasedOwner);
+    REQUIRE(!frame.empty());
+    const std::size_t staleOffset = frame.size();
+    const auto staleFrame = makeOwnedAc1018LineFrame(staleHandle,
+                                                     existingOwner);
+    REQUIRE(!staleFrame.empty());
+    frame.insert(frame.end(), staleFrame.cbegin(), staleFrame.cend());
+
+    DwgEntityReaderProbe reader(std::make_unique<dwgBuffer>(
+        frame.data(), frame.size()));
+    reader.setVersionForTest(DRW::AC1018);
+    reader.addBlockRecordForTest(existingOwner);
+    reader.ObjectMap.emplace(
+        orphanHandle, objHandle(dwgType::LINE, orphanHandle, 0));
+    reader.ObjectMap.emplace(
+        staleHandle, objHandle(dwgType::LINE, staleHandle, staleOffset));
+    dwgBuffer buffer(frame.data(), frame.size());
+    DwgReadProbe interface;
+
+    CHECK_FALSE(reader.readDwgEntities(interface, &buffer));
+    CHECK_FALSE(reader.entitySweepFailureContained());
+    CHECK(interface.framePublications.empty());
+}
+
+namespace {
+
+// A complete AC1018 entity frame whose object-size field marks the start of
+// the handle stream, as in a real R2004 file. The general frame builders above
+// set that field to the end of the body, which is enough for a typed parse (it
+// reads the handle stream in sequence) but leaves an owner unreadable to the
+// sweep, which reads it from bit objSize when the entity has no typed body.
+template <typename Entity>
+std::vector<std::uint8_t> makeRealisticAc1018Frame(Entity& entity) {
+    dwgBufferW dataOnly;
+    dwgBufferW handles;
+    if (!entity.encodeDwg(DRW::AC1018, &dataOnly, 0, nullptr, &handles))
+        return {};
+    // Everything before the handle stream.
+    const std::uint32_t dataBitCount = dataOnly.bitCount();
+    dwgBufferW body;
+    if (!entity.encodeDwg(DRW::AC1018, &body, 0, nullptr, nullptr)
+        || body.data().empty())
+        return {};
+    const std::uint8_t bsCode =
+        static_cast<std::uint8_t>((body.data().front() >> 6) & 0x03);
+    body.patchRawLong32AtBit(
+        bsCode == 0x01 ? 10 : bsCode == 0x00 ? 18 : 2, dataBitCount);
+    body.alignToByte();
+    dwgBufferW frame;
+    frame.putModularShort(static_cast<std::int32_t>(body.data().size()));
+    frame.putBytes(body.data().data(), body.data().size());
+    frame.putRawShort16(frame.crc16(0xC0C1, 0, frame.data().size()));
+    return frame.data();
+}
+
+struct SweepFrame {
+    std::uint32_t handle;
+    std::int16_t type;
+    std::vector<std::uint8_t> bytes;
+};
+
+struct SweepResult {
+    bool returned = false;
+    bool contained = false;
+    std::size_t failures = 0;
+    std::size_t orphans = 0;
+    std::size_t published = 0;
+    std::size_t inserts = 0;
+    std::size_t polylines = 0;
+    // Nothing of a rejected group stays behind: no frame in the object map, no
+    // staged compound state, every frame of the coverage report settled as
+    // failed or quarantined and none published.
+    bool nothingLeft = false;
+    bool allFramesRejected = false;
+};
+
+// Runs the entity sweep over `frames` (each at its own offset of one buffer)
+// for a drawing whose only block records are `blockRecords`.
+SweepResult sweepFrames(DRW::Version version, std::vector<SweepFrame> frames,
+                        const std::vector<std::uint32_t>& blockRecords) {
+    std::sort(frames.begin(), frames.end(),
+              [](const SweepFrame& lhs, const SweepFrame& rhs) {
+                  return lhs.handle < rhs.handle;
+              });
+    std::vector<std::uint8_t> objectData;
+    std::vector<std::uint32_t> offsets;
+    for (const SweepFrame& frame : frames) {
+        offsets.push_back(static_cast<std::uint32_t>(objectData.size()));
+        objectData.insert(objectData.end(), frame.bytes.cbegin(),
+                          frame.bytes.cend());
+    }
+    dwgBufferW handleEntries;
+    std::uint32_t previousHandle = 0;
+    std::int64_t previousOffset = 0;
+    for (std::size_t i = 0; i < frames.size(); ++i) {
+        REQUIRE(handleEntries.putUModularChar(frames[i].handle
+                                              - previousHandle));
+        REQUIRE(handleEntries.putModularChar(
+            static_cast<std::int64_t>(offsets[i]) - previousOffset));
+        previousHandle = frames[i].handle;
+        previousOffset = offsets[i];
+    }
+    std::vector<std::uint8_t> handleMap;
+    appendHandleMapPage(handleMap, handleEntries.data());
+    appendHandleMapPage(handleMap, {});
+
+    DwgEntityReaderProbe reader(std::make_unique<dwgBuffer>(
+        objectData.data(), objectData.size()));
+    reader.setVersionForTest(version);
+    for (const std::uint32_t record : blockRecords)
+        reader.addBlockRecordForTest(record);
+    dwgBuffer handleBuffer(handleMap.data(), handleMap.size());
+    REQUIRE(reader.readDwgHandles(
+        &handleBuffer, 0, handleMap.size(), objectData.size()));
+    dwgBuffer objectBuffer(objectData.data(), objectData.size());
+    DwgInsertReceiptProbe interface;
+
+    SweepResult result;
+    result.returned = reader.readDwgEntities(interface, &objectBuffer);
+    result.contained = reader.entitySweepFailureContained();
+    result.failures = reader.entityParseFailuresForTest();
+    result.orphans = reader.orphanedEntityDiagnosticsForTest().size();
+    result.published = interface.publications.size();
+    result.inserts = interface.inserts.size();
+    result.polylines = interface.polylineCount;
+    result.nothingLeft = reader.ObjectMap.empty()
+        && reader.stagedPendingInsertCountForTest() == 0u
+        && reader.stagedOrphanAttribCountForTest() == 0u
+        && reader.stagedSeqEndCountForTest() == 0u
+        && reader.stagedPendingPolylineCountForTest() == 0u
+        && reader.stagedOrphanPolylineVertexCountForTest() == 0u;
+    result.allFramesRejected =
+        reader.m_dwgSourceFrameLedger.size() == frames.size()
+        && std::all_of(
+            reader.m_dwgSourceFrameLedger.cbegin(),
+            reader.m_dwgSourceFrameLedger.cend(),
+            [](const DRW_DwgFrameCoverageEntry& entry) {
+                return (entry.m_disposition == DRW_DwgFrameDisposition::Failed
+                        || entry.m_disposition
+                            == DRW_DwgFrameDisposition::Quarantined)
+                    && entry.m_publicationCount == 0u;
+            });
+    return result;
+}
+
+// An INSERT with one ATTRIB and a SEQEND, all AC1018. The INSERT's frame is
+// built with `realisticOwner`: whether its object-size field marks the start
+// of the handle stream (a real file) or the end of the body.
+std::vector<SweepFrame> makeInsertGroupFrames(std::uint32_t insertHandle,
+                                              std::uint32_t owner,
+                                              bool realisticOwner) {
+    const std::uint32_t attribHandle = 0x101;
+    const std::uint32_t seqEndHandle = 0x102;
+    DwgInsertWriterProbe insert;
+    insert.handle = insertHandle;
+    insert.parentHandle = owner;
+    insert.setObjectType(dwgType::INSERT);
+    dwgHandle attrib;
+    attrib.ref = attribHandle;
+    insert.attribHandles.push_back(attrib);
+    insert.seqendH.ref = seqEndHandle;
+    std::vector<std::uint8_t> insertFrame;
+    if (realisticOwner) {
+        insertFrame = makeRealisticAc1018Frame(insert);
+    } else {
+        insertFrame = makeInsertWithChildrenFrame(insertHandle, owner,
+                                                  attribHandle, seqEndHandle);
+    }
+    REQUIRE(!insertFrame.empty());
+    const auto attribFrame = makeAttribFrame(attribHandle, insertHandle);
+    const auto seqEndFrame = makeSeqEndFrame(seqEndHandle, insertHandle);
+    REQUIRE(!attribFrame.empty());
+    REQUIRE(!seqEndFrame.empty());
+    return {{insertHandle, dwgType::INSERT, insertFrame},
+            {attribHandle, dwgType::ATTRIB, attribFrame},
+            {seqEndHandle, dwgType::SEQEND, seqEndFrame}};
+}
+
+// The POLYLINE, VERTEX and SEQEND of the polyline fixture (handles 0x100,
+// 0x101 and 0x102), sliced back into frames.
+std::vector<SweepFrame> makePolylineGroupFrames(DRW::Version version,
+                                                std::uint32_t owner) {
+    if (version == DRW::AC1018) {
+        auto vertex = std::make_shared<DwgVertexWriterProbe>();
+        vertex->handle = 0x101;
+        vertex->parentHandle = 0x100;
+        vertex->basePoint = DRW_Coord(10.0, 20.0, 0.0);
+        vertex->setDwgSubtype(DRW_Vertex::DwgSubtype::Vertex2D);
+        DwgPolylineWriterProbe polyline;
+        polyline.handle = 0x100;
+        polyline.parentHandle = owner;
+        polyline.appendVertex(vertex);
+        polyline.setDwgSeqEndHandle(0x102);
+        const auto polylineFrame = makeRealisticAc1018Frame(polyline);
+        dwgBufferW vertexBody;
+        REQUIRE(vertex->encodeDwg(DRW::AC1018, &vertexBody, 0, nullptr,
+                                  nullptr));
+        const auto vertexFrame = makeEntityFrame(vertexBody);
+        const auto seqEndFrame = makeSeqEndFrame(0x102, 0x100);
+        REQUIRE(!polylineFrame.empty());
+        REQUIRE(!vertexFrame.empty());
+        REQUIRE(!seqEndFrame.empty());
+        return {{0x100, dwgType::POLYLINE_2D, polylineFrame},
+                {0x101, dwgType::VERTEX_2D, vertexFrame},
+                {0x102, dwgType::SEQEND, seqEndFrame}};
+    }
+    const auto fixture = makePolylineFrameFixture(
+        false, false, false, false, 0.0, false, version,
+        DRW_Vertex::DwgSubtype::Vertex2D, owner);
+    REQUIRE(!fixture.bytes.empty());
+    const auto slice = [&fixture](std::size_t from, std::size_t to) {
+        return std::vector<std::uint8_t>(fixture.bytes.begin() + from,
+                                         fixture.bytes.begin() + to);
+    };
+    return {{0x100, dwgType::POLYLINE_2D, slice(0, fixture.vertexOffset)},
+            {0x101, dwgType::VERTEX_2D,
+             slice(fixture.vertexOffset, fixture.seqEndOffset)},
+            {0x102, dwgType::SEQEND,
+             slice(fixture.seqEndOffset, fixture.bytes.size())}};
+}
+
+} // namespace
+
+TEST_CASE("DWG entity sweep contains an INSERT group whose owner record does "
+          "not exist",
+          "[dwg][safety][compound]") {
+    // An INSERT with attributes in an erased block. The INSERT is classified
+    // like any owned entity: its owner names no BLOCK_RECORD, so it is
+    // rejected and counted. Its ATTRIB and SEQEND name the INSERT, not the
+    // block, so they are staged under it and terminalized when the sweep ends,
+    // each counted; nothing is published and nothing stays staged. Whether the
+    // parent comes first or last in the object map does not matter.
+    constexpr std::uint32_t erasedOwner = 0x501;
+    for (const std::uint32_t insertHandle : {0x100u, 0x120u}) {
+        DYNAMIC_SECTION("INSERT " << std::hex << insertHandle) {
+            const SweepResult result = sweepFrames(
+                DRW::AC1018,
+                makeInsertGroupFrames(insertHandle, erasedOwner, true), {});
+            CHECK_FALSE(result.returned);
+            CHECK(result.contained);
+            CHECK(result.orphans == 1u);
+            CHECK(result.failures >= 2u);
+            CHECK(result.published == 0u);
+            CHECK(result.inserts == 0u);
+            CHECK(result.nothingLeft);
+            CHECK(result.allFramesRejected);
+        }
+    }
+}
+
+TEST_CASE("DWG entity sweep contains a POLYLINE group whose owner record does "
+          "not exist",
+          "[dwg][safety][compound]") {
+    // The same for a POLYLINE with a VERTEX and a SEQEND, in every layout of
+    // the frames an owner can be read from: the R2004 handle stream that
+    // starts at bit objSize, and the R2010 and R2013 separate handle streams.
+    constexpr std::uint32_t erasedOwner = 0x501;
+    const DRW::Version version =
+        GENERATE(DRW::AC1018, DRW::AC1024, DRW::AC1027);
+    INFO("version " << static_cast<int>(version));
+    const SweepResult result = sweepFrames(
+        version, makePolylineGroupFrames(version, erasedOwner), {});
+    CHECK_FALSE(result.returned);
+    CHECK(result.contained);
+    CHECK(result.orphans == 1u);
+    CHECK(result.failures >= 2u);
+    CHECK(result.published == 0u);
+    CHECK(result.polylines == 0u);
+    CHECK(result.nothingLeft);
+    CHECK(result.allFramesRejected);
+}
+
+TEST_CASE("DWG entity sweep keeps a group structural when its owner is in "
+          "doubt",
+          "[dwg][safety][compound]") {
+    // An owner that exists but does not list the group, and an owner the
+    // sweep cannot read, are contradictions or unknowns, not an erased
+    // record: the group is rejected and the phase fails, as for any entity.
+    SECTION("the owner exists and does not list the polyline") {
+        const DRW::Version version = GENERATE(DRW::AC1024, DRW::AC1027);
+        const SweepResult result = sweepFrames(
+            version, makePolylineGroupFrames(version, 0x502), {0x502});
+        CHECK_FALSE(result.returned);
+        CHECK_FALSE(result.contained);
+        CHECK(result.orphans == 0u);
+        CHECK(result.published == 0u);
+    }
+    SECTION("the owner of an INSERT frame cannot be read") {
+        // The frame builders above set the object-size field to the end of
+        // the body: no handle stream can be located, so the owner is unknown.
+        const SweepResult result = sweepFrames(
+            DRW::AC1018, makeInsertGroupFrames(0x100, 0x501, false), {});
+        CHECK_FALSE(result.returned);
+        CHECK_FALSE(result.contained);
+        CHECK(result.orphans == 0u);
+        CHECK(result.published == 0u);
+    }
+}
+
+namespace {
+
+// Runs the phases a whole-file read runs, one at a time, so a test can change
+// what the table phase produced before the block and entity phases.
+class DwgOrphanChainReader32Probe final : public dwgReader32 {
+public:
+    using dwgReader::entitySweepFailureContained;
+    using dwgReader::publishDeferredTableFramePublications;
+
+    // `owner` is only asked for the file's version by readMetaData.
+    DwgOrphanChainReader32Probe(std::unique_ptr<dwgBuffer> buffer, dwgRW* owner)
+        : dwgReader32(std::move(buffer), owner) {}
+
+    // The handle of the first block record whose name starts with `prefix`.
+    bool findBlockRecordForTest(const std::string& prefix,
+                                std::uint32_t& handle) const {
+        for (const auto& item : blockRecordmap) {
+            if (item.second != nullptr
+                && item.second->name.compare(0, prefix.size(), prefix) == 0) {
+                handle = item.first;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Takes an object out of the object map, as if the file did not hold it.
+    void removeObjectForTest(std::uint32_t handle) { ObjectMap.erase(handle); }
+
+    std::size_t danglingBlockRecordCountForTest() const {
+        return m_danglingBlockRecords.size();
+    }
+
+    bool hasDanglingBlockRecordForTest(std::uint32_t handle) const {
+        return isDanglingBlockRecord(handle);
+    }
+
+    std::vector<DwgIntegrityDiagnostic> danglingDiagnosticsForTest() const {
+        std::vector<DwgIntegrityDiagnostic> result;
+        std::copy_if(
+            m_integrityDiagnostics.cbegin(), m_integrityDiagnostics.cend(),
+            std::back_inserter(result),
+            [](const DwgIntegrityDiagnostic& diagnostic) {
+                return diagnostic.kind
+                    == DwgIntegrityCheckKind::TableControlDanglingHandle;
+            });
+        return result;
+    }
+
+    // Forgets the first block record whose name starts with `prefix`, as if
+    // the drawing's table never listed it.
+    bool eraseBlockRecordForTest(const std::string& prefix,
+                                 std::uint32_t& handle) {
+        for (auto it = blockRecordmap.begin(); it != blockRecordmap.end();
+             ++it) {
+            if (it->second == nullptr
+                || it->second->name.compare(0, prefix.size(), prefix) != 0)
+                continue;
+            handle = it->first;
+            delete it->second;
+            blockRecordmap.erase(it);
+            return true;
+        }
+        return false;
+    }
+
+    std::size_t entityParseFailuresForTest() const {
+        return m_entityParseFailures;
+    }
+
+    std::vector<DwgIntegrityDiagnostic> orphanDiagnosticsForTest() const {
+        std::vector<DwgIntegrityDiagnostic> result;
+        std::copy_if(
+            m_integrityDiagnostics.cbegin(), m_integrityDiagnostics.cend(),
+            std::back_inserter(result),
+            [](const DwgIntegrityDiagnostic& diagnostic) {
+                return diagnostic.kind
+                    == DwgIntegrityCheckKind::EntityOwnerRecordMissing;
+            });
+        return result;
+    }
+};
+
+class DwgEntityCountingProbe final : public DwgReadProbe {
+public:
+    std::size_t entityCount = 0;
+    void addPoint(const DRW_Point&) override { ++entityCount; }
+    void addLine(const DRW_Line&) override { ++entityCount; }
+    void addSolid(const DRW_Solid&) override { ++entityCount; }
+    void addMText(const DRW_MText& text) override {
+        DwgReadProbe::addMText(text);
+        ++entityCount;
+    }
+    void addDimRadial(const DRW_DimRadial*) override { ++entityCount; }
+};
+
+struct DwgOrphanChainResult {
+    // The BLOCK_RECORD of the fixture's anonymous dimension block.
+    std::uint32_t erasedOwner = 0;
+    bool entitiesRead = false;
+    bool contained = false;
+    std::size_t failures = 0;
+    std::size_t entities = 0;
+    std::size_t blocks = 0;
+    std::vector<DwgIntegrityDiagnostic> orphans;
+    std::size_t danglingRecords = 0;
+    bool erasedRecordIsDangling = false;
+    std::vector<DwgIntegrityDiagnostic> danglingDiagnostics;
+};
+
+enum class DwgBlockErasure {
+    None,
+    // The table phase reads the record, which is then forgotten, as if the
+    // drawing's table never listed it.
+    ForgetRecordAfterTables,
+    // The record's object is not in the object map when the table phase runs
+    // while BLOCK_CONTROL still lists it: what an erased record leaves.
+    RemoveRecordObject
+};
+
+// Reads the R2018 fixture phase by phase. `erasure` says what happens to the
+// BLOCK_RECORD of its anonymous dimension block; for RemoveRecordObject
+// `record` is that record's handle (learned from a read without erasure).
+DwgOrphanChainResult runDwgOrphanChain(const std::filesystem::path& path,
+                                       std::vector<std::uint8_t>& bytes,
+                                       DwgBlockErasure erasure,
+                                       std::uint32_t record = 0) {
+    DwgOrphanChainResult result;
+    dwgRW owner(path.string().c_str());
+    (void)owner.getPreview();
+    REQUIRE(owner.getVersion() == DRW::AC1032);
+    DwgOrphanChainReader32Probe reader(std::make_unique<dwgBuffer>(
+        bytes.data(), bytes.size()), &owner);
+    DwgEntityCountingProbe interface;
+    DRW_Header header;
+    REQUIRE(reader.readMetaData());
+    REQUIRE(reader.readFileHeader());
+    REQUIRE(reader.readDwgHeader(header));
+    REQUIRE(reader.readDwgClasses());
+    REQUIRE(reader.readDwgHandles());
+    if (erasure == DwgBlockErasure::RemoveRecordObject) {
+        REQUIRE(record != 0u);
+        result.erasedOwner = record;
+        reader.removeObjectForTest(record);
+    }
+    REQUIRE(reader.readDwgTables(header));
+    REQUIRE(reader.publishDeferredTableFramePublications(interface));
+    if (erasure == DwgBlockErasure::ForgetRecordAfterTables) {
+        REQUIRE(reader.eraseBlockRecordForTest("*D", result.erasedOwner));
+    } else if (erasure == DwgBlockErasure::None) {
+        REQUIRE(reader.findBlockRecordForTest("*D", result.erasedOwner));
+    }
+    result.danglingRecords = reader.danglingBlockRecordCountForTest();
+    result.erasedRecordIsDangling =
+        reader.hasDanglingBlockRecordForTest(result.erasedOwner);
+    result.danglingDiagnostics = reader.danglingDiagnosticsForTest();
+    REQUIRE(reader.readDwgBlocks(interface));
+    result.entitiesRead = reader.readDwgEntities(interface);
+    result.contained = reader.entitySweepFailureContained();
+    result.failures = reader.entityParseFailuresForTest();
+    result.entities = interface.entityCount;
+    result.blocks = interface.blockCount;
+    result.orphans = reader.orphanDiagnosticsForTest();
+    return result;
+}
+
+} // namespace
+
+TEST_CASE("DWG entities of an erased block record are contained orphans",
+          "[dwg][safety][fixture]") {
+    // The R2018 fixture has an anonymous dimension block (*D<n>) that holds
+    // the geometry of its radial dimension. Forgetting that block's
+    // BLOCK_RECORD leaves its BLOCK, ENDBLK and contents owned by a record
+    // that does not exist: the state an erased dimension leaves in a real
+    // file. They are rejected one by one, counted and reported, and the rest
+    // of the drawing is delivered.
+    const auto path = std::filesystem::path(LIBRECAD_TEST_DIR) /
+                      "large_radial.dwg";
+    auto bytes = readFile(path);
+    REQUIRE(!bytes.empty());
+
+    // Control: the untouched drawing rejects nothing.
+    const DwgOrphanChainResult intact =
+        runDwgOrphanChain(path, bytes, DwgBlockErasure::None);
+    CHECK(intact.entitiesRead);
+    CHECK_FALSE(intact.contained);
+    CHECK(intact.failures == 0u);
+    CHECK(intact.orphans.empty());
+    CHECK(intact.danglingRecords == 0u);
+    REQUIRE(intact.entities > 0u);
+
+    const DwgOrphanChainResult erased = runDwgOrphanChain(
+        path, bytes, DwgBlockErasure::ForgetRecordAfterTables);
+    // A direct caller sees the rejection; the file's read goes on.
+    CHECK_FALSE(erased.entitiesRead);
+    CHECK(erased.contained);
+    // The block's contents are no longer delivered, and the rest still is.
+    CHECK(erased.blocks + 1u == intact.blocks);
+    REQUIRE(erased.entities < intact.entities);
+    REQUIRE(erased.entities > 0u);
+    // Every frame of the block is counted and reported: its contents, and its
+    // BLOCK and ENDBLK.
+    const std::size_t leftovers = intact.entities - erased.entities + 2u;
+    CHECK(erased.failures == leftovers);
+    REQUIRE(erased.orphans.size() == leftovers);
+    for (const auto& diagnostic : erased.orphans) {
+        CHECK(diagnostic.severity == DwgIntegritySeverity::Warning);
+        CHECK(diagnostic.hasExpected);
+        CHECK(diagnostic.expected == erased.erasedOwner);
+    }
+}
+
 TEST_CASE("DWG dictionaries bound counts and honor legacy WDFLT fields",
           "[dwg][safety]") {
     std::vector<std::uint8_t> malformed = makeMalformedDictionaryBody();
@@ -16275,6 +18505,744 @@ TEST_CASE("DWG missing table records roll back the table phase",
         CHECK(restored->second.loc == entry.second.loc);
     }
     CHECK(reader.ObjectMap.find(recordHandle) == reader.ObjectMap.end());
+}
+
+namespace {
+
+// Reads the header, classes and handle map of the R2000 fixture into `reader`
+// so that its table phase can run.
+void prepareAc1015TableReader(DwgTableStateReaderProbe& reader,
+                              DRW_Header& header) {
+    reader.setVersionForTest(DRW::AC1015);
+    REQUIRE(reader.readFileHeader());
+    REQUIRE(reader.readDwgHeader(header));
+    REQUIRE(reader.readDwgClasses());
+    REQUIRE(reader.readDwgHandles());
+}
+
+std::vector<DwgIntegrityDiagnostic> danglingControlDiagnostics(
+    const std::vector<DwgIntegrityDiagnostic>& diagnostics) {
+    std::vector<DwgIntegrityDiagnostic> result;
+    std::copy_if(diagnostics.cbegin(), diagnostics.cend(),
+                 std::back_inserter(result),
+                 [](const DwgIntegrityDiagnostic& diagnostic) {
+                     return diagnostic.kind
+                         == DwgIntegrityCheckKind::TableControlDanglingHandle;
+                 });
+    return result;
+}
+
+} // namespace
+
+namespace {
+
+// The table controls and nothing else: enough for the table phase to run from
+// the first control to the last. `listed` names the records each control
+// lists; none of them is in the object map. A control that has phantom
+// entries (LTYPE, BLOCK) also lists its two null entries.
+struct DwgControlOnlyDrawing {
+    using Listed = std::map<std::int16_t, std::vector<std::uint32_t>>;
+
+    std::map<std::int16_t, std::uint32_t> controls;
+    std::vector<std::uint8_t> bytes;
+    std::vector<objHandle> objects;
+
+    std::uint32_t handleOf(std::int16_t controlType) const {
+        return controls.at(controlType);
+    }
+
+    void add(std::int16_t type, std::vector<std::uint32_t> listed,
+             const std::vector<std::uint32_t>& blockPhantoms) {
+        const std::uint16_t entryCount =
+            static_cast<std::uint16_t>(listed.size());
+        if (type == DRW::DwgBlockControlObjectType) {
+            // The model and paper space records.
+            listed.insert(listed.end(), blockPhantoms.cbegin(),
+                          blockPhantoms.cend());
+        } else if (type == DRW::DwgLTypeControlObjectType) {
+            // The BYLAYER and BYBLOCK linetypes.
+            listed.push_back(0u);
+            listed.push_back(0u);
+        }
+        const std::uint32_t handle = handleOf(type);
+        const auto frame = makeTableControlFrame(
+            static_cast<std::uint16_t>(type), handle, entryCount, listed);
+        REQUIRE(!frame.empty());
+        objects.emplace_back(static_cast<std::uint16_t>(type), handle,
+                             bytes.size());
+        bytes.insert(bytes.end(), frame.cbegin(), frame.cend());
+    }
+
+    static const std::vector<std::int16_t>& tableOrder() {
+        static const std::vector<std::int16_t> order{
+            DRW::DwgLTypeControlObjectType, DRW::DwgLayerControlObjectType,
+            DRW::DwgStyleControlObjectType, DRW::DwgDimStyleControlObjectType,
+            DRW::DwgVPortControlObjectType, DRW::DwgBlockControlObjectType,
+            DRW::DwgAppIdControlObjectType, DRW::DwgViewControlObjectType,
+            DRW::DwgUcsControlObjectType};
+        return order;
+    }
+
+    // `controlHandles` are the handles the header names for the controls.
+    // `blockPhantoms` are the two handles the block control lists after its
+    // counted entries, the model and paper space records: null unless a test
+    // says otherwise (a null entry is dropped when the control is decoded).
+    explicit DwgControlOnlyDrawing(
+        const std::map<std::int16_t, std::uint32_t>& controlHandles,
+        const Listed& listed = Listed(),
+        const std::vector<std::uint32_t>& blockPhantoms =
+            std::vector<std::uint32_t>(2, 0u))
+        : controls(controlHandles) {
+        for (const std::int16_t type : tableOrder()) {
+            const auto it = listed.find(type);
+            add(type,
+                it == listed.end() ? std::vector<std::uint32_t>()
+                                   : it->second,
+                blockPhantoms);
+        }
+    }
+
+    void fill(DwgTableStateReaderProbe& reader) const {
+        reader.setVersionForTest(DRW::AC1015);
+        for (const objHandle& object : objects)
+            reader.ObjectMap.emplace(object.handle, object);
+    }
+};
+
+// The control handles the R2000 fixture's header names, and the header.
+struct DwgControlOnlyHeader {
+    DRW_Header header;
+    std::map<std::int16_t, std::uint32_t> controls;
+
+    DwgControlOnlyHeader() {
+        auto bytes = readFile(std::filesystem::path(LIBRECAD_TEST_DIR) /
+                              "ordinary_enc_AC1015.dwg");
+        REQUIRE(!bytes.empty());
+        DwgTableStateReaderProbe source(std::make_unique<dwgBuffer>(
+            bytes.data(), bytes.size()));
+        prepareAc1015TableReader(source, header);
+        controls = source.controlHandlesForTest();
+        REQUIRE(controls.size() == DwgControlOnlyDrawing::tableOrder().size());
+    }
+};
+
+void checkTablePhaseRolledBack(DwgTableStateReaderProbe& reader,
+                               const DwgControlOnlyDrawing& drawing) {
+    CHECK(reader.tableStateEmptyForTest());
+    CHECK(reader.danglingBlockRecordCountForTest() == 0u);
+    REQUIRE(reader.ObjectMap.size() == drawing.objects.size());
+    for (const objHandle& object : drawing.objects) {
+        const auto restored = reader.ObjectMap.find(object.handle);
+        REQUIRE(restored != reader.ObjectMap.end());
+        CHECK(restored->second.type == object.type);
+        CHECK(restored->second.loc == object.loc);
+    }
+}
+
+} // namespace
+
+TEST_CASE("DWG block control skips every absent entry it lists",
+          "[dwg][safety][table]") {
+    DwgControlOnlyHeader fixture;
+    DwgControlOnlyDrawing drawing(
+        fixture.controls,
+        {{DRW::DwgBlockControlObjectType, {0x9030u, 0x9031u, 0x9032u}}});
+    DwgTableStateReaderProbe reader(std::make_unique<dwgBuffer>(
+        drawing.bytes.data(), drawing.bytes.size()));
+    drawing.fill(reader);
+
+    dwgBuffer buffer(drawing.bytes.data(), drawing.bytes.size());
+    REQUIRE(reader.readDwgTables(fixture.header, &buffer));
+
+    // Every control was consumed and published as a receipt; no record was
+    // read because none exists.
+    CHECK(reader.ObjectMap.empty());
+    CHECK(reader.deferredTableFrameCountForTest()
+          == DwgControlOnlyDrawing::tableOrder().size());
+    CHECK(reader.blockRecordCountForTest() == 0u);
+
+    // All three are counted and each is reported against the block control.
+    CHECK(reader.danglingBlockRecordCountForTest() == 3u);
+    std::vector<std::pair<std::uint32_t, std::uint64_t>> reported;
+    for (const auto& diagnostic : danglingControlDiagnostics(
+             reader.integrityDiagnosticsForTest())) {
+        CHECK(diagnostic.severity == DwgIntegritySeverity::Warning);
+        CHECK(diagnostic.phase == DwgIntegrityPhase::SectionParser);
+        REQUIRE(diagnostic.hasLogicalHandle);
+        REQUIRE(diagnostic.hasExpected);
+        reported.emplace_back(diagnostic.logicalHandle, diagnostic.expected);
+    }
+    const std::uint64_t control =
+        drawing.handleOf(DRW::DwgBlockControlObjectType);
+    const std::vector<std::pair<std::uint32_t, std::uint64_t>> expected{
+        {0x9030u, control}, {0x9031u, control}, {0x9032u, control}};
+    CHECK(reported == expected);
+    for (const std::uint32_t handle : {0x9030u, 0x9031u, 0x9032u})
+        CHECK(reader.hasDanglingBlockRecordForTest(handle));
+}
+
+TEST_CASE("DWG table phase rolls back after skipping an erased block record",
+          "[dwg][safety][table]") {
+    // A failure later in the phase still restores every handle the phase
+    // consumed, leaves no table state and publishes no erased record, whatever
+    // it skipped before: the block control lists an absent record and skips it,
+    // the APPID control that follows lists one too and fails the phase.
+    DwgControlOnlyHeader fixture;
+    DwgControlOnlyDrawing drawing(
+        fixture.controls, {{DRW::DwgBlockControlObjectType, {0x9030u}},
+                           {DRW::DwgAppIdControlObjectType, {0x9001u}}});
+    DwgTableStateReaderProbe reader(std::make_unique<dwgBuffer>(
+        drawing.bytes.data(), drawing.bytes.size()));
+    drawing.fill(reader);
+
+    dwgBuffer buffer(drawing.bytes.data(), drawing.bytes.size());
+    CHECK_FALSE(reader.readDwgTables(fixture.header, &buffer));
+    checkTablePhaseRolledBack(reader, drawing);
+    // What was observed before the failure stays reported.
+    CHECK(danglingControlDiagnostics(reader.integrityDiagnosticsForTest())
+              .size() == 1u);
+}
+
+TEST_CASE("DWG block control rejects an absent model or paper space record",
+          "[dwg][safety][table]") {
+    // The two records the block control lists apart from its counted entries
+    // are the model and paper space. A drawing that lacks one is not a
+    // drawing with an erased block, so only the counted entries are skipped.
+    DwgControlOnlyHeader fixture;
+    struct Case {
+        const char* name;
+        std::vector<std::uint32_t> phantoms;
+    };
+    const Case cases[] = {{"model space", {0x9040u, 0u}},
+                          {"paper space", {0u, 0x9041u}},
+                          {"both", {0x9040u, 0x9041u}}};
+    for (const Case& scenario : cases) {
+        DYNAMIC_SECTION(scenario.name) {
+            DwgControlOnlyDrawing drawing(fixture.controls,
+                                          DwgControlOnlyDrawing::Listed(),
+                                          scenario.phantoms);
+            DwgTableStateReaderProbe reader(std::make_unique<dwgBuffer>(
+                drawing.bytes.data(), drawing.bytes.size()));
+            drawing.fill(reader);
+
+            dwgBuffer buffer(drawing.bytes.data(), drawing.bytes.size());
+            CHECK_FALSE(reader.readDwgTables(fixture.header, &buffer));
+            checkTablePhaseRolledBack(reader, drawing);
+            CHECK(danglingControlDiagnostics(
+                      reader.integrityDiagnosticsForTest()).empty());
+        }
+    }
+}
+
+TEST_CASE("DWG every table but the block table rejects an absent record",
+          "[dwg][safety][table]") {
+    // A record that a control lists and the object map lacks is tolerated only
+    // for the block table. In every other table it would leave an object that
+    // names the record (an entity on the layer, in the style, of the
+    // linetype) resolved to nothing with no report, so the phase fails and
+    // rolls back, as it did before the block table's exception.
+    DwgControlOnlyHeader fixture;
+    struct Case {
+        const char* name;
+        std::int16_t control;
+    };
+    const Case cases[] = {
+        {"LTYPE", DRW::DwgLTypeControlObjectType},
+        {"LAYER", DRW::DwgLayerControlObjectType},
+        {"STYLE", DRW::DwgStyleControlObjectType},
+        {"DIMSTYLE", DRW::DwgDimStyleControlObjectType},
+        {"VPORT", DRW::DwgVPortControlObjectType},
+        {"APPID", DRW::DwgAppIdControlObjectType},
+        {"VIEW", DRW::DwgViewControlObjectType},
+        {"UCS", DRW::DwgUcsControlObjectType}};
+    for (const Case& scenario : cases) {
+        DYNAMIC_SECTION(scenario.name) {
+            DwgControlOnlyDrawing drawing(
+                fixture.controls, {{scenario.control, {0x9001u}}});
+            DwgTableStateReaderProbe reader(std::make_unique<dwgBuffer>(
+                drawing.bytes.data(), drawing.bytes.size()));
+            drawing.fill(reader);
+
+            dwgBuffer buffer(drawing.bytes.data(), drawing.bytes.size());
+            CHECK_FALSE(reader.readDwgTables(fixture.header, &buffer));
+            checkTablePhaseRolledBack(reader, drawing);
+            // Nothing was skipped, so nothing is reported.
+            CHECK(danglingControlDiagnostics(
+                      reader.integrityDiagnosticsForTest()).empty());
+        }
+    }
+
+    // The same drawing with the block table listing the record instead: the
+    // one table that reads on.
+    DwgControlOnlyDrawing tolerated(
+        fixture.controls, {{DRW::DwgBlockControlObjectType, {0x9001u}}});
+    DwgTableStateReaderProbe reader(std::make_unique<dwgBuffer>(
+        tolerated.bytes.data(), tolerated.bytes.size()));
+    tolerated.fill(reader);
+    dwgBuffer buffer(tolerated.bytes.data(), tolerated.bytes.size());
+    CHECK(reader.readDwgTables(fixture.header, &buffer));
+}
+
+TEST_CASE("DWG table controls still reject contradictory claims",
+          "[dwg][safety][table]") {
+    DwgControlOnlyHeader fixture;
+    struct Case {
+        const char* name;
+        DwgControlOnlyDrawing::Listed listed;
+    };
+    // The block control lists an object another control owns, or an entry
+    // another control claimed. Neither is an erased record: two owners
+    // contradict each other, so the phase fails and rolls back.
+    const Case cases[] = {
+        {"a control that came before",
+         {{DRW::DwgBlockControlObjectType,
+           {fixture.controls.at(DRW::DwgLTypeControlObjectType)}}}},
+        {"a control that follows",
+         {{DRW::DwgBlockControlObjectType,
+           {fixture.controls.at(DRW::DwgAppIdControlObjectType)}}}},
+        {"an entry the block control claimed",
+         {{DRW::DwgBlockControlObjectType, {0x9030u}},
+          {DRW::DwgAppIdControlObjectType, {0x9030u}}}}};
+    for (const Case& scenario : cases) {
+        DYNAMIC_SECTION(scenario.name) {
+            DwgControlOnlyDrawing drawing(fixture.controls, scenario.listed);
+            DwgTableStateReaderProbe reader(std::make_unique<dwgBuffer>(
+                drawing.bytes.data(), drawing.bytes.size()));
+            drawing.fill(reader);
+
+            dwgBuffer buffer(drawing.bytes.data(), drawing.bytes.size());
+            CHECK_FALSE(reader.readDwgTables(fixture.header, &buffer));
+            checkTablePhaseRolledBack(reader, drawing);
+        }
+    }
+}
+
+TEST_CASE("DWG erased block record that its table still lists is skipped and "
+          "its leftovers are contained",
+          "[dwg][safety][fixture]") {
+    // The whole erased-record shape in the R2018 fixture: the object of its
+    // anonymous dimension block's BLOCK_RECORD is not in the object map,
+    // while BLOCK_CONTROL still lists it (the table phase skips and reports
+    // the entry), and the block's BLOCK, ENDBLK and contents are still in the
+    // file, owned by the record that no longer exists (the entity sweep
+    // contains them). The rest of the drawing is delivered.
+    const auto path = std::filesystem::path(LIBRECAD_TEST_DIR) /
+                      "large_radial.dwg";
+    auto bytes = readFile(path);
+    REQUIRE(!bytes.empty());
+
+    const DwgOrphanChainResult intact =
+        runDwgOrphanChain(path, bytes, DwgBlockErasure::None);
+    REQUIRE(intact.erasedOwner != 0u);
+    CHECK(intact.danglingRecords == 0u);
+    CHECK(intact.danglingDiagnostics.empty());
+
+    const DwgOrphanChainResult forgotten = runDwgOrphanChain(
+        path, bytes, DwgBlockErasure::ForgetRecordAfterTables);
+    const DwgOrphanChainResult removed = runDwgOrphanChain(
+        path, bytes, DwgBlockErasure::RemoveRecordObject, intact.erasedOwner);
+
+    // The table phase skipped the absent record, counted it, and said so.
+    CHECK(removed.danglingRecords == 1u);
+    CHECK(removed.erasedRecordIsDangling);
+    REQUIRE(removed.danglingDiagnostics.size() == 1u);
+    CHECK(removed.danglingDiagnostics.front().severity
+          == DwgIntegritySeverity::Warning);
+    CHECK(removed.danglingDiagnostics.front().logicalHandle
+          == intact.erasedOwner);
+
+    // What it left behind is contained exactly as when only the table forgot
+    // the record.
+    CHECK_FALSE(removed.entitiesRead);
+    CHECK(removed.contained);
+    CHECK(removed.blocks == forgotten.blocks);
+    CHECK(removed.entities == forgotten.entities);
+    CHECK(removed.failures == forgotten.failures);
+    CHECK(removed.orphans.size() == forgotten.orphans.size());
+    CHECK(removed.failures > 0u);
+    REQUIRE(removed.entities > 0u);
+    REQUIRE(removed.entities < intact.entities);
+    for (const auto& diagnostic : removed.orphans)
+        CHECK(diagnostic.expected == intact.erasedOwner);
+}
+
+namespace {
+
+class DwgLineCountingProbe final : public DwgReadProbe {
+public:
+    std::size_t lineCount = 0;
+    void addLine(const DRW_Line&) override { ++lineCount; }
+};
+
+std::uint32_t readLittleEndian32(const std::vector<std::uint8_t>& bytes,
+                                 std::size_t at) {
+    return static_cast<std::uint32_t>(bytes[at])
+        | static_cast<std::uint32_t>(bytes[at + 1]) << 8
+        | static_cast<std::uint32_t>(bytes[at + 2]) << 16
+        | static_cast<std::uint32_t>(bytes[at + 3]) << 24;
+}
+
+void writeLittleEndian32(std::vector<std::uint8_t>& bytes, std::size_t at,
+                         std::uint32_t value) {
+    for (std::size_t i = 0; i < 4; ++i)
+        bytes[at + i] = static_cast<std::uint8_t>(value >> (8u * i));
+}
+
+// Rebuilds the object map (the HANDLES section) of an R2000 file without the
+// given handles, leaving every other byte in place: the section shrinks, the
+// gap it leaves is zero-filled, and the size in the section locator and the
+// file-header CRC that covers the locator are patched. What comes out is a
+// well-formed R2000 file that lacks those objects, which is the state an
+// erased record leaves behind.
+bool eraseR2000Objects(std::vector<std::uint8_t>& bytes,
+                       const std::set<std::uint32_t>& erased) {
+    constexpr std::size_t locatorCountAt = 0x15;
+    constexpr std::size_t locatorRecordsAt = 0x19;
+    constexpr std::uint32_t handlesRecordNumber = 2;
+    constexpr std::size_t maxPageEntryBytes = 2000;
+    if (bytes.size() < locatorRecordsAt)
+        return false;
+    const std::uint32_t count = readLittleEndian32(bytes, locatorCountAt);
+    std::uint16_t crcMask = 0;
+    switch (count) {
+    case 3: crcMask = 0xA598; break;
+    case 4: crcMask = 0x8101; break;
+    case 5: crcMask = 0x3CC4; break;
+    case 6: crcMask = 0x8461; break;
+    default: return false;
+    }
+    const std::size_t recordsEnd = locatorRecordsAt + 9u * count;
+    if (bytes.size() < recordsEnd + 2u)
+        return false;
+    std::size_t handlesRecord = 0;
+    for (std::uint32_t i = 0; i < count; ++i) {
+        const std::size_t at = locatorRecordsAt + 9u * i;
+        if (bytes[at] == handlesRecordNumber)
+            handlesRecord = at;
+    }
+    if (handlesRecord == 0)
+        return false;
+    const std::uint32_t seek = readLittleEndian32(bytes, handlesRecord + 1);
+    const std::uint32_t size = readLittleEndian32(bytes, handlesRecord + 5);
+    if (seek > bytes.size() || size > bytes.size() - seek)
+        return false;
+
+    // The object map as the reader decodes it, without the erased handles.
+    DwgEntityReaderProbe reader(std::make_unique<dwgBuffer>(
+        bytes.data(), bytes.size()));
+    dwgBuffer buffer(bytes.data(), bytes.size());
+    if (!reader.readDwgHandles(&buffer, seek, size, bytes.size()))
+        return false;
+    std::vector<std::pair<std::uint32_t, std::uint32_t>> entries;
+    for (const auto& item : reader.ObjectMap) {
+        if (erased.count(item.first) == 0)
+            entries.emplace_back(item.first, item.second.loc);
+    }
+    std::sort(entries.begin(), entries.end());
+
+    // Pages of entries, the deltas restarting on every page, and the empty
+    // page that ends the section.
+    std::vector<std::uint8_t> section;
+    std::vector<std::uint8_t> page;
+    std::uint32_t lastHandle = 0;
+    std::int64_t lastLocation = 0;
+    const auto encode = [](std::uint32_t handleDelta,
+                           std::int64_t locationDelta,
+                           std::vector<std::uint8_t>& out) {
+        dwgBufferW encoded;
+        if (!encoded.putUModularChar(handleDelta)
+            || !encoded.putModularChar(locationDelta))
+            return false;
+        out = encoded.data();
+        return true;
+    };
+    for (const auto& entry : entries) {
+        std::vector<std::uint8_t> encoded;
+        if (!encode(entry.first - lastHandle,
+                    static_cast<std::int64_t>(entry.second) - lastLocation,
+                    encoded))
+            return false;
+        if (!page.empty() && page.size() + encoded.size() > maxPageEntryBytes) {
+            appendHandleMapPage(section, page);
+            page.clear();
+            lastHandle = 0;
+            lastLocation = 0;
+            if (!encode(entry.first, static_cast<std::int64_t>(entry.second),
+                        encoded))
+                return false;
+        }
+        page.insert(page.end(), encoded.cbegin(), encoded.cend());
+        lastHandle = entry.first;
+        lastLocation = entry.second;
+    }
+    if (!page.empty())
+        appendHandleMapPage(section, page);
+    appendHandleMapPage(section, {});
+    if (section.size() > size)
+        return false;
+
+    std::vector<std::uint8_t> patched(bytes.begin(), bytes.begin() + seek);
+    patched.insert(patched.end(), section.cbegin(), section.cend());
+    patched.insert(patched.end(), size - section.size(), 0u);
+    patched.insert(patched.end(), bytes.begin() + seek + size, bytes.end());
+    writeLittleEndian32(patched, handlesRecord + 5,
+                        static_cast<std::uint32_t>(section.size()));
+    dwgBuffer crcBuffer(patched.data(), patched.size());
+    const std::uint16_t crc = static_cast<std::uint16_t>(
+        crcBuffer.crc8(0, 0, static_cast<std::int32_t>(recordsEnd)) ^ crcMask);
+    patched[recordsEnd] = static_cast<std::uint8_t>(crc & 0xFFu);
+    patched[recordsEnd + 1] = static_cast<std::uint8_t>(crc >> 8);
+    bytes = std::move(patched);
+    return true;
+}
+
+struct DwgErasedObjectRead {
+    bool ok = false;
+    DRW::error error = DRW::BAD_UNKNOWN;
+    std::size_t lines = 0;
+    std::size_t blocks = 0;
+    std::size_t entityFailures = 0;
+    std::size_t danglingRecords = 0;
+    std::size_t orphanedEntities = 0;
+};
+
+// Reads `bytes` as a whole file.
+DwgErasedObjectRead readWholeDwg(const std::vector<std::uint8_t>& bytes,
+                                 const char* name) {
+    const auto path = std::filesystem::temp_directory_path() / name;
+    std::filesystem::remove(path);
+    {
+        std::ofstream output(path, std::ios::binary);
+        REQUIRE(output.good());
+        output.write(reinterpret_cast<const char*>(bytes.data()),
+                     static_cast<std::streamsize>(bytes.size()));
+        REQUIRE(output.good());
+    }
+    DwgErasedObjectRead result;
+    {
+        dwgRW reader(path.string().c_str());
+        DwgLineCountingProbe interface;
+        result.ok = reader.read(&interface, /*ext=*/false);
+        result.error = reader.getError();
+        result.lines = interface.lineCount;
+        result.blocks = interface.blockCount;
+        result.entityFailures = reader.getEntityParseFailures();
+        result.danglingRecords = reader.getDanglingBlockRecords();
+        result.orphanedEntities = reader.getOrphanedEntities();
+    }
+    std::filesystem::remove(path);
+    return result;
+}
+
+// The handle of the first record the table control of the given type lists in
+// the R2000 fixture.
+std::uint32_t firstRecordOfTable(const std::vector<std::uint8_t>& bytes,
+                                 std::int16_t controlType) {
+    DwgTableStateReaderProbe reader(std::make_unique<dwgBuffer>(
+        const_cast<std::uint8_t*>(bytes.data()), bytes.size()));
+    DRW_Header header;
+    prepareAc1015TableReader(reader, header);
+    std::uint32_t handle = 0;
+    std::uint64_t offset = 0;
+    REQUIRE(reader.firstTableRecordForTest(controlType, handle, offset));
+    return handle;
+}
+
+// The handle of the block record called `name` in the R2000 fixture.
+std::uint32_t blockRecordNamed(const std::vector<std::uint8_t>& bytes,
+                               const std::string& name) {
+    DwgTableStateReaderProbe reader(std::make_unique<dwgBuffer>(
+        const_cast<std::uint8_t*>(bytes.data()), bytes.size()));
+    DRW_Header header;
+    prepareAc1015TableReader(reader, header);
+    dwgBuffer tableBuffer(const_cast<std::uint8_t*>(bytes.data()),
+                          bytes.size());
+    REQUIRE(reader.readDwgTables(header, &tableBuffer));
+    std::uint32_t handle = 0;
+    REQUIRE(reader.findBlockRecordForTest(name, handle));
+    return handle;
+}
+
+} // namespace
+
+TEST_CASE("DWG R2000 file with a rebuilt object map reads as before",
+          "[dwg][safety][table][fixture]") {
+    // The control for the file-level erasure tests below: rebuilding the
+    // object map without dropping anything changes no result, so a change in
+    // the result is the erased record's.
+    auto bytes = readFile(std::filesystem::path(LIBRECAD_TEST_DIR) /
+                          "ordinary_enc_AC1015.dwg");
+    REQUIRE(!bytes.empty());
+    const DwgErasedObjectRead pristine =
+        readWholeDwg(bytes, "libdxfrw_erased_control_original.dwg");
+    REQUIRE(pristine.ok);
+    REQUIRE(pristine.lines > 0u);
+
+    REQUIRE(eraseR2000Objects(bytes, {}));
+    const DwgErasedObjectRead rebuilt =
+        readWholeDwg(bytes, "libdxfrw_erased_control_rebuilt.dwg");
+    CHECK(rebuilt.ok);
+    CHECK(rebuilt.error == DRW::BAD_NONE);
+    CHECK(rebuilt.lines == pristine.lines);
+    CHECK(rebuilt.blocks == pristine.blocks);
+    CHECK(rebuilt.entityFailures == pristine.entityFailures);
+    CHECK(rebuilt.danglingRecords == 0u);
+}
+
+TEST_CASE("DWG file that lists an erased record is rejected",
+          "[dwg][safety][table][fixture]") {
+    // The state an erased record leaves in a whole R2000 file: its table
+    // control still lists it and the object map no longer holds it. Only an
+    // ordinary block record may be missing (the R2018 fixture and the
+    // control-only drawings above cover that; this R2000 fixture has none).
+    // For every other record the read fails at the table phase, as before: the
+    // objects that name the record (entities on an erased layer, in an erased
+    // style, in an erased model space) would otherwise open as if nothing were
+    // wrong, on the default layer or style.
+    const auto original = readFile(std::filesystem::path(LIBRECAD_TEST_DIR) /
+                                   "ordinary_enc_AC1015.dwg");
+    REQUIRE(!original.empty());
+
+    struct Case {
+        const char* name;
+        std::int16_t control;
+        const char* blockName;
+    };
+    const Case cases[] = {
+        {"LTYPE", DRW::DwgLTypeControlObjectType, nullptr},
+        {"LAYER", DRW::DwgLayerControlObjectType, nullptr},
+        {"STYLE", DRW::DwgStyleControlObjectType, nullptr},
+        {"DIMSTYLE", DRW::DwgDimStyleControlObjectType, nullptr},
+        {"VPORT", DRW::DwgVPortControlObjectType, nullptr},
+        {"APPID", DRW::DwgAppIdControlObjectType, nullptr},
+        {"model space", 0, "*Model_Space"},
+        {"paper space", 0, "*Paper_Space"}};
+    for (const Case& scenario : cases) {
+        DYNAMIC_SECTION(scenario.name) {
+            auto bytes = original;
+            const std::uint32_t record =
+                scenario.blockName != nullptr
+                    ? blockRecordNamed(original, scenario.blockName)
+                    : firstRecordOfTable(original, scenario.control);
+            REQUIRE(eraseR2000Objects(bytes, {record}));
+            const DwgErasedObjectRead read =
+                readWholeDwg(bytes, "libdxfrw_erased_table_record.dwg");
+            CHECK_FALSE(read.ok);
+            CHECK(read.error == DRW::BAD_READ_TABLES);
+            CHECK(read.lines == 0u);
+            CHECK(read.danglingRecords == 0u);
+        }
+    }
+}
+
+TEST_CASE("DWG INSERT that places an erased block record is rejected",
+          "[dwg][safety][table][compound]") {
+    // BLOCK_CONTROL lists a record the file does not hold, and an INSERT
+    // places it. Reading the INSERT as a block named "" would open the
+    // drawing as if nothing were wrong; the INSERT is rejected whole instead,
+    // reported, and fails the phase that reads it. The same INSERT placing a
+    // record that exists is read and named after that record.
+    constexpr std::uint32_t insertHandle = 0x100;
+    constexpr std::uint32_t erasedBlock = 0x600;
+    constexpr std::uint32_t liveBlock = 0x601;
+    const bool placesErasedBlock = GENERATE(true, false);
+    INFO((placesErasedBlock ? "places the erased record"
+                            : "places a record that exists"));
+
+    DwgInsertWriterProbe insert;
+    insert.handle = insertHandle;
+    insert.setObjectType(dwgType::INSERT);
+    insert.blockRecH.ref = placesErasedBlock ? erasedBlock : liveBlock;
+    dwgBufferW body;
+    REQUIRE(insert.encodeDwg(DRW::AC1018, &body, 0, nullptr, nullptr));
+    const auto frame = makeEntityFrame(body);
+    REQUIRE(!frame.empty());
+
+    dwgBufferW handleEntries;
+    REQUIRE(handleEntries.putUModularChar(insertHandle));
+    REQUIRE(handleEntries.putModularChar(0));
+    std::vector<std::uint8_t> handleMap;
+    appendHandleMapPage(handleMap, handleEntries.data());
+    appendHandleMapPage(handleMap, {});
+
+    const auto makeReader = [&frame, &handleMap]() {
+        auto reader = std::make_unique<DwgEntityReaderProbe>(
+            std::make_unique<dwgBuffer>(
+                const_cast<std::uint8_t*>(frame.data()), frame.size()));
+        reader->setVersionForTest(DRW::AC1018);
+        reader->addBlockRecordForTest(liveBlock, "PLACED");
+        reader->addDanglingBlockRecordForTest(erasedBlock);
+        dwgBuffer handleBuffer(handleMap.data(), handleMap.size());
+        REQUIRE(reader->readDwgHandles(
+            &handleBuffer, 0, handleMap.size(), frame.size()));
+        return reader;
+    };
+
+    SECTION("in a block walk") {
+        auto reader = makeReader();
+        DRW_Block_Record record;
+        record.name = "OWNER";
+        DwgBlockOwnershipTestAccess::setHandles(record, 0, 0, {insertHandle});
+        DwgInsertReceiptProbe interface;
+        dwgBuffer objectBuffer(
+            const_cast<std::uint8_t*>(frame.data()), frame.size());
+        DwgEntityReaderProbe::DwgBlockWalkOutcome outcome =
+            DwgEntityReaderProbe::DwgBlockWalkOutcome::Complete;
+        const bool walked = reader->walkBlockRecordEntities(
+            &record, &objectBuffer, interface, DRW::NoHandle, DRW::NoHandle,
+            DwgIntegrityAddressSpace::DecodedBuffer, &outcome);
+        if (placesErasedBlock) {
+            CHECK_FALSE(walked);
+            CHECK(outcome
+                  == DwgEntityReaderProbe::DwgBlockWalkOutcome::Structural);
+            CHECK(interface.inserts.empty());
+            CHECK(interface.publications.empty());
+            REQUIRE(reader->m_dwgSourceFrameLedger.size() == 1u);
+            CHECK(reader->m_dwgSourceFrameLedger.front().m_disposition
+                  == DRW_DwgFrameDisposition::Failed);
+        } else {
+            CHECK(walked);
+            REQUIRE(interface.inserts.size() == 1u);
+            CHECK(interface.inserts.front().name == "PLACED");
+        }
+    }
+
+    SECTION("in the entity sweep") {
+        auto reader = makeReader();
+        DwgInsertReceiptProbe interface;
+        dwgBuffer objectBuffer(
+            const_cast<std::uint8_t*>(frame.data()), frame.size());
+        const bool swept = reader->readDwgEntities(interface, &objectBuffer);
+        if (placesErasedBlock) {
+            CHECK_FALSE(swept);
+            CHECK_FALSE(reader->entitySweepFailureContained());
+            CHECK(interface.inserts.empty());
+            CHECK(interface.publications.empty());
+        } else {
+            CHECK(swept);
+            REQUIRE(interface.inserts.size() == 1u);
+            CHECK(interface.inserts.front().name == "PLACED");
+        }
+    }
+
+    // Either way the rejection is reported: an error that names the INSERT,
+    // its frame and the absent record.
+    auto reader = makeReader();
+    DwgInsertReceiptProbe interface;
+    dwgBuffer objectBuffer(
+        const_cast<std::uint8_t*>(frame.data()), frame.size());
+    (void)reader->readDwgEntities(interface, &objectBuffer);
+    const auto diagnostics = reader->erasedBlockReferenceDiagnosticsForTest();
+    if (placesErasedBlock) {
+        REQUIRE(diagnostics.size() == 1u);
+        CHECK(diagnostics.front().severity == DwgIntegritySeverity::Error);
+        CHECK(diagnostics.front().logicalHandle == insertHandle);
+        CHECK(diagnostics.front().hasFileOffset);
+        CHECK(diagnostics.front().fileOffset == 0u);
+        CHECK(diagnostics.front().expected == erasedBlock);
+    } else {
+        CHECK(diagnostics.empty());
+    }
 }
 
 TEST_CASE("DWG TABLES rejects a mismatched control type before record parsing",
@@ -19714,13 +22682,816 @@ TEST_CASE("DWG mapped wrong-owner ATTRIB fails at the entity boundary",
     CHECK(reader.stagedOrphanAttribCountForTest() == 0u);
     CHECK(reader.stagedSeqEndCountForTest() == 0u);
     CHECK(reader.m_invalidInsertOwners.count(insertHandle) == 1u);
-    CHECK(reader.m_invalidInsertOwners.count(wrongOwner) == 1u);
+    // The rejected group is invalid; the owner its ATTRIB named is not. The
+    // group's foreign-owned child is disposed of on its own -- that owner may
+    // be a real group whose children are staged next to it, or the foreign
+    // owner of other rejected groups (see "DWG mapped INSERT groups that share
+    // one foreign owner are all contained") -- so it is left alone. This used
+    // to be marked invalid as a side effect of the end-of-walk sweep of every
+    // orphan state, which made a second group naming the same owner fail
+    // structurally.
+    CHECK(reader.m_invalidInsertOwners.count(wrongOwner) == 0u);
     CHECK(reader.m_invalidSeqEndHandles.count(seqEndHandle) == 1u);
     REQUIRE(reader.m_dwgSourceFrameLedger.size() == 3u);
     for (const DRW_DwgFrameCoverageEntry& entry : reader.m_dwgSourceFrameLedger) {
         CHECK(entry.m_disposition == DRW_DwgFrameDisposition::Quarantined);
         CHECK(entry.m_publicationCount == 0u);
     }
+}
+
+// A mapped (R2004+) INSERT group is INSERT + ATTRIB... + SEQEND. Frames are
+// laid out in handle order; the BLOCK_RECORD's entity list gives the walk
+// order, which may put the children before the INSERT.
+TEST_CASE("DWG mapped INSERT group with two ATTRIBs commits in either order",
+          "[dwg][safety][compound][mapped-owner]") {
+    constexpr std::uint32_t recordHandle = 0x780;
+    constexpr std::uint32_t insertHandle = 0x781;
+    constexpr std::uint32_t firstAttribHandle = 0x782;
+    constexpr std::uint32_t lastAttribHandle = 0x783;
+    constexpr std::uint32_t seqEndHandle = 0x784;
+    constexpr std::uint32_t lineHandle = 0x786;
+    const bool childFirst = GENERATE(false, true);
+    INFO("children " << (childFirst ? "before" : "after") << " the INSERT");
+
+    const auto set = makeMappedFrameSet({
+        {insertHandle, makeInsertWithAttributesFrame(
+             insertHandle, recordHandle, {firstAttribHandle, lastAttribHandle},
+             seqEndHandle)},
+        {firstAttribHandle, makeAttribFrame(firstAttribHandle, insertHandle)},
+        {lastAttribHandle, makeAttribFrame(lastAttribHandle, insertHandle)},
+        {seqEndHandle, makeSeqEndFrame(seqEndHandle, insertHandle)},
+        {lineHandle, makeLineFrame(lineHandle, recordHandle)}});
+    REQUIRE(set.valid);
+
+    DwgEntityReaderProbe reader(std::make_unique<dwgBuffer>(
+        const_cast<std::uint8_t*>(set.bytes.data()), set.bytes.size()));
+    reader.setVersionForTest(DRW::AC1018);
+    dwgBuffer handleBuffer(
+        const_cast<std::uint8_t*>(set.handleMap.data()), set.handleMap.size());
+    REQUIRE(reader.readDwgHandles(
+        &handleBuffer, 0, set.handleMap.size(), set.bytes.size()));
+
+    DRW_Block_Record record;
+    DwgBlockOwnershipTestAccess::setHandle(record, recordHandle);
+    record.name = "MAPPED_GROUP_CONTROL";
+    DwgBlockOwnershipTestAccess::setHandles(
+        record, 0, 0,
+        childFirst ? std::vector<std::uint32_t>{firstAttribHandle,
+                                                lastAttribHandle, seqEndHandle,
+                                                insertHandle, lineHandle}
+                   : std::vector<std::uint32_t>{insertHandle, firstAttribHandle,
+                                                lastAttribHandle, seqEndHandle,
+                                                lineHandle});
+    DwgGroupRejectionProbe interface;
+    dwgBuffer objectBuffer(
+        const_cast<std::uint8_t*>(set.bytes.data()), set.bytes.size());
+    DwgEntityReaderProbe::DwgBlockWalkOutcome outcome =
+        DwgEntityReaderProbe::DwgBlockWalkOutcome::Structural;
+    CHECK(reader.walkBlockRecordEntities(
+        &record, &objectBuffer, interface, recordHandle, recordHandle,
+        DwgIntegrityAddressSpace::DecodedBuffer, &outcome));
+    CHECK(outcome == DwgEntityReaderProbe::DwgBlockWalkOutcome::Complete);
+    REQUIRE(interface.inserts.size() == 1u);
+    CHECK(interface.inserts.front().attlist.size() == 2u);
+    CHECK(interface.lineCount == 1u);
+    CHECK(reader.ObjectMap.empty());
+    for (const DRW_DwgFrameCoverageEntry& entry : reader.m_dwgSourceFrameLedger) {
+        CHECK(entry.m_disposition == DRW_DwgFrameDisposition::Published);
+        CHECK(entry.m_publicationCount == 1u);
+    }
+}
+
+// The group is rejected as a whole and the walk still reports the violation,
+// but as a contained failure: every other frame of the walk was read on its own
+// merits (the LINE is published), nothing of the group is published, nothing is
+// left staged, and nothing of the group is left for the sweep to decode.
+TEST_CASE("DWG mapped INSERT contains a foreign child owner to its group",
+          "[dwg][safety][compound][mapped-owner]") {
+    constexpr std::uint32_t recordHandle = 0x780;
+    constexpr std::uint32_t insertHandle = 0x781;
+    constexpr std::uint32_t firstAttribHandle = 0x782;
+    constexpr std::uint32_t lastAttribHandle = 0x783;
+    constexpr std::uint32_t seqEndHandle = 0x784;
+    constexpr std::uint32_t wrongOwner = 0x785;
+    constexpr std::uint32_t lineHandle = 0x786;
+    const ForeignChild foreign =
+        GENERATE(ForeignChild::First, ForeignChild::Last, ForeignChild::SeqEnd);
+    const bool childFirst = GENERATE(false, true);
+    INFO("foreign owner on the " << foreignChildName(foreign) << ", children "
+         << (childFirst ? "before" : "after") << " the INSERT");
+
+    const auto set = makeMappedFrameSet({
+        {insertHandle, makeInsertWithAttributesFrame(
+             insertHandle, recordHandle, {firstAttribHandle, lastAttribHandle},
+             seqEndHandle)},
+        {firstAttribHandle,
+         makeAttribFrame(firstAttribHandle,
+                         foreign == ForeignChild::First ? wrongOwner
+                                                        : insertHandle)},
+        {lastAttribHandle,
+         makeAttribFrame(lastAttribHandle,
+                         foreign == ForeignChild::Last ? wrongOwner
+                                                       : insertHandle)},
+        {seqEndHandle,
+         makeSeqEndFrame(seqEndHandle, foreign == ForeignChild::SeqEnd
+                                           ? wrongOwner : insertHandle)},
+        {lineHandle, makeLineFrame(lineHandle, recordHandle)}});
+    REQUIRE(set.valid);
+
+    DwgEntityReaderProbe reader(std::make_unique<dwgBuffer>(
+        const_cast<std::uint8_t*>(set.bytes.data()), set.bytes.size()));
+    reader.setVersionForTest(DRW::AC1018);
+    dwgBuffer handleBuffer(
+        const_cast<std::uint8_t*>(set.handleMap.data()), set.handleMap.size());
+    REQUIRE(reader.readDwgHandles(
+        &handleBuffer, 0, set.handleMap.size(), set.bytes.size()));
+
+    DRW_Block_Record record;
+    DwgBlockOwnershipTestAccess::setHandle(record, recordHandle);
+    record.name = "MAPPED_FOREIGN_CHILD_OWNER";
+    DwgBlockOwnershipTestAccess::setHandles(
+        record, 0, 0,
+        childFirst ? std::vector<std::uint32_t>{firstAttribHandle,
+                                                lastAttribHandle, seqEndHandle,
+                                                insertHandle, lineHandle}
+                   : std::vector<std::uint32_t>{insertHandle, firstAttribHandle,
+                                                lastAttribHandle, seqEndHandle,
+                                                lineHandle});
+    DwgGroupRejectionProbe interface;
+    dwgBuffer objectBuffer(
+        const_cast<std::uint8_t*>(set.bytes.data()), set.bytes.size());
+    DwgEntityReaderProbe::DwgBlockWalkOutcome outcome =
+        DwgEntityReaderProbe::DwgBlockWalkOutcome::Complete;
+    CHECK_FALSE(reader.walkBlockRecordEntities(
+        &record, &objectBuffer, interface, recordHandle, recordHandle,
+        DwgIntegrityAddressSpace::DecodedBuffer, &outcome));
+    CHECK(outcome
+          == DwgEntityReaderProbe::DwgBlockWalkOutcome::ContainedGroupRejection);
+    CHECK(interface.inserts.empty());
+    CHECK(interface.lineCount == 1u);
+    CHECK(reader.m_entityParseFailures >= 1u);
+    CHECK(reader.stagedPendingInsertCountForTest() == 0u);
+    CHECK(reader.stagedOrphanAttribCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+    for (const auto& item : reader.ObjectMap) {
+        CHECK(reader.m_quarantinedEntityHandles.count(item.first) == 1u);
+    }
+    checkGroupNeverPublished(
+        reader.m_dwgSourceFrameLedger,
+        {insertHandle, firstAttribHandle, lastAttribHandle, seqEndHandle});
+    for (const DRW_DwgFrameCoverageEntry& entry : reader.m_dwgSourceFrameLedger) {
+        if (entry.m_handle != lineHandle)
+            continue;
+        CHECK(entry.m_disposition == DRW_DwgFrameDisposition::Published);
+        CHECK(entry.m_publicationCount == 1u);
+    }
+
+    DwgReadProbe sweepInterface;
+    dwgBuffer sweepBuffer(
+        const_cast<std::uint8_t*>(set.bytes.data()), set.bytes.size());
+    REQUIRE(reader.readDwgEntities(sweepInterface, &sweepBuffer));
+    CHECK(sweepInterface.inserts.empty());
+    CHECK(reader.ObjectMap.empty());
+    CHECK(reader.stagedOrphanAttribCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+}
+
+// The journalled block scope (every modern BLOCK_RECORD, named and model/paper
+// space alike): a group rejected only for a foreign child owner is contained.
+// The block commits what it delivered -- the LINE, the block scope -- without
+// the group, certifies no reachability for an entity list it did not publish in
+// full, and leaves the group's frames Failed/Quarantined in the coverage. With
+// no foreign owner the same block commits the group and its reachability.
+TEST_CASE("DWG journalled block commits around a contained INSERT group",
+          "[dwg][safety][journal][mapped-owner]") {
+    constexpr std::uint32_t recordHandle = 0x7C0;
+    constexpr std::uint32_t blockHandle = 0x7C1;
+    constexpr std::uint32_t insertHandle = 0x7C2;
+    constexpr std::uint32_t firstAttribHandle = 0x7C3;
+    constexpr std::uint32_t lastAttribHandle = 0x7C4;
+    constexpr std::uint32_t seqEndHandle = 0x7C5;
+    constexpr std::uint32_t lineHandle = 0x7C6;
+    constexpr std::uint32_t endBlockHandle = 0x7C7;
+    constexpr std::uint32_t wrongOwner = 0x7C8;
+    const bool modelSpace = GENERATE(false, true);
+    const ForeignChild foreign =
+        GENERATE(ForeignChild::None, ForeignChild::First, ForeignChild::Last,
+                 ForeignChild::SeqEnd);
+    const bool childFirst = GENERATE(false, true);
+    INFO((modelSpace ? "model space" : "named block") << ", "
+         << foreignChildName(foreign) << ", children "
+         << (childFirst ? "before" : "after") << " the INSERT");
+    const std::uint32_t blockOwner = modelSpace ? DRW::NoHandle : recordHandle;
+
+    const auto run = runJournalledBlock(
+        recordHandle, blockHandle, endBlockHandle,
+        modelSpace ? "*Model_Space" : "JOURNALLED_GROUP", blockOwner,
+        {{insertHandle, makeInsertWithAttributesFrame(
+              insertHandle, blockOwner,
+              {firstAttribHandle, lastAttribHandle}, seqEndHandle)},
+         {firstAttribHandle,
+          makeAttribFrame(firstAttribHandle,
+                          foreign == ForeignChild::First ? wrongOwner
+                                                         : insertHandle)},
+         {lastAttribHandle,
+          makeAttribFrame(lastAttribHandle,
+                          foreign == ForeignChild::Last ? wrongOwner
+                                                        : insertHandle)},
+         {seqEndHandle,
+          makeSeqEndFrame(seqEndHandle, foreign == ForeignChild::SeqEnd
+                                            ? wrongOwner : insertHandle)},
+         {lineHandle, makeLineFrame(lineHandle, blockOwner)}},
+        childFirst ? std::vector<std::uint32_t>{firstAttribHandle,
+                                                lastAttribHandle, seqEndHandle,
+                                                insertHandle, lineHandle}
+                   : std::vector<std::uint32_t>{insertHandle, firstAttribHandle,
+                                                lastAttribHandle, seqEndHandle,
+                                                lineHandle});
+    const DwgEntityReaderProbe& reader = *run->reader;
+    const DwgGroupRejectionProbe& interface = run->interface;
+
+    // The block itself is never lost, and the phase after BLOCKS still runs.
+    CHECK(run->readBlocks);
+    CHECK(run->readEntities);
+    CHECK(run->sweepInterface.inserts.empty());
+    CHECK(interface.blockCount == 1u);
+    CHECK(interface.lineCount == 1u);
+    CHECK(reader.ObjectMap.empty());
+    CHECK(reader.stagedPendingInsertCountForTest() == 0u);
+    CHECK(reader.stagedOrphanAttribCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+    // Model/paper space deliver their entities after the block scope closes.
+    std::vector<std::string> expectedCallbacks =
+        modelSpace ? std::vector<std::string>{"block", "endBlock"}
+                   : std::vector<std::string>{"block"};
+    if (foreign == ForeignChild::None)
+        expectedCallbacks.emplace_back("insert");
+    expectedCallbacks.emplace_back("line");
+    if (!modelSpace)
+        expectedCallbacks.emplace_back("endBlock");
+    if (foreign == ForeignChild::None)
+        expectedCallbacks.emplace_back("reachability");
+    CHECK(interface.callbacks == expectedCallbacks);
+
+    if (foreign == ForeignChild::None) {
+        REQUIRE(interface.inserts.size() == 1u);
+        CHECK(interface.inserts.front().attlist.size() == 2u);
+        REQUIRE(interface.reachabilities.size() == 1u);
+        CHECK(interface.reachabilities.front().m_complete);
+        CHECK(interface.reachabilities.front().m_entities.size() == 5u);
+        for (const DRW_DwgFrameCoverageEntry& entry
+             : reader.m_dwgSourceFrameLedger) {
+            CHECK(entry.m_disposition == DRW_DwgFrameDisposition::Published);
+            CHECK(entry.m_publicationCount == 1u);
+        }
+        return;
+    }
+
+    CHECK(interface.inserts.empty());
+    CHECK(interface.reachabilities.empty());
+    CHECK(reader.m_entityParseFailures >= 1u);
+    checkGroupNeverPublished(
+        reader.m_dwgSourceFrameLedger,
+        {insertHandle, firstAttribHandle, lastAttribHandle, seqEndHandle});
+    for (const DRW_DwgFrameCoverageEntry& entry : reader.m_dwgSourceFrameLedger) {
+        if (entry.m_handle == insertHandle || entry.m_handle == firstAttribHandle
+            || entry.m_handle == lastAttribHandle
+            || entry.m_handle == seqEndHandle) {
+            continue;
+        }
+        INFO("handle 0x" << std::hex << entry.m_handle);
+        CHECK(entry.m_disposition == DRW_DwgFrameDisposition::Published);
+        CHECK(entry.m_publicationCount == 1u);
+    }
+}
+
+TEST_CASE("DWG journalled block commits around a contained POLYLINE group",
+          "[dwg][safety][journal][mapped-owner]") {
+    constexpr std::uint32_t recordHandle = 0xE0;
+    constexpr std::uint32_t blockHandle = 0xF0;
+    constexpr std::uint32_t polylineHandle = 0x100;
+    constexpr std::uint32_t firstVertexHandle = 0x101;
+    constexpr std::uint32_t lastVertexHandle = 0x102;
+    constexpr std::uint32_t seqEndHandle = 0x103;
+    constexpr std::uint32_t lineHandle = 0x108;
+    constexpr std::uint32_t endBlockHandle = 0x110;
+    const bool modelSpace = GENERATE(false, true);
+    const ForeignChild foreign =
+        GENERATE(ForeignChild::None, ForeignChild::First, ForeignChild::Last,
+                 ForeignChild::SeqEnd);
+    const bool childFirst = GENERATE(false, true);
+    INFO((modelSpace ? "model space" : "named block") << ", "
+         << foreignChildName(foreign) << ", children "
+         << (childFirst ? "before" : "after") << " the POLYLINE");
+    const std::uint32_t blockOwner = modelSpace ? DRW::NoHandle : recordHandle;
+
+    const auto fixture = makePolylineFrameFixture(
+        false, false, foreign == ForeignChild::SeqEnd,
+        foreign == ForeignChild::First, 0.0, true, DRW::AC1018,
+        DRW_Vertex::DwgSubtype::Vertex2D, blockOwner,
+        foreign == ForeignChild::Last);
+    REQUIRE(!fixture.bytes.empty());
+    const auto slice = [&fixture](std::uint32_t begin, std::uint32_t end) {
+        return std::vector<std::uint8_t>(
+            fixture.bytes.begin() + static_cast<std::ptrdiff_t>(begin),
+            fixture.bytes.begin() + static_cast<std::ptrdiff_t>(end));
+    };
+    const auto size = static_cast<std::uint32_t>(fixture.bytes.size());
+
+    const auto run = runJournalledBlock(
+        recordHandle, blockHandle, endBlockHandle,
+        modelSpace ? "*Model_Space" : "JOURNALLED_POLYLINE_GROUP", blockOwner,
+        {{polylineHandle, slice(0, fixture.vertexOffset)},
+         {firstVertexHandle,
+          slice(fixture.vertexOffset, fixture.secondVertexOffset)},
+         {lastVertexHandle,
+          slice(fixture.secondVertexOffset, fixture.seqEndOffset)},
+         {seqEndHandle, slice(fixture.seqEndOffset, size)},
+         {lineHandle, makeLineFrame(lineHandle, blockOwner)}},
+        childFirst ? std::vector<std::uint32_t>{firstVertexHandle,
+                                                lastVertexHandle, seqEndHandle,
+                                                polylineHandle, lineHandle}
+                   : std::vector<std::uint32_t>{polylineHandle,
+                                                firstVertexHandle,
+                                                lastVertexHandle, seqEndHandle,
+                                                lineHandle});
+    const DwgEntityReaderProbe& reader = *run->reader;
+    const DwgGroupRejectionProbe& interface = run->interface;
+
+    CHECK(run->readBlocks);
+    CHECK(run->readEntities);
+    CHECK(run->sweepInterface.polylineCount == 0u);
+    CHECK(interface.blockCount == 1u);
+    CHECK(interface.lineCount == 1u);
+    CHECK(reader.ObjectMap.empty());
+    CHECK(reader.stagedPendingPolylineCountForTest() == 0u);
+    CHECK(reader.stagedOrphanPolylineVertexCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+    std::vector<std::string> expectedCallbacks =
+        modelSpace ? std::vector<std::string>{"block", "endBlock"}
+                   : std::vector<std::string>{"block"};
+    if (foreign == ForeignChild::None)
+        expectedCallbacks.emplace_back("polyline");
+    expectedCallbacks.emplace_back("line");
+    if (!modelSpace)
+        expectedCallbacks.emplace_back("endBlock");
+    if (foreign == ForeignChild::None)
+        expectedCallbacks.emplace_back("reachability");
+    CHECK(interface.callbacks == expectedCallbacks);
+
+    if (foreign == ForeignChild::None) {
+        CHECK(interface.polylineCount == 1u);
+        REQUIRE(interface.reachabilities.size() == 1u);
+        CHECK(interface.reachabilities.front().m_complete);
+        CHECK(interface.reachabilities.front().m_entities.size() == 5u);
+        for (const DRW_DwgFrameCoverageEntry& entry
+             : reader.m_dwgSourceFrameLedger) {
+            CHECK(entry.m_disposition == DRW_DwgFrameDisposition::Published);
+            CHECK(entry.m_publicationCount == 1u);
+        }
+        return;
+    }
+
+    CHECK(interface.polylineCount == 0u);
+    CHECK(interface.reachabilities.empty());
+    CHECK(reader.m_entityParseFailures >= 1u);
+    checkGroupNeverPublished(
+        reader.m_dwgSourceFrameLedger,
+        {polylineHandle, firstVertexHandle, lastVertexHandle, seqEndHandle});
+    for (const DRW_DwgFrameCoverageEntry& entry : reader.m_dwgSourceFrameLedger) {
+        if (entry.m_handle == polylineHandle
+            || entry.m_handle == firstVertexHandle
+            || entry.m_handle == lastVertexHandle
+            || entry.m_handle == seqEndHandle) {
+            continue;
+        }
+        INFO("handle 0x" << std::hex << entry.m_handle);
+        CHECK(entry.m_disposition == DRW_DwgFrameDisposition::Published);
+        CHECK(entry.m_publicationCount == 1u);
+    }
+}
+
+// The containment stops at the group: any other failure in the same block still
+// fails it and rolls the whole transaction back, including what the contained
+// group's neighbours delivered.
+TEST_CASE("DWG journalled block still rolls back on a structural failure "
+          "beside a contained INSERT group",
+          "[dwg][safety][journal][mapped-owner]") {
+    constexpr std::uint32_t recordHandle = 0x7D0;
+    constexpr std::uint32_t blockHandle = 0x7D1;
+    constexpr std::uint32_t insertHandle = 0x7D2;
+    constexpr std::uint32_t attribHandle = 0x7D3;
+    constexpr std::uint32_t seqEndHandle = 0x7D4;
+    constexpr std::uint32_t lineHandle = 0x7D5;
+    constexpr std::uint32_t badLineHandle = 0x7D6;
+    constexpr std::uint32_t endBlockHandle = 0x7D7;
+    constexpr std::uint32_t wrongOwner = 0x7D8;
+    const bool modelSpace = GENERATE(false, true);
+    INFO((modelSpace ? "model space" : "named block"));
+    const std::uint32_t blockOwner = modelSpace ? DRW::NoHandle : recordHandle;
+
+    const auto run = runJournalledBlock(
+        recordHandle, blockHandle, endBlockHandle,
+        modelSpace ? "*Model_Space" : "JOURNALLED_ROLLBACK", blockOwner,
+        {{insertHandle, makeInsertWithAttributesFrame(
+              insertHandle, blockOwner, {attribHandle}, seqEndHandle)},
+         {attribHandle, makeAttribFrame(attribHandle, wrongOwner)},
+         {seqEndHandle, makeSeqEndFrame(seqEndHandle, insertHandle)},
+         {lineHandle, makeLineFrame(lineHandle, blockOwner)},
+         // A LINE owned by something else: a structural failure of its own.
+         {badLineHandle, makeLineFrame(badLineHandle, wrongOwner)}},
+        {insertHandle, attribHandle, seqEndHandle, lineHandle, badLineHandle});
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK_FALSE(run->readBlocks);
+    // Nothing of the block reached the interface: not the block scope, not the
+    // LINE before the failure, not the contained group.
+    CHECK(run->interface.callbacks.empty());
+    CHECK(run->interface.inserts.empty());
+    CHECK(run->interface.reachabilities.empty());
+    CHECK(reader.ObjectMap.empty());
+    CHECK(reader.stagedPendingInsertCountForTest() == 0u);
+    CHECK(reader.stagedOrphanAttribCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+    for (const DRW_DwgFrameCoverageEntry& entry : reader.m_dwgSourceFrameLedger) {
+        if (entry.m_handle == recordHandle)
+            continue; // the BLOCK_RECORD table frame was published up front
+        INFO("handle 0x" << std::hex << entry.m_handle);
+        CHECK(entry.m_publicationCount == 0u);
+        CHECK((entry.m_disposition == DRW_DwgFrameDisposition::Failed
+               || entry.m_disposition == DRW_DwgFrameDisposition::Quarantined));
+    }
+}
+
+// The journal is all or nothing around the contained group too: when the
+// transaction cannot take what the block did deliver, nothing of the block --
+// and nothing of the contained group -- reaches the interface.
+TEST_CASE("DWG journalled block rolls back cleanly after a contained INSERT "
+          "group when the journal fails",
+          "[dwg][safety][journal][mapped-owner]") {
+    constexpr std::uint32_t recordHandle = 0x7E0;
+    constexpr std::uint32_t blockHandle = 0x7E1;
+    constexpr std::uint32_t insertHandle = 0x7E2;
+    constexpr std::uint32_t attribHandle = 0x7E3;
+    constexpr std::uint32_t seqEndHandle = 0x7E4;
+    constexpr std::uint32_t lineHandle = 0x7E5;
+    constexpr std::uint32_t endBlockHandle = 0x7E6;
+    constexpr std::uint32_t wrongOwner = 0x7E7;
+    const bool failReservation = GENERATE(false, true);
+    INFO((failReservation ? "reservation fails" : "adoption fails"));
+
+    const auto run = runJournalledBlock(
+        recordHandle, blockHandle, endBlockHandle, "JOURNALLED_FAULT", recordHandle,
+        {{insertHandle, makeInsertWithAttributesFrame(
+              insertHandle, recordHandle, {attribHandle}, seqEndHandle)},
+         {attribHandle, makeAttribFrame(attribHandle, wrongOwner)},
+         {seqEndHandle, makeSeqEndFrame(seqEndHandle, insertHandle)},
+         {lineHandle, makeLineFrame(lineHandle, recordHandle)}},
+        {insertHandle, attribHandle, seqEndHandle, lineHandle},
+        [failReservation](DwgEntityReaderProbe& reader) {
+            // The block delimiters take the first two admissions; the LINE is
+            // the next one, after the contained group.
+            if (failReservation)
+                reader.failBlockJournalReservationForTest(3u);
+            else
+                reader.failBlockJournalAdoptionForTest(3u);
+        });
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK_FALSE(run->readBlocks);
+    CHECK(run->interface.callbacks.empty());
+    CHECK(run->interface.inserts.empty());
+    CHECK(run->interface.reachabilities.empty());
+    CHECK(reader.ObjectMap.empty());
+    CHECK(reader.stagedPendingInsertCountForTest() == 0u);
+    CHECK(reader.stagedOrphanAttribCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+    for (const DRW_DwgFrameCoverageEntry& entry : reader.m_dwgSourceFrameLedger) {
+        if (entry.m_handle == recordHandle)
+            continue;
+        INFO("handle 0x" << std::hex << entry.m_handle);
+        CHECK(entry.m_publicationCount == 0u);
+    }
+}
+
+// A simple entity whose frame, handle and owner are sound but whose body does
+// not decode is one bad entity, not a bad block. The walk without a journal and
+// the sweep after BLOCKS both count such an entity and go on; the journalled
+// walk used to roll the whole block back and fail the file with
+// BAD_READ_BLOCKS, so one unreadable entity (an ACAD_TABLE whose cell grid could
+// not be decoded, in a real R2007 file) cost the drawing every other entity of
+// its block.
+TEST_CASE("DWG journalled block commits around an undecodable entity",
+          "[dwg][safety][journal]") {
+    constexpr std::uint32_t recordHandle = 0x7F0;
+    constexpr std::uint32_t blockHandle = 0x7F1;
+    constexpr std::uint32_t firstLineHandle = 0x7F2;
+    constexpr std::uint32_t undecodableHandle = 0x7F3;
+    constexpr std::uint32_t lastLineHandle = 0x7F4;
+    constexpr std::uint32_t endBlockHandle = 0x7F5;
+    const bool modelSpace = GENERATE(false, true);
+    INFO((modelSpace ? "model space" : "named block"));
+    const std::uint32_t blockOwner = modelSpace ? DRW::NoHandle : recordHandle;
+
+    const auto run = runJournalledBlock(
+        recordHandle, blockHandle, endBlockHandle,
+        modelSpace ? "*Model_Space" : "JOURNALLED_UNDECODABLE", blockOwner,
+        {{firstLineHandle, makeLineFrame(firstLineHandle, blockOwner)},
+         // An MLINE that declares more vertices than the reader accepts.
+         {undecodableHandle,
+          makeMalformedMLineFrame(5001, 0, undecodableHandle, blockOwner)},
+         {lastLineHandle, makeLineFrame(lastLineHandle, blockOwner)}},
+        {firstLineHandle, undecodableHandle, lastLineHandle});
+    const DwgEntityReaderProbe& reader = *run->reader;
+    const DwgGroupRejectionProbe& interface = run->interface;
+
+    // The block is not lost, the file read goes on, and the phase after BLOCKS
+    // still runs.
+    CHECK(run->readBlocks);
+    CHECK(run->readEntities);
+    CHECK(interface.blockCount == 1u);
+    CHECK(interface.lineCount == 2u);
+    CHECK(interface.mlineCount == 0u);
+    CHECK(run->sweepInterface.mlineCount == 0u);
+    CHECK(reader.ObjectMap.empty());
+    std::vector<std::string> expectedCallbacks =
+        modelSpace ? std::vector<std::string>{"block", "endBlock"}
+                   : std::vector<std::string>{"block"};
+    expectedCallbacks.emplace_back("line");
+    expectedCallbacks.emplace_back("line");
+    if (!modelSpace)
+        expectedCallbacks.emplace_back("endBlock");
+    // The block delivered what it could and does not claim to have reached
+    // every entity of its record.
+    CHECK(interface.callbacks == expectedCallbacks);
+    CHECK(interface.reachabilities.empty());
+
+    // One failure, counted once and attributed to the entity.
+    CHECK(reader.m_entityParseFailures == 1u);
+    checkGroupNeverPublished(reader.m_dwgSourceFrameLedger,
+                             {undecodableHandle});
+    for (const DRW_DwgFrameCoverageEntry& entry : reader.m_dwgSourceFrameLedger) {
+        if (entry.m_handle == undecodableHandle)
+            continue;
+        INFO("handle 0x" << std::hex << entry.m_handle);
+        CHECK(entry.m_disposition == DRW_DwgFrameDisposition::Published);
+        CHECK(entry.m_publicationCount == 1u);
+    }
+}
+
+// The transaction is still all or nothing around such an entity: when it cannot
+// take what the block did deliver, nothing of the block reaches the interface.
+TEST_CASE("DWG journalled block rolls back cleanly after an undecodable "
+          "entity when the journal fails",
+          "[dwg][safety][journal]") {
+    constexpr std::uint32_t recordHandle = 0x7F8;
+    constexpr std::uint32_t blockHandle = 0x7F9;
+    constexpr std::uint32_t firstLineHandle = 0x7FA;
+    constexpr std::uint32_t undecodableHandle = 0x7FB;
+    constexpr std::uint32_t lastLineHandle = 0x7FC;
+    constexpr std::uint32_t endBlockHandle = 0x7FD;
+    const bool failReservation = GENERATE(false, true);
+    INFO((failReservation ? "reservation fails" : "adoption fails"));
+
+    const auto run = runJournalledBlock(
+        recordHandle, blockHandle, endBlockHandle, "JOURNALLED_UNDECODABLE_FAULT",
+        recordHandle,
+        {{firstLineHandle, makeLineFrame(firstLineHandle, recordHandle)},
+         {undecodableHandle,
+          makeMalformedMLineFrame(5001, 0, undecodableHandle, recordHandle)},
+         {lastLineHandle, makeLineFrame(lastLineHandle, recordHandle)}},
+        {firstLineHandle, undecodableHandle, lastLineHandle},
+        [failReservation](DwgEntityReaderProbe& reader) {
+            // The block delimiters take the first two admissions, the first LINE
+            // the third; the undecodable entity is reserved but never adopted, so
+            // the last LINE is the fifth reservation and the fourth adoption.
+            if (failReservation)
+                reader.failBlockJournalReservationForTest(5u);
+            else
+                reader.failBlockJournalAdoptionForTest(4u);
+        });
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK_FALSE(run->readBlocks);
+    CHECK(run->interface.callbacks.empty());
+    CHECK(run->interface.lineCount == 0u);
+    CHECK(run->interface.reachabilities.empty());
+    CHECK(reader.ObjectMap.empty());
+    for (const DRW_DwgFrameCoverageEntry& entry : reader.m_dwgSourceFrameLedger) {
+        if (entry.m_handle == recordHandle)
+            continue; // the BLOCK_RECORD table frame was published up front
+        INFO("handle 0x" << std::hex << entry.m_handle);
+        CHECK(entry.m_publicationCount == 0u);
+    }
+}
+
+TEST_CASE("DWG mapped INSERT rejects a group without harming the next one",
+          "[dwg][safety][compound][mapped-owner]") {
+    // Two groups in one block: the second is well formed and must survive the
+    // first one's rejection.
+    constexpr std::uint32_t recordHandle = 0x7A0;
+    constexpr std::uint32_t badInsert = 0x7A1;
+    constexpr std::uint32_t badAttrib = 0x7A2;
+    constexpr std::uint32_t badSeqEnd = 0x7A3;
+    constexpr std::uint32_t wrongOwner = 0x7A4;
+    constexpr std::uint32_t goodInsert = 0x7A5;
+    constexpr std::uint32_t goodAttrib = 0x7A6;
+    constexpr std::uint32_t goodSeqEnd = 0x7A7;
+    const bool childFirst = GENERATE(false, true);
+    INFO("children " << (childFirst ? "before" : "after") << " the INSERT");
+
+    const auto set = makeMappedFrameSet({
+        {badInsert, makeInsertWithAttributesFrame(
+             badInsert, recordHandle, {badAttrib}, badSeqEnd)},
+        {badAttrib, makeAttribFrame(badAttrib, wrongOwner)},
+        {badSeqEnd, makeSeqEndFrame(badSeqEnd, badInsert)},
+        {goodInsert, makeInsertWithAttributesFrame(
+             goodInsert, recordHandle, {goodAttrib}, goodSeqEnd)},
+        {goodAttrib, makeAttribFrame(goodAttrib, goodInsert)},
+        {goodSeqEnd, makeSeqEndFrame(goodSeqEnd, goodInsert)}});
+    REQUIRE(set.valid);
+
+    DwgEntityReaderProbe reader(std::make_unique<dwgBuffer>(
+        const_cast<std::uint8_t*>(set.bytes.data()), set.bytes.size()));
+    reader.setVersionForTest(DRW::AC1018);
+    dwgBuffer handleBuffer(
+        const_cast<std::uint8_t*>(set.handleMap.data()), set.handleMap.size());
+    REQUIRE(reader.readDwgHandles(
+        &handleBuffer, 0, set.handleMap.size(), set.bytes.size()));
+
+    DRW_Block_Record record;
+    DwgBlockOwnershipTestAccess::setHandle(record, recordHandle);
+    record.name = "MAPPED_TWO_GROUPS";
+    DwgBlockOwnershipTestAccess::setHandles(
+        record, 0, 0,
+        childFirst ? std::vector<std::uint32_t>{badAttrib, badSeqEnd, badInsert,
+                                                goodAttrib, goodSeqEnd,
+                                                goodInsert}
+                   : std::vector<std::uint32_t>{badInsert, badAttrib, badSeqEnd,
+                                                goodInsert, goodAttrib,
+                                                goodSeqEnd});
+    DwgGroupRejectionProbe interface;
+    dwgBuffer objectBuffer(
+        const_cast<std::uint8_t*>(set.bytes.data()), set.bytes.size());
+    DwgEntityReaderProbe::DwgBlockWalkOutcome outcome =
+        DwgEntityReaderProbe::DwgBlockWalkOutcome::Complete;
+    CHECK_FALSE(reader.walkBlockRecordEntities(
+        &record, &objectBuffer, interface, recordHandle, recordHandle,
+        DwgIntegrityAddressSpace::DecodedBuffer, &outcome));
+    CHECK(outcome
+          == DwgEntityReaderProbe::DwgBlockWalkOutcome::ContainedGroupRejection);
+    REQUIRE(interface.inserts.size() == 1u);
+    CHECK(interface.inserts.front().handle == goodInsert);
+    REQUIRE(interface.inserts.front().attlist.size() == 1u);
+    CHECK(interface.inserts.front().attlist.front()->handle == goodAttrib);
+    checkGroupNeverPublished(reader.m_dwgSourceFrameLedger,
+                             {badInsert, badAttrib, badSeqEnd});
+    for (const DRW_DwgFrameCoverageEntry& entry : reader.m_dwgSourceFrameLedger) {
+        if (entry.m_handle != goodInsert && entry.m_handle != goodAttrib
+            && entry.m_handle != goodSeqEnd) {
+            continue;
+        }
+        CHECK(entry.m_disposition == DRW_DwgFrameDisposition::Published);
+        CHECK(entry.m_publicationCount == 1u);
+    }
+    CHECK(reader.stagedPendingInsertCountForTest() == 0u);
+    CHECK(reader.stagedOrphanAttribCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+}
+
+// The containment is for a foreign owner and nothing else. A declared child
+// that is staged nowhere is a missing frame: with or without a foreign-owned
+// sibling, the group's failure is structural, in the walk and in the journalled
+// block, where it rolls the block back.
+TEST_CASE("DWG mapped INSERT with a missing child stays structural beside a "
+          "foreign owner",
+          "[dwg][safety][compound][journal][mapped-owner]") {
+    constexpr std::uint32_t recordHandle = 0x7F0;
+    constexpr std::uint32_t blockHandle = 0x7F1;
+    constexpr std::uint32_t insertHandle = 0x7F2;
+    constexpr std::uint32_t foreignAttrib = 0x7F3;
+    constexpr std::uint32_t missingAttrib = 0x7F4; // declared, no frame
+    constexpr std::uint32_t seqEndHandle = 0x7F5;
+    constexpr std::uint32_t endBlockHandle = 0x7F6;
+    constexpr std::uint32_t wrongOwner = 0x7F7;
+    const bool journalled = GENERATE(false, true);
+    INFO((journalled ? "journalled block" : "block walk"));
+
+    if (journalled) {
+        const auto run = runJournalledBlock(
+            recordHandle, blockHandle, endBlockHandle, "MISSING_CHILD",
+            recordHandle,
+            {{insertHandle, makeInsertWithAttributesFrame(
+                  insertHandle, recordHandle, {foreignAttrib, missingAttrib},
+                  seqEndHandle)},
+             {foreignAttrib, makeAttribFrame(foreignAttrib, wrongOwner)},
+             {seqEndHandle, makeSeqEndFrame(seqEndHandle, insertHandle)}},
+            {insertHandle, foreignAttrib, seqEndHandle});
+        CHECK_FALSE(run->readBlocks);
+        CHECK(run->interface.callbacks.empty());
+        CHECK(run->interface.inserts.empty());
+        return;
+    }
+
+    const auto set = makeMappedFrameSet({
+        {insertHandle, makeInsertWithAttributesFrame(
+             insertHandle, recordHandle, {foreignAttrib, missingAttrib},
+             seqEndHandle)},
+        {foreignAttrib, makeAttribFrame(foreignAttrib, wrongOwner)},
+        {seqEndHandle, makeSeqEndFrame(seqEndHandle, insertHandle)}});
+    REQUIRE(set.valid);
+    DwgEntityReaderProbe reader(std::make_unique<dwgBuffer>(
+        const_cast<std::uint8_t*>(set.bytes.data()), set.bytes.size()));
+    reader.setVersionForTest(DRW::AC1018);
+    dwgBuffer handleBuffer(
+        const_cast<std::uint8_t*>(set.handleMap.data()), set.handleMap.size());
+    REQUIRE(reader.readDwgHandles(
+        &handleBuffer, 0, set.handleMap.size(), set.bytes.size()));
+    DRW_Block_Record record;
+    DwgBlockOwnershipTestAccess::setHandle(record, recordHandle);
+    record.name = "MAPPED_MISSING_CHILD";
+    DwgBlockOwnershipTestAccess::setHandles(
+        record, 0, 0, {insertHandle, foreignAttrib, seqEndHandle});
+    DwgGroupRejectionProbe interface;
+    dwgBuffer objectBuffer(
+        const_cast<std::uint8_t*>(set.bytes.data()), set.bytes.size());
+    DwgEntityReaderProbe::DwgBlockWalkOutcome outcome =
+        DwgEntityReaderProbe::DwgBlockWalkOutcome::Complete;
+    CHECK_FALSE(reader.walkBlockRecordEntities(
+        &record, &objectBuffer, interface, recordHandle, recordHandle,
+        DwgIntegrityAddressSpace::DecodedBuffer, &outcome));
+    CHECK(outcome == DwgEntityReaderProbe::DwgBlockWalkOutcome::Structural);
+    CHECK(interface.inserts.empty());
+    checkGroupNeverPublished(reader.m_dwgSourceFrameLedger,
+                             {insertHandle, foreignAttrib, seqEndHandle});
+}
+
+TEST_CASE("DWG mapped INSERT groups that share one foreign owner are all "
+          "contained",
+          "[dwg][safety][compound][mapped-owner]") {
+    // Two groups whose ATTRIBs name the same foreign owner. Rejecting the first
+    // must not decide the second's fate: each is one contained failure, in
+    // either order.
+    constexpr std::uint32_t recordHandle = 0x7B0;
+    constexpr std::uint32_t firstInsert = 0x7B1;
+    constexpr std::uint32_t firstAttrib = 0x7B2;
+    constexpr std::uint32_t firstSeqEnd = 0x7B3;
+    constexpr std::uint32_t secondInsert = 0x7B4;
+    constexpr std::uint32_t secondAttrib = 0x7B5;
+    constexpr std::uint32_t secondSeqEnd = 0x7B6;
+    constexpr std::uint32_t sharedOwner = 0x7B7;
+    const bool childFirst = GENERATE(false, true);
+    INFO("children " << (childFirst ? "before" : "after") << " the INSERT");
+
+    const auto set = makeMappedFrameSet({
+        {firstInsert, makeInsertWithAttributesFrame(
+             firstInsert, recordHandle, {firstAttrib}, firstSeqEnd)},
+        {firstAttrib, makeAttribFrame(firstAttrib, sharedOwner)},
+        {firstSeqEnd, makeSeqEndFrame(firstSeqEnd, firstInsert)},
+        {secondInsert, makeInsertWithAttributesFrame(
+             secondInsert, recordHandle, {secondAttrib}, secondSeqEnd)},
+        {secondAttrib, makeAttribFrame(secondAttrib, sharedOwner)},
+        {secondSeqEnd, makeSeqEndFrame(secondSeqEnd, secondInsert)}});
+    REQUIRE(set.valid);
+
+    DwgEntityReaderProbe reader(std::make_unique<dwgBuffer>(
+        const_cast<std::uint8_t*>(set.bytes.data()), set.bytes.size()));
+    reader.setVersionForTest(DRW::AC1018);
+    dwgBuffer handleBuffer(
+        const_cast<std::uint8_t*>(set.handleMap.data()), set.handleMap.size());
+    REQUIRE(reader.readDwgHandles(
+        &handleBuffer, 0, set.handleMap.size(), set.bytes.size()));
+
+    DRW_Block_Record record;
+    DwgBlockOwnershipTestAccess::setHandle(record, recordHandle);
+    record.name = "MAPPED_SHARED_FOREIGN_OWNER";
+    DwgBlockOwnershipTestAccess::setHandles(
+        record, 0, 0,
+        childFirst ? std::vector<std::uint32_t>{firstAttrib, firstSeqEnd,
+                                                firstInsert, secondAttrib,
+                                                secondSeqEnd, secondInsert}
+                   : std::vector<std::uint32_t>{firstInsert, firstAttrib,
+                                                firstSeqEnd, secondInsert,
+                                                secondAttrib, secondSeqEnd});
+    DwgGroupRejectionProbe interface;
+    dwgBuffer objectBuffer(
+        const_cast<std::uint8_t*>(set.bytes.data()), set.bytes.size());
+    DwgEntityReaderProbe::DwgBlockWalkOutcome outcome =
+        DwgEntityReaderProbe::DwgBlockWalkOutcome::Complete;
+    CHECK_FALSE(reader.walkBlockRecordEntities(
+        &record, &objectBuffer, interface, recordHandle, recordHandle,
+        DwgIntegrityAddressSpace::DecodedBuffer, &outcome));
+    CHECK(outcome
+          == DwgEntityReaderProbe::DwgBlockWalkOutcome::ContainedGroupRejection);
+    CHECK(interface.inserts.empty());
+    CHECK(reader.m_entityParseFailures >= 2u);
+    CHECK(reader.stagedPendingInsertCountForTest() == 0u);
+    CHECK(reader.stagedOrphanAttribCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+    checkGroupNeverPublished(
+        reader.m_dwgSourceFrameLedger,
+        {firstInsert, firstAttrib, firstSeqEnd, secondInsert, secondAttrib,
+         secondSeqEnd});
 }
 
 TEST_CASE("DWG staged INSERT helpers commit exact parent and child frames",
@@ -19830,7 +23601,15 @@ TEST_CASE("DWG staged INSERT helpers adopt orphan ATTRIB frames",
     CHECK(reader.validateDeferredCompoundState());
 }
 
-TEST_CASE("DWG staged INSERT helper terminalizes rejected orphan ATTRIBs",
+// An ATTRIB that names an INSERT the INSERT does not declare claims a
+// membership nobody granted. The ATTRIB is rejected on its own (its frame is
+// quarantined, it is remembered as disowned); the INSERT it names is left
+// alone and commits with the members it does declare. This replaces the older
+// rule that quarantined the whole INSERT: whether an INSERT survived then
+// depended on whether the stray ATTRIB was read before or after the INSERT,
+// and the INSERT's own members were all present and consistent either way.
+TEST_CASE("DWG staged INSERT helper disposes of orphan ATTRIBs it does not "
+          "declare",
           "[dwg][safety][compound]") {
     std::uint8_t dummy[] = {0};
     DwgEntityReaderProbe reader(
@@ -19861,27 +23640,33 @@ TEST_CASE("DWG staged INSERT helper terminalizes rejected orphan ATTRIBs",
     dwgHandle attributeHandle;
     attributeHandle.ref = 2;
     insert.attribHandles.push_back(attributeHandle);
-    CHECK_FALSE(reader.stageInsertForTest(
+    CHECK(reader.stageInsertForTest(
         std::move(insert), reader.publicationForTest(1), interface, committed));
-    CHECK_FALSE(committed);
-    CHECK(interface.inserts.empty());
-    CHECK(interface.publications.empty());
+    CHECK(committed);
+    REQUIRE(interface.inserts.size() == 1u);
+    REQUIRE(interface.inserts.front().attlist.size() == 1u);
+    CHECK(interface.inserts.front().attlist.front()->handle == 2u);
+    REQUIRE(interface.publications.size() == 2u);
+    CHECK(interface.publications[0].m_handle == 1u);
+    CHECK(interface.publications[1].m_handle == 2u);
     CHECK(reader.stagedOrphanAttribCountForTest() == 0u);
+    CHECK(reader.stagedPendingInsertCountForTest() == 0u);
     CHECK(reader.m_invalidInsertOwners.find(1u)
-          != reader.m_invalidInsertOwners.end());
-    CHECK(reader.ObjectMap.size() == 1u);
-    CHECK(reader.ObjectMap.find(1u) != reader.ObjectMap.end());
+          == reader.m_invalidInsertOwners.end());
+    CHECK(reader.m_disownedChildHandles.count(3u) == 1u);
+    CHECK(reader.m_disownedChildHandles.count(2u) == 0u);
+    CHECK(reader.m_entityParseFailures == 1u);
+    CHECK(reader.ObjectMap.empty());
     REQUIRE(reader.m_dwgSourceFrameLedger.size() == 3u);
     CHECK(reader.m_dwgSourceFrameLedger[0].m_disposition
-          == DRW_DwgFrameDisposition::Pending);
-    for (std::size_t index = 1; index < reader.m_dwgSourceFrameLedger.size();
-         ++index) {
-        CHECK(reader.m_dwgSourceFrameLedger[index].m_disposition
-              == DRW_DwgFrameDisposition::Quarantined);
-        CHECK(reader.m_dwgSourceFrameLedger[index].m_reason
-              == DRW_DwgFrameCoverageReason::Quarantined);
-        CHECK(reader.m_dwgSourceFrameLedger[index].m_publicationCount == 0u);
-    }
+          == DRW_DwgFrameDisposition::Published);
+    CHECK(reader.m_dwgSourceFrameLedger[1].m_disposition
+          == DRW_DwgFrameDisposition::Published);
+    CHECK(reader.m_dwgSourceFrameLedger[2].m_disposition
+          == DRW_DwgFrameDisposition::Quarantined);
+    CHECK(reader.m_dwgSourceFrameLedger[2].m_reason
+          == DRW_DwgFrameCoverageReason::Quarantined);
+    CHECK(reader.m_dwgSourceFrameLedger[2].m_publicationCount == 0u);
 }
 
 TEST_CASE("DWG staged INSERT helpers terminalize a throwing callback",
@@ -20478,7 +24263,12 @@ TEST_CASE("DWG staged INSERT preparation rejects consumed child collisions",
     }
 }
 
-TEST_CASE("DWG staged INSERT helper terminalizes an unexpected SEQEND",
+// The same rule for a SEQEND: one that names a pending INSERT that declares a
+// different SEQEND is rejected on its own; the INSERT keeps what it staged and
+// goes on waiting for the SEQEND it declares (and is terminalized with the
+// rest of the unresolved compound state if that never comes).
+TEST_CASE("DWG staged INSERT helper leaves an INSERT alone for an unexpected "
+          "SEQEND",
           "[dwg][safety][compound]") {
     std::uint8_t dummy[] = {0};
     DwgEntityReaderProbe reader(
@@ -20513,18 +24303,29 @@ TEST_CASE("DWG staged INSERT helper terminalizes an unexpected SEQEND",
     CHECK_FALSE(committed);
     CHECK(interface.inserts.empty());
     CHECK(interface.publications.empty());
-    CHECK(reader.stagedPendingInsertCountForTest() == 0u);
     CHECK(reader.stagedSeqEndCountForTest() == 0u);
+    CHECK(reader.m_disownedChildHandles.count(3u) == 1u);
+    // The INSERT is untouched: still pending, with its ATTRIB staged.
+    CHECK(reader.stagedPendingInsertCountForTest() == 1u);
+    CHECK(reader.m_invalidInsertOwners.count(1u) == 0u);
     CHECK(reader.ObjectMap.find(3u) != reader.ObjectMap.end());
     REQUIRE(reader.m_dwgSourceFrameLedger.size() == 3u);
+    CHECK(reader.m_dwgSourceFrameLedger[0].m_disposition
+          == DRW_DwgFrameDisposition::Staged);
+    CHECK(reader.m_dwgSourceFrameLedger[1].m_disposition
+          == DRW_DwgFrameDisposition::Staged);
+    CHECK(reader.m_dwgSourceFrameLedger[2].m_disposition
+          == DRW_DwgFrameDisposition::Pending);
+
+    // The SEQEND it declares never comes: the unresolved group is terminalized.
+    CHECK(reader.abandonStagedCompoundStateForTest());
+    CHECK(reader.stagedPendingInsertCountForTest() == 0u);
     for (std::size_t index = 0; index < 2; ++index) {
         CHECK(reader.m_dwgSourceFrameLedger[index].m_disposition
               == DRW_DwgFrameDisposition::Quarantined);
         CHECK(reader.m_dwgSourceFrameLedger[index].m_reason
               == DRW_DwgFrameCoverageReason::Quarantined);
     }
-    CHECK(reader.m_dwgSourceFrameLedger[2].m_disposition
-          == DRW_DwgFrameDisposition::Pending);
 }
 
 TEST_CASE("DWG source-frame leases reject dual parser-map residency",
@@ -21608,4 +25409,2921 @@ TEST_CASE("DWG short R2007 data pages preserve zero-padded handles",
     REQUIRE(dwgRSCodec::encode251I(input.data(), encoded.data(), 1));
     REQUIRE(dwgRSCodec::decode251I(encoded.data(), decoded.data(), 1));
     CHECK(std::equal(handles.cbegin(), handles.cend(), decoded.cbegin()));
+}
+
+namespace {
+
+// The frames of one published group carry exactly one publication each.
+void checkPublishedOnce(const std::vector<DRW_DwgFrameCoverageEntry>& ledger,
+                        const std::vector<std::uint32_t>& handles) {
+    for (const std::uint32_t handle : handles) {
+        const auto entry = std::find_if(
+            ledger.cbegin(), ledger.cend(),
+            [handle](const DRW_DwgFrameCoverageEntry& candidate) {
+                return candidate.m_handle == handle;
+            });
+        INFO("handle 0x" << std::hex << handle);
+        REQUIRE(entry != ledger.cend());
+        CHECK(entry->m_disposition == DRW_DwgFrameDisposition::Published);
+        CHECK(entry->m_publicationCount == 1u);
+    }
+}
+
+// Where the frames of two groups sit in a walk. The children of the group that
+// is rejected may come after their parent, before it, before the group they
+// name has even been seen, or after that group was published.
+enum class Arrangement {
+    ParentsFirst,
+    ChildrenFirst,
+    OwnerFirst,
+    ForeignChildBeforeOwner
+};
+
+const char* arrangementName(Arrangement arrangement) {
+    switch (arrangement) {
+    case Arrangement::ParentsFirst: return "parents first";
+    case Arrangement::ChildrenFirst: return "children first";
+    case Arrangement::OwnerFirst: return "the named group first";
+    case Arrangement::ForeignChildBeforeOwner:
+        return "the foreign child before the named group";
+    }
+    return "";
+}
+
+// The walk order of group A (parent, children) and group B (parent, children)
+// and one LINE, for the arrangement; `foreignChild` is the child of A that
+// names B.
+std::vector<std::uint32_t> arrangedWalk(
+    Arrangement arrangement, std::uint32_t parentA,
+    const std::vector<std::uint32_t>& childrenA, std::uint32_t foreignChild,
+    std::uint32_t parentB, const std::vector<std::uint32_t>& childrenB,
+    std::uint32_t line) {
+    std::vector<std::uint32_t> walk;
+    const auto append = [&walk](const std::vector<std::uint32_t>& handles) {
+        walk.insert(walk.end(), handles.cbegin(), handles.cend());
+    };
+    std::vector<std::uint32_t> groupA{parentA};
+    groupA.insert(groupA.end(), childrenA.cbegin(), childrenA.cend());
+    std::vector<std::uint32_t> groupB{parentB};
+    groupB.insert(groupB.end(), childrenB.cbegin(), childrenB.cend());
+    switch (arrangement) {
+    case Arrangement::ParentsFirst:
+        append(groupA);
+        append(groupB);
+        break;
+    case Arrangement::ChildrenFirst:
+        append(childrenA);
+        walk.push_back(parentA);
+        append(childrenB);
+        walk.push_back(parentB);
+        break;
+    case Arrangement::OwnerFirst:
+        append(groupB);
+        append(groupA);
+        break;
+    case Arrangement::ForeignChildBeforeOwner:
+        walk.push_back(foreignChild);
+        append(groupB);
+        walk.push_back(parentA);
+        for (const std::uint32_t child : childrenA) {
+            if (child != foreignChild)
+                walk.push_back(child);
+        }
+        break;
+    }
+    walk.push_back(line);
+    return walk;
+}
+
+class DwgPolylineParseProbe final : public DRW_Polyline {
+public:
+    using DRW_Polyline::parseDwg;
+};
+
+// A POLYLINE as the reader parses it from its frame: the declared vertices and
+// SEQEND are only reachable that way.
+DRW_Polyline parseMappedPolylineFrame(
+    DRW::Version version, std::uint32_t handle,
+    const std::vector<std::uint32_t>& vertices, std::uint32_t seqEnd) {
+    auto bytes = makeMappedPolylineParentFrame(version, handle, DRW::NoHandle,
+                                               vertices, seqEnd);
+    REQUIRE(!bytes.empty());
+    DwgObjectFrame frame;
+    dwgBuffer source(bytes.data(), bytes.size());
+    REQUIRE(frame.readAt(source, version, 0));
+    dwgBuffer body(frame.body().data(), frame.body().size());
+    DwgPolylineParseProbe parsed;
+    REQUIRE(parsed.parseDwg(version, &body, frame.bodyBitSize()));
+    return parsed;
+}
+
+} // namespace
+
+// A child declared by one INSERT group that names another INSERT group as its
+// owner. The child claims a membership the named group never granted, and the
+// group that declares it cannot be completed: that group is rejected whole,
+// atomically, as one contained failure. The group the child names is not
+// touched: its own members are all present and consistent, so it is read on its
+// own merits and published -- whichever frame the walk reaches first, and
+// whether the named group is still to come, pending or already published when
+// the child is seen.
+TEST_CASE("DWG mapped INSERT rejects a group whose child names another group",
+          "[dwg][safety][compound][mapped-owner][named-group]") {
+    constexpr std::uint32_t recordHandle = 0x800;
+    constexpr std::uint32_t insertA = 0x801;
+    constexpr std::uint32_t firstA = 0x802;
+    constexpr std::uint32_t lastA = 0x803;
+    constexpr std::uint32_t seqEndA = 0x804;
+    constexpr std::uint32_t insertB = 0x805;
+    constexpr std::uint32_t attribB = 0x806;
+    constexpr std::uint32_t seqEndB = 0x807;
+    constexpr std::uint32_t lineHandle = 0x808;
+    const ForeignChild foreign =
+        GENERATE(ForeignChild::First, ForeignChild::Last, ForeignChild::SeqEnd);
+    const Arrangement arrangement =
+        GENERATE(Arrangement::ParentsFirst, Arrangement::ChildrenFirst,
+                 Arrangement::OwnerFirst,
+                 Arrangement::ForeignChildBeforeOwner);
+    INFO("the " << foreignChildName(foreign) << " of A names B, "
+         << arrangementName(arrangement));
+    const std::uint32_t foreignHandle = foreign == ForeignChild::First
+        ? firstA : foreign == ForeignChild::Last ? lastA : seqEndA;
+
+    const auto run = runMappedWalk(
+        DRW::AC1018, recordHandle,
+        {{insertA, makeInsertWithAttributesFrame(
+              insertA, recordHandle, {firstA, lastA}, seqEndA)},
+         {firstA, makeAttribFrame(firstA, foreign == ForeignChild::First
+                                              ? insertB : insertA)},
+         {lastA, makeAttribFrame(lastA, foreign == ForeignChild::Last
+                                            ? insertB : insertA)},
+         {seqEndA, makeSeqEndFrame(seqEndA, foreign == ForeignChild::SeqEnd
+                                                ? insertB : insertA)},
+         {insertB, makeInsertWithAttributesFrame(
+              insertB, recordHandle, {attribB}, seqEndB)},
+         {attribB, makeAttribFrame(attribB, insertB)},
+         {seqEndB, makeSeqEndFrame(seqEndB, insertB)},
+         {lineHandle, makeLineFrame(lineHandle, recordHandle)}},
+        arrangedWalk(arrangement, insertA, {firstA, lastA, seqEndA},
+                     foreignHandle, insertB, {attribB, seqEndB}, lineHandle));
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK_FALSE(run->walked);
+    CHECK(run->outcome
+          == DwgEntityReaderProbe::DwgBlockWalkOutcome::ContainedGroupRejection);
+    REQUIRE(run->interface.inserts.size() == 1u);
+    CHECK(run->interface.inserts.front().handle == insertB);
+    REQUIRE(run->interface.inserts.front().attlist.size() == 1u);
+    CHECK(run->interface.inserts.front().attlist.front()->handle == attribB);
+    CHECK(run->interface.lineCount == 1u);
+    CHECK(reader.m_entityParseFailures >= 1u);
+    CHECK(reader.stagedPendingInsertCountForTest() == 0u);
+    CHECK(reader.stagedOrphanAttribCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+    CHECK(reader.m_invalidInsertOwners.count(insertB) == 0u);
+    for (const auto& item : reader.ObjectMap) {
+        CHECK(reader.m_quarantinedEntityHandles.count(item.first) == 1u);
+    }
+    checkGroupNeverPublished(reader.m_dwgSourceFrameLedger,
+                             {insertA, firstA, lastA, seqEndA});
+    checkPublishedOnce(reader.m_dwgSourceFrameLedger,
+                       {insertB, attribB, seqEndB, lineHandle});
+    // Nothing of A is left for the sweep after BLOCKS to decode.
+    CHECK(run->swept);
+    CHECK(run->sweepInterface.inserts.empty());
+    CHECK(reader.ObjectMap.empty());
+}
+
+// The containment stops at the group. Any other failure of the same walk keeps
+// the walk structural, whatever else it counted as contained: the walk still
+// reports the violation, and the enclosing section fails.
+TEST_CASE("DWG mapped walk stays structural beside a group whose child names "
+          "another group",
+          "[dwg][safety][compound][mapped-owner][named-group]") {
+    constexpr std::uint32_t recordHandle = 0xD00;
+    constexpr std::uint32_t insertA = 0xD01;
+    constexpr std::uint32_t attribA = 0xD02;
+    constexpr std::uint32_t seqEndA = 0xD03;
+    constexpr std::uint32_t insertB = 0xD04;
+    constexpr std::uint32_t attribB = 0xD05;
+    constexpr std::uint32_t seqEndB = 0xD06;
+    constexpr std::uint32_t badLineHandle = 0xD07;
+    constexpr std::uint32_t wrongOwner = 0xD08;
+
+    const auto run = runMappedWalk(
+        DRW::AC1018, recordHandle,
+        {{insertA, makeInsertWithAttributesFrame(
+              insertA, recordHandle, {attribA}, seqEndA)},
+         {attribA, makeAttribFrame(attribA, insertB)},
+         {seqEndA, makeSeqEndFrame(seqEndA, insertA)},
+         {insertB, makeInsertWithAttributesFrame(
+              insertB, recordHandle, {attribB}, seqEndB)},
+         {attribB, makeAttribFrame(attribB, insertB)},
+         {seqEndB, makeSeqEndFrame(seqEndB, insertB)},
+         // A LINE owned by something else: a structural failure of its own.
+         {badLineHandle, makeLineFrame(badLineHandle, wrongOwner)}},
+        {insertA, attribA, seqEndA, insertB, attribB, seqEndB, badLineHandle});
+
+    CHECK_FALSE(run->walked);
+    CHECK(run->outcome == DwgEntityReaderProbe::DwgBlockWalkOutcome::Structural);
+    // What the walk did deliver on its own merits is still delivered.
+    REQUIRE(run->interface.inserts.size() == 1u);
+    CHECK(run->interface.inserts.front().handle == insertB);
+    checkGroupNeverPublished(run->reader->m_dwgSourceFrameLedger,
+                             {insertA, attribA, seqEndA, badLineHandle});
+}
+
+// Each group's child names the other group: both are rejected, each as one
+// counted failure, and neither is published on the strength of the other.
+TEST_CASE("DWG mapped INSERT groups whose children name each other are both "
+          "rejected",
+          "[dwg][safety][compound][mapped-owner][named-group]") {
+    constexpr std::uint32_t recordHandle = 0x810;
+    constexpr std::uint32_t insertA = 0x811;
+    constexpr std::uint32_t attribA = 0x812;
+    constexpr std::uint32_t seqEndA = 0x813;
+    constexpr std::uint32_t insertB = 0x814;
+    constexpr std::uint32_t attribB = 0x815;
+    constexpr std::uint32_t seqEndB = 0x816;
+    constexpr std::uint32_t lineHandle = 0x817;
+    const Arrangement arrangement =
+        GENERATE(Arrangement::ParentsFirst, Arrangement::ChildrenFirst,
+                 Arrangement::OwnerFirst);
+    INFO(arrangementName(arrangement));
+
+    const auto run = runMappedWalk(
+        DRW::AC1018, recordHandle,
+        {{insertA, makeInsertWithAttributesFrame(
+              insertA, recordHandle, {attribA}, seqEndA)},
+         {attribA, makeAttribFrame(attribA, insertB)},
+         {seqEndA, makeSeqEndFrame(seqEndA, insertA)},
+         {insertB, makeInsertWithAttributesFrame(
+              insertB, recordHandle, {attribB}, seqEndB)},
+         {attribB, makeAttribFrame(attribB, insertA)},
+         {seqEndB, makeSeqEndFrame(seqEndB, insertB)},
+         {lineHandle, makeLineFrame(lineHandle, recordHandle)}},
+        arrangedWalk(arrangement, insertA, {attribA, seqEndA}, attribA, insertB,
+                     {attribB, seqEndB}, lineHandle));
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK_FALSE(run->walked);
+    CHECK(run->outcome
+          == DwgEntityReaderProbe::DwgBlockWalkOutcome::ContainedGroupRejection);
+    CHECK(run->interface.inserts.empty());
+    CHECK(run->interface.lineCount == 1u);
+    CHECK(reader.m_entityParseFailures >= 2u);
+    CHECK(reader.stagedPendingInsertCountForTest() == 0u);
+    CHECK(reader.stagedOrphanAttribCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+    checkGroupNeverPublished(
+        reader.m_dwgSourceFrameLedger,
+        {insertA, attribA, seqEndA, insertB, attribB, seqEndB});
+    checkPublishedOnce(reader.m_dwgSourceFrameLedger, {lineHandle});
+    CHECK(run->swept);
+    CHECK(reader.ObjectMap.empty());
+}
+
+// The same shape for POLYLINE groups, through every mapped version. The named
+// group is a real POLYLINE with its own VERTEX and SEQEND.
+TEST_CASE("DWG mapped POLYLINE rejects a group whose child names another group",
+          "[dwg][safety][compound][mapped-owner][named-group]") {
+    constexpr std::uint32_t recordHandle = 0x820;
+    constexpr std::uint32_t polylineA = 0x821;
+    constexpr std::uint32_t firstA = 0x822;
+    constexpr std::uint32_t lastA = 0x823;
+    constexpr std::uint32_t seqEndA = 0x824;
+    constexpr std::uint32_t polylineB = 0x825;
+    constexpr std::uint32_t vertexB = 0x826;
+    constexpr std::uint32_t seqEndB = 0x827;
+    constexpr std::uint32_t lineHandle = 0x828;
+    const DRW::Version version = GENERATE(
+        DRW::AC1018, DRW::AC1021, DRW::AC1024, DRW::AC1027);
+    const ForeignChild foreign =
+        GENERATE(ForeignChild::First, ForeignChild::Last, ForeignChild::SeqEnd);
+    const Arrangement arrangement =
+        GENERATE(Arrangement::ParentsFirst, Arrangement::ChildrenFirst,
+                 Arrangement::OwnerFirst,
+                 Arrangement::ForeignChildBeforeOwner);
+    INFO("version " << static_cast<int>(version) << ", the "
+         << foreignChildName(foreign) << " of A names B, "
+         << arrangementName(arrangement));
+    const std::uint32_t foreignHandle = foreign == ForeignChild::First
+        ? firstA : foreign == ForeignChild::Last ? lastA : seqEndA;
+    // The LINE frame is AC1018-encoded, so it only rides along there.
+    const bool withLine = version == DRW::AC1018;
+
+    std::vector<FramePair> frames = {
+        {polylineA, makeMappedPolylineParentFrame(
+             version, polylineA, recordHandle, {firstA, lastA}, seqEndA)},
+        {firstA, makeMappedVertexFrame(
+             version, firstA,
+             foreign == ForeignChild::First ? polylineB : polylineA)},
+        {lastA, makeMappedVertexFrame(
+             version, lastA,
+             foreign == ForeignChild::Last ? polylineB : polylineA)},
+        {seqEndA, makeMappedSeqEndFrame(
+             version, seqEndA,
+             foreign == ForeignChild::SeqEnd ? polylineB : polylineA)},
+        {polylineB, makeMappedPolylineParentFrame(
+             version, polylineB, recordHandle, {vertexB}, seqEndB)},
+        {vertexB, makeMappedVertexFrame(version, vertexB, polylineB)},
+        {seqEndB, makeMappedSeqEndFrame(version, seqEndB, polylineB)}};
+    std::vector<std::uint32_t> walk = arrangedWalk(
+        arrangement, polylineA, {firstA, lastA, seqEndA}, foreignHandle,
+        polylineB, {vertexB, seqEndB}, lineHandle);
+    if (withLine) {
+        frames.push_back(
+            {lineHandle, makeLineFrame(lineHandle, recordHandle)});
+    } else {
+        walk.pop_back();
+    }
+    for (const FramePair& frame : frames)
+        REQUIRE(!frame.second.empty());
+
+    const auto run = runMappedWalk(version, recordHandle, frames, walk);
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK_FALSE(run->walked);
+    CHECK(run->outcome
+          == DwgEntityReaderProbe::DwgBlockWalkOutcome::ContainedGroupRejection);
+    REQUIRE(run->interface.polylineHandles.size() == 1u);
+    CHECK(run->interface.polylineHandles.front() == polylineB);
+    CHECK(run->interface.lineCount == (withLine ? 1u : 0u));
+    CHECK(reader.m_entityParseFailures >= 1u);
+    CHECK(reader.stagedPendingPolylineCountForTest() == 0u);
+    CHECK(reader.stagedOrphanPolylineVertexCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+    CHECK(reader.m_invalidPolylineOwners.count(polylineB) == 0u);
+    for (const auto& item : reader.ObjectMap) {
+        CHECK(reader.m_quarantinedEntityHandles.count(item.first) == 1u);
+    }
+    checkGroupNeverPublished(reader.m_dwgSourceFrameLedger,
+                             {polylineA, firstA, lastA, seqEndA});
+    checkPublishedOnce(reader.m_dwgSourceFrameLedger,
+                       {polylineB, vertexB, seqEndB});
+    if (withLine)
+        checkPublishedOnce(reader.m_dwgSourceFrameLedger, {lineHandle});
+    CHECK(run->swept);
+    CHECK(run->sweepInterface.polylineCount == 0u);
+    CHECK(reader.ObjectMap.empty());
+}
+
+TEST_CASE("DWG mapped POLYLINE groups whose children name each other are both "
+          "rejected",
+          "[dwg][safety][compound][mapped-owner][named-group]") {
+    constexpr std::uint32_t recordHandle = 0x830;
+    constexpr std::uint32_t polylineA = 0x831;
+    constexpr std::uint32_t vertexA = 0x832;
+    constexpr std::uint32_t seqEndA = 0x833;
+    constexpr std::uint32_t polylineB = 0x834;
+    constexpr std::uint32_t vertexB = 0x835;
+    constexpr std::uint32_t seqEndB = 0x836;
+    const DRW::Version version = GENERATE(
+        DRW::AC1018, DRW::AC1021, DRW::AC1024, DRW::AC1027);
+    const Arrangement arrangement =
+        GENERATE(Arrangement::ParentsFirst, Arrangement::ChildrenFirst,
+                 Arrangement::OwnerFirst);
+    INFO("version " << static_cast<int>(version) << ", "
+         << arrangementName(arrangement));
+
+    std::vector<std::uint32_t> walk = arrangedWalk(
+        arrangement, polylineA, {vertexA, seqEndA}, vertexA, polylineB,
+        {vertexB, seqEndB}, 0);
+    walk.pop_back(); // no LINE
+    const auto run = runMappedWalk(
+        version, recordHandle,
+        {{polylineA, makeMappedPolylineParentFrame(
+              version, polylineA, recordHandle, {vertexA}, seqEndA)},
+         {vertexA, makeMappedVertexFrame(version, vertexA, polylineB)},
+         {seqEndA, makeMappedSeqEndFrame(version, seqEndA, polylineA)},
+         {polylineB, makeMappedPolylineParentFrame(
+              version, polylineB, recordHandle, {vertexB}, seqEndB)},
+         {vertexB, makeMappedVertexFrame(version, vertexB, polylineA)},
+         {seqEndB, makeMappedSeqEndFrame(version, seqEndB, polylineB)}},
+        walk);
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK_FALSE(run->walked);
+    CHECK(run->outcome
+          == DwgEntityReaderProbe::DwgBlockWalkOutcome::ContainedGroupRejection);
+    CHECK(run->interface.polylineCount == 0u);
+    CHECK(reader.m_entityParseFailures >= 2u);
+    CHECK(reader.stagedPendingPolylineCountForTest() == 0u);
+    CHECK(reader.stagedOrphanPolylineVertexCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+    checkGroupNeverPublished(
+        reader.m_dwgSourceFrameLedger,
+        {polylineA, vertexA, seqEndA, polylineB, vertexB, seqEndB});
+    CHECK(run->swept);
+    CHECK(reader.ObjectMap.empty());
+}
+
+// The primitives behind it, driven one frame at a time: the child arrives while
+// the group that declares it and the group it names are both pending. The child
+// is rejected on its own, the declaring group is rejected whole (as one with a
+// child that names a foreign owner), and the named group -- which the child
+// only claims to belong to -- is left alone and completes with its own members.
+TEST_CASE("DWG staged INSERT helpers leave the named group alone when a child "
+          "names it",
+          "[dwg][safety][compound][named-group]") {
+    std::uint8_t dummy[] = {0};
+    DwgEntityReaderProbe reader(
+        std::make_unique<dwgBuffer>(dummy, sizeof(dummy)));
+    std::vector<std::uint8_t> bytes;
+    // Handles 1..6: A, B, the child of A (3), the child of B (4), A's SEQEND
+    // (5), B's SEQEND (6).
+    appendHandleMapPage(bytes, {1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1});
+    appendHandleMapPage(bytes, {});
+    dwgBuffer mapBuffer(bytes.data(), bytes.size());
+    REQUIRE(reader.readDwgHandles(&mapBuffer, 0, bytes.size()));
+    REQUIRE(reader.ObjectMap.size() == 6u);
+    reader.setVersionForTest(DRW::AC1018);
+    DwgInsertReceiptProbe interface;
+    bool committed = false;
+
+    const auto makeInsert = [](std::uint32_t handle, std::uint32_t attrib,
+                               std::uint32_t seqEnd) {
+        DRW_Insert insert;
+        insert.handle = handle;
+        dwgHandle attribHandle;
+        attribHandle.ref = attrib;
+        insert.attribHandles.push_back(attribHandle);
+        insert.seqendH.ref = seqEnd;
+        return insert;
+    };
+    REQUIRE(reader.stageInsertForTest(
+        makeInsert(1, 3, 5), reader.publicationForTest(1), interface,
+        committed));
+    REQUIRE(reader.stageInsertForTest(
+        makeInsert(2, 4, 6), reader.publicationForTest(2), interface,
+        committed));
+    CHECK(reader.stagedPendingInsertCountForTest() == 2u);
+
+    const std::uint64_t conflictsBefore = reader.groupOwnerConflictsForTest();
+    auto foreignChild = std::make_shared<DRW_Attrib>();
+    foreignChild->handle = 3;
+    foreignChild->parentHandle = 2; // declared by A, names B
+    CHECK_FALSE(reader.stageAttributeForTest(
+        std::move(foreignChild), reader.publicationForTest(3), interface,
+        committed));
+    CHECK_FALSE(committed);
+    CHECK(reader.groupOwnerConflictsForTest() == conflictsBefore + 1u);
+    CHECK(reader.m_disownedChildHandles.count(3u) == 1u);
+    // A is gone, quarantined whole; B is still pending and untouched.
+    CHECK(reader.stagedPendingInsertCountForTest() == 1u);
+    CHECK(reader.m_invalidInsertOwners.count(1u) == 1u);
+    CHECK(reader.m_invalidInsertOwners.count(2u) == 0u);
+    CHECK(reader.m_dwgSourceFrameLedger[0].m_disposition
+          == DRW_DwgFrameDisposition::Quarantined);
+    CHECK(reader.m_dwgSourceFrameLedger[1].m_disposition
+          == DRW_DwgFrameDisposition::Staged);
+    CHECK(interface.inserts.empty());
+
+    // B completes with the members it declares.
+    auto ownChild = std::make_shared<DRW_Attrib>();
+    ownChild->handle = 4;
+    ownChild->parentHandle = 2;
+    REQUIRE(reader.stageAttributeForTest(
+        std::move(ownChild), reader.publicationForTest(4), interface,
+        committed));
+    REQUIRE(reader.stageSeqEndForTest(
+        6, 2, reader.publicationForTest(6), interface, committed));
+    CHECK(committed);
+    REQUIRE(interface.inserts.size() == 1u);
+    CHECK(interface.inserts.front().handle == 2u);
+    REQUIRE(interface.inserts.front().attlist.size() == 1u);
+    CHECK(interface.inserts.front().attlist.front()->handle == 4u);
+    CHECK(reader.stagedPendingInsertCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+    CHECK(reader.validateDeferredCompoundState());
+    CHECK(reader.abandonStagedCompoundStateForTest());
+    // A's own SEQEND was never staged; its frame is still in the map.
+    CHECK(reader.ObjectMap.count(5u) == 1u);
+    CHECK(reader.m_dwgSourceFrameLedger[0].m_publicationCount == 0u);
+    CHECK(reader.m_dwgSourceFrameLedger[2].m_publicationCount == 0u);
+}
+
+TEST_CASE("DWG staged POLYLINE helpers leave the named group alone when a "
+          "child names it",
+          "[dwg][safety][compound][named-group]") {
+    std::uint8_t dummy[] = {0};
+    DwgEntityReaderProbe reader(
+        std::make_unique<dwgBuffer>(dummy, sizeof(dummy)));
+    std::vector<std::uint8_t> bytes;
+    // Handles 1..6: P1, P2, the VERTEX of P1 (3), the VERTEX of P2 (4), P1's
+    // SEQEND (5), P2's SEQEND (6).
+    appendHandleMapPage(bytes, {1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1});
+    appendHandleMapPage(bytes, {});
+    dwgBuffer mapBuffer(bytes.data(), bytes.size());
+    REQUIRE(reader.readDwgHandles(&mapBuffer, 0, bytes.size()));
+    reader.setVersionForTest(DRW::AC1018);
+    DwgInsertReceiptProbe interface;
+    bool committed = false;
+
+    const auto makePolyline = [](std::uint32_t handle, std::uint32_t vertex,
+                                 std::uint32_t seqEnd) {
+        return parseMappedPolylineFrame(DRW::AC1018, handle, {vertex}, seqEnd);
+    };
+    const auto makeVertex = [](std::uint32_t handle, std::uint32_t owner) {
+        DwgVertexWriterProbe vertex;
+        vertex.handle = handle;
+        vertex.parentHandle = owner;
+        vertex.setDwgSubtype(DRW_Vertex::DwgSubtype::Vertex2D);
+        return static_cast<DRW_Vertex>(vertex);
+    };
+    REQUIRE(reader.stagePolylineForTest(
+        makePolyline(1, 3, 5), reader.publicationForTest(1), interface,
+        committed));
+    REQUIRE(reader.stagePolylineForTest(
+        makePolyline(2, 4, 6), reader.publicationForTest(2), interface,
+        committed));
+    CHECK(reader.stagedPendingPolylineCountForTest() == 2u);
+
+    const std::uint64_t conflictsBefore = reader.groupOwnerConflictsForTest();
+    CHECK_FALSE(reader.stageVertexForTest(
+        makeVertex(3, 2), reader.publicationForTest(3), interface, committed));
+    CHECK(reader.groupOwnerConflictsForTest() == conflictsBefore + 1u);
+    CHECK(reader.m_disownedChildHandles.count(3u) == 1u);
+    CHECK(reader.stagedPendingPolylineCountForTest() == 1u);
+    CHECK(reader.m_invalidPolylineOwners.count(1u) == 1u);
+    CHECK(reader.m_invalidPolylineOwners.count(2u) == 0u);
+    CHECK(reader.m_dwgSourceFrameLedger[0].m_disposition
+          == DRW_DwgFrameDisposition::Quarantined);
+    CHECK(reader.m_dwgSourceFrameLedger[1].m_disposition
+          == DRW_DwgFrameDisposition::Staged);
+
+    REQUIRE(reader.stageVertexForTest(
+        makeVertex(4, 2), reader.publicationForTest(4), interface, committed));
+    REQUIRE(reader.stageSeqEndForTest(
+        6, 2, reader.publicationForTest(6), interface, committed));
+    CHECK(committed);
+    CHECK(interface.polylineCount == 1u);
+    CHECK(interface.polylineHandles.front() == 2u);
+    CHECK(reader.stagedPendingPolylineCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+    CHECK(reader.validateDeferredCompoundState());
+}
+
+// The journalled block scope (every modern BLOCK_RECORD, named and model/paper
+// space alike): a group whose child names another group is contained too. The
+// block commits what it delivered -- the named group included, which is read on
+// its own merits -- and certifies no reachability for an entity list it did not
+// publish in full.
+TEST_CASE("DWG journalled block commits around an INSERT group whose child "
+          "names another group",
+          "[dwg][safety][journal][mapped-owner][named-group]") {
+    constexpr std::uint32_t recordHandle = 0x900;
+    constexpr std::uint32_t blockHandle = 0x901;
+    constexpr std::uint32_t insertA = 0x902;
+    constexpr std::uint32_t firstA = 0x903;
+    constexpr std::uint32_t lastA = 0x904;
+    constexpr std::uint32_t seqEndA = 0x905;
+    constexpr std::uint32_t insertB = 0x906;
+    constexpr std::uint32_t attribB = 0x907;
+    constexpr std::uint32_t seqEndB = 0x908;
+    constexpr std::uint32_t lineHandle = 0x909;
+    constexpr std::uint32_t endBlockHandle = 0x90A;
+    const bool modelSpace = GENERATE(false, true);
+    const ForeignChild foreign =
+        GENERATE(ForeignChild::First, ForeignChild::Last, ForeignChild::SeqEnd);
+    const Arrangement arrangement =
+        GENERATE(Arrangement::ParentsFirst, Arrangement::ChildrenFirst,
+                 Arrangement::OwnerFirst,
+                 Arrangement::ForeignChildBeforeOwner);
+    INFO((modelSpace ? "model space" : "named block") << ", the "
+         << foreignChildName(foreign) << " of A names B, "
+         << arrangementName(arrangement));
+    const std::uint32_t blockOwner = modelSpace ? DRW::NoHandle : recordHandle;
+    const std::uint32_t foreignHandle = foreign == ForeignChild::First
+        ? firstA : foreign == ForeignChild::Last ? lastA : seqEndA;
+
+    const auto run = runJournalledBlock(
+        recordHandle, blockHandle, endBlockHandle,
+        modelSpace ? "*Model_Space" : "JOURNALLED_NAMED_GROUP", blockOwner,
+        {{insertA, makeInsertWithAttributesFrame(
+              insertA, blockOwner, {firstA, lastA}, seqEndA)},
+         {firstA, makeAttribFrame(firstA, foreign == ForeignChild::First
+                                              ? insertB : insertA)},
+         {lastA, makeAttribFrame(lastA, foreign == ForeignChild::Last
+                                            ? insertB : insertA)},
+         {seqEndA, makeSeqEndFrame(seqEndA, foreign == ForeignChild::SeqEnd
+                                                ? insertB : insertA)},
+         {insertB, makeInsertWithAttributesFrame(
+              insertB, blockOwner, {attribB}, seqEndB)},
+         {attribB, makeAttribFrame(attribB, insertB)},
+         {seqEndB, makeSeqEndFrame(seqEndB, insertB)},
+         {lineHandle, makeLineFrame(lineHandle, blockOwner)}},
+        arrangedWalk(arrangement, insertA, {firstA, lastA, seqEndA},
+                     foreignHandle, insertB, {attribB, seqEndB}, lineHandle));
+    const DwgEntityReaderProbe& reader = *run->reader;
+    const DwgGroupRejectionProbe& interface = run->interface;
+
+    CHECK(run->readBlocks);
+    CHECK(run->readEntities);
+    CHECK(run->sweepInterface.inserts.empty());
+    CHECK(interface.blockCount == 1u);
+    REQUIRE(interface.inserts.size() == 1u);
+    CHECK(interface.inserts.front().handle == insertB);
+    REQUIRE(interface.inserts.front().attlist.size() == 1u);
+    CHECK(interface.lineCount == 1u);
+    CHECK(interface.reachabilities.empty());
+    CHECK(reader.ObjectMap.empty());
+    CHECK(reader.stagedPendingInsertCountForTest() == 0u);
+    CHECK(reader.stagedOrphanAttribCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+    CHECK(reader.m_entityParseFailures >= 1u);
+    // Model/paper space deliver their entities after the block scope closes.
+    const std::vector<std::string> expectedCallbacks =
+        modelSpace
+            ? std::vector<std::string>{"block", "endBlock", "insert", "line"}
+            : std::vector<std::string>{"block", "insert", "line", "endBlock"};
+    CHECK(interface.callbacks == expectedCallbacks);
+    checkGroupNeverPublished(reader.m_dwgSourceFrameLedger,
+                             {insertA, firstA, lastA, seqEndA});
+    checkPublishedOnce(reader.m_dwgSourceFrameLedger,
+                       {insertB, attribB, seqEndB, lineHandle});
+}
+
+TEST_CASE("DWG journalled block commits around a POLYLINE group whose child "
+          "names another group",
+          "[dwg][safety][journal][mapped-owner][named-group]") {
+    constexpr std::uint32_t recordHandle = 0x910;
+    constexpr std::uint32_t blockHandle = 0x911;
+    constexpr std::uint32_t polylineA = 0x912;
+    constexpr std::uint32_t firstA = 0x913;
+    constexpr std::uint32_t lastA = 0x914;
+    constexpr std::uint32_t seqEndA = 0x915;
+    constexpr std::uint32_t polylineB = 0x916;
+    constexpr std::uint32_t vertexB = 0x917;
+    constexpr std::uint32_t seqEndB = 0x918;
+    constexpr std::uint32_t lineHandle = 0x919;
+    constexpr std::uint32_t endBlockHandle = 0x91A;
+    const bool modelSpace = GENERATE(false, true);
+    const ForeignChild foreign =
+        GENERATE(ForeignChild::First, ForeignChild::Last, ForeignChild::SeqEnd);
+    const Arrangement arrangement =
+        GENERATE(Arrangement::ParentsFirst, Arrangement::ChildrenFirst,
+                 Arrangement::OwnerFirst,
+                 Arrangement::ForeignChildBeforeOwner);
+    INFO((modelSpace ? "model space" : "named block") << ", the "
+         << foreignChildName(foreign) << " of A names B, "
+         << arrangementName(arrangement));
+    const DRW::Version version = DRW::AC1018;
+    const std::uint32_t blockOwner = modelSpace ? DRW::NoHandle : recordHandle;
+    const std::uint32_t foreignHandle = foreign == ForeignChild::First
+        ? firstA : foreign == ForeignChild::Last ? lastA : seqEndA;
+
+    const auto run = runJournalledBlock(
+        recordHandle, blockHandle, endBlockHandle,
+        modelSpace ? "*Model_Space" : "JOURNALLED_NAMED_POLYLINES", blockOwner,
+        {{polylineA, makeMappedPolylineParentFrame(
+              version, polylineA, blockOwner, {firstA, lastA}, seqEndA)},
+         {firstA, makeMappedVertexFrame(
+              version, firstA,
+              foreign == ForeignChild::First ? polylineB : polylineA)},
+         {lastA, makeMappedVertexFrame(
+              version, lastA,
+              foreign == ForeignChild::Last ? polylineB : polylineA)},
+         {seqEndA, makeMappedSeqEndFrame(
+              version, seqEndA,
+              foreign == ForeignChild::SeqEnd ? polylineB : polylineA)},
+         {polylineB, makeMappedPolylineParentFrame(
+              version, polylineB, blockOwner, {vertexB}, seqEndB)},
+         {vertexB, makeMappedVertexFrame(version, vertexB, polylineB)},
+         {seqEndB, makeMappedSeqEndFrame(version, seqEndB, polylineB)},
+         {lineHandle, makeLineFrame(lineHandle, blockOwner)}},
+        arrangedWalk(arrangement, polylineA, {firstA, lastA, seqEndA},
+                     foreignHandle, polylineB, {vertexB, seqEndB},
+                     lineHandle));
+    const DwgEntityReaderProbe& reader = *run->reader;
+    const DwgGroupRejectionProbe& interface = run->interface;
+
+    CHECK(run->readBlocks);
+    CHECK(run->readEntities);
+    CHECK(run->sweepInterface.polylineCount == 0u);
+    CHECK(interface.blockCount == 1u);
+    REQUIRE(interface.polylineHandles.size() == 1u);
+    CHECK(interface.polylineHandles.front() == polylineB);
+    CHECK(interface.lineCount == 1u);
+    CHECK(interface.reachabilities.empty());
+    CHECK(reader.ObjectMap.empty());
+    CHECK(reader.stagedPendingPolylineCountForTest() == 0u);
+    CHECK(reader.stagedOrphanPolylineVertexCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+    CHECK(reader.m_entityParseFailures >= 1u);
+    const std::vector<std::string> expectedCallbacks =
+        modelSpace
+            ? std::vector<std::string>{"block", "endBlock", "polyline", "line"}
+            : std::vector<std::string>{"block", "polyline", "line", "endBlock"};
+    CHECK(interface.callbacks == expectedCallbacks);
+    checkGroupNeverPublished(reader.m_dwgSourceFrameLedger,
+                             {polylineA, firstA, lastA, seqEndA});
+    checkPublishedOnce(reader.m_dwgSourceFrameLedger,
+                       {polylineB, vertexB, seqEndB, lineHandle});
+}
+
+// The containment stops at the group: any other failure in the same block still
+// fails it and rolls the whole transaction back -- the named group's members
+// included, which the journal had already taken.
+TEST_CASE("DWG journalled block still rolls back on a structural failure "
+          "beside an INSERT group whose child names another group",
+          "[dwg][safety][journal][mapped-owner][named-group]") {
+    constexpr std::uint32_t recordHandle = 0x920;
+    constexpr std::uint32_t blockHandle = 0x921;
+    constexpr std::uint32_t insertA = 0x922;
+    constexpr std::uint32_t attribA = 0x923;
+    constexpr std::uint32_t seqEndA = 0x924;
+    constexpr std::uint32_t insertB = 0x925;
+    constexpr std::uint32_t attribB = 0x926;
+    constexpr std::uint32_t seqEndB = 0x927;
+    constexpr std::uint32_t badLineHandle = 0x928;
+    constexpr std::uint32_t endBlockHandle = 0x929;
+    constexpr std::uint32_t wrongOwner = 0x92A;
+    const bool modelSpace = GENERATE(false, true);
+    INFO((modelSpace ? "model space" : "named block"));
+    const std::uint32_t blockOwner = modelSpace ? DRW::NoHandle : recordHandle;
+
+    const auto run = runJournalledBlock(
+        recordHandle, blockHandle, endBlockHandle,
+        modelSpace ? "*Model_Space" : "JOURNALLED_NAMED_ROLLBACK", blockOwner,
+        {{insertA, makeInsertWithAttributesFrame(
+              insertA, blockOwner, {attribA}, seqEndA)},
+         {attribA, makeAttribFrame(attribA, insertB)},
+         {seqEndA, makeSeqEndFrame(seqEndA, insertA)},
+         {insertB, makeInsertWithAttributesFrame(
+              insertB, blockOwner, {attribB}, seqEndB)},
+         {attribB, makeAttribFrame(attribB, insertB)},
+         {seqEndB, makeSeqEndFrame(seqEndB, insertB)},
+         // A LINE owned by something else: a structural failure of its own.
+         {badLineHandle, makeLineFrame(badLineHandle, wrongOwner)}},
+        {insertA, attribA, seqEndA, insertB, attribB, seqEndB, badLineHandle});
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK_FALSE(run->readBlocks);
+    // Nothing of the block reached the interface: not the block scope, not the
+    // named group, not the rejected one.
+    CHECK(run->interface.callbacks.empty());
+    CHECK(run->interface.inserts.empty());
+    CHECK(run->interface.reachabilities.empty());
+    CHECK(reader.ObjectMap.empty());
+    CHECK(reader.stagedPendingInsertCountForTest() == 0u);
+    CHECK(reader.stagedOrphanAttribCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+    for (const DRW_DwgFrameCoverageEntry& entry : reader.m_dwgSourceFrameLedger) {
+        if (entry.m_handle == recordHandle)
+            continue; // the BLOCK_RECORD table frame was published up front
+        INFO("handle 0x" << std::hex << entry.m_handle);
+        CHECK(entry.m_publicationCount == 0u);
+        CHECK((entry.m_disposition == DRW_DwgFrameDisposition::Failed
+               || entry.m_disposition == DRW_DwgFrameDisposition::Quarantined));
+    }
+}
+
+// The journal is all or nothing around such a group too: when the transaction
+// cannot take what the block did deliver, nothing of the block reaches the
+// interface.
+TEST_CASE("DWG journalled block rolls back cleanly after an INSERT group whose "
+          "child names another group when the journal fails",
+          "[dwg][safety][journal][mapped-owner][named-group]") {
+    constexpr std::uint32_t recordHandle = 0x930;
+    constexpr std::uint32_t blockHandle = 0x931;
+    constexpr std::uint32_t insertA = 0x932;
+    constexpr std::uint32_t attribA = 0x933;
+    constexpr std::uint32_t seqEndA = 0x934;
+    constexpr std::uint32_t insertB = 0x935;
+    constexpr std::uint32_t attribB = 0x936;
+    constexpr std::uint32_t seqEndB = 0x937;
+    constexpr std::uint32_t lineHandle = 0x938;
+    constexpr std::uint32_t endBlockHandle = 0x939;
+    const bool failReservation = GENERATE(false, true);
+    INFO((failReservation ? "reservation fails" : "adoption fails"));
+
+    const auto run = runJournalledBlock(
+        recordHandle, blockHandle, endBlockHandle, "JOURNALLED_NAMED_FAULT",
+        recordHandle,
+        {{insertA, makeInsertWithAttributesFrame(
+              insertA, recordHandle, {attribA}, seqEndA)},
+         {attribA, makeAttribFrame(attribA, insertB)},
+         {seqEndA, makeSeqEndFrame(seqEndA, insertA)},
+         {insertB, makeInsertWithAttributesFrame(
+              insertB, recordHandle, {attribB}, seqEndB)},
+         {attribB, makeAttribFrame(attribB, insertB)},
+         {seqEndB, makeSeqEndFrame(seqEndB, insertB)},
+         {lineHandle, makeLineFrame(lineHandle, recordHandle)}},
+        {insertA, attribA, seqEndA, insertB, attribB, seqEndB, lineHandle},
+        [failReservation](DwgEntityReaderProbe& reader) {
+            // The block delimiters take the first two admissions; the named
+            // group's commit is the next one, after the rejected group.
+            if (failReservation)
+                reader.failBlockJournalReservationForTest(3u);
+            else
+                reader.failBlockJournalAdoptionForTest(3u);
+        });
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK_FALSE(run->readBlocks);
+    CHECK(run->interface.callbacks.empty());
+    CHECK(run->interface.inserts.empty());
+    CHECK(run->interface.reachabilities.empty());
+    CHECK(reader.ObjectMap.empty());
+    CHECK(reader.stagedPendingInsertCountForTest() == 0u);
+    CHECK(reader.stagedOrphanAttribCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+    for (const DRW_DwgFrameCoverageEntry& entry : reader.m_dwgSourceFrameLedger) {
+        if (entry.m_handle == recordHandle)
+            continue;
+        INFO("handle 0x" << std::hex << entry.m_handle);
+        CHECK(entry.m_publicationCount == 0u);
+    }
+}
+
+namespace {
+
+// A legacy (R13-R2000) POLYLINE group: the POLYLINE, two VERTICES chained by
+// their next links, and the SEQEND, at consecutive handles from `polyline`.
+// The owner of each child is the caller's choice.
+std::vector<FramePair> makeLegacyPolylineGroupFramePairs(
+    std::uint32_t polyline, std::uint32_t firstOwner, std::uint32_t lastOwner,
+    std::uint32_t seqEndOwner) {
+    const std::uint32_t first = polyline + 1u;
+    const std::uint32_t last = polyline + 2u;
+    const std::uint32_t seqEnd = polyline + 3u;
+
+    auto firstVertex = std::make_shared<DwgVertexWriterProbe>();
+    firstVertex->handle = first;
+    firstVertex->basePoint = DRW_Coord(10.0, 20.0, 0.0);
+    firstVertex->setDwgSubtype(DRW_Vertex::DwgSubtype::Vertex2D);
+    auto lastVertex = std::make_shared<DwgVertexWriterProbe>();
+    lastVertex->handle = last;
+    lastVertex->basePoint = DRW_Coord(30.0, 40.0, 0.0);
+    lastVertex->setDwgSubtype(DRW_Vertex::DwgSubtype::Vertex2D);
+
+    DwgPolylineWriterProbe parent;
+    parent.handle = polyline;
+    parent.appendVertex(firstVertex);
+    parent.appendVertex(lastVertex);
+    parent.setDwgSeqEndHandle(seqEnd);
+    dwgBufferW parentBody;
+    if (!parent.encodeDwg(DRW::AC1015, &parentBody, 0, nullptr, nullptr))
+        return {};
+    return {{polyline, makeEntityFrame(parentBody)},
+            {first, makeLegacyVertexFrame(first, firstOwner, last)},
+            {last, makeLegacyVertexFrame(last, lastOwner, 0)},
+            {seqEnd, makeSeqEndFrame(seqEnd, seqEndOwner)}};
+}
+
+std::vector<FramePair> concatenated(
+    std::initializer_list<std::vector<FramePair>> parts) {
+    std::vector<FramePair> all;
+    for (const std::vector<FramePair>& part : parts)
+        all.insert(all.end(), part.cbegin(), part.cend());
+    return all;
+}
+
+} // namespace
+
+// The legacy chain aggregates read their children themselves, so a child that
+// names another group is found without that group being staged at all: the
+// declaring group is rejected whole, the named group -- which the child only
+// claims to belong to -- is read on its own merits, and so is everything after
+// the rejected group in the block's chain (a LINE), in the walk, not left to the
+// ENTITIES sweep to publish outside the block.
+TEST_CASE("DWG legacy INSERT rejects a group whose child names another group",
+          "[dwg][safety][compound][named-group]") {
+    // Two groups and a LINE at consecutive handles: the group that is rejected
+    // (three frames plus the parent) and the one it names.
+    const bool rejectedFirst = GENERATE(false, true);
+    const ForeignChild foreign =
+        GENERATE(ForeignChild::First, ForeignChild::Last, ForeignChild::SeqEnd);
+    INFO((rejectedFirst ? "the rejected group comes first"
+                        : "the named group comes first")
+         << ", the " << foreignChildName(foreign) << " names the other group");
+    const std::uint32_t rejectedBase = rejectedFirst ? 0x10u : 0x13u;
+    const std::uint32_t namedBase = rejectedFirst ? 0x14u : 0x10u;
+    const std::uint32_t lineHandle = 0x17u;
+    // Rejected: INSERT, two ATTRIBs, SEQEND. Named: INSERT, one ATTRIB, SEQEND.
+    const std::uint32_t rejected = rejectedBase;
+    const std::uint32_t first = rejectedBase + 1u;
+    const std::uint32_t last = rejectedBase + 2u;
+    const std::uint32_t seqEnd = rejectedBase + 3u;
+    const std::uint32_t named = namedBase;
+    const std::uint32_t namedAttrib = namedBase + 1u;
+    const std::uint32_t namedSeqEnd = namedBase + 2u;
+
+    const auto run = runLegacyWalk(
+        {{rejected, makeLegacyInsertParentFrame(rejected, first, last, seqEnd)},
+         {first, makeLegacyAttribFrame(
+              first, foreign == ForeignChild::First ? named : rejected)},
+         {last, makeLegacyAttribFrame(
+              last, foreign == ForeignChild::Last ? named : rejected)},
+         {seqEnd, makeSeqEndFrame(seqEnd, foreign == ForeignChild::SeqEnd
+                                              ? named : rejected)},
+         {named, makeLegacyInsertParentFrame(named, namedAttrib, namedAttrib,
+                                             namedSeqEnd)},
+         {namedAttrib, makeLegacyAttribFrame(namedAttrib, named)},
+         {namedSeqEnd, makeSeqEndFrame(namedSeqEnd, named)},
+         {lineHandle, makeLegacyLineFrame(lineHandle)}},
+        std::min(rejected, named), lineHandle);
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK_FALSE(run->walked);
+    CHECK(run->outcome
+          == DwgEntityReaderProbe::DwgBlockWalkOutcome::ContainedGroupRejection);
+    REQUIRE(run->interface.inserts.size() == 1u);
+    CHECK(run->interface.inserts.front().handle == named);
+    REQUIRE(run->interface.inserts.front().attlist.size() == 1u);
+    CHECK(run->interface.lineCount == 1u);
+    CHECK(reader.m_entityParseFailures >= 1u);
+    CHECK(reader.stagedPendingInsertCountForTest() == 0u);
+    CHECK(reader.stagedOrphanAttribCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+    checkGroupNeverPublished(reader.m_dwgSourceFrameLedger,
+                             {rejected, first, last, seqEnd});
+    checkPublishedOnce(reader.m_dwgSourceFrameLedger,
+                       {named, namedAttrib, namedSeqEnd, lineHandle});
+    // The walk left nothing for the sweep.
+    CHECK(run->swept);
+    CHECK(run->sweepInterface.inserts.empty());
+    CHECK(run->sweepInterface.framePublications.empty());
+    CHECK(reader.ObjectMap.empty());
+}
+
+TEST_CASE("DWG legacy INSERT groups whose children name each other are both "
+          "rejected",
+          "[dwg][safety][compound][named-group]") {
+    constexpr std::uint32_t firstInsert = 0x10;
+    constexpr std::uint32_t firstAttrib = 0x11;
+    constexpr std::uint32_t firstSeqEnd = 0x12;
+    constexpr std::uint32_t secondInsert = 0x13;
+    constexpr std::uint32_t secondAttrib = 0x14;
+    constexpr std::uint32_t secondSeqEnd = 0x15;
+    constexpr std::uint32_t lineHandle = 0x16;
+
+    const auto run = runLegacyWalk(
+        {{firstInsert, makeLegacyInsertParentFrame(
+              firstInsert, firstAttrib, firstAttrib, firstSeqEnd)},
+         {firstAttrib, makeLegacyAttribFrame(firstAttrib, secondInsert)},
+         {firstSeqEnd, makeSeqEndFrame(firstSeqEnd, firstInsert)},
+         {secondInsert, makeLegacyInsertParentFrame(
+              secondInsert, secondAttrib, secondAttrib, secondSeqEnd)},
+         {secondAttrib, makeLegacyAttribFrame(secondAttrib, firstInsert)},
+         {secondSeqEnd, makeSeqEndFrame(secondSeqEnd, secondInsert)},
+         {lineHandle, makeLegacyLineFrame(lineHandle)}},
+        firstInsert, lineHandle);
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK_FALSE(run->walked);
+    CHECK(run->outcome
+          == DwgEntityReaderProbe::DwgBlockWalkOutcome::ContainedGroupRejection);
+    CHECK(run->interface.inserts.empty());
+    CHECK(run->interface.lineCount == 1u);
+    CHECK(reader.m_entityParseFailures >= 2u);
+    checkGroupNeverPublished(
+        reader.m_dwgSourceFrameLedger,
+        {firstInsert, firstAttrib, firstSeqEnd, secondInsert, secondAttrib,
+         secondSeqEnd});
+    checkPublishedOnce(reader.m_dwgSourceFrameLedger, {lineHandle});
+    CHECK(run->swept);
+    CHECK(run->sweepInterface.inserts.empty());
+    CHECK(reader.ObjectMap.empty());
+}
+
+TEST_CASE("DWG legacy POLYLINE rejects a group whose child names another group",
+          "[dwg][safety][compound][named-group]") {
+    const bool rejectedFirst = GENERATE(false, true);
+    const ForeignChild foreign =
+        GENERATE(ForeignChild::First, ForeignChild::Last, ForeignChild::SeqEnd);
+    INFO((rejectedFirst ? "the rejected group comes first"
+                        : "the named group comes first")
+         << ", the " << foreignChildName(foreign) << " names the other group");
+    const std::uint32_t rejected = rejectedFirst ? 0x10u : 0x14u;
+    const std::uint32_t named = rejectedFirst ? 0x14u : 0x10u;
+    constexpr std::uint32_t lineHandle = 0x18;
+
+    const auto run = runLegacyWalk(
+        concatenated({makeLegacyPolylineGroupFramePairs(
+                          rejected,
+                          foreign == ForeignChild::First ? named : rejected,
+                          foreign == ForeignChild::Last ? named : rejected,
+                          foreign == ForeignChild::SeqEnd ? named : rejected),
+                      makeLegacyPolylineGroupFramePairs(named, named, named, named),
+                      {{lineHandle, makeLegacyLineFrame(lineHandle)}}}),
+        0x10, lineHandle);
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK_FALSE(run->walked);
+    CHECK(run->outcome
+          == DwgEntityReaderProbe::DwgBlockWalkOutcome::ContainedGroupRejection);
+    REQUIRE(run->interface.polylineHandles.size() == 1u);
+    CHECK(run->interface.polylineHandles.front() == named);
+    CHECK(run->interface.lineCount == 1u);
+    CHECK(reader.m_entityParseFailures >= 1u);
+    CHECK(reader.stagedPendingPolylineCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+    checkGroupNeverPublished(
+        reader.m_dwgSourceFrameLedger,
+        {rejected, rejected + 1u, rejected + 2u, rejected + 3u});
+    checkPublishedOnce(reader.m_dwgSourceFrameLedger,
+                       {named, named + 1u, named + 2u, named + 3u,
+                        lineHandle});
+    CHECK(run->swept);
+    CHECK(run->sweepInterface.polylineCount == 0u);
+    CHECK(reader.ObjectMap.empty());
+}
+
+// Two rejected groups in one block: the chain goes on past the first one, so
+// the second is found by the walk and rejected the same way.
+TEST_CASE("DWG legacy walk rejects two groups in one block and reads the rest",
+          "[dwg][safety][compound][named-group]") {
+    const bool polyline = GENERATE(false, true);
+    INFO((polyline ? "POLYLINE groups" : "INSERT groups"));
+    constexpr std::uint32_t wrongOwner = 0x60;
+
+    if (!polyline) {
+        constexpr std::uint32_t lineHandle = 0x16;
+        const auto run = runLegacyWalk(
+            {{0x10, makeLegacyInsertParentFrame(0x10, 0x11, 0x11, 0x12)},
+             {0x11, makeLegacyAttribFrame(0x11, wrongOwner)},
+             {0x12, makeSeqEndFrame(0x12, 0x10)},
+             {0x13, makeLegacyInsertParentFrame(0x13, 0x14, 0x14, 0x15)},
+             {0x14, makeLegacyAttribFrame(0x14, wrongOwner)},
+             {0x15, makeSeqEndFrame(0x15, 0x13)},
+             {lineHandle, makeLegacyLineFrame(lineHandle)}},
+            0x10, lineHandle);
+        CHECK_FALSE(run->walked);
+        CHECK(run->outcome == DwgEntityReaderProbe::DwgBlockWalkOutcome::
+                                  ContainedGroupRejection);
+        CHECK(run->interface.inserts.empty());
+        CHECK(run->interface.lineCount == 1u);
+        CHECK(run->reader->m_entityParseFailures >= 2u);
+        checkGroupNeverPublished(run->reader->m_dwgSourceFrameLedger,
+                                 {0x10, 0x11, 0x12, 0x13, 0x14, 0x15});
+        checkPublishedOnce(run->reader->m_dwgSourceFrameLedger, {lineHandle});
+        CHECK(run->swept);
+        CHECK(run->sweepInterface.inserts.empty());
+        CHECK(run->reader->ObjectMap.empty());
+        return;
+    }
+    constexpr std::uint32_t lineHandle = 0x18;
+    const auto run = runLegacyWalk(
+        concatenated({makeLegacyPolylineGroupFramePairs(0x10, wrongOwner, 0x10, 0x10),
+                      makeLegacyPolylineGroupFramePairs(0x14, 0x14, wrongOwner, 0x14),
+                      {{lineHandle, makeLegacyLineFrame(lineHandle)}}}),
+        0x10, lineHandle);
+    CHECK_FALSE(run->walked);
+    CHECK(run->outcome == DwgEntityReaderProbe::DwgBlockWalkOutcome::
+                              ContainedGroupRejection);
+    CHECK(run->interface.polylineCount == 0u);
+    CHECK(run->interface.lineCount == 1u);
+    CHECK(run->reader->m_entityParseFailures >= 2u);
+    checkGroupNeverPublished(run->reader->m_dwgSourceFrameLedger,
+                             {0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17});
+    checkPublishedOnce(run->reader->m_dwgSourceFrameLedger, {lineHandle});
+    CHECK(run->swept);
+    CHECK(run->sweepInterface.polylineCount == 0u);
+    CHECK(run->reader->ObjectMap.empty());
+}
+
+namespace {
+
+// Where an undeclared child sits in the walk of the group that it names.
+enum class StrayPosition {
+    AfterGroup,       // the group was read and published already
+    BeforeGroup,      // the group is still to come
+    AmongChildren,    // between the group's own children, parent first
+    ChildrenFirst     // between the group's own children, parent last
+};
+
+const char* strayPositionName(StrayPosition position) {
+    switch (position) {
+    case StrayPosition::AfterGroup: return "after the group";
+    case StrayPosition::BeforeGroup: return "before the group";
+    case StrayPosition::AmongChildren:
+        return "among the children, parent first";
+    case StrayPosition::ChildrenFirst:
+        return "among the children, parent last";
+    }
+    return "";
+}
+
+// The walk order of one group (parent, then its children), the stray child that
+// names it and a LINE.
+std::vector<std::uint32_t> strayWalk(
+    StrayPosition position, std::uint32_t parent,
+    const std::vector<std::uint32_t>& children, std::uint32_t stray,
+    std::uint32_t line) {
+    std::vector<std::uint32_t> walk;
+    switch (position) {
+    case StrayPosition::AfterGroup:
+        walk.push_back(parent);
+        walk.insert(walk.end(), children.cbegin(), children.cend());
+        walk.push_back(stray);
+        break;
+    case StrayPosition::BeforeGroup:
+        walk.push_back(stray);
+        walk.push_back(parent);
+        walk.insert(walk.end(), children.cbegin(), children.cend());
+        break;
+    case StrayPosition::AmongChildren:
+        walk.push_back(parent);
+        walk.push_back(children.front());
+        walk.push_back(stray);
+        walk.insert(walk.end(), children.cbegin() + 1, children.cend());
+        break;
+    case StrayPosition::ChildrenFirst:
+        walk.push_back(children.front());
+        walk.push_back(stray);
+        walk.insert(walk.end(), children.cbegin() + 1, children.cend());
+        walk.push_back(parent);
+        break;
+    }
+    walk.push_back(line);
+    return walk;
+}
+
+} // namespace
+
+// A child that a group does not declare is disposed of on its own, and the group
+// is still judged on what it declares: here it lost a declared child, which is a
+// missing frame and a structural failure whatever was disposed of on the way.
+TEST_CASE("DWG mapped INSERT that lost a declared child stays structural beside "
+          "an undeclared one",
+          "[dwg][safety][compound][mapped-owner][undeclared-child]") {
+    constexpr std::uint32_t recordHandle = 0xD10;
+    constexpr std::uint32_t strayHandle = 0xD11;
+    constexpr std::uint32_t insertHandle = 0xD12;
+    constexpr std::uint32_t attribHandle = 0xD13;
+    constexpr std::uint32_t missingHandle = 0xD14; // declared, has no frame
+    constexpr std::uint32_t seqEndHandle = 0xD15;
+
+    const auto run = runMappedWalk(
+        DRW::AC1018, recordHandle,
+        {{strayHandle, makeAttribFrame(strayHandle, insertHandle)},
+         {insertHandle, makeInsertWithAttributesFrame(
+              insertHandle, recordHandle, {attribHandle, missingHandle},
+              seqEndHandle)},
+         {attribHandle, makeAttribFrame(attribHandle, insertHandle)},
+         {seqEndHandle, makeSeqEndFrame(seqEndHandle, insertHandle)}},
+        {strayHandle, insertHandle, attribHandle, seqEndHandle});
+
+    CHECK_FALSE(run->walked);
+    CHECK(run->outcome == DwgEntityReaderProbe::DwgBlockWalkOutcome::Structural);
+    CHECK(run->interface.inserts.empty());
+    CHECK(run->reader->m_disownedChildHandles.count(strayHandle) == 1u);
+    checkGroupNeverPublished(
+        run->reader->m_dwgSourceFrameLedger,
+        {strayHandle, insertHandle, attribHandle, seqEndHandle});
+    CHECK(run->reader->stagedPendingInsertCountForTest() == 0u);
+    CHECK(run->reader->stagedOrphanAttribCountForTest() == 0u);
+    CHECK(run->reader->stagedSeqEndCountForTest() == 0u);
+}
+
+// A child that names a group that does not declare it -- and that no other
+// group declares either -- claims a membership nobody granted. It is rejected
+// on its own, counted, and quarantined; the group it names has all its own
+// members and is published intact, whether the stray is read before or after
+// the group and whether the group is still to come, pending or published.
+TEST_CASE("DWG mapped INSERT rejects a child that its named group does not "
+          "declare",
+          "[dwg][safety][compound][mapped-owner][undeclared-child]") {
+    constexpr std::uint32_t recordHandle = 0xA00;
+    constexpr std::uint32_t insertHandle = 0xA01;
+    constexpr std::uint32_t attribHandle = 0xA02;
+    constexpr std::uint32_t seqEndHandle = 0xA03;
+    constexpr std::uint32_t strayHandle = 0xA04;
+    constexpr std::uint32_t lineHandle = 0xA05;
+    const bool straySeqEnd = GENERATE(false, true);
+    const StrayPosition position =
+        GENERATE(StrayPosition::AfterGroup, StrayPosition::BeforeGroup,
+                 StrayPosition::AmongChildren, StrayPosition::ChildrenFirst);
+    INFO("the stray " << (straySeqEnd ? "SEQEND" : "ATTRIB") << " sits "
+         << strayPositionName(position));
+
+    const auto run = runMappedWalk(
+        DRW::AC1018, recordHandle,
+        {{insertHandle, makeInsertWithAttributesFrame(
+              insertHandle, recordHandle, {attribHandle}, seqEndHandle)},
+         {attribHandle, makeAttribFrame(attribHandle, insertHandle)},
+         {seqEndHandle, makeSeqEndFrame(seqEndHandle, insertHandle)},
+         {strayHandle, straySeqEnd
+              ? makeSeqEndFrame(strayHandle, insertHandle)
+              : makeAttribFrame(strayHandle, insertHandle)},
+         {lineHandle, makeLineFrame(lineHandle, recordHandle)}},
+        strayWalk(position, insertHandle, {attribHandle, seqEndHandle},
+                  strayHandle, lineHandle));
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK_FALSE(run->walked);
+    CHECK(run->outcome
+          == DwgEntityReaderProbe::DwgBlockWalkOutcome::ContainedGroupRejection);
+    REQUIRE(run->interface.inserts.size() == 1u);
+    CHECK(run->interface.inserts.front().handle == insertHandle);
+    REQUIRE(run->interface.inserts.front().attlist.size() == 1u);
+    CHECK(run->interface.inserts.front().attlist.front()->handle
+          == attribHandle);
+    CHECK(run->interface.lineCount == 1u);
+    CHECK(reader.m_entityParseFailures >= 1u);
+    CHECK(reader.m_disownedChildHandles.count(strayHandle) == 1u);
+    CHECK(reader.m_invalidInsertOwners.count(insertHandle) == 0u);
+    CHECK(reader.stagedPendingInsertCountForTest() == 0u);
+    CHECK(reader.stagedOrphanAttribCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+    checkGroupNeverPublished(reader.m_dwgSourceFrameLedger, {strayHandle});
+    checkPublishedOnce(reader.m_dwgSourceFrameLedger,
+                       {insertHandle, attribHandle, seqEndHandle, lineHandle});
+    CHECK(run->swept);
+    CHECK(run->sweepInterface.inserts.empty());
+    CHECK(reader.ObjectMap.empty());
+}
+
+TEST_CASE("DWG mapped POLYLINE rejects a child that its named group does not "
+          "declare",
+          "[dwg][safety][compound][mapped-owner][undeclared-child]") {
+    constexpr std::uint32_t recordHandle = 0xA10;
+    constexpr std::uint32_t polylineHandle = 0xA11;
+    constexpr std::uint32_t vertexHandle = 0xA12;
+    constexpr std::uint32_t seqEndHandle = 0xA13;
+    constexpr std::uint32_t strayHandle = 0xA14;
+    constexpr std::uint32_t lineHandle = 0xA15;
+    const DRW::Version version = GENERATE(
+        DRW::AC1018, DRW::AC1021, DRW::AC1024, DRW::AC1027);
+    const bool straySeqEnd = GENERATE(false, true);
+    const StrayPosition position =
+        GENERATE(StrayPosition::AfterGroup, StrayPosition::BeforeGroup,
+                 StrayPosition::AmongChildren, StrayPosition::ChildrenFirst);
+    INFO("version " << static_cast<int>(version) << ", the stray "
+         << (straySeqEnd ? "SEQEND" : "VERTEX") << " sits "
+         << strayPositionName(position));
+    const bool withLine = version == DRW::AC1018;
+
+    std::vector<FramePair> frames = {
+        {polylineHandle, makeMappedPolylineParentFrame(
+             version, polylineHandle, recordHandle, {vertexHandle},
+             seqEndHandle)},
+        {vertexHandle, makeMappedVertexFrame(version, vertexHandle,
+                                             polylineHandle)},
+        {seqEndHandle, makeMappedSeqEndFrame(version, seqEndHandle,
+                                             polylineHandle)},
+        {strayHandle, straySeqEnd
+             ? makeMappedSeqEndFrame(version, strayHandle, polylineHandle)
+             : makeMappedVertexFrame(version, strayHandle, polylineHandle)}};
+    std::vector<std::uint32_t> walk =
+        strayWalk(position, polylineHandle, {vertexHandle, seqEndHandle},
+                  strayHandle, lineHandle);
+    if (withLine) {
+        frames.push_back({lineHandle, makeLineFrame(lineHandle, recordHandle)});
+    } else {
+        walk.pop_back();
+    }
+    for (const FramePair& frame : frames)
+        REQUIRE(!frame.second.empty());
+
+    const auto run = runMappedWalk(version, recordHandle, frames, walk);
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK_FALSE(run->walked);
+    CHECK(run->outcome
+          == DwgEntityReaderProbe::DwgBlockWalkOutcome::ContainedGroupRejection);
+    REQUIRE(run->interface.polylineHandles.size() == 1u);
+    CHECK(run->interface.polylineHandles.front() == polylineHandle);
+    CHECK(run->interface.lineCount == (withLine ? 1u : 0u));
+    CHECK(reader.m_entityParseFailures >= 1u);
+    CHECK(reader.m_disownedChildHandles.count(strayHandle) == 1u);
+    CHECK(reader.m_invalidPolylineOwners.count(polylineHandle) == 0u);
+    CHECK(reader.stagedPendingPolylineCountForTest() == 0u);
+    CHECK(reader.stagedOrphanPolylineVertexCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+    checkGroupNeverPublished(reader.m_dwgSourceFrameLedger, {strayHandle});
+    checkPublishedOnce(reader.m_dwgSourceFrameLedger,
+                       {polylineHandle, vertexHandle, seqEndHandle});
+    CHECK(run->swept);
+    CHECK(run->sweepInterface.polylineCount == 0u);
+    CHECK(reader.ObjectMap.empty());
+}
+
+// Several undeclared children, of several groups, in one block: each is one
+// counted rejection, and every group is published with what it declares.
+TEST_CASE("DWG mapped groups reject several undeclared children in one block",
+          "[dwg][safety][compound][mapped-owner][undeclared-child]") {
+    constexpr std::uint32_t recordHandle = 0xA20;
+    constexpr std::uint32_t insertHandle = 0xA21;
+    constexpr std::uint32_t attribHandle = 0xA22;
+    constexpr std::uint32_t insertSeqEnd = 0xA23;
+    constexpr std::uint32_t polylineHandle = 0xA24;
+    constexpr std::uint32_t vertexHandle = 0xA25;
+    constexpr std::uint32_t polylineSeqEnd = 0xA26;
+    constexpr std::uint32_t strayAttrib = 0xA27;
+    constexpr std::uint32_t strayAttribToo = 0xA28;
+    constexpr std::uint32_t strayVertex = 0xA29;
+    constexpr std::uint32_t straySeqEnd = 0xA2A;
+    const bool strayFirst = GENERATE(false, true);
+    INFO((strayFirst ? "the strays come first" : "the groups come first"));
+    const DRW::Version version = DRW::AC1018;
+
+    const std::vector<std::uint32_t> groups = {
+        insertHandle, attribHandle, insertSeqEnd,
+        polylineHandle, vertexHandle, polylineSeqEnd};
+    const std::vector<std::uint32_t> strays = {
+        strayAttrib, strayAttribToo, strayVertex, straySeqEnd};
+    std::vector<std::uint32_t> walk;
+    walk.insert(walk.end(), strayFirst ? strays.cbegin() : groups.cbegin(),
+                strayFirst ? strays.cend() : groups.cend());
+    walk.insert(walk.end(), strayFirst ? groups.cbegin() : strays.cbegin(),
+                strayFirst ? groups.cend() : strays.cend());
+
+    const auto run = runMappedWalk(
+        version, recordHandle,
+        {{insertHandle, makeInsertWithAttributesFrame(
+              insertHandle, recordHandle, {attribHandle}, insertSeqEnd)},
+         {attribHandle, makeAttribFrame(attribHandle, insertHandle)},
+         {insertSeqEnd, makeSeqEndFrame(insertSeqEnd, insertHandle)},
+         {polylineHandle, makeMappedPolylineParentFrame(
+              version, polylineHandle, recordHandle, {vertexHandle},
+              polylineSeqEnd)},
+         {vertexHandle, makeMappedVertexFrame(version, vertexHandle,
+                                              polylineHandle)},
+         {polylineSeqEnd, makeMappedSeqEndFrame(version, polylineSeqEnd,
+                                                polylineHandle)},
+         {strayAttrib, makeAttribFrame(strayAttrib, insertHandle)},
+         {strayAttribToo, makeAttribFrame(strayAttribToo, insertHandle)},
+         {strayVertex, makeMappedVertexFrame(version, strayVertex,
+                                             polylineHandle)},
+         {straySeqEnd, makeMappedSeqEndFrame(version, straySeqEnd,
+                                             polylineHandle)}},
+        walk);
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK_FALSE(run->walked);
+    CHECK(run->outcome
+          == DwgEntityReaderProbe::DwgBlockWalkOutcome::ContainedGroupRejection);
+    REQUIRE(run->interface.inserts.size() == 1u);
+    CHECK(run->interface.inserts.front().attlist.size() == 1u);
+    REQUIRE(run->interface.polylineHandles.size() == 1u);
+    CHECK(reader.m_entityParseFailures >= 4u);
+    checkGroupNeverPublished(reader.m_dwgSourceFrameLedger, strays);
+    checkPublishedOnce(reader.m_dwgSourceFrameLedger, groups);
+    CHECK(reader.stagedPendingInsertCountForTest() == 0u);
+    CHECK(reader.stagedOrphanAttribCountForTest() == 0u);
+    CHECK(reader.stagedPendingPolylineCountForTest() == 0u);
+    CHECK(reader.stagedOrphanPolylineVertexCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+    CHECK(run->swept);
+    CHECK(reader.ObjectMap.empty());
+}
+
+// A stray that no block lists is left to the ENTITIES phase after BLOCKS. It is
+// rejected there just the same, and ends that entity, not the phase.
+TEST_CASE("DWG entity sweep rejects an undeclared child without failing the "
+          "phase",
+          "[dwg][safety][compound][mapped-owner][undeclared-child]") {
+    constexpr std::uint32_t recordHandle = 0xA30;
+    constexpr std::uint32_t insertHandle = 0xA31;
+    constexpr std::uint32_t attribHandle = 0xA32;
+    constexpr std::uint32_t seqEndHandle = 0xA33;
+    constexpr std::uint32_t strayHandle = 0xA34;
+
+    // The block lists the group only; the stray stays in the handle map.
+    const auto run = runMappedWalk(
+        DRW::AC1018, recordHandle,
+        {{insertHandle, makeInsertWithAttributesFrame(
+              insertHandle, recordHandle, {attribHandle}, seqEndHandle)},
+         {attribHandle, makeAttribFrame(attribHandle, insertHandle)},
+         {seqEndHandle, makeSeqEndFrame(seqEndHandle, insertHandle)},
+         {strayHandle, makeAttribFrame(strayHandle, insertHandle)}},
+        {insertHandle, attribHandle, seqEndHandle});
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    // The walk was clean; the sweep found the stray.
+    CHECK(run->walked);
+    REQUIRE(run->interface.inserts.size() == 1u);
+    CHECK(run->swept);
+    CHECK(run->sweepInterface.inserts.empty());
+    CHECK(reader.m_disownedChildHandles.count(strayHandle) == 1u);
+    CHECK(reader.m_entityParseFailures >= 1u);
+    CHECK(reader.ObjectMap.empty());
+    CHECK(reader.stagedOrphanAttribCountForTest() == 0u);
+    checkGroupNeverPublished(reader.m_dwgSourceFrameLedger, {strayHandle});
+    checkPublishedOnce(reader.m_dwgSourceFrameLedger,
+                       {insertHandle, attribHandle, seqEndHandle});
+}
+
+// The journalled block scope: a block that lost an undeclared child commits
+// what it delivered, the named group included, and certifies no reachability.
+TEST_CASE("DWG journalled block commits around a child its group does not "
+          "declare",
+          "[dwg][safety][journal][mapped-owner][undeclared-child]") {
+    constexpr std::uint32_t recordHandle = 0xB00;
+    constexpr std::uint32_t blockHandle = 0xB01;
+    constexpr std::uint32_t parentHandle = 0xB02;
+    constexpr std::uint32_t childHandle = 0xB03;
+    constexpr std::uint32_t seqEndHandle = 0xB04;
+    constexpr std::uint32_t strayHandle = 0xB05;
+    constexpr std::uint32_t lineHandle = 0xB06;
+    constexpr std::uint32_t endBlockHandle = 0xB07;
+    const bool polyline = GENERATE(false, true);
+    const bool modelSpace = GENERATE(false, true);
+    const bool straySeqEnd = GENERATE(false, true);
+    const StrayPosition position =
+        GENERATE(StrayPosition::AfterGroup, StrayPosition::BeforeGroup,
+                 StrayPosition::AmongChildren, StrayPosition::ChildrenFirst);
+    INFO((polyline ? "POLYLINE" : "INSERT") << ", "
+         << (modelSpace ? "model space" : "named block") << ", the stray "
+         << (straySeqEnd ? "SEQEND" : (polyline ? "VERTEX" : "ATTRIB"))
+         << " sits " << strayPositionName(position));
+    const DRW::Version version = DRW::AC1018;
+    const std::uint32_t blockOwner = modelSpace ? DRW::NoHandle : recordHandle;
+
+    std::vector<FramePair> frames;
+    if (polyline) {
+        frames = {
+            {parentHandle, makeMappedPolylineParentFrame(
+                 version, parentHandle, blockOwner, {childHandle},
+                 seqEndHandle)},
+            {childHandle, makeMappedVertexFrame(version, childHandle,
+                                                parentHandle)},
+            {seqEndHandle, makeMappedSeqEndFrame(version, seqEndHandle,
+                                                 parentHandle)},
+            {strayHandle, straySeqEnd
+                 ? makeMappedSeqEndFrame(version, strayHandle, parentHandle)
+                 : makeMappedVertexFrame(version, strayHandle, parentHandle)}};
+    } else {
+        frames = {
+            {parentHandle, makeInsertWithAttributesFrame(
+                 parentHandle, blockOwner, {childHandle}, seqEndHandle)},
+            {childHandle, makeAttribFrame(childHandle, parentHandle)},
+            {seqEndHandle, makeSeqEndFrame(seqEndHandle, parentHandle)},
+            {strayHandle, straySeqEnd
+                 ? makeSeqEndFrame(strayHandle, parentHandle)
+                 : makeAttribFrame(strayHandle, parentHandle)}};
+    }
+    frames.push_back({lineHandle, makeLineFrame(lineHandle, blockOwner)});
+    for (const FramePair& frame : frames)
+        REQUIRE(!frame.second.empty());
+
+    const auto run = runJournalledBlock(
+        recordHandle, blockHandle, endBlockHandle,
+        modelSpace ? "*Model_Space" : "JOURNALLED_UNDECLARED", blockOwner,
+        frames,
+        strayWalk(position, parentHandle, {childHandle, seqEndHandle},
+                  strayHandle, lineHandle));
+    const DwgEntityReaderProbe& reader = *run->reader;
+    const DwgGroupRejectionProbe& interface = run->interface;
+
+    CHECK(run->readBlocks);
+    CHECK(run->readEntities);
+    CHECK(interface.blockCount == 1u);
+    CHECK(interface.lineCount == 1u);
+    if (polyline) {
+        CHECK(interface.polylineHandles == std::vector<std::uint32_t>{
+                                               parentHandle});
+        CHECK(run->sweepInterface.polylineCount == 0u);
+    } else {
+        REQUIRE(interface.inserts.size() == 1u);
+        CHECK(interface.inserts.front().attlist.size() == 1u);
+        CHECK(run->sweepInterface.inserts.empty());
+    }
+    CHECK(interface.reachabilities.empty());
+    CHECK(reader.ObjectMap.empty());
+    CHECK(reader.stagedPendingInsertCountForTest() == 0u);
+    CHECK(reader.stagedOrphanAttribCountForTest() == 0u);
+    CHECK(reader.stagedPendingPolylineCountForTest() == 0u);
+    CHECK(reader.stagedOrphanPolylineVertexCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+    CHECK(reader.m_entityParseFailures >= 1u);
+    const std::string parentCallback = polyline ? "polyline" : "insert";
+    const std::vector<std::string> expectedCallbacks =
+        modelSpace
+            ? std::vector<std::string>{"block", "endBlock", parentCallback,
+                                       "line"}
+            : std::vector<std::string>{"block", parentCallback, "line",
+                                       "endBlock"};
+    CHECK(interface.callbacks == expectedCallbacks);
+    checkGroupNeverPublished(reader.m_dwgSourceFrameLedger, {strayHandle});
+    checkPublishedOnce(reader.m_dwgSourceFrameLedger,
+                       {parentHandle, childHandle, seqEndHandle, lineHandle});
+}
+
+TEST_CASE("DWG journalled block still rolls back on a structural failure "
+          "beside a child its group does not declare",
+          "[dwg][safety][journal][mapped-owner][undeclared-child]") {
+    constexpr std::uint32_t recordHandle = 0xB10;
+    constexpr std::uint32_t blockHandle = 0xB11;
+    constexpr std::uint32_t insertHandle = 0xB12;
+    constexpr std::uint32_t attribHandle = 0xB13;
+    constexpr std::uint32_t seqEndHandle = 0xB14;
+    constexpr std::uint32_t strayHandle = 0xB15;
+    constexpr std::uint32_t badLineHandle = 0xB16;
+    constexpr std::uint32_t endBlockHandle = 0xB17;
+    constexpr std::uint32_t wrongOwner = 0xB18;
+    const bool modelSpace = GENERATE(false, true);
+    INFO((modelSpace ? "model space" : "named block"));
+    const std::uint32_t blockOwner = modelSpace ? DRW::NoHandle : recordHandle;
+
+    const auto run = runJournalledBlock(
+        recordHandle, blockHandle, endBlockHandle,
+        modelSpace ? "*Model_Space" : "JOURNALLED_UNDECLARED_ROLLBACK",
+        blockOwner,
+        {{insertHandle, makeInsertWithAttributesFrame(
+              insertHandle, blockOwner, {attribHandle}, seqEndHandle)},
+         {attribHandle, makeAttribFrame(attribHandle, insertHandle)},
+         {seqEndHandle, makeSeqEndFrame(seqEndHandle, insertHandle)},
+         {strayHandle, makeAttribFrame(strayHandle, insertHandle)},
+         {badLineHandle, makeLineFrame(badLineHandle, wrongOwner)}},
+        {insertHandle, attribHandle, seqEndHandle, strayHandle, badLineHandle});
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK_FALSE(run->readBlocks);
+    CHECK(run->interface.callbacks.empty());
+    CHECK(run->interface.inserts.empty());
+    CHECK(run->interface.reachabilities.empty());
+    CHECK(reader.ObjectMap.empty());
+    CHECK(reader.stagedPendingInsertCountForTest() == 0u);
+    CHECK(reader.stagedOrphanAttribCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+    for (const DRW_DwgFrameCoverageEntry& entry : reader.m_dwgSourceFrameLedger) {
+        if (entry.m_handle == recordHandle)
+            continue;
+        INFO("handle 0x" << std::hex << entry.m_handle);
+        CHECK(entry.m_publicationCount == 0u);
+        CHECK((entry.m_disposition == DRW_DwgFrameDisposition::Failed
+               || entry.m_disposition == DRW_DwgFrameDisposition::Quarantined));
+    }
+}
+
+TEST_CASE("DWG journalled block rolls back cleanly after a child its group "
+          "does not declare when the journal fails",
+          "[dwg][safety][journal][mapped-owner][undeclared-child]") {
+    constexpr std::uint32_t recordHandle = 0xB20;
+    constexpr std::uint32_t blockHandle = 0xB21;
+    constexpr std::uint32_t strayHandle = 0xB22;
+    constexpr std::uint32_t insertHandle = 0xB23;
+    constexpr std::uint32_t attribHandle = 0xB24;
+    constexpr std::uint32_t seqEndHandle = 0xB25;
+    constexpr std::uint32_t lineHandle = 0xB26;
+    constexpr std::uint32_t endBlockHandle = 0xB27;
+    const bool failReservation = GENERATE(false, true);
+    INFO((failReservation ? "reservation fails" : "adoption fails"));
+
+    // The stray is read before its group, so it is disposed of when the group
+    // arrives; the group's commit is the admission that then fails.
+    const auto run = runJournalledBlock(
+        recordHandle, blockHandle, endBlockHandle, "JOURNALLED_UNDECLARED_FAULT",
+        recordHandle,
+        {{strayHandle, makeAttribFrame(strayHandle, insertHandle)},
+         {insertHandle, makeInsertWithAttributesFrame(
+              insertHandle, recordHandle, {attribHandle}, seqEndHandle)},
+         {attribHandle, makeAttribFrame(attribHandle, insertHandle)},
+         {seqEndHandle, makeSeqEndFrame(seqEndHandle, insertHandle)},
+         {lineHandle, makeLineFrame(lineHandle, recordHandle)}},
+        {strayHandle, insertHandle, attribHandle, seqEndHandle, lineHandle},
+        [failReservation](DwgEntityReaderProbe& reader) {
+            // The block delimiters take the first two admissions; the group's
+            // commit is the next one.
+            if (failReservation)
+                reader.failBlockJournalReservationForTest(3u);
+            else
+                reader.failBlockJournalAdoptionForTest(3u);
+        });
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK_FALSE(run->readBlocks);
+    CHECK(run->interface.callbacks.empty());
+    CHECK(run->interface.inserts.empty());
+    CHECK(run->interface.reachabilities.empty());
+    CHECK(reader.ObjectMap.empty());
+    CHECK(reader.stagedPendingInsertCountForTest() == 0u);
+    CHECK(reader.stagedOrphanAttribCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+    for (const DRW_DwgFrameCoverageEntry& entry : reader.m_dwgSourceFrameLedger) {
+        if (entry.m_handle == recordHandle)
+            continue;
+        INFO("handle 0x" << std::hex << entry.m_handle);
+        CHECK(entry.m_publicationCount == 0u);
+    }
+}
+
+// The primitives, one frame at a time: a child that names a group that was
+// published already, and a SEQEND staged under a group before that group
+// arrives.
+TEST_CASE("DWG staged INSERT helpers reject a child that names a committed "
+          "INSERT",
+          "[dwg][safety][compound][undeclared-child]") {
+    std::uint8_t dummy[] = {0};
+    DwgEntityReaderProbe reader(
+        std::make_unique<dwgBuffer>(dummy, sizeof(dummy)));
+    std::vector<std::uint8_t> bytes;
+    // Handles 1..5: the INSERT, its ATTRIB (2) and SEQEND (3), and two strays
+    // that name it: an ATTRIB (4) and a SEQEND (5).
+    appendHandleMapPage(bytes, {1, 0, 1, 1, 1, 1, 1, 1, 1, 1});
+    appendHandleMapPage(bytes, {});
+    dwgBuffer mapBuffer(bytes.data(), bytes.size());
+    REQUIRE(reader.readDwgHandles(&mapBuffer, 0, bytes.size()));
+    reader.setVersionForTest(DRW::AC1018);
+    DwgInsertReceiptProbe interface;
+    bool committed = false;
+
+    DRW_Insert insert;
+    insert.handle = 1;
+    dwgHandle attribHandle;
+    attribHandle.ref = 2;
+    insert.attribHandles.push_back(attribHandle);
+    insert.seqendH.ref = 3;
+    REQUIRE(reader.stageInsertForTest(
+        std::move(insert), reader.publicationForTest(1), interface, committed));
+    auto attribute = std::make_shared<DRW_Attrib>();
+    attribute->handle = 2;
+    attribute->parentHandle = 1;
+    REQUIRE(reader.stageAttributeForTest(
+        std::move(attribute), reader.publicationForTest(2), interface,
+        committed));
+    REQUIRE(reader.stageSeqEndForTest(
+        3, 1, reader.publicationForTest(3), interface, committed));
+    REQUIRE(committed);
+    REQUIRE(interface.inserts.size() == 1u);
+
+    auto strayAttribute = std::make_shared<DRW_Attrib>();
+    strayAttribute->handle = 4;
+    strayAttribute->parentHandle = 1;
+    CHECK_FALSE(reader.stageAttributeForTest(
+        std::move(strayAttribute), reader.publicationForTest(4), interface,
+        committed));
+    CHECK_FALSE(reader.stageSeqEndForTest(
+        5, 1, reader.publicationForTest(5), interface, committed));
+    // Neither is staged as an orphan of a group that will never come.
+    CHECK(reader.stagedOrphanAttribCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+    CHECK(reader.m_disownedChildHandles.count(4u) == 1u);
+    CHECK(reader.m_disownedChildHandles.count(5u) == 1u);
+    CHECK(reader.validateDeferredCompoundState());
+    // The published group is untouched.
+    CHECK(interface.inserts.size() == 1u);
+    CHECK(interface.publications.size() == 3u);
+    CHECK(reader.m_invalidInsertOwners.count(1u) == 0u);
+}
+
+TEST_CASE("DWG staged POLYLINE helpers reject a child that names a committed "
+          "POLYLINE",
+          "[dwg][safety][compound][undeclared-child]") {
+    std::uint8_t dummy[] = {0};
+    DwgEntityReaderProbe reader(
+        std::make_unique<dwgBuffer>(dummy, sizeof(dummy)));
+    std::vector<std::uint8_t> bytes;
+    // Handles 1..5: the POLYLINE, its VERTEX (2) and SEQEND (3), and two strays
+    // that name it: a VERTEX (4) and a SEQEND (5).
+    appendHandleMapPage(bytes, {1, 0, 1, 1, 1, 1, 1, 1, 1, 1});
+    appendHandleMapPage(bytes, {});
+    dwgBuffer mapBuffer(bytes.data(), bytes.size());
+    REQUIRE(reader.readDwgHandles(&mapBuffer, 0, bytes.size()));
+    reader.setVersionForTest(DRW::AC1018);
+    DwgInsertReceiptProbe interface;
+    bool committed = false;
+
+    const auto makeVertex = [](std::uint32_t handle, std::uint32_t owner) {
+        DwgVertexWriterProbe vertex;
+        vertex.handle = handle;
+        vertex.parentHandle = owner;
+        vertex.setDwgSubtype(DRW_Vertex::DwgSubtype::Vertex2D);
+        return static_cast<DRW_Vertex>(vertex);
+    };
+    REQUIRE(reader.stagePolylineForTest(
+        parseMappedPolylineFrame(DRW::AC1018, 1, {2}, 3),
+        reader.publicationForTest(1), interface, committed));
+    REQUIRE(reader.stageVertexForTest(
+        makeVertex(2, 1), reader.publicationForTest(2), interface, committed));
+    REQUIRE(reader.stageSeqEndForTest(
+        3, 1, reader.publicationForTest(3), interface, committed));
+    REQUIRE(committed);
+    REQUIRE(interface.polylineCount == 1u);
+
+    CHECK_FALSE(reader.stageVertexForTest(
+        makeVertex(4, 1), reader.publicationForTest(4), interface, committed));
+    CHECK_FALSE(reader.stageSeqEndForTest(
+        5, 1, reader.publicationForTest(5), interface, committed));
+    CHECK(reader.stagedOrphanPolylineVertexCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+    CHECK(reader.m_disownedChildHandles.count(4u) == 1u);
+    CHECK(reader.m_disownedChildHandles.count(5u) == 1u);
+    CHECK(reader.validateDeferredCompoundState());
+    CHECK(interface.polylineCount == 1u);
+    CHECK(reader.m_invalidPolylineOwners.count(1u) == 0u);
+}
+
+TEST_CASE("DWG staged INSERT helper disposes of a staged SEQEND it does not "
+          "declare",
+          "[dwg][safety][compound][undeclared-child]") {
+    std::uint8_t dummy[] = {0};
+    DwgEntityReaderProbe reader(
+        std::make_unique<dwgBuffer>(dummy, sizeof(dummy)));
+    std::vector<std::uint8_t> bytes;
+    // Handles 1..5: the INSERT, its ATTRIB (2) and SEQEND (3), a SEQEND (5)
+    // that names it as well (4 is left out of the map on purpose).
+    appendHandleMapPage(bytes, {1, 0, 1, 1, 1, 1, 2, 1});
+    appendHandleMapPage(bytes, {});
+    dwgBuffer mapBuffer(bytes.data(), bytes.size());
+    REQUIRE(reader.readDwgHandles(&mapBuffer, 0, bytes.size()));
+    reader.setVersionForTest(DRW::AC1018);
+    DwgInsertReceiptProbe interface;
+    bool committed = false;
+
+    // Both SEQENDs arrive before the INSERT, each staged under it.
+    REQUIRE(reader.stageSeqEndForTest(
+        3, 1, reader.publicationForTest(3), interface, committed));
+    REQUIRE(reader.stageSeqEndForTest(
+        5, 1, reader.publicationForTest(5), interface, committed));
+    CHECK(reader.stagedSeqEndCountForTest() == 2u);
+    // While the INSERT is still to come, neither is finished business.
+    CHECK(reader.disposeFinishedGroupSeqEndsForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 2u);
+
+    DRW_Insert insert;
+    insert.handle = 1;
+    dwgHandle attribHandle;
+    attribHandle.ref = 2;
+    insert.attribHandles.push_back(attribHandle);
+    insert.seqendH.ref = 3;
+    REQUIRE(reader.stageInsertForTest(
+        std::move(insert), reader.publicationForTest(1), interface, committed));
+    CHECK_FALSE(committed);
+    auto attribute = std::make_shared<DRW_Attrib>();
+    attribute->handle = 2;
+    attribute->parentHandle = 1;
+    REQUIRE(reader.stageAttributeForTest(
+        std::move(attribute), reader.publicationForTest(2), interface,
+        committed));
+    // The INSERT committed with the SEQEND it declares; the other one is still
+    // staged under a group that will never come for it.
+    CHECK(committed);
+    REQUIRE(interface.inserts.size() == 1u);
+    CHECK(reader.stagedPendingInsertCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 1u);
+
+    CHECK(reader.disposeFinishedGroupSeqEndsForTest() == 1u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+    CHECK(reader.m_disownedChildHandles.count(5u) == 1u);
+    CHECK(reader.m_entityParseFailures == 1u);
+    REQUIRE(reader.m_dwgSourceFrameLedger.size() == 4u);
+    CHECK(reader.m_dwgSourceFrameLedger[2].m_disposition
+          == DRW_DwgFrameDisposition::Published);
+    CHECK(reader.m_dwgSourceFrameLedger[3].m_disposition
+          == DRW_DwgFrameDisposition::Quarantined);
+    CHECK(reader.m_dwgSourceFrameLedger[3].m_publicationCount == 0u);
+    CHECK(reader.validateDeferredCompoundState());
+}
+
+// Legacy (R13-R2000) groups are their chain: the aggregate reads every member
+// itself. An ATTRIB that names the INSERT but is no link of its chain is
+// rejected -- read before the group (it must not be taken for a member, though
+// a legacy INSERT names only its first and last ATTRIB) or after it.
+TEST_CASE("DWG legacy INSERT rejects an ATTRIB its chain does not contain",
+          "[dwg][safety][compound][undeclared-child]") {
+    const bool strayFirst = GENERATE(false, true);
+    const bool twoAttribs = GENERATE(false, true);
+    INFO("the stray comes " << (strayFirst ? "before" : "after")
+         << " the group, the group has "
+         << (twoAttribs ? "two ATTRIBs (first != last)" : "one ATTRIB"));
+    const std::uint32_t stray = strayFirst ? 0x10u : 0x10u + (twoAttribs ? 4u : 3u);
+    const std::uint32_t insert = strayFirst ? 0x11u : 0x10u;
+    const std::uint32_t first = insert + 1u;
+    const std::uint32_t last = twoAttribs ? insert + 2u : first;
+    const std::uint32_t seqEnd = last + 1u;
+    const std::uint32_t lineHandle = 0x10u + (twoAttribs ? 5u : 4u);
+    REQUIRE((strayFirst ? lineHandle == seqEnd + 1u : lineHandle == stray + 1u));
+
+    std::vector<FramePair> frames = {
+        {stray, makeLegacyAttribFrame(stray, insert)},
+        {insert, makeLegacyInsertParentFrame(insert, first, last, seqEnd)},
+        {first, makeLegacyAttribFrame(first, insert)},
+        {seqEnd, makeSeqEndFrame(seqEnd, insert)},
+        {lineHandle, makeLegacyLineFrame(lineHandle)}};
+    if (twoAttribs)
+        frames.push_back({last, makeLegacyAttribFrame(last, insert)});
+
+    const auto run = runLegacyWalk(frames, std::min(stray, insert), lineHandle);
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK_FALSE(run->walked);
+    CHECK(run->outcome
+          == DwgEntityReaderProbe::DwgBlockWalkOutcome::ContainedGroupRejection);
+    REQUIRE(run->interface.inserts.size() == 1u);
+    CHECK(run->interface.inserts.front().handle == insert);
+    // Exactly the chain: the stray is not among the attributes.
+    REQUIRE(run->interface.inserts.front().attlist.size()
+            == (twoAttribs ? 2u : 1u));
+    for (const auto& attribute : run->interface.inserts.front().attlist)
+        CHECK(attribute->handle != stray);
+    CHECK(run->interface.lineCount == 1u);
+    CHECK(reader.m_entityParseFailures >= 1u);
+    CHECK(reader.stagedPendingInsertCountForTest() == 0u);
+    CHECK(reader.stagedOrphanAttribCountForTest() == 0u);
+    checkGroupNeverPublished(reader.m_dwgSourceFrameLedger, {stray});
+    checkPublishedOnce(reader.m_dwgSourceFrameLedger,
+                       {insert, first, last, seqEnd, lineHandle});
+    CHECK(run->swept);
+    CHECK(run->sweepInterface.inserts.empty());
+    CHECK(reader.ObjectMap.empty());
+}
+
+// A stray no chain reaches is left to the ENTITIES sweep, which rejects it the
+// same way and does not fail the phase.
+TEST_CASE("DWG legacy entity sweep rejects an ATTRIB naming a committed INSERT",
+          "[dwg][safety][compound][undeclared-child]") {
+    constexpr std::uint32_t insert = 0x10;
+    constexpr std::uint32_t attrib = 0x11;
+    constexpr std::uint32_t seqEnd = 0x12;
+    constexpr std::uint32_t lineHandle = 0x13;
+    constexpr std::uint32_t stray = 0x40; // in no chain
+
+    const auto run = runLegacyWalk(
+        {{insert, makeLegacyInsertParentFrame(insert, attrib, attrib, seqEnd)},
+         {attrib, makeLegacyAttribFrame(attrib, insert)},
+         {seqEnd, makeSeqEndFrame(seqEnd, insert)},
+         {lineHandle, makeLegacyLineFrame(lineHandle)},
+         {stray, makeLegacyAttribFrame(stray, insert)}},
+        insert, lineHandle);
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK(run->walked);
+    REQUIRE(run->interface.inserts.size() == 1u);
+    CHECK(run->interface.lineCount == 1u);
+    CHECK(run->swept);
+    CHECK(run->sweepInterface.inserts.empty());
+    CHECK(reader.m_disownedChildHandles.count(stray) == 1u);
+    CHECK(reader.m_entityParseFailures >= 1u);
+    CHECK(reader.ObjectMap.empty());
+    checkGroupNeverPublished(reader.m_dwgSourceFrameLedger, {stray});
+    checkPublishedOnce(reader.m_dwgSourceFrameLedger,
+                       {insert, attrib, seqEnd, lineHandle});
+}
+
+namespace {
+
+// One block of a modern file: its BLOCK_RECORD, BLOCK and ENDBLK handles, its
+// name, the owner of its entities (NoHandle for model/paper space) and the walk
+// order of its entity list.
+struct ModernBlockSpec {
+    std::uint32_t recordHandle;
+    std::uint32_t blockHandle;
+    std::uint32_t endBlockHandle;
+    UTF8STRING name;
+    std::uint32_t owner;
+    std::vector<std::uint32_t> walkOrder;
+};
+
+// Several modern (AC1018) BLOCK_RECORDs run through readDwgBlocks, which walks
+// each one through the journalled block scope when it can. The handles of all
+// the frames must be distinct; the frames may be given in any order.
+std::unique_ptr<JournalledBlockRun> runModernBlocks(
+    const std::vector<ModernBlockSpec>& blocks,
+    const std::vector<FramePair>& entityFrames) {
+    auto run = std::make_unique<JournalledBlockRun>();
+    std::vector<FramePair> frames = entityFrames;
+    for (const ModernBlockSpec& block : blocks) {
+        frames.push_back({block.recordHandle, {0u}});
+        frames.push_back({block.blockHandle,
+                          makeBlockFrame(block.blockHandle, block.owner, false,
+                                         block.name)});
+        frames.push_back({block.endBlockHandle,
+                          makeBlockFrame(block.endBlockHandle, block.owner,
+                                         true)});
+    }
+    std::sort(frames.begin(), frames.end(),
+              [](const FramePair& left, const FramePair& right) {
+                  return left.first < right.first;
+              });
+    const MappedFrameSet set = makeMappedFrameSet(frames);
+    REQUIRE(set.valid);
+    run->bytes = set.bytes;
+    run->handleMap = set.handleMap;
+
+    run->reader = std::make_unique<DwgEntityReaderProbe>(
+        std::make_unique<dwgBuffer>(run->bytes.data(), run->bytes.size()));
+    DwgEntityReaderProbe& reader = *run->reader;
+    reader.setVersionForTest(DRW::AC1018);
+    reader.setCodePageForTest("ANSI_1252");
+    dwgBuffer handleBuffer(run->handleMap.data(), run->handleMap.size());
+    REQUIRE(reader.readDwgHandles(
+        &handleBuffer, 0, run->handleMap.size(), run->bytes.size()));
+
+    for (const ModernBlockSpec& block : blocks) {
+        auto recordPublication = reader.publicationForTest(block.recordHandle);
+        recordPublication.m_version = DRW::AC1018;
+        recordPublication.m_encodedType = DRW::DwgBlockRecordObjectType;
+        recordPublication.m_resolvedType = DRW::DwgBlockRecordObjectType;
+        recordPublication.setCommonLinkEvidence(
+            DRW_DwgCommonLinkEvidence::ValidatedAbsent);
+        REQUIRE(reader.publishFrameForTest(run->interface, recordPublication));
+        reader.ObjectMap.erase(block.recordHandle);
+
+        auto* record = new DRW_Block_Record();
+        DwgBlockOwnershipTestAccess::setHandle(*record, block.recordHandle);
+        record->name = block.name;
+        DwgBlockOwnershipTestAccess::setHandles(
+            *record, block.blockHandle, block.endBlockHandle, block.walkOrder);
+        REQUIRE(reader.blockRecordmap.emplace(block.recordHandle, record)
+                    .second);
+    }
+
+    run->objectBuffer =
+        std::make_unique<dwgBuffer>(run->bytes.data(), run->bytes.size());
+    run->readBlocks = reader.readDwgBlocks(run->interface,
+                                           run->objectBuffer.get());
+    dwgBuffer sweepBuffer(run->bytes.data(), run->bytes.size());
+    run->readEntities = reader.readDwgEntities(run->sweepInterface, &sweepBuffer);
+    return run;
+}
+
+// Which child the two POLYLINEs of a conflict declare in common.
+enum class SharedChild { Vertex, SeqEnd };
+
+const char* sharedChildName(SharedChild child) {
+    return child == SharedChild::Vertex ? "VERTEX" : "SEQEND";
+}
+
+// Handles of the two conflicting POLYLINEs of the tests below and what they
+// declare: POLYLINE 1 declares its own VERTEX (and a shared one, or a shared
+// SEQEND), POLYLINE 2 the same, so that they share exactly one child.
+struct SharedChildGroups {
+    std::uint32_t polyline1, own1, seqEnd1;
+    std::uint32_t polyline2, own2, seqEnd2;
+    std::uint32_t shared;
+    SharedChild kind;
+
+    // The vertices and the SEQEND POLYLINE 1 / 2 declare.
+    std::vector<std::uint32_t> vertices1() const {
+        return kind == SharedChild::Vertex
+            ? std::vector<std::uint32_t>{own1, shared}
+            : std::vector<std::uint32_t>{own1};
+    }
+    std::vector<std::uint32_t> vertices2() const {
+        return kind == SharedChild::Vertex
+            ? std::vector<std::uint32_t>{own2, shared}
+            : std::vector<std::uint32_t>{own2};
+    }
+    std::uint32_t declaredSeqEnd1() const {
+        return kind == SharedChild::SeqEnd ? shared : seqEnd1;
+    }
+    std::uint32_t declaredSeqEnd2() const {
+        return kind == SharedChild::SeqEnd ? shared : seqEnd2;
+    }
+    // Every frame of the two groups.
+    std::vector<std::uint32_t> handles() const {
+        std::vector<std::uint32_t> all = {polyline1, own1, polyline2, own2,
+                                          shared};
+        if (kind == SharedChild::Vertex) {
+            all.push_back(seqEnd1);
+            all.push_back(seqEnd2);
+        }
+        return all;
+    }
+};
+
+// The frames of the two POLYLINEs and everything they declare, for `version`.
+// `sharedOwner` is what the shared child names as its owner.
+std::vector<FramePair> sharedChildFrames(
+    DRW::Version version, const SharedChildGroups& groups,
+    std::uint32_t blockOwner, std::uint32_t sharedOwner) {
+    std::vector<FramePair> frames = {
+        {groups.polyline1, makeMappedPolylineParentFrame(
+             version, groups.polyline1, blockOwner, groups.vertices1(),
+             groups.declaredSeqEnd1())},
+        {groups.own1, makeMappedVertexFrame(version, groups.own1,
+                                            groups.polyline1)},
+        {groups.polyline2, makeMappedPolylineParentFrame(
+             version, groups.polyline2, blockOwner, groups.vertices2(),
+             groups.declaredSeqEnd2())},
+        {groups.own2, makeMappedVertexFrame(version, groups.own2,
+                                            groups.polyline2)}};
+    if (groups.kind == SharedChild::Vertex) {
+        frames.push_back({groups.shared, makeMappedVertexFrame(
+                                             version, groups.shared,
+                                             sharedOwner)});
+        frames.push_back({groups.seqEnd1, makeMappedSeqEndFrame(
+                                              version, groups.seqEnd1,
+                                              groups.polyline1)});
+        frames.push_back({groups.seqEnd2, makeMappedSeqEndFrame(
+                                              version, groups.seqEnd2,
+                                              groups.polyline2)});
+    } else {
+        frames.push_back({groups.shared, makeMappedSeqEndFrame(
+                                             version, groups.shared,
+                                             sharedOwner)});
+    }
+    return frames;
+}
+
+} // namespace
+
+// Two POLYLINEs that declare the same child. Each declaration is consistent by
+// itself; the conflict is between them, and the child's own owner field does
+// not decide it (it may name either group, or neither). No group can win, so
+// both are rejected whole -- with every frame each of them declares, the shared
+// child included -- whichever comes first in a walk, and everything else in the
+// block is read on its own merits. The rejection is contained: the walk reports
+// it, the read goes on.
+TEST_CASE("DWG mapped POLYLINEs that declare the same child are both rejected",
+          "[dwg][safety][compound][mapped-owner][shared-child]") {
+    constexpr std::uint32_t recordHandle = 0xC00;
+    constexpr std::uint32_t otherHandle = 0xC0F; // no group
+    constexpr std::uint32_t polyline3 = 0xC10;
+    constexpr std::uint32_t vertex3 = 0xC11;
+    constexpr std::uint32_t seqEnd3 = 0xC12;
+    constexpr std::uint32_t lineHandle = 0xC13;
+    const DRW::Version version = GENERATE(
+        DRW::AC1018, DRW::AC1021, DRW::AC1024, DRW::AC1027);
+    const SharedChild kind = GENERATE(SharedChild::Vertex, SharedChild::SeqEnd);
+    const int sharedOwnerChoice = GENERATE(0, 1, 2);
+    const bool childrenFirst = GENERATE(false, true);
+    SharedChildGroups groups{0xC01, 0xC02, 0xC03, 0xC04, 0xC05, 0xC06, 0xC07,
+                             kind};
+    const std::uint32_t sharedOwner = sharedOwnerChoice == 0
+        ? groups.polyline1
+        : sharedOwnerChoice == 1 ? groups.polyline2 : otherHandle;
+    INFO("version " << static_cast<int>(version) << ", shared "
+         << sharedChildName(kind) << " names "
+         << (sharedOwnerChoice == 0 ? "the first POLYLINE"
+                                    : sharedOwnerChoice == 1
+                                          ? "the second POLYLINE" : "no group")
+         << ", " << (childrenFirst ? "children first" : "parents first"));
+    const bool withLine = version == DRW::AC1018;
+
+    std::vector<FramePair> frames =
+        sharedChildFrames(version, groups, recordHandle, sharedOwner);
+    frames.push_back({polyline3, makeMappedPolylineParentFrame(
+                                     version, polyline3, recordHandle,
+                                     {vertex3}, seqEnd3)});
+    frames.push_back({vertex3, makeMappedVertexFrame(version, vertex3,
+                                                     polyline3)});
+    frames.push_back({seqEnd3, makeMappedSeqEndFrame(version, seqEnd3,
+                                                     polyline3)});
+    std::vector<std::uint32_t> walk;
+    for (const std::uint32_t polyline : {groups.polyline1, groups.polyline2}) {
+        const bool first = polyline == groups.polyline1;
+        // The entity list names every frame once: the shared child is listed
+        // with the first group.
+        std::vector<std::uint32_t> children = {
+            first ? groups.own1 : groups.own2};
+        if (first)
+            children.push_back(groups.shared);
+        if (kind == SharedChild::Vertex)
+            children.push_back(first ? groups.seqEnd1 : groups.seqEnd2);
+        if (childrenFirst) {
+            walk.insert(walk.end(), children.cbegin(), children.cend());
+            walk.push_back(polyline);
+        } else {
+            walk.push_back(polyline);
+            walk.insert(walk.end(), children.cbegin(), children.cend());
+        }
+    }
+    walk.insert(walk.end(), {polyline3, vertex3, seqEnd3});
+    if (withLine) {
+        frames.push_back({lineHandle, makeLineFrame(lineHandle, recordHandle)});
+        walk.push_back(lineHandle);
+    }
+    for (const FramePair& frame : frames)
+        REQUIRE(!frame.second.empty());
+
+    const auto run = runMappedWalk(version, recordHandle, frames, walk);
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK_FALSE(run->walked);
+    CHECK(run->outcome
+          == DwgEntityReaderProbe::DwgBlockWalkOutcome::ContainedGroupRejection);
+    REQUIRE(run->interface.polylineHandles.size() == 1u);
+    CHECK(run->interface.polylineHandles.front() == polyline3);
+    CHECK(run->interface.lineCount == (withLine ? 1u : 0u));
+    CHECK(reader.m_entityParseFailures >= 2u);
+    CHECK(reader.m_invalidPolylineOwners.count(groups.polyline1) == 1u);
+    CHECK(reader.m_invalidPolylineOwners.count(groups.polyline2) == 1u);
+    CHECK(reader.stagedPendingPolylineCountForTest() == 0u);
+    CHECK(reader.stagedOrphanPolylineVertexCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+    checkGroupNeverPublished(reader.m_dwgSourceFrameLedger, groups.handles());
+    checkPublishedOnce(reader.m_dwgSourceFrameLedger,
+                       {polyline3, vertex3, seqEnd3});
+    if (withLine)
+        checkPublishedOnce(reader.m_dwgSourceFrameLedger, {lineHandle});
+    CHECK(run->swept);
+    CHECK(run->sweepInterface.polylineCount == 0u);
+    CHECK(reader.ObjectMap.empty());
+}
+
+// The conflict does not depend on where the two POLYLINEs are: in two blocks,
+// each block loses its group, keeps everything else, and the file reads.
+TEST_CASE("DWG modern blocks lose POLYLINEs that declare the same child",
+          "[dwg][safety][compound][journal][mapped-owner][shared-child]") {
+    constexpr std::uint32_t firstRecord = 0xC20;
+    constexpr std::uint32_t secondRecord = 0xC21;
+    constexpr std::uint32_t polyline3 = 0xC40;
+    constexpr std::uint32_t vertex3 = 0xC41;
+    constexpr std::uint32_t seqEnd3 = 0xC42;
+    constexpr std::uint32_t firstLine = 0xC43;
+    constexpr std::uint32_t secondLine = 0xC44;
+    const SharedChild kind = GENERATE(SharedChild::Vertex, SharedChild::SeqEnd);
+    const bool modelSpace = GENERATE(false, true);
+    INFO("shared " << sharedChildName(kind) << ", first block is "
+         << (modelSpace ? "model space" : "a named block"));
+    const DRW::Version version = DRW::AC1018;
+    SharedChildGroups groups{0xC30, 0xC31, 0xC32, 0xC33, 0xC34, 0xC35, 0xC36,
+                             kind};
+    const std::uint32_t firstOwner = modelSpace ? DRW::NoHandle : firstRecord;
+
+    // POLYLINE 1 and its own VERTEX live in the first block, POLYLINE 2 and its
+    // own in the second, with a group and a LINE of their own each.
+    std::vector<FramePair> frames =
+        sharedChildFrames(version, groups, firstOwner, groups.polyline1);
+    frames[2].second = makeMappedPolylineParentFrame(
+        version, groups.polyline2, secondRecord, groups.vertices2(),
+        groups.declaredSeqEnd2());
+    frames.push_back({polyline3, makeMappedPolylineParentFrame(
+                                     version, polyline3, secondRecord,
+                                     {vertex3}, seqEnd3)});
+    frames.push_back({vertex3, makeMappedVertexFrame(version, vertex3,
+                                                     polyline3)});
+    frames.push_back({seqEnd3, makeMappedSeqEndFrame(version, seqEnd3,
+                                                     polyline3)});
+    frames.push_back({firstLine, makeLineFrame(firstLine, firstOwner)});
+    frames.push_back({secondLine, makeLineFrame(secondLine, secondRecord)});
+
+    std::vector<std::uint32_t> firstWalk = {groups.polyline1, groups.own1};
+    std::vector<std::uint32_t> secondWalk = {groups.polyline2, groups.own2,
+                                             polyline3, vertex3, seqEnd3};
+    if (kind == SharedChild::Vertex) {
+        firstWalk.insert(firstWalk.end(), {groups.shared, groups.seqEnd1});
+        secondWalk.push_back(groups.seqEnd2);
+    } else {
+        firstWalk.push_back(groups.shared);
+    }
+    firstWalk.push_back(firstLine);
+    secondWalk.push_back(secondLine);
+
+    const auto run = runModernBlocks(
+        {{firstRecord, 0xC22, 0xC23,
+          modelSpace ? "*Model_Space" : "FIRST_BLOCK", firstOwner, firstWalk},
+         {secondRecord, 0xC24, 0xC25, "SECOND_BLOCK", secondRecord,
+          secondWalk}},
+        frames);
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK(run->readBlocks);
+    CHECK(run->readEntities);
+    CHECK(run->interface.blockCount == 2u);
+    CHECK(run->interface.lineCount == 2u);
+    // Neither block certifies reachability for an entity list it lost a group
+    // of; the second block, which delivered its own group, publishes it.
+    CHECK(run->interface.reachabilities.empty());
+    REQUIRE(run->interface.polylineHandles.size() == 1u);
+    CHECK(run->interface.polylineHandles.front() == polyline3);
+    CHECK(reader.m_entityParseFailures >= 2u);
+    CHECK(reader.ObjectMap.empty());
+    CHECK(reader.stagedPendingPolylineCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+    checkGroupNeverPublished(reader.m_dwgSourceFrameLedger, groups.handles());
+    checkPublishedOnce(reader.m_dwgSourceFrameLedger,
+                       {polyline3, vertex3, seqEnd3, firstLine, secondLine});
+}
+
+// One block through the journalled block scope: it cannot be journalled (a
+// group of it was rejected before the walk), so it takes the established
+// staged path, keeps everything else and certifies no reachability.
+TEST_CASE("DWG journalled block keeps its other entities when POLYLINEs share a "
+          "child",
+          "[dwg][safety][journal][mapped-owner][shared-child]") {
+    constexpr std::uint32_t recordHandle = 0xC50;
+    constexpr std::uint32_t blockHandle = 0xC51;
+    constexpr std::uint32_t endBlockHandle = 0xC6F;
+    constexpr std::uint32_t polyline3 = 0xC60;
+    constexpr std::uint32_t vertex3 = 0xC61;
+    constexpr std::uint32_t seqEnd3 = 0xC62;
+    constexpr std::uint32_t lineHandle = 0xC63;
+    const SharedChild kind = GENERATE(SharedChild::Vertex, SharedChild::SeqEnd);
+    const bool modelSpace = GENERATE(false, true);
+    INFO("shared " << sharedChildName(kind) << ", "
+         << (modelSpace ? "model space" : "named block"));
+    const DRW::Version version = DRW::AC1018;
+    const std::uint32_t blockOwner = modelSpace ? DRW::NoHandle : recordHandle;
+    SharedChildGroups groups{0xC53, 0xC54, 0xC55, 0xC56, 0xC57, 0xC58, 0xC59,
+                             kind};
+
+    std::vector<FramePair> frames =
+        sharedChildFrames(version, groups, blockOwner, groups.polyline1);
+    frames.push_back({polyline3, makeMappedPolylineParentFrame(
+                                     version, polyline3, blockOwner, {vertex3},
+                                     seqEnd3)});
+    frames.push_back({vertex3, makeMappedVertexFrame(version, vertex3,
+                                                     polyline3)});
+    frames.push_back({seqEnd3, makeMappedSeqEndFrame(version, seqEnd3,
+                                                     polyline3)});
+    frames.push_back({lineHandle, makeLineFrame(lineHandle, blockOwner)});
+    std::sort(frames.begin(), frames.end(),
+              [](const FramePair& left, const FramePair& right) {
+                  return left.first < right.first;
+              });
+
+    std::vector<std::uint32_t> walk = {groups.polyline1, groups.own1,
+                                       groups.polyline2, groups.own2};
+    if (kind == SharedChild::Vertex) {
+        walk.insert(walk.end(),
+                    {groups.shared, groups.seqEnd1, groups.seqEnd2});
+    } else {
+        walk.push_back(groups.shared);
+    }
+    walk.insert(walk.end(), {polyline3, vertex3, seqEnd3, lineHandle});
+
+    const auto run = runJournalledBlock(
+        recordHandle, blockHandle, endBlockHandle,
+        modelSpace ? "*Model_Space" : "JOURNALLED_SHARED_CHILD", blockOwner,
+        frames, walk);
+    const DwgEntityReaderProbe& reader = *run->reader;
+    const DwgGroupRejectionProbe& interface = run->interface;
+
+    CHECK(run->readBlocks);
+    CHECK(run->readEntities);
+    CHECK(interface.blockCount == 1u);
+    CHECK(interface.polylineHandles
+          == std::vector<std::uint32_t>{polyline3});
+    CHECK(interface.lineCount == 1u);
+    CHECK(interface.reachabilities.empty());
+    const std::vector<std::string> expectedCallbacks =
+        modelSpace
+            ? std::vector<std::string>{"block", "endBlock", "polyline", "line"}
+            : std::vector<std::string>{"block", "polyline", "line", "endBlock"};
+    CHECK(interface.callbacks == expectedCallbacks);
+    CHECK(reader.ObjectMap.empty());
+    checkGroupNeverPublished(reader.m_dwgSourceFrameLedger, groups.handles());
+    checkPublishedOnce(reader.m_dwgSourceFrameLedger,
+                       {polyline3, vertex3, seqEnd3, lineHandle});
+}
+
+// Two separate conflicts in one block: four POLYLINEs, all rejected, each
+// counted, and the rest of the block read.
+TEST_CASE("DWG mapped block rejects two pairs of POLYLINEs that share children",
+          "[dwg][safety][compound][mapped-owner][shared-child]") {
+    constexpr std::uint32_t recordHandle = 0xC70;
+    constexpr std::uint32_t lineHandle = 0xC7F;
+    const DRW::Version version = DRW::AC1018;
+    SharedChildGroups vertexPair{0xC71, 0xC72, 0xC73, 0xC74, 0xC75, 0xC76,
+                                 0xC77, SharedChild::Vertex};
+    SharedChildGroups seqEndPair{0xC81, 0xC82, 0xC83, 0xC84, 0xC85, 0xC86,
+                                 0xC87, SharedChild::SeqEnd};
+
+    std::vector<FramePair> frames = sharedChildFrames(
+        version, vertexPair, recordHandle, vertexPair.polyline1);
+    const std::vector<FramePair> others = sharedChildFrames(
+        version, seqEndPair, recordHandle, seqEndPair.polyline2);
+    frames.insert(frames.end(), others.cbegin(), others.cend());
+    frames.push_back({lineHandle, makeLineFrame(lineHandle, recordHandle)});
+    std::vector<std::uint32_t> walk;
+    for (const std::uint32_t handle : vertexPair.handles())
+        walk.push_back(handle);
+    for (const std::uint32_t handle : seqEndPair.handles())
+        walk.push_back(handle);
+    walk.push_back(lineHandle);
+
+    const auto run = runMappedWalk(version, recordHandle, frames, walk);
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK_FALSE(run->walked);
+    CHECK(run->outcome
+          == DwgEntityReaderProbe::DwgBlockWalkOutcome::ContainedGroupRejection);
+    CHECK(run->interface.polylineCount == 0u);
+    CHECK(run->interface.lineCount == 1u);
+    CHECK(reader.m_entityParseFailures >= 4u);
+    std::vector<std::uint32_t> rejected = vertexPair.handles();
+    const std::vector<std::uint32_t> moreRejected = seqEndPair.handles();
+    rejected.insert(rejected.end(), moreRejected.cbegin(), moreRejected.cend());
+    checkGroupNeverPublished(reader.m_dwgSourceFrameLedger, rejected);
+    checkPublishedOnce(reader.m_dwgSourceFrameLedger, {lineHandle});
+    CHECK(run->swept);
+    CHECK(reader.ObjectMap.empty());
+}
+
+// The containment is for a conflict between declarations and nothing else: a
+// POLYLINE that is malformed by itself -- here, one that lists a VERTEX twice --
+// is still rejected as a structural failure, beside the conflicting pair.
+TEST_CASE("DWG mapped POLYLINE malformed by itself stays a structural failure "
+          "beside a shared child",
+          "[dwg][safety][compound][mapped-owner][shared-child]") {
+    constexpr std::uint32_t recordHandle = 0xC90;
+    constexpr std::uint32_t duplicating = 0xC98;
+    constexpr std::uint32_t duplicated = 0xC99;
+    constexpr std::uint32_t duplicatingSeqEnd = 0xC9A;
+    const DRW::Version version = DRW::AC1018;
+    const bool withConflict = GENERATE(false, true);
+    INFO((withConflict ? "beside a conflicting pair" : "alone"));
+    SharedChildGroups groups{0xC91, 0xC92, 0xC93, 0xC94, 0xC95, 0xC96, 0xC97,
+                             SharedChild::Vertex};
+
+    std::vector<FramePair> frames;
+    std::vector<std::uint32_t> walk;
+    if (withConflict) {
+        frames = sharedChildFrames(version, groups, recordHandle,
+                                   groups.polyline1);
+        walk = groups.handles();
+    }
+    frames.push_back({duplicating, makeMappedPolylineParentFrame(
+                                       version, duplicating, recordHandle,
+                                       {duplicated, duplicated},
+                                       duplicatingSeqEnd)});
+    frames.push_back({duplicated, makeMappedVertexFrame(version, duplicated,
+                                                        duplicating)});
+    frames.push_back({duplicatingSeqEnd, makeMappedSeqEndFrame(
+                                             version, duplicatingSeqEnd,
+                                             duplicating)});
+    walk.insert(walk.end(), {duplicating, duplicated, duplicatingSeqEnd});
+    for (const FramePair& frame : frames)
+        REQUIRE(!frame.second.empty());
+
+    const auto run = runMappedWalk(version, recordHandle, frames, walk);
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK_FALSE(run->walked);
+    CHECK(run->outcome == DwgEntityReaderProbe::DwgBlockWalkOutcome::Structural);
+    CHECK(run->interface.polylineCount == 0u);
+    CHECK(reader.m_invalidPolylineOwners.count(duplicating) == 1u);
+    std::vector<std::uint32_t> rejected = {duplicating, duplicated,
+                                           duplicatingSeqEnd};
+    if (withConflict) {
+        const std::vector<std::uint32_t> pair = groups.handles();
+        rejected.insert(rejected.end(), pair.cbegin(), pair.cend());
+    }
+    checkGroupNeverPublished(reader.m_dwgSourceFrameLedger, rejected);
+    CHECK(reader.ObjectMap.empty());
+}
+
+// Two INSERTs that declare the same ATTRIB. There is no pass over INSERT
+// ownership lists, so which group meets the child first matters: the group that
+// finds it consumed by a group that was committed, or held by a group that was
+// rejected, is rejected as a contained conflict, and nothing is published twice.
+TEST_CASE("DWG mapped INSERTs that declare the same ATTRIB are rejected without "
+          "failing the walk",
+          "[dwg][safety][compound][mapped-owner][shared-child]") {
+    constexpr std::uint32_t recordHandle = 0xCA0;
+    constexpr std::uint32_t insertA = 0xCA1;
+    constexpr std::uint32_t sharedAttrib = 0xCA2;
+    constexpr std::uint32_t seqEndA = 0xCA3;
+    constexpr std::uint32_t insertB = 0xCA4;
+    constexpr std::uint32_t seqEndB = 0xCA5;
+    constexpr std::uint32_t lineHandle = 0xCA6;
+    const bool aFirst = GENERATE(false, true);
+    const bool childrenFirst = GENERATE(false, true);
+    INFO((aFirst ? "the group the ATTRIB names comes first"
+                 : "the other group comes first")
+         << ", " << (childrenFirst ? "children first" : "parents first"));
+
+    // The ATTRIB names A; both declare it.
+    std::vector<std::uint32_t> walk;
+    const auto appendGroup = [&](std::uint32_t parent,
+                                 std::vector<std::uint32_t> children) {
+        if (childrenFirst) {
+            walk.insert(walk.end(), children.cbegin(), children.cend());
+            walk.push_back(parent);
+        } else {
+            walk.push_back(parent);
+            walk.insert(walk.end(), children.cbegin(), children.cend());
+        }
+    };
+    if (aFirst) {
+        appendGroup(insertA, {sharedAttrib, seqEndA});
+        appendGroup(insertB, {seqEndB});
+    } else {
+        appendGroup(insertB, {seqEndB});
+        appendGroup(insertA, {sharedAttrib, seqEndA});
+    }
+    walk.push_back(lineHandle);
+
+    const auto run = runMappedWalk(
+        DRW::AC1018, recordHandle,
+        {{insertA, makeInsertWithAttributesFrame(
+              insertA, recordHandle, {sharedAttrib}, seqEndA)},
+         {sharedAttrib, makeAttribFrame(sharedAttrib, insertA)},
+         {seqEndA, makeSeqEndFrame(seqEndA, insertA)},
+         {insertB, makeInsertWithAttributesFrame(
+              insertB, recordHandle, {sharedAttrib}, seqEndB)},
+         {seqEndB, makeSeqEndFrame(seqEndB, insertB)},
+         {lineHandle, makeLineFrame(lineHandle, recordHandle)}},
+        walk);
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK_FALSE(run->walked);
+    CHECK(run->outcome
+          == DwgEntityReaderProbe::DwgBlockWalkOutcome::ContainedGroupRejection);
+    CHECK(run->interface.lineCount == 1u);
+    CHECK(reader.m_entityParseFailures >= 1u);
+    CHECK(reader.stagedPendingInsertCountForTest() == 0u);
+    CHECK(reader.stagedOrphanAttribCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+    // B never publishes: its ATTRIB is A's. A publishes when it meets the
+    // ATTRIB first, exactly once.
+    checkGroupNeverPublished(reader.m_dwgSourceFrameLedger,
+                             {insertB, seqEndB});
+    if (aFirst) {
+        REQUIRE(run->interface.inserts.size() == 1u);
+        CHECK(run->interface.inserts.front().handle == insertA);
+        CHECK(run->interface.inserts.front().attlist.size() == 1u);
+        checkPublishedOnce(reader.m_dwgSourceFrameLedger,
+                           {insertA, sharedAttrib, seqEndA, lineHandle});
+    } else {
+        CHECK(run->interface.inserts.empty());
+        checkGroupNeverPublished(reader.m_dwgSourceFrameLedger,
+                                 {insertA, sharedAttrib, seqEndA});
+        checkPublishedOnce(reader.m_dwgSourceFrameLedger, {lineHandle});
+    }
+    CHECK(run->swept);
+    CHECK(reader.ObjectMap.empty());
+}
+
+namespace {
+
+// A legacy (R13-R2000) POLYLINE frame that declares `first` and `last` as the
+// ends of its vertex chain and `seqEnd` as its SEQEND.
+std::vector<std::uint8_t> makeLegacyPolylineParentFrame(
+    std::uint32_t handle, std::uint32_t first, std::uint32_t last,
+    std::uint32_t seqEnd) {
+    auto firstVertex = std::make_shared<DwgVertexWriterProbe>();
+    firstVertex->handle = first;
+    firstVertex->setDwgSubtype(DRW_Vertex::DwgSubtype::Vertex2D);
+    auto lastVertex = std::make_shared<DwgVertexWriterProbe>();
+    lastVertex->handle = last;
+    lastVertex->setDwgSubtype(DRW_Vertex::DwgSubtype::Vertex2D);
+    DwgPolylineWriterProbe parent;
+    parent.handle = handle;
+    parent.appendVertex(firstVertex);
+    parent.appendVertex(lastVertex);
+    parent.setDwgSeqEndHandle(seqEnd);
+    dwgBufferW body;
+    if (!parent.encodeDwg(DRW::AC1015, &body, 0, nullptr, nullptr))
+        return {};
+    return makeEntityFrame(body);
+}
+
+} // namespace
+
+// The legacy chains: the second group's chain runs into a link that the first
+// group consumed. That group is declared by both and cannot be completed; it is
+// rejected as a contained conflict, the first group stays published, and the
+// block's chain goes on after the rejected group.
+TEST_CASE("DWG legacy POLYLINEs whose chains share a link reject the second "
+          "group",
+          "[dwg][safety][compound][shared-child]") {
+    // First group: POLYLINE 0x10, VERTICES 0x11 and 0x12, SEQEND 0x13.
+    // Second group: POLYLINE 0x14 declaring 0x12 (the first group's) and its
+    // own VERTEX 0x15 as the ends of its chain, SEQEND 0x16.
+    constexpr std::uint32_t lineHandle = 0x17;
+    std::vector<FramePair> frames = makeLegacyPolylineGroupFramePairs(
+        0x10, 0x10, 0x10, 0x10);
+    frames.push_back({0x14, makeLegacyPolylineParentFrame(0x14, 0x12, 0x15,
+                                                          0x16)});
+    frames.push_back({0x15, makeLegacyVertexFrame(0x15, 0x14, 0)});
+    frames.push_back({0x16, makeSeqEndFrame(0x16, 0x14)});
+    frames.push_back({lineHandle, makeLegacyLineFrame(lineHandle)});
+
+    const auto run = runLegacyWalk(frames, 0x10, lineHandle);
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK_FALSE(run->walked);
+    CHECK(run->outcome
+          == DwgEntityReaderProbe::DwgBlockWalkOutcome::ContainedGroupRejection);
+    REQUIRE(run->interface.polylineHandles.size() == 1u);
+    CHECK(run->interface.polylineHandles.front() == 0x10u);
+    CHECK(run->interface.lineCount == 1u);
+    CHECK(reader.m_entityParseFailures >= 1u);
+    CHECK(reader.stagedPendingPolylineCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+    checkPublishedOnce(reader.m_dwgSourceFrameLedger,
+                       {0x10, 0x11, 0x12, 0x13, lineHandle});
+    // The second group is not published; what is left of its chain goes down
+    // with it in the sweep, without failing the phase.
+    checkGroupNeverPublished(reader.m_dwgSourceFrameLedger,
+                             {0x14, 0x15, 0x16});
+    CHECK(run->swept);
+    CHECK(run->sweepInterface.polylineCount == 0u);
+    CHECK(reader.ObjectMap.empty());
+}
+
+// A rejected group is left the way a committed one is: the entity after it is
+// the first handle behind its parent that is not one of the group's own frames
+// (a legacy entity without links is followed by the object with the next
+// handle), wherever the group's children sit. When the children are far from
+// the parent, the handle behind the SEQEND is no longer the next entity of the
+// block, and stopping there would leave the rest of the block to the ENTITIES
+// sweep, which publishes it outside the block.
+TEST_CASE("DWG legacy walk continues past a rejected group whose children are "
+          "elsewhere",
+          "[dwg][safety][compound][named-group]") {
+    const bool polyline = GENERATE(false, true);
+    INFO((polyline ? "POLYLINE group" : "INSERT group"));
+    constexpr std::uint32_t wrongOwner = 0x99;
+    constexpr std::uint32_t parent = 0x10;
+    constexpr std::uint32_t lineHandle = 0x11;
+
+    std::vector<FramePair> frames;
+    std::vector<std::uint32_t> group;
+    if (!polyline) {
+        frames = {{parent, makeLegacyInsertParentFrame(parent, 0x60, 0x60, 0x61)},
+                  {0x60, makeLegacyAttribFrame(0x60, wrongOwner)},
+                  {0x61, makeSeqEndFrame(0x61, parent)}};
+        group = {parent, 0x60, 0x61};
+    } else {
+        frames = {{parent, makeLegacyPolylineParentFrame(parent, 0x60, 0x61,
+                                                         0x62)},
+                  {0x60, makeLegacyVertexFrame(0x60, wrongOwner, 0x61)},
+                  {0x61, makeLegacyVertexFrame(0x61, parent, 0)},
+                  {0x62, makeSeqEndFrame(0x62, parent)}};
+        group = {parent, 0x60, 0x61, 0x62};
+    }
+    frames.push_back({lineHandle, makeLegacyLineFrame(lineHandle)});
+
+    const auto run = runLegacyWalk(std::move(frames), parent, lineHandle);
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK_FALSE(run->walked);
+    CHECK(run->outcome
+          == DwgEntityReaderProbe::DwgBlockWalkOutcome::ContainedGroupRejection);
+    CHECK(run->interface.inserts.empty());
+    CHECK(run->interface.polylineHandles.empty());
+    // The walk published the LINE itself; it was not left to the sweep.
+    CHECK(run->interface.lineCount == 1u);
+    CHECK(reader.m_entityParseFailures >= 1u);
+    checkGroupNeverPublished(reader.m_dwgSourceFrameLedger, group);
+    checkPublishedOnce(reader.m_dwgSourceFrameLedger, {lineHandle});
+    CHECK(run->swept);
+    CHECK(run->sweepInterface.inserts.empty());
+    CHECK(run->sweepInterface.polylineCount == 0u);
+    CHECK(reader.ObjectMap.empty());
+}
+
+namespace {
+
+// The ways a compound group can name ITSELF among the frames it declares. A
+// group that does is malformed by itself: it is not in conflict with any other
+// group, so the rejection is structural and never the contained rejection the
+// walks reserve for a child that names a foreign owner, a child no group
+// declares, or two groups that declare one child.
+enum class SelfReference {
+    PolylineVertex, // a mapped POLYLINE that lists itself as a VERTEX
+    PolylineSeqEnd, // ... as its SEQEND
+    InsertAttrib,   // a mapped INSERT that lists itself as an ATTRIB
+    InsertSeqEnd,   // ... as its SEQEND
+    LegacyInsertFirst,     // a legacy INSERT whose first ATTRIB is itself
+    LegacyInsertLast,      // ... whose last ATTRIB is itself
+    LegacyInsertSeqEnd,    // ... whose SEQEND is itself
+    LegacyPolylineFirst,   // a legacy POLYLINE whose first VERTEX is itself
+    LegacyPolylineLast,    // ... whose last VERTEX is itself
+    LegacyPolylineSeqEnd,  // ... whose SEQEND is itself
+};
+
+const char* selfReferenceName(SelfReference kind) {
+    switch (kind) {
+    case SelfReference::PolylineVertex: return "POLYLINE lists itself as a VERTEX";
+    case SelfReference::PolylineSeqEnd: return "POLYLINE lists itself as its SEQEND";
+    case SelfReference::InsertAttrib: return "INSERT lists itself as an ATTRIB";
+    case SelfReference::InsertSeqEnd: return "INSERT lists itself as its SEQEND";
+    case SelfReference::LegacyInsertFirst: return "legacy INSERT: first ATTRIB is itself";
+    case SelfReference::LegacyInsertLast: return "legacy INSERT: last ATTRIB is itself";
+    case SelfReference::LegacyInsertSeqEnd: return "legacy INSERT: SEQEND is itself";
+    case SelfReference::LegacyPolylineFirst: return "legacy POLYLINE: first VERTEX is itself";
+    case SelfReference::LegacyPolylineLast: return "legacy POLYLINE: last VERTEX is itself";
+    case SelfReference::LegacyPolylineSeqEnd: return "legacy POLYLINE: SEQEND is itself";
+    }
+    return "";
+}
+
+struct SelfReferencingGroup {
+    std::vector<FramePair> frames;
+    // The handles of the group's frames, parent first, in the order a block
+    // lists them.
+    std::vector<std::uint32_t> handles;
+};
+
+bool isPolylineSelfReference(SelfReference kind) {
+    return kind == SelfReference::PolylineVertex
+        || kind == SelfReference::PolylineSeqEnd;
+}
+
+// The group at `parent`, `parent` + 1 and `parent` + 2 (a legacy group has a
+// fourth frame at `parent` + 3: its chain runs through consecutive handles).
+// Everything but the self reference is well formed: each child names the group
+// as its owner, so the group's only fault is naming itself. `version` is for
+// the mapped POLYLINEs; the INSERT frames of the helpers are AC1018 ones.
+SelfReferencingGroup makeSelfReferencingGroup(
+    SelfReference kind, std::uint32_t parent, std::uint32_t owner,
+    DRW::Version version = DRW::AC1018) {
+    const std::uint32_t first = parent + 1u;
+    const std::uint32_t last = parent + 2u;
+    const std::uint32_t seqEnd = parent + 3u;
+    SelfReferencingGroup group;
+    switch (kind) {
+    case SelfReference::PolylineVertex:
+        group.frames = {
+            {parent, makeMappedPolylineParentFrame(version, parent, owner,
+                                                   {first, parent}, last)},
+            {first, makeMappedVertexFrame(version, first, parent)},
+            {last, makeMappedSeqEndFrame(version, last, parent)}};
+        group.handles = {parent, first, last};
+        break;
+    case SelfReference::PolylineSeqEnd:
+        group.frames = {
+            {parent, makeMappedPolylineParentFrame(version, parent, owner,
+                                                   {first}, parent)},
+            {first, makeMappedVertexFrame(version, first, parent)}};
+        group.handles = {parent, first};
+        break;
+    case SelfReference::InsertAttrib:
+        group.frames = {
+            {parent, makeInsertWithAttributesFrame(parent, owner,
+                                                   {first, parent}, last)},
+            {first, makeAttribFrame(first, parent)},
+            {last, makeSeqEndFrame(last, parent)}};
+        group.handles = {parent, first, last};
+        break;
+    case SelfReference::InsertSeqEnd:
+        group.frames = {
+            {parent, makeInsertWithAttributesFrame(parent, owner, {first},
+                                                   parent)},
+            {first, makeAttribFrame(first, parent)}};
+        group.handles = {parent, first};
+        break;
+    case SelfReference::LegacyInsertFirst:
+    case SelfReference::LegacyInsertLast:
+    case SelfReference::LegacyInsertSeqEnd:
+        group.frames = {
+            {parent, makeLegacyInsertParentFrame(
+                         parent,
+                         kind == SelfReference::LegacyInsertFirst ? parent
+                                                                  : first,
+                         kind == SelfReference::LegacyInsertLast ? parent
+                                                                 : last,
+                         kind == SelfReference::LegacyInsertSeqEnd ? parent
+                                                                   : seqEnd)},
+            {first, makeLegacyAttribFrame(first, parent)},
+            {last, makeLegacyAttribFrame(last, parent)},
+            {seqEnd, makeSeqEndFrame(seqEnd, parent)}};
+        group.handles = {parent, first, last, seqEnd};
+        break;
+    case SelfReference::LegacyPolylineFirst:
+    case SelfReference::LegacyPolylineLast:
+    case SelfReference::LegacyPolylineSeqEnd:
+        group.frames = {
+            {parent, makeLegacyPolylineParentFrame(
+                         parent,
+                         kind == SelfReference::LegacyPolylineFirst ? parent
+                                                                    : first,
+                         kind == SelfReference::LegacyPolylineLast ? parent
+                                                                   : last,
+                         kind == SelfReference::LegacyPolylineSeqEnd
+                             ? parent
+                             : seqEnd)},
+            {first, makeLegacyVertexFrame(first, parent, last)},
+            {last, makeLegacyVertexFrame(last, parent, 0)},
+            {seqEnd, makeSeqEndFrame(seqEnd, parent)}};
+        group.handles = {parent, first, last, seqEnd};
+        break;
+    }
+    for (const FramePair& frame : group.frames)
+        REQUIRE(!frame.second.empty());
+    return group;
+}
+
+bool isLegacySelfReference(SelfReference kind) {
+    return kind >= SelfReference::LegacyInsertFirst;
+}
+
+// No compound state may outlive the read of a rejected group.
+void checkNoStagedCompoundState(const DwgEntityReaderProbe& reader) {
+    CHECK(reader.stagedPendingInsertCountForTest() == 0u);
+    CHECK(reader.stagedOrphanAttribCountForTest() == 0u);
+    CHECK(reader.stagedPendingPolylineCountForTest() == 0u);
+    CHECK(reader.stagedOrphanPolylineVertexCountForTest() == 0u);
+    CHECK(reader.stagedSeqEndCountForTest() == 0u);
+}
+
+} // namespace
+
+// The containment of a group's rejection is decided from the handle of the
+// entity being read: a child that names a group that does not declare it is
+// recorded as disowned, and a walk that finds the entity it just read among the
+// disowned children takes its failure for that child's own. A rejected group
+// claims the frames it declared so that no other group can have them, but it
+// must never claim itself: a group that names itself would then be taken for a
+// child rejected on its own, and a malformed group would fail as a contained
+// conflict, letting a whole BLOCKS section through instead of failing it.
+TEST_CASE("DWG walk fails structurally for a group that names itself",
+          "[dwg][safety][compound][self-reference]") {
+    constexpr std::uint32_t recordHandle = 0xD00;
+    constexpr std::uint32_t lineBefore = 0xD01;
+    constexpr std::uint32_t groupHandle = 0xD10;
+    constexpr std::uint32_t lineAfter = 0xD20;
+    const SelfReference kind = GENERATE(
+        SelfReference::PolylineVertex, SelfReference::PolylineSeqEnd,
+        SelfReference::InsertAttrib, SelfReference::InsertSeqEnd,
+        SelfReference::LegacyInsertFirst, SelfReference::LegacyInsertLast,
+        SelfReference::LegacyInsertSeqEnd, SelfReference::LegacyPolylineFirst,
+        SelfReference::LegacyPolylineLast,
+        SelfReference::LegacyPolylineSeqEnd);
+    const DRW::Version generated = GENERATE(
+        DRW::AC1018, DRW::AC1021, DRW::AC1024, DRW::AC1027);
+    const DRW::Version version =
+        isPolylineSelfReference(kind) ? generated : DRW::AC1018;
+    INFO(selfReferenceName(kind) << ", version " << static_cast<int>(version));
+    const bool legacy = isLegacySelfReference(kind);
+    const SelfReferencingGroup group =
+        makeSelfReferencingGroup(kind, groupHandle, recordHandle, version);
+
+    std::vector<FramePair> frames = group.frames;
+    std::unique_ptr<MappedWalkRun> run;
+    if (legacy) {
+        // The chain of a legacy block runs through consecutive handles: the
+        // group, then a LINE.
+        const std::uint32_t line = groupHandle + 4u;
+        frames.push_back({line, makeLegacyLineFrame(line)});
+        run = runLegacyWalk(frames, groupHandle, line);
+    } else {
+        frames.push_back({lineBefore, makeLineFrame(lineBefore, recordHandle)});
+        frames.push_back({lineAfter, makeLineFrame(lineAfter, recordHandle)});
+        std::vector<std::uint32_t> walk = {lineBefore};
+        walk.insert(walk.end(), group.handles.cbegin(), group.handles.cend());
+        walk.push_back(lineAfter);
+        run = runMappedWalk(version, recordHandle, frames, walk);
+    }
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK_FALSE(run->walked);
+    CHECK(run->outcome == DwgEntityReaderProbe::DwgBlockWalkOutcome::Structural);
+    // The group did not claim itself.
+    CHECK(reader.m_disownedChildHandles.count(groupHandle) == 0u);
+    CHECK(reader.m_entityParseFailures >= 1u);
+    CHECK(run->interface.polylineCount == 0u);
+    CHECK(run->interface.inserts.empty());
+    checkGroupNeverPublished(reader.m_dwgSourceFrameLedger, group.handles);
+    if (legacy) {
+        checkPublishedOnce(reader.m_dwgSourceFrameLedger, {groupHandle + 4u});
+    } else if (isPolylineSelfReference(kind)) {
+        // The ownership pass rejects a POLYLINE that names itself before the
+        // walk reads anything, as it does one that lists a VERTEX twice: the
+        // block fails whole. The LINEs are still never published twice.
+        for (const std::uint32_t line : {lineBefore, lineAfter}) {
+            for (const DRW_DwgFrameCoverageEntry& entry
+                 : reader.m_dwgSourceFrameLedger) {
+                if (entry.m_handle == line)
+                    CHECK(entry.m_publicationCount <= 1u);
+            }
+        }
+    } else {
+        // An INSERT is rejected by its aggregate and the rest of the block is
+        // read on.
+        checkPublishedOnce(reader.m_dwgSourceFrameLedger,
+                           {lineBefore, lineAfter});
+    }
+    checkNoStagedCompoundState(reader);
+    CHECK(reader.ObjectMap.empty());
+}
+
+// The journalled scope: the block rolls back, as it does for every structural
+// failure, and nothing of it reaches the interface -- not even the LINE that
+// was read before the group.
+TEST_CASE("DWG journalled block rolls back for a group that names itself",
+          "[dwg][safety][journal][compound][self-reference]") {
+    constexpr std::uint32_t recordHandle = 0xD40;
+    constexpr std::uint32_t blockHandle = 0xD41;
+    constexpr std::uint32_t lineBefore = 0xD42;
+    constexpr std::uint32_t groupHandle = 0xD50;
+    constexpr std::uint32_t lineAfter = 0xD60;
+    constexpr std::uint32_t endBlockHandle = 0xD6F;
+    // A legacy (R13-R2000) block is never journalled: its walk is the staged
+    // one, tested above.
+    const SelfReference kind = GENERATE(
+        SelfReference::PolylineVertex, SelfReference::PolylineSeqEnd,
+        SelfReference::InsertAttrib, SelfReference::InsertSeqEnd);
+    const bool modelSpace = GENERATE(false, true);
+    INFO(selfReferenceName(kind) << ", "
+         << (modelSpace ? "model space" : "named block"));
+    const std::uint32_t blockOwner = modelSpace ? DRW::NoHandle : recordHandle;
+    const SelfReferencingGroup group =
+        makeSelfReferencingGroup(kind, groupHandle, blockOwner);
+
+    std::vector<FramePair> frames = {
+        {lineBefore, makeLineFrame(lineBefore, blockOwner)}};
+    frames.insert(frames.end(), group.frames.cbegin(), group.frames.cend());
+    frames.push_back({lineAfter, makeLineFrame(lineAfter, blockOwner)});
+    std::vector<std::uint32_t> walk = {lineBefore};
+    walk.insert(walk.end(), group.handles.cbegin(), group.handles.cend());
+    walk.push_back(lineAfter);
+
+    const auto run = runJournalledBlock(
+        recordHandle, blockHandle, endBlockHandle,
+        modelSpace ? "*Model_Space" : "JOURNALLED_SELF_REFERENCE", blockOwner,
+        frames, walk);
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK_FALSE(run->readBlocks);
+    CHECK(reader.m_disownedChildHandles.count(groupHandle) == 0u);
+    CHECK(run->interface.callbacks.empty());
+    CHECK(run->interface.inserts.empty());
+    CHECK(run->interface.polylineHandles.empty());
+    CHECK(run->interface.lineCount == 0u);
+    CHECK(run->interface.reachabilities.empty());
+    checkNoStagedCompoundState(reader);
+    if (isPolylineSelfReference(kind)) {
+        // The ownership pass fails the section before any block is entered
+        // (see the staged walk above): what the harness's ENTITIES phase
+        // makes of the frames afterwards is beside the point.
+        checkGroupNeverPublished(reader.m_dwgSourceFrameLedger, group.handles);
+        return;
+    }
+    CHECK(reader.ObjectMap.empty());
+    for (const DRW_DwgFrameCoverageEntry& entry : reader.m_dwgSourceFrameLedger) {
+        if (entry.m_handle == recordHandle)
+            continue; // the BLOCK_RECORD table frame was published up front
+        INFO("handle 0x" << std::hex << entry.m_handle);
+        CHECK(entry.m_publicationCount == 0u);
+        CHECK((entry.m_disposition == DRW_DwgFrameDisposition::Failed
+               || entry.m_disposition == DRW_DwgFrameDisposition::Quarantined));
+    }
+}
+
+// A group that no block lists is read by the ENTITIES sweep, which ends the
+// phase for it just the same: the sweep only lets a child rejected on its own
+// through.
+TEST_CASE("DWG entity sweep fails for a group that names itself",
+          "[dwg][safety][compound][self-reference]") {
+    constexpr std::uint32_t recordHandle = 0xD80;
+    constexpr std::uint32_t groupHandle = 0xD90;
+    const SelfReference kind = GENERATE(
+        SelfReference::PolylineVertex, SelfReference::PolylineSeqEnd,
+        SelfReference::InsertAttrib, SelfReference::InsertSeqEnd,
+        SelfReference::LegacyInsertFirst, SelfReference::LegacyInsertLast,
+        SelfReference::LegacyInsertSeqEnd, SelfReference::LegacyPolylineFirst,
+        SelfReference::LegacyPolylineLast,
+        SelfReference::LegacyPolylineSeqEnd);
+    const DRW::Version generated = GENERATE(
+        DRW::AC1018, DRW::AC1021, DRW::AC1024, DRW::AC1027);
+    const DRW::Version version =
+        isPolylineSelfReference(kind) ? generated : DRW::AC1018;
+    INFO(selfReferenceName(kind) << ", version " << static_cast<int>(version));
+    const SelfReferencingGroup group =
+        makeSelfReferencingGroup(kind, groupHandle, recordHandle, version);
+
+    // The block lists nothing: the group is left to the sweep.
+    const auto run = isLegacySelfReference(kind)
+        ? runLegacyWalk(group.frames, 0, 0)
+        : runMappedWalk(version, recordHandle, group.frames, {});
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK(run->walked);
+    CHECK_FALSE(run->swept);
+    CHECK(reader.m_disownedChildHandles.count(groupHandle) == 0u);
+    CHECK(run->sweepInterface.polylineCount == 0u);
+    CHECK(run->sweepInterface.inserts.empty());
+    checkGroupNeverPublished(reader.m_dwgSourceFrameLedger, group.handles);
+    checkNoStagedCompoundState(reader);
+    CHECK(reader.ObjectMap.empty());
+}
+
+// The file-wide ownership pass rejects the POLYLINEs that declare one child, as
+// a contained conflict. A POLYLINE that also names itself is malformed by
+// itself: it is no party to a conflict between declarations, so it stays a
+// structural failure whether or not it declares a child another POLYLINE
+// declares.
+TEST_CASE("DWG mapped POLYLINE that names itself stays a structural failure "
+          "beside a shared child",
+          "[dwg][safety][compound][mapped-owner][shared-child][self-reference]") {
+    constexpr std::uint32_t recordHandle = 0xDA0;
+    constexpr std::uint32_t selfNaming = 0xDB0;
+    const SelfReference kind = GENERATE(SelfReference::PolylineVertex,
+                                        SelfReference::PolylineSeqEnd);
+    const DRW::Version version = GENERATE(
+        DRW::AC1018, DRW::AC1021, DRW::AC1024, DRW::AC1027);
+    const bool withConflict = GENERATE(false, true);
+    INFO(selfReferenceName(kind) << ", version " << static_cast<int>(version)
+         << (withConflict ? ", beside a conflicting pair" : ", alone"));
+    SharedChildGroups groups{0xDA1, 0xDA2, 0xDA3, 0xDA4, 0xDA5, 0xDA6, 0xDA7,
+                             SharedChild::Vertex};
+    const SelfReferencingGroup group =
+        makeSelfReferencingGroup(kind, selfNaming, recordHandle, version);
+
+    std::vector<FramePair> frames = group.frames;
+    std::vector<std::uint32_t> rejected = group.handles;
+    std::vector<std::uint32_t> walk;
+    if (withConflict) {
+        const std::vector<FramePair> pair =
+            sharedChildFrames(version, groups, recordHandle, groups.polyline1);
+        frames.insert(frames.end(), pair.cbegin(), pair.cend());
+        walk = groups.handles();
+        const std::vector<std::uint32_t> pairHandles = groups.handles();
+        rejected.insert(rejected.end(), pairHandles.cbegin(),
+                        pairHandles.cend());
+    }
+    walk.insert(walk.end(), group.handles.cbegin(), group.handles.cend());
+
+    const auto run = runMappedWalk(version, recordHandle, frames, walk);
+    const DwgEntityReaderProbe& reader = *run->reader;
+
+    CHECK_FALSE(run->walked);
+    CHECK(run->outcome == DwgEntityReaderProbe::DwgBlockWalkOutcome::Structural);
+    CHECK(run->interface.polylineCount == 0u);
+    CHECK(reader.m_invalidPolylineOwners.count(selfNaming) == 1u);
+    CHECK(reader.m_disownedChildHandles.count(selfNaming) == 0u);
+    checkGroupNeverPublished(reader.m_dwgSourceFrameLedger, rejected);
+    checkNoStagedCompoundState(reader);
+    CHECK(reader.ObjectMap.empty());
 }

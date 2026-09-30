@@ -537,7 +537,12 @@ void RS_Graphic::setIsoView(const RS2::IsoGridViewType viewType) {
  */
 void RS_Graphic::setUnit(const RS2::Unit u) {
     // fixme - sand - add caching
-    m_plotSettings->setPaperSize(RS_Units::convert(m_plotSettings->getPaperSize(), getUnit(), u));
+    // The paper keeps its physical size, so only its numbers change with the unit.
+    // That is not a choice of paper by the user: the size remembered for new
+    // drawings (in millimetres) must not be touched. It used to be overwritten
+    // with these numbers read as millimetres, so every drawing set to inches
+    // divided it by 25.4 and every drawing made afterwards got a smaller page.
+    m_plotSettings->setDrawingPaperSize(RS_Units::convert(m_plotSettings->getPaperSize(), getUnit(), u));
     addVariable("$INSUNITS", u, 70);
 }
 

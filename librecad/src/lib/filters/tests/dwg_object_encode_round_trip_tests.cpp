@@ -7679,6 +7679,45 @@ TEST_CASE("DRW_LType preserves complex segments and legacy text area",
     CHECK(parsed.segments[2].text == "TXT");
 }
 
+// Real writers set bit 3 (0x08) on text elements: AutoCAD's GAS_LINE carries
+// 0x0A. The DXF reader and both writers accept every combination up to 0x0F,
+// and a R14 file holding such a linetype used to fail its whole TABLES phase.
+TEST_CASE("DRW_LType keeps the extra shape flag bit on a text element",
+          "[dwg-read][dwg-write][object-encode][ltype]") {
+    const DRW::Version version = DRW::AC1015;
+    DRW_LType source;
+    source.handle = 0x447u;
+    source.name = "GAS_LINE";
+    source.desc = "gas line";
+    source.size = 2;
+    source.path = {0.5, -0.2};
+    source.length = 0.7;
+    source.segments = {
+        DRW_LTypeSegment{0.5, 0, {}, 0.0, 0.0, 1.0, 0.0, 0, {}},
+        DRW_LTypeSegment{-0.2, 0, hardPtr(0x564u), -0.1, -0.05, 0.1, 0.0,
+                         0x0A, "GAS"}};
+
+    dwgBufferW encoded;
+    emitObjectPreamble(encoded, version, /*oType=*/0x39, source.handle);
+    REQUIRE(DrwObjectEncodeTestAccess::encodeLtype(source, version, &encoded));
+
+    auto bytes = snapshot(encoded);
+    dwgBuffer reader(bytes.data(), bytes.size());
+    DRW_LType parsed;
+    REQUIRE(DrwObjectEncodeTestAccess::parseLtype(parsed, version, &reader));
+    REQUIRE(parsed.segments.size() == 2u);
+    CHECK(parsed.segments[1].shapeFlags == 0x0A);
+    CHECK(parsed.segments[1].text == "GAS");
+    CHECK(parsed.segments[1].styleHandle.ref == 0x564u);
+
+    // Bits above 0x08 are still not a shape flag.
+    source.segments[1].shapeFlags = 0x1A;
+    dwgBufferW rejected;
+    emitObjectPreamble(rejected, version, /*oType=*/0x39, source.handle);
+    CHECK_FALSE(DrwObjectEncodeTestAccess::encodeLtype(source, version,
+                                                       &rejected));
+}
+
 TEST_CASE("DRW_LType preserves complex text in the R2007 string area",
           "[dwg-read][dwg-write][object-encode][ltype][ac1021]") {
     DRW_LType source;

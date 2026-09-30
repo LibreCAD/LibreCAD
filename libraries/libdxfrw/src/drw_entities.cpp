@@ -488,14 +488,6 @@ std::uint64_t tableTextEndBit(const dwgBuffer *bodyBuf,
     return textBuf == bodyBuf ? bounds.bodyEndBit : bounds.stringEndBit;
 }
 
-bool readBoundedRawShort16(dwgBuffer& buffer, std::uint64_t endBit,
-                           std::uint16_t& value) {
-    if (!proxyEntityHasBits(buffer, endBit, 16))
-        return false;
-    value = buffer.getRawShort16();
-    return buffer.isGood();
-}
-
 bool skipTableBit(dwgBuffer& buffer, std::uint64_t endBit) {
     bool value = false;
     return readBoundedBit(buffer, endBit, value);
@@ -519,11 +511,6 @@ bool skipTableBitDouble(dwgBuffer& buffer, std::uint64_t endBit) {
 bool skipTableRawChar8(dwgBuffer& buffer, std::uint64_t endBit) {
     std::uint8_t value = 0;
     return readBoundedRawChar8(buffer, endBit, value);
-}
-
-bool skipTableRawShort16(dwgBuffer& buffer, std::uint64_t endBit) {
-    std::uint16_t value = 0;
-    return readBoundedRawShort16(buffer, endBit, value);
 }
 
 bool readBounded3BitDouble(dwgBuffer& buffer, std::uint64_t endBit,
@@ -2011,18 +1998,20 @@ UTF8STRING readTableText(DRW::Version version, dwgBuffer *buf,
         return value;
     }
 
-    std::uint16_t parsedByteLen = 0;
-    if (!readBoundedBitShort(*buf, endBit, parsedByteLen)) {
+    // R2007+ text is a BS count of UTF-16LE code units followed by two bytes
+    // per unit (ODA spec TV/TU; the encoding dwgBuffer::getUCSText reads). The
+    // count is not a byte count: taking `count` bytes leaves the second half of
+    // every string unread and puts every later read of the string stream out
+    // of step, which turns the next length into garbage.
+    std::uint16_t parsedCharCount = 0;
+    if (!readBoundedBitShort(*buf, endBit, parsedCharCount)) {
         buf->invalidate();
         return UTF8STRING();
     }
-    const std::uint32_t byteLen = parsedByteLen;
-    if (byteLen == 0)
+    if (parsedCharCount == 0)
         return UTF8STRING();
-    if (byteLen > kMaxTableStringBytes) {
-        DRW_DBG("TABLE text byte length invalid: "); DRW_DBG(byteLen); DRW_DBG("\n");
-        return UTF8STRING();
-    }
+    // At most 2 * 65535 bytes, far below kMaxTableStringBytes.
+    const std::uint32_t byteLen = static_cast<std::uint32_t>(parsedCharCount) * 2u;
 
     std::vector<std::uint8_t> raw;
     if (!DRW::resize(raw, static_cast<int>(byteLen + 2)))
@@ -2036,6 +2025,8 @@ UTF8STRING readTableText(DRW::Version version, dwgBuffer *buf,
     std::string s(reinterpret_cast<const char*>(raw.data()), byteLen);
     if (buf->decoder)
         s = buf->decoder->toUtf8(s);
+    while (!s.empty() && s.back() == '\0')
+        s.pop_back();
     return s;
 }
 
@@ -2091,7 +2082,14 @@ bool readTableCadValue(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf,
 
     if (!readBoundedBitLong(*buf, bounds.bodyEndBit, value.m_dataType))
         return false;
-    const bool emptyR2007Value = version > DRW::AC1018 && (value.m_formatFlags & 3);
+    // Only bit 0 of the value flags marks the payload absent for ACAD_TABLE
+    // cell values (ACadSharp CadValue.IsEmpty). Bit 1 is set on values that do
+    // carry a payload: R2007 cells hold flags 6 (title/data text) and 2
+    // (merged text), both with a kGeneral payload, and only flags 3 (empty
+    // cell) has none. Testing `& 3` skips those payloads and desynchronises
+    // every later cell. The FIELD object reads the same structure but tests
+    // `& 3` (libredwg dwg_spec_shared.h); do not unify the two masks.
+    const bool emptyR2007Value = version > DRW::AC1018 && (value.m_formatFlags & 1);
     if (!emptyR2007Value) {
         switch (value.m_dataType) {
         case 0:
@@ -2231,8 +2229,13 @@ bool skipR2007TableCellOverrides(DRW::Version version, dwgBuffer *buf,
     cell.m_overrideFlags = static_cast<std::uint32_t>(overrideFlags);
     cell.m_virtualEdgeFlags = virtualEdgeFlags;
 
+    // The ODA specification types the cell alignment override as RS, but the
+    // value is stored as a BS (ACadSharp reads it that way). Read as a raw
+    // 16-bit value it swallows bits that belong to the next field: the first
+    // cell that overrides its alignment then decodes as garbage, and so does
+    // every cell after it.
     if (cell.m_overrideFlags & 0x00001
-        && !skipTableRawShort16(*buf, bounds.bodyEndBit))
+        && !skipTableBitShort(*buf, bounds.bodyEndBit))
         return false;
     if (cell.m_overrideFlags & 0x00002
         && !skipTableBit(*buf, bounds.bodyEndBit))
@@ -3294,6 +3297,14 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
     // remain transactional.
     if (buf == nullptr)
         return false;
+
+    // The object size in bits is read at a version-dependent point: first
+    // for R2000/R2004, derived for R2010+, and only after the EED and the
+    // graphics data for R13/R14. Every bound computed before that point
+    // spells "unknown" as 0 (the whole frame), so start from it instead of
+    // whatever an earlier parse of this object, or the construction of a
+    // probe entity, left behind.
+    objSize = 0;
 
     DRW_DBG("\n***************************** parsing entity *********************************************\n");
     oType = buf->getObjType(version);
@@ -9516,6 +9527,17 @@ bool DRW_Table::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
         return fail();
     m_content.m_tableStyleHandle = m_tableStyleHandle;
     m_semanticContentComplete = true;
+    // Decode the cell grid on independent cursors, as the R2010+ path does for
+    // TABLECONTENT. Everything read so far (base point, block record, owned
+    // attributes, grid geometry, table style) is validated, so a cell this
+    // reader cannot decode costs the semantic grid and nothing else: the
+    // anonymous *T block that the INSERT part refers to still draws the table.
+    // A failing cell used to invalidate the shared cursors, and the closing
+    // isGood() check then rejected the whole entity, which fails the block
+    // that owns it. The cursors are adopted only when the whole grid decoded.
+    dwgBuffer contentBuf = buf->forkIndependent();
+    dwgBuffer contentStringBuf = sBuf->forkIndependent();
+    dwgBuffer contentHandleBuf = hBuff.forkIndependent();
     // For <=AC1018 (R2000/R2004) there is no separate R2007+ string stream:
     // DRW_Entity::parseDwg only seeks sBuf when version > AC1018 (see the
     // `strBuf != NULL && version > DRW::AC1018` guard there), so legacy cell
@@ -9523,7 +9545,7 @@ bool DRW_Table::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
     // text from the wrong position and desync `buf`.  Pass nullptr so the
     // cell readers' `textBuf = strBuf ? strBuf : buf` falls back to the
     // inline `buf`.  R2007 (AC1021) keeps the separate sBuf stream.
-    dwgBuffer *cellStrBuf = (version > DRW::AC1018) ? sBuf : nullptr;
+    dwgBuffer *cellStrBuf = (version > DRW::AC1018) ? &contentStringBuf : nullptr;
     TableDwgBounds tableBounds;
     tableBounds.bodyEndBit = bodyEndBit;
     tableBounds.stringEndBit = cellStrBuf == nullptr
@@ -9531,7 +9553,8 @@ bool DRW_Table::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
     tableBounds.handleEndBit = handleEndBit;
     for (std::uint32_t row = 0; row < rows && m_semanticContentComplete; ++row) {
         for (std::uint32_t column = 0; column < columns; ++column) {
-            if (!parseR2007TableCell(version, buf, cellStrBuf, &hBuff,
+            if (!parseR2007TableCell(version, &contentBuf, cellStrBuf,
+                                     &contentHandleBuf,
                                      m_content.m_rows[row].m_cells[column],
                                      &m_content.m_subrecordRanges,
                                      tableBounds)) {
@@ -9543,10 +9566,21 @@ bool DRW_Table::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
 
     if (m_semanticContentComplete)
         m_semanticContentComplete = skipR2007TableOverrides(
-            version, buf, cellStrBuf, &hBuff, &m_content.m_subrecordRanges,
-            tableBounds);
-    if (!m_semanticContentComplete)
+            version, &contentBuf, cellStrBuf, &contentHandleBuf,
+            &m_content.m_subrecordRanges, tableBounds);
+    if (m_semanticContentComplete
+        && (!contentBuf.isGood()
+            || (cellStrBuf != nullptr && !contentStringBuf.isGood())
+            || !contentHandleBuf.isGood()))
+        m_semanticContentComplete = false;
+    if (m_semanticContentComplete) {
+        *buf = contentBuf;
+        if (cellStrBuf != nullptr)
+            *sBuf = contentStringBuf;
+        hBuff = contentHandleBuf;
+    } else {
         DRW_DBG("R2007 TABLE cell parse incomplete; anonymous block insert kept\n");
+    }
 
     if (!buf->isGood() || !sBuf->isGood() || !hBuff.isGood())
         return fail();

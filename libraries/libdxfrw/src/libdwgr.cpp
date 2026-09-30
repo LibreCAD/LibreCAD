@@ -761,6 +761,13 @@ bool dwgRW::readInstalledReader() {
     return isOk;
 }
 
+namespace {
+size_t saturateToSize(std::uint64_t value) {
+    constexpr std::uint64_t maxSize = (std::numeric_limits<size_t>::max)();
+    return static_cast<size_t>(value < maxSize ? value : maxSize);
+}
+} // namespace
+
 void dwgRW::captureReaderDiagnostics() {
     if (!reader)
         return;
@@ -770,6 +777,8 @@ void dwgRW::captureReaderDiagnostics() {
     // them.
     m_entityParseFailures = reader->m_entityParseFailures;
     m_objectParseFailures = reader->m_objectParseFailures;
+    m_danglingBlockRecords = reader->m_danglingBlockRecords.size();
+    m_orphanedEntities = saturateToSize(reader->m_orphanedEntityRejections);
     m_classesCrcMismatch = reader->m_classesCrcMismatch;
     m_r2007CrcMismatch = reader->m_r2007CrcMismatch;
     m_r2004CrcMismatch = reader->m_r2004CrcMismatch;
@@ -791,6 +800,8 @@ void dwgRW::captureReaderDiagnostics() {
 void dwgRW::resetReadDiagnostics() {
     m_entityParseFailures = 0;
     m_objectParseFailures = 0;
+    m_danglingBlockRecords = 0;
+    m_orphanedEntities = 0;
     m_classesCrcMismatch = 0;
     m_r2007CrcMismatch = 0;
     m_r2004CrcMismatch = 0;
@@ -821,6 +832,16 @@ size_t dwgRW::getObjectParseFailures() const {
     // Mirrors getEntityParseFailures: prefer the dwgRW-side cache (survives
     // reader.reset()), fall back to the live reader for a mid-read query.
     return reader ? reader->m_objectParseFailures : m_objectParseFailures;
+}
+
+size_t dwgRW::getDanglingBlockRecords() const {
+    return reader ? reader->m_danglingBlockRecords.size()
+                  : m_danglingBlockRecords;
+}
+
+size_t dwgRW::getOrphanedEntities() const {
+    return reader ? saturateToSize(reader->m_orphanedEntityRejections)
+                  : m_orphanedEntities;
 }
 
 size_t dwgRW::getClassesCrcMismatch() const {
@@ -3379,7 +3400,10 @@ bool dwgRW::processDwg() {
             ret = false;
         }
     }
-    if (ret && !ret2) {
+    // An entity sweep that only rejected orphaned entities (owner erased,
+    // entity left behind) counted each one as an entity failure; the file
+    // is read on like any file with skipped entities.
+    if (ret && !ret2 && !reader->entitySweepFailureContained()) {
         error = DRW::BAD_READ_ENTITIES;
         ret = ret2;
     }

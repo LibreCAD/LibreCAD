@@ -3613,9 +3613,12 @@ bool DRW_LType::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
             || !readFiniteBitDouble(rotation)
             || !readBitShortWithinBody(bodyBuf, version, bodyEnd, dashFlags))
             return fail();
+        // Bit 3 (0x08) is set by real writers on text elements (AutoCAD's
+        // GAS_LINE carries 0x0A); the DXF reader and both writers already
+        // accept every combination up to 0x0F, so the DWG reader must too.
         if (shapeCode < 0
             || shapeCode > std::numeric_limits<std::uint16_t>::max()
-            || dashFlags < 0 || dashFlags > 0x07)
+            || dashFlags < 0 || dashFlags > 0x0F)
             return fail();
         DRW_LTypeSegment segment;
         segment.length = dashLength;

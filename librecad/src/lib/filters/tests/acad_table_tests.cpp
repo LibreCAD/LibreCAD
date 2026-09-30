@@ -524,11 +524,15 @@ TEST_CASE("dwgRW reads R2004 ACAD_TABLE + resolves *T block (example_2004.dwg)",
     CHECK(texts[i] == "xx");
 }
 
-TEST_CASE("dwgRW R2010 ACAD_TABLE read is unchanged (example_2010.dwg)",
+TEST_CASE("dwgRW reads R2010 ACAD_TABLE cells (example_2010.dwg)",
           "[acad_table][dwg][fixture]") {
-  // Byte-identical regression pin for the version > AC1018 path: values below
-  // are the shipping behavior captured BEFORE the R2000/R2004 fix (probe
-  // transcript, pristine tree) — the fix must not alter any of them.
+  // The same drawing as example_2004.dwg, saved as AutoCAD 2010. The R2010 grid
+  // lives in the TABLECONTENT tail of the entity, and its strings are UTF-16
+  // (a BS count of code units, two bytes each). This pin used to record the
+  // table as it was decoded while the reader took the count for a byte count:
+  // no rows and an incomplete grid, because the first cell string put every
+  // later read of the string stream out of step. Read correctly, the R2010
+  // table is the R2004 table.
   const std::string path = libredwgFixturePath("", "example_2010.dwg");
   if (path.empty() || !std::filesystem::is_regular_file(path)) {
     SKIP("example_2010.dwg fixture absent: " << path);
@@ -548,8 +552,22 @@ TEST_CASE("dwgRW R2010 ACAD_TABLE read is unchanged (example_2010.dwg)",
   CHECK(table.blockRecH.ref == 1267u);
   CHECK(table.basePoint.x == Catch::Approx(3298.7947769117454));
   CHECK(table.basePoint.y == Catch::Approx(839.6133480853896));
-  CHECK(table.m_content.m_columns.size() == 9u);
-  CHECK(table.m_content.m_rows.empty());
+
   CHECK(table.m_hasSemanticContent);
-  CHECK_FALSE(table.m_semanticContentComplete);
+  CHECK(table.m_semanticContentComplete);
+  CHECK(table.m_tableStyleHandle == 667u);
+  REQUIRE(table.m_content.m_columns.size() == 9u);
+  REQUIRE(table.m_content.m_rows.size() == 20u);
+  for (const auto &col : table.m_content.m_columns)
+    CHECK(col.m_width == Catch::Approx(63.5));
+  CHECK(table.m_content.m_rows[0].m_height == Catch::Approx(11.0));
+  for (size_t row = 1; row < table.m_content.m_rows.size(); ++row)
+    CHECK(table.m_content.m_rows[row].m_height == Catch::Approx(9.0));
+
+  const std::vector<std::string> texts = collectCellTexts(table);
+  REQUIRE(texts.size() == 7u);
+  CHECK(texts[0] == "test");
+  CHECK(texts[1] == "test");
+  for (size_t i = 2; i < texts.size(); ++i)
+    CHECK(texts[i] == "xx");
 }

@@ -111,7 +111,11 @@ void RS_Settings::init(const QString &companyKey,const QString &appKey) {
         INSTANCE->m_settings->sync();
     }
 
-    auto settings = std::make_unique<QSettings>(companyKey, appKey);
+    // QSettings(company, app) always opens the native store; the default format
+    // is the native one too, unless the program has chosen another (the tests
+    // keep their settings in an INI file of their own).
+    auto settings = std::make_unique<QSettings>(QSettings::defaultFormat(), QSettings::UserScope,
+                                                companyKey, appKey);
 
     // First-run migration: if this is a versioned production store and
     // it's empty, look for a prior-major sibling and copy its contents.
@@ -168,7 +172,7 @@ QString RS_Settings::migrateFromPriorMajor(const QString& companyKey,
                                             QSettings* dst,
                                             int currentMajor) {
     auto tryCopy = [&](const QString& priorApp) -> bool {
-        QSettings prior(companyKey, priorApp);
+        QSettings prior(QSettings::defaultFormat(), QSettings::UserScope, companyKey, priorApp);
         if (isStoreEmpty(prior)) {
             return false;
         }
