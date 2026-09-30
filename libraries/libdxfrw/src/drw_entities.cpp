@@ -508,11 +508,6 @@ bool skipTableBitDouble(dwgBuffer& buffer, std::uint64_t endBit) {
     return readBoundedBitDouble(buffer, endBit, value);
 }
 
-bool skipTableRawChar8(dwgBuffer& buffer, std::uint64_t endBit) {
-    std::uint8_t value = 0;
-    return readBoundedRawChar8(buffer, endBit, value);
-}
-
 bool readBounded3BitDouble(dwgBuffer& buffer, std::uint64_t endBit,
                            DRW_Coord& value) {
     dwgBuffer probe = buffer.forkIndependent();
@@ -2598,7 +2593,6 @@ bool skipTableCellStyle(DRW::Version version, dwgBuffer *buf,
     std::int32_t rgb = -1;
     UTF8STRING name;
     UTF8STRING book;
-    dwgBuffer *textBuf = strBuf ? strBuf : buf;
     std::uint32_t color = 0;
     if (!readBoundedCmColor(*buf, strBuf, bounds.bodyEndBit, version,
                             color, &rgb, nullptr, &name, &book,
@@ -12722,7 +12716,6 @@ bool DRW_MText::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
     std::uint32_t parsedBackgroundColor = 0;
     std::int32_t parsedBackgroundTransparency = 0;
     bool parsedIsNotAnnotative = false;
-    bool parsedReallyLocked = false;
     std::uint16_t parsedR2018Version = 0;
     bool parsedDefaultFlag = false;
     std::int32_t parsedR2018Attachment = 0;

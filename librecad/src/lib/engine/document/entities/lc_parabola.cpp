@@ -565,7 +565,7 @@ void LC_Parabola::moveRef(const RS_Vector& ref, const RS_Vector& offset)
       break;
     }
 
-    update();
+  update();
 }
 
 void LC_Parabola::revertDirection()

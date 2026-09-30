@@ -78,22 +78,6 @@ namespace {
     // Issue #1787: cursor hot spot at center by using hotX=hotY=-1
     constexpr int HOTSPOT_XY = -1;
 
-    // maximum length for displayed block name in context menu
-    constexpr int g_MaxBlockNameLength = 40; // fixme - sand - move to common public place
-
-    /*
-             * The zoomFactor effects how quickly the scroll wheel will zoom in & out.
-             *
-             * Benchmarks:
-             * 1.250 - the original; fast & usable, but seems a choppy & a bit 'jarring'
-             * 1.175 - still a bit choppy
-             * 1.150 - smoother than the original, but still 'quick' enough for good navigation.
-             * 1.137 - seems to work well for me
-             * 1.125 - about the lowest that would be acceptable and useful, a tad on the slow side for me
-             * 1.100 - a very slow & deliberate zooming, but feels very "cautious", "controlled", "safe", and "precise".
-             * 1.000 - goes nowhere. :)
-             */
-    constexpr double zoomFactor = 1.137; // fixme - to settings
     // zooming factor is wheel angle delta divided by this factor
     constexpr double ZOOM_WHEEL_DIVISOR = 200.; // fixme - to settings
 

@@ -59,7 +59,7 @@ void LC_ActionDrawDual::updateActionPromptForSelection() {
     updatePromptTRCancel(tr("Select to create dual (Enter to complete)"), MOD_SHIFT_LC(tr("Select contour")));
 }
 
-void LC_ActionDrawDual::updateActionPromptForSelected(int status) {
+void LC_ActionDrawDual::updateActionPromptForSelected(int) {
     updatePrompt(tr("Select Center"));
 }
 
@@ -79,7 +79,7 @@ void LC_ActionDrawDual::doTriggerCompletion([[maybe_unused]] bool success) {
     finish();
 }
 
-void LC_ActionDrawDual::onMouseLeftButtonReleaseSelected(int status, const LC_MouseEvent* event) {
+void LC_ActionDrawDual::onMouseLeftButtonReleaseSelected(int, const LC_MouseEvent* event) {
     const RS_Vector snap = event->snapPoint;
     if (getStatus() == ChooseCenter) {
         m_center = snap;
@@ -87,7 +87,7 @@ void LC_ActionDrawDual::onMouseLeftButtonReleaseSelected(int status, const LC_Mo
     }
 }
 
-void LC_ActionDrawDual::onMouseRightButtonReleaseSelected(int status, const LC_MouseEvent* event) {
+void LC_ActionDrawDual::onMouseRightButtonReleaseSelected(int, const LC_MouseEvent*) {
     finish();
 }
 

@@ -1245,8 +1245,8 @@ QPainterPath RS_Painter::createSolidFillPath(const RS_EntityContainer& loops) co
                 if (!hasUsableEllipseParameters(uiCenter, radius, radius))
                     break;
 
-                    loopPath.moveTo(uiCenter);
-                    loopPath.addEllipse(uiCenter, radius, radius);
+                loopPath.moveTo(uiCenter);
+                loopPath.addEllipse(uiCenter, radius, radius);
             }
                     break;
                 case RS2::EntityEllipse: {
@@ -1262,13 +1262,13 @@ QPainterPath RS_Painter::createSolidFillPath(const RS_EntityContainer& loops) co
                     if (!hasUsableArcParameters(ellipseRect, startAngle, angularLength))
                         break;
 
-                        ellipsePath.arcMoveTo(ellipseRect, startAngle);
-                        ellipsePath.arcTo(ellipseRect, startAngle, angularLength);
+                    ellipsePath.arcMoveTo(ellipseRect, startAngle);
+                    ellipsePath.arcTo(ellipseRect, startAngle, angularLength);
                 } else {
                     if (!hasUsableArcParameters(ellipseRect, 0., 360.))
                         break;
 
-                        ellipsePath.addEllipse(ellipseRect);
+                    ellipsePath.addEllipse(ellipseRect);
                     }
 
                     QTransform ellipseTransform;
@@ -1293,7 +1293,7 @@ QPainterPath RS_Painter::createSolidFillPath(const RS_EntityContainer& loops) co
                 if (!hasFiniteValue(ellipseAngle))
                     break;
 
-                    ellipseTransform.rotate(-ellipseAngle);
+                ellipseTransform.rotate(-ellipseAngle);
                     loopPath.addPath(ellipseTransform.map(ellipsePath));
                     break;
                 }

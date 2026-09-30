@@ -2645,21 +2645,6 @@ struct RawObjectShell final : public DRW_TableEntry {
   }
 };
 
-bool rawObjectHasDataStorage(DRW::Version version,
-                             std::vector<std::uint8_t> &bytes,
-                             std::uint32_t bodyBitSize,
-                             DRW_TextCodec *decoder) {
-  if (version <= DRW::AC1024 || bytes.empty() || decoder == nullptr)
-    return false;
-
-  dwgBuffer probeBuffer(bytes.data(), bytes.size(), decoder);
-  RawObjectHeaderProbe probe;
-  if (!probe.parseCommon(version, &probeBuffer, bodyBitSize) ||
-      !probeBuffer.isGood())
-    return false;
-  return probe.hasDataStorageBinaryData();
-}
-
 std::string normalizeDwgClassToken(const std::string &value) {
   std::string token;
   token.reserve(value.size());
@@ -9159,8 +9144,6 @@ void dwgReader::linkDataStorage(DRW_Entity &entity) {
 
   const bool hasExplicitKey = !entity.dataStorageHandleKey.empty();
   const bool hasExplicitHandle = entity.dataStorageHandle != DRW::NoHandle;
-  const bool hasExplicitLink = hasExplicitKey || hasExplicitHandle;
-
   struct Candidate {
     std::size_t sectionIndex = 0;
     std::size_t recordIndex = 0;
@@ -10068,7 +10051,6 @@ bool dwgReader::readDwgEntityWithOutput(dwgBuffer *dbuf, objHandle &obj,
     // that range are file-local CLASSES ordinals and must be resolved before
     // dispatch.
     const DRW_Class *resolvedClass = nullptr;
-    bool unresolvedCustomClass = false;
     const bool fixedEntityShell =
         version >= DRW::AC1021 &&
         DRW_UnsupportedObject::isFixedEntityShellType(oType);
@@ -10079,7 +10061,6 @@ bool dwgReader::readDwgEntityWithOutput(dwgBuffer *dbuf, objHandle &obj,
         !fixedEntityShell && !fixedObjectShell && oType != dwgType::WIPEOUT) {
       auto it = classesmap.find(oType);
       if (it == classesmap.end()) { // preserve unknown custom objects
-        unresolvedCustomClass = true;
         if (expectedBlockEntityOwner == DRW::NoHandle &&
             !(rejectOwnedEntityInSweep && version > DRW::AC1015)) {
           // Without an entity owner, preserve it as an opaque OBJECTS

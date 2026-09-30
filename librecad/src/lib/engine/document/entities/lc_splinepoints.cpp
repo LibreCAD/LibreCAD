@@ -848,7 +848,7 @@ bool LC_SplinePoints::tryBoundJet(const double a, const double b, LC_CurveJetBou
     switch (segment.kind) {
         case LC_SplinePointsSegment::Kind::Point:
             result = {px(segment.start), py(segment.start), LC_Interval::point(0.0), LC_Interval::point(0.0),
-                      LC_Interval::point(0.0), LC_Interval::point(0.0)};
+                      LC_Interval::point(0.0), LC_Interval::point(0.0), {}, {}};
             if (products) {
                 result.speedSquaredProduct = LC_Interval::point(0.0);
                 result.crossProduct = LC_Interval::point(0.0);
@@ -864,7 +864,7 @@ bool LC_SplinePoints::tryBoundJet(const double a, const double b, LC_CurveJetBou
             const LC_Interval y1 = py(segment.end);
             result = {LC_Interval::hull(at(ua, x0, x1), at(ub, x0, x1)),
                       LC_Interval::hull(at(ua, y0, y1), at(ub, y0, y1)), x1 - x0, y1 - y0,
-                      LC_Interval::point(0.0), LC_Interval::point(0.0)};
+                      LC_Interval::point(0.0), LC_Interval::point(0.0), {}, {}};
             if (products) {
                 result.speedSquaredProduct = sqr(x1 - x0) + sqr(y1 - y0);
                 result.crossProduct = LC_Interval::point(0.0);

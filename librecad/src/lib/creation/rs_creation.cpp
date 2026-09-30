@@ -75,11 +75,6 @@ namespace {
         return {start / (-start.dotP(line)), stop / (-stop.dotP(line))};
     }
 
-    // tangent condition tolerance
-    // two circles are considered tangent, if the distance is within this factor of the radii
-    constexpr double TANGENT_TOLERANCE_FACTOR = 1e-6; // fixme - sand - options candidate?
-
-
 }
 
 

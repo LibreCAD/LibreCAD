@@ -724,7 +724,7 @@ void readSchemaIndex(const ByteReader& r, DRW_DataStorageSection& section) {
 
 void readSchemaNames(const ByteReader& r,
                      DRW_DataStorageSection& section,
-                     const DRW_DataStorageSegment& segment,
+                     const DRW_DataStorageSegment&,
                      std::uint64_t namesOffset,
                      std::uint64_t segmentEnd) {
     if (namesOffset == segmentEnd)

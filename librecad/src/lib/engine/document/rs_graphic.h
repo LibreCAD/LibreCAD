@@ -369,9 +369,6 @@ private:
      *  (legacy behavior — UI defaults to modelspace / first layout). */
     std::uint32_t m_activeLayoutHandle = 0;
 
-    //if set to true, will refuse to modify paper scale
-    bool paperScaleFixed = false;
-
     /** Format type */
     RS2::FormatType m_formatType = RS2::FormatUnknown;
 
