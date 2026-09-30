@@ -56,7 +56,9 @@ namespace {
 }
 
 void LC_PropertiesProviderGraphicLayer::fillDocumentProperties(LC_PropertyContainer* container, RS_Graphic* graphic) {
-    if (m_widget->getOptions()->noSelectionActiveLayer) {
+    // No layer is active while a drawing's layers are being replaced (loading a file clears them, then
+    // adds the file's): the sheet is refilled when one is (#2969)
+    if (m_widget->getOptions()->noSelectionActiveLayer && graphic->getActiveLayer() != nullptr) {
         const LC_Property::Names names = {SECTION_GENERAL, tr("Active Layer"), tr("Active layer properties")};
         const auto cont = createSection(container, names);
         createActiveLayer(cont, graphic);

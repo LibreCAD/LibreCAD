@@ -31,6 +31,8 @@
 #include <QList>
 #include <QSet>
 
+#include "lc_trackedlistener.h"
+
 class RS_Layer;
 class RS_LayerListListener;
 
@@ -83,6 +85,8 @@ public:
 
     void addListener(RS_LayerListListener* listener);
     void removeListener(RS_LayerListListener* listener);
+    /// how many listeners are registered (a widget that is destroyed while attached must have unregistered)
+    int listenerCount() const {return static_cast<int>(m_layerListListeners.size());}
     /**
      * Sets the layer lists modified status to 'm'.
      */
@@ -141,7 +145,7 @@ private:
     //! mutation point (add/remove/clear) -- sort() never changes membership.
     QSet<RS_Layer*> m_layerSet;
     //! List of registered LayerListListeners
-    QList<RS_LayerListListener*> m_layerListListeners;
+    LC_ListenerList<RS_LayerListListener, RS_LayerList> m_layerListListeners{this};
     RS_Layer* m_activeLayer = nullptr;
     /** Flag set if the layer list was modified and not yet saved. */
     bool m_modified = false;

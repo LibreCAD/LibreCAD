@@ -206,6 +206,24 @@ void LC_UCSListWidget::setGraphicView(RS_GraphicView *gv) {
     }
 }
 
+/**
+ * The list is being destroyed with its drawing, which was not detached from this dock first (the list
+ * has already dropped this listener): forget the list, the view and the viewport (the view may be
+ * destroyed already, so nothing is disconnected from it), and clear the table. Not updateData(): it
+ * reads the drawing.
+ */
+void LC_UCSListWidget::ucsListDestroyed() {
+    m_currentUCSList = nullptr;
+    m_graphicView = nullptr;
+    m_viewport = nullptr;
+    m_ucsListModel->setUCSList(nullptr, nullptr);
+    updateButtonsState();
+    if (m_ucsStateWidget != nullptr) {
+        const QIcon none;
+        m_ucsStateWidget->update(none, "", "");
+    }
+}
+
 void LC_UCSListWidget::setUCSList(LC_UCSList *viewsList) {
     if (m_currentUCSList != nullptr) {
         m_currentUCSList->removeListener(this);
@@ -235,7 +253,7 @@ void LC_UCSListWidget::updateCurrentUCSWidget(const LC_UCS* ucs) const {
 }
 
 void LC_UCSListWidget::onViewUCSChanged(const LC_UCS *ucs) {
-    if (ucs == nullptr){
+    if (ucs == nullptr || m_currentUCSList == nullptr || m_viewport == nullptr){
         return;
     }
     m_ucsListModel->markActive(ucs);

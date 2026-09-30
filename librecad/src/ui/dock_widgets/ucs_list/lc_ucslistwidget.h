@@ -57,6 +57,8 @@ public:
     QIcon getUCSTypeIcon(const LC_UCS *view) const;
     QWidget* createSelectionWidget(QAction* createAction, QAction* defaultAction);
     void ucsListModified([[maybe_unused]]bool changed) override{refresh();}
+    /// the list is being destroyed with its drawing: forget it, the view and the viewport, and clear the table
+    void ucsListDestroyed() override;
     QModelIndex getIndexForUCS(const LC_UCS *u) const;
     void applyUCSByIndex(const QModelIndex& index) const;
     LC_UCS* getActiveUCS() const;

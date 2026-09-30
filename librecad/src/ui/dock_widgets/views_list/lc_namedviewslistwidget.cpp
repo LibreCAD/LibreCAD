@@ -167,8 +167,28 @@ void LC_NamedViewsListWidget::setGraphicView(RS_GraphicView* gv) {
     setViewsList(viewsList);
 }
 
+/**
+ * The list is being destroyed with its drawing, which was not detached from this dock first (the list
+ * has already dropped this listener): forget the list, the view and the viewport, and clear the table.
+ * Not updateData(): it reads the drawing.
+ */
+void LC_NamedViewsListWidget::viewsListDestroyed() {
+    m_currentViewList = nullptr;
+    m_graphicView = nullptr;
+    m_viewport = nullptr;
+    m_viewsModel->setViewsList(nullptr, nullptr);
+    updateButtonsState();
+    emit viewListChanged(0);
+}
+
 void LC_NamedViewsListWidget::setViewsList(LC_ViewList* viewsList) {
+    if (m_currentViewList != nullptr) {
+        m_currentViewList->removeListener(this);
+    }
     m_currentViewList = viewsList;
+    if (viewsList != nullptr) {
+        viewsList->addListener(this);
+    }
     updateData(false);
     if (nullptr != viewsList && m_viewsModel->count() > 0) {
         selectView(m_currentViewList->at(0));

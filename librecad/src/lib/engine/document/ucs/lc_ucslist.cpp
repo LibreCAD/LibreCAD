@@ -27,8 +27,23 @@ LC_UCSList::LC_UCSList() {
     setModified(false);
 }
 
+/**
+ * Frees the UCSs, after telling the listeners that still listen (see
+ * LC_UCSListListener::ucsListDestroyed()): a dock attached to the list has a pointer to it, and rows
+ * for the UCSs. m_wcs is listed too, but its unique_ptr owns it.
+ */
 LC_UCSList::~LC_UCSList() {
-    deleteOwnedEntries();
+    QList<LC_UCS*> removed;
+    removed.swap(m_ucsList);
+    m_activeUCS = nullptr;
+    m_ucsListListeners.drain([](LC_UCSListListener* listener) {
+        listener->ucsListDestroyed();
+    });
+    for (const auto ucs : std::as_const(removed)) {
+        if (ucs != m_wcs.get()) {
+            delete ucs;
+        }
+    }
 }
 
 // m_wcs is listed too, but its unique_ptr owns it

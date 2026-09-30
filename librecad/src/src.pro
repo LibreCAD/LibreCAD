@@ -430,6 +430,7 @@ HEADERS += \
     lib/engine/document/entities/support/lc_dimarrowblock.h \
     lib/engine/document/entities/support/lc_dimarrowblockpoly.h \
     lib/engine/document/lc_graphicvariables.h \
+    lib/engine/document/lc_trackedlistener.h \
     lib/engine/document/selection/lc_selectedset.h \
     lib/engine/document/selection/lc_selectedsetlistener.h \
     lib/engine/document/textstyles/lc_textstyle.h \
