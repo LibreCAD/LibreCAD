@@ -548,12 +548,16 @@ bool RS_Ellipse::switchMajorMinor() {
         return false;
     }
 
+    // The end points of an arc are taken before the axes change: the new axes describe the same
+    // ellipse, but the old angles would then name other points on it.
+    const bool arc = isEllipticArc();
+    const RS_Vector vpStart = getStartpoint();
+    const RS_Vector vpEnd = getEndpoint();
+
     const RS_Vector vp = getMajorP();
     setMajorP(RS_Vector(-m_data.ratio * vp.y, m_data.ratio * vp.x)); //direction pi/2 relative to old MajorP;
     setRatio(1. / m_data.ratio);
-    if (isEllipticArc()) {
-        const RS_Vector vpStart = getStartpoint();
-        const RS_Vector vpEnd = getEndpoint();
+    if (arc) {
         //only reset start/end points for ellipse arcs, i.e., angle1 angle2 are not both zero
         setAngle1(getEllipseAngle(vpStart));
         setAngle2(getEllipseAngle(vpEnd));
