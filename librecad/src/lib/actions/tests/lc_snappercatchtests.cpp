@@ -27,6 +27,8 @@
 #include <random>
 #include <vector>
 
+#include "lc_action_draw_line_snake.h"
+#include "lc_action_draw_rectangle_2points.h"
 #include "lc_action_modify_line_gap.h"
 #include "lc_action_modify_round.h"
 #include "lc_action_modify_trim_amount.h"
@@ -35,6 +37,7 @@
 #include "lc_actiontestsupport.h"
 #include "lc_containertraverser.h"
 #include "lc_hyperbola.h"
+#include "lc_overlayentitiescontainer.h"
 #include "rs_arc.h"
 #include "rs_block.h"
 #include "rs_circle.h"
@@ -125,6 +128,23 @@ public:
     using LC_AbstractActionWithPreview::checkMayExpandEntity;
 };
 
+class SnakeStartSnapProbe final : public LC_ActionDrawLineSnake {
+public:
+    explicit SnakeStartSnapProbe(LC_ActionContext* actionContext)
+        : LC_ActionDrawLineSnake(actionContext, RS2::ActionDrawSnakeLine) {}
+
+    using LC_ActionDrawLineSnake::SetStartPoint;
+    using LC_ActionDrawLineSnake::updateSnapperAndCoordinateWidget;
+};
+
+class RectangleStartSnapProbe final : public LC_ActionDrawRectangle2Points {
+public:
+    explicit RectangleStartSnapProbe(LC_ActionContext* actionContext) : LC_ActionDrawRectangle2Points(actionContext) {}
+
+    using LC_ActionDrawRectangle2Points::SetPoint1;
+    using LC_ActionDrawRectangle2Points::updateSnapperAndCoordinateWidget;
+};
+
 RS_Line* addLine(RS_Graphic& graphic, const RS_Vector& from, const RS_Vector& to) {
     auto* line = new RS_Line(&graphic, RS_LineData(from, to));
     graphic.addEntity(line);
@@ -179,6 +199,17 @@ RS_Hatch* addSolidSquare(RS_Graphic& graphic, const RS_Vector& corner, const dou
     return hatch;
 }
 
+template <typename Action>
+void checkInitialSnapIndicator(ActionFixture<Action>& fixture, const int status) {
+    fixture.m_action->init(status);
+    const LC_MouseEvent event = eventAt(10.0, 20.0);
+    fixture.m_action->updateSnapperAndCoordinateWidget(&event, status);
+
+    auto* snapOverlay = fixture.m_view.getViewPort()->getOverlaysDrawablesContainer(RS2::Snapper);
+    REQUIRE(snapOverlay != nullptr);
+    CHECK(snapOverlay->first() != nullptr);
+}
+
 bool containsDeleted(const RS_EntityContainer& container) {
     return std::any_of(container.begin(), container.end(), [](const RS_Entity* entity) {
         return entity != nullptr && entity->isDeleted();
@@ -197,6 +228,19 @@ RS_Entity* nearestMeasuringAll(const RS_EntityContainer& drawing, const RS_Vecto
 }
 
 } // namespace
+
+TEST_CASE("Actions without an initial preview refresh the snap indicator", "[snap][cursor]") {
+    LC_SET_ONE("Appearance", "indicator_lines_state", true);
+
+    SECTION("snake line") {
+        ActionFixture<SnakeStartSnapProbe> fixture;
+        checkInitialSnapIndicator(fixture, SnakeStartSnapProbe::SetStartPoint);
+    }
+    SECTION("two-point rectangle") {
+        ActionFixture<RectangleStartSnapProbe> fixture;
+        checkInitialSnapIndicator(fixture, RectangleStartSnapProbe::SetPoint1);
+    }
+}
 
 // ---------------------------------------------------------------------------
 // What a catch returns
