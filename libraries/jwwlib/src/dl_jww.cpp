@@ -1045,7 +1045,7 @@ void DL_Jww::endEntity(DL_CreationInterface* /*creationInterface*/) {
 void DL_Jww::endSequence(DL_CreationInterface* /*creationInterface*/) {
 }
 
-int DL_Jww::stringToInt(const char* s, bool* ok) {
+int DL_Jww::stringToInt(const char*, bool*) {
     return 0;
 }
 
