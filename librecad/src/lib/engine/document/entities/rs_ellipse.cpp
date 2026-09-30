@@ -25,7 +25,9 @@
 **
 **********************************************************************/
 
+#include <algorithm>
 #include <cmath>
+#include <limits>
 
 #include <QPainterPath>
 #include "rs_ellipse.h"
@@ -50,12 +52,7 @@
 // Workaround for Qt bug: https://bugreports.qt-project.org/browse/QTBUG-22829
 // TODO: the Q_MOC_RUN detection shouldn't be necessary after this Qt bug is resolved
 #ifndef Q_MOC_RUN
-#include <boost/version.hpp>
 #include <boost/math/special_functions/ellint_2.hpp>
-#include <boost/math/tools/roots.hpp>
-#if BOOST_VERSION > 104500
-#include <boost/tuple/tuple.hpp>
-#endif
 #endif
 
 namespace {
@@ -81,70 +78,100 @@ bool hasUsableEllipseData(const RS_EllipseData& data) {
         && data.majorP.magnitude() > RS_TOLERANCE;
 }
 
-    //functor to solve for distance, used by snapDistance
-    class EllipseDistanceFunctor {
-    public:
-        EllipseDistanceFunctor(const RS_Ellipse& ellipse, const double target) :
-            m_distance{target}, m_e{ellipse}, m_ra{m_e.getMajorRadius()}, m_k2{1. - (m_e.getRatio() * m_e.getRatio())},
-            m_k2Ra{m_k2 * m_ra} {
-        }
-#if BOOST_VERSION > 104500
-        boost::tuples::tuple<double, double, double> operator()(const double z) const {
-#else
-            boost::fusion::tuple<double, double, double> operator()(const double& z) const {
-
-#endif
+    /**
+     * @brief solveArcLength find the elliptic angle at which the arc length from the angle \p x1 is \p length
+     *
+     * The length grows with the angle from 0 at \p x1 to the whole length of the ellipse at \p x1 + 2 pi, so
+     * there is exactly one such angle in between. Newton's method is kept inside a bracket of the angles, and
+     * bisects when a step leaves it, so it always ends: in a few steps, or in at most maxSteps. It also ends
+     * when the bracket is down to neighbouring numbers, for the length of a thin ellipse near the end of its
+     * axis is not exact to the tolerance below (the elliptic integral is off by more than that there).
+     * @param e ellipse which is not reversed, with ratio <= 1
+     * @param x1 the start angle, in [0, 2 pi)
+     * @param length between 0 and \p wholeLength, and not within a hair of either
+     * @return the angle, or NaN if the search did not converge
+     */
+    double solveArcLength(const RS_Ellipse& e, const double x1, const double length, const double wholeLength) {
+        constexpr int maxSteps = 100;
+        const double ra = e.getMajorRadius();
+        const double k2 = 1. - (e.getRatio() * e.getRatio());
+        // the length is 0 at x1 but the whole ellipse for an angle that does not differ from it
+        double low = x1 + (2. * RS_TOLERANCE_ANGLE);
+        double high = x1 + (2. * M_PI) - (2. * RS_TOLERANCE_ANGLE);
+        double z = std::clamp(x1 + (2. * M_PI * length / wholeLength), low, high);
+        for (int step = 0; step < maxSteps; ++step) {
+            const double f = e.getEllipseLength(x1, z) - length;
+            if (std::abs(f) <= 1e-13 * wholeLength) {
+                return z;
+            }
+            if (f < 0.) {
+                low = z;
+            }
+            else {
+                high = z;
+            }
+            if (high - low <= 4. * std::numeric_limits<double>::epsilon() * high) {
+                return 0.5 * (low + high);
+            }
+            // the speed of the point at the elliptic angle z, the derivative of the length: the integrand
+            // of getEllipseLength() is sqrt(1 - k^2 cos^2 z)
             const double cz = std::cos(z);
-            const double sz = std::sin(z);
-            //delta amplitude
-            const double d = std::sqrt(1 - (m_k2 * sz * sz));
-            // return f(x), f'(x) and f''(x)
-#if BOOST_VERSION > 104500
-            return boost::tuples::make_tuple(
-#else
-                return boost::fusion::make_tuple(
-#endif
-                m_e.getEllipseLength(z) - m_distance, m_ra * d, m_k2Ra * sz * cz / d);
+            const double speed = ra * std::sqrt(1. - (k2 * cz * cz));
+            double next = z - (f / speed);
+            if (!(next > low && next < high)) {
+                next = 0.5 * (low + high);
+            }
+            z = next;
         }
-
-    private:
-        double m_distance;
-        const RS_Ellipse& m_e;
-        const double m_ra;
-        const double m_k2;
-        const double m_k2Ra;
-    };
+        return std::numeric_limits<double>::quiet_NaN();
+    }
 
     /**
      * @brief getNearestDistHelper find end point after trimmed by amount
-     * @param e ellipse which is not reversed, assume ratio (a/b) >= 1
+     * @param e ellipse which is not reversed, with ratio (minor/major) <= 1
      * @param trimAmount the length of the trimmed is increased by this amount
      * @param coord current mouse position
      * @param dist if this pointer is not nullptr, save the distance from the new
-     * end point to mouse position coord
-     * @return the new end point of the trimmed. Only one end of the entity is
-     *  trimmed
+     * end point to mouse position coord (RS_MAXDOUBLE if there is none)
+     * @return the new end point of the trimmed, or an invalid vector if there is none: the arc is trimmed
+     *  to nothing. Only one end of the entity is trimmed
      */
     RS_Vector getNearestDistHelper(const RS_Ellipse& e, const double trimAmount, const RS_Vector& coord, double* dist = nullptr) {
-        const double x1 = e.getAngle1();
-
-        const double guess = x1 + M_PI;
-        constexpr int digits = std::numeric_limits<double>::digits;
-
-        double trimmed = e.getLength() + trimAmount;
+        const double arcLength = e.getLength();
+        if (!(arcLength + trimAmount > 0.)) {
+            if (dist != nullptr) {
+                *dist = RS_MAXDOUBLE;
+            }
+            return RS_Vector{false};
+        }
+        const double wholeLength = e.getEllipseLength(0, 0); // start/end angle 0 is used for whole ellipses
 
         // choose the end to trim by the mouse position coord
         const bool trimEnd = coord.squaredTo(e.getStartpoint()) <= coord.squaredTo(e.getEndpoint());
 
+        // the arc length from the start point to the wanted point; past a whole turn the ellipse goes round again
+        double trimmed = arcLength + trimAmount;
         if (trimEnd) {
-            const double wholeLength = e.getEllipseLength(0, 0); // start/end angle 0 is used for whole ellipses
             trimmed = trimAmount > 0 ? wholeLength - trimAmount : -trimAmount;
         }
+        trimmed = std::fmod(trimmed, wholeLength);
+        if (trimmed < 0.) {
+            trimmed += wholeLength;
+        }
 
-        //solve equation of the distance by second order newton_raphson
-        const EllipseDistanceFunctor X{e, trimmed};
-        using namespace boost::math::tools;
-        const double sol = halley_iterate<EllipseDistanceFunctor, double>(X, guess, x1, x1 + (2 * M_PI) - RS_TOLERANCE_ANGLE, digits);
+        const double x1 = RS_Math::correctAngle(e.getAngle1());
+        double sol = x1;
+        // the search stops a hair short of the start point, which is where these lie
+        const double nearStart = 2. * e.getMajorRadius() * RS_TOLERANCE_ANGLE;
+        if (trimmed > nearStart && trimmed < wholeLength - nearStart) {
+            sol = solveArcLength(e, x1, trimmed, wholeLength);
+            if (!std::isfinite(sol)) {
+                if (dist != nullptr) {
+                    *dist = RS_MAXDOUBLE;
+                }
+                return RS_Vector{false};
+            }
+        }
 
         const RS_Vector vp = e.getEllipsePoint(sol);
         if (dist != nullptr) {
@@ -498,7 +525,7 @@ double RS_Ellipse::getEllipseLength(const double angleLength) const {
 /**
   * get the point on the ellipse arc and with arc distance from the start point
   * the distance is expected to be within 0 and getLength()
-  * using Newton-Raphson from boost
+  * (a positive distance lengthens the arc at the end the mouse is near, a negative one shortens it)
   *
   *@author: Dongxu Li
   */

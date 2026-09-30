@@ -2498,6 +2498,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/entities/tests/lc_parabola_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_ellipse_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_ellipse_length_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_ellipse_nearest_dist_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_ellipse_axis_swap_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_spline_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_splinepoints_tests.cpp
