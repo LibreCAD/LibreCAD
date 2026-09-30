@@ -452,31 +452,40 @@ double RS_Ellipse::getEllipseLength(double angle1, double angle2) const {
     const double a(getMajorRadius());
     double k(getRatio());
     k = std::sqrt(1 - (k * k)); // elliptic modulus, or eccentricity
+    if (!std::isfinite(a) || !std::isfinite(angle1) || !std::isfinite(angle2) || !std::isfinite(k)) {
+        return 0.; // no length for what is not an ellipse (k is not a number for a ratio above 1)
+    }
     //    std::cout<<"1, angle1="<<x1/M_PI<<" angle2="<<x2/M_PI<<std::endl;
     //    if(isReversed())  std::swap(x1,x2);
     angle1 = RS_Math::correctAngle(angle1);
     angle2 = RS_Math::correctAngle(angle2);
     //    std::cout<<"2, angle1="<<x1/M_PI<<" angle2="<<x2/M_PI<<std::endl;
-    if (angle2 < angle1 + RS_TOLERANCE_ANGLE) {
+    if (std::abs(angle2 - angle1) < RS_TOLERANCE_ANGLE) {
+        // no sweep is a whole turn: four quarters
+        return 4. * a * boost::math::ellint_2<double>(k);
+    }
+    if (angle2 < angle1) {
         angle2 += 2. * M_PI;
     }
-    double ret = 0.;
-    //    std::cout<<"3, angle1="<<x1/M_PI<<" angle2="<<x2/M_PI<<std::endl;
-    if (angle2 >= M_PI) {
-        // the complete elliptic integral
-        ret = (static_cast<int>((angle2 + RS_TOLERANCE_ANGLE) / M_PI) - (static_cast<int>((angle1 + RS_TOLERANCE_ANGLE) / M_PI))) * 2;
-        //        std::cout<<"Adding "<<ret<<" of E("<<k<<")\n";
-        ret *= boost::math::ellint_2<double>(k);
-    }
-    else {
-        ret = 0.;
-    }
-    angle1 = std::fmod(angle1,M_PI);
-    angle2 = std::fmod(angle2,M_PI);
-    if (std::abs(angle2 - angle1) > RS_TOLERANCE_ANGLE) {
-        ret += RS_Math::ellipticIntegral_2(k, angle2) - RS_Math::ellipticIntegral_2(k, angle1);
-    }
-    return a * ret;
+    // The length (in units of a) up to \p angle from a fixed angle, which cancels in the difference: the
+    // whole half periods, and what is left in the last one. Both come from one split of the angle, so the
+    // length has no jump at a multiple of pi, where a count made with a tolerance and a remainder made
+    // without one disagree.
+    const double halfPeriod = 2. * boost::math::ellint_2<double>(k);
+    const auto lengthTo = [halfPeriod, k](const double angle) {
+        double periods = std::floor(angle / M_PI);
+        double rest = angle - (periods * M_PI);
+        if (rest < 0.) {
+            periods -= 1.;
+            rest += M_PI;
+        }
+        else if (rest >= M_PI) {
+            periods += 1.;
+            rest -= M_PI;
+        }
+        return (periods * halfPeriod) + RS_Math::ellipticIntegral_2(k, rest);
+    };
+    return a * (lengthTo(angle2) - lengthTo(angle1));
 }
 
 /**

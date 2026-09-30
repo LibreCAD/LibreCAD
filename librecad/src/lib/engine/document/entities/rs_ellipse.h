@@ -137,7 +137,8 @@ public:
     //Ellipse must have ratio<1, and not reversed
     *@ x1, ellipse angle
     *@ x2, ellipse angle
-    //@return the arc length between ellipse angle x1, x2
+    //@return the arc length between ellipse angle x1, x2: that of the whole ellipse if they do not differ,
+    // and 0 if an angle or the ratio is not a finite number (or the ratio is above 1)
     **/
     double getEllipseLength(double angle1, double angle2) const;
     double getEllipseLength(double angleLength) const;
