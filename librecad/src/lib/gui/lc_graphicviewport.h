@@ -56,8 +56,12 @@ public:
 
     void setSize(const int width, const int height)
     {
+        if (m_width == width && m_height == height)
+            return;
         m_width = width;
         m_height = height;
+        if (width > 0 && height > 0)
+            invalidateGrid();
     }
     RS_Vector getFactor() const {return m_factor;}
 
