@@ -1682,7 +1682,7 @@ void LC_LayerTreeWidget::copyLayerAttributes(RS_Layer *copyLayer, const RS_Layer
 
     pen.setColor(sourcePen.getColor());
     pen.setWidth(sourcePen.getWidth());
-    pen.setLineType(sourcePen.getLineType());
+    pen.setLineTypeFromPen(sourcePen);
     pen.setAlpha(sourcePen.getAlpha());
     pen.setScreenWidth(sourcePen.getScreenWidth());
     pen.setDashOffset(sourcePen.dashOffset());
