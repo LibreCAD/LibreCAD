@@ -2532,6 +2532,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/ucs/tests/lc_ucslist_tests.cpp
         librecad/src/lib/engine/document/ucs/tests/lc_wcs_tests.cpp
         librecad/src/lib/engine/document/views/tests/lc_view_tests.cpp
+        librecad/src/actions/drawing/tests/rs_actiondefault_tests.cpp
         librecad/src/lib/engine/tests/rs_pen_tests.cpp
         librecad/src/lib/actions/tests/lc_snappercatchtests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_round_tests.cpp
@@ -2924,6 +2925,9 @@ if (BUILD_TESTS)
     add_librecad_filter_micro_test(
         librecad_draw_fast_tests
         librecad/src/lib/creation/tests/lc_action_draw_fast_tests.cpp)
+    add_librecad_filter_micro_test(
+        librecad_default_action_tests
+        librecad/src/actions/drawing/tests/rs_actiondefault_tests.cpp)
     add_librecad_filter_micro_test(
         librecad_snake_action_tests
         librecad/src/lib/creation/tests/lc_action_draw_line_snake_tests.cpp)
