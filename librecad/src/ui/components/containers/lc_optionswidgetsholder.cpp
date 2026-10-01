@@ -70,7 +70,7 @@ void LC_OptionsWidgetsHolder::removeOptionsWidget(QWidget *optionsWidget) const 
         const QObjectList &list = ui->wOptionsWidgetsContainer->children();
         LC_ERR << "OPTION WIDGETS BEFORE: " << list.size();
 #endif
-        // ui->wOptionsWidgetsContainer->layout()->removeWidget(optionsWidget);
+        ui->wOptionsWidgetsContainer->layout()->removeWidget(optionsWidget);
         optionsWidget->setParent(nullptr);
         // optionsWidget->deleteLater();
 #ifdef DEBUG_WIDGETS_COUNT
