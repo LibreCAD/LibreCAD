@@ -39,7 +39,6 @@ public:
     void doUpdateWidgetSettings(int leftToolbarColumnsCount,
                                 int leftToolbarIconSize,
                                 bool leftToolbarFlatIcons);
-    QSize minimumSizeHint() const override;
   private:
     QFrame* m_frame = nullptr;
     QGridLayout* m_gridLayout = nullptr;

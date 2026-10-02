@@ -87,6 +87,7 @@ void LC_ApplicationWindowInitializer::initApplication(){
     initPropertySheetWidget();
     initDialogFactory();
     initRecentFilesList();
+    m_appWin->initializeDockLayout();
     m_appWin->initSettings();
     loadCmdWidgetVariablesFile();
     initAutoSaveTimer();

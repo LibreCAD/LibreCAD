@@ -483,6 +483,7 @@ int main(int argc, char** argv) {
 
     const bool maximize = LC_GET_ONE_BOOL("Startup","Maximize", false);
 
+    appWin.prepareWindowForShow();
     if (maximize || first_load) {
         appWin.showMaximized();
     }

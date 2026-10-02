@@ -2650,6 +2650,7 @@ if (BUILD_TESTS)
         librecad/src/lib/generators/layers/tests/lc_layersexporter_tests.cpp
         librecad/src/ui/main/persistence/tests/lc_documentsstorage_tests.cpp
         librecad/src/ui/main/tests/lc_mdiwindow_close_tests.cpp
+        librecad/src/ui/main/tests/lc_docklayout_tests.cpp
         librecad/src/ui/components/pen/tests/qg_widgetpen_tests.cpp
         librecad/src/ui/dock_widgets/layers_tree/tests/lc_layertreewidget_tests.cpp
         librecad/src/plugins/tests/qc_actiongetselect_tests.cpp
@@ -2941,6 +2942,12 @@ if (BUILD_TESTS)
     add_librecad_filter_micro_test(
         librecad_spline_command_tests
         librecad/src/lib/creation/tests/lc_action_draw_spline_tests.cpp)
+    # Isolate GUI tests from the text tests' static offscreen bootstraps.
+    add_librecad_filter_micro_test(
+        librecad_dock_layout_tests
+        librecad/src/ui/main/tests/lc_docklayout_tests.cpp)
+    target_sources(librecad_dock_layout_tests PRIVATE ${LIBRECAD_RES})
+    set_target_properties(librecad_dock_layout_tests PROPERTIES AUTORCC ON)
     add_executable(librecad_console_command_utils_tests
         EXCLUDE_FROM_ALL
         librecad/src/main/lc_release_label.cpp
@@ -3186,6 +3193,10 @@ if (BUILD_TESTS)
             WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
             ENVIRONMENT "QT_QPA_PLATFORM=offscreen"
         )
+        add_test(NAME librecad_dock_layout_tests
+            COMMAND $<TARGET_FILE:librecad_dock_layout_tests> "[dock-window]" --reporter compact)
+        set_tests_properties(librecad_dock_layout_tests PROPERTIES
+            ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)
     endif()
     if (LIBRECAD_REGISTER_INTEGRATION_TESTS)
         add_test(NAME librecad_dwg_fast_tests
