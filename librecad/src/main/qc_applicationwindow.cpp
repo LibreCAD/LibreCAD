@@ -435,10 +435,16 @@ void QC_ApplicationWindow::initializeDockLayout()
             else scheduleDockFit();
         });
         connect(dock, &QDockWidget::dockLocationChanged, this,
-                [this](Qt::DockWidgetArea) { scheduleDockFit(); });
+                [this, dock](Qt::DockWidgetArea area) {
+                    if (!dockLayoutApplying && !dockFitRunning && !dock->isHidden()
+                        && area != Qt::NoDockWidgetArea)
+                        requestedDockAreas[area] = true;
+                    scheduleDockFit();
+                });
         connect(dock, &QDockWidget::topLevelChanged, this,
                 [this, dock](bool floating) {
-                    if (floating && !dockLayoutApplying) requestedDockAreas[Qt::NoDockWidgetArea] = true;
+                    if (floating && !dockLayoutApplying && !dockFitRunning)
+                        requestedDockAreas[Qt::NoDockWidgetArea] = true;
                     scheduleDockFit();
                 });
     }
@@ -449,6 +455,11 @@ void QC_ApplicationWindow::initializeDockLayout()
         names.sort();
         selectedDockByGroup[names.join(QLatin1Char('|'))] = dock->objectName();
     });
+    for (QToolBar* toolbar : findChildren<QToolBar*>())
+        connect(toolbar, &QToolBar::visibilityChanged, this,
+                [this](bool) { scheduleDockFit(); });
+    statusBar()->installEventFilter(this);
+    mdiAreaCAD->installEventFilter(this);
 }
 
 void QC_ApplicationWindow::prepareWindowForShow()
@@ -464,10 +475,10 @@ void QC_ApplicationWindow::clampToAvailableScreen()
     QScreen* screen = screenForFrame(frameGeometry());
     if (!screen) return;
     const QRect available = screen->availableGeometry();
-    const QRect frame = frameGeometry();
-    const QSize frameExtra = frame.size() - size();
+    const QSize frameExtra = frameGeometry().size() - size();
     resize(qMin(width(), qMax(1, available.width() - frameExtra.width())),
            qMin(height(), qMax(1, available.height() - frameExtra.height())));
+    const QRect frame = frameGeometry();
     const QPoint offset = pos() - frame.topLeft();
     move(qBound(available.left(), frame.left(),
                 qMax(available.left(), available.right() - frame.width() + 1)) + offset.x(),
@@ -490,6 +501,39 @@ QList<QDockWidget*> QC_ApplicationWindow::dockGroup(QDockWidget* dock) const
     QList<QDockWidget*> group {dock};
     if (!dock->isFloating()) group.append(tabifiedDockWidgets(dock));
     return group;
+}
+
+QC_ApplicationWindow::CollapsedDockGroup QC_ApplicationWindow::captureDockGroup(QDockWidget* dock) const
+{
+    const auto group = dockGroup(dock);
+    CollapsedDockGroup collapsed;
+    collapsed.area = dockWidgetArea(dock);
+    for (QTabBar* bar : findChildren<QTabBar*>()) {
+        QStringList order;
+        for (int tab = 0; tab < bar->count(); ++tab) {
+            for (QDockWidget* member : group) {
+                if (bar->tabText(tab) == member->windowTitle())
+                    order.append(member->objectName());
+            }
+        }
+        if (order.size() == group.size() && group.size() > 1) {
+            collapsed.names = order;
+            for (QDockWidget* member : group) {
+                if (bar->tabText(bar->currentIndex()) == member->windowTitle())
+                    collapsed.selected = member->objectName();
+            }
+            break;
+        }
+    }
+    if (collapsed.names.isEmpty()) {
+        for (QDockWidget* member : group) collapsed.names.append(member->objectName());
+    }
+    QStringList sortedNames = collapsed.names;
+    sortedNames.sort();
+    const QString key = sortedNames.join(QLatin1Char('|'));
+    if (selectedDockByGroup.contains(key)) collapsed.selected = selectedDockByGroup.value(key);
+    if (collapsed.selected.isEmpty()) collapsed.selected = dock->objectName();
+    return collapsed;
 }
 
 void QC_ApplicationWindow::applyDockVisibility()
@@ -539,6 +583,7 @@ void QC_ApplicationWindow::updateDockAreaActions()
 
 void QC_ApplicationWindow::restoreCollapsedGroup(int index)
 {
+    QScopedValueRollback<bool> applying(dockLayoutApplying, true);
     const CollapsedDockGroup group = collapsedDockGroups.takeAt(index);
     applyDockVisibility();
     QDockWidget* first = nullptr;
@@ -599,13 +644,22 @@ QByteArray QC_ApplicationWindow::dockStateForSaving()
     if (collapsedDockGroups.isEmpty()) return saveState();
     // Serialize the user's layout, not the temporary small-screen layout.
     QScopedValueRollback<bool> fitting(dockFitRunning, true);
+    QScopedValueRollback<bool> applying(dockLayoutApplying, true);
+    const QByteArray effectiveState = saveState();
+    const QRect effectiveGeometry = geometry();
+    const auto options = dockOptions();
+    setDockOptions(options & ~QMainWindow::AnimatedDocks);
     const QList<CollapsedDockGroup> collapsed = collapsedDockGroups;
     const bool updates = updatesEnabled();
     setUpdatesEnabled(false);
     while (!collapsedDockGroups.isEmpty()) restoreCollapsedGroup(0);
     const QByteArray state = saveState();
     collapsedDockGroups = collapsed;
+    restoreState(effectiveState);
     applyDockVisibility();
+    if (layout()) layout()->activate();
+    if (!isMaximized() && !isFullScreen()) setGeometry(effectiveGeometry);
+    setDockOptions(options);
     setUpdatesEnabled(updates);
     return state;
 }
@@ -614,12 +668,30 @@ void QC_ApplicationWindow::fitDockLayout()
 {
     if (dockFitRunning || !isVisible()) return;
     QScopedValueRollback<bool> fitting(dockFitRunning, true);
-    clampToAvailableScreen();
-    if (layout()) layout()->activate();
-
+    const auto activateLayout = [this] {
+        if (layout()) {
+            layout()->invalidate();
+            layout()->activate();
+        }
+        if (centralWidget()->layout()) centralWidget()->layout()->activate();
+    };
+    const auto restoreLayout = [this, &activateLayout](const QByteArray& state, const QRect& rect) {
+        QScopedValueRollback<bool> applying(dockLayoutApplying, true);
+        restoreState(state);
+        applyDockVisibility();
+        activateLayout();
+        if (!isMaximized() && !isFullScreen()) setGeometry(rect);
+        activateLayout();
+    };
     QScreen* screen = screenForFrame(frameGeometry());
     if (!screen) return;
-    const QSize available = screen->availableGeometry().size();
+    const auto options = dockOptions();
+    setDockOptions(options & ~QMainWindow::AnimatedDocks);
+    clampToAvailableScreen();
+    activateLayout();
+    const QSize available = (isFullScreen() ? screen->geometry() : screen->availableGeometry()).size();
+    if (available != fittedDockScreen) priorityDockName.clear();
+    const QString priorityName = priorityDockName;
     for (QDockWidget* dock : findChildren<QDockWidget*>()) {
         if (!dock->isFloating() || !dock->isVisible()) continue;
         QScreen* dockScreen = screenForFrame(dock->frameGeometry());
@@ -638,11 +710,17 @@ void QC_ApplicationWindow::fitDockLayout()
 
     const QSize floor(qMin(480, qMax(200, width() - 100)),
                       qMin(320, qMax(160, height() - 100)));
-    const auto needsFit = [this, &floor, &available] {
-        return frameGeometry().width() > available.width()
-            || frameGeometry().height() > available.height()
-            || mdiAreaCAD->width() < floor.width()
-            || mdiAreaCAD->height() < floor.height();
+    const auto windowSize = [this] {
+        return isMaximized() || isFullScreen() ? size() : frameGeometry().size();
+    };
+    const auto violations = [this, &floor, &available, &windowSize] {
+        return QSize(qMax(0, windowSize().width() - available.width())
+                         + qMax(0, floor.width() - mdiAreaCAD->width()),
+                     qMax(0, windowSize().height() - available.height())
+                         + qMax(0, floor.height() - mdiAreaCAD->height()));
+    };
+    const auto needsFit = [&violations] {
+        return violations() != QSize(0, 0);
     };
     int leftWidth = 0;
     QDockWidget* right = nullptr;
@@ -652,32 +730,34 @@ void QC_ApplicationWindow::fitDockLayout()
             leftWidth = qMax(leftWidth, dock->width());
         if (!right && dockWidgetArea(dock) == Qt::RightDockWidgetArea) right = dock;
     }
-    if (right && (frameGeometry().width() > available.width()
+    if (right && (windowSize().width() > available.width()
                   || mdiAreaCAD->width() < floor.width())) {
         const int budget = qMax(150, qMin(390, width() - floor.width() - leftWidth - 24));
         if (right->width() > budget) {
             resizeDocks({right}, {budget}, Qt::Horizontal);
-            if (layout()) layout()->activate();
+            activateLayout();
         }
     }
 
-    for (int i = collapsedDockGroups.size() - 1; i >= 0; --i) {
+    const bool capacityChanged = saveState() != fittedDockState
+        || mdiAreaCAD->size() != fittedDockCanvas || available != fittedDockScreen;
+    for (int i = collapsedDockGroups.size() - 1; capacityChanged && i >= 0; --i) {
         const CollapsedDockGroup group = collapsedDockGroups.at(i);
-        const int growth = group.pressure == Qt::Horizontal
-            ? width() - group.windowSize.width() : height() - group.windowSize.height();
-        if (growth < 24) continue;
+        const QByteArray state = saveState();
+        const QRect rect = geometry();
         restoreCollapsedGroup(i);
-        if (layout()) layout()->activate();
-        if (frameGeometry().width() > available.width()
-            || frameGeometry().height() > available.height()
-            || mdiAreaCAD->width() < floor.width() + 24
-            || mdiAreaCAD->height() < floor.height() + 24) {
+        activateLayout();
+        if (windowSize().width() > available.width()
+            || windowSize().height() > available.height()
+            || mdiAreaCAD->width() < floor.width() + (group.pressure == Qt::Horizontal ? 24 : 0)
+            || mdiAreaCAD->height() < floor.height() + (group.pressure == Qt::Vertical ? 24 : 0)) {
             collapsedDockGroups.insert(i, group);
-            applyDockVisibility();
+            restoreLayout(state, rect);
         }
     }
 
     QSet<QString> tried;
+    bool protectRequestedDock = true;
     while (needsFit()) {
         QDockWidget* candidate = nullptr;
         int priority = 100;
@@ -688,65 +768,83 @@ void QC_ApplicationWindow::fitDockLayout()
             for (QDockWidget* member : group) names.append(member->objectName());
             names.sort();
             const QString key = names.join(QLatin1Char('|'));
-            if (tried.contains(key) || names.contains(priorityDockName)) continue;
-            const bool heightPressure = frameGeometry().height() > available.height()
+            if (tried.contains(key) || (protectRequestedDock && names.contains(priorityName))) continue;
+            const bool heightPressure = windowSize().height() > available.height()
                 || mdiAreaCAD->height() < floor.height();
             int rank = dock == pen_wiz ? 0 : dockWidgetArea(dock) == Qt::LeftDockWidgetArea ? 2 : 3;
             if (names.contains(QStringLiteral("command_dockwidget"))) rank = heightPressure ? 1 : 4;
             if (rank < priority) { candidate = dock; priority = rank; }
         }
-        if (!candidate) break;
-        const auto group = dockGroup(candidate);
-        CollapsedDockGroup collapsed;
-        collapsed.area = dockWidgetArea(candidate);
-        collapsed.pressure = frameGeometry().height() > available.height()
-            || mdiAreaCAD->height() < floor.height() ? Qt::Vertical : Qt::Horizontal;
-        collapsed.windowSize = size();
-        for (QTabBar* bar : findChildren<QTabBar*>()) {
-            QStringList order;
-            for (int tab = 0; tab < bar->count(); ++tab) {
-                for (QDockWidget* member : group) {
-                    if (bar->tabText(tab) == member->windowTitle())
-                        order.append(member->objectName());
-                }
+        if (!candidate) {
+            if (protectRequestedDock && !priorityName.isEmpty()
+                && (windowSize().width() > available.width() || windowSize().height() > available.height())) {
+                protectRequestedDock = false;
+                tried.clear();
+                continue;
             }
-            if (order.size() == group.size() && group.size() > 1) {
-                collapsed.names = order;
-                for (QDockWidget* member : group) {
-                    if (bar->tabText(bar->currentIndex()) == member->windowTitle())
-                        collapsed.selected = member->objectName();
-                }
-                break;
+            break;
+        }
+        const QByteArray state = saveState();
+        const QRect rect = geometry();
+        const QSize before = violations();
+        const int firstCollapsed = collapsedDockGroups.size();
+        const auto pressure = before.height() > 0 ? Qt::Vertical : Qt::Horizontal;
+        const auto collapse = [this, &tried, &activateLayout, pressure](QDockWidget* dock) {
+            auto group = captureDockGroup(dock);
+            group.pressure = pressure;
+            QStringList sorted = group.names;
+            sorted.sort();
+            tried.insert(sorted.join(QLatin1Char('|')));
+            collapsedDockGroups.append(group);
+            applyDockVisibility();
+            activateLayout();
+            clampToAvailableScreen();
+            activateLayout();
+        };
+        const auto improves = [&violations, &before] {
+            const QSize after = violations();
+            return after.width() <= before.width() && after.height() <= before.height()
+                && after != before;
+        };
+        collapse(candidate);
+        const auto area = dockWidgetArea(candidate);
+        // Split groups can share a column/row: reclaim it as one reversible trial.
+        if (!improves() && ((before.width() > 0
+                            && (area == Qt::LeftDockWidgetArea || area == Qt::RightDockWidgetArea))
+                           || (before.height() > 0
+                               && (area == Qt::TopDockWidgetArea || area == Qt::BottomDockWidgetArea)))) {
+            for (QDockWidget* dock : findChildren<QDockWidget*>()) {
+                if (dock->isFloating() || !dock->isVisible() || dockWidgetArea(dock) != area) continue;
+                QStringList names;
+                for (QDockWidget* member : dockGroup(dock)) names.append(member->objectName());
+                names.sort();
+                if (tried.contains(names.join(QLatin1Char('|')))
+                    || (protectRequestedDock && names.contains(priorityName))) continue;
+                collapse(dock);
+                if (improves()) break;
             }
         }
-        if (collapsed.names.isEmpty()) {
-            for (QDockWidget* member : group) collapsed.names.append(member->objectName());
+        if (improves()) {
+            for (int i = firstCollapsed; i < collapsedDockGroups.size(); ++i)
+                collapsedDockGroups[i].pressure = violations().width() < before.width()
+                    ? Qt::Horizontal : Qt::Vertical;
+        } else {
+            while (collapsedDockGroups.size() > firstCollapsed) collapsedDockGroups.removeLast();
+            restoreLayout(state, rect);
         }
-        QStringList sortedNames = collapsed.names;
-        sortedNames.sort();
-        const QString key = sortedNames.join(QLatin1Char('|'));
-        if (selectedDockByGroup.contains(key)) collapsed.selected = selectedDockByGroup.value(key);
-        if (collapsed.selected.isEmpty()) collapsed.selected = candidate->objectName();
-        tried.insert(key);
-        const QSize beforeCanvas = mdiAreaCAD->size();
-        const QSize beforeFrame = frameGeometry().size();
-        collapsedDockGroups.append(collapsed);
-        applyDockVisibility();
-        if (layout()) layout()->activate();
-        clampToAvailableScreen();
-        if (mdiAreaCAD->width() <= beforeCanvas.width()
-            && mdiAreaCAD->height() <= beforeCanvas.height()
-            && frameGeometry().width() >= beforeFrame.width()
-            && frameGeometry().height() >= beforeFrame.height())
-            restoreCollapsedGroup(collapsedDockGroups.size() - 1);
     }
     clampToAvailableScreen();
     updateDockAreaActions();
+    setDockOptions(options);
+    fittedDockState = saveState();
+    fittedDockCanvas = mdiAreaCAD->size();
+    fittedDockScreen = available;
 }
 
 void QC_ApplicationWindow::resizeEvent(QResizeEvent* event)
 {
     MainWindowX::resizeEvent(event);
+    if (!dockFitRunning && !dockLayoutApplying) priorityDockName.clear();
     scheduleDockFit();
 }
 
@@ -763,6 +861,8 @@ void QC_ApplicationWindow::showEvent(QShowEvent* event)
                     [this](const QRect&) { scheduleDockFit(); });
             scheduleDockFit();
         });
+        connect(qGuiApp, &QGuiApplication::screenRemoved, this,
+                [this](QScreen*) { scheduleDockFit(); });
         if (windowHandle())
             connect(windowHandle(), &QWindow::screenChanged, this,
                     [this](QScreen*) { scheduleDockFit(); });
@@ -1302,7 +1402,13 @@ void QC_ApplicationWindow::initSettings()
     QSettings settings;
 
     settings.beginGroup("Geometry");
-    const bool restored = restoreState(settings.value("StateOfWidgets").toByteArray());
+    collapsedDockGroups.clear();
+    fittedDockState.clear();
+    bool restored;
+    {
+        QScopedValueRollback<bool> applying(dockLayoutApplying, true);
+        restored = restoreState(settings.value("StateOfWidgets").toByteArray());
+    }
     const bool hasRequested = settings.contains("RequestedDockVisibility");
     const QVariantMap requested = settings.value("RequestedDockVisibility").toMap();
     requestedDockAreas[Qt::LeftDockWidgetArea] = settings.value("LeftDockArea", 0).toBool();
@@ -1317,7 +1423,7 @@ void QC_ApplicationWindow::initSettings()
             ? requested.value(it.key(), it.value()).toBool()
             : restored && requestedDockAreas.value(area, true) ? !dock->isHidden() : it.value();
     }
-    if (!usePenWizard()) requestedDockVisibility[pen_wiz->objectName()] = false;
+    if (!hasRequested && !usePenWizard()) requestedDockVisibility[pen_wiz->objectName()] = false;
     {
         const QSignalBlocker left(dock_areas.left), right(dock_areas.right);
         const QSignalBlocker top(dock_areas.top), bottom(dock_areas.bottom);
@@ -1357,6 +1463,7 @@ void QC_ApplicationWindow::storeSettings() {
 
     if (RS_Settings::save_is_allowed)
     {
+        const QByteArray dockState = dockStateForSaving();
         RS_SETTINGS->beginGroup("/Geometry");
         RS_SETTINGS->writeEntry("/WindowWidth", width());
         RS_SETTINGS->writeEntry("/WindowHeight", height());
@@ -1364,7 +1471,7 @@ void QC_ApplicationWindow::storeSettings() {
         RS_SETTINGS->writeEntry("/WindowY", y());
         QString geometry {saveGeometry().toBase64(QByteArray::Base64Encoding)};
         RS_SETTINGS->writeEntry("/WindowGeometry", geometry);
-        RS_SETTINGS->writeEntry("/StateOfWidgets", QVariant(dockStateForSaving()));
+        RS_SETTINGS->writeEntry("/StateOfWidgets", QVariant(dockState));
         QVariantMap requested;
         for (auto it = requestedDockVisibility.cbegin(); it != requestedDockVisibility.cend(); ++it)
             requested.insert(it.key(), it.value());
@@ -1526,7 +1633,6 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w, bool forced)
         slotPenChanged(penToolBar->getPen());
 
         pen_wiz->setMdiWindow(m);
-        requestedDockVisibility[pen_wiz->objectName()] = usePenWizard();
         applyDockVisibility();
         scheduleDockFit();
         if (penPaletteWidget != nullptr){
@@ -3906,9 +4012,19 @@ void QC_ApplicationWindow::reloadStyleSheet()
 
 bool QC_ApplicationWindow::eventFilter(QObject *obj, QEvent *event)
 {
+    if (!dockLayoutApplying && !dockFitRunning) {
+        if (obj == mdiAreaCAD && event->type() == QEvent::Resize) scheduleDockFit();
+        if (obj == statusBar() && (event->type() == QEvent::Show || event->type() == QEvent::Hide))
+            scheduleDockFit();
+        if (auto* dock = qobject_cast<QDockWidget*>(obj)) {
+            if (dock->isFloating() && (event->type() == QEvent::Move || event->type() == QEvent::Resize))
+                scheduleDockFit();
+        }
+    }
     if (event->type() == QEvent::Close && !dockLayoutApplying) {
         if (auto* dock = qobject_cast<QDockWidget*>(obj)) {
             requestedDockVisibility[dock->objectName()] = false;
+            if (dock->objectName() == priorityDockName) priorityDockName.clear();
             scheduleDockFit();
         }
     }
@@ -4223,6 +4339,7 @@ void QC_ApplicationWindow::destroyMenu(const QString& menu_name)
 
 void QC_ApplicationWindow::changeEvent(QEvent* event)
 {
+    if (event->type() == QEvent::WindowStateChange) scheduleDockFit();
     // author: ravas
     // returning to LC via Command+Tab won't always activate a subwindow #821
 

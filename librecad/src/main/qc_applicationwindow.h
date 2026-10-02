@@ -349,12 +349,12 @@ protected:
     //! \}
 
 private:
+    friend class LC_DockLayoutTests;
     struct CollapsedDockGroup {
         QStringList names;
         QString selected;
         Qt::DockWidgetArea area;
-        Qt::Orientation pressure;
-        QSize windowSize;
+        Qt::Orientation pressure {Qt::Horizontal};
     };
 
     void initializeDockLayout();
@@ -365,6 +365,7 @@ private:
     void setDockAreaRequested(Qt::DockWidgetArea area, bool state);
     void requestDockVisible(QDockWidget* dock);
     QList<QDockWidget*> dockGroup(QDockWidget* dock) const;
+    CollapsedDockGroup captureDockGroup(QDockWidget* dock) const;
     void restoreCollapsedGroup(int index);
     QByteArray dockStateForSaving();
     void clampToAvailableScreen();
@@ -428,6 +429,9 @@ private:
     bool dockLayoutApplying {false};
     bool screenWatchInstalled {false};
     QString priorityDockName;
+    QByteArray fittedDockState;
+    QSize fittedDockCanvas;
+    QSize fittedDockScreen;
 
     /** Layer list widget */
     QG_LayerWidget* layerWidget {nullptr};
