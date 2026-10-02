@@ -552,11 +552,19 @@ void QC_ApplicationWindow::reflowBottomToolbars(int availableWidth) {
             toolbar && toolBarArea(toolbar) == Qt::BottomToolBarArea) removeToolBarBreak(toolbar);
     }
     m_autoToolbarBreaks.clear();
+    if (!layout()) return;
+    QList<QToolBar*> toolbars;
+    // Layout items follow the user order even before widget geometry updates.
+    const int itemCount = layout()->count();
+    for (int i = 0; i < itemCount; ++i) {
+        auto* item = layout()->itemAt(i);
+        auto* toolbar = item ? qobject_cast<QToolBar*>(item->widget()) : nullptr;
+        if (toolbar && !toolbar->isHidden() && !toolbar->isFloating()
+            && toolBarArea(toolbar) == Qt::BottomToolBarArea) toolbars.append(toolbar);
+    }
     int rowWidth = 0;
     const int budget = qMax(1, availableWidth);
-    for (QToolBar* toolbar : findChildren<QToolBar*>()) {
-        if (toolbar->isHidden() || toolbar->isFloating() ||
-            toolBarArea(toolbar) != Qt::BottomToolBarArea) continue;
+    for (QToolBar* toolbar : std::as_const(toolbars)) {
         if (toolBarBreak(toolbar)) rowWidth = 0;
         const int width = toolbar->minimumSizeHint().width();
         if (rowWidth > 0 && rowWidth + width > budget) {

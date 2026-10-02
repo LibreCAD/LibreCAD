@@ -448,6 +448,41 @@ TEST_CASE("Temporary toolbar wrapping is not persisted or left mutated by saving
     CHECK(window.toolBarBreak(second));
 }
 
+TEST_CASE("Bottom toolbar wrapping follows the user's reordered layout", "[.gui][dock-window]") {
+    DockFixture fixture;
+    fixture.isolate();
+    auto& window = fixture.window;
+    SECTION("left to right") { window.setLayoutDirection(Qt::LeftToRight); }
+    SECTION("right to left") { window.setLayoutDirection(Qt::RightToLeft); }
+    QList<QToolBar*> toolbars;
+    for (int i = 0; i < 3; ++i) {
+        auto* toolbar = new QToolBar(&window);
+        toolbar->setObjectName(QString("reordered_toolbar_%1").arg(i));
+        toolbar->installEventFilter(&window);
+        fixture.extras.append(toolbar);
+        auto* content = new QWidget(toolbar);
+        content->setFixedSize(260, 20);
+        toolbar->addWidget(content);
+        window.addToolBar(Qt::BottomToolBarArea, toolbar);
+        toolbar->show();
+        toolbars.append(toolbar);
+    }
+    window.insertToolBar(toolbars.first(), toolbars.last());
+    settle();
+    window.resize(500, 500);
+    settle();
+    QStringList itemOrder;
+    for (int i = 0; i < window.layout()->count(); ++i) {
+        if (auto* toolbar = qobject_cast<QToolBar*>(window.layout()->itemAt(i)->widget()))
+            itemOrder.append(toolbar->objectName());
+    }
+    INFO("Qt toolbar item order: " << qPrintable(itemOrder.join(',')));
+    CHECK_FALSE(window.toolBarBreak(toolbars.last()));
+    CHECK(window.toolBarBreak(toolbars.first()));
+    CHECK(window.toolBarBreak(toolbars[1]));
+    CHECK(window.layout()->minimumSize().width() <= window.width());
+}
+
 TEST_CASE("Named and global workspaces round-trip requested dock preferences", "[.gui][dock-window]") {
     DockFixture fixture;
     QTemporaryDir directory;
