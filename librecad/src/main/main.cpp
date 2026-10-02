@@ -307,6 +307,8 @@ int main(int argc, char** argv)
     if (!first_load)
         restoreWindowGeometry(appWin, settings);
 
+    appWin.prepareWindowForShow();
+
     bool maximize = settings.value("Startup/Maximize", 0).toBool();
 
     if (maximize || first_load)

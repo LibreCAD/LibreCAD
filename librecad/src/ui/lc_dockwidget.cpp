@@ -28,6 +28,7 @@
 #include <QToolButton>
 #include <QGridLayout>
 #include <QFrame>
+#include <QScrollArea>
 
 #include "lc_dockwidget.h"
 
@@ -37,11 +38,16 @@ LC_DockWidget::LC_DockWidget(QWidget* parent)
     , grid(new QGridLayout)
 {
 	frame->setContentsMargins(0,0,0,0);
-	setWidget(frame);
-
     grid->setSpacing(2);
 	grid->setContentsMargins(1,1,1,1);
 	frame->setLayout(grid);
+
+    auto* scroll = new QScrollArea(this);
+    scroll->setFrameShape(QFrame::NoFrame);
+    scroll->setWidgetResizable(true);
+    scroll->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    scroll->setWidget(frame);
+    setWidget(scroll);
 
 	setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
 }

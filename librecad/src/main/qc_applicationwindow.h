@@ -63,6 +63,7 @@ class QG_SelectionWidget;
 class QG_SnapToolBar;
 class QMdiArea;
 class QMdiSubWindow;
+class QDockWidget;
 class RS_Block;
 class RS_Document;
 class RS_GraphicView;
@@ -99,6 +100,7 @@ public:
 
     void initSettings();
     void storeSettings();
+    void prepareWindowForShow();
 
     bool queryExit(bool force);
 
@@ -114,6 +116,11 @@ public:
     void showStatusMessage(const QString& msg, int timeout = 0) const;
 
 public slots:
+    void toggleLeftDockArea(bool state);
+    void toggleRightDockArea(bool state);
+    void toggleTopDockArea(bool state);
+    void toggleBottomDockArea(bool state);
+    void toggleFloatingDockwidgets(bool state);
     void relayAction(QAction* q_action);
     void slotFocus();
     void slotBack();
@@ -332,6 +339,8 @@ public:
     void doClose(QC_MDIWindow* w, bool activateNext = true);
 
 protected:
+    void resizeEvent(QResizeEvent* event) override;
+    void showEvent(QShowEvent* event) override;
     void closeEvent(QCloseEvent*) override;
     //! \{ accept drop files to open
      void dropEvent(QDropEvent* e) override;
@@ -340,6 +349,26 @@ protected:
     //! \}
 
 private:
+    friend class LC_DockLayoutTests;
+    struct CollapsedDockGroup {
+        QStringList names;
+        QString selected;
+        Qt::DockWidgetArea area;
+        Qt::Orientation pressure {Qt::Horizontal};
+    };
+
+    void initializeDockLayout();
+    void scheduleDockFit();
+    void fitDockLayout();
+    void applyDockVisibility();
+    void updateDockAreaActions();
+    void setDockAreaRequested(Qt::DockWidgetArea area, bool state);
+    void requestDockVisible(QDockWidget* dock);
+    QList<QDockWidget*> dockGroup(QDockWidget* dock) const;
+    CollapsedDockGroup captureDockGroup(QDockWidget* dock) const;
+    void restoreCollapsedGroup(int index);
+    QByteArray dockStateForSaving();
+    void clampToAvailableScreen();
     QC_ApplicationWindow();
 
     QMenu* createPopupMenu() override;
@@ -390,6 +419,19 @@ private:
     // --- Dockwidgets ---
     //! toggle actions for the dock areas
     DockAreas dock_areas;
+    QMap<QString, bool> requestedDockVisibility;
+    QMap<QString, bool> factoryDockVisibility;
+    QMap<QString, QString> selectedDockByGroup;
+    QMap<int, bool> requestedDockAreas;
+    QList<CollapsedDockGroup> collapsedDockGroups;
+    bool dockFitQueued {false};
+    bool dockFitRunning {false};
+    bool dockLayoutApplying {false};
+    bool screenWatchInstalled {false};
+    QString priorityDockName;
+    QByteArray fittedDockState;
+    QSize fittedDockCanvas;
+    QSize fittedDockScreen;
 
     /** Layer list widget */
     QG_LayerWidget* layerWidget {nullptr};
@@ -462,4 +504,3 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 #endif
-
