@@ -522,6 +522,28 @@ TEST_CASE("Beyond the drawing by middle-button drags on the canvas", "[navigatio
     }
 }
 
+TEST_CASE("Middle-button double-click zooms extents without cancelling the active action", "[navigation][2982]") {
+    const bool qtReady = lc::test::application() != nullptr;
+    REQUIRE(qtReady);
+    LineScenario s;
+    const double extentsFactor = s.m_fixture.viewport()->getFactor().x;
+    s.m_fixture.viewport()->zoomIn(4.0, RS_Vector(50.0, 25.0));
+    REQUIRE(s.waitingForEndpoint());
+    CHECK(s.m_fixture.viewport()->getFactor().x != extentsFactor);
+
+    // A middle click first switches briefly to pan; its release restores Draw Line.
+    sendMouse(s.m_fixture.view, QEvent::MouseButtonPress, s.centre(), Qt::MiddleButton, Qt::MiddleButton);
+    sendMouse(s.m_fixture.view, QEvent::MouseButtonRelease, s.centre(), Qt::MiddleButton, Qt::NoButton);
+    REQUIRE(s.waitingForEndpoint());
+
+    sendMouse(s.m_fixture.view, QEvent::MouseButtonDblClick, s.centre(), Qt::MiddleButton, Qt::MiddleButton);
+    sendMouse(s.m_fixture.view, QEvent::MouseButtonRelease, s.centre(), Qt::MiddleButton, Qt::NoButton);
+    pump();
+
+    CHECK(std::abs(s.m_fixture.viewport()->getFactor().x - extentsFactor) < 1e-9);
+    CHECK(s.waitingForEndpoint());
+}
+
 TEST_CASE("Beyond the drawing by zooming out at one side and in at the other", "[navigation][2945-beyond]") {
     const bool qtReady = lc::test::application() != nullptr;
     REQUIRE(qtReady);

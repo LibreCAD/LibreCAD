@@ -567,7 +567,13 @@ void QG_GraphicView::mousePressEvent(QMouseEvent* event) {
 }
 
 void QG_GraphicView::mouseDoubleClickEvent(QMouseEvent* e) {
-    // LC_ERR << "MOUSE DOUBLE CLICK";
+    if (e->button() == Qt::MiddleButton && e->modifiers() == Qt::NoModifier) {
+        // Zoom the view directly so an in-progress drawing or editing action remains active.
+        getViewPort()->zoomAuto(false, true);
+        e->accept();
+        return;
+    }
+
     if (getEventHandler()->hasAction()) {
     }
     else {
@@ -596,20 +602,6 @@ void QG_GraphicView::mouseDoubleClickEvent(QMouseEvent* e) {
             }
         }
     }
-    /*else {
-        switch(e->button()){
-            case Qt::MiddleButton:
-                switchToAction(RS2::ActionZoomAuto);
-                break;
-            case Qt::LeftButton:
-                // double click on an entity to edit entity properties
-
-                showEntityPropertiesDialog(entity);
-                break;
-            default:
-                break;
-        }
-    }*/
     e->accept();
 }
 
