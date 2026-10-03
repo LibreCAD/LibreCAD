@@ -320,10 +320,12 @@ bool LC_ActionDrawLineSnake::doProceedCommand([[maybe_unused]]RS_CommandEvent *e
 }
 
 bool LC_ActionDrawLineSnake::doProcessCommandValue(RS_CommandEvent *e, const QString &c){
+    // Leave coordinate input to the event handler, not the scalar evaluator.
+    if (c.contains(',') || c.contains('<')){
+        return false;
+    }
     bool result = true;
     switch (getStatus()) {
-        case SetDirection:
-            break;
         case SetDistance: {
             // processing entered distance value
             bool ok = false;
@@ -346,6 +348,7 @@ bool LC_ActionDrawLineSnake::doProcessCommandValue(RS_CommandEvent *e, const QSt
                         break;
                     }
                     default:
+                        result = false;
                         break;
                 }
             } else {
@@ -358,6 +361,9 @@ bool LC_ActionDrawLineSnake::doProcessCommandValue(RS_CommandEvent *e, const QSt
             result = processAngleValueInput(e, c);
             break;
         }
+        default:
+            result = false;
+            break;
     }
     return result;
 }

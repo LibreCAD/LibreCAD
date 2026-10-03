@@ -21,6 +21,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
 #include "lc_actionoptionswidget.h"
+#include <QToolBar>
 #include "rs_actioninterface.h"
 #include "rs_debug.h"
 #include "rs_settings.h"
@@ -33,12 +34,25 @@ LC_ActionOptionsWidget::LC_ActionOptionsWidget(QWidget *parent, Qt::WindowFlags 
 
 LC_ActionOptionsWidget::~LC_ActionOptionsWidget() = default;
 
+void LC_ActionOptionsWidget::setOptionsVisible(bool visible){
+    if (auto* toolbar = qobject_cast<QToolBar*>(parentWidget())){
+        // Toolbar layouts take visibility from the widget's QAction.
+        for (auto* action : toolbar->actions()){
+            if (toolbar->widgetForAction(action) == this){
+                action->setVisible(visible);
+                break;
+            }
+        }
+    }
+    QWidget::setVisible(visible);
+}
+
 /**
  * Method is called from the action when options should be hidden.
  * Simply hides UI and saves settings.
  */
 void LC_ActionOptionsWidget::hideOptions(){
-    hide();
+    setOptionsVisible(false);
     saveSettings();
 }
 
