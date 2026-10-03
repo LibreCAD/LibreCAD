@@ -441,7 +441,6 @@ void QG_DlgOptionsGeneral::setFontsFolder()
     QFileDialog dlg(this);
     dlg.setFileMode(QFileDialog::Directory);
     dlg.setOption(QFileDialog::ShowDirsOnly);
-    dlg.setOption(QFileDialog::DontUseNativeDialog);
     dlg.setLabelText(QFileDialog::Accept, tr("Choose"));
 
     if (dlg.exec())
@@ -455,7 +454,7 @@ void QG_DlgOptionsGeneral::setLibraryPath()
 {
     QG_FileDialog dlg(this);
     dlg.setFileMode(QFileDialog::Directory);
-    dlg.setOption(QFileDialog::DontUseNativeDialog);
+    dlg.setOption(QFileDialog::ShowDirsOnly);
     dlg.setLabelText(QFileDialog::Accept, tr("Choose"));
 
     if (dlg.exec())
