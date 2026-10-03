@@ -415,10 +415,12 @@ bool LC_ActionDrawLineSnake::doProceedCommand([[maybe_unused]] int status, const
 }
 
 bool LC_ActionDrawLineSnake::doProcessCommandValue(const int status, const QString& c) {
+    // Leave coordinate input to the event handler, not the scalar evaluator.
+    if (c.contains(',') || c.contains('<')) {
+        return false;
+    }
     bool result = true;
     switch (status) {
-        case SetDirection:
-            break;
         case SetDistance: {
             // processing entered distance value
             bool ok = false;
@@ -450,6 +452,7 @@ bool LC_ActionDrawLineSnake::doProcessCommandValue(const int status, const QStri
                         break;
                     }
                     default:
+                        result = false;
                         break;
                 }
             }
@@ -465,6 +468,7 @@ bool LC_ActionDrawLineSnake::doProcessCommandValue(const int status, const QStri
             break;
         }
         default:
+            result = false;
             break;
     }
     return result;
