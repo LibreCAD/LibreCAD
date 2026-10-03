@@ -333,7 +333,7 @@ void RS_ActionInterface::showOptions() {
                m_optionWidget->setAction(this);
             }
             else{
-              m_optionWidget->show();
+              m_optionWidget->setOptionsVisible(true);
             }
         }
     }

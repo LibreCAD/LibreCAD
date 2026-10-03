@@ -40,6 +40,7 @@ class LC_ActionOptionsWidget:public QWidget
 public:
     explicit LC_ActionOptionsWidget(QWidget *parent = nullptr, Qt::WindowFlags fl = {});
     ~LC_ActionOptionsWidget();
+    void setOptionsVisible(bool visible);
     void setAction(RS_ActionInterface * a, bool update = false);
     /**
      * Called externally when the widget should be hidded
