@@ -392,38 +392,34 @@ void RS_System::initAllLanguagesList() {
     LNG( "zu"   , RS2::locLeftToRight, "Zulu")
 }
 
+QStringList RS_System::translationLocaleFallbacks(const QString& lang) {
+    QString normalized = lang.trimmed();
+    normalized.replace('-', '_');
+    if (normalized.isEmpty()) {
+        return {};
+    }
+
+    const int separator = normalized.indexOf('_');
+    const QString language = (separator < 0 ? normalized : normalized.left(separator)).toLower();
+    if (separator < 0) {
+        return {language};
+    }
+
+    QString territory = normalized.mid(separator + 1);
+    if (territory.size() == 2) {
+        territory = territory.toUpper();
+    }
+    const QString exactLocale = language + '_' + territory;
+    if (language.compare("es", Qt::CaseInsensitive) == 0) {
+        return {language, exactLocale};
+    }
+    return {exactLocale};
+}
+
 /**
  * Loads translations for the application GUI and command line.
  */
 void RS_System::loadTranslation(const QString& lang, const QString& langCmd) {
-    static QTranslator* tQt = nullptr;
-    static QTranslator* tLibreCAD = nullptr;
-    static QTranslator* tPlugIns = nullptr;
-
-    //make translation filenames case insensitive, #276
-    QString langLower("");
-    QString langUpper("");
-    const int i0 = lang.indexOf('_');
-    if (i0 >= 2 && lang.size() - i0 >= 2) {
-        //contains region code
-        langLower = lang.left( i0) + '_' + lang.mid( i0 + 1).toLower();
-        langUpper = lang.left( i0) + '_' + lang.mid( i0 + 1).toUpper();
-    }
-    else {
-        langLower = lang;
-        langUpper.clear();
-    }
-    QString langCmdLower("");
-    QString langCmdUpper("");
-    const int i1 = langCmd.indexOf('_');
-    if (i1 >= 2 && langCmd.size() - i1 >= 2) {
-        langCmdLower = langCmd.left(i1) + '_' + langCmd.mid(i1 + 1).toLower();
-        langCmdUpper = langCmd.left(i1) + '_' + langCmd.mid(i1 + 1).toUpper();
-    }
-    else {
-        langCmdLower = langCmd;
-        langCmdUpper.clear();
-    }
     // search in various directories for translations
     QStringList lst = getDirectoryList( "qm");
 
@@ -431,83 +427,90 @@ void RS_System::loadTranslation(const QString& lang, const QString& langCmd) {
     lst += (LC_GET_STR("Translations", "")).split(";", Qt::SkipEmptyParts);
     LC_GROUP_END();
 
-    if( tLibreCAD != nullptr) {
-        qApp->removeTranslator( tLibreCAD);
-        delete tLibreCAD;
+    for (QTranslator* translator : m_translationTranslators) {
+        qApp->removeTranslator(translator);
+        delete translator;
     }
-    if( tPlugIns != nullptr) {
-        qApp->removeTranslator( tPlugIns);
-        delete tPlugIns;
-    }
-    if( tQt != nullptr) {
-        qApp->removeTranslator( tQt);
-        delete tQt;
-    }
-    const QString langFileLower = "librecad_" + langLower + ".qm";
-    const QString langFileUpper = "librecad_" + langUpper + ".qm";
-    const QString langPlugInsLower = "plugins_" + langLower + ".qm";
-    const QString langPlugInsUpper = "plugins_" + langUpper + ".qm";
-    const QString langQtLower = "qt_" + langLower + ".qm";
-    const QString langQtUpper = "qt_" + langUpper + ".qm";
-    auto t = new QTranslator(nullptr);
-    for (QStringList::Iterator it = lst.begin();
-         it != lst.end();
-         ++it) {
+    m_translationTranslators.clear();
 
-        // load LibreCAD translations
-        if (nullptr == tLibreCAD) {
-            if (t->load(langFileLower, *it) || (!langUpper.isEmpty() && t->load(langFileUpper, *it))) {
-                tLibreCAD = t;
-                qApp->installTranslator( tLibreCAD);
-                t = new QTranslator(nullptr);
+    const auto loadCatalogs = [&lst](const QString& prefix, const QString& locale) {
+        QList<QTranslator*> loaded;
+        QStringList fileNames;
+        const int separator = locale.indexOf('_');
+        if (separator >= 2 && locale.size() - separator >= 2) {
+            const QString language = locale.left(separator).toLower();
+            const QString territory = locale.mid(separator + 1);
+            fileNames << prefix + '_' + language + '_' + territory.toLower() + ".qm";
+            const QString upperName = prefix + '_' + language + '_' + territory.toUpper() + ".qm";
+            if (!fileNames.contains(upperName)) {
+                fileNames << upperName;
             }
         }
-
-        // load PlugIns translations
-        if (nullptr == tPlugIns) {
-            if (t->load(langPlugInsLower, *it) || (!langUpper.isEmpty() && t->load(langPlugInsUpper, *it) == true)) {
-                tPlugIns = t;
-                qApp->installTranslator( tPlugIns);
-                t = new QTranslator(nullptr);
-            }
+        else {
+            fileNames << prefix + '_' + locale + ".qm";
         }
 
-        // load Qt standard dialog translations
-        if (nullptr == tQt) {
-            if (t->load(langQtLower, *it) || (!langUpper.isEmpty() && t->load(langQtUpper, *it))) {
-                tQt = t;
-                qApp->installTranslator( tQt);
-                t = new QTranslator(nullptr);
+        auto* translator = new QTranslator(nullptr);
+        bool loadedCatalog = false;
+        for (const QString& directory : lst) {
+            for (const QString& fileName : fileNames) {
+                if (translator->load(fileName, directory)) {
+                    loaded.append(translator);
+                    loadedCatalog = true;
+                    break;
+                }
+            }
+            if (loadedCatalog) {
+                break;
             }
         }
-        if (nullptr != tLibreCAD && nullptr != tPlugIns && nullptr != tQt) {
-            break;
+        if (!loadedCatalog) {
+            for (const QString& fileName : fileNames) {
+                if (translator->load(QStringLiteral(":/i18n/") + fileName)) {
+                    loaded.append(translator);
+                    loadedCatalog = true;
+                    break;
+                }
+            }
+        }
+        if (!loadedCatalog) {
+            delete translator;
+        }
+        return loaded;
+    };
+
+    const QStringList guiLocales = translationLocaleFallbacks(lang);
+    const QStringList prefixes{QStringLiteral("librecad"), QStringLiteral("plugins"), QStringLiteral("qt")};
+    for (const QString& prefix : prefixes) {
+        for (const QString& locale : guiLocales) {
+            const QList<QTranslator*> catalogs = loadCatalogs(prefix, locale);
+            for (QTranslator* translator : catalogs) {
+                // Qt checks the most recently installed translator first, so install fallback before regional.
+                qApp->installTranslator(translator);
+                m_translationTranslators.append(translator);
+            }
         }
     }
 
-    delete t;
-
-    delete m_commandTranslator;
-    m_commandTranslator = new QTranslator(nullptr);
-    const QString commandFileLower = "librecad_" + langCmdLower + ".qm";
-    const QString commandFileUpper = "librecad_" + langCmdUpper + ".qm";
-    for (const QString& directory : lst) {
-        if (m_commandTranslator->load(commandFileLower, directory)
-            || (!langCmdUpper.isEmpty() && m_commandTranslator->load(commandFileUpper, directory))) {
-            return;
-        }
+    for (QTranslator* translator : m_commandTranslators) {
+        delete translator;
     }
-
-    delete m_commandTranslator;
-    m_commandTranslator = nullptr;
+    m_commandTranslators.clear();
+    const QStringList commandLocales = translationLocaleFallbacks(langCmd);
+    for (const QString& locale : commandLocales) {
+        m_commandTranslators += loadCatalogs(QStringLiteral("librecad"), locale);
+    }
 }
 
 QString RS_System::translateCommand(const char* source, const char* disambiguation,
                                     const char* context) const {
-    const QString translation = m_commandTranslator != nullptr
-                                    ? m_commandTranslator->translate(context, source, disambiguation)
-                                    : QString{};
-    return translation.isEmpty() ? QString::fromUtf8(source) : translation;
+    for (auto it = m_commandTranslators.crbegin(); it != m_commandTranslators.crend(); ++it) {
+        const QString translation = (*it)->translate(context, source, disambiguation);
+        if (!translation.isEmpty()) {
+            return translation;
+        }
+    }
+    return QString::fromUtf8(source);
 }
 
 

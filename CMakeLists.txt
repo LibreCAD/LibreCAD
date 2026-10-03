@@ -2948,6 +2948,9 @@ if (BUILD_TESTS)
         librecad/src/ui/main/tests/lc_docklayout_tests.cpp)
     target_sources(librecad_dock_layout_tests PRIVATE ${LIBRECAD_RES})
     set_target_properties(librecad_dock_layout_tests PROPERTIES AUTORCC ON)
+    add_librecad_filter_micro_test(
+        librecad_translation_fallback_tests
+        librecad/src/lib/engine/tests/rs_system_translation_tests.cpp)
     add_executable(librecad_console_command_utils_tests
         EXCLUDE_FROM_ALL
         librecad/src/main/lc_release_label.cpp
