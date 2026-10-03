@@ -69,7 +69,7 @@ void LC_LineSnakeOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
 
     const int direction = m_action->getDirection();
 
-    LC_GuardedSignalsBlocker({
+    LC_GuardedSignalsBlocker signalsBlocker({
         ui->rbPoint,
         ui->rbX,
         ui->rbY,
