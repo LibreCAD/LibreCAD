@@ -32,6 +32,7 @@
 #include <QDir>
 #include <QList>
 #include <QSharedPointer>
+#include <QStringList>
 
 #include "rs_locale.h"
 
@@ -177,6 +178,7 @@ public:
 
     static QString getEncoding(const QString& str);
 
+    static QStringList translationLocaleFallbacks(const QString& lang);
     void loadTranslation(const QString& lang, const QString& langCmd);
     QString translateCommand(const char* source, const char* disambiguation = nullptr,
                              const char* context = "QObject") const;
@@ -203,7 +205,8 @@ protected:
     bool initialized {false};
     bool externalAppDir {false};
     QList<QSharedPointer<RS_Locale> > allKnownLocales;
-    QTranslator* m_commandTranslator{nullptr};
+    QList<QTranslator*> m_translationTranslators;
+    QList<QTranslator*> m_commandTranslators;
 };
 
 #endif
