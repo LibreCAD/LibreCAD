@@ -40,14 +40,18 @@ namespace {
 
 class SnakeActionProbe final : public LC_ActionDrawLineSnake {
 public:
-    explicit SnakeActionProbe(LC_ActionContext* actionContext)
-        : LC_ActionDrawLineSnake(actionContext, RS2::ActionDrawSnakeLineX) {}
+    explicit SnakeActionProbe(LC_ActionContext* actionContext,
+                              RS2::ActionType type = RS2::ActionDrawSnakeLineX)
+        : LC_ActionDrawLineSnake(actionContext, type) {}
 
     using LC_ActionDrawLineSnake::doProcessCommand;
     using LC_ActionDrawLineSnake::onCoordinateEvent;
 
     static constexpr int distanceStatus() { return SetDistance; }
     static constexpr int startPointStatus() { return SetStartPoint; }
+    static constexpr int pointStatus() { return SetPoint; }
+    static constexpr int directionStatus() { return SetDirection; }
+    static constexpr int angleStatus() { return SetAngle; }
 };
 
 struct SnakeActionFixture {
@@ -57,15 +61,63 @@ struct SnakeActionFixture {
     LC_ActionContext m_context;
     std::unique_ptr<SnakeActionProbe> m_action;
 
-    SnakeActionFixture() {
+    explicit SnakeActionFixture(RS2::ActionType type = RS2::ActionDrawSnakeLineX) {
         m_graphic.initForNewDocument();
         m_view.setDocument(&m_graphic);
         m_context.setDocumentAndView(&m_graphic, &m_view);
-        m_action = std::make_unique<SnakeActionProbe>(&m_context);
+        m_action = std::make_unique<SnakeActionProbe>(&m_context, type);
     }
 };
 
 } // namespace
+
+TEST_CASE("Snake line leaves commands and coordinates to the dispatcher", "[snake][commands]") {
+    for (const auto type : {RS2::ActionDrawSnakeLine, RS2::ActionDrawSnakeLineX,
+                            RS2::ActionDrawSnakeLineY}) {
+        SnakeActionFixture fixture(type);
+        auto& action = *fixture.m_action;
+        action.onCoordinateEvent(action.getStatus(), false, RS_Vector{0.0, 0.0});
+
+        for (const auto status : {SnakeActionProbe::startPointStatus(),
+                                  SnakeActionProbe::pointStatus(),
+                                  SnakeActionProbe::directionStatus(),
+                                  SnakeActionProbe::distanceStatus(),
+                                  SnakeActionProbe::angleStatus()}) {
+            action.setStatus(status);
+            for (const auto* command : {"sline", "slinex", "sliney", "line", "circle",
+                                        "0,0", "@10,5", "10<45", "@10<45", "not_a_command"}) {
+                INFO("action type " << type << ", status " << status << ", command " << command);
+                CHECK_FALSE(action.doProcessCommand(status, QString::fromLatin1(command)));
+                CHECK(action.getStatus() == status);
+                CHECK(fixture.m_graphic.count() == 0);
+            }
+        }
+    }
+}
+
+TEST_CASE("Snake line accepts numeric input only in a matching input state", "[snake][commands]") {
+    SnakeActionFixture fixture;
+    auto& action = *fixture.m_action;
+    CHECK_FALSE(action.doProcessCommand(action.getStatus(), QStringLiteral("10")));
+    action.onCoordinateEvent(action.getStatus(), false, RS_Vector{0.0, 0.0});
+    REQUIRE(action.doProcessCommand(action.getStatus(), QStringLiteral("10/2")));
+    CHECK(fixture.m_graphic.count() == 1);
+
+    action.setSetAngleDirectionState();
+    CHECK_FALSE(action.doProcessCommand(action.getStatus(), QStringLiteral("line")));
+    REQUIRE(action.doProcessCommand(action.getStatus(), QStringLiteral("45")));
+    CHECK(action.getStatus() == SnakeActionProbe::distanceStatus());
+    REQUIRE(action.doProcessCommand(action.getStatus(), QStringLiteral("5")));
+    CHECK(fixture.m_graphic.count() == 2);
+
+    action.setSetPointDirectionState();
+    CHECK_FALSE(action.doProcessCommand(action.getStatus(), QStringLiteral("10")));
+    action.setStatus(SnakeActionProbe::directionStatus());
+    CHECK_FALSE(action.doProcessCommand(action.getStatus(), QStringLiteral("10")));
+    action.setStatus(SnakeActionProbe::distanceStatus());
+    CHECK_FALSE(action.doProcessCommand(action.getStatus(), QStringLiteral("10")));
+    CHECK(fixture.m_graphic.count() == 2);
+}
 
 TEST_CASE("Snake line undo and redo restore the previous direction", "[snake][undo]") {
     SnakeActionFixture fixture;
