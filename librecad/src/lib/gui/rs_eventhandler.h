@@ -99,6 +99,7 @@ public:
 	bool isValid(RS_ActionInterface* action) const;
 
     void killSelectActions();
+    void finishSnakeActions();
     void killAllActions();
 
     bool hasAction();

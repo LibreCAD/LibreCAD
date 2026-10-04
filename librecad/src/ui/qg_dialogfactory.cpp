@@ -204,7 +204,8 @@ void QG_DialogFactory::setOptionWidget(QToolBar* ow) {
 }
 
 void QG_DialogFactory::addOptionsWidget(QWidget * options){
-    optionWidget->addWidget(options);
+    auto* action = optionWidget->addWidget(options);
+    QObject::connect(options, &QObject::destroyed, action, &QObject::deleteLater);
 }
 
 

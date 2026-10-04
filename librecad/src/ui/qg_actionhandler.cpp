@@ -1082,6 +1082,15 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     }
 
 	if (a) {
+        // Explicit drawing/editing tools replace snakes; utility actions still suspend them.
+        if ((id >= RS2::ActionDrawArc && id <= RS2::ActionModifyLineGap) ||
+            (id >= RS2::ActionEditCut && id <= RS2::ActionOrderTop) ||
+            id == RS2::ActionModifyExplodeText || id == RS2::ActionModifyExplodeTextNoSelect ||
+            id == RS2::ActionBlocksInsert || id == RS2::ActionBlocksCreate ||
+            id == RS2::ActionBlocksCreateNoSelect || id == RS2::ActionBlocksExplode ||
+            id == RS2::ActionBlocksExplodeNoSelect || id == RS2::ActionLibraryInsert) {
+            view->getEventHandler()->finishSnakeActions();
+        }
         view->setCurrentAction(a);
     } else {
         // no action started (e.g. the tool is the current one already): the QAction

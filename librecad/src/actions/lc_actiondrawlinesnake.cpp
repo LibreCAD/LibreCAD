@@ -320,9 +320,16 @@ bool LC_ActionDrawLineSnake::doProceedCommand([[maybe_unused]]RS_CommandEvent *e
 }
 
 bool LC_ActionDrawLineSnake::doProcessCommandValue(RS_CommandEvent *e, const QString &c){
-    // Leave coordinate input to the event handler, not the scalar evaluator.
-    if (c.contains(',') || c.contains('<')){
-        return false;
+    // Function arguments are scalar input; only top-level separators denote coordinates.
+    int depth = 0;
+    for (const auto ch : c){
+        if (ch == '('){
+            ++depth;
+        } else if (ch == ')'){
+            --depth;
+        } else if (depth == 0 && (ch == ',' || ch == '<')){
+            return false;
+        }
     }
     bool result = true;
     switch (getStatus()) {
