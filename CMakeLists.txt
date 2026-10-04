@@ -2621,6 +2621,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/dxf_line_width_mapping_tests.cpp
         librecad/src/lib/filters/tests/dxf_layer0_declared_tests.cpp
         librecad/src/lib/filters/tests/dxf_unknown_version_tests.cpp
+        librecad/src/lib/filters/tests/lc_dxf_r2007_codepage_tests.cpp
         librecad/src/lib/filters/tests/dxf_closed_spline_tests.cpp
         librecad/src/lib/filters/tests/jww_import_tests.cpp
         librecad/src/lib/filters/tests/byte_identity_harness.cpp
@@ -2842,6 +2843,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/dxf_roundtrip_tests.cpp
         librecad/src/lib/filters/tests/dxf_string_codec_tests.cpp
         librecad/src/lib/filters/tests/entity_metadata_tests.cpp
+        librecad/src/lib/filters/tests/lc_dxf_r2007_codepage_tests.cpp
         librecad/src/lib/filters/tests/mleader_dxf_context_tests.cpp
     )
     add_executable(librecad_dxf_fast_tests

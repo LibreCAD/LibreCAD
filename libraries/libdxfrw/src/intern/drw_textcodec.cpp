@@ -94,6 +94,15 @@ void DRW_TextCodec::setVersion(const std::string &v, bool dxfFormat){
 void DRW_TextCodec::setCodePage(const std::string &c, bool dxfFormat){
     cp = correctCodePage(c);
     conv.reset();
+    if (dxfFormat && m_sourceVersionSet && version == DRW::AC1021) {
+        // R2007+ DXF text is UTF-8 whatever $DWGCODEPAGE says (LibreCAD 2.2
+        // saves a drawing opened from a CP1250 file with ANSI_1250 above
+        // UTF-8 text); cp is kept so the header round-trips.
+        if (cp == "UTF-8")
+            cp = "ANSI_1252";
+        conv.reset( new DRW_Converter(nullptr, 0) );
+        return;
+    }
     if (cp == "ANSI_874")
         conv.reset( new DRW_ConvTable(DRW_Table874, CPLENGTHCOMMON) );
     else if (cp == "ANSI_932")
