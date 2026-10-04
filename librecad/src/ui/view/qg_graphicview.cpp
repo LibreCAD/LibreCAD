@@ -1643,7 +1643,7 @@ void QG_GraphicView::setDraftMode(const bool dm) {
 void QG_GraphicView::setDraftLinesMode(const bool mode) const {
     auto* viewRenderer = dynamic_cast<LC_GraphicViewRenderer*>(getRenderer());
     if (viewRenderer != nullptr) {
-        viewRenderer->setLineWidthScaling(mode);
+        viewRenderer->setLineWidthScaling(!mode);
     }
 }
 

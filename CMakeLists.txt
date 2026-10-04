@@ -2659,6 +2659,7 @@ if (BUILD_TESTS)
         librecad/src/lib/gui/tests/lc_scrollmodel_tests.cpp
         librecad/src/lib/gui/tests/lc_graphicviewport_zoomauto_tests.cpp
         librecad/src/ui/view/tests/qg_graphicview_scroll_tests.cpp
+        librecad/src/ui/view/tests/qg_graphicview_draft_lines_tests.cpp
         librecad/src/ui/view/tests/qg_scrollbar_band_tests.cpp
         librecad/src/ui/view/tests/lc_scroll_beyond_tests.cpp
         librecad/src/main/tests/console_command_utils_tests.cpp
@@ -2944,6 +2945,9 @@ if (BUILD_TESTS)
     add_librecad_filter_micro_test(
         librecad_spline_command_tests
         librecad/src/lib/creation/tests/lc_action_draw_spline_tests.cpp)
+    add_librecad_filter_micro_test(
+        librecad_draft_lines_tests
+        librecad/src/ui/view/tests/qg_graphicview_draft_lines_tests.cpp)
     # Isolate GUI tests from the text tests' static offscreen bootstraps.
     add_librecad_filter_micro_test(
         librecad_dock_layout_tests
