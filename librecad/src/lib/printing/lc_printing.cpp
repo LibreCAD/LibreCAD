@@ -159,6 +159,7 @@ bool LC_Printing::printGraphic(QPrinter& printer, RS_Graphic& graphic, const RS2
 
     LC_PlotSettings* ps = graphic.getPlotSettings();
     double scale = ps->getPaperScale();
+    renderer.setPaperScale(scale);
     double factor = f * scale;
 
     //RS_DEBUG->print(RS_Debug::D_ERROR, "PaperSize=(%d, %d)\n",printer.widthMM(), printer.heightMM());
