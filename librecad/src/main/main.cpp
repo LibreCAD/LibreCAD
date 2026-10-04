@@ -73,6 +73,9 @@
 #define LC_VERSION "2.2.2-alpha"
 #endif
 
+// The application directory name is stringified, so a quoted value (#3003)
+// would put the quotes into every resource path.
+static_assert(XSTR(QC_APPDIR)[0] != '"', "define QC_APPDIR without quotes");
 
 // fixme - sand - files - complete refactoring
 namespace
