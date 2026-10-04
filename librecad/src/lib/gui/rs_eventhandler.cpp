@@ -583,6 +583,21 @@ void RS_EventHandler::killSelectActions() {
 
 
 
+void RS_EventHandler::finishSnakeActions() {
+    bool replacingSnake = false;
+    for (const auto& action : currentActions) {
+        if (isActive(action) && action->rtti() == RS2::ActionDrawSnakeLine) {
+            replacingSnake = true;
+        }
+        // Helpers above the replaced snake must not retain its predecessor pointer.
+        if (replacingSnake && isActive(action)) {
+            action->setPredecessor(nullptr);
+            action->finish();
+            unlinkQAction(action.get());
+        }
+    }
+}
+
 /**
  * Kills all running actions. Called when a window is closed.
  */
