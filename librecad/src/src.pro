@@ -85,7 +85,7 @@ unix {
         TARGET = librecad
         RC_FILE = ../res/images/librecad.icns
         contains(DISABLE_POSTSCRIPT, false) {
-            QMAKE_POST_LINK = cd $$_PRO_FILE_PWD_/../.. && scripts/postprocess-unix.sh
+            QMAKE_POST_LINK = cd $$_PRO_FILE_PWD_/../.. && scripts/postprocess-unix.sh $$[QT_INSTALL_BINS]
         }
         DEFINES -=  QT_NO_SHORTCUT
     }
