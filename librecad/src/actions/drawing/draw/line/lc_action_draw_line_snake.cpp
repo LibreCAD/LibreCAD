@@ -415,10 +415,12 @@ bool LC_ActionDrawLineSnake::doProceedCommand([[maybe_unused]] int status, const
 }
 
 bool LC_ActionDrawLineSnake::doProcessCommandValue(const int status, const QString& c) {
-    bool result = false;
+    // Leave coordinate input to the event handler, not the scalar evaluator.
+    if (c.contains(',') || c.contains('<')) {
+        return false;
+    }
+    bool result = true;
     switch (status) {
-        case SetDirection:
-            break;
         case SetDistance: {
             // processing entered distance value
             bool ok = false;
@@ -431,7 +433,6 @@ bool LC_ActionDrawLineSnake::doProcessCommandValue(const int status, const QStri
                         const auto ucsEndPoint = RS_Vector(ucsStart.x + distance, ucsStart.y);
                         m_actionData->data.endpoint = toWorld(ucsEndPoint);
                         completeLineSegment(false);
-                        result = true;
                         break;
                     }
                     case DIRECTION_Y: {
@@ -442,19 +443,21 @@ bool LC_ActionDrawLineSnake::doProcessCommandValue(const int status, const QStri
                         //                        pPoints->data.endpoint.x = pPoints->data.startpoint.x;
                         //                        pPoints->data.endpoint.y = pPoints->data.startpoint.y + distance;
                         completeLineSegment(false);
-                        result = true;
                         break;
                     }
                     case DIRECTION_ANGLE: {
                         // the value is for coordinates adjustment in direction specified by angle
                         calculateAngleSegment(distance);
                         completeLineSegment(false);
-                        result = true;
                         break;
                     }
                     default:
+                        result = false;
                         break;
                 }
+            }
+            else {
+                result = false;
             }
             break;
         }
@@ -465,6 +468,7 @@ bool LC_ActionDrawLineSnake::doProcessCommandValue(const int status, const QStri
             break;
         }
         default:
+            result = false;
             break;
     }
     return result;
