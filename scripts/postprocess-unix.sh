@@ -10,6 +10,11 @@ TSDIRPI="${PIDIR}/ts"
 SPTDIR="${LCDIR}/support"
 DESKTOPDIR="${THISDIR}/desktop"
 LRELEASE="lrelease"
+# Qt's own tool when qmake passes its bin directory: distributions name the
+# one on PATH differently (lrelease-qt6, lrelease6) or not at all.
+[ -x "${1}/lrelease" ] && LRELEASE="${1}/lrelease"
+command -v "${LRELEASE}" >/dev/null 2>&1 ||
+        echo "WARNING: lrelease not found - translations will not be generated" >&2
 
 cd "${THISDIR}"
 
