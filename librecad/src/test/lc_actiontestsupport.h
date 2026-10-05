@@ -72,8 +72,12 @@ public:
                 [[maybe_unused]] bool immediately = false) override {}
     void adjustOffsetControls() override {}
     void adjustZoomControls() override {}
-    void setMouseCursor([[maybe_unused]] RS2::CursorType cursor) override {}
+    void setMouseCursor(RS2::CursorType cursor) override { m_mouseCursor = cursor; }
+    RS2::CursorType getMouseCursor() const { return m_mouseCursor; }
     void updateGridStatusWidget([[maybe_unused]] QString status) override {}
+
+private:
+    RS2::CursorType m_mouseCursor = RS2::ArrowCursor;
 };
 
 inline LC_MouseEvent eventAt(const double x, const double y) {

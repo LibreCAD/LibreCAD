@@ -71,6 +71,7 @@ class DualProbe final : public LC_ActionDrawDual {
 public:
     using LC_ActionDrawDual::LC_ActionDrawDual;
     using LC_ActionPreSelectionAwareBase::m_selectedEntities;
+    using LC_ActionPreSelectionAwareBase::m_selectionComplete;
 };
 
 } // namespace
@@ -99,6 +100,7 @@ TEST_CASE("Draw Dual of a circle about an outside point adds both hyperbola bran
 
     DualProbe action(&f.m_context);
     action.m_selectedEntities = {circle};
+    action.m_selectionComplete = true;
     action.onCoordinateEvent(DualProbe::ChooseCenter, false, RS_Vector{20, 0});
 
     int hyperbolas = 0;
