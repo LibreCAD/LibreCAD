@@ -4,9 +4,11 @@ include_directories(
 )
 
 if(APPLE)
-    set(LIBRECAD_PLUGIN_INSTALL_DIR CACHE PATH "bin/LibreCAD.app/Contents/PlugIns/LibreCAD")
+    set(LIBRECAD_PLUGIN_INSTALL_DIR "bin/LibreCAD.app/Contents/PlugIns/LibreCAD"
+        CACHE STRING "Plugin destination, relative to CMAKE_INSTALL_PREFIX or absolute")
 else()
-    set(LIBRECAD_PLUGIN_INSTALL_DIR CACHE PATH "bin/resources/plugins")
+    set(LIBRECAD_PLUGIN_INSTALL_DIR "bin/resources/plugins"
+        CACHE STRING "Plugin destination, relative to CMAKE_INSTALL_PREFIX or absolute")
 endif()
 
 set(PLUGIN_HEADERS

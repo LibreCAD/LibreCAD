@@ -106,6 +106,15 @@ LibreCAD can natively import ESRI Shapefiles (`.shp`/`.shx`/`.dbf`), built with 
 
 More information: [Build from source](https://github.com/LibreCAD/LibreCAD/wiki/Build-from-source)
 
+### Plugin Installation
+
+CMake accepts `-DLIBRECAD_PLUGIN_INSTALL_DIR=lib/librecad/plugins` to override
+the plugin installation directory. Relative destinations use `CMAKE_INSTALL_PREFIX`;
+absolute destinations are also accepted. This option does not change runtime
+plugin discovery: use an existing search location, such as `<prefix>/lib/librecad/plugins`
+when the executable is installed in `<prefix>/bin` on Linux. macOS packaging
+expects plugins in `LibreCAD.app/Contents/PlugIns/LibreCAD`.
+
 ### Building Unit Tests
 
 To build unit tests (e.g., for `rs_math.cpp`), enable the `BUILD_TESTS` flag:
