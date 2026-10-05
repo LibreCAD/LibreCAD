@@ -2419,7 +2419,38 @@ set(TS_FILES
 )
 
 # Use qt_add_translations normally, the language warnings are harmless
-qt_add_translations (librecad TS_FILE_DIR ${TS_DIR} TS_FILES ${TS_FILES})
+qt_add_translations (librecad TS_FILE_DIR ${TS_DIR} TS_FILES ${TS_FILES}
+	QM_FILES_OUTPUT_VARIABLE QM_FILES)
+install(FILES ${QM_FILES}
+    DESTINATION "share/librecad/qm"
+)
+
+install(DIRECTORY librecad/support/fonts/
+    DESTINATION "share/librecad/fonts"
+    FILES_MATCHING PATTERN "*"
+)
+
+install(DIRECTORY librecad/support/patterns/
+    DESTINATION "share/librecad/patterns"
+    FILES_MATCHING PATTERN "*"
+)
+
+install(FILES "desktop/librecad.1"
+    DESTINATION "share/man/man1"
+)
+
+install(FILES "desktop/librecad.desktop"
+    DESTINATION "share/applications"
+)
+
+install(FILES "librecad/res/images/librecad.png"
+    DESTINATION "share/pixmaps"
+)
+
+install(FILES "desktop/librecad.sharedmimeinfo"
+    DESTINATION "share/mime/packages"
+    RENAME "librecad.xml"
+)
 
 # Optional ttf2lff
 if (FREETYPE_FOUND AND NOT WIN32)
@@ -2430,6 +2461,7 @@ if (FREETYPE_FOUND AND NOT WIN32)
                                 ${FREETYPE_INCLUDE_DIRS}
                                 ${SHARED_INCLUDES}
     )
+    install (TARGETS ttf2lff RUNTIME DESTINATION bin)
 endif ()
 
 add_subdirectory (libraries/lciconengine)
