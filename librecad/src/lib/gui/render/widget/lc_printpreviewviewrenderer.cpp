@@ -231,12 +231,8 @@ void LC_PrintPreviewViewRenderer::setPenForPrintingEntity(RS_Painter *painter, R
         if (width >0) {
             double wf = 1.0; // Width factor.
 
-            if (m_paperScale > RS_TOLERANCE) {
-                if (m_scaleLineWidth) {
-                    wf = m_defaultWidthFactor;
-                } else {
-                    wf = 1.0 / m_paperScale;
-                }
+            if (m_paperScale > RS_TOLERANCE && !m_scaleLineWidth) {
+                wf = 1.0 / m_paperScale;
             }
             double screenWidth = painter->toGuiDX(width * m_unitFactor100 * wf);
 
