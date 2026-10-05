@@ -65,7 +65,9 @@ namespace {
         const auto loopCopy = std::make_shared<RS_EntityContainer>(nullptr, true);
         for (const RS_Entity* e : *cont) {
             if (e && !e->isContainer()) {
-                loopCopy->addEntity(e->clone()); // Clone atomics for independent ownership
+                auto* cloned = e->clone();
+                cloned->setParent(loopCopy.get());
+                loopCopy->addEntity(cloned);
             }
         }
         LC_LoopUtils::LC_Loops lc(loopCopy, true);
@@ -219,6 +221,7 @@ std::vector<std::unique_ptr<RS_EntityContainer>> LoopExtractor::extract()const {
     RS_Entity* first = findFirst();
     if (first) {
       RS_Entity* cloned_first = first->clone();
+      cloned_first->setParent(m_loop.get());
       m_loop->addEntity(cloned_first);
       m_data->processed[first] = true;
       m_data->current = cloned_first;
@@ -250,6 +253,7 @@ std::vector<std::unique_ptr<RS_EntityContainer>> LoopExtractor::extract()const {
           auto new_loop = std::make_unique<RS_EntityContainer>();
           for (int i = static_cast<int>(m_loop->count()) - 1; i >= 0; --i) {
             RS_Entity* e = m_loop->entityAt(static_cast<unsigned>(i))->clone();
+            e->setParent(new_loop.get());
             e->revertDirection();
             new_loop->addEntity(e);
           }
@@ -516,6 +520,7 @@ bool LoopExtractor::findNext() const {
 
   if (next) {
     RS_Entity* cloned = next->clone();
+    cloned->setParent(m_loop.get());
     m_loop->addEntity(cloned);
     m_data->processed[next] = true;
     m_data->unprocessed.erase(std::remove(m_data->unprocessed.begin(), m_data->unprocessed.end(), next), m_data->unprocessed.end());
