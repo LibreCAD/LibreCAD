@@ -45,6 +45,7 @@ void LC_ActionDrawDual::onSelectionCompleted([[maybe_unused]] bool singleEntity,
     // picking it. The base class would trigger here, before a center exists.
     setSelectionComplete(isAllowTriggerOnEmptySelection(), fromInit);
     updateActionPrompt();
+    updateMouseCursor();
 }
 
 bool LC_ActionDrawDual::isAllowTriggerOnEmptySelection() {

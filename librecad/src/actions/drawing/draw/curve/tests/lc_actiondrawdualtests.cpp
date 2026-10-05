@@ -17,6 +17,7 @@
 // nothing to dualize and finished before a center could be clicked.
 
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/generators/catch_generators.hpp>
 
 #include <memory>
 
@@ -126,6 +127,7 @@ TEST_CASE("Draw Dual started on a selection runs until its center is typed", "[a
     CHECK(f.start());
     CHECK(f.m_action->m_selectionComplete);
     CHECK(f.isCurrent());
+    CHECK(f.m_view.getMouseCursor() == RS2::CadCursor);
     CHECK(f.hyperbolas() == 0);
 
     f.type(QStringLiteral("20,0"));
@@ -162,6 +164,28 @@ TEST_CASE("Draw Dual stays in selection when nothing is selected", "[actions][du
     CHECK_FALSE(f.m_graphic.hasSelection());
     CHECK_FALSE(f.m_action->m_selectionComplete);
     CHECK_FALSE(f.m_action->isFinished());
+    CHECK(f.m_view.getMouseCursor() == RS2::SelectCursor);
+}
+
+TEST_CASE("Draw Dual switches to the center-picking cursor after selection", "[actions][dual]") {
+    DualFixture f;
+    REQUIRE(f.start());
+    CHECK(f.m_view.getMouseCursor() == RS2::SelectCursor);
+
+    SECTION("keyboard completion") {
+        const auto key = GENERATE(Qt::Key_Return, Qt::Key_Enter);
+        f.click(5.0, 0.0);
+        QKeyEvent event(QEvent::KeyPress, key, Qt::NoModifier);
+        f.m_view.keyPressEvent(&event);
+    }
+    SECTION("Ctrl-click completion") {
+        f.click(5.0, 0.0, true);
+    }
+
+    REQUIRE(f.m_action->m_selectionComplete);
+    CHECK(f.isCurrent());
+    CHECK(f.m_view.getMouseCursor() == RS2::CadCursor);
+    CHECK(f.hyperbolas() == 0);
 }
 
 TEST_CASE("Draw Dual reports its own action type", "[actions][dual]") {
