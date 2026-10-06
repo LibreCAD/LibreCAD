@@ -115,6 +115,11 @@ plugin discovery: use an existing search location, such as `<prefix>/lib/libreca
 when the executable is installed in `<prefix>/bin` on Linux. macOS packaging
 expects plugins in `LibreCAD.app/Contents/PlugIns/LibreCAD`.
 
+With qmake, pass an absolute destination, for example
+`qmake6 librecad.pro "LIBRECAD_PLUGIN_INSTALL_DIR=/usr/lib/librecad/plugins"`.
+This enables plugin installation with `make -C plugins install` without changing
+the build-output directories. Omitting the variable keeps the existing behavior.
+
 ### Building Unit Tests
 
 To build unit tests (e.g., for `rs_math.cpp`), enable the `BUILD_TESTS` flag:
