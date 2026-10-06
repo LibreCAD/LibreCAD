@@ -120,6 +120,10 @@ With qmake, pass an absolute destination, for example
 This enables plugin installation with `make -C plugins install` without changing
 the build-output directories. Omitting the variable keeps the existing behavior.
 
+Pixi CI runs `pixi run check-plugin-install`, reusing the compiled sample plugin
+to check default and custom destinations. qmake checks run on Linux and macOS;
+Windows CI continues using CMake.
+
 ### Building Unit Tests
 
 To build unit tests (e.g., for `rs_math.cpp`), enable the `BUILD_TESTS` flag:
