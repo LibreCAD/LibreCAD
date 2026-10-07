@@ -498,17 +498,18 @@ void RS_MText::flushBidiLine(LC_TextLine &oneLine,
            plainText, direction,
            m_data.legacyRtlLayout && direction == Qt::RightToLeft)) {
     const RS_Vector clusterOrigin = letterPosition;
-    for (int logIdx = cluster.start; logIdx < cluster.start + cluster.length;
-         ++logIdx) {
+    for (int offset = 0; offset < cluster.length; ++offset) {
+      const int logIdx = cluster.start + offset;
       const auto &seg = segments[logIdx];
       switch (seg.kind) {
       case LC_BidiSegment::Char: {
         char32_t scalar = seg.codepoint.unicode();
         if (seg.codepoint.isHighSurrogate() &&
-            logIdx + 1 < cluster.start + cluster.length &&
+            offset + 1 < cluster.length &&
             segments[logIdx + 1].codepoint.isLowSurrogate()) {
           scalar = QChar::surrogateToUcs4(
-              seg.codepoint, segments[++logIdx].codepoint);
+              seg.codepoint, segments[logIdx + 1].codepoint);
+          ++offset;
         }
         const auto category = QChar::category(scalar);
         if (category == QChar::Other_Format ||

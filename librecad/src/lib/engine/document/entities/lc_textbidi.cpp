@@ -105,8 +105,8 @@ std::vector<int> visualOrder(const QString &text,
   std::vector<int> order;
   order.reserve(text.size());
   for (const auto &cluster : visualClusters(text, direction)) {
-    for (int i = cluster.start; i < cluster.start + cluster.length; ++i) {
-      order.push_back(i);
+    for (int offset = 0; offset < cluster.length; ++offset) {
+      order.push_back(cluster.start + offset);
     }
   }
   return order;

@@ -275,12 +275,14 @@ void RS_Text::update() {
               ? Qt::LeftToRight : Qt::LayoutDirectionAuto;
     for (const auto &cluster : lc::textbidi::visualClusters(m_data.text, direction)) {
         const RS_Vector clusterOrigin = letterPos;
-        for (int i = cluster.start; i < cluster.start + cluster.length; ++i) {
+        for (int offset = 0; offset < cluster.length; ++offset) {
+            const int i = cluster.start + offset;
             const QChar ch = m_data.text.at(i);
             char32_t scalar = ch.unicode();
-            if (ch.isHighSurrogate() && i + 1 < cluster.start + cluster.length &&
+            if (ch.isHighSurrogate() && offset + 1 < cluster.length &&
                 m_data.text.at(i + 1).isLowSurrogate()) {
-                scalar = QChar::surrogateToUcs4(ch, m_data.text.at(++i));
+                scalar = QChar::surrogateToUcs4(ch, m_data.text.at(i + 1));
+                ++offset;
             }
             const auto category = QChar::category(scalar);
             if (category == QChar::Other_Format ||

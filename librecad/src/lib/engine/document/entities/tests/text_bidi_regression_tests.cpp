@@ -217,6 +217,41 @@ TEST_CASE("Hebrew and decimal labels render in Unicode visual order",
   CHECK(glyphNames(text) == expected);
 }
 
+TEST_CASE("TEXT and MTEXT consume complete UTF-16 clusters",
+          "[text][bidi]") {
+  SourceFonts fonts;
+  const char32_t scalar = 0x1f600;
+  const auto pair = QString::fromUcs4(&scalar, 1);
+  const QString values[] = {
+      "A" + pair + "B", "A" + pair, "A" + QChar(0xd83d),
+      "A" + QChar(0xde00), "A" + pair + QChar(0x0301) + "B"};
+  for (const QString &value : values) {
+    for (bool rtl : {false, true}) {
+      INFO(value.toStdString());
+      INFO(rtl);
+      const auto glyphCount = value.toUcs4().size();
+      RS_TextData data;
+      data.text = value;
+      data.style = "iso3098";
+      data.drawingDirection = rtl ? RS_TextData::RightToLeft
+                                 : RS_TextData::LeftToRight;
+      data.updateMode = RS2::Update;
+      RS_Text text(nullptr, data);
+      CHECK(text.count() == glyphCount);
+      CHECK(text.getText() == value);
+
+      auto multilineData = mtextData(value);
+      multilineData.drawingDirection = rtl ? RS_MTextData::RightToLeft
+                                          : RS_MTextData::LeftToRight;
+      RS_MText mtext(nullptr, multilineData);
+      auto *line = dynamic_cast<RS_EntityContainer *>(mtext.entityAt(0));
+      REQUIRE(line);
+      CHECK(line->count() == glyphCount);
+      CHECK(mtext.getText() == value);
+    }
+  }
+}
+
 TEST_CASE("Supplementary controls and marks do not advance LFF geometry",
           "[text][bidi]") {
   SourceFonts fonts;
