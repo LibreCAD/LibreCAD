@@ -14,6 +14,8 @@ configure = { cmd = [ "cmake", "-G", "Ninja", "-B", "build",
 build = {cmd = ["ninja", "-C", "build", "install"], depends-on=["configure"]}
 check-plugin-install = {cmd = ["cmake", "-D", "LIBRECAD_BUILD_DIR=build",
                               "-P", "scripts/check-plugin-install.cmake"], depends-on=["build"]}
+check-resource-install = {cmd = ["cmake", "-D", "LIBRECAD_BUILD_DIR=build",
+                                "-P", "scripts/check-resource-install.cmake"], depends-on=["check-plugin-install"]}
 
 [dependencies]
 qt6-main = ">=6.8.1,<7"
