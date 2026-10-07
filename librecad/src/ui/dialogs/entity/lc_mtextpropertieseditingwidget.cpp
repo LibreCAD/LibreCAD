@@ -30,11 +30,8 @@
 #include <QTextDocument>
 #include <QTextOption>
 
-#include "lc_textbidi.h"
 #include "rs_mtext.h"
 #include "ui_lc_mtextpropertieseditingwidget.h"
-
-using lc::textbidi::mirrorByLine;
 
 LC_MTextPropertiesEditingWidget::LC_MTextPropertiesEditingWidget(
     QWidget *parent)
@@ -73,8 +70,7 @@ void LC_MTextPropertiesEditingWidget::setEntity(RS_Entity *entity) {
   // entity. We do not need to block the QLineEdits — editingFinished only
   // fires on user interaction.
   QSignalBlocker textBlocker(ui->teText);
-  ui->teText->setPlainText(ltr ? m_entity->getText()
-                               : mirrorByLine(m_entity->getText()));
+  ui->teText->setPlainText(m_entity->getText());
 
   toUIValue(m_entity->getHeight(), ui->leHeight);
   toUIValue(m_entity->getWidth(), ui->leWidth);
@@ -90,8 +86,7 @@ void LC_MTextPropertiesEditingWidget::setEntity(RS_Entity *entity) {
 }
 
 void LC_MTextPropertiesEditingWidget::applyDirectionToEditor() {
-  // Mirror QG_DlgMText::layoutDirectionChanged so the editor's bidi matches
-  // the rendered output (both go through Qt's UAX#9 implementation).
+  // Set the paragraph direction without changing logical text.
   const bool ltr = ui->rbLeftToRight->isChecked();
   const Qt::LayoutDirection direction = ltr ? Qt::LeftToRight : Qt::RightToLeft;
   ui->teText->setLayoutDirection(direction);
@@ -125,8 +120,7 @@ void LC_MTextPropertiesEditingWidget::onTextChanged() {
   if (m_entity == nullptr)
     return;
   const QString widgetText = ui->teText->toPlainText();
-  const bool ltr = ui->rbLeftToRight->isChecked();
-  m_entity->setText(ltr ? widgetText : mirrorByLine(widgetText));
+  m_entity->setText(widgetText);
 }
 
 void LC_MTextPropertiesEditingWidget::onHeightEditingFinished() {
@@ -156,53 +150,9 @@ void LC_MTextPropertiesEditingWidget::onStyleEditingFinished() {
 }
 
 void LC_MTextPropertiesEditingWidget::onDirectionToggled(bool checked) {
-  // Each user click fires twice (one button goes off, the other comes on).
-  // Skip the off-edge so we mirror the buffer exactly once per actual flip.
   if (!checked)
     return;
-
   const bool ltr = ui->rbLeftToRight->isChecked();
-
-  // Capture cursor (anchor + position) so we can flip the column index
-  // within its block after the mirror. Block structure is preserved by
-  // per-line mirroring; only the column flips.
-  auto capture = [](const QTextDocument *doc, int pos) {
-    const QTextBlock block = doc->findBlock(pos);
-    const int blockNum = block.blockNumber();
-    int blockLen = block.length();
-    if (block.next().isValid())
-      --blockLen;
-    return std::tuple<int, int, int>{blockNum, pos - block.position(),
-                                     blockLen};
-  };
-  const QTextCursor oldCursor = ui->teText->textCursor();
-  const auto anchorInfo = capture(ui->teText->document(), oldCursor.anchor());
-  const auto posInfo = capture(ui->teText->document(), oldCursor.position());
-
-  // Flip the displayed buffer so the same logical text now reads in the
-  // newly selected direction. The entity's text is unchanged — only the
-  // widget's visual layout flips.
-  {
-    QSignalBlocker textBlocker(ui->teText);
-    const QString current = ui->teText->toPlainText();
-    ui->teText->setPlainText(mirrorByLine(current));
-  }
-
-  auto restore = [](const QTextDocument *doc,
-                    const std::tuple<int, int, int> &info) -> int {
-    const auto [blockNum, col, blockLen] = info;
-    const QTextBlock block = doc->findBlockByNumber(blockNum);
-    if (!block.isValid())
-      return 0;
-    return block.position() + (blockLen - col);
-  };
-  {
-    QTextCursor c = ui->teText->textCursor();
-    c.setPosition(restore(ui->teText->document(), anchorInfo));
-    c.setPosition(restore(ui->teText->document(), posInfo),
-                  QTextCursor::KeepAnchor);
-    ui->teText->setTextCursor(c);
-  }
 
   if (m_entity != nullptr) {
     m_entity->setDrawingDirection(ltr ? RS_MTextData::LeftToRight

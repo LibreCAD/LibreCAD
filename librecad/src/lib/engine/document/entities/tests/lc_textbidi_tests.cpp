@@ -17,6 +17,7 @@
 **
 **********************************************************************/
 
+#include <algorithm>
 #include <catch2/catch_test_macros.hpp>
 
 #include <QChar>
@@ -116,4 +117,67 @@ TEST_CASE("mirrorByLine tolerates lone surrogates", "[textbidi]") {
   REQUIRE(result.at(2) == QChar('a'));
   // Round-trip still holds.
   REQUIRE(mirrorByLine(result) == lonely);
+}
+
+namespace {
+QString visualText(const QString &text, Qt::LayoutDirection direction) {
+  QString visual;
+  for (const auto &cluster : lc::textbidi::visualClusters(text, direction)) {
+    for (int i = cluster.start; i < cluster.start + cluster.length; ++i) {
+      const auto ch = text.at(i);
+      if (ch.category() != QChar::Other_Format) {
+        visual += cluster.rightToLeft ? ch.mirroredChar() : ch;
+      }
+    }
+  }
+  return visual;
+}
+} // namespace
+
+TEST_CASE("Bidi ordering is font-independent and preserves numeric runs",
+          "[textbidi][issue1859]") {
+  const auto hebrew = QString::fromUtf8(u8"שלום");
+  const auto reversed = mirrorByLine(hebrew);
+  for (const auto direction : {Qt::RightToLeft, Qt::LayoutDirectionAuto}) {
+    for (const QString &number :
+         {QStringLiteral("123"), QStringLiteral("12.5"),
+          QStringLiteral("1,234.56"), QStringLiteral("12/34"),
+          QStringLiteral("(123)"), QStringLiteral("Main 123")}) {
+      CHECK(visualText(hebrew + " " + number, direction) ==
+            number + " " + reversed);
+    }
+    CHECK(visualText(hebrew + " " + QChar(0x2066) + "Main 12.5" + QChar(0x2069),
+                     direction) == "Main 12.5 " + reversed);
+  }
+  CHECK(visualText("Main 123", Qt::RightToLeft) == "Main 123");
+  CHECK(visualText(QString::fromUtf8(u8"שלום\nMain 123"),
+                   Qt::LayoutDirectionAuto) == reversed + "\nMain 123");
+  CHECK(visualText(QString::fromUtf8(u8"שלום\r\nMain 123"),
+                   Qt::LayoutDirectionAuto) == reversed + "\r\nMain 123");
+  CHECK(visualText(QString::fromUtf8(u8"שלום") + QChar(0x2029) + "Main 123",
+                   Qt::LayoutDirectionAuto) ==
+        reversed + QChar(0x2029) + "Main 123");
+}
+
+TEST_CASE("Bidi ordering keeps graphemes and malformed UTF-16 intact",
+          "[textbidi]") {
+  const QString marked = QString(QChar(0x05e9)) + QChar(0x05b0) + " 123";
+  const auto clusters = lc::textbidi::visualClusters(marked, Qt::RightToLeft);
+  REQUIRE(!clusters.empty());
+  CHECK(clusters.back().start == 0);
+  CHECK(clusters.back().length == 2);
+  const QString pair = QString(QChar(0xd83d)) + QChar(0xde00);
+  const auto supplementary =
+      lc::textbidi::visualClusters(pair, Qt::RightToLeft);
+  REQUIRE(supplementary.size() == 1);
+  CHECK(supplementary.front().length == 2);
+  for (const auto &text : {QString(), QString(QChar(0xd83d)),
+                           QString(QChar(0xde00)), QString(pair + marked)}) {
+    auto indices = lc::textbidi::visualOrder(text, Qt::RightToLeft);
+    std::sort(indices.begin(), indices.end());
+    REQUIRE(indices.size() == text.size());
+    for (int i = 0; i < text.size(); ++i) {
+      CHECK(indices[i] == i);
+    }
+  }
 }

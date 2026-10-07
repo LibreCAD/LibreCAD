@@ -115,6 +115,8 @@ struct RS_MTextData {
     HAlign halign = HALeft;
     /** Drawing direction */
     MTextDrawingDirection drawingDirection = LeftToRight;
+    // Imported LibreCad RTL marker 1 retains the historical reversal layout.
+    bool legacyRtlLayout = false;
     /** Line spacing style */
     MTextLineSpacingStyle lineSpacingStyle = AtLeast;
     /** Line spacing factor */
@@ -168,7 +170,8 @@ public:
    */
   static std::vector<int>
   computeBidiVisualOrder(const QString &text,
-                         Qt::LayoutDirection baseDirection);int getNumberOfLines() const;
+                         Qt::LayoutDirection baseDirection);
+    int getNumberOfLines() const;
 
     RS_Vector getInsertionPoint() const {
         return m_data.insertionPoint;
@@ -335,7 +338,7 @@ protected:
     };
 
     double updateAddLine(LC_TextLine* textLine, int lineCounter);
-    void addLetter(LC_TextLine& oneLine, QChar letter, RS_Font& font, const RS_Vector& letterSpace, RS_Vector& letterPosition);
+    void addLetter(LC_TextLine& oneLine, QString letter, RS_Font& font, const RS_Vector& letterSpace, RS_Vector& letterPosition);
     void flushBidiLine(LC_TextLine &oneLine,
                        std::vector<LC_BidiSegment> &segments,
                        const RS_Vector &letterSpace, RS_Vector &letterPosition);

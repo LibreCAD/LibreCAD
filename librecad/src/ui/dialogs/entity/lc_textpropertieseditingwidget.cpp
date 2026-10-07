@@ -24,7 +24,6 @@
 
 #include "lc_textpropertieseditingwidget.h"
 
-#include "lc_textbidi.h"
 #include "rs_text.h"
 #include "ui_lc_textpropertieseditingwidget.h"
 
@@ -35,8 +34,6 @@ namespace {
 constexpr int alignmentCodeFromIndex(int index) { return index + 1; }
 constexpr int alignmentIndexFromCode(int code) { return code - 1; }
 } // namespace
-
-using lc::textbidi::mirrorByLine;
 
 LC_TextPropertiesEditingWidget::LC_TextPropertiesEditingWidget(QWidget *parent)
     : LC_EntityPropertiesEditorWidget(parent),
@@ -85,11 +82,8 @@ void LC_TextPropertiesEditingWidget::setEntity(RS_Entity *entity) {
   m_entity = static_cast<RS_Text *>(entity);
 
   const auto direction = m_entity->getDrawingDirection();
-  const bool mirror = (direction == RS_TextData::RightToLeft);
-
   QSignalBlocker textBlocker(ui->leText);
-  ui->leText->setText(mirror ? mirrorByLine(m_entity->getText())
-                             : m_entity->getText());
+  ui->leText->setText(m_entity->getText());
 
   toUIValue(m_entity->getHeight(), ui->leHeight);
   toUIValue(m_entity->getWidthRel(), ui->leWidthRel);
@@ -138,8 +132,7 @@ void LC_TextPropertiesEditingWidget::onTextEditingFinished() {
   if (m_entity == nullptr)
     return;
   const QString widgetText = ui->leText->text();
-  const bool mirror = ui->rbRightToLeft->isChecked();
-  m_entity->setText(mirror ? mirrorByLine(widgetText) : widgetText);
+  m_entity->setText(widgetText);
 }
 
 void LC_TextPropertiesEditingWidget::onHeightEditingFinished() {
@@ -173,32 +166,8 @@ void LC_TextPropertiesEditingWidget::onAlignmentChanged(int index) {
 }
 
 void LC_TextPropertiesEditingWidget::onDirectionToggled(bool checked) {
-  // Each user click fires twice across the radio group (one off, one on).
-  // Skip the off-edge so we mirror the buffer at most once per actual flip.
   if (!checked)
     return;
-
-  // The line edit's current layoutDirection reflects the previously-applied
-  // direction (set by applyDirectionToEditor on the last toggle). If the
-  // mirror requirement changed (RTL ↔ non-RTL), flip the visible buffer so
-  // the same logical string reads in the new direction.
-  const bool mirrorPrev = ui->leText->layoutDirection() == Qt::RightToLeft;
-  const bool mirrorNow = ui->rbRightToLeft->isChecked();
-  if (mirrorPrev != mirrorNow) {
-    QSignalBlocker textBlocker(ui->leText);
-    const int len = ui->leText->text().size();
-    const int oldStart = ui->leText->selectionStart();
-    const int oldLen = ui->leText->selectedText().size();
-    const int oldCursor = ui->leText->cursorPosition();
-    ui->leText->setText(mirrorByLine(ui->leText->text()));
-    // Flip column for cursor and (if any) selection across the buffer.
-    if (oldStart >= 0) {
-      const int newStart = len - (oldStart + oldLen);
-      ui->leText->setSelection(newStart, oldLen);
-    } else {
-      ui->leText->setCursorPosition(len - oldCursor);
-    }
-  }
 
   if (m_entity != nullptr) {
     if (ui->rbLeftToRight->isChecked()) {

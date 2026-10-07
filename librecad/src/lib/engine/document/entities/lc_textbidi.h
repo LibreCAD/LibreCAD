@@ -20,26 +20,25 @@
 #ifndef LC_TEXTBIDI_H
 #define LC_TEXTBIDI_H
 
-class QString;
+#include <QString>
+#include <Qt>
+#include <vector>
 
 namespace lc::textbidi {
 
-/**
- * Reverse each line of @p input by code point, keeping surrogate pairs
- * together. Lines (separated by '\n') are mirrored independently; line
- * order is preserved.
- *
- * Used to translate between an RS_MText / RS_Text logical-order text field
- * and the editor's visually-mirrored display when drawingDirection ==
- * RightToLeft. AutoCAD's drawingDirection is positional, not Unicode
- * bidi — UAX#9 leaves EN digits direction-immune, so only an explicit
- * mirror makes pure-digit strings like "1234" visibly flip on toggle.
- *
- * Involutive: mirrorByLine(mirrorByLine(s)) == s.
- *
- * Single-line input is supported transparently — without a newline the
- * function reduces to a whole-string mirror.
- */
+struct Cluster {
+    int start;
+    int length;
+    bool rightToLeft;
+};
+
+// Font-independent visual order; callers retain their own font metrics.
+std::vector<Cluster> visualClusters(const QString &text,
+                                    Qt::LayoutDirection direction,
+                                    bool legacyReversed = false);
+std::vector<int> visualOrder(const QString &text, Qt::LayoutDirection direction);
+
+// Kept for explicit legacy reversal, never for logical-order text editors.
 QString mirrorByLine(const QString &input);
 
 } // namespace lc::textbidi

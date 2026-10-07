@@ -129,6 +129,49 @@
 #endif // DWGSUPPORT
 
 namespace {
+constexpr std::int32_t kLegacyRtlLayout = 1;
+constexpr std::int32_t kLogicalRtlLayout = 2;
+
+bool isLibreCadApp(const std::shared_ptr<DRW_Variant> &tag) {
+  return tag && tag->code() == 1001 && tag->type() == DRW_Variant::STRING &&
+         tag->content.s && *tag->content.s == "LibreCad";
+}
+
+void setMTextRtlMarker(DRW_Text &text, std::int32_t layout) {
+  decltype(text.extData) filtered;
+  bool inLibreCad = false;
+  for (const auto &tag : text.extData) {
+    if (tag && tag->code() == 1001)
+      inLibreCad = isLibreCadApp(tag);
+    if (inLibreCad && tag && tag->code() == 1071 &&
+        tag->type() == DRW_Variant::INTEGER &&
+        (tag->content.i == kLegacyRtlLayout || tag->content.i == kLogicalRtlLayout))
+      continue;
+    filtered.push_back(tag);
+  }
+  for (size_t i = 0; i < filtered.size();) {
+    if (isLibreCadApp(filtered[i]) &&
+        (i + 1 == filtered.size() ||
+         (filtered[i + 1] && filtered[i + 1]->code() == 1001))) {
+      filtered.erase(filtered.begin() + i);
+    } else {
+      ++i;
+    }
+  }
+  if (layout != 0) {
+    auto app = std::find_if(filtered.begin(), filtered.end(), isLibreCadApp);
+    if (app == filtered.end()) {
+      filtered.push_back(std::make_shared<DRW_Variant>(1001, std::string("LibreCad")));
+      app = std::prev(filtered.end());
+    }
+    auto end = std::find_if(std::next(app), filtered.end(), [](const auto &tag) {
+      return tag && tag->code() == 1001;
+    });
+    filtered.insert(end, std::make_shared<DRW_Variant>(1071, layout));
+  }
+  text.extData = std::move(filtered);
+}
+
 
 constexpr int kImportedSplineFallbackSamples = 96;
 
@@ -8074,7 +8117,7 @@ RS_MText *RS_FilterDXFRW::mtextEntityFromDRW(const DRW_MText &data) {
   // else→ByStyle), matching the DXF MTEXT group 72 spec. There is no DXF
   // value for RightToLeft; that flag round-trips via XDATA below — when
   // an MTEXT carries a "LibreCad" + 1071 marker, restore the RTL setting.
-  bool wantRTL = false;
+  std::int32_t rtlLayout = 0;
   for (size_t k = 0; k + 1 < data.extData.size(); ++k) {
     const auto &appTag = data.extData[k];
     if (!appTag || appTag->code() != 1001 ||
@@ -8089,18 +8132,17 @@ RS_MText *RS_FilterDXFRW::mtextEntityFromDRW(const DRW_MText &data) {
       if (v->code() == 1001)
         break;
       if (v->code() == 1071 && v->type() == DRW_Variant::INTEGER &&
-          v->content.i != 0) {
-        wantRTL = true;
+          (v->content.i == kLegacyRtlLayout || v->content.i == kLogicalRtlLayout)) {
+        rtlLayout = std::max(rtlLayout, v->content.i);
       }
     }
-    if (wantRTL)
-      break;
   }
-  if (wantRTL)
+  if (rtlLayout != 0)
     dir = RS_MTextData::RightToLeft;
 
   RS_MTextData d(ip, data.height, data.widthscale, valign, halign, dir, lss,
                  interlin, mtext, sty, angle, RS2::NoUpdate);
+  d.legacyRtlLayout = rtlLayout == kLegacyRtlLayout;
   return new RS_MText(nullptr, d);
 }
 
@@ -30829,12 +30871,9 @@ void RS_FilterDXFRW::writeMText(const RS_MText *t) {
       text->alignH = static_cast<DRW_Text::HAlign>(1);
       break;
     }
-    if (t->getDrawingDirection() == RS_MTextData::RightToLeft) {
-      text->extData.push_back(
-          std::make_shared<DRW_Variant>(1001, std::string("LibreCad")));
-      text->extData.push_back(
-          std::make_shared<DRW_Variant>(1071, std::int32_t{1}));
-    }
+    // Marker 1 preserves old drawings; marker 2 stores logical Unicode RTL.
+    setMTextRtlMarker(*text, t->getDrawingDirection() == RS_MTextData::RightToLeft
+        ? (t->getData().legacyRtlLayout ? kLegacyRtlLayout : kLogicalRtlLayout) : 0);
     if (t->getLineSpacingStyle() == RS_MTextData::AtLeast) {
       text->alignV = static_cast<DRW_Text::VAlign>(1);
     } else {

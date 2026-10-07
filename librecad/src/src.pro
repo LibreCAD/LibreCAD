@@ -43,11 +43,13 @@ GEN_LIB_DIR = ../../generated/lib
 msvc {
     PRE_TARGETDEPS += $$GEN_LIB_DIR/dxfrw.lib \
             $$GEN_LIB_DIR/jwwlib.lib \
-            $$GEN_LIB_DIR/shapelib.lib
+            $$GEN_LIB_DIR/shapelib.lib \
+            $$GEN_LIB_DIR/lcfribidi.lib
 } else {
     PRE_TARGETDEPS += $$GEN_LIB_DIR/libdxfrw.a \
             $$GEN_LIB_DIR/libjwwlib.a \
-            $$GEN_LIB_DIR/libshapelib.a
+            $$GEN_LIB_DIR/libshapelib.a \
+            $$GEN_LIB_DIR/liblcfribidi.a
 }
 
 DESTDIR = $${INSTALLDIR}
@@ -122,7 +124,10 @@ DEFINES += LC_PRERELEASE=\"$$LC_PRERELEASE\"
 LIBS += -L../../generated/lib  \
     -ldxfrw \
     -ljwwlib \
-    -lshapelib
+    -lshapelib \
+    -llcfribidi
+
+DEFINES += FRIBIDI_LIB_STATIC DONT_HAVE_FRIBIDI_CONFIG_H
 
 INCLUDEPATH += \
     ../../libraries/lciconengine \
@@ -130,6 +135,7 @@ INCLUDEPATH += \
     ../../libraries/libdxfrw/src/intern \
     ../../libraries/jwwlib/src \
     ../../libraries/shapelib/src \
+    ../../libraries/fribidi/src \
     cmd \
     lib/actions \
     lib/actions/visual_snap \

@@ -25,6 +25,7 @@
 **********************************************************************/
 
 #include "rs_text.h"
+#include "lc_textbidi.h"
 
 #include<iostream>
 
@@ -34,36 +35,9 @@
 #include "rs_insert.h"
 #include "rs_line.h"
 #include "rs_math.h"
-#include "rs_mtext.h"
 #include "rs_painter.h"
 #include "rs_pen.h"
 
-namespace {
-/**
- * Resolve the UAX#9 base direction for an RS_Text update pass. Honors an
- * explicit @c LeftToRight / @c RightToLeft setting when set; for @c ByContent
- * scans the string for the first strong-directional character and uses that
- * (UAX#9 P-rules), defaulting to LTR when there is no strong character.
- */
-Qt::LayoutDirection
-resolveTextBaseDirection(const QString &text,
-                         RS_TextData::DrawingDirection setting) {
-  if (setting == RS_TextData::LeftToRight)
-    return Qt::LeftToRight;
-  if (setting == RS_TextData::RightToLeft)
-    return Qt::RightToLeft;
-  for (int i = 0; i < text.size(); ++i) {
-    const QChar::Direction d = text.at(i).direction();
-    if (d == QChar::DirL)
-      return Qt::LeftToRight;
-    if (d == QChar::DirR || d == QChar::DirAL)
-      return Qt::RightToLeft;
-  }
-  return Qt::LeftToRight;
-}
-} // namespace
-
-class RS_Font;
 
 RS_TextData::RS_TextData(const RS_Vector& insertionPoint, const RS_Vector& secondPoint, const double height, const double widthRel,
                          const VAlign valign, const HAlign halign, const TextGeneration textGeneration, const QString& text,
@@ -295,61 +269,51 @@ void RS_Text::update() {
     //   height: 9.0
     // Rotation, scaling and centering is done later
 
-    // Visual ordering depends on the drawingDirection setting:
-    //   * RightToLeft: pure positional reversal — matches AutoCAD semantics
-    //     and the editor mirror. UAX#9 alone leaves EN digits direction-
-    //     immune, so widget and canvas would diverge for "1234" otherwise.
-    //   * ByContent (and the other settings): UAX#9 with first-strong base
-    //     detection so embedded strong-RTL runs (Hebrew/Arabic) still
-    //     display in correct visual order.
-    std::vector<int> visual;
-    if (m_data.drawingDirection == RS_TextData::RightToLeft) {
-      visual.resize(m_data.text.size());
-      for (int i = 0; i < m_data.text.size(); ++i) {
-        visual[i] = m_data.text.size() - 1 - i;
-      }
-    } else {
-      const Qt::LayoutDirection baseDir =
-          resolveTextBaseDirection(m_data.text, m_data.drawingDirection);
-      visual = RS_MText::computeBidiVisualOrder(m_data.text, baseDir); // fixme - sand - it's better to use separate utility
-    }
-
-    for (int logIdx : visual) {
-      const QChar ch = m_data.text.at(logIdx);
-      // Space:
-      if (ch.unicode() == 0x20) {
-        letterPos += space;
-      } else {
-        // One Letter:
-        QString letterText = QString(ch);
-        if (font->findLetter(letterText) == nullptr) {
-          RS_DEBUG->print("RS_Text::update: missing font for letter( %s ), "
-                          "replaced it with QChar(0xfffd)",
-                          qPrintable(letterText));
-          letterText = QChar(0xfffd);
-        }
-        RS_DEBUG->print("RS_Text::update: insert a "
-                        "letter at pos: %f/%f",
-                        letterPos.x, letterPos.y);
-
-            RS_InsertData d(letterText, letterPos, RS_Vector(1.0, 1.0), 0.0, 1, 1, RS_Vector(0.0, 0.0), font->getLetterList(),
+    const auto direction = m_data.drawingDirection == RS_TextData::RightToLeft
+        ? Qt::RightToLeft
+        : m_data.drawingDirection == RS_TextData::LeftToRight
+              ? Qt::LeftToRight : Qt::LayoutDirectionAuto;
+    for (const auto &cluster : lc::textbidi::visualClusters(m_data.text, direction)) {
+        const RS_Vector clusterOrigin = letterPos;
+        for (int i = cluster.start; i < cluster.start + cluster.length; ++i) {
+            const QChar ch = m_data.text.at(i);
+            if (ch.category() == QChar::Other_Format ||
+                ch.category() == QChar::Other_Control) {
+                continue;
+            }
+            if (ch == QLatin1Char(' ')) {
+                letterPos += space;
+                continue;
+            }
+            QString letterText(ch);
+            if (ch.isHighSurrogate() && i + 1 < cluster.start + cluster.length &&
+                m_data.text.at(i + 1).isLowSurrogate()) {
+                letterText.append(m_data.text.at(++i));
+            } else if (cluster.rightToLeft) {
+                letterText = ch.mirroredChar();
+            }
+            if (font->findLetter(letterText) == nullptr) {
+                letterText = QChar(0xfffd);
+            }
+            const bool combining = ch.category() == QChar::Mark_NonSpacing ||
+                                   ch.category() == QChar::Mark_Enclosing;
+            const RS_Vector glyphPos = combining ? clusterOrigin : letterPos;
+            RS_InsertData d(letterText, glyphPos, RS_Vector(1.0, 1.0), 0.0,
+                            1, 1, RS_Vector(0.0, 0.0), font->getLetterList(),
                             RS2::NoUpdate);
-
-            auto* letter = new RS_Insert(this, d);
+            auto *letter = new RS_Insert(this, d);
             letter->setPen(RS_Pen(RS2::FlagInvalid));
             letter->setLayer(nullptr);
             letter->update();
             letter->forcedCalculateBorders();
-
-        auto letterWidth = RS_Vector(letter->getMax().x - letterPos.x, 0.0);
-            if (letterWidth.x < 0) {
-                letterWidth.x = -letterSpace.x;
-            }
             addEntity(letter);
-
-            // next letter position:
-            letterPos += letterWidth;
-            letterPos += letterSpace;
+            if (!combining) {
+                double width = letter->getMax().x - letterPos.x;
+                if (width < 0.0) {
+                    width = -letterSpace.x;
+                }
+                letterPos.x += width + letterSpace.x;
+            }
         }
     }
 
