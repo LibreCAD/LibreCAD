@@ -23,5 +23,5 @@ jobs:
       with:
         pixi-version: v0.41.4
         cache: true
-    - name: Build and check plugin installation
-      run: pixi run check-plugin-install
+    - name: Build and check plugin and resource installation
+      run: pixi run check-resource-install
