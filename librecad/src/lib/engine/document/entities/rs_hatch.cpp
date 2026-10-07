@@ -171,9 +171,15 @@ bool RS_Hatch::validate() {
           if (edges.empty())
             continue;
 
+          // A clone keeps its source's parent and layer, and so does every clone
+          // made of it, down to the cached loops. Those outlive both: drop them.
           RS_EntityContainer perLoopCont{nullptr, true};
-          for (RS_Entity *e : edges)
-            LC_LoopUtils::cloneInto(perLoopCont, *e);
+          for (RS_Entity *e : edges) {
+            RS_Entity *edge = e->clone();
+            edge->setParent(nullptr);
+            edge->setLayer(nullptr);
+            perLoopCont.addEntity(edge);
+          }
 
           // For pattern hatches apply the rotation before extraction so the
           // extracted loop coordinates are in the axis-aligned tiling frame.

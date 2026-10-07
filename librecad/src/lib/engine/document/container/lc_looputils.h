@@ -55,9 +55,6 @@ using LC_Rect = lc::geo::Area;
  */
 namespace LC_LoopUtils {
 
-/// Adds a clone of the edge to the loop as the loop's own: its child, on no layer.
-RS_Entity* cloneInto(RS_EntityContainer& loop, const RS_Entity& edge);
-
 /**
  * @brief The LC_Loops class - recursive representation of contour loops with holes.
  * Represents a hierarchical structure for contours, where each loop can have child loops (holes or islands).
