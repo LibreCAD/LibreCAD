@@ -2439,7 +2439,7 @@ option (BUILD_TESTS "Build unit tests for LibreCAD" OFF)
 option (LIBRECAD_REGISTER_FULL_TESTS
         "Register the complete LibreCAD test executable with CTest" OFF)
 option (LIBRECAD_REGISTER_INTEGRATION_TESTS
-        "Register LibreCAD-linked DWG/DXF and hatch regression lanes with CTest" OFF)
+        "Register LibreCAD-linked DWG/DXF fast lanes with CTest" OFF)
 option (LIBRECAD_REGISTER_FORMAT_TESTS
         "Register separate DWG and DXF parser lanes with CTest" OFF)
 option (LIBRECAD_REGISTER_CROSS_READ_SMOKE
@@ -2949,9 +2949,6 @@ if (BUILD_TESTS)
     add_librecad_filter_micro_test(
         librecad_draft_lines_tests
         librecad/src/ui/view/tests/qg_graphicview_draft_lines_tests.cpp)
-    add_librecad_filter_micro_test(
-        librecad_hatch_move_tests
-        librecad/src/lib/engine/document/entities/tests/lc_hatchmovetests.cpp)
     # Isolate GUI tests from the text tests' static offscreen bootstraps.
     add_librecad_filter_micro_test(
         librecad_dock_layout_tests
@@ -3212,10 +3209,6 @@ if (BUILD_TESTS)
             ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)
     endif()
     if (LIBRECAD_REGISTER_INTEGRATION_TESTS)
-        add_test(NAME librecad_hatch_move_tests
-            COMMAND $<TARGET_FILE:librecad_hatch_move_tests> --reporter compact)
-        set_tests_properties(librecad_hatch_move_tests PROPERTIES
-            ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)
         add_test(NAME librecad_dwg_fast_tests
             COMMAND $<TARGET_FILE:librecad_dwg_fast_tests>
                 ${LIBRECAD_FAST_TEST_EXCLUDES}

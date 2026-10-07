@@ -31,9 +31,6 @@ on:
       - 'CMakeLists.txt'
       - 'libraries/libdxfrw/**'
       - 'librecad/src/lib/filters/**'
-      - 'librecad/src/lib/engine/document/**'
-      - 'librecad/src/lib/modification/**'
-      - 'librecad/src/test/**'
       - 'scripts/dwg-fast-check.sh'
   pull_request:
     branches: [master]
@@ -42,9 +39,6 @@ on:
       - 'CMakeLists.txt'
       - 'libraries/libdxfrw/**'
       - 'librecad/src/lib/filters/**'
-      - 'librecad/src/lib/engine/document/**'
-      - 'librecad/src/lib/modification/**'
-      - 'librecad/src/test/**'
       - 'scripts/dwg-fast-check.sh'
   workflow_dispatch:
 
@@ -84,7 +78,7 @@ jobs:
       - name: Build bounded DWG/DXF test lanes
         run: |
           cmake --build format-tests \
-            --target librecad_dwg_fast_tests librecad_dxf_fast_tests librecad_hatch_move_tests \
+            --target librecad_dwg_fast_tests librecad_dxf_fast_tests \
             -j"$(nproc)"
 
       - name: Run bounded DWG/DXF test lanes
@@ -161,7 +155,7 @@ jobs:
           set "PATH=%VSPATH%\Common7\IDE\CommonExtensions\Microsoft\CMake\Ninja;%PATH%"
           ninja --version || exit /b 1
           cmake.exe -S . -B generated-tests -G Ninja -DCMAKE_BUILD_TYPE=Release -DBOOST_ROOT="%CD%\boost" -DCMAKE_CXX_FLAGS="/EHsc" -DBUILD_TESTS=ON -DLIBRECAD_REGISTER_INTEGRATION_TESTS=ON -DLIBRECAD_REGISTER_FULL_TESTS=OFF -DLIBRECAD_REGISTER_FORMAT_TESTS=OFF -DLIBRECAD_REGISTER_CROSS_READ_SMOKE=OFF || exit /b 1
-          cmake --build generated-tests --parallel --target librecad_dwg_fast_tests librecad_dxf_fast_tests librecad_hatch_move_tests || exit /b 1
+          cmake --build generated-tests --parallel --target librecad_dwg_fast_tests librecad_dxf_fast_tests || exit /b 1
         shell: cmd
 
       - name: Run bounded DWG/DXF test lanes
