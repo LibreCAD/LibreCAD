@@ -2216,11 +2216,11 @@ set (MUPARSER_SOURCES
 )
 
 # Static library from shared sources
-add_subdirectory(libraries/fribidi)
+add_subdirectory(libraries/qtbidi)
 set_source_files_properties(
-    librecad/src/lib/engine/document/entities/lc_textbidi.cpp PROPERTIES
-    INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/libraries/fribidi/src"
-    COMPILE_DEFINITIONS "FRIBIDI_LIB_STATIC;DONT_HAVE_FRIBIDI_CONFIG_H")
+    librecad/src/lib/engine/document/entities/lc_textbidi.cpp
+    librecad/src/lib/engine/document/entities/tests/lc_textbidi_tests.cpp PROPERTIES
+    INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/libraries/qtbidi")
 
 qt_add_library (librecad_lib STATIC
                 ${MUPARSER_SOURCES}
@@ -2239,7 +2239,7 @@ target_include_directories(librecad_lib PRIVATE
 )
 
 target_link_libraries (librecad_lib PRIVATE
-                       lcfribidi
+                       lcqtbidi
                        Qt6::Core Qt6::Widgets Qt6::Gui Qt6::PrintSupport Qt6::Svg Qt6::Network
 )
 set_property (TARGET librecad_lib PROPERTY AUTOUIC_OPTIONS --connections string)
@@ -2774,7 +2774,12 @@ if (BUILD_TESTS)
     target_include_directories(librecad_text_bidi_headless_tests PRIVATE
         librecad/src/lib/engine/document/entities)
     target_link_libraries(librecad_text_bidi_headless_tests PRIVATE
-        lcfribidi Catch2::Catch2WithMain Qt6::Core)
+        lcqtbidi Catch2::Catch2WithMain Qt6::Core)
+
+    add_executable(librecad_bidi_conformance EXCLUDE_FROM_ALL
+        libraries/qtbidi/tests/unicode_conformance.cpp)
+    target_include_directories(librecad_bidi_conformance PRIVATE libraries/qtbidi)
+    target_link_libraries(librecad_bidi_conformance PRIVATE lcqtbidi Qt6::Core)
 
     # Keep a small structural DWG/DXF lane for the incremental implementation
     # loop. The complete target remains the milestone and release gate; this

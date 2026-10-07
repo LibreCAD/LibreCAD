@@ -217,6 +217,56 @@ TEST_CASE("Hebrew and decimal labels render in Unicode visual order",
   CHECK(glyphNames(text) == expected);
 }
 
+TEST_CASE("Supplementary controls and marks do not advance LFF geometry",
+          "[text][bidi]") {
+  SourceFonts fonts;
+  const char32_t format = 0xe0001, mark = 0x1e944;
+  const auto controlText = "1" + QString::fromUcs4(&format, 1) + "2";
+  const auto markedText = "1" + QString::fromUcs4(&mark, 1) + "2";
+  auto checkGeometry = [](const RS_EntityContainer &baseline,
+                          const RS_EntityContainer &controlled,
+                          const RS_EntityContainer &marked) {
+    REQUIRE(baseline.count() == 2);
+    REQUIRE(controlled.count() == 2);
+    REQUIRE(marked.count() == 3);
+    auto point = [](const RS_EntityContainer &container, int i) {
+      auto *glyph = dynamic_cast<RS_Insert *>(container.entityAt(i));
+      REQUIRE(glyph);
+      return glyph->getInsertionPoint();
+    };
+    CHECK(point(marked, 0) == point(marked, 1));
+    const auto advance = point(baseline, 1) - point(baseline, 0);
+    CHECK(point(controlled, 1) - point(controlled, 0) == advance);
+    CHECK(point(marked, 2) - point(marked, 0) == advance);
+  };
+  auto makeMText = [](const QString &value) {
+    auto data = mtextData(value);
+    data.drawingDirection = RS_MTextData::LeftToRight;
+    return data;
+  };
+  RS_MText baseline(nullptr, makeMText("12"));
+  RS_MText controlled(nullptr, makeMText(controlText));
+  RS_MText marked(nullptr, makeMText(markedText));
+  auto line = [](const RS_MText &text) {
+    auto *result = dynamic_cast<RS_EntityContainer *>(text.entityAt(0));
+    REQUIRE(result);
+    return result;
+  };
+  checkGeometry(*line(baseline), *line(controlled), *line(marked));
+  auto makeText = [](const QString &value) {
+    RS_TextData data;
+    data.text = value;
+    data.style = "iso3098";
+    data.drawingDirection = RS_TextData::LeftToRight;
+    data.updateMode = RS2::Update;
+    return data;
+  };
+  RS_Text textBaseline(nullptr, makeText("12"));
+  RS_Text textControlled(nullptr, makeText(controlText));
+  RS_Text textMarked(nullptr, makeText(markedText));
+  checkGeometry(textBaseline, textControlled, textMarked);
+}
+
 TEST_CASE("Unicode bidi preserves clusters and mixed numeric runs",
           "[textbidi][issue1859]") {
   const QString hebrew = QString::fromUtf8("\xd7\xa9\xd7\x9c\xd7\x95\xd7\x9d");
@@ -255,6 +305,45 @@ TEST_CASE("Unicode bidi preserves clusters and mixed numeric runs",
   }
   CHECK(visual ==
         QStringLiteral("Main 12.5 ") + lc::textbidi::mirrorByLine(hebrew));
+}
+
+TEST_CASE("MTEXT formatting retains bidi context and stack ownership",
+          "[text][bidi]") {
+  SourceFonts fonts;
+  const auto hebrew = QString::fromUtf8(u8"שלום");
+  const auto ending = QString::fromUtf8(u8"אב");
+  auto data = mtextData(hebrew + " \\f{iso3098}12.5\\f{unicode} " + ending);
+  data.style = "unicode";
+  RS_MText formatted(nullptr, data);
+  auto *line = dynamic_cast<RS_EntityContainer *>(formatted.entityAt(0));
+  REQUIRE(line);
+  CHECK(glyphNames(*line) == lc::textbidi::mirrorByLine(ending) + "12.5" +
+                            lc::textbidi::mirrorByLine(hebrew));
+
+  data.text = hebrew + " \\S12^34; " + ending;
+  RS_MText stacked(nullptr, data);
+  line = dynamic_cast<RS_EntityContainer *>(stacked.entityAt(0));
+  REQUIRE(line);
+  CHECK(glyphNames(*line) == lc::textbidi::mirrorByLine(ending) +
+                            lc::textbidi::mirrorByLine(hebrew));
+  int children = 0;
+  for (auto *entity : line->getEntityList()) {
+    if (auto *child = dynamic_cast<RS_MText *>(entity)) {
+      CHECK(child->getParent() == line);
+      CHECK(child->getText() == (children == 0 ? "12" : "34"));
+      auto *childLine = dynamic_cast<RS_EntityContainer *>(child->entityAt(0));
+      REQUIRE(childLine);
+      CHECK(glyphNames(*childLine) == child->getText());
+      ++children;
+    }
+  }
+  CHECK(children == 2);
+
+  RS_MText truncated(nullptr, mtextData("12.5\\f"));
+  line = dynamic_cast<RS_EntityContainer *>(truncated.entityAt(0));
+  REQUIRE(line);
+  CHECK(glyphNames(*line) == "12.5");
+  CHECK(truncated.getText() == "12.5\\f");
 }
 
 TEST_CASE("RTL editors keep logical text and cursor selections",

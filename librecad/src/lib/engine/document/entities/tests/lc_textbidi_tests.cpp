@@ -18,12 +18,15 @@
 **********************************************************************/
 
 #include <algorithm>
+#include <utility>
 #include <catch2/catch_test_macros.hpp>
 
 #include <QChar>
+#include <QList>
 #include <QString>
 
 #include "lc_textbidi.h"
+#include "qt_bidi.h"
 
 using lc::textbidi::mirrorByLine;
 
@@ -123,10 +126,11 @@ namespace {
 QString visualText(const QString &text, Qt::LayoutDirection direction) {
   QString visual;
   for (const auto &cluster : lc::textbidi::visualClusters(text, direction)) {
-    for (int i = cluster.start; i < cluster.start + cluster.length; ++i) {
-      const auto ch = text.at(i);
-      if (ch.category() != QChar::Other_Format) {
-        visual += cluster.rightToLeft ? ch.mirroredChar() : ch;
+    for (char32_t scalar : text.mid(cluster.start, cluster.length).toUcs4()) {
+      if (QChar::category(scalar) != QChar::Other_Format) {
+        if (cluster.rightToLeft)
+          scalar = QChar::mirroredChar(scalar);
+        visual += QString::fromUcs4(&scalar, 1);
       }
     }
   }
@@ -179,5 +183,142 @@ TEST_CASE("Bidi ordering keeps graphemes and malformed UTF-16 intact",
     for (int i = 0; i < text.size(); ++i) {
       CHECK(indices[i] == i);
     }
+  }
+}
+
+TEST_CASE("Bidi resolves supplementary RTL letters in LTR paragraphs",
+          "[textbidi]") {
+  const char32_t letters[] = {0x1e900, 0x1e901, 0x1e902};
+  const char32_t reversed[] = {0x1e902, 0x1e901, 0x1e900};
+  const auto adlam = QString::fromUcs4(letters, 3);
+  const auto reverseAdlam = QString::fromUcs4(reversed, 3);
+  for (auto direction : {Qt::LeftToRight, Qt::RightToLeft,
+                         Qt::LayoutDirectionAuto}) {
+    CHECK(visualText(adlam + " 123", direction) == "123 " + reverseAdlam);
+    const auto levels = lc::qtbidi::resolve(adlam, direction).levels;
+    REQUIRE(levels.size() == 6);
+    for (size_t i = 0; i < levels.size(); i += 2)
+      CHECK(levels[i] == levels[i + 1]);
+  }
+  for (auto direction : {Qt::LeftToRight, Qt::LayoutDirectionAuto})
+    CHECK(visualText("A " + adlam + " 123", direction) ==
+          "A 123 " + reverseAdlam);
+  const auto clusters = lc::textbidi::visualClusters(adlam, Qt::LeftToRight);
+  REQUIRE(clusters.size() == 3);
+  for (int i = 0; i < 3; ++i) {
+    CHECK(clusters[i].start == 4 - 2 * i);
+    CHECK(clusters[i].length == 2);
+  }
+}
+
+TEST_CASE("Bidi brackets use canonical equivalence, not compatibility folding",
+          "[textbidi]") {
+  const auto alef = QString(QChar(0x05d0)), bet = QString(QChar(0x05d1));
+  for (char16_t closing : {char16_t(0xff09), char16_t(0x207e),
+                           char16_t(0x208e), char16_t(0xfe5a)}) {
+    const QString input = "A(" + alef + QChar(closing) + bet;
+    const auto levels = lc::qtbidi::resolve(input, Qt::LeftToRight).levels;
+    REQUIRE(levels.size() == 5);
+    CHECK(levels[1] == 0);
+    CHECK(levels[3] == 1);
+    CHECK(visualText(input, Qt::LeftToRight) ==
+          "A(" + bet + QChar(closing).mirroredChar() + alef);
+  }
+  for (const auto &pair : {std::pair<char16_t, char16_t>{0x2329, 0x3009},
+                           {0x3008, 0x232a}}) {
+    const QString input = "A" + QString(QChar(pair.first)) + alef +
+                          QChar(pair.second) + bet;
+    const auto levels = lc::qtbidi::resolve(input, Qt::LeftToRight).levels;
+    REQUIRE(levels.size() == 5);
+    CHECK(levels[1] == 0);
+    CHECK(levels[3] == 0);
+  }
+}
+
+TEST_CASE("Bidi bracket NSMs inherit resolved direction across X9 controls",
+          "[textbidi]") {
+  struct Case {
+    std::vector<char32_t> scalars;
+    std::vector<int> levels;
+  };
+  // Unicode 17 BidiCharacterTest: N0 cases following opening/closing brackets.
+  const Case cases[] = {
+      {{0x41, 0x200f, 0x5b, 0x5d0, 0x5d, 0x200d, 0x20d6},
+       {0, 1, 1, 1, 1, -1, 1}},
+      {{0x41, 0x200f, 0x5b, 0x200d, 0x20d6, 0x5d0, 0x5d, 0x200d, 0x20d6},
+       {0, 1, 1, -1, 1, 1, 1, -1, 1}},
+      {{0x41, 0x200f, 0x5b, 0x200d, 0x200b, 0x20d6, 0x5d0, 0x5d,
+        0x200b, 0x200d, 0x20d6},
+       {0, 1, 1, -1, -1, 1, 1, 1, -1, -1, 1}}};
+  for (const auto &test : cases) {
+    const auto text = QString::fromUcs4(test.scalars.data(), test.scalars.size());
+    const auto resolved = lc::qtbidi::resolve(text, Qt::LeftToRight);
+    CHECK(resolved.base == 0);
+    REQUIRE(resolved.levels.size() == test.levels.size());
+    for (size_t i = 0; i < test.levels.size(); ++i)
+      if (test.levels[i] >= 0)
+        CHECK(resolved.levels[i] == test.levels[i]);
+  }
+}
+
+TEST_CASE("Bidi isolates and X9 controls do not leak into surrounding runs",
+          "[textbidi]") {
+  struct Case {
+    std::vector<char32_t> scalars;
+    std::vector<int> levels;
+    Qt::LayoutDirection direction;
+  };
+  const Case cases[] = {
+      {{0x41, 0x200f, 0x28, 0x2066, 0x2066, 0x41, 0x2069, 0x5d0,
+        0x2069, 0x29, 0x41},
+       {0, 1, 0, 0, 2, 4, 2, 3, 0, 0, 0}, Qt::LeftToRight},
+      {{0x2067, 0x41, 0x2069, 0x202a, 0x3009, 0x661},
+       {1, 4, 1, -1, 2, 4}, Qt::RightToLeft},
+      {{0x5d0, 0x202d, 0x202c, 0x2068, 0x2069, 0x5d0},
+       {1, -1, -1, 1, 1, 1}, Qt::LeftToRight},
+      {{0x627, 0x202e, 0x202c, 0x31, 0x2067},
+       {1, -1, -1, 2, 0}, Qt::LeftToRight},
+      {{0x202d, 0x202e, 0x41, 0x202c, 0x2069, 0x202e, 0x42},
+       {-1, -1, 3, -1, 2, -1, 3}, Qt::LeftToRight}};
+  for (const auto &test : cases) {
+    const auto text = QString::fromUcs4(test.scalars.data(), test.scalars.size());
+    const auto resolved = lc::qtbidi::resolve(text, test.direction);
+    REQUIRE(resolved.levels.size() == test.levels.size());
+    for (size_t i = 0; i < test.levels.size(); ++i)
+      if (test.levels[i] >= 0)
+        CHECK(resolved.levels[i] == test.levels[i]);
+  }
+}
+
+TEST_CASE("Bidi FSI matching survives explicit-level overflow",
+          "[textbidi]") {
+  for (int depth : {63, 125, 128, 129, 256}) {
+    const QString prefix = QString(QChar(0x2066)).repeated(depth) + "A" +
+                           QString(QChar(0x2069)).repeated(depth);
+    const QString input = prefix + QChar(0x2068) + QChar(0x05d0) + QChar(0x2069);
+    const auto levels = lc::qtbidi::resolve(input, Qt::LeftToRight).levels;
+    REQUIRE(levels.size() == input.size());
+    CHECK(levels[prefix.size()] == 0);
+    CHECK(levels[prefix.size() + 1] == 1);
+    CHECK(levels[prefix.size() + 2] == 0);
+    auto order = lc::qtbidi::reorder(levels);
+    std::sort(order.begin(), order.end());
+    for (int i = 0; i < input.size(); ++i)
+      REQUIRE(order[i] == i);
+  }
+}
+
+TEST_CASE("Supplementary boundary neutrals do not prevent L1 whitespace reset",
+          "[textbidi]") {
+  for (const char32_t control : {char32_t(0xe0001), char32_t(0x1d173)}) {
+    REQUIRE(QChar::direction(control) == QChar::DirBN);
+    const auto alef = QString(QChar(0x05d0));
+    const QString input = QChar(0x202b) + alef + " " +
+                          QString::fromUcs4(&control, 1);
+    const auto levels = lc::qtbidi::resolve(input, Qt::LeftToRight).levels;
+    REQUIRE(levels.size() == 5);
+    CHECK(levels[2] == 0);
+    CHECK(levels[3] == levels[4]);
+    CHECK(visualText(input, Qt::LeftToRight) == alef + " ");
   }
 }

@@ -1,0 +1,52 @@
+Qt-derived Unicode bidi resolver for LibreCAD
+=============================================
+
+Upstream: Qt qtbase, src/gui/text/qtextengine.cpp, QBidiAlgorithm
+Version: v6.11.2
+Commit: ef55f427f2c8b410d34f8a7681020a3000cf6866
+Source: https://github.com/qt/qtbase/blob/ef55f427f2c8b410d34f8a7681020a3000cf6866/src/gui/text/qtextengine.cpp
+Upstream source SHA-256:
+a6eb23e84fed66f80e4ca3274f413d7a686e1e54b405b97f1cd3f53e215096eb
+
+Qt copyright and SPDX notices are retained. The Qt-derived code is used
+under Qt's GPL-2.0-only option; LibreCAD modifications and integration
+files are GPL-2.0-or-later. The GPL version 2 text is in
+../../licenses/gpl-2.0.txt.
+
+This is a source extraction, not a call to Qt's private ABI. It requires
+only public QtCore APIs, C++17, and no GUI application or font database.
+Qt supplies Unicode properties; the supported Unicode version follows
+the Qt runtime.
+
+Local changes:
+- Replace private QScriptAnalysis and QUnicodeTables with a small local
+  analysis record and public QChar property queries.
+- Decode supplementary characters in the bidi fast-path check and
+  propagate X9/L1 properties to both UTF-16 units of boundary neutrals.
+- Resolve NSMs after either paired bracket, skipping X9-removed controls
+  within the isolating run sequence.
+- Scan bracket contents only within their isolating run sequence, and
+  count a PDI in the run it resumes rather than the run it closes.
+- Keep X9-removed embedding/override controls neutral to weak-type
+  resolution, including when a directional override is active.
+- Preserve run continuation across empty embeddings before an isolate,
+  and match all FSI/PDI pairs even beyond the explicit-level depth limit.
+- Match canonical bracket equivalents through Qt normalization, without
+  conflating compatibility forms or maintaining a bracket table.
+- Provide bounded UTF-16 embedding levels and an L2 visual index map.
+
+Paragraph separation and LFF grapheme handling belong to lc_textbidi.
+Glyph metrics and geometry belong to RS_Text/RS_MText. This resolver does
+not perform Arabic contextual shaping or OpenType glyph substitution.
+
+Validation uses Unicode 17 BidiTest.txt and BidiCharacterTest.txt:
+770241 type/direction cases and 91707 character cases. These validate
+paragraph levels and L2 maps; they do not cover LFF glyph geometry,
+shaping, or line wrapping. Run the small committed regressions for the
+normal incremental development loop, and the external Unicode corpora
+when changing the resolver or updating its upstream version.
+
+With BUILD_TESTS=ON, build the opt-in librecad_bidi_conformance target,
+then run it with paths to the official BidiTest.txt and
+BidiCharacterTest.txt for the Qt runtime's Unicode version. Corpus files
+are external inputs and are not bundled. The runner needs only QtCore.

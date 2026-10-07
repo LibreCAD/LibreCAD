@@ -371,7 +371,7 @@ void RS_MText::update() {
                         //  \f{symbol} changes font to symbol
                         //  \f{} sets font to standard
                         ++i;
-                        if ('{' != m_data.text.at(i).unicode()) {
+                        if (i >= m_data.text.size() || '{' != m_data.text.at(i).unicode()) {
                             --i;
                             continue;
                         }
@@ -503,8 +503,16 @@ void RS_MText::flushBidiLine(LC_TextLine &oneLine,
       const auto &seg = segments[logIdx];
       switch (seg.kind) {
       case LC_BidiSegment::Char: {
-        if (seg.codepoint.category() == QChar::Other_Format ||
-            seg.codepoint.category() == QChar::Other_Control) {
+        char32_t scalar = seg.codepoint.unicode();
+        if (seg.codepoint.isHighSurrogate() &&
+            logIdx + 1 < cluster.start + cluster.length &&
+            segments[logIdx + 1].codepoint.isLowSurrogate()) {
+          scalar = QChar::surrogateToUcs4(
+              seg.codepoint, segments[++logIdx].codepoint);
+        }
+        const auto category = QChar::category(scalar);
+        if (category == QChar::Other_Format ||
+            category == QChar::Other_Control) {
           break;
         }
         RS_Font *segFont = seg.font;
@@ -513,16 +521,11 @@ void RS_MText::flushBidiLine(LC_TextLine &oneLine,
           segFont = RS_FONTLIST->requestFont(m_data.style);
         }
         if (segFont != nullptr) {
-          QString glyph(seg.codepoint);
-          if (seg.codepoint.isHighSurrogate() &&
-              logIdx + 1 < cluster.start + cluster.length &&
-              segments[logIdx + 1].codepoint.isLowSurrogate()) {
-            glyph.append(segments[++logIdx].codepoint);
-          } else if (cluster.rightToLeft) {
-            glyph = seg.codepoint.mirroredChar();
-          }
-          if (seg.codepoint.category() == QChar::Mark_NonSpacing ||
-              seg.codepoint.category() == QChar::Mark_Enclosing) {
+          if (cluster.rightToLeft)
+            scalar = QChar::mirroredChar(scalar);
+          const auto glyph = QString::fromUcs4(&scalar, 1);
+          if (category == QChar::Mark_NonSpacing ||
+              category == QChar::Mark_Enclosing) {
             auto markPosition = clusterOrigin;
             addLetter(oneLine, glyph, *segFont, letterSpace, markPosition);
           } else {

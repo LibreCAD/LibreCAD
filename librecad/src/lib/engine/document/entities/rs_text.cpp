@@ -277,26 +277,28 @@ void RS_Text::update() {
         const RS_Vector clusterOrigin = letterPos;
         for (int i = cluster.start; i < cluster.start + cluster.length; ++i) {
             const QChar ch = m_data.text.at(i);
-            if (ch.category() == QChar::Other_Format ||
-                ch.category() == QChar::Other_Control) {
+            char32_t scalar = ch.unicode();
+            if (ch.isHighSurrogate() && i + 1 < cluster.start + cluster.length &&
+                m_data.text.at(i + 1).isLowSurrogate()) {
+                scalar = QChar::surrogateToUcs4(ch, m_data.text.at(++i));
+            }
+            const auto category = QChar::category(scalar);
+            if (category == QChar::Other_Format ||
+                category == QChar::Other_Control) {
                 continue;
             }
-            if (ch == QLatin1Char(' ')) {
+            if (scalar == ' ') {
                 letterPos += space;
                 continue;
             }
-            QString letterText(ch);
-            if (ch.isHighSurrogate() && i + 1 < cluster.start + cluster.length &&
-                m_data.text.at(i + 1).isLowSurrogate()) {
-                letterText.append(m_data.text.at(++i));
-            } else if (cluster.rightToLeft) {
-                letterText = ch.mirroredChar();
-            }
+            if (cluster.rightToLeft)
+                scalar = QChar::mirroredChar(scalar);
+            QString letterText = QString::fromUcs4(&scalar, 1);
             if (font->findLetter(letterText) == nullptr) {
                 letterText = QChar(0xfffd);
             }
-            const bool combining = ch.category() == QChar::Mark_NonSpacing ||
-                                   ch.category() == QChar::Mark_Enclosing;
+            const bool combining = category == QChar::Mark_NonSpacing ||
+                                   category == QChar::Mark_Enclosing;
             const RS_Vector glyphPos = combining ? clusterOrigin : letterPos;
             RS_InsertData d(letterText, glyphPos, RS_Vector(1.0, 1.0), 0.0,
                             1, 1, RS_Vector(0.0, 0.0), font->getLetterList(),
