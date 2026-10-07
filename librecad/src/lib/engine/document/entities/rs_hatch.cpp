@@ -173,7 +173,7 @@ bool RS_Hatch::validate() {
 
           RS_EntityContainer perLoopCont{nullptr, true};
           for (RS_Entity *e : edges)
-            perLoopCont.addEntity(e->clone());
+            LC_LoopUtils::cloneInto(perLoopCont, *e);
 
           // For pattern hatches apply the rotation before extraction so the
           // extracted loop coordinates are in the axis-aligned tiling frame.

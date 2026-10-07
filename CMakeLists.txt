@@ -2517,7 +2517,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/entities/tests/lc_polylineclosing_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_dimarrowtests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_hatch_tests.cpp
-        librecad/src/lib/engine/document/entities/tests/rs_hatch_move_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_hatchmovetests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_image_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_insert_transform_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_textbidi_tests.cpp
@@ -2951,7 +2951,7 @@ if (BUILD_TESTS)
         librecad/src/ui/view/tests/qg_graphicview_draft_lines_tests.cpp)
     add_librecad_filter_micro_test(
         librecad_hatch_move_tests
-        librecad/src/lib/engine/document/entities/tests/rs_hatch_move_tests.cpp)
+        librecad/src/lib/engine/document/entities/tests/lc_hatchmovetests.cpp)
     # Isolate GUI tests from the text tests' static offscreen bootstraps.
     add_librecad_filter_micro_test(
         librecad_dock_layout_tests

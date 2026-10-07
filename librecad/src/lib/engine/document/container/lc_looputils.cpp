@@ -65,9 +65,7 @@ namespace {
         const auto loopCopy = std::make_shared<RS_EntityContainer>(nullptr, true);
         for (const RS_Entity* e : *cont) {
             if (e && !e->isContainer()) {
-                auto* cloned = e->clone();
-                cloned->setParent(loopCopy.get());
-                loopCopy->addEntity(cloned);
+                LC_LoopUtils::cloneInto(*loopCopy, *e);
             }
         }
         LC_LoopUtils::LC_Loops lc(loopCopy, true);
@@ -170,6 +168,16 @@ VectorKey makeVectorKey(const RS_Vector& v) {
 
 namespace LC_LoopUtils {
 
+// A clone still names the parent and the layer of the entity it was cloned
+// from. Both may be freed while the loop lives on, so its edge keeps neither.
+RS_Entity* cloneInto(RS_EntityContainer& loop, const RS_Entity& edge) {
+  RS_Entity* clone = edge.clone();
+  clone->setParent(&loop);
+  clone->setLayer(nullptr);
+  loop.addEntity(clone);
+  return clone;
+}
+
 // Private implementation for LoopExtractor
 struct LoopExtractor::LoopData {
   std::vector<RS_Entity*> unprocessed;
@@ -220,9 +228,7 @@ std::vector<std::unique_ptr<RS_EntityContainer>> LoopExtractor::extract()const {
     m_loop = std::make_unique<RS_EntityContainer>();
     RS_Entity* first = findFirst();
     if (first) {
-      RS_Entity* cloned_first = first->clone();
-      cloned_first->setParent(m_loop.get());
-      m_loop->addEntity(cloned_first);
+      RS_Entity* cloned_first = cloneInto(*m_loop, *first);
       m_data->processed[first] = true;
       m_data->current = cloned_first;
       const RS_Vector start = cloned_first->getStartpoint();
@@ -252,10 +258,7 @@ std::vector<std::unique_ptr<RS_EntityContainer>> LoopExtractor::extract()const {
           // Reverse direction for positive area (counter-clockwise)
           auto new_loop = std::make_unique<RS_EntityContainer>();
           for (int i = static_cast<int>(m_loop->count()) - 1; i >= 0; --i) {
-            RS_Entity* e = m_loop->entityAt(static_cast<unsigned>(i))->clone();
-            e->setParent(new_loop.get());
-            e->revertDirection();
-            new_loop->addEntity(e);
+            cloneInto(*new_loop, *m_loop->entityAt(static_cast<unsigned>(i)))->revertDirection();
           }
           m_loop = std::move(new_loop);
         }
@@ -519,9 +522,7 @@ bool LoopExtractor::findNext() const {
   RS_Entity* next = (connected.size() == 1) ? connected[0] : findOutermost(connected);
 
   if (next) {
-    RS_Entity* cloned = next->clone();
-    cloned->setParent(m_loop.get());
-    m_loop->addEntity(cloned);
+    RS_Entity* cloned = cloneInto(*m_loop, *next);
     m_data->processed[next] = true;
     m_data->unprocessed.erase(std::remove(m_data->unprocessed.begin(), m_data->unprocessed.end(), next), m_data->unprocessed.end());
     if (cloned->getStartpoint().distanceTo(m_data->endPoint) > ENDPOINT_TOLERANCE) {

@@ -19,7 +19,10 @@
 #include "lc_actiontestsupport.h"
 #include "lc_looputils.h"
 #include "lc_settingguard.h"
+#include "rs_block.h"
 #include "rs_hatch.h"
+#include "rs_insert.h"
+#include "rs_layer.h"
 #include "rs_line.h"
 #include "rs_modification.h"
 #include "rs_polyline.h"
@@ -43,6 +46,7 @@ void checkOwnedEdges(const RS_EntityContainer& loop) {
     for (const RS_Entity* edge : loop) {
         // Check ownership before following the parent in isDeleted().
         REQUIRE(edge->getParent() == &loop);
+        CHECK(edge->getLayer(false) == nullptr);
         CHECK_FALSE(edge->isDeleted());
     }
 }
@@ -62,6 +66,20 @@ std::unique_ptr<RS_Hatch> makeHatch(RS_EntityContainer* parent, const bool solid
     auto* hole = new RS_EntityContainer(hatch.get());
     hatch->addEntity(hole);
     rectangle(*hole, {8, 4}, {12, 6}, true);
+    hatch->update();
+    return hatch;
+}
+
+// A hatch as Draw Hatch builds it: one loop of clones of the picked entities.
+std::unique_ptr<RS_Hatch> hatchOver(RS_Graphic& graphic, const QList<RS_Entity*>& picked, const bool solid) {
+    auto hatch = std::make_unique<RS_Hatch>(&graphic, RS_HatchData(solid, 1.0, 0.0, solid ? "SOLID" : "ANSI31"));
+    auto* loop = new RS_EntityContainer(hatch.get());
+    hatch->addEntity(loop);
+    for (const RS_Entity* entity : picked) {
+        RS_Entity* clone = entity->clone();
+        clone->reparent(loop);
+        loop->addEntity(clone);
+    }
     hatch->update();
     return hatch;
 }
@@ -105,14 +123,19 @@ void checkCopies(const QList<RS_Entity*>& entities, const RS_MoveData& data, con
 
 } // namespace
 
-TEST_CASE("Extracted loops own their edges after the source is destroyed", "[hatch-move][loop-ownership]") {
+TEST_CASE("Extracted loops own their edges after the source and its layer are destroyed", "[hatch-move][loop-ownership]") {
     const bool clockwise = GENERATE(false, true);
+    auto layer = std::make_unique<RS_Layer>("contour");
     auto source = std::make_unique<RS_EntityContainer>();
     rectangle(*source, {0, 0}, {20, 10}, clockwise);
+    for (RS_Entity* edge : *source) {
+        edge->setLayer(layer.get());
+    }
     LC_LoopUtils::LoopExtractor extractor{*source};
     const auto extracted = extractor.extract();
     REQUIRE(extracted.size() == 1);
     source.reset();
+    layer.reset();
     checkOwnedEdges(*extracted.front());
     CHECK_THAT(extracted.front()->areaLineIntegral(), Catch::Matchers::WithinAbs(200.0, 1e-8));
 }
@@ -240,21 +263,60 @@ TEST_CASE("Hatch Move Copy supports repeated previews and undo redo", "[hatch-mo
     checkCopies(moved, data, withRectangle);
 }
 
-TEST_CASE("Hatch boundary caches survive replacement of source contours", "[hatch-move][hatch-lifetime]") {
+// Issue #3008. Moving an insert rebuilds its children, so the polyline that the
+// cached boundary edges were cloned from is gone before the hatch updates.
+TEST_CASE("A hatch moves with a block insert in its contour", "[hatch-move][hatch-lifetime]") {
     lc::test::application();
     lc::test::SettingGuard patterns{RS_SETTINGS, "Paths", "Patterns"};
     patterns.set(QStringLiteral(LIBRECAD_SOURCE_DIR "/librecad/support/patterns"));
     const bool solid = GENERATE(false, true);
-    auto hatch = makeHatch(nullptr, solid);
-    REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
-    auto replacement = makeHatch(nullptr, solid);
-    auto entities = replacement->takeEntities();
-    hatch->clear();
-    for (auto& entity : entities) {
-        entity->reparent(hatch.get());
-        hatch->addEntity(entity.release());
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    auto* block = new RS_Block(&graphic, RS_BlockData("frame", {0, 0}, false));
+    auto* outline = new RS_Polyline(block);
+    for (const RS_Vector& corner : {RS_Vector{0, 0}, RS_Vector{20, 0}, RS_Vector{20, 10}, RS_Vector{0, 10}}) {
+        outline->addVertex(corner);
     }
-    // move() activates the old cached boundaries before rebuilding them.
+    outline->setClosed(true, 0.0);
+    block->addEntity(outline);
+    REQUIRE(graphic.addBlock(block));
+    RS_Insert insert{&graphic, RS_InsertData("frame", {0, 0}, {1, 1}, 0.0, 1, 1, {0, 0})};
+    insert.update();
+    const auto hatch = hatchOver(graphic, {&insert}, solid);
+    REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+
     hatch->move({7, -3});
-    checkHatch(*hatch, {7, -3});
+
+    REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+    CHECK_THAT(hatch->getTotalArea(), Catch::Matchers::WithinAbs(200.0, 1e-8));
+    checkBounds(*hatch, {7, -3});
+}
+
+// The clones in a contour keep the layer of the entities picked for it, and
+// deleting a layer does not reach inside a hatch.
+TEST_CASE("A hatch moves after the layer of its contour is deleted", "[hatch-move][hatch-lifetime]") {
+    lc::test::application();
+    lc::test::SettingGuard patterns{RS_SETTINGS, "Paths", "Patterns"};
+    patterns.set(QStringLiteral(LIBRECAD_SOURCE_DIR "/librecad/support/patterns"));
+    const bool solid = GENERATE(false, true);
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    auto* layer = new RS_Layer("contour");
+    graphic.addLayer(layer);
+    RS_EntityContainer picked;
+    rectangle(picked, {0, 0}, {20, 10});
+    QList<RS_Entity*> edges;
+    for (RS_Entity* edge : picked) {
+        edge->setLayer(layer);
+        edges << edge;
+    }
+    const auto hatch = hatchOver(graphic, edges, solid);
+    REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+    graphic.removeLayer(layer);
+
+    hatch->move({7, -3});
+
+    REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+    CHECK_THAT(hatch->getTotalArea(), Catch::Matchers::WithinAbs(200.0, 1e-8));
+    checkBounds(*hatch, {7, -3});
 }
