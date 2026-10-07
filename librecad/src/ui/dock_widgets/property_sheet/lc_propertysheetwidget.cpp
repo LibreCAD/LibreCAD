@@ -150,6 +150,8 @@ void LC_PropertySheetWidget::saveCollapsedSections() {
 
 void LC_PropertySheetWidget::setGraphicView(RS_GraphicView* gv) {
     if (gv != m_graphicView) {
+        // Tool options belong to the view being left, not the shared drawing.
+        m_toolOptionsPropertiesContainerProvider = nullptr;
         // an edit that was begun and not applied yet (its 30 ms timer is pending) belongs to the drawing that is being left
         forgetEditedEntities();
     }
@@ -203,6 +205,7 @@ void LC_PropertySheetWidget::setGraphicView(RS_GraphicView* gv) {
  * Empties the sheet and disables it, reading nothing of the drawing or the view.
  */
 void LC_PropertySheetWidget::clearSheet() {
+    m_toolOptionsPropertiesContainerProvider = nullptr;
     forgetEditedEntities();
     ui->cbSelection->blockSignals(true);
     ui->propertySheet->blockSignals(true);
