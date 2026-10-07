@@ -4524,7 +4524,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
         <source>&amp;Hide all layers except current</source>
-        <translation>&amp;Ocultar todas as capas agás a actual</translation>
+        <translation>Ocultar &amp;todas as capas agás a actual</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
@@ -15995,7 +15995,7 @@ Por favor, especifica outro valor.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
         <source>&amp;Hide all layers except current</source>
-        <translation>&amp;Ocultar todas as capas agás a actual</translation>
+        <translation>Ocultar &amp;todas as capas agás a actual</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>

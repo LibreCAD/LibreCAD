@@ -3172,7 +3172,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="533"></location>
         <source>&amp;Hide all layers except current</source>
-        <translation>&amp;ເຊື່ອງທຸກເລເຢີຍົກເວັ້ນເລເຢີປັດຈຸບັນ</translation>
+        <translation>ເຊື່ອ&amp;ງທຸກເລເຢີຍົກເວັ້ນເລເຢີປັດຈຸບັນ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="534"></location>
@@ -10516,7 +10516,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="738"></location>
         <source>&amp;Hide all layers except current</source>
-        <translation>&amp;ເຊື່ອງທຸກເລເຢີຍົກເວັ້ນເລເຢີປັດຈຸບັນ</translation>
+        <translation>ເຊື່ອ&amp;ງທຸກເລເຢີຍົກເວັ້ນເລເຢີປັດຈຸບັນ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="739"></location>

@@ -4502,7 +4502,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
         <source>&amp;Hide all layers except current</source>
-        <translation>&amp;Скриј ги сите слоеви освен тековниот</translation>
+        <translation>Скриј ги сите слоеви освен &amp;тековниот</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
@@ -15912,7 +15912,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
         <source>&amp;Hide all layers except current</source>
-        <translation>&amp;Скриј ги сите слоеви освен тековниот</translation>
+        <translation>Скриј ги сите слоеви освен &amp;тековниот</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>

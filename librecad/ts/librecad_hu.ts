@@ -4562,7 +4562,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
         <source>&amp;Hide all layers except current</source>
-        <translation>&amp;Az összes réteg elrejtése az aktuális kivételével</translation>
+        <translation>Az összes réteg &amp;elrejtése az aktuális kivételével</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
@@ -16063,7 +16063,7 @@ Kérjük, adjon meg egy másik értéket.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
         <source>&amp;Hide all layers except current</source>
-        <translation>&amp;Az összes réteg elrejtése az aktuális kivételével</translation>
+        <translation>Az összes réteg &amp;elrejtése az aktuális kivételével</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>

@@ -4536,7 +4536,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
         <source>&amp;Hide all layers except current</source>
-        <translation>&amp;ซ่อนทุกเลเยอร์ยกเว้นเลเยอร์ปัจจุบัน</translation>
+        <translation>ซ่อนทุกเลเยอร์&amp;ยกเว้นเลเยอร์ปัจจุบัน</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
@@ -16022,7 +16022,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
         <source>&amp;Hide all layers except current</source>
-        <translation>&amp;ซ่อนทุกเลเยอร์ยกเว้นเลเยอร์ปัจจุบัน</translation>
+        <translation>ซ่อนทุกเลเยอร์&amp;ยกเว้นเลเยอร์ปัจจุบัน</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>

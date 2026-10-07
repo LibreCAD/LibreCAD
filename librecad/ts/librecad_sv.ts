@@ -16168,7 +16168,7 @@ Ange ett annat värde.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
         <source>&amp;Hide all layers except current</source>
-        <translation>&amp;Dölj alla lager utom det aktuella</translation>
+        <translation>Dölj alla &amp;lager utom det aktuella</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>

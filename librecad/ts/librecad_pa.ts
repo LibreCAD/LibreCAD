@@ -4500,7 +4500,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
         <source>&amp;Hide all layers except current</source>
-        <translation>&amp;ਮੌਜੂਦਾ ਤੋਂ ਇਲਾਵਾ ਸਾਰੀਆਂ ਲੇਅਰਾਂ ਲੁਕਾਓ</translation>
+        <translation>ਮੌਜੂਦਾ ਤੋਂ ਇਲਾਵਾ ਸਾਰੀਆਂ ਲੇਅਰਾਂ ਲੁਕਾ&amp;ਓ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
@@ -15907,7 +15907,7 @@ Mangyaring tukuyin ang ibang halaga.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
         <source>&amp;Hide all layers except current</source>
-        <translation>&amp;ਮੌਜੂਦਾ ਤੋਂ ਇਲਾਵਾ ਸਾਰੀਆਂ ਲੇਅਰਾਂ ਲੁਕਾਓ</translation>
+        <translation>ਮੌਜੂਦਾ ਤੋਂ ਇਲਾਵਾ ਸਾਰੀਆਂ ਲੇਅਰਾਂ ਲੁਕਾ&amp;ਓ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>

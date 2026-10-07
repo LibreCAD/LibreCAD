@@ -3370,7 +3370,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
         <source>&amp;Hide all layers except current</source>
-        <translation>&amp;Piilota kaikki tasot paitsi nykyinen</translation>
+        <translation>Piilota kaikki &amp;tasot paitsi nykyinen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
@@ -16061,7 +16061,7 @@ Määrittele jokin muu arvo.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
         <source>&amp;Hide all layers except current</source>
-        <translation>&amp;Piilota kaikki tasot paitsi nykyinen</translation>
+        <translation>Piilota kaikki &amp;tasot paitsi nykyinen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>

@@ -4536,7 +4536,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
         <source>&amp;Hide all layers except current</source>
-        <translation>&amp;Skjul alle lag unntatt det gjeldende</translation>
+        <translation>Sk&amp;jul alle lag unntatt det gjeldende</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
@@ -15965,7 +15965,7 @@ Vennligst angi en annen verdi.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
         <source>&amp;Hide all layers except current</source>
-        <translation>&amp;Skjul alle lag unntatt det gjeldende</translation>
+        <translation>Sk&amp;jul alle lag unntatt det gjeldende</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>

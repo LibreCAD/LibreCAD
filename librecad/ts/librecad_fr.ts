@@ -4560,7 +4560,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
         <source>&amp;Hide all layers except current</source>
-        <translation>&amp;Cacher toutes les couches sauf la courante</translation>
+        <translation>Cac&amp;her toutes les couches sauf la courante</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
@@ -15873,7 +15873,7 @@ Veuillez indiquer une valeur différente.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="193"/>
         <source>Hide all layers except current</source>
-        <translation>Cacher toutes les couches sauf la courante</translation>
+        <translation>Cacher tous les calques sauf le courant</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="200"/>
@@ -16061,7 +16061,7 @@ Veuillez indiquer une valeur différente.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
         <source>&amp;Hide all layers except current</source>
-        <translation>&amp;Cacher toutes les couches sauf la courante</translation>
+        <translation>Cac&amp;her tous les calques sauf le courant</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>
@@ -16071,7 +16071,7 @@ Veuillez indiquer une valeur différente.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="745"/>
         <source>&amp;Lock All Layers</source>
-        <translation>&amp;Cacher tous les calques</translation>
+        <translation>Verrouiller &amp;tous les calques</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="746"/>

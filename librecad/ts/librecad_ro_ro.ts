@@ -4536,7 +4536,7 @@ fie [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
         <source>&amp;Hide all layers except current</source>
-        <translation>&amp;Ascunde toate straturile cu excepția celui curent</translation>
+        <translation>Ascunde toate &amp;straturile cu excepția celui curent</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
@@ -16007,7 +16007,7 @@ Vă rugăm să specificați o valoare diferită.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
         <source>&amp;Hide all layers except current</source>
-        <translation>&amp;Ascunde toate straturile cu excepția celui curent</translation>
+        <translation>Ascunde toate &amp;straturile cu excepția celui curent</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>

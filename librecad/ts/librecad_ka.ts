@@ -4516,7 +4516,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
         <source>&amp;Hide all layers except current</source>
-        <translation>&amp;ყველა ფენის დამალვა მიმდინარის გარდა</translation>
+        <translation>ყველა ფენის დამა&amp;ლვა მიმდინარის გარდა</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
@@ -15930,7 +15930,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
         <source>&amp;Hide all layers except current</source>
-        <translation>&amp;ყველა ფენის დამალვა მიმდინარის გარდა</translation>
+        <translation>ყველა ფენის დამა&amp;ლვა მიმდინარის გარდა</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>

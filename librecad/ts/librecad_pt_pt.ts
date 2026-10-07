@@ -4555,7 +4555,7 @@ quer [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
         <source>&amp;Hide all layers except current</source>
-        <translation>&amp;Esconder todas as camadas exceto a atual</translation>
+        <translation>Esconder &amp;todas as camadas exceto a atual</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
@@ -16061,7 +16061,7 @@ Por favor, indique um valor diferente.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
         <source>&amp;Hide all layers except current</source>
-        <translation>&amp;Esconder todas as camadas exceto a atual</translation>
+        <translation>Esconder &amp;todas as camadas exceto a atual</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>

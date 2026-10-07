@@ -4560,7 +4560,7 @@ oder [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
         <source>&amp;Hide all layers except current</source>
-        <translation>Alle Layer außer dem aktuellen aussc&amp;halten</translation>
+        <translation>Alle Layer außer dem aktuellen &amp;ausschalten</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
