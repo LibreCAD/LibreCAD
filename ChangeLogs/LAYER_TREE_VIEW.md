@@ -43,7 +43,7 @@ Several predefined layer types are supported:
 
 #### Toolbar Actions
 * Show all Layers
-* Hide all Layers
+* Hide all Layers except the current one
 * Show/Hide Secondary layers
 * Show Active layer Only
 * Expand All Items (Tree mode)

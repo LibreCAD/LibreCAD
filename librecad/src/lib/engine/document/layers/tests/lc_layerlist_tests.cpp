@@ -418,3 +418,55 @@ TEST_CASE("A library insert keeps nothing of the library drawing's layers", "[la
     REQUIRE(destination.m_graphic.findLayer(QStringLiteral("WALLS")) != nullptr);
     checkOwnLayers(destination.m_graphic);
 }
+
+// "Hide all layers except current": the layer list's filter leaves the layers
+// it does not show as they are, so the list used to find one of those still
+// visible, make it the active layer and leave the current one hidden.
+TEST_CASE("Hiding all layers never hides the current one", "[layers][active]") {
+    (void)lc::test::application();
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    RS_Layer* zero = graphic.findLayer(QStringLiteral("0"));
+    REQUIRE(zero != nullptr);
+    auto* doors = new RS_Layer(QStringLiteral("Doors"));
+    auto* wall1 = new RS_Layer(QStringLiteral("Wall1"));
+    auto* wall2 = new RS_Layer(QStringLiteral("Wall2"));
+    for (RS_Layer* layer : {doors, wall1, wall2}) {
+        graphic.addLayer(layer);
+    }
+    graphic.activateLayer(wall1);
+    REQUIRE(graphic.getActiveLayer() == wall1);
+
+    SECTION("with the layer list showing every layer") {
+        graphic.freezeAllLayers(true);
+        CHECK(graphic.getActiveLayer() == wall1);
+        CHECK_FALSE(wall1->isFrozen());
+        CHECK(wall2->isFrozen());
+        CHECK(doors->isFrozen());
+        CHECK(zero->isFrozen());
+    }
+
+    SECTION("with the layer list filtered to the layers named Wall*") {
+        zero->visibleInLayerList(false);
+        doors->visibleInLayerList(false);
+        graphic.freezeAllLayers(true);
+        CHECK(graphic.getActiveLayer() == wall1);
+        CHECK_FALSE(wall1->isFrozen());
+        CHECK(wall2->isFrozen());
+        // not listed, so not touched
+        CHECK_FALSE(doors->isFrozen());
+        CHECK_FALSE(zero->isFrozen());
+    }
+
+    SECTION("showing all layers again shows the listed ones only") {
+        doors->visibleInLayerList(false);
+        doors->freeze(true);
+        graphic.freezeAllLayers(true);
+        graphic.freezeAllLayers(false);
+        for (const RS_Layer* layer : {zero, wall1, wall2}) {
+            CHECK_FALSE(layer->isFrozen());
+        }
+        CHECK(doors->isFrozen());
+        CHECK(graphic.getActiveLayer() == wall1);
+    }
+}

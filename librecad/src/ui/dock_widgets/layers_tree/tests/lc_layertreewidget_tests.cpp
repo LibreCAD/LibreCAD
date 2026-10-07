@@ -17,17 +17,21 @@
 **********************************************************************/
 
 // Copying a layer in the layer tree copies its pen, linetype name included.
+// "Hide all layers except current" keeps the current layer under a filter too.
 
 #include <catch2/catch_test_macros.hpp>
 
 #include <QAbstractItemModel>
+#include <QCheckBox>
 #include <QItemSelectionModel>
+#include <QLineEdit>
 #include <QString>
 #include <QTreeView>
 
 #include "lc_actiontestsupport.h"
 #include "lc_layertreewidget.h"
 #include "rs_color.h"
+#include "rs_graphic.h"
 #include "rs_layer.h"
 #include "rs_layerlist.h"
 #include "rs_pen.h"
@@ -80,4 +84,66 @@ TEST_CASE("Copying a layer keeps its linetype name", "[gui][layers][linetype]") 
     CHECK(copy->getPen().getLineTypeId() == pen.getLineTypeId());
     CHECK(copy->getPen().getLineTypeName() == QStringLiteral("VENDOR_TAB"));
     CHECK(copy->getPen() == pen);
+}
+
+// In filter mode the tree holds the matching layers only. Hiding them all hid
+// the current one as well, and the layer list then made a layer the filter
+// had left visible the active one.
+TEST_CASE("Hiding all layers of the layer tree keeps the current layer", "[gui][layers][active]") {
+    (void)lc::test::application();
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    RS_Layer *zero = graphic.findLayer(QStringLiteral("0"));
+    REQUIRE(zero != nullptr);
+    auto *doors = new RS_Layer(QStringLiteral("Doors"));
+    auto *wall1 = new RS_Layer(QStringLiteral("Wall1"));
+    auto *wall2 = new RS_Layer(QStringLiteral("Wall2"));
+    for (RS_Layer *layer : {doors, wall1, wall2}) {
+        graphic.addLayer(layer);
+    }
+
+    graphic.activateLayer(wall1);
+    REQUIRE(graphic.getActiveLayer() == wall1);
+
+    lc::test::TestGraphicView view;
+    view.setDocument(&graphic);
+    LC_LayerTreeWidget tree(nullptr, nullptr);
+    tree.setGraphicView(&view);
+
+    auto *filter = tree.findChild<QLineEdit *>();
+    auto *highlightMode = tree.findChild<QCheckBox *>();
+    REQUIRE(filter != nullptr);
+    REQUIRE(highlightMode != nullptr);
+    REQUIRE(highlightMode->isChecked());
+
+    SECTION("without a filter every other layer is hidden") {
+        tree.hideAllLayers();
+        CHECK(graphic.getActiveLayer() == wall1);
+        CHECK_FALSE(wall1->isFrozen());
+        CHECK(wall2->isFrozen());
+        CHECK(doors->isFrozen());
+        CHECK(zero->isFrozen());
+    }
+
+    SECTION("a highlighting filter hides the same layers") {
+        filter->setText(QStringLiteral("Wall"));
+        tree.hideAllLayers();
+        CHECK(graphic.getActiveLayer() == wall1);
+        CHECK_FALSE(wall1->isFrozen());
+        CHECK(wall2->isFrozen());
+        CHECK(doors->isFrozen());
+        CHECK(zero->isFrozen());
+    }
+
+    SECTION("a filter that removes layers from the tree leaves those as they are") {
+        highlightMode->click();
+        REQUIRE_FALSE(highlightMode->isChecked());
+        filter->setText(QStringLiteral("Wall"));
+        tree.hideAllLayers();
+        CHECK(graphic.getActiveLayer() == wall1);
+        CHECK_FALSE(wall1->isFrozen());
+        CHECK(wall2->isFrozen());
+        CHECK_FALSE(doors->isFrozen());
+        CHECK_FALSE(zero->isFrozen());
+    }
 }

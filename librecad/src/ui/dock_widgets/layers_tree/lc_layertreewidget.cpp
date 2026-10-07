@@ -817,13 +817,18 @@ void LC_LayerTreeWidget::showActiveLayerOnly() const {
     }
 }
 /**
- * Makes all layers invisible except the active one, which the layer list keeps visible
+ * Makes all layers of the tree invisible except the active one. In filter mode
+ * the tree holds the matching layers only, and the others are left as they are.
  */
 void LC_LayerTreeWidget::hideAllLayers() {
     m_btnShowSecondaryLayers->setChecked(false);
     const LC_LayerTreeItemAcceptor acceptAll;
     const QList<RS_Layer *> layersToShow;
-    const QList<RS_Layer *> layersToHide = m_layerTreeModel->collectLayers(acceptAll);
+    QList<RS_Layer *> layersToHide = m_layerTreeModel->collectLayers(acceptAll);
+    if (m_layerList != nullptr) {
+        // frozen, the active layer would be replaced by one the filter left visible
+        layersToHide.removeAll(m_layerList->getActive());
+    }
     manageLayersVisibilityFlag(layersToShow, layersToHide, false);
 }
 
