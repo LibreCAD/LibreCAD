@@ -4528,8 +4528,8 @@ o [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
-        <source>&amp;Hide all layers</source>
-        <translation>Ocultar totes les capes</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Oculta totes les capes excepte l&apos;actual</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
@@ -15811,8 +15811,8 @@ Especifiqueu un valor diferent.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Oculta totes les capes</translation>
+        <source>Hide all layers except current</source>
+        <translation>Oculta totes les capes excepte l&apos;actual</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="200"/>
@@ -15999,8 +15999,8 @@ Especifiqueu un valor diferent.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>&amp;Freeze Totes les capes</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Oculta totes les capes excepte l&apos;actual</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>

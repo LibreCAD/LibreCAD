@@ -4535,8 +4535,8 @@ fie [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
-        <source>&amp;Hide all layers</source>
-        <translation>Ascunde toate straturile</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Ascunde toate straturile cu excepția celui curent</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
@@ -15818,8 +15818,8 @@ Vă rugăm să specificați o valoare diferită.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Ascunde toate straturile</translation>
+        <source>Hide all layers except current</source>
+        <translation>Ascunde toate straturile cu excepția celui curent</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="200"/>
@@ -16006,8 +16006,8 @@ Vă rugăm să specificați o valoare diferită.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>&amp; Congelează toate straturile</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Ascunde toate straturile cu excepția celui curent</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>

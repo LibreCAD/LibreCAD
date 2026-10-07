@@ -4523,8 +4523,8 @@ või [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp; Peida kõik kihid</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Peida kõik kihid peale praeguse</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
@@ -15802,8 +15802,8 @@ Palun määra teistsugune väärtus.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Peida kõik kihid</translation>
+        <source>Hide all layers except current</source>
+        <translation>Peida kõik kihid peale praeguse</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="200"/>
@@ -15990,8 +15990,8 @@ Palun määra teistsugune väärtus.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>Kõigi kihtide külmutamine</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Peida kõik kihid peale praeguse</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>

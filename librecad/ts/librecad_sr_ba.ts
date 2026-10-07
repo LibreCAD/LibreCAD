@@ -4104,8 +4104,8 @@ ili [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp;Sakrij sve slojeve</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Sakrij sve slojeve osim trenutnog</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
@@ -15697,8 +15697,8 @@ Please specify a different value.</source>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Сакриј све слојеве</translation>
+        <source>Hide all layers except current</source>
+        <translation>Sakrij sve slojeve osim trenutnog</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="200"/>
@@ -15885,8 +15885,8 @@ Please specify a different value.</source>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>&amp;Zamrzni sve slojeve</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Sakrij sve slojeve osim trenutnog</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>

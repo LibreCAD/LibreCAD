@@ -4561,8 +4561,8 @@ Traduzione:</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp;Nascondi tutti i livelli</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Nascondi tutti i livelli tranne quello corrente</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
@@ -15874,8 +15874,8 @@ Si prega di specificare un valore diverso.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Nascondi tutti gli strati</translation>
+        <source>Hide all layers except current</source>
+        <translation>Nascondi tutti i livelli tranne quello corrente</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="200"/>
@@ -16062,8 +16062,8 @@ Si prega di specificare un valore diverso.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>&amp;Freeze Tutti i livelli</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Nascondi tutti i livelli tranne quello corrente</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>

@@ -4561,8 +4561,8 @@ vagy [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp;Az összes réteg elrejtése</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Az összes réteg elrejtése az aktuális kivételével</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
@@ -15874,8 +15874,8 @@ Kérjük, adjon meg egy másik értéket.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Minden réteg elrejtése</translation>
+        <source>Hide all layers except current</source>
+        <translation>Az összes réteg elrejtése az aktuális kivételével</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="200"/>
@@ -16062,8 +16062,8 @@ Kérjük, adjon meg egy másik értéket.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>Minden rétegek &amp; befagyasztása</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Az összes réteg elrejtése az aktuális kivételével</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>

@@ -3370,8 +3370,8 @@ ose [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
-        <source>&amp;Hide all layers</source>
-        <translation>Fshih</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Fshih të gjitha shtresat përveç asaj aktuale</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
@@ -15833,8 +15833,8 @@ Ju lutem specifikoni një vlerë tjetër.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Fshih</translation>
+        <source>Hide all layers except current</source>
+        <translation>Fshih të gjitha shtresat përveç asaj aktuale</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="200"/>
@@ -16021,8 +16021,8 @@ Ju lutem specifikoni një vlerë tjetër.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>Freeze</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Fshih të gjitha shtresat përveç asaj aktuale</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>

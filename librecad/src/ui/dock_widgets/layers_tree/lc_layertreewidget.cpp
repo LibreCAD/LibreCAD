@@ -190,7 +190,7 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
     // hide all layer:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/not_visible_all.lci"));
-    but->setToolTip(tr("Hide all layers"));
+    but->setToolTip(tr("Hide all layers except current"));
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::hideAllLayers);
     layButtons->addWidget(but);
 
@@ -763,7 +763,7 @@ void LC_LayerTreeWidget::onCustomContextMenu(const QPoint &point){
         }
         addActionFunc("visible", tr("&Freeze Others Layers"), &LC_LayerTreeWidget::hideOtherThanSelectedLayers);
         addActionFunc("visible_all",   tr("&Defreeze All Layers"),  &LC_LayerTreeWidget::showAllLayers);
-        addActionFunc("not_visible_all",tr("&Freeze All Layers"), &LC_LayerTreeWidget::hideAllLayers);
+        addActionFunc("not_visible_all",tr("&Hide all layers except current"), &LC_LayerTreeWidget::hideAllLayers);
         addActionFunc("unlocked", tr("&Unlock All Layers"), &LC_LayerTreeWidget::unlockAllLayers);
         addActionFunc("locked", tr("&Lock All Layers"), &LC_LayerTreeWidget::lockAllLayers);
         addActionFunc("print", tr("Enable &Printing All Layers"),  &LC_LayerTreeWidget::printAllLayers);
@@ -817,7 +817,7 @@ void LC_LayerTreeWidget::showActiveLayerOnly() const {
     }
 }
 /**
- * Makes all layers invisible
+ * Makes all layers invisible except the active one, which the layer list keeps visible
  */
 void LC_LayerTreeWidget::hideAllLayers() {
     m_btnShowSecondaryLayers->setChecked(false);

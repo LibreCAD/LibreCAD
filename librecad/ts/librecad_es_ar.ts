@@ -4535,8 +4535,8 @@ o [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp; Hide todas las capas</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Ocultar todas las capas excepto la actual</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
@@ -15818,8 +15818,8 @@ Por favor especifique un valor diferente.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Ocultar todas las capas</translation>
+        <source>Hide all layers except current</source>
+        <translation>Ocultar todas las capas excepto la actual</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="200"/>
@@ -16006,8 +16006,8 @@ Por favor especifique un valor diferente.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>Congelar todas las capas</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Ocultar todas las capas excepto la actual</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>

@@ -4662,8 +4662,8 @@ eller [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp;Dölj alla lager</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Dölj alla lager utom det aktuella</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
@@ -15979,8 +15979,8 @@ Ange ett annat värde.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Dölj alla lager</translation>
+        <source>Hide all layers except current</source>
+        <translation>Dölj alla lager utom det aktuella</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="200"/>
@@ -16167,8 +16167,8 @@ Ange ett annat värde.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>Freeze alla lager</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Dölj alla lager utom det aktuella</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>

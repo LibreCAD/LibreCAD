@@ -3305,8 +3305,8 @@ atau [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp; Sembunyikan semua lapis</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Sembunyikan semua lapis kecuali lapis saat ini</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
@@ -15833,8 +15833,8 @@ Silakan nyatakan nilai yang berbeda.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Sembunyikan semua lapis</translation>
+        <source>Hide all layers except current</source>
+        <translation>Sembunyikan semua lapis kecuali lapis saat ini</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="200"/>
@@ -16021,8 +16021,8 @@ Silakan nyatakan nilai yang berbeda.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>&amp; Bekukan Semua Lapisan</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Sembunyikan semua lapis kecuali lapis saat ini</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>

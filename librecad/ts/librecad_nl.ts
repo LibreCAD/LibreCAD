@@ -4559,8 +4559,8 @@ of [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
-        <source>&amp;Hide all layers</source>
-        <translation>Alle lagen &amp; verbergen</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Alle lagen behalve de huidige &amp;verbergen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
@@ -15872,8 +15872,8 @@ Geef een andere waarde op.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Alle lagen verbergen</translation>
+        <source>Hide all layers except current</source>
+        <translation>Alle lagen behalve de huidige verbergen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="200"/>
@@ -16060,8 +16060,8 @@ Geef een andere waarde op.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>Alle lagen &amp;vrijmaken</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Alle lagen behalve de huidige &amp;verbergen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>

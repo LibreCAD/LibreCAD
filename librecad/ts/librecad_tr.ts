@@ -4561,8 +4561,8 @@ or [%2]</source>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp;Tüm katmanları gizle</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Geçerli katman hariç tüm katmanları gizle</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
@@ -15874,8 +15874,8 @@ Lütfen farklı bir değeri belirtin.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Tüm katmanlar Gizle</translation>
+        <source>Hide all layers except current</source>
+        <translation>Geçerli katman hariç tüm katmanları gizle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="200"/>
@@ -16062,8 +16062,8 @@ Lütfen farklı bir değeri belirtin.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>Ve Freeze Tüm Katmanlar</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Geçerli katman hariç tüm katmanları gizle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>

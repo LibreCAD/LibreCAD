@@ -3171,8 +3171,8 @@ or [%2]</source>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="533"></location>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp;ເຊື່ອງທຸກເລເຢີ</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;ເຊື່ອງທຸກເລເຢີຍົກເວັ້ນເລເຢີປັດຈຸບັນ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="534"></location>
@@ -10327,8 +10327,8 @@ Please specify a different value.</source>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="189"></location>
-        <source>Hide all layers</source>
-        <translation>ຊ່ອນເລເຢີທັງໝົດ</translation>
+        <source>Hide all layers except current</source>
+        <translation>ເຊື່ອງທຸກເລເຢີຍົກເວັ້ນເລເຢີປັດຈຸບັນ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="196"></location>
@@ -10515,8 +10515,8 @@ Please specify a different value.</source>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="738"></location>
-        <source>&amp;Freeze All Layers</source>
-        <translation>&amp;ແຊ່ແຂງທຸກເລເຢີ</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;ເຊື່ອງທຸກເລເຢີຍົກເວັ້ນເລເຢີປັດຈຸບັນ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="739"></location>

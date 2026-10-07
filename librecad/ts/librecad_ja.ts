@@ -4573,8 +4573,8 @@ or [%2]</source>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
-        <source>&amp;Hide all layers</source>
-        <translation>全レイヤー非表示(&amp;H)</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>現在のレイヤー以外を非表示(&amp;H)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
@@ -15887,8 +15887,8 @@ Please specify a different value.</source>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>すべてのレイヤーを非表示</translation>
+        <source>Hide all layers except current</source>
+        <translation>現在のレイヤー以外を非表示</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="200"/>
@@ -16075,8 +16075,8 @@ Please specify a different value.</source>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>すべてのレイヤーを凍結(&amp;F)</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>現在のレイヤー以外を非表示(&amp;H)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>

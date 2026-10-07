@@ -4529,8 +4529,8 @@ edo [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
-        <source>&amp;Hide all layers</source>
-        <translation>E&amp;zkutatu geruza guztiak</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>E&amp;zkutatu geruza guztiak unekoa izan ezik</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
@@ -15827,8 +15827,8 @@ Zehaztu beste balio bat.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Ezkutatu geruza guztiak</translation>
+        <source>Hide all layers except current</source>
+        <translation>Ezkutatu geruza guztiak unekoa izan ezik</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="200"/>
@@ -16015,8 +16015,8 @@ Zehaztu beste balio bat.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>&amp; Izoztu geruza guztiak</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>E&amp;zkutatu geruza guztiak unekoa izan ezik</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>

@@ -4499,8 +4499,8 @@ or [%2]</source>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp;ਸਾਰੇ ਲੇਅਰ ਲੁਕਾਓ</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;ਮੌਜੂਦਾ ਤੋਂ ਇਲਾਵਾ ਸਾਰੀਆਂ ਲੇਅਰਾਂ ਲੁਕਾਓ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
@@ -15718,8 +15718,8 @@ Mangyaring tukuyin ang ibang halaga.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>ਸਾਰੀਆਂ ਲੇਅਰਾਂ ਲੁਕਾਓ</translation>
+        <source>Hide all layers except current</source>
+        <translation>ਮੌਜੂਦਾ ਤੋਂ ਇਲਾਵਾ ਸਾਰੀਆਂ ਲੇਅਰਾਂ ਲੁਕਾਓ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="200"/>
@@ -15906,8 +15906,8 @@ Mangyaring tukuyin ang ibang halaga.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>&amp;ਸਭ ਲੇਅਰਾਂ ਫ੍ਰੀਜ਼ ਕਰੋ</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;ਮੌਜੂਦਾ ਤੋਂ ਇਲਾਵਾ ਸਾਰੀਆਂ ਲੇਅਰਾਂ ਲੁਕਾਓ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>
