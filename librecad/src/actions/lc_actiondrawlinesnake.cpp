@@ -362,13 +362,11 @@ bool LC_ActionDrawLineSnake::doProcessCommandValue(RS_CommandEvent *e, const QSt
             if (ok && LC_LineMath::isMeaningful(distance)){
                 switch (direction) {
                     case DIRECTION_X: // the value is for x coordinate adjustment
-                        pPoints->data.endpoint.x = pPoints->data.startpoint.x + distance;
-                        pPoints->data.endpoint.y = pPoints->data.startpoint.y;
+                        pPoints->data.endpoint = pPoints->data.startpoint + RS_Vector{distance, 0.};
                         completeLineSegment(false);
                         break;
                     case DIRECTION_Y: // the value is for y coordinate adjustment
-                        pPoints->data.endpoint.x = pPoints->data.startpoint.x;
-                        pPoints->data.endpoint.y = pPoints->data.startpoint.y + distance;
+                        pPoints->data.endpoint = pPoints->data.startpoint + RS_Vector{0., distance};
                         completeLineSegment(false);
                         break;
                     case DIRECTION_ANGLE: { // the value is for coordinates adjustment in direction specified by angle
