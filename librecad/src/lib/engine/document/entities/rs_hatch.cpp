@@ -171,9 +171,15 @@ bool RS_Hatch::validate() {
           if (edges.empty())
             continue;
 
+          // A clone keeps its source's parent and layer, and so does every clone
+          // made of it, down to the cached loops. Those outlive both: drop them.
           RS_EntityContainer perLoopCont{nullptr, true};
-          for (RS_Entity *e : edges)
-            perLoopCont.addEntity(e->clone());
+          for (RS_Entity *e : edges) {
+            RS_Entity *edge = e->clone();
+            edge->setParent(nullptr);
+            edge->setLayer(nullptr);
+            perLoopCont.addEntity(edge);
+          }
 
           // For pattern hatches apply the rotation before extraction so the
           // extracted loop coordinates are in the axis-aligned tiling frame.
@@ -237,14 +243,11 @@ RS_EntityContainer* RS_Hatch::getBoundaryContainer(const int loopIndex) const {
 }
 
 /**
- * Calculates the bounding box, temporarily activating contours for accurate computation.
+ * Calculates the bounding box as update() does. The contour bounds the hatch
+ * even while the layer its edges were picked from is hidden.
  */
 void RS_Hatch::calculateBorders() {
-    RS_DEBUG->print("RS_Hatch::calculateBorders");
-    activateContour(true);
-    RS_EntityContainer::calculateBorders();
-    RS_DEBUG->print("RS_Hatch::calculateBorders: size: %f,%f", getSize().x, getSize().y);
-    activateContour(false);
+    forcedCalculateBorders();
 }
 
 /**
