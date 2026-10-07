@@ -2418,8 +2418,45 @@ set(TS_FILES
     librecad/ts/librecad_zh_tw.ts
 )
 
-# Use qt_add_translations normally, the language warnings are harmless
-qt_add_translations (librecad TS_FILE_DIR ${TS_DIR} TS_FILES ${TS_FILES})
+if(APPLE)
+    set(LIBRECAD_DATA_INSTALL_DIR "bin/LibreCAD.app/Contents/Resources")
+elseif(WIN32)
+    set(LIBRECAD_DATA_INSTALL_DIR "bin/resources")
+else()
+    set(LIBRECAD_DATA_INSTALL_DIR "share/librecad")
+endif()
+
+set(LIBRECAD_TRANSLATION_OPTIONS)
+if(Qt6_VERSION VERSION_GREATER_EQUAL 6.7)
+    list(APPEND LIBRECAD_TRANSLATION_OPTIONS IMMEDIATE_CALL)
+endif()
+qt_add_translations(librecad ${LIBRECAD_TRANSLATION_OPTIONS}
+    TS_FILE_DIR ${TS_DIR} TS_FILES ${TS_FILES}
+    QM_FILES_OUTPUT_VARIABLE QM_FILES)
+# Keep the fallback catalogs and their build dependencies when also installing files.
+qt_add_resources(librecad "librecad_translations"
+    PREFIX "/i18n" BASE "${CMAKE_CURRENT_BINARY_DIR}" FILES ${QM_FILES})
+install(FILES ${QM_FILES}
+    DESTINATION "${LIBRECAD_DATA_INSTALL_DIR}/qm" COMPONENT Resources
+)
+
+foreach(resource_dir fonts patterns library)
+    install(DIRECTORY "librecad/support/${resource_dir}/"
+        DESTINATION "${LIBRECAD_DATA_INSTALL_DIR}/${resource_dir}" COMPONENT Resources)
+endforeach()
+
+if(UNIX AND NOT APPLE)
+    install(FILES "desktop/librecad.1"
+        DESTINATION "share/man/man1" COMPONENT Resources)
+    install(FILES "desktop/librecad.desktop"
+        DESTINATION "share/applications" COMPONENT Resources)
+    install(FILES "librecad/res/images/librecad.png"
+        DESTINATION "share/pixmaps" COMPONENT Resources)
+    install(FILES "desktop/librecad.sharedmimeinfo"
+        DESTINATION "share/mime/packages" RENAME "librecad.xml" COMPONENT Resources)
+    install(FILES "desktop/org.librecad.librecad.appdata.xml"
+        DESTINATION "share/metainfo" COMPONENT Resources)
+endif()
 
 # Optional ttf2lff
 if (FREETYPE_FOUND AND NOT WIN32)
@@ -2430,10 +2467,19 @@ if (FREETYPE_FOUND AND NOT WIN32)
                                 ${FREETYPE_INCLUDE_DIRS}
                                 ${SHARED_INCLUDES}
     )
+    install (TARGETS ttf2lff RUNTIME DESTINATION bin)
 endif ()
 
 add_subdirectory (libraries/lciconengine)
 add_subdirectory (plugins)
+
+add_custom_target(librecad_plugin_translations)
+qt_add_lrelease(librecad_plugin_translations TS_FILES ${PLUGIN_TS_FILES}
+    QM_FILES_OUTPUT_VARIABLE PLUGIN_QM_FILES)
+qt_add_resources(librecad "librecad_plugin_translations"
+    PREFIX "/i18n" BASE "${CMAKE_CURRENT_BINARY_DIR}" FILES ${PLUGIN_QM_FILES})
+install(FILES ${PLUGIN_QM_FILES}
+    DESTINATION "${LIBRECAD_DATA_INSTALL_DIR}/qm" COMPONENT Resources)
 
 option (BUILD_TESTS "Build unit tests for LibreCAD" OFF)
 option (LIBRECAD_REGISTER_FULL_TESTS
@@ -2536,6 +2582,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/tests/rs_pen_tests.cpp
         librecad/src/lib/actions/tests/lc_snappercatchtests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_round_tests.cpp
+        librecad/src/actions/drawing/draw/curve/tests/lc_actiondrawdualtests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_offset_tests.cpp
         librecad/src/actions/drawing/modify/tests/lc_offsetmatrixtests.cpp
         librecad/src/lib/filters/tests/dwg_pre_r13_codepage_tests.cpp

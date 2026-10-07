@@ -32,7 +32,7 @@
 
 
 LC_ActionDrawDual::LC_ActionDrawDual(LC_ActionContext* context)
-    : LC_ActionPreSelectionAwareBase("Draw Dual", context){
+    : LC_ActionPreSelectionAwareBase("Draw Dual", context, RS2::ActionDrawDual){
 }
 
 void LC_ActionDrawDual::init(int status) {
@@ -40,8 +40,23 @@ void LC_ActionDrawDual::init(int status) {
     LC_ActionPreSelectionAwareBase::init(status);
 }
 
+void LC_ActionDrawDual::onSelectionCompleted([[maybe_unused]] bool singleEntity, const bool fromInit) {
+    // The dual still needs its center: completing the selection only moves on to
+    // picking it. The base class would trigger here, before a center exists.
+    setSelectionComplete(isAllowTriggerOnEmptySelection(), fromInit);
+    updateActionPrompt();
+    updateMouseCursor();
+}
+
+bool LC_ActionDrawDual::isAllowTriggerOnEmptySelection() {
+    return false;
+}
+
 void LC_ActionDrawDual::onCoordinateEvent([[maybe_unused]] int status, [[maybe_unused]] bool isZero,
                                            [[maybe_unused]] const RS_Vector& coord) {
+    if (!m_selectionComplete) {
+        return;
+    }
     if (getStatus() == ChooseCenter) {
         m_center = coord;
         trigger();

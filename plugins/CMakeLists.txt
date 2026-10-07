@@ -4,9 +4,11 @@ include_directories(
 )
 
 if(APPLE)
-    set(LIBRECAD_PLUGIN_INSTALL_DIR "bin/LibreCAD.app/Contents/PlugIns/LibreCAD")
+    set(LIBRECAD_PLUGIN_INSTALL_DIR "bin/LibreCAD.app/Contents/PlugIns/LibreCAD"
+        CACHE STRING "Plugin destination, relative to CMAKE_INSTALL_PREFIX or absolute")
 else()
-    set(LIBRECAD_PLUGIN_INSTALL_DIR "bin/resources/plugins")
+    set(LIBRECAD_PLUGIN_INSTALL_DIR "bin/resources/plugins"
+        CACHE STRING "Plugin destination, relative to CMAKE_INSTALL_PREFIX or absolute")
 endif()
 
 set(PLUGIN_HEADERS
@@ -117,12 +119,5 @@ add_subdirectory(gear)
 # importshp plugin removed in Phase 5 of docs/plan_shp_native_filter.md;
 # superseded by the native RS_FilterSHP filter (File->Open path).
 
-# Compile plugin translations (.ts → .qm)
-# Note: qt_add_translations is commented out to avoid duplicate resource definition
-# conflicts with CMAKE_AUTORCC ON in the main CMakeLists.txt
-# set(PLUGIN_TS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/ts)
-# list(TRANSFORM PLUGIN_TS_FILES PREPEND "${PLUGIN_TS_DIR}/")
-# qt_add_translations(align
-#     TS_FILE_DIR ${PLUGIN_TS_DIR}
-#     TS_FILES ${PLUGIN_TS_FILES}
-# )
+list(TRANSFORM PLUGIN_TS_FILES PREPEND "${CMAKE_CURRENT_SOURCE_DIR}/ts/")
+set(PLUGIN_TS_FILES "${PLUGIN_TS_FILES}" PARENT_SCOPE)
