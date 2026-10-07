@@ -1,6 +1,7 @@
 /****************************************************************************
 ** This file is part of the LibreCAD project, a 2D CAD program
-** Copyright (C) 2026 LibreCAD.org
+** Copyright (C) 2026 librecad.org
+** Copyright (C) 2026 Dongxu Li (github.com/dxli)
 **
 ** This program is free software; you can redistribute it and/or modify it
 ** under the terms of the GNU General Public License as published by the
@@ -187,7 +188,8 @@ TEST_CASE("Hatch Move Copy supports repeated previews and undo redo", "[hatch-mo
         outline->addVertex({20, 0});
         outline->addVertex({20, 10});
         outline->addVertex({0, 10});
-        outline->setClosed(true);
+        outline->setClosed(true, 0.0);
+        REQUIRE(outline->count() == 4);
         graphic.addEntity(outline);
         selected << outline;
     }
