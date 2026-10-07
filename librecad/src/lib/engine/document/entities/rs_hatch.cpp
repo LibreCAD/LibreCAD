@@ -237,14 +237,11 @@ RS_EntityContainer* RS_Hatch::getBoundaryContainer(const int loopIndex) const {
 }
 
 /**
- * Calculates the bounding box, temporarily activating contours for accurate computation.
+ * Calculates the bounding box as update() does. The contour bounds the hatch
+ * even while the layer its edges were picked from is hidden.
  */
 void RS_Hatch::calculateBorders() {
-    RS_DEBUG->print("RS_Hatch::calculateBorders");
-    activateContour(true);
-    RS_EntityContainer::calculateBorders();
-    RS_DEBUG->print("RS_Hatch::calculateBorders: size: %f,%f", getSize().x, getSize().y);
-    activateContour(false);
+    forcedCalculateBorders();
 }
 
 /**

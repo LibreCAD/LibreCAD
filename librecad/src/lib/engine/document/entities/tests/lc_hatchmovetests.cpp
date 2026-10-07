@@ -292,13 +292,15 @@ TEST_CASE("A hatch moves with a block insert in its contour", "[hatch-move][hatc
     checkBounds(*hatch, {7, -3});
 }
 
-// The clones in a contour keep the layer of the entities picked for it, and
-// deleting a layer does not reach inside a hatch.
-TEST_CASE("A hatch moves after the layer of its contour is deleted", "[hatch-move][hatch-lifetime]") {
+// The clones in a contour keep the layer of the entities picked for it. Deleting
+// that layer does not reach inside a hatch, and freezing it hides the clones.
+TEST_CASE("A hatch moves whatever becomes of the layer of its contour", "[hatch-move][hatch-lifetime]") {
     lc::test::application();
     lc::test::SettingGuard patterns{RS_SETTINGS, "Paths", "Patterns"};
     patterns.set(QStringLiteral(LIBRECAD_SOURCE_DIR "/librecad/support/patterns"));
     const bool solid = GENERATE(false, true);
+    const bool deleted = GENERATE(false, true);
+    CAPTURE(solid, deleted);
     RS_Graphic graphic;
     graphic.initForNewDocument();
     auto* layer = new RS_Layer("contour");
@@ -312,9 +314,15 @@ TEST_CASE("A hatch moves after the layer of its contour is deleted", "[hatch-mov
     }
     const auto hatch = hatchOver(graphic, edges, solid);
     REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
-    graphic.removeLayer(layer);
+    if (deleted) {
+        graphic.removeLayer(layer);
+    }
+    else {
+        layer->freeze(true);
+    }
 
     hatch->move({7, -3});
+    hatch->calculateBorders(); // as a drawing does for its extent
 
     REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
     CHECK_THAT(hatch->getTotalArea(), Catch::Matchers::WithinAbs(200.0, 1e-8));
