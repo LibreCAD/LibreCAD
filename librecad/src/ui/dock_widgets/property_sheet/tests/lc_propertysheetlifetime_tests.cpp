@@ -3,6 +3,7 @@
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
 ** Copyright (C) 2026 LibreCAD (librecad.org)
+** Copyright (C) 2026 Dongxu Li (github.com/dxli)
 **
 ** This program is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License
@@ -31,6 +32,7 @@
 
 #include <memory>
 
+#include <QAction>
 #include <QCoreApplication>
 #include <QEventLoop>
 #include <QTimer>
@@ -45,6 +47,12 @@
 #include "rs_line.h"
 
 namespace {
+
+class TestOptionsProvider final : public LC_ToolOptionsPropertiesContainerProvider {
+public:
+    void fillToolOptionsContainer(LC_PropertyContainer*) override { ++fills; }
+    int fills = 0;
+};
 
 /// a drawing with a selected line
 RS_Line* fillWithSelectedLine(RS_Graphic& graphic) {
@@ -226,4 +234,52 @@ TEST_CASE("A property sheet with no drawing ignores a late request", "[gui][prop
     sheet.doProcessLateRequest(info);
     info.inputType = LC_ActionContext::InteractiveInputInfo::POINT_X;
     sheet.doProcessLateRequest(info);
+}
+
+TEST_CASE("Tool options do not outlive their view", "[gui][properties][3017]") {
+    (void)lc::test::application();
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    lc::test::TestGraphicView drawingView;
+    drawingView.setDocument(&graphic);
+    auto preview = std::make_unique<lc::test::TestGraphicView>();
+    preview->setDocument(&graphic);
+    preview->setPrintPreview(true);
+    LC_ActionContext context;
+    context.setDocumentAndView(&graphic, preview.get());
+    LC_ActionGroupManager actions(nullptr);
+    LC_PropertySheetWidget sheet(nullptr, &context, &actions);
+    switchOffSectionsForTests(sheet);
+    sheet.getOptions()->showToolOptions = true;
+    sheet.show();
+    sheet.setGraphicView(preview.get());
+    auto provider = std::make_unique<TestOptionsProvider>();
+    sheet.showToolOptions(provider.get());
+    REQUIRE(provider->fills > 0);
+
+    const int initialFills = provider->fills;
+    sheet.setGraphicView(preview.get());
+    sheet.updateFormats();
+    REQUIRE(provider->fills > initialFills); // the same view keeps its options
+    const int fills = provider->fills;
+
+    SECTION("detach") { sheet.setGraphicView(nullptr); }
+    SECTION("switch views") {
+        context.setDocumentAndView(&graphic, &drawingView);
+        sheet.setGraphicView(&drawingView);
+    }
+    SECTION("destroy the view") { preview.reset(); }
+    context.setDocumentAndView(&graphic, &drawingView);
+    sheet.setGraphicView(&drawingView);
+    preview.reset();
+
+    // Drawing Preferences enters tool-options mode before refreshing formats.
+    QAction preferences(QStringLiteral("Drawing Preferences"), nullptr);
+    sheet.setCurrentQAction(&preferences);
+    sheet.updateFormats();
+    REQUIRE(provider->fills == fills);
+    provider.reset();
+    graphic.getPlotSettings()->setPaperFormat(RS2::A3, false);
+    sheet.updateFormats();
+    CHECK(sheet.isEnabled());
 }
