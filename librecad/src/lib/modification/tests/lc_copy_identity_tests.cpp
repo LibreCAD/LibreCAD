@@ -40,6 +40,9 @@
 #include "lc_actiontestsupport.h"
 #include "lc_copyutils.h"
 #include "lc_documentinvariants.h"
+#include "lc_dwgadvancedmetadata.h"
+#include "lc_linetype.h"
+#include "lc_linetypenames.h"
 #include "rs_block.h"
 #include "rs_circle.h"
 #include "rs_clipboard.h"
@@ -1108,4 +1111,340 @@ TEST_CASE("Copies of a block reference on a locked layer and of its text are pai
     for (const RS_Entity* text : d.live(RS2::EntityText)) {
         CHECK(text->ownerLineage() != firstInsert->lineage());
     }
+}
+
+namespace {
+
+std::string ltypeRecordDxf(const std::string& name, const std::string& description, const std::vector<double>& dashes) {
+    double length = 0;
+    for (const double dash : dashes) {
+        length += std::abs(dash);
+    }
+    std::string record = "0\nLTYPE\n2\n" + name + "\n70\n0\n3\n" + description + "\n72\n65\n73\n"
+        + std::to_string(dashes.size()) + "\n40\n" + std::to_string(length) + "\n";
+    for (const double dash : dashes) {
+        record += "49\n" + std::to_string(dash) + "\n";
+    }
+    return record;
+}
+
+// An R12 library drawing: VENDOR_X, named by a layer, a block member and a
+// top-level line; VENDOR_LIB, named by nothing; a lower-case HIDDEN record
+// and a padded DASHED one, which the library's list keeps or drops by its
+// seed rules (the seed takes the first, add() deletes the second).
+std::string libraryDxf() {
+    return "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1009\n0\nENDSEC\n"
+           "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLTYPE\n70\n4\n"
+           + ltypeRecordDxf("VENDOR_X", "Vendor x", {2, -2})
+           + ltypeRecordDxf("VENDOR_LIB", "Vendor library", {4, -1})
+           + ltypeRecordDxf("hidden", "Vendor hidden", {9, -9})
+           + ltypeRecordDxf(" DASHED", "Vendor dashed", {9, -9})
+           + "0\nENDTAB\n0\nTABLE\n2\nLAYER\n70\n2\n"
+             "0\nLAYER\n2\n0\n70\n0\n62\n7\n6\nCONTINUOUS\n"
+             "0\nLAYER\n2\nL_X\n70\n0\n62\n7\n6\nVENDOR_X\n"
+             "0\nENDTAB\n0\nENDSEC\n"
+             "0\nSECTION\n2\nBLOCKS\n"
+             "0\nBLOCK\n8\n0\n2\nKNOB\n70\n0\n10\n0.0\n20\n0.0\n30\n0.0\n3\nKNOB\n1\n\n"
+             "0\nLINE\n8\nL_X\n6\nVENDOR_X\n10\n0.0\n20\n0.0\n11\n1.0\n21\n0.0\n"
+             "0\nENDBLK\n8\n0\n0\nENDSEC\n"
+             "0\nSECTION\n2\nENTITIES\n"
+             "0\nLINE\n8\nL_X\n6\nVENDOR_X\n10\n0.0\n20\n0.0\n11\n10.0\n21\n0.0\n"
+             "0\nINSERT\n8\n0\n2\nKNOB\n10\n5.0\n20\n5.0\n30\n0.0\n"
+             "0\nENDSEC\n0\nEOF\n";
+}
+
+// A drawing of its own: one LTYPE record and a line naming it.
+std::string drawingWithLType(const std::string& name, const std::string& description, const std::vector<double>& dashes) {
+    return "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1009\n0\nENDSEC\n"
+           "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLTYPE\n70\n1\n"
+           + ltypeRecordDxf(name, description, dashes)
+           + "0\nENDTAB\n0\nTABLE\n2\nLAYER\n70\n1\n"
+             "0\nLAYER\n2\n0\n70\n0\n62\n7\n6\nCONTINUOUS\n"
+             "0\nENDTAB\n0\nENDSEC\n0\nSECTION\n2\nENTITIES\n"
+             "0\nLINE\n8\n0\n6\n" + name + "\n10\n0.0\n20\n50.0\n11\n10.0\n21\n50.0\n"
+             "0\nENDSEC\n0\nEOF\n";
+}
+
+void importText(RS_Graphic& graphic, const std::string& text, const std::string& name) {
+    const auto path = tempFile(name);
+    std::ofstream(path) << text;
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(path.string()), RS2::FormatDXFRW));
+    std::filesystem::remove(path);
+}
+
+// The values of one group code in each LTYPE record spelt `name` to the
+// byte, one vector per record: values() cannot tell the records apart, nor
+// a padded name from the plain one.
+std::vector<std::vector<std::string>> ltypeRecords(const std::filesystem::path& path, const std::string& name,
+                                                   const std::string& code) {
+    std::ifstream in(path);
+    std::vector<std::vector<std::string>> records;
+    std::string c;
+    std::string v;
+    bool inLtype = false;
+    bool named = false;
+    auto trim = [](std::string s) {
+        s.erase(0, s.find_first_not_of(" \t"));
+        s.erase(s.find_last_not_of(" \t\r") + 1);
+        return s;
+    };
+    while (std::getline(in, c) && std::getline(in, v)) {
+        c = trim(c);
+        if (!v.empty() && v.back() == '\r') {
+            v.pop_back();
+        }
+        if (c == "0") {
+            inLtype = trim(v) == "LTYPE";
+            named = false;
+        }
+        else if (inLtype && c == "2") {
+            named = v == name;
+            if (named) {
+                records.emplace_back();
+            }
+        }
+        else if (named && c == code) {
+            records.back().push_back(trim(v));
+        }
+    }
+    return records;
+}
+
+using Dashes = std::vector<std::vector<double>>;
+
+Dashes ltypeDashes(const std::filesystem::path& path, const std::string& name) {
+    Dashes dashes;
+    for (const auto& record : ltypeRecords(path, name, "49")) {
+        dashes.emplace_back();
+        for (const std::string& value : record) {
+            dashes.back().push_back(std::stod(value));
+        }
+    }
+    return dashes;
+}
+
+std::unique_ptr<Drawing> libraryDrawing() {
+    auto source = std::make_unique<Drawing>();
+    importText(source->m_graphic, libraryDxf(), "library.dxf");
+    // The seeds, VENDOR_X and VENDOR_LIB: HIDDEN took the record spelt
+    // `hidden`, the padded DASHED record made no entry.
+    REQUIRE(source->m_graphic.countLineTypes() == 37);
+    return source;
+}
+
+void insertLibrary(Drawing& destination, std::unique_ptr<Drawing>& source) {
+    destination.modify([&](LC_DocumentModificationBatch& ctx) {
+        RS_Modification::libraryInsert(LC_LibraryInsertData(RS_Vector{0, 0}, 1, 0, "PART", &source->m_graphic),
+                                       &destination.m_graphic, ctx);
+    });
+    source.reset(); // nothing inserted may depend on the library drawing
+}
+
+void importBack(RS_Graphic& graphic, const std::filesystem::path& path, const RS2::FormatType format) {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(path.string()), format));
+}
+
+} // namespace
+
+// The library's line types come as fresh copies, the whole table as every
+// layer does; its built-ins never do.
+TEST_CASE("A library insert brings the library drawing's line types as new entries", "[copy][library][linetype]") {
+    auto source = libraryDrawing();
+    const LC_LineType* sourceX = source->m_graphic.findLineType("VENDOR_X");
+    REQUIRE(sourceX != nullptr);
+    REQUIRE(sourceX->hasImportedRecord);
+
+    Drawing destination;
+    destination.modify([&](LC_DocumentModificationBatch& ctx) {
+        RS_Modification::libraryInsert(LC_LibraryInsertData(RS_Vector{0, 0}, 1, 0, "PART", &source->m_graphic),
+                                       &destination.m_graphic, ctx);
+    });
+    // A copy of the library's entry; the library drawing keeps its own.
+    const LC_LineType* x = destination.m_graphic.findLineType("VENDOR_X");
+    REQUIRE(x != nullptr);
+    CHECK(x != sourceX);
+    CHECK(source->m_graphic.countLineTypes() == 37);
+    CHECK(source->m_graphic.findLineType("VENDOR_X") == sourceX);
+    source.reset(); // nothing inserted may depend on the library drawing
+
+    CHECK(x->name == "VENDOR_X");
+    CHECK(x->description == "Vendor x");
+    CHECK(x->pattern == std::vector<double>{2, -2});
+    CHECK(x->origin == LC_LineType::Origin::Imported);
+    // No LTYPE record of this drawing backs it: the writer makes one from the entry.
+    CHECK_FALSE(x->hasImportedRecord);
+    CHECK(destination.m_graphic.dwgAdvancedMetadata().findLineTypeTableEntryByName("VENDOR_X") == nullptr);
+    // The whole table comes, named by something or not.
+    const LC_LineType* lib = destination.m_graphic.findLineType("VENDOR_LIB");
+    REQUIRE(lib != nullptr);
+    CHECK(lib->pattern == std::vector<double>{4, -1});
+    CHECK(destination.m_graphic.countLineTypes() == 37);
+    // The built-ins stay this drawing's own, however the library spelt or dashed them.
+    const LC_LineType* hidden = destination.m_graphic.findLineType("HIDDEN");
+    REQUIRE(hidden != nullptr);
+    CHECK(hidden == destination.m_graphic.lineTypeAt(11));
+    CHECK(hidden->name == "HIDDEN");
+    CHECK(hidden->pattern == LC_LineTypeNames::builtinMetrics()[11].pattern);
+    CHECK(hidden->origin == LC_LineType::Origin::BuiltIn);
+    CHECK_FALSE(hidden->hasImportedRecord);
+    CHECK(destination.m_graphic.findLineType(" DASHED") == destination.m_graphic.lineTypeAt(7));
+    CHECK(destination.m_graphic.lineTypeAt(7)->name == "DASHED");
+    CHECK(lc::test::documentProblems(destination.m_graphic).isEmpty());
+}
+
+// The pens are what they were, and the file gets one record
+// per entry with the entry's dashes, in DXF and DWG, and nothing of the
+// library's archive.
+TEST_CASE("A library insert's line types reach the destination's pens and file", "[copy][library][linetype]") {
+    auto source = libraryDrawing();
+    Drawing destination;
+    insertLibrary(destination, source);
+
+    // The cloned layer's pen and the block member's. (The part block's own
+    // members are ByBlock, as addByBlockEntity has always made them.)
+    RS_Layer* lx = destination.m_graphic.findLayer("L_X");
+    REQUIRE(lx != nullptr);
+    CHECK(lx->getPen().getLineTypeName() == "VENDOR_X");
+    const RS_Block* knob = destination.m_graphic.findBlock("KNOB");
+    REQUIRE(knob != nullptr);
+    REQUIRE(knob->firstEntity() != nullptr);
+    CHECK(knob->firstEntity()->getPen(false).getLineTypeName() == "VENDOR_X");
+
+    for (const RS2::FormatType format : {RS2::FormatDXFRW, RS2::FormatDXFRW12}) {
+        INFO("format " << static_cast<int>(format));
+        const auto dxf = tempFile("library_linetype.dxf");
+        REQUIRE(save(destination.m_graphic, dxf, format));
+        // One record per entry, with the entry's dashes and description...
+        CHECK(ltypeDashes(dxf, "VENDOR_X") == Dashes{{2, -2}});
+        CHECK(ltypeDashes(dxf, "VENDOR_LIB") == Dashes{{4, -1}});
+        if (format != RS2::FormatDXFRW12) {
+            CHECK(ltypeRecords(dxf, "VENDOR_X", "3") == std::vector<std::vector<std::string>>{{"Vendor x"}});
+        }
+        // ...and nothing of the library's archive: its HIDDEN and DASHED
+        // records stayed there. The head's 35, VENDOR_X and VENDOR_LIB.
+        CHECK(ltypeDashes(dxf, "hidden").empty());
+        CHECK(ltypeDashes(dxf, " DASHED").empty());
+        CHECK(values(dxf, "LTYPE", "2").size() == 37);
+        // Read back, each entry is a record's.
+        RS_Graphic again;
+        importBack(again, dxf, RS2::FormatDXFRW);
+        const LC_LineType* x = again.findLineType("VENDOR_X");
+        REQUIRE(x != nullptr);
+        CHECK(x->pattern == std::vector<double>{2, -2});
+        CHECK(x->hasImportedRecord);
+        CHECK(again.findLineType("VENDOR_LIB") != nullptr);
+        CHECK(again.countLineTypes() == 37);
+        std::filesystem::remove(dxf);
+    }
+
+    // DWG keeps group 40 as the double it is given: the dashes and their sum.
+    const auto dwg = tempFile("library_linetype.dwg");
+    REQUIRE(save(destination.m_graphic, dwg, RS2::FormatDWG2004));
+    RS_Graphic fromDwg;
+    importBack(fromDwg, dwg, RS2::FormatDWG);
+    const auto& meta = fromDwg.dwgAdvancedMetadata();
+    const DRW_LType* libRecord = meta.findLineTypeTableEntryByName("VENDOR_LIB");
+    REQUIRE(libRecord != nullptr);
+    CHECK(libRecord->path == std::vector<double>{4, -1});
+    CHECK(libRecord->length == 5.0);
+    CHECK(libRecord->desc == "Vendor library");
+    const DRW_LType* xRecord = meta.findLineTypeTableEntryByName("VENDOR_X");
+    REQUIRE(xRecord != nullptr);
+    CHECK(xRecord->path == std::vector<double>{2, -2});
+    CHECK(xRecord->length == 4.0);
+    CHECK(fromDwg.countLineTypes() == 37);
+    std::filesystem::remove(dwg);
+}
+
+// A line type the destination defines stays as it is, spelling, dashes and
+// description, as a layer or a block of the same name does.
+TEST_CASE("A library insert leaves a line type the destination already defines alone", "[copy][library][linetype]") {
+    auto source = libraryDrawing();
+    Drawing destination;
+    importText(destination.m_graphic, drawingWithLType("Vendor_x", "Own x", {5, -5}), "own_x.dxf");
+    REQUIRE(destination.m_graphic.countLineTypes() == 36);
+    const LC_LineType* own = destination.m_graphic.findLineType("VENDOR_X");
+    REQUIRE(own != nullptr);
+    insertLibrary(destination, source);
+
+    CHECK(destination.m_graphic.findLineType("VENDOR_X") == own);
+    CHECK(own->name == "Vendor_x");
+    CHECK(own->pattern == std::vector<double>{5, -5});
+    CHECK(own->description == "Own x");
+    CHECK(own->hasImportedRecord);
+    CHECK(destination.m_graphic.countLineTypes() == 37);
+    // The inserted pens keep the library's spelling; the file has the one
+    // record, the destination's, which that spelling resolves to.
+    const RS_Block* knob = destination.m_graphic.findBlock("KNOB");
+    REQUIRE(knob != nullptr);
+    REQUIRE(knob->firstEntity() != nullptr);
+    CHECK(knob->firstEntity()->getPen(false).getLineTypeName() == "VENDOR_X");
+    const auto dxf = tempFile("own_x_out.dxf");
+    REQUIRE(save(destination.m_graphic, dxf, RS2::FormatDXFRW));
+    CHECK(ltypeDashes(dxf, "Vendor_x") == Dashes{{5, -5}});
+    CHECK(ltypeDashes(dxf, "VENDOR_X").empty());
+    CHECK(values(dxf, "LTYPE", "2").size() == 37);
+    std::filesystem::remove(dxf);
+}
+
+// The merge sits beside the layer clones, outside the undo section: undo
+// removes the insert and keeps the entries, as it keeps the layers.
+TEST_CASE("Undoing a library insert keeps its line types, as it keeps its layers", "[copy][library][linetype][undo]") {
+    auto source = libraryDrawing();
+    Drawing destination;
+    insertLibrary(destination, source);
+
+    REQUIRE(destination.m_graphic.undo());
+    CHECK(destination.live(RS2::EntityInsert).isEmpty());
+    CHECK(destination.m_graphic.findLayer("L_X") != nullptr);
+    const LC_LineType* x = destination.m_graphic.findLineType("VENDOR_X");
+    REQUIRE(x != nullptr);
+    CHECK(x->pattern == std::vector<double>{2, -2});
+    REQUIRE(destination.m_graphic.redo());
+    CHECK(destination.m_graphic.findLineType("VENDOR_X") == x);
+    CHECK(destination.m_graphic.countLineTypes() == 37);
+}
+
+// A record that only names a line type does not keep a definition out: the
+// entry keeps the destination's spelling, description and record and takes
+// the library's dashes, and the file gets that record with them, once.
+TEST_CASE("A record that only names a line type takes the library's dashes", "[copy][library][linetype]") {
+    auto source = libraryDrawing();
+    Drawing destination;
+    importText(destination.m_graphic, drawingWithLType("VENDOR_X", "Name only", {}), "name_only.dxf");
+    const LC_LineType* own = destination.m_graphic.findLineType("VENDOR_X");
+    REQUIRE(own != nullptr);
+    REQUIRE(own->pattern.empty());
+    REQUIRE(own->hasImportedRecord);
+    insertLibrary(destination, source);
+
+    CHECK(destination.m_graphic.findLineType("VENDOR_X") == own);
+    CHECK(own->pattern == std::vector<double>{2, -2});
+    CHECK(own->name == "VENDOR_X");
+    CHECK(own->description == "Name only");
+    CHECK(own->hasImportedRecord);
+    CHECK(destination.m_graphic.countLineTypes() == 37);
+
+    for (const RS2::FormatType format : {RS2::FormatDXFRW, RS2::FormatDXFRW12}) {
+        INFO("format " << static_cast<int>(format));
+        const auto dxf = tempFile("name_only_out.dxf");
+        REQUIRE(save(destination.m_graphic, dxf, format));
+        CHECK(ltypeDashes(dxf, "VENDOR_X") == Dashes{{2, -2}});
+        if (format != RS2::FormatDXFRW12) {
+            CHECK(ltypeRecords(dxf, "VENDOR_X", "3") == std::vector<std::vector<std::string>>{{"Name only"}});
+        }
+        CHECK(values(dxf, "LTYPE", "2").size() == 37);
+        std::filesystem::remove(dxf);
+    }
+    const auto dwg = tempFile("name_only_out.dwg");
+    REQUIRE(save(destination.m_graphic, dwg, RS2::FormatDWG2004));
+    RS_Graphic fromDwg;
+    importBack(fromDwg, dwg, RS2::FormatDWG);
+    const DRW_LType* record = fromDwg.dwgAdvancedMetadata().findLineTypeTableEntryByName("VENDOR_X");
+    REQUIRE(record != nullptr);
+    CHECK(record->path == std::vector<double>{2, -2});
+    CHECK(record->length == 4.0);
+    std::filesystem::remove(dwg);
 }
