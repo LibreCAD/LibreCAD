@@ -56,6 +56,7 @@ void RS_Clipboard::clear() const {
     m_graphic->clear();
     m_graphic->clearBlocks();
     m_graphic->clearLayers();
+    m_graphic->clearLineTypes();
     m_graphic->clearVariables();
 }
 

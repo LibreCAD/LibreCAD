@@ -149,23 +149,37 @@ LC_LineType* LC_LineTypeList::add(LC_LineType* entry) {
     return existing;
 }
 
+void LC_LineTypeList::take(const LC_LineType* incoming) {
+    if (incoming->origin == LC_LineType::Origin::BuiltIn) {
+        return; // this list seeded its own
+    }
+    LC_LineType* existing = find(incoming->name);
+    if (existing == nullptr) {
+        // a copy: the other list may be freed before this one
+        auto* copy = new LC_LineType(incoming->name);
+        copy->description = incoming->description;
+        copy->pattern = incoming->pattern;
+        add(copy);
+    } else if (existing->pattern.empty() && !incoming->pattern.empty()) {
+        // a record that only names a line type loses to a definition;
+        // the spelling and the record stay this drawing's
+        existing->pattern = incoming->pattern;
+        setModified(true);
+    }
+}
+
 void LC_LineTypeList::merge(const LC_LineTypeList& source) {
     for (const LC_LineType* incoming : source.m_entries) {
-        if (incoming->origin == LC_LineType::Origin::BuiltIn) {
-            continue; // this list seeded its own
-        }
-        LC_LineType* existing = find(incoming->name);
-        if (existing == nullptr) {
-            // a copy: the other list may be freed before this one
-            auto* copy = new LC_LineType(incoming->name);
-            copy->description = incoming->description;
-            copy->pattern = incoming->pattern;
-            add(copy);
-        } else if (existing->pattern.empty() && !incoming->pattern.empty()) {
-            // a record that only names a line type loses to a definition;
-            // the spelling and the record stay this drawing's
-            existing->pattern = incoming->pattern;
-            setModified(true);
+        take(incoming);
+    }
+}
+
+void LC_LineTypeList::merge(const LC_LineTypeList& source, const std::vector<QString>& names) {
+    for (const QString& name : names) {
+        const LC_LineType* incoming = source.find(name);
+        // an entry without dashes defines nothing to bring
+        if (incoming != nullptr && !incoming->pattern.empty()) {
+            take(incoming);
         }
     }
 }

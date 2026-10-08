@@ -10007,8 +10007,8 @@ TEST_CASE("DXF a record that only names a line type takes the list's dashes",
   std::filesystem::remove(out);
 }
 
-// Only a library insert gives such a record dashes. One beside a twin that
-// has them, or spelt as a built-in with blanks, is written as it came.
+// Only an insert or a paste gives such a record dashes. One beside a twin
+// that has them, or spelt as a built-in with blanks, is written as it came.
 TEST_CASE("DXF a name-only LTYPE record beside a twin with dashes is written as it came",
           "[dxf][roundtrip][filter][linetype][named][table]") {
   ensureSettings();

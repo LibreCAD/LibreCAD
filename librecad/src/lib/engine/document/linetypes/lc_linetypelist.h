@@ -56,6 +56,8 @@ public:
     /// copies the entries of another list whose key this one lacks, but no
     /// built-in; an entry here without dashes takes those of its twin there
     void merge(const LC_LineTypeList& source);
+    /// merge(), of the entries these names find there that have dashes
+    void merge(const LC_LineTypeList& source, const std::vector<QString>& names);
 
     bool isModified() const {
         return m_modified;
@@ -67,6 +69,7 @@ public:
 
 private:
     void seedBuiltins();
+    void take(const LC_LineType* incoming);
 
     QList<LC_LineType*> m_entries;
     bool m_modified = false;

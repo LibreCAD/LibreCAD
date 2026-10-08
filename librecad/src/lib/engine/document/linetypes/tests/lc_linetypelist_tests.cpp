@@ -658,3 +658,59 @@ TEST_CASE("LC_LineTypeList::merge copies the line types it lacks and keeps its o
     }
     CHECK(live == 0);
 }
+
+TEST_CASE("LC_LineTypeList::merge by name copies the definitions the names find",
+          "[linetype][list][merge]") {
+    LC_LineTypeList source;
+    const LC_LineType* theirs = source.add(makeRecord(QStringLiteral("VENDOR_PEN"), {1.0, -1.0},
+                                                      QStringLiteral("Theirs")));
+    source.add(makeRecord(QStringLiteral("VENDOR_OWN"), {3.0, -3.0}, QStringLiteral("Theirs")));
+    source.add(makeRecord(QStringLiteral("VENDOR_NAMED"), {4.0, -4.0}, QStringLiteral("Theirs")));
+    source.add(makeRecord(QStringLiteral("VENDOR_BARE"), {}));
+    source.add(makeRecord(QStringLiteral("VENDOR_OTHER"), {6.0, -6.0}));
+    source.add(makeRecord(QStringLiteral("HIDDEN"), {9.0, -9.0}));
+    source.setModified(false);
+
+    LC_LineTypeList destination;
+    LC_LineType* own = destination.add(makeRecord(QStringLiteral("Vendor_own"), {5.0, -5.0},
+                                                  QStringLiteral("Ours")));
+    LC_LineType* named = destination.add(makeRecord(QStringLiteral("Vendor_named"), {}, QStringLiteral("Ours")));
+    const std::vector<double> hiddenSeed = destination.find(QStringLiteral("HIDDEN"))->pattern;
+    destination.setModified(false);
+
+    // a name twice, by two spellings; a built-in's; one the source lacks
+    const std::vector<QString> names{QStringLiteral("VENDOR_PEN"), QStringLiteral(" vendor_pen "),
+                                     QStringLiteral("vendor_own"), QStringLiteral("VENDOR_NAMED"),
+                                     QStringLiteral("VENDOR_BARE"), QStringLiteral("hidden"),
+                                     QStringLiteral("VENDOR_GONE")};
+    destination.merge(source, names);
+
+    CHECK(destination.isModified());
+    CHECK(destination.count() == 38);
+    const LC_LineType* pen = destination.find(QStringLiteral("VENDOR_PEN"));
+    REQUIRE(pen != nullptr);
+    CHECK(pen != theirs);
+    CHECK(pen->name == "VENDOR_PEN");
+    CHECK(pen->description == "Theirs");
+    CHECK(pen->pattern == std::vector<double>{1.0, -1.0});
+    CHECK_FALSE(pen->hasImportedRecord);
+    // no name asked for it
+    CHECK(destination.find(QStringLiteral("VENDOR_OTHER")) == nullptr);
+    // merge()'s rules: its own stays, a record that only names takes the dashes
+    CHECK(own->name == "Vendor_own");
+    CHECK(own->pattern == std::vector<double>{5.0, -5.0});
+    CHECK(named->name == "Vendor_named");
+    CHECK(named->description == "Ours");
+    CHECK(named->pattern == std::vector<double>{4.0, -4.0});
+    // nothing to bring: no dashes, a built-in, no entry
+    CHECK(destination.find(QStringLiteral("VENDOR_BARE")) == nullptr);
+    CHECK(destination.find(QStringLiteral("HIDDEN"))->pattern == hiddenSeed);
+    CHECK(destination.find(QStringLiteral("VENDOR_GONE")) == nullptr);
+
+    CHECK_FALSE(source.isModified());
+    destination.setModified(false);
+    destination.merge(source, names);
+    destination.merge(source, {});
+    CHECK_FALSE(destination.isModified());
+    CHECK(destination.count() == 38);
+}

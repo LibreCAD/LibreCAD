@@ -19738,10 +19738,10 @@ void RS_FilterDXFRW::writeLTypes() {
       continue;
     DRW_LType ltype = entry.second;
     if (ltype.path.empty() && ltype.segments.empty()) {
-      // A record that only names a line type takes the dashes a library
-      // insert gave its entry: the entry is spelt as the record and no record
-      // gave it those dashes. It is rebuilt around its own table entry part,
-      // because a parsed group 73 pins the size.
+      // A record that only names a line type takes the dashes an insert or
+      // a paste gave its entry: the entry is spelt as the record and no
+      // record gave it those dashes. It is rebuilt around its own table
+      // entry part, because a parsed group 73 pins the size.
       const LC_LineType *lineType =
           m_graphic->findLineType(QString::fromUtf8(entry.first.c_str()));
       if (lineType != nullptr && !lineType->pattern.empty() &&
@@ -19758,8 +19758,8 @@ void RS_FilterDXFRW::writeLTypes() {
     }
     (void)writeLTypeRecord(ltype);
   }
-  // An entry no record backs, brought in by a library insert, gets a record
-  // of its own, spelt and described as the entry is.
+  // An entry no record backs, brought in by an insert or a paste, gets a
+  // record of its own, spelt and described as the entry is.
   for (unsigned i = 0; i < m_graphic->countLineTypes(); ++i) {
     const LC_LineType *lineType = m_graphic->lineTypeAt(i);
     const std::string key =
