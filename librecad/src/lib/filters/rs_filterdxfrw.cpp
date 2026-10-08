@@ -19797,8 +19797,9 @@ void RS_FilterDXFRW::writeLTypes() {
     (void)writeLTypeRecord(ltype);
   }
   // A name that only a pen, a layer or a style gives still needs a record.
-  // It gets the dashes of the built-in it is drawn as, which are none for a
-  // name LibreCAD does not know. These records only add to the ones above.
+  // It gets the dashes of the list entry its name folds to, else those of
+  // the built-in it is drawn as, which are none for a name LibreCAD does not
+  // know. These records only add to the ones above.
   // Blanks around a string do not make another name: pens have none, so
   // names without them go first, and a padded one adds a record only for a
   // name that has none yet.
@@ -19814,14 +19815,19 @@ void RS_FilterDXFRW::writeLTypes() {
         !emittedNames.insert(normalizeDwgTableName(utf8)).second)
       continue;
     emittedNames.insert(trimmed);
-    const std::string family = normalizeDwgTableName(
-        LC_LineTypeNames::lineTypeToName(
-            LC_LineTypeNames::nameToLineType(name))
-            .toStdString());
-    const auto literal = m_builtinLTypePaths.find(family);
-    const std::vector<double> path = literal != m_builtinLTypePaths.end()
-                                         ? literal->second
-                                         : std::vector<double>{};
+    const LC_LineType *entry = m_graphic->findLineType(name);
+    std::vector<double> path;
+    if (entry != nullptr && !entry->pattern.empty()) {
+      path = entry->pattern;
+    } else {
+      const std::string family = normalizeDwgTableName(
+          LC_LineTypeNames::lineTypeToName(
+              LC_LineTypeNames::nameToLineType(name))
+              .toStdString());
+      const auto literal = m_builtinLTypePaths.find(family);
+      if (literal != m_builtinLTypePaths.end())
+        path = literal->second;
+    }
     double length = 0.0;
     for (const double dash : path)
       length += std::fabs(dash);
