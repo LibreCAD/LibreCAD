@@ -84,6 +84,7 @@
 #include "lc_extentitydata.h"
 #include "lc_hyperbola.h"
 #include "lc_hyperbolaspline.h"
+#include "lc_linetype.h"
 #include "lc_linetypenames.h"
 #include "lc_mleader.h"
 #include "lc_parabola.h"
@@ -4659,8 +4660,14 @@ void RS_FilterDXFRW::addLayer(const DRW_Layer &data) {
 }
 
 void RS_FilterDXFRW::addLType(const DRW_LType &data) {
-  if (m_graphic != nullptr)
-    m_graphic->dwgAdvancedMetadata().addLineTypeName(data);
+  if (m_graphic == nullptr || data.name.empty())
+    return;
+  m_graphic->dwgAdvancedMetadata().addLineTypeName(data);
+  auto *entry = new LC_LineType(QString::fromUtf8(data.name.c_str()));
+  entry->description = QString::fromUtf8(data.desc.c_str());
+  entry->pattern = data.path;
+  entry->hasImportedRecord = true;
+  m_graphic->addLineType(entry);
 }
 
 void RS_FilterDXFRW::addTextStyle(const DRW_Textstyle &data) {
