@@ -26,11 +26,9 @@
 
 
 #include "qg_dlg_mtext.h"
+#include "lc_textedit.h"
 
 #include <QFileDialog>
-#include <QTextBlock>
-#include <QTextBlockFormat>
-#include <QTextCursor>
 
 #include "lc_linemath.h"
 #include "rs_font.h"
@@ -115,6 +113,7 @@ void QG_DlgMText::init() {
 
     // events
     connect(rbLeftToRight, &QRadioButton::toggled, this, &QG_DlgMText::layoutDirectionChanged);
+    connect(teText, &QTextEdit::textChanged, this, &QG_DlgMText::applyDirectionVisuals);
 }
 
 
@@ -291,32 +290,7 @@ void QG_DlgMText::layoutDirectionChanged() const
 
 void QG_DlgMText::applyDirectionVisuals() const {
   const bool leftToRight = rbLeftToRight->isChecked();
-  const Qt::LayoutDirection direction =
-      leftToRight ? Qt::LeftToRight : Qt::RightToLeft;
-  teText->setLayoutDirection(direction);
-
-  QTextDocument *doc = teText->document();
-  if (doc == nullptr)
-    return;
-
-  QTextOption option = doc->defaultTextOption();
-  option.setTextDirection(direction);
-  doc->setDefaultTextOption(option);
-
-  // Stamp per-block layout direction so already-typed blocks reflow now —
-  // setDefaultTextOption alone only governs future content.
-  QSignalBlocker textBlocker(teText);
-  QTextCursor cursor(doc);
-  cursor.beginEditBlock();
-  cursor.movePosition(QTextCursor::Start);
-  do {
-    QTextBlockFormat fmt = cursor.blockFormat();
-    fmt.setLayoutDirection(direction);
-    cursor.setBlockFormat(fmt);
-  } while (cursor.movePosition(QTextCursor::NextBlock));
-  cursor.endEditBlock();
-
-  teText->update();
+  lc::textedit::setDirection(teText, leftToRight ? Qt::LeftToRight : Qt::RightToLeft);
 }
 
 /**

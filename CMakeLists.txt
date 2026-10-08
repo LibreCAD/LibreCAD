@@ -1450,6 +1450,7 @@ set (SHARED_SOURCES
      librecad/src/ui/components/layouts/lc_flexlayout.cpp
      librecad/src/ui/components/layouts/lc_flexlayout.h
      librecad/src/ui/components/lc_plaintextedit.h
+     librecad/src/ui/components/lc_textedit.h
      librecad/src/ui/components/pen/qg_widgetpen.cpp
      librecad/src/ui/components/pen/qg_widgetpen.h
      librecad/src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.h

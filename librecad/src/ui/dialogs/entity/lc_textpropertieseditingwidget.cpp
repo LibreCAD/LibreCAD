@@ -56,8 +56,10 @@ LC_TextPropertiesEditingWidget::LC_TextPropertiesEditingWidget(QWidget *parent)
   ui->cbAlignment->addItem(tr("Aligned"));
   ui->cbAlignment->addItem(tr("Middle"));
 
-  connect(ui->leText, &QLineEdit::editingFinished, this,
+  connect(ui->leText, &LC_SingleLineTextEdit::editingFinished, this,
           &LC_TextPropertiesEditingWidget::onTextEditingFinished);
+  connect(ui->leText, &QTextEdit::textChanged, this,
+          &LC_TextPropertiesEditingWidget::applyDirectionToEditor);
   connect(ui->leHeight, &QLineEdit::editingFinished, this,
           &LC_TextPropertiesEditingWidget::onHeightEditingFinished);
   connect(ui->leWidthRel, &QLineEdit::editingFinished, this,
@@ -113,19 +115,13 @@ void LC_TextPropertiesEditingWidget::setEntity(RS_Entity *entity) {
 }
 
 void LC_TextPropertiesEditingWidget::applyDirectionToEditor() {
-  // For "Auto" we leave the line edit's direction at LayoutDirectionAuto so
-  // Qt does first-strong-character detection on the input live — matching
-  // RS_Text's resolveTextBaseDirection for ByContent.
   Qt::LayoutDirection direction = Qt::LayoutDirectionAuto;
   if (ui->rbLeftToRight->isChecked()) {
     direction = Qt::LeftToRight;
   } else if (ui->rbRightToLeft->isChecked()) {
     direction = Qt::RightToLeft;
-  } else {
-    direction = Qt::LayoutDirectionAuto;
   }
-  ui->leText->setLayoutDirection(direction);
-  ui->leText->update();
+  lc::textedit::setDirection(ui->leText, direction);
 }
 
 void LC_TextPropertiesEditingWidget::onTextEditingFinished() {

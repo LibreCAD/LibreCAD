@@ -24,12 +24,7 @@
 
 #include "lc_mtextpropertieseditingwidget.h"
 
-#include <QTextBlock>
-#include <QTextBlockFormat>
-#include <QTextCursor>
-#include <QTextDocument>
-#include <QTextOption>
-
+#include "lc_textedit.h"
 #include "rs_mtext.h"
 #include "ui_lc_mtextpropertieseditingwidget.h"
 
@@ -86,39 +81,14 @@ void LC_MTextPropertiesEditingWidget::setEntity(RS_Entity *entity) {
 }
 
 void LC_MTextPropertiesEditingWidget::applyDirectionToEditor() {
-  // Set the paragraph direction without changing logical text.
   const bool ltr = ui->rbLeftToRight->isChecked();
-  const Qt::LayoutDirection direction = ltr ? Qt::LeftToRight : Qt::RightToLeft;
-  ui->teText->setLayoutDirection(direction);
-
-  QTextDocument *doc = ui->teText->document();
-  if (doc == nullptr)
-    return;
-
-  QTextOption option = doc->defaultTextOption();
-  option.setTextDirection(direction);
-  doc->setDefaultTextOption(option);
-
-  // setDefaultTextOption only governs future relayout, so existing blocks
-  // keep their old direction until something else triggers them. Stamp the
-  // direction onto every block format so already-typed text flips now.
-  QSignalBlocker textBlocker(ui->teText);
-  QTextCursor cursor(doc);
-  cursor.beginEditBlock();
-  cursor.movePosition(QTextCursor::Start);
-  do {
-    QTextBlockFormat fmt = cursor.blockFormat();
-    fmt.setLayoutDirection(direction);
-    cursor.setBlockFormat(fmt);
-  } while (cursor.movePosition(QTextCursor::NextBlock));
-  cursor.endEditBlock();
-
-  ui->teText->update();
+  lc::textedit::setDirection(ui->teText, ltr ? Qt::LeftToRight : Qt::RightToLeft);
 }
 
 void LC_MTextPropertiesEditingWidget::onTextChanged() {
   if (m_entity == nullptr)
     return;
+  applyDirectionToEditor();
   const QString widgetText = ui->teText->toPlainText();
   m_entity->setText(widgetText);
 }

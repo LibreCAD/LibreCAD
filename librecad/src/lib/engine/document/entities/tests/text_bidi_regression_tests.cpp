@@ -27,17 +27,20 @@
 
 #include <QApplication>
 #include <QFile>
-#include <QLineEdit>
 #include <QPlainTextEdit>
 #include <QRadioButton>
 #include <QTemporaryDir>
+#include <QTextBlock>
 #include <QTextEdit>
+#include <QTextLayout>
 
 #include "lc_graphicviewport.h"
 #include "lc_mtextpropertieseditingwidget.h"
 #include "lc_textbidi.h"
+#include "lc_textedit.h"
 #include "lc_textpropertieseditingwidget.h"
 #include "qg_dlg_mtext.h"
+#include "qg_dlg_text.h"
 #include "rs_debug.h"
 #include "rs_filterdxfrw.h"
 #include "rs_fontlist.h"
@@ -384,9 +387,23 @@ TEST_CASE("MTEXT formatting retains bidi context and stack ownership",
 TEST_CASE("RTL editors keep logical text and cursor selections",
           "[text][bidi][issue1859][gui]") {
   SourceFonts fonts;
-  const QString input = QString::fromUtf8("\xd7\xa9\xd7\x9c\xd7\x95\xd7\x9d") +
+  const QString input = QStringLiteral("ABC ") +
+                        QString::fromUtf8("\xd7\xa9\xd7\x9c\xd7\x95\xd7\x9d") +
                         QStringLiteral(" 12.5");
-  RS_MText mtext(nullptr, mtextData(input));
+  const QString hebrewVisual =
+      QString::fromUtf8("\xd7\x9d\xd7\x95\xd7\x9c\xd7\xa9");
+  auto data = mtextData(input);
+  data.style = "unicode";
+  RS_MText mtext(nullptr, data);
+  const auto checkLayout = [&](bool rtl) {
+    CHECK(mtext.getDrawingDirection() ==
+          (rtl ? RS_MTextData::RightToLeft : RS_MTextData::LeftToRight));
+    auto *line = dynamic_cast<RS_EntityContainer *>(mtext.entityAt(0));
+    REQUIRE(line);
+    const QString expected = rtl ? QString("12.5" + hebrewVisual + "ABC")
+                                 : QString("ABC12.5" + hebrewVisual);
+    CHECK(glyphNames(*line) == expected);
+  };
   LC_GraphicViewport viewport;
   LC_MTextPropertiesEditingWidget editor(nullptr);
   editor.setGraphicViewport(&viewport);
@@ -400,20 +417,39 @@ TEST_CASE("RTL editors keep logical text and cursor selections",
   for (const char *button : {"rbLeftToRight", "rbRightToLeft"}) {
     auto *radio = editor.findChild<QRadioButton *>(button);
     REQUIRE(radio);
-    radio->setChecked(true);
+    radio->click();
+    const bool rtl = radio->objectName() == "rbRightToLeft";
+    CHECK(edit->layoutDirection() == (rtl ? Qt::RightToLeft : Qt::LeftToRight));
+    CHECK(edit->document()->begin().blockFormat().alignment().testFlag(
+          rtl ? Qt::AlignRight : Qt::AlignLeft));
+    checkLayout(rtl);
     CHECK(edit->toPlainText() == input);
     CHECK(mtext.getText() == input);
     CHECK(edit->textCursor().anchor() == 1);
     CHECK(edit->textCursor().position() == 3);
   }
+  edit->clear();
+  CHECK(edit->document()->begin().blockFormat().alignment().testFlag(Qt::AlignRight));
+  edit->setPlainText(input);
+  CHECK(edit->document()->begin().blockFormat().alignment().testFlag(Qt::AlignRight));
 
   QG_DlgMText dialog(nullptr, &viewport, &mtext, false);
   auto *dialogEdit = dialog.findChild<QTextEdit *>("teText");
   REQUIRE(dialogEdit);
   REQUIRE(dialogEdit->toPlainText() == input);
-  dialog.findChild<QRadioButton *>("rbLeftToRight")->setChecked(true);
-  dialog.findChild<QRadioButton *>("rbRightToLeft")->setChecked(true);
-  dialog.updateEntity();
+  for (const char *button : {"rbLeftToRight", "rbRightToLeft"}) {
+    auto *radio = dialog.findChild<QRadioButton *>(button);
+    REQUIRE(radio);
+    radio->click();
+    const bool rtl = radio->objectName() == "rbRightToLeft";
+    CHECK(dialogEdit->layoutDirection() ==
+          (rtl ? Qt::RightToLeft : Qt::LeftToRight));
+    CHECK(dialogEdit->document()->begin().blockFormat().alignment().testFlag(
+          rtl ? Qt::AlignRight : Qt::AlignLeft));
+    dialog.updateEntity();
+    checkLayout(rtl);
+    CHECK(dialogEdit->toPlainText() == input);
+  }
   CHECK(mtext.getText() == input);
   QTemporaryDir directory;
   REQUIRE(directory.isValid());
@@ -424,31 +460,153 @@ TEST_CASE("RTL editors keep logical text and cursor selections",
   CHECK(QString::fromUtf8(saved.readAll()) == input);
   saved.close();
   dialogEdit->clear();
+  CHECK(dialogEdit->document()->begin().blockFormat().alignment().testFlag(Qt::AlignRight));
   dialog.load(textPath);
   CHECK(dialogEdit->toPlainText() == input);
+  CHECK(dialogEdit->document()->begin().blockFormat().alignment().testFlag(Qt::AlignRight));
   dialogEdit->setPlainText("<b>" + input + "</b>");
   dialog.updateEntity();
   CHECK(mtext.getText() == "<b>" + input + "</b>");
   dialog.reject();
 
-  RS_TextData data;
-  data.text = input;
-  data.style = "iso3098";
-  data.drawingDirection = RS_TextData::RightToLeft;
-  RS_Text text(nullptr, data);
+  RS_TextData textData;
+  textData.text = input;
+  textData.style = "iso3098";
+  textData.drawingDirection = RS_TextData::RightToLeft;
+  RS_Text text(nullptr, textData);
   LC_TextPropertiesEditingWidget textEditor(nullptr);
   textEditor.setGraphicViewport(&viewport);
   textEditor.setEntity(&text);
-  auto *lineEdit = textEditor.findChild<QLineEdit *>("leText");
-  REQUIRE(lineEdit);
-  REQUIRE(lineEdit->text() == input);
-  lineEdit->setSelection(1, 2);
+  auto *textEdit = textEditor.findChild<QTextEdit *>("leText");
+  REQUIRE(textEdit);
+  REQUIRE(textEdit->toPlainText() == input);
+  cursor = textEdit->textCursor();
+  cursor.setPosition(1);
+  cursor.setPosition(3, QTextCursor::KeepAnchor);
+  textEdit->setTextCursor(cursor);
   for (const char *button : {"rbAuto", "rbLeftToRight", "rbRightToLeft"}) {
     textEditor.findChild<QRadioButton *>(button)->setChecked(true);
-    CHECK(lineEdit->text() == input);
-    CHECK(lineEdit->selectionStart() == 1);
-    CHECK(lineEdit->selectedText().size() == 2);
+    CHECK(textEdit->toPlainText() == input);
+    CHECK(textEdit->textCursor().anchor() == 1);
+    CHECK(textEdit->textCursor().position() == 3);
+    const auto direction = QString(button) == "rbAuto" ? Qt::LayoutDirectionAuto
+        : QString(button) == "rbRightToLeft" ? Qt::RightToLeft : Qt::LeftToRight;
+    CHECK(textEdit->document()->begin().blockFormat().layoutDirection() == direction);
   }
+  textEdit->clear();
+  CHECK(textEdit->document()->begin().blockFormat().alignment().testFlag(Qt::AlignRight));
+  textEdit->setPlainText(input);
+  CHECK(textEdit->document()->begin().blockFormat().layoutDirection() == Qt::RightToLeft);
+  CHECK(textEdit->document()->begin().blockFormat().alignment().testFlag(Qt::AlignRight));
+
+  for (bool isNew : {false, true}) {
+    QG_DlgText textDialog(nullptr, &viewport, &text, isNew);
+    auto *textDialogEdit = textDialog.findChild<QTextEdit *>("teText");
+    REQUIRE(textDialogEdit);
+    textDialogEdit->setPlainText(input);
+    for (const auto direction : {RS_TextData::LeftToRight,
+                                RS_TextData::RightToLeft, RS_TextData::ByContent}) {
+      const char *button = direction == RS_TextData::ByContent ? "rbAuto"
+          : direction == RS_TextData::RightToLeft ? "rbRightToLeft" : "rbLeftToRight";
+      auto *radio = textDialog.findChild<QRadioButton *>(button);
+      REQUIRE(radio);
+      radio->click();
+      textDialog.updateEntity();
+      CHECK(text.getDrawingDirection() == direction);
+      CHECK(text.getText() == input);
+      const auto qtDirection = direction == RS_TextData::ByContent ? Qt::LayoutDirectionAuto
+          : direction == RS_TextData::RightToLeft ? Qt::RightToLeft : Qt::LeftToRight;
+      CHECK(textDialogEdit->document()->begin().blockFormat().layoutDirection() == qtDirection);
+      textDialogEdit->clear();
+      CHECK(textDialogEdit->document()->begin().blockFormat().alignment().testFlag(
+          direction == RS_TextData::RightToLeft ? Qt::AlignRight : Qt::AlignLeft));
+      textDialogEdit->setPlainText(input);
+      CHECK(textDialogEdit->document()->begin().blockFormat().layoutDirection() == qtDirection);
+    }
+    textDialog.reject();
+  }
+}
+
+TEST_CASE("Text input paragraphs follow the selected direction",
+          "[text][bidi][gui]") {
+  const QString input = QStringLiteral("ABC ") +
+                        QString::fromUtf8("\xd7\xa9\xd7\x9c\xd7\x95\xd7\x9d") +
+                        QStringLiteral(" 12.5");
+  const auto checkEditor = [&](auto &edit) {
+    INFO(edit.metaObject()->className());
+    edit.resize(600, 160);
+    edit.show();
+    for (const auto direction : {Qt::LeftToRight, Qt::RightToLeft, Qt::LayoutDirectionAuto}) {
+      edit.setPlainText(input + "\n" + input);
+      lc::textedit::setDirection(&edit, direction);
+      QApplication::processEvents();
+      for (auto block = edit.document()->begin(); block.isValid(); block = block.next()) {
+        CHECK(block.blockFormat().layoutDirection() == direction);
+        REQUIRE(block.layout()->lineCount() > 0);
+        const auto line = block.layout()->lineAt(0);
+        const auto firstLetter = line.cursorToX(0);
+        const auto firstDigit = line.cursorToX(input.indexOf("12.5"));
+        CHECK((firstLetter > firstDigit) == (direction == Qt::RightToLeft));
+      }
+      edit.setPlainText("123");
+      lc::textedit::setDirection(&edit, direction);
+      QApplication::processEvents();
+      const QTextCursor start(edit.document());
+      CHECK((edit.cursorRect(start).left() > edit.viewport()->width() / 2) ==
+            (direction == Qt::RightToLeft));
+      CHECK(edit.toPlainText() == "123");
+      edit.clear();
+      lc::textedit::setDirection(&edit, direction);
+      QApplication::processEvents();
+      CHECK((edit.cursorRect().left() > edit.viewport()->width() / 2) ==
+            (direction == Qt::RightToLeft));
+      auto cursor = edit.textCursor();
+      cursor.insertText(input);
+      cursor.insertBlock();
+      cursor.insertText(input);
+      QApplication::processEvents();
+      for (auto block = edit.document()->begin(); block.isValid(); block = block.next()) {
+        const auto line = block.layout()->lineAt(0);
+        CHECK((line.cursorToX(0) > line.cursorToX(input.indexOf("12.5"))) ==
+              (direction == Qt::RightToLeft));
+      }
+      CHECK(edit.toPlainText() == input + "\n" + input);
+    }
+  };
+  QTextEdit richEdit;
+  checkEditor(richEdit);
+  QPlainTextEdit plainEdit;
+  checkEditor(plainEdit);
+}
+
+TEST_CASE("Single-line text input preserves editing behavior",
+          "[text][bidi][gui]") {
+  struct Input : LC_SingleLineTextEdit {
+    using LC_SingleLineTextEdit::insertFromMimeData;
+  } edit;
+  edit.setText("<b>123</b>");
+  lc::textedit::setDirection(&edit, Qt::RightToLeft);
+  CHECK(edit.text() == "<b>123</b>");
+  edit.selectAll();
+  QMimeData clipboard;
+  clipboard.setText("A\r\nB\nC\rD" + QString(QChar::LineSeparator) + "E" +
+                    QChar::ParagraphSeparator + "F");
+  edit.insertFromMimeData(&clipboard);
+  CHECK(edit.text() == "A B C D E F");
+  CHECK(edit.document()->blockCount() == 1);
+  edit.undo();
+  CHECK(edit.text() == "<b>123</b>");
+  edit.redo();
+  CHECK(edit.text() == "A B C D E F");
+  int finished = 0;
+  QObject::connect(&edit, &LC_SingleLineTextEdit::editingFinished, [&] { ++finished; });
+  for (const auto key : {Qt::Key_Return, Qt::Key_Enter}) {
+    QKeyEvent event(QEvent::KeyPress, key, Qt::NoModifier);
+    QApplication::sendEvent(&edit, &event);
+    CHECK_FALSE(event.isAccepted());
+  }
+  CHECK(finished == 2);
+  CHECK(edit.document()->blockCount() == 1);
 }
 
 TEST_CASE("MTEXT RTL layout marker round trips without rewriting text",

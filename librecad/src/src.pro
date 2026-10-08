@@ -1815,6 +1815,7 @@ HEADERS += ui/action_options/lc_action_options_manager.h \
     ui/components/creators/actionlist.h \
     ui/components/layouts/lc_flexlayout.h \
     ui/components/lc_plaintextedit.h \
+    ui/components/lc_textedit.h \
     ui/components/pen/qg_widgetpen.h \
     ui/components/qg_scrollbar.h \
     ui/components/status_bar/qg_activelayername.h \

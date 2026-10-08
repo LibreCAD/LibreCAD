@@ -140,13 +140,33 @@
       </layout>
      </item>
      <item>
-      <widget class="QLineEdit" name="teText">
+      <widget class="LC_SingleLineTextEdit" name="teText">
        <property name="toolTip">
         <string>Text to insert</string>
        </property>
-       <property name="linkUnderline" stdset="0">
-        <bool>false</bool>
-       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="gbDirection">
+       <property name="title"><string>Text Direction</string></property>
+       <layout class="QHBoxLayout" name="hlDirection">
+        <item>
+         <widget class="QRadioButton" name="rbAuto">
+          <property name="text"><string>Auto</string></property>
+          <property name="checked"><bool>true</bool></property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="rbLeftToRight">
+          <property name="text"><string>Left to Right</string></property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="rbRightToLeft">
+          <property name="text"><string>Right to Left</string></property>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </item>
     </layout>
@@ -1668,6 +1688,11 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
+  <customwidget>
+   <class>LC_SingleLineTextEdit</class>
+   <extends>QTextEdit</extends>
+   <header>lc_textedit.h</header>
+  </customwidget>
   <customwidget>
    <class>QG_WidgetPen</class>
    <extends>QWidget</extends>
