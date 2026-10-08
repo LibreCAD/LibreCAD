@@ -19727,6 +19727,18 @@ std::vector<QString> referencedLineTypeNames(RS_Graphic &graphic) {
   }
   return names;
 }
+// The record a list entry is written as: groups 73 and 40 follow the dashes.
+DRW_LType lineTypeToDrw(const std::string &name, const std::string &description,
+                        const std::vector<double> &pattern) {
+  double length = 0.0;
+  for (const double dash : pattern)
+    length += std::fabs(dash);
+  DRW_LType record;
+  record.updateValues(name, description, static_cast<int>(pattern.size()),
+                      length, pattern);
+  return record;
+}
+
 } // namespace
 
 void RS_FilterDXFRW::writeLType(const UTF8STRING &lTypeName,
@@ -19789,12 +19801,56 @@ void RS_FilterDXFRW::writeLTypes() {
   // re-emitted as they came in; writeLType() records the built-in names so a
   // new built-in type cannot end up written twice.
   std::set<std::string> emittedNames = m_builtinLTypeNames;
-  for (const auto &entry :
-       m_graphic->dwgAdvancedMetadata().lineTypeTableEntries()) {
+  const auto &records =
+      m_graphic->dwgAdvancedMetadata().lineTypeTableEntries();
+  // What the list calls each record, as addLType() read it: bytes that are
+  // not UTF-8 make it another spelling than the record's.
+  std::set<std::string> listedNames;
+  std::set<std::string> dashedNames;
+  for (const auto &entry : records) {
+    const std::string listed =
+        QString::fromUtf8(entry.first.c_str()).toStdString();
+    listedNames.insert(normalizeDwgTableName(listed));
+    if (!entry.second.path.empty())
+      dashedNames.insert(listed);
+  }
+  for (const auto &entry : records) {
     if (!emittedNames.insert(normalizeDwgTableName(entry.first)).second)
       continue;
     DRW_LType ltype = entry.second;
+    if (ltype.path.empty() && ltype.segments.empty()) {
+      // A record that only names a line type takes the dashes a library
+      // insert gave its entry: the entry is spelt as the record and no record
+      // gave it those dashes. It is rebuilt around its own table entry part,
+      // because a parsed group 73 pins the size.
+      const LC_LineType *lineType =
+          m_graphic->findLineType(QString::fromUtf8(entry.first.c_str()));
+      if (lineType != nullptr && !lineType->pattern.empty() &&
+          normalizeDwgTableName(lineType->name.toStdString()) ==
+              normalizeDwgTableName(entry.first) &&
+          dashedNames.count(lineType->name.toStdString()) == 0) {
+        DRW_LType dashed =
+            lineTypeToDrw(ltype.name, ltype.desc, lineType->pattern);
+        static_cast<DRW_TableEntry &>(dashed) = ltype;
+        dashed.alignment = ltype.alignment;
+        dashed.xrefBlockHandle = ltype.xrefBlockHandle;
+        ltype = dashed;
+      }
+    }
     (void)writeLTypeRecord(ltype);
+  }
+  // An entry no record backs, brought in by a library insert, gets a record
+  // of its own, spelt and described as the entry is.
+  for (unsigned i = 0; i < m_graphic->countLineTypes(); ++i) {
+    const LC_LineType *lineType = m_graphic->lineTypeAt(i);
+    const std::string key =
+        normalizeDwgTableName(lineType->name.toStdString());
+    if (listedNames.count(key) != 0 || !emittedNames.insert(key).second)
+      continue;
+    DRW_LType record = lineTypeToDrw(lineType->name.toStdString(),
+                                     lineType->description.toStdString(),
+                                     lineType->pattern);
+    (void)writeLTypeRecord(record);
   }
   // A name that only a pen, a layer or a style gives still needs a record.
   // It gets the dashes of the list entry its name folds to, else those of
@@ -19828,11 +19884,7 @@ void RS_FilterDXFRW::writeLTypes() {
       if (literal != m_builtinLTypePaths.end())
         path = literal->second;
     }
-    double length = 0.0;
-    for (const double dash : path)
-      length += std::fabs(dash);
-    DRW_LType marker;
-    marker.updateValues(utf8, "", static_cast<int>(path.size()), length, path);
+    DRW_LType marker = lineTypeToDrw(utf8, "", path);
     (void)writeLTypeRecord(marker);
   }
 }
