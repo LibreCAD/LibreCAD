@@ -46,7 +46,6 @@
 #include <sstream>
 #include <stack>
 #include <type_traits>
-#include <unordered_set>
 #include <utility>
 #include <vector>
 
@@ -57,7 +56,6 @@
 #include <QLocale>
 #include <QRegularExpression>
 #include <QScopeGuard>
-#include <QSet>
 #include <QTemporaryFile>
 #if QT_VERSION >= QT_VERSION_CHECK(6, 4, 0)
 #include <QByteArrayView>
@@ -19648,85 +19646,6 @@ QString lineTypeNameToWrite(const RS_Pen &pen) {
   return LC_LineTypeNames::lineTypeToName(pen.getLineType());
 }
 
-// Every linetype name a writer emits as a string, first seen first, each once.
-// It walks what the writers walk: the top level of model space and of each
-// block, the children of pattern hatches, dimension overrides, layers, dim
-// styles, header variables and MLINESTYLE elements. Names given by handle are
-// left out: a handle only resolves through a record the file already has.
-std::vector<QString> referencedLineTypeNames(RS_Graphic &graphic) {
-  std::vector<QString> names;
-  QSet<QString> seenNames;
-  std::unordered_set<std::uint16_t> seenIds;
-  const auto addName = [&](const QString &name) {
-    if (name.trimmed().isEmpty() || !isWritableLineTypeName(name) ||
-        seenNames.contains(name))
-      return;
-    seenNames.insert(name);
-    names.push_back(name);
-  };
-  const auto addPen = [&](const RS_Pen &pen) {
-    if (pen.getLineTypeFoldId() != 0 &&
-        seenIds.insert(pen.getLineTypeId()).second)
-      addName(pen.getLineTypeName());
-  };
-  const auto addDimStyle = [&](const LC_DimStyle &style) {
-    addName(style.dimensionLine()->lineTypeName());
-    addName(style.extensionLine()->lineTypeFirstRaw());
-    addName(style.extensionLine()->lineTypeSecondRaw());
-  };
-  const auto addEntities = [&](const RS_EntityContainer &container) {
-    for (RS_Entity *e :
-         lc::LC_ContainerTraverser{container, RS2::ResolveNone}.entities()) {
-      if (e->getFlag(RS2::FlagDeleted))
-        continue;
-      addPen(e->getPen(false));
-      switch (e->rtti()) {
-      case RS2::EntityDimLinear:
-      case RS2::EntityDimOrdinate:
-      case RS2::EntityDimAligned:
-      case RS2::EntityDimAngular:
-      case RS2::EntityDimRadial:
-      case RS2::EntityDimDiametric:
-      case RS2::EntityDimArc:
-        if (const LC_DimStyle *style =
-                static_cast<RS_Dimension *>(e)->getDimStyleOverride())
-          addDimStyle(*style);
-        break;
-      case RS2::EntityHatch:
-        // R12 writes the pattern children with their own pens.
-        if (!static_cast<RS_Hatch *>(e)->isSolid()) {
-          for (RS_Entity *child :
-               lc::LC_ContainerTraverser{*static_cast<RS_Hatch *>(e),
-                                         RS2::ResolveNone}
-                   .entities())
-            addPen(child->getPen(false));
-        }
-        break;
-      default:
-        break;
-      }
-    }
-  };
-
-  addEntities(graphic);
-  for (unsigned i = 0; i < graphic.countBlocks(); i++) {
-    const RS_Block *block = graphic.blockAt(i);
-    if (!block->isDeleted())
-      addEntities(*block);
-  }
-  const RS_LayerList *layers = graphic.getLayerList();
-  for (unsigned i = 0; i < layers->count(); i++)
-    addPen(layers->at(i)->getPen());
-  for (const LC_DimStyle *style : *graphic.getDimStyleList()->getStylesList())
-    addDimStyle(*style);
-  for (const char *key : {"$CELTYPE", "$DIMLTYPE", "$DIMLTEX1", "$DIMLTEX2"})
-    addName(graphic.getVariableString(QLatin1String(key), QString()));
-  for (const auto &style : graphic.dwgAdvancedMetadata().mlineStyles()) {
-    for (const auto &element : style.elements)
-      addName(QString::fromStdString(element.linetype));
-  }
-  return names;
-}
 // The record a list entry is written as: groups 73 and 40 follow the dashes.
 DRW_LType lineTypeToDrw(const std::string &name, const std::string &description,
                         const std::vector<double> &pattern) {
@@ -19859,11 +19778,13 @@ void RS_FilterDXFRW::writeLTypes() {
   // Blanks around a string do not make another name: pens have none, so
   // names without them go first, and a padded one adds a record only for a
   // name that has none yet.
-  std::vector<QString> names = referencedLineTypeNames(*m_graphic);
+  std::vector<QString> names = m_graphic->referencedLineTypeNames();
   std::stable_partition(names.begin(), names.end(), [](const QString &name) {
     return name.trimmed() == name;
   });
   for (const QString &name : names) {
+    if (!isWritableLineTypeName(name))
+      continue;
     const std::string utf8 = name.toStdString();
     const std::string trimmed =
         normalizeDwgTableName(name.trimmed().toStdString());
