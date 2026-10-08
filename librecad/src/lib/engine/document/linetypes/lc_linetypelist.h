@@ -53,6 +53,9 @@ public:
     LC_LineType* find(const QString& name) const;
     /// takes ownership; returns the entry that holds the key afterwards
     LC_LineType* add(LC_LineType* entry);
+    /// copies the entries of another list whose key this one lacks, but no
+    /// built-in; an entry here without dashes takes those of its twin there
+    void merge(const LC_LineTypeList& source);
 
     bool isModified() const {
         return m_modified;

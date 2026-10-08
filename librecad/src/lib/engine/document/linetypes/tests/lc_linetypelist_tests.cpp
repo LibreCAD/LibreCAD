@@ -562,3 +562,99 @@ TEST_CASE("RS_Graphic::addLineType returns the entry that holds the key",
     CHECK(graphic.addLineType(nullptr) == nullptr);
     CHECK(graphic.countLineTypes() == 36);
 }
+
+TEST_CASE("LC_LineTypeList::merge copies the line types it lacks and keeps its own",
+          "[linetype][list][merge]") {
+    int live = 0;
+    {
+        LC_LineTypeList source;
+        auto* lib = new CountedLineType(QStringLiteral("VENDOR_LIB"), live);
+        lib->description = QStringLiteral("Vendor library");
+        lib->pattern = {2.0, -2.0};
+        lib->hasImportedRecord = true;
+        REQUIRE(source.add(lib) == lib);
+        source.add(makeRecord(QStringLiteral(" VENDOR_PAD"), {4.0, -4.0}));
+        source.add(makeRecord(QStringLiteral("VENDOR_BARE"), {}));
+        source.add(makeRecord(QStringLiteral("VENDOR_BOTH"), {1.0, -1.0}, QStringLiteral("Theirs")));
+        source.add(makeRecord(QStringLiteral("VENDOR_NAMED"), {3.0, -3.0}, QStringLiteral("Theirs")));
+        source.add(makeRecord(QStringLiteral("VENDOR_NONE"), {}));
+        // a library that redefines built-ins, one of them without dashes here
+        source.add(makeRecord(QStringLiteral("HIDDEN"), {9.0, -9.0}));
+        source.add(makeRecord(QStringLiteral("CONTINUOUS"), {1.0, -1.0}));
+        REQUIRE(source.count() == 41);
+        source.setModified(false);
+
+        LC_LineTypeList destination;
+        // a spelling the source's would outrank in add(), and dashes of its own
+        LC_LineType* both = destination.add(makeRecord(QStringLiteral("Vendor_both"), {5.0, -5.0},
+                                                       QStringLiteral("Ours")));
+        // records that only name a line type
+        LC_LineType* named = destination.add(makeRecord(QStringLiteral("Vendor_named"), {},
+                                                        QStringLiteral("Ours")));
+        LC_LineType* none = destination.add(makeRecord(QStringLiteral("VENDOR_NONE"), {}));
+        const std::vector<double> hiddenSeed = destination.find(QStringLiteral("HIDDEN"))->pattern;
+        REQUIRE(destination.count() == 38);
+        destination.setModified(false);
+
+        destination.merge(source);
+
+        CHECK(destination.isModified());
+        CHECK(destination.count() == 41);
+        // What it lacks comes as a copy, spelt and described as it was, with
+        // no record of this drawing behind it.
+        const LC_LineType* copy = destination.find(QStringLiteral("vendor_lib"));
+        REQUIRE(copy != nullptr);
+        CHECK(copy != lib);
+        CHECK(live == 1);
+        CHECK(copy->name == "VENDOR_LIB");
+        CHECK(copy->description == "Vendor library");
+        CHECK(copy->pattern == std::vector<double>{2.0, -2.0});
+        CHECK(copy->origin == LC_LineType::Origin::Imported);
+        CHECK_FALSE(copy->hasImportedRecord);
+        REQUIRE(destination.find(QStringLiteral("VENDOR_PAD")) != nullptr);
+        CHECK(destination.find(QStringLiteral("VENDOR_PAD"))->name == " VENDOR_PAD");
+        const LC_LineType* bare = destination.find(QStringLiteral("VENDOR_BARE"));
+        REQUIRE(bare != nullptr);
+        CHECK(bare->pattern.empty());
+        CHECK_FALSE(bare->hasImportedRecord);
+        CHECK(destination.at(38) == copy); // in the source's order, after its own
+        // A definition of its own wins, whatever the spellings.
+        CHECK(destination.find(QStringLiteral("VENDOR_BOTH")) == both);
+        CHECK(both->name == "Vendor_both");
+        CHECK(both->description == "Ours");
+        CHECK(both->pattern == std::vector<double>{5.0, -5.0});
+        // A name without dashes takes the definition, and nothing else of it.
+        CHECK(destination.find(QStringLiteral("VENDOR_NAMED")) == named);
+        CHECK(named->pattern == std::vector<double>{3.0, -3.0});
+        CHECK(named->name == "Vendor_named");
+        CHECK(named->description == "Ours");
+        CHECK(named->hasImportedRecord);
+        CHECK(none->pattern.empty());
+        // A built-in never travels, redefined or not.
+        const LC_LineType* hidden = destination.find(QStringLiteral("HIDDEN"));
+        CHECK(hidden == destination.at(11));
+        CHECK(hidden->pattern == hiddenSeed);
+        CHECK(hidden->origin == LC_LineType::Origin::BuiltIn);
+        CHECK_FALSE(hidden->hasImportedRecord);
+        CHECK(destination.at(0)->pattern.empty());
+
+        // The source is as it was; merging again, or into itself, changes nothing.
+        CHECK(source.count() == 41);
+        CHECK(source.find(QStringLiteral("VENDOR_LIB")) == lib);
+        CHECK_FALSE(source.isModified());
+        destination.setModified(false);
+        destination.merge(source);
+        destination.merge(destination);
+        CHECK_FALSE(destination.isModified());
+        // Taking dashes alone is a change too.
+        named->pattern.clear();
+        destination.merge(source);
+        CHECK(destination.isModified());
+        CHECK(named->pattern == std::vector<double>{3.0, -3.0});
+        destination.setModified(false);
+        destination.merge(source);
+        CHECK_FALSE(destination.isModified());
+        CHECK(destination.count() == 41);
+    }
+    CHECK(live == 0);
+}
