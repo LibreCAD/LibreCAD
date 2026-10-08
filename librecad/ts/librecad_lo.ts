@@ -2217,7 +2217,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="400"></location>
         <source>Update Current Pen by Active Layer' Pen</source>
-        <translation>ອັບເດດປາກກາປັດຈຸບັນຕາມປາກກາເລເຢີ</translation>
+        <translation>ອັບເດດປາກກາປັດຈຸບັນຕາມປາກກາຂອງເລເຢີທີ່ໃຊ້ງານ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="406"></location>
@@ -2584,7 +2584,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="108"></location>
         <source>Toggle Entity's Layer Construction</source>
-        <translation>ສະຫຼັບເລເຢີໂຄງສ້າງຂອງອົງປະກອບ</translation>
+        <translation>ສະຫຼັບເລເຢີຊ່ວຍສ້າງຂອງອົງປະກອບ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="109"></location>
@@ -2849,7 +2849,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="537"></location>
         <source>&amp;Remove Layer</source>
-        <translation>&amp;ລຶບເລເຢີ</translation>
+        <translation>ລຶ&amp;ບເລເຢີ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="538"></location>
@@ -2864,17 +2864,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="540"></location>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation>&amp;ສະຫຼັບການເບິ່ງເຫັນເລເຢີ</translation>
+        <translation>ສ&amp;ະຫຼັບການເບິ່ງເຫັນເລເຢີ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="541"></location>
         <source>Toggle Layer &amp;Print</source>
-        <translation>ສະຫຼັບການ&amp;ພິມເລເຢີ</translation>
+        <translation>ສະຫຼັບການພິ&amp;ມເລເຢີ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="542"></location>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>ສະຫຼັບເລເຢີ&amp;ໂຄງສ້າງ</translation>
+        <translation>ສະຫຼັບເລເຢີຊ່&amp;ວຍສ້າງ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="552"></location>
@@ -3177,22 +3177,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="534"></location>
         <source>&amp;Unlock all</source>
-        <translation>&amp;ປົດລັອກທັງໝົດ</translation>
+        <translation>ປົ&amp;ດລັອກທັງໝົດ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="535"></location>
         <source>&amp;Lock all</source>
-        <translation>&amp;ລັອກທັງໝົດ</translation>
+        <translation>ລັ&amp;ອກທັງໝົດ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="543"></location>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>&amp;ສົ່ງອອກເລເຢີທີ່ເລືອກ</translation>
+        <translation>ສົ່ງອອກເ&amp;ລເຢີທີ່ເລືອກ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="544"></location>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>ສົ່ງອອກເລເຢີທີ່&amp;ເບິ່ງເຫັນ</translation>
+        <translation>ສົ່ງອອກເລເຢີທີ່ເບິ່ງເຫັ&amp;ນ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="550"></location>
@@ -3706,12 +3706,12 @@ End Edge Point: (%9 , %10)</source>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"></location>
         <source>activate</source>
-        <translation>activate</translation>
+        <translation>ເປີດໃຊ້</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"></location>
         <source>create</source>
-        <translation>create</translation>
+        <translation>ສ້າງ</translation>
     </message>
 </context>
 <context>
@@ -3720,13 +3720,13 @@ End Edge Point: (%9 , %10)</source>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"></location>
         <source>selected</source>
         <comment>Layers to export</comment>
-        <translation>selected</translation>
+        <translation>ທີ່ເລືອກ</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"></location>
         <source>visible</source>
         <comment>Layers to export</comment>
-        <translation>visible</translation>
+        <translation>ທີ່ເບິ່ງເຫັນ</translation>
     </message>
 </context>
 <context>
@@ -9834,12 +9834,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="20"></location>
         <source>Layer Settings</source>
-        <translation>ຕັ້ງຄ່າເລເຢີ</translation>
+        <translation>ການຕັ້ງຄ່າເລເຢີ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="48"></location>
         <source>Name of new layer. In order to create hierarchical layers, include name of virtual layer and layer name separator.</source>
-        <translation>ຊື່ຂອງເລເຢີໃໝ່. ເພື່ອສ້າງເລເຢີແບບຈັດລຳດັບເລເຢີ, ໃຫ້ລວມເອົາຊື່ຂອງເລເຢີສະເໝືອນ ແລະ ຕົວແຍກຊື່ເລເຢີ.</translation>
+        <translation>ຊື່ຂອງເລເຢີໃໝ່. ເພື່ອສ້າງເລເຢີແບບລຳດັບຂັ້ນ, ໃຫ້ລວມເອົາຊື່ຂອງເລເຢີສະເໝືອນ ແລະ ຕົວຂັ້ນຊື່ເລເຢີ.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="64"></location>
@@ -9884,7 +9884,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="132"></location>
         <source>Layer with alternate position of entities located on normal layers</source>
-        <translation>ເລເຢີທີ່ມີຕຳແໜ່ງສຳຮອງຂອງອົງປະກອບທີ່ຢູ່ໃນເລເຢີປົກກະຕິ</translation>
+        <translation>ເລເຢີທີ່ມີຕຳແໜ່ງທາງເລືອກຂອງອົງປະກອບທີ່ຢູ່ໃນເລເຢີປົກກະຕິ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="135"></location>
@@ -9895,13 +9895,13 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="148"></location>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>ເລເຢີການກໍ່ສ້າງມີເສັ້ນຊື່ທີ່ຍາວບໍ່ມີທີ່ສິ້ນສຸດ ເພື່ອໃຊ້ໃນການວາງແນວທາງເລຂາຄະນິດ. 
-ສິ່ງທີ່ຢູ່ໃນເລເຢີນີ້ຈະບໍ່ປະກົດອອກໃນເວລາສັ່ງພິມ.</translation>
+        <translation>ເລເຢີຊ່ວຍສ້າງປະກອບດ້ວຍເສັ້ນຊື່ທີ່ບໍ່ມີສິ້ນສຸດ ເພື່ອໃຊ້ສຳລັບການສ້າງຮູບຊົງເລຂາຄະນິດ.
+ເນື້ອໃນຂອງເລເຢີຊ່ວຍສ້າງຈະບໍ່ປາກົດໃນເວລາພິມອອກ.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="152"></location>
         <source>Construction Layer</source>
-        <translation>ເລເຢີການກໍ່ສ້າງ</translation>
+        <translation>ເລເຢີຊ່ວຍສ້າງ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="181"></location>
@@ -9966,7 +9966,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="66"></location>
         <source>Export Named Views too</source>
-        <translation>ສົ່ງອອກມຸມມອງທີ່ຕັ້ງຊື່ນຳ</translation>
+        <translation>ສົ່ງອອກມຸມມອງທີ່ຕັ້ງຊື່ໄວ້ນຳ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="73"></location>
@@ -10004,12 +10004,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="20"></location>
         <source>Layers Tree Options</source>
-        <translation>ຕົວເລືອກໂໂຄງສ້າງເລເຢີ</translation>
+        <translation>ຕົວເລືອກໂຄງສ້າງເລເຢີ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="36"></location>
         <source>Settings for naming convention that is used to create layers hierarchy based on flat list of layers</source>
-        <translation>ຕັ້ງຄ່າຮູບແບບການຕັ້ງຊື່ທີ່ໃຊ້ເພື່ອສ້າງລຳດັບເລເຢີໂດຍອີງໃສ່ລາຍການເລເຢີແບບຮາບພຽງ</translation>
+        <translation>ຕັ້ງຄ່າຮູບແບບການຕັ້ງຊື່ທີ່ໃຊ້ເພື່ອສ້າງລຳດັບຂັ້ນຂອງເລເຢີໂດຍອີງໃສ່ລາຍການເລເຢີແບບຮາບພຽງ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="39"></location>
@@ -10019,7 +10019,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="64"></location>
         <source>Separator used for split inner name of layer to hierarchical names</source>
-        <translation>ຕົວຂັ້ນທີ່ໃຊ້ສຳລັບແຍກຊື່ພາຍໃນຂອງເລເຢີໃຫ້ເປັນຊື່ແບບລຳດັບເລເຢີ</translation>
+        <translation>ຕົວຂັ້ນທີ່ໃຊ້ສຳລັບແຍກຊື່ພາຍໃນຂອງເລເຢີໃຫ້ເປັນຊື່ແບບລຳດັບຂັ້ນ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="77"></location>
@@ -10034,7 +10034,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="103"></location>
         <source>Dimensional</source>
-        <translation>ກ່ຽວກັບມິຕິ</translation>
+        <translation>ມິຕິ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="116"></location>
@@ -10044,7 +10044,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="126"></location>
         <source>Informational</source>
-        <translation>ກ່ຽວກັບຂໍ້ມູນ</translation>
+        <translation>ຂໍ້ມູນ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="139"></location>
@@ -10129,12 +10129,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="276"></location>
         <source>Size of the indent in characters to indent name of child layer from parent ones</source>
-        <translation>ຂະໜາດຂອງການຍໍ້ໜ້າເປັນຕົວອັກສອນ ເພື່ອຍໍ້ຊື່ຂອງເລເຢີຍ່ອຍຈາກເລເຢີຫຼັກ</translation>
+        <translation>ຂະໜາດຂອງການຍໍ້ໜ້າເປັນຕົວອັກສອນ ເພື່ອຍໍ້ຊື່ຂອງເລເຢີຍ່ອຍຈາກເລເຢີແມ່</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="305"></location>
         <source>If checked, drag&amp;drop operations in layers list are enabled and layers hierarchy may be restructutured</source>
-        <translation>ຫາກໝາຍເລືອກ, ຈະສາມາດໃຊ້ການລາກ ແລະ ວາງໃນລາຍການເລເຢີໄດ້ ແລະ ອາດຈະປັບປ່ຽນໂຄງສ້າງລຳດັບເລເຢີໃໝ່ໄດ້</translation>
+        <translation>ຫາກໝາຍເລືອກ, ຈະສາມາດໃຊ້ການລາກ&amp;ວາງໃນລາຍການເລເຢີໄດ້ ແລະ ອາດຈະປັບປ່ຽນໂຄງສ້າງລຳດັບຂັ້ນຂອງເລເຢີໃໝ່ໄດ້</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="308"></location>
@@ -10164,7 +10164,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="335"></location>
         <source>Background color for selected items in layers tree.</source>
-        <translation>ສີພື້ນຫຼັງສຳລັບລາຍການທີ່ຖືກເລືອກໃນລຳດັບເລເຢີ.</translation>
+        <translation>ສີພື້ນຫຼັງສຳລັບລາຍການທີ່ຖືກເລືອກໃນໂຄງສ້າງເລເຢີ.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="354"></location>
@@ -10188,12 +10188,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="444"></location>
         <source>Matched item in highlight filter mode</source>
-        <translation>ລາຍການທີ່ກົງກັນໃນໂໝດການກອງແບບເນັ້ນ (highlight)</translation>
+        <translation>ລາຍການທີ່ກົງກັນໃນໂໝດເນັ້ນຂອງຕົວຕອງ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="464"></location>
         <source>Color for items that matches filter conditions</source>
-        <translation>ສີສຳລັບລາຍການທີ່ກົງກັບເງື່ອນໄຂການກອງ</translation>
+        <translation>ສີສຳລັບລາຍການທີ່ກົງກັບເງື່ອນໄຂຂອງຕົວຕອງ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="479"></location>
@@ -10218,7 +10218,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="579"></location>
         <source>Background color for active layer item in layers tree</source>
-        <translation>ສີພື້ນຫຼັງສຳລັບເລເຢີທີ່ກຳລັງໃຊ້ງານໃນລຳດັບເລເຢີ</translation>
+        <translation>ສີພື້ນຫຼັງສຳລັບເລເຢີທີ່ກຳລັງໃຊ້ງານໃນໂຄງສ້າງເລເຢີ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="582"></location>
@@ -10283,7 +10283,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="188"></location>
         <source>Error</source>
-        <translation>ຜິດພາດ</translation>
+        <translation>ຂໍ້ຜິດພາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="189"></location>
@@ -10303,7 +10303,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="146"></location>
         <source>Filter</source>
-        <translation>ກອງ</translation>
+        <translation>ຕົວຕອງ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="148"></location>
@@ -10313,7 +10313,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="153"></location>
         <source>Highlight Mode</source>
-        <translation>ໂໝດເນັ້ນ (Highlight)</translation>
+        <translation>ໂໝດເນັ້ນ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="163"></location>
@@ -10323,7 +10323,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="182"></location>
         <source>Show all layers</source>
-        <translation>ສະແດງເລເຢີທັງໝົດ</translation>
+        <translation>ສະແດງທຸກເລເຢີ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="189"></location>
@@ -10358,27 +10358,27 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="238"></location>
         <source>Unlock all layers</source>
-        <translation>ປົດລັອກເລເຢີທັງໝົດ</translation>
+        <translation>ປົດລັອກທຸກເລເຢີ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="245"></location>
         <source>Lock all layers</source>
-        <translation>ລັອກເລເຢີທັງໝົດ</translation>
+        <translation>ລັອກທຸກເລເຢີ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="252"></location>
         <source>Add a layer</source>
-        <translation>ເພີ່ມເລເຢີ..</translation>
+        <translation>ເພີ່ມເລເຢີ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="259"></location>
         <source>Add dimensions Layer</source>
-        <translation>ເພີ່ມເລເຢີມິຕິ..</translation>
+        <translation>ເພີ່ມເລເຢີມິຕິ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="268"></location>
         <source>Remove layer</source>
-        <translation>ລຶບເລເຢີອອກ</translation>
+        <translation>ລຶບເລເຢີ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="275"></location>
@@ -10388,67 +10388,67 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="282"></location>
         <source>Flat List Mode)</source>
-        <translation>ໂໝດລາຍການແບບຮາບພຽງ)</translation>
+        <translation>ໂໝດລາຍການແບບຮາບພຽງ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="651"></location>
         <source>&amp;Add Child Layer</source>
-        <translation>&amp;ເພີ່ມເລເຢີຍ່ອຍ</translation>
+        <translation>ເພີ່&amp;ມເລເຢີຍ່ອຍ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="652"></location>
         <source>&amp;Rename</source>
-        <translation>&amp;ປ່ຽນຊື່</translation>
+        <translation>ປ່&amp;ຽນຊື່</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="653"></location>
         <source>&amp;Remove Layers (Sub-Tree)</source>
-        <translation>&amp;ລຶບເລເຢີ (ໂຄງສ້າງຍ່ອຍ)</translation>
+        <translation>ລຶ&amp;ບເລເຢີ (ໂຄງສ້າງຍ່ອຍ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="655"></location>
         <source>&amp;Copy Structure (Sub-Tree)</source>
-        <translation>&amp;ກ່າຍໂຄງສ້າງ (ໂຄງສ້າງຍ່ອຍ)</translation>
+        <translation>ສຳເນົາ&amp;ໂຄງສ້າງ (ໂຄງສ້າງຍ່ອຍ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="656"></location>
         <source>&amp;Duplicate Content (Sub-Tree)</source>
-        <translation>&amp;ເຮັດຊ້ຳເນື້ອຫາ (ໂຄງສ້າງຍ່ອຍ)</translation>
+        <translation>ເຮັດຊ້ຳເນື້ອ&amp;ຫາ (ໂຄງສ້າງຍ່ອຍ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="658"></location>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>&amp;ເລືອກອົງປະກອບ (ໂຄງສ້າງຍ່ອຍ)</translation>
+        <translation>ເລືອກອົງ&amp;ປະກອບ (ໂຄງສ້າງຍ່ອຍ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="663"></location>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>&amp;ແກ້ໄຂ&amp;ຄຸນສົມບັດເລເຢີ</translation>
+        <translation>ແກ້ໄ&amp;ຂຄຸນສົມບັດເລເຢີ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="665"></location>
         <source>&amp;Remove Layer</source>
-        <translation>&amp;ລຶບເລເຢີ</translation>
+        <translation>ລຶບເ&amp;ລເຢີ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="674"></location>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>&amp;ເພີ່ມເລເຢີຍ່ອຍມິຕິ</translation>
+        <translation>ເພີ່&amp;ມເລເຢີຍ່ອຍມິຕິ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="678"></location>
         <source>&amp;Add Info Sub-Layer</source>
-        <translation>&amp;ເພີ່ມເລເຢີຍ່ອຍຂໍ້ມູນ</translation>
+        <translation>ເພີ່ມເລເຢີຍ່ອ&amp;ຍຂໍ້ມູນ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="682"></location>
         <source>&amp;Add Alternative View Sub-Layer</source>
-        <translation>&amp;ເພີ່ມເລເຢີຍ່ອຍມຸມມອງທາງເລືອກ</translation>
+        <translation>ເພີ່ມເລເຢີຍ່ອຍ&amp;ຕຳແໜ່ງທາງເລືອກ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="688"></location>
         <source>&amp;Remove Sub-layers</source>
-        <translation>&amp;ລຶບເລເຢີຍ່ອຍ</translation>
+        <translation>ລຶ&amp;ບເລເຢີຍ່ອຍ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="696"></location>
@@ -10476,17 +10476,17 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="718"></location>
         <source>&amp;Select Layer's Entities</source>
-        <translation>&amp;ເລືອກອົງປະກອບຂອງເລເຢີ</translation>
+        <translation>ເລືອກອົງ&amp;ປະກອບຂອງເລເຢີ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="721"></location>
         <source>&amp;Create Layer Copy</source>
-        <translation>&amp;ສ້າງສຳເນົາເລເຢີ</translation>
+        <translation>ສ້າງສ&amp;ຳເນົາເລເຢີ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="722"></location>
         <source>&amp;Duplicate Layer With Content</source>
-        <translation>&amp;ເຮັດຊ້ຳເລເຢີພ້ອມເນື້ອຫາ</translation>
+        <translation>ເຮັດຊ້ຳເລເຢີພ້ອມເນື້ອ&amp;ຫາ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="726"></location>
@@ -10501,17 +10501,17 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="734"></location>
         <source>&amp;Add Layer</source>
-        <translation>&amp;ເພີ່ມເລເຢີ</translation>
+        <translation>ເພີ່&amp;ມເລເຢີ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="736"></location>
         <source>&amp;Freeze Others Layers</source>
-        <translation>&amp;ແຊ່ແຂງເລເຢີອື່ນໆ</translation>
+        <translation>ເຊື່ອງເລເຢີອື່ນ&amp;ໆ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="737"></location>
         <source>&amp;Defreeze All Layers</source>
-        <translation>&amp;ຍົກເລີກການແຊ່ແຂງທຸກເລເຢີ</translation>
+        <translation>&amp;ສະແດງທຸກເລເຢີ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="738"></location>
@@ -10521,32 +10521,32 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="739"></location>
         <source>&amp;Unlock All Layers</source>
-        <translation>&amp;ປົດລັອກທຸກເລເຢີ</translation>
+        <translation>ປົ&amp;ດລັອກທຸກເລເຢີ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="740"></location>
         <source>&amp;Lock All Layers</source>
-        <translation>&amp;ລັອກທຸກເລເຢີ</translation>
+        <translation>ລັອ&amp;ກທຸກເລເຢີ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="741"></location>
         <source>Enable &amp;Printing All Layers</source>
-        <translation>ເປີດການ&amp;ພິມທຸກເລເຢີ</translation>
+        <translation>ເປີດກ&amp;ານພິມທຸກເລເຢີ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="742"></location>
         <source>&amp;Disable Printing All Layers</source>
-        <translation>&amp;ປິດການພິມທຸກເລເຢີ</translation>
+        <translation>ປິດກາ&amp;ນພິມທຸກເລເຢີ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="745"></location>
         <source>&amp;Export Single Layer</source>
-        <translation>&amp;ສົ່ງອອກເລເຢີດຽວ</translation>
+        <translation>ສົ່ງ&amp;ອອກເລເຢີດຽວ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="749"></location>
         <source>&amp;Export Layer Sub-Tree</source>
-        <translation>&amp;ສົ່ງອອກໂຄງສ້າງເລເຢີຍ່ອຍ</translation>
+        <translation>ສົ່ງອອກໂ&amp;ຄງສ້າງເລເຢີຍ່ອຍ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="753"></location>
@@ -17328,7 +17328,7 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="200"></location>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="200"></location>
         <source>Layers Tree</source>
-        <translation>ລາຍການເລເຢີ</translation>
+        <translation>ໂຄງສ້າງເລເຢີ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="225"></location>
@@ -21867,7 +21867,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4237"></location>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ເມື່ອເປີດໃຊ້, ການເລືອກເລເຢີຈະປ່ຽນອົງປະກອບທີ່ຖືກເລືອກທັງໝົດໄປຍັງເລເຢີນັ້ນ. ວິທີປ່ຽນເລເຢີຂອງຫຼາຍອົງປະກອບ: ທຳອິດໃຫ້ເລືອກອົງປະກອບທີ່ຕ້ອງການ; ຈາກນັ້ນເລືອກເລເຢີໃນວິດເຈັດເລເຢີ. ອັນນີ້ຈະເຮັດໃຫ້ອົງປະກອບທີ່ເລືອກທັງໝົດຍ້າຍໄປຢູ່ເລເຢີໃໝ່.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ເມື່ອເປີດໃຊ້ຕົວເລືອກນີ້, ການເປີດໃຊ້ເລເຢີຈະປ່ຽນອົງປະກອບທີ່ຖືກເລືອກທັງໝົດໄປຍັງເລເຢີນັ້ນ. ວິທີປ່ຽນເລເຢີຂອງຫຼາຍອົງປະກອບ: ທຳອິດໃຫ້ເລືອກອົງປະກອບທີ່ຕ້ອງການ; ຈາກນັ້ນເປີດໃຊ້ເລເຢີໃນວິດເຈັດເລເຢີ. ອັນນີ້ຈະເຮັດໃຫ້ອົງປະກອບທີ່ເລືອກທັງໝົດຍ້າຍໄປຢູ່ເລເຢີໃໝ່.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5165"></location>
@@ -23735,7 +23735,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="92"></location>
         <source>Export visible construction layers</source>
-        <translation>ສົ່ງອອກເລເຢີເສັ້ນຮ່າງ (construction) ທີ່ເບິ່ງເຫັນ</translation>
+        <translation>ສົ່ງອອກເລເຢີຊ່ວຍສ້າງທີ່ເບິ່ງເຫັນ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="104"></location>
@@ -25799,6 +25799,7 @@ This action can NOT be undone.</source>
         <source>Remove %n layer(s)</source>
         <translation>
  <numerusform>ລຶບ %n ເລເຢີ</numerusform>
+ <numerusform>ລຶບ %n ເລເຢີ</numerusform>
  </translation>
     </message>
     <message>
@@ -25885,7 +25886,8 @@ Clear filtering mask and repeat.</source>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
 Clear filtering mask and repeat.</source>
-        <translation>ພົບເລເຢີທີ່ບໍ່ມີອົງປະກອບ, ແຕ່ພວກມັນຖືກກອງໄວ້ ແລະ ບໍ່ສະແດງໃຫ້ເຫັນ.
+        <translation>ພົບເລເຢີທີ່ບໍ່ມີອົງປະກອບ, ແຕ່ພວກມັນຖືກຕອງອອກ ແລະ ບໍ່ສະແດງໃຫ້ເຫັນ.
+
 ລ້າງຕົວຕອງແລ້ວລອງໃໝ່.</translation>
     </message>
     <message>
@@ -26013,13 +26015,13 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1378"></location>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>ບໍ່ພົບອົງປະກອບທີ່ກົງກັບປາກກາໃນເລເຢີທີ່ສະແດງຢູ່.</translation>
+        <translation>ບໍ່ພົບອົງປະກອບທີ່ກົງກັບປາກກາໃນເລເຢີທີ່ເບິ່ງເຫັນ.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1379"></location>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>ອົງປະກອບດັ່ງກ່າວມີຢູ່ໃນເລເຢີທີ່ຖືກແຊ່ແຂງ (Frozen).
+        <translation>ອົງປະກອບດັ່ງກ່າວມີຢູ່ໃນເລເຢີທີ່ຖືກເຊື່ອງໄວ້.
 </translation>
     </message>
     <message>
@@ -29343,7 +29345,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_filedialogservice.cpp" line="190"></location>
         <source>Combine all layers</source>
-        <translation>ລວມເລເຢີ (layers) ທັງໝົດ</translation>
+        <translation>ລວມທຸກເລເຢີ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="180"></location>

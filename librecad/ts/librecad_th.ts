@@ -2664,7 +2664,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="252"/>
         <source>(De-)Select Layer</source>
-        <translation>เลเยอร์ถัดไป</translation>
+        <translation>เลือก/ยกเลิกการเลือกเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="235"/>
@@ -3561,7 +3561,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="410"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>ปรับปรุงปากกาปัจจุบันด้วยปากกาที่ทํางานอยู่</translation>
+        <translation>ปรับปรุงปากกาปัจจุบันด้วยปากกาของเลเยอร์ที่ทำงานอยู่</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="416"/>
@@ -3697,12 +3697,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="66"/>
         <source>Layer</source>
-        <translation>ชั้น</translation>
+        <translation>เลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="66"/>
         <source>Layers operations</source>
-        <translation>เลเยอร์</translation>
+        <translation>ปฏิบัติการเกี่ยวกับเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="67"/>
@@ -3894,12 +3894,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity Layer</source>
-        <translation>เลเยอร์ถัดไป</translation>
+        <translation>เลเยอร์ของวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity&apos;s Layer</source>
-        <translation>เพิ่มเลเยอร์..</translation>
+        <translation>เลเยอร์ของวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="88"/>
@@ -3914,32 +3914,32 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="109"/>
         <source>Activate Entity&apos;s Layer</source>
-        <translation>เปิดใช้งานเลเยอร์</translation>
+        <translation>เปิดใช้งานเลเยอร์ของวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="110"/>
         <source>Hide Entity&apos;s Layer</source>
-        <translation>ซ่อนเลเยอร์</translation>
+        <translation>ซ่อนเลเยอร์ของวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="111"/>
         <source>Hide Other Layers than Entity&apos;s</source>
-        <translation>เลเยอร์ถัดไป</translation>
+        <translation>ซ่อนทุกเลเยอร์ยกเว้นเลเยอร์ของวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="112"/>
         <source>Lock Entity&apos;s Layer</source>
-        <translation>ล็อคเลเยอร์</translation>
+        <translation>ล็อคเลเยอร์ของวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="113"/>
         <source>Toggle Entity&apos;s Layer Construction</source>
-        <translation>เปิด/ ปิด การตกแต่งเลเยอร์</translation>
+        <translation>เปิด/ปิดสถานะเส้นร่างของเลเยอร์ของวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="114"/>
         <source>Toggle Entity&apos;s Layer Printing</source>
-        <translation>เปิด/ ปิด การพิมพ์</translation>
+        <translation>เปิด/ปิดการพิมพ์เลเยอร์ของวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="225"/>
@@ -4213,37 +4213,37 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="621"/>
         <source>&amp;Add Layer</source>
-        <translation>เพิ่มเลเยอร์..</translation>
+        <translation>เพิ่&amp;มเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="622"/>
         <source>&amp;Remove Layer</source>
-        <translation>ลบเลเยอร์</translation>
+        <translation>ล&amp;บเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="623"/>
         <source>&amp;Edit Layer</source>
-        <translation>ลบเลเยอร์</translation>
+        <translation>แก้ไ&amp;ขเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="624"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>เปิด/ ปิด ลูกเล่นกับหน้าต่าง</translation>
+        <translation>เปิด/ปิด&amp;การล็อคเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="625"/>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation>ความเปรียบต่างของเลเยอร์</translation>
+        <translation>เปิ&amp;ด/ปิดการมองเห็นเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="626"/>
         <source>Toggle Layer &amp;Print</source>
-        <translation>เปิด/ ปิด เลเยอร์</translation>
+        <translation>เปิด/ปิดการพิมพ์เ&amp;ลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="627"/>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>เปิด/ ปิด ลูกข่าย</translation>
+        <translation>เปิด/ปิดส&amp;ถานะเลเยอร์เส้นร่าง</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="637"/>
@@ -4531,7 +4531,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="617"/>
         <source>&amp;Show all layers</source>
-        <translation>แสดงเลเยอร์ทั้งหมด</translation>
+        <translation>แ&amp;สดงเลเยอร์ทั้งหมด</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
@@ -4541,22 +4541,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
         <source>&amp;Unlock all</source>
-        <translation>ไม่ต้องล็อคทั้งหมด</translation>
+        <translation>&amp;ปลดล็อคทั้งหมด</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="620"/>
         <source>&amp;Lock all</source>
-        <translation>&amp; ปิดทั้งหมด</translation>
+        <translation>ล็&amp;อคทั้งหมด</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="628"/>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>เพิ่มเลเยอร์..</translation>
+        <translation>ส่&amp;งออกเลเยอร์ที่เลือก</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="629"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>ส่งออกเป็นเลเยอร์ที่ใช้ได้</translation>
+        <translation>ส่งออกเลเยอร์ที่มองเห็&amp;น</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="635"/>
@@ -5127,7 +5127,7 @@ Cartesian: (%2)%3
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>Enter layer name to %1</source>
-        <translation>ป้อนชื่อเลเยอร์เป็น%1</translation>
+        <translation>ป้อนชื่อเลเยอร์ที่จะ%1</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
@@ -5152,7 +5152,7 @@ Cartesian: (%2)%3
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
         <source>visible</source>
         <comment>Layers to export</comment>
-        <translation>แสดง</translation>
+        <translation>มองเห็น</translation>
     </message>
 </context>
 <context>
@@ -6874,7 +6874,7 @@ Cartesian: (%2)%3
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_layer.cpp" line="75"/>
         <source>Specify entity with desired layer</source>
-        <translation type="unfinished">ระบุรายการที่มีเลเยอร์ที่ต้องการ</translation>
+        <translation type="unfinished">ระบุวัตถุที่อยู่ในเลเยอร์ที่ต้องการ</translation>
     </message>
 </context>
 <context>
@@ -7479,12 +7479,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="66"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">หากกาเลือกไว้ จะทําการวางโครงสร้างกระจกเงาบนเลเยอร์ปัจจุบัน ไม่เช่นนั้นก็จะถูกนําไปวางไว้ในชั้นเดิม.</translation>
+        <translation type="unfinished">หากกาเลือกไว้ วัตถุที่ได้จากการสะท้อนจะถูกวางไว้ในเลเยอร์ปัจจุบัน มิฉะนั้น จะถูกวางไว้ในเลเยอร์เดิม.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="69"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">เลเยอร์ปัจจุบันของผู้ใช้</translation>
+        <translation type="unfinished">ใช้เลเยอร์ปัจจุบัน</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="76"/>
@@ -8807,7 +8807,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="62"/>
         <source>Layer to which created circle should be placed</source>
-        <translation type="unfinished">เพิ่มเลเยอร์..</translation>
+        <translation type="unfinished">เลเยอร์ที่จะวางวงกลมที่สร้างขึ้น</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="66"/>
@@ -8847,7 +8847,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="124"/>
         <source>Layer:</source>
-        <translation type="unfinished">เลเยอร์</translation>
+        <translation type="unfinished">เลเยอร์:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="131"/>
@@ -10798,7 +10798,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="209"/>
         <source>Layer</source>
-        <translation>ชั้น</translation>
+        <translation>เลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="236"/>
@@ -11102,7 +11102,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="64"/>
         <source>Layer</source>
-        <translation>ชั้น</translation>
+        <translation>เลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="76"/>
@@ -11112,7 +11112,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="98"/>
         <source>Layer of entity</source>
-        <translation>เลเยอร์</translation>
+        <translation>เลเยอร์ของวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="148"/>
@@ -12271,7 +12271,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="118"/>
         <source>Active Layer</source>
-        <translation type="unfinished">เลเยอร์ถัดไป</translation>
+        <translation type="unfinished">เลเยอร์ที่ทำงานอยู่</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="125"/>
@@ -12595,7 +12595,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="26"/>
         <source>Layer of dimension</source>
-        <translation>ชั้นของมิติ</translation>
+        <translation>เลเยอร์ของมิติ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="45"/>
@@ -12605,7 +12605,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="58"/>
         <source>Layer:</source>
-        <translation>เลเยอร์</translation>
+        <translation>เลเยอร์:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="91"/>
@@ -13571,7 +13571,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="82"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">เพิ่มเลเยอร์..</translation>
+        <translation type="unfinished">เลเยอร์ที่จะวางวัตถุที่ทำซ้ำ</translation>
     </message>
 </context>
 <context>
@@ -13584,7 +13584,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="45"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">เพิ่มเลเยอร์..</translation>
+        <translation type="unfinished">เลเยอร์ที่จะวางวัตถุที่ทำซ้ำ</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="49"/>
@@ -13654,7 +13654,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="164"/>
         <source>Layer:</source>
-        <translation type="unfinished">เลเยอร์</translation>
+        <translation type="unfinished">เลเยอร์:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="171"/>
@@ -14371,12 +14371,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="168"/>
         <source>Layer</source>
-        <translation type="unfinished">ชั้น</translation>
+        <translation type="unfinished">เลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="168"/>
         <source>Layer of entity</source>
-        <translation type="unfinished">เลเยอร์</translation>
+        <translation type="unfinished">เลเยอร์ของวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="204"/>
@@ -14440,12 +14440,12 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="135"/>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="179"/>
         <source>Export Layers</source>
-        <translation>ส่งออกเลเยอร์..</translation>
+        <translation>ส่งออกเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="152"/>
         <source>Exported Layers</source>
-        <translation>ลบเลเยอร์แล้ว</translation>
+        <translation>เลเยอร์ที่ส่งออก</translation>
     </message>
 </context>
 <context>
@@ -15276,17 +15276,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="20"/>
         <source>Layer Settings</source>
-        <translation>ตั้งค่าเลเยอร์..</translation>
+        <translation>ตั้งค่าเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="48"/>
         <source>Name of new layer. In order to create hierarchical layers, include name of virtual layer and layer name separator.</source>
-        <translation>ชื่อของเลเยอร์ใหม่ การสร้างชั้นชั้นชั้นชั้นชั้นใน คือชื่อของเลเยอร์และชื่อตัวแบ่งชั้น.</translation>
+        <translation>ชื่อของเลเยอร์ใหม่ หากต้องการสร้างเลเยอร์แบบลำดับชั้น ให้ใส่ชื่อเลเยอร์เสมือนและตัวแบ่งชื่อเลเยอร์ไว้ในชื่อด้วย.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="64"/>
         <source>Parent Layers Path:</source>
-        <translation>ตําแหน่งเลเยอร์แม่:</translation>
+        <translation>พาธของเลเยอร์แม่:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="81"/>
@@ -15296,7 +15296,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="93"/>
         <source>Layer for various infromational elements, notes, drafts etc.</source>
-        <translation>เลเยอร์สําหรับองค์ประกอบต่าง ๆ จากสารสนเทศ, โน้ต, แบบร่าง เป็นต้น.</translation>
+        <translation>เลเยอร์สำหรับองค์ประกอบเชิงข้อมูลต่าง ๆ เช่น หมายเหตุ แบบร่าง เป็นต้น.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="96"/>
@@ -15306,7 +15306,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="106"/>
         <source>Normal layer with drawing eleements</source>
-        <translation>เลเยอร์ปกติ</translation>
+        <translation>เลเยอร์ปกติที่มีองค์ประกอบของงานเขียนแบบ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="109"/>
@@ -15316,34 +15316,34 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="119"/>
         <source>Layer that holds dimensions</source>
-        <translation>เพิ่มเลเยอร์..</translation>
+        <translation>เลเยอร์ที่ใช้เก็บมิติ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="122"/>
         <source>Dimensions</source>
-        <translation>ขนาด</translation>
+        <translation>มิติ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="132"/>
         <source>Layer with alternate position of entities located on normal layers</source>
-        <translation>เพิ่มเลเยอร์..</translation>
+        <translation>เลเยอร์ที่มีตำแหน่งทางเลือกของวัตถุซึ่งอยู่ในเลเยอร์ปกติ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="135"/>
         <source>Alternative Position</source>
-        <translation>ตําแหน่งตัวเลือก</translation>
+        <translation>ตำแหน่งทางเลือก</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="148"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>ชั้น ก่อ สร้าง มี ชั้น ของ เส้น ตรง สุด คณา นับ ซึ่ง มุ่ง หมาย จะ ใช้ สําหรับ การ ก่อ สร้าง ทาง เรขาคณิต.
-ส่วน ประกอบ ของ ชั้น ก่อ สร้าง ไม่ ควร ปรากฏ ใน การ พิมพ์ ออก.</translation>
+        <translation>เลเยอร์เส้นร่างมีวัตถุเป็นเส้นตรงยาวไม่สิ้นสุด ซึ่งมีไว้ใช้สำหรับการสร้างทางเรขาคณิต
+เนื้อหาของเลเยอร์เส้นร่างไม่ควรปรากฏในงานพิมพ์.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="152"/>
         <source>Construction Layer</source>
-        <translation>เลเยอร์ถัดไป</translation>
+        <translation>เลเยอร์เส้นร่าง</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="181"/>
@@ -15353,28 +15353,28 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="197"/>
         <source>Layer Name:</source>
-        <translation>ชื่อเลเยอร์</translation>
+        <translation>ชื่อเลเยอร์:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="68"/>
         <source>Rename Virtual Layer</source>
-        <translation>ลบเลเยอร์แล้ว</translation>
+        <translation>เปลี่ยนชื่อเลเยอร์เสมือน</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="72"/>
         <source>Add Secondary Layer</source>
-        <translation>เพิ่มเลเยอร์ถัดไป</translation>
+        <translation>เพิ่มเลเยอร์รอง</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="78"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="85"/>
         <source>Add Layer</source>
-        <translation>เพิ่มเลเยอร์..</translation>
+        <translation>เพิ่มเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="91"/>
         <source>Edit Layer</source>
-        <translation>ลบเลเยอร์แล้ว</translation>
+        <translation>แก้ไขเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="183"/>
@@ -15398,47 +15398,47 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="57"/>
         <source>Layers Export Options</source>
-        <translation>ตัวเลือกการไล่ระดับสี</translation>
+        <translation>ตัวเลือกการส่งออกเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="63"/>
         <source>If checked, Named Views from the document will be included into exported drawings. Otherwise, views are not included.</source>
-        <translation>หากกาเลือก จะมีการรวมมุมมองที่มีชื่อจากเอกสาร เข้าไว้ในภาพร่าง มิ ฉะนั้น ก็ ไม่ ได้ รวม เอา ความ คิด เห็น ไว้ ด้วย.</translation>
+        <translation>หากกาเลือกไว้ มุมมองที่มีชื่อในเอกสารจะถูกรวมไว้ในงานเขียนแบบที่ส่งออกด้วย มิฉะนั้น จะไม่รวมมุมมองไว้.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="66"/>
         <source>Export Named Views too</source>
-        <translation>ส่งออกมุมมองชื่อ</translation>
+        <translation>ส่งออกมุมมองที่มีชื่อด้วย</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="73"/>
         <source>If checked, each original exported layer will be stored in separate drawing. Otherwise, all layers will be in exported to one combined drawing.</source>
-        <translation>หากกาเลือกไว้ จะเก็บแต่ละชั้นต้นฉบับที่ถูกส่งออกไปไว้ในภาพวาดแยกกัน มิ ฉะนั้น ชั้น ต่าง ๆ ทุก ชั้น จะ ถูก ส่ง ออก ไป เป็น รูป หนึ่ง ที่ รวม กัน.</translation>
+        <translation>หากกาเลือกไว้ เลเยอร์เดิมแต่ละเลเยอร์ที่ส่งออกจะถูกเก็บไว้ในงานเขียนแบบแยกกัน มิฉะนั้น เลเยอร์ทั้งหมดจะถูกส่งออกรวมกันเป็นงานเขียนแบบแผ่นเดียว.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="76"/>
         <source>Export each layer to own drawing file</source>
-        <translation>ส่งออกแต่ละชั้นเป็นแฟ้มวาดเอง</translation>
+        <translation>ส่งออกแต่ละเลเยอร์เป็นแฟ้มงานเขียนแบบแยกกัน</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="83"/>
         <source>If checked, entities will be stored in original layer. Otherwise, they are placed to layer &quot;0&quot;.</source>
-        <translation>หากกาเลือกไว้ จะมีการจัดเก็บเนื้อหาไว้ในเลเยอร์เดิม ไม่อย่างนั้น พวกมันจะถูกวางลงในชั้น &quot;0&quot;.</translation>
+        <translation>หากกาเลือกไว้ วัตถุจะถูกเก็บไว้ในเลเยอร์เดิม มิฉะนั้น วัตถุจะถูกวางไว้ในเลเยอร์ &quot;0&quot;.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="89"/>
         <source>Retain original layer for entities</source>
-        <translation>สร้างเลเยอร์ใหม่</translation>
+        <translation>คงเลเยอร์เดิมของวัตถุไว้</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="96"/>
         <source>If checked, UCSs from the document will be included into exported drawings. Otherwise, UCSs are not included.</source>
-        <translation>หากกาเลือกไว้ จะรวม UCSS จากเอกสารเป็นรูปภาพที่ส่งออก มิฉะนั้น ยูซีเอสจะไม่รวม.</translation>
+        <translation>หากกาเลือกไว้ UCS ในเอกสารจะถูกรวมไว้ในงานเขียนแบบที่ส่งออกด้วย มิฉะนั้น จะไม่รวม UCS ไว้.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="99"/>
         <source>Export UCSs too</source>
-        <translation>ส่งออกเป็น UCSS ด้วย</translation>
+        <translation>ส่งออก UCS ด้วย</translation>
     </message>
 </context>
 <context>
@@ -15446,17 +15446,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="20"/>
         <source>Layers Tree Options</source>
-        <translation>ตัวเลือกเลเยอร์</translation>
+        <translation>ตัวเลือกต้นไม้เลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="46"/>
         <source>Settings for naming convention that is used to create layers hierarchy based on flat list of layers</source>
-        <translation>ตั้งค่าสําหรับการตั้งชื่อที่ใช้ในการแบ่งชั้นชั้นชั้นต่าง ๆ ที่ตั้งอยู่บนรายการเลเยอร์</translation>
+        <translation>ตั้งค่ารูปแบบการตั้งชื่อที่ใช้สร้างลำดับชั้นของเลเยอร์จากรายการเลเยอร์แบบแบนราบ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="49"/>
         <source>Naming Convention</source>
-        <translation>การ สมรส</translation>
+        <translation>รูปแบบการตั้งชื่อ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="55"/>
@@ -15466,7 +15466,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="116"/>
         <source>Separator used for split inner name of layer to hierarchical names</source>
-        <translation>ตัวแบ่งที่จะใช้แยกชื่อในชั้นในเพื่อลําดับชั้นของชื่อ</translation>
+        <translation>ตัวแบ่งที่ใช้แยกชื่อภายในของเลเยอร์ออกเป็นชื่อตามลำดับชั้น</translation>
     </message>
     <message>
         <source>Layer Level Name Separator</source>
@@ -15480,12 +15480,12 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
-        <translation>ขนาด</translation>
+        <translation>มิติ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="201"/>
         <source>Suffix of layer&apos;s name that defines that layer is dimensional</source>
-        <translation>แปรงทาสี</translation>
+        <translation>ส่วนต่อท้ายของชื่อเลเยอร์ที่ระบุว่าเลเยอร์นั้นเป็นเลเยอร์มิติ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="211"/>
@@ -15496,17 +15496,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="224"/>
         <source>Suffix of layer&apos;s name that defines that layer is informational.</source>
-        <translation>แผ่นชื่อเลเยอร์ที่นิยามเลเยอร์เป็นข้อมูล.</translation>
+        <translation>ส่วนต่อท้ายของชื่อเลเยอร์ที่ระบุว่าเลเยอร์นั้นเป็นเลเยอร์ข้อมูล.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="234"/>
         <source>Alternative Position </source>
-        <translation>ตําแหน่งตัวเลือก</translation>
+        <translation>ตำแหน่งทางเลือก </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
-        <translation>ชื่อของเลเยอร์ที่นิยามเลเยอร์นั้น สําหรับตําแหน่งทางเลือก.</translation>
+        <translation>ส่วนต่อท้ายของชื่อเลเยอร์ที่ระบุว่าเลเยอร์นั้นเป็นเลเยอร์ตำแหน่งทางเลือก.</translation>
     </message>
     <message>
         <source>Duplicating Name</source>
@@ -15515,22 +15515,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="61"/>
         <source>Prefix</source>
-        <translation>นําหน้า</translation>
+        <translation>คำนำหน้า</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="74"/>
         <source>Prefix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>ชื่อก่อนสุดของเลเยอร์ที่ถูกใช้หากมีชื่อดังกล่าวอยู่ (เช่น เมื่อสร้างแฟ้มซ้ํา)</translation>
+        <translation>คำนำหน้าของชื่อเลเยอร์ที่จะใช้หากมีเลเยอร์ชื่อนั้นอยู่แล้ว (เช่น เมื่อทำซ้ำเลเยอร์)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="84"/>
         <source>Suffix</source>
-        <translation>แปรงทาสี</translation>
+        <translation>ส่วนต่อท้าย</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="97"/>
         <source>Suffix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>ชื่อของเลเยอร์ที่จะถูกใช้ หากมีเลเยอร์ที่ชื่อดังกล่าวอยู่ (เช่น เมื่อสร้างเลเยอร์ซ้ํา)</translation>
+        <translation>ส่วนต่อท้ายของชื่อเลเยอร์ที่จะใช้หากมีเลเยอร์ชื่อนั้นอยู่แล้ว (เช่น เมื่อทำซ้ำเลเยอร์)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="155"/>
@@ -15570,12 +15570,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="329"/>
         <source>If checked, tooltip will include complete name of layer (with all upper layer levels)</source>
-        <translation>หากกาเลือกไว้ จะรวมชื่อเต็มของเลเยอร์ด้วย (ทั้งชั้นบนสุด)</translation>
+        <translation>หากกาเลือกไว้ ทูลทิปจะแสดงชื่อเต็มของเลเยอร์ (รวมระดับเลเยอร์ที่อยู่เหนือขึ้นไปทั้งหมด)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="332"/>
         <source>Show full name as ToolTip</source>
-        <translation>แสดงชื่อเต็มเป็นเครื่องมือผุด</translation>
+        <translation>แสดงชื่อเต็มเป็นทูลทิป</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="608"/>
@@ -15605,47 +15605,47 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="319"/>
         <source>If checked, icons for layer types will be shown</source>
-        <translation>หากกาเลือก จะมีการแสดงภาพไอคอนสําหรับประเภทของเลเยอร์</translation>
+        <translation>หากกาเลือกไว้ จะแสดงไอคอนชนิดเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="322"/>
         <source>Show layer type icons</source>
-        <translation>แสดงภาพไอคอนชั้นใน</translation>
+        <translation>แสดงไอคอนชนิดเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="309"/>
         <source>Indentation for child layers</source>
-        <translation>ระยะห่างจากชั้นเด็ก</translation>
+        <translation>ระยะเยื้องสำหรับเลเยอร์ลูก</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="312"/>
         <source>Show indented layer names. Ident size:</source>
-        <translation>แสดงชื่อเลเยอร์ที่แยกไม่ออก ขนาดทศนิยม:</translation>
+        <translation>แสดงชื่อเลเยอร์แบบเยื้อง ระยะเยื้อง:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="277"/>
         <source>Size of the indent in characters to indent name of child layer from parent ones</source>
-        <translation>ขนาดของช่องสีในตัวอักษรที่จะกําหนดชื่อชั้นสําหรับเด็กจากตัวแม่</translation>
+        <translation>ระยะเยื้อง (เป็นจำนวนอักขระ) ของชื่อเลเยอร์ลูกจากเลเยอร์แม่</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="352"/>
         <source>If checked, drag&amp;drop operations in layers list are enabled and layers hierarchy may be restructutured</source>
-        <translation>หากกาเลือกไว้ จะทําการลดระดับการทํางานในชั้นต่าง ๆ ของการลากและปรับโครงสร้างชั้นต่าง ๆ ใหม่</translation>
+        <translation>หากกาเลือกไว้ จะเปิดใช้การลาก&amp;วางในรายการเลเยอร์ และสามารถจัดโครงสร้างลำดับชั้นของเลเยอร์ใหม่ได้</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="355"/>
         <source>Allow restructuring via Drag&amp;Drop</source>
-        <translation>อนุญาตให้ทําการปรับปรุงใหม่ผ่านทาง Draw&amp; Drop</translation>
+        <translation>อนุญาตให้จัดโครงสร้างใหม่ด้วยการลาก&amp;&amp;วาง</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="293"/>
         <source>If primary layer is renames, secondary layers are renamed too.</source>
-        <translation>ถ้าเลเยอร์หลักถูกเปลี่ยนชื่อ ชั้นชั้นที่สองจะถูกเปลี่ยนชื่อเช่นกัน.</translation>
+        <translation>ถ้าเลเยอร์หลักถูกเปลี่ยนชื่อ เลเยอร์รองจะถูกเปลี่ยนชื่อด้วยเช่นกัน.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="296"/>
         <source>Rename secondary layers on primary rename</source>
-        <translation>เปลี่ยนชื่อเลเยอร์หลัก</translation>
+        <translation>เปลี่ยนชื่อเลเยอร์รองเมื่อเปลี่ยนชื่อเลเยอร์หลัก</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="376"/>
@@ -15659,7 +15659,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="470"/>
         <source>Background color for selected items in layers tree.</source>
-        <translation>สีพื้นหลังสําหรับรายการที่เลือกที่อยู่ในแนวต้นไม้ชั้นต่าง ๆ.</translation>
+        <translation>สีพื้นหลังของรายการที่เลือกในต้นไม้เลเยอร์.</translation>
     </message>
     <message>
         <source>Color for separator lines in layers tree view</source>
@@ -15668,7 +15668,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="420"/>
         <source>Background color for virtual layers items in layers list</source>
-        <translation>สีพื้นหลังของรายการเลเยอร์เสมือนในเลเยอร์</translation>
+        <translation>สีพื้นหลังของเลเยอร์เสมือนในรายการเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="449"/>
@@ -15681,12 +15681,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="560"/>
         <source>Matched item in highlight filter mode</source>
-        <translation>รายการที่เข้าคู่ในโหมดตัวกรองเน้น</translation>
+        <translation>รายการที่ตรงกับตัวกรองในโหมดเน้น</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="391"/>
         <source>Color for items that matches filter conditions</source>
-        <translation>สีสําหรับรายการที่ตรงกับเงื่อนไขการกรอง</translation>
+        <translation>สีสำหรับรายการที่ตรงกับเงื่อนไขการกรอง</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="379"/>
@@ -15696,12 +15696,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="406"/>
         <source>#1E90FF</source>
-        <translation>1 E90FF</translation>
+        <translation>#1E90FF</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="581"/>
         <source>Virtual layer background color</source>
-        <translation>สีพื้นหลังของเลเยอร์</translation>
+        <translation>สีพื้นหลังเลเยอร์เสมือน</translation>
     </message>
     <message>
         <source>Threeview items separator grid</source>
@@ -15715,12 +15715,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="523"/>
         <source>Background color for active layer item in layers tree</source>
-        <translation>สีพื้นหลังของรายการเลเยอร์ที่ทํางานอยู่</translation>
+        <translation>สีพื้นหลังของรายการเลเยอร์ที่ทำงานอยู่</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="526"/>
         <source>Active layer background color</source>
-        <translation>สีพื้นหลังเลเยอร์ที่ทํางานอยู่</translation>
+        <translation>สีพื้นหลังเลเยอร์ที่ทำงานอยู่</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="588"/>
@@ -15735,7 +15735,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="599"/>
         <source>Pens that will be set for newly created layers of different types.</source>
-        <translation>ปากกาที่จะตั้งค่าสําหรับชั้นใหม่ที่สร้างขึ้นของชนิดที่แตกต่างกัน.</translation>
+        <translation>ปากกาที่จะกำหนดให้กับเลเยอร์ชนิดต่าง ๆ ที่สร้างขึ้นใหม่.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="602"/>
@@ -15750,17 +15750,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="69"/>
         <source>Dimensional Layer</source>
-        <translation>เลเยอร์ถัดไป</translation>
+        <translation>เลเยอร์มิติ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="70"/>
         <source>Informational Layer</source>
-        <translation>เลเยอร์ถัดไป</translation>
+        <translation>เลเยอร์ข้อมูล</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Alternative Position Layer</source>
-        <translation>เลเยอร์ถัดไป</translation>
+        <translation>เลเยอร์ตำแหน่งทางเลือก</translation>
     </message>
     <message>
         <source>grid</source>
@@ -15774,7 +15774,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="110"/>
         <source>virtual layer background</source>
-        <translation>พื้นหลังเลเยอร์จริง</translation>
+        <translation>พื้นหลังเลเยอร์เสมือน</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="118"/>
@@ -15784,7 +15784,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="126"/>
         <source>active layer background</source>
-        <translation>พื้นหลังเลเยอร์ที่ทํางานอยู่</translation>
+        <translation>พื้นหลังเลเยอร์ที่ทำงานอยู่</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
@@ -15795,7 +15795,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>ค่าที่ไม่พอสําหรับ%1 สี
+        <translation>ค่าที่ระบุไม่ถูกต้องสำหรับสี%1
 โปรดระบุค่าอื่น.</translation>
     </message>
     <message>
@@ -15814,7 +15814,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="152"/>
         <source>Looking for matching layer names</source>
-        <translation>ค้นหาชื่อเลเยอร์ที่เข้ากันได้</translation>
+        <translation>ค้นหาชื่อเลเยอร์ที่ตรงกัน</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="157"/>
@@ -15839,12 +15839,12 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="200"/>
         <source>Show Secondary Layers</source>
-        <translation>แสดงเลเยอร์ที่สอง</translation>
+        <translation>แสดงเลเยอร์รอง</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="210"/>
         <source>Show Active Layer Only</source>
-        <translation>แสดงเลเยอร์ที่ทํางานอยู่</translation>
+        <translation>แสดงเฉพาะเลเยอร์ที่ทำงานอยู่</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="218"/>
@@ -15854,37 +15854,37 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="226"/>
         <source>Collapse All</source>
-        <translation>ย่อเก็บทั้งหมด</translation>
+        <translation>ยุบทั้งหมด</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="234"/>
         <source>Collapse Secondary</source>
-        <translation>ยุบลําดับที่สอง</translation>
+        <translation>ยุบเลเยอร์รอง</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="242"/>
         <source>Unlock all layers</source>
-        <translation>ปลดล็อคทุกชั้น</translation>
+        <translation>ปลดล็อคเลเยอร์ทั้งหมด</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="249"/>
         <source>Lock all layers</source>
-        <translation>ล็อคทุกชั้น</translation>
+        <translation>ล็อคเลเยอร์ทั้งหมด</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="256"/>
         <source>Add a layer</source>
-        <translation>เพิ่มเลเยอร์..</translation>
+        <translation>เพิ่มเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="263"/>
         <source>Add dimensions Layer</source>
-        <translation>เพิ่มเลเยอร์..</translation>
+        <translation>เพิ่มเลเยอร์มิติ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="272"/>
         <source>Remove layer</source>
-        <translation>ลบเลเยอร์แล้ว</translation>
+        <translation>ลบเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="279"/>
@@ -15894,73 +15894,73 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="286"/>
         <source>Flat List Mode)</source>
-        <translation>โหมดรายการแบบแบนราบ)</translation>
+        <translation>โหมดรายการแบบแบนราบ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="656"/>
         <source>&amp;Add Child Layer</source>
-        <translation>เพิ่มเลเยอร์..</translation>
+        <translation>เพิ่&amp;มเลเยอร์ลูก</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="657"/>
         <source>&amp;Rename</source>
-        <translation>&amp; ชื่อใหม่</translation>
+        <translation>&amp;เปลี่ยนชื่อ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="658"/>
         <source>&amp;Remove Layers (Sub-Tree)</source>
-        <translation>&amp; ลบเลเยอร์</translation>
+        <translation>&amp;ลบเลเยอร์ (ต้นไม้ย่อย)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="660"/>
         <source>&amp;Copy Structure (Sub-Tree)</source>
-        <translation>โครงสร้างสําเนา (Sub- Tree)</translation>
+        <translation>คัดลอกโค&amp;รงสร้าง (ต้นไม้ย่อย)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="661"/>
         <source>&amp;Duplicate Content (Sub-Tree)</source>
-        <translation>เนื้อหาแบบโปร่งแสง (Sub- Tre)</translation>
+        <translation>&amp;ทำซ้ำเนื้อหา (ต้นไม้ย่อย)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="663"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>คุณสมบัติการเลือก (ช่องย่อย)</translation>
+        <translation>เลือกวั&amp;ตถุ (ต้นไม้ย่อย)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="668"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>ลบเลเยอร์แล้ว</translation>
+        <translation>แก้ไ&amp;ขคุณสมบัติเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="670"/>
         <source>&amp;Remove Layer</source>
-        <translation>ลบเลเยอร์</translation>
+        <translation>ล&amp;บเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="679"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>เพิ่มขนาดย่อย</translation>
+        <translation>เพิ่&amp;มเลเยอร์ย่อยมิติ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="683"/>
         <source>&amp;Add Info Sub-Layer</source>
-        <translation>เพิ่มข้อมูลย่อย</translation>
+        <translation>&amp;เพิ่มเลเยอร์ย่อยข้อมูล</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="687"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
-        <translation>เพิ่มรายการย่อยของมุมมอง</translation>
+        <translation>เพิ่มเลเยอร์ย่อย&amp;ตำแหน่งทางเลือก</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="693"/>
         <source>&amp;Remove Sub-layers</source>
-        <translation>&amp; ลบเลเยอร์</translation>
+        <translation>&amp;ลบเลเยอร์ย่อย</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="701"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="711"/>
         <source>Convert to Dimensional Layer</source>
-        <translation>แปลงเป็นเลเยอร์ขนาด</translation>
+        <translation>แปลงเป็นเลเยอร์มิติ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="702"/>
@@ -15972,7 +15972,7 @@ Please specify a different value.</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="703"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="717"/>
         <source>Convert to Alternative Position Layer</source>
-        <translation>แปลงเป็นเลเยอร์ตําแหน่ง</translation>
+        <translation>แปลงเป็นเลเยอร์ตำแหน่งทางเลือก</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="709"/>
@@ -15982,17 +15982,17 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="723"/>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>คุณสมบัติเลเยอร์..</translation>
+        <translation>เลือกวัตถุ&amp;ในเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="726"/>
         <source>&amp;Create Layer Copy</source>
-        <translation>&amp; ลบเลเยอร์</translation>
+        <translation>สร้างสำเนาเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="727"/>
         <source>&amp;Duplicate Layer With Content</source>
-        <translation>เพิ่มเลเยอร์..</translation>
+        <translation>&amp;ทำซ้ำเลเยอร์พร้อมเนื้อหา</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="731"/>
@@ -16002,22 +16002,22 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="732"/>
         <source>Duplicate Selection to Layer</source>
-        <translation>เลเยอร์ถัดไป</translation>
+        <translation>ทำซ้ำส่วนที่เลือกไปยังเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="739"/>
         <source>&amp;Add Layer</source>
-        <translation>เพิ่มเลเยอร์..</translation>
+        <translation>เพิ่&amp;มเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="741"/>
         <source>&amp;Freeze Others Layers</source>
-        <translation>เพิ่มเลเยอร์..</translation>
+        <translation>ซ่อ&amp;นเลเยอร์อื่น</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="742"/>
         <source>&amp;Defreeze All Layers</source>
-        <translation>&amp; ลบเลเยอร์</translation>
+        <translation>แ&amp;สดงเลเยอร์ทั้งหมด</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
@@ -16027,42 +16027,42 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>
         <source>&amp;Unlock All Layers</source>
-        <translation>&amp; ไม่ล็อคเลเยอร์</translation>
+        <translation>&amp;ปลดล็อคเลเยอร์ทั้งหมด</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="745"/>
         <source>&amp;Lock All Layers</source>
-        <translation>&amp; ปิดเลเยอร์ทั้งหมด</translation>
+        <translation>ล็อ&amp;คเลเยอร์ทั้งหมด</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="746"/>
         <source>Enable &amp;Printing All Layers</source>
-        <translation>เปิดใช้การพิมพ์เลเยอร์ทั้งหมด</translation>
+        <translation>เปิดใช้ก&amp;ารพิมพ์เลเยอร์ทั้งหมด</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="747"/>
         <source>&amp;Disable Printing All Layers</source>
-        <translation>ลบเลเยอร์แล้ว</translation>
+        <translation>ปิ&amp;ดใช้การพิมพ์เลเยอร์ทั้งหมด</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="750"/>
         <source>&amp;Export Single Layer</source>
-        <translation>เพิ่มเลเยอร์..</translation>
+        <translation>ส่ง&amp;ออกเลเยอร์เดียว</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="754"/>
         <source>&amp;Export Layer Sub-Tree</source>
-        <translation>เพิ่มเลเยอร์..</translation>
+        <translation>ส่งออ&amp;กต้นไม้ย่อยของเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="758"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>ส่งออกเป็นเลเยอร์ที่ใช้ได้</translation>
+        <translation>ส่&amp;งออกเลเยอร์ที่มองเห็น</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="760"/>
         <source>&amp;Find And Remove Empty Layers</source>
-        <translation>ค้นหาและลบเลเยอร์ที่ว่างเปล่า</translation>
+        <translation>ค้น&amp;หาและลบเลเยอร์ที่ว่างเปล่า</translation>
     </message>
 </context>
 <context>
@@ -18622,7 +18622,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="39"/>
         <source>Layer</source>
-        <translation type="unfinished">ชั้น</translation>
+        <translation type="unfinished">เลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="39"/>
@@ -23351,12 +23351,12 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="82"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">หากกาเลือกไว้ จะทําการวางโครงสร้างกระจกเงาบนเลเยอร์ปัจจุบัน ไม่เช่นนั้นก็จะถูกนําไปวางไว้ในชั้นเดิม.</translation>
+        <translation type="unfinished">หากกาเลือกไว้ วัตถุที่ได้จากการสะท้อนจะถูกวางไว้ในเลเยอร์ปัจจุบัน มิฉะนั้น จะถูกวางไว้ในเลเยอร์เดิม.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">เลเยอร์ปัจจุบันของผู้ใช้</translation>
+        <translation type="unfinished">ใช้เลเยอร์ปัจจุบัน</translation>
     </message>
 </context>
 <context>
@@ -23650,7 +23650,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="45"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="unfinished">หากกาเลือกไว้ จะมีการวางโฟลเดอร์ที่ถูกสร้างไปยังเลเยอร์ปัจจุบัน มิฉะนั้นแล้ว มันจะรวมเป็นชั้น ๆ.</translation>
+        <translation type="unfinished">หากกาเลือกไว้ วัตถุที่สร้างขึ้นจะถูกวางไว้ในเลเยอร์ปัจจุบัน มิฉะนั้น จะถูกวางไว้ในเลเยอร์เดิม. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="48"/>
@@ -23836,7 +23836,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="144"/>
         <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="unfinished">หากกาเลือกไว้ จะทําการฝังเป็นเลเยอร์ปัจจุบัน.</translation>
+        <translation type="unfinished">หากกาเลือกไว้ วัตถุที่สร้างขึ้นจะถูกวางไว้ในเลเยอร์ปัจจุบัน มิฉะนั้น จะอยู่ในเลเยอร์เดิม. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="147"/>
@@ -24252,7 +24252,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="93"/>
         <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">หากกาเลือกไว้ จะมีการจัดวางในเลเยอร์ปัจจุบัน ไม่เช่นนั้นก็จะอยู่ในเลเยอร์เดิม.</translation>
+        <translation type="unfinished">หากกาเลือกไว้ วัตถุที่สร้างขึ้นจะถูกวางไว้ในเลเยอร์ปัจจุบัน มิฉะนั้น จะอยู่ในเลเยอร์เดิม.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="96"/>
@@ -24750,7 +24750,7 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="263"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="298"/>
         <source>By Layer</source>
-        <translation>เลเยอร์</translation>
+        <translation>ตามเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="264"/>
@@ -25378,22 +25378,22 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="188"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>ปรับปรุงปากกาปัจจุบันด้วยปากกาที่ทํางานอยู่</translation>
+        <translation>ปรับปรุงปากกาปัจจุบันด้วยปากกาของเลเยอร์ที่ทำงานอยู่</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="205"/>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation>ลบรูปภาพ</translation>
+        <translation>กรอกค่าในเครื่องมือแก้ไขปากกาจากปากกาของเลเยอร์ที่ทำงานอยู่</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="208"/>
         <source>Pick from Active Layer</source>
-        <translation>เลือกเลเยอร์ที่ทํางานอยู่</translation>
+        <translation>เลือกจากเลเยอร์ที่ทำงานอยู่</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="222"/>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation>ปรับใช้ปากกาเครื่องมือแก้ไขไปยังเลเยอร์ที่ทํางานอยู่</translation>
+        <translation>ปรับใช้ปากกาเครื่องมือแก้ไขไปยังเลเยอร์ที่ทำงานอยู่</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="225"/>
@@ -25483,7 +25483,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="305"/>
         <source>&amp;Apply Pen To Active Layer</source>
-        <translation>ลบเลเยอร์แล้ว</translation>
+        <translation>&amp;ปรับใช้ปากกากับเลเยอร์ที่ทำงานอยู่</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="306"/>
@@ -29496,7 +29496,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="60"/>
         <source>Active Layer</source>
-        <translation type="unfinished">เลเยอร์ถัดไป</translation>
+        <translation type="unfinished">เลเยอร์ที่ทำงานอยู่</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="60"/>
@@ -29526,7 +29526,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="122"/>
         <source>Line Width</source>
-        <translation type="unfinished">ไลน์ความกว้าง</translation>
+        <translation type="unfinished">ความกว้างเส้น</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="122"/>
@@ -29552,7 +29552,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="171"/>
         <source>Dimensional</source>
-        <translation type="unfinished">ขนาด</translation>
+        <translation type="unfinished">มิติ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="175"/>
@@ -29642,7 +29642,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="303"/>
         <source>Unlock all layers</source>
-        <translation type="unfinished">ปลดล็อคทุกชั้น</translation>
+        <translation type="unfinished">ปลดล็อคเลเยอร์ทั้งหมด</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="303"/>
@@ -32754,7 +32754,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="533"/>
         <source>Layer</source>
-        <translation>ชั้น</translation>
+        <translation>เลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="538"/>
@@ -33115,7 +33115,8 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="127"/>
         <source>
 Layer: </source>
-        <translation>เลเยอร์</translation>
+        <translation>
+เลเยอร์: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="573"/>
@@ -35921,7 +35922,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="208"/>
         <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="unfinished">กําหนดสําเนาที่จะแทนที่จะถูกแทรกไปยังเลเยอร์ปัจจุบัน</translation>
+        <translation type="unfinished">กำหนดว่าจะแทรกสำเนาลงในเลเยอร์ปัจจุบันหรือเลเยอร์เดิม</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="211"/>
@@ -36167,7 +36168,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="209"/>
         <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">หากกาเลือกไว้ จะมีการวางค่าความเข้มสีไว้ในเลเยอร์ปัจจุบัน ไม่เช่นนั้นก็จะอยู่ในเลเยอร์เดิม.</translation>
+        <translation type="unfinished">หากกาเลือกไว้ วัตถุใหม่จะถูกวางไว้ในเลเยอร์ปัจจุบัน มิฉะนั้น จะอยู่ในเลเยอร์เดิม.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="212"/>
@@ -36410,7 +36411,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="83"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="unfinished">หากกาเลือกไว้ จะมีการวางโฟลเดอร์ที่ถูกสร้างไปยังเลเยอร์ปัจจุบัน มิ ฉะนั้น จะ ถูก วาง ไว้ ใน ชั้น ดิน เดิม.</translation>
+        <translation type="unfinished">หากกาเลือกไว้ วัตถุที่สร้างขึ้นจะถูกวางไว้ในเลเยอร์ปัจจุบัน มิฉะนั้น จะถูกวางไว้ในเลเยอร์เดิม. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="86"/>
@@ -37324,7 +37325,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="77"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">หากกาเลือกไว้ จะมีการวางโครงสร้างต่าง ๆ ไว้ในเลเยอร์ปัจจุบัน ไม่เช่นนั้นก็จะถูกนําไปวางไว้ในเลเยอร์เดิม.</translation>
+        <translation type="unfinished">หากกาเลือกไว้ วัตถุที่สร้างขึ้นจะถูกวางไว้ในเลเยอร์ปัจจุบัน มิฉะนั้น จะถูกวางไว้ในเลเยอร์เดิม.</translation>
     </message>
 </context>
 <context>
@@ -37362,7 +37363,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="73"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">หากกาเลือกไว้ จะมีการวางโครงสร้างต่าง ๆ ไว้ในเลเยอร์ปัจจุบัน ไม่เช่นนั้นก็จะถูกนําไปวางไว้ในเลเยอร์เดิม.</translation>
+        <translation type="unfinished">หากกาเลือกไว้ วัตถุที่สร้างขึ้นจะถูกวางไว้ในเลเยอร์ปัจจุบัน มิฉะนั้น จะถูกวางไว้ในเลเยอร์เดิม.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="76"/>
@@ -37505,7 +37506,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="71"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">หากกาเลือกไว้ จะมีการวางโครงสร้างต่าง ๆ ไว้ในเลเยอร์ปัจจุบัน ไม่เช่นนั้นก็จะถูกนําไปวางไว้ในเลเยอร์เดิม.</translation>
+        <translation type="unfinished">หากกาเลือกไว้ วัตถุที่สร้างขึ้นจะถูกวางไว้ในเลเยอร์ปัจจุบัน มิฉะนั้น จะถูกวางไว้ในเลเยอร์เดิม.</translation>
     </message>
 </context>
 <context>
@@ -37518,12 +37519,12 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="32"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">หากกาเลือกไว้ จะมีการวางโครงสร้างต่าง ๆ ไว้ในเลเยอร์ปัจจุบัน ไม่เช่นนั้นก็จะถูกนําไปวางไว้ในเลเยอร์เดิม.</translation>
+        <translation type="unfinished">หากกาเลือกไว้ วัตถุที่สร้างขึ้นจะถูกวางไว้ในเลเยอร์ปัจจุบัน มิฉะนั้น จะถูกวางไว้ในเลเยอร์เดิม.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="35"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">เลเยอร์ปัจจุบันของผู้ใช้</translation>
+        <translation type="unfinished">ใช้เลเยอร์ปัจจุบัน</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="42"/>
@@ -38389,7 +38390,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="216"/>
         <source>Entity&apos;s Layer</source>
-        <translation>เพิ่มเลเยอร์..</translation>
+        <translation>เลเยอร์ของวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="250"/>
@@ -39099,7 +39100,7 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="236"/>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="236"/>
         <source>Layers Tree</source>
-        <translation>เลเยอร์</translation>
+        <translation>ต้นไม้เลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="261"/>
@@ -39180,7 +39181,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="540"/>
         <source>Active Layer</source>
-        <translation>เลเยอร์ถัดไป</translation>
+        <translation>เลเยอร์ที่ทำงานอยู่</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="542"/>
@@ -39898,7 +39899,7 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="100"/>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="276"/>
         <source>By Layer</source>
-        <translation>เลเยอร์</translation>
+        <translation>ตามเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="101"/>
@@ -40332,7 +40333,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="44"/>
         <source>Layer:</source>
-        <translation>เลเยอร์</translation>
+        <translation>เลเยอร์:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="54"/>
@@ -40890,7 +40891,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="51"/>
         <source>Layer:</source>
-        <translation>เลเยอร์</translation>
+        <translation>เลเยอร์:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="241"/>
@@ -43503,7 +43504,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5074"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt; หัว/&gt; หากเปิดใช้ จะทําให้การเรียกให้แสดงเลเยอร์ จะเป็นการแก้ไขส่วนที่เลือกไว้ทั้งหมดไปยังเลเยอร์ใหม่นั้น เพื่อเปลี่ยนเลเยอร์ขององค์กรต่าง ๆ: การเลือกรายการแรก จะเป็นการเปิดใช้งานเลเยอร์ในวิดเจ็ตชั้น ๆ นี่จะทําให้องค์กรที่เลือกทั้งหมด ถูกแก้ไขให้เป็นเลเยอร์ใหม่</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;เมื่อเปิดใช้ตัวเลือกนี้ การเปิดใช้งานเลเยอร์จะย้ายวัตถุที่เลือกทั้งหมดไปยังเลเยอร์นั้น วิธีเปลี่ยนเลเยอร์ของวัตถุหลายชิ้น: เลือกวัตถุที่ต้องการก่อน แล้วเปิดใช้งานเลเยอร์ในวิดเจ็ตเลเยอร์ วัตถุที่เลือกทั้งหมดจะถูกเปลี่ยนให้อยู่ในเลเยอร์ใหม่นั้น.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5934"/>
@@ -44624,7 +44625,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5077"/>
         <source>Modify layer of selected entities, at layer activation</source>
-        <translation>เลเยอร์ที่เลือกไว้</translation>
+        <translation>เปลี่ยนเลเยอร์ของวัตถุที่เลือกเมื่อเปิดใช้งานเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5490"/>
@@ -45798,7 +45799,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="92"/>
         <source>Export visible construction layers</source>
-        <translation>ส่งออกเลเยอร์ที่มองเห็น</translation>
+        <translation>ส่งออกเลเยอร์เส้นร่างที่มองเห็น</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="104"/>
@@ -46964,7 +46965,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="178"/>
         <source>Layer:</source>
-        <translation>เลเยอร์</translation>
+        <translation>เลเยอร์:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="240"/>
@@ -47233,12 +47234,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="20"/>
         <source>Layer Settings</source>
-        <translation>ตั้งค่าเลเยอร์..</translation>
+        <translation>ตั้งค่าเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="46"/>
         <source>Layer Name:</source>
-        <translation>ชื่อเลเยอร์</translation>
+        <translation>ชื่อเลเยอร์:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="63"/>
@@ -47249,13 +47250,13 @@ so default step value required for baking</source>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="29"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>ชั้น ก่อ สร้าง มี ชั้น ของ เส้น ตรง สุด คณา นับ ซึ่ง มุ่ง หมาย จะ ใช้ สําหรับ การ ก่อ สร้าง ทาง เรขาคณิต.
-ส่วน ประกอบ ของ ชั้น ก่อ สร้าง ไม่ ควร ปรากฏ ใน การ พิมพ์ ออก.</translation>
+        <translation>เลเยอร์เส้นร่างมีวัตถุเป็นเส้นตรงยาวไม่สิ้นสุด ซึ่งมีไว้ใช้สำหรับการสร้างทางเรขาคณิต
+เนื้อหาของเลเยอร์เส้นร่างไม่ควรปรากฏในงานพิมพ์.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="33"/>
         <source>Construction Layer</source>
-        <translation>เลเยอร์ถัดไป</translation>
+        <translation>เลเยอร์เส้นร่าง</translation>
     </message>
 </context>
 <context>
@@ -47263,7 +47264,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="298"/>
         <source>Looking for matching layer names</source>
-        <translation>ค้นหาชื่อเลเยอร์ที่เข้ากันได้</translation>
+        <translation>ค้นหาชื่อเลเยอร์ที่ตรงกัน</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="296"/>
@@ -47300,7 +47301,7 @@ The contents of a Construction Layer should not appear in printout.</source>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="83"/>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="189"/>
         <source>By Layer</source>
-        <translation>เลเยอร์</translation>
+        <translation>ตามเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="84"/>
@@ -47629,7 +47630,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="239"/>
         <source>By Layer</source>
-        <translation>เลเยอร์</translation>
+        <translation>ตามเลเยอร์</translation>
     </message>
 </context>
 <context>
@@ -47648,17 +47649,17 @@ p, li {white- space: pre- wrap;}
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="240"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1739"/>
         <source>Remove Layer</source>
-        <translation>ลบเลเยอร์แล้ว</translation>
+        <translation>ลบเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="183"/>
         <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>ไม่สามารถลบเลเยอร์%1 ได้.</translation>
+        <translation>ไม่สามารถลบเลเยอร์ &quot;%1&quot; ได้.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="304"/>
         <source>Layer Dialog</source>
-        <translation>เลเยอร์ถัดไป</translation>
+        <translation>กล่องโต้ตอบเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="406"/>
@@ -47676,7 +47677,7 @@ p, li {white- space: pre- wrap;}
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="264"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="308"/>
         <source>Layer Properties</source>
-        <translation>คุณสมบัติเลเยอร์..</translation>
+        <translation>คุณสมบัติเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="84"/>
@@ -47687,14 +47688,14 @@ p, li {white- space: pre- wrap;}
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="173"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>เลเยอร์ &quot;%1&quot; และทุกหน่วยงานบนมันจะถูกลบออกไป
-การกระทํานี้ไม่สามารถยกเลิกได้.</translation>
+        <translation>เลเยอร์ &quot;%1&quot; และวัตถุทั้งหมดในเลเยอร์นั้นจะถูกลบ
+การกระทำนี้ไม่สามารถเลิกทำได้.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="240"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1739"/>
         <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>ชั้น &quot;0&quot; ไม่สามารถลบได้.</translation>
+        <translation>ไม่สามารถลบเลเยอร์ &quot;0&quot; ได้.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="248"/>
@@ -47708,7 +47709,7 @@ This action can NOT be undone.</source>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="251"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1788"/>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>ชั้นที่มีชื่อและทุกหน่วยงานบนพวกเขาจะถูกลบ.</translation>
+        <translation>เลเยอร์ในรายการและวัตถุทั้งหมดในเลเยอร์เหล่านั้นจะถูกลบ.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="253"/>
@@ -47719,13 +47720,13 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="257"/>
         <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>คําเตือน: ไม่สามารถลบเลเยอร์ &quot;0&quot; ได้.</translation>
+        <translation>คำเตือน: ไม่สามารถลบเลเยอร์ &quot;0&quot; ได้.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="260"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1790"/>
         <source>Layers for removal:</source>
-        <translation>เลเยอร์สําหรับลบ:</translation>
+        <translation>เลเยอร์สำหรับลบ:</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="463"/>
@@ -47747,7 +47748,7 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="230"/>
         <source>Layer empty name is not allowed.</source>
-        <translation>ไม่อนุญาตให้ใช้ชื่อว่างในชั้นต่าง ๆ.</translation>
+        <translation>ไม่อนุญาตให้ชื่อเลเยอร์ว่างเปล่า.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="265"/>
@@ -47759,7 +47760,7 @@ This action can NOT be undone.</source>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation>การพยายามสร้างเลเยอร์ด้วยชื่อ dockling ชื่อเลเยอร์ซ้ํากัน
+        <translation>พยายามสร้างเลเยอร์ด้วยชื่อที่ซ้ำกัน ชื่อเลเยอร์ที่ซ้ำคือ
 [%1].
 โปรดระบุชื่ออื่น.</translation>
     </message>
@@ -47773,14 +47774,14 @@ Please specify a different name.</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="143"/>
         <source>Layer list separator string is empty. It will not be possible to build layers tree.
 Please specify a different value.</source>
-        <translation>ไม่มีข้อความแบ่งชั้น เป็น ไป ไม่ ได้ ที่ จะ สร้าง ต้น ไม้ ชั้น นอก.
+        <translation>สตริงตัวแบ่งรายการเลเยอร์ว่างเปล่า จึงไม่สามารถสร้างต้นไม้เลเยอร์ได้
 โปรดระบุค่าอื่น.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="962"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="972"/>
         <source>Remove empty layers</source>
-        <translation>ลบเลเยอร์ที่ว่างอยู่</translation>
+        <translation>ลบเลเยอร์ที่ว่างเปล่า</translation>
     </message>
     <message>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
@@ -47798,21 +47799,21 @@ Clear filtering mask and repeat.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="973"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>ไม่พบชั้นแฟ้มใด ๆ โดยไม่ต้องมีส่วนใด ๆ ให้ลบออก.</translation>
+        <translation>ไม่พบเลเยอร์ที่ไม่มีวัตถุ จึงไม่มีอะไรให้ลบ.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1116"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1161"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1169"/>
         <source>Add Layer</source>
-        <translation>เพิ่มเลเยอร์..</translation>
+        <translation>เพิ่มเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1117"/>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation>ชั้นของเด็กดังกล่าวมีอยู่แล้วสําหรับ
+        <translation>เลเยอร์ลูกดังกล่าวมีอยู่แล้วสำหรับ
 [%1].
 โปรดระบุชื่ออื่น.</translation>
     </message>
@@ -47821,14 +47822,16 @@ Please specify a different name.</source>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation>ชั้นของเด็กดังกล่าวมีอยู่แล้วสําหรับ
-[%1].</translation>
+        <translation>เลเยอร์ลูกดังกล่าวมีอยู่แล้วสำหรับ
+[%1].
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1170"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>เลเยอร์.</translation>
+        <translation>สามารถเพิ่มเลเยอร์มิติได้เฉพาะเมื่อเลเยอร์ที่ทำงานอยู่เป็นเลเยอร์ปกติเท่านั้น.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1233"/>
@@ -47861,7 +47864,7 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1805"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1863"/>
         <source>Layer DialogEx</source>
-        <translation>ลบเลเยอร์แล้ว</translation>
+        <translation>กล่องโต้ตอบเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="202"/>
@@ -47914,19 +47917,21 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1453"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>ไม่มีวัตถุที่ตรงกับปากกา บนชั้นที่มองเห็นได้.</translation>
+        <translation>ไม่มีวัตถุที่ตรงกับปากกาในเลเยอร์ที่มองเห็น.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1454"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>บุคคลดังกล่าวมีอยู่บนชั้นแช่แข็ง.</translation>
+        <translation>มีวัตถุดังกล่าวอยู่ในเลเยอร์ที่ถูกซ่อน.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1455"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>บุคคลดังกล่าวอยู่บนชั้นที่ถูกล็อค.</translation>
+        <translation>มีวัตถุดังกล่าวอยู่ในเลเยอร์ที่ถูกล็อค.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1456"/>
@@ -48921,7 +48926,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="83"/>
         <source>cnlayer</source>
-        <translation>ตัวผสมเสียง</translation>
+        <translation>cnlayer</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="84"/>
@@ -48931,7 +48936,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="88"/>
         <source>cslayer</source>
-        <translation>เลเยอร์</translation>
+        <translation>cslayer</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="89"/>
@@ -49439,7 +49444,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="77"/>
         <source>No %1 layers found</source>
-        <translation>ไม่พบ%1 ชั้น</translation>
+        <translation>ไม่พบเลเยอร์ที่%1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="95"/>
@@ -51446,7 +51451,7 @@ Do you want to replace it?</source>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="50"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="206"/>
         <source>By Layer</source>
-        <translation>เลเยอร์</translation>
+        <translation>ตามเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="56"/>

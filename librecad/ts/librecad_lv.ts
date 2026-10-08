@@ -3283,7 +3283,7 @@ vai [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="410"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Atjaunināt aktīvo pildspalvu pēc aktīvā slāņa&apos; Pen</translation>
+        <translation>Atjaunināt pašreizējo zīmuli pēc aktīvā slāņa zīmuļa</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="416"/>
@@ -3424,7 +3424,7 @@ vai [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="66"/>
         <source>Layers operations</source>
-        <translation>Slāņi</translation>
+        <translation>Slāņu darbības</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="67"/>
@@ -3616,12 +3616,12 @@ vai [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity Layer</source>
-        <translation>Vienības slānis</translation>
+        <translation>Objekta slānis</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity&apos;s Layer</source>
-        <translation>Vienības slānis</translation>
+        <translation>Objekta slānis</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="88"/>
@@ -3636,32 +3636,32 @@ vai [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="109"/>
         <source>Activate Entity&apos;s Layer</source>
-        <translation>Aktivizēt vienības slāni</translation>
+        <translation>Aktivizēt objekta slāni</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="110"/>
         <source>Hide Entity&apos;s Layer</source>
-        <translation>Slēpt vienības slāni</translation>
+        <translation>Slēpt objekta slāni</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="111"/>
         <source>Hide Other Layers than Entity&apos;s</source>
-        <translation>Slēpt citus slānis nekā vienības</translation>
+        <translation>Slēpt visus slāņus, izņemot objekta slāni</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="112"/>
         <source>Lock Entity&apos;s Layer</source>
-        <translation>Slēgt vienības slāni</translation>
+        <translation>Slēgt objekta slāni</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="113"/>
         <source>Toggle Entity&apos;s Layer Construction</source>
-        <translation>Slēgt Zvaigznes</translation>
+        <translation>Pārslēgt objekta konstruēšanas slāni</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="114"/>
         <source>Toggle Entity&apos;s Layer Printing</source>
-        <translation>Slēgt Zvaigznes</translation>
+        <translation>Pārslēgt objekta slāņa drukāšanu</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="225"/>
@@ -3980,7 +3980,7 @@ vai [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="621"/>
         <source>&amp;Add Layer</source>
-        <translation>&amp;Pievienot slāni</translation>
+        <translation>Pievie&amp;not slāni</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="622"/>
@@ -3995,7 +3995,7 @@ vai [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="624"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>Pārslēgt slāņa fi&amp;ksēšanu</translation>
+        <translation>S&amp;lēgt/atslēgt slāni</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="625"/>
@@ -4523,7 +4523,7 @@ vai [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="617"/>
         <source>&amp;Show all layers</source>
-        <translation>&amp; Rādīt visus slāņus</translation>
+        <translation>&amp;Rādīt visus slāņus</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
@@ -4533,22 +4533,22 @@ vai [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
         <source>&amp;Unlock all</source>
-        <translation>&amp; Atslēgt visu</translation>
+        <translation>&amp;Atslēgt visus slāņus</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="620"/>
         <source>&amp;Lock all</source>
-        <translation>&amp; Atlikt visu</translation>
+        <translation>Slēgt &amp;visus slāņus</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="628"/>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>&amp;Eksportēt izvēlēto(-os) slāni(-us)</translation>
+        <translation>Eksp&amp;ortēt izvēlētos slāņus</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="629"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Eksportēt &amp; redzamu slāni(-us)</translation>
+        <translation>Eksportēt re&amp;dzamos slāņus</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="635"/>
@@ -5119,7 +5119,7 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>Enter layer name to %1</source>
-        <translation>Ievadiet slāņa nosaukumu uz%1</translation>
+        <translation>Ievadiet nosaukumu slānim, ko %1</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
@@ -5144,7 +5144,7 @@ Punkts: (%8 , %9)</translation>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
         <source>visible</source>
         <comment>Layers to export</comment>
-        <translation>redzama</translation>
+        <translation>redzams</translation>
     </message>
 </context>
 <context>
@@ -6866,7 +6866,7 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_layer.cpp" line="75"/>
         <source>Specify entity with desired layer</source>
-        <translation type="unfinished">Norādīt vienību ar vēlamo slāni</translation>
+        <translation type="unfinished">Norādiet objektu uz vajadzīgā slāņa</translation>
     </message>
 </context>
 <context>
@@ -7471,12 +7471,12 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="66"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Ja ieslēgts, spoguļainas vienības tiks novietotas uz pašreizējā slāņa, pretējā gadījumā tās tiks ievietotas oriģinālajos slāņos.</translation>
+        <translation type="unfinished">Ja ieslēgts, spoguļotie objekti tiks novietoti uz pašreizējā slāņa, pretējā gadījumā tie tiks novietoti uz oriģinālajiem slāņiem.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="69"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Lietotāja Pašreizējais Slānis</translation>
+        <translation type="unfinished">Lietot pašreizējo slāni</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="76"/>
@@ -8799,7 +8799,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="62"/>
         <source>Layer to which created circle should be placed</source>
-        <translation type="unfinished">Slānis, kurā jāizveido aplis</translation>
+        <translation type="unfinished">Slānis, uz kura jānovieto izveidotais riņķis</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="66"/>
@@ -11100,7 +11100,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="98"/>
         <source>Layer of entity</source>
-        <translation>Vienības slānis</translation>
+        <translation>Objekta slānis</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="148"/>
@@ -13548,7 +13548,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="82"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">Slānis, uz kuru jānovieto dublikāts</translation>
+        <translation type="unfinished">Slānis, uz kura jānovieto dublikāts</translation>
     </message>
 </context>
 <context>
@@ -13561,7 +13561,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="45"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">Slānis, uz kuru jānovieto dublikāts</translation>
+        <translation type="unfinished">Slānis, uz kura jānovieto dublikāts</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="49"/>
@@ -14353,7 +14353,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="168"/>
         <source>Layer of entity</source>
-        <translation type="unfinished">Vienības slānis</translation>
+        <translation type="unfinished">Objekta slānis</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="204"/>
@@ -14417,7 +14417,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="135"/>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="179"/>
         <source>Export Layers</source>
-        <translation>Eksportēt Slāņi</translation>
+        <translation>Eksportēt slāņus</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="152"/>
@@ -15258,22 +15258,22 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="48"/>
         <source>Name of new layer. In order to create hierarchical layers, include name of virtual layer and layer name separator.</source>
-        <translation>Jaunā slāņa nosaukums. Lai izveidotu hierarhiskos slāņus, ietver virtuālā slāņa nosaukumu un slāņa nosaukumu atdalītāju.</translation>
+        <translation>Jaunā slāņa nosaukums. Lai izveidotu hierarhiskos slāņus, ietveriet virtuālā slāņa nosaukumu un slāņa nosaukumu atdalītāju.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="64"/>
         <source>Parent Layers Path:</source>
-        <translation>Vecāku slāni ceļš:</translation>
+        <translation>Vecākslāņu ceļš:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="81"/>
         <source>Layer Type</source>
-        <translation>Slānis Tips</translation>
+        <translation>Slāņa tips</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="93"/>
         <source>Layer for various infromational elements, notes, drafts etc.</source>
-        <translation>Slānis dažādiem nominācijas elementiem, piezīmēm, uzmetumiem u.c.</translation>
+        <translation>Slānis dažādiem informatīviem elementiem, piezīmēm, uzmetumiem u.c.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="96"/>
@@ -15283,7 +15283,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="106"/>
         <source>Normal layer with drawing eleements</source>
-        <translation>Normāls slānis ar zīmēšanas elementiem</translation>
+        <translation>Normāls slānis ar zīmējuma elementiem</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="109"/>
@@ -15303,7 +15303,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="132"/>
         <source>Layer with alternate position of entities located on normal layers</source>
-        <translation>Slānis ar alternatīvu vienību atrašanās vietu, kas atrodas uz normāliem slāņiem</translation>
+        <translation>Slānis ar alternatīvo pozīciju objektiem, kas atrodas uz normāliem slāņiem</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="135"/>
@@ -15314,18 +15314,18 @@ Vai tiešām izmetīsi izmaiņas?</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="148"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Būvslānim ir bezgalīgas taisnas līnijas, kas paredzētas ģeometriskai konstrukcijai.
-Būvslāņa saturam nevajadzētu parādīties izdrukā.</translation>
+        <translation>Konstruēšanas slānī objektiem ir bezgalīgi garas līnijas, kuras ir paredzētas ģeometrisku figūru konstruēšanai.
+       Konstruēšanas slāņa saturam nevajadzētu parādīties izdrukā.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="152"/>
         <source>Construction Layer</source>
-        <translation>Būvslānis</translation>
+        <translation>Konstruēšanas slānis</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="181"/>
         <source>Path for parent layer</source>
-        <translation>Ceļš vecāka slānim</translation>
+        <translation>Vecākslāņa ceļš</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="197"/>
@@ -15357,7 +15357,7 @@ Būvslāņa saturam nevajadzētu parādīties izdrukā.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="183"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="221"/>
         <source>Default Pen</source>
-        <translation>Noklusētā pildspalvveida pilnšļirce</translation>
+        <translation>Noklusētais zīmulis</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="200"/>
@@ -15375,12 +15375,12 @@ Būvslāņa saturam nevajadzētu parādīties izdrukā.</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="57"/>
         <source>Layers Export Options</source>
-        <translation>Slāņi eksportēšanas opcijas</translation>
+        <translation>Slāņu eksportēšanas opcijas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="63"/>
         <source>If checked, Named Views from the document will be included into exported drawings. Otherwise, views are not included.</source>
-        <translation>Ja ieslēgts, dokumentā esošie skati tiks iekļauti eksportētajos rasējumos. Pretējā gadījumā viedokļi netiek iekļauti.</translation>
+        <translation>Ja ieslēgts, dokumenta nosauktie skati tiks iekļauti eksportētajos zīmējumos. Pretējā gadījumā skati netiek iekļauti.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="66"/>
@@ -15395,22 +15395,22 @@ Būvslāņa saturam nevajadzētu parādīties izdrukā.</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="76"/>
         <source>Export each layer to own drawing file</source>
-        <translation>Eksportēt katru slāni uz savu zīmēšanas failu</translation>
+        <translation>Eksportēt katru slāni savā zīmējuma datnē</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="83"/>
         <source>If checked, entities will be stored in original layer. Otherwise, they are placed to layer &quot;0&quot;.</source>
-        <translation>Ja ieslēgts, vienības tiks saglabātas oriģinālā slānī. Pretējā gadījumā tie ir novietoti uz slāņa &quot;0&quot;.</translation>
+        <translation>Ja ieslēgts, objekti tiks saglabāti oriģinālajā slānī. Pretējā gadījumā tie tiks novietoti uz slāņa “0”.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="89"/>
         <source>Retain original layer for entities</source>
-        <translation>Saglabāt orģinālo slāni entītēm</translation>
+        <translation>Saglabāt objektu oriģinālo slāni</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="96"/>
         <source>If checked, UCSs from the document will be included into exported drawings. Otherwise, UCSs are not included.</source>
-        <translation>Ja atzīmēts, UCS no dokumenta tiks iekļauti eksporta rasējumos. Pretējā gadījumā UCS netiek iekļauti.</translation>
+        <translation>Ja ieslēgts, dokumenta UCS tiks iekļauti eksportētajos zīmējumos. Pretējā gadījumā UCS netiek iekļauti.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="99"/>
@@ -15423,17 +15423,17 @@ Būvslāņa saturam nevajadzētu parādīties izdrukā.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="20"/>
         <source>Layers Tree Options</source>
-        <translation>Slāņi koka opcijas</translation>
+        <translation>Slāņu koka opcijas</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="46"/>
         <source>Settings for naming convention that is used to create layers hierarchy based on flat list of layers</source>
-        <translation>Iestatījumi nosaukumu konvencijai, kas tiek izmantota, lai izveidotu slāņu hierarhiju, pamatojoties uz plakanu sarakstu slāņu</translation>
+        <translation>Iestatījumi nosaukumu konvencijai, kas tiek izmantota, lai izveidotu slāņu hierarhiju, pamatojoties uz plakanu slāņu sarakstu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="49"/>
         <source>Naming Convention</source>
-        <translation>Nosaukuma konvencija</translation>
+        <translation>Nosaukumu konvencija</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="55"/>
@@ -15457,12 +15457,12 @@ Būvslāņa saturam nevajadzētu parādīties izdrukā.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
-        <translation>Izmēru</translation>
+        <translation>Izmēri</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="201"/>
         <source>Suffix of layer&apos;s name that defines that layer is dimensional</source>
-        <translation>Sufikss no slāņa nosaukuma, kas nosaka, ka slānis ir dimensionāls</translation>
+        <translation>Slāņa nosaukuma sufikss, kas nosaka, ka slānis ir izmēru slānis</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="211"/>
@@ -15473,17 +15473,17 @@ Būvslāņa saturam nevajadzētu parādīties izdrukā.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="224"/>
         <source>Suffix of layer&apos;s name that defines that layer is informational.</source>
-        <translation>Sufikss no slāņa nosaukuma, kas definē, ka slānis ir informatīvs.</translation>
+        <translation>Slāņa nosaukuma sufikss, kas nosaka, ka slānis ir informācijas slānis.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="234"/>
         <source>Alternative Position </source>
-        <translation>Alternatīvā pozīcija</translation>
+        <translation>Alternatīvā pozīcija </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
-        <translation>Sufikss no slāņa nosaukuma, kas definē šo slāni ir alternatīvai pozīcijai.</translation>
+        <translation>Slāņa nosaukuma sufikss, kas nosaka, ka slānis ir alternatīvās pozīcijas slānis.</translation>
     </message>
     <message>
         <source>Duplicating Name</source>
@@ -15497,7 +15497,7 @@ Būvslāņa saturam nevajadzētu parādīties izdrukā.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="74"/>
         <source>Prefix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>Prefikss no slāņa nosaukuma, kas tiek lietots, ja slānis ar šādu nosaukumu eksistē (sakiet, kad tiek izveidots dublikāts)</translation>
+        <translation>Slāņa nosaukuma prefikss, ko lieto, ja slānis ar šādu nosaukumu jau eksistē (piemēram, veidojot dublikātu)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="84"/>
@@ -15507,7 +15507,7 @@ Būvslāņa saturam nevajadzētu parādīties izdrukā.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="97"/>
         <source>Suffix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>Sufikss no slāņa nosaukuma, kas tiek izmantots, ja slānis ar šādu nosaukumu pastāv (saka, kad tiek izveidots dublikāts)</translation>
+        <translation>Slāņa nosaukuma sufikss, ko lieto, ja slānis ar šādu nosaukumu jau eksistē (piemēram, veidojot dublikātu)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="155"/>
@@ -15552,7 +15552,7 @@ Būvslāņa saturam nevajadzētu parādīties izdrukā.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="332"/>
         <source>Show full name as ToolTip</source>
-        <translation>Rādīt pilno nosaukumu kā rīkuTip</translation>
+        <translation>Rādīt pilno nosaukumu kā paskaidri</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="608"/>
@@ -15582,7 +15582,7 @@ Būvslāņa saturam nevajadzētu parādīties izdrukā.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="319"/>
         <source>If checked, icons for layer types will be shown</source>
-        <translation>Ja ieslēgts, tiks rādītas slāni tipu ikonas</translation>
+        <translation>Ja ieslēgts, tiks rādītas slāņu tipu ikonas</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="322"/>
@@ -15592,27 +15592,27 @@ Būvslāņa saturam nevajadzētu parādīties izdrukā.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="309"/>
         <source>Indentation for child layers</source>
-        <translation>Bērnu slāņu atkāpju veidošana</translation>
+        <translation>Apakšslāņu atkāpe</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="312"/>
         <source>Show indented layer names. Ident size:</source>
-        <translation>Rādīt ievilkumu slāņa nosaukumus. Identitātes izmērs:</translation>
+        <translation>Rādīt slāņu nosaukumus ar atkāpi. Atkāpes izmērs:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="277"/>
         <source>Size of the indent in characters to indent name of child layer from parent ones</source>
-        <translation>Ievilkuma izmērs rakstzīmēs uz ievilkuma vārda bērna slānis no vecākiem</translation>
+        <translation>Atkāpes izmērs rakstzīmēs, par kādu apakšslāņa nosaukums tiek atbīdīts no vecākslāņa nosaukuma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="352"/>
         <source>If checked, drag&amp;drop operations in layers list are enabled and layers hierarchy may be restructutured</source>
-        <translation>Ja ieslēgts, vilkt un nomest slāņu sarakstā darbības ir ieslēgtas un slāņu hierarhija var tikt pārstrukturēta</translation>
+        <translation>Ja ieslēgts, slāņu sarakstā ir atļautas vilkšanas un nomešanas (Drag&amp;Drop) darbības un slāņu hierarhiju var pārstrukturēt</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="355"/>
         <source>Allow restructuring via Drag&amp;Drop</source>
-        <translation>Atļaut pārstrukturēšanu, izmantojot Drag&amp;Drop</translation>
+        <translation>Atļaut pārstrukturēšanu ar vilkšanu un nomešanu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="293"/>
@@ -15622,7 +15622,7 @@ Būvslāņa saturam nevajadzētu parādīties izdrukā.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="296"/>
         <source>Rename secondary layers on primary rename</source>
-        <translation>Pārdēvēt sekundāros slāņus primārajā pārdēvēšanā</translation>
+        <translation>Pārdēvēt sekundāros slāņus, pārdēvējot primāro slāni</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="376"/>
@@ -15658,12 +15658,12 @@ Būvslāņa saturam nevajadzētu parādīties izdrukā.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="560"/>
         <source>Matched item in highlight filter mode</source>
-        <translation>Atbilst vienumam izcelšanas filtra režīmā</translation>
+        <translation>Filtram atbilstošs ieraksts izcelšanas režīmā</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="391"/>
         <source>Color for items that matches filter conditions</source>
-        <translation>Faila krāsa</translation>
+        <translation>Krāsa ierakstiem, kas atbilst filtra nosacījumiem</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="379"/>
@@ -15687,12 +15687,12 @@ Būvslāņa saturam nevajadzētu parādīties izdrukā.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="503"/>
         <source>Selected items background color</source>
-        <translation>Izvēlēto vienību fona krāsa</translation>
+        <translation>Izvēlēto ierakstu fona krāsa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="523"/>
         <source>Background color for active layer item in layers tree</source>
-        <translation>Fona krāsa aktīvajam slānim</translation>
+        <translation>Fona krāsa aktīvā slāņa ierakstam slāņu kokā</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="526"/>
@@ -15712,12 +15712,12 @@ Būvslāņa saturam nevajadzētu parādīties izdrukā.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="599"/>
         <source>Pens that will be set for newly created layers of different types.</source>
-        <translation>Pildspalvveida pilnšļirces, kas tiks uzstādītas jaunizveidotiem dažādu tipu slāņiem.</translation>
+        <translation>Zīmuļi, kas tiks iestatīti jaunizveidotiem dažādu tipu slāņiem.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="602"/>
         <source>Default Pens</source>
-        <translation>Noklusētās pildspalvveida pilnšļirces</translation>
+        <translation>Noklusētie zīmuļi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="68"/>
@@ -15737,7 +15737,7 @@ Būvslāņa saturam nevajadzētu parādīties izdrukā.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Alternative Position Layer</source>
-        <translation>Alternatīvs pozīcijas slānis</translation>
+        <translation>Alternatīvās pozīcijas slānis</translation>
     </message>
     <message>
         <source>grid</source>
@@ -15746,7 +15746,7 @@ Būvslāņa saturam nevajadzētu parādīties izdrukā.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="103"/>
         <source>highlighted item</source>
-        <translation>izceltais elements</translation>
+        <translation>izceltais ieraksts</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="110"/>
@@ -15772,7 +15772,7 @@ Būvslāņa saturam nevajadzētu parādīties izdrukā.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>Nederīga vērtība nodrošina%1 krāsu.
+        <translation>Krāsai “%1” norādīta nederīga vērtība.
 Lūdzu, norādiet citu vērtību.</translation>
     </message>
     <message>
@@ -15791,7 +15791,7 @@ Lūdzu, norādiet citu vērtību.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="152"/>
         <source>Looking for matching layer names</source>
-        <translation>Meklē atbilstošus slāņa nosaukumus</translation>
+        <translation>Meklē atbilstošus slāņu nosaukumus</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="157"/>
@@ -15816,7 +15816,7 @@ Lūdzu, norādiet citu vērtību.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="200"/>
         <source>Show Secondary Layers</source>
-        <translation>Rādīt sekundāros slānislāņus</translation>
+        <translation>Rādīt sekundāros slāņus</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="210"/>
@@ -15836,7 +15836,7 @@ Lūdzu, norādiet citu vērtību.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="234"/>
         <source>Collapse Secondary</source>
-        <translation>Sakļaut sekundāro</translation>
+        <translation>Sakļaut sekundāros slāņus</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="242"/>
@@ -15856,12 +15856,12 @@ Lūdzu, norādiet citu vērtību.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="263"/>
         <source>Add dimensions Layer</source>
-        <translation>Slānis</translation>
+        <translation>Pievienot izmēru slāni</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="272"/>
         <source>Remove layer</source>
-        <translation>Noņemt slāni</translation>
+        <translation>Izņemt slāni</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="279"/>
@@ -15871,130 +15871,130 @@ Lūdzu, norādiet citu vērtību.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="286"/>
         <source>Flat List Mode)</source>
-        <translation>Plakanā saraksta režīms)</translation>
+        <translation>Plakanā saraksta režīms</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="656"/>
         <source>&amp;Add Child Layer</source>
-        <translation>&amp; Pievienot bērnu slāni</translation>
+        <translation>Pievie&amp;not apakšslāni</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="657"/>
         <source>&amp;Rename</source>
-        <translation>&amp; Pārdēvēt</translation>
+        <translation>P&amp;ārdēvēt</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="658"/>
         <source>&amp;Remove Layers (Sub-Tree)</source>
-        <translation>&amp; Noņemt slāni (Sub- Tree)</translation>
+        <translation>I&amp;zņemt slāņus (apakškoks)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="660"/>
         <source>&amp;Copy Structure (Sub-Tree)</source>
-        <translation>&amp;Kopēt struktūru (Sub- Tree)</translation>
+        <translation>Kopēt str&amp;uktūru (apakškoks)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="661"/>
         <source>&amp;Duplicate Content (Sub-Tree)</source>
-        <translation>&amp;Duplicēt saturu (Sub-tree)</translation>
+        <translation>Du&amp;blēt saturu (apakškoks)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="663"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>&amp;Izvēlieties vienības (Sub-tree)</translation>
+        <translation>Izvē&amp;lēties objektus (apakškoks)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="668"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>Slāņa &amp; atribūti</translation>
+        <translation>Rediģēt s&amp;lāņa atribūtus</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="670"/>
         <source>&amp;Remove Layer</source>
-        <translation>Slānis</translation>
+        <translation>I&amp;zņemt slāni</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="679"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>&amp;Pievienot izmērus apakšdarbam</translation>
+        <translation>Pievie&amp;not izmēru apakšslāni</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="683"/>
         <source>&amp;Add Info Sub-Layer</source>
-        <translation>&amp;Pievienot informācijas apakšslāņu</translation>
+        <translation>Pievienot in&amp;formācijas apakšslāni</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="687"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
-        <translation>&amp;Pievienot alternatīvo skata apakšslāņu</translation>
+        <translation>Pievienot alternatīvās pozī&amp;cijas apakšslāni</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="693"/>
         <source>&amp;Remove Sub-layers</source>
-        <translation>&amp; Izņemt apakšslāņus</translation>
+        <translation>Izņe&amp;mt apakšslāņus</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="701"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="711"/>
         <source>Convert to Dimensional Layer</source>
-        <translation>Pārveidot uz Dimensionāls Slānis</translation>
+        <translation>Pārveidot par izmēru slāni</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="702"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="714"/>
         <source>Convert to Info Layer</source>
-        <translation>Pārveidot uz informācijas slāni</translation>
+        <translation>Pārveidot par informācijas slāni</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="703"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="717"/>
         <source>Convert to Alternative Position Layer</source>
-        <translation>Pārveidot uz alternatīvo pozīcijas slāni</translation>
+        <translation>Pārveidot par alternatīvās pozīcijas slāni</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="709"/>
         <source>Convert to Normal Layer</source>
-        <translation>Pārveidot uz normālu slāni</translation>
+        <translation>Pārveidot par normālu slāni</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="723"/>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>&amp; Izvēlieties slāņa vienības</translation>
+        <translation>Izvēlēties slāņa o&amp;bjektus</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="726"/>
         <source>&amp;Create Layer Copy</source>
-        <translation>Izveidot &amp; slāņa kopiju</translation>
+        <translation>Izveidot slāņa kopi&amp;ju</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="727"/>
         <source>&amp;Duplicate Layer With Content</source>
-        <translation>&amp; Dublēt slāni ar saturu</translation>
+        <translation>D&amp;ublēt slāni ar saturu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="731"/>
         <source>Move Selection to Layer</source>
-        <translation>Pārvietot iezīmēto uz slāni</translation>
+        <translation>Pārvietot izvēlēto uz slāni</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="732"/>
         <source>Duplicate Selection to Layer</source>
-        <translation>Dublēt iezīmēto slāni</translation>
+        <translation>Dublēt izvēlēto uz slāni</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="739"/>
         <source>&amp;Add Layer</source>
-        <translation>Slānis</translation>
+        <translation>Pievie&amp;not slāni</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="741"/>
         <source>&amp;Freeze Others Layers</source>
-        <translation>&amp; Iesaldēt pārējos Slāņus</translation>
+        <translation>Slēpt &amp;pārējos slāņus</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="742"/>
         <source>&amp;Defreeze All Layers</source>
-        <translation>&amp; Atbrīvot visus slānis</translation>
+        <translation>&amp;Rādīt visus slāņus</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
@@ -16004,42 +16004,42 @@ Lūdzu, norādiet citu vērtību.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>
         <source>&amp;Unlock All Layers</source>
-        <translation>&amp; Atslēgt visus slānis</translation>
+        <translation>&amp;Atslēgt visus slāņus</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="745"/>
         <source>&amp;Lock All Layers</source>
-        <translation>&amp; Pārslēgt visus slānis</translation>
+        <translation>Slēgt &amp;visus slāņus</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="746"/>
         <source>Enable &amp;Printing All Layers</source>
-        <translation>Ieslēgt visu slāni &amp; drukas</translation>
+        <translation>&amp;Ieslēgt visu slāņu drukāšanu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="747"/>
         <source>&amp;Disable Printing All Layers</source>
-        <translation>&amp; Deaktivizēt visu slāni drukāšanu</translation>
+        <translation>Izslēgt visu slāņu &amp;drukāšanu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="750"/>
         <source>&amp;Export Single Layer</source>
-        <translation>&amp; Eksportēt vienu slāni</translation>
+        <translation>&amp;Eksportēt vienu slāni</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="754"/>
         <source>&amp;Export Layer Sub-Tree</source>
-        <translation>&amp; Eksportēt slāņa apakškolonnu</translation>
+        <translation>E&amp;ksportēt slāņa apakškoku</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="758"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Eksportēt &amp; redzamu slāni(-us)</translation>
+        <translation>Eksp&amp;ortēt redzamos slāņus</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="760"/>
         <source>&amp;Find And Remove Empty Layers</source>
-        <translation>&amp; Atrast un noņemt tukšos slānis</translation>
+        <translation>Atrast un izņemt &amp;tukšos slāņus</translation>
     </message>
 </context>
 <context>
@@ -23328,12 +23328,12 @@ Lūdzu, norādiet citu vērtību.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="82"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Ja ieslēgts, spoguļainas vienības tiks novietotas uz pašreizējā slāņa, pretējā gadījumā tās tiks ievietotas oriģinālajos slāņos.</translation>
+        <translation type="unfinished">Ja ieslēgts, spoguļotie objekti tiks novietoti uz pašreizējā slāņa, pretējā gadījumā tie tiks novietoti uz oriģinālajiem slāņiem.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Lietotāja Pašreizējais Slānis</translation>
+        <translation type="unfinished">Lietot pašreizējo slāni</translation>
     </message>
 </context>
 <context>
@@ -23627,12 +23627,12 @@ Lūdzu, norādiet citu vērtību.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="45"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="unfinished">Ja ieslēgts, izveidotās vienības tiks ievietotas aktīvajā slānī. Pretējā gadījumā tie tiks ievietoti oriģinālajos slāņos.</translation>
+        <translation type="unfinished">Ja ieslēgts, izveidotie objekti tiks novietoti uz pašreizējā slāņa. Pretējā gadījumā tie tiks novietoti uz oriģinālajiem slāņiem. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="48"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Lietot aktīvo slāni</translation>
+        <translation type="unfinished">Lietot pašreizējo slāni</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="55"/>
@@ -23813,12 +23813,12 @@ Lūdzu, norādiet citu vērtību.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="144"/>
         <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="unfinished">Ja ieslēgts, izveidotās vienības tiks ievietotas pašreizējā slānī, pretējā gadījumā tās būs oriģinālās slāņos.</translation>
+        <translation type="unfinished">Ja ieslēgts, izveidotie objekti tiks novietoti uz pašreizējā slāņa, pretējā gadījumā tie būs uz oriģinālajiem slāņiem. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="147"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Lietot aktīvo slāni</translation>
+        <translation type="unfinished">Lietot pašreizējo slāni</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="166"/>
@@ -24229,12 +24229,12 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="93"/>
         <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">Ja ieslēgts, izveidotās vienības tiks ievietotas pašreizējā slānī, pretējā gadījumā tās būs oriģinālās slāņos.</translation>
+        <translation type="unfinished">Ja ieslēgts, izveidotie objekti tiks novietoti uz pašreizējā slāņa, pretējā gadījumā tie būs uz oriģinālajiem slāņiem.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="96"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Lietot aktīvo slāni</translation>
+        <translation type="unfinished">Lietot pašreizējo slāni</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="109"/>
@@ -25355,12 +25355,12 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="188"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Atjaunināt aktīvo pildspalvu pēc aktīvā slāņa&apos; Pen</translation>
+        <translation>Atjaunināt pašreizējo zīmuli pēc aktīvā slāņa zīmuļa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="205"/>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation>Aktīvā slāņa pildspalvveida pilnšļirces pildspalvu redaktors</translation>
+        <translation>Aizpildīt zīmuļa redaktoru no aktīvā slāņa zīmuļa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="208"/>
@@ -25370,7 +25370,7 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="222"/>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation>Pielietot redaktora pildspalvu aktīvajai slāņa pildspalvai</translation>
+        <translation>Pielietot redaktora zīmuli aktīvā slāņa zīmulim</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="225"/>
@@ -25460,7 +25460,7 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="305"/>
         <source>&amp;Apply Pen To Active Layer</source>
-        <translation>Uzlīmēt uz aktīvā slāņa</translation>
+        <translation>&amp;Pielietot zīmuli aktīvajam slānim</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="306"/>
@@ -29503,7 +29503,7 @@ Lūdzu, ņemiet vērā, ka, ja saglabāsiet pildspalvu, izmantojot redaktoru, ne
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="122"/>
         <source>Line Width</source>
-        <translation type="unfinished">Rindas platums</translation>
+        <translation type="unfinished">Līnijas platums</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="122"/>
@@ -29513,7 +29513,7 @@ Lūdzu, ņemiet vērā, ka, ja saglabāsiet pildspalvu, izmantojot redaktoru, ne
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="144"/>
         <source>Line Type</source>
-        <translation type="unfinished">Rindas tips</translation>
+        <translation type="unfinished">Līnijas tips</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="144"/>
@@ -29529,7 +29529,7 @@ Lūdzu, ņemiet vērā, ka, ja saglabāsiet pildspalvu, izmantojot redaktoru, ne
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="171"/>
         <source>Dimensional</source>
-        <translation type="unfinished">Izmēru</translation>
+        <translation type="unfinished">Izmēri</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="175"/>
@@ -29544,7 +29544,7 @@ Lūdzu, ņemiet vērā, ka, ja saglabāsiet pildspalvu, izmantojot redaktoru, ne
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="186"/>
         <source>Type</source>
-        <translation type="unfinished">Veids</translation>
+        <translation type="unfinished">Tips</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="186"/>
@@ -33092,7 +33092,8 @@ Lūdzu, ņemiet vērā, ka, ja saglabāsiet pildspalvu, izmantojot redaktoru, ne
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="127"/>
         <source>
 Layer: </source>
-        <translation>Slānis:</translation>
+        <translation>
+Slānis: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="573"/>
@@ -35898,12 +35899,12 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="208"/>
         <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="unfinished">Precizē whetether kopijas tiks ievietotas pašreizējā vai oriģinālā slānī</translation>
+        <translation type="unfinished">Nosaka, vai kopijas tiks novietotas uz pašreizējā vai oriģinālā slāņa</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="211"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Lietot aktīvo slāni</translation>
+        <translation type="unfinished">Lietot pašreizējo slāni</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="218"/>
@@ -36144,12 +36145,12 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="209"/>
         <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">Ja atzīmēts, uz pašreizējā slāņa tiks izvietoti jauni entuziasti, pretējā gadījumā tie būs oriģinālos slāņos.</translation>
+        <translation type="unfinished">Ja ieslēgts, jaunie objekti tiks novietoti uz pašreizējā slāņa, pretējā gadījumā tie būs uz oriģinālajiem slāņiem.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="212"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Lietot aktīvo slāni</translation>
+        <translation type="unfinished">Lietot pašreizējo slāni</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="219"/>
@@ -36387,12 +36388,12 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="83"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="unfinished">Ja ieslēgts, izveidotās vienības tiks ievietotas aktīvajā slānī. Pretējā gadījumā tie tiks ievietoti oriģinālajos slāņos.</translation>
+        <translation type="unfinished">Ja ieslēgts, izveidotie objekti tiks novietoti uz pašreizējā slāņa. Pretējā gadījumā tie tiks novietoti uz oriģinālajiem slāņiem. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="86"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Lietot aktīvo slāni</translation>
+        <translation type="unfinished">Lietot pašreizējo slāni</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="107"/>
@@ -37301,7 +37302,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="77"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Ja ieslēgts, izveidotās vienības tiks novietotas uz pašreizējā slāņa, pretējā gadījumā tās tiks ievietotas oriģinālajos slāņos.</translation>
+        <translation type="unfinished">Ja ieslēgts, izveidotie objekti tiks novietoti uz pašreizējā slāņa, pretējā gadījumā tie tiks novietoti uz oriģinālajiem slāņiem.</translation>
     </message>
 </context>
 <context>
@@ -37339,12 +37340,12 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="73"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Ja ieslēgts, izveidotās vienības tiks novietotas uz pašreizējā slāņa, pretējā gadījumā tās tiks ievietotas oriģinālajos slāņos.</translation>
+        <translation type="unfinished">Ja ieslēgts, izveidotie objekti tiks novietoti uz pašreizējā slāņa, pretējā gadījumā tie tiks novietoti uz oriģinālajiem slāņiem.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="76"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Lietot aktīvo slāni</translation>
+        <translation type="unfinished">Lietot pašreizējo slāni</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="83"/>
@@ -37482,7 +37483,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="71"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Ja ieslēgts, izveidotās vienības tiks novietotas uz pašreizējā slāņa, pretējā gadījumā tās tiks ievietotas oriģinālajos slāņos.</translation>
+        <translation type="unfinished">Ja ieslēgts, izveidotie objekti tiks novietoti uz pašreizējā slāņa, pretējā gadījumā tie tiks novietoti uz oriģinālajiem slāņiem.</translation>
     </message>
 </context>
 <context>
@@ -37495,12 +37496,12 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="32"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Ja ieslēgts, izveidotās vienības tiks novietotas uz pašreizējā slāņa, pretējā gadījumā tās tiks ievietotas oriģinālajos slāņos.</translation>
+        <translation type="unfinished">Ja ieslēgts, izveidotie objekti tiks novietoti uz pašreizējā slāņa, pretējā gadījumā tie tiks novietoti uz oriģinālajiem slāņiem.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="35"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Lietotāja Pašreizējais Slānis</translation>
+        <translation type="unfinished">Lietot pašreizējo slāni</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="42"/>
@@ -38370,7 +38371,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="216"/>
         <source>Entity&apos;s Layer</source>
-        <translation>Vienības slānis</translation>
+        <translation>Objekta slānis</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="250"/>
@@ -39080,7 +39081,7 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="236"/>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="236"/>
         <source>Layers Tree</source>
-        <translation>Slāņi</translation>
+        <translation>Slāņu koks</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="261"/>
@@ -39826,7 +39827,7 @@ Lūdzu, pārbaudiet, vai tā eksistē un vai ir pareizas atļaujas.</translation
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="105"/>
         <source>Name of Current Active Layer</source>
-        <translation>Aktīvais slānis</translation>
+        <translation>Pašreizējā aktīvā slāņa nosaukums</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="80"/>
@@ -40911,7 +40912,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="70"/>
         <source>Layer of MText</source>
-        <translation>Slānis</translation>
+        <translation>Daudzrindu teksta slānis</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="144"/>
@@ -43454,7 +43455,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5074"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head/&gt; &lt;body&gt; &lt;p&gt; Ja ieslēgts, slāņa aktivizēšana pārveidotu visas izvēlētās vienības uz jauno slāni. Lai mainītu vairāku vienību slāni: vispirms izvēlieties nepieciešamās vienības; aktivizējiet slāni slāņa logdaļā. Tas padara visas izvēlētās vienības modificētas, lai tās piederētu jaunajam slānim</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ja ieslēgts, slāņa aktivizēšana pārvietos visus izvēlētos objektus uz šo slāni. Lai mainītu vairāku objektu slāni: vispirms izvēlieties vajadzīgos objektus, pēc tam aktivizējiet slāni slāņu sīkrīkā. Tādējādi visi izvēlētie objekti tiks modificēti, lai tie piederētu jaunajam slānim.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5934"/>
@@ -44575,7 +44576,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5077"/>
         <source>Modify layer of selected entities, at layer activation</source>
-        <translation>Modificēt izvēlēto vienību slāni slāņa aktivācijas laikā</translation>
+        <translation>Modificēt izvēlēto objektu slāni, aktivizējot slāni</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5490"/>
@@ -46304,7 +46305,7 @@ cepšanai nepieciešamā standartpakāpe</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="197"/>
         <source>Layer of text</source>
-        <translation>Slānis</translation>
+        <translation>Teksta slānis</translation>
     </message>
     <message>
         <source>Obligue of text</source>
@@ -47188,7 +47189,7 @@ cepšanai nepieciešamā standartpakāpe</translation>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="29"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Konstruēšanas slānī vienumiem ir bezgalīgi garas līnijas, kuras ir paredzētas ģeometrisku figūru konstruēšanai.
+        <translation>Konstruēšanas slānī objektiem ir bezgalīgi garas līnijas, kuras ir paredzētas ģeometrisku figūru konstruēšanai.
 Konstruēšanas slāņa saturam nevajadzētu parādīties izdrukā.</translation>
     </message>
     <message>
@@ -47626,29 +47627,30 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="173"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>Tiks izņemts slānis “%1” un visi uz tā esošie objekti.Šo darbību NEVAR atsaukt.</translation>
+        <translation>Tiks izņemts slānis “%1” un visi uz tā esošie objekti.
+Šo darbību NEVAR atsaukt.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="240"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1739"/>
         <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>Slānis &quot;0&quot; nekad nevar noņemt.</translation>
+        <translation>Nevar izņemt slāni “0”.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="248"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1787"/>
         <source>Remove %n layer(s)</source>
         <translation>
-            <numerusform>Noņemt %n slāni</numerusform>
-            <numerusform>Noņemt %n slāņus</numerusform>
-            <numerusform></numerusform>
+            <numerusform>Izņemt %n slāni</numerusform>
+            <numerusform>Izņemt %n slāņus</numerusform>
+            <numerusform>Izņemt %n slāņu</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="251"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1788"/>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>Uzskaitītie slāņi un visas uz tiem esošās vienības tiks izdzēstas.</translation>
+        <translation>Tiks izņemti uzskaitītie slāņi un visi uz tiem esošie objekti.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="253"/>
@@ -47659,13 +47661,13 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="257"/>
         <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>Brīdinājums: slāni &quot;0&quot; nekad nevar noņemt.</translation>
+        <translation>Brīdinājums: nevar izņemt slāni “0”.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="260"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1790"/>
         <source>Layers for removal:</source>
-        <translation>Noņemšanas slāņi:</translation>
+        <translation>Izņemamie slāņi:</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="463"/>
@@ -47689,7 +47691,7 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="230"/>
         <source>Layer empty name is not allowed.</source>
-        <translation>Slānis tukšs nosaukums nav atļauts.</translation>
+        <translation>Tukšs slāņa nosaukums nav atļauts.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="265"/>
@@ -47701,9 +47703,9 @@ This action can NOT be undone.</source>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation>Mēģināt izveidot slāni ar dublējošu nosaukumu. Dublēts slāņa nosaukums ir
+        <translation>Mēģinājums izveidot slāni ar dublētu nosaukumu. Dublētais slāņa nosaukums ir 
 [%1].
-Lūdzu norādiet citu nosaukumu.</translation>
+Lūdzu, norādiet citu nosaukumu.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="142"/>
@@ -47722,7 +47724,7 @@ Lūdzu, norādiet citu vērtību.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="962"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="972"/>
         <source>Remove empty layers</source>
-        <translation>Noņemt tukšos slāņus</translation>
+        <translation>Izņemt tukšos slāņus</translation>
     </message>
     <message>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
@@ -47740,7 +47742,7 @@ Clear filtering mask and repeat.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="973"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>Nav slāņi bez vienībām atrasts, nekas, ko noņemt.</translation>
+        <translation>Nav atrasts neviens slānis bez objektiem, nav ko izņemt.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1116"/>
@@ -47754,23 +47756,25 @@ Clear filtering mask and repeat.</source>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation>Šāds bērnu slānis jau pastāv
+        <translation>Šāds apakšslānis jau eksistē slānim 
 [%1].
-Lūdzu norādiet citu nosaukumu.</translation>
+Lūdzu, norādiet citu nosaukumu.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1162"/>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation>Šāds bērnu slānis jau pastāv
-[%1].</translation>
+        <translation>Šāds apakšslānis jau eksistē slānim 
+[%1].
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1170"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>Dimensijas slāni drīkst pievienot tikai normālam aktīvajam slānim.</translation>
+        <translation>Izmēru slāni var pievienot tikai normālam aktīvajam slānim.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1233"/>
@@ -47803,7 +47807,7 @@ Ja Nē, vērtības &quot;Pēc slāņa&quot; paliks nemainīgas, un tā mērķsl�
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1805"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1863"/>
         <source>Layer DialogEx</source>
-        <translation>Slāņa dialogsEx</translation>
+        <translation>Slāņa dialoglodziņš</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="202"/>
@@ -47856,19 +47860,21 @@ Lūdzu, norādiet citu vērtību.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1453"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>Nav vienību, kas atbilstu pildspalvu uz redzamiem slāņiem.</translation>
+        <translation>Uz redzamajiem slāņiem nav objektu, kas atbilst zīmulim.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1454"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>Šādas vienības pastāv uz iesaldētiem slāņiem.</translation>
+        <translation>Šādi objekti ir uz paslēptiem slāņiem.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1455"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>Šādas vienības pastāv uz slēgtiem slāņiem.</translation>
+        <translation>Šādi objekti ir uz slēgtiem slāņiem.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1456"/>
@@ -49333,7 +49339,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="88"/>
         <source>cslayer</source>
-        <translation>cslānis</translation>
+        <translation>cslayer</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="89"/>
@@ -49997,7 +50003,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="77"/>
         <source>No %1 layers found</source>
-        <translation>Nav atrasti%1 slāņi</translation>
+        <translation>Nav atrasts neviens %1 slānis</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="95"/>

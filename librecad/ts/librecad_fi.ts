@@ -2688,7 +2688,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="252"/>
         <source>(De-)Select Layer</source>
-        <translation>(De-) Valitse taso</translation>
+        <translation>Valitse taso / poista valinta</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="235"/>
@@ -3365,7 +3365,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="617"/>
         <source>&amp;Show all layers</source>
-        <translation>&amp; Näytä kaikki kerrokset</translation>
+        <translation>&amp;Näytä kaikki tasot</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
@@ -3375,22 +3375,22 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
         <source>&amp;Unlock all</source>
-        <translation>&amp; Avaa kaikki</translation>
+        <translation>&amp;Vapauta kaikki</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="620"/>
         <source>&amp;Lock all</source>
-        <translation>&amp; Lukitse kaikki</translation>
+        <translation>&amp;Lukitse kaikki</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="628"/>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>&amp; Vie valitut tasot</translation>
+        <translation>Vi&amp;e valitut tasot</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="629"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Vie &amp; näkyvissä olevat tasot</translation>
+        <translation>Vie nä&amp;kyvät tasot</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="635"/>
@@ -3883,12 +3883,12 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity Layer</source>
-        <translation>Yhteisön taso</translation>
+        <translation>Kohteen taso</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity&apos;s Layer</source>
-        <translation>Yhteisön taso</translation>
+        <translation>Kohteen taso</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="88"/>
@@ -3903,32 +3903,32 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="109"/>
         <source>Activate Entity&apos;s Layer</source>
-        <translation>Aktivoi yhteisön taso</translation>
+        <translation>Aktivoi kohteen taso</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="110"/>
         <source>Hide Entity&apos;s Layer</source>
-        <translation>Piilota yksikön taso</translation>
+        <translation>Piilota kohteen taso</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="111"/>
         <source>Hide Other Layers than Entity&apos;s</source>
-        <translation>Piilota muut kerrokset kuin Yksikön</translation>
+        <translation>Piilota muut tasot kuin kohteen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="112"/>
         <source>Lock Entity&apos;s Layer</source>
-        <translation>Lukitse yksikön taso</translation>
+        <translation>Lukitse kohteen taso</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="113"/>
         <source>Toggle Entity&apos;s Layer Construction</source>
-        <translation>Vaihda yksikön tasorakenne</translation>
+        <translation>Vaihda kohteen tason rakennetila</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="114"/>
         <source>Toggle Entity&apos;s Layer Printing</source>
-        <translation>Vaihda yksikön tasotulostus</translation>
+        <translation>Vaihda kohteen tason tulostus</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="196"/>
@@ -4348,37 +4348,37 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="621"/>
         <source>&amp;Add Layer</source>
-        <translation>&amp;Lisää Taso</translation>
+        <translation>Li&amp;sää taso</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="622"/>
         <source>&amp;Remove Layer</source>
-        <translation>&amp;Poista Taso</translation>
+        <translation>&amp;Poista taso</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="623"/>
         <source>&amp;Edit Layer</source>
-        <translation>&amp;Muokkaa Tasoa</translation>
+        <translation>&amp;Muokkaa tasoa</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="624"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>Vaihda layer Loc&amp;k</translation>
+        <translation>Va&amp;ihda tason lukitus</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="625"/>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation>&amp; Vaihda tason näkyvyys</translation>
+        <translation>V&amp;aihda tason näkyvyys</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="626"/>
         <source>Toggle Layer &amp;Print</source>
-        <translation>Vaihda tason &amp; tulostus</translation>
+        <translation>Vai&amp;hda tason tulostus</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="627"/>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>Vaihda &amp; rakennetaso</translation>
+        <translation>Vaihda tason &amp;rakennetila</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="637"/>
@@ -5151,7 +5151,7 @@ Piste: (%8 ,%9)</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>Enter layer name to %1</source>
-        <translation>Anna kerroksen nimi%1</translation>
+        <translation>Anna tason nimi (toiminto: %1)</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
@@ -6898,7 +6898,7 @@ Piste: (%8 ,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_layer.cpp" line="75"/>
         <source>Specify entity with desired layer</source>
-        <translation type="unfinished">Määrittele yhteisö halutulla tasolla</translation>
+        <translation type="unfinished">Määritä kohde, joka on halutulla tasolla</translation>
     </message>
 </context>
 <context>
@@ -7509,12 +7509,12 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="66"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Jos valittu, peilatut yksiköt sijoitetaan nykyiselle kerrokselle, muuten ne sijoitetaan alkuperäisiin kerroksiin.</translation>
+        <translation type="unfinished">Jos valittu, peilatut kohteet sijoitetaan nykyiselle tasolle, muuten ne sijoitetaan alkuperäisille tasoilleen.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="69"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Käyttäjän nykyinen taso</translation>
+        <translation type="unfinished">Käytä nykyistä tasoa</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="76"/>
@@ -8837,7 +8837,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="62"/>
         <source>Layer to which created circle should be placed</source>
-        <translation type="unfinished">Taso, johon luotu ympyrä olisi sijoitettava</translation>
+        <translation type="unfinished">Taso, jolle luotu ympyrä sijoitetaan</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="66"/>
@@ -11151,7 +11151,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="98"/>
         <source>Layer of entity</source>
-        <translation>Kokonaisuus</translation>
+        <translation>Kohteen taso</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="148"/>
@@ -12634,7 +12634,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="26"/>
         <source>Layer of dimension</source>
-        <translation>Mitat</translation>
+        <translation>Mitan taso</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="45"/>
@@ -13610,7 +13610,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="82"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">Kerros, johon kaksoiskappale on sijoitettava</translation>
+        <translation type="unfinished">Taso, jolle kaksoiskappale sijoitetaan</translation>
     </message>
 </context>
 <context>
@@ -13623,7 +13623,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="45"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">Kerros, johon kaksoiskappale on sijoitettava</translation>
+        <translation type="unfinished">Taso, jolle kaksoiskappale sijoitetaan</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="49"/>
@@ -14415,7 +14415,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="168"/>
         <source>Layer of entity</source>
-        <translation type="unfinished">Kokonaisuus</translation>
+        <translation type="unfinished">Kohteen taso</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="204"/>
@@ -14479,12 +14479,12 @@ Oletko varma, että aiot hylätä muutokset?</translation>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="135"/>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="179"/>
         <source>Export Layers</source>
-        <translation>Vientitasot</translation>
+        <translation>Vie tasot</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="152"/>
         <source>Exported Layers</source>
-        <translation>Vientitasot</translation>
+        <translation>Viedyt tasot</translation>
     </message>
 </context>
 <context>
@@ -15320,7 +15320,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="48"/>
         <source>Name of new layer. In order to create hierarchical layers, include name of virtual layer and layer name separator.</source>
-        <translation>Uuden kerroksen nimi. Jotta voidaan luoda hierarkkisia kerroksia, sisältää nimi virtuaalinen kerros ja kerroksen nimi erotin.</translation>
+        <translation>Uuden tason nimi. Jos haluat luoda hierarkkisia tasoja, sisällytä nimeen virtuaalitason nimi ja tason nimen erotin.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="64"/>
@@ -15335,7 +15335,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="93"/>
         <source>Layer for various infromational elements, notes, drafts etc.</source>
-        <translation>Layer eri in fromational elementtejä, muistiinpanoja, luonnoksia jne.</translation>
+        <translation>Taso erilaisille tietoelementeille, muistiinpanoille, luonnoksille jne.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="96"/>
@@ -15345,7 +15345,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="106"/>
         <source>Normal layer with drawing eleements</source>
-        <translation>Normaali kerros, jossa piirustukset</translation>
+        <translation>Normaali taso, jossa on piirustuselementtejä</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="109"/>
@@ -15365,7 +15365,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="132"/>
         <source>Layer with alternate position of entities located on normal layers</source>
-        <translation>Kerros, jossa on yksikköjen vaihtoehtoinen sijainti normaaleissa kerroksissa</translation>
+        <translation>Taso, jossa on normaaleilla tasoilla olevien kohteiden vaihtoehtoinen sijainti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="135"/>
@@ -15376,18 +15376,18 @@ Oletko varma, että aiot hylätä muutokset?</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="148"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Rakentaminen taso on entiteettien ääretön suora linjat on tarkoitettu käytettäväksi geometrinen rakentaminen.
-Rakennuskerroksen sisältö ei saa näkyä tulosteessa.</translation>
+        <translation>Rakennetason kohteet ovat äärettömiä suoria viivoja, jotka on tarkoitettu geometriseen konstruointiin.
+       Rakennetason sisällön ei pitäisi näkyä tulosteessa.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="152"/>
         <source>Construction Layer</source>
-        <translation>Rakennustaso</translation>
+        <translation>Rakennetaso</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="181"/>
         <source>Path for parent layer</source>
-        <translation>Kantakerroksen polku</translation>
+        <translation>Vanhempitason polku</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="197"/>
@@ -15397,7 +15397,7 @@ Rakennuskerroksen sisältö ei saa näkyä tulosteessa.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="68"/>
         <source>Rename Virtual Layer</source>
-        <translation>Nimeä Virtual Layer uudelleen</translation>
+        <translation>Nimeä virtuaalitaso uudelleen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="72"/>
@@ -15424,7 +15424,7 @@ Rakennuskerroksen sisältö ei saa näkyä tulosteessa.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="200"/>
         <source>Rename Layer</source>
-        <translation>Nimeä taso</translation>
+        <translation>Nimeä taso uudelleen</translation>
     </message>
 </context>
 <context>
@@ -15432,7 +15432,7 @@ Rakennuskerroksen sisältö ei saa näkyä tulosteessa.</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="39"/>
         <source>Form</source>
-        <translation>Pakkaus</translation>
+        <translation>Lomake</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="57"/>
@@ -15442,42 +15442,42 @@ Rakennuskerroksen sisältö ei saa näkyä tulosteessa.</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="63"/>
         <source>If checked, Named Views from the document will be included into exported drawings. Otherwise, views are not included.</source>
-        <translation>Jos valittuna, dokumentin Näkymät sisällytetään vietyihin piirustuksiin. Muussa tapauksessa ei oteta huomioon näkemyksiä.</translation>
+        <translation>Jos valittu, dokumentin nimetyt näkymät sisällytetään vietyihin piirustuksiin. Muuten näkymiä ei sisällytetä.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="66"/>
         <source>Export Named Views too</source>
-        <translation>Vie myös nimet</translation>
+        <translation>Vie myös nimetyt näkymät</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="73"/>
         <source>If checked, each original exported layer will be stored in separate drawing. Otherwise, all layers will be in exported to one combined drawing.</source>
-        <translation>Jos valittu, jokainen alkuperäinen viety kerros säilytetään erillisessä piirustuksessa. Muuten kaikki kerrokset viedään yhteen yhdistettyyn piirustukseen.</translation>
+        <translation>Jos valittu, jokainen viety alkuperäinen taso tallennetaan erilliseen piirustukseen. Muuten kaikki tasot viedään yhteen yhdistettyyn piirustukseen.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="76"/>
         <source>Export each layer to own drawing file</source>
-        <translation>Vie jokainen kerros omaan piirustustiedostoon</translation>
+        <translation>Vie jokainen taso omaan piirustustiedostoonsa</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="83"/>
         <source>If checked, entities will be stored in original layer. Otherwise, they are placed to layer &quot;0&quot;.</source>
-        <translation>Jos valittu, yksiköt tallennetaan alkuperäiseen kerrokseen. Muuten ne asetetaan kerrokseen &quot;0.&quot;.</translation>
+        <translation>Jos valittu, kohteet tallennetaan alkuperäiselle tasolleen. Muuten ne sijoitetaan tasolle &quot;0&quot;.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="89"/>
         <source>Retain original layer for entities</source>
-        <translation>Säilytä alkuperäinen kerros yhteisöille</translation>
+        <translation>Säilytä kohteiden alkuperäinen taso</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="96"/>
         <source>If checked, UCSs from the document will be included into exported drawings. Otherwise, UCSs are not included.</source>
-        <translation>Jos valittu, asiakirjasta peräisin olevat UCS:t sisällytetään vietyihin piirustuksiin. Muuten UCS:t eivät sisälly.</translation>
+        <translation>Jos valittu, dokumentin UCS:t sisällytetään vietyihin piirustuksiin. Muuten niitä ei sisällytetä.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="99"/>
         <source>Export UCSs too</source>
-        <translation>Vie UCS myös</translation>
+        <translation>Vie myös UCS:t</translation>
     </message>
 </context>
 <context>
@@ -15485,17 +15485,17 @@ Rakennuskerroksen sisältö ei saa näkyä tulosteessa.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="20"/>
         <source>Layers Tree Options</source>
-        <translation>Tasot Tree asetukset</translation>
+        <translation>Tasopuun asetukset</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="46"/>
         <source>Settings for naming convention that is used to create layers hierarchy based on flat list of layers</source>
-        <translation>Asetukset nimeämiskäytäntöä, jota käytetään luomaan kerrosten hierarkia perustuu tasainen luettelo kerroksia</translation>
+        <translation>Asetukset nimeämiskäytännölle, jonka avulla litteästä tasoluettelosta luodaan tasohierarkia</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="49"/>
         <source>Naming Convention</source>
-        <translation>Nimeämissopimus</translation>
+        <translation>Nimeämiskäytäntö</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="55"/>
@@ -15505,7 +15505,7 @@ Rakennuskerroksen sisältö ei saa näkyä tulosteessa.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="116"/>
         <source>Separator used for split inner name of layer to hierarchical names</source>
-        <translation>Separaattori, jota käytetään hierarkkisten nimien jakoon kerroksen sisäinen nimi</translation>
+        <translation>Erotin, jolla tason sisäinen nimi jaetaan hierarkkisiksi nimiksi</translation>
     </message>
     <message>
         <source>Layer Level Name Separator</source>
@@ -15519,12 +15519,12 @@ Rakennuskerroksen sisältö ei saa näkyä tulosteessa.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
-        <translation>Ulottuvuus</translation>
+        <translation>Mitat</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="201"/>
         <source>Suffix of layer&apos;s name that defines that layer is dimensional</source>
-        <translation>Loppuliite kerroksen nimi, joka määrittelee, että kerros on dimensional</translation>
+        <translation>Tason nimen loppuliite, joka määrittää, että taso on mittataso</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="211"/>
@@ -15535,17 +15535,17 @@ Rakennuskerroksen sisältö ei saa näkyä tulosteessa.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="224"/>
         <source>Suffix of layer&apos;s name that defines that layer is informational.</source>
-        <translation>Se on informatiivinen.</translation>
+        <translation>Tason nimen loppuliite, joka määrittää, että taso on tietotaso.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="234"/>
         <source>Alternative Position </source>
-        <translation>Vaihtoehtoinen sijainti</translation>
+        <translation>Vaihtoehtoinen sijainti </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
-        <translation>Loppuliite kerroksen nimi, joka määrittelee tämän kerroksen on vaihtoehtoinen sijainti.</translation>
+        <translation>Tason nimen loppuliite, joka määrittää, että taso on vaihtoehtoista sijaintia varten.</translation>
     </message>
     <message>
         <source>Duplicating Name</source>
@@ -15559,7 +15559,7 @@ Rakennuskerroksen sisältö ei saa näkyä tulosteessa.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="74"/>
         <source>Prefix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>Tason nimen etuliite, jota käytetään, jos sellainen on olemassa (sano, kun kaksoiskappale luodaan)</translation>
+        <translation>Tason nimen etuliite, jota käytetään, jos samanniminen taso on jo olemassa (esimerkiksi tasoa monistettaessa)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="84"/>
@@ -15569,7 +15569,7 @@ Rakennuskerroksen sisältö ei saa näkyä tulosteessa.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="97"/>
         <source>Suffix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>Loppuliite kerroksen nimi, jota käytetään, jos sellainen kerros on olemassa (sano, kun kaksoiskappale on luotu)</translation>
+        <translation>Tason nimen loppuliite, jota käytetään, jos samanniminen taso on jo olemassa (esimerkiksi tasoa monistettaessa)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="155"/>
@@ -15599,7 +15599,7 @@ Rakennuskerroksen sisältö ei saa näkyä tulosteessa.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="268"/>
         <source>Display and operations settings</source>
-        <translation>Näyttö- ja toimintaasetukset</translation>
+        <translation>Näyttö- ja toimintoasetukset</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="271"/>
@@ -15609,12 +15609,12 @@ Rakennuskerroksen sisältö ei saa näkyä tulosteessa.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="329"/>
         <source>If checked, tooltip will include complete name of layer (with all upper layer levels)</source>
-        <translation>Jos valittu, työkaluvihje sisältää kokonaisen kerroksen nimen (kaikki ylemmät tasot)</translation>
+        <translation>Jos valittu, työkaluvihje sisältää tason koko nimen (kaikkine ylempine tasoineen)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="332"/>
         <source>Show full name as ToolTip</source>
-        <translation>Näytä koko nimi työkaluvinkkinä</translation>
+        <translation>Näytä koko nimi työkaluvihjeenä</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="608"/>
@@ -15644,52 +15644,52 @@ Rakennuskerroksen sisältö ei saa näkyä tulosteessa.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="319"/>
         <source>If checked, icons for layer types will be shown</source>
-        <translation>Jos valittu, näytetään kerrostyyppien kuvakkeet</translation>
+        <translation>Jos valittu, tasotyyppien kuvakkeet näytetään</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="322"/>
         <source>Show layer type icons</source>
-        <translation>Näytä kerrostyypin kuvakkeet</translation>
+        <translation>Näytä tasotyyppien kuvakkeet</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="309"/>
         <source>Indentation for child layers</source>
-        <translation>Lapsikerrosten sisennys</translation>
+        <translation>Lapsitasojen sisennys</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="312"/>
         <source>Show indented layer names. Ident size:</source>
-        <translation>Näytä sisennyskerroksen nimet. Sisennän koko:</translation>
+        <translation>Näytä tasojen nimet sisennettyinä. Sisennyksen koko:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="277"/>
         <source>Size of the indent in characters to indent name of child layer from parent ones</source>
-        <translation>Vanhempien lapsikerrosten nimeen merkityn luetelmakohdan koko</translation>
+        <translation>Merkkimäärä, jonka verran lapsitason nimeä sisennetään vanhempitasoihin nähden</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="352"/>
         <source>If checked, drag&amp;drop operations in layers list are enabled and layers hierarchy may be restructutured</source>
-        <translation>Jos valittuna, krash&amp;drop-toiminnot on otettu käyttöön kerrosluettelossa ja kerroshierarkiaa voidaan muokata</translation>
+        <translation>Jos valittu, vedä&amp;pudota-toiminnot ovat käytössä tasoluettelossa ja tasohierarkiaa voidaan järjestää uudelleen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="355"/>
         <source>Allow restructuring via Drag&amp;Drop</source>
-        <translation>Salli rakenneuudistus Drag&amp;Dropin avulla</translation>
+        <translation>Salli uudelleenjärjestely vetämällä ja pudottamalla</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="293"/>
         <source>If primary layer is renames, secondary layers are renamed too.</source>
-        <translation>Jos ensisijainen kerros on uudelleennimetä, toissijaiset kerrokset on myös nimetty uudelleen.</translation>
+        <translation>Jos ensisijainen taso nimetään uudelleen, myös toissijaiset tasot nimetään uudelleen.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="296"/>
         <source>Rename secondary layers on primary rename</source>
-        <translation>Nimeä toissijaisia kerroksia uudelleen päänimelle</translation>
+        <translation>Nimeä toissijaiset tasot uudelleen, kun ensisijainen nimetään uudelleen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="376"/>
         <source>Various colors settings</source>
-        <translation>Eri väriasetukset</translation>
+        <translation>Erilaisia väriasetuksia</translation>
     </message>
     <message>
         <source>Colors</source>
@@ -15698,7 +15698,7 @@ Rakennuskerroksen sisältö ei saa näkyä tulosteessa.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="470"/>
         <source>Background color for selected items in layers tree.</source>
-        <translation>Taustan väri valitut kohteet kerrokset puu.</translation>
+        <translation>Tasopuussa valittujen rivien taustaväri.</translation>
     </message>
     <message>
         <source>Color for separator lines in layers tree view</source>
@@ -15707,7 +15707,7 @@ Rakennuskerroksen sisältö ei saa näkyä tulosteessa.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="420"/>
         <source>Background color for virtual layers items in layers list</source>
-        <translation>Virtuaalikerrosten kappaleiden taustaväri kerroksittain</translation>
+        <translation>Virtuaalitasojen rivien taustaväri tasoluettelossa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="449"/>
@@ -15720,12 +15720,12 @@ Rakennuskerroksen sisältö ei saa näkyä tulosteessa.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="560"/>
         <source>Matched item in highlight filter mode</source>
-        <translation>Vastaava kohde korostussuodatintilassa</translation>
+        <translation>Suodatinta vastaava rivi korostustilassa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="391"/>
         <source>Color for items that matches filter conditions</source>
-        <translation>Suodatusolosuhteita vastaavien kohteiden väri</translation>
+        <translation>Suodatinehtoja vastaavien rivien väri</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="379"/>
@@ -15740,7 +15740,7 @@ Rakennuskerroksen sisältö ei saa näkyä tulosteessa.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="581"/>
         <source>Virtual layer background color</source>
-        <translation>Virtuaalikerroksen taustaväri</translation>
+        <translation>Virtuaalitason taustaväri</translation>
     </message>
     <message>
         <source>Threeview items separator grid</source>
@@ -15749,17 +15749,17 @@ Rakennuskerroksen sisältö ei saa näkyä tulosteessa.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="503"/>
         <source>Selected items background color</source>
-        <translation>Valitut kohteet taustaväri</translation>
+        <translation>Valittujen rivien taustaväri</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="523"/>
         <source>Background color for active layer item in layers tree</source>
-        <translation>Taustan väri aktiivisen kerros kohteen kerrokset puu</translation>
+        <translation>Aktiivisen tason rivin taustaväri tasopuussa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="526"/>
         <source>Active layer background color</source>
-        <translation>Aktiivisen kerroksen taustaväri</translation>
+        <translation>Aktiivisen tason taustaväri</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="588"/>
@@ -15774,7 +15774,7 @@ Rakennuskerroksen sisältö ei saa näkyä tulosteessa.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="599"/>
         <source>Pens that will be set for newly created layers of different types.</source>
-        <translation>Kynät, jotka asetetaan uusia kerroksia eri tyyppejä.</translation>
+        <translation>Kynät, jotka asetetaan erityyppisille uusille tasoille.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="602"/>
@@ -15789,7 +15789,7 @@ Rakennuskerroksen sisältö ei saa näkyä tulosteessa.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="69"/>
         <source>Dimensional Layer</source>
-        <translation>Mitat</translation>
+        <translation>Mittataso</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="70"/>
@@ -15799,7 +15799,7 @@ Rakennuskerroksen sisältö ei saa näkyä tulosteessa.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Alternative Position Layer</source>
-        <translation>Vaihtoehtoinen sijaintitaso</translation>
+        <translation>Vaihtoehtoisen sijainnin taso</translation>
     </message>
     <message>
         <source>grid</source>
@@ -15808,22 +15808,22 @@ Rakennuskerroksen sisältö ei saa näkyä tulosteessa.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="103"/>
         <source>highlighted item</source>
-        <translation>korostettu kohta</translation>
+        <translation>korostettu rivi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="110"/>
         <source>virtual layer background</source>
-        <translation>virtuaalikerroksen tausta</translation>
+        <translation>virtuaalitason tausta</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="118"/>
         <source>selected item background</source>
-        <translation>valittu kohdetausta</translation>
+        <translation>valitun rivin tausta</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="126"/>
         <source>active layer background</source>
-        <translation>aktiivinen kerros tausta</translation>
+        <translation>aktiivisen tason tausta</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
@@ -15834,7 +15834,7 @@ Rakennuskerroksen sisältö ei saa näkyä tulosteessa.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>Virheellinen arvo antaa%1 värille.
+        <translation>Virheellinen arvo värille: %1.
 Määrittele jokin muu arvo.</translation>
     </message>
     <message>
@@ -15853,12 +15853,12 @@ Määrittele jokin muu arvo.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="152"/>
         <source>Looking for matching layer names</source>
-        <translation>Etsitään vastaavia kerroksen nimiä</translation>
+        <translation>Etsitään vastaavia tasojen nimiä</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="157"/>
         <source>Highlight Mode</source>
-        <translation>Korosta tila</translation>
+        <translation>Korostustila</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="167"/>
@@ -15868,7 +15868,7 @@ Määrittele jokin muu arvo.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="186"/>
         <source>Show all layers</source>
-        <translation>Näytä kaikki kerrokset</translation>
+        <translation>Näytä kaikki tasot</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="193"/>
@@ -15893,125 +15893,125 @@ Määrittele jokin muu arvo.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="226"/>
         <source>Collapse All</source>
-        <translation>Lopeta kaikki</translation>
+        <translation>Supista kaikki</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="234"/>
         <source>Collapse Secondary</source>
-        <translation>Romahda alivalikko</translation>
+        <translation>Supista toissijaiset</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="242"/>
         <source>Unlock all layers</source>
-        <translation>Avaa kaikki kerrokset</translation>
+        <translation>Vapauta kaikki tasot</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="249"/>
         <source>Lock all layers</source>
-        <translation>Lukitse kaikki kerrokset</translation>
+        <translation>Lukitse kaikki tasot</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="256"/>
         <source>Add a layer</source>
-        <translation>Lisää kerros</translation>
+        <translation>Lisää taso</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="263"/>
         <source>Add dimensions Layer</source>
-        <translation>Lisää mitat taso</translation>
+        <translation>Lisää mittataso</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="272"/>
         <source>Remove layer</source>
-        <translation>Poista kerros</translation>
+        <translation>Poista taso</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="279"/>
         <source>Modify layer attributes / rename</source>
-        <translation>Muokkaa kerroksen ominaisuuksia / nimeä uudelleen</translation>
+        <translation>Muokkaa tason ominaisuuksia / nimeä uudelleen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="286"/>
         <source>Flat List Mode)</source>
-        <translation>Tasolistatila)</translation>
+        <translation>Litteä luettelotila</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="656"/>
         <source>&amp;Add Child Layer</source>
-        <translation>&amp; Lisää lapsikerros</translation>
+        <translation>&amp;Lisää lapsitaso</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="657"/>
         <source>&amp;Rename</source>
-        <translation>&amp; Nimeä uudelleen</translation>
+        <translation>Nimeä &amp;uudelleen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="658"/>
         <source>&amp;Remove Layers (Sub-Tree)</source>
-        <translation>&amp; Poista kerrokset (ala- rivi)</translation>
+        <translation>&amp;Poista tasot (alipuu)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="660"/>
         <source>&amp;Copy Structure (Sub-Tree)</source>
-        <translation>&amp;Kopiorakenne (alaverkko)</translation>
+        <translation>Kopioi &amp;rakenne (alipuu)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="661"/>
         <source>&amp;Duplicate Content (Sub-Tree)</source>
-        <translation>&amp; Kavenna sisältö (alaverkko)</translation>
+        <translation>&amp;Monista sisältö (alipuu)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="663"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>&amp; Valitse Yksiköt (Sub- Tree)</translation>
+        <translation>V&amp;alitse kohteet (alipuu)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="668"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>&amp; Muokkaa tasoa ja kohteita</translation>
+        <translation>M&amp;uokkaa tason ominaisuuksia</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="670"/>
         <source>&amp;Remove Layer</source>
-        <translation>&amp; Poista taso</translation>
+        <translation>Po&amp;ista taso</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="679"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>&amp; Lisää mitat alalayer</translation>
+        <translation>Lisää &amp;mitta-alitaso</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="683"/>
         <source>&amp;Add Info Sub-Layer</source>
-        <translation>&amp; Lisää info- osalayer</translation>
+        <translation>Lis&amp;ää tietoalitaso</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="687"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
-        <translation>Lisää vaihtoehtonäkymä ali- layer</translation>
+        <translation>Lisää vaihtoehtoisen si&amp;jainnin alitaso</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="693"/>
         <source>&amp;Remove Sub-layers</source>
-        <translation>&amp; Poista alitaso</translation>
+        <translation>&amp;Poista alitasot</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="701"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="711"/>
         <source>Convert to Dimensional Layer</source>
-        <translation>Muunna kokotasoksi</translation>
+        <translation>Muunna mittatasoksi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="702"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="714"/>
         <source>Convert to Info Layer</source>
-        <translation>Muunna infotasolle</translation>
+        <translation>Muunna tietotasoksi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="703"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="717"/>
         <source>Convert to Alternative Position Layer</source>
-        <translation>Muunna vaihtoehtoiseen asentoon</translation>
+        <translation>Muunna vaihtoehtoisen sijainnin tasoksi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="709"/>
@@ -16021,17 +16021,17 @@ Määrittele jokin muu arvo.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="723"/>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>&amp; Valitse tasoyksiköt</translation>
+        <translation>V&amp;alitse tason kohteet</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="726"/>
         <source>&amp;Create Layer Copy</source>
-        <translation>&amp; Luo tasokopio</translation>
+        <translation>&amp;Luo tason kopio</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="727"/>
         <source>&amp;Duplicate Layer With Content</source>
-        <translation>&amp; Kata taso sisällön kanssa</translation>
+        <translation>Monista taso sisältöineen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="731"/>
@@ -16041,22 +16041,22 @@ Määrittele jokin muu arvo.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="732"/>
         <source>Duplicate Selection to Layer</source>
-        <translation>Monista valinta kerrokseen</translation>
+        <translation>Monista valinta tasolle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="739"/>
         <source>&amp;Add Layer</source>
-        <translation>&amp; Lisää taso</translation>
+        <translation>&amp;Lisää taso</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="741"/>
         <source>&amp;Freeze Others Layers</source>
-        <translation>&amp; Pysäytä muut tasot</translation>
+        <translation>Jää&amp;dytä muut tasot</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="742"/>
         <source>&amp;Defreeze All Layers</source>
-        <translation>&amp; Poista kaikki tasot</translation>
+        <translation>&amp;Sulata kaikki tasot</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
@@ -16066,42 +16066,42 @@ Määrittele jokin muu arvo.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>
         <source>&amp;Unlock All Layers</source>
-        <translation>&amp; Poista kaikki tasot</translation>
+        <translation>&amp;Vapauta kaikki tasot</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="745"/>
         <source>&amp;Lock All Layers</source>
-        <translation>&amp; Lukitse kaikki tasot</translation>
+        <translation>Lukitse &amp;kaikki tasot</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="746"/>
         <source>Enable &amp;Printing All Layers</source>
-        <translation>Ota käyttöön kaikkien kerrosten tulostus</translation>
+        <translation>Ota käytt&amp;öön kaikkien tasojen tulostus</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="747"/>
         <source>&amp;Disable Printing All Layers</source>
-        <translation>&amp; Poista tulostus kaikista tasoista</translation>
+        <translation>P&amp;oista käytöstä kaikkien tasojen tulostus</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="750"/>
         <source>&amp;Export Single Layer</source>
-        <translation>&amp; Vie yksi kerros</translation>
+        <translation>Vie &amp;yksi taso</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="754"/>
         <source>&amp;Export Layer Sub-Tree</source>
-        <translation>&amp; Vie taso</translation>
+        <translation>Vi&amp;e tason alipuu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="758"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Vie &amp; näkyvissä olevat tasot</translation>
+        <translation>Vie &amp;näkyvät tasot</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="760"/>
         <source>&amp;Find And Remove Empty Layers</source>
-        <translation>&amp; Etsi ja poista tyhjät tasot</translation>
+        <translation>Etsi ja poista ty&amp;hjät tasot</translation>
     </message>
 </context>
 <context>
@@ -23390,12 +23390,12 @@ Määrittele jokin muu arvo.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="82"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Jos valittu, peilatut yksiköt sijoitetaan nykyiselle kerrokselle, muuten ne sijoitetaan alkuperäisiin kerroksiin.</translation>
+        <translation type="unfinished">Jos valittu, peilatut kohteet sijoitetaan nykyiselle tasolle, muuten ne sijoitetaan alkuperäisille tasoilleen.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Käyttäjän nykyinen taso</translation>
+        <translation type="unfinished">Käytä nykyistä tasoa</translation>
     </message>
 </context>
 <context>
@@ -23689,7 +23689,7 @@ Määrittele jokin muu arvo.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="45"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="unfinished">Jos valittu, luodut yksiköt sijoitetaan nykyiseen kerrokseen. Muuten ne laitetaan alkuperäiseen kerrokseen.</translation>
+        <translation type="unfinished">Jos valittu, luodut kohteet sijoitetaan nykyiselle tasolle. Muuten ne sijoitetaan alkuperäisille tasoilleen. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="48"/>
@@ -23875,7 +23875,7 @@ Määrittele jokin muu arvo.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="144"/>
         <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="unfinished">Jos valittu, luodut yksiköt sijoitetaan nykyiseen kerrokseen, muuten ne ovat alkuperäisissä kerroksissa.</translation>
+        <translation type="unfinished">Jos valittu, luodut kohteet sijoitetaan nykyiselle tasolle, muuten ne sijoitetaan alkuperäisille tasoilleen. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="147"/>
@@ -24291,7 +24291,7 @@ Varoitus: tätä toimintaa ei voida perua!</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="93"/>
         <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">Jos valittu, luodut yksiköt sijoitetaan nykyiseen kerrokseen, muuten ne ovat alkuperäisissä kerroksissa.</translation>
+        <translation type="unfinished">Jos valittu, luodut kohteet sijoitetaan nykyiselle tasolle, muuten ne sijoitetaan alkuperäisille tasoilleen.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="96"/>
@@ -24789,13 +24789,13 @@ Varoitus: tätä toimintaa ei voida perua!</translation>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="263"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="298"/>
         <source>By Layer</source>
-        <translation>Kerroksen mukaan</translation>
+        <translation>Tason Mukaan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="264"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="299"/>
         <source>By Block</source>
-        <translation>Kentän mukaan</translation>
+        <translation>Lohkon Mukaan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="266"/>
@@ -25422,22 +25422,22 @@ Varoitus: tätä toimintaa ei voida perua!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="205"/>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation>Fill Pen -editori aktiivisesta kerroksesta</translation>
+        <translation>Täytä kynämuokkain aktiivisen tason kynän mukaan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="208"/>
         <source>Pick from Active Layer</source>
-        <translation>Valitse aktiivisesta kerroksesta</translation>
+        <translation>Valitse aktiiviselta tasolta</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="222"/>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation>Käytä editorikynää aktiiviseen tasokynään</translation>
+        <translation>Käytä muokkaimen kynää aktiivisen tason kynänä</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="225"/>
         <source>Apply To Layer</source>
-        <translation>Käytä kerrokseen</translation>
+        <translation>Käytä tasoon</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="239"/>
@@ -25522,7 +25522,7 @@ Varoitus: tätä toimintaa ei voida perua!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="305"/>
         <source>&amp;Apply Pen To Active Layer</source>
-        <translation>&amp; Käytä kynää aktiiviseen kerrokseen</translation>
+        <translation>&amp;Käytä kynää aktiiviseen tasoon</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="306"/>
@@ -29567,7 +29567,7 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="122"/>
         <source>Line Width</source>
-        <translation type="unfinished">Rivin leveys</translation>
+        <translation type="unfinished">Viivan leveys</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="122"/>
@@ -29577,7 +29577,7 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="144"/>
         <source>Line Type</source>
-        <translation type="unfinished">Rivityyppi</translation>
+        <translation type="unfinished">Viivatyyppi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="144"/>
@@ -29593,7 +29593,7 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="171"/>
         <source>Dimensional</source>
-        <translation type="unfinished">Ulottuvuus</translation>
+        <translation type="unfinished">Mitat</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="175"/>
@@ -29683,7 +29683,7 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="303"/>
         <source>Unlock all layers</source>
-        <translation type="unfinished">Avaa kaikki kerrokset</translation>
+        <translation type="unfinished">Vapauta kaikki tasot</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="303"/>
@@ -29708,7 +29708,7 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="341"/>
         <source>Show all layers</source>
-        <translation type="unfinished">Näytä kaikki kerrokset</translation>
+        <translation type="unfinished">Näytä kaikki tasot</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="341"/>
@@ -33156,7 +33156,8 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="127"/>
         <source>
 Layer: </source>
-        <translation>Taso:</translation>
+        <translation>
+Taso: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="573"/>
@@ -35962,7 +35963,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="208"/>
         <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="unfinished">Määrittää Whetether kopiot lisätään nykyiseen tai alkuperäiseen kerrokseen</translation>
+        <translation type="unfinished">Määrittää, lisätäänkö kopiot nykyiselle vai alkuperäiselle tasolle</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="211"/>
@@ -36208,7 +36209,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="209"/>
         <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">Jos valittuna, uudet värit sijoitetaan nykyiselle kerrokselle, muuten ne ovat alkuperäisissä kerroksissa.</translation>
+        <translation type="unfinished">Jos valittu, uudet kohteet sijoitetaan nykyiselle tasolle, muuten ne sijoitetaan alkuperäisille tasoilleen.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="212"/>
@@ -36451,7 +36452,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="83"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="unfinished">Jos valittu, luodut yksiköt sijoitetaan nykyiseen kerrokseen. Muuten ne sijoitetaan alkuperäisille kerroksille.</translation>
+        <translation type="unfinished">Jos valittu, luodut kohteet sijoitetaan nykyiselle tasolle. Muuten ne sijoitetaan alkuperäisille tasoilleen. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="86"/>
@@ -37365,7 +37366,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="77"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Jos valittu, luodut yksiköt sijoitetaan nykyiseen kerrokseen, muuten ne sijoitetaan alkuperäisiin kerroksiin.</translation>
+        <translation type="unfinished">Jos valittu, luodut kohteet sijoitetaan nykyiselle tasolle, muuten ne sijoitetaan alkuperäisille tasoilleen.</translation>
     </message>
 </context>
 <context>
@@ -37403,7 +37404,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="73"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Jos valittu, luodut yksiköt sijoitetaan nykyiseen kerrokseen, muuten ne sijoitetaan alkuperäisiin kerroksiin.</translation>
+        <translation type="unfinished">Jos valittu, luodut kohteet sijoitetaan nykyiselle tasolle, muuten ne sijoitetaan alkuperäisille tasoilleen.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="76"/>
@@ -37550,7 +37551,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="71"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Jos valittu, luodut yksiköt sijoitetaan nykyiseen kerrokseen, muuten ne sijoitetaan alkuperäisiin kerroksiin.</translation>
+        <translation type="unfinished">Jos valittu, luodut kohteet sijoitetaan nykyiselle tasolle, muuten ne sijoitetaan alkuperäisille tasoilleen.</translation>
     </message>
 </context>
 <context>
@@ -37563,12 +37564,12 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="32"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Jos valittu, luodut yksiköt sijoitetaan nykyiseen kerrokseen, muuten ne sijoitetaan alkuperäisiin kerroksiin.</translation>
+        <translation type="unfinished">Jos valittu, luodut kohteet sijoitetaan nykyiselle tasolle, muuten ne sijoitetaan alkuperäisille tasoilleen.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="35"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Käyttäjän nykyinen taso</translation>
+        <translation type="unfinished">Käytä nykyistä tasoa</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="42"/>
@@ -38434,7 +38435,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="216"/>
         <source>Entity&apos;s Layer</source>
-        <translation>Yhteisön taso</translation>
+        <translation>Kohteen taso</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="250"/>
@@ -39144,7 +39145,7 @@ Varoitus: tätä toimintaa ei voida perua!</translation>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="236"/>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="236"/>
         <source>Layers Tree</source>
-        <translation>Tasot Puu</translation>
+        <translation>Tasopuu</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="261"/>
@@ -39894,7 +39895,7 @@ Automaattitallennus otettu pois käytöstä.</translation>
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="80"/>
         <source>Current Layer</source>
-        <translation>Tämänhetkinen Taso</translation>
+        <translation>Nykyinen taso</translation>
     </message>
 </context>
 <context>
@@ -39954,7 +39955,7 @@ Automaattitallennus otettu pois käytöstä.</translation>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="101"/>
         <source>By Block</source>
-        <translation>Kappaleen Mukaan</translation>
+        <translation>Lohkon Mukaan</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="105"/>
@@ -41057,7 +41058,7 @@ Tämä rekursiivisesti muuttaa kaikkia yksiköitä Block itse.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="70"/>
         <source>Layer of MText</source>
-        <translation>MTekstin taso</translation>
+        <translation>Monirivitekstin taso</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="144"/>
@@ -44176,7 +44177,7 @@ Tämä rekursiivisesti muuttaa kaikkia yksiköitä Block itse.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5077"/>
         <source>Modify layer of selected entities, at layer activation</source>
-        <translation>Muokkaa valittujen yksiköiden tasoa kerroksen aktivoinnin yhteydessä</translation>
+        <translation>Muuta valittujen kohteiden taso, kun taso aktivoidaan</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5490"/>
@@ -45754,7 +45755,7 @@ Tämä rekursiivisesti muuttaa kaikkia yksiköitä Block itse.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5074"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html &gt; &lt;head/&gt; &lt;body &gt;&lt;p&gt; Kun käytössä, aktivoimalla kerros muuttaisi kaikki valitut yksiköt tähän uuteen kerrokseen. Voit muuttaa kerrosta useita yksiköitä: ensin valita tarvittavat yksiköt; aktivoi kerros kerros widget. Tämä tekee kaikista valituista yksiköistä, jotka on muutettu kuulumaan uuteen kerrokseen. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kun tämä on käytössä, tason aktivointi siirtää kaikki valitut kohteet kyseiselle tasolle. Usean kohteen tason vaihtaminen: valitse ensin tarvittavat kohteet ja aktivoi sitten taso tasoluettelossa. Tällöin kaikki valitut kohteet muutetaan kuulumaan uudelle tasolle.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4991"/>
@@ -45890,7 +45891,7 @@ Tämä rekursiivisesti muuttaa kaikkia yksiköitä Block itse.</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="92"/>
         <source>Export visible construction layers</source>
-        <translation>Vie näkyvät rakennustasot</translation>
+        <translation>Vie näkyvät rakennetasot</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="104"/>
@@ -46556,7 +46557,7 @@ niin oletus askelarvo tarvitaan leivonta</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="197"/>
         <source>Layer of text</source>
-        <translation>Tekstikerros</translation>
+        <translation>Tekstin taso</translation>
     </message>
     <message>
         <source>Obligue of text</source>
@@ -47353,13 +47354,13 @@ niin oletus askelarvo tarvitaan leivonta</translation>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="29"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Rakentaminen taso on entiteettien ääretön suora linjat on tarkoitettu käytettäväksi geometrinen rakentaminen.
-Rakennuskerroksen sisältö ei saa näkyä tulosteessa.</translation>
+        <translation>Rakennetason kohteet ovat äärettömiä suoria viivoja, jotka on tarkoitettu geometriseen konstruointiin.
+Rakennetason sisällön ei pitäisi näkyä tulosteessa.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="33"/>
         <source>Construction Layer</source>
-        <translation>Rakennustaso</translation>
+        <translation>Rakennetaso</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="46"/>
@@ -47382,7 +47383,7 @@ Rakennuskerroksen sisältö ei saa näkyä tulosteessa.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="298"/>
         <source>Looking for matching layer names</source>
-        <translation>Etsitään vastaavia kerroksen nimiä</translation>
+        <translation>Etsitään vastaavia tasojen nimiä</translation>
     </message>
 </context>
 <context>
@@ -47424,7 +47425,7 @@ Rakennuskerroksen sisältö ei saa näkyä tulosteessa.</translation>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="84"/>
         <source>By Block</source>
-        <translation>Kappaleen Mukaan</translation>
+        <translation>Lohkon Mukaan</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="87"/>
@@ -47815,7 +47816,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="84"/>
         <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>Taso, jonka nimi on &quot;%1,&quot; on jo olemassa. Määrittele toinen nimi.</translation>
+        <translation>Taso, jonka nimi on &quot;%1&quot;, on jo olemassa. Määrittele toinen nimi.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="172"/>
@@ -47829,8 +47830,8 @@ p, li {white- space: pre- wrap; }
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="173"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>Taso &quot;%1&quot; ja kaikki sen yksiköt poistetaan.
-Tätä toimenpidettä ei voida perua.</translation>
+        <translation>Taso &quot;%1&quot; ja kaikki sen kohteet poistetaan.
+Tätä toimintoa EI voi kumota.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="183"/>
@@ -47856,7 +47857,7 @@ Tätä toimenpidettä ei voida perua.</translation>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="251"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1788"/>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>Listatut kerrokset ja kaikki niiden yksiköt poistetaan.</translation>
+        <translation>Luetellut tasot ja kaikki niillä olevat kohteet poistetaan.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="253"/>
@@ -47867,7 +47868,7 @@ Tätä toimenpidettä ei voida perua.</translation>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="257"/>
         <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>Varoitus: kerros &quot;0&quot; ei voi koskaan poistaa.</translation>
+        <translation>Varoitus: tasoa &quot;0&quot; ei voi koskaan poistaa.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="260"/>
@@ -47911,7 +47912,7 @@ Tätä toimenpidettä ei voida perua.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="230"/>
         <source>Layer empty name is not allowed.</source>
-        <translation>Layer tyhjä nimi ei ole sallittu.</translation>
+        <translation>Tason nimi ei saa olla tyhjä.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="265"/>
@@ -47923,7 +47924,7 @@ Tätä toimenpidettä ei voida perua.</translation>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation>Yritä luoda kerros kaksoisnimellä. Kaksoiskerroksen nimi on
+        <translation>Yritettiin luoda taso, jonka nimi on jo käytössä. Päällekkäinen tason nimi on 
 [%1].
 Määrittele toinen nimi.</translation>
     </message>
@@ -47937,14 +47938,14 @@ Määrittele toinen nimi.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="143"/>
         <source>Layer list separator string is empty. It will not be possible to build layers tree.
 Please specify a different value.</source>
-        <translation>Tasoluettelon erotinmerkkijono on tyhjä. Ei ole mahdollista rakentaa kerroksia puu.
+        <translation>Tasoluettelon erotinmerkkijono on tyhjä. Tasopuuta ei voida rakentaa.
 Määrittele jokin muu arvo.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="962"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="972"/>
         <source>Remove empty layers</source>
-        <translation>Poista tyhjät kerrokset</translation>
+        <translation>Poista tyhjät tasot</translation>
     </message>
     <message>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
@@ -47957,14 +47958,14 @@ Tyhjennä suodatinmaski ja toista.</translation>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
 Clear filtering mask and repeat.</source>
-        <translation>Löydettiin kerros/kerroksia ilman entiteettejä, mutta ne on suodatettu eikä ne ole näkyvissä.
+        <translation>Löytyi tasoja, joilla ei ole kohteita, mutta ne on suodatettu pois eivätkä ne ole näkyvissä.
 
-Poista suodatusmaski ja toista.</translation>
+Tyhjennä suodatin ja yritä uudelleen.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="973"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>Ei kerroksia ilman olentoja, ei mitään poistettavaa.</translation>
+        <translation>Tasoja ilman kohteita ei löytynyt, ei mitään poistettavaa.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1116"/>
@@ -47978,7 +47979,7 @@ Poista suodatusmaski ja toista.</translation>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation>Tällainen lapsi kerros on jo olemassa
+        <translation>Tällainen lapsitaso on jo olemassa tasolle 
 [%1].
 Määrittele toinen nimi.</translation>
     </message>
@@ -47987,14 +47988,16 @@ Määrittele toinen nimi.</translation>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation>Tällainen lapsi kerros on jo olemassa
-[%1].</translation>
+        <translation>Tällainen lapsitaso on jo olemassa tasolle 
+[%1].
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1170"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>Ulottuvuuskerros voidaan lisätä vain normaalille aktiiviselle kerrokselle.</translation>
+        <translation>Mittataso voidaan lisätä vain normaalille aktiiviselle tasolle.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1233"/>
@@ -48013,11 +48016,11 @@ Määrittele toinen nimi.</translation>
 If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation>Korvataanko &quot;Kerroksen mukaan&quot; -arvo lähdekerroksien arvoilla?
+        <translation>Korvataanko &quot;Tason Mukaan&quot; -arvo lähdetasojen arvoilla?
 
-Jos Kyllä - &quot;Kerroksen mukaan&quot; -kynillä varustetut entiteetit näyttävät uudella kerroksella täsmälleen samalta kuin aiemmilla kerroksilla ja &quot;Kerroksen mukaan&quot; -arvo korvataan ratkaistuilla kynillä.
+Jos Kyllä - kohteet, joiden kynä on &quot;Tason Mukaan&quot;, näyttävät uudella tasolla täsmälleen samalta kuin aiemmilla tasoilla, ja &quot;Tason Mukaan&quot; -arvo korvataan ratkaistuilla kynillä.
 
-Jos Ei - &quot;Kerroksen mukaan&quot; -arvot pysyvät, joten kohdekerroksen kynä määrittää kynän tällaisille entiteeteille.</translation>
+Jos Ei - &quot;Tason Mukaan&quot; -arvot säilyvät, joten kohdetason kynä määrittää tällaisten kohteiden kynän.</translation>
     </message>
     <message>
         <source>Replace &quot;By Layer&quot; value to source layers values?
@@ -48084,19 +48087,21 @@ Määrittele jokin muu arvo.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1453"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>Mikään yksikkö ei vastaa kynää näkyvillä kerroksilla.</translation>
+        <translation>Näkyvillä tasoilla ei ole kynää vastaavia kohteita.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1454"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>Tällaisia olentoja on pakastekerroksissa.</translation>
+        <translation>Tällaisia kohteita on jäädytetyillä tasoilla.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1455"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>Tällaisia olentoja on lukituilla kerroksilla.</translation>
+        <translation>Tällaisia kohteita on lukituilla tasoilla.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1456"/>
@@ -51702,7 +51707,7 @@ Haluatko korvata sen?</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="77"/>
         <source>No %1 layers found</source>
-        <translation>Ei%1 kerroksia löytynyt</translation>
+        <translation>Ei löytynyt yhtään tasoa, joka on %1</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterinterface.h" line="93"/>
@@ -51893,7 +51898,7 @@ Haluatko korvata sen?</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_filedialogservice.cpp" line="195"/>
         <source>Combine all layers</source>
-        <translation>Yhdistä kaikki kerrokset</translation>
+        <translation>Yhdistä kaikki tasot</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="180"/>
@@ -51946,13 +51951,13 @@ Haluatko korvata sen?</translation>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="50"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="206"/>
         <source>By Layer</source>
-        <translation>Kerroksen mukaan</translation>
+        <translation>Tason Mukaan</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="56"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="209"/>
         <source>By Block</source>
-        <translation>Kentän mukaan</translation>
+        <translation>Lohkon Mukaan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="212"/>

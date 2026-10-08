@@ -3176,7 +3176,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="621"/>
         <source>&amp;Add Layer</source>
-        <translation>&amp;Lägg till lager</translation>
+        <translation>Lä&amp;gg till lager</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="622"/>
@@ -3186,7 +3186,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="623"/>
         <source>&amp;Edit Layer</source>
-        <translation>R&amp;edigera lager</translation>
+        <translation>&amp;Redigera lager</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="624"/>
@@ -3196,12 +3196,12 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="625"/>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation>&amp;Växla synlighet för lager</translation>
+        <translation>Växla &amp;synlighet för lager</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="626"/>
         <source>Toggle Layer &amp;Print</source>
-        <translation>Växla lager&amp;utskrift</translation>
+        <translation>Vä&amp;xla lagerutskrift</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="627"/>
@@ -3776,12 +3776,12 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="66"/>
         <source>Layer</source>
-        <translation>Layer</translation>
+        <translation>Lager</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="66"/>
         <source>Layers operations</source>
-        <translation>Layers verksamhet</translation>
+        <translation>Lageroperationer</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="67"/>
@@ -3999,7 +3999,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="109"/>
         <source>Activate Entity&apos;s Layer</source>
-        <translation>Aktivera företagets lager</translation>
+        <translation>Aktivera entitetens lager</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="110"/>
@@ -4009,7 +4009,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="111"/>
         <source>Hide Other Layers than Entity&apos;s</source>
-        <translation>Göm andra lager än företagets</translation>
+        <translation>Dölj andra lager än entitetens</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="112"/>
@@ -4019,12 +4019,12 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="113"/>
         <source>Toggle Entity&apos;s Layer Construction</source>
-        <translation>Toggle Entitys lagerkonstruktion</translation>
+        <translation>Växla konstruktionsläge för entitetens lager</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="114"/>
         <source>Toggle Entity&apos;s Layer Printing</source>
-        <translation>Toggle Entitys Layer Printing</translation>
+        <translation>Växla utskrift för entitetens lager</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="196"/>
@@ -4359,7 +4359,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="410"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Uppdatering Nuvarande Pen av Aktiv Layer Pen</translation>
+        <translation>Uppdatera aktuell penna med det aktiva lagrets penna</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="416"/>
@@ -4678,7 +4678,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="628"/>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>&amp;Exportera valda lager</translation>
+        <translation>Ex&amp;portera valda lager</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="629"/>
@@ -5254,7 +5254,7 @@ Poäng: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>Enter layer name to %1</source>
-        <translation>Ange lagernamn till %1</translation>
+        <translation>Ange namn på lager att %1</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
@@ -5277,13 +5277,13 @@ Poäng: (%8, %9)</translation>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
         <source>selected</source>
         <comment>Layers to export</comment>
-        <translation>vald</translation>
+        <translation>valda</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
         <source>visible</source>
         <comment>Layers to export</comment>
-        <translation>synligt</translation>
+        <translation>synliga</translation>
     </message>
 </context>
 <context>
@@ -7005,7 +7005,7 @@ Poäng: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_layer.cpp" line="75"/>
         <source>Specify entity with desired layer</source>
-        <translation type="unfinished">Ange enhet med önskat lager</translation>
+        <translation type="unfinished">Ange entitet på önskat lager</translation>
     </message>
 </context>
 <context>
@@ -7616,12 +7616,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="66"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Om de kontrolleras kommer speglade enheter att placeras på nuvarande lager, annars kommer de att placeras i originallager.</translation>
+        <translation type="unfinished">Om den här rutan är markerad placeras speglade entiteter på det aktuella lagret, annars placeras de på sina ursprungliga lager.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="69"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Användar Current Layer</translation>
+        <translation type="unfinished">Använd aktuellt lager</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="76"/>
@@ -8911,7 +8911,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="67"/>
         <source>Layer to apply</source>
-        <translation type="unfinished">Lager att ansöka</translation>
+        <translation type="unfinished">Lager att tillämpa</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="67"/>
@@ -8944,7 +8944,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="62"/>
         <source>Layer to which created circle should be placed</source>
-        <translation type="unfinished">Lager till vilken skapad cirkel bör placeras</translation>
+        <translation type="unfinished">Lager som den skapade cirkeln ska placeras på</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="66"/>
@@ -10975,7 +10975,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="209"/>
         <source>Layer</source>
-        <translation>Layer</translation>
+        <translation>Lager</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="236"/>
@@ -11248,7 +11248,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="64"/>
         <source>Layer</source>
-        <translation>Layer</translation>
+        <translation>Lager</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="76"/>
@@ -11258,7 +11258,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="98"/>
         <source>Layer of entity</source>
-        <translation>Lager av Entity</translation>
+        <translation>Entitetens lager</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="148"/>
@@ -12741,7 +12741,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="26"/>
         <source>Layer of dimension</source>
-        <translation>Lager av dimension</translation>
+        <translation>Dimensionens lager</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="45"/>
@@ -12751,7 +12751,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="58"/>
         <source>Layer:</source>
-        <translation>Layer:</translation>
+        <translation>Lager:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="91"/>
@@ -13717,7 +13717,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="82"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">Lager till vilken dubblett bör placeras</translation>
+        <translation type="unfinished">Lager som dubbletten ska placeras på</translation>
     </message>
 </context>
 <context>
@@ -13730,7 +13730,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="45"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">Lager till vilken dubblett bör placeras</translation>
+        <translation type="unfinished">Lager som dubbletten ska placeras på</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="49"/>
@@ -14522,7 +14522,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="168"/>
         <source>Layer of entity</source>
-        <translation type="unfinished">Lager av Entity</translation>
+        <translation type="unfinished">Entitetens lager</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="204"/>
@@ -14586,7 +14586,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="135"/>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="179"/>
         <source>Export Layers</source>
-        <translation>Exportlager</translation>
+        <translation>Exportera lager</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="152"/>
@@ -15422,17 +15422,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="20"/>
         <source>Layer Settings</source>
-        <translation>Layer Inställningar</translation>
+        <translation>Lagerinställningar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="48"/>
         <source>Name of new layer. In order to create hierarchical layers, include name of virtual layer and layer name separator.</source>
-        <translation>Namn på nya lager. För att skapa hierarkiska lager, inkludera namn på virtuella lager och lager namn separator.</translation>
+        <translation>Namn på det nya lagret. För att skapa hierarkiska lager anger du även namnet på det virtuella lagret och avgränsaren för lagernamn.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="64"/>
         <source>Parent Layers Path:</source>
-        <translation>Förälder Layers Path:</translation>
+        <translation>Sökväg för överordnade lager:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="81"/>
@@ -15442,17 +15442,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="93"/>
         <source>Layer for various infromational elements, notes, drafts etc.</source>
-        <translation>Lager för olika infromationselement, anteckningar, utkast etc.</translation>
+        <translation>Lager för olika informationselement, anteckningar, utkast etc.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="96"/>
         <source>Informational</source>
-        <translation>Informations</translation>
+        <translation>Information</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="106"/>
         <source>Normal layer with drawing eleements</source>
-        <translation>Normalt lager med ritning eleements</translation>
+        <translation>Normalt lager med ritningselement</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="109"/>
@@ -15462,7 +15462,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="119"/>
         <source>Layer that holds dimensions</source>
-        <translation>Lager som håller dimensioner</translation>
+        <translation>Lager som innehåller dimensioner</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="122"/>
@@ -15472,7 +15472,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="132"/>
         <source>Layer with alternate position of entities located on normal layers</source>
-        <translation>Layer med alternativ position av enheter som ligger på normala lager</translation>
+        <translation>Lager med alternativ position för entiteter som ligger på normala lager</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="135"/>
@@ -15483,13 +15483,13 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="148"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>En Construction Layer har enheter av oändliga raka linjer avsedda att användas för geometrisk konstruktion.
-Innehållet i en Construction Layer ska inte visas i utskrift.</translation>
+        <translation>Ett konstruktionslager har entiteter av oändliga raka linjer som är avsedda att användas för geometrisk konstruktion.
+       Innehållet i ett konstruktionslager ska inte visas i utskriften.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="152"/>
         <source>Construction Layer</source>
-        <translation>Bygglager</translation>
+        <translation>Konstruktionslager</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="181"/>
@@ -15509,13 +15509,13 @@ Innehållet i en Construction Layer ska inte visas i utskrift.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="72"/>
         <source>Add Secondary Layer</source>
-        <translation>Lägg till sekundärlayer</translation>
+        <translation>Lägg till sekundärt lager</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="78"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="85"/>
         <source>Add Layer</source>
-        <translation>Lägg till Layer</translation>
+        <translation>Lägg till lager</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="91"/>
@@ -15544,22 +15544,22 @@ Innehållet i en Construction Layer ska inte visas i utskrift.</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="57"/>
         <source>Layers Export Options</source>
-        <translation>Lager Export Alternativ</translation>
+        <translation>Alternativ för lagerexport</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="63"/>
         <source>If checked, Named Views from the document will be included into exported drawings. Otherwise, views are not included.</source>
-        <translation>Om det kontrolleras kommer namngivna vyer från dokumentet att ingå i exporterade ritningar. Annars ingår inte visningar.</translation>
+        <translation>Om den här rutan är markerad tas namngivna vyer från dokumentet med i de exporterade ritningarna. Annars tas inga vyer med.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="66"/>
         <source>Export Named Views too</source>
-        <translation>Exportera namngivna vyer också</translation>
+        <translation>Exportera även namngivna vyer</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="73"/>
         <source>If checked, each original exported layer will be stored in separate drawing. Otherwise, all layers will be in exported to one combined drawing.</source>
-        <translation>Om det kontrolleras kommer varje originalexporterat lager att lagras i separat ritning. Annars kommer alla lager att exporteras till en kombinerad ritning.</translation>
+        <translation>Om den här rutan är markerad sparas varje ursprungligt lager som exporteras i en separat ritning. Annars exporteras alla lager till en gemensam ritning.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="76"/>
@@ -15569,17 +15569,17 @@ Innehållet i en Construction Layer ska inte visas i utskrift.</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="83"/>
         <source>If checked, entities will be stored in original layer. Otherwise, they are placed to layer &quot;0&quot;.</source>
-        <translation>Om de kontrolleras kommer enheter att lagras i originalskiktet. Annars placeras de till lager &quot;0&quot;.</translation>
+        <translation>Om den här rutan är markerad sparas entiteterna i sitt ursprungliga lager. Annars placeras de på lager &quot;0&quot;.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="89"/>
         <source>Retain original layer for entities</source>
-        <translation>Behåll originalskikt för enheter</translation>
+        <translation>Behåll ursprungligt lager för entiteter</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="96"/>
         <source>If checked, UCSs from the document will be included into exported drawings. Otherwise, UCSs are not included.</source>
-        <translation>Om det kontrolleras kommer UCS från dokumentet att ingå i exporterade ritningar. Annars ingår inte UCS.</translation>
+        <translation>Om den här rutan är markerad tas UCS från dokumentet med i de exporterade ritningarna. Annars tas inga UCS med.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="99"/>
@@ -15592,17 +15592,17 @@ Innehållet i en Construction Layer ska inte visas i utskrift.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="20"/>
         <source>Layers Tree Options</source>
-        <translation>Layers trädalternativ</translation>
+        <translation>Alternativ för lagerträd</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="46"/>
         <source>Settings for naming convention that is used to create layers hierarchy based on flat list of layers</source>
-        <translation>Inställningar för namngivning konvention som används för att skapa lager hierarki baserat på platt lista över lager</translation>
+        <translation>Inställningar för den namngivningskonvention som används för att skapa lagerhierarkin utifrån en platt lista över lager</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="49"/>
         <source>Naming Convention</source>
-        <translation>Namnkonvention</translation>
+        <translation>Namngivningskonvention</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="55"/>
@@ -15612,7 +15612,7 @@ Innehållet i en Construction Layer ska inte visas i utskrift.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="116"/>
         <source>Separator used for split inner name of layer to hierarchical names</source>
-        <translation>Separator används för delat inre namn på lager till hierarkiska namn</translation>
+        <translation>Avgränsare som används för att dela upp lagrets interna namn i hierarkiska namn</translation>
     </message>
     <message>
         <source>Layer Level Name Separator</source>
@@ -15626,33 +15626,33 @@ Innehållet i en Construction Layer ska inte visas i utskrift.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
-        <translation>Dimensionell</translation>
+        <translation>Dimensioner</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="201"/>
         <source>Suffix of layer&apos;s name that defines that layer is dimensional</source>
-        <translation>Suffix av lagrets namn som definierar att lagret är dimensionellt</translation>
+        <translation>Suffix i lagrets namn som anger att lagret är ett dimensionslager</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="211"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="809"/>
         <source>Informational</source>
-        <translation>Informations</translation>
+        <translation>Information</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="224"/>
         <source>Suffix of layer&apos;s name that defines that layer is informational.</source>
-        <translation>Suffix av lagrets namn som definierar att lagret är informativt.</translation>
+        <translation>Suffix i lagrets namn som anger att lagret är ett informationslager.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="234"/>
         <source>Alternative Position </source>
-        <translation>Alternativ position</translation>
+        <translation>Alternativ position </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
-        <translation>Suffix av lagrets namn som definierar att lagret är för alternativ position.</translation>
+        <translation>Suffix i lagrets namn som anger att lagret är ett lager för alternativ position.</translation>
     </message>
     <message>
         <source>Duplicating Name</source>
@@ -15666,7 +15666,7 @@ Innehållet i en Construction Layer ska inte visas i utskrift.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="74"/>
         <source>Prefix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>Prefix av lagrets namn som används om lagret med sådant namn finns (säg när dubblett skapas)</translation>
+        <translation>Prefix till lagrets namn som används om ett lager med samma namn redan finns (till exempel när en dubblett skapas)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="84"/>
@@ -15676,7 +15676,7 @@ Innehållet i en Construction Layer ska inte visas i utskrift.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="97"/>
         <source>Suffix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>Suffix av lagrets namn som används om lager med sådant namn finns (säg när dubblett skapas)</translation>
+        <translation>Suffix till lagrets namn som används om ett lager med samma namn redan finns (till exempel när en dubblett skapas)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="155"/>
@@ -15706,22 +15706,22 @@ Innehållet i en Construction Layer ska inte visas i utskrift.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="268"/>
         <source>Display and operations settings</source>
-        <translation>Display och operationsinställningar</translation>
+        <translation>Inställningar för visning och åtgärder</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="271"/>
         <source>Display and Operations</source>
-        <translation>Visa och Operations</translation>
+        <translation>Visning och åtgärder</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="329"/>
         <source>If checked, tooltip will include complete name of layer (with all upper layer levels)</source>
-        <translation>Om det kontrolleras, kommer verktygstip att innehålla fullständigt namn på lager (med alla övre lagernivåer)</translation>
+        <translation>Om den här rutan är markerad innehåller verktygstipset lagrets fullständiga namn (med alla överordnade lagernivåer)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="332"/>
         <source>Show full name as ToolTip</source>
-        <translation>Visa fullständigt namn som ToolTip</translation>
+        <translation>Visa fullständigt namn som verktygstips</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="608"/>
@@ -15751,52 +15751,52 @@ Innehållet i en Construction Layer ska inte visas i utskrift.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="319"/>
         <source>If checked, icons for layer types will be shown</source>
-        <translation>Om de kontrolleras visas ikoner för lagertyper</translation>
+        <translation>Om den här rutan är markerad visas ikoner för lagertyper</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="322"/>
         <source>Show layer type icons</source>
-        <translation>Visa lager typ ikoner</translation>
+        <translation>Visa ikoner för lagertyp</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="309"/>
         <source>Indentation for child layers</source>
-        <translation>Indragning för barnlager</translation>
+        <translation>Indrag för underordnade lager</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="312"/>
         <source>Show indented layer names. Ident size:</source>
-        <translation>Visa indragna lagernamn. Identstorlek:</translation>
+        <translation>Visa indragna lagernamn. Indragsstorlek:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="277"/>
         <source>Size of the indent in characters to indent name of child layer from parent ones</source>
-        <translation>Storlek på indragen i tecken till indraget namn på barnskikt från föräldrar</translation>
+        <translation>Indragets storlek i antal tecken, för att dra in namnet på ett underordnat lager i förhållande till de överordnade</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="352"/>
         <source>If checked, drag&amp;drop operations in layers list are enabled and layers hierarchy may be restructutured</source>
-        <translation>Om de kontrolleras kan drag&amp;drop-operationer i lagerlistan aktiveras och lagerhierarki omstruktureras</translation>
+        <translation>Om den här rutan är markerad är dra&amp;släpp-åtgärder aktiverade i lagerlistan och lagerhierarkin kan struktureras om</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="355"/>
         <source>Allow restructuring via Drag&amp;Drop</source>
-        <translation>Tillåt omstrukturering via Drag&amp;Drop</translation>
+        <translation>Tillåt omstrukturering via dra&amp;&amp;släpp</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="293"/>
         <source>If primary layer is renames, secondary layers are renamed too.</source>
-        <translation>Om primärskiktet är renames bytas sekundära lager också.</translation>
+        <translation>Om det primära lagret byter namn byter även de sekundära lagren namn.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="296"/>
         <source>Rename secondary layers on primary rename</source>
-        <translation>Rename sekundära lager på primärt namn</translation>
+        <translation>Byt namn på sekundära lager när det primära lagret byter namn</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="376"/>
         <source>Various colors settings</source>
-        <translation>Olika färger inställningar</translation>
+        <translation>Olika färginställningar</translation>
     </message>
     <message>
         <source>Colors</source>
@@ -15805,7 +15805,7 @@ Innehållet i en Construction Layer ska inte visas i utskrift.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="470"/>
         <source>Background color for selected items in layers tree.</source>
-        <translation>Bakgrundsfärg för utvalda objekt i lager träd.</translation>
+        <translation>Bakgrundsfärg för valda objekt i lagerträdet.</translation>
     </message>
     <message>
         <source>Color for separator lines in layers tree view</source>
@@ -15814,7 +15814,7 @@ Innehållet i en Construction Layer ska inte visas i utskrift.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="420"/>
         <source>Background color for virtual layers items in layers list</source>
-        <translation>Bakgrundsfärg för virtuella lager objekt i lager lista</translation>
+        <translation>Bakgrundsfärg för virtuella lager i lagerlistan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="449"/>
@@ -15827,12 +15827,12 @@ Innehållet i en Construction Layer ska inte visas i utskrift.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="560"/>
         <source>Matched item in highlight filter mode</source>
-        <translation>Matchade objekt i höjdpunkt filterläge</translation>
+        <translation>Matchande objekt i filtrets markeringsläge</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="391"/>
         <source>Color for items that matches filter conditions</source>
-        <translation>Färg för objekt som matchar filterförhållanden</translation>
+        <translation>Färg för objekt som matchar filtervillkoren</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="379"/>
@@ -15847,7 +15847,7 @@ Innehållet i en Construction Layer ska inte visas i utskrift.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="581"/>
         <source>Virtual layer background color</source>
-        <translation>Virtuell lager bakgrund färg</translation>
+        <translation>Bakgrundsfärg för virtuellt lager</translation>
     </message>
     <message>
         <source>Threeview items separator grid</source>
@@ -15856,17 +15856,17 @@ Innehållet i en Construction Layer ska inte visas i utskrift.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="503"/>
         <source>Selected items background color</source>
-        <translation>Valda objekt bakgrundsfärg</translation>
+        <translation>Bakgrundsfärg för valda objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="523"/>
         <source>Background color for active layer item in layers tree</source>
-        <translation>Bakgrundsfärg för aktivt lagerobjekt i lager träd</translation>
+        <translation>Bakgrundsfärg för det aktiva lagret i lagerträdet</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="526"/>
         <source>Active layer background color</source>
-        <translation>Aktiv lager bakgrund färg</translation>
+        <translation>Bakgrundsfärg för aktivt lager</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="588"/>
@@ -15896,17 +15896,17 @@ Innehållet i en Construction Layer ska inte visas i utskrift.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="69"/>
         <source>Dimensional Layer</source>
-        <translation>Dimensionell Layer</translation>
+        <translation>Dimensionslager</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="70"/>
         <source>Informational Layer</source>
-        <translation>Informationslayer</translation>
+        <translation>Informationslager</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Alternative Position Layer</source>
-        <translation>Alternativ Position Layer</translation>
+        <translation>Lager för alternativ position</translation>
     </message>
     <message>
         <source>grid</source>
@@ -15915,22 +15915,22 @@ Innehållet i en Construction Layer ska inte visas i utskrift.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="103"/>
         <source>highlighted item</source>
-        <translation>highlighted objekt</translation>
+        <translation>markerat objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="110"/>
         <source>virtual layer background</source>
-        <translation>virtuell lager bakgrund</translation>
+        <translation>bakgrund för virtuellt lager</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="118"/>
         <source>selected item background</source>
-        <translation>vald objekt bakgrund</translation>
+        <translation>bakgrund för valt objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="126"/>
         <source>active layer background</source>
-        <translation>aktiv lager bakgrund</translation>
+        <translation>bakgrund för aktivt lager</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
@@ -15941,7 +15941,7 @@ Innehållet i en Construction Layer ska inte visas i utskrift.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>Ogiltigt värde ger för %1 färg.
+        <translation>Ogiltigt färgvärde har angetts för %1.
 Ange ett annat värde.</translation>
     </message>
     <message>
@@ -15955,7 +15955,7 @@ Ange ett annat värde.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="150"/>
         <source>Filter</source>
-        <translation>Filter</translation>
+        <translation>Filtrera</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="152"/>
@@ -15965,7 +15965,7 @@ Ange ett annat värde.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="157"/>
         <source>Highlight Mode</source>
-        <translation>Markeringläge</translation>
+        <translation>Markeringsläge</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="167"/>
@@ -15990,7 +15990,7 @@ Ange ett annat värde.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="210"/>
         <source>Show Active Layer Only</source>
-        <translation>Visa Active Layer bara</translation>
+        <translation>Visa endast aktivt lager</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="218"/>
@@ -16005,7 +16005,7 @@ Ange ett annat värde.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="234"/>
         <source>Collapse Secondary</source>
-        <translation>Kollaps sekundär</translation>
+        <translation>Kollapsa sekundära lager</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="242"/>
@@ -16025,7 +16025,7 @@ Ange ett annat värde.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="263"/>
         <source>Add dimensions Layer</source>
-        <translation>Lägg till dimensioner Layer</translation>
+        <translation>Lägg till dimensionslager</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="272"/>
@@ -16035,7 +16035,7 @@ Ange ett annat värde.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="279"/>
         <source>Modify layer attributes / rename</source>
-        <translation>Modifiera lager attribut / namn</translation>
+        <translation>Ändra lagerattribut / byt namn</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="286"/>
@@ -16045,125 +16045,125 @@ Ange ett annat värde.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="656"/>
         <source>&amp;Add Child Layer</source>
-        <translation>och över Child Layer</translation>
+        <translation>Lä&amp;gg till underordnat lager</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="657"/>
         <source>&amp;Rename</source>
-        <translation>Rename</translation>
+        <translation>&amp;Byt namn</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="658"/>
         <source>&amp;Remove Layers (Sub-Tree)</source>
-        <translation>Remove Layers (Sub-Tree)</translation>
+        <translation>Ta b&amp;ort lager (delträd)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="660"/>
         <source>&amp;Copy Structure (Sub-Tree)</source>
-        <translation>Kopieringsstruktur (Sub-Tree)</translation>
+        <translation>&amp;Kopiera struktur (delträd)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="661"/>
         <source>&amp;Duplicate Content (Sub-Tree)</source>
-        <translation>&amp;Duplicate innehåll (Sub-Tree)</translation>
+        <translation>Du&amp;plicera innehåll (delträd)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="663"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>och välja enheter (Sub-Tree)</translation>
+        <translation>&amp;Välj entiteter (delträd)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="668"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>Redigera Layer &amp;Attributes</translation>
+        <translation>&amp;Redigera lagerattribut</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="670"/>
         <source>&amp;Remove Layer</source>
-        <translation>Remove Layer</translation>
+        <translation>Ta &amp;bort lager</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="679"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>Lägg till Dimensions Sub-Layer</translation>
+        <translation>Lä&amp;gg till underlager för dimensioner</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="683"/>
         <source>&amp;Add Info Sub-Layer</source>
-        <translation>Lägg till Info Sub-Layer</translation>
+        <translation>Lägg till u&amp;nderlager för information</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="687"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
-        <translation>och över Alternative View Sub-Layer</translation>
+        <translation>Lägg till underlager för alternativ &amp;position</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="693"/>
         <source>&amp;Remove Sub-layers</source>
-        <translation>Remove Sub-layers</translation>
+        <translation>Ta b&amp;ort underlager</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="701"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="711"/>
         <source>Convert to Dimensional Layer</source>
-        <translation>Konvertera till Dimensional Layer</translation>
+        <translation>Konvertera till dimensionslager</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="702"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="714"/>
         <source>Convert to Info Layer</source>
-        <translation>Konvertera till Info Layer</translation>
+        <translation>Konvertera till informationslager</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="703"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="717"/>
         <source>Convert to Alternative Position Layer</source>
-        <translation>Konvertera till Alternativ Position Layer</translation>
+        <translation>Konvertera till lager för alternativ position</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="709"/>
         <source>Convert to Normal Layer</source>
-        <translation>Konvertera till Normal Layer</translation>
+        <translation>Konvertera till normalt lager</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="723"/>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>och välja Layers enheter</translation>
+        <translation>&amp;Välj lagrets entiteter</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="726"/>
         <source>&amp;Create Layer Copy</source>
-        <translation>och Create Layer Copy</translation>
+        <translation>S&amp;kapa lagerkopia</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="727"/>
         <source>&amp;Duplicate Layer With Content</source>
-        <translation>Duplicera lager med innehåll</translation>
+        <translation>Dupli&amp;cera lager med innehåll</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="731"/>
         <source>Move Selection to Layer</source>
-        <translation>Flytta urval till Layer</translation>
+        <translation>Flytta markering till lager</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="732"/>
         <source>Duplicate Selection to Layer</source>
-        <translation>Duplicate Selection till Layer</translation>
+        <translation>Duplicera markering till lager</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="739"/>
         <source>&amp;Add Layer</source>
-        <translation>och add layer</translation>
+        <translation>Lä&amp;gg till lager</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="741"/>
         <source>&amp;Freeze Others Layers</source>
-        <translation>Frysa andra lager</translation>
+        <translation>&amp;Frys andra lager</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="742"/>
         <source>&amp;Defreeze All Layers</source>
-        <translation>Defreeze alla lager</translation>
+        <translation>&amp;Tina alla lager</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
@@ -16173,42 +16173,42 @@ Ange ett annat värde.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>
         <source>&amp;Unlock All Layers</source>
-        <translation>låsa upp alla lager</translation>
+        <translation>Lås upp &amp;alla lager</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="745"/>
         <source>&amp;Lock All Layers</source>
-        <translation>och lås alla lager</translation>
+        <translation>Lå&amp;s alla lager</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="746"/>
         <source>Enable &amp;Printing All Layers</source>
-        <translation>Aktivera och skriva alla lager</translation>
+        <translation>Aktivera &amp;utskrift av alla lager</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="747"/>
         <source>&amp;Disable Printing All Layers</source>
-        <translation>&amp;Disable utskrift alla lager</translation>
+        <translation>&amp;Inaktivera utskrift av alla lager</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="750"/>
         <source>&amp;Export Single Layer</source>
-        <translation>Expport Single Layer</translation>
+        <translation>&amp;Exportera enskilt lager</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="754"/>
         <source>&amp;Export Layer Sub-Tree</source>
-        <translation>och Export Layer Sub-Tree</translation>
+        <translation>Exportera lagrets &amp;delträd</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="758"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Export &amp; Visible Layer(s)</translation>
+        <translation>E&amp;xportera synliga lager</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="760"/>
         <source>&amp;Find And Remove Empty Layers</source>
-        <translation>och ta bort tomma lager</translation>
+        <translation>&amp;Hitta och ta bort tomma lager</translation>
     </message>
 </context>
 <context>
@@ -23497,12 +23497,12 @@ Ange ett annat värde.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="82"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Om de kontrolleras kommer speglade enheter att placeras på nuvarande lager, annars kommer de att placeras i originallager.</translation>
+        <translation type="unfinished">Om den här rutan är markerad placeras speglade entiteter på det aktuella lagret, annars placeras de på sina ursprungliga lager.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Användar Current Layer</translation>
+        <translation type="unfinished">Använd aktuellt lager</translation>
     </message>
 </context>
 <context>
@@ -23796,12 +23796,12 @@ Ange ett annat värde.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="45"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="unfinished">Om de kontrolleras kommer skapade enheter att placeras till nuvarande lager. Annars kommer de att placeras i originalskikt.</translation>
+        <translation type="unfinished">Om den här rutan är markerad placeras skapade entiteter på det aktuella lagret. Annars placeras de på sina ursprungliga lager. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="48"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Använd nuvarande lager</translation>
+        <translation type="unfinished">Använd aktuellt lager</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="55"/>
@@ -23982,12 +23982,12 @@ Ange ett annat värde.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="144"/>
         <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="unfinished">Om de kontrolleras kommer skapade enheter att placeras i nuvarande lager, annars kommer viljan att vara i ursprungliga lager.</translation>
+        <translation type="unfinished">Om den här rutan är markerad placeras skapade entiteter på det aktuella lagret, annars placeras de på sina ursprungliga lager. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="147"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Använd nuvarande lager</translation>
+        <translation type="unfinished">Använd aktuellt lager</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="166"/>
@@ -24398,12 +24398,12 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="93"/>
         <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">Om de kontrolleras kommer skapade enheter att placeras i nuvarande lager, annars kommer de att vara i ursprungliga lager.</translation>
+        <translation type="unfinished">Om den här rutan är markerad placeras skapade entiteter på det aktuella lagret, annars placeras de på sina ursprungliga lager.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="96"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Använd nuvarande lager</translation>
+        <translation type="unfinished">Använd aktuellt lager</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="109"/>
@@ -24896,13 +24896,13 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="263"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="298"/>
         <source>By Layer</source>
-        <translation>Av Layer</translation>
+        <translation>Efter lager</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="264"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="299"/>
         <source>By Block</source>
-        <translation>Av Block</translation>
+        <translation>Efter block</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="266"/>
@@ -25524,27 +25524,27 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="188"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Uppdatering Nuvarande Pen av Aktiv Layer Pen</translation>
+        <translation>Uppdatera aktuell penna med det aktiva lagrets penna</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="205"/>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation>Fyll Pen Editor från Active Layer&apos;s Pen</translation>
+        <translation>Fyll pennredigeraren från det aktiva lagrets penna</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="208"/>
         <source>Pick from Active Layer</source>
-        <translation>Välj från Active Layer</translation>
+        <translation>Välj från aktivt lager</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="222"/>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation>Applicera redaktör Pen till Active Layer Pen</translation>
+        <translation>Tillämpa redigerarens penna på det aktiva lagrets penna</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="225"/>
         <source>Apply To Layer</source>
-        <translation>Ansök till Layer</translation>
+        <translation>Tillämpa på lager</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="239"/>
@@ -25629,7 +25629,7 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="305"/>
         <source>&amp;Apply Pen To Active Layer</source>
-        <translation>Apply Pen till Active Layer</translation>
+        <translation>&amp;Tillämpa penna på aktivt lager</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="306"/>
@@ -29664,7 +29664,7 @@ Observera att om du sparar en penna via redigeraren utan att starta om programme
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="101"/>
         <source>Color</source>
-        <translation type="unfinished">Färgfärg</translation>
+        <translation type="unfinished">Färg</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="101"/>
@@ -29700,7 +29700,7 @@ Observera att om du sparar en penna via redigeraren utan att starta om programme
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="171"/>
         <source>Dimensional</source>
-        <translation type="unfinished">Dimensionell</translation>
+        <translation type="unfinished">Dimensioner</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="175"/>
@@ -29710,7 +29710,7 @@ Observera att om du sparar en penna via redigeraren utan att starta om programme
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="179"/>
         <source>Informational</source>
-        <translation type="unfinished">Informations</translation>
+        <translation type="unfinished">Information</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="186"/>
@@ -32755,7 +32755,8 @@ Observera att om du sparar en penna via redigeraren utan att starta om programme
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="127"/>
         <source>
 Layer: </source>
-        <translation>Layer:</translation>
+        <translation>
+Lager: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="261"/>
@@ -32789,7 +32790,7 @@ Layer: </source>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="533"/>
         <source>Layer</source>
-        <translation>Layer</translation>
+        <translation>Lager</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="538"/>
@@ -36069,12 +36070,12 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="208"/>
         <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="unfinished">Anger whetether kopior kommer att införas till nuvarande eller ursprungliga lager</translation>
+        <translation type="unfinished">Anger om kopior ska infogas på det aktuella eller det ursprungliga lagret</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="211"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Använd nuvarande lager</translation>
+        <translation type="unfinished">Använd aktuellt lager</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="218"/>
@@ -36315,12 +36316,12 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="209"/>
         <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">Om de kontrolleras kommer nya uppgifter att placeras på nuvarande lager, annars kommer de att vara i originallager.</translation>
+        <translation type="unfinished">Om den här rutan är markerad placeras nya entiteter på det aktuella lagret, annars placeras de på sina ursprungliga lager.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="212"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Använd nuvarande lager</translation>
+        <translation type="unfinished">Använd aktuellt lager</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="219"/>
@@ -36558,12 +36559,12 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="83"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="unfinished">Om de kontrolleras kommer skapade enheter att placeras till nuvarande lager. Annars kommer de att placeras till originalskikt.</translation>
+        <translation type="unfinished">Om den här rutan är markerad placeras skapade entiteter på det aktuella lagret. Annars placeras de på sina ursprungliga lager. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="86"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Använd nuvarande lager</translation>
+        <translation type="unfinished">Använd aktuellt lager</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="107"/>
@@ -37472,7 +37473,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="77"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Om de kontrolleras kommer skapade enheter att placeras på nuvarande lager, annars kommer de att placeras i originallager.</translation>
+        <translation type="unfinished">Om den här rutan är markerad placeras skapade entiteter på det aktuella lagret, annars placeras de på sina ursprungliga lager.</translation>
     </message>
 </context>
 <context>
@@ -37510,12 +37511,12 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="73"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Om de kontrolleras kommer skapade enheter att placeras på nuvarande lager, annars kommer de att placeras i originallager.</translation>
+        <translation type="unfinished">Om den här rutan är markerad placeras skapade entiteter på det aktuella lagret, annars placeras de på sina ursprungliga lager.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="76"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Använd nuvarande lager</translation>
+        <translation type="unfinished">Använd aktuellt lager</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="83"/>
@@ -37657,7 +37658,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="71"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Om de kontrolleras kommer skapade enheter att placeras på nuvarande lager, annars kommer de att placeras i originallager.</translation>
+        <translation type="unfinished">Om den här rutan är markerad placeras skapade entiteter på det aktuella lagret, annars placeras de på sina ursprungliga lager.</translation>
     </message>
 </context>
 <context>
@@ -37670,12 +37671,12 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="32"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Om de kontrolleras kommer skapade enheter att placeras på nuvarande lager, annars kommer de att placeras i originallager.</translation>
+        <translation type="unfinished">Om den här rutan är markerad placeras skapade entiteter på det aktuella lagret, annars placeras de på sina ursprungliga lager.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="35"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Användar Current Layer</translation>
+        <translation type="unfinished">Använd aktuellt lager</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="42"/>
@@ -39208,7 +39209,7 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="188"/>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="188"/>
         <source>Layers</source>
-        <translation>Layers</translation>
+        <translation>Lager</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="201"/>
@@ -39234,7 +39235,7 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="236"/>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="236"/>
         <source>Layers Tree</source>
-        <translation>Lager-träd</translation>
+        <translation>Lagerträd</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="249"/>
@@ -40451,7 +40452,7 @@ Kontrollera att filen finns och vilka behörigheter den har.</translation>
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="105"/>
         <source>Name of Current Active Layer</source>
-        <translation>Namn på nuvarande aktiva lager</translation>
+        <translation>Namn på aktuellt aktivt lager</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -41051,7 +41052,7 @@ i ett separat fönster</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="54"/>
         <source>Layer to apply</source>
-        <translation>Lager att ansöka</translation>
+        <translation>Lager att tillämpa</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="69"/>
@@ -41730,7 +41731,7 @@ Välj den enhet som du vill använda för nya ritningar och ditt önskade språk
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="70"/>
         <source>Layer of MText</source>
-        <translation>Lager av MText</translation>
+        <translation>MText-entitetens lager</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="144"/>
@@ -45509,7 +45510,7 @@ Välj den enhet som du vill använda för nya ritningar och ditt önskade språk
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5077"/>
         <source>Modify layer of selected entities, at layer activation</source>
-        <translation>Ändra lager av utvalda enheter, vid lager aktivering</translation>
+        <translation>Ändra lager för valda entiteter när ett lager aktiveras</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5091"/>
@@ -46561,7 +46562,7 @@ Välj den enhet som du vill använda för nya ritningar och ditt önskade språk
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5074"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Om du aktiverar ett lager ändras alla markerade entiteter till det nya lagret. För att ändra lager för flera entiteter: välj först de entiteter som behövs; aktivera ett lager i lagerwidgeten. Detta gör att alla markerade entiteter ändras till att tillhöra det nya lagret.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Om det här alternativet är aktiverat och du aktiverar ett lager ändras alla valda entiteter till det nya lagret. För att ändra lager för flera entiteter: välj först de entiteter som behövs; aktivera ett lager i lagerwidgeten. Detta gör att alla valda entiteter ändras till att tillhöra det nya lagret.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5934"/>
@@ -47287,7 +47288,7 @@ så standardstegvärde krävs för bakning</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="197"/>
         <source>Layer of text</source>
-        <translation>Lager av text</translation>
+        <translation>Textens lager</translation>
     </message>
     <message>
         <source>Obligue of text</source>
@@ -48162,7 +48163,7 @@ så standardstegvärde krävs för bakning</translation>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_layerbox.cpp" line="68"/>
         <source>- Unchanged -</source>
-        <translation>- Oförändrad -</translation>
+        <translation>- Oförändrat -</translation>
     </message>
 </context>
 <context>
@@ -49021,7 +49022,7 @@ Denna åtgärd kan INTE ångras.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="230"/>
         <source>Layer empty name is not allowed.</source>
-        <translation>Layer tomt namn är inte tillåtet.</translation>
+        <translation>Ett tomt lagernamn är inte tillåtet.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="265"/>
@@ -49033,7 +49034,7 @@ Denna åtgärd kan INTE ångras.</translation>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation>Försök att skapa lager med duplicerande namn. Duplicerat lagernamn är
+        <translation>Försök att skapa ett lager med ett namn som redan finns. Det duplicerade lagernamnet är 
 [%1].
 Ange ett annat namn.</translation>
     </message>
@@ -49047,7 +49048,7 @@ Ange ett annat namn.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="143"/>
         <source>Layer list separator string is empty. It will not be possible to build layers tree.
 Please specify a different value.</source>
-        <translation>Layer list separator sträng är tom. Det är inte möjligt att bygga lager träd.
+        <translation>Avgränsarsträngen för lagerlistan är tom. Det kommer inte att gå att bygga upp lagerträdet.
 Ange ett annat värde.</translation>
     </message>
     <message>
@@ -49074,21 +49075,21 @@ Rensa filtreringsmasken och upprepa.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="973"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>Inga lager utan enheter hittades, ingenting att ta bort.</translation>
+        <translation>Inga lager utan entiteter hittades, ingenting att ta bort.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1116"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1161"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1169"/>
         <source>Add Layer</source>
-        <translation>Lägg till Layer</translation>
+        <translation>Lägg till lager</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1117"/>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation>Sådana barnskikt finns redan för
+        <translation>Ett sådant underordnat lager finns redan för 
 [%1].
 Ange ett annat namn.</translation>
     </message>
@@ -49097,14 +49098,16 @@ Ange ett annat namn.</translation>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation>Sådana barnskikt finns redan för
-[%1].</translation>
+        <translation>Ett sådant underordnat lager finns redan för 
+[%1].
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1170"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>Dimensionellt lager kan endast läggas till för normalt aktivt lager.</translation>
+        <translation>Ett dimensionslager kan endast läggas till för ett normalt aktivt lager.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1233"/>
@@ -49123,11 +49126,11 @@ Ange ett annat namn.</translation>
 If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation>Ersätt &quot;Per lager&quot;-värdet med källlagerens värden?
+        <translation>Vill du ersätta värdet &quot;Efter lager&quot; med källagrens värden?
 
-Om Ja - entiteter med &quot;Per lager&quot;-pennor ser ut på det nya lagret exakt som på de föregående lagren och &quot;Per lager&quot;-värdet ersätts med lösta pennor.
+Om Ja - entiteter med pennor inställda på &quot;Efter lager&quot; ser likadana ut på det nya lagret som på de tidigare lagren, och värdet &quot;Efter lager&quot; ersätts med de faktiska pennorna.
 
-Om Nej - &quot;Per lager&quot;-värden kvarstår och mållagers penna definierar pennan för sådana entiteter.</translation>
+Om Nej - värdet &quot;Efter lager&quot; behålls, så att mållagrets penna bestämmer pennan för dessa entiteter.</translation>
     </message>
     <message>
         <source>Replace &quot;By Layer&quot; value to source layers values?
@@ -49141,7 +49144,7 @@ Om du väljer Nej kommer värdena &quot;Efter lager&quot; att behållas, och pen
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1805"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1863"/>
         <source>Layer DialogEx</source>
-        <translation>translation 1</translation>
+        <translation>Lagerdialog</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="202"/>
@@ -49194,19 +49197,21 @@ Ange ett annat värde.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1453"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>Det finns inga enheter som matchar penna på synliga lager.</translation>
+        <translation>Det finns inga entiteter som matchar pennan på synliga lager.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1454"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>Sådana enheter finns på frysta lager.</translation>
+        <translation>Sådana entiteter finns på frysta lager.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1455"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>Sådana enheter finns på låsta lager.</translation>
+        <translation>Sådana entiteter finns på låsta lager.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1456"/>
@@ -51244,7 +51249,7 @@ Vill du ersätta den?</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="77"/>
         <source>No %1 layers found</source>
-        <translation>Inga %1-lager hittades</translation>
+        <translation>Inga %1 lager hittades</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="95"/>
@@ -53645,13 +53650,13 @@ Vill du ersätta den?</translation>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="50"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="206"/>
         <source>By Layer</source>
-        <translation>Av Layer</translation>
+        <translation>Efter lager</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="56"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="209"/>
         <source>By Block</source>
-        <translation>Av Block</translation>
+        <translation>Efter block</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="61"/>

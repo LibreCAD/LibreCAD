@@ -2664,7 +2664,7 @@ fie [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="252"/>
         <source>(De-)Select Layer</source>
-        <translation>(De-)Select strat</translation>
+        <translation>(De)selectează stratul</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="235"/>
@@ -3291,7 +3291,7 @@ fie [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="410"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Actualizează stiloul injector (pen- ul) curent după Active Layer&apos; Pen</translation>
+        <translation>Actualizează stiloul curent cu stiloul stratului activ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="416"/>
@@ -3432,7 +3432,7 @@ fie [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="66"/>
         <source>Layers operations</source>
-        <translation>Operațiuni de straturi</translation>
+        <translation>Operațiuni cu straturi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="67"/>
@@ -3624,7 +3624,7 @@ fie [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity Layer</source>
-        <translation>Nivel de entitate</translation>
+        <translation>Stratul entității</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
@@ -3644,7 +3644,7 @@ fie [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="109"/>
         <source>Activate Entity&apos;s Layer</source>
-        <translation>Activează planul entității</translation>
+        <translation>Activează stratul entității</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="110"/>
@@ -3654,22 +3654,22 @@ fie [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="111"/>
         <source>Hide Other Layers than Entity&apos;s</source>
-        <translation>Ascunde alte straturi decât cele ale Entității</translation>
+        <translation>Ascunde toate straturile cu excepția celui al entității</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="112"/>
         <source>Lock Entity&apos;s Layer</source>
-        <translation>Blochează planul entității</translation>
+        <translation>Blochează stratul entității</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="113"/>
         <source>Toggle Entity&apos;s Layer Construction</source>
-        <translation>Comută construcția straturilor entității</translation>
+        <translation>Comută modul de construcție al stratului entității</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="114"/>
         <source>Toggle Entity&apos;s Layer Printing</source>
-        <translation>Comută imprimarea straturilor entității</translation>
+        <translation>Comută imprimarea stratului entității</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="225"/>
@@ -3993,37 +3993,37 @@ fie [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="621"/>
         <source>&amp;Add Layer</source>
-        <translation>&amp; Adaugă plan</translation>
+        <translation>Ada&amp;ugă un strat</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="622"/>
         <source>&amp;Remove Layer</source>
-        <translation>&amp; Elimină stratul</translation>
+        <translation>E&amp;limină stratul</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="623"/>
         <source>&amp;Edit Layer</source>
-        <translation>Strat &amp; Edit</translation>
+        <translation>Edi&amp;tează stratul</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="624"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>Comută stratul Loc&amp;k</translation>
+        <translation>C&amp;omută blocarea stratului</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="625"/>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation>&amp; Comută vizibilitatea straturilor</translation>
+        <translation>&amp;Comută vizibilitatea stratului</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="626"/>
         <source>Toggle Layer &amp;Print</source>
-        <translation>Comută plan și imprimantă</translation>
+        <translation>Comută &amp;imprimarea stratului</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="627"/>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>Comută &amp; plan de construcție</translation>
+        <translation>Co&amp;mută stratul de construcție</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="637"/>
@@ -4531,7 +4531,7 @@ fie [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="617"/>
         <source>&amp;Show all layers</source>
-        <translation>Arată toate straturile</translation>
+        <translation>&amp;Arată toate straturile</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
@@ -4541,22 +4541,22 @@ fie [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
         <source>&amp;Unlock all</source>
-        <translation>&amp; Deblochează toate</translation>
+        <translation>&amp;Deblochează toate</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="620"/>
         <source>&amp;Lock all</source>
-        <translation>&amp; Închide toate</translation>
+        <translation>&amp;Blochează toate</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="628"/>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>&amp; Exportare plan selectat (s)</translation>
+        <translation>E&amp;xportă straturile selectate</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="629"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Exportă și plan vizibil (s)</translation>
+        <translation>Exportă straturile &amp;vizibile</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="635"/>
@@ -5127,7 +5127,7 @@ Punct: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>Enter layer name to %1</source>
-        <translation>Introduceți numele stratului la%1</translation>
+        <translation>Introduceți numele stratului care se %1</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
@@ -5146,7 +5146,7 @@ Punct: (%8,%9)</translation>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
         <source>selected</source>
         <comment>Layers to export</comment>
-        <translation>selectat</translation>
+        <translation>selectate</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
@@ -7479,12 +7479,12 @@ Eşti sigur că vei renunţa la schimbări?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="66"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Dacă sunt verificate, entitățile oglindite vor fi plasate pe stratul curent, altfel vor fi plasate în straturi originale.</translation>
+        <translation type="unfinished">Dacă este bifată, entitățile oglindite vor fi plasate pe stratul curent, altfel vor fi plasate pe straturile originale.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="69"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Plan curent utilizator</translation>
+        <translation type="unfinished">Folosește stratul curent</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="76"/>
@@ -11108,7 +11108,7 @@ Eşti sigur că vei renunţa la schimbări?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="98"/>
         <source>Layer of entity</source>
-        <translation>Nivelul entității</translation>
+        <translation>Stratul entității</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="148"/>
@@ -12580,7 +12580,7 @@ Eşti sigur că vei renunţa la schimbări?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="26"/>
         <source>Layer of dimension</source>
-        <translation>Strat de dimensiune</translation>
+        <translation>Stratul dimensiunii</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="45"/>
@@ -14361,7 +14361,7 @@ Eşti sigur că vei renunţa la schimbări?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="168"/>
         <source>Layer of entity</source>
-        <translation type="unfinished">Nivelul entității</translation>
+        <translation type="unfinished">Stratul entității</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="204"/>
@@ -14425,7 +14425,7 @@ Eşti sigur că vei renunţa la schimbări?</translation>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="135"/>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="179"/>
         <source>Export Layers</source>
-        <translation>Straturi de export</translation>
+        <translation>Exportă straturile</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="152"/>
@@ -15261,37 +15261,37 @@ Eşti sigur că vei renunţa la schimbări?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="20"/>
         <source>Layer Settings</source>
-        <translation>Configurări plan</translation>
+        <translation>Setările pentru strat</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="48"/>
         <source>Name of new layer. In order to create hierarchical layers, include name of virtual layer and layer name separator.</source>
-        <translation>Numele de strat nou. În scopul de a crea straturi ierarhice, include numele de strat virtual și separator nume strat.</translation>
+        <translation>Numele noului strat. Pentru a crea straturi ierarhice, includeți numele stratului virtual și separatorul numelor de straturi.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="64"/>
         <source>Parent Layers Path:</source>
-        <translation>Calea straturilor parentale:</translation>
+        <translation>Calea straturilor părinte:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="81"/>
         <source>Layer Type</source>
-        <translation>Tip plan</translation>
+        <translation>Tip strat</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="93"/>
         <source>Layer for various infromational elements, notes, drafts etc.</source>
-        <translation>Layer pentru diferite elemente, note, schițe etc.</translation>
+        <translation>Strat pentru diverse elemente informative, note, schițe etc.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="96"/>
         <source>Informational</source>
-        <translation>Informațional</translation>
+        <translation>Informații</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="106"/>
         <source>Normal layer with drawing eleements</source>
-        <translation>Strat normal cu pante de desen</translation>
+        <translation>Strat normal cu elemente de desen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="109"/>
@@ -15301,7 +15301,7 @@ Eşti sigur că vei renunţa la schimbări?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="119"/>
         <source>Layer that holds dimensions</source>
-        <translation>Strat care deține dimensiuni</translation>
+        <translation>Strat care conține dimensiuni</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="122"/>
@@ -15316,14 +15316,14 @@ Eşti sigur că vei renunţa la schimbări?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="135"/>
         <source>Alternative Position</source>
-        <translation>Poziția alternativă</translation>
+        <translation>Poziție alternativă</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="148"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Un strat de construcţii are entităţi de linii drepte infinite destinate utilizării pentru construcţii geometrice.
-Conținutul unui plan de construcție nu trebuie să apară în imprimerie.</translation>
+        <translation>Un strat de construcție conține entități sub formă de linii drepte infinite, destinate construcțiilor geometrice.
+       Conținutul unui strat de construcție nu trebuie să apară la imprimare.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="152"/>
@@ -15338,39 +15338,39 @@ Conținutul unui plan de construcție nu trebuie să apară în imprimerie.</tra
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="197"/>
         <source>Layer Name:</source>
-        <translation>Nume plan:</translation>
+        <translation>Nume Strat:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="68"/>
         <source>Rename Virtual Layer</source>
-        <translation>Redenumește plan virtual</translation>
+        <translation>Redenumește stratul virtual</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="72"/>
         <source>Add Secondary Layer</source>
-        <translation>Adaugă plan secundar</translation>
+        <translation>Adaugă un strat secundar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="78"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="85"/>
         <source>Add Layer</source>
-        <translation>Adaugă plan</translation>
+        <translation>Adaugă un strat</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="91"/>
         <source>Edit Layer</source>
-        <translation>Editează plan</translation>
+        <translation>Editează stratul</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="183"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="221"/>
         <source>Default Pen</source>
-        <translation>Pen implicit</translation>
+        <translation>Stilou implicit</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="200"/>
         <source>Rename Layer</source>
-        <translation>Redenumește plan</translation>
+        <translation>Redenumește stratul</translation>
     </message>
 </context>
 <context>
@@ -15388,17 +15388,17 @@ Conținutul unui plan de construcție nu trebuie să apară în imprimerie.</tra
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="63"/>
         <source>If checked, Named Views from the document will be included into exported drawings. Otherwise, views are not included.</source>
-        <translation>Dacă se verifică, în desenele exportate vor fi incluse în documentul &quot;Vizualizare numită.&quot; În caz contrar, opiniile nu sunt incluse.</translation>
+        <translation>Dacă este bifată, vizualizările numite din document vor fi incluse în desenele exportate. În caz contrar, vizualizările nu sunt incluse.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="66"/>
         <source>Export Named Views too</source>
-        <translation>Exportă vizualizările numite</translation>
+        <translation>Exportă și vizualizările numite</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="73"/>
         <source>If checked, each original exported layer will be stored in separate drawing. Otherwise, all layers will be in exported to one combined drawing.</source>
-        <translation>Dacă este verificat, fiecare strat exportat original va fi depozitat în desen separat. În caz contrar, toate straturile vor fi exportate într-un desen combinat.</translation>
+        <translation>Dacă este bifată, fiecare strat original exportat va fi salvat într-un desen separat. În caz contrar, toate straturile vor fi exportate într-un singur desen combinat.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="76"/>
@@ -15408,17 +15408,17 @@ Conținutul unui plan de construcție nu trebuie să apară în imprimerie.</tra
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="83"/>
         <source>If checked, entities will be stored in original layer. Otherwise, they are placed to layer &quot;0&quot;.</source>
-        <translation>Dacă se verifică, entitățile vor fi stocate în stratul original. În caz contrar, acestea sunt plasate pe stratul &quot;0.&quot;.</translation>
+        <translation>Dacă este bifată, entitățile vor fi păstrate pe stratul original. În caz contrar, acestea sunt plasate pe stratul &quot;0&quot;.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="89"/>
         <source>Retain original layer for entities</source>
-        <translation>Menținerea stratului original pentru entități</translation>
+        <translation>Păstrează stratul original pentru entități</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="96"/>
         <source>If checked, UCSs from the document will be included into exported drawings. Otherwise, UCSs are not included.</source>
-        <translation>Dacă sunt verificate, UCS din document vor fi incluse în desene exportate. În caz contrar, UCS nu sunt incluse.</translation>
+        <translation>Dacă este bifată, UCS-urile din document vor fi incluse în desenele exportate. În caz contrar, UCS-urile nu sunt incluse.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="99"/>
@@ -15436,12 +15436,12 @@ Conținutul unui plan de construcție nu trebuie să apară în imprimerie.</tra
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="46"/>
         <source>Settings for naming convention that is used to create layers hierarchy based on flat list of layers</source>
-        <translation>Configurări pentru numirea convenției care este utilizat pentru a crea ierarhia straturilor bazate pe lista plană de straturi</translation>
+        <translation>Configurări pentru convenția de denumire utilizată la crearea ierarhiei de straturi pe baza listei plane de straturi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="49"/>
         <source>Naming Convention</source>
-        <translation>Convenţia privind nominalizarea</translation>
+        <translation>Convenție de denumire</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="55"/>
@@ -15451,7 +15451,7 @@ Conținutul unui plan de construcție nu trebuie să apară în imprimerie.</tra
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="116"/>
         <source>Separator used for split inner name of layer to hierarchical names</source>
-        <translation>Separator utilizat pentru divizarea numelui interior al stratului pentru nume ierarhice</translation>
+        <translation>Separator utilizat pentru împărțirea numelui intern al stratului în nume ierarhice</translation>
     </message>
     <message>
         <source>Layer Level Name Separator</source>
@@ -15465,33 +15465,33 @@ Conținutul unui plan de construcție nu trebuie să apară în imprimerie.</tra
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
-        <translation>Dimensional</translation>
+        <translation>Dimensiuni</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="201"/>
         <source>Suffix of layer&apos;s name that defines that layer is dimensional</source>
-        <translation>Sufixul numelui stratului care definește că stratul este dimensional</translation>
+        <translation>Sufixul numelui stratului care indică un strat de dimensiuni</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="211"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="809"/>
         <source>Informational</source>
-        <translation>Informațional</translation>
+        <translation>Informații</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="224"/>
         <source>Suffix of layer&apos;s name that defines that layer is informational.</source>
-        <translation>Sufixul numelui stratului care defineşte acest strat este informaţional.</translation>
+        <translation>Sufixul numelui stratului care indică un strat de informații.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="234"/>
         <source>Alternative Position </source>
-        <translation>Poziția alternativă</translation>
+        <translation>Poziție alternativă </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
-        <translation>Sufixul numelui stratului care defineşte acest strat este pentru poziţia alternativă.</translation>
+        <translation>Sufixul numelui stratului care indică un strat de poziție alternativă.</translation>
     </message>
     <message>
         <source>Duplicating Name</source>
@@ -15505,7 +15505,7 @@ Conținutul unui plan de construcție nu trebuie să apară în imprimerie.</tra
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="74"/>
         <source>Prefix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>Prefixul numelui stratului care este utilizat în cazul în care există un strat cu un astfel de nume (spune, atunci când este creat duplicatul)</translation>
+        <translation>Prefixul numelui stratului care este utilizat în cazul în care există deja un strat cu un astfel de nume (de exemplu, atunci când este creat un duplicat)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="84"/>
@@ -15515,7 +15515,7 @@ Conținutul unui plan de construcție nu trebuie să apară în imprimerie.</tra
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="97"/>
         <source>Suffix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>Sufixul numelui stratului care este utilizat în cazul în care există un strat cu un astfel de nume (spune, atunci când este creat duplicatul)</translation>
+        <translation>Sufixul numelui stratului care este utilizat în cazul în care există deja un strat cu un astfel de nume (de exemplu, atunci când este creat un duplicat)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="155"/>
@@ -15555,12 +15555,12 @@ Conținutul unui plan de construcție nu trebuie să apară în imprimerie.</tra
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="329"/>
         <source>If checked, tooltip will include complete name of layer (with all upper layer levels)</source>
-        <translation>Dacă este verificat, vârful de unelte va include denumirea completă a stratului (cu toate nivelurile superioare ale stratului)</translation>
+        <translation>Dacă este bifată, indiciul (tooltip) va include numele complet al stratului (cu toate nivelurile superioare de straturi)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="332"/>
         <source>Show full name as ToolTip</source>
-        <translation>Arată numele complet ca ToolTip</translation>
+        <translation>Arată numele complet ca indiciu (tooltip)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="608"/>
@@ -15590,52 +15590,52 @@ Conținutul unui plan de construcție nu trebuie să apară în imprimerie.</tra
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="319"/>
         <source>If checked, icons for layer types will be shown</source>
-        <translation>Dacă se verifică, vor fi afișate pictograme pentru tipurile de straturi</translation>
+        <translation>Dacă este bifată, vor fi afișate pictograme pentru tipurile de straturi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="322"/>
         <source>Show layer type icons</source>
-        <translation>Arată pictograme de tip strat</translation>
+        <translation>Arată pictogramele tipurilor de straturi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="309"/>
         <source>Indentation for child layers</source>
-        <translation>Indentare pentru straturile de copii</translation>
+        <translation>Indentare pentru straturile copil</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="312"/>
         <source>Show indented layer names. Ident size:</source>
-        <translation>Arată numele straturilor. Dimensiune identificare:</translation>
+        <translation>Arată numele straturilor indentate. Dimensiunea indentării:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="277"/>
         <source>Size of the indent in characters to indent name of child layer from parent ones</source>
-        <translation>Dimensiune de la liniuţa cu caractere care trebuie să liniuţeze numele stratului de copii de la cei părinţi</translation>
+        <translation>Dimensiunea indentării, în caractere, cu care numele stratului copil este indentat față de cel al stratului părinte</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="352"/>
         <source>If checked, drag&amp;drop operations in layers list are enabled and layers hierarchy may be restructutured</source>
-        <translation>Dacă sunt verificate, sunt activate operațiunile de drag &amp; drop din lista straturilor și ierarhia straturilor poate fi restructurată</translation>
+        <translation>Dacă este bifată, operațiunile de drag&amp;drop din lista de straturi sunt activate, iar ierarhia straturilor poate fi restructurată</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="355"/>
         <source>Allow restructuring via Drag&amp;Drop</source>
-        <translation>Permite restructurarea prin Drag&amp;Drop</translation>
+        <translation>Permite restructurarea prin Drag&amp;&amp;Drop</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="293"/>
         <source>If primary layer is renames, secondary layers are renamed too.</source>
-        <translation>Dacă stratul primar este redenumit, şi straturile secundare sunt redenumite.</translation>
+        <translation>Dacă stratul primar este redenumit, și straturile secundare sunt redenumite.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="296"/>
         <source>Rename secondary layers on primary rename</source>
-        <translation>Redenumește straturile secundare pe redenumirea primară</translation>
+        <translation>Redenumește straturile secundare la redenumirea stratului primar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="376"/>
         <source>Various colors settings</source>
-        <translation>Configurări diferite culori</translation>
+        <translation>Configurări pentru diverse culori</translation>
     </message>
     <message>
         <source>Colors</source>
@@ -15644,7 +15644,7 @@ Conținutul unui plan de construcție nu trebuie să apară în imprimerie.</tra
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="470"/>
         <source>Background color for selected items in layers tree.</source>
-        <translation>Culoare de fundal pentru elemente selectate în copac straturi.</translation>
+        <translation>Culoare de fundal pentru elementele selectate din arborele de straturi.</translation>
     </message>
     <message>
         <source>Color for separator lines in layers tree view</source>
@@ -15653,7 +15653,7 @@ Conținutul unui plan de construcție nu trebuie să apară în imprimerie.</tra
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="420"/>
         <source>Background color for virtual layers items in layers list</source>
-        <translation>Culoare fundal pentru straturi virtuale elemente în listă straturi</translation>
+        <translation>Culoare de fundal pentru elementele de tip strat virtual din lista de straturi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="449"/>
@@ -15666,7 +15666,7 @@ Conținutul unui plan de construcție nu trebuie să apară în imprimerie.</tra
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="560"/>
         <source>Matched item in highlight filter mode</source>
-        <translation>Se potrivesc elementul în modul filtrul de evidențiere</translation>
+        <translation>Element care corespunde filtrului în modul de evidențiere</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="391"/>
@@ -15686,7 +15686,7 @@ Conținutul unui plan de construcție nu trebuie să apară în imprimerie.</tra
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="581"/>
         <source>Virtual layer background color</source>
-        <translation>Culoare fundal strat virtual</translation>
+        <translation>Culoare de fundal strat virtual</translation>
     </message>
     <message>
         <source>Threeview items separator grid</source>
@@ -15700,7 +15700,7 @@ Conținutul unui plan de construcție nu trebuie să apară în imprimerie.</tra
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="523"/>
         <source>Background color for active layer item in layers tree</source>
-        <translation>Culoare de fundal pentru elementul strat activ în straturi copac</translation>
+        <translation>Culoare de fundal pentru elementul stratului activ din arborele de straturi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="526"/>
@@ -15725,7 +15725,7 @@ Conținutul unui plan de construcție nu trebuie să apară în imprimerie.</tra
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="602"/>
         <source>Default Pens</source>
-        <translation>Stilouri injectoare (pen- uri) implicite</translation>
+        <translation>Stilouri implicite</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="68"/>
@@ -15735,12 +15735,12 @@ Conținutul unui plan de construcție nu trebuie să apară în imprimerie.</tra
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="69"/>
         <source>Dimensional Layer</source>
-        <translation>Strat dimensional</translation>
+        <translation>Strat de dimensiuni</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="70"/>
         <source>Informational Layer</source>
-        <translation>Strat informativ</translation>
+        <translation>Strat de informații</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="71"/>
@@ -15769,7 +15769,7 @@ Conținutul unui plan de construcție nu trebuie să apară în imprimerie.</tra
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="126"/>
         <source>active layer background</source>
-        <translation>strat activ de fond</translation>
+        <translation>fundal strat activ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
@@ -15780,13 +15780,13 @@ Conținutul unui plan de construcție nu trebuie să apară în imprimerie.</tra
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>Valoarea nevalidă asigură culoarea%1.
-Vă rugăm să specificați o valoare diferită.</translation>
+        <translation>Valoare nevalidă furnizată pentru culoarea &quot;%1&quot;.
+Vă rugăm să specificați o altă valoare.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="245"/>
         <source>Select Color</source>
-        <translation>Alegeți culoarea</translation>
+        <translation>Selectează culoarea</translation>
     </message>
 </context>
 <context>
@@ -15799,12 +15799,12 @@ Vă rugăm să specificați o valoare diferită.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="152"/>
         <source>Looking for matching layer names</source>
-        <translation>Caut nume de straturi asortate</translation>
+        <translation>Caută nume de straturi care se potrivesc</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="157"/>
         <source>Highlight Mode</source>
-        <translation>Arată modul</translation>
+        <translation>Modul de evidențiere</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="167"/>
@@ -15824,7 +15824,7 @@ Vă rugăm să specificați o valoare diferită.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="200"/>
         <source>Show Secondary Layers</source>
-        <translation>Afișează straturile secundare</translation>
+        <translation>Arată straturile secundare</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="210"/>
@@ -15839,22 +15839,22 @@ Vă rugăm să specificați o valoare diferită.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="226"/>
         <source>Collapse All</source>
-        <translation>Se prăbuşeşte toate</translation>
+        <translation>Restrânge tot</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="234"/>
         <source>Collapse Secondary</source>
-        <translation>Colaps secundar</translation>
+        <translation>Restrânge straturile secundare</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="242"/>
         <source>Unlock all layers</source>
-        <translation>Deblocare toate straturile</translation>
+        <translation>Deblochează toate straturile</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="249"/>
         <source>Lock all layers</source>
-        <translation>Blocați toate straturile</translation>
+        <translation>Blochează toate straturile</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="256"/>
@@ -15864,7 +15864,7 @@ Vă rugăm să specificați o valoare diferită.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="263"/>
         <source>Add dimensions Layer</source>
-        <translation>Adaugă dimensiuni Strat</translation>
+        <translation>Adaugă un strat de dimensiuni</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="272"/>
@@ -15874,135 +15874,135 @@ Vă rugăm să specificați o valoare diferită.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="279"/>
         <source>Modify layer attributes / rename</source>
-        <translation>Modifică atributele straturilor / redenumește</translation>
+        <translation>Modifică atributele stratului / redenumește</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="286"/>
         <source>Flat List Mode)</source>
-        <translation>Modul listă plană)</translation>
+        <translation>Modul listă plană</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="656"/>
         <source>&amp;Add Child Layer</source>
-        <translation>&amp; Adaugă plan de copii</translation>
+        <translation>Ada&amp;ugă un strat copil</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="657"/>
         <source>&amp;Rename</source>
-        <translation>&amp; Redenumește</translation>
+        <translation>&amp;Redenumește</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="658"/>
         <source>&amp;Remove Layers (Sub-Tree)</source>
-        <translation>&amp; Deplasarea straturilor (sub- Tree)</translation>
+        <translation>E&amp;limină straturile (subarbore)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="660"/>
         <source>&amp;Copy Structure (Sub-Tree)</source>
-        <translation>Structura &amp; copie (sub- Tree)</translation>
+        <translation>C&amp;opiază structura (subarbore)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="661"/>
         <source>&amp;Duplicate Content (Sub-Tree)</source>
-        <translation>Conținut &amp; duplicat (sub- Tree)</translation>
+        <translation>Du&amp;plică conținutul (subarbore)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="663"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>Entități alese (Subtree)</translation>
+        <translation>Selectea&amp;ză entitățile (subarbore)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="668"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>&amp; Edit Layer &amp;Atributes</translation>
+        <translation>Editea&amp;ză atributele stratului</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="670"/>
         <source>&amp;Remove Layer</source>
-        <translation>&amp; Elimină stratul</translation>
+        <translation>E&amp;limină stratul</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="679"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>&amp; Adăugare dimensiuni sub- Layer</translation>
+        <translation>Ada&amp;ugă un substrat de dimensiuni</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="683"/>
         <source>&amp;Add Info Sub-Layer</source>
-        <translation>&amp; Adăugați &amp; Info Sub-Layer</translation>
+        <translation>Adaugă un subst&amp;rat de informații</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="687"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
-        <translation>&amp; Adaugă sub- Layer de vizualizare alternativă</translation>
+        <translation>Adaugă un substrat de &amp;poziție alternativă</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="693"/>
         <source>&amp;Remove Sub-layers</source>
-        <translation>&amp; Elimină substraturile</translation>
+        <translation>Eli&amp;mină substraturile</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="701"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="711"/>
         <source>Convert to Dimensional Layer</source>
-        <translation>Conversie în plan dimensional</translation>
+        <translation>Convertește în strat de dimensiuni</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="702"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="714"/>
         <source>Convert to Info Layer</source>
-        <translation>Convertește la nivelul de informații</translation>
+        <translation>Convertește în strat de informații</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="703"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="717"/>
         <source>Convert to Alternative Position Layer</source>
-        <translation>Conversie în plan de poziție alternativă</translation>
+        <translation>Convertește în strat de poziție alternativă</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="709"/>
         <source>Convert to Normal Layer</source>
-        <translation>Schimbă în plan normal</translation>
+        <translation>Convertește în strat normal</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="723"/>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>Alegeți entitățile din plan</translation>
+        <translation>Selectează e&amp;ntitățile stratului</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="726"/>
         <source>&amp;Create Layer Copy</source>
-        <translation>&amp; Creează copie plan</translation>
+        <translation>Creează o c&amp;opie a stratului</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="727"/>
         <source>&amp;Duplicate Layer With Content</source>
-        <translation>&amp; Duplică stratul cu conținut</translation>
+        <translation>Duplic&amp;ă stratul cu conținut</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="731"/>
         <source>Move Selection to Layer</source>
-        <translation>Mută selecția în plan</translation>
+        <translation>Mută selecția pe strat</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="732"/>
         <source>Duplicate Selection to Layer</source>
-        <translation>Selecţie dublă în plan</translation>
+        <translation>Duplică selecția pe strat</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="739"/>
         <source>&amp;Add Layer</source>
-        <translation>&amp; Adaugă plan</translation>
+        <translation>Ada&amp;ugă un strat</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="741"/>
         <source>&amp;Freeze Others Layers</source>
-        <translation>&amp; Congelează alte straturi</translation>
+        <translation>Îngheață &amp;celelalte straturi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="742"/>
         <source>&amp;Defreeze All Layers</source>
-        <translation>&amp; Decongelează toate straturile</translation>
+        <translation>&amp;Dezgheață toate straturile</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
@@ -16012,42 +16012,42 @@ Vă rugăm să specificați o valoare diferită.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>
         <source>&amp;Unlock All Layers</source>
-        <translation>&amp; Deblochează toate straturile</translation>
+        <translation>Deblochează &amp;toate straturile</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="745"/>
         <source>&amp;Lock All Layers</source>
-        <translation>&amp; Închide toate straturile</translation>
+        <translation>&amp;Blochează toate straturile</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="746"/>
         <source>Enable &amp;Printing All Layers</source>
-        <translation>Activează &amp; imprimarea tuturor straturilor</translation>
+        <translation>&amp;Activează imprimarea tuturor straturilor</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="747"/>
         <source>&amp;Disable Printing All Layers</source>
-        <translation>Imprimare &amp; dezactivează toate straturile</translation>
+        <translation>Dezactivează &amp;imprimarea tuturor straturilor</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="750"/>
         <source>&amp;Export Single Layer</source>
-        <translation>&amp; Exportează plan unic</translation>
+        <translation>&amp;Exportă un singur strat</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="754"/>
         <source>&amp;Export Layer Sub-Tree</source>
-        <translation>&amp; Exportează stratul sub- Tree</translation>
+        <translation>E&amp;xportă subarborele stratului</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="758"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Exportă și plan vizibil (s)</translation>
+        <translation>Exportă straturile &amp;vizibile</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="760"/>
         <source>&amp;Find And Remove Empty Layers</source>
-        <translation>&amp; Găsește și elimină straturile goale</translation>
+        <translation>&amp;Găsește și elimină straturile goale</translation>
     </message>
 </context>
 <context>
@@ -23336,12 +23336,12 @@ Vă rugăm să specificați o valoare diferită.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="82"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Dacă sunt verificate, entitățile oglindite vor fi plasate pe stratul curent, altfel vor fi plasate în straturi originale.</translation>
+        <translation type="unfinished">Dacă este bifată, entitățile oglindite vor fi plasate pe stratul curent, altfel vor fi plasate pe straturile originale.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Plan curent utilizator</translation>
+        <translation type="unfinished">Folosește stratul curent</translation>
     </message>
 </context>
 <context>
@@ -23635,12 +23635,12 @@ Vă rugăm să specificați o valoare diferită.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="45"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="unfinished">Dacă este verificat, entitățile create vor fi plasate pe stratul curent. În caz contrar, acestea vor fi plasate în straturi originale.</translation>
+        <translation type="unfinished">Dacă este bifată, entitățile create vor fi plasate pe stratul curent. În caz contrar, vor fi plasate pe straturile originale. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="48"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Folosește plan curent</translation>
+        <translation type="unfinished">Folosește stratul curent</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="55"/>
@@ -23821,12 +23821,12 @@ Vă rugăm să specificați o valoare diferită.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="144"/>
         <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="unfinished">Dacă este verificat, entitățile create vor fi plasate în stratul curent, altfel va fi în straturi originale.</translation>
+        <translation type="unfinished">Dacă este bifată, entitățile create vor fi plasate pe stratul curent, altfel vor fi pe straturile originale. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="147"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Folosește plan curent</translation>
+        <translation type="unfinished">Folosește stratul curent</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="166"/>
@@ -24237,12 +24237,12 @@ Atenție: această acțiune NU poate fi anulată!</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="93"/>
         <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">Dacă sunt verificate, entitățile create vor fi plasate în stratul curent, altfel vor fi în straturi originale.</translation>
+        <translation type="unfinished">Dacă este bifată, entitățile create vor fi plasate pe stratul curent, altfel vor fi pe straturile originale.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="96"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Folosește plan curent</translation>
+        <translation type="unfinished">Folosește stratul curent</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="109"/>
@@ -24735,7 +24735,7 @@ Atenție: această acțiune NU poate fi anulată!</translation>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="263"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="298"/>
         <source>By Layer</source>
-        <translation>Pe plan</translation>
+        <translation>După strat</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="264"/>
@@ -25363,27 +25363,27 @@ Atenție: această acțiune NU poate fi anulată!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="188"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Actualizează stiloul injector (pen- ul) curent după Active Layer&apos; Pen</translation>
+        <translation>Actualizează stiloul curent cu stiloul stratului activ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="205"/>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation>Completaţi Editorul stiloului injector (pen) din stiloul injector (pen- ul) activ</translation>
+        <translation>Completează editorul de stilou cu stiloul stratului activ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="208"/>
         <source>Pick from Active Layer</source>
-        <translation>Pick din plan activ</translation>
+        <translation>Preia din stratul activ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="222"/>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation>Aplicaţi stiloul injector (pen- ul) Editor pe stiloul injector (pen- ul) cu strat activ</translation>
+        <translation>Aplică stiloul din editor la stiloul stratului activ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="225"/>
         <source>Apply To Layer</source>
-        <translation>Aplică pe plan</translation>
+        <translation>Aplică pe strat</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="239"/>
@@ -25468,7 +25468,7 @@ Atenție: această acțiune NU poate fi anulată!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="305"/>
         <source>&amp;Apply Pen To Active Layer</source>
-        <translation>Aplicaţi stiloul injector (pen- ul) la un nivel activ</translation>
+        <translation>&amp;Aplică stiloul pe stratul activ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="306"/>
@@ -29537,7 +29537,7 @@ Vă rugăm să rețineți că, dacă salvați un stil prin editor fără a repor
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="171"/>
         <source>Dimensional</source>
-        <translation type="unfinished">Dimensional</translation>
+        <translation type="unfinished">Dimensiuni</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="175"/>
@@ -29547,7 +29547,7 @@ Vă rugăm să rețineți că, dacă salvați un stil prin editor fără a repor
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="179"/>
         <source>Informational</source>
-        <translation type="unfinished">Informațional</translation>
+        <translation type="unfinished">Informații</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="186"/>
@@ -29627,7 +29627,7 @@ Vă rugăm să rețineți că, dacă salvați un stil prin editor fără a repor
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="303"/>
         <source>Unlock all layers</source>
-        <translation type="unfinished">Deblocare toate straturile</translation>
+        <translation type="unfinished">Deblochează toate straturile</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="303"/>
@@ -33100,7 +33100,8 @@ Vă rugăm să rețineți că, dacă salvați un stil prin editor fără a repor
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="127"/>
         <source>
 Layer: </source>
-        <translation>Strat:</translation>
+        <translation>
+Strat: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="573"/>
@@ -35906,12 +35907,12 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="208"/>
         <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="unfinished">Specifică copiile whetether vor fi introduse în stratul curent sau original</translation>
+        <translation type="unfinished">Specifică dacă se inserează copiile pe stratul curent sau pe cel original</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="211"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Folosește plan curent</translation>
+        <translation type="unfinished">Folosește stratul curent</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="218"/>
@@ -36152,12 +36153,12 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="209"/>
         <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">Dacă sunt verificate, vor fi plasate pe stratul curent, altfel vor fi în straturi originale.</translation>
+        <translation type="unfinished">Dacă este bifată, entitățile noi vor fi plasate pe stratul curent, altfel vor fi pe straturile originale.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="212"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Folosește plan curent</translation>
+        <translation type="unfinished">Folosește stratul curent</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="219"/>
@@ -36395,12 +36396,12 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="83"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="unfinished">Dacă este verificat, entitățile create vor fi plasate pe stratul curent. În caz contrar, acestea vor fi plasate pe straturi originale.</translation>
+        <translation type="unfinished">Dacă este bifată, entitățile create vor fi plasate pe stratul curent. În caz contrar, vor fi plasate pe straturile originale. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="86"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Folosește plan curent</translation>
+        <translation type="unfinished">Folosește stratul curent</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="107"/>
@@ -37309,7 +37310,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="77"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Dacă sunt verificate, entitățile create vor fi plasate pe stratul curent, altfel vor fi plasate în straturi originale.</translation>
+        <translation type="unfinished">Dacă este bifată, entitățile create vor fi plasate pe stratul curent, altfel vor fi plasate pe straturile originale.</translation>
     </message>
 </context>
 <context>
@@ -37347,12 +37348,12 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="73"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Dacă sunt verificate, entitățile create vor fi plasate pe stratul curent, altfel vor fi plasate în straturi originale.</translation>
+        <translation type="unfinished">Dacă este bifată, entitățile create vor fi plasate pe stratul curent, altfel vor fi plasate pe straturile originale.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="76"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Folosește plan curent</translation>
+        <translation type="unfinished">Folosește stratul curent</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="83"/>
@@ -37490,7 +37491,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="71"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Dacă sunt verificate, entitățile create vor fi plasate pe stratul curent, altfel vor fi plasate în straturi originale.</translation>
+        <translation type="unfinished">Dacă este bifată, entitățile create vor fi plasate pe stratul curent, altfel vor fi plasate pe straturile originale.</translation>
     </message>
 </context>
 <context>
@@ -37503,12 +37504,12 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="32"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Dacă sunt verificate, entitățile create vor fi plasate pe stratul curent, altfel vor fi plasate în straturi originale.</translation>
+        <translation type="unfinished">Dacă este bifată, entitățile create vor fi plasate pe stratul curent, altfel vor fi plasate pe straturile originale.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="35"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Plan curent utilizator</translation>
+        <translation type="unfinished">Folosește stratul curent</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="42"/>
@@ -39830,7 +39831,7 @@ Vă rugăm să verificaţi existenţa şi permisiunile sale.</translation>
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="105"/>
         <source>Name of Current Active Layer</source>
-        <translation>Denumirea stratului activ actual</translation>
+        <translation>Numele stratului activ curent</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="80"/>
@@ -39885,12 +39886,12 @@ Vă rugăm să verificaţi existenţa şi permisiunile sale.</translation>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="100"/>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="276"/>
         <source>By Layer</source>
-        <translation>Dupa strat</translation>
+        <translation>După strat</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="101"/>
         <source>By Block</source>
-        <translation>Dupa Bloc</translation>
+        <translation>După bloc</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="108"/>
@@ -40899,7 +40900,7 @@ Acest lucru modifică recursiv toate entitățile blocului în sine.</translatio
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="70"/>
         <source>Layer of MText</source>
-        <translation>Strat de text</translation>
+        <translation>Stratul entității MText</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="144"/>
@@ -43442,7 +43443,7 @@ Acest lucru modifică recursiv toate entitățile blocului în sine.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5074"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html &gt; &lt;head/&gt; &lt;body&gt; &lt;p&gt; Atunci când este activat, activarea unui strat ar modifica toate entitățile selectate la acel nou strat. Pentru a schimba stratul de mai multe entități: prima selectați entitățile necesare; activați un strat în widget strat. Aceasta face ca toate entităţile selectate să fie modificate pentru a aparţine noului strat. &lt;/p&gt; &lt;/corp&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Când opțiunea este activată, activarea unui strat mută toate entitățile selectate pe acel strat. Pentru a schimba stratul mai multor entități: mai întâi selectați entitățile dorite; apoi activați un strat în widget-ul de straturi. Astfel, toate entitățile selectate sunt modificate pentru a aparține noului strat.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5934"/>
@@ -44563,7 +44564,7 @@ Acest lucru modifică recursiv toate entitățile blocului în sine.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5077"/>
         <source>Modify layer of selected entities, at layer activation</source>
-        <translation>Modificarea stratului de entități selectate, la activarea stratului</translation>
+        <translation>Modifică stratul entităților selectate la activarea unui strat</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5490"/>
@@ -45737,7 +45738,7 @@ Acest lucru modifică recursiv toate entitățile blocului în sine.</translatio
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="92"/>
         <source>Export visible construction layers</source>
-        <translation>Exportă straturi vizibile de construcție</translation>
+        <translation>Exportă straturi de construcție vizibile</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="104"/>
@@ -46269,7 +46270,7 @@ deci valoarea implicită a treptei necesare pentru coacere</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="197"/>
         <source>Layer of text</source>
-        <translation>Strat de text</translation>
+        <translation>Stratul textului</translation>
     </message>
     <message>
         <source>Obligue of text</source>
@@ -47156,7 +47157,7 @@ deci valoarea implicită a treptei necesare pentru coacere</translation>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="20"/>
         <source>Layer Settings</source>
-        <translation>Setarile pentru strat</translation>
+        <translation>Setările pentru strat</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="46"/>
@@ -47166,14 +47167,14 @@ deci valoarea implicită a treptei necesare pentru coacere</translation>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="63"/>
         <source>Default Pen</source>
-        <translation>Creion implicit</translation>
+        <translation>Stilou implicit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="29"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Un strat de construcţii are entităţi de linii drepte infinite destinate utilizării pentru construcţii geometrice.
-Conținutul unui plan de construcție nu trebuie să apară în imprimerie.</translation>
+        <translation>Un strat de construcție conține entități sub formă de linii drepte infinite, destinate construcțiilor geometrice.
+Conținutul unui strat de construcție nu trebuie să apară la imprimare.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="33"/>
@@ -47186,7 +47187,7 @@ Conținutul unui plan de construcție nu trebuie să apară în imprimerie.</tra
     <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="298"/>
         <source>Looking for matching layer names</source>
-        <translation>Caut nume de straturi asortate</translation>
+        <translation>Caută nume de straturi care se potrivesc</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="296"/>
@@ -47223,12 +47224,12 @@ Conținutul unui plan de construcție nu trebuie să apară în imprimerie.</tra
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="83"/>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="189"/>
         <source>By Layer</source>
-        <translation>Dupa Strat</translation>
+        <translation>După strat</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="84"/>
         <source>By Block</source>
-        <translation>Dupa Bloc</translation>
+        <translation>După bloc</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="87"/>
@@ -47552,7 +47553,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="239"/>
         <source>By Layer</source>
-        <translation>Dupa strat</translation>
+        <translation>După strat</translation>
     </message>
 </context>
 <context>
@@ -47571,17 +47572,17 @@ p, li {white- space: pre- wrap;}
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="240"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1739"/>
         <source>Remove Layer</source>
-        <translation>Stergere strat</translation>
+        <translation>Elimină stratul</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="183"/>
         <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>Stratul &quot;%1&quot; nu poate fi sters.</translation>
+        <translation>Stratul &quot;%1&quot; nu poate fi eliminat niciodată.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="304"/>
         <source>Layer Dialog</source>
-        <translation>Meniu Strat</translation>
+        <translation>Dialog strat</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="406"/>
@@ -47599,25 +47600,25 @@ p, li {white- space: pre- wrap;}
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="264"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="308"/>
         <source>Layer Properties</source>
-        <translation>Proprietatile Stratului</translation>
+        <translation>Proprietățile Stratului</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="84"/>
         <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>Stratul cu numele &quot;%1&quot; exista deja. Va trebui sa alegeti alt nume.</translation>
+        <translation>Stratul cu numele &quot;%1&quot; există deja. Va trebui să alegeți alt nume.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="173"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>Stratul &quot;%1 &quot; și toate entitățile de pe el vor fi eliminate.
+        <translation>Stratul &quot;%1&quot; și toate entitățile de pe el vor fi eliminate.
 Această acțiune NU poate fi anulată.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="240"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1739"/>
         <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>Stratul &quot;0&quot; nu poate fi îndepărtat niciodată.</translation>
+        <translation>Stratul &quot;0&quot; nu poate fi eliminat niciodată.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="248"/>
@@ -47626,7 +47627,7 @@ Această acțiune NU poate fi anulată.</translation>
         <translation>
             <numerusform>Elimină %n strat</numerusform>
             <numerusform>Elimină %n straturi</numerusform>
-            <numerusform></numerusform>
+            <numerusform>Elimină %n de straturi</numerusform>
         </translation>
     </message>
     <message>
@@ -47644,13 +47645,13 @@ Această acțiune NU poate fi anulată.</translation>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="257"/>
         <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>Atenție: stratul &quot;0&quot; nu poate fi îndepărtat niciodată.</translation>
+        <translation>Atenție: stratul &quot;0&quot; nu poate fi eliminat niciodată.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="260"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1790"/>
         <source>Layers for removal:</source>
-        <translation>Straturi pentru îndepărtarea:</translation>
+        <translation>Straturi de eliminat:</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="463"/>
@@ -47674,7 +47675,7 @@ Această acțiune NU poate fi anulată.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="230"/>
         <source>Layer empty name is not allowed.</source>
-        <translation>Numele gol nu este permis.</translation>
+        <translation>Numele stratului nu poate fi gol.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="265"/>
@@ -47686,7 +47687,7 @@ Această acțiune NU poate fi anulată.</translation>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation>Încercarea de a crea strat cu nume duplicat. Denumirea stratului duplicat este
+        <translation>Încercare de a crea un strat cu un nume duplicat. Numele de strat duplicat este 
 [%1].
 Vă rugăm să specificați un nume diferit.</translation>
     </message>
@@ -47700,8 +47701,8 @@ Vă rugăm să specificați un nume diferit.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="143"/>
         <source>Layer list separator string is empty. It will not be possible to build layers tree.
 Please specify a different value.</source>
-        <translation>Sirul separatorului din listă este gol. Nu va fi posibil să construim straturi de copac.
-Vă rugăm să specificați o valoare diferită.</translation>
+        <translation>Șirul separator al listei de straturi este gol. Nu va fi posibilă construirea arborelui de straturi.
+Vă rugăm să specificați o altă valoare.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="962"/>
@@ -47725,21 +47726,21 @@ Clear filtering mask and repeat.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="973"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>Nu există straturi fără entități găsite, nimic de eliminat.</translation>
+        <translation>Nu s-au găsit straturi fără entități, nu este nimic de eliminat.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1116"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1161"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1169"/>
         <source>Add Layer</source>
-        <translation>Adaugă plan</translation>
+        <translation>Adaugă un strat</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1117"/>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation>Un astfel de strat de copii există deja pentru
+        <translation>Un astfel de strat copil există deja pentru 
 [%1].
 Vă rugăm să specificați un nume diferit.</translation>
     </message>
@@ -47748,14 +47749,16 @@ Vă rugăm să specificați un nume diferit.</translation>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation>Un astfel de strat de copii există deja pentru
-[%1].</translation>
+        <translation>Un astfel de strat copil există deja pentru 
+[%1].
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1170"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>Stratul dimensional poate fi adăugat numai pentru stratul activ normal.</translation>
+        <translation>Un strat de dimensiuni poate fi adăugat numai pentru un strat activ normal.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1233"/>
@@ -47788,7 +47791,7 @@ Dacă nu, valorile „În funcție de strat” vor rămâne, iar penița stratul
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1805"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1863"/>
         <source>Layer DialogEx</source>
-        <translation>Dialog plan</translation>
+        <translation>Dialog strat</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="202"/>
@@ -47841,19 +47844,21 @@ Vă rugăm să specificați o valoare diferită.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1453"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>Nu există entităţi care să se potrivească cu stiloul pe straturi vizibile.</translation>
+        <translation>Nu există entități care să corespundă stiloului pe straturile vizibile.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1454"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>Astfel de entități există pe straturi congelate.</translation>
+        <translation>Astfel de entități există pe straturi înghețate.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1455"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>Astfel de entități există pe straturi blocate.</translation>
+        <translation>Astfel de entități există pe straturi blocate.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1456"/>
@@ -49721,7 +49726,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="77"/>
         <source>No %1 layers found</source>
-        <translation>Nu s- au găsit straturi%1</translation>
+        <translation>Nu s-au găsit straturi %1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="95"/>
@@ -51758,7 +51763,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="50"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="206"/>
         <source>By Layer</source>
-        <translation>Pe plan</translation>
+        <translation>După strat</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="56"/>

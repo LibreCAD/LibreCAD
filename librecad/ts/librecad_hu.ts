@@ -2690,7 +2690,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="252"/>
         <source>(De-)Select Layer</source>
-        <translation>Réteg kiválasztása</translation>
+        <translation>Réteg kijelölése</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="235"/>
@@ -3317,7 +3317,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="410"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Az aktuális injekciós toll frissítése aktív rétegű injekciós tollal</translation>
+        <translation>Aktuális toll frissítése az aktív réteg tollával</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="416"/>
@@ -3458,7 +3458,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="66"/>
         <source>Layers operations</source>
-        <translation>A rétegek működése</translation>
+        <translation>Rétegműveletek</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="67"/>
@@ -3650,12 +3650,12 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity Layer</source>
-        <translation>Szervezetek</translation>
+        <translation>Elem rétege</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity&apos;s Layer</source>
-        <translation>Szervezetek</translation>
+        <translation>Elem rétege</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="88"/>
@@ -3670,32 +3670,32 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="109"/>
         <source>Activate Entity&apos;s Layer</source>
-        <translation>A szervezet rétegének aktiválása</translation>
+        <translation>Elem rétegének aktiválása</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="110"/>
         <source>Hide Entity&apos;s Layer</source>
-        <translation>A szervezet rétegének elrejtése</translation>
+        <translation>Elem rétegének elrejtése</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="111"/>
         <source>Hide Other Layers than Entity&apos;s</source>
-        <translation>Egyéb rétegek elrejtése</translation>
+        <translation>Elem rétegén kívüli rétegek elrejtése</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="112"/>
         <source>Lock Entity&apos;s Layer</source>
-        <translation>A zárolási egység rétege</translation>
+        <translation>Elem rétegének zárolása</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="113"/>
         <source>Toggle Entity&apos;s Layer Construction</source>
-        <translation>A gazdálkodó egység réteg építése</translation>
+        <translation>Építési réteg váltása az elem rétegén</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="114"/>
         <source>Toggle Entity&apos;s Layer Printing</source>
-        <translation>A gazdálkodó egység rétegnyomtatása</translation>
+        <translation>Elem rétege nyomtatásának váltása</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="225"/>
@@ -4019,32 +4019,32 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="622"/>
         <source>&amp;Remove Layer</source>
-        <translation>Fólia &amp;törlése</translation>
+        <translation>Ré&amp;teg eltávolítása</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="623"/>
         <source>&amp;Edit Layer</source>
-        <translation>Fólia &amp;szerkesztése</translation>
+        <translation>Réteg &amp;szerkesztése</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="624"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>Fólia zárolás váltá&amp;sa</translation>
+        <translation>Réteg &amp;zárolásának váltása</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="625"/>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation>&amp;Fólia láthatóság váltása</translation>
+        <translation>Réteg láthatóságának &amp;váltása</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="626"/>
         <source>Toggle Layer &amp;Print</source>
-        <translation>Fólia &amp;Nyomtatás váltása</translation>
+        <translation>Réteg &amp;nyomtatásának váltása</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="627"/>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>Építési réteg&amp; váltása</translation>
+        <translation>É&amp;pítési réteg váltása</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="637"/>
@@ -4557,7 +4557,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="617"/>
         <source>&amp;Show all layers</source>
-        <translation>&amp;Minden réteg megjelenítése</translation>
+        <translation>Az összes réteg &amp;megjelenítése</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
@@ -4567,7 +4567,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
         <source>&amp;Unlock all</source>
-        <translation>&amp;Mindegyik feloldása</translation>
+        <translation>Az összes &amp;feloldása</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="620"/>
@@ -4577,7 +4577,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="628"/>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>&amp; Kiválasztott réteg(ek) exportálása</translation>
+        <translation>&amp;Kiválasztott réteg(ek) exportálása</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="629"/>
@@ -5153,7 +5153,7 @@ Pont: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>Enter layer name to %1</source>
-        <translation>Adja meg a rétegnevet:%1</translation>
+        <translation>Adja meg a réteg nevét ehhez a művelethez: %1</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
@@ -5172,7 +5172,7 @@ Pont: (%8,%9)</translation>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
         <source>selected</source>
         <comment>Layers to export</comment>
-        <translation>kijelölt</translation>
+        <translation>kiválasztott</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
@@ -6900,7 +6900,7 @@ Pont: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_layer.cpp" line="75"/>
         <source>Specify entity with desired layer</source>
-        <translation type="unfinished">A kívánt rétegű egység megadása</translation>
+        <translation type="unfinished">Válasszon elemet a kívánt rétegről</translation>
     </message>
 </context>
 <context>
@@ -7511,12 +7511,12 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="66"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Ha ez be van jelölve, a tükröző entitásokat az aktuális rétegre helyezik, máskülönben eredeti rétegekbe.</translation>
+        <translation type="unfinished">Ha be van jelölve, a tükrözött elemek az aktuális rétegre kerülnek, ellenkező esetben az eredeti rétegükre.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="69"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">A felhasználó aktuális rétege</translation>
+        <translation type="unfinished">Az aktuális réteg használata</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="76"/>
@@ -11153,7 +11153,7 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="98"/>
         <source>Layer of entity</source>
-        <translation>Az egység rétege</translation>
+        <translation>Az elem rétege</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="148"/>
@@ -12636,7 +12636,7 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="26"/>
         <source>Layer of dimension</source>
-        <translation>Méretréteg</translation>
+        <translation>A méret rétege</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="45"/>
@@ -13612,7 +13612,7 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="82"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">Olyan réteg, amelybe a másodlatot kell helyezni</translation>
+        <translation type="unfinished">A réteg, amelyre a másolatot kell helyezni</translation>
     </message>
 </context>
 <context>
@@ -13625,7 +13625,7 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="45"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">Olyan réteg, amelybe a másodlatot kell helyezni</translation>
+        <translation type="unfinished">A réteg, amelyre a másolatot kell helyezni</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="49"/>
@@ -14417,7 +14417,7 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="168"/>
         <source>Layer of entity</source>
-        <translation type="unfinished">Az egység rétege</translation>
+        <translation type="unfinished">Az elem rétege</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="204"/>
@@ -14481,7 +14481,7 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="135"/>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="179"/>
         <source>Export Layers</source>
-        <translation>Exportrétegek</translation>
+        <translation>Rétegek exportálása</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="152"/>
@@ -15317,17 +15317,17 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="20"/>
         <source>Layer Settings</source>
-        <translation>A réteg beállításai</translation>
+        <translation>Réteg beállításai</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="48"/>
         <source>Name of new layer. In order to create hierarchical layers, include name of virtual layer and layer name separator.</source>
-        <translation>Új réteg neve. A hierarchikus rétegek létrehozása érdekében tartalmazza a virtuális réteg és rétegnév elválasztó nevét.</translation>
+        <translation>Az új réteg neve. Hierarchikus rétegek létrehozásához a névnek tartalmaznia kell a virtuális réteg nevét és a rétegnév-elválasztót is.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="64"/>
         <source>Parent Layers Path:</source>
-        <translation>Szülőrétegek útja:</translation>
+        <translation>Szülőrétegek útvonala:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="81"/>
@@ -15337,17 +15337,17 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="93"/>
         <source>Layer for various infromational elements, notes, drafts etc.</source>
-        <translation>Varróréteg különböző infromációs elemekhez, jegyzetekhez, huzatokhoz stb.</translation>
+        <translation>Réteg különféle információs elemekhez, megjegyzésekhez, vázlatokhoz stb.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="96"/>
         <source>Informational</source>
-        <translation>Tájékoztatás</translation>
+        <translation>Információs</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="106"/>
         <source>Normal layer with drawing eleements</source>
-        <translation>Normál réteg rajzolással</translation>
+        <translation>Normál réteg rajzelemekkel</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="109"/>
@@ -15357,29 +15357,29 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="119"/>
         <source>Layer that holds dimensions</source>
-        <translation>Méretekkel rendelkező réteg</translation>
+        <translation>Méreteket tartalmazó réteg</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="122"/>
         <source>Dimensions</source>
-        <translation>Méretek</translation>
+        <translation>Méretezési</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="132"/>
         <source>Layer with alternate position of entities located on normal layers</source>
-        <translation>A normál rétegeken található egységek alternatív pozíciójával rendelkező réteg</translation>
+        <translation>A normál rétegeken lévő elemek alternatív helyzetét tartalmazó réteg</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="135"/>
         <source>Alternative Position</source>
-        <translation>Alternatív pozíció</translation>
+        <translation>Alternatív helyzetű</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="148"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>A Construction Layer rendelkezik entitások végtelen egyenes vonalak tervezett használni geometriai építés.
-Az építőipari réteg tartalma nem jelenik meg a nyomtatásban.</translation>
+        <translation>Az építési réteg végtelen egyenes vonalú elemeket tartalmaz, amelyek geometriai szerkesztéshez használhatók.
+       Az építési rétegek tartalma nem kerül kinyomtatásra.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="152"/>
@@ -15389,12 +15389,12 @@ Az építőipari réteg tartalma nem jelenik meg a nyomtatásban.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="181"/>
         <source>Path for parent layer</source>
-        <translation>A szülőréteg útja</translation>
+        <translation>A szülőréteg útvonala</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="197"/>
         <source>Layer Name:</source>
-        <translation>A réteg neve:</translation>
+        <translation>Réteg neve:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="68"/>
@@ -15410,23 +15410,23 @@ Az építőipari réteg tartalma nem jelenik meg a nyomtatásban.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="78"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="85"/>
         <source>Add Layer</source>
-        <translation>A réteg hozzáadása</translation>
+        <translation>Réteg hozzáadása</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="91"/>
         <source>Edit Layer</source>
-        <translation>A réteg szerkesztése</translation>
+        <translation>Réteg szerkesztése</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="183"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="221"/>
         <source>Default Pen</source>
-        <translation>Alapértelmezett injekciós toll</translation>
+        <translation>Alapértelmezett toll</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="200"/>
         <source>Rename Layer</source>
-        <translation>A réteg átnevezése</translation>
+        <translation>Réteg átnevezése</translation>
     </message>
 </context>
 <context>
@@ -15434,17 +15434,17 @@ Az építőipari réteg tartalma nem jelenik meg a nyomtatásban.</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="39"/>
         <source>Form</source>
-        <translation>Formanyomtatvány</translation>
+        <translation>Űrlap</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="57"/>
         <source>Layers Export Options</source>
-        <translation>Layers Exportálási beállítások</translation>
+        <translation>Rétegek exportálásának beállításai</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="63"/>
         <source>If checked, Named Views from the document will be included into exported drawings. Otherwise, views are not included.</source>
-        <translation>Ha be van jelölve, a dokumentumból származó nézetek bekerülnek az exportált rajzokba. Ellenkező esetben a vélemények nem szerepelnek.</translation>
+        <translation>Ha be van jelölve, a dokumentum megnevezett nézetei bekerülnek az exportált rajzokba. Ellenkező esetben a nézetek nem kerülnek bele.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="66"/>
@@ -15454,7 +15454,7 @@ Az építőipari réteg tartalma nem jelenik meg a nyomtatásban.</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="73"/>
         <source>If checked, each original exported layer will be stored in separate drawing. Otherwise, all layers will be in exported to one combined drawing.</source>
-        <translation>Ha ez be van jelölve, minden eredeti exportált réteget külön rajzban kell tárolni. Ellenkező esetben minden réteg egy kombinált rajzra kerül exportálásra.</translation>
+        <translation>Ha be van jelölve, minden exportált eredeti réteg külön rajzba kerül. Ellenkező esetben az összes réteg egyetlen, egyesített rajzba lesz exportálva.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="76"/>
@@ -15464,22 +15464,22 @@ Az építőipari réteg tartalma nem jelenik meg a nyomtatásban.</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="83"/>
         <source>If checked, entities will be stored in original layer. Otherwise, they are placed to layer &quot;0&quot;.</source>
-        <translation>Ha ez be van jelölve, a gazdálkodó egységek eredeti rétegben kerülnek tárolásra. Ellenkező esetben a &quot;0&quot; rétegbe kerülnek.</translation>
+        <translation>Ha be van jelölve, az elemek az eredeti rétegükön lesznek tárolva. Ellenkező esetben a &quot;0&quot; rétegre kerülnek.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="89"/>
         <source>Retain original layer for entities</source>
-        <translation>A gazdálkodó egységek eredeti rétegének megtartása</translation>
+        <translation>Az elemek eredeti rétegének megtartása</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="96"/>
         <source>If checked, UCSs from the document will be included into exported drawings. Otherwise, UCSs are not included.</source>
-        <translation>Ha ez be van jelölve, az UPS-ek a dokumentumból bekerülnek az exportált rajzokba. Ellenkező esetben az UPS-ek nem tartoznak ide.</translation>
+        <translation>Ha be van jelölve, a dokumentum UCS-ei bekerülnek az exportált rajzokba. Ellenkező esetben az UCS-ek nem kerülnek bele.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="99"/>
         <source>Export UCSs too</source>
-        <translation>Export UPS-ek is</translation>
+        <translation>UCS-ek exportálása is</translation>
     </message>
 </context>
 <context>
@@ -15487,17 +15487,17 @@ Az építőipari réteg tartalma nem jelenik meg a nyomtatásban.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="20"/>
         <source>Layers Tree Options</source>
-        <translation>Layers fa beállítások</translation>
+        <translation>Rétegfa beállításai</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="46"/>
         <source>Settings for naming convention that is used to create layers hierarchy based on flat list of layers</source>
-        <translation>A rétegek hierarchiájának létrehozásához használt, a rétegek sima listáján alapuló konvenció beállításai</translation>
+        <translation>Annak az elnevezési szabálynak a beállításai, amely a rétegek lapos listájából réteghierarchiát hoz létre</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="49"/>
         <source>Naming Convention</source>
-        <translation>Megnevezési egyezmény</translation>
+        <translation>Elnevezési szabály</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="55"/>
@@ -15521,33 +15521,33 @@ Az építőipari réteg tartalma nem jelenik meg a nyomtatásban.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
-        <translation>Méretek</translation>
+        <translation>Méretezési</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="201"/>
         <source>Suffix of layer&apos;s name that defines that layer is dimensional</source>
-        <translation>A réteg nevének hiánya, ami meghatározza, hogy a réteg dimenzió</translation>
+        <translation>A rétegnév utótagja, amely azt jelzi, hogy a réteg méretezési réteg</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="211"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="809"/>
         <source>Informational</source>
-        <translation>Tájékoztatás</translation>
+        <translation>Információs</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="224"/>
         <source>Suffix of layer&apos;s name that defines that layer is informational.</source>
-        <translation>A réteg nevének hiánya, ami meghatározza, hogy a réteg informatív.</translation>
+        <translation>A rétegnév utótagja, amely azt jelzi, hogy a réteg információs réteg.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="234"/>
         <source>Alternative Position </source>
-        <translation>Alternatív pozíció</translation>
+        <translation>Alternatív helyzetű </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
-        <translation>A réteg nevének hiánya, ami meghatározza, hogy a réteg alternatív pozíció.</translation>
+        <translation>A rétegnév utótagja, amely azt jelzi, hogy a réteg alternatív helyzetű réteg.</translation>
     </message>
     <message>
         <source>Duplicating Name</source>
@@ -15561,17 +15561,17 @@ Az építőipari réteg tartalma nem jelenik meg a nyomtatásban.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="74"/>
         <source>Prefix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>Előtag a réteg nevét, hogy használják, ha réteg ilyen név létezik (mondd, ha a másolat jön létre)</translation>
+        <translation>A rétegnév előtagja, amely akkor használatos, ha már létezik ilyen nevű réteg (például duplikáláskor)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="84"/>
         <source>Suffix</source>
-        <translation>Suffix</translation>
+        <translation>Utótag</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="97"/>
         <source>Suffix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>A réteg nevének hiánya, amelyet akkor használnak, ha létezik ilyen nevű réteg (mond, amikor a másolat létrejön)</translation>
+        <translation>A rétegnév utótagja, amely akkor használatos, ha már létezik ilyen nevű réteg (például duplikáláskor)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="155"/>
@@ -15601,22 +15601,22 @@ Az építőipari réteg tartalma nem jelenik meg a nyomtatásban.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="268"/>
         <source>Display and operations settings</source>
-        <translation>Megjelenítési és üzemeltetési beállítások</translation>
+        <translation>Megjelenítési és műveleti beállítások</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="271"/>
         <source>Display and Operations</source>
-        <translation>Megjelenítés és üzemeltetés</translation>
+        <translation>Megjelenítés és műveletek</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="329"/>
         <source>If checked, tooltip will include complete name of layer (with all upper layer levels)</source>
-        <translation>Ha be van jelölve, az eszköztipp tartalmazza a réteg teljes nevét (az összes felső réteg szintjével)</translation>
+        <translation>Ha be van jelölve, az eszköztipp a réteg teljes nevét tartalmazza (az összes felsőbb rétegszinttel együtt)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="332"/>
         <source>Show full name as ToolTip</source>
-        <translation>A teljes név megjelenítése ToolTip néven</translation>
+        <translation>Teljes név megjelenítése eszköztippként</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="608"/>
@@ -15651,42 +15651,42 @@ Az építőipari réteg tartalma nem jelenik meg a nyomtatásban.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="322"/>
         <source>Show layer type icons</source>
-        <translation>A rétegtípus ikonok megjelenítése</translation>
+        <translation>Rétegtípus-ikonok megjelenítése</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="309"/>
         <source>Indentation for child layers</source>
-        <translation>A gyermekrétegek bemetszése</translation>
+        <translation>Gyermekrétegek behúzása</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="312"/>
         <source>Show indented layer names. Ident size:</source>
-        <translation>A belső rétegnevek megjelenítése. Az azonosító mérete:</translation>
+        <translation>Behúzott rétegnevek megjelenítése. Behúzás mérete:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="277"/>
         <source>Size of the indent in characters to indent name of child layer from parent ones</source>
-        <translation>A francia bekezdés mérete betűkkel a szülőktől származó gyermekréteg nevéhez</translation>
+        <translation>A behúzás mérete karakterben: ennyivel kerül beljebb a gyermekréteg neve a szülőrétegéhez képest</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="352"/>
         <source>If checked, drag&amp;drop operations in layers list are enabled and layers hierarchy may be restructutured</source>
-        <translation>Ha be van jelölve, a réteglistában engedélyezve van a drag &amp; drop művelet, és a rétegek hierarchiája átalakítható</translation>
+        <translation>Ha be van jelölve, a réteglistában engedélyezettek a fogd és vidd (drag&amp;drop) műveletek, és a rétegek hierarchiája átszervezhető</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="355"/>
         <source>Allow restructuring via Drag&amp;Drop</source>
-        <translation>A szerkezetátalakítás engedélyezése a Drag &amp; Drop segítségével</translation>
+        <translation>Átszervezés engedélyezése fogd és vidd módszerrel</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="293"/>
         <source>If primary layer is renames, secondary layers are renamed too.</source>
-        <translation>Ha az elsődleges réteg átnevez, a másodlagos rétegeket is átnevezzük.</translation>
+        <translation>Ha az elsődleges réteget átnevezik, a program a másodlagos rétegeket is átnevezi.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="296"/>
         <source>Rename secondary layers on primary rename</source>
-        <translation>Másodlagos rétegek átnevezése az elsődleges átnevezésen</translation>
+        <translation>Másodlagos rétegek átnevezése az elsődleges átnevezésekor</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="376"/>
@@ -15700,7 +15700,7 @@ Az építőipari réteg tartalma nem jelenik meg a nyomtatásban.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="470"/>
         <source>Background color for selected items in layers tree.</source>
-        <translation>Háttér színe kiválasztott elemek rétegek fa.</translation>
+        <translation>A rétegfa kiválasztott elemeinek háttérszíne.</translation>
     </message>
     <message>
         <source>Color for separator lines in layers tree view</source>
@@ -15709,7 +15709,7 @@ Az építőipari réteg tartalma nem jelenik meg a nyomtatásban.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="420"/>
         <source>Background color for virtual layers items in layers list</source>
-        <translation>Háttér színe virtuális rétegek elemek réteglistában</translation>
+        <translation>A virtuális rétegek háttérszíne a réteglistában</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="449"/>
@@ -15722,12 +15722,12 @@ Az építőipari réteg tartalma nem jelenik meg a nyomtatásban.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="560"/>
         <source>Matched item in highlight filter mode</source>
-        <translation>Egyezett elem kiemelt szűrőüzemmódban</translation>
+        <translation>Egyező elem a szűrő kiemelési módjában</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="391"/>
         <source>Color for items that matches filter conditions</source>
-        <translation>A szűrési körülményeknek megfelelő elemek színe</translation>
+        <translation>A szűrési feltételeknek megfelelő elemek színe</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="379"/>
@@ -15737,12 +15737,12 @@ Az építőipari réteg tartalma nem jelenik meg a nyomtatásban.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="406"/>
         <source>#1E90FF</source>
-        <translation># 1E90FF</translation>
+        <translation>#1E90FF</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="581"/>
         <source>Virtual layer background color</source>
-        <translation>Virtuális réteg háttér színe</translation>
+        <translation>Virtuális réteg háttérszíne</translation>
     </message>
     <message>
         <source>Threeview items separator grid</source>
@@ -15756,12 +15756,12 @@ Az építőipari réteg tartalma nem jelenik meg a nyomtatásban.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="523"/>
         <source>Background color for active layer item in layers tree</source>
-        <translation>Háttér színe aktív réteg elem rétegek fa</translation>
+        <translation>Az aktív réteg háttérszíne a rétegfában</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="526"/>
         <source>Active layer background color</source>
-        <translation>Aktív réteg háttér színe</translation>
+        <translation>Aktív réteg háttérszíne</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="588"/>
@@ -15791,7 +15791,7 @@ Az építőipari réteg tartalma nem jelenik meg a nyomtatásban.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="69"/>
         <source>Dimensional Layer</source>
-        <translation>Méretréteg</translation>
+        <translation>Méretezési réteg</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="70"/>
@@ -15801,7 +15801,7 @@ Az építőipari réteg tartalma nem jelenik meg a nyomtatásban.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Alternative Position Layer</source>
-        <translation>Alternatív helyzetjelző réteg</translation>
+        <translation>Alternatív helyzetű réteg</translation>
     </message>
     <message>
         <source>grid</source>
@@ -15810,22 +15810,22 @@ Az építőipari réteg tartalma nem jelenik meg a nyomtatásban.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="103"/>
         <source>highlighted item</source>
-        <translation>kiemelt tétel</translation>
+        <translation>kiemelt elem</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="110"/>
         <source>virtual layer background</source>
-        <translation>virtuális réteg háttér</translation>
+        <translation>virtuális réteg háttere</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="118"/>
         <source>selected item background</source>
-        <translation>kijelölt elem háttere</translation>
+        <translation>kiválasztott elem háttere</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="126"/>
         <source>active layer background</source>
-        <translation>aktív réteg háttér</translation>
+        <translation>aktív réteg háttere</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
@@ -15836,8 +15836,8 @@ Az építőipari réteg tartalma nem jelenik meg a nyomtatásban.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>Érvénytelen érték:%1 szín.
-Kérjük, adjon meg egy másik értéket.</translation>
+        <translation>Érvénytelen színérték a következőhöz: %1.
+Adjon meg másik értéket.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="245"/>
@@ -15855,12 +15855,12 @@ Kérjük, adjon meg egy másik értéket.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="152"/>
         <source>Looking for matching layer names</source>
-        <translation>A megfelelő rétegnevek keresése</translation>
+        <translation>Egyező rétegnevek keresése</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="157"/>
         <source>Highlight Mode</source>
-        <translation>Kiemelt üzemmód</translation>
+        <translation>Kiemelési mód</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="167"/>
@@ -15885,180 +15885,180 @@ Kérjük, adjon meg egy másik értéket.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="210"/>
         <source>Show Active Layer Only</source>
-        <translation>Csak aktív réteg megjelenítése</translation>
+        <translation>Csak az aktív réteg megjelenítése</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="218"/>
         <source>Expand All</source>
-        <translation>Az összes kiterjesztés</translation>
+        <translation>Az összes kibontása</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="226"/>
         <source>Collapse All</source>
-        <translation>Összecsukás</translation>
+        <translation>Az összes összecsukása</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="234"/>
         <source>Collapse Secondary</source>
-        <translation>Másodlagos összeomlás</translation>
+        <translation>Másodlagos rétegek összecsukása</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="242"/>
         <source>Unlock all layers</source>
-        <translation>Minden réteg feloldása</translation>
+        <translation>Az összes réteg feloldása</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="249"/>
         <source>Lock all layers</source>
-        <translation>Zárd be az összes réteget</translation>
+        <translation>Az összes réteg zárolása</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="256"/>
         <source>Add a layer</source>
-        <translation>Egy réteg hozzáadása</translation>
+        <translation>Réteg hozzáadása</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="263"/>
         <source>Add dimensions Layer</source>
-        <translation>Méretek hozzáadása</translation>
+        <translation>Méretezési réteg hozzáadása</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="272"/>
         <source>Remove layer</source>
-        <translation>A réteg eltávolítása</translation>
+        <translation>Réteg eltávolítása</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="279"/>
         <source>Modify layer attributes / rename</source>
-        <translation>A rétegattribútumok módosítása / átnevezése</translation>
+        <translation>Rétegtulajdonságok módosítása / átnevezés</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="286"/>
         <source>Flat List Mode)</source>
-        <translation>Síklista mód)</translation>
+        <translation>Lapos lista mód</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="656"/>
         <source>&amp;Add Child Layer</source>
-        <translation>Gyermek réteg hozzáadása</translation>
+        <translation>G&amp;yermekréteg hozzáadása</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="657"/>
         <source>&amp;Rename</source>
-        <translation>Átnevezés</translation>
+        <translation>Átne&amp;vezés</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="658"/>
         <source>&amp;Remove Layers (Sub-Tree)</source>
-        <translation>A rétegek eltávolítása (Alfa)</translation>
+        <translation>Rétegek eltáv&amp;olítása (részfa)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="660"/>
         <source>&amp;Copy Structure (Sub-Tree)</source>
-        <translation>Struktúra másolása (Alfa)</translation>
+        <translation>&amp;Struktúra másolása (részfa)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="661"/>
         <source>&amp;Duplicate Content (Sub-Tree)</source>
-        <translation>&amp; Duplicate tartalom (Alfa)</translation>
+        <translation>Tartalom &amp;duplikálása (részfa)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="663"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>Szervezetek kiválasztása (Alfa)</translation>
+        <translation>Ele&amp;mek kijelölése (részfa)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="668"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>A rétegek és attribútumok szerkesztése</translation>
+        <translation>Rétegtulajdonságok &amp;szerkesztése</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="670"/>
         <source>&amp;Remove Layer</source>
-        <translation>A réteg eltávolítása</translation>
+        <translation>Réteg eltá&amp;volítása</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="679"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>Méretek hozzáadása</translation>
+        <translation>&amp;Méretezési alréteg hozzáadása</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="683"/>
         <source>&amp;Add Info Sub-Layer</source>
-        <translation>Infó hozzáadása</translation>
+        <translation>&amp;Információs alréteg hozzáadása</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="687"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
-        <translation>Alternatív nézet hozzáadása</translation>
+        <translation>Alternatív hel&amp;yzetű alréteg hozzáadása</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="693"/>
         <source>&amp;Remove Sub-layers</source>
-        <translation>Alrétegek eltávolítása</translation>
+        <translation>Alrétegek eltáv&amp;olítása</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="701"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="711"/>
         <source>Convert to Dimensional Layer</source>
-        <translation>Átalakítás dimenzionális rétegbe</translation>
+        <translation>Átalakítás méretezési réteggé</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="702"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="714"/>
         <source>Convert to Info Layer</source>
-        <translation>Átalakítás infó rétegbe</translation>
+        <translation>Átalakítás információs réteggé</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="703"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="717"/>
         <source>Convert to Alternative Position Layer</source>
-        <translation>Átalakít az alternatív helyzetjelző rétegre</translation>
+        <translation>Átalakítás alternatív helyzetű réteggé</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="709"/>
         <source>Convert to Normal Layer</source>
-        <translation>Átalakítás normál rétegbe</translation>
+        <translation>Átalakítás normál réteggé</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="723"/>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>A réteg entitásainak kiválasztása</translation>
+        <translation>Réteg elemeinek ki&amp;jelölése</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="726"/>
         <source>&amp;Create Layer Copy</source>
-        <translation>A rétegmásolat létrehozása</translation>
+        <translation>R&amp;étegmásolat létrehozása</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="727"/>
         <source>&amp;Duplicate Layer With Content</source>
-        <translation>A réteg duplikálása tartalommal</translation>
+        <translation>Réteg &amp;duplikálása tartalommal</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="731"/>
         <source>Move Selection to Layer</source>
-        <translation>A kijelölés áthelyezése a rétegbe</translation>
+        <translation>Kijelölés áthelyezése a rétegre</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="732"/>
         <source>Duplicate Selection to Layer</source>
-        <translation>Kiválasztás duplikálása rétegbe</translation>
+        <translation>Kijelölés duplikálása a rétegre</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="739"/>
         <source>&amp;Add Layer</source>
-        <translation>A réteg hozzáadása</translation>
+        <translation>Réteg h&amp;ozzáadása</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="741"/>
         <source>&amp;Freeze Others Layers</source>
-        <translation>Más rétegek befagyasztása</translation>
+        <translation>A többi réteg f&amp;agyasztása</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="742"/>
         <source>&amp;Defreeze All Layers</source>
-        <translation>Az összes rétegek hatástalanítása</translation>
+        <translation>Az összes &amp;réteg felolvasztása</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
@@ -16068,42 +16068,42 @@ Kérjük, adjon meg egy másik értéket.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>
         <source>&amp;Unlock All Layers</source>
-        <translation>Minden rétegek megnyitása</translation>
+        <translation>Az összes réteg &amp;feloldása</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="745"/>
         <source>&amp;Lock All Layers</source>
-        <translation>Az összes réteg bezárása</translation>
+        <translation>Az összes réteg &amp;zárolása</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="746"/>
         <source>Enable &amp;Printing All Layers</source>
-        <translation>Az összes réteg nyomtatása</translation>
+        <translation>Az összes réteg &amp;nyomtatásának engedélyezése</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="747"/>
         <source>&amp;Disable Printing All Layers</source>
-        <translation>Az összes réteg nyomtatásának letiltása</translation>
+        <translation>Az összes réteg nyomtatásának &amp;letiltása</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="750"/>
         <source>&amp;Export Single Layer</source>
-        <translation>Egyrétegű exportálás</translation>
+        <translation>E&amp;gyetlen réteg exportálása</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="754"/>
         <source>&amp;Export Layer Sub-Tree</source>
-        <translation>A réteg alfájának exportálása</translation>
+        <translation>Ré&amp;teg részfájának exportálása</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="758"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>&amp; Látható réteg (ek) exportálása</translation>
+        <translation>Lát&amp;ható réteg(ek) exportálása</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="760"/>
         <source>&amp;Find And Remove Empty Layers</source>
-        <translation>Az üres rétegek keresése és eltávolítása</translation>
+        <translation>Üres rétegek &amp;keresése és eltávolítása</translation>
     </message>
 </context>
 <context>
@@ -23392,12 +23392,12 @@ Kérjük, adjon meg egy másik értéket.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="82"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Ha ez be van jelölve, a tükröző entitásokat az aktuális rétegre helyezik, máskülönben eredeti rétegekbe.</translation>
+        <translation type="unfinished">Ha be van jelölve, a tükrözött elemek az aktuális rétegre kerülnek, ellenkező esetben az eredeti rétegükre.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">A felhasználó aktuális rétege</translation>
+        <translation type="unfinished">Az aktuális réteg használata</translation>
     </message>
 </context>
 <context>
@@ -23691,7 +23691,7 @@ Kérjük, adjon meg egy másik értéket.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="45"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="unfinished">Ha be van jelölve, a létrehozott egységek a jelenlegi rétegbe kerülnek. Máskülönben eredeti rétegekbe kerülnek.</translation>
+        <translation type="unfinished">Ha be van jelölve, a létrehozott elemek az aktuális rétegre kerülnek. Ellenkező esetben az eredeti rétegükre kerülnek. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="48"/>
@@ -23877,7 +23877,7 @@ Kérjük, adjon meg egy másik értéket.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="144"/>
         <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="unfinished">Ha ez be van jelölve, a létrehozott egységek bekerülnek a jelenlegi rétegbe, máskülönben az eredeti rétegekbe kerülnek.</translation>
+        <translation type="unfinished">Ha be van jelölve, a létrehozott elemek az aktuális rétegre kerülnek, ellenkező esetben az eredeti rétegükre. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="147"/>
@@ -24293,7 +24293,7 @@ Figyelem: ezt a műveletet NEM lehet visszavonni!</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="93"/>
         <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">Ha ez be van jelölve, akkor a létrehozott entitások bekerülnek a jelenlegi rétegbe, máskülönben eredeti rétegekben lesznek.</translation>
+        <translation type="unfinished">Ha be van jelölve, a létrehozott elemek az aktuális rétegre kerülnek, ellenkező esetben az eredeti rétegükre.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="96"/>
@@ -24791,13 +24791,13 @@ Figyelem: ezt a műveletet NEM lehet visszavonni!</translation>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="263"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="298"/>
         <source>By Layer</source>
-        <translation>Layer</translation>
+        <translation>Réteg szerint</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="264"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="299"/>
         <source>By Block</source>
-        <translation>Block szerint</translation>
+        <translation>Blokk szerint</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="266"/>
@@ -25419,22 +25419,22 @@ Figyelem: ezt a műveletet NEM lehet visszavonni!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="188"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Az aktuális injekciós toll frissítése aktív rétegű injekciós tollal</translation>
+        <translation>Aktuális toll frissítése az aktív réteg tollával</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="205"/>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation>Töltőtoll szerkesztője az aktív réteg injekciós tolláról</translation>
+        <translation>Tollszerkesztő kitöltése az aktív réteg tollából</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="208"/>
         <source>Pick from Active Layer</source>
-        <translation>Válasszon aktív rétegből</translation>
+        <translation>Kiválasztás az aktív rétegről</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="222"/>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation>Alkalmazza a szerkesztő tollat az aktív réteges injekciós tollra</translation>
+        <translation>A szerkesztő tollának alkalmazása az aktív réteg tollára</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="225"/>
@@ -25524,7 +25524,7 @@ Figyelem: ezt a műveletet NEM lehet visszavonni!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="305"/>
         <source>&amp;Apply Pen To Active Layer</source>
-        <translation>A toll alkalmazása aktív rétegbe</translation>
+        <translation>&amp;Toll alkalmazása az aktív rétegre</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="306"/>
@@ -29595,7 +29595,7 @@ Kérjük, vegye figyelembe, hogy ha a tollat az editorban menti el újraindítá
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="171"/>
         <source>Dimensional</source>
-        <translation type="unfinished">Méretek</translation>
+        <translation type="unfinished">Méretezési</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="175"/>
@@ -29605,7 +29605,7 @@ Kérjük, vegye figyelembe, hogy ha a tollat az editorban menti el újraindítá
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="179"/>
         <source>Informational</source>
-        <translation type="unfinished">Tájékoztatás</translation>
+        <translation type="unfinished">Információs</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="186"/>
@@ -29685,7 +29685,7 @@ Kérjük, vegye figyelembe, hogy ha a tollat az editorban menti el újraindítá
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="303"/>
         <source>Unlock all layers</source>
-        <translation type="unfinished">Minden réteg feloldása</translation>
+        <translation type="unfinished">Az összes réteg feloldása</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="303"/>
@@ -33158,7 +33158,8 @@ Kérjük, vegye figyelembe, hogy ha a tollat az editorban menti el újraindítá
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="127"/>
         <source>
 Layer: </source>
-        <translation>Réteg:</translation>
+        <translation>
+Réteg: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="573"/>
@@ -35964,7 +35965,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="208"/>
         <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="unfinished">Meghatározza, hogy a másolatok bekerülnek-e az aktuális vagy eredeti rétegbe</translation>
+        <translation type="unfinished">Meghatározza, hogy a másolatok az aktuális rétegre kerülnek-e, vagy az eredeti rétegükre</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="211"/>
@@ -36210,7 +36211,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="209"/>
         <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">Ha ez be van jelölve, az új lenies az aktuális rétegre kerül, máskülönben eredeti rétegekben lesznek.</translation>
+        <translation type="unfinished">Ha be van jelölve, az új elemek az aktuális rétegre kerülnek, ellenkező esetben az eredeti rétegükre.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="212"/>
@@ -36453,7 +36454,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="83"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="unfinished">Ha be van jelölve, a létrehozott egységek a jelenlegi rétegbe kerülnek. Máskülönben eredeti rétegekbe kerülnek.</translation>
+        <translation type="unfinished">Ha be van jelölve, a létrehozott elemek az aktuális rétegre kerülnek. Ellenkező esetben az eredeti rétegükre kerülnek. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="86"/>
@@ -37367,7 +37368,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="77"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Ha be van jelölve, akkor a létrehozott egységeket a jelenlegi rétegre helyezik, máskülönben eredeti rétegekbe.</translation>
+        <translation type="unfinished">Ha be van jelölve, a létrehozott elemek az aktuális rétegre kerülnek, ellenkező esetben az eredeti rétegükre.</translation>
     </message>
 </context>
 <context>
@@ -37405,7 +37406,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="73"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Ha be van jelölve, akkor a létrehozott egységeket a jelenlegi rétegre helyezik, máskülönben eredeti rétegekbe.</translation>
+        <translation type="unfinished">Ha be van jelölve, a létrehozott elemek az aktuális rétegre kerülnek, ellenkező esetben az eredeti rétegükre.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="76"/>
@@ -37552,7 +37553,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="71"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Ha be van jelölve, akkor a létrehozott egységeket a jelenlegi rétegre helyezik, máskülönben eredeti rétegekbe.</translation>
+        <translation type="unfinished">Ha be van jelölve, a létrehozott elemek az aktuális rétegre kerülnek, ellenkező esetben az eredeti rétegükre.</translation>
     </message>
 </context>
 <context>
@@ -37565,12 +37566,12 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="32"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Ha be van jelölve, akkor a létrehozott egységeket a jelenlegi rétegre helyezik, máskülönben eredeti rétegekbe.</translation>
+        <translation type="unfinished">Ha be van jelölve, a létrehozott elemek az aktuális rétegre kerülnek, ellenkező esetben az eredeti rétegükre.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="35"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">A felhasználó aktuális rétege</translation>
+        <translation type="unfinished">Az aktuális réteg használata</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="42"/>
@@ -38440,7 +38441,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="216"/>
         <source>Entity&apos;s Layer</source>
-        <translation>Szervezetek</translation>
+        <translation>Elem rétege</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="250"/>
@@ -39129,7 +39130,7 @@ Figyelem: ezt a műveletet NEM lehet visszavonni!</translation>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="188"/>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="188"/>
         <source>Layers</source>
-        <translation>Lábak</translation>
+        <translation>Rétegek</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="201"/>
@@ -39150,7 +39151,7 @@ Figyelem: ezt a műveletet NEM lehet visszavonni!</translation>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="236"/>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="236"/>
         <source>Layers Tree</source>
-        <translation>Fa</translation>
+        <translation>Rétegfa</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="261"/>
@@ -39954,12 +39955,12 @@ Kérjük, ellenőrizze annak létezését és engedélyeit.</translation>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="100"/>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="276"/>
         <source>By Layer</source>
-        <translation>Fólia szerint</translation>
+        <translation>Réteg szerint</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="101"/>
         <source>By Block</source>
-        <translation>Blokkonként</translation>
+        <translation>Blokk szerint</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="108"/>
@@ -40387,7 +40388,7 @@ Kérjük, ellenőrizze annak létezését és engedélyeit.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="44"/>
         <source>Layer:</source>
-        <translation>Fólia:</translation>
+        <translation>Réteg:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="54"/>
@@ -40977,7 +40978,7 @@ Ez rekurzív módon módosítja magának a blokknak az összes entitását.</tra
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="51"/>
         <source>Layer:</source>
-        <translation>Fólia:</translation>
+        <translation>Réteg:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="241"/>
@@ -43590,7 +43591,7 @@ Ez rekurzív módon módosítja magának a blokknak az összes entitását.</tra
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5074"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ha engedélyezve van, egy réteg aktiválása az összes kijelölt entitást az új fóliára módosítja. Több entitás rétegének módosítása: először válassza ki a szükséges entitásokat; Aktiváljon egy réteget a Réteg widgetben. Ez az összes kijelölt rajzelemet úgy módosítja, hogy az új fóliához tartozzon.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ha engedélyezve van, egy réteg aktiválása az összes kijelölt elemet erre az új rétegre helyezi át. Több elem rétegének módosításához először jelölje ki a kívánt elemeket, majd aktiváljon egy réteget a Rétegek widgetben. Ezzel az összes kijelölt elem az új réteghez fog tartozni.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5934"/>
@@ -44711,7 +44712,7 @@ Ez rekurzív módon módosítja magának a blokknak az összes entitását.</tra
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5077"/>
         <source>Modify layer of selected entities, at layer activation</source>
-        <translation>A kiválasztott szervezetek rétegének módosítása rétegaktiváláskor</translation>
+        <translation>A kijelölt elemek rétegének módosítása réteg aktiválásakor</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5490"/>
@@ -45885,7 +45886,7 @@ Ez rekurzív módon módosítja magának a blokknak az összes entitását.</tra
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="92"/>
         <source>Export visible construction layers</source>
-        <translation>Látható építési fóliák exportálása</translation>
+        <translation>Látható építési rétegek exportálása</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="104"/>
@@ -46484,7 +46485,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="197"/>
         <source>Layer of text</source>
-        <translation>Szövegréteg</translation>
+        <translation>A szöveg rétege</translation>
     </message>
     <message>
         <source>Obligue of text</source>
@@ -47083,7 +47084,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="178"/>
         <source>Layer:</source>
-        <translation>Fólia:</translation>
+        <translation>Réteg:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="240"/>
@@ -47352,12 +47353,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="20"/>
         <source>Layer Settings</source>
-        <translation>Fólia beállításai</translation>
+        <translation>Réteg beállításai</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="46"/>
         <source>Layer Name:</source>
-        <translation>Fólia neve:</translation>
+        <translation>Réteg neve:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="63"/>
@@ -47368,8 +47369,8 @@ so default step value required for baking</source>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="29"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>A tervezési réteg végtelen egyenes vonalú elemeket tartalmaz, amelyek felhasználhatók a tervezéshez.
-A tervezési rétegek tartalma nem kerül kinyomtatásra.</translation>
+        <translation>Az építési réteg végtelen egyenes vonalú elemeket tartalmaz, amelyek geometriai szerkesztéshez használhatók.
+Az építési rétegek tartalma nem kerül kinyomtatásra.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="33"/>
@@ -47382,7 +47383,7 @@ A tervezési rétegek tartalma nem kerül kinyomtatásra.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="298"/>
         <source>Looking for matching layer names</source>
-        <translation>Egyező fólianevek keresése</translation>
+        <translation>Egyező rétegnevek keresése</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="296"/>
@@ -47424,7 +47425,7 @@ A tervezési rétegek tartalma nem kerül kinyomtatásra.</translation>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="83"/>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="189"/>
         <source>By Layer</source>
-        <translation>Fólia szerint</translation>
+        <translation>Réteg szerint</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="84"/>
@@ -47796,7 +47797,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="239"/>
         <source>By Layer</source>
-        <translation>Fólia szerint</translation>
+        <translation>Réteg szerint</translation>
     </message>
 </context>
 <context>
@@ -47815,17 +47816,17 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="240"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1739"/>
         <source>Remove Layer</source>
-        <translation>Fólia törlése</translation>
+        <translation>Réteg eltávolítása</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="183"/>
         <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>A &quot;%1&quot; fólia soha sem törölhető.</translation>
+        <translation>A &quot;%1&quot; réteg soha nem távolítható el.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="304"/>
         <source>Layer Dialog</source>
-        <translation>Fólia beállítás</translation>
+        <translation>Rétegbeállítás</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="406"/>
@@ -47843,12 +47844,12 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="264"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="308"/>
         <source>Layer Properties</source>
-        <translation>Fólia tulajdonságai</translation>
+        <translation>Réteg tulajdonságai</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="84"/>
         <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>A &quot;%1&quot; nevű fólia már létezik. Válasszon másik nevet.</translation>
+        <translation>A &quot;%1&quot; nevű réteg már létezik. Válasszon másik nevet.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="173"/>
@@ -47875,7 +47876,7 @@ Ez a művelet nem visszavonható.</translation>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="251"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1788"/>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>A listázott rétegek és a rajtuk lévő összes elemek el lesznek távolítva.</translation>
+        <translation>A listázott rétegek a rajtuk lévő összes elemmel együtt el lesznek távolítva.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="253"/>
@@ -47886,7 +47887,7 @@ Ez a művelet nem visszavonható.</translation>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="257"/>
         <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>Figyelmeztetés: &quot;0&quot; réteg soha nem távolítható el.</translation>
+        <translation>Figyelmeztetés: a &quot;0&quot; réteg soha nem távolítható el.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="260"/>
@@ -47914,7 +47915,7 @@ Ez a művelet nem visszavonható.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="230"/>
         <source>Layer empty name is not allowed.</source>
-        <translation>A réteg üres neve nem megengedett.</translation>
+        <translation>A réteg neve nem lehet üres.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="265"/>
@@ -47926,9 +47927,9 @@ Ez a művelet nem visszavonható.</translation>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation>Próbálja meg létrehozni réteg másoló név. Duplikált réteg neve
+        <translation>Kísérlet történt már létező nevű réteg létrehozására. Az ismétlődő rétegnév: 
 [%1].
-Kérjük, nevezzen meg egy másik nevet.</translation>
+Válasszon másik nevet.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="142"/>
@@ -47940,8 +47941,8 @@ Kérjük, nevezzen meg egy másik nevet.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="143"/>
         <source>Layer list separator string is empty. It will not be possible to build layers tree.
 Please specify a different value.</source>
-        <translation>A réteglistás elválasztó sztring üres. Nem lehet réteges fát építeni.
-Kérjük, adjon meg egy másik értéket.</translation>
+        <translation>A réteglista elválasztó karakterlánca üres. Így a rétegfa nem építhető fel.
+Adjon meg másik értéket.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="962"/>
@@ -47960,44 +47961,46 @@ Törölje a szűrőt és ismételje meg.</translation>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
 Clear filtering mask and repeat.</source>
-        <translation>Entitások nélküli réteg(ek) találhatók, de szűrve vannak és nem láthatók.
+        <translation>Elem nélküli réteg(ek) található(k), de a szűrés miatt nem látható(k).
 
-Törölje a szűrési maszkot és ismételje meg.</translation>
+Törölje a szűrőmaszkot, és ismételje meg a műveletet.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="973"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>Nincs réteg entitások nélkül, nincs mit eltávolítani.</translation>
+        <translation>Nem található elem nélküli réteg, nincs mit eltávolítani.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1116"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1161"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1169"/>
         <source>Add Layer</source>
-        <translation>A réteg hozzáadása</translation>
+        <translation>Réteg hozzáadása</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1117"/>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation>Ilyen gyermekréteg már létezik
+        <translation>A következő rétegnek már van ilyen gyermekrétege: 
 [%1].
-Kérjük, nevezzen meg egy másik nevet.</translation>
+Válasszon másik nevet.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1162"/>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation>Ilyen gyermekréteg már létezik
-[%1].</translation>
+        <translation>A következő rétegnek már van ilyen gyermekrétege: 
+[%1].
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1170"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>Méretréteg csak normál aktív réteghez adható hozzá.</translation>
+        <translation>Méretezési réteg csak normál aktív réteghez adható hozzá.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1233"/>
@@ -48016,11 +48019,11 @@ Kérjük, nevezzen meg egy másik nevet.</translation>
 If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation>Lecseréli a &quot;Réteg szerinti&quot; értéket a forráerétegek értékeire?
+        <translation>Lecseréli a &quot;Réteg szerint&quot; értéket a forrásrétegek értékeire?
 
-Ha Igen - a &quot;Réteg szerinti&quot; tollakkal rendelkező entitások az új rétegen ugyanúgy néznek ki, mint az előző rétegeken, és a &quot;Réteg szerinti&quot; értéket a feloldott tollak váltják fel.
+Ha Igen - a &quot;Réteg szerint&quot; tollal rendelkező elemek az új rétegen pontosan ugyanúgy néznek ki, mint az előző rétegeken, és a &quot;Réteg szerint&quot; érték helyére a feloldott tollak kerülnek.
 
-Ha Nem - a &quot;Réteg szerinti&quot; értékek maradnak, és a célréteg tolla határozza meg az ilyen entitások tollát.</translation>
+Ha Nem - a &quot;Réteg szerint&quot; értékek megmaradnak, így az ilyen elemek tollát a célréteg tolla határozza meg.</translation>
     </message>
     <message>
         <source>Replace &quot;By Layer&quot; value to source layers values?
@@ -48034,7 +48037,7 @@ Ha Nem, akkor a „Réteg szerint” értékek változatlanok maradnak, és a c�
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1805"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1863"/>
         <source>Layer DialogEx</source>
-        <translation>Layer dialogEx</translation>
+        <translation>Rétegbeállítás</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="202"/>
@@ -48087,19 +48090,21 @@ Kérjük, adjon meg egy másik értéket.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1453"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>Nincsenek olyan entitások, amelyek látható rétegeken egyeznének az injekciós tollal.</translation>
+        <translation>A látható rétegeken nincs a tollnak megfelelő elem.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1454"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>Ezek az entitások fagyasztott rétegeken léteznek.</translation>
+        <translation>Ilyen elemek fagyasztott rétegeken találhatók.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1455"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>Az ilyen entitások zárt rétegeken léteznek.</translation>
+        <translation>Ilyen elemek zárolt rétegeken találhatók.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1456"/>
@@ -49212,7 +49217,7 @@ Lecseréli?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="88"/>
         <source>cslayer</source>
-        <translation>clayer</translation>
+        <translation>cslayer</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="89"/>
@@ -52241,13 +52246,13 @@ Lecseréli?</translation>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="50"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="206"/>
         <source>By Layer</source>
-        <translation>Layer</translation>
+        <translation>Réteg szerint</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="56"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="209"/>
         <source>By Block</source>
-        <translation>Block szerint</translation>
+        <translation>Blokk szerint</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="212"/>

@@ -2656,7 +2656,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="252"/>
         <source>(De-)Select Layer</source>
-        <translation>(Απο-)Επιλογή Στρώσης</translation>
+        <translation>(Απο-)Επιλογή στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="235"/>
@@ -2872,12 +2872,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="66"/>
         <source>Layer</source>
-        <translation>Στρώμα</translation>
+        <translation>Στρώση</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="66"/>
         <source>Layers operations</source>
-        <translation>Λειτουργίες στρωμάτων</translation>
+        <translation>Λειτουργίες στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="67"/>
@@ -3069,12 +3069,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity Layer</source>
-        <translation>Στρώμα οντότητας</translation>
+        <translation>Στρώση οντότητας</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity&apos;s Layer</source>
-        <translation>Οντότητα</translation>
+        <translation>Στρώση οντότητας</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="88"/>
@@ -3089,32 +3089,32 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="109"/>
         <source>Activate Entity&apos;s Layer</source>
-        <translation>Ενεργοποίηση στρώματος οντότητας</translation>
+        <translation>Ενεργοποίηση στρώσης οντότητας</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="110"/>
         <source>Hide Entity&apos;s Layer</source>
-        <translation>Απόκρυψη στρώματος οντότητας</translation>
+        <translation>Απόκρυψη στρώσης οντότητας</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="111"/>
         <source>Hide Other Layers than Entity&apos;s</source>
-        <translation>Απόκρυψη άλλων στρωμάτων εκτός των Οντοτήτων</translation>
+        <translation>Απόκρυψη όλων των στρώσεων εκτός της στρώσης της οντότητας</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="112"/>
         <source>Lock Entity&apos;s Layer</source>
-        <translation>Κλείδωμα στρώματος οντότητας</translation>
+        <translation>Κλείδωμα στρώσης οντότητας</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="113"/>
         <source>Toggle Entity&apos;s Layer Construction</source>
-        <translation>Εναλλαγή κατασκευής στρώματος οντότητας</translation>
+        <translation>Εναλλαγή στρώσης κατασκευής για τη στρώση της οντότητας</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="114"/>
         <source>Toggle Entity&apos;s Layer Printing</source>
-        <translation>Εναλλαγή εκτύπωσης στρώματος οντότητας</translation>
+        <translation>Εναλλαγή εκτύπωσης στρώσης οντότητας</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="222"/>
@@ -3925,7 +3925,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="410"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Ενημέρωση της τρέχουσας πένας από το Active Layer&apos; Pen</translation>
+        <translation>Ενημέρωση της τρέχουσας πένας από την πένα της ενεργής στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="416"/>
@@ -4170,27 +4170,27 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="621"/>
         <source>&amp;Add Layer</source>
-        <translation>Προσθήκη Στρώσης</translation>
+        <translation>Προσ&amp;θήκη στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="622"/>
         <source>&amp;Remove Layer</source>
-        <translation>Αφαίρεση Στρώσης</translation>
+        <translation>Α&amp;φαίρεση στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="623"/>
         <source>&amp;Edit Layer</source>
-        <translation>Επεξεργασία Στρώσης</translation>
+        <translation>Επεξε&amp;ργασία στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="624"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>Εναλλαγή &amp;Κλειδώματος Στρώσης</translation>
+        <translation>Ε&amp;ναλλαγή κλειδώματος στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="625"/>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation>Εναλλαγή &amp;Ορατότητας Στρώσης</translation>
+        <translation>Εναλλαγή &amp;ορατότητας στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="626"/>
@@ -4523,32 +4523,32 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="617"/>
         <source>&amp;Show all layers</source>
-        <translation>Εμφάνιση όλων των στρωμάτων</translation>
+        <translation>&amp;Εμφάνιση όλων των στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
         <source>&amp;Hide all layers except current</source>
-        <translation>Απόκρυψη όλων των &amp;στρωμάτων εκτός του τρέχοντος</translation>
+        <translation>Απόκρυψη όλων των &amp;στρώσεων εκτός της τρέχουσας</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
         <source>&amp;Unlock all</source>
-        <translation>&amp; Ξεκλείδωμα όλων</translation>
+        <translation>&amp;Ξεκλείδωμα όλων</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="620"/>
         <source>&amp;Lock all</source>
-        <translation>&amp; Κλείδωμα όλων</translation>
+        <translation>Κ&amp;λείδωμα όλων</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="628"/>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>&amp; Εξαγωγή επιλεγμένου στρώματος( ών)</translation>
+        <translation>Εξα&amp;γωγή επιλεγμένων στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="629"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Εξαγωγή &amp; Ορατού στρώματος( ων)</translation>
+        <translation>Εξαγ&amp;ωγή ορατών στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="635"/>
@@ -5119,7 +5119,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>Enter layer name to %1</source>
-        <translation>Εισάγετε όνομα στρώματος στο%1</translation>
+        <translation>Εισάγετε όνομα στρώσης για %1</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
@@ -5138,13 +5138,13 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
         <source>selected</source>
         <comment>Layers to export</comment>
-        <translation>επιλεγμένο</translation>
+        <translation>επιλεγμένες</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
         <source>visible</source>
         <comment>Layers to export</comment>
-        <translation>ορατό</translation>
+        <translation>ορατές</translation>
     </message>
 </context>
 <context>
@@ -6866,7 +6866,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_layer.cpp" line="75"/>
         <source>Specify entity with desired layer</source>
-        <translation type="unfinished">Προσδιορίστε την οντότητα με το επιθυμητό στρώμα</translation>
+        <translation type="unfinished">Καθορίστε μια οντότητα της επιθυμητής στρώσης</translation>
     </message>
 </context>
 <context>
@@ -7471,12 +7471,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="66"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Εάν ελεγχθεί, οι κατοπτρισμένες οντότητες θα τοποθετηθούν σε τρέχον στρώμα, διαφορετικά θα τοποθετηθούν σε πρωτότυπα στρώματα.</translation>
+        <translation type="unfinished">Εάν ενεργοποιηθεί, οι καθρεπτισμένες οντότητες θα τοποθετηθούν στην τρέχουσα στρώση, διαφορετικά θα τοποθετηθούν στις αρχικές τους στρώσεις.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="69"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Τρέχον στρώμα χρήστη</translation>
+        <translation type="unfinished">Χρήση τρέχουσας στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="76"/>
@@ -8766,7 +8766,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="67"/>
         <source>Layer to apply</source>
-        <translation type="unfinished">Στρώμα προς εφαρμογή</translation>
+        <translation type="unfinished">Στρώση προς εφαρμογή</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="67"/>
@@ -8799,7 +8799,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="62"/>
         <source>Layer to which created circle should be placed</source>
-        <translation type="unfinished">Στρώμα στον οποίο πρέπει να τοποθετηθεί ο δημιουργημένος κύκλος</translation>
+        <translation type="unfinished">Στρώση στην οποία πρέπει να τοποθετηθεί ο κύκλος που δημιουργείται</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="66"/>
@@ -10774,7 +10774,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="209"/>
         <source>Layer</source>
-        <translation>Στρώμα</translation>
+        <translation>Στρώση</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="236"/>
@@ -11078,7 +11078,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="64"/>
         <source>Layer</source>
-        <translation>Στρώμα</translation>
+        <translation>Στρώση</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="76"/>
@@ -11088,7 +11088,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="98"/>
         <source>Layer of entity</source>
-        <translation>Στρώμα της οντότητας</translation>
+        <translation>Στρώση της οντότητας</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="148"/>
@@ -12243,7 +12243,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="118"/>
         <source>Active Layer</source>
-        <translation type="unfinished">Ενεργό στρώμα</translation>
+        <translation type="unfinished">Ενεργή στρώση</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="125"/>
@@ -12560,7 +12560,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="26"/>
         <source>Layer of dimension</source>
-        <translation>Στρώμα διάστασης</translation>
+        <translation>Στρώση της διάστασης</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="45"/>
@@ -12570,7 +12570,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="58"/>
         <source>Layer:</source>
-        <translation>Στρώμα:</translation>
+        <translation>Στρώση:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="91"/>
@@ -13536,7 +13536,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="82"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">Στρώμα στο οποίο πρέπει να τοποθετηθεί αντίγραφο</translation>
+        <translation type="unfinished">Στρώση στην οποία πρέπει να τοποθετηθεί το αντίγραφο</translation>
     </message>
 </context>
 <context>
@@ -13549,7 +13549,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="45"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">Στρώμα στο οποίο πρέπει να τοποθετηθεί αντίγραφο</translation>
+        <translation type="unfinished">Στρώση στην οποία πρέπει να τοποθετηθεί το αντίγραφο</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="49"/>
@@ -14336,12 +14336,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="168"/>
         <source>Layer</source>
-        <translation type="unfinished">Στρώμα</translation>
+        <translation type="unfinished">Στρώση</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="168"/>
         <source>Layer of entity</source>
-        <translation type="unfinished">Στρώμα της οντότητας</translation>
+        <translation type="unfinished">Στρώση της οντότητας</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="204"/>
@@ -14405,12 +14405,12 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="135"/>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="179"/>
         <source>Export Layers</source>
-        <translation>Εξαγωγή στρώματος</translation>
+        <translation>Εξαγωγή στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="152"/>
         <source>Exported Layers</source>
-        <translation>Εξαγωγικά στρώματα</translation>
+        <translation>Εξαγόμενες στρώσεις</translation>
     </message>
 </context>
 <context>
@@ -15241,47 +15241,47 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="20"/>
         <source>Layer Settings</source>
-        <translation>Settings στρώματος</translation>
+        <translation>Ρυθμίσεις στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="48"/>
         <source>Name of new layer. In order to create hierarchical layers, include name of virtual layer and layer name separator.</source>
-        <translation>Όνομα νέου στρώματος. Προκειμένου να δημιουργηθούν ιεραρχικά στρώματα, περιλαμβάνει το όνομα του εικονικού στρώματος και διαχωριστή ονόματος στρώματος.</translation>
+        <translation>Όνομα της νέας στρώσης. Για να δημιουργήσετε ιεραρχικές στρώσεις, συμπεριλάβετε το όνομα της εικονικής στρώσης και τον διαχωριστή ονομάτων στρώσεων.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="64"/>
         <source>Parent Layers Path:</source>
-        <translation>Διαδρομή γονικών στρωμάτων:</translation>
+        <translation>Διαδρομή γονικών στρώσεων:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="81"/>
         <source>Layer Type</source>
-        <translation>Τύπος στρώματος</translation>
+        <translation>Τύπος στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="93"/>
         <source>Layer for various infromational elements, notes, drafts etc.</source>
-        <translation>Στρώμα για διάφορα infromation στοιχεία, σημειώσεις, σχέδια κ.λπ.</translation>
+        <translation>Στρώση για διάφορα πληροφοριακά στοιχεία, σημειώσεις, πρόχειρα κ.λπ.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="96"/>
         <source>Informational</source>
-        <translation>Ενημέρωση</translation>
+        <translation>Πληροφορίες</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="106"/>
         <source>Normal layer with drawing eleements</source>
-        <translation>Κανονικό στρώμα με ελάσματα σχεδίασης</translation>
+        <translation>Κανονική στρώση με στοιχεία σχεδίου</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="109"/>
         <source>Normal</source>
-        <translation>Κανονικό</translation>
+        <translation>Κανονική</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="119"/>
         <source>Layer that holds dimensions</source>
-        <translation>Στρώμα που χωράει διαστάσεις</translation>
+        <translation>Στρώση που περιέχει διαστάσεις</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="122"/>
@@ -15291,7 +15291,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="132"/>
         <source>Layer with alternate position of entities located on normal layers</source>
-        <translation>Στρώμα με εναλλακτική θέση οντοτήτων που βρίσκονται σε κανονικά στρώματα</translation>
+        <translation>Στρώση με εναλλακτική θέση οντοτήτων που βρίσκονται σε κανονικές στρώσεις</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="135"/>
@@ -15302,55 +15302,55 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="148"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Ένα στρώμα κατασκευής έχει οντότητες άπειρων ευθείων γραμμών που προορίζονται να χρησιμοποιηθούν για γεωμετρική κατασκευή.
-Το περιεχόμενο μιας Δομικής Στρώσης δεν πρέπει να εμφανίζεται σε εκτύπωση.</translation>
+        <translation>Μία στρώση κατασκευής έχει οντότητες από άπειρες ευθείες γραμμές οι οποίες προορίζονται να χρησιμοποιηθούν για γεωμετρική κατασκευή.
+       Τα περιεχόμενα μίας στρώσης κατασκευής δεν πρέπει να εμφανίζονται στην εκτύπωση.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="152"/>
         <source>Construction Layer</source>
-        <translation>Στρώμα κατασκευής</translation>
+        <translation>Στρώση κατασκευής</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="181"/>
         <source>Path for parent layer</source>
-        <translation>Διαδρομή για το γονικό στρώμα</translation>
+        <translation>Διαδρομή για τη γονική στρώση</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="197"/>
         <source>Layer Name:</source>
-        <translation>Όνομα στρώματος:</translation>
+        <translation>Όνομα στρώσης:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="68"/>
         <source>Rename Virtual Layer</source>
-        <translation>Μετονομασία εικονικού στρώματος</translation>
+        <translation>Μετονομασία εικονικής στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="72"/>
         <source>Add Secondary Layer</source>
-        <translation>Προσθήκη δευτερεύοντος στρώματος</translation>
+        <translation>Προσθήκη δευτερεύουσας στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="78"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="85"/>
         <source>Add Layer</source>
-        <translation>Προσθήκη στρώματος</translation>
+        <translation>Προσθήκη στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="91"/>
         <source>Edit Layer</source>
-        <translation>Επεξεργασία στρώματος</translation>
+        <translation>Επεξεργασία στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="183"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="221"/>
         <source>Default Pen</source>
-        <translation>Προκαθορισμένη πένα</translation>
+        <translation>Προεπιλεγμένη πένα</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="200"/>
         <source>Rename Layer</source>
-        <translation>Μετονομασία στρώματος</translation>
+        <translation>Μετονομασία στρώσης</translation>
     </message>
 </context>
 <context>
@@ -15363,37 +15363,37 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="57"/>
         <source>Layers Export Options</source>
-        <translation>Επιλογές εξαγωγής στρωμάτων</translation>
+        <translation>Επιλογές εξαγωγής στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="63"/>
         <source>If checked, Named Views from the document will be included into exported drawings. Otherwise, views are not included.</source>
-        <translation>Εάν ενεργοποιηθεί, οι ονομαστικές απόψεις από το έγγραφο θα συμπεριληφθούν στα εξαγόμενα σχέδια. Διαφορετικά, οι απόψεις δεν περιλαμβάνονται.</translation>
+        <translation>Εάν ενεργοποιηθεί, οι προβολές με όνομα που υπάρχουν στο έγγραφο θα συμπεριληφθούν στα εξαγόμενα σχέδια. Διαφορετικά, οι προβολές δεν περιλαμβάνονται.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="66"/>
         <source>Export Named Views too</source>
-        <translation>Εξαγωγή και Ονομαζόμενων Προβολών</translation>
+        <translation>Εξαγωγή και των προβολών με όνομα</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="73"/>
         <source>If checked, each original exported layer will be stored in separate drawing. Otherwise, all layers will be in exported to one combined drawing.</source>
-        <translation>Εάν ενεργοποιηθεί, κάθε αρχικό εξαγόμενο στρώμα θα αποθηκευτεί σε ξεχωριστό σχέδιο. Διαφορετικά, όλα τα στρώματα θα εξάγονται σε ένα συνδυασμένο σχέδιο.</translation>
+        <translation>Εάν ενεργοποιηθεί, κάθε αρχική εξαγόμενη στρώση θα αποθηκευτεί σε ξεχωριστό σχέδιο. Διαφορετικά, όλες οι στρώσεις θα εξαχθούν σε ένα συνδυασμένο σχέδιο.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="76"/>
         <source>Export each layer to own drawing file</source>
-        <translation>Εξαγωγή κάθε στρώμαυ στο δικό του αρχείο σχεδίασης</translation>
+        <translation>Εξαγωγή κάθε στρώσης στο δικό της αρχείο σχεδίου</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="83"/>
         <source>If checked, entities will be stored in original layer. Otherwise, they are placed to layer &quot;0&quot;.</source>
-        <translation>Εάν ελεγχθεί, οι οντότητες θα αποθηκευτούν σε αρχικό επίπεδο. Σε αντίθετη περίπτωση, τοποθετούνται στο στρώμα &quot;0&quot;.1.</translation>
+        <translation>Εάν ενεργοποιηθεί, οι οντότητες θα αποθηκευτούν στην αρχική τους στρώση. Διαφορετικά, τοποθετούνται στη στρώση &quot;0&quot;.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="89"/>
         <source>Retain original layer for entities</source>
-        <translation>Διατήρηση του αρχικού στρώματος για οντότητες</translation>
+        <translation>Διατήρηση της αρχικής στρώσης των οντοτήτων</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="96"/>
@@ -15403,7 +15403,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="99"/>
         <source>Export UCSs too</source>
-        <translation>Εξαγωγή και UCSs</translation>
+        <translation>Εξαγωγή και των UCS</translation>
     </message>
 </context>
 <context>
@@ -15411,12 +15411,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="20"/>
         <source>Layers Tree Options</source>
-        <translation>Επιλογές δέντρου στρωμάτων</translation>
+        <translation>Επιλογές δέντρου στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="46"/>
         <source>Settings for naming convention that is used to create layers hierarchy based on flat list of layers</source>
-        <translation>Settings για σύμβαση ονοματοδοσίας που χρησιμοποιείται για τη δημιουργία ιεραρχίας στρωμάτων με βάση την επίπεδη λίστα στρωμάτων</translation>
+        <translation>Ρυθμίσεις για τη σύμβαση ονοματοδοσίας που χρησιμοποιείται για τη δημιουργία ιεραρχίας στρώσεων με βάση την επίπεδη λίστα στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="49"/>
@@ -15431,7 +15431,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="116"/>
         <source>Separator used for split inner name of layer to hierarchical names</source>
-        <translation>Διαχωριστής που χρησιμοποιείται για διαχωρισμό του εσωτερικού ονόματος του στρώματος σε ιεραρχικά ονόματα</translation>
+        <translation>Διαχωριστής που χρησιμοποιείται για τον διαχωρισμό του εσωτερικού ονόματος της στρώσης σε ιεραρχικά ονόματα</translation>
     </message>
     <message>
         <source>Layer Level Name Separator</source>
@@ -15445,33 +15445,33 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
-        <translation>Διάσταση</translation>
+        <translation>Διαστάσεις</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="201"/>
         <source>Suffix of layer&apos;s name that defines that layer is dimensional</source>
-        <translation>Επίθημα του ονόματος του στρώματος που ορίζει ότι το στρώμα είναι διαστάσεων</translation>
+        <translation>Επίθημα του ονόματος της στρώσης που ορίζει ότι η στρώση είναι στρώση διαστάσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="211"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="809"/>
         <source>Informational</source>
-        <translation>Ενημέρωση</translation>
+        <translation>Πληροφορίες</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="224"/>
         <source>Suffix of layer&apos;s name that defines that layer is informational.</source>
-        <translation>Επίθημα του ονόματος του στρώματος που ορίζει ότι το στρώμα είναι πληροφοριακό.</translation>
+        <translation>Επίθημα του ονόματος της στρώσης που ορίζει ότι η στρώση είναι στρώση πληροφοριών.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="234"/>
         <source>Alternative Position </source>
-        <translation>Εναλλακτική θέση</translation>
+        <translation>Εναλλακτική θέση </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
-        <translation>Επίθημα του ονόματος του στρώματος που ορίζει ότι το στρώμα είναι για εναλλακτική θέση.</translation>
+        <translation>Επίθημα του ονόματος της στρώσης που ορίζει ότι η στρώση είναι για εναλλακτική θέση.</translation>
     </message>
     <message>
         <source>Duplicating Name</source>
@@ -15485,7 +15485,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="74"/>
         <source>Prefix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>Πρόθεμα του ονόματος του στρώματος που χρησιμοποιείται αν υπάρχει στρώμα με τέτοιο όνομα (δείτε, όταν δημιουργείται διπλό)</translation>
+        <translation>Πρόθεμα του ονόματος της στρώσης που χρησιμοποιείται αν υπάρχει στρώση με τέτοιο όνομα (π.χ. όταν δημιουργείται αντίγραφο)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="84"/>
@@ -15495,7 +15495,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="97"/>
         <source>Suffix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>Επίθημα του ονόματος του στρώματος που χρησιμοποιείται αν υπάρχει στρώμα με τέτοιο όνομα (π.χ. όταν δημιουργείται αντίγραφο)</translation>
+        <translation>Επίθημα του ονόματος της στρώσης που χρησιμοποιείται αν υπάρχει στρώση με τέτοιο όνομα (π.χ. όταν δημιουργείται αντίγραφο)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="155"/>
@@ -15525,7 +15525,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="268"/>
         <source>Display and operations settings</source>
-        <translation>Settings εμφάνισης και λειτουργίας</translation>
+        <translation>Ρυθμίσεις εμφάνισης και λειτουργιών</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="271"/>
@@ -15535,12 +15535,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="329"/>
         <source>If checked, tooltip will include complete name of layer (with all upper layer levels)</source>
-        <translation>Αν ενεργοποιηθεί, η εργαλειοθήκη θα περιλαμβάνει το πλήρες όνομα του στρώματος (με όλα τα ανώτερα επίπεδα στρώματος)</translation>
+        <translation>Αν ενεργοποιηθεί, η επεξήγηση εργαλείου θα περιλαμβάνει το πλήρες όνομα της στρώσης (με όλα τα ανώτερα επίπεδα στρώσεων)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="332"/>
         <source>Show full name as ToolTip</source>
-        <translation>Εμφάνιση πλήρους ονόματος ως εργαλειοθήκης</translation>
+        <translation>Εμφάνιση πλήρους ονόματος στην επεξήγηση εργαλείου</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="608"/>
@@ -15560,7 +15560,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="794"/>
         <source>Normal</source>
-        <translation type="unfinished">Κανονικό</translation>
+        <translation type="unfinished">Κανονική</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="804"/>
@@ -15570,52 +15570,52 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="319"/>
         <source>If checked, icons for layer types will be shown</source>
-        <translation>Αν ενεργοποιηθεί, θα εμφανιστούν εικονίδια για τύπους στρώματος</translation>
+        <translation>Αν ενεργοποιηθεί, θα εμφανίζονται εικονίδια για τους τύπους στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="322"/>
         <source>Show layer type icons</source>
-        <translation>Εμφάνιση εικονιδίων τύπου στρώματος</translation>
+        <translation>Εμφάνιση εικονιδίων τύπου στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="309"/>
         <source>Indentation for child layers</source>
-        <translation>Ένδειξη για παιδικά στρώματα</translation>
+        <translation>Εσοχή για θυγατρικές στρώσεις</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="312"/>
         <source>Show indented layer names. Ident size:</source>
-        <translation>Εμφάνιση εποχούμενων ονομάτων στρώματος. Μέγεθος ταυτότητας:</translation>
+        <translation>Εμφάνιση ονομάτων στρώσεων με εσοχή. Μέγεθος εσοχής:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="277"/>
         <source>Size of the indent in characters to indent name of child layer from parent ones</source>
-        <translation>Μέγεθος της περίπτωσης στους χαρακτήρες με το όνομα της περίπτωσης του στρώματος του παιδιού από το γονικό</translation>
+        <translation>Μέγεθος της εσοχής, σε χαρακτήρες, του ονόματος της θυγατρικής στρώσης σε σχέση με τις γονικές</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="352"/>
         <source>If checked, drag&amp;drop operations in layers list are enabled and layers hierarchy may be restructutured</source>
-        <translation>Αν ενεργοποιηθεί, ενεργοποιούνται οι εργασίες drag&amp;drop στη λίστα στρωμάτων και η ιεραρχία στρωμάτων μπορεί να ανακατασκευαστεί</translation>
+        <translation>Αν ενεργοποιηθεί, ενεργοποιούνται οι λειτουργίες μεταφοράς και απόθεσης (drag&amp;drop) στη λίστα στρώσεων και η ιεραρχία των στρώσεων μπορεί να αναδιαρθρωθεί</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="355"/>
         <source>Allow restructuring via Drag&amp;Drop</source>
-        <translation>Επιτρέπει την αναδιάρθρωση μέσω Drag&amp;Drop</translation>
+        <translation>Να επιτρέπεται η αναδιάρθρωση με μεταφορά και απόθεση</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="293"/>
         <source>If primary layer is renames, secondary layers are renamed too.</source>
-        <translation>Αν το πρωτεύον στρώμα είναι μετονομασίες, τα δευτερεύοντα στρώματα μετονομάζονται επίσης.</translation>
+        <translation>Αν μετονομαστεί η πρωτεύουσα στρώση, μετονομάζονται και οι δευτερεύουσες στρώσεις.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="296"/>
         <source>Rename secondary layers on primary rename</source>
-        <translation>Μετονομασία δευτερευόντων στρωμάτων στην κύρια μετονομασία</translation>
+        <translation>Μετονομασία δευτερευουσών στρώσεων κατά τη μετονομασία της πρωτεύουσας</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="376"/>
         <source>Various colors settings</source>
-        <translation>Various διαφόρων χρωμάτων</translation>
+        <translation>Ρυθμίσεις διαφόρων χρωμάτων</translation>
     </message>
     <message>
         <source>Colors</source>
@@ -15624,7 +15624,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="470"/>
         <source>Background color for selected items in layers tree.</source>
-        <translation>Χρώμα φόντου για επιλεγμένα αντικείμενα σε στρώματα δέντρου.</translation>
+        <translation>Χρώμα φόντου για επιλεγμένα αντικείμενα στο δέντρο στρώσεων.</translation>
     </message>
     <message>
         <source>Color for separator lines in layers tree view</source>
@@ -15633,7 +15633,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="420"/>
         <source>Background color for virtual layers items in layers list</source>
-        <translation>Χρώμα φόντου για αντικείμενα εικονικών στρωμάτων στη λίστα στρωμάτων</translation>
+        <translation>Χρώμα φόντου για αντικείμενα εικονικών στρώσεων στη λίστα στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="449"/>
@@ -15646,7 +15646,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="560"/>
         <source>Matched item in highlight filter mode</source>
-        <translation>Ταιριασμένο αντικείμενο σε λειτουργία φίλτρου επισήμανσης</translation>
+        <translation>Αντικείμενο που ταιριάζει με το φίλτρο σε λειτουργία επισήμανσης</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="391"/>
@@ -15666,7 +15666,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="581"/>
         <source>Virtual layer background color</source>
-        <translation>Χρώμα φόντου εικονικού στρώματος</translation>
+        <translation>Χρώμα φόντου εικονικής στρώσης</translation>
     </message>
     <message>
         <source>Threeview items separator grid</source>
@@ -15680,12 +15680,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="523"/>
         <source>Background color for active layer item in layers tree</source>
-        <translation>Χρώμα φόντου για το ενεργό στοιχείο στρώμα σε στρώματα δέντρο</translation>
+        <translation>Χρώμα φόντου για το αντικείμενο της ενεργής στρώσης στο δέντρο στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="526"/>
         <source>Active layer background color</source>
-        <translation>Χρώμα φόντου ενεργού στρώματος</translation>
+        <translation>Χρώμα φόντου ενεργής στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="588"/>
@@ -15700,32 +15700,32 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="599"/>
         <source>Pens that will be set for newly created layers of different types.</source>
-        <translation>Στυλογράφοι που θα ρυθμιστούν για νεοδημιουργημένα στρώματα διαφορετικών τύπων.</translation>
+        <translation>Πένες που θα ορίζονται για τις νέες στρώσεις των διαφόρων τύπων.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="602"/>
         <source>Default Pens</source>
-        <translation>Προκαθορισμένες πένες</translation>
+        <translation>Προεπιλεγμένες πένες</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="68"/>
         <source>Normal Layer</source>
-        <translation>Κανονικό στρώμα</translation>
+        <translation>Κανονική στρώση</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="69"/>
         <source>Dimensional Layer</source>
-        <translation>Στρώμα διαστάσεων</translation>
+        <translation>Στρώση διαστάσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="70"/>
         <source>Informational Layer</source>
-        <translation>Πληροφοριακό στρώμα</translation>
+        <translation>Στρώση πληροφοριών</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Alternative Position Layer</source>
-        <translation>Εναλλακτικό στρώμα θέσης</translation>
+        <translation>Στρώση εναλλακτικής θέσης</translation>
     </message>
     <message>
         <source>grid</source>
@@ -15734,22 +15734,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="103"/>
         <source>highlighted item</source>
-        <translation>τονισμένο στοιχείο</translation>
+        <translation>επισημασμένο αντικείμενο</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="110"/>
         <source>virtual layer background</source>
-        <translation>φόντο εικονικού στρώματος</translation>
+        <translation>φόντο εικονικής στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="118"/>
         <source>selected item background</source>
-        <translation>επιλεγμένο φόντο αντικειμένου</translation>
+        <translation>φόντο επιλεγμένου αντικειμένου</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="126"/>
         <source>active layer background</source>
-        <translation>ενεργό φόντο στρώματος</translation>
+        <translation>φόντο ενεργής στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
@@ -15760,8 +15760,8 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>Μη έγκυρη τιμή παρέχει το%1 χρώμα.
-Παρακαλώ προσδιορίστε μια διαφορετική τιμή.</translation>
+        <translation>Δόθηκε μη έγκυρη τιμή χρώματος για %1.
+Παρακαλούμε να καθορίσετε διαφορετική τιμή.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="245"/>
@@ -15779,7 +15779,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="152"/>
         <source>Looking for matching layer names</source>
-        <translation>Αναζήτηση για τα ίδια ονόματα στρώματος</translation>
+        <translation>Αναζήτηση για σύμφωνα ονόματα στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="157"/>
@@ -15789,27 +15789,27 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="167"/>
         <source>Settings</source>
-        <translation>Settings</translation>
+        <translation>Ρυθμίσεις</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="186"/>
         <source>Show all layers</source>
-        <translation>Εμφάνιση όλων των στρωμάτων</translation>
+        <translation>Εμφάνιση όλων των στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="193"/>
         <source>Hide all layers except current</source>
-        <translation>Απόκρυψη όλων των στρωμάτων εκτός του τρέχοντος</translation>
+        <translation>Απόκρυψη όλων των στρώσεων εκτός της τρέχουσας</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="200"/>
         <source>Show Secondary Layers</source>
-        <translation>Εμφάνιση δευτερευόντων επιπέδων</translation>
+        <translation>Εμφάνιση δευτερευουσών στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="210"/>
         <source>Show Active Layer Only</source>
-        <translation>Εμφάνιση μόνο ενεργού στρώματος</translation>
+        <translation>Εμφάνιση μόνο της ενεργής στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="218"/>
@@ -15819,52 +15819,52 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="226"/>
         <source>Collapse All</source>
-        <translation>Κατάρρευση όλων</translation>
+        <translation>Σύμπτυξη όλων</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="234"/>
         <source>Collapse Secondary</source>
-        <translation>Δευτερεύουσα κατάρρευση</translation>
+        <translation>Σύμπτυξη δευτερευουσών στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="242"/>
         <source>Unlock all layers</source>
-        <translation>Ξεκλείδωμα όλων των στρωμάτων</translation>
+        <translation>Ξεκλείδωμα όλων των στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="249"/>
         <source>Lock all layers</source>
-        <translation>Κλείδωμα όλων των στρωμάτων</translation>
+        <translation>Κλείδωμα όλων των στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="256"/>
         <source>Add a layer</source>
-        <translation>Προσθήκη στρώματος</translation>
+        <translation>Προσθήκη στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="263"/>
         <source>Add dimensions Layer</source>
-        <translation>Προσθήκη διαστάσεων στρώματος</translation>
+        <translation>Προσθήκη στρώσης διαστάσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="272"/>
         <source>Remove layer</source>
-        <translation>Αφαίρεση στρώματος</translation>
+        <translation>Αφαίρεση στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="279"/>
         <source>Modify layer attributes / rename</source>
-        <translation>Τροποποίηση χαρακτηριστικών στρώματος / μετονομασία</translation>
+        <translation>Τροποποίηση χαρακτηριστικών στρώσης / μετονομασία</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="286"/>
         <source>Flat List Mode)</source>
-        <translation>Λειτουργία επίπεδης λίστας)</translation>
+        <translation>Λειτουργία επίπεδης λίστας</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="656"/>
         <source>&amp;Add Child Layer</source>
-        <translation>&amp; Προσθήκη στρώματος παιδιού</translation>
+        <translation>Προσθήκη &amp;θυγατρικής στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="657"/>
@@ -15874,160 +15874,160 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="658"/>
         <source>&amp;Remove Layers (Sub-Tree)</source>
-        <translation>&amp;Αφαίρεση στρωμάτων (υπο-τρι)</translation>
+        <translation>Α&amp;φαίρεση στρώσεων (υποδέντρο)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="660"/>
         <source>&amp;Copy Structure (Sub-Tree)</source>
-        <translation>Δομή &amp; Copy (υπο-Tree)</translation>
+        <translation>Αντιγραφή &amp;δομής (υποδέντρο)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="661"/>
         <source>&amp;Duplicate Content (Sub-Tree)</source>
-        <translation>&amp;Duplicate Περιεχόμενο (Sub-Tree)</translation>
+        <translation>Δ&amp;ιπλασιασμός περιεχομένου (υποδέντρο)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="663"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>&amp; Επιλογή Οντοτήτων (Sub-Tree)</translation>
+        <translation>Επι&amp;λογή οντοτήτων (υποδέντρο)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="668"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>&amp;Επεξεργασία &amp; χαρακτηριστικών στρώματος</translation>
+        <translation>Επεξεργασία &amp;χαρακτηριστικών στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="670"/>
         <source>&amp;Remove Layer</source>
-        <translation>&amp; Αφαίρεση στρώματος</translation>
+        <translation>Α&amp;φαίρεση στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="679"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>&amp; Προσθήκη υποεπιπέδου διαστάσεων</translation>
+        <translation>Προσθήκη υποστρώσης &amp;διαστάσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="683"/>
         <source>&amp;Add Info Sub-Layer</source>
-        <translation>&amp; Προσθήκη υπο-λέιερ πληροφοριών</translation>
+        <translation>Προσ&amp;θήκη υποστρώσης πληροφοριών</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="687"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
-        <translation>&amp; Προσθήκη εναλλακτικής προβολής Sub-Layer</translation>
+        <translation>Προσθήκ&amp;η υποστρώσης εναλλακτικής θέσης</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="693"/>
         <source>&amp;Remove Sub-layers</source>
-        <translation>&amp; Αφαίρεση υποστρωμάτων</translation>
+        <translation>Αφαίρεση υποσ&amp;τρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="701"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="711"/>
         <source>Convert to Dimensional Layer</source>
-        <translation>Μετατροπή σε στρώμα διαστάσεων</translation>
+        <translation>Μετατροπή σε στρώση διαστάσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="702"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="714"/>
         <source>Convert to Info Layer</source>
-        <translation>Μετατροπή σε στρώμα πληροφοριών</translation>
+        <translation>Μετατροπή σε στρώση πληροφοριών</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="703"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="717"/>
         <source>Convert to Alternative Position Layer</source>
-        <translation>Μετατροπή σε εναλλακτικό στρώμα θέσης</translation>
+        <translation>Μετατροπή σε στρώση εναλλακτικής θέσης</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="709"/>
         <source>Convert to Normal Layer</source>
-        <translation>Μετατροπή σε κανονικό στρώμα</translation>
+        <translation>Μετατροπή σε κανονική στρώση</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="723"/>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>&amp; Επιλογή οντοτήτων στρώματος</translation>
+        <translation>Επ&amp;ιλογή οντοτήτων στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="726"/>
         <source>&amp;Create Layer Copy</source>
-        <translation>&amp; Δημιουργία αντιγράφου στρώματος</translation>
+        <translation>Δη&amp;μιουργία αντιγράφου στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="727"/>
         <source>&amp;Duplicate Layer With Content</source>
-        <translation>&amp;Duplicate στρώμα με περιεχόμενο</translation>
+        <translation>Διπ&amp;λασιασμός στρώσης με το περιεχόμενό της</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="731"/>
         <source>Move Selection to Layer</source>
-        <translation>Μετακίνηση επιλογής στο στρώμα</translation>
+        <translation>Μετακίνηση επιλογής στη στρώση</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="732"/>
         <source>Duplicate Selection to Layer</source>
-        <translation>Διπλή επιλογή σε στρώμα</translation>
+        <translation>Διπλασιασμός επιλογής στη στρώση</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="739"/>
         <source>&amp;Add Layer</source>
-        <translation>&amp; Προσθήκη στρώματος</translation>
+        <translation>Προσ&amp;θήκη στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="741"/>
         <source>&amp;Freeze Others Layers</source>
-        <translation>&amp; Παγώστε άλλες στρώσεις</translation>
+        <translation>&amp;Πάγωμα των άλλων στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="742"/>
         <source>&amp;Defreeze All Layers</source>
-        <translation>&amp; Αποπάγωση όλων των στρωμάτων</translation>
+        <translation>&amp;Ξεπάγωμα όλων των στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
         <source>&amp;Hide all layers except current</source>
-        <translation>Απόκρυψη όλων των &amp;στρωμάτων εκτός του τρέχοντος</translation>
+        <translation>Απόκρυψη όλων των &amp;στρώσεων εκτός της τρέχουσας</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>
         <source>&amp;Unlock All Layers</source>
-        <translation>&amp; Ξεκλείδωμα όλων των στρωμάτων</translation>
+        <translation>Ξ&amp;εκλείδωμα όλων των στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="745"/>
         <source>&amp;Lock All Layers</source>
-        <translation>&amp; Κλείδωμα όλων των στρωμάτων</translation>
+        <translation>&amp;Κλείδωμα όλων των στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="746"/>
         <source>Enable &amp;Printing All Layers</source>
-        <translation>Ενεργοποίηση όλων των στρωμάτων</translation>
+        <translation>Ε&amp;νεργοποίηση εκτύπωσης όλων των στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="747"/>
         <source>&amp;Disable Printing All Layers</source>
-        <translation>&amp; Disable Εκτύπωση όλων των στρωμάτων</translation>
+        <translation>&amp;Απενεργοποίηση εκτύπωσης όλων των στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="750"/>
         <source>&amp;Export Single Layer</source>
-        <translation>&amp; Εξαγωγή ενιαίου στρώματος</translation>
+        <translation>Εξα&amp;γωγή μεμονωμένης στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="754"/>
         <source>&amp;Export Layer Sub-Tree</source>
-        <translation>&amp; Εξαγωγή στρώματος</translation>
+        <translation>Εξαγωγή &amp;υποδέντρου στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="758"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Εξαγωγή &amp; Ορατού στρώματος( ων)</translation>
+        <translation>Εξαγ&amp;ωγή ορατών στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="760"/>
         <source>&amp;Find And Remove Empty Layers</source>
-        <translation>&amp; Βρείτε και αφαιρέστε τα άδεια στρώματα</translation>
+        <translation>Εύ&amp;ρεση και αφαίρεση κενών στρώσεων</translation>
     </message>
 </context>
 <context>
@@ -18587,7 +18587,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="39"/>
         <source>Layer</source>
-        <translation type="unfinished">Στρώμα</translation>
+        <translation type="unfinished">Στρώση</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="39"/>
@@ -23316,12 +23316,12 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="82"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Εάν ελεγχθεί, οι κατοπτρισμένες οντότητες θα τοποθετηθούν σε τρέχον στρώμα, διαφορετικά θα τοποθετηθούν σε πρωτότυπα στρώματα.</translation>
+        <translation type="unfinished">Εάν ενεργοποιηθεί, οι καθρεπτισμένες οντότητες θα τοποθετηθούν στην τρέχουσα στρώση, διαφορετικά θα τοποθετηθούν στις αρχικές τους στρώσεις.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Τρέχον στρώμα χρήστη</translation>
+        <translation type="unfinished">Χρήση τρέχουσας στρώσης</translation>
     </message>
 </context>
 <context>
@@ -23615,12 +23615,12 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="45"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="unfinished">Εάν ενεργοποιηθεί, οι δημιουργημένες οντότητες θα τοποθετηθούν στο τρέχον επίπεδο. Διαφορετικά, θα τοποθετηθούν σε πρωτότυπα στρώματα.</translation>
+        <translation type="unfinished">Εάν ενεργοποιηθεί, οι οντότητες που δημιουργούνται θα τοποθετηθούν στην τρέχουσα στρώση. Διαφορετικά, θα τοποθετηθούν στις αρχικές τους στρώσεις. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="48"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Χρήση τρέχοντος στρώματος</translation>
+        <translation type="unfinished">Χρήση τρέχουσας στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="55"/>
@@ -23801,12 +23801,12 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="144"/>
         <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="unfinished">Αν ενεργοποιηθεί, οι δημιουργημένες οντότητες θα τοποθετηθούν στο τρέχον στρώμα, διαφορετικά θα είναι σε αρχικά στρώματα.</translation>
+        <translation type="unfinished">Εάν ενεργοποιηθεί, οι οντότητες που δημιουργούνται θα τοποθετηθούν στην τρέχουσα στρώση, διαφορετικά θα βρίσκονται στις αρχικές τους στρώσεις. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="147"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Χρήση τρέχοντος στρώματος</translation>
+        <translation type="unfinished">Χρήση τρέχουσας στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="166"/>
@@ -24217,12 +24217,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="93"/>
         <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">Αν ενεργοποιηθεί, οι δημιουργημένες οντότητες θα τοποθετηθούν στο τρέχον στρώμα, διαφορετικά θα βρίσκονται σε αρχικά στρώματα.</translation>
+        <translation type="unfinished">Εάν ενεργοποιηθεί, οι οντότητες που δημιουργούνται θα τοποθετηθούν στην τρέχουσα στρώση, διαφορετικά θα βρίσκονται στις αρχικές τους στρώσεις.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="96"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Χρήση τρέχοντος στρώματος</translation>
+        <translation type="unfinished">Χρήση τρέχουσας στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="109"/>
@@ -24715,13 +24715,13 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="263"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="298"/>
         <source>By Layer</source>
-        <translation>Ανά στρώμα</translation>
+        <translation>Κατά στρώση</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="264"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="299"/>
         <source>By Block</source>
-        <translation>Κατά τετράγωνο</translation>
+        <translation>Κατά μπλοκ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="266"/>
@@ -25343,27 +25343,27 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="188"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Ενημέρωση της τρέχουσας πένας από το Active Layer&apos; Pen</translation>
+        <translation>Ενημέρωση της τρέχουσας πένας από την πένα της ενεργής στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="205"/>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation>Επεξεργαστής πλήρωσης στυλών από την πένα Active Layer</translation>
+        <translation>Συμπλήρωση του επεξεργαστή πένας από την πένα της ενεργής στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="208"/>
         <source>Pick from Active Layer</source>
-        <translation>Επιλογή από το ενεργό στρώμα</translation>
+        <translation>Επιλογή από την ενεργή στρώση</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="222"/>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation>Εφαρμογή πένας Επεξεργαστών σε ενεργό στυλ στυλό</translation>
+        <translation>Εφαρμογή της πένας του επεξεργαστή στην πένα της ενεργής στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="225"/>
         <source>Apply To Layer</source>
-        <translation>Εφαρμογή στο στρώμα</translation>
+        <translation>Εφαρμογή στη στρώση</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="239"/>
@@ -25448,7 +25448,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="305"/>
         <source>&amp;Apply Pen To Active Layer</source>
-        <translation>&amp; Εφαρμογή πένας σε ενεργό στρώμα</translation>
+        <translation>&amp;Εφαρμογή πένας στην ενεργή στρώση</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="306"/>
@@ -29461,7 +29461,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="60"/>
         <source>Active Layer</source>
-        <translation type="unfinished">Ενεργό στρώμα</translation>
+        <translation type="unfinished">Ενεργή στρώση</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="60"/>
@@ -29512,12 +29512,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="167"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="183"/>
         <source>Normal</source>
-        <translation type="unfinished">Κανονικό</translation>
+        <translation type="unfinished">Κανονική</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="171"/>
         <source>Dimensional</source>
-        <translation type="unfinished">Διάσταση</translation>
+        <translation type="unfinished">Διαστάσεις</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="175"/>
@@ -29527,7 +29527,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="179"/>
         <source>Informational</source>
-        <translation type="unfinished">Ενημέρωση</translation>
+        <translation type="unfinished">Πληροφορίες</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="186"/>
@@ -29607,7 +29607,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="303"/>
         <source>Unlock all layers</source>
-        <translation type="unfinished">Ξεκλείδωμα όλων των στρωμάτων</translation>
+        <translation type="unfinished">Ξεκλείδωμα όλων των στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="303"/>
@@ -29632,7 +29632,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="341"/>
         <source>Show all layers</source>
-        <translation type="unfinished">Εμφάνιση όλων των στρωμάτων</translation>
+        <translation type="unfinished">Εμφάνιση όλων των στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="341"/>
@@ -32719,7 +32719,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="533"/>
         <source>Layer</source>
-        <translation>Στρώμα</translation>
+        <translation>Στρώση</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="538"/>
@@ -33080,7 +33080,8 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="127"/>
         <source>
 Layer: </source>
-        <translation>Στρώμα:</translation>
+        <translation>
+Στρώση: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="573"/>
@@ -35886,12 +35887,12 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="208"/>
         <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="unfinished">Καθορίζει τα αντίγραφα whatetather θα εισαχθεί στο τρέχον ή αρχικό στρώμα</translation>
+        <translation type="unfinished">Καθορίζει αν τα αντίγραφα θα εισαχθούν στην τρέχουσα ή στην αρχική στρώση</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="211"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Χρήση τρέχοντος στρώματος</translation>
+        <translation type="unfinished">Χρήση τρέχουσας στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="218"/>
@@ -36132,12 +36133,12 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="209"/>
         <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">Αν ενεργοποιηθεί, θα τοποθετηθούν νέα ερινύες στο τρέχον στρώμα, διαφορετικά θα είναι σε πρωτότυπα στρώματα.</translation>
+        <translation type="unfinished">Εάν ενεργοποιηθεί, οι νέες οντότητες θα τοποθετηθούν στην τρέχουσα στρώση, διαφορετικά θα βρίσκονται στις αρχικές τους στρώσεις.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="212"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Χρήση τρέχοντος στρώματος</translation>
+        <translation type="unfinished">Χρήση τρέχουσας στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="219"/>
@@ -36375,12 +36376,12 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="83"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="unfinished">Εάν ενεργοποιηθεί, οι δημιουργημένες οντότητες θα τοποθετηθούν στο τρέχον επίπεδο. Διαφορετικά, θα τοποθετηθούν σε πρωτότυπα στρώματα.</translation>
+        <translation type="unfinished">Εάν ενεργοποιηθεί, οι οντότητες που δημιουργούνται θα τοποθετηθούν στην τρέχουσα στρώση. Διαφορετικά, θα τοποθετηθούν στις αρχικές τους στρώσεις. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="86"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Χρήση τρέχοντος στρώματος</translation>
+        <translation type="unfinished">Χρήση τρέχουσας στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="107"/>
@@ -37289,7 +37290,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="77"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Εάν ενεργοποιηθεί, οι δημιουργημένες οντότητες θα τοποθετηθούν σε τρέχον στρώμα, διαφορετικά θα τοποθετηθούν σε πρωτότυπα στρώματα.</translation>
+        <translation type="unfinished">Εάν ενεργοποιηθεί, οι οντότητες που δημιουργούνται θα τοποθετηθούν στην τρέχουσα στρώση, διαφορετικά θα τοποθετηθούν στις αρχικές τους στρώσεις.</translation>
     </message>
 </context>
 <context>
@@ -37327,12 +37328,12 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="73"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Εάν ενεργοποιηθεί, οι δημιουργημένες οντότητες θα τοποθετηθούν σε τρέχον στρώμα, διαφορετικά θα τοποθετηθούν σε πρωτότυπα στρώματα.</translation>
+        <translation type="unfinished">Εάν ενεργοποιηθεί, οι οντότητες που δημιουργούνται θα τοποθετηθούν στην τρέχουσα στρώση, διαφορετικά θα τοποθετηθούν στις αρχικές τους στρώσεις.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="76"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Χρήση τρέχοντος στρώματος</translation>
+        <translation type="unfinished">Χρήση τρέχουσας στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="83"/>
@@ -37470,7 +37471,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="71"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Εάν ενεργοποιηθεί, οι δημιουργημένες οντότητες θα τοποθετηθούν σε τρέχον στρώμα, διαφορετικά θα τοποθετηθούν σε πρωτότυπα στρώματα.</translation>
+        <translation type="unfinished">Εάν ενεργοποιηθεί, οι οντότητες που δημιουργούνται θα τοποθετηθούν στην τρέχουσα στρώση, διαφορετικά θα τοποθετηθούν στις αρχικές τους στρώσεις.</translation>
     </message>
 </context>
 <context>
@@ -37483,12 +37484,12 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="32"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Εάν ενεργοποιηθεί, οι δημιουργημένες οντότητες θα τοποθετηθούν σε τρέχον στρώμα, διαφορετικά θα τοποθετηθούν σε πρωτότυπα στρώματα.</translation>
+        <translation type="unfinished">Εάν ενεργοποιηθεί, οι οντότητες που δημιουργούνται θα τοποθετηθούν στην τρέχουσα στρώση, διαφορετικά θα τοποθετηθούν στις αρχικές τους στρώσεις.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="35"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Τρέχον στρώμα χρήστη</translation>
+        <translation type="unfinished">Χρήση τρέχουσας στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="42"/>
@@ -38354,7 +38355,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="216"/>
         <source>Entity&apos;s Layer</source>
-        <translation>Οντότητα</translation>
+        <translation>Στρώση οντότητας</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="250"/>
@@ -39043,7 +39044,7 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="188"/>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="188"/>
         <source>Layers</source>
-        <translation>Στρώματα</translation>
+        <translation>Στρώσεις</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="201"/>
@@ -39064,7 +39065,7 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="236"/>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="236"/>
         <source>Layers Tree</source>
-        <translation>Δέντρο στρωμάτων</translation>
+        <translation>Δέντρο στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="261"/>
@@ -39145,7 +39146,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="540"/>
         <source>Active Layer</source>
-        <translation>Ενεργό στρώμα</translation>
+        <translation>Ενεργή στρώση</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="542"/>
@@ -39809,7 +39810,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="105"/>
         <source>Name of Current Active Layer</source>
-        <translation>Όνομα του τρέχοντος ενεργού στρώματος</translation>
+        <translation>Όνομα της τρέχουσας ενεργής στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="80"/>
@@ -40296,7 +40297,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="54"/>
         <source>Layer to apply</source>
-        <translation>Στρώμα προς εφαρμογή</translation>
+        <translation>Στρώση προς εφαρμογή</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="69"/>
@@ -40864,7 +40865,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="70"/>
         <source>Layer of MText</source>
-        <translation>Στρώμα MTEXT</translation>
+        <translation>Στρώση του ΠΚειμένου</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="144"/>
@@ -43410,7 +43411,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5074"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Απόδοση Διαλόγων/Συγχρονισμός: Όταν ενεργοποιηθεί, η ενεργοποίηση ενός στρώματος θα τροποποιήσει όλες τις επιλεγμένες οντότητες σε αυτό το νέο στρώμα. Για να αλλάξετε το στρώμα των πολλαπλών οντοτήτων: πρώτα επιλέξτε τις απαραίτητες οντότητες? Ενεργοποιήστε ένα στρώμα στο widget στρώμα. Αυτό κάνει όλες τις επιλεγμένες οντότητες τροποποιημένες να ανήκουν στο νέο στρώμα. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Όταν είναι ενεργοποιημένο, η ενεργοποίηση μιας στρώσης μεταφέρει όλες τις επιλεγμένες οντότητες σε αυτή τη στρώση. Για να αλλάξετε τη στρώση πολλών οντοτήτων: επιλέξτε πρώτα τις οντότητες που θέλετε και μετά ενεργοποιήστε μια στρώση στη λίστα στρώσεων. Έτσι, όλες οι επιλεγμένες οντότητες θα ανήκουν πλέον στη νέα στρώση.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5934"/>
@@ -44531,7 +44532,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5077"/>
         <source>Modify layer of selected entities, at layer activation</source>
-        <translation>Τροποποίηση στρώματος επιλεγμένων οντοτήτων, κατά την ενεργοποίηση στρώματος</translation>
+        <translation>Τροποποίηση της στρώσης των επιλεγμένων οντοτήτων κατά την ενεργοποίηση στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5490"/>
@@ -46241,7 +46242,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="197"/>
         <source>Layer of text</source>
-        <translation>Στρώμα κειμένου</translation>
+        <translation>Στρώση του κειμένου</translation>
     </message>
     <message>
         <source>Obligue of text</source>
@@ -47134,7 +47135,7 @@ so default step value required for baking</source>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="29"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Μία στρώση κατασκευής έχει οντότητες από άπειρες ευθείες γραμμές οι οποίες προορίζεται να χρησιμοποιηθούν για γεωμετρική κατασκευή.
+        <translation>Μία στρώση κατασκευής έχει οντότητες από άπειρες ευθείες γραμμές οι οποίες προορίζονται να χρησιμοποιηθούν για γεωμετρική κατασκευή.
 Τα περιεχόμενα μίας στρώσης κατασκευής δεν πρέπει να εμφανίζονται στην εκτύπωση.</translation>
     </message>
     <message>
@@ -47572,29 +47573,29 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="173"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>Στρώμα - και όλες οι οντότητες σε αυτό θα αφαιρεθεί.
+        <translation>Η στρώση &quot;%1&quot; και όλες οι οντότητες πάνω σε αυτή θα αφαιρεθούν.
 Αυτή η ενέργεια ΔΕΝ μπορεί να αναιρεθεί.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="240"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1739"/>
         <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>Το στρώμα &quot;0&quot; δεν μπορεί ποτέ να αφαιρεθεί.</translation>
+        <translation>Η στρώση &quot;0&quot; δεν είναι δυνατό να αφαιρεθεί ποτέ.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="248"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1787"/>
         <source>Remove %n layer(s)</source>
         <translation>
-            <numerusform>Αφαίρεση %n στρώματος</numerusform>
-            <numerusform>Αφαίρεση %n στρωμάτων</numerusform>
+            <numerusform>Αφαίρεση %n στρώσης</numerusform>
+            <numerusform>Αφαίρεση %n στρώσεων</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="251"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1788"/>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>Τα καταγεγραμμένα στρώματα και όλες οι οντότητες πάνω τους θα αφαιρεθούν.</translation>
+        <translation>Οι αναφερόμενες στρώσεις και όλες οι οντότητες πάνω σε αυτές θα αφαιρεθούν.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="253"/>
@@ -47605,13 +47606,13 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="257"/>
         <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>Προειδοποίηση: το στρώμα &quot;0&quot; δεν μπορεί ποτέ να αφαιρεθεί.</translation>
+        <translation>Προειδοποίηση: η στρώση &quot;0&quot; δεν είναι δυνατό να αφαιρεθεί ποτέ.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="260"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1790"/>
         <source>Layers for removal:</source>
-        <translation>Στρώματα προς αφαίρεση:</translation>
+        <translation>Στρώσεις προς αφαίρεση:</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="463"/>
@@ -47634,7 +47635,7 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="230"/>
         <source>Layer empty name is not allowed.</source>
-        <translation>Το κενό του στρώματος δεν επιτρέπεται.</translation>
+        <translation>Δεν επιτρέπεται κενό όνομα στρώσης.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="265"/>
@@ -47646,9 +47647,9 @@ This action can NOT be undone.</source>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation>Προσπάθησε να δημιουργήσεις στρώμα με διπλό όνομα. Διπλό όνομα στρώματος
+        <translation>Απόπειρα δημιουργίας στρώσης με διπλότυπο όνομα. Το διπλότυπο όνομα στρώσης είναι 
 [%1].
-Παρακαλώ προσδιορίστε ένα διαφορετικό όνομα.</translation>
+Παρακαλούμε να καθορίσετε διαφορετικό όνομα.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="142"/>
@@ -47660,14 +47661,14 @@ Please specify a different name.</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="143"/>
         <source>Layer list separator string is empty. It will not be possible to build layers tree.
 Please specify a different value.</source>
-        <translation>Η συμβολοσειρά διαχωριστικού λίστας στρώματος είναι κενή. Δεν θα είναι δυνατόν να χτιστούν στρώματα δέντρο.
-Παρακαλώ προσδιορίστε μια διαφορετική τιμή.</translation>
+        <translation>Η συμβολοσειρά διαχωριστή της λίστας στρώσεων είναι κενή. Δεν θα είναι δυνατή η δημιουργία του δέντρου στρώσεων.
+Παρακαλούμε να καθορίσετε διαφορετική τιμή.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="962"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="972"/>
         <source>Remove empty layers</source>
-        <translation>Αφαίρεση κενών στρωμάτων</translation>
+        <translation>Αφαίρεση κενών στρώσεων</translation>
     </message>
     <message>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
@@ -47685,37 +47686,39 @@ Clear filtering mask and repeat.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="973"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>Δεν βρέθηκαν στρώματα χωρίς οντότητες, τίποτα να αφαιρεθεί.</translation>
+        <translation>Δεν βρέθηκαν στρώσεις χωρίς οντότητες, δεν υπάρχει τίποτα προς αφαίρεση.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1116"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1161"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1169"/>
         <source>Add Layer</source>
-        <translation>Προσθήκη στρώματος</translation>
+        <translation>Προσθήκη στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1117"/>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation>Ένα τέτοιο στρώμα παιδιών υπάρχει ήδη για
+        <translation>Υπάρχει ήδη τέτοια θυγατρική στρώση για τη στρώση 
 [%1].
-Παρακαλώ προσδιορίστε ένα διαφορετικό όνομα.</translation>
+Παρακαλούμε να καθορίσετε διαφορετικό όνομα.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1162"/>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation>Ένα τέτοιο στρώμα παιδιών υπάρχει ήδη για
-[%1].</translation>
+        <translation>Υπάρχει ήδη τέτοια θυγατρική στρώση για τη στρώση 
+[%1].
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1170"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>Το στρώμα διαστάσεων μπορεί να προστεθεί μόνο για το κανονικό ενεργό στρώμα.</translation>
+        <translation>Η στρώση διαστάσεων μπορεί να προστεθεί μόνο για κανονική ενεργή στρώση.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1233"/>
@@ -47748,7 +47751,7 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1805"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1863"/>
         <source>Layer DialogEx</source>
-        <translation>Διάλογος στρώματοςEx</translation>
+        <translation>Διάλογος στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="202"/>
@@ -47801,19 +47804,21 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1453"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>Δεν υπάρχουν οντότητες που ταιριάζουν με στυλό σε ορατά στρώματα.</translation>
+        <translation>Δεν υπάρχουν οντότητες που να ταιριάζουν με την πένα στις ορατές στρώσεις.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1454"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>Τέτοιες οντότητες υπάρχουν σε κατεψυγμένα στρώματα.</translation>
+        <translation>Τέτοιες οντότητες υπάρχουν σε παγωμένες στρώσεις.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1455"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>Τέτοιες οντότητες υπάρχουν σε κλειδωμένα στρώματα.</translation>
+        <translation>Τέτοιες οντότητες υπάρχουν σε κλειδωμένες στρώσεις.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1456"/>
@@ -49062,7 +49067,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="83"/>
         <source>cnlayer</source>
-        <translation>σφαιρίδιο</translation>
+        <translation>cnlayer</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="84"/>
@@ -49072,7 +49077,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="88"/>
         <source>cslayer</source>
-        <translation>σφιγκτήρας</translation>
+        <translation>cslayer</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="89"/>
@@ -49742,7 +49747,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="77"/>
         <source>No %1 layers found</source>
-        <translation>Δε βρέθηκαν στρώματα%1</translation>
+        <translation>Δεν βρέθηκαν %1 στρώσεις</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="95"/>
@@ -51894,7 +51899,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_filedialogservice.cpp" line="195"/>
         <source>Combine all layers</source>
-        <translation>Συνδυάστε όλα τα στρώματα</translation>
+        <translation>Συνδυασμός όλων των στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="180"/>
@@ -51953,13 +51958,13 @@ Do you want to replace it?</source>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="50"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="206"/>
         <source>By Layer</source>
-        <translation>Ανά στρώμα</translation>
+        <translation>Κατά στρώση</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="56"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="209"/>
         <source>By Block</source>
-        <translation>Κατά τετράγωνο</translation>
+        <translation>Κατά μπλοκ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="212"/>

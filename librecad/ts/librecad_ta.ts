@@ -2648,7 +2648,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="252"/>
         <source>(De-)Select Layer</source>
-        <translation>(தேர்வுநீக்கு) அடுக்கு</translation>
+        <translation>அடுக்கைத் தேர்ந்தெடு / தேர்வுநீக்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="235"/>
@@ -3545,7 +3545,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="410"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>செயலில் உள்ள அடுக்கின் பேனாவால் தற்போதைய பேனாவை புதுப்பி</translation>
+        <translation>செயலில் உள்ள அடுக்கின் பேனாவால் தற்போதைய பேனாவைப் புதுப்பி</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="416"/>
@@ -3898,7 +3898,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="109"/>
         <source>Activate Entity&apos;s Layer</source>
-        <translation>பொருளின் அடுக்கை செயல்படுத்து</translation>
+        <translation>பொருளின் அடுக்கைச் செயல்படுத்து</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="110"/>
@@ -3913,7 +3913,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="112"/>
         <source>Lock Entity&apos;s Layer</source>
-        <translation>பொருளின் அடுக்கை பூட்டு</translation>
+        <translation>பொருளின் அடுக்கைப் பூட்டு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="113"/>
@@ -3923,7 +3923,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="114"/>
         <source>Toggle Entity&apos;s Layer Printing</source>
-        <translation>பொருளின் அடுக்கு அச்சை மாற்று</translation>
+        <translation>பொருளின் அடுக்கு அச்சிடுதலை மாற்று</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="225"/>
@@ -4197,32 +4197,32 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="621"/>
         <source>&amp;Add Layer</source>
-        <translation>&amp;அடுக்கு சேர்</translation>
+        <translation>அடுக்கைச் சேர்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="622"/>
         <source>&amp;Remove Layer</source>
-        <translation>&amp;அடுக்கு நீக்கு</translation>
+        <translation>அடுக்கை நீக்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="623"/>
         <source>&amp;Edit Layer</source>
-        <translation>&amp;அடுக்கு திருத்து</translation>
+        <translation>அடுக்கைத் திருத்து</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="624"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>அடுக்கு பூட்டை &amp;மாற்று</translation>
+        <translation>அடுக்கு பூட்டை மாற்று</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="625"/>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation>அடுக்கு தெரிவுநிலையை &amp;மாற்று</translation>
+        <translation>அடுக்கு தெரிவுநிலையை மாற்று</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="626"/>
         <source>Toggle Layer &amp;Print</source>
-        <translation>அடுக்கு அச்சிடுதலை &amp;மாற்று</translation>
+        <translation>அடுக்கு அச்சிடு&amp;தலை மாற்று</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="627"/>
@@ -4515,32 +4515,32 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="617"/>
         <source>&amp;Show all layers</source>
-        <translation>அனைத்து அடுக்குகளையும் &amp;காட்டு</translation>
+        <translation>&amp;அனைத்து அடுக்குகளையும் காட்டு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
         <source>&amp;Hide all layers except current</source>
-        <translation>தற்போதையதைத் தவி&amp;ர அனைத்து அடுக்குகளையும் மறை</translation>
+        <translation>தற்போதையதைத் தவிர அனைத்து அடுக்குகளையும் &amp;மறை</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
         <source>&amp;Unlock all</source>
-        <translation>அனைத்தையும் &amp;திற</translation>
+        <translation>அனைத்தின் பூட்டையும் தி&amp;ற</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="620"/>
         <source>&amp;Lock all</source>
-        <translation>அனைத்தையும் &amp;பூட்டு</translation>
+        <translation>அனைத்தையும் பூட்டு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="628"/>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>தேர்ந்தெடுக்கப்பட்ட அடுக்கு(களை) ஏற்றுமதி செய்</translation>
+        <translation>தேர்ந்தெடுக்கப்பட்ட அடுக்குகளை &amp;ஏற்றுமதி செய்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="629"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>காணக்கூடிய அடுக்கு(களை) ஏற்றுமதி செய்</translation>
+        <translation>காணக்கூடி&amp;ய அடுக்குகளை ஏற்றுமதி செய்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="635"/>
@@ -5111,7 +5111,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>Enter layer name to %1</source>
-        <translation>%1 இல் அடுக்கு பெயரை உள்ளிடவும்</translation>
+        <translation>%1: அடுக்கு பெயரை உள்ளிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
@@ -5130,13 +5130,13 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
         <source>selected</source>
         <comment>Layers to export</comment>
-        <translation>தேர்ந்தெடுக்கப்பட்டது</translation>
+        <translation>தேர்ந்தெடுக்கப்பட்ட</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
         <source>visible</source>
         <comment>Layers to export</comment>
-        <translation>தெரியக்கூடியது</translation>
+        <translation>காணக்கூடிய</translation>
     </message>
 </context>
 <context>
@@ -6858,7 +6858,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_layer.cpp" line="75"/>
         <source>Specify entity with desired layer</source>
-        <translation type="unfinished">விரும்பிய அடுக்குடன் பொருளை குறிப்பிடவும்</translation>
+        <translation type="unfinished">விரும்பிய அடுக்கில் உள்ள பொருளைக் குறிப்பிடவும்</translation>
     </message>
 </context>
 <context>
@@ -15228,7 +15228,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="93"/>
         <source>Layer for various infromational elements, notes, drafts etc.</source>
-        <translation>பல்வேறு தகவல் கூறுகள், குறிப்புகள், வரைவுகள் போன்றவற்றிற்கான அடுக்கு</translation>
+        <translation>பல்வேறு தகவல் கூறுகள், குறிப்புகள், வரைவுகள் போன்றவற்றிற்கான அடுக்கு.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="96"/>
@@ -15248,12 +15248,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="119"/>
         <source>Layer that holds dimensions</source>
-        <translation>அளவுகளைக் கொண்ட அடுக்கு</translation>
+        <translation>பரிமாணங்களைக் கொண்ட அடுக்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="122"/>
         <source>Dimensions</source>
-        <translation>அளவுகள்</translation>
+        <translation>பரிமாணங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="132"/>
@@ -15290,7 +15290,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="68"/>
         <source>Rename Virtual Layer</source>
-        <translation>மெய்நிகர் அடுக்கின் பெயரை மாற்றுக</translation>
+        <translation>மெய்நிகர் அடுக்கை மறுபெயரிடு</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="72"/>
@@ -15301,12 +15301,12 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="78"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="85"/>
         <source>Add Layer</source>
-        <translation>அடுக்கு சேர்</translation>
+        <translation>அடுக்கைச் சேர்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="91"/>
         <source>Edit Layer</source>
-        <translation>அடுக்கு திருத்து</translation>
+        <translation>அடுக்கைத் திருத்து</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="183"/>
@@ -15317,7 +15317,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="200"/>
         <source>Rename Layer</source>
-        <translation>அடுக்கு பெயரை மாற்று</translation>
+        <translation>அடுக்கை மறுபெயரிடு</translation>
     </message>
 </context>
 <context>
@@ -15335,7 +15335,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="63"/>
         <source>If checked, Named Views from the document will be included into exported drawings. Otherwise, views are not included.</source>
-        <translation>இந்த பெட்டி சரிபார்க்கப்பட்டிருந்தால், ஆவணத்தில் உள்ள பெயரிடப்பட்ட காட்சிகள் ஏற்றுமதி செய்யப்பட்ட வரைபடங்களில் சேர்க்கப்படும். இல்லையெனில், காட்சிகள் சேர்க்கப்படாது.</translation>
+        <translation>இந்த பெட்டி தேர்வு செய்யப்பட்டால், ஆவணத்தில் உள்ள பெயரிடப்பட்ட காட்சிகள் ஏற்றுமதி செய்யப்பட்ட வரைபடங்களில் சேர்க்கப்படும். இல்லையெனில், காட்சிகள் சேர்க்கப்படாது.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="66"/>
@@ -15345,7 +15345,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="73"/>
         <source>If checked, each original exported layer will be stored in separate drawing. Otherwise, all layers will be in exported to one combined drawing.</source>
-        <translation>இந்த பெட்டி சரிபார்க்கப்பட்டிருந்தால், ஒவ்வொரு அசல் ஏற்றுமதி செய்யப்பட்ட அடுக்கையும் தனி வரைபடத்தில் சேமிக்கும். இல்லையெனில், அனைத்து அடுக்குகளும் ஒரு ஒருங்கிணைந்த வரைபடத்தில் ஏற்றுமதி செய்யப்படும்.</translation>
+        <translation>இந்த பெட்டி தேர்வு செய்யப்பட்டால், ஒவ்வொரு அசல் ஏற்றுமதி செய்யப்பட்ட அடுக்கையும் தனி வரைபடத்தில் சேமிக்கும். இல்லையெனில், அனைத்து அடுக்குகளும் ஒரு ஒருங்கிணைந்த வரைபடத்தில் ஏற்றுமதி செய்யப்படும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="76"/>
@@ -15355,22 +15355,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="83"/>
         <source>If checked, entities will be stored in original layer. Otherwise, they are placed to layer &quot;0&quot;.</source>
-        <translation>இந்த பெட்டி சரிபார்க்கப்பட்டிருந்தால், கூறுகள் அசல் அடுக்கில் சேமிக்கப்படும். இல்லையெனில், அவை &apos;0&apos; அடுக்குக்கு மாற்றப்படும்.</translation>
+        <translation>இந்த பெட்டி தேர்வு செய்யப்பட்டால், பொருட்கள் அசல் அடுக்கில் சேமிக்கப்படும். இல்லையெனில், அவை &quot;0&quot; அடுக்கிற்கு மாற்றப்படும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="89"/>
         <source>Retain original layer for entities</source>
-        <translation>அசல் அடுக்கில் உள்ள கூறுகளை அப்படியே வைக்கவும்</translation>
+        <translation>பொருட்களை அவற்றின் அசல் அடுக்கிலேயே வைத்திரு</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="96"/>
         <source>If checked, UCSs from the document will be included into exported drawings. Otherwise, UCSs are not included.</source>
-        <translation>இந்த பெட்டி சரிபார்க்கப்பட்டிருந்தால், ஆவணத்தில் உள்ள UCSகள் ஏற்றுமதி செய்யப்பட்ட வரைபடங்களில் சேர்க்கப்படும். இல்லையெனில், UCSகள் சேர்க்கப்படாது.</translation>
+        <translation>இந்த பெட்டி தேர்வு செய்யப்பட்டால், ஆவணத்தில் உள்ள UCSகள் ஏற்றுமதி செய்யப்பட்ட வரைபடங்களில் சேர்க்கப்படும். இல்லையெனில், UCSகள் சேர்க்கப்படாது.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="99"/>
         <source>Export UCSs too</source>
-        <translation>UCSகளையும் ஏற்றுமதி செய்யவும்</translation>
+        <translation>UCSகளையும் ஏற்றுமதி செய்</translation>
     </message>
 </context>
 <context>
@@ -15378,7 +15378,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="20"/>
         <source>Layers Tree Options</source>
-        <translation>அடுக்கு மரம் விருப்பங்கள்</translation>
+        <translation>அடுக்கு மர விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="46"/>
@@ -15417,7 +15417,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="201"/>
         <source>Suffix of layer&apos;s name that defines that layer is dimensional</source>
-        <translation>அடுக்கு பெயர், அந்த அடுக்கு பரிமாணத்தைக் குறிக்கும் வகையில் பயன்படுத்தப்படும் பின்னொட்டு</translation>
+        <translation>அடுக்கு பெயரில், அந்த அடுக்கு பரிமாண அடுக்கு என்பதைக் குறிக்கும் பின்னொட்டு</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="211"/>
@@ -15428,17 +15428,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="224"/>
         <source>Suffix of layer&apos;s name that defines that layer is informational.</source>
-        <translation>அடுக்கு பெயர், அந்த அடுக்கு தகவலைக் குறிக்கும் வகையில் பயன்படுத்தப்படும் பின்னொட்டு</translation>
+        <translation>அடுக்கு பெயரில், அந்த அடுக்கு தகவல் அடுக்கு என்பதைக் குறிக்கும் பின்னொட்டு.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="234"/>
         <source>Alternative Position </source>
-        <translation>மாற்று நிலை</translation>
+        <translation>மாற்று நிலை </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
-        <translation>அடுக்கு பெயர், அந்த அடுக்கு மாற்று நிலையைக் குறிக்கும் வகையில் பயன்படுத்தப்படும் பின்னொட்டு</translation>
+        <translation>அடுக்கு பெயரில், அந்த அடுக்கு மாற்று நிலை அடுக்கு என்பதைக் குறிக்கும் பின்னொட்டு.</translation>
     </message>
     <message>
         <source>Duplicating Name</source>
@@ -15462,7 +15462,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="97"/>
         <source>Suffix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>அதே பெயரில் அடுக்கு இருந்தால், அடுக்கின் பெயருடன் சேர்க்கப்படும் பின்னோட்டு (எடுத்துக்காட்டாக, நகல் உருவாக்கும்போது)</translation>
+        <translation>அதே பெயரில் அடுக்கு இருந்தால், அடுக்கின் பெயருடன் சேர்க்கப்படும் பின்னொட்டு (எடுத்துக்காட்டாக, நகல் உருவாக்கும்போது)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="155"/>
@@ -15502,7 +15502,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="329"/>
         <source>If checked, tooltip will include complete name of layer (with all upper layer levels)</source>
-        <translation>இந்த பெட்டி சரிபார்க்கப்பட்டால், கருவி உதவிக்குறிப்பில் அடுக்கின் முழு பெயர் (அனைத்து மேல் அடுக்கின் நிலைகளுடன்) சேர்க்கப்படும்</translation>
+        <translation>இந்த பெட்டி தேர்வு செய்யப்பட்டால், கருவி உதவிக்குறிப்பில் அடுக்கின் முழு பெயர் (அனைத்து மேல் அடுக்கின் நிலைகளுடன்) சேர்க்கப்படும்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="332"/>
@@ -15537,7 +15537,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="319"/>
         <source>If checked, icons for layer types will be shown</source>
-        <translation>இந்த பெட்டி சரிபார்க்கப்பட்டால், அடுக்கு வகைகளுக்கான ஐகான்கள் காட்டப்படும்</translation>
+        <translation>இந்த பெட்டி தேர்வு செய்யப்பட்டால், அடுக்கு வகைகளுக்கான ஐகான்கள் காட்டப்படும்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="322"/>
@@ -15557,32 +15557,32 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="277"/>
         <source>Size of the indent in characters to indent name of child layer from parent ones</source>
-        <translation>உள்தள்ளலின் அளவு, இது குழந்தை அடுக்கின் பெயரை அதன் பெற்றோர் அடுக்கிலிருந்து எவ்வளவு தூரம் தள்ளி காட்ட வேண்டும் என்பதைக் குறிக்கிறது</translation>
+        <translation>உள்தள்ளலின் அளவு (எழுத்துகளில்), இது குழந்தை அடுக்கின் பெயரை அதன் பெற்றோர் அடுக்கிலிருந்து எவ்வளவு தூரம் தள்ளிக் காட்ட வேண்டும் என்பதைக் குறிக்கிறது</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="352"/>
         <source>If checked, drag&amp;drop operations in layers list are enabled and layers hierarchy may be restructutured</source>
-        <translation>இந்த பெட்டி சரிபார்க்கப்பட்டிருந்தால், லேயர் பட்டியலில் உள்ள இழுத்து விடுதல் செயல்பாடுகள் இயக்கப்படும், மேலும் லேயர்களின் வரிசை மாற்றியமைக்கப்படலாம்.</translation>
+        <translation>இந்த பெட்டி தேர்வு செய்யப்பட்டால், அடுக்கு பட்டியலில் இழுத்து விடுதல் (drag&amp;drop) செயல்பாடுகள் இயக்கப்படும், மேலும் அடுக்குகளின் படிநிலையை மாற்றியமைக்கலாம்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="355"/>
         <source>Allow restructuring via Drag&amp;Drop</source>
-        <translation>இழுத்து விடுவதன் மூலம் வரிசை மாற்றியமைக்க அனுமதிக்கவும்</translation>
+        <translation>இழுத்து விடுவதன் மூலம் படிநிலையை மாற்றியமைக்க அனுமதிக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="293"/>
         <source>If primary layer is renames, secondary layers are renamed too.</source>
-        <translation>முதன்மை லேயர் மறுபெயரிடப்பட்டால், இரண்டாம் நிலை லேயர்களும் மறுபெயரிடப்படும்.</translation>
+        <translation>முதன்மை அடுக்கு மறுபெயரிடப்பட்டால், இரண்டாம் நிலை அடுக்குகளும் மறுபெயரிடப்படும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="296"/>
         <source>Rename secondary layers on primary rename</source>
-        <translation>முதன்மை லேயர் மறுபெயரிடப்படும்போது இரண்டாம் நிலை லேயர்களை மறுபெயரிடு</translation>
+        <translation>முதன்மை அடுக்கு மறுபெயரிடப்படும்போது இரண்டாம் நிலை அடுக்குகளை மறுபெயரிடு</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="376"/>
         <source>Various colors settings</source>
-        <translation>பல்வேறு வண்ண அமைப்புகள்</translation>
+        <translation>பல்வேறு நிற அமைப்புகள்</translation>
     </message>
     <message>
         <source>Colors</source>
@@ -15591,7 +15591,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="470"/>
         <source>Background color for selected items in layers tree.</source>
-        <translation>லேயர் மரத்தில் தேர்ந்தெடுக்கப்பட்ட பொருட்களுக்கான பின்னணி நிறம்.</translation>
+        <translation>அடுக்கு மரத்தில் தேர்ந்தெடுக்கப்பட்ட உருப்படிகளுக்கான பின்னணி நிறம்.</translation>
     </message>
     <message>
         <source>Color for separator lines in layers tree view</source>
@@ -15600,7 +15600,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="420"/>
         <source>Background color for virtual layers items in layers list</source>
-        <translation>லேயர் பட்டியலில் உள்ள மெய்நிகர் லேயர் பொருட்களுக்கான பின்னணி நிறம்</translation>
+        <translation>அடுக்கு பட்டியலில் உள்ள மெய்நிகர் அடுக்கு உருப்படிகளுக்கான பின்னணி நிறம்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="449"/>
@@ -15608,12 +15608,12 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="546"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="567"/>
         <source>Click to select color</source>
-        <translation>வண்ணத்தைத் தேர்ந்தெடுக்க கிளிக் செய்யவும்</translation>
+        <translation>நிறத்தைத் தேர்ந்தெடுக்க கிளிக் செய்யவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="560"/>
         <source>Matched item in highlight filter mode</source>
-        <translation>ஹைலைட் வடிகட்டி முறையில் பொருந்தும் உருப்படி</translation>
+        <translation>சிறப்பித்துக் காட்டும் வடிகட்டி முறையில் பொருந்தும் உருப்படி</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="391"/>
@@ -15667,12 +15667,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="599"/>
         <source>Pens that will be set for newly created layers of different types.</source>
-        <translation>வெவ்வேறு வகைகளின் புதிதாக உருவாக்கப்பட்ட அடுக்குகளுக்கு அமைக்கப்படும் எழுதுகோல்கள்.</translation>
+        <translation>வெவ்வேறு வகைகளின் புதிதாக உருவாக்கப்பட்ட அடுக்குகளுக்கு அமைக்கப்படும் பேனாக்கள்.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="602"/>
         <source>Default Pens</source>
-        <translation>இயல்புநிலை எழுதுகோல்கள்</translation>
+        <translation>இயல்புநிலை பேனாக்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="68"/>
@@ -15701,7 +15701,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="103"/>
         <source>highlighted item</source>
-        <translation>குறிக்கப்பட்ட பொருள்</translation>
+        <translation>சிறப்பித்துக் காட்டப்பட்ட உருப்படியின்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="110"/>
@@ -15711,7 +15711,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="118"/>
         <source>selected item background</source>
-        <translation>தேர்ந்தெடுக்கப்பட்ட பொருளின் பின்னணி</translation>
+        <translation>தேர்ந்தெடுக்கப்பட்ட உருப்படியின் பின்னணி</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="126"/>
@@ -15727,7 +15727,8 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>%1 நிறத்திற்கான தவறான மதிப்பு வழங்கப்பட்டுள்ளது. வேறு ஒரு மதிப்பைக் குறிப்பிடவும்.</translation>
+        <translation>%1 நிறத்திற்கான தவறான மதிப்பு வழங்கப்பட்டுள்ளது.
+வேறு ஒரு மதிப்பைக் குறிப்பிடவும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="245"/>
@@ -15750,7 +15751,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="157"/>
         <source>Highlight Mode</source>
-        <translation>உயர்விளக்கு முறை</translation>
+        <translation>சிறப்பித்துக் காட்டும் முறை</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="167"/>
@@ -15790,12 +15791,12 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="234"/>
         <source>Collapse Secondary</source>
-        <translation>இரண்டாம் நிலையைக் சுருக்கு</translation>
+        <translation>இரண்டாம் நிலை அடுக்குகளைச் சுருக்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="242"/>
         <source>Unlock all layers</source>
-        <translation>அனைத்து அடுக்குகளையும் திற</translation>
+        <translation>அனைத்து அடுக்குகளின் பூட்டையும் திற</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="249"/>
@@ -15810,7 +15811,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="263"/>
         <source>Add dimensions Layer</source>
-        <translation>அளவீட்டு அடுக்கைச் சேர்</translation>
+        <translation>பரிமாண அடுக்கைச் சேர்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="272"/>
@@ -15830,7 +15831,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="656"/>
         <source>&amp;Add Child Layer</source>
-        <translation>குழந்தை அடுக்கைச் சேர்</translation>
+        <translation>கு&amp;ழந்தை அடுக்கைச் சேர்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="657"/>
@@ -15845,22 +15846,22 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="660"/>
         <source>&amp;Copy Structure (Sub-Tree)</source>
-        <translation>கட்டமைப்பை நகலெடு (துணை-மரம்)</translation>
+        <translation>கட்டமைப்பை &amp;நகலெடு (துணை-மரம்)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="661"/>
         <source>&amp;Duplicate Content (Sub-Tree)</source>
-        <translation>உள்ளடக்கத்தை நகலெடு (துணை-மரம்)</translation>
+        <translation>&amp;உள்ளடக்கத்தை நகலெடு (துணை-மரம்)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="663"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>உருப்படிகளைத் தேர்ந்தெடு (துணை-மரம்)</translation>
+        <translation>பொருட்களைத் தேர்ந்தெடு (துணை-மரம்)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="668"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>அடுக்கின் பண்புகளைத் திருத்து</translation>
+        <translation>அடுக்கின் &amp;பண்புகளைத் திருத்து</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="670"/>
@@ -15870,17 +15871,17 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="679"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>பரிமாண துணை அடுக்கைச் சேர்</translation>
+        <translation>பரிமா&amp;ண துணை அடுக்கைச் சேர்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="683"/>
         <source>&amp;Add Info Sub-Layer</source>
-        <translation>தகவல் துணை அடுக்கைச் சேர்</translation>
+        <translation>&amp;தகவல் துணை அடுக்கைச் சேர்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="687"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
-        <translation>மாற்று காட்சி துணை அடுக்கைச் சேர்</translation>
+        <translation>மாற்று நிலை துணை அடுக்கைச் சேர்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="693"/>
@@ -15913,42 +15914,42 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="723"/>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>அடுக்கின் கூறுகளைத் தேர்ந்தெடு</translation>
+        <translation>அடுக்கின் பொருட்களைத் தேர்ந்தெடு</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="726"/>
         <source>&amp;Create Layer Copy</source>
-        <translation>அடுக்கின் நகலை உருவாக்கு</translation>
+        <translation>அடுக்கின் &amp;நகலை உருவாக்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="727"/>
         <source>&amp;Duplicate Layer With Content</source>
-        <translation>உள்ளடக்கத்துடன் அடுக்கை நகலெடு</translation>
+        <translation>&amp;உள்ளடக்கத்துடன் அடுக்கை நகலெடு</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="731"/>
         <source>Move Selection to Layer</source>
-        <translation>தேர்ந்தெடுப்பை அடுக்கிற்கு நகர்த்து</translation>
+        <translation>தேர்வை அடுக்கிற்கு நகர்த்து</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="732"/>
         <source>Duplicate Selection to Layer</source>
-        <translation>அடுக்குகளுக்கு நகல் தேர்வைச் சேர்</translation>
+        <translation>தேர்வை அடுக்கிற்கு நகலெடு</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="739"/>
         <source>&amp;Add Layer</source>
-        <translation>&amp;அடுக்கு சேர்</translation>
+        <translation>அடுக்கைச் சேர்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="741"/>
         <source>&amp;Freeze Others Layers</source>
-        <translation>மற்ற அடுக்குகளை &amp;உறைநிலைக்கு மாற்று</translation>
+        <translation>&amp;மற்ற அடுக்குகளை மறை</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="742"/>
         <source>&amp;Defreeze All Layers</source>
-        <translation>அனைத்து அடுக்குகளையும் &amp;உறைநிலைக்கு மாற்றாதே</translation>
+        <translation>அனைத்து அடுக்கு&amp;களையும் காட்டு</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
@@ -15958,22 +15959,22 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>
         <source>&amp;Unlock All Layers</source>
-        <translation>அனைத்து அடுக்குகளையும் &amp;திற</translation>
+        <translation>அனைத்து அடுக்குகளின் பூட்டையும் தி&amp;ற</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="745"/>
         <source>&amp;Lock All Layers</source>
-        <translation>அனைத்து அடுக்குகளையும் &amp;பூட்டு</translation>
+        <translation>&amp;அனைத்து அடுக்குகளையும் பூட்டு</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="746"/>
         <source>Enable &amp;Printing All Layers</source>
-        <translation>அனைத்து அடுக்குகளையும் அச்சிட &amp;இயக்கு</translation>
+        <translation>அனைத்து அடுக்குகளையும் அச்சிடுவதை &amp;இயக்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="747"/>
         <source>&amp;Disable Printing All Layers</source>
-        <translation>அனைத்து அடுக்குகளையும் அச்சிடுவதை &amp;முடக்கு</translation>
+        <translation>அனைத்து அடுக்குகளையும் அச்சிடு&amp;வதை முடக்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="750"/>
@@ -15983,17 +15984,17 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="754"/>
         <source>&amp;Export Layer Sub-Tree</source>
-        <translation>அடுக்கு துணை மரத்தை ஏற்றுமதி செய்க</translation>
+        <translation>அடுக்கு துணை-மரத்தை ஏற்றுமதி செய்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="758"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>காணக்கூடிய அடுக்கை ஏற்றுமதி செய்க</translation>
+        <translation>காணக்கூடி&amp;ய அடுக்குகளை ஏற்றுமதி செய்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="760"/>
         <source>&amp;Find And Remove Empty Layers</source>
-        <translation>வெற்று அடுக்குகளை கண்டுபிடித்து நீக்கு</translation>
+        <translation>வெற்று அடுக்குகளைக் கண்டுபிடித்து நீக்கு</translation>
     </message>
 </context>
 <context>
@@ -23581,7 +23582,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="45"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="unfinished">சரிபார்க்கப்பட்டால், உருவாக்கப்பட்ட கூறுகள் தற்போதைய அடுக்கில் வைக்கப்படும். இல்லையெனில், அவை அசல் அடுக்குகளில் வைக்கப்படும்.</translation>
+        <translation type="unfinished">இந்த பெட்டி தேர்வு செய்யப்பட்டால், உருவாக்கப்பட்ட பொருட்கள் தற்போதைய அடுக்கில் வைக்கப்படும். இல்லையெனில், அவை அசல் அடுக்குகளில் வைக்கப்படும். </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="48"/>
@@ -23767,7 +23768,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="144"/>
         <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="unfinished">சரிபார்க்கப்பட்டால், உருவாக்கப்பட்ட பொருட்கள் தற்போதைய அடுக்கில் வைக்கப்படும், இல்லையெனில் அவை அசல் அடுக்குகளில் இருக்கும்.</translation>
+        <translation type="unfinished">இந்த பெட்டி தேர்வு செய்யப்பட்டால், உருவாக்கப்பட்ட பொருட்கள் தற்போதைய அடுக்கில் வைக்கப்படும், இல்லையெனில் அவை அசல் அடுக்குகளில் இருக்கும். </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="147"/>
@@ -24182,7 +24183,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="93"/>
         <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">சரிபார்க்கப்பட்டால், உருவாக்கப்பட்ட பொருட்கள் தற்போதைய அடுக்கில் வைக்கப்படும், இல்லையெனில் அவை அசல் அடுக்குகளில் இருக்கும்.</translation>
+        <translation type="unfinished">இந்த பெட்டி தேர்வு செய்யப்பட்டால், உருவாக்கப்பட்ட பொருட்கள் தற்போதைய அடுக்கில் வைக்கப்படும், இல்லையெனில் அவை அசல் அடுக்குகளில் இருக்கும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="96"/>
@@ -25308,7 +25309,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="188"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>செயலில் உள்ள அடுக்கின் பேனாவைப் பயன்படுத்தி தற்போதைய பேனாவைப் புதுப்பிக்கவும்</translation>
+        <translation>செயலில் உள்ள அடுக்கின் பேனாவால் தற்போதைய பேனாவைப் புதுப்பி</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="205"/>
@@ -25413,7 +25414,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="305"/>
         <source>&amp;Apply Pen To Active Layer</source>
-        <translation>செயலில் உள்ள அடுக்கில் பேனாவை பயன்படுத்து</translation>
+        <translation>செயலில் உள்ள &amp;அடுக்கில் பேனாவைப் பயன்படுத்து</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="306"/>
@@ -29572,7 +29573,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="303"/>
         <source>Unlock all layers</source>
-        <translation type="unfinished">அனைத்து அடுக்குகளையும் திற</translation>
+        <translation type="unfinished">அனைத்து அடுக்குகளின் பூட்டையும் திற</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="303"/>
@@ -33045,7 +33046,8 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="127"/>
         <source>
 Layer: </source>
-        <translation>அடுக்கு:</translation>
+        <translation>
+அடுக்கு: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="573"/>
@@ -36093,7 +36095,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="209"/>
         <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">சரிபார்க்கப்பட்டால், புதிய உருப்படிகள் தற்போதைய அடுக்கில் வைக்கப்படும், இல்லையெனில் அவை அசல் அடுக்குகளில் இருக்கும்.</translation>
+        <translation type="unfinished">இந்த பெட்டி தேர்வு செய்யப்பட்டால், புதிய பொருட்கள் தற்போதைய அடுக்கில் வைக்கப்படும், இல்லையெனில் அவை அசல் அடுக்குகளில் இருக்கும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="212"/>
@@ -36336,7 +36338,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="83"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="unfinished">இந்த பெட்டி தேர்வு செய்யப்பட்டால், உருவாக்கப்பட்ட பொருட்கள் தற்போதைய அடுக்கில் வைக்கப்படும். இல்லையெனில், அவை அசல் அடுக்குகளில் வைக்கப்படும்.</translation>
+        <translation type="unfinished">இந்த பெட்டி தேர்வு செய்யப்பட்டால், உருவாக்கப்பட்ட பொருட்கள் தற்போதைய அடுக்கில் வைக்கப்படும். இல்லையெனில், அவை அசல் அடுக்குகளில் வைக்கப்படும். </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="86"/>
@@ -37250,7 +37252,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="77"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">சரிபார்க்கப்பட்டால், உருவாக்கப்பட்ட பொருள்கள் தற்போதைய அடுக்கில் வைக்கப்படும், இல்லையெனில் அவை அசல் அடுக்குகளில் வைக்கப்படும்.</translation>
+        <translation type="unfinished">இந்த பெட்டி தேர்வு செய்யப்பட்டால், உருவாக்கப்பட்ட பொருட்கள் தற்போதைய அடுக்கில் வைக்கப்படும், இல்லையெனில் அவை அசல் அடுக்குகளில் வைக்கப்படும்.</translation>
     </message>
 </context>
 <context>
@@ -37288,7 +37290,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="73"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">சரிபார்க்கப்பட்டால், உருவாக்கப்பட்ட பொருள்கள் தற்போதைய அடுக்கில் வைக்கப்படும், இல்லையெனில் அவை அசல் அடுக்குகளில் வைக்கப்படும்.</translation>
+        <translation type="unfinished">இந்த பெட்டி தேர்வு செய்யப்பட்டால், உருவாக்கப்பட்ட பொருட்கள் தற்போதைய அடுக்கில் வைக்கப்படும், இல்லையெனில் அவை அசல் அடுக்குகளில் வைக்கப்படும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="76"/>
@@ -37431,7 +37433,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="71"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">சரிபார்க்கப்பட்டால், உருவாக்கப்பட்ட பொருள்கள் தற்போதைய அடுக்கில் வைக்கப்படும், இல்லையெனில் அவை அசல் அடுக்குகளில் வைக்கப்படும்.</translation>
+        <translation type="unfinished">இந்த பெட்டி தேர்வு செய்யப்பட்டால், உருவாக்கப்பட்ட பொருட்கள் தற்போதைய அடுக்கில் வைக்கப்படும், இல்லையெனில் அவை அசல் அடுக்குகளில் வைக்கப்படும்.</translation>
     </message>
 </context>
 <context>
@@ -37444,7 +37446,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="32"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">சரிபார்க்கப்பட்டால், உருவாக்கப்பட்ட பொருள்கள் தற்போதைய அடுக்கில் வைக்கப்படும், இல்லையெனில் அவை அசல் அடுக்குகளில் வைக்கப்படும்.</translation>
+        <translation type="unfinished">இந்த பெட்டி தேர்வு செய்யப்பட்டால், உருவாக்கப்பட்ட பொருட்கள் தற்போதைய அடுக்கில் வைக்கப்படும், இல்லையெனில் அவை அசல் அடுக்குகளில் வைக்கப்படும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="35"/>
@@ -38315,7 +38317,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="216"/>
         <source>Entity&apos;s Layer</source>
-        <translation>உருவத்தின் அடுக்கு</translation>
+        <translation>பொருளின் அடுக்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="250"/>
@@ -39010,7 +39012,7 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="236"/>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="236"/>
         <source>Layers Tree</source>
-        <translation>அடுக்குகள் மரம்</translation>
+        <translation>அடுக்கு மரம்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="261"/>
@@ -39824,12 +39826,12 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="100"/>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="276"/>
         <source>By Layer</source>
-        <translation>அடுக்கு மூலம்</translation>
+        <translation>அடுக்கு வாரியாக</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="101"/>
         <source>By Block</source>
-        <translation>தொகுதி மூலம்</translation>
+        <translation>தொகுதி வாரியாக</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="108"/>
@@ -43405,7 +43407,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5074"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;இது இயக்கப்பட்டால், ஒரு அடுக்கைத் தேர்ந்தெடுப்பது, தேர்ந்தெடுக்கப்பட்ட அனைத்து கூறுகளையும் அந்த புதிய அடுக்கிற்கு மாற்றும். பல கூறுகளின் அடுக்கை மாற்ற: முதலில் தேவையான கூறுகளைத் தேர்ந்தெடுக்கவும்; அடுக்கு விட்ஜெட்டில் ஒரு அடுக்கைத் தேர்ந்தெடுக்கவும். இது தேர்ந்தெடுக்கப்பட்ட அனைத்து கூறுகளையும் புதிய அடுக்கிற்கு மாற்றும்.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;இது இயக்கப்பட்டால், ஒரு அடுக்கைச் செயல்படுத்துவது, தேர்ந்தெடுக்கப்பட்ட அனைத்து பொருட்களையும் அந்த புதிய அடுக்கிற்கு மாற்றும். பல பொருட்களின் அடுக்கை மாற்ற: முதலில் தேவையான பொருட்களைத் தேர்ந்தெடுக்கவும்; அடுக்கு விட்ஜெட்டில் ஒரு அடுக்கைச் செயல்படுத்தவும். இது தேர்ந்தெடுக்கப்பட்ட அனைத்து பொருட்களையும் புதிய அடுக்கிற்கு மாற்றும்.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5934"/>
@@ -44526,7 +44528,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5077"/>
         <source>Modify layer of selected entities, at layer activation</source>
-        <translation>தேர்ந்தெடுக்கப்பட்ட உருப்படிகளின் அடுக்கை, அடுக்கு செயல்படுத்தப்படும்போது மாற்றவும்</translation>
+        <translation>தேர்ந்தெடுக்கப்பட்ட பொருட்களின் அடுக்கை, அடுக்கு செயல்படுத்தப்படும்போது மாற்றவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5490"/>
@@ -45695,12 +45697,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="85"/>
         <source>Export invisible layers</source>
-        <translation>தெரியாத அடுக்குகளை ஏற்றுமதி செய்க</translation>
+        <translation>மறைக்கப்பட்ட அடுக்குகளை ஏற்றுமதி செய்க</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="92"/>
         <source>Export visible construction layers</source>
-        <translation>தெரியக்கூடிய கட்டுமான அடுக்குகளை ஏற்றுமதி செய்க</translation>
+        <translation>காணக்கூடிய கட்டுமான அடுக்குகளை ஏற்றுமதி செய்க</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="104"/>
@@ -47123,7 +47125,7 @@ so default step value required for baking</source>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="29"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>கட்டுமான அடுக்கு என்பது முடிவில்லாத நேர்கோடுகளைக் கொண்ட ஒரு அடுக்காகும், இது வடிவியல் கட்டுமானத்திற்குப் பயன்படுத்தப்படுகிறது.
+        <translation>ஒரு கட்டுமான அடுக்கில் முடிவில்லாத நேர்கோடுகள் உள்ளன, அவை வடிவியல் கட்டுமானத்திற்குப் பயன்படுத்தப்படுகின்றன.
 கட்டுமான அடுக்கின் உள்ளடக்கம் அச்சிடலில் தோன்றக்கூடாது.</translation>
     </message>
     <message>
@@ -47495,7 +47497,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="239"/>
         <source>By Layer</source>
-        <translation>அடுக்கு மூலம்</translation>
+        <translation>அடுக்கு வாரியாக</translation>
     </message>
 </context>
 <context>
@@ -47514,7 +47516,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="240"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1739"/>
         <source>Remove Layer</source>
-        <translation>அடுக்கு நீக்கு</translation>
+        <translation>அடுக்கை நீக்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="183"/>
@@ -47553,7 +47555,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="173"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>&quot;%1&quot; என்ற அடுக்கு மற்றும் அதிலுள்ள அனைத்து கூறுகளும் நீக்கப்படும்.
+        <translation>&quot;%1&quot; என்ற அடுக்கு மற்றும் அதிலுள்ள அனைத்து பொருட்களும் நீக்கப்படும்.
 இந்த செயலை திரும்பப் பெற முடியாது.</translation>
     </message>
     <message>
@@ -47567,15 +47569,15 @@ This action can NOT be undone.</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1787"/>
         <source>Remove %n layer(s)</source>
         <translation>
-            <numerusform>%n அடுக்கை அகற்று</numerusform>
-            <numerusform>%n அடுக்குகளை அகற்று</numerusform>
+            <numerusform>%n அடுக்கை நீக்கு</numerusform>
+            <numerusform>%n அடுக்குகளை நீக்கு</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="251"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1788"/>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>பட்டியலிடப்பட்ட அடுக்குகள் மற்றும் அவற்றில் உள்ள அனைத்து கூறுகளும் நீக்கப்படும்.</translation>
+        <translation>பட்டியலிடப்பட்ட அடுக்குகள் மற்றும் அவற்றில் உள்ள அனைத்து பொருட்களும் நீக்கப்படும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="253"/>
@@ -47615,7 +47617,7 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="230"/>
         <source>Layer empty name is not allowed.</source>
-        <translation>வெற்று பெயர் கொண்ட அடுக்கை உருவாக்க முடியாது.</translation>
+        <translation>அடுக்கின் பெயர் காலியாக இருக்கக்கூடாது.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="265"/>
@@ -47628,7 +47630,8 @@ This action can NOT be undone.</source>
 [%1].
 Please specify a different name.</source>
         <translation>ஒரே பெயரில் அடுக்கை உருவாக்க முயற்சி. நகல் செய்யப்பட்ட அடுக்கின் பெயர் 
-[%1]. வேறு பெயரைத் தேர்ந்தெடுக்கவும்.</translation>
+[%1].
+வேறு பெயரை குறிப்பிடவும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="142"/>
@@ -47665,21 +47668,22 @@ Clear filtering mask and repeat.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="973"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>உருப்படிகள் இல்லாத அடுக்குகள் எதுவும் இல்லை, நீக்க எதுவும் இல்லை.</translation>
+        <translation>பொருட்கள் இல்லாத அடுக்குகள் எதுவும் இல்லை, நீக்க எதுவும் இல்லை.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1116"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1161"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1169"/>
         <source>Add Layer</source>
-        <translation>அடுக்கு சேர்</translation>
+        <translation>அடுக்கைச் சேர்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1117"/>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation>[%1] க்கான இதே துணை அடுக்கு ஏற்கனவே உள்ளது.
+        <translation>பின்வரும் அடுக்கிற்கு இத்தகைய துணை அடுக்கு ஏற்கனவே உள்ளது:
+[%1].
 வேறு பெயரை குறிப்பிடவும்.</translation>
     </message>
     <message>
@@ -47687,13 +47691,16 @@ Please specify a different name.</source>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation>[%1] க்கான இதே துணை அடுக்கு ஏற்கனவே உள்ளது.</translation>
+        <translation>பின்வரும் அடுக்கிற்கு இத்தகைய துணை அடுக்கு ஏற்கனவே உள்ளது:
+[%1].
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1170"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>பரிமாண அடுக்கு சாதாரண செயலில் உள்ள அடுக்குக்கு மட்டுமே சேர்க்கப்பட முடியும்.</translation>
+        <translation>செயலில் உள்ள அடுக்கு சாதாரண அடுக்காக இருந்தால் மட்டுமே பரிமாண அடுக்கைச் சேர்க்க முடியும்.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1233"/>
@@ -47779,19 +47786,21 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1453"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>காணக்கூடிய அடுக்குகளில் பொருத்தமான உருப்படிகள் எதுவும் இல்லை.</translation>
+        <translation>காணக்கூடிய அடுக்குகளில் பேனாவுடன் பொருந்தும் பொருட்கள் எதுவும் இல்லை.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1454"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>இத்தகைய உருப்படிகள் உறைந்த அடுக்குகளில் உள்ளன.</translation>
+        <translation>இத்தகைய பொருட்கள் மறைக்கப்பட்ட அடுக்குகளில் உள்ளன.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1455"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>இத்தகைய உருப்படிகள் பூட்டப்பட்ட அடுக்குகளில் உள்ளன.</translation>
+        <translation>இத்தகைய பொருட்கள் பூட்டப்பட்ட அடுக்குகளில் உள்ளன.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1456"/>
@@ -48786,7 +48795,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="83"/>
         <source>cnlayer</source>
-        <translation>அடுக்கு</translation>
+        <translation>cnlayer</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="84"/>
@@ -48796,7 +48805,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="88"/>
         <source>cslayer</source>
-        <translation>அடுக்கு</translation>
+        <translation>cslayer</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="89"/>
@@ -51317,7 +51326,7 @@ Do you want to replace it?</source>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="56"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="209"/>
         <source>By Block</source>
-        <translation>பிளாக் வாரியாக</translation>
+        <translation>தொகுதி வாரியாக</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="212"/>

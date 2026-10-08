@@ -3638,7 +3638,7 @@ edo [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="109"/>
         <source>Activate Entity&apos;s Layer</source>
-        <translation>Aktibatu Entitatearen geruza</translation>
+        <translation>Aktibatu entitatearen geruza</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="110"/>
@@ -3658,12 +3658,12 @@ edo [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="113"/>
         <source>Toggle Entity&apos;s Layer Construction</source>
-        <translation>Txandakatu entitatearen geruza-eraikuntza</translation>
+        <translation>Aldatu entitatearen geruzaren eraikuntza modua</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="114"/>
         <source>Toggle Entity&apos;s Layer Printing</source>
-        <translation>Txandakatu entitatearen geruza inprimatzea</translation>
+        <translation>Aldatu entitatearen geruzaren inprimaketa</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="225"/>
@@ -3982,37 +3982,37 @@ edo [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="621"/>
         <source>&amp;Add Layer</source>
-        <translation>&amp;Geruza gehitu</translation>
+        <translation>Ge&amp;hitu geruza</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="622"/>
         <source>&amp;Remove Layer</source>
-        <translation>&amp;Geruza kendu</translation>
+        <translation>&amp;Kendu geruza</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="623"/>
         <source>&amp;Edit Layer</source>
-        <translation>&amp;Geruza Editatu</translation>
+        <translation>Editat&amp;u geruza</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="624"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>Aldatu geruzaren blokeoa</translation>
+        <translation>Aldatu &amp;geruzaren blokeoa</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="625"/>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation>&amp;Aldatu geruzaren ikusgarritasuna</translation>
+        <translation>&amp;Aldatu geruzaren ikusgaitasuna</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="626"/>
         <source>Toggle Layer &amp;Print</source>
-        <translation>Aldatu geruzaren inprimaketa</translation>
+        <translation>A&amp;ldatu geruzaren inprimaketa</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="627"/>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>Aldatu &amp;Eraikuntza geruza</translation>
+        <translation>Alda&amp;tu eraikuntza-geruza</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="637"/>
@@ -5121,7 +5121,7 @@ Puntua: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>Enter layer name to %1</source>
-        <translation>Sartu geruzaren izena %1era</translation>
+        <translation>Sartu %1 beharreko geruzaren izena</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
@@ -7473,12 +7473,12 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="66"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Aktibatzen bada, objektu ispiludunak uneko geruzan jarriko dira, bestela jatorrizko geruzetan jarriko dira.</translation>
+        <translation type="unfinished">Aktibatzen bada, ispilatutako entitateak uneko geruzan jarriko dira, bestela jatorrizko geruzetan jarriko dira.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="69"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Erabiltzailearen uneko geruza</translation>
+        <translation type="unfinished">Erabili uneko geruza</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="76"/>
@@ -8801,7 +8801,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="62"/>
         <source>Layer to which created circle should be placed</source>
-        <translation type="unfinished">Sortutako zirkuluaren geruza jarri behar da</translation>
+        <translation type="unfinished">Sortutako zirkulua jarriko den geruza</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="66"/>
@@ -13565,7 +13565,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="82"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">Bikoiztutako geruza jarri behar da</translation>
+        <translation type="unfinished">Bikoiztua jarriko den geruza</translation>
     </message>
 </context>
 <context>
@@ -13578,7 +13578,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="45"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">Bikoiztutako geruza jarri behar da</translation>
+        <translation type="unfinished">Bikoiztua jarriko den geruza</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="49"/>
@@ -15290,7 +15290,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="93"/>
         <source>Layer for various infromational elements, notes, drafts etc.</source>
-        <translation>Hainbat elementu infromazionaletarako geruza, oharrak, zirriborroak eta abar.</translation>
+        <translation>Hainbat informazio-elementutarako geruza: oharrak, zirriborroak eta abar.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="96"/>
@@ -15300,7 +15300,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="106"/>
         <source>Normal layer with drawing eleements</source>
-        <translation>Geruza normala marratxoekin</translation>
+        <translation>Geruza normala, marrazki-elementuak dituena</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="109"/>
@@ -15310,12 +15310,12 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="119"/>
         <source>Layer that holds dimensions</source>
-        <translation>Dimentsioak dituen geruza</translation>
+        <translation>Kotak dituen geruza</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="122"/>
         <source>Dimensions</source>
-        <translation>Dimentsioak</translation>
+        <translation>Kotak</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="132"/>
@@ -15342,7 +15342,7 @@ Eraikuntza-geruza baten edukia ez litzateke inprimatu behar.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="181"/>
         <source>Path for parent layer</source>
-        <translation>Guraso-geruzaren bide-izena</translation>
+        <translation>Guraso-geruzaren bidea</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="197"/>
@@ -15374,7 +15374,7 @@ Eraikuntza-geruza baten edukia ez litzateke inprimatu behar.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="183"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="221"/>
         <source>Default Pen</source>
-        <translation>Pen lehenetsia</translation>
+        <translation>Arkatz lehenetsia</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="200"/>
@@ -15397,12 +15397,12 @@ Eraikuntza-geruza baten edukia ez litzateke inprimatu behar.</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="63"/>
         <source>If checked, Named Views from the document will be included into exported drawings. Otherwise, views are not included.</source>
-        <translation>Aktibatzen bada, Dokumentuaren Ikuspegi Izendunak esportatutako marrazkietan sartuko dira. Bestela, ikuspegiak ez dira sartzen.</translation>
+        <translation>Aktibatzen bada, dokumentuko izendatutako ikuspegiak esportatutako marrazkietan sartuko dira. Bestela, ikuspegiak ez dira sartzen.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="66"/>
         <source>Export Named Views too</source>
-        <translation>Esportatu izendun ikuspegiak ere</translation>
+        <translation>Esportatu izendatutako ikuspegiak ere</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="73"/>
@@ -15427,12 +15427,12 @@ Eraikuntza-geruza baten edukia ez litzateke inprimatu behar.</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="96"/>
         <source>If checked, UCSs from the document will be included into exported drawings. Otherwise, UCSs are not included.</source>
-        <translation>Hautatzen bada, dokumentuko UCSak esportatutako marrazkietan sartuko dira. Bestela, UCSak ez dira sartzen.</translation>
+        <translation>Aktibatzen bada, dokumentuko UCSak esportatutako marrazkietan sartuko dira. Bestela, UCSak ez dira sartzen.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="99"/>
         <source>Export UCSs too</source>
-        <translation>Esportatu UCS ere</translation>
+        <translation>Esportatu UCSak ere</translation>
     </message>
 </context>
 <context>
@@ -15450,7 +15450,7 @@ Eraikuntza-geruza baten edukia ez litzateke inprimatu behar.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="49"/>
         <source>Naming Convention</source>
-        <translation>Izen-ematea</translation>
+        <translation>Izendapen-konbentzioa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="55"/>
@@ -15474,12 +15474,12 @@ Eraikuntza-geruza baten edukia ez litzateke inprimatu behar.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
-        <translation>Dimentsioa</translation>
+        <translation>Kotak</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="201"/>
         <source>Suffix of layer&apos;s name that defines that layer is dimensional</source>
-        <translation>Geruzak dimentsioa duela definitzen duen geruzaren izena</translation>
+        <translation>Geruzaren izenaren atzizkia, geruza kota-geruza dela definitzen duena</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="211"/>
@@ -15490,17 +15490,17 @@ Eraikuntza-geruza baten edukia ez litzateke inprimatu behar.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="224"/>
         <source>Suffix of layer&apos;s name that defines that layer is informational.</source>
-        <translation>Geruzaren izenaren laburdurak zehazten du geruza informaziozkoa dela.</translation>
+        <translation>Geruzaren izenaren atzizkia, geruza informazio-geruza dela definitzen duena.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="234"/>
         <source>Alternative Position </source>
-        <translation>Ordezko posizioa</translation>
+        <translation>Ordezko posizioa </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
-        <translation>Geruzaren izenaren laburdurak zehazten du geruza beste posizio baterako dela.</translation>
+        <translation>Geruzaren izenaren atzizkia, geruza ordezko posiziokoa dela definitzen duena.</translation>
     </message>
     <message>
         <source>Duplicating Name</source>
@@ -15519,12 +15519,12 @@ Eraikuntza-geruza baten edukia ez litzateke inprimatu behar.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="84"/>
         <source>Suffix</source>
-        <translation>Suffix</translation>
+        <translation>Atzizkia</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="97"/>
         <source>Suffix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>Geruzaren izena erabiltzen da izen hori duen geruza existitzen bada (adibidez, bikoiztua sortzen denean)</translation>
+        <translation>Geruzaren izenaren atzizkia, izen hori duen geruza existitzen bada (adibidez, bikoiztua sortzen denean)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="155"/>
@@ -15554,12 +15554,12 @@ Eraikuntza-geruza baten edukia ez litzateke inprimatu behar.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="268"/>
         <source>Display and operations settings</source>
-        <translation>Bistaratu eta eragiketen ezarpenak</translation>
+        <translation>Bistaratzearen eta eragiketen ezarpenak</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="271"/>
         <source>Display and Operations</source>
-        <translation>Pantaila eta eragiketak</translation>
+        <translation>Bistaratzea eta eragiketak</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="329"/>
@@ -15569,7 +15569,7 @@ Eraikuntza-geruza baten edukia ez litzateke inprimatu behar.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="332"/>
         <source>Show full name as ToolTip</source>
-        <translation>Erakutsi izen osoa ToolTip gisa</translation>
+        <translation>Erakutsi izen osoa argibide gisa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="608"/>
@@ -15599,7 +15599,7 @@ Eraikuntza-geruza baten edukia ez litzateke inprimatu behar.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="319"/>
         <source>If checked, icons for layer types will be shown</source>
-        <translation>Hautatzen bada, geruza moten ikonoak erakutsiko dira</translation>
+        <translation>Aktibatzen bada, geruza moten ikonoak erakutsiko dira</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="322"/>
@@ -15609,37 +15609,37 @@ Eraikuntza-geruza baten edukia ez litzateke inprimatu behar.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="309"/>
         <source>Indentation for child layers</source>
-        <translation>Ume-geruzak koskatzeko</translation>
+        <translation>Geruza umeak koskatzeko</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="312"/>
         <source>Show indented layer names. Ident size:</source>
-        <translation>Erakutsi ezkutuko geruza-izenak. Ident tamaina:</translation>
+        <translation>Erakutsi koskadun geruza-izenak. Koska-tamaina:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="277"/>
         <source>Size of the indent in characters to indent name of child layer from parent ones</source>
-        <translation>Indentaren tamaina, karakteretan, haur-geruzaren izen koskatzailea gurasoengandik</translation>
+        <translation>Koskaren tamaina, karakteretan, geruza umearen izena gurasoenarekiko koskatzeko</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="352"/>
         <source>If checked, drag&amp;drop operations in layers list are enabled and layers hierarchy may be restructutured</source>
-        <translation>Aktibatzen bada, geruza-zerrendako arrastatu eta jaregin eragiketak gaitu egiten dira eta geruza-hierarkia atseden har daiteke</translation>
+        <translation>Aktibatzen bada, geruza-zerrendako arrastatu&amp;jaregin eragiketak gaitzen dira eta geruza-hierarkia berregitura daiteke</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="355"/>
         <source>Allow restructuring via Drag&amp;Drop</source>
-        <translation>Baimendu berregituratzea Drag&amp;Drop erabiliz</translation>
+        <translation>Baimendu berregituratzea arrastatu eta jaregin bidez</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="293"/>
         <source>If primary layer is renames, secondary layers are renamed too.</source>
-        <translation>Lehen geruzak izena aldatzen badu, bigarren mailako geruzak ere aldatu egiten dira.</translation>
+        <translation>Geruza nagusiaren izena aldatzen bada, geruza sekundarioen izena ere aldatzen da.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="296"/>
         <source>Rename secondary layers on primary rename</source>
-        <translation>Aldatu bigarren mailako geruzak lehen izen-aldatzean</translation>
+        <translation>Aldatu geruza sekundarioen izena nagusiaren izena aldatzean</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="376"/>
@@ -15675,7 +15675,7 @@ Eraikuntza-geruza baten edukia ez litzateke inprimatu behar.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="560"/>
         <source>Matched item in highlight filter mode</source>
-        <translation>Bat datorren elementua nabarmendutako iragazki moduan</translation>
+        <translation>Bat datorren elementua iragazkiaren nabarmentze moduan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="391"/>
@@ -15734,7 +15734,7 @@ Eraikuntza-geruza baten edukia ez litzateke inprimatu behar.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="602"/>
         <source>Default Pens</source>
-        <translation>Pen lehenetsia</translation>
+        <translation>Arkatz lehenetsiak</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="68"/>
@@ -15744,7 +15744,7 @@ Eraikuntza-geruza baten edukia ez litzateke inprimatu behar.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="69"/>
         <source>Dimensional Layer</source>
-        <translation>Geruza dimentsionala</translation>
+        <translation>Kota-geruza</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="70"/>
@@ -15754,7 +15754,7 @@ Eraikuntza-geruza baten edukia ez litzateke inprimatu behar.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Alternative Position Layer</source>
-        <translation>Ordezko posizioa geruza</translation>
+        <translation>Ordezko posizioko geruza</translation>
     </message>
     <message>
         <source>grid</source>
@@ -15768,7 +15768,7 @@ Eraikuntza-geruza baten edukia ez litzateke inprimatu behar.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="110"/>
         <source>virtual layer background</source>
-        <translation>geruza birtualeko atzeko planoa</translation>
+        <translation>geruza birtualaren atzeko planoa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="118"/>
@@ -15789,7 +15789,7 @@ Eraikuntza-geruza baten edukia ez litzateke inprimatu behar.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>Baliogabeko balioa ematen dio %1 koloreari.
+        <translation>Balio baliogabea eman da kolore honetarako: %1.
 Zehaztu beste balio bat.</translation>
     </message>
     <message>
@@ -15843,7 +15843,7 @@ Zehaztu beste balio bat.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="218"/>
         <source>Expand All</source>
-        <translation>Zabaldu dena</translation>
+        <translation>Zabaldu denak</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="226"/>
@@ -15853,7 +15853,7 @@ Zehaztu beste balio bat.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="234"/>
         <source>Collapse Secondary</source>
-        <translation>Tolestu sekundarioa</translation>
+        <translation>Tolestu geruza sekundarioak</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="242"/>
@@ -15873,7 +15873,7 @@ Zehaztu beste balio bat.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="263"/>
         <source>Add dimensions Layer</source>
-        <translation>Gehitu neurriak</translation>
+        <translation>Gehitu kota-geruza</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="272"/>
@@ -15883,12 +15883,12 @@ Zehaztu beste balio bat.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="279"/>
         <source>Modify layer attributes / rename</source>
-        <translation>Aldatu geruzen atributuak / aldatu izena</translation>
+        <translation>Aldatu geruzaren atributuak / aldatu izena</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="286"/>
         <source>Flat List Mode)</source>
-        <translation>Zerrenda lauaren modua)</translation>
+        <translation>Zerrenda lauaren modua</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="656"/>
@@ -15898,32 +15898,32 @@ Zehaztu beste balio bat.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="657"/>
         <source>&amp;Rename</source>
-        <translation>Aldatu izena</translation>
+        <translation>&amp;Aldatu izena</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="658"/>
         <source>&amp;Remove Layers (Sub-Tree)</source>
-        <translation>&amp;Kendu geruzak (Sub-Tree)</translation>
+        <translation>Ke&amp;ndu geruzak (azpizuhaitza)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="660"/>
         <source>&amp;Copy Structure (Sub-Tree)</source>
-        <translation>&amp;Kopiatu egitura (Sub-Tree)</translation>
+        <translation>K&amp;opiatu egitura (azpizuhaitza)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="661"/>
         <source>&amp;Duplicate Content (Sub-Tree)</source>
-        <translation>&amp;Bikoiztu edukia (Sub-Tree)</translation>
+        <translation>Bi&amp;koiztu edukia (azpizuhaitza)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="663"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>&amp;Hautatu entitateak (Sub-Tree)</translation>
+        <translation>&amp;Hautatu entitateak (azpizuhaitza)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="668"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>&amp;Editatu geruza eta atributuak</translation>
+        <translation>Editatu geruzare&amp;n atributuak</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="670"/>
@@ -15933,28 +15933,28 @@ Zehaztu beste balio bat.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="679"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>Gehitu dimentsio-azpigeruza</translation>
+        <translation>Gehitu kota-&amp;azpigeruza</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="683"/>
         <source>&amp;Add Info Sub-Layer</source>
-        <translation>&amp;Gehitu informazioa Azpigeruza</translation>
+        <translation>Gehitu in&amp;formazio-azpigeruza</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="687"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
-        <translation>&amp;Gehitu ikuspegi alternatiboa</translation>
+        <translation>Gehitu &amp;ordezko posizioko azpigeruza</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="693"/>
         <source>&amp;Remove Sub-layers</source>
-        <translation>&amp;Kendu azpi-geruzak</translation>
+        <translation>Kendu azpigeruzak</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="701"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="711"/>
         <source>Convert to Dimensional Layer</source>
-        <translation>Bihurtu geruza dimentsionalera</translation>
+        <translation>Bihurtu kota-geruzara</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="702"/>
@@ -15966,7 +15966,7 @@ Zehaztu beste balio bat.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="703"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="717"/>
         <source>Convert to Alternative Position Layer</source>
-        <translation>Bihurtu beste posizioko geruzara</translation>
+        <translation>Bihurtu ordezko posizioko geruzara</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="709"/>
@@ -15986,7 +15986,7 @@ Zehaztu beste balio bat.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="727"/>
         <source>&amp;Duplicate Layer With Content</source>
-        <translation>Bikoiztu geruza edukiarekin</translation>
+        <translation>Bikoiztu &amp;geruza edukiarekin</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="731"/>
@@ -16006,12 +16006,12 @@ Zehaztu beste balio bat.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="741"/>
         <source>&amp;Freeze Others Layers</source>
-        <translation>&amp; Izoztu beste geruzak</translation>
+        <translation>Ezk&amp;utatu beste geruzak</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="742"/>
         <source>&amp;Defreeze All Layers</source>
-        <translation>Desizoztu geruza guztiak</translation>
+        <translation>E&amp;rakutsi geruza guztiak</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
@@ -16031,32 +16031,32 @@ Zehaztu beste balio bat.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="746"/>
         <source>Enable &amp;Printing All Layers</source>
-        <translation>Gaitu geruza guztiak inprimatzea</translation>
+        <translation>Gaitu geruza guztiak inpri&amp;matzea</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="747"/>
         <source>&amp;Disable Printing All Layers</source>
-        <translation>Geruza guztiak inprimatzea</translation>
+        <translation>Desgaitu geruza guztiak &amp;inprimatzea</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="750"/>
         <source>&amp;Export Single Layer</source>
-        <translation>&amp; Esportatu geruza bakarra</translation>
+        <translation>Es&amp;portatu geruza bakarra</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="754"/>
         <source>&amp;Export Layer Sub-Tree</source>
-        <translation>&amp;Esportatu azpiko geruza</translation>
+        <translation>&amp;Esportatu geruzaren azpizuhaitza</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="758"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Esportatu geruza ikusgaia(k)</translation>
+        <translation>Espor&amp;tatu ikusgai dauden geruza(k)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="760"/>
         <source>&amp;Find And Remove Empty Layers</source>
-        <translation>&amp;Bilatu eta kendu geruza hutsak</translation>
+        <translation>Bi&amp;latu eta kendu geruza hutsak</translation>
     </message>
 </context>
 <context>
@@ -23345,12 +23345,12 @@ Zehaztu beste balio bat.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="82"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Aktibatzen bada, objektu ispiludunak uneko geruzan jarriko dira, bestela jatorrizko geruzetan jarriko dira.</translation>
+        <translation type="unfinished">Aktibatzen bada, ispilatutako entitateak uneko geruzan jarriko dira, bestela jatorrizko geruzetan jarriko dira.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Erabiltzailearen uneko geruza</translation>
+        <translation type="unfinished">Erabili uneko geruza</translation>
     </message>
 </context>
 <context>
@@ -23644,7 +23644,7 @@ Zehaztu beste balio bat.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="45"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="unfinished">Aktibatzen bada, sortutako entitateak uneko geruzan kokatuko dira. Bestela, jatorrizko geruzetan jarriko dira.</translation>
+        <translation type="unfinished">Aktibatzen bada, sortutako entitateak uneko geruzan kokatuko dira. Bestela, jatorrizko geruzetan jarriko dira. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="48"/>
@@ -23830,7 +23830,7 @@ Zehaztu beste balio bat.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="144"/>
         <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="unfinished">Hautatzen bada, sortutako entitateak uneko geruzan jarriko dira, bestela jatorrizko geruzetan egongo dira.</translation>
+        <translation type="unfinished">Hautatzen bada, sortutako entitateak uneko geruzan jarriko dira, bestela jatorrizko geruzetan egongo dira. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="147"/>
@@ -25377,17 +25377,17 @@ Abisua: ekintza hau ezin da desegin!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="205"/>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation>Bete geruza aktiboaren arkatzaren editorea</translation>
+        <translation>Bete arkatzaren editorea geruza aktiboaren arkatzaren arabera</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="208"/>
         <source>Pick from Active Layer</source>
-        <translation>Hartu geruza aktiboa</translation>
+        <translation>Hartu geruza aktibotik</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="222"/>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation>Aplikatu arkatza geruza aktiboan</translation>
+        <translation>Aplikatu editorearen arkatza geruza aktiboaren arkatzari</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="225"/>
@@ -29546,7 +29546,7 @@ Kontuan izan, editorearen bidez arkatza gorde eta berrabiarazi gabe, paletako ar
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="171"/>
         <source>Dimensional</source>
-        <translation type="unfinished">Dimentsioa</translation>
+        <translation type="unfinished">Kotak</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="175"/>
@@ -33109,7 +33109,8 @@ Kontuan izan, editorearen bidez arkatza gorde eta berrabiarazi gabe, paletako ar
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="127"/>
         <source>
 Layer: </source>
-        <translation>Geruza:</translation>
+        <translation>
+Geruza: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="573"/>
@@ -35915,7 +35916,7 @@ p, li { zuriunea: aurreitzulbira; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="208"/>
         <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="unfinished">Whetether kopiak uneko edo jatorrizko geruzan txertatuko direla zehazten du</translation>
+        <translation type="unfinished">Kopiak uneko geruzan ala jatorrizko geruzan txertatuko diren zehazten du</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="211"/>
@@ -36161,7 +36162,7 @@ p, li { zuriunea: aurreitzulbira; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="209"/>
         <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">Hautatzen bada, enties berriak uneko geruzan jarriko dira, bestela jatorrizko geruzetan egongo dira.</translation>
+        <translation type="unfinished">Hautatzen bada, entitate berriak uneko geruzan jarriko dira, bestela jatorrizko geruzetan egongo dira.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="212"/>
@@ -36404,7 +36405,7 @@ p, li { zuriunea: aurreitzulbira; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="83"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="unfinished">Aktibatzen bada, sortutako entitateak uneko geruzan kokatuko dira. Bestela, jatorrizko geruzetan jarriko dira.</translation>
+        <translation type="unfinished">Aktibatzen bada, sortutako entitateak uneko geruzan kokatuko dira. Bestela, jatorrizko geruzetan jarriko dira. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="86"/>
@@ -37517,7 +37518,7 @@ p, li { zuriunea: aurreitzulbira; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="35"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Erabiltzailearen uneko geruza</translation>
+        <translation type="unfinished">Erabili uneko geruza</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="42"/>
@@ -39897,12 +39898,12 @@ Ikus ea dagoen eta baimenak.</translation>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="100"/>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="276"/>
         <source>By Layer</source>
-        <translation>Geruzen bitartez</translation>
+        <translation>Geruzaren arabera</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="101"/>
         <source>By Block</source>
-        <translation>Geruzen bitartez</translation>
+        <translation>Blokearen arabera</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="108"/>
@@ -40959,7 +40960,7 @@ Honek errekurtsiboki aldatzen ditu blokearen entitate guztiak.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="70"/>
         <source>Layer of MText</source>
-        <translation>MText geruza</translation>
+        <translation>MTestuaren geruza</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="144"/>
@@ -43502,7 +43503,7 @@ Honek errekurtsiboki aldatzen ditu blokearen entitate guztiak.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5074"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Gaitutakoan, geruza bat aktibatzeak hautatutako entitate guztiak geruza berri horretara aldatuko lituzke. Entitate anitzen geruza aldatzeko: hautatu beharrezko entitateak, aktibatu geruza bat geruza-trepetan. Hautatutako erakunde guztiak geruza berrian sartzen dira.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Gaitutakoan, geruza bat aktibatzeak hautatutako entitate guztiak geruza berri horretara aldatuko ditu. Entitate anitzen geruza aldatzeko: lehenik hautatu beharrezko entitateak; ondoren aktibatu geruza bat geruza-trepetan. Horrela, hautatutako entitate guztiak geruza berrikoak izango dira.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5934"/>
@@ -44623,7 +44624,7 @@ Honek errekurtsiboki aldatzen ditu blokearen entitate guztiak.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5077"/>
         <source>Modify layer of selected entities, at layer activation</source>
-        <translation>Aldatu hautatutako erakundeen geruza geruza, geruzaren aktibazioan</translation>
+        <translation>Aldatu hautatutako entitateen geruza, geruza aktibatzean</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5490"/>
@@ -47234,7 +47235,7 @@ beraz, labean egiteko behar den urrats-balio lehenetsia</translation>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="63"/>
         <source>Default Pen</source>
-        <translation>Pen lehenetsia</translation>
+        <translation>Arkatz lehenetsia</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="29"/>
@@ -47644,7 +47645,7 @@ p, li { zuriunea: aurreitzulbira; }
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="183"/>
         <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>Ezin da &quot;%s&quot; geruza kendu.</translation>
+        <translation>&quot;%1&quot; geruza ezin da inoiz kendu.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="304"/>
@@ -47678,7 +47679,7 @@ p, li { zuriunea: aurreitzulbira; }
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="173"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>&quot;%1&quot; geruza eta bertako entitate guztiak ezabatuko dira.
+        <translation>&quot;%1&quot; geruza eta bertako entitate guztiak kenduko dira.
 Ekintza hau ezin da desegin.</translation>
     </message>
     <message>
@@ -47692,15 +47693,15 @@ Ekintza hau ezin da desegin.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1787"/>
         <source>Remove %n layer(s)</source>
         <translation>
-            <numerusform>%n geruza kentzea</numerusform>
-            <numerusform>%n geruza kentzen</numerusform>
+            <numerusform>Kendu geruza bat</numerusform>
+            <numerusform>Kendu %n geruza</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="251"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1788"/>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>Geruza zerrendatuak eta entitate guztiak ezabatuko dira.</translation>
+        <translation>Zerrendatutako geruzak eta bertako entitate guztiak kenduko dira.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="253"/>
@@ -47752,7 +47753,7 @@ Ekintza hau ezin da desegin.</translation>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation>Saiatu geruza sortzen izen bikoizgarriarekin. Geruza-izen bikoiztua da
+        <translation>Izen bikoiztua duen geruza bat sortzeko saiakera egin da. Bikoiztutako geruza-izena hau da:
 [%1].
 Zehaztu beste izen bat.</translation>
     </message>
@@ -47791,7 +47792,7 @@ Clear filtering mask and repeat.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="973"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>Ez da geruzarik aurkitu, ez dago kentzeko ezer.</translation>
+        <translation>Ez da entitaterik gabeko geruzarik aurkitu; ez dago ezer kentzeko.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1116"/>
@@ -47805,7 +47806,7 @@ Clear filtering mask and repeat.</source>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation>Horrelako geruza txiki bat badago jadanik
+        <translation>Horrelako geruza ume bat badago lehendik geruza honetan:
 [%1].
 Zehaztu beste izen bat.</translation>
     </message>
@@ -47814,14 +47815,16 @@ Zehaztu beste izen bat.</translation>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation>Horrelako geruza txiki bat badago jadanik
-[%1].</translation>
+        <translation>Horrelako geruza ume bat badago lehendik geruza honetan:
+[%1].
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1170"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>Geruza dimentsionala geruza aktibo arruntean bakarrik gehi daiteke.</translation>
+        <translation>Kota-geruza geruza aktibo normalari bakarrik gehi dakioke.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1233"/>
@@ -47907,19 +47910,21 @@ Zehaztu beste balio bat.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1453"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>Ez dago geruza ikusgaietan lumarekin bat datorren entitaterik.</translation>
+        <translation>Ez dago geruza ikusgaietan arkatzarekin bat datorren entitaterik.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1454"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>Horrelako entitateak geruza izoztuetan daude.</translation>
+        <translation>Horrelako entitateak geruza ezkutatuetan daude.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1455"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>Horrelako entitateak geruza itxietan daude.</translation>
+        <translation>Horrelako entitateak geruza blokeatuetan daude.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1456"/>
@@ -49756,7 +49761,7 @@ Ordeztea nahi duzu?</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="77"/>
         <source>No %1 layers found</source>
-        <translation>Ez da %1 geruzarik aurkitu</translation>
+        <translation>Ez da %1 dagoen geruzarik aurkitu</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="95"/>
