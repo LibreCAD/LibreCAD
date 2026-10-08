@@ -34,12 +34,15 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+#include <QDateTime>
 #include <QString>
 
+#include "lc_actiontestsupport.h"
 #include "lc_linetype.h"
 #include "lc_linetypelist.h"
 #include "lc_linetypenames.h"
 #include "rs.h"
+#include "rs_graphic.h"
 
 namespace {
 
@@ -462,4 +465,100 @@ TEST_CASE("LC_LineTypeList marks an imported seed as modified even when its metr
     list.setModified(false);
     list.add(makeRecord(seed->name, seed->pattern, seed->description));
     CHECK_FALSE(list.isModified());
+}
+
+// Through RS_Graphic, which owns the list by value beside its layer list.
+TEST_CASE("A drawing holds the seeded line type list and initForNewDocument() reseeds it",
+          "[linetype][list][graphic]") {
+    (void)lc::test::application();
+    int live = 0;
+    {
+        RS_Graphic graphic;
+        // From birth: the clipboard's drawing never sees initForNewDocument().
+        REQUIRE(graphic.countLineTypes() == 35);
+        CHECK(graphic.lineTypeAt(0)->name == "CONTINUOUS");
+        CHECK(graphic.findLineType(QStringLiteral(" dashed ")) == graphic.lineTypeAt(7));
+        CHECK(graphic.findLineType(QStringLiteral("NO_SUCH")) == nullptr);
+
+        graphic.initForNewDocument();
+        REQUIRE(graphic.countLineTypes() == 35);
+        CHECK_FALSE(graphic.isModified());
+
+        auto* custom = new CountedLineType(QStringLiteral("VENDOR"), live);
+        custom->pattern = {2.0, -2.0};
+        REQUIRE(graphic.addLineType(custom) == custom);
+        LC_LineType* dashed = graphic.findLineType(QStringLiteral("DASHED"));
+        REQUIRE(dashed != nullptr);
+        REQUIRE(graphic.addLineType(makeRecord(QStringLiteral("DASHED"), {64.0, -32.0})) == dashed);
+        CHECK(graphic.countLineTypes() == 36);
+        CHECK(dashed->hasImportedRecord);
+        REQUIRE(live == 1);
+
+        // File > New on an open window, more than once: the custom entry is
+        // freed, the built-in is the seed again, the drawing is clean.
+        graphic.initForNewDocument();
+        graphic.initForNewDocument();
+        CHECK(live == 0);
+        CHECK(graphic.countLineTypes() == 35);
+        CHECK(graphic.findLineType(QStringLiteral("VENDOR")) == nullptr);
+        dashed = graphic.findLineType(QStringLiteral("DASHED"));
+        REQUIRE(dashed != nullptr);
+        CHECK(dashed == graphic.lineTypeAt(7));
+        CHECK(dashed->pattern == std::vector<double>{12.7, -6.35});
+        CHECK(dashed->origin == LC_LineType::Origin::BuiltIn);
+        CHECK_FALSE(dashed->hasImportedRecord);
+        CHECK_FALSE(graphic.isModified());
+
+        REQUIRE(graphic.addLineType(new CountedLineType(QStringLiteral("VENDOR"), live)) != nullptr);
+        REQUIRE(live == 1);
+    }
+    // The drawing frees the entries it still holds.
+    CHECK(live == 0);
+}
+
+TEST_CASE("A drawing's line type list is part of its modified flag",
+          "[linetype][list][graphic]") {
+    (void)lc::test::application();
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    REQUIRE_FALSE(graphic.isModified());
+
+    // A record dirties the drawing; marking the drawing saved reaches the list.
+    LC_LineType* vendor = graphic.addLineType(makeRecord(QStringLiteral("VENDOR"), {2.0, -2.0}));
+    REQUIRE(vendor != nullptr);
+    CHECK(graphic.isModified());
+    graphic.markSaved(QDateTime::currentDateTime());
+    CHECK_FALSE(graphic.isModified());
+    CHECK(graphic.findLineType(QStringLiteral("VENDOR")) == vendor);
+
+    // A merge that changes nothing is no edit; one that does is.
+    graphic.addLineType(makeRecord(QStringLiteral("Vendor"), {1.0, -1.0}));
+    CHECK_FALSE(graphic.isModified());
+    graphic.addLineType(makeRecord(QStringLiteral("DASHED"), {64.0, -32.0}));
+    CHECK(graphic.isModified());
+    graphic.setModified(false);
+    CHECK_FALSE(graphic.isModified());
+}
+
+TEST_CASE("RS_Graphic::addLineType returns the entry that holds the key",
+          "[linetype][list][graphic]") {
+    (void)lc::test::application();
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    LC_LineType* vendor = graphic.addLineType(
+        makeRecord(QStringLiteral("VENDOR"), {2.0, -2.0}, QStringLiteral("Vendor")));
+    REQUIRE(vendor != nullptr);
+    CHECK(graphic.countLineTypes() == 36);
+    CHECK(vendor->origin == LC_LineType::Origin::Imported);
+
+    // A twin merges into the entry it shares a key with and is freed, as a
+    // duplicate layer is by RS_LayerList::add(); the entry keeps its address.
+    CHECK(graphic.addLineType(makeRecord(QStringLiteral("Vendor"), {1.0, -1.0})) == vendor);
+    CHECK(graphic.countLineTypes() == 36);
+    CHECK(vendor->name == "VENDOR");
+    CHECK(vendor->pattern == std::vector<double>{2.0, -2.0});
+    CHECK(vendor->description == "Vendor");
+    CHECK(graphic.findLineType(QStringLiteral(" vendor ")) == vendor);
+    CHECK(graphic.addLineType(nullptr) == nullptr);
+    CHECK(graphic.countLineTypes() == 36);
 }

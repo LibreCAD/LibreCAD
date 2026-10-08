@@ -308,6 +308,7 @@ void RS_Graphic::initForNewDocument() {
     RS_DEBUG->print("RS_Graphic::newDoc: before clear, autosaveFilename='%s'", m_autosaveFilename.toLatin1().data());
     m_dwgAdvancedMetadata.clear();
     m_dxfRecoverySourceFile.clear();
+    m_lineTypeList.clear();
     clear();
     clearLayers();
     clearBlocks();
@@ -896,7 +897,7 @@ QString RS_Graphic::formatLinear(const double linear) const {
   */
 bool RS_Graphic::isModified() const {
     return m_modified || m_layerList.isModified() || m_blockList.isModified() || m_namedViewsList.isModified() || m_ucsList.isModified() ||
-        m_dimstyleList.isModified() || m_variableDict.isModified();
+        m_dimstyleList.isModified() || m_variableDict.isModified() || m_lineTypeList.isModified();
 }
 
 /**
@@ -911,6 +912,7 @@ void RS_Graphic::setModified(const bool m) {
         m_ucsList.setModified(m);
         m_dimstyleList.setModified(m);
         m_variableDict.setModified(m);
+        m_lineTypeList.setModified(m);
     }
 
     fireGraphicModified(m);
