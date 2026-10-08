@@ -9714,3 +9714,146 @@ TEST_CASE("DWG import fills the line type list from its records",
   std::filesystem::remove(dwg);
 }
 #endif // DWGSUPPORT
+
+namespace {
+
+// kOelfarbe with U+0308 COMBINING DIAERESIS after the O: the same name in
+// NFD, another byte spelling of one key.
+const char *const kOelfarbeNfd = "O\xCC\x88" "lfarbe";
+
+// An R12 drawing whose references are spelt unlike their records: NFD for
+// an NFC record, no blanks for a padded record, and an ISO alias for a
+// padded record that only names it. Each LINE sits on a layer of its own.
+// It declares UTF-8, which the two spellings are.
+std::string foldedReferenceDrawing() {
+  return "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1009\n"
+         "9\n$DWGCODEPAGE\n3\nUTF-8\n0\nENDSEC\n"
+         "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLTYPE\n70\n3\n" +
+         ltypeRecord(kOelfarbe, {20.0, -20.0}) +
+         ltypeRecord(" VENDOR", {3.0, -3.0}) +
+         "0\nLTYPE\n2\n ACAD_ISO02W100\n70\n0\n"
+         "0\nENDTAB\n0\nTABLE\n2\nLAYER\n70\n4\n"
+         "0\nLAYER\n2\n0\n70\n0\n62\n7\n6\nCONTINUOUS\n"
+         "0\nLAYER\n2\nL_NFD\n70\n0\n62\n7\n6\nCONTINUOUS\n"
+         "0\nLAYER\n2\nL_PLAIN\n70\n0\n62\n7\n6\nCONTINUOUS\n"
+         "0\nLAYER\n2\nL_ISO\n70\n0\n62\n7\n6\nCONTINUOUS\n"
+         "0\nENDTAB\n0\nENDSEC\n0\nSECTION\n2\nENTITIES\n"
+         "0\nLINE\n8\nL_NFD\n6\n" +
+         std::string(kOelfarbeNfd) +
+         "\n10\n0.0\n20\n0.0\n11\n10.0\n21\n0.0\n"
+         "0\nLINE\n8\nL_PLAIN\n6\nVENDOR\n"
+         "10\n0.0\n20\n10.0\n11\n10.0\n21\n10.0\n"
+         "0\nLINE\n8\nL_ISO\n6\nACAD_ISO02W100\n"
+         "10\n0.0\n20\n20.0\n11\n10.0\n21\n20.0\n"
+         "0\nENDSEC\n0\nEOF\n";
+}
+
+} // namespace
+
+// A reference the writer's byte key matches to no record gets a record of
+// its own under its spelling; it carries the dashes of the list entry the
+// name folds to, where it carried none. An entry without dashes does not
+// hide the family's.
+TEST_CASE("DXF a reference spelt unlike its record takes the entry's dashes",
+          "[dxf][roundtrip][filter][linetype][named][table]") {
+  ensureSettings();
+  const std::string src = tmpFile("table_folded_ref_src.dxf");
+  const std::string out = tmpFile("table_folded_ref_out.dxf");
+  writeText(src, foldedReferenceDrawing());
+  RS_Graphic graphic;
+  REQUIRE(importFile(graphic, src));
+  CHECK(graphic.countLineTypes() == 38);
+
+  // 2007 on purpose: it writes the names byte for byte.
+  REQUIRE(exportAs(graphic, out, RS2::FormatDXFRW));
+  // The records keep their own spelling and dashes...
+  CHECK(ltypeRecordsSpelt(out, kOelfarbe) == Records{{20.0, -20.0}});
+  CHECK(ltypeRecordsSpelt(out, " VENDOR") == Records{{3.0, -3.0}});
+  CHECK(ltypeRecordsSpelt(out, " ACAD_ISO02W100") ==
+        Records{std::vector<double>{}});
+  // ...and each reference its record, spelt as the entity spells it.
+  CHECK(ltypeRecordsSpelt(out, kOelfarbeNfd) == Records{{20.0, -20.0}});
+  CHECK(ltypeRecordsSpelt(out, "VENDOR") == Records{{3.0, -3.0}});
+  CHECK(ltypeRecordsSpelt(out, "ACAD_ISO02W100") == Records{{12.7, -6.35}});
+  CHECK(recordGroupValues(out, "LINE", "6") ==
+        std::vector<std::string>{kOelfarbeNfd, "VENDOR", "ACAD_ISO02W100"});
+  // Nothing is added and nothing moves: the built-ins as the golden has
+  // them, the records in byte order, the markers in the order they were met.
+  std::vector<std::string> names = recordGroupValues(
+      std::string(LIBRECAD_TEST_DIR) + "/dxf/ltype_table_ac1015_ac1021.dxf",
+      "LTYPE", "2");
+  REQUIRE(names.size() == 35);
+  for (const char *name : {"ACAD_ISO02W100", "VENDOR", kOelfarbe,
+                           kOelfarbeNfd, "VENDOR", "ACAD_ISO02W100"})
+    names.push_back(name);
+  CHECK(recordGroupValues(out, "LTYPE", "2") == names);
+  CHECK(graphic.countLineTypes() == 38);
+
+  // Read back, each fold's one entry holds the dashes whichever spelling
+  // wins it.
+  RS_Graphic again;
+  REQUIRE(importFile(again, out));
+  CHECK(again.countLineTypes() == 38);
+  const LC_LineType *oel = again.findLineType(QString::fromUtf8(kOelfarbe));
+  REQUIRE(oel != nullptr);
+  CHECK(oel->name == QString::fromUtf8(kOelfarbeNfd));
+  CHECK(oel->pattern == std::vector<double>{20.0, -20.0});
+  const LC_LineType *vendor = again.findLineType(QStringLiteral("VENDOR"));
+  REQUIRE(vendor != nullptr);
+  CHECK(vendor->name == "VENDOR");
+  CHECK(vendor->pattern == std::vector<double>{3.0, -3.0});
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
+#ifdef DWGSUPPORT
+// The same record reaches a DWG, which keeps group 40 as the double it is
+// given: the entry's dashes and their sum.
+TEST_CASE("DWG a reference spelt unlike its record takes the entry's dashes",
+          "[dwg][roundtrip][filter][linetype][named][table]") {
+  ensureSettings();
+  const std::string src = tmpFile("table_folded_ref_dwg_src.dxf");
+  const std::string dwg = tmpFile("table_folded_ref_out.dwg");
+  writeText(src, foldedReferenceDrawing());
+  RS_Graphic graphic;
+  REQUIRE(importFile(graphic, src));
+  REQUIRE(exportAs(graphic, dwg, RS2::FormatDWG2004));
+  RS_Graphic fromDwg;
+  REQUIRE(importFile(fromDwg, dwg, RS2::FormatDWG));
+
+  struct Reference {
+    const char *layer;
+    const char *name;
+    std::vector<double> dashes;
+    double length;
+  };
+  const auto &meta = fromDwg.dwgAdvancedMetadata();
+  for (const Reference &ref :
+       {Reference{"L_NFD", kOelfarbeNfd, {20.0, -20.0}, 40.0},
+        Reference{"L_PLAIN", "VENDOR", {3.0, -3.0}, 6.0}}) {
+    INFO("reference " << ref.name);
+    RS_Entity *line = entityOnLayer(fromDwg, QLatin1String(ref.layer));
+    REQUIRE(line != nullptr);
+    CHECK(line->getPen(false).getLineTypeName() == QString::fromUtf8(ref.name));
+    const DRW_LType *record = meta.findLineTypeTableEntryByName(ref.name);
+    REQUIRE(record != nullptr);
+    CHECK(record->path == ref.dashes);
+    CHECK(record->length == ref.length);
+  }
+  const DRW_LType *nfc = meta.findLineTypeTableEntryByName(kOelfarbe);
+  REQUIRE(nfc != nullptr);
+  CHECK(nfc->path == std::vector<double>{20.0, -20.0});
+  // Read back, each fold's one entry holds those dashes.
+  CHECK(fromDwg.countLineTypes() == 38);
+  const LC_LineType *oel = fromDwg.findLineType(QString::fromUtf8(kOelfarbe));
+  REQUIRE(oel != nullptr);
+  CHECK(oel->pattern == std::vector<double>{20.0, -20.0});
+  const LC_LineType *vendor = fromDwg.findLineType(QStringLiteral("VENDOR"));
+  REQUIRE(vendor != nullptr);
+  CHECK(vendor->pattern == std::vector<double>{3.0, -3.0});
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(dwg);
+}
+#endif // DWGSUPPORT
