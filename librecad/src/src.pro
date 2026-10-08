@@ -175,6 +175,7 @@ INCLUDEPATH += \
     lib/engine/document/fonts \
     lib/engine/document/io \
     lib/engine/document/layers \
+    lib/engine/document/linetypes \
     lib/engine/document/patterns \
     lib/engine/document/selection \
     lib/engine/document/textstyles \
@@ -567,6 +568,8 @@ HEADERS += \
     lib/engine/document/layers/rs_layer.h \
     lib/engine/document/layers/rs_layerlist.h \
     lib/engine/document/layers/rs_layerlistlistener.h \
+    lib/engine/document/linetypes/lc_linetype.h \
+    lib/engine/document/linetypes/lc_linetypelist.h \
     lib/engine/document/entities/rs_leader.h \
     lib/engine/document/entities/rs_line.h \
     lib/engine/document/entities/rs_mtext.h \
@@ -1245,6 +1248,8 @@ SOURCES += \
     lib/engine/document/entities/lc_wipeout.cpp \
     lib/engine/document/layers/rs_layer.cpp \
     lib/engine/document/layers/rs_layerlist.cpp \
+    lib/engine/document/linetypes/lc_linetype.cpp \
+    lib/engine/document/linetypes/lc_linetypelist.cpp \
     lib/engine/document/entities/rs_leader.cpp \
     lib/engine/document/entities/rs_line.cpp \
     lib/engine/document/entities/rs_mtext.cpp \

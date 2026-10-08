@@ -19773,76 +19773,11 @@ bool RS_FilterDXFRW::writeLTypeRecord(DRW_LType &ltype) {
 void RS_FilterDXFRW::writeLTypes() {
   m_builtinLTypeNames.clear();
   m_builtinLTypePaths.clear();
-  writeLType("CONTINUOUS", "Solid line", 0, 0, {});
-  writeLType("ByLayer", "", 0, 0, {});
-  writeLType("ByBlock", "", 0, 0, {});
-  writeLType("DOT", "Dot . . . . . . . . . . . . . . . . . . . . . .", 2, 6.35,
-             {0.0, -6.35});
-  writeLType("DOTTINY", "Dot (.15x) .....................................", 2,
-             0.9525, {0.0, -0.9525});
-  writeLType("DOT2", "Dot (.5x) .....................................", 2,
-             3.175, {0.0, -3.175});
-  writeLType("DOTX2", "Dot (2x) .  .  .  .  .  .  .  .  .  .  .  .  .", 2, 12.7,
-             {0.0, -12.7});
-  writeLType("DASHED", "Dashed _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _", 2, 19.05,
-             {12.7, -6.35});
-  writeLType("DASHEDTINY", "Dashed (.15x) _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _", 2,
-             2.8575, {1.905, -0.9525});
-  writeLType("DASHED2", "Dashed (.5x) _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _", 2,
-             9.525, {6.35, -3.175});
-  writeLType("DASHEDX2", "Dashed (2x) ____  ____  ____  ____  ____  ___", 2,
-             38.1, {25.4, -12.7});
-  // acad.lin: HIDDEN A,.25,-.125 / HIDDEN2 A,.125,-.0625 / HIDDENX2 A,.5,-.25
-  writeLType("HIDDEN", "Hidden __ __ __ __ __ __ __ __ __ __ __ __ __ __", 2,
-             9.525, {6.35, -3.175});
-  writeLType("HIDDENTINY", "Hidden (.15x) _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _", 2,
-             1.42875, {0.9525, -0.47625});
-  writeLType("HIDDEN2", "Hidden (.5x) _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _", 2,
-             4.7625, {3.175, -1.5875});
-  writeLType("HIDDENX2", "Hidden (2x) ____ ____ ____ ____ ____ ____ ____", 2,
-             19.05, {12.7, -6.35});
-  writeLType("DASHDOT", "Dash dot __ . __ . __ . __ . __ . __ . __ . __", 4,
-             25.4, {12.7, -6.35, 0.0, -6.35});
-  writeLType("DASHDOTTINY", "Dash dot (.15x) _._._._._._._._._._._._._._._.", 4,
-             3.81, {1.905, -0.9525, 0.0, -0.9525});
-  writeLType("DASHDOT2", "Dash dot (.5x) _._._._._._._._._._._._._._._.", 4,
-             12.7, {6.35, -3.175, 0.0, -3.175});
-  writeLType("DASHDOTX2", "Dash dot (2x) ____  .  ____  .  ____  .  ___", 4,
-             50.8, {25.4, -12.7, 0.0, -12.7});
-  writeLType("DIVIDE", "Divide ____ . . ____ . . ____ . . ____ . . ____", 6,
-             31.75, {12.7, -6.35, 0.0, -6.35, 0.0, -6.35});
-  writeLType("DIVIDETINY", "Divide (.15x) __..__..__..__..__..__..__..__.._", 6,
-             4.7625, {1.905, -0.9525, 0.0, -0.9525, 0.0, -0.9525});
-  writeLType("DIVIDE2", "Divide (.5x) __..__..__..__..__..__..__..__.._", 6,
-             15.875, {6.35, -3.175, 0.0, -3.175, 0.0, -3.175});
-  writeLType("DIVIDEX2", "Divide (2x) ________  .  .  ________  .  .  _", 6,
-             63.5, {25.4, -12.7, 0.0, -12.7, 0.0, -12.7});
-  writeLType("BORDER", "Border __ __ . __ __ . __ __ . __ __ . __ __ .", 6,
-             44.45, {12.7, -6.35, 12.7, -6.35, 0.0, -6.35});
-  writeLType("BORDERTINY", "Border (.15x) __.__.__.__.__.__.__.__.__.__.__.", 6,
-             6.6675, {1.905, -0.9525, 1.905, -0.9525, 0.0, -0.9525});
-  writeLType("BORDER2", "Border (.5x) __.__.__.__.__.__.__.__.__.__.__.", 6,
-             22.225, {6.35, -3.175, 6.35, -3.175, 0.0, -3.175});
-  writeLType("BORDERX2", "Border (2x) ____  ____  .  ____  ____  .  ___", 6,
-             88.9, {25.4, -12.7, 25.4, -12.7, 0.0, -12.7});
-  writeLType("CENTER", "Center ____ _ ____ _ ____ _ ____ _ ____ _ ____", 4,
-             50.8, {31.75, -6.35, 6.35, -6.35});
-  writeLType("CENTERTINY", "Center (.15x) ___ _ ___ _ ___ _ ___ _ ___ _ ___", 4,
-             7.62, {4.7625, -0.9525, 0.9525, -0.9525});
-  writeLType("CENTER2", "Center (.5x) ___ _ ___ _ ___ _ ___ _ ___ _ ___", 4,
-             28.575, {19.05, -3.175, 3.175, -3.175});
-  writeLType("CENTERX2", "Center (2x) ________  __  ________  __  _____", 4,
-             101.6, {63.5, -12.7, 12.7, -12.7});
-  // acad.lin: PHANTOM A,1.25,-.25,.25,-.25,.25,-.25; PHANTOM2 and PHANTOMX2
-  // are its .5x and 2x.
-  writeLType("PHANTOM", "Phantom ______  __  __  ______  __  __  ______", 6,
-             63.5, {31.75, -6.35, 6.35, -6.35, 6.35, -6.35});
-  writeLType("PHANTOMTINY", "Phantom (.15x) ___ _ _ ___ _ _ ___ _ _ ___ _ _", 6,
-             9.525, {4.7625, -0.9525, 0.9525, -0.9525, 0.9525, -0.9525});
-  writeLType("PHANTOM2", "Phantom (.5x) ___ _ _ ___ _ _ ___ _ _ ___ _ _", 6,
-             31.75, {15.875, -3.175, 3.175, -3.175, 3.175, -3.175});
-  writeLType("PHANTOMX2", "Phantom (2x) ____________    ____    ____   _", 6,
-             127.0, {63.5, -12.7, 12.7, -12.7, 12.7, -12.7});
+  for (const auto &row : LC_LineTypeNames::builtinMetrics()) {
+    writeLType(LC_LineTypeNames::lineTypeToName(row.type).toStdString(),
+               row.description, static_cast<int>(row.pattern.size()),
+               row.length, row.pattern);
+  }
   // Imported LTYPE records that are not part of the built-in table above are
   // re-emitted as they came in; writeLType() records the built-in names so a
   // new built-in type cannot end up written twice.

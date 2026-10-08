@@ -29,6 +29,7 @@
 #define LC_LINETYPENAMES_H
 
 #include <QString>
+#include <vector>
 
 #include "rs.h"
 
@@ -40,6 +41,14 @@ namespace LC_LineTypeNames {
     RS2::LineType nameToLineType(const QString& name);
     QString lineTypeToName(RS2::LineType lineType);
     QString foldName(const QString& name);
+
+    struct BuiltinMetric {
+        RS2::LineType type;
+        const char* description;     // DXF 3
+        double length;               // DXF 40, as written
+        std::vector<double> pattern; // DXF 49
+    };
+    const std::vector<BuiltinMetric>& builtinMetrics();
     // QString lineTypeToDescription(RS2::LineType lineType);
 }
 

@@ -226,6 +226,7 @@ set (SHARED_INCLUDES
      librecad/src/lib/engine/document/entities/support
      librecad/src/lib/engine/document/fonts
      librecad/src/lib/engine/document/layers
+     librecad/src/lib/engine/document/linetypes
      librecad/src/lib/engine/document/selection
      librecad/src/lib/engine/document/patterns
      librecad/src/lib/engine/document/textstyles
@@ -1013,6 +1014,10 @@ set (SHARED_SOURCES
      librecad/src/lib/engine/document/lc_graphicvariables.cpp
      librecad/src/lib/engine/document/lc_graphicvariables.h
      librecad/src/lib/engine/document/lc_trackedlistener.h
+     librecad/src/lib/engine/document/linetypes/lc_linetype.cpp
+     librecad/src/lib/engine/document/linetypes/lc_linetype.h
+     librecad/src/lib/engine/document/linetypes/lc_linetypelist.cpp
+     librecad/src/lib/engine/document/linetypes/lc_linetypelist.h
      librecad/src/lib/engine/document/patterns/rs_pattern.cpp
      librecad/src/lib/engine/document/patterns/rs_pattern.h
      librecad/src/lib/engine/document/patterns/rs_patternlist.cpp

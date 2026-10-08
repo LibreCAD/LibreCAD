@@ -259,6 +259,89 @@ QString LC_LineTypeNames::foldName(const QString &name) {
 }
 
 /**
+ * The built-in LTYPE records, in the order the DXF writer emits them. The
+ * length is the group 40 each record always carried, not the sum of its
+ * dashes: the two differ in the last bit for some rows, which a DWG keeps.
+ */
+const std::vector<LC_LineTypeNames::BuiltinMetric> &
+LC_LineTypeNames::builtinMetrics() {
+  static const std::vector<BuiltinMetric> rows = {
+      {RS2::SolidLine, "Solid line", 0, {}},
+      {RS2::LineByLayer, "", 0, {}},
+      {RS2::LineByBlock, "", 0, {}},
+      {RS2::DotLine, "Dot . . . . . . . . . . . . . . . . . . . . . .",
+       6.35, {0.0, -6.35}},
+      {RS2::DotLineTiny, "Dot (.15x) .....................................",
+       0.9525, {0.0, -0.9525}},
+      {RS2::DotLine2, "Dot (.5x) .....................................",
+       3.175, {0.0, -3.175}},
+      {RS2::DotLineX2, "Dot (2x) .  .  .  .  .  .  .  .  .  .  .  .  .",
+       12.7, {0.0, -12.7}},
+      {RS2::DashLine, "Dashed _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _",
+       19.05, {12.7, -6.35}},
+      {RS2::DashLineTiny, "Dashed (.15x) _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _",
+       2.8575, {1.905, -0.9525}},
+      {RS2::DashLine2, "Dashed (.5x) _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _",
+       9.525, {6.35, -3.175}},
+      {RS2::DashLineX2, "Dashed (2x) ____  ____  ____  ____  ____  ___",
+       38.1, {25.4, -12.7}},
+      // acad.lin: HIDDEN A,.25,-.125 / HIDDEN2 A,.125,-.0625 /
+      // HIDDENX2 A,.5,-.25
+      {RS2::HiddenLine, "Hidden __ __ __ __ __ __ __ __ __ __ __ __ __ __",
+       9.525, {6.35, -3.175}},
+      {RS2::HiddenLineTiny, "Hidden (.15x) _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _",
+       1.42875, {0.9525, -0.47625}},
+      {RS2::HiddenLine2, "Hidden (.5x) _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _",
+       4.7625, {3.175, -1.5875}},
+      {RS2::HiddenLineX2, "Hidden (2x) ____ ____ ____ ____ ____ ____ ____",
+       19.05, {12.7, -6.35}},
+      {RS2::DashDotLine, "Dash dot __ . __ . __ . __ . __ . __ . __ . __",
+       25.4, {12.7, -6.35, 0.0, -6.35}},
+      {RS2::DashDotLineTiny, "Dash dot (.15x) _._._._._._._._._._._._._._._.",
+       3.81, {1.905, -0.9525, 0.0, -0.9525}},
+      {RS2::DashDotLine2, "Dash dot (.5x) _._._._._._._._._._._._._._._.",
+       12.7, {6.35, -3.175, 0.0, -3.175}},
+      {RS2::DashDotLineX2, "Dash dot (2x) ____  .  ____  .  ____  .  ___",
+       50.8, {25.4, -12.7, 0.0, -12.7}},
+      {RS2::DivideLine, "Divide ____ . . ____ . . ____ . . ____ . . ____",
+       31.75, {12.7, -6.35, 0.0, -6.35, 0.0, -6.35}},
+      {RS2::DivideLineTiny, "Divide (.15x) __..__..__..__..__..__..__..__.._",
+       4.7625, {1.905, -0.9525, 0.0, -0.9525, 0.0, -0.9525}},
+      {RS2::DivideLine2, "Divide (.5x) __..__..__..__..__..__..__..__.._",
+       15.875, {6.35, -3.175, 0.0, -3.175, 0.0, -3.175}},
+      {RS2::DivideLineX2, "Divide (2x) ________  .  .  ________  .  .  _",
+       63.5, {25.4, -12.7, 0.0, -12.7, 0.0, -12.7}},
+      {RS2::BorderLine, "Border __ __ . __ __ . __ __ . __ __ . __ __ .",
+       44.45, {12.7, -6.35, 12.7, -6.35, 0.0, -6.35}},
+      {RS2::BorderLineTiny, "Border (.15x) __.__.__.__.__.__.__.__.__.__.__.",
+       6.6675, {1.905, -0.9525, 1.905, -0.9525, 0.0, -0.9525}},
+      {RS2::BorderLine2, "Border (.5x) __.__.__.__.__.__.__.__.__.__.__.",
+       22.225, {6.35, -3.175, 6.35, -3.175, 0.0, -3.175}},
+      {RS2::BorderLineX2, "Border (2x) ____  ____  .  ____  ____  .  ___",
+       88.9, {25.4, -12.7, 25.4, -12.7, 0.0, -12.7}},
+      {RS2::CenterLine, "Center ____ _ ____ _ ____ _ ____ _ ____ _ ____",
+       50.8, {31.75, -6.35, 6.35, -6.35}},
+      {RS2::CenterLineTiny, "Center (.15x) ___ _ ___ _ ___ _ ___ _ ___ _ ___",
+       7.62, {4.7625, -0.9525, 0.9525, -0.9525}},
+      {RS2::CenterLine2, "Center (.5x) ___ _ ___ _ ___ _ ___ _ ___ _ ___",
+       28.575, {19.05, -3.175, 3.175, -3.175}},
+      {RS2::CenterLineX2, "Center (2x) ________  __  ________  __  _____",
+       101.6, {63.5, -12.7, 12.7, -12.7}},
+      // acad.lin: PHANTOM A,1.25,-.25,.25,-.25,.25,-.25; PHANTOM2 and PHANTOMX2
+      // are its .5x and 2x.
+      {RS2::PhantomLine, "Phantom ______  __  __  ______  __  __  ______",
+       63.5, {31.75, -6.35, 6.35, -6.35, 6.35, -6.35}},
+      {RS2::PhantomLineTiny, "Phantom (.15x) ___ _ _ ___ _ _ ___ _ _ ___ _ _",
+       9.525, {4.7625, -0.9525, 0.9525, -0.9525, 0.9525, -0.9525}},
+      {RS2::PhantomLine2, "Phantom (.5x) ___ _ _ ___ _ _ ___ _ _ ___ _ _",
+       31.75, {15.875, -3.175, 3.175, -3.175, 3.175, -3.175}},
+      {RS2::PhantomLineX2, "Phantom (2x) ____________    ____    ____   _",
+       127.0, {63.5, -12.7, 12.7, -12.7, 12.7, -12.7}},
+  };
+  return rows;
+}
+
+/**
  * Converts a RS_LineType into a name for a line type.
  */
 /*QString LC_LineTypeNames::lineTypeToDescription(RS2::LineType lineType) {
