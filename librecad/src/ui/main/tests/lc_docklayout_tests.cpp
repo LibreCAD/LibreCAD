@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
+// Copyright (C) 2026 librecad.org
+// Copyright (C) 2026 Dongxu Li (github.com/dxli)
 
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/reporters/catch_reporter_event_listener.hpp>
@@ -12,6 +14,8 @@
 #include "lc_testsettingsisolation.h"
 #include "lc_workspacesmanager.h"
 #include "qc_applicationwindow.h"
+#include "qc_mdiwindow.h"
+#include "qg_graphicview.h"
 #include "rs_debug.h"
 #include "rs_system.h"
 #include "qg_blockwidget.h"
@@ -179,6 +183,31 @@ TEST_CASE("Main window fits its available screen", "[.gui][dock-window]") {
     CHECK(window.windowHandle()->screen()->availableGeometry().contains(window.frameGeometry()));
     CHECK(window.getMdiArea()->width() >= 480);
     CHECK(window.getMdiArea()->height() >= 320);
+}
+
+TEST_CASE("Draft toggling preserves the drawing title", "[.gui][draft][3018]") {
+    DockFixture fixture;
+    auto& window = fixture.window;
+    window.slotFileNewFromDefaultTemplate();
+    auto* mdi = window.getCurrentMDIWindow();
+    REQUIRE(mdi != nullptr);
+    auto* view = mdi->getGraphicView();
+    REQUIRE(view != nullptr);
+    auto* draft = window.getAction("ViewDraft");
+    REQUIRE(draft != nullptr);
+    REQUIRE(draft->isEnabled());
+    window.slotViewDraft(false);
+    const QString normalTitle = mdi->windowTitle();
+
+    for (bool enabled : {true, false, true, false}) {
+        draft->trigger();
+        CHECK(view->isDraftMode() == enabled);
+        CHECK(draft->isChecked() == enabled);
+        const QString expectedTitle = enabled
+            ? normalTitle + " [" + QC_ApplicationWindow::tr("Draft Mode") + "]" : normalTitle;
+        CHECK(mdi->windowTitle() == expectedTitle);
+        settle(0);
+    }
 }
 
 TEST_CASE("First-run maximization fits the available client area", "[.gui][dock-window]") {

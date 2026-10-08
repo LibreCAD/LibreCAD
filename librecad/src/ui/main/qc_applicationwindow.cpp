@@ -850,7 +850,7 @@ void QC_ApplicationWindow::setupMDIWindowTitleByFile(QC_MDIWindow* w, const QStr
 
 void QC_ApplicationWindow::setupMDIWindowTitleByName(QC_MDIWindow* w, const QString& baseTitleString, const bool draftMode) {
     if (draftMode) {
-        const auto title = baseTitleString + "[*]" + " [" + tr("Draft Mode") + "]";
+        const QString title = baseTitleString + "[*]" + " [" + tr("Draft Mode") + "]";
         w->setWindowTitle(title);
     }
     else {
