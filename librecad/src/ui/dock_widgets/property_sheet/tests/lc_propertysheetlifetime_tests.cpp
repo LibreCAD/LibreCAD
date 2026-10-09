@@ -64,7 +64,7 @@ RS_Line* fillWithSelectedLine(RS_Graphic& graphic) {
 }
 
 /// runs the event loop for \p milliseconds (a property edit is applied by a 30 ms timer)
-void wait(const int milliseconds) {
+void waitMs(const int milliseconds) {
     QEventLoop loop;
     QTimer::singleShot(milliseconds, &loop, &QEventLoop::quit);
     loop.exec();
@@ -205,7 +205,7 @@ TEST_CASE("An edit begun in a drawing that is closed does not reach the next dra
         context.setDocumentAndView(nullptr, nullptr);
         first.reset();
     }
-    wait(100);
+    waitMs(100);
 
     RS_Graphic second;
     RS_Line* line = fillWithSelectedLine(second);
@@ -215,7 +215,7 @@ TEST_CASE("An edit begun in a drawing that is closed does not reach the next dra
     sheet.setGraphicView(&view);
     sheet.entityModified(line, line->clone());
     sheet.onPropertyEdited(&property);
-    wait(100);
+    waitMs(100);
     // the edit replaced the line by its clone: one line, not the clone and the orphan of the first drawing
     CHECK(liveLines(second) == 1);
     sheet.setGraphicView(nullptr);
