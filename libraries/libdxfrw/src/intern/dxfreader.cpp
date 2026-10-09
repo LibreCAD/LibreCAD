@@ -153,9 +153,9 @@ bool dxfReaderBinary::readBinary() {
 
 bool dxfReaderBinary::readInt16() {
     type = INT32;
-    std::int16_t value = 0;
-    filestr->read(reinterpret_cast<char*>(&value),2);
-    intData = value;
+    unsigned char buffer[2] = {};
+    filestr->read(reinterpret_cast<char*>(buffer),2);
+    intData = static_cast<std::int16_t>(buffer[1] << 8 | buffer[0]);
     DRW_DBG(intData); DRW_DBG("\n");
     return (filestr->good());
 }

@@ -10,6 +10,7 @@
 **  along with this program.  If not, see <http://www.gnu.org/licenses/>.    **
 ******************************************************************************/
 
+#include <cstring>
 #include <sstream>
 #include "drw_dbg.h"
 #include "dwgutil.h"
@@ -297,9 +298,12 @@ bool dwgCompressor::buffersGood(void)
 void dwgCompressor::decrypt18Hdr(duint8 *buf, duint64 size, duint64 offset){
     duint8 max = size / 4;
     duint32 secMask = 0x4164536b ^ offset;
-    duint32* pHdr = reinterpret_cast<duint32*>(buf);
-    for (duint8 j = 0; j < max; j++)
-        *pHdr++ ^= secMask;
+    for (duint8 j = 0; j < max; j++) {
+        duint32 word = 0;
+        memcpy(&word, buf + 4*j, sizeof(word));
+        word ^= secMask;
+        memcpy(buf + 4*j, &word, sizeof(word));
+    }
 }
 
 /*void dwgCompressor::decrypt18Data(duint8 *buf, duint32 size, duint32 offset){

@@ -347,15 +347,16 @@ double dwgBuffer::getBitDouble(){
     if (b == 1)
         return 1.0;
     else if (b == 0){
-        duint8 buffer[8];
+        duint8 buffer[8] = {};
         if (bitPos != 0) {
             for (int i = 0; i < 8; i++)
                 buffer[i] = getRawChar8();
         } else {
         filestr->read (buffer,8);
         }
-        double* ret = reinterpret_cast<double*>( buffer );
-        return *ret;
+        double ret = 0.;
+        memcpy(&ret, buffer, sizeof(ret));
+        return ret;
     }
     //    if (b == 2)
     return 0.0;
@@ -416,8 +417,9 @@ double dwgBuffer::getRawDouble(){
         for (int i = 0; i < 8; i++)
             buffer[i] = getRawChar8();
     }
-    double* nOffset = reinterpret_cast<double*>( buffer );
-    return *nOffset;
+    double ret = 0.;
+    memcpy(&ret, buffer, sizeof(ret));
+    return ret;
 }
 
 /**Reads 2 raw double IEEE standard 64 bits returns a DRW_Coord of floating point double 64 bits (2RD) **/
@@ -822,7 +824,7 @@ duint32 dwgBuffer::getEnColor(DRW::Version v) {
 
 /**Reads raw short 16 bits big-endian order, returns a unsigned short crc & size **/
 duint16 dwgBuffer::getBERawShort16(){
-    char buffer[2];
+    duint8 buffer[2];
     buffer[0] = getRawChar8();
     buffer[1] = getRawChar8();
     duint16 size = (buffer[0] << 8) | (buffer[1] & 0xFF);
