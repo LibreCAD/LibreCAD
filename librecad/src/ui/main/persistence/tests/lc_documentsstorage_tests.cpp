@@ -39,8 +39,11 @@
 #include <QTemporaryDir>
 
 #include "jwwdoc.h"
+#include "lc_actiontestsupport.h"
 #include "lc_documentsstorage.h"
 #include "lc_filedialogservice.h"
+#include "lc_settingguard.h"
+#include "qg_dlgoptionsgeneral.h"
 #include "rs_fileio.h"
 #include "rs_filterdxfrw.h"
 #include "rs_graphic.h"
@@ -48,6 +51,8 @@
 #include "rs_settings.h"
 
 namespace {
+
+using lc::test::SettingGuard;
 
 void ensureApp() {
     // saveDocument() sets an override cursor, which needs a QGuiApplication.
@@ -70,10 +75,18 @@ void ensureApp() {
     (void)ready;
 }
 
-/** Answers the Save As dialog in place of a user: with m_answer, or cancels it when m_answer is empty. */
+/**
+ * Answers the Save As dialog in place of a user: with m_answer, or cancels it when m_answer is empty.
+ * Pins the backup settings, which other tests of the process change.
+ */
 class TestStorage : public LC_DocumentsStorage {
 public:
     using LC_DocumentsStorage::loadGraphicFromTemplate;
+
+    TestStorage() {
+        m_backup.set(true);
+        m_backupSuffix.set(QStringLiteral("~"));
+    }
 
     QString m_answer;
     RS2::FormatType m_answerType = RS2::FormatDXFRW;
@@ -94,6 +107,10 @@ protected:
         }
         return result;
     }
+
+private:
+    SettingGuard m_backup{RS_SETTINGS, "Defaults", "AutoBackupDocument"};
+    SettingGuard m_backupSuffix{RS_SETTINGS, "Defaults", "BackupFileSuffix"};
 };
 
 QByteArray contents(const QString& path) {
@@ -493,6 +510,34 @@ TEST_CASE("A drawing opened from DXF is saved as DXF", "[documentsstorage][save]
     RS_Graphic reopened;
     open(storage, reopened, path);
     CHECK(hasEditedLine(reopened));
+}
+
+// The preferences dialog read the suffix with another default than Save, and
+// RS_Settings keeps the default of whichever reads first.
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Opening the preferences does not rename the backup", "[documentsstorage][save]") {
+    (void)lc::test::application(); // a dialog needs a QApplication
+    SettingGuard backup{RS_SETTINGS, "Defaults", "AutoBackupDocument"};
+    SettingGuard suffix{RS_SETTINGS, "Defaults", "BackupFileSuffix"};
+    backup.set(true);
+    {
+        // a profile that never stored a suffix
+        const auto group = RS_SETTINGS->beginGroupGuard("Defaults");
+        RS_SETTINGS->remove("BackupFileSuffix");
+    }
+    { const QG_DlgOptionsGeneral preferences; }
+
+    QTemporaryDir dir;
+    const QString path = dir.filePath("drawing.dxf");
+    writeDxf(path);
+    const QByteArray original = contents(path);
+    LC_DocumentsStorage storage;
+    RS_Graphic graphic;
+    open(storage, graphic, path);
+    edit(graphic);
+    bool cancelled = false;
+    REQUIRE(save(storage, graphic, cancelled));
+    CHECK(contents(path + "~") == original);
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
