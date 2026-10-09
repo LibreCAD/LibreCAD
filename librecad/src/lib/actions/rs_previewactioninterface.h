@@ -124,6 +124,7 @@ protected:
     void deletePreview();
     void deleteHighlights() const;
     void deletePreviewAndHighlights();
+    virtual bool clearHighlightsOnMouseMove() const { return true; }
     void drawPreview();
     void drawHighlights() const;
     void drawPreviewAndHighlights();

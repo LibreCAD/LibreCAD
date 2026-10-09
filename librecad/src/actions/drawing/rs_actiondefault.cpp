@@ -30,6 +30,7 @@
 #include "lc_actioninfomessagebuilder.h"
 #include "lc_cursoroverlayinfo.h"
 #include "lc_graphicviewport.h"
+#include "lc_highlight.h"
 #include "lc_linemath.h"
 #include "lc_propertysheetwidget.h"
 #include "lc_quickinfowidget.h"
@@ -56,6 +57,8 @@ struct RS_ActionDefault::ActionData {
     RS_Vector v2;
     RS_Vector pressSnapPoint;
     RS_Entity* refMovingEntity = nullptr;
+    unsigned long long hoveredEntityId = 0;
+    bool hoverRefPoints = false;
 };
 
 namespace {
@@ -91,6 +94,11 @@ RS_ActionDefault::RS_ActionDefault(LC_ActionContext *actionContext)
 
     RS_DEBUG->print("RS_ActionDefault::RS_ActionDefault");
     m_typeToSelect = m_graphicView->getTypeToSelect();
+    connect(m_graphicView, &RS_GraphicView::drawingRedrawRequested, this, [this] {
+        if (m_actionData->hoveredEntityId != 0) {
+            clearHighLighting();
+        }
+    });
     RS_DEBUG->print("RS_ActionDefault::RS_ActionDefault: OK");
 }
 
@@ -168,17 +176,21 @@ void RS_ActionDefault::highlightHoveredEntities(const LC_MouseEvent *event){
     const bool showEntityDescriptions = isShowEntityDescriptionOnHighlight();
 
     if (!showHighlightEntity && !showEntityDescriptions) {
+        clearHighLighting();
         return;
     }
 
     const RS2::ResolveLevel level = controlPressed ? RS2::ResolveAll : RS2::ResolveNone;
-    auto entity = catchEntityByEvent(event, level);
+    double hitDistance = 0.0;
+    auto entity = catchEntity(event->graphPoint, level, &hitDistance);
 
     if (entity == nullptr) {
+        clearHighLighting();
         m_infoCursorOverlayData->setZone2("");
         return;
     }
     if (!entity->isVisible()){
+        clearHighLighting();
         return;
     }
 
@@ -191,6 +203,7 @@ void RS_ActionDefault::highlightHoveredEntities(const LC_MouseEvent *event){
     }
 
     if (entity->isLocked() && !shouldShowQuickInfoWidget){
+        clearHighLighting();
         return;
     }
 
@@ -216,6 +229,8 @@ void RS_ActionDefault::highlightHoveredEntities(const LC_MouseEvent *event){
         if (nearestDistanceToPointOnEntity <= hoverToleranceAdjusted) {
             isPointOnEntity = true;
         }
+    } else if (entityType == RS2::EntityInsert) {
+        isPointOnEntity = hitDistance <= hoverToleranceAdjusted;
     } else {
         isPointOnEntity = entity->isPointOnEntity(currentMousePosition, hoverToleranceAdjusted);
     }
@@ -226,6 +241,8 @@ void RS_ActionDefault::highlightHoveredEntities(const LC_MouseEvent *event){
         if (shouldShowQuickInfoWidget){
             updateQuickInfoWidget(entity);
         }
+    } else {
+        clearHighLighting();
     }
 }
 
@@ -244,7 +261,9 @@ void RS_ActionDefault::onMouseMoveEvent([[maybe_unused]] const int status, const
     updateCoordinateWidgetByRelZero(mouse);
 
     // clear any existing hovering
-    clearHighLighting();
+    if (status != Neutral) {
+        clearHighLighting();
+    }
 
     switch (status) {
         case Neutral: {
@@ -1062,7 +1081,12 @@ bool RS_ActionDefault::isInVisualSnapStatus(int status) {
     return status == Moving || status == MovingRef;
 }
 
+bool RS_ActionDefault::clearHighlightsOnMouseMove() const {
+    return getStatus() != Neutral;
+}
+
 void RS_ActionDefault::clearHighLighting(){
+    m_actionData->hoveredEntityId = 0;
     deleteHighlights();
 }
 
@@ -1077,11 +1101,23 @@ void RS_ActionDefault::suspend(){
     BASE_CLASS::suspend();
 }
 
-void RS_ActionDefault::highlightEntity(const RS_Entity *entity) const {
+void RS_ActionDefault::highlightEntity(const RS_Entity *entity) {
     if (!allowMouseOverGlowing(entity)) {
+        clearHighLighting();
         return;
     }
-    highlightHover(entity);
+    if (m_actionData->hoveredEntityId != entity->getId() || m_highlight->isEmpty()
+        || m_actionData->hoverRefPoints != m_highlightEntitiesRefPointsOnHover) {
+        deleteHighlights();
+        highlightHover(entity);
+        m_actionData->hoveredEntityId = entity->getId();
+        m_actionData->hoverRefPoints = m_highlightEntitiesRefPointsOnHover;
+    } else {
+        // Overlay painting clears the clone's own selection flag after drawing its grips.
+        auto* clone = m_highlight->entityAt(0);
+        clone->RS_Entity::setSelectionFlag(m_highlightEntitiesRefPointsOnHover
+                                          && (!clone->isContainer() || !clone->isLocked()));
+    }
 }
 
 RS2::EntityType RS_ActionDefault::getTypeToSelect() const {

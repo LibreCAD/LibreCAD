@@ -1475,9 +1475,10 @@ double RS_EntityContainer::doGetDistanceToPoint(const RS_Vector& coord, RS_Entit
     RS_Entity* closestEntity = nullptr; // closest entity found
     RS_Entity* subEntity = nullptr;
 
-    // a drawing skips every entity whose borders lie farther away than the nearest entity found so far
+    // INSERT expansions use the same conservative bounds as the drawing, including
+    // the exceptions for construction geometry and invalid borders.
     std::optional<DistanceLowerBound> bound;
-    if (isDocument()) {
+    if (isDocument() || rtti() == RS2::EntityInsert) {
         bound.emplace(*this);
     }
 

@@ -1076,11 +1076,17 @@ RS_Vector RS_Snapper::restrictAngle(const RS_Vector& basePoint, const RS_Vector&
  *        container
  * @return Pointer to the entity or nullptr.
  */
-RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos, const RS2::ResolveLevel level) const {
+RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos, const RS2::ResolveLevel level, double* distance) const {
+    const double catchDistance = getCatchDistance(getSnapRange(), m_catchEntityGuiRange);
+    RS_EntityContainer nearby(nullptr, false);
+    m_document->appendNearby(pos, catchDistance, nearby);
     // set default distance for points inside solids
     double dist(0.);
-    RS_Entity* entity = m_document->getNearestEntity(pos, &dist, level);
-    if (entity != nullptr && dist <= getCatchDistance(getSnapRange(), m_catchEntityGuiRange)) {
+    RS_Entity* entity = nearby.getNearestEntity(pos, &dist, level);
+    if (distance != nullptr) {
+        *distance = dist;
+    }
+    if (entity != nullptr && dist <= catchDistance) {
         RS_DEBUG->print("RS_Snapper::catchEntity: found");
         return entity;
     }

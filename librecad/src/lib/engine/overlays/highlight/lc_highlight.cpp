@@ -34,9 +34,6 @@ void LC_Highlight::addEntity(const RS_Entity* entity, const bool selected) {
     // fixme - sand - review this, probably it's better to return proxy on highlight. That might be useful for images etc,
     // fixme - sand and potentially may simplify drawing of overlay
     // RS_Entity *clone = entity->cloneProxy();
-    if (entity->rtti() == RS2::EntityInsert) {
-        clone->update();
-    }
     const RS_Pen pen = entity->getPen(true);
     clone->setPen(pen);
     const bool inVisualSnap = entity->getFlag(RS2::FlagInVisualSnap);

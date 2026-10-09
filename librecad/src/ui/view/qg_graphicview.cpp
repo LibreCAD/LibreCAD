@@ -489,6 +489,9 @@ void QG_GraphicView::dragEnterEvent(QDragEnterEvent* event) {
  * Redraws the widget.
  */
 void QG_GraphicView::redraw(const RS2::RedrawMethod method, bool immediately) {
+    if ((method & RS2::RedrawDrawing) != 0) {
+        emit drawingRedrawRequested();
+    }
     getRenderer()->invalidate(method);
     update(); // Paint when ready to paint
     if (immediately) {
