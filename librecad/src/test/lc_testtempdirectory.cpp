@@ -24,48 +24,60 @@
 
 #include "lc_testtempdirectory.h"
 
+#include <chrono>
 #include <cstdlib>
-#include <random>
 #include <string>
 #include <system_error>
 
 namespace {
 
+// Sets the variable the standard library and Qt read the directory from.
+void setTempDirectory(const std::filesystem::path& directory) {
+#ifdef _WIN32
+    _wputenv((L"TMP=" + directory.native()).c_str());
+#else
+    setenv("TMPDIR", directory.c_str(), 1);
+#endif
+}
+
 class PrivateTempDirectory final {
 public:
+    // Only calls that report a failure through an error code: an exception
+    // before main() would end the process.
     PrivateTempDirectory() {
         std::error_code error;
-        const std::filesystem::path shared = std::filesystem::temp_directory_path(error);
-        std::random_device random;
+        m_shared = std::filesystem::temp_directory_path(error);
+        auto id = std::chrono::system_clock::now().time_since_epoch().count();
         bool created = false;
         // create_directory() is false, without an error, for a name that is taken
         while (!created && !error) {
-            m_path = shared / ("librecad-tests-" + std::to_string(random()));
+            m_path = m_shared / ("librecad-tests-" + std::to_string(id++));
             created = std::filesystem::create_directory(m_path, error);
         }
-        if (!created) {
+        if (created) {
+            setTempDirectory(m_path);
+        } else {
             m_path.clear();
-            return;
         }
-        // the variable the standard library and Qt read the directory from
-#ifdef _WIN32
-        _wputenv((L"TMP=" + m_path.native()).c_str());
-#else
-        setenv("TMPDIR", m_path.c_str(), 1);
-#endif
     }
 
     ~PrivateTempDirectory() {
-        if (!m_path.empty()) {
-            std::error_code error;
-            std::filesystem::remove_all(m_path, error);
+        if (m_path.empty()) {
+            return;
         }
+        // first, so that whatever still runs is not sent to a directory that is gone
+        setTempDirectory(m_shared);
+        std::error_code error;
+        std::filesystem::remove_all(m_path, error);
     }
 
-    /// Empty when the directory could not be created.
-    const std::filesystem::path& path() const { return m_path; }
+    /// The directory the process was started with, which it keeps when it could not make its own.
+    std::filesystem::path shared() const {
+        return m_path.empty() ? std::filesystem::temp_directory_path() : m_shared;
+    }
 
 private:
+    std::filesystem::path m_shared;
     std::filesystem::path m_path;
 };
 
@@ -78,8 +90,7 @@ const PrivateTempDirectory privateTempDirectory;
 namespace lc::test {
 
 std::filesystem::path sharedTempDirectory() {
-    const std::filesystem::path& path = privateTempDirectory.path();
-    return path.empty() ? std::filesystem::temp_directory_path() : path.parent_path();
+    return privateTempDirectory.shared();
 }
 
 } // namespace lc::test

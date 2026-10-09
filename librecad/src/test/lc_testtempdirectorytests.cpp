@@ -32,33 +32,52 @@
 #include <filesystem>
 #include <fstream>
 #include <string>
+#include <vector>
 
 #include <QCoreApplication>
+#include <QDir>
 #include <QProcess>
 #include <QProcessEnvironment>
 #include <QString>
 #include <QStringList>
 
-#include "lc_actiontestsupport.h"
+#include "lc_testtempdirectory.h"
 
 namespace {
 
 constexpr auto reportVariable = "LC_TEMP_DIRECTORY_REPORT";
 constexpr auto fixedName = "lc_temp_directory_probe.txt";
 
-std::string firstLine(const std::filesystem::path& file) {
+// The path takes an application object, which another test may have made.
+QString executablePath() {
+    static int argc = 1;
+    static char name[] = "librecad_tests";
+    static char* argv[] = {name, nullptr};
+    static const QCoreApplication* application = QCoreApplication::instance() != nullptr
+                                                     ? QCoreApplication::instance()
+                                                     : new QCoreApplication(argc, argv);
+    (void)application;
+    return QCoreApplication::applicationFilePath();
+}
+
+std::vector<std::string> linesOf(const std::filesystem::path& file) {
     std::ifstream in(file);
-    std::string line;
-    std::getline(in, line);
-    return line;
+    std::vector<std::string> lines;
+    for (std::string line; std::getline(in, line);) {
+        lines.push_back(line);
+    }
+    return lines;
 }
 
 } // namespace
 
 TEST_CASE("a test process does not write into the temporary directory of another",
           "[temp][isolation][process]") {
-    (void)lc::test::application();
+    const QString executable = executablePath();
     const std::filesystem::path own = std::filesystem::temp_directory_path();
+    // Qt finds the directory in its own way
+    CHECK(std::filesystem::equivalent(own, std::filesystem::path(QDir::tempPath().toStdWString())));
+
     const std::filesystem::path file = own / fixedName;
     const std::filesystem::path report = own / "lc_temp_directory_report.txt";
     std::ofstream(file) << "parent\n";
@@ -68,7 +87,7 @@ TEST_CASE("a test process does not write into the temporary directory of another
     QProcess child;
     child.setProcessEnvironment(environment);
     child.setProcessChannelMode(QProcess::MergedChannels);
-    child.start(QCoreApplication::applicationFilePath(), QStringList{QStringLiteral("[temp_directory_probe]")});
+    child.start(executable, QStringList{QStringLiteral("[temp_directory_probe]")});
     const bool finished = child.waitForFinished(120000);
     INFO("output of the child process:\n" << child.readAllStandardOutput().toStdString());
     REQUIRE(finished);
@@ -76,11 +95,14 @@ TEST_CASE("a test process does not write into the temporary directory of another
     REQUIRE(child.exitCode() == 0);
 
     // the child wrote the same name, into a directory of its own that is gone now
-    const std::filesystem::path childDirectory = firstLine(report);
-    REQUIRE_FALSE(childDirectory.empty());
+    const std::vector<std::string> reported = linesOf(report);
+    REQUIRE(reported.size() == 2);
+    const std::filesystem::path childDirectory = reported[0];
     CHECK(childDirectory != own);
     CHECK_FALSE(std::filesystem::exists(childDirectory));
-    CHECK(firstLine(file) == "parent");
+    CHECK(linesOf(file) == std::vector<std::string>{"parent"});
+    // what the child was started with, this process's directory, is its shared one
+    CHECK(std::filesystem::equivalent(reported[1], own));
 
     std::filesystem::remove(file);
     std::filesystem::remove(report);
@@ -95,5 +117,7 @@ TEST_CASE("temporary directory probe run by the test of another process",
     }
     const std::filesystem::path own = std::filesystem::temp_directory_path();
     std::ofstream(own / fixedName) << "child\n";
-    std::ofstream(std::filesystem::path(report.toStdWString())) << own.string() << '\n';
+    std::ofstream(std::filesystem::path(report.toStdWString()))
+        << own.string() << '\n'
+        << lc::test::sharedTempDirectory().string() << '\n';
 }

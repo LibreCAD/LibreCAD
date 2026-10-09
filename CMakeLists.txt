@@ -2538,9 +2538,13 @@ if (BUILD_TESTS)
     # Gives each test process a temporary directory of its own (see
     # librecad/src/test/lc_testtempdirectory.h). It works through a static
     # object too and needs neither Qt nor the application library, so the
-    # parser-only executables list it among their sources as well.
+    # parser-only executables list it among their sources as well. Its test
+    # starts a second process through Qt; besides the complete executable, the
+    # two lanes that CI runs on Linux and Windows list it.
     set(LIBRECAD_TEST_TEMP_DIRECTORY_SOURCE
         librecad/src/test/lc_testtempdirectory.cpp)
+    set(LIBRECAD_TEST_TEMP_DIRECTORY_TEST_SOURCE
+        librecad/src/test/lc_testtempdirectorytests.cpp)
 
     # The complete test executable is a milestone/release target. Keep it out
     # of the default build so ordinary incremental application and library
@@ -2702,7 +2706,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/settings/tests/rs_settings_migration_tests.cpp
         librecad/src/lib/engine/settings/tests/lc_settings_init_tests.cpp
         librecad/src/lib/engine/settings/tests/lc_settings_isolation_tests.cpp
-        librecad/src/test/lc_testtempdirectorytests.cpp
+        ${LIBRECAD_TEST_TEMP_DIRECTORY_TEST_SOURCE}
         librecad/src/lib/engine/document/tests/lc_graphic_unit_tests.cpp
         librecad/src/lib/gui/tests/rs_graphicview_close_tests.cpp
         librecad/src/lib/gui/tests/lc_grid_tests.cpp
@@ -2871,6 +2875,7 @@ if (BUILD_TESTS)
         librecad/src/main/lc_release_label.cpp
         ${LIBRECAD_TEST_SETTINGS_ISOLATION_SOURCE}
         ${LIBRECAD_TEST_TEMP_DIRECTORY_SOURCE}
+        ${LIBRECAD_TEST_TEMP_DIRECTORY_TEST_SOURCE}
         ${LIBRECAD_DWG_FAST_TEST_SOURCES}
     )
     set_target_properties(librecad_dwg_fast_tests PROPERTIES
@@ -2952,6 +2957,7 @@ if (BUILD_TESTS)
         librecad/src/main/lc_release_label.cpp
         ${LIBRECAD_TEST_SETTINGS_ISOLATION_SOURCE}
         ${LIBRECAD_TEST_TEMP_DIRECTORY_SOURCE}
+        ${LIBRECAD_TEST_TEMP_DIRECTORY_TEST_SOURCE}
         ${LIBRECAD_DXF_FAST_TEST_SOURCES}
     )
     set_target_properties(librecad_dxf_fast_tests PROPERTIES
