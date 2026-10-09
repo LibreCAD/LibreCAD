@@ -655,7 +655,7 @@ void QG_DlgOptionsGeneral::init(){
         QString autosaveFileNamePrefix = LC_GET_STR("AutosaveFilePrefix", "#");
         cbAutoSaveFileNamePrefix->setCurrentText(autosaveFileNamePrefix);
 
-        QString backupFileNameSuffix = LC_GET_STR("BackupFileSuffix", "#");
+        QString backupFileNameSuffix = LC_GET_STR("BackupFileSuffix", "~");
         cbBackupFileSuffix->setCurrentText(backupFileNameSuffix);
 
 
