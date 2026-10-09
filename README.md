@@ -27,15 +27,49 @@ The 2.0 branch will be the last to support the QCAD toolbar.
 
 (https://travis-ci.org/LibreCAD/LibreCAD.svg?branch=2.0)](https://travis-ci.org/LibreCAD/LibreCAD) 
 
-## DXF Converter
+## Command-Line Converters
 
-LibreCAD can be used as DXF to a PDF, PNG, or SVG converter. For example, to convert a `foo.dxf` to `foo.pdf`, `foo.png`, or `foo.svg`:
+Run `librecad <command> [options] <input files>` to convert drawings without
+opening the editor:
+
+| DXF input | DWG input | Output |
+| --- | --- | --- |
+| `dxf2pdf` | `dwg2pdf` | PDF document |
+| `dxf2png` | `dwg2png` | PNG raster image |
+| `dxf2svg` | `dwg2svg` | SVG vector image |
+| `dxf2dwg` | `dwg2dxf` | DWG or DXF drawing, respectively |
+
+DWG input and output require a build with `DWGSUPPORT` enabled.
+By default, each output is saved beside its input with the same base name and
+the new extension. Use `-t <directory>` to choose an output directory, or
+`-o <file>` to name the output file; these options cannot be combined.
+`-o` requires a single input, except for PDF conversion, where multiple inputs
+are combined into one PDF.
+
+Format-specific options include:
+
+- PDF: `-a` fits and centers the drawing on the page; `-p <WxH>` sets paper size
+  in millimeters; `-r <DPI>` sets print resolution.
+- PNG: `-r <WxH>` sets image dimensions in pixels.
+- DWG output: `-V <version>` selects `r2000` (default), `r2004`, `r2007`, `r2010`,
+  `r2013`, or `r2018`.
+- DXF output: `-V <version>` selects `r12`, `r14`, `r2000`, `r2004`, `r2007`
+  (default), `r2010`, `r2013`, or `r2018`.
+
+For example, convert a DWG drawing to a DXF R2018 file:
 
 ```bash
-$ librecad dxf2pdf foo.dxf
-$ librecad dxf2png foo.dxf
-$ librecad dxf2svg foo.dxf
+librecad dwg2dxf -V r2018 -o drawing.dxf drawing.dwg
 ```
+
+Convert a DXF drawing to a PDF, fitted and centered on the page:
+
+```bash
+librecad dxf2pdf -a -o drawing.pdf drawing.dxf
+```
+
+Use `librecad <command> -h` for the full list of options. On systems without a
+display, set `QT_QPA_PLATFORM=offscreen` for PDF, PNG, and SVG conversion.
 
 ## Releases and Milestones
 
