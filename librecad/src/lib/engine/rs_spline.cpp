@@ -190,7 +190,7 @@ void RS_Spline::update() {
     if (data.closed && !hasWrappedControlPoints()) {
         std::vector<RS_Vector> wrappedPoints{data.controlPoints.cbegin(), data.controlPoints.cbegin() + data.degree};
         tControlPoints.insert(tControlPoints.end(), wrappedPoints.cbegin(), wrappedPoints.cend());
-        RS_DEBUG->print(RS_Debug::D_NOTICE, "%s: controlPoints: size=%llu\n", __func__, data.controlPoints.size());
+        RS_DEBUG->print(RS_Debug::D_NOTICE, "%s: controlPoints: size=%zu\n", __func__, data.controlPoints.size());
     }
 
 	const size_t npts = tControlPoints.size();

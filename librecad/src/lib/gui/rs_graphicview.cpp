@@ -153,6 +153,16 @@ void RS_GraphicView::setFactorY(double f) {
 	}
 }
 
+/**
+ * @return @p v as an offset. Out of the range of int a conversion is
+ * undefined, so the value is first brought within half that range, which
+ * leaves room for the sums made with offsets. Not a number gives the lower end.
+ */
+int RS_GraphicView::toOffset(double v) {
+	const double limit = INT_MAX/2;
+	return static_cast<int>(v > -limit ? std::min(v, limit) : -limit);
+}
+
 void RS_GraphicView::setOffset(int ox, int oy) {
 	//    DEBUG_HEADER
 	//    RS_DEBUG->print(/*RS_Debug::D_WARNING, */"set offset from (%d, %d) to (%d, %d)", getOffsetX(), getOffsetY(), ox, oy);
@@ -196,7 +206,7 @@ RS2::CrosshairType RS_GraphicView::getCrosshairType() const{
  */
 void RS_GraphicView::centerOffsetX() {
 	if (container && !zoomFrozen) {
-		offsetX = (int)(((getWidth()-borderLeft-borderRight)
+		offsetX = toOffset(((getWidth()-borderLeft-borderRight)
 						 - (container->getSize().x*factor.x))/2.0
 						- (container->getMin().x*factor.x)) + borderLeft;
 	}
@@ -209,7 +219,7 @@ void RS_GraphicView::centerOffsetX() {
  */
 void RS_GraphicView::centerOffsetY() {
 	if (container && !zoomFrozen) {
-		offsetY = (int)((getHeight()-borderTop-borderBottom
+		offsetY = toOffset((getHeight()-borderTop-borderBottom
 						 - (container->getSize().y*factor.y))/2.0
 						- (container->getMin().y*factor.y)) + borderBottom;
 	}
@@ -222,7 +232,7 @@ void RS_GraphicView::centerOffsetY() {
  */
 void RS_GraphicView::centerX(double v) {
 	if (!zoomFrozen) {
-		offsetX = (int)((v*factor.x)
+		offsetX = toOffset((v*factor.x)
 						- (double)(getWidth()-borderLeft-borderRight)/2.0);
 	}
 }
@@ -234,7 +244,7 @@ void RS_GraphicView::centerX(double v) {
  */
 void RS_GraphicView::centerY(double v) {
 	if (!zoomFrozen) {
-		offsetY = (int)((v*factor.y)
+		offsetY = toOffset((v*factor.y)
 						- (double)(getHeight()-borderTop-borderBottom)/2.0);
 	}
 }
@@ -396,7 +406,7 @@ void RS_GraphicView::zoomIn(double f, const RS_Vector& center) {
  */
 void RS_GraphicView::zoomInX(double f) {
 	factor.x*=f;
-	offsetX=(int)((offsetX-getWidth()/2)*f)+getWidth()/2;
+	offsetX=toOffset((offsetX-getWidth()/2)*f)+getWidth()/2;
 	adjustOffsetControls();
 	adjustZoomControls();
 	// updateGrid();
@@ -410,7 +420,7 @@ void RS_GraphicView::zoomInX(double f) {
  */
 void RS_GraphicView::zoomInY(double f) {
 	factor.y*=f;
-	offsetY=(int)((offsetY-getHeight()/2)*f)+getHeight()/2;
+	offsetY=toOffset((offsetY-getHeight()/2)*f)+getHeight()/2;
 	adjustOffsetControls();
 	adjustZoomControls();
 	//    updateGrid();
@@ -443,7 +453,7 @@ void RS_GraphicView::zoomOutX(double f) {
 		return;
 	}
 	factor.x/=f;
-	offsetX=(int)(offsetX/f);
+	offsetX=toOffset(offsetX/f);
 	adjustOffsetControls();
 	adjustZoomControls();
 	//    updateGrid();
@@ -462,7 +472,7 @@ void RS_GraphicView::zoomOutY(double f) {
 		return;
 	}
 	factor.y/=f;
-	offsetY=(int)(offsetY/f);
+	offsetY=toOffset(offsetY/f);
 	adjustOffsetControls();
 	adjustZoomControls();
 	//    updateGrid();
@@ -690,7 +700,7 @@ void RS_GraphicView::zoomAutoY(bool axis) {
 		if (noChange==false) {
 			setFactorY(fy);
 			//centerOffsetY();
-			offsetY = (int)((getHeight()-borderTop-borderBottom
+			offsetY = toOffset((getHeight()-borderTop-borderBottom
 							 - (visibleHeight*factor.y))/2.0
 							- (minY*factor.y)) + borderBottom;
 			adjustOffsetControls();
@@ -754,18 +764,18 @@ void RS_GraphicView::zoomWindow(RS_Vector v1, RS_Vector v2,
     zoomX=std::abs(zoomX);
     zoomY=std::abs(zoomY);
 
-	// Borders in pixel after zoom
+	// Borders in pixel after zoom. Out of the range of int the conversion is
+	// undefined, so the range is tested before it, with room for the sums below.
+	for (const double pix: {v1.x*zoomX, v2.y*zoomY, v2.x*zoomX, v1.y*zoomY}) {
+		if (!(std::abs(pix) < INT_MAX/2)) {
+			RS_DIALOGFACTORY->commandMessage("Requested zooming factor out of range. Zooming not changed");
+			return;
+		}
+	}
 	int pixLeft  =(int)(v1.x*zoomX);
 	int pixTop   =(int)(v2.y*zoomY);
 	int pixRight =(int)(v2.x*zoomX);
 	int pixBottom=(int)(v1.y*zoomY);
-	if(  pixLeft == INT_MIN || pixLeft== INT_MAX ||
-		 pixRight == INT_MIN || pixRight== INT_MAX ||
-		 pixTop == INT_MIN || pixTop== INT_MAX ||
-		 pixBottom == INT_MIN || pixBottom== INT_MAX ) {
-		RS_DIALOGFACTORY->commandMessage("Requested zooming factor out of range. Zooming not changed");
-		return;
-	}
 	saveView();
 
 	// Set new offset for zero point:
@@ -1379,58 +1389,71 @@ void RS_GraphicView::drawPaper(RS_Painter *painter) {
 	RS_Vector v1 = toGui((RS_Vector(0,0)-pinsbase)/scale);
 	RS_Vector v2 = toGui((printAreaSize-pinsbase)/scale);
 
-	int marginLeft = (int)(graphic->getMarginLeftInUnits() * factor.x / scale);
-	int marginTop = (int)(graphic->getMarginTopInUnits() * factor.y / scale);
-	int marginRight = (int)(graphic->getMarginRightInUnits() * factor.x / scale);
-	int marginBottom = (int)(graphic->getMarginBottomInUnits() * factor.y / scale);
+	// Whole pixels as before, but kept as doubles: deep in a zoom these, and
+	// their sums, leave the range of int.
+	const double marginLeft = std::trunc(graphic->getMarginLeftInUnits() * factor.x / scale);
+	const double marginTop = std::trunc(graphic->getMarginTopInUnits() * factor.y / scale);
+	const double marginRight = std::trunc(graphic->getMarginRightInUnits() * factor.x / scale);
+	const double marginBottom = std::trunc(graphic->getMarginBottomInUnits() * factor.y / scale);
 
-	int printAreaW = (int)(v2.x-v1.x);
-	int printAreaH = (int)(v2.y-v1.y);
+	const double printAreaW = std::trunc(v2.x-v1.x);
+	const double printAreaH = std::trunc(v2.y-v1.y);
 
-	int paperX1 = (int)v1.x;
-	int paperY1 = (int)v1.y;
+	const double paperX1 = std::trunc(v1.x);
+	const double paperY1 = std::trunc(v1.y);
 	// Don't show margins between neighbor pages.
-	int paperW = printAreaW + marginLeft + marginRight;
-	int paperH = printAreaH - marginTop - marginBottom;
+	const double paperW = printAreaW + marginLeft + marginRight;
+	const double paperH = printAreaH - marginTop - marginBottom;
 
 	int numX = graphic->getPagesNumHoriz();
 	int numY = graphic->getPagesNumVert();
+
+	// The edges of a rectangle are brought into range, not its size.
+	const auto fillRect = [painter](double x, double y, double w, double h,
+									const RS_Color& color) {
+		x = std::trunc(x);
+		y = std::trunc(y);
+		const int x1 = toOffset(x);
+		const int y1 = toOffset(y);
+		painter->fillRect(x1, y1, toOffset(x + w) - x1, toOffset(y + h) - y1,
+						  color);
+	};
 
 	// gray background:
 	painter->fillRect(0,0, getWidth(), getHeight(),
 					  RS_Color(200,200,200));
 
 	// shadow:
-	painter->fillRect(paperX1+6, paperY1+6, paperW, paperH,
-					  RS_Color(64,64,64));
+	fillRect(paperX1+6, paperY1+6, paperW, paperH,
+			 RS_Color(64,64,64));
 
 	// border:
-	painter->fillRect(paperX1, paperY1, paperW, paperH,
-					  RS_Color(64,64,64));
+	fillRect(paperX1, paperY1, paperW, paperH,
+			 RS_Color(64,64,64));
 
 	// paper:
-	painter->fillRect(paperX1+1, paperY1-1, paperW-2, paperH+2,
-					  RS_Color(180,180,180));
+	fillRect(paperX1+1, paperY1-1, paperW-2, paperH+2,
+			 RS_Color(180,180,180));
 
 	// print area:
-	painter->fillRect(paperX1+1+marginLeft, paperY1-1-marginBottom,
-					  printAreaW-2, printAreaH+2,
-					  RS_Color(255,255,255));
+	fillRect(paperX1+1+marginLeft, paperY1-1-marginBottom,
+			 printAreaW-2, printAreaH+2,
+			 RS_Color(255,255,255));
 
 	// don't paint boundaries if zoom is to small
-    if (qMin(std::abs(printAreaW/numX), std::abs(printAreaH/numY)) > 2) {
+    if (qMin(std::abs(printAreaW)/numX, std::abs(printAreaH)/numY) >= 3) {
 		// boundaries between pages:
 		for (int pX = 1; pX < numX; pX++) {
-			double offset = ((double)printAreaW*pX)/numX;
-			painter->fillRect(paperX1+marginLeft+offset, paperY1,
-							  1, paperH,
-							  RS_Color(64,64,64));
+			double offset = (printAreaW*pX)/numX;
+			fillRect(paperX1+marginLeft+offset, paperY1,
+					 1, paperH,
+					 RS_Color(64,64,64));
 		}
 		for (int pY = 1; pY < numY; pY++) {
-			double offset = ((double)printAreaH*pY)/numY;
-			painter->fillRect(paperX1, paperY1-marginBottom+offset,
-							  paperW, 1,
-							  RS_Color(64,64,64));
+			double offset = (printAreaH*pY)/numY;
+			fillRect(paperX1, paperY1-marginBottom+offset,
+					 paperW, 1,
+					 RS_Color(64,64,64));
 		}
 	}
 }

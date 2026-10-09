@@ -73,7 +73,7 @@ void LC_ActionOptionsWidget::setAction(RS_ActionInterface *a, bool update){
             RS_SETTINGS->endGroup();
         }
         else{
-            RS_DEBUG->print(RS_Debug::D_ERROR, typeid(*this).name(), "::setAction: wrong action type");
+            RS_DEBUG->print(RS_Debug::D_ERROR, "%s::setAction: wrong action type", typeid(*this).name());
         }
     }
 }

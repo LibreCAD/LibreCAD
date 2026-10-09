@@ -1396,7 +1396,7 @@ RS2::ActionType RS_Commands::cmdToAction(const QString& cmd, bool verbose) const
             return ret;
         }
     }
-    RS_DEBUG->print(QObject::tr("RS_Commands:: command not found: %1").arg(full).toStdString().c_str());
+    RS_DEBUG->print("%s", QObject::tr("RS_Commands:: command not found: %1").arg(full).toStdString().c_str());
     return ret;
 }
 

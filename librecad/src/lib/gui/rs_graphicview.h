@@ -201,6 +201,7 @@ public:
 	 * @param oy, offset Y
 	 */
 	virtual void setOffset(int ox, int oy);
+	static int toOffset(double v);
 	void setOffsetX(int ox);
 	void setOffsetY(int oy);
 	int getOffsetX() const;

@@ -611,7 +611,7 @@ void LC_ActionDrawLineSnake::addHistory(LC_ActionDrawLineSnake::HistoryAction a,
     if (pPoints->historyIndex < -1){
         pPoints->historyIndex = -1;
     }
-    pPoints->history.erase(pPoints->history.begin() + pPoints->historyIndex + 1, pPoints->history.end());
+    pPoints->history.erase(pPoints->history.begin() + (pPoints->historyIndex + 1), pPoints->history.end());
     pPoints->history.push_back(History(a, p, c, s));
     pPoints->historyIndex = static_cast<int>(pPoints->history.size() - 1);
 }

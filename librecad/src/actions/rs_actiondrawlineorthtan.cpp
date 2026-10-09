@@ -52,6 +52,8 @@ RS_ActionDrawLineOrthTan::RS_ActionDrawLineOrthTan(
 	actionType=RS2::ActionDrawLineOrthTan;
 }
 
+RS_ActionDrawLineOrthTan::~RS_ActionDrawLineOrthTan() = default;
+
 
 void RS_ActionDrawLineOrthTan::finish(bool updateTB){
 	clearLines();
@@ -72,6 +74,7 @@ void RS_ActionDrawLineOrthTan::trigger() {
 	newEntity->setLayerToActive();
 	newEntity->setPenToActive();
 	container->addEntity(newEntity);
+	tangent.reset();
 
 	// upd. undo list:
 	if (document) {
@@ -109,10 +112,11 @@ void RS_ActionDrawLineOrthTan::mouseMoveEvent(QMouseEvent* e) {
 		graphicView->redraw(RS2::RedrawDrawing);
 		deletePreview();
 		RS_Creation creation(preview.get(), graphicView, false);
-		tangent = creation.createLineOrthTan(mouse,
-											 normal,
-											 circle);
-		preview->addEntity(tangent);
+		tangent.reset(creation.createLineOrthTan(mouse,
+												 normal,
+												 circle));
+		if(tangent)
+			preview->addEntity(tangent->clone());
 		drawPreview();
 
 	}
@@ -132,6 +136,7 @@ void RS_ActionDrawLineOrthTan::clearLines()
 		}
 	}
 	if(circle) circle=nullptr;
+	tangent.reset();
 	deletePreview();
 }
 

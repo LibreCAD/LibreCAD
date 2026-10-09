@@ -44,6 +44,7 @@ private:
 public:
     RS_ActionDrawLineOrthTan(RS_EntityContainer& container,
                              RS_GraphicView& graphicView);
+    ~RS_ActionDrawLineOrthTan() override;
 
 	void trigger() override;
 	void finish(bool updateTB = true) override;
@@ -58,8 +59,8 @@ private:
 	void clearLines();
     /** normal to tangent. */
     RS_Line* normal = nullptr; // the select normal line
-    /** tangent. */
-    RS_Line* tangent = nullptr; //holds the tangent line for preview
+    /** tangent: owned here, as the preview deletes its entities; it shows a copy. */
+    std::unique_ptr<RS_Line> tangent;
     /** arc/circle/ellipse to generate tangent */
     RS_Entity* circle = nullptr;
 };

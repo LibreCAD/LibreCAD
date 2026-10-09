@@ -99,7 +99,7 @@ void QG_PolylineOptions::setAction(RS_ActionInterface* a, bool update) {
 		ui->rbNeg->setChecked(reversed);
         updateMode(mode);
     } else {
-		RS_DEBUG->print(RS_Debug::D_ERROR, QString("QG_PolylineOptions::setAction:"
+		RS_DEBUG->print(RS_Debug::D_ERROR, "%s", QString("QG_PolylineOptions::setAction:"
 						+ tr("wrong action type")).toStdString().c_str());
 		action = nullptr;
     }
