@@ -470,3 +470,71 @@ TEST_CASE("Hiding all layers never hides the current one", "[layers][active]") {
         CHECK(graphic.getActiveLayer() == wall1);
     }
 }
+
+// find() looks a name up in an index and add() inserts in name order, where
+// both went through the whole list before. A layer can get another name behind
+// the list's back, so these pin what has to hold all the same.
+
+namespace {
+
+QStringList layerNames(const RS_LayerList& list) {
+    QStringList names;
+    for (const RS_Layer* layer : list) {
+        names << layer->getName();
+    }
+    return names;
+}
+
+} // namespace
+
+TEST_CASE("RS_LayerList finds a layer by the name it has now", "[layers][find]") {
+    RS_LayerList list;
+    auto* walls = new RS_Layer(QStringLiteral("WALLS"));
+    auto* doors = new RS_Layer(QStringLiteral("DOORS"));
+    list.add(walls);
+    list.add(doors);
+    REQUIRE(list.find(QStringLiteral("WALLS")) == walls);
+
+    // Renamed directly, as the layer tree does.
+    walls->setName(QStringLiteral("ROOF"));
+    CHECK(list.find(QStringLiteral("ROOF")) == walls);
+    CHECK(list.find(QStringLiteral("WALLS")) == nullptr);
+
+    // Renamed through the list.
+    list.edit(doors, RS_Layer(QStringLiteral("GLASS")));
+    CHECK(list.find(QStringLiteral("GLASS")) == doors);
+    CHECK(list.find(QStringLiteral("DOORS")) == nullptr);
+
+    // A decomposed name is found by its composed form.
+    auto* cafe = new RS_Layer(QString::fromUtf8("cafe\xcc\x81"));
+    list.add(cafe);
+    CHECK(list.find(QString::fromUtf8("caf\xc3\xa9")) == cafe);
+}
+
+TEST_CASE("RS_LayerList finds the first of two layers renamed to one name", "[layers][find]") {
+    Drawing drawing;
+    RS_Layer* walls = drawing.addLayer(QStringLiteral("WALLS"));
+    RS_Layer* yard = drawing.addLayer(QStringLiteral("YARD"));
+    yard->setName(QStringLiteral("WALLS"));
+    CHECK(drawing.m_graphic.findLayer(QStringLiteral("WALLS")) == walls);
+
+    drawing.m_graphic.removeLayer(walls);
+    CHECK(drawing.m_graphic.findLayer(QStringLiteral("WALLS")) == yard);
+    CHECK(drawing.m_graphic.findLayer(QStringLiteral("YARD")) == nullptr);
+}
+
+TEST_CASE("RS_LayerList stays sorted by name as layers are added", "[layers][find]") {
+    RS_LayerList list;
+    for (const char* name : {"M", "C", "X", "A", "T"}) {
+        list.add(new RS_Layer(QString::fromLatin1(name)));
+    }
+    CHECK(layerNames(list) == QStringList{"A", "C", "M", "T", "X"});
+
+    // A rename leaves the list as it is; the next add() sorts all of it.
+    list.find(QStringLiteral("A"))->setName(QStringLiteral("Z"));
+    CHECK(layerNames(list) == QStringList{"Z", "C", "M", "T", "X"});
+    list.add(new RS_Layer(QStringLiteral("D")));
+    CHECK(layerNames(list) == QStringList{"C", "D", "M", "T", "X", "Z"});
+    list.add(new RS_Layer(QStringLiteral("B")));
+    CHECK(layerNames(list) == QStringList{"B", "C", "D", "M", "T", "X", "Z"});
+}
