@@ -39,7 +39,8 @@ void reorderParagraph(const QString &text, Qt::LayoutDirection direction,
     const int start = begin->start;
     const auto &last = *(end - 1);
     const auto paragraph = text.mid(start, last.start + last.length - start);
-    const auto resolved = lc::qtbidi::resolve(paragraph, direction);
+    const auto display = directionalText(paragraph, direction);
+    const auto resolved = lc::qtbidi::resolve(display.text, direction);
     const auto order = lc::qtbidi::reorder(resolved.levels);
     std::vector<int> clusterForUnit(paragraph.size());
     for (auto it = begin; it != end; ++it) {
@@ -51,10 +52,13 @@ void reorderParagraph(const QString &text, Qt::LayoutDirection direction,
     std::vector<Cluster> ordered;
     ordered.reserve(end - begin);
     for (int unit : order) {
-        const int index = clusterForUnit[unit];
+        const int source = display.sourcePositions[unit];
+        if (source < 0) continue;
+        const int index = clusterForUnit[source];
         if (emitted[index]) continue;
         auto cluster = begin[index];
-        cluster.rightToLeft = (resolved.levels[cluster.start - start] & 1) != 0;
+        cluster.rightToLeft =
+            (resolved.levels[display.displayPositions[cluster.start - start]] & 1) != 0;
         ordered.push_back(cluster);
         emitted[index] = true;
     }
@@ -62,6 +66,85 @@ void reorderParagraph(const QString &text, Qt::LayoutDirection direction,
 }
 
 } // namespace
+
+int DirectionalText::sourcePosition(int position) const {
+    position = std::clamp(position, 0, int(sourcePositions.size()));
+    while (position > 0) {
+        const int source = sourcePositions[--position];
+        if (source >= 0) return source + 1;
+    }
+    return 0;
+}
+
+DirectionalText directionalText(const QString &text, Qt::LayoutDirection direction) {
+    if (text.size() > std::numeric_limits<int>::max() / 5) {
+        throw std::length_error("Directional text exceeds index range");
+    }
+    DirectionalText result;
+    result.text.reserve(text.size());
+    result.sourcePositions.reserve(text.size());
+    result.displayPositions.resize(text.size() + 1);
+    const auto control = [&](ushort value) {
+        result.text += QChar(value);
+        result.sourcePositions.push_back(-1);
+    };
+    bool overriding = false;
+    std::vector<bool> explicitScopes;
+    QTextBoundaryFinder boundaries(QTextBoundaryFinder::Grapheme, text);
+    for (int start = 0, end = boundaries.toNextBoundary(); end >= 0;
+         start = end, end = boundaries.toNextBoundary()) {
+        char32_t scalar = text.at(start).unicode();
+        if (text.at(start).isHighSurrogate() && end - start > 1 &&
+            text.at(start + 1).isLowSurrogate()) {
+            scalar = QChar::surrogateToUcs4(text.at(start), text.at(start + 1));
+        }
+        const auto bidi = QChar::direction(scalar);
+        const bool han = direction == Qt::RightToLeft && explicitScopes.empty() &&
+                         QChar::script(scalar) == QChar::Script_Han;
+        if (overriding && !han) {
+            control(0x202c); // PDF
+            control(0x2069); // PDI
+        }
+        if (!overriding && han) {
+            control(0x2067); // RLI: do not let Han overrides reorder adjacent numbers.
+            control(0x202e); // RLO
+        }
+        overriding = han;
+        for (int i = start; i < end; ++i) {
+            result.displayPositions[i] = int(result.text.size());
+            result.text += text.at(i);
+            result.sourcePositions.push_back(i);
+        }
+        switch (bidi) {
+        case QChar::DirLRE: case QChar::DirRLE:
+        case QChar::DirLRO: case QChar::DirRLO:
+            explicitScopes.push_back(false);
+            break;
+        case QChar::DirLRI: case QChar::DirRLI: case QChar::DirFSI:
+            explicitScopes.push_back(true);
+            break;
+        case QChar::DirPDF:
+            if (!explicitScopes.empty() && !explicitScopes.back()) explicitScopes.pop_back();
+            break;
+        case QChar::DirPDI: {
+            const auto isolate = std::find(explicitScopes.rbegin(), explicitScopes.rend(), true);
+            if (isolate != explicitScopes.rend()) explicitScopes.erase(isolate.base() - 1, explicitScopes.end());
+            break;
+        }
+        case QChar::DirB:
+            explicitScopes.clear();
+            break;
+        default:
+            break;
+        }
+    }
+    if (overriding) {
+        control(0x202c);
+        control(0x2069);
+    }
+    result.displayPositions[text.size()] = int(result.text.size());
+    return result;
+}
 
 std::vector<Cluster> visualClusters(const QString &text,
                                     Qt::LayoutDirection direction,

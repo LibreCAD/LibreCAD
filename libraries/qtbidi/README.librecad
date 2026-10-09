@@ -39,6 +39,20 @@ Paragraph separation and LFF grapheme handling belong to lc_textbidi.
 Glyph metrics and geometry belong to RS_Text/RS_MText. This resolver does
 not perform Arabic contextual shaping or OpenType glyph substitution.
 
+Explicit RTL in LibreCAD additionally supports traditional horizontal
+Chinese: Han grapheme runs read right-to-left, while Arabic numerals and
+Latin words retain their normal order (logical U+4E2D U+6587 123 displays
+as 123 U+6587 U+4E2D). Auto/LTR retain ordinary Unicode behavior. This
+higher-level policy lives in lc_textbidi, not in this UAX #9 resolver;
+explicit user-supplied Unicode embeddings and isolates take precedence.
+
+LC_TextEdit uses the same display projection with public QTextLayout
+APIs. Generated isolates/overrides never enter the QTextDocument, saved
+text, clipboard, or input-method surrounding text. The adapter maps
+visual cursor positions back to logical UTF-16 positions, including
+split carets at bidi boundaries, and retains native line breaks and undo.
+Native Qt handles non-Chinese paragraphs, word boundaries, and editing.
+
 Validation uses Unicode 17 BidiTest.txt and BidiCharacterTest.txt:
 770241 type/direction cases and 91707 character cases. These validate
 paragraph levels and L2 maps; they do not cover LFF glyph geometry,

@@ -32,12 +32,76 @@
 #include <QTextBlockFormat>
 #include <QTextDocument>
 #include <QTextEdit>
+#include <QBasicTimer>
 #include <QtMath>
+#include <map>
+#include <memory>
+#include <type_traits>
+#include <optional>
+
+// Logical plain-text document with a display-only traditional Chinese RTL layout.
+class LC_TextEdit : public QTextEdit {
+    Q_OBJECT
+public:
+    explicit LC_TextEdit(QWidget *parent = nullptr);
+    ~LC_TextEdit() override;
+    void setTextDirection(Qt::LayoutDirection direction);
+    QRect cursorRect(const QTextCursor &cursor) const;
+    QRect cursorRect() const { return cursorRect(textCursor()); }
+    QTextCursor cursorForPosition(const QPoint &position) const;
+    QVariant inputMethodQuery(Qt::InputMethodQuery query) const override;
+    Q_INVOKABLE QVariant inputMethodQuery(Qt::InputMethodQuery query, QVariant argument) const;
+
+protected:
+    void paintEvent(QPaintEvent *event) override;
+    void keyPressEvent(QKeyEvent *event) override;
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
+    void mouseDoubleClickEvent(QMouseEvent *event) override;
+    void inputMethodEvent(QInputMethodEvent *event) override;
+    void resizeEvent(QResizeEvent *event) override;
+    void changeEvent(QEvent *event) override;
+    void timerEvent(QTimerEvent *event) override;
+    void dropEvent(QDropEvent *event) override;
+    void dragMoveEvent(QDragMoveEvent *event) override;
+    void dragLeaveEvent(QDragLeaveEvent *event) override;
+    void focusInEvent(QFocusEvent *event) override;
+    void focusOutEvent(QFocusEvent *event) override;
+
+private:
+    struct BlockLayout;
+    const BlockLayout &layoutForBlock(const QTextBlock &block) const;
+    QPointF blockOrigin(const QTextBlock &block) const;
+    bool hasChineseRtl() const;
+    void invalidateLayouts();
+    void mouseEvent(QMouseEvent *event);
+    int displayCursorPosition(const QTextCursor &cursor, const BlockLayout &view) const;
+    void setDisplayCursor(QTextCursor cursor, int position, QTextCursor::MoveMode mode);
+    void ensureDisplayCursorVisible();
+    mutable std::map<int, std::unique_ptr<BlockLayout>> m_layouts;
+    mutable bool m_directionDirty = true;
+    mutable bool m_chineseRtl = false;
+    int m_cursorBlock = -1;
+    int m_displayCursor = -1;
+    qreal m_verticalX = -1;
+    QBasicTimer m_cursorTimer;
+    QBasicTimer m_selectionScrollTimer;
+    QPointF m_mousePosition;
+    std::optional<QPointF> m_dropPosition;
+    bool m_cursorVisible = true;
+    int m_preeditCursor = 0;
+    bool m_preeditCursorVisible = true;
+};
 
 namespace lc::textedit {
 
 template <typename Editor>
 void setDirection(Editor *editor, Qt::LayoutDirection direction) {
+    if constexpr (std::is_base_of_v<LC_TextEdit, Editor>) {
+        editor->setTextDirection(direction);
+        return;
+    }
     const QSignalBlocker blocker(editor);
     editor->setLayoutDirection(direction);
     auto *document = editor->document();
@@ -70,13 +134,14 @@ void setDirection(Editor *editor, Qt::LayoutDirection direction) {
 } // namespace lc::textedit
 
 // QLineEdit has no public API for setting its text's paragraph base direction.
-class LC_SingleLineTextEdit : public QTextEdit {
+class LC_SingleLineTextEdit : public LC_TextEdit {
     Q_OBJECT
 public:
-    explicit LC_SingleLineTextEdit(QWidget *parent = nullptr) : QTextEdit(parent) {
+    explicit LC_SingleLineTextEdit(QWidget *parent = nullptr) : LC_TextEdit(parent) {
         setAcceptRichText(false);
         setTabChangesFocus(true);
-        setWordWrapMode(QTextOption::NoWrap);
+        setLineWrapMode(QTextEdit::NoWrap);
+        setInputMethodHints(inputMethodHints() & ~Qt::ImhMultiLine);
         setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
@@ -101,17 +166,19 @@ signals:
     void editingFinished();
 
 protected:
+    void inputMethodEvent(QInputMethodEvent *event) override;
+
     void keyPressEvent(QKeyEvent *event) override {
         if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter) {
             emit editingFinished();
             event->ignore();
             return;
         }
-        QTextEdit::keyPressEvent(event);
+        LC_TextEdit::keyPressEvent(event);
     }
 
     void focusOutEvent(QFocusEvent *event) override {
-        QTextEdit::focusOutEvent(event);
+        LC_TextEdit::focusOutEvent(event);
         emit editingFinished();
     }
 

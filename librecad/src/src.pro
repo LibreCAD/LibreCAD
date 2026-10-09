@@ -2017,6 +2017,7 @@ SOURCES +=  ui/action_options/circle/lc_circle_by_arc_options_widget.cpp \
     ui/components/containers/lc_snapoptionswidgetsholder.cpp \
     ui/components/creators/actionlist.cpp \
     ui/components/layouts/lc_flexlayout.cpp \
+    ui/components/lc_textedit.cpp \
     ui/components/pen/qg_widgetpen.cpp \
     ui/components/status_bar/qg_activelayername.cpp \
     ui/components/status_bar/qg_coordinatewidget.cpp \

@@ -138,6 +138,44 @@ QString visualText(const QString &text, Qt::LayoutDirection direction) {
 }
 } // namespace
 
+TEST_CASE("Chinese RTL reverses Han runs but preserves numeric values",
+          "[textbidi][chinese]") {
+  const auto chinese = QStringLiteral("\u4e2d\u6587");
+  const auto reversed = QStringLiteral("\u6587\u4e2d");
+  for (const QString &number : {QStringLiteral("123"), QStringLiteral("12.5"),
+                                QStringLiteral("1,234.56"), QStringLiteral("12/34"),
+                                QStringLiteral("CAD123")}) {
+    const auto input = chinese + number;
+    CHECK(visualText(input, Qt::LeftToRight) == input);
+    CHECK(visualText(input, Qt::LayoutDirectionAuto) == input);
+    CHECK(visualText(input, Qt::RightToLeft) == number + reversed);
+    const auto display = lc::textbidi::directionalText(input, Qt::RightToLeft);
+    QString restored;
+    for (int i = 0; i < int(display.sourcePositions.size()); ++i) {
+      if (display.sourcePositions[i] >= 0) restored += display.text.at(i);
+    }
+    CHECK(restored == input);
+    for (int i = 0; i <= input.size(); ++i)
+      CHECK(display.sourcePosition(display.displayPositions[i]) == i);
+  }
+  CHECK(visualText(chinese + QStringLiteral("\u4e00\u4e8c\u4e09"), Qt::RightToLeft) ==
+        QStringLiteral("\u4e09\u4e8c\u4e00") + reversed);
+  const auto explicitLtr = QChar(0x2066) + chinese + "123" + QChar(0x2069);
+  CHECK(visualText(explicitLtr, Qt::RightToLeft) == chinese + "123");
+  const auto nested = QStringLiteral("\u2066\u202a") + chinese + QChar(0x2069);
+  const auto projected = lc::textbidi::directionalText(nested + chinese, Qt::RightToLeft);
+  CHECK(projected.text.startsWith(nested + QStringLiteral("\u2067\u202e")));
+  const auto strayPdf = QString(QChar(0x2066)) + QChar(0x202c) + chinese + QChar(0x2069);
+  CHECK(lc::textbidi::directionalText(strayPdf, Qt::RightToLeft).text == strayPdf);
+  const char32_t supplementary[] = {0x20000, 0xe0100, 0x20001};
+  const auto input = QString::fromUcs4(supplementary, 3) + "123";
+  const auto clusters = lc::textbidi::visualClusters(input, Qt::RightToLeft);
+  REQUIRE(clusters.size() == 5);
+  CHECK(clusters[3].start == 4);
+  CHECK(clusters[4].start == 0);
+  CHECK(clusters[4].length == 4);
+}
+
 TEST_CASE("Bidi ordering is font-independent and preserves numeric runs",
           "[textbidi][issue1859]") {
   const auto hebrew = QString::fromUtf8(u8"שלום");

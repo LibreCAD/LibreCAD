@@ -34,7 +34,7 @@ LC_MTextPropertiesEditingWidget::LC_MTextPropertiesEditingWidget(
       ui(new Ui::LC_MTextPropertiesEditingWidget) {
   ui->setupUi(this);
 
-  connect(ui->teText, &QPlainTextEdit::textChanged, this,
+  connect(ui->teText, &QTextEdit::textChanged, this,
           &LC_MTextPropertiesEditingWidget::onTextChanged);
   connect(ui->leHeight, &QLineEdit::editingFinished, this,
           &LC_MTextPropertiesEditingWidget::onHeightEditingFinished);

@@ -32,6 +32,16 @@ struct Cluster {
     bool rightToLeft;
 };
 
+// Display-only overrides for traditional horizontal Chinese RTL. Indices and
+// stored strings remain in logical UTF-16 order; generated controls map to -1.
+struct DirectionalText {
+    QString text;
+    std::vector<int> sourcePositions;
+    std::vector<int> displayPositions;
+    int sourcePosition(int displayPosition) const;
+};
+DirectionalText directionalText(const QString &text, Qt::LayoutDirection direction);
+
 // Font-independent visual order; callers retain their own font metrics.
 std::vector<Cluster> visualClusters(const QString &text,
                                     Qt::LayoutDirection direction,

@@ -27,8 +27,13 @@
 
 #include <QApplication>
 #include <QFile>
+#include <QClipboard>
+#include <QDropEvent>
+#include <QInputMethodEvent>
+#include <QMouseEvent>
 #include <QPlainTextEdit>
 #include <QRadioButton>
+#include <QScrollBar>
 #include <QTemporaryDir>
 #include <QTextBlock>
 #include <QTextEdit>
@@ -147,6 +152,22 @@ std::vector<std::int32_t> libreCadIntegers(const RS_Entity &entity) {
       values.push_back(tag->content.i);
   }
   return values;
+}
+
+void keyPress(QWidget &edit, int code, Qt::KeyboardModifiers modifiers = Qt::NoModifier,
+              const QString &text = QString()) {
+  QKeyEvent event(QEvent::KeyPress, code, modifiers, text);
+  QApplication::sendEvent(&edit, &event);
+  QApplication::processEvents();
+}
+
+void mouseEvent(LC_TextEdit &edit, QEvent::Type type, const QPoint &position,
+                Qt::MouseButton button = Qt::LeftButton,
+                Qt::MouseButtons buttons = Qt::LeftButton) {
+  QMouseEvent event(type, position, edit.viewport()->mapToGlobal(position),
+                    button, buttons, Qt::NoModifier);
+  QApplication::sendEvent(edit.viewport(), &event);
+  QApplication::processEvents();
 }
 } // namespace
 
@@ -408,7 +429,7 @@ TEST_CASE("RTL editors keep logical text and cursor selections",
   LC_MTextPropertiesEditingWidget editor(nullptr);
   editor.setGraphicViewport(&viewport);
   editor.setEntity(&mtext);
-  auto *edit = editor.findChild<QPlainTextEdit *>("teText");
+  auto *edit = editor.findChild<LC_TextEdit *>("teText");
   REQUIRE(edit);
   auto cursor = edit->textCursor();
   cursor.setPosition(1);
@@ -420,7 +441,7 @@ TEST_CASE("RTL editors keep logical text and cursor selections",
     radio->click();
     const bool rtl = radio->objectName() == "rbRightToLeft";
     CHECK(edit->layoutDirection() == (rtl ? Qt::RightToLeft : Qt::LeftToRight));
-    CHECK(edit->document()->begin().blockFormat().alignment().testFlag(
+    CHECK(edit->document()->defaultTextOption().alignment().testFlag(
           rtl ? Qt::AlignRight : Qt::AlignLeft));
     checkLayout(rtl);
     CHECK(edit->toPlainText() == input);
@@ -429,9 +450,9 @@ TEST_CASE("RTL editors keep logical text and cursor selections",
     CHECK(edit->textCursor().position() == 3);
   }
   edit->clear();
-  CHECK(edit->document()->begin().blockFormat().alignment().testFlag(Qt::AlignRight));
+  CHECK(edit->document()->defaultTextOption().alignment().testFlag(Qt::AlignRight));
   edit->setPlainText(input);
-  CHECK(edit->document()->begin().blockFormat().alignment().testFlag(Qt::AlignRight));
+  CHECK(edit->document()->defaultTextOption().alignment().testFlag(Qt::AlignRight));
 
   QG_DlgMText dialog(nullptr, &viewport, &mtext, false);
   auto *dialogEdit = dialog.findChild<QTextEdit *>("teText");
@@ -444,7 +465,7 @@ TEST_CASE("RTL editors keep logical text and cursor selections",
     const bool rtl = radio->objectName() == "rbRightToLeft";
     CHECK(dialogEdit->layoutDirection() ==
           (rtl ? Qt::RightToLeft : Qt::LeftToRight));
-    CHECK(dialogEdit->document()->begin().blockFormat().alignment().testFlag(
+    CHECK(dialogEdit->document()->defaultTextOption().alignment().testFlag(
           rtl ? Qt::AlignRight : Qt::AlignLeft));
     dialog.updateEntity();
     checkLayout(rtl);
@@ -460,10 +481,10 @@ TEST_CASE("RTL editors keep logical text and cursor selections",
   CHECK(QString::fromUtf8(saved.readAll()) == input);
   saved.close();
   dialogEdit->clear();
-  CHECK(dialogEdit->document()->begin().blockFormat().alignment().testFlag(Qt::AlignRight));
+  CHECK(dialogEdit->document()->defaultTextOption().alignment().testFlag(Qt::AlignRight));
   dialog.load(textPath);
   CHECK(dialogEdit->toPlainText() == input);
-  CHECK(dialogEdit->document()->begin().blockFormat().alignment().testFlag(Qt::AlignRight));
+  CHECK(dialogEdit->document()->defaultTextOption().alignment().testFlag(Qt::AlignRight));
   dialogEdit->setPlainText("<b>" + input + "</b>");
   dialog.updateEntity();
   CHECK(mtext.getText() == "<b>" + input + "</b>");
@@ -491,13 +512,13 @@ TEST_CASE("RTL editors keep logical text and cursor selections",
     CHECK(textEdit->textCursor().position() == 3);
     const auto direction = QString(button) == "rbAuto" ? Qt::LayoutDirectionAuto
         : QString(button) == "rbRightToLeft" ? Qt::RightToLeft : Qt::LeftToRight;
-    CHECK(textEdit->document()->begin().blockFormat().layoutDirection() == direction);
+    CHECK(textEdit->document()->defaultTextOption().textDirection() == direction);
   }
   textEdit->clear();
-  CHECK(textEdit->document()->begin().blockFormat().alignment().testFlag(Qt::AlignRight));
+  CHECK(textEdit->document()->defaultTextOption().alignment().testFlag(Qt::AlignRight));
   textEdit->setPlainText(input);
-  CHECK(textEdit->document()->begin().blockFormat().layoutDirection() == Qt::RightToLeft);
-  CHECK(textEdit->document()->begin().blockFormat().alignment().testFlag(Qt::AlignRight));
+  CHECK(textEdit->document()->defaultTextOption().textDirection() == Qt::RightToLeft);
+  CHECK(textEdit->document()->defaultTextOption().alignment().testFlag(Qt::AlignRight));
 
   for (bool isNew : {false, true}) {
     QG_DlgText textDialog(nullptr, &viewport, &text, isNew);
@@ -516,12 +537,12 @@ TEST_CASE("RTL editors keep logical text and cursor selections",
       CHECK(text.getText() == input);
       const auto qtDirection = direction == RS_TextData::ByContent ? Qt::LayoutDirectionAuto
           : direction == RS_TextData::RightToLeft ? Qt::RightToLeft : Qt::LeftToRight;
-      CHECK(textDialogEdit->document()->begin().blockFormat().layoutDirection() == qtDirection);
+      CHECK(textDialogEdit->document()->defaultTextOption().textDirection() == qtDirection);
       textDialogEdit->clear();
-      CHECK(textDialogEdit->document()->begin().blockFormat().alignment().testFlag(
+      CHECK(textDialogEdit->document()->defaultTextOption().alignment().testFlag(
           direction == RS_TextData::RightToLeft ? Qt::AlignRight : Qt::AlignLeft));
       textDialogEdit->setPlainText(input);
-      CHECK(textDialogEdit->document()->begin().blockFormat().layoutDirection() == qtDirection);
+      CHECK(textDialogEdit->document()->defaultTextOption().textDirection() == qtDirection);
     }
     textDialog.reject();
   }
@@ -609,6 +630,385 @@ TEST_CASE("Single-line text input preserves editing behavior",
   CHECK(edit.document()->blockCount() == 1);
 }
 
+TEST_CASE("Chinese direction switching keeps editor and entity geometry consistent",
+          "[text][bidi][chinese][gui]") {
+  SourceFonts fonts;
+  const auto input = QStringLiteral("\u4e2d\u6587123");
+  const auto rtl = QStringLiteral("123\u6587\u4e2d");
+  auto data = mtextData(input);
+  data.style = "unicode";
+  RS_MText mtext(nullptr, data);
+  RS_TextData textData;
+  textData.text = input;
+  textData.style = "unicode";
+  textData.updateMode = RS2::Update;
+  RS_Text text(nullptr, textData);
+  LC_GraphicViewport viewport;
+  LC_MTextPropertiesEditingWidget mtextEditor(nullptr);
+  LC_TextPropertiesEditingWidget textEditor(nullptr);
+  mtextEditor.setGraphicViewport(&viewport);
+  textEditor.setGraphicViewport(&viewport);
+  mtextEditor.setEntity(&mtext);
+  textEditor.setEntity(&text);
+  for (auto *panel : {static_cast<QWidget *>(&mtextEditor), static_cast<QWidget *>(&textEditor)}) {
+    panel->resize(600, 500);
+    panel->show();
+    auto *edit = panel->findChild<LC_TextEdit *>();
+    REQUIRE(edit);
+    auto cursor = edit->textCursor();
+    cursor.setPosition(1);
+    cursor.setPosition(3, QTextCursor::KeepAnchor);
+    edit->setTextCursor(cursor);
+    for (const char *button : {"rbLeftToRight", "rbRightToLeft", "rbLeftToRight", "rbRightToLeft"}) {
+      panel->findChild<QRadioButton *>(button)->click();
+      QApplication::processEvents();
+      const bool isRtl = QString(button) == "rbRightToLeft";
+      CHECK(edit->toPlainText() == input);
+      CHECK(edit->document()->toPlainText() == input);
+      CHECK(edit->textCursor().anchor() == 1);
+      CHECK(edit->textCursor().position() == 3);
+      auto start = QTextCursor(edit->document());
+      auto second = start;
+      second.setPosition(1);
+      CHECK((edit->cursorRect(start).x() > edit->cursorRect(second).x()) == isRtl);
+      auto digit = start;
+      digit.setPosition(2);
+      auto nextDigit = start;
+      nextDigit.setPosition(3);
+      CHECK(edit->cursorRect(digit).x() < edit->cursorRect(nextDigit).x());
+      if (panel == &mtextEditor) {
+        CHECK(glyphNames(*static_cast<RS_EntityContainer *>(mtext.entityAt(0))) ==
+              (isRtl ? rtl : input));
+      } else {
+        CHECK(glyphNames(text) == (isRtl ? rtl : input));
+      }
+    }
+    panel->hide();
+  }
+}
+
+TEST_CASE("Chinese mixed-number editing keeps logical text and native undo",
+          "[text][bidi][chinese][gui]") {
+  const auto input = QStringLiteral("\u4e2d\u6587123");
+  for (const auto direction : {Qt::LeftToRight, Qt::RightToLeft}) {
+    LC_TextEdit edit;
+    edit.resize(600, 160);
+    edit.setPlainText(input);
+    lc::textedit::setDirection(&edit, direction);
+    edit.show();
+    edit.setFocus();
+    QApplication::processEvents();
+    auto cursor = QTextCursor(edit.document());
+    cursor.setPosition(2);
+    edit.setTextCursor(cursor);
+    keyPress(edit, Qt::Key_Backspace);
+    CHECK(edit.toPlainText() == QStringLiteral("\u4e2d123"));
+    edit.undo();
+    CHECK(edit.toPlainText() == input);
+    edit.redo();
+    CHECK(edit.toPlainText() == QStringLiteral("\u4e2d123"));
+    edit.undo();
+    cursor.setPosition(3);
+    edit.setTextCursor(cursor);
+    keyPress(edit, Qt::Key_Delete);
+    CHECK(edit.toPlainText() == QStringLiteral("\u4e2d\u658713"));
+    lc::textedit::setDirection(&edit, direction == Qt::RightToLeft ? Qt::LeftToRight : Qt::RightToLeft);
+    edit.undo();
+    CHECK(edit.toPlainText() == input);
+    edit.redo();
+    CHECK(edit.toPlainText() == QStringLiteral("\u4e2d\u658713"));
+    edit.undo();
+    edit.selectAll();
+    edit.copy();
+    CHECK(QApplication::clipboard()->text() == input);
+    keyPress(edit, Qt::Key_X, Qt::ControlModifier);
+    CHECK(edit.toPlainText().isEmpty());
+    edit.paste();
+    CHECK(edit.toPlainText() == input);
+    cursor = QTextCursor(edit.document());
+    cursor.setPosition(1);
+    edit.setTextCursor(cursor);
+    CHECK(edit.inputMethodQuery(Qt::ImSurroundingText).toString() == input);
+    QInputMethodEvent preedit(QStringLiteral("\u6587"), {});
+    QApplication::sendEvent(&edit, &preedit);
+    CHECK(edit.toPlainText() == input);
+    QInputMethodEvent commit;
+    commit.setCommitString(QStringLiteral("\u6587"));
+    QApplication::sendEvent(&edit, &commit);
+    CHECK(edit.toPlainText() == QStringLiteral("\u4e2d\u6587\u6587123"));
+    edit.undo();
+    CHECK(edit.toPlainText() == input);
+    edit.setPlainText(input);
+    lc::textedit::setDirection(&edit, direction);
+    QApplication::processEvents();
+    cursor = QTextCursor(edit.document());
+    edit.setTextCursor(cursor);
+    const int before = edit.cursorRect().x();
+    keyPress(edit, direction == Qt::RightToLeft ? Qt::Key_Left : Qt::Key_Right);
+    CHECK(edit.textCursor().position() == 1);
+    CHECK((edit.cursorRect().x() < before) == (direction == Qt::RightToLeft));
+  }
+}
+
+TEST_CASE("Chinese editor navigation follows visual runs without exposing controls",
+          "[text][bidi][chinese][gui]") {
+  const auto input = QStringLiteral("\u4e2d\u6587123");
+  for (const auto direction : {Qt::LeftToRight, Qt::RightToLeft}) {
+    LC_TextEdit edit;
+    edit.resize(600, 160);
+    edit.setPlainText(input);
+    edit.setTextDirection(direction);
+    edit.show();
+    edit.setFocus();
+    QApplication::processEvents();
+    edit.setTextCursor(QTextCursor(edit.document()));
+    const std::vector<int> path = direction == Qt::RightToLeft
+                                   ? std::vector<int>{0, 1, 2, 5, 4, 3, 2}
+                                   : std::vector<int>{0, 1, 2, 3, 4, 5};
+    int previous = edit.cursorRect().x();
+    for (int i = 1; i < int(path.size()); ++i) {
+      keyPress(edit, direction == Qt::RightToLeft ? Qt::Key_Left : Qt::Key_Right);
+      CHECK(edit.textCursor().position() == path[i]);
+      const int x = edit.cursorRect().x();
+      CHECK((direction == Qt::RightToLeft ? x <= previous : x >= previous));
+      previous = x;
+    }
+    for (int i = int(path.size()) - 2; i >= 0; --i) {
+      keyPress(edit, direction == Qt::RightToLeft ? Qt::Key_Right : Qt::Key_Left);
+      CHECK(edit.textCursor().position() == path[i]);
+    }
+    for (const auto command : {QKeySequence::MoveToEndOfLine, QKeySequence::MoveToStartOfLine}) {
+      const auto binding = QKeySequence::keyBindings(command).first()[0];
+      keyPress(edit, binding.key(), binding.keyboardModifiers());
+      CHECK(edit.textCursor().position() == (command == QKeySequence::MoveToEndOfLine ? input.size() : 0));
+    }
+    edit.setTextCursor(QTextCursor(edit.document()));
+    for (int i = 0; i < 2; ++i)
+      keyPress(edit, direction == Qt::RightToLeft ? Qt::Key_Left : Qt::Key_Right, Qt::ShiftModifier);
+    CHECK(edit.textCursor().selectedText() == input.left(2));
+    edit.copy();
+    CHECK(QApplication::clipboard()->text() == input.left(2));
+    keyPress(edit, Qt::Key_Left);
+    CHECK_FALSE(edit.textCursor().hasSelection());
+    CHECK(edit.textCursor().position() == (direction == Qt::RightToLeft ? 2 : 0));
+    if (direction == Qt::RightToLeft) {
+      auto digit = QTextCursor(edit.document());
+      digit.setPosition(3);
+      CHECK(edit.cursorRect().x() > edit.cursorRect(digit).x());
+    }
+    edit.setTextCursor(QTextCursor(edit.document()));
+    keyPress(edit, Qt::Key_unknown, Qt::NoModifier, QStringLiteral("\u56fd"));
+    CHECK(edit.toPlainText() == QStringLiteral("\u56fd") + input);
+    edit.undo();
+    CHECK(edit.toPlainText() == input);
+    const char32_t supplementary[] = {0x20000, 0xe0100};
+    edit.setPlainText(QString::fromUcs4(supplementary, 2) + input);
+    edit.setTextCursor(QTextCursor(edit.document()));
+    keyPress(edit, direction == Qt::RightToLeft ? Qt::Key_Left : Qt::Key_Right);
+    CHECK(edit.textCursor().position() == 4);
+  }
+}
+
+TEST_CASE("Chinese editor hit testing selection and drop use logical indices",
+          "[text][bidi][chinese][gui]") {
+  struct Editor : LC_TextEdit { using LC_TextEdit::dropEvent; };
+  const auto input = QStringLiteral("\u4e2d\u6587123");
+  for (const auto direction : {Qt::LeftToRight, Qt::RightToLeft}) {
+    Editor edit;
+    edit.resize(600, 160);
+    edit.setPlainText(input);
+    edit.setTextDirection(direction);
+    edit.show();
+    QApplication::processEvents();
+    for (const int position : {1, 3, 4}) {
+      auto cursor = QTextCursor(edit.document());
+      cursor.setPosition(position);
+      const auto point = edit.cursorRect(cursor).center();
+      CHECK(edit.cursorForPosition(point).position() == position);
+      CHECK(edit.inputMethodQuery(Qt::ImCursorPosition, QPointF(point)).toInt() == position);
+      CHECK(edit.inputMethodQuery(Qt::ImAbsolutePosition, QPointF(point)).toInt() == position);
+      mouseEvent(edit, QEvent::MouseButtonPress, point);
+      mouseEvent(edit, QEvent::MouseButtonRelease, point, Qt::LeftButton, Qt::NoButton);
+      CHECK(edit.textCursor().position() == position);
+    }
+    auto first = QTextCursor(edit.document());
+    first.setPosition(3);
+    auto last = first;
+    last.setPosition(4);
+    const auto start = edit.cursorRect(first).center();
+    const auto end = edit.cursorRect(last).center();
+    mouseEvent(edit, QEvent::MouseButtonPress, start);
+    mouseEvent(edit, QEvent::MouseMove, end, Qt::NoButton);
+    mouseEvent(edit, QEvent::MouseButtonRelease, end, Qt::LeftButton, Qt::NoButton);
+    CHECK(edit.textCursor().selectedText() == "2");
+    mouseEvent(edit, QEvent::MouseButtonDblClick, (start + end) / 2);
+    mouseEvent(edit, QEvent::MouseButtonRelease, end, Qt::LeftButton, Qt::NoButton);
+    auto word = QTextCursor(edit.document());
+    word.setPosition(3);
+    word.select(QTextCursor::WordUnderCursor);
+    CHECK(edit.textCursor().selectedText() == word.selectedText());
+    edit.setTextCursor(first);
+    QMimeData mime;
+    mime.setText("4");
+    QDropEvent drop(start, Qt::CopyAction, &mime, Qt::LeftButton, Qt::NoModifier);
+    edit.dropEvent(&drop);
+    CHECK(drop.isAccepted());
+    CHECK(edit.toPlainText() == QStringLiteral("\u4e2d\u65871423"));
+    edit.undo();
+    CHECK(edit.toPlainText() == input);
+  }
+}
+
+TEST_CASE("Chinese editor pixels match Qt layout without storing generated controls",
+          "[text][bidi][chinese][gui]") {
+  const auto input = QStringLiteral("\u4e2d\u6587 123\n\u4e2d\u6587 12.5 CAD123");
+  for (const auto direction : {Qt::LeftToRight, Qt::RightToLeft}) {
+    LC_TextEdit edit;
+    QTextEdit reference;
+    edit.resize(600, 160);
+    reference.resize(600, 160);
+    edit.setReadOnly(true);
+    reference.setReadOnly(true);
+    edit.setPlainText(input);
+    edit.setTextDirection(direction);
+    const auto display = lc::textbidi::directionalText(input, direction);
+    reference.setPlainText(display.text);
+    lc::textedit::setDirection(&reference, direction);
+    edit.show();
+    reference.show();
+    QApplication::processEvents();
+    edit.clearFocus();
+    reference.clearFocus();
+    QApplication::processEvents();
+    CHECK(edit.viewport()->grab().toImage() == reference.viewport()->grab().toImage());
+    auto selection = QTextCursor(edit.document());
+    selection.setPosition(0);
+    selection.setPosition(2, QTextCursor::KeepAnchor);
+    edit.setTextCursor(selection);
+    auto projectedSelection = QTextCursor(reference.document());
+    projectedSelection.setPosition(display.displayPositions[0]);
+    projectedSelection.setPosition(display.displayPositions[2], QTextCursor::KeepAnchor);
+    reference.setTextCursor(projectedSelection);
+    QApplication::processEvents();
+    CHECK(edit.viewport()->grab().toImage() == reference.viewport()->grab().toImage());
+    CHECK(edit.toPlainText() == input);
+    edit.selectAll();
+    reference.selectAll();
+    QApplication::processEvents();
+    CHECK(edit.viewport()->grab().toImage() == reference.viewport()->grab().toImage());
+    edit.zoomIn(3);
+    reference.zoomIn(3);
+    QApplication::processEvents();
+    CAPTURE(direction);
+    // Keep native paragraph heights even if controls change fallback-font metrics.
+    const QRect firstLine(0, 0, edit.viewport()->width(),
+                          int(edit.document()->documentMargin() + edit.document()->begin().layout()->boundingRect().height()));
+    CHECK(edit.viewport()->grab(firstLine).toImage() == reference.viewport()->grab(firstLine).toImage());
+  }
+}
+
+TEST_CASE("Chinese editor wrapping scrolling and composition preserve the document",
+          "[text][bidi][chinese][gui]") {
+  const auto input = QStringLiteral("\u4e2d\u6587123");
+  for (const auto direction : {Qt::LeftToRight, Qt::RightToLeft}) {
+    LC_TextEdit edit;
+    edit.resize(100, 300);
+    edit.setPlainText(input.repeated(8) + "\n" + input);
+    edit.setTextDirection(direction);
+    edit.show();
+    edit.setFocus();
+    QApplication::processEvents();
+    const auto block = edit.document()->begin();
+    REQUIRE(block.layout()->lineCount() > 1);
+    for (int position = 0; position < block.length() - 1; ++position) {
+      auto cursor = QTextCursor(block);
+      cursor.setPosition(position);
+      const auto nativeLine = block.layout()->lineForTextPosition(position);
+      CHECK(edit.cursorRect(cursor).y() == qRound(edit.document()->documentMargin() + nativeLine.y()));
+    }
+    edit.setTextCursor(QTextCursor(edit.document()));
+    const auto top = edit.cursorRect();
+    keyPress(edit, Qt::Key_Down);
+    CHECK(edit.cursorRect().y() > top.y());
+    keyPress(edit, Qt::Key_Up);
+    CHECK(edit.textCursor().position() == 0);
+    std::vector<bool> reached(8 * input.size() + 1, false);
+    for (int step = 0; step < 300 && edit.textCursor().blockNumber() == 0; ++step) {
+      reached.at(edit.textCursor().position()) = true;
+      keyPress(edit, direction == Qt::RightToLeft ? Qt::Key_Left : Qt::Key_Right);
+    }
+    for (int position = 0; position < int(reached.size()) - 1; ++position) {
+      CAPTURE(direction, position);
+      CHECK(reached[position]);
+    }
+    edit.setPlainText(input);
+    auto cursor = QTextCursor(edit.document());
+    cursor.setPosition(1);
+    edit.setTextCursor(cursor);
+    QTextCharFormat format;
+    format.setFontUnderline(true);
+    QList<QInputMethodEvent::Attribute> attributes{
+      {QInputMethodEvent::TextFormat, 0, 2, format},
+      {QInputMethodEvent::Cursor, 1, 1, {}}
+    };
+    QInputMethodEvent preedit(QStringLiteral("\u6587\u56fd"), attributes);
+    QApplication::sendEvent(&edit, &preedit);
+    CHECK(edit.toPlainText() == input);
+    CHECK(edit.inputMethodQuery(Qt::ImCursorPosition).toInt() == 1);
+    CHECK(edit.inputMethodQuery(Qt::ImCursorRectangle).toRect() == edit.cursorRect());
+    const auto composition = edit.document()->begin().layout()->preeditAreaText();
+    edit.setTextDirection(direction == Qt::RightToLeft ? Qt::LeftToRight : Qt::RightToLeft);
+    CHECK(edit.document()->begin().layout()->preeditAreaText() == composition);
+    QInputMethodEvent cancel;
+    QApplication::sendEvent(&edit, &cancel);
+    CHECK(edit.toPlainText() == input);
+    QInputMethodEvent replacement;
+    replacement.setCommitString(QStringLiteral("\u56fd"), -1, 1);
+    QApplication::sendEvent(&edit, &replacement);
+    CHECK(edit.toPlainText() == QStringLiteral("\u56fd\u6587123"));
+    edit.undo();
+    CHECK(edit.toPlainText() == input);
+    edit.setTextDirection(direction);
+    edit.clear();
+    QInputMethodEvent firstPreedit(input, {{QInputMethodEvent::Cursor, 0, 1, {}}});
+    QApplication::sendEvent(&edit, &firstPreedit);
+    const int preeditStart = edit.cursorRect().x();
+    QInputMethodEvent secondPreedit(input, {{QInputMethodEvent::Cursor, 1, 1, {}}});
+    QApplication::sendEvent(&edit, &secondPreedit);
+    CHECK((edit.cursorRect().x() < preeditStart) == (direction == Qt::RightToLeft));
+    CHECK(edit.toPlainText().isEmpty());
+    QApplication::sendEvent(&edit, &cancel);
+    {
+      const QSignalBlocker blocker(&edit);
+      edit.setPlainText(input + "45");
+    }
+    CHECK(edit.cursorForPosition(edit.cursorRect(cursor).center()).position() == cursor.position());
+    LC_SingleLineTextEdit single;
+    single.resize(100, single.sizeHint().height());
+    single.setText(input.repeated(30));
+    single.setTextDirection(direction);
+    single.show();
+    QApplication::processEvents();
+    auto caret = QTextCursor(single.document());
+    for (const int position : {0, 100, 25, 149}) {
+      caret.setPosition(position);
+      single.setTextCursor(caret);
+      QApplication::processEvents();
+      CAPTURE(direction, position, single.horizontalScrollBar()->value(), single.horizontalScrollBar()->maximum());
+      CHECK(single.cursorRect().left() >= 0);
+      CHECK(single.cursorRect().right() < single.viewport()->width());
+    }
+    single.setText(input);
+    QInputMethodEvent multiline;
+    multiline.setCommitString(QStringLiteral("\u56fd\n\u6587"));
+    QApplication::sendEvent(&single, &multiline);
+    CHECK(single.document()->blockCount() == 1);
+    CHECK(single.text() == QStringLiteral("\u56fd \u6587") + input);
+    single.undo();
+    CHECK(single.text() == input);
+  }
+}
+
 TEST_CASE("MTEXT RTL layout marker round trips without rewriting text",
           "[dxf][dwg][bidi][issue1859]") {
   SourceFonts fonts;
@@ -674,5 +1074,37 @@ TEST_CASE("MTEXT RTL layout marker round trips without rewriting text",
       REQUIRE(line);
       CHECK(glyphNames(*line) == "123");
     }
+  }
+}
+
+TEST_CASE("Chinese RTL MTEXT round trips logical text and display policy",
+          "[dxf][dwg][bidi][chinese]") {
+  SourceFonts fonts;
+  QTemporaryDir directory;
+  REQUIRE(directory.isValid());
+  const auto input = QStringLiteral("\u4e2d\u6587123");
+  for (const auto format : {RS2::FormatDXFRW, RS2::FormatDWG2004}) {
+    INFO("format " << format);
+    RS_Graphic original;
+    auto data = mtextData(input);
+    data.style = "unicode";
+    original.addEntity(new RS_MText(&original, data));
+    const auto path = directory.filePath(format == RS2::FormatDXFRW ? "chinese.dxf" : "chinese.dwg");
+    RS_FilterDXFRW writer;
+    REQUIRE(writer.fileExport(original, path, format));
+    RS_Graphic imported;
+    RS_FilterDXFRW reader;
+    REQUIRE(reader.fileImport(imported, path, format));
+    auto *entity = findMText(imported);
+    REQUIRE(entity);
+    CHECK(entity->getText() == input);
+    CHECK_FALSE(entity->getData().legacyRtlLayout);
+    CHECK(libreCadIntegers(*entity) == std::vector<std::int32_t>{2});
+    // Keep this layout check independent of the file's STYLE resolution.
+    entity->setStyle("unicode");
+    entity->update();
+    auto *line = dynamic_cast<RS_EntityContainer *>(entity->entityAt(0));
+    REQUIRE(line);
+    CHECK(glyphNames(*line) == QStringLiteral("123\u6587\u4e2d"));
   }
 }
