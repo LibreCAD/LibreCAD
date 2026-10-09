@@ -10,6 +10,7 @@
 **  along with this program.  If not, see <http://www.gnu.org/licenses/>.    **
 ******************************************************************************/
 
+#include <cstdint>
 #include <cstdlib>
 #include <fstream>
 #include <string>
@@ -112,18 +113,15 @@ int dxfReader::getHandleString(){
 }
 
 bool dxfReaderBinary::readCode(int *code) {
-    unsigned short *int16p;
-    char buffer[2];
-    filestr->read(buffer,2);
-    int16p = (unsigned short *) buffer;
+    std::uint16_t value = 0;
+    filestr->read(reinterpret_cast<char*>(&value),2);
 //exist a 32bits int (code 90) with 2 bytes???
-    if ((*code == 90) && (*int16p>2000)){
+    if ((*code == 90) && (value>2000)){
         DRW_DBG(*code); DRW_DBG(" de 16bits\n");
         filestr->seekg(-4, std::ios_base::cur);
-        filestr->read(buffer,2);
-        int16p = (unsigned short *) buffer;
+        filestr->read(reinterpret_cast<char*>(&value),2);
     }
-    *code = *int16p;
+    *code = value;
     DRW_DBG(*code); DRW_DBG("\n");
 
     return (filestr->good());
@@ -155,49 +153,40 @@ bool dxfReaderBinary::readBinary() {
 
 bool dxfReaderBinary::readInt16() {
     type = INT32;
-    char buffer[2];
-    filestr->read(buffer,2);
-    intData = (int)((buffer[1] << 8) | buffer[0]);
+    std::int16_t value = 0;
+    filestr->read(reinterpret_cast<char*>(&value),2);
+    intData = value;
     DRW_DBG(intData); DRW_DBG("\n");
     return (filestr->good());
 }
 
 bool dxfReaderBinary::readInt32() {
     type = INT32;
-    unsigned int *int32p;
-    char buffer[4];
-    filestr->read(buffer,4);
-    int32p = (unsigned int *) buffer;
-    intData = *int32p;
+    intData = 0;
+    filestr->read(reinterpret_cast<char*>(&intData),4);
     DRW_DBG(intData); DRW_DBG("\n");
     return (filestr->good());
 }
 
 bool dxfReaderBinary::readInt64() {
     type = INT64;
-    unsigned long long int *int64p; //64 bits integer pointer
-    char buffer[8];
-    filestr->read(buffer,8);
-    int64p = (unsigned long long int *) buffer;
-    int64 = *int64p;
+    int64 = 0;
+    filestr->read(reinterpret_cast<char*>(&int64),8);
     DRW_DBG(int64); DRW_DBG(" int64\n");
     return (filestr->good());
 }
 
 bool dxfReaderBinary::readDouble() {
     type = DOUBLE;
-    double *result;
-    char buffer[8];
-    filestr->read(buffer,8);
-    result = (double *) buffer;
-    doubleData = *result;
+    doubleData = 0.;
+    filestr->read(reinterpret_cast<char*>(&doubleData),8);
     DRW_DBG(doubleData); DRW_DBG("\n");
     return (filestr->good());
 }
 
 //saved as int or add a bool member??
 bool dxfReaderBinary::readBool() {
-    char buffer[1];
+    char buffer[1] = {};
     filestr->read(buffer,1);
     intData = (int)(buffer[0]);
     DRW_DBG(intData); DRW_DBG("\n");
