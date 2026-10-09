@@ -82,13 +82,12 @@ void LC_MTextPropertiesEditingWidget::setEntity(RS_Entity *entity) {
 
 void LC_MTextPropertiesEditingWidget::applyDirectionToEditor() {
   const bool ltr = ui->rbLeftToRight->isChecked();
-  lc::textedit::setDirection(ui->teText, ltr ? Qt::LeftToRight : Qt::RightToLeft);
+  ui->teText->setTextDirection(ltr ? Qt::LeftToRight : Qt::RightToLeft);
 }
 
 void LC_MTextPropertiesEditingWidget::onTextChanged() {
   if (m_entity == nullptr)
     return;
-  applyDirectionToEditor();
   const QString widgetText = ui->teText->toPlainText();
   m_entity->setText(widgetText);
 }

@@ -31,7 +31,6 @@
 #include <QDropEvent>
 #include <QInputMethodEvent>
 #include <QMouseEvent>
-#include <QPlainTextEdit>
 #include <QRadioButton>
 #include <QScrollBar>
 #include <QTemporaryDir>
@@ -559,10 +558,10 @@ TEST_CASE("Text input paragraphs follow the selected direction",
     edit.show();
     for (const auto direction : {Qt::LeftToRight, Qt::RightToLeft, Qt::LayoutDirectionAuto}) {
       edit.setPlainText(input + "\n" + input);
-      lc::textedit::setDirection(&edit, direction);
+      edit.setTextDirection(direction);
       QApplication::processEvents();
       for (auto block = edit.document()->begin(); block.isValid(); block = block.next()) {
-        CHECK(block.blockFormat().layoutDirection() == direction);
+        CHECK(edit.document()->defaultTextOption().textDirection() == direction);
         REQUIRE(block.layout()->lineCount() > 0);
         const auto line = block.layout()->lineAt(0);
         const auto firstLetter = line.cursorToX(0);
@@ -570,14 +569,14 @@ TEST_CASE("Text input paragraphs follow the selected direction",
         CHECK((firstLetter > firstDigit) == (direction == Qt::RightToLeft));
       }
       edit.setPlainText("123");
-      lc::textedit::setDirection(&edit, direction);
+      edit.setTextDirection(direction);
       QApplication::processEvents();
       const QTextCursor start(edit.document());
       CHECK((edit.cursorRect(start).left() > edit.viewport()->width() / 2) ==
             (direction == Qt::RightToLeft));
       CHECK(edit.toPlainText() == "123");
       edit.clear();
-      lc::textedit::setDirection(&edit, direction);
+      edit.setTextDirection(direction);
       QApplication::processEvents();
       CHECK((edit.cursorRect().left() > edit.viewport()->width() / 2) ==
             (direction == Qt::RightToLeft));
@@ -594,10 +593,10 @@ TEST_CASE("Text input paragraphs follow the selected direction",
       CHECK(edit.toPlainText() == input + "\n" + input);
     }
   };
-  QTextEdit richEdit;
-  checkEditor(richEdit);
-  QPlainTextEdit plainEdit;
-  checkEditor(plainEdit);
+  LC_TextEdit multiline;
+  checkEditor(multiline);
+  LC_SingleLineTextEdit singleLine;
+  checkEditor(singleLine);
 }
 
 TEST_CASE("Single-line text input preserves editing behavior",
@@ -606,7 +605,7 @@ TEST_CASE("Single-line text input preserves editing behavior",
     using LC_SingleLineTextEdit::insertFromMimeData;
   } edit;
   edit.setText("<b>123</b>");
-  lc::textedit::setDirection(&edit, Qt::RightToLeft);
+  edit.setTextDirection(Qt::RightToLeft);
   CHECK(edit.text() == "<b>123</b>");
   edit.selectAll();
   QMimeData clipboard;
@@ -628,6 +627,25 @@ TEST_CASE("Single-line text input preserves editing behavior",
   }
   CHECK(finished == 2);
   CHECK(edit.document()->blockCount() == 1);
+  edit.resize(100, edit.sizeHint().height());
+  edit.show();
+  for (const auto direction : {Qt::LeftToRight, Qt::RightToLeft}) {
+    edit.setTextDirection(direction);
+    for (const auto &value : {QStringLiteral("123"), QStringLiteral("CAD123 ").repeated(30)}) {
+      edit.setText(value);
+      QApplication::processEvents();
+      REQUIRE(edit.document()->begin().layout()->lineCount() == 1);
+      auto caret = QTextCursor(edit.document());
+      for (const int position : {0, int(value.size()) / 2, int(value.size())}) {
+        caret.setPosition(position);
+        edit.setTextCursor(caret);
+        QApplication::processEvents();
+        CAPTURE(direction, position);
+        CHECK(edit.cursorRect().left() >= 0);
+        CHECK(edit.cursorRect().right() < edit.viewport()->width());
+      }
+    }
+  }
 }
 
 TEST_CASE("Chinese direction switching keeps editor and entity geometry consistent",
@@ -694,7 +712,7 @@ TEST_CASE("Chinese mixed-number editing keeps logical text and native undo",
     LC_TextEdit edit;
     edit.resize(600, 160);
     edit.setPlainText(input);
-    lc::textedit::setDirection(&edit, direction);
+    edit.setTextDirection(direction);
     edit.show();
     edit.setFocus();
     QApplication::processEvents();
@@ -712,7 +730,7 @@ TEST_CASE("Chinese mixed-number editing keeps logical text and native undo",
     edit.setTextCursor(cursor);
     keyPress(edit, Qt::Key_Delete);
     CHECK(edit.toPlainText() == QStringLiteral("\u4e2d\u658713"));
-    lc::textedit::setDirection(&edit, direction == Qt::RightToLeft ? Qt::LeftToRight : Qt::RightToLeft);
+    edit.setTextDirection(direction == Qt::RightToLeft ? Qt::LeftToRight : Qt::RightToLeft);
     edit.undo();
     CHECK(edit.toPlainText() == input);
     edit.redo();
@@ -739,7 +757,7 @@ TEST_CASE("Chinese mixed-number editing keeps logical text and native undo",
     edit.undo();
     CHECK(edit.toPlainText() == input);
     edit.setPlainText(input);
-    lc::textedit::setDirection(&edit, direction);
+    edit.setTextDirection(direction);
     QApplication::processEvents();
     cursor = QTextCursor(edit.document());
     edit.setTextCursor(cursor);
@@ -873,7 +891,8 @@ TEST_CASE("Chinese editor pixels match Qt layout without storing generated contr
     edit.setTextDirection(direction);
     const auto display = lc::textbidi::directionalText(input, direction);
     reference.setPlainText(display.text);
-    lc::textedit::setDirection(&reference, direction);
+    reference.setLayoutDirection(direction);
+    reference.document()->setDefaultTextOption(edit.document()->defaultTextOption());
     edit.show();
     reference.show();
     QApplication::processEvents();

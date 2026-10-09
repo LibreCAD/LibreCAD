@@ -58,8 +58,6 @@ LC_TextPropertiesEditingWidget::LC_TextPropertiesEditingWidget(QWidget *parent)
 
   connect(ui->leText, &LC_SingleLineTextEdit::editingFinished, this,
           &LC_TextPropertiesEditingWidget::onTextEditingFinished);
-  connect(ui->leText, &QTextEdit::textChanged, this,
-          &LC_TextPropertiesEditingWidget::applyDirectionToEditor);
   connect(ui->leHeight, &QLineEdit::editingFinished, this,
           &LC_TextPropertiesEditingWidget::onHeightEditingFinished);
   connect(ui->leWidthRel, &QLineEdit::editingFinished, this,
@@ -121,7 +119,7 @@ void LC_TextPropertiesEditingWidget::applyDirectionToEditor() {
   } else if (ui->rbRightToLeft->isChecked()) {
     direction = Qt::RightToLeft;
   }
-  lc::textedit::setDirection(ui->leText, direction);
+  ui->leText->setTextDirection(direction);
 }
 
 void LC_TextPropertiesEditingWidget::onTextEditingFinished() {

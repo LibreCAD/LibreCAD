@@ -28,15 +28,12 @@
 #include <QFocusEvent>
 #include <QKeyEvent>
 #include <QMimeData>
-#include <QSignalBlocker>
-#include <QTextBlockFormat>
 #include <QTextDocument>
 #include <QTextEdit>
 #include <QBasicTimer>
 #include <QtMath>
 #include <map>
 #include <memory>
-#include <type_traits>
 #include <optional>
 
 // Logical plain-text document with a display-only traditional Chinese RTL layout.
@@ -55,10 +52,7 @@ public:
 protected:
     void paintEvent(QPaintEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
-    void mousePressEvent(QMouseEvent *event) override;
-    void mouseMoveEvent(QMouseEvent *event) override;
-    void mouseReleaseEvent(QMouseEvent *event) override;
-    void mouseDoubleClickEvent(QMouseEvent *event) override;
+    bool viewportEvent(QEvent *event) override;
     void inputMethodEvent(QInputMethodEvent *event) override;
     void resizeEvent(QResizeEvent *event) override;
     void changeEvent(QEvent *event) override;
@@ -75,7 +69,6 @@ private:
     QPointF blockOrigin(const QTextBlock &block) const;
     bool hasChineseRtl() const;
     void invalidateLayouts();
-    void mouseEvent(QMouseEvent *event);
     int displayCursorPosition(const QTextCursor &cursor, const BlockLayout &view) const;
     void setDisplayCursor(QTextCursor cursor, int position, QTextCursor::MoveMode mode);
     void ensureDisplayCursorVisible();
@@ -94,53 +87,14 @@ private:
     bool m_preeditCursorVisible = true;
 };
 
-namespace lc::textedit {
-
-template <typename Editor>
-void setDirection(Editor *editor, Qt::LayoutDirection direction) {
-    if constexpr (std::is_base_of_v<LC_TextEdit, Editor>) {
-        editor->setTextDirection(direction);
-        return;
-    }
-    const QSignalBlocker blocker(editor);
-    editor->setLayoutDirection(direction);
-    auto *document = editor->document();
-    Qt::Alignment alignment = direction == Qt::RightToLeft ? Qt::AlignRight : Qt::AlignLeft;
-    if (direction != Qt::LayoutDirectionAuto) {
-        alignment |= Qt::AlignAbsolute;
-    }
-    auto option = document->defaultTextOption();
-    option.setTextDirection(direction);
-    option.setAlignment(alignment);
-    if (document->defaultTextOption().textDirection() != direction ||
-        document->defaultTextOption().alignment() != alignment) {
-        document->setDefaultTextOption(option);
-    }
-
-    // Widget direction alone does not set the text's paragraph direction.
-    QTextCursor cursor(document);
-    cursor.beginEditBlock();
-    do {
-        auto format = cursor.blockFormat();
-        if (format.layoutDirection() != direction || format.alignment() != alignment) {
-            format.setLayoutDirection(direction);
-            format.setAlignment(alignment);
-            cursor.setBlockFormat(format);
-        }
-    } while (cursor.movePosition(QTextCursor::NextBlock));
-    cursor.endEditBlock();
-}
-
-} // namespace lc::textedit
-
 // QLineEdit has no public API for setting its text's paragraph base direction.
 class LC_SingleLineTextEdit : public LC_TextEdit {
     Q_OBJECT
 public:
     explicit LC_SingleLineTextEdit(QWidget *parent = nullptr) : LC_TextEdit(parent) {
-        setAcceptRichText(false);
         setTabChangesFocus(true);
-        setLineWrapMode(QTextEdit::NoWrap);
+        // Keep viewport width for RTL alignment without wrapping.
+        setWordWrapMode(QTextOption::NoWrap);
         setInputMethodHints(inputMethodHints() & ~Qt::ImhMultiLine);
         setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);

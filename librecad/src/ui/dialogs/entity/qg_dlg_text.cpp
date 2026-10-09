@@ -124,7 +124,6 @@ void QG_DlgText::init() {
     for (auto *button : {rbAuto, rbLeftToRight, rbRightToLeft}) {
         connect(button, &QRadioButton::toggled, this, &QG_DlgText::layoutDirectionChanged);
     }
-    connect(teText, &QTextEdit::textChanged, this, [this] { layoutDirectionChanged(true); });
 }
 
 
@@ -248,7 +247,7 @@ void QG_DlgText::layoutDirectionChanged(bool checked) {
     if (checked) {
         const auto direction = rbLeftToRight->isChecked() ? Qt::LeftToRight
             : rbRightToLeft->isChecked() ? Qt::RightToLeft : Qt::LayoutDirectionAuto;
-        lc::textedit::setDirection(teText, direction);
+        teText->setTextDirection(direction);
     }
 }
 

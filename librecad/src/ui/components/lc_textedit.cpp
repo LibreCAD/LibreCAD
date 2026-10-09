@@ -33,6 +33,7 @@
 #include <QMouseEvent>
 #include <QPainter>
 #include <QScrollBar>
+#include <QSignalBlocker>
 #include <QStyleOption>
 #include <QTextBlock>
 #include <QTextLayout>
@@ -274,6 +275,8 @@ void LC_TextEdit::paintEvent(QPaintEvent *event) {
 
 void LC_TextEdit::keyPressEvent(QKeyEvent *event) {
     if (!hasChineseRtl()) { QTextEdit::keyPressEvent(event); return; }
+    const auto mode = event->modifiers() & Qt::ShiftModifier
+                        ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor;
     const bool left = event->matches(QKeySequence::MoveToPreviousChar) || event->matches(QKeySequence::SelectPreviousChar);
     const bool right = event->matches(QKeySequence::MoveToNextChar) || event->matches(QKeySequence::SelectNextChar);
     if (left || right) {
@@ -281,8 +284,6 @@ void LC_TextEdit::keyPressEvent(QKeyEvent *event) {
         const auto block = cursor.block();
         const auto &view = layoutForBlock(block);
         const int position = displayCursorPosition(cursor, view);
-        const auto mode = event->modifiers() & Qt::ShiftModifier
-                            ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor;
         if (cursor.hasSelection() && mode == QTextCursor::MoveAnchor) {
             auto start = cursor;
             auto finish = cursor;
@@ -338,8 +339,6 @@ void LC_TextEdit::keyPressEvent(QKeyEvent *event) {
         const auto *view = &layoutForBlock(block);
         auto line = view->layout.lineForTextPosition(displayCursorPosition(cursor, *view));
         if (line.isValid()) {
-            const auto mode = event->modifiers() & Qt::ShiftModifier
-                                ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor;
             if (home || end) {
                 const int position = home ? line.textStart()
                                         : line.textStart() + line.textLength();
@@ -367,20 +366,16 @@ void LC_TextEdit::keyPressEvent(QKeyEvent *event) {
     QTextEdit::keyPressEvent(event);
 }
 
-void LC_TextEdit::mouseEvent(QMouseEvent *event) {
-    const auto dispatch = [this](QMouseEvent *e) {
-        switch (e->type()) {
-        case QEvent::MouseButtonPress: QTextEdit::mousePressEvent(e); break;
-        case QEvent::MouseMove: QTextEdit::mouseMoveEvent(e); break;
-        case QEvent::MouseButtonRelease: QTextEdit::mouseReleaseEvent(e); break;
-        case QEvent::MouseButtonDblClick: QTextEdit::mouseDoubleClickEvent(e); break;
-        default: break;
-        }
-    };
-    if (!hasChineseRtl()) {
-        dispatch(event);
-        return;
+bool LC_TextEdit::viewportEvent(QEvent *input) {
+    switch (input->type()) {
+    case QEvent::MouseButtonPress: case QEvent::MouseMove:
+    case QEvent::MouseButtonRelease: case QEvent::MouseButtonDblClick:
+        break;
+    default:
+        return QTextEdit::viewportEvent(input);
     }
+    if (!hasChineseRtl()) return QTextEdit::viewportEvent(input);
+    auto *event = static_cast<QMouseEvent *>(input);
     const auto cursor = cursorForPosition(event->position().toPoint());
     QPointF nativePoint = QTextEdit::cursorRect(cursor).center();
     {
@@ -403,7 +398,7 @@ void LC_TextEdit::mouseEvent(QMouseEvent *event) {
     QMouseEvent mapped(event->type(), nativePoint, event->scenePosition(),
                        event->globalPosition(), event->button(), event->buttons(),
                        event->modifiers(), Qt::MouseEventSynthesizedByApplication, event->pointingDevice());
-    dispatch(&mapped);
+    const bool handled = QTextEdit::viewportEvent(&mapped);
     const auto block = textCursor().block();
     if (cursor.position() == textCursor().position()) {
         const auto &view = layoutForBlock(block);
@@ -422,19 +417,7 @@ void LC_TextEdit::mouseEvent(QMouseEvent *event) {
         m_selectionScrollTimer.stop();
     }
     event->setAccepted(mapped.isAccepted());
-}
-
-void LC_TextEdit::mousePressEvent(QMouseEvent *event) {
-    mouseEvent(event);
-}
-void LC_TextEdit::mouseMoveEvent(QMouseEvent *event) {
-    mouseEvent(event);
-}
-void LC_TextEdit::mouseReleaseEvent(QMouseEvent *event) {
-    mouseEvent(event);
-}
-void LC_TextEdit::mouseDoubleClickEvent(QMouseEvent *event) {
-    mouseEvent(event);
+    return handled;
 }
 
 QVariant LC_TextEdit::inputMethodQuery(Qt::InputMethodQuery query) const {
@@ -562,7 +545,7 @@ void LC_TextEdit::timerEvent(QTimerEvent *event) {
         vertical->setValue(vertical->value() + std::clamp(dy, -vertical->singleStep(), vertical->singleStep()));
         QMouseEvent move(QEvent::MouseMove, m_mousePosition, viewport()->mapToGlobal(m_mousePosition.toPoint()),
                          Qt::NoButton, Qt::LeftButton, QApplication::keyboardModifiers());
-        mouseEvent(&move);
+        viewportEvent(&move);
     } else if (event->timerId() == m_cursorTimer.timerId()) {
         m_cursorVisible = !m_cursorVisible;
         if (hasFocus() && hasChineseRtl()) viewport()->update();
