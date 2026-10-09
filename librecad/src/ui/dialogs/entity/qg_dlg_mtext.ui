@@ -821,7 +821,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QTextEdit" name="teText">
+        <widget class="LC_TextEdit" name="teText">
          <property name="focusPolicy">
           <enum>Qt::StrongFocus</enum>
          </property>
@@ -1606,6 +1606,11 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
+  <customwidget>
+   <class>LC_TextEdit</class>
+   <extends>QTextEdit</extends>
+   <header>lc_textedit.h</header>
+  </customwidget>
   <customwidget>
    <class>QG_WidgetPen</class>
    <extends>QWidget</extends>

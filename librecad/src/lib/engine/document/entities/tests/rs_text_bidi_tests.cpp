@@ -22,52 +22,19 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include <QChar>
-#include <QGuiApplication>
 #include <QString>
 #include <Qt>
 
-#include "rs_mtext.h"
+#include "lc_textbidi.h"
 #include "rs_text.h"
 
 namespace {
 
-// QGuiApplication bootstrap (offscreen) — matches the fixture in
-// rs_mtext_bidi_tests.cpp so the bidi pass can run regardless of which test
-// file Catch2 happens to schedule first. Process-singleton, intentionally
-// never destroyed.
-struct QtAppBootstrap {
-  QtAppBootstrap() {
-    if (QGuiApplication::instance() != nullptr)
-      return;
-    qputenv("QT_QPA_PLATFORM", "offscreen");
-    static int argc = 1;
-    static char arg0[] = "librecad_tests";
-    static char *argv[] = {arg0, nullptr};
-    new QGuiApplication(argc, argv);
-  }
-};
-static QtAppBootstrap s_qtAppBootstrap;
-
-/**
- * Mirror of the helper in rs_text.cpp's anonymous namespace. We re-implement
- * here so the test can assert direction resolution behavior without needing
- * to instantiate an RS_Text (which would require a font).
- */
-Qt::LayoutDirection
-resolveBaseDirection(const QString &text,
-                     RS_TextData::DrawingDirection setting) {
-  if (setting == RS_TextData::LeftToRight)
-    return Qt::LeftToRight;
-  if (setting == RS_TextData::RightToLeft)
-    return Qt::RightToLeft;
-  for (int i = 0; i < text.size(); ++i) {
-    const QChar::Direction d = text.at(i).direction();
-    if (d == QChar::DirL)
-      return Qt::LeftToRight;
-    if (d == QChar::DirR || d == QChar::DirAL)
-      return Qt::RightToLeft;
-  }
-  return Qt::LeftToRight;
+QString visualText(const QString &text, Qt::LayoutDirection direction) {
+  QString result;
+  for (int index : lc::textbidi::visualOrder(text, direction))
+    result += text.at(index);
+  return result;
 }
 
 /** Find visual position of @p logIdx, or -1 if absent. */
@@ -82,18 +49,17 @@ int posOf(const std::vector<int> &visual, int logIdx) {
 } // namespace
 
 TEST_CASE("RS_Text bidi: explicit LeftToRight setting wins", "[text][bidi]") {
-  REQUIRE(resolveBaseDirection(QString::fromUtf8("\xD7\xA9\xD7\x9C"),
-                               RS_TextData::LeftToRight) == Qt::LeftToRight);
+  REQUIRE(visualText(QString::fromUtf8(u8"שלום world"), Qt::LeftToRight) ==
+          QString::fromUtf8(u8"םולש world"));
 }
 
 TEST_CASE("RS_Text bidi: explicit RightToLeft setting wins", "[text][bidi]") {
-  REQUIRE(resolveBaseDirection(QStringLiteral("hello"),
-                               RS_TextData::RightToLeft) == Qt::RightToLeft);
+  REQUIRE(visualText(QString::fromUtf8(u8"hello שלום"), Qt::RightToLeft) ==
+          QString::fromUtf8(u8"םולש hello"));
 }
 
 TEST_CASE("RS_Text bidi: ByContent picks LTR for Latin", "[text][bidi]") {
-  REQUIRE(resolveBaseDirection(QStringLiteral("hello world"),
-                               RS_TextData::ByContent) == Qt::LeftToRight);
+  REQUIRE(visualText("hello world", Qt::LayoutDirectionAuto) == "hello world");
 }
 
 TEST_CASE("RS_Text bidi: ByContent picks RTL for first-strong Hebrew",
@@ -101,7 +67,8 @@ TEST_CASE("RS_Text bidi: ByContent picks RTL for first-strong Hebrew",
   // "שלום world" — leading Hebrew → first-strong is R → RTL base.
   QString s = QString::fromUtf8("\xD7\xA9\xD7\x9C\xD7\x95\xD7\x9D");
   s += QStringLiteral(" world");
-  REQUIRE(resolveBaseDirection(s, RS_TextData::ByContent) == Qt::RightToLeft);
+  REQUIRE(visualText(s, Qt::LayoutDirectionAuto) ==
+          QString::fromUtf8(u8"world םולש"));
 }
 
 TEST_CASE("RS_Text bidi: ByContent picks LTR when leading neutrals + Latin",
@@ -109,30 +76,21 @@ TEST_CASE("RS_Text bidi: ByContent picks LTR when leading neutrals + Latin",
   // "  hello שלום" — first strong is 'h' (L) → LTR base.
   QString s = QStringLiteral("  hello ");
   s += QString::fromUtf8("\xD7\xA9\xD7\x9C\xD7\x95\xD7\x9D");
-  REQUIRE(resolveBaseDirection(s, RS_TextData::ByContent) == Qt::LeftToRight);
+  REQUIRE(visualText(s, Qt::LayoutDirectionAuto) ==
+          QString::fromUtf8(u8"  hello םולש"));
 }
 
 TEST_CASE("RS_Text bidi: ByContent on empty / pure-neutral falls back to LTR",
           "[text][bidi]") {
-  REQUIRE(resolveBaseDirection(QString(), RS_TextData::ByContent) ==
-          Qt::LeftToRight);
-  REQUIRE(resolveBaseDirection(QStringLiteral("   "), RS_TextData::ByContent) ==
-          Qt::LeftToRight);
-  REQUIRE(resolveBaseDirection(QStringLiteral("123 456"),
-                               RS_TextData::ByContent) == Qt::LeftToRight);
+  for (const QString &s :
+       {QString(), QStringLiteral("   "), QStringLiteral("123 456")})
+    REQUIRE(visualText(s, Qt::LayoutDirectionAuto) == s);
 }
 
 TEST_CASE("RS_Text bidi: visual-order pass reverses Hebrew like MText does",
           "[text][bidi]") {
-  // End-to-end check that RS_MText::computeBidiVisualOrder, fed with the
-  // direction RS_Text resolves, reorders Hebrew to visual order. RS_Text
-  // calls computeBidiVisualOrder(text, baseDir) directly, so this also
-  // validates the integration.
   const QString s = QString::fromUtf8("\xD7\xA9\xD7\x9C\xD7\x95\xD7\x9D");
-  Qt::LayoutDirection base = resolveBaseDirection(s, RS_TextData::ByContent);
-  REQUIRE(base == Qt::RightToLeft);
-
-  auto v = RS_MText::computeBidiVisualOrder(s, base);
+  auto v = lc::textbidi::visualOrder(s, Qt::LayoutDirectionAuto);
   REQUIRE(v.size() == static_cast<size_t>(s.size()));
   REQUIRE(v.front() == s.size() - 1); // logical-last is leftmost visually
   REQUIRE(v.back() == 0);             // logical-first is rightmost visually
@@ -148,9 +106,7 @@ TEST_CASE("RS_Text bidi: mixed Hebrew + Latin reorders correctly with auto",
   const int hebrewEndExcl = s.size();
   s += QChar('!');
 
-  Qt::LayoutDirection base = resolveBaseDirection(s, RS_TextData::ByContent);
-  REQUIRE(base == Qt::LeftToRight);
-  auto v = RS_MText::computeBidiVisualOrder(s, base);
+  auto v = lc::textbidi::visualOrder(s, Qt::LayoutDirectionAuto);
 
   // 'H' is leftmost.
   REQUIRE(v.front() == 0);

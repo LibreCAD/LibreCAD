@@ -117,7 +117,13 @@ void QG_DlgText::init() {
     setTabOrder(bCut, bCopy);
     setTabOrder(bCopy, bPaste);
     setTabOrder(bPaste, teText); // Paste loops back to Text
-    setTabOrder(teText, cbLayer); // Text widget -> Layer widget
+    setTabOrder(teText, rbAuto);
+    setTabOrder(rbAuto, rbLeftToRight);
+    setTabOrder(rbLeftToRight, rbRightToLeft);
+    setTabOrder(rbRightToLeft, cbLayer);
+    for (auto *button : {rbAuto, rbLeftToRight, rbRightToLeft}) {
+        connect(button, &QRadioButton::toggled, this, &QG_DlgText::layoutDirectionChanged);
+    }
 }
 
 
@@ -151,6 +157,8 @@ void QG_DlgText::destroy() const {
             LC_SET("TextWidthRelation", leWidthRel->text());
             LC_SET("TextStringT", teText->text());
             LC_SET("TextAngle", leAngle->text());
+            LC_SET("TextDirectionT", rbLeftToRight->isChecked() ? RS_TextData::LeftToRight
+                : rbRightToLeft->isChecked() ? RS_TextData::RightToLeft : RS_TextData::ByContent);
         }
     }
 }
@@ -172,6 +180,7 @@ void QG_DlgText::setEntity(RS_Text* t, const bool isNew) {
     QString str;
     //QString shape;
     QString angle;
+    int direction = m_entity->getDrawingDirection();
 
     if (isNew) {
         wPen->hide();
@@ -188,6 +197,7 @@ void QG_DlgText::setEntity(RS_Text* t, const bool isNew) {
             widthRelation = LC_GET_STR("TextWidthRelation", "1");
             str = LC_GET_STR("TextStringT", "");
             angle = LC_GET_STR("TextAngle", "0");
+            direction = LC_GET_INT("TextDirectionT", direction);
         }
     } else {
         font = m_entity->getStyle();
@@ -219,11 +229,27 @@ void QG_DlgText::setEntity(RS_Text* t, const bool isNew) {
 //    setwidthRel(widthRelation.toDouble());
     leWidthRel->setText(widthRelation);
     teText->setText(str);
+    {
+        const QSignalBlocker blockAuto(rbAuto);
+        const QSignalBlocker blockLtr(rbLeftToRight);
+        const QSignalBlocker blockRtl(rbRightToLeft);
+        rbLeftToRight->setChecked(direction == RS_TextData::LeftToRight);
+        rbRightToLeft->setChecked(direction == RS_TextData::RightToLeft);
+        rbAuto->setChecked(direction != RS_TextData::LeftToRight && direction != RS_TextData::RightToLeft);
+    }
+    layoutDirectionChanged(true);
     leAngle->setText(angle);
     teText->setFocus();
     teText->selectAll();
 }
 
+void QG_DlgText::layoutDirectionChanged(bool checked) {
+    if (checked) {
+        const auto direction = rbLeftToRight->isChecked() ? Qt::LeftToRight
+            : rbRightToLeft->isChecked() ? Qt::RightToLeft : Qt::LayoutDirectionAuto;
+        teText->setTextDirection(direction);
+    }
+}
 
 /**
  * Updates the text entity represented by the dialog to fit the choices of the user.
@@ -237,6 +263,8 @@ void QG_DlgText::updateEntity() {
         m_entity->setWidthRel(leWidthRel->text().toDouble());
 
         m_entity->setText(teText->text());
+        m_entity->setDrawingDirection(rbLeftToRight->isChecked() ? RS_TextData::LeftToRight
+            : rbRightToLeft->isChecked() ? RS_TextData::RightToLeft : RS_TextData::ByContent);
         m_entity->setAlignment(getAlignment());
         const double wcsAngle = toWCSAngle(leAngle, m_entity->getAngle());
         m_entity->setAngle(wcsAngle);

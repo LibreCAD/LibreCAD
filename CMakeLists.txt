@@ -1450,6 +1450,8 @@ set (SHARED_SOURCES
      librecad/src/ui/components/layouts/lc_flexlayout.cpp
      librecad/src/ui/components/layouts/lc_flexlayout.h
      librecad/src/ui/components/lc_plaintextedit.h
+     librecad/src/ui/components/lc_textedit.h
+     librecad/src/ui/components/lc_textedit.cpp
      librecad/src/ui/components/pen/qg_widgetpen.cpp
      librecad/src/ui/components/pen/qg_widgetpen.h
      librecad/src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.h
@@ -2216,6 +2218,12 @@ set (MUPARSER_SOURCES
 )
 
 # Static library from shared sources
+add_subdirectory(libraries/qtbidi)
+set_source_files_properties(
+    librecad/src/lib/engine/document/entities/lc_textbidi.cpp
+    librecad/src/lib/engine/document/entities/tests/lc_textbidi_tests.cpp PROPERTIES
+    INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/libraries/qtbidi")
+
 qt_add_library (librecad_lib STATIC
                 ${MUPARSER_SOURCES}
                 ${SHARED_SOURCES}
@@ -2233,6 +2241,7 @@ target_include_directories(librecad_lib PRIVATE
 )
 
 target_link_libraries (librecad_lib PRIVATE
+                       lcqtbidi
                        Qt6::Core Qt6::Widgets Qt6::Gui Qt6::PrintSupport Qt6::Svg Qt6::Network
 )
 set_property (TARGET librecad_lib PROPERTY AUTOUIC_OPTIONS --connections string)
@@ -2569,6 +2578,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/entities/tests/lc_textbidi_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_mtext_bidi_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_text_bidi_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/text_bidi_regression_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_text_alignment_tests.cpp
         librecad/src/lib/engine/document/container/tests/lc_container_ownership_tests.cpp
         librecad/src/lib/engine/document/container/tests/lc_copy_semantics_tests.cpp
@@ -2722,6 +2732,7 @@ if (BUILD_TESTS)
 
     # Include directories for rs_math.h and other dependencies
     target_include_directories (librecad_tests PRIVATE
+        $<TARGET_PROPERTY:librecad_lib,INCLUDE_DIRECTORIES>
                                 ${SHARED_INCLUDES}
                                 "${CMAKE_CURRENT_BINARY_DIR}/librecad_lib_autogen/include"
                                 # (shapelib include comes via SHARED_INCLUDES)
@@ -2743,6 +2754,35 @@ if (BUILD_TESTS)
     target_compile_features (librecad_tests PRIVATE cxx_std_17)
     # compiling time defines
     target_compile_definitions(librecad_tests PRIVATE BUILD_TESTS=1 DWGSUPPORT _USE_MATH_DEFINES LIBRECAD_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}" LIBRECAD_TEST_DIR="${CMAKE_CURRENT_SOURCE_DIR}/librecad/src/lib/filters/tests/testdata")
+
+    add_executable(librecad_text_bidi_tests EXCLUDE_FROM_ALL
+        librecad/src/main/lc_release_label.cpp
+        librecad/src/lib/engine/document/entities/tests/text_bidi_regression_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_textbidi_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/rs_mtext_bidi_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/rs_text_bidi_tests.cpp)
+    target_include_directories(librecad_text_bidi_tests PRIVATE
+        ${SHARED_INCLUDES} $<TARGET_PROPERTY:librecad_lib,INCLUDE_DIRECTORIES>)
+    target_link_libraries(librecad_text_bidi_tests PRIVATE
+        librecad_lib Catch2::Catch2WithMain Qt6::Widgets)
+    target_compile_features(librecad_text_bidi_tests PRIVATE cxx_std_17)
+    target_compile_definitions(librecad_text_bidi_tests PRIVATE
+        DWGSUPPORT _USE_MATH_DEFINES
+        LIBRECAD_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
+
+    # Exercise the shared algorithm without a GUI application or font database.
+    add_executable(librecad_text_bidi_headless_tests EXCLUDE_FROM_ALL
+        librecad/src/lib/engine/document/entities/lc_textbidi.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_textbidi_tests.cpp)
+    target_include_directories(librecad_text_bidi_headless_tests PRIVATE
+        librecad/src/lib/engine/document/entities)
+    target_link_libraries(librecad_text_bidi_headless_tests PRIVATE
+        lcqtbidi Catch2::Catch2WithMain Qt6::Core)
+
+    add_executable(librecad_bidi_conformance EXCLUDE_FROM_ALL
+        libraries/qtbidi/tests/unicode_conformance.cpp)
+    target_include_directories(librecad_bidi_conformance PRIVATE libraries/qtbidi)
+    target_link_libraries(librecad_bidi_conformance PRIVATE lcqtbidi Qt6::Core)
 
     # Keep a small structural DWG/DXF lane for the incremental implementation
     # loop. The complete target remains the milestone and release gate; this

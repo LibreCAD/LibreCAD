@@ -43,11 +43,13 @@ GEN_LIB_DIR = ../../generated/lib
 msvc {
     PRE_TARGETDEPS += $$GEN_LIB_DIR/dxfrw.lib \
             $$GEN_LIB_DIR/jwwlib.lib \
-            $$GEN_LIB_DIR/shapelib.lib
+            $$GEN_LIB_DIR/shapelib.lib \
+            $$GEN_LIB_DIR/lcqtbidi.lib
 } else {
     PRE_TARGETDEPS += $$GEN_LIB_DIR/libdxfrw.a \
             $$GEN_LIB_DIR/libjwwlib.a \
-            $$GEN_LIB_DIR/libshapelib.a
+            $$GEN_LIB_DIR/libshapelib.a \
+            $$GEN_LIB_DIR/liblcqtbidi.a
 }
 
 DESTDIR = $${INSTALLDIR}
@@ -122,7 +124,8 @@ DEFINES += LC_PRERELEASE=\"$$LC_PRERELEASE\"
 LIBS += -L../../generated/lib  \
     -ldxfrw \
     -ljwwlib \
-    -lshapelib
+    -lshapelib \
+    -llcqtbidi
 
 INCLUDEPATH += \
     ../../libraries/lciconengine \
@@ -130,6 +133,7 @@ INCLUDEPATH += \
     ../../libraries/libdxfrw/src/intern \
     ../../libraries/jwwlib/src \
     ../../libraries/shapelib/src \
+    ../../libraries/qtbidi \
     cmd \
     lib/actions \
     lib/actions/visual_snap \
@@ -1811,6 +1815,7 @@ HEADERS += ui/action_options/lc_action_options_manager.h \
     ui/components/creators/actionlist.h \
     ui/components/layouts/lc_flexlayout.h \
     ui/components/lc_plaintextedit.h \
+    ui/components/lc_textedit.h \
     ui/components/pen/qg_widgetpen.h \
     ui/components/qg_scrollbar.h \
     ui/components/status_bar/qg_activelayername.h \
@@ -2012,6 +2017,7 @@ SOURCES +=  ui/action_options/circle/lc_circle_by_arc_options_widget.cpp \
     ui/components/containers/lc_snapoptionswidgetsholder.cpp \
     ui/components/creators/actionlist.cpp \
     ui/components/layouts/lc_flexlayout.cpp \
+    ui/components/lc_textedit.cpp \
     ui/components/pen/qg_widgetpen.cpp \
     ui/components/status_bar/qg_activelayername.cpp \
     ui/components/status_bar/qg_coordinatewidget.cpp \
