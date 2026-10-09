@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 """
 Generate the corpus-gap fixtures called out in Phase 4a of
-docs/plan_shp_native_filter.md, and one for the DBF LTYPE column.
+docs/plan_shp_native_filter.md, and one each for the DBF LTYPE and LAYER
+columns.
 
 Produces (all under test_data/shp/, all genuinely NEW filenames — never
 touches existing pinned fixtures):
@@ -30,6 +31,10 @@ touches existing pinned fixtures):
                              LTYPE C(32) column, one LTYPE_POINT_VALUES
                              entry each, for the linetype name RS_FilterSHP
                              puts on the entity pen.
+  layer_point.shp/.shx/.dbf -- SHPT_POINT records whose .dbf carries a
+                             LAYER C(32) column, one LAYER_POINT_VALUES
+                             entry each, for the layer names RS_FilterSHP
+                             creates.
 
 Pure-stdlib `struct`-packing.  No GDAL / no shapelib dependency; the
 generator is intentionally read-only against the corpus dir (it only
@@ -454,13 +459,34 @@ def gen_ltype_point(root: Path):
                                lambda i: LTYPE_POINT_VALUES[i - 1])])
 
 
+# One POINT each: two legal layer names, then names with a character AutoCAD
+# refuses in one: a control character, or one of < > / \ " : ; ? * | , = `
+LAYER_POINT_VALUES = ["ROADS", "Lot 7-A", "N/A", "1:500", "a|b", "*",
+                      "TAB\tIN", "CR\rLF\nIN", "<>/\\\":;?*|,=`"]
+
+
+def gen_layer_point(root: Path):
+    """One POINT per LAYER_POINT_VALUES entry, at x = 10, 20, ... and y = 20.
+
+    RS_FilterSHP creates a layer per value of a LAYER, LEVEL or LYR column."""
+    xs = [10.0 * i for i in range(1, len(LAYER_POINT_VALUES) + 1)]
+    y = 20.0
+    write_shp_shx(root / "layer_point", SHPT_POINT,
+                  [(SHPT_POINT, build_point_payload(x, y)) for x in xs],
+                  bbox=(xs[0], y, xs[-1], y, 0.0, 0.0, 0.0, 0.0))
+    write_minimal_dbf(root / "layer_point", n_records=len(xs),
+                      fields=[("FID", "N", 11, 0, lambda i: str(i)),
+                              ("LAYER", "C", 32, 0,
+                               lambda i: LAYER_POINT_VALUES[i - 1])])
+
+
 # ---- inventory update ------------------------------------------------------
 
 def update_inventory(root: Path):
     """Add the newly-generated fixtures to test_data/shp_inventory.json under
-    the "generated_z_types", "generated_hostile" and "generated_linetype"
-    buckets so their expected sizes/types can be cross-checked
-    programmatically."""
+    the "generated_z_types", "generated_hostile", "generated_linetype" and
+    "generated_layer" buckets so their expected sizes/types can be
+    cross-checked programmatically."""
     inv_path = root.parent / "shp_inventory.json"
     if not inv_path.exists():
         print(f"[warn] {inv_path} not found — skipping inventory update",
@@ -503,6 +529,12 @@ def update_inventory(root: Path):
          "generator": "scripts/make_shp_fixtures.py",
          "expect": "each DBF LTYPE value reaches its point's pen"},
     ]
+    inv["generated_layer"] = [
+        {"name": "layer_point.shp", "shp_size": sz("layer_point.shp"),
+         "has_shx": True, "has_prj": False,
+         "generator": "scripts/make_shp_fixtures.py",
+         "expect": "each DBF LAYER value becomes a legal layer name"},
+    ]
     with inv_path.open("w", encoding="utf-8") as f:
         json.dump(inv, f, indent=2)
         f.write("\n")
@@ -536,6 +568,7 @@ def main():
         "dos_npoints.shp", "dos_npoints.shx",
         "dos_nparts.shp", "dos_nparts.shx",
         "ltype_point.shp", "ltype_point.shx", "ltype_point.dbf",
+        "layer_point.shp", "layer_point.shx", "layer_point.dbf",
     ]
     existing = [f for f in generated if (root / f).exists()]
     if existing and not args.force:
@@ -550,6 +583,7 @@ def main():
     gen_dos_npoints(root)
     gen_dos_nparts(root)
     gen_ltype_point(root)
+    gen_layer_point(root)
     update_inventory(root)
     print(f"Wrote {len(generated)} fixture file(s) to {root}")
     return 0

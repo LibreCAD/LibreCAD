@@ -284,8 +284,15 @@ std::optional<RS_Pen> penFromRecord(DBFHandle dbf, int record,
     return pen;
 }
 
-// Ensure a layer with the given name exists on @p g; return it.
-RS_Layer* ensureLayer(RS_Graphic& g, const QString& name) {
+// Ensure a layer with the given name exists on @p g; return it.  AutoCAD
+// refuses a layer name with a control character or one of <>/\":;?*|,=` and
+// the DXF writer one with a line break, so each of them becomes '_'.
+RS_Layer* ensureLayer(RS_Graphic& g, QString name) {
+    for (QChar& c : name) {
+        if (c.unicode() < 0x20
+            || QLatin1StringView("<>/\\\":;?*|,=`").contains(c))
+            c = QLatin1Char('_');
+    }
     if (RS_Layer* existing = g.findLayer(name)) return existing;
     auto* layer = new RS_Layer(name);
     // Default pen — ByBlock via RS_Layer's default constructor.
