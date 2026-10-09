@@ -2644,7 +2644,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="252"/>
         <source>(De-)Select Layer</source>
-        <translation>(გა)არჩევა ფენის</translation>
+        <translation>ფენის მონიშვნა / მონიშვნის მოხსნა</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="235"/>
@@ -3496,12 +3496,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="66"/>
         <source>Layer</source>
-        <translation>შრე</translation>
+        <translation>ფენა</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="66"/>
         <source>Layers operations</source>
-        <translation>შრეების ოპერაციები</translation>
+        <translation>ფენების ოპერაციები</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="67"/>
@@ -3723,7 +3723,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="111"/>
         <source>Hide Other Layers than Entity&apos;s</source>
-        <translation>დამალეთ ობიექტის გარდა ყველა სხვა ფენა</translation>
+        <translation>ყველა ფენის დამალვა ობიექტის ფენის გარდა</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="112"/>
@@ -3733,12 +3733,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="113"/>
         <source>Toggle Entity&apos;s Layer Construction</source>
-        <translation>გააქტივეთ/გამორთეთ ობიექტის ფენის კონსტრუქცია</translation>
+        <translation>ობიექტის ფენის დამხმარე რეჟიმის გადართვა</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="114"/>
         <source>Toggle Entity&apos;s Layer Printing</source>
-        <translation>გააქტივეთ/გამორთეთ ობიექტის ფენის დაბეჭდვა</translation>
+        <translation>ობიექტის ფენის ბეჭდვის გადართვა</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="229"/>
@@ -4188,7 +4188,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="621"/>
         <source>&amp;Add Layer</source>
-        <translation>&amp;ფენის დამატება</translation>
+        <translation>ფე&amp;ნის დამატება</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="622"/>
@@ -4203,7 +4203,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="624"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>ფენის ჩაკეტვის გადართვა</translation>
+        <translation>ფ&amp;ენის დაბლოკვის გადართვა</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="625"/>
@@ -4218,7 +4218,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="627"/>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>მშენებლობის ფენის გადართვა</translation>
+        <translation>დ&amp;ამხმარე ფენის გადართვა</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="637"/>
@@ -4511,12 +4511,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="617"/>
         <source>&amp;Show all layers</source>
-        <translation>&amp;ყველა ფენის შექმნა</translation>
+        <translation>ყ&amp;ველა ფენის ჩვენება</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp;ყველა ფენის დამალვა</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>ყველა ფენის დამა&amp;ლვა მიმდინარის გარდა</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
@@ -5107,12 +5107,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>Enter layer name to %1</source>
-        <translation>შეიყვანეთ %1-ში ფენის სახელი</translation>
+        <translation>შეიყვანეთ ფენის სახელი (მოქმედება: %1)</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>activate</source>
-        <translation>აქტივირება</translation>
+        <translation>აქტივაცია</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
@@ -5126,13 +5126,13 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
         <source>selected</source>
         <comment>Layers to export</comment>
-        <translation>შერჩეული</translation>
+        <translation>მონიშნული</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
         <source>visible</source>
         <comment>Layers to export</comment>
-        <translation>ხილადი</translation>
+        <translation>ხილული</translation>
     </message>
 </context>
 <context>
@@ -6854,7 +6854,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_layer.cpp" line="75"/>
         <source>Specify entity with desired layer</source>
-        <translation type="unfinished">მონიშნეთ ობიექტი სასურველი ფენით</translation>
+        <translation type="unfinished">მიუთითეთ სასურველ ფენაზე მდებარე ობიექტი</translation>
     </message>
 </context>
 <context>
@@ -8754,7 +8754,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="67"/>
         <source>Layer to apply</source>
-        <translation type="unfinished">გამოყენების სიბრტყე</translation>
+        <translation type="unfinished">გამოსაყენებელი ფენა</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="67"/>
@@ -10770,7 +10770,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="209"/>
         <source>Layer</source>
-        <translation>შრე</translation>
+        <translation>ფენა</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="236"/>
@@ -11074,7 +11074,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="64"/>
         <source>Layer</source>
-        <translation>შრე</translation>
+        <translation>ფენა</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="76"/>
@@ -11084,7 +11084,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="98"/>
         <source>Layer of entity</source>
-        <translation>ობიექტის შრე</translation>
+        <translation>ობიექტის ფენა</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="148"/>
@@ -13480,7 +13480,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="82"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">შრის, რომელშიც დუბლიკატი უნდა განთავსდეს</translation>
+        <translation type="unfinished">დუბლიკატის განთავსების ფენა</translation>
     </message>
 </context>
 <context>
@@ -13493,7 +13493,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="45"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">შრის, რომელშიც დუბლიკატი უნდა განთავსდეს</translation>
+        <translation type="unfinished">დუბლიკატის განთავსების ფენა</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="49"/>
@@ -14280,12 +14280,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="168"/>
         <source>Layer</source>
-        <translation type="unfinished">შრე</translation>
+        <translation type="unfinished">ფენა</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="168"/>
         <source>Layer of entity</source>
-        <translation type="unfinished">ობიექტის შრე</translation>
+        <translation type="unfinished">ობიექტის ფენა</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="204"/>
@@ -14349,12 +14349,12 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="135"/>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="179"/>
         <source>Export Layers</source>
-        <translation>შრებების ექსპორტი</translation>
+        <translation>ფენების გატანა</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="152"/>
         <source>Exported Layers</source>
-        <translation>ექსპორტირებული შრებ</translation>
+        <translation>გატანილი ფენები</translation>
     </message>
 </context>
 <context>
@@ -15190,7 +15190,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="48"/>
         <source>Name of new layer. In order to create hierarchical layers, include name of virtual layer and layer name separator.</source>
-        <translation>ახალი ფენის სახელი. ჰიერარქიული ფენების შესასაჩივრებლად, შეიცავით ვირტუალური ფენის სახელი და ფენების სახელის გამყოფი.</translation>
+        <translation>ახალი ფენის სახელი. იერარქიული ფენების შესაქმნელად სახელში შეიტანეთ ვირტუალური ფენის სახელი და ფენის სახელის გამყოფი.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="64"/>
@@ -15215,7 +15215,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="106"/>
         <source>Normal layer with drawing eleements</source>
-        <translation>სტანდარტული ფენა ნახაზის ელემენტებით</translation>
+        <translation>ნორმალური ფენა ნახაზის ელემენტებით</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="109"/>
@@ -15235,7 +15235,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="132"/>
         <source>Layer with alternate position of entities located on normal layers</source>
-        <translation>ფენა, რომელიც შეიცავს ობიექტების ალტერნატიულ პოზიციას, რომლებიც მდებარეობს სტანდარტულ ფენებზე</translation>
+        <translation>ფენა ნორმალურ ფენებზე მდებარე ობიექტების ალტერნატიული პოზიციით</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="135"/>
@@ -15246,18 +15246,18 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="148"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>მშენებლობის ფენა შეიცავს უსასრულო სწორი ხაზების ენტიტეტებს გეომეტრიული მშენებლობისთვის.
-       მშენებლობის ფენის შიგთავსი არ უნდა გამოჩნდეს ბეჭდვაში.</translation>
+        <translation>დამხმარე ფენის ობიექტები უსასრულო სწორი ხაზებია, რომლებიც გეომეტრიული აგებისთვისაა განკუთვნილი.
+       დამხმარე ფენის შიგთავსი ამონაბეჭდში არ უნდა გამოჩნდეს.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="152"/>
         <source>Construction Layer</source>
-        <translation>მშენებლობის ფენა</translation>
+        <translation>დამხმარე ფენა</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="181"/>
         <source>Path for parent layer</source>
-        <translation>მშობელი ფენის გზა</translation>
+        <translation>მშობელი ფენის ბილიკი</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="197"/>
@@ -15289,7 +15289,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="183"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="221"/>
         <source>Default Pen</source>
-        <translation>ნაგულისხმევი პენი</translation>
+        <translation>ნაგულისხმევი კალამი</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="200"/>
@@ -15307,47 +15307,47 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="57"/>
         <source>Layers Export Options</source>
-        <translation>შრეთების ექსპორტის პარამეტრები</translation>
+        <translation>ფენების გატანის პარამეტრები</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="63"/>
         <source>If checked, Named Views from the document will be included into exported drawings. Otherwise, views are not included.</source>
-        <translation>თუ მონიშნილია, დოკუმენტიდან ექსპორტირებულ ნახატებში შედის დასახელებული ხედები. წინააღმდეგ შემთხვევაში, ხედები არ შედის.</translation>
+        <translation>თუ მონიშნულია, დოკუმენტის დასახელებული ხედები გატანილ ნახაზებში ჩაირთვება. წინააღმდეგ შემთხვევაში, ხედები არ ჩაირთვება.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="66"/>
         <source>Export Named Views too</source>
-        <translation>დასახელებული ხედების ექსპორტი</translation>
+        <translation>დასახელებული ხედების გატანაც</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="73"/>
         <source>If checked, each original exported layer will be stored in separate drawing. Otherwise, all layers will be in exported to one combined drawing.</source>
-        <translation>თუ მონიშნილია, თითოეული ექსპორტირებული შრისთვის შეიქმნება ცალკეული ნახატი. წინააღმდეგ შემთხვევაში, ყველა შრისთვის შეიქმნება ერთი გაერთიანებული ნახატი.</translation>
+        <translation>თუ მონიშნულია, თითოეული გატანილი ფენა ცალკე ნახაზში შეინახება. წინააღმდეგ შემთხვევაში, ყველა ფენა ერთ გაერთიანებულ ნახაზში გაიტანება.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="76"/>
         <source>Export each layer to own drawing file</source>
-        <translation>თითოეული შრის ექსპორტი ცალკე ნახატად</translation>
+        <translation>თითოეული ფენის გატანა ნახაზის ცალკე ფაილში</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="83"/>
         <source>If checked, entities will be stored in original layer. Otherwise, they are placed to layer &quot;0&quot;.</source>
-        <translation>თუ მონიშნილია, ობიექტები ინახებენ თავდაპირველ შრებზე. წინააღმდეგ შემთხვევაში, ისინი განთავსებულია &quot;0&quot; შრზე.</translation>
+        <translation>თუ მონიშნულია, ობიექტები თავდაპირველ ფენაზე შეინახება. წინააღმდეგ შემთხვევაში, ისინი განთავსდება ფენაზე &quot;0&quot;.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="89"/>
         <source>Retain original layer for entities</source>
-        <translation>შენარჩუნდეს ობიექტების თავდაპირველი შრე</translation>
+        <translation>ობიექტების თავდაპირველი ფენის შენარჩუნება</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="96"/>
         <source>If checked, UCSs from the document will be included into exported drawings. Otherwise, UCSs are not included.</source>
-        <translation>თუ მონიშნილია, დოკუმენტიდან ექსპორტირებულ ნახატებში შედის UCS-ები. წინააღმდეგ შემთხვევაში, UCS-ები არ შედის.</translation>
+        <translation>თუ მონიშნულია, დოკუმენტის UCS-ები გატანილ ნახაზებში ჩაირთვება. წინააღმდეგ შემთხვევაში, UCS-ები არ ჩაირთვება.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="99"/>
         <source>Export UCSs too</source>
-        <translation>UCS-ების ექსპორტი</translation>
+        <translation>UCS-ების გატანაც</translation>
     </message>
 </context>
 <context>
@@ -15360,7 +15360,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="46"/>
         <source>Settings for naming convention that is used to create layers hierarchy based on flat list of layers</source>
-        <translation>პარამეტრები, რომლებიც განსაზღვრავენ სახელის მიცემის წესს, რათა შეიქმნას შრეების იერარქია, რომელიც დაფუძნებულია შრეების ჩამონათვალზე.</translation>
+        <translation>იმ დასახელების წესის პარამეტრები, რომლითაც ფენების ბრტყელი სიიდან ფენების იერარქია იქმნება</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="49"/>
@@ -15375,7 +15375,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="116"/>
         <source>Separator used for split inner name of layer to hierarchical names</source>
-        <translation>შუალედი, რომელიც გამოიყენება ფენის შიდა სახელის ჰიერარქიულ სახელებად დაყოფისთვის</translation>
+        <translation>გამყოფი, რომელიც გამოიყენება ფენის შიდა სახელის იერარქიულ სახელებად დასაყოფად</translation>
     </message>
     <message>
         <source>Layer Level Name Separator</source>
@@ -15389,12 +15389,12 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
-        <translation>ზომითი</translation>
+        <translation>ზომები</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="201"/>
         <source>Suffix of layer&apos;s name that defines that layer is dimensional</source>
-        <translation>ფენის სახელის შეკვეთილი, რომელიც მიუთითებს, რომ ფენა განზომილებიანია</translation>
+        <translation>ფენის სახელის სუფიქსი, რომელიც მიუთითებს, რომ ეს ზომების ფენაა</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="211"/>
@@ -15405,17 +15405,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="224"/>
         <source>Suffix of layer&apos;s name that defines that layer is informational.</source>
-        <translation>ფენის სახელის შეკვეთილი, რომელიც მიუთითებს, რომ ფენა საინფორმაციოა</translation>
+        <translation>ფენის სახელის სუფიქსი, რომელიც მიუთითებს, რომ ფენა ინფორმაციულია.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="234"/>
         <source>Alternative Position </source>
-        <translation>ალტერნატიული პოზიცია</translation>
+        <translation>ალტერნატიული პოზიცია </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
-        <translation>ფენის სახელის შეკვეთილი, რომელიც მიუთითებს, რომ ფენა ალტერნატიული პოზიციისთვისაა</translation>
+        <translation>ფენის სახელის სუფიქსი, რომელიც მიუთითებს, რომ ფენა ალტერნატიული პოზიციისთვისაა.</translation>
     </message>
     <message>
         <source>Duplicating Name</source>
@@ -15429,7 +15429,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="74"/>
         <source>Prefix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>ფენის სახელის პრეფიქსი, რომელიც გამოიყენება, თუ არსებობს იგივე სახელის ფენა (მაგალითად, დუბლიკატის შექმნისას)</translation>
+        <translation>ფენის სახელის პრეფიქსი, რომელიც გამოიყენება, თუ არსებობს იმავე სახელის ფენა (მაგალითად, დუბლიკატის შექმნისას)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="84"/>
@@ -15439,7 +15439,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="97"/>
         <source>Suffix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>ფენის სახელის შეკვეთილი, რომელიც გამოიყენება, თუ არსებობს იგივე სახელის ფენა (მაგალითად, დუბლიკატის შექმნისას)</translation>
+        <translation>ფენის სახელის სუფიქსი, რომელიც გამოიყენება, თუ არსებობს იმავე სახელის ფენა (მაგალითად, დუბლიკატის შექმნისას)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="155"/>
@@ -15469,7 +15469,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="268"/>
         <source>Display and operations settings</source>
-        <translation>ჩვენების და ოპერაციების პარამეტრები</translation>
+        <translation>ჩვენებისა და ოპერაციების პარამეტრები</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="271"/>
@@ -15479,12 +15479,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="329"/>
         <source>If checked, tooltip will include complete name of layer (with all upper layer levels)</source>
-        <translation>თუ მონიშნულია, ხელსაყრელში ჩაიწერება ფენის სრული სახელი (ყველა ზედა დონის ჩათვლით)</translation>
+        <translation>თუ მონიშნულია, მინიშნებაში ნაჩვენები იქნება ფენის სრული სახელი (ფენების ყველა ზედა დონის ჩათვლით)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="332"/>
         <source>Show full name as ToolTip</source>
-        <translation>სრული სახელის ჩვენება ინსტრუმენტის მინიშნებად</translation>
+        <translation>სრული სახელის ჩვენება მინიშნებად</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="608"/>
@@ -15514,7 +15514,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="319"/>
         <source>If checked, icons for layer types will be shown</source>
-        <translation>თუ მონიშნულია, აჩვენებს ფენის ტიპების ხატებს</translation>
+        <translation>თუ მონიშნულია, ნაჩვენები იქნება ფენის ტიპების ხატულები</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="322"/>
@@ -15524,32 +15524,32 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="309"/>
         <source>Indentation for child layers</source>
-        <translation>ქვემოთა ფენების ჩაღრმავება</translation>
+        <translation>შვილობილი ფენების შეწევა</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="312"/>
         <source>Show indented layer names. Ident size:</source>
-        <translation>ინდენტირებული ფენის სახელების ჩვენება. ინდენტის ზომა:</translation>
+        <translation>ფენის სახელების შეწევით ჩვენება. შეწევის ზომა:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="277"/>
         <source>Size of the indent in characters to indent name of child layer from parent ones</source>
-        <translation>შრიფტის ზომა, რომლითაც ჩვილის ფენის სახელი ჩამოშლილია მშობლის ფენისგან.</translation>
+        <translation>შეწევის ზომა სიმბოლოებში, რომლითაც შვილობილი ფენის სახელი მშობელი ფენის სახელის მიმართ შეიწევა</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="352"/>
         <source>If checked, drag&amp;drop operations in layers list are enabled and layers hierarchy may be restructutured</source>
-        <translation>თუ ეს ვარიანტი აქტიურია, ფენების სიაში ჩართულია გადატანის ფუნქცია და შესაძლებელია ფენების იერარქიის შეცვლა.</translation>
+        <translation>თუ მონიშნულია, ფენების სიაში ჩართულია თაგვით გადატანა და შესაძლებელია ფენების იერარქიის გადაწყობა</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="355"/>
         <source>Allow restructuring via Drag&amp;Drop</source>
-        <translation>სტრუქტურის გადაწყობის დაშვება Drag&amp;Drop-ით</translation>
+        <translation>სტრუქტურის გადაწყობის დაშვება თაგვით გადატანით</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="293"/>
         <source>If primary layer is renames, secondary layers are renamed too.</source>
-        <translation>თუ ძირითადი ფენა გადარქმეულია, მეორეული ფენებიც გადარქმეული იქნება.</translation>
+        <translation>თუ ძირითადი ფენის სახელი შეიცვლება, მეორადი ფენების სახელებიც შეიცვლება.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="296"/>
@@ -15559,7 +15559,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="376"/>
         <source>Various colors settings</source>
-        <translation>სხვადასხვა ფერების პარამეტრები.</translation>
+        <translation>სხვადასხვა ფერის პარამეტრები</translation>
     </message>
     <message>
         <source>Colors</source>
@@ -15568,7 +15568,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="470"/>
         <source>Background color for selected items in layers tree.</source>
-        <translation>ფონური ფერი, რომელიც გამოიყენება არჩეული ელემენტებისთვის ფენების ხეში.</translation>
+        <translation>ფონური ფერი, რომელიც გამოიყენება მონიშნული ელემენტებისთვის ფენების ხეში.</translation>
     </message>
     <message>
         <source>Color for separator lines in layers tree view</source>
@@ -15577,7 +15577,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="420"/>
         <source>Background color for virtual layers items in layers list</source>
-        <translation>ფონური ფერი, რომელიც გამოიყენება ვირტუალური ფენების ელემენტებისთვის ფენების სიაში.</translation>
+        <translation>ფონური ფერი, რომელიც გამოიყენება ვირტუალური ფენების ელემენტებისთვის ფენების სიაში</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="449"/>
@@ -15585,22 +15585,22 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="546"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="567"/>
         <source>Click to select color</source>
-        <translation>დააწკაპეთ ფერის ასარჩევად.</translation>
+        <translation>დააწკაპეთ ფერის ასარჩევად</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="560"/>
         <source>Matched item in highlight filter mode</source>
-        <translation>დამთხვევი ელემენტი გამოჩენის ფილტრის რეჟიმში</translation>
+        <translation>ფილტრის შესაბამისი ელემენტი გამოყოფის რეჟიმში</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="391"/>
         <source>Color for items that matches filter conditions</source>
-        <translation>ფერი, რომელიც გამოიყენება ელემენტებისთვის, რომლებიც შეესაბამება ფილტრის პირობებს.</translation>
+        <translation>ფერი, რომელიც გამოიყენება ელემენტებისთვის, რომლებიც შეესაბამება ფილტრის პირობებს</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="379"/>
         <source>Appearance</source>
-        <translation type="unfinished">გამ appearance</translation>
+        <translation type="unfinished">გარეგნობა</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="406"/>
@@ -15619,12 +15619,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="503"/>
         <source>Selected items background color</source>
-        <translation>არჩეული ელემენტების ფონის ფერი</translation>
+        <translation>მონიშნული ელემენტების ფონის ფერი</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="523"/>
         <source>Background color for active layer item in layers tree</source>
-        <translation>ფონური ფერი, რომელიც გამოიყენება აქტიური ფენის ელემენტისთვის ფენების ხეში.</translation>
+        <translation>ფონური ფერი, რომელიც გამოიყენება აქტიური ფენის ელემენტისთვის ფენების ხეში</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="526"/>
@@ -15644,12 +15644,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="599"/>
         <source>Pens that will be set for newly created layers of different types.</source>
-        <translation>ახალი ტიპის ფენებისთვის დაყენებული კალმები.</translation>
+        <translation>კალმები, რომლებიც დაუყენდება სხვადასხვა ტიპის ახლად შექმნილ ფენებს.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="602"/>
         <source>Default Pens</source>
-        <translation>ნაგულისხმევი პენები</translation>
+        <translation>ნაგულისხმევი კალმები</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="68"/>
@@ -15659,7 +15659,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="69"/>
         <source>Dimensional Layer</source>
-        <translation>ზომითი ფენა</translation>
+        <translation>ზომების ფენა</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="70"/>
@@ -15678,7 +15678,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="103"/>
         <source>highlighted item</source>
-        <translation>შერჩეული ელემენტი</translation>
+        <translation>გამოყოფილი ელემენტი</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="110"/>
@@ -15688,7 +15688,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="118"/>
         <source>selected item background</source>
-        <translation>შერჩეული ელემენტის ფონი</translation>
+        <translation>მონიშნული ელემენტის ფონი</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="126"/>
@@ -15704,7 +15704,8 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>%1 ფერის არასწორი მნიშვნელობა. გთხოვთ, მიუთითოთ სხვა მნიშვნელობა.</translation>
+        <translation>მითითებულია ფერის არასწორი მნიშვნელობა (%1).
+გთხოვთ, მიუთითოთ სხვა მნიშვნელობა.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="245"/>
@@ -15727,7 +15728,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="157"/>
         <source>Highlight Mode</source>
-        <translation>გამოჩენის რეჟიმი</translation>
+        <translation>გამოყოფის რეჟიმი</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="167"/>
@@ -15741,8 +15742,8 @@ Please specify a different value.</source>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>ყველა ფენის დამალვა</translation>
+        <source>Hide all layers except current</source>
+        <translation>ყველა ფენის დამალვა მიმდინარის გარდა</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="200"/>
@@ -15802,7 +15803,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="286"/>
         <source>Flat List Mode)</source>
-        <translation>ბრტყელი სიის რეჟიმი)</translation>
+        <translation>ბრტყელი სიის რეჟიმი</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="656"/>
@@ -15817,27 +15818,27 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="658"/>
         <source>&amp;Remove Layers (Sub-Tree)</source>
-        <translation>&amp;ფენების წაშლა (ქვე-ხე)</translation>
+        <translation>&amp;ფენების წაშლა (ქვეხე)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="660"/>
         <source>&amp;Copy Structure (Sub-Tree)</source>
-        <translation>&amp;სტრუქტურის კოპირება (ქვე-ხე)</translation>
+        <translation>სტრუქტურის &amp;კოპირება (ქვეხე)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="661"/>
         <source>&amp;Duplicate Content (Sub-Tree)</source>
-        <translation>&amp;შიგთავსის დუბლირება (ქვე-ხე)</translation>
+        <translation>შ&amp;იგთავსის დუბლირება (ქვეხე)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="663"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>&amp;ენტიტეტების არჩევა (ქვე-ხე)</translation>
+        <translation>&amp;ობიექტების მონიშვნა (ქვეხე)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="668"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>ფენის &amp;ატრიბუტების &amp;რედაქტირება</translation>
+        <translation>ფენის &amp;ატრიბუტების რედაქტირება</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="670"/>
@@ -15847,28 +15848,28 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="679"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>&amp;ზომების ქვე-ფენის დამატება</translation>
+        <translation>&amp;ზომების ქვეფენის დამატება</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="683"/>
         <source>&amp;Add Info Sub-Layer</source>
-        <translation>&amp;ინფორმაციის ქვე-ფენის დამატება</translation>
+        <translation>&amp;ინფორმაციული ქვეფენის დამატება</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="687"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
-        <translation>&amp;ალტერნატიული ხედის ქვე-ფენის დამატება</translation>
+        <translation>ალტერნატიული &amp;პოზიციის ქვეფენის დამატება</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="693"/>
         <source>&amp;Remove Sub-layers</source>
-        <translation>&amp;ქვე-ფენების წაშლა</translation>
+        <translation>ქვეფენების &amp;წაშლა</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="701"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="711"/>
         <source>Convert to Dimensional Layer</source>
-        <translation>ზომით ფენად გადაკეთება</translation>
+        <translation>ზომების ფენად გადაკეთება</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="702"/>
@@ -15890,32 +15891,32 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="723"/>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>ფენის ენტიტეტების &amp;არჩევა</translation>
+        <translation>ფენის &amp;ობიექტების მონიშვნა</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="726"/>
         <source>&amp;Create Layer Copy</source>
-        <translation>ფენის &amp;კოპიის შექმნა</translation>
+        <translation>ფე&amp;ნის ასლის შექმნა</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="727"/>
         <source>&amp;Duplicate Layer With Content</source>
-        <translation>ფენის &amp;დუბლირება შიგთავსით</translation>
+        <translation>ფენის დ&amp;უბლირება შიგთავსით</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="731"/>
         <source>Move Selection to Layer</source>
-        <translation>არჩევის გადატანა ფენაში</translation>
+        <translation>მონიშნულის გადატანა ფენაზე</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="732"/>
         <source>Duplicate Selection to Layer</source>
-        <translation>არჩევის დუბლირება ფენაში</translation>
+        <translation>მონიშნულის დუბლირება ფენაზე</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="739"/>
         <source>&amp;Add Layer</source>
-        <translation>ფენის &amp;დამატება</translation>
+        <translation>ფე&amp;ნის დამატება</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="741"/>
@@ -15925,17 +15926,17 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="742"/>
         <source>&amp;Defreeze All Layers</source>
-        <translation>ყველა ფენის &amp;გალღობა</translation>
+        <translation>&amp;ყველა ფენის გალღობა</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>ყველა ფენის &amp;გაყინვა</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>ყველა ფენის დამა&amp;ლვა მიმდინარის გარდა</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>
         <source>&amp;Unlock All Layers</source>
-        <translation>ყველა ფენის &amp;განბლოკვა</translation>
+        <translation>ყ&amp;ველა ფენის განბლოკვა</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="745"/>
@@ -15950,22 +15951,22 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="747"/>
         <source>&amp;Disable Printing All Layers</source>
-        <translation>ყველა ფენის &amp;ბეჭდვის გამორთვა</translation>
+        <translation>ყვ&amp;ელა ფენის ბეჭდვის გამორთვა</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="750"/>
         <source>&amp;Export Single Layer</source>
-        <translation>ერთი ფენის ექსპორტი</translation>
+        <translation>ე&amp;რთი ფენის გატანა</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="754"/>
         <source>&amp;Export Layer Sub-Tree</source>
-        <translation>ფენის ქვე-ხეს ექსპორტი</translation>
+        <translation>ფენის &amp;ქვეხის გატანა</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="758"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>გამოიყვანეთ &amp;ნახვადი ფენა(ები)</translation>
+        <translation>&amp;ხილული ფენების გატანა</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="760"/>
@@ -18530,7 +18531,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="39"/>
         <source>Layer</source>
-        <translation type="unfinished">შრე</translation>
+        <translation type="unfinished">ფენა</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="39"/>
@@ -23558,7 +23559,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="45"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="unfinished">თუ მონიშნულია, შექმნილი ობიექტები მოთავსდება მიმდინარე ფენაზე. წინააღმდეგ შემთხვევაში, ისინი მოთავსდება ორიგინალურ ფენებზე.</translation>
+        <translation type="unfinished">თუ მონიშნულია, შექმნილი ობიექტები განთავსდება მიმდინარე ფენაზე. წინააღმდეგ შემთხვევაში, ისინი განთავსდება თავდაპირველ ფენებზე. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="48"/>
@@ -23744,7 +23745,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="144"/>
         <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="unfinished">თუ მონიშნულია, შექმნილი ობიექტები მოთავსდება მიმდინარე ფენაში, წინააღმდეგ შემთხვევაში ისინი დარჩება ორიგინალურ ფენებში.</translation>
+        <translation type="unfinished">თუ მონიშნულია, შექმნილი ობიექტები განთავსდება მიმდინარე ფენაზე, წინააღმდეგ შემთხვევაში ისინი განთავსდება თავდაპირველ ფენებზე. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="147"/>
@@ -24159,7 +24160,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="93"/>
         <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">თუ მონიშნულია, შექმნილი ობიექტები მოთავსდება მიმდინარე ფენაში, წინააღმდეგ შემთხვევაში ისინი მოთავსდება ორიგინალურ ფენებში.</translation>
+        <translation type="unfinished">თუ მონიშნულია, შექმნილი ობიექტები განთავსდება მიმდინარე ფენაზე, წინააღმდეგ შემთხვევაში ისინი განთავსდება თავდაპირველ ფენებზე.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="96"/>
@@ -24657,13 +24658,13 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="263"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="298"/>
         <source>By Layer</source>
-        <translation>შრეზე</translation>
+        <translation>ფენით</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="264"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="299"/>
         <source>By Block</source>
-        <translation>ბლოკზე</translation>
+        <translation>ბლოკით</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="266"/>
@@ -29459,7 +29460,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="171"/>
         <source>Dimensional</source>
-        <translation type="unfinished">ზომითი</translation>
+        <translation type="unfinished">ზომები</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="175"/>
@@ -32661,7 +32662,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="533"/>
         <source>Layer</source>
-        <translation>შრე</translation>
+        <translation>ფენა</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="538"/>
@@ -33022,7 +33023,8 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="127"/>
         <source>
 Layer: </source>
-        <translation>შრე:</translation>
+        <translation>
+ფენა: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="573"/>
@@ -35824,7 +35826,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="208"/>
         <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="unfinished">უზრუნველყოფს, დაემატება თუ კოპიები მიმდინარე, თუ ორიგინალურ ფენაში</translation>
+        <translation type="unfinished">განსაზღვრავს, ასლები მიმდინარე ფენაზე განთავსდება თუ თავდაპირველ ფენაზე</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="211"/>
@@ -36070,7 +36072,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="209"/>
         <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">თუ მონიშნულია, ახალი ობიექტები განთავსდება მიმდინარე ფენაზე, წინააღმდეგ შემთხვევაში ისინი ექნებათ თავდაპირველი ფენები.</translation>
+        <translation type="unfinished">თუ მონიშნულია, ახალი ობიექტები განთავსდება მიმდინარე ფენაზე, წინააღმდეგ შემთხვევაში ისინი განთავსდება თავდაპირველ ფენებზე.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="212"/>
@@ -36313,7 +36315,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="83"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="unfinished">თუ მონიშნულია, შექმნილი ობიექტები განთავსდება მიმდინარე ფენაზე. წინააღმდეგ შემთხვევაში, ისინი განთავსდება ორიგინალურ ფენებზე.</translation>
+        <translation type="unfinished">თუ მონიშნულია, შექმნილი ობიექტები განთავსდება მიმდინარე ფენაზე. წინააღმდეგ შემთხვევაში, ისინი განთავსდება თავდაპირველ ფენებზე. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="86"/>
@@ -38984,7 +38986,7 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="188"/>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="188"/>
         <source>Layers</source>
-        <translation>შრეები</translation>
+        <translation>ფენები</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="201"/>
@@ -39005,7 +39007,7 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="236"/>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="236"/>
         <source>Layers Tree</source>
-        <translation>შრეების ხე</translation>
+        <translation>ფენების ხე</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="261"/>
@@ -40220,7 +40222,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="54"/>
         <source>Layer to apply</source>
-        <translation>გამოყენების სიბრტყე</translation>
+        <translation>გამოსაყენებელი ფენა</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="69"/>
@@ -43326,7 +43328,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5074"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;თუ ჩართულია, ფენის აქტივაცია შეცვლის ყველა არჩეული ობიექტის ფენას ახალ ფენად. მრავალი ობიექტის ფენის შესაცვლელად: ჯერ აირჩიეთ საჭირო ობიექტები; შემდეგ, აქტივირეთ ფენა ფენების ვიჯეტში. ეს გამოიწვევს ყველა არჩეული ობიექტის შეცვლას, რათა ისინი ახალ ფენას მიეკუთვნონ.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;თუ ჩართულია, ფენის აქტივაცია ყველა მონიშნული ობიექტის ფენას ამ ახალი ფენით შეცვლის. რამდენიმე ობიექტის ფენის შესაცვლელად: ჯერ მონიშნეთ საჭირო ობიექტები, შემდეგ გაააქტიურეთ ფენა ფენების ვიჯეტში. შედეგად ყველა მონიშნული ობიექტი ახალ ფენას მიეკუთვნება.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5934"/>
@@ -44447,7 +44449,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5077"/>
         <source>Modify layer of selected entities, at layer activation</source>
-        <translation>არჩეული ობიექტების ფენის შეცვლა, ფენის აქტივაციის დროს</translation>
+        <translation>მონიშნული ობიექტების ფენის შეცვლა ფენის აქტივაციისას</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5490"/>
@@ -45621,7 +45623,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="92"/>
         <source>Export visible construction layers</source>
-        <translation>გამოიყავით ხილული კონსტრუქციული ფენები</translation>
+        <translation>ხილული დამხმარე ფენების გატანა</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="104"/>
@@ -47008,7 +47010,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_layerbox.cpp" line="68"/>
         <source>- Unchanged -</source>
-        <translation>- არ შეცვლილი -</translation>
+        <translation>- შეუცვლელი -</translation>
     </message>
 </context>
 <context>
@@ -47016,7 +47018,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="20"/>
         <source>Layer Settings</source>
-        <translation>შრის პარამეტრები</translation>
+        <translation>ფენის პარამეტრები</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="46"/>
@@ -47026,19 +47028,19 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="63"/>
         <source>Default Pen</source>
-        <translation>სტანდარტული კალამი</translation>
+        <translation>ნაგულისხმევი კალამი</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="29"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>კონსტრუქციის შრის ობიექტები წარმოადგენს უსასრულო სწორ ხაზებს, რომლებიც განკუთვნილია გეომეტრიული კონსტრუქციისთვის.
-კონსტრუქციის შრის შინაარსი არ უნდა ჩანდეს დაბეჭდილ ვერსიაში.</translation>
+        <translation>დამხმარე ფენის ობიექტები უსასრულო სწორი ხაზებია, რომლებიც გეომეტრიული აგებისთვისაა განკუთვნილი.
+დამხმარე ფენის შიგთავსი ამონაბეჭდში არ უნდა გამოჩნდეს.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="33"/>
         <source>Construction Layer</source>
-        <translation>კონსტრუქციის შრი</translation>
+        <translation>დამხმარე ფენა</translation>
     </message>
 </context>
 <context>
@@ -47046,7 +47048,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="298"/>
         <source>Looking for matching layer names</source>
-        <translation>ეძებს დამთხვევის მქონე შრის სახელებს</translation>
+        <translation>ფენის სახელების ძებნა</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="296"/>
@@ -47432,12 +47434,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="183"/>
         <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>შრეს &quot;%1&quot; არ შეიძლება წაშლილი.</translation>
+        <translation>ფენა &quot;%1&quot; არ შეიძლება წაიშალოს.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="304"/>
         <source>Layer Dialog</source>
-        <translation>შრის დიალოგი</translation>
+        <translation>ფენის დიალოგი</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="406"/>
@@ -47460,20 +47462,20 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="84"/>
         <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>შრეს სახელწოდებით &quot;%1&quot; უკვე არსებობს. გთხოვთ, მიუთითოთ სხვა სახელი.</translation>
+        <translation>ფენა სახელით &quot;%1&quot; უკვე არსებობს. გთხოვთ, მიუთითოთ სხვა სახელი.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="173"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>შრე &quot;%1&quot; და მასზე არსებული ყველა ელემენტი წაიშლება.
+        <translation>ფენა &quot;%1&quot; და მასზე არსებული ყველა ობიექტი წაიშლება.
 ეს მოქმედება არ შეიძლება გაუქმდეს.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="240"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1739"/>
         <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>შრე &quot;0&quot; არ შეიძლება წაიშალოს.</translation>
+        <translation>ფენა &quot;0&quot; არ შეიძლება წაიშალოს.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="248"/>
@@ -47488,7 +47490,7 @@ This action can NOT be undone.</source>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="251"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1788"/>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>ჩამოთვლილი შრეები და მათზე არსებული ყველა ელემენტი წაიშლება.</translation>
+        <translation>ჩამოთვლილი ფენები და მათზე არსებული ყველა ობიექტი წაიშლება.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="253"/>
@@ -47499,13 +47501,13 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="257"/>
         <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>გაფრთხილება: შრე &quot;0&quot; არ შეიძლება წაიშალოს.</translation>
+        <translation>გაფრთხილება: ფენა &quot;0&quot; არ შეიძლება წაიშალოს.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="260"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1790"/>
         <source>Layers for removal:</source>
-        <translation>წაშლისთვის შერჩეული შრეები:</translation>
+        <translation>წასაშლელი ფენები:</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="463"/>
@@ -47528,7 +47530,7 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="230"/>
         <source>Layer empty name is not allowed.</source>
-        <translation>მშრალი ფენის სახელი არ არის ნებადართული.</translation>
+        <translation>ფენის ცარიელი სახელი დაუშვებელია.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="265"/>
@@ -47541,7 +47543,8 @@ This action can NOT be undone.</source>
 [%1].
 Please specify a different name.</source>
         <translation>მცდელობა, შეიქმნას ფენა დუბლირებული სახელით. დუბლირებული ფენის სახელია 
-[%1]. გთხოვთ, მიუთითოთ სხვა სახელი.</translation>
+[%1].
+გთხოვთ, მიუთითოთ სხვა სახელი.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="142"/>
@@ -47553,7 +47556,8 @@ Please specify a different name.</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="143"/>
         <source>Layer list separator string is empty. It will not be possible to build layers tree.
 Please specify a different value.</source>
-        <translation>ფენების სიაში გამყოფი სტრინგი ცარიელია. შეუძლებელი იქნება ფენების ხის აგება. გთხოვთ, მიუთითოთ სხვა მნიშვნელობა.</translation>
+        <translation>ფენების სიის გამყოფი სტრიქონი ცარიელია. ფენების ხის აგება შეუძლებელი იქნება.
+გთხოვთ, მიუთითოთ სხვა მნიშვნელობა.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="962"/>
@@ -47577,7 +47581,7 @@ Clear filtering mask and repeat.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="973"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>არ მოიძებნა ელემენტების გარეშე ფენა(ები), არაფრის წაშლა.</translation>
+        <translation>ობიექტების გარეშე ფენები არ მოიძებნა, წასაშლელი არაფერია.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1116"/>
@@ -47591,23 +47595,25 @@ Clear filtering mask and repeat.</source>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation>ასეთი ქვედა ფენა უკვე არსებობს 
-[%1]-თვის.
-გთხოვთ, მიუთითეთ სხვა სახელი.</translation>
+        <translation>ასეთი შვილობილი ფენა უკვე არსებობს ფენისთვის 
+[%1].
+გთხოვთ, მიუთითოთ სხვა სახელი.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1162"/>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation>ასეთი ქვედა ფენა უკვე არსებობს 
-[%1]-თვის.</translation>
+        <translation>ასეთი შვილობილი ფენა უკვე არსებობს ფენისთვის 
+[%1].
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1170"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>განზომილებიანი ფენა შეიძლება დაემატოს მხოლოდ ჩვეულებრივ, აქტიურ ფენას.</translation>
+        <translation>ზომების ფენა შეიძლება დაემატოს მხოლოდ ნორმალურ აქტიურ ფენას.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1233"/>
@@ -47693,19 +47699,21 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1453"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>არ არსებობს ელემენტები, რომლებიც შეესაბამება კალამს, რომელიც ჩანს ფენებზე.</translation>
+        <translation>ხილულ ფენებზე არ არის ობიექტები, რომლებიც კალამს შეესაბამება.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1454"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>ასეთი ელემენტები არსებობს დაფარულ ფენებზე.</translation>
+        <translation>ასეთი ობიექტები არსებობს გაყინულ ფენებზე.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1455"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>ასეთი ელემენტები არსებობს დაბლოკილ ფენებზე.</translation>
+        <translation>ასეთი ობიექტები არსებობს დაბლოკილ ფენებზე.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1456"/>
@@ -48831,7 +48839,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="83"/>
         <source>cnlayer</source>
-        <translation>შრის სახელი</translation>
+        <translation>cnlayer</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="84"/>
@@ -48841,7 +48849,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="88"/>
         <source>cslayer</source>
-        <translation>სტილის შრის სახელი</translation>
+        <translation>cslayer</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="89"/>
@@ -49349,7 +49357,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="77"/>
         <source>No %1 layers found</source>
-        <translation>%1 შრის არ მოიძებნა</translation>
+        <translation>%1 ფენა არ მოიძებნა</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="95"/>
@@ -51610,13 +51618,13 @@ Do you want to replace it?</source>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="50"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="206"/>
         <source>By Layer</source>
-        <translation>შრეზე</translation>
+        <translation>ფენით</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="56"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="209"/>
         <source>By Block</source>
-        <translation>ბლოკზე</translation>
+        <translation>ბლოკით</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="212"/>

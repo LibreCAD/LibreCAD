@@ -2664,7 +2664,7 @@ atau [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="252"/>
         <source>(De-)Select Layer</source>
-        <translation>(De-) Pilih Lapis</translation>
+        <translation>(Batal) Pilih Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="235"/>
@@ -3301,32 +3301,32 @@ atau [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="617"/>
         <source>&amp;Show all layers</source>
-        <translation>&amp; Tampilkan semua lapis</translation>
+        <translation>&amp;Tampilkan semua lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp; Sembunyikan semua lapis</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Sembunyikan semua lapisan kecuali lapisan saat ini</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
         <source>&amp;Unlock all</source>
-        <translation>&amp; Buka semua</translation>
+        <translation>&amp;Buka kunci semua</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="620"/>
         <source>&amp;Lock all</source>
-        <translation>&amp; Kunci semua</translation>
+        <translation>&amp;Kunci semua</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="628"/>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>&amp; Ekspor Lapis Yang Dipilih</translation>
+        <translation>&amp;Ekspor Lapisan yang Dipilih</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="629"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Ekspor Lapis Terlihat</translation>
+        <translation>Ekspor Lapisan &amp;yang Terlihat</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="635"/>
@@ -3692,7 +3692,7 @@ atau [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="410"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Mutakhirkan Pen Saat Ini dengan Tapis Aktif &apos;Pen</translation>
+        <translation>Mutakhirkan Pen Saat Ini dengan Pen Lapisan Aktif</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="416"/>
@@ -3828,12 +3828,12 @@ atau [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="66"/>
         <source>Layer</source>
-        <translation>Lapis</translation>
+        <translation>Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="66"/>
         <source>Layers operations</source>
-        <translation>Operasi layer</translation>
+        <translation>Operasi lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="67"/>
@@ -4025,12 +4025,12 @@ atau [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity Layer</source>
-        <translation>Undo-type</translation>
+        <translation>Lapisan Entitas</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity&apos;s Layer</source>
-        <translation>Undo-type</translation>
+        <translation>Lapisan Entitas</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="88"/>
@@ -4045,32 +4045,32 @@ atau [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="109"/>
         <source>Activate Entity&apos;s Layer</source>
-        <translation>Aktifkan Lapis Entitas</translation>
+        <translation>Aktifkan Lapisan Entitas</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="110"/>
         <source>Hide Entity&apos;s Layer</source>
-        <translation>Sembunyikan Lapis Entitas</translation>
+        <translation>Sembunyikan Lapisan Entitas</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="111"/>
         <source>Hide Other Layers than Entity&apos;s</source>
-        <translation>Sembunyikan Lapisan Lain daripada Entiti</translation>
+        <translation>Sembunyikan Lapisan Selain Lapisan Entitas</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="112"/>
         <source>Lock Entity&apos;s Layer</source>
-        <translation>Layers-action</translation>
+        <translation>Kunci Lapisan Entitas</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="113"/>
         <source>Toggle Entity&apos;s Layer Construction</source>
-        <translation>Jungkitkan Lapis Konstruksi Entitas</translation>
+        <translation>Jungkitkan Lapisan Konstruksi Entitas</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="114"/>
         <source>Toggle Entity&apos;s Layer Printing</source>
-        <translation>Undo-type</translation>
+        <translation>Jungkitkan Pencetakan Lapisan Entitas</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="225"/>
@@ -4344,37 +4344,37 @@ atau [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="621"/>
         <source>&amp;Add Layer</source>
-        <translation>&amp; Tambah Lapis</translation>
+        <translation>T&amp;ambah Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="622"/>
         <source>&amp;Remove Layer</source>
-        <translation>&amp; Hapus Lapis</translation>
+        <translation>&amp;Hapus Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="623"/>
         <source>&amp;Edit Layer</source>
-        <translation>&amp; Sunting Lapis</translation>
+        <translation>Su&amp;nting Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="624"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>Undo-type</translation>
+        <translation>Jungkitkan Kunci &amp;Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="625"/>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation>view-action</translation>
+        <translation>&amp;Jungkitkan Visibilitas Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="626"/>
         <source>Toggle Layer &amp;Print</source>
-        <translation>Undo-type</translation>
+        <translation>Jungkitkan &amp;Pencetakan Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="627"/>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>Undo-type</translation>
+        <translation>J&amp;ungkitkan Lapisan Konstruksi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="637"/>
@@ -5127,7 +5127,7 @@ Titik: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>Enter layer name to %1</source>
-        <translation>Masukkan nama lapis ke%1</translation>
+        <translation>Masukkan nama lapisan yang akan di%1</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
@@ -6874,7 +6874,7 @@ Titik: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_layer.cpp" line="75"/>
         <source>Specify entity with desired layer</source>
-        <translation type="unfinished">Spesifikasikan entiti dengan lapis yang diinginkan</translation>
+        <translation type="unfinished">Tentukan entitas dengan lapisan yang diinginkan</translation>
     </message>
 </context>
 <context>
@@ -7479,12 +7479,12 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="66"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Jika dicontreng, entitas cermin akan ditempatkan pada lapisan saat ini, atau mereka akan ditempatkan ke lapisan asli.</translation>
+        <translation type="unfinished">Jika dicontreng, entitas hasil pencerminan akan ditempatkan pada lapisan saat ini; jika tidak, entitas akan ditempatkan pada lapisan aslinya.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="69"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Layers-action</translation>
+        <translation type="unfinished">Gunakan Lapisan Saat Ini</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="76"/>
@@ -8774,7 +8774,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="67"/>
         <source>Layer to apply</source>
-        <translation type="unfinished">Layers-action</translation>
+        <translation type="unfinished">Lapisan yang akan diterapkan</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="67"/>
@@ -8807,7 +8807,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="62"/>
         <source>Layer to which created circle should be placed</source>
-        <translation type="unfinished">Lapis yang dibuat lingkaran harus ditempatkan</translation>
+        <translation type="unfinished">Lapisan untuk menempatkan lingkaran yang dibuat</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="66"/>
@@ -8847,7 +8847,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="124"/>
         <source>Layer:</source>
-        <translation type="unfinished">Lapis:</translation>
+        <translation type="unfinished">Lapisan:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="131"/>
@@ -10798,7 +10798,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="209"/>
         <source>Layer</source>
-        <translation>Lapis</translation>
+        <translation>Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="236"/>
@@ -11102,7 +11102,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="64"/>
         <source>Layer</source>
-        <translation>Lapis</translation>
+        <translation>Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="76"/>
@@ -11112,7 +11112,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="98"/>
         <source>Layer of entity</source>
-        <translation>Lapis entitas</translation>
+        <translation>Lapisan entitas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="148"/>
@@ -12271,7 +12271,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="118"/>
         <source>Active Layer</source>
-        <translation type="unfinished">Tapis Aktif</translation>
+        <translation type="unfinished">Lapisan Aktif</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="125"/>
@@ -12595,7 +12595,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="26"/>
         <source>Layer of dimension</source>
-        <translation>Lapis dimensi</translation>
+        <translation>Lapisan dimensi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="45"/>
@@ -12605,7 +12605,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="58"/>
         <source>Layer:</source>
-        <translation>Lapis:</translation>
+        <translation>Lapisan:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="91"/>
@@ -13571,7 +13571,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="82"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">Layers-action</translation>
+        <translation type="unfinished">Lapisan untuk menempatkan duplikat</translation>
     </message>
 </context>
 <context>
@@ -13584,7 +13584,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="45"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">Layers-action</translation>
+        <translation type="unfinished">Lapisan untuk menempatkan duplikat</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="49"/>
@@ -13654,7 +13654,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="164"/>
         <source>Layer:</source>
-        <translation type="unfinished">Lapis:</translation>
+        <translation type="unfinished">Lapisan:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="171"/>
@@ -14371,12 +14371,12 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="168"/>
         <source>Layer</source>
-        <translation type="unfinished">Lapis</translation>
+        <translation type="unfinished">Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="168"/>
         <source>Layer of entity</source>
-        <translation type="unfinished">Lapis entitas</translation>
+        <translation type="unfinished">Lapisan entitas</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="204"/>
@@ -14445,7 +14445,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="152"/>
         <source>Exported Layers</source>
-        <translation>Lapisan Exported</translation>
+        <translation>Lapisan yang Diekspor</translation>
     </message>
 </context>
 <context>
@@ -15276,12 +15276,12 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="20"/>
         <source>Layer Settings</source>
-        <translation>Pengaturan Lapis</translation>
+        <translation>Pengaturan Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="48"/>
         <source>Name of new layer. In order to create hierarchical layers, include name of virtual layer and layer name separator.</source>
-        <translation>Nama lapisan baru. Dalam rangka untuk membuat lapisan hirarkis, termasuk nama lapis maya dan pemisah nama lapis.</translation>
+        <translation>Nama lapisan baru. Untuk membuat lapisan hierarkis, sertakan nama lapisan virtual dan pemisah nama lapisan.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="64"/>
@@ -15291,22 +15291,22 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="81"/>
         <source>Layer Type</source>
-        <translation>Tipe Lapis</translation>
+        <translation>Tipe Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="93"/>
         <source>Layer for various infromational elements, notes, drafts etc.</source>
-        <translation>Lapisan untuk berbagai elemen infromasional, catatan, draf dll.</translation>
+        <translation>Lapisan untuk berbagai elemen informasional, catatan, draf, dll.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="96"/>
         <source>Informational</source>
-        <translation>Informasional</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="106"/>
         <source>Normal layer with drawing eleements</source>
-        <translation>Undo-type</translation>
+        <translation>Lapisan normal dengan elemen gambar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="109"/>
@@ -15316,7 +15316,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="119"/>
         <source>Layer that holds dimensions</source>
-        <translation>Layers-action</translation>
+        <translation>Lapisan yang memuat dimensi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="122"/>
@@ -15326,7 +15326,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="132"/>
         <source>Layer with alternate position of entities located on normal layers</source>
-        <translation>Lapisan dengan posisi alternatif entitas terletak pada lapisan normal</translation>
+        <translation>Lapisan dengan posisi alternatif entitas yang terletak pada lapisan normal</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="135"/>
@@ -15337,7 +15337,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="148"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Sebuah Lapisan Konstruksi memiliki entitas garis lurus tak terbatas dimaksudkan untuk digunakan untuk konstruksi geometris.
+        <translation>Lapisan Konstruksi memiliki entitas garis lurus tak terbatas yang dimaksudkan untuk digunakan dalam konstruksi geometris.
 Isi Lapisan Konstruksi seharusnya tidak muncul di cetakan.</translation>
     </message>
     <message>
@@ -15348,33 +15348,33 @@ Isi Lapisan Konstruksi seharusnya tidak muncul di cetakan.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="181"/>
         <source>Path for parent layer</source>
-        <translation>Path untuk lapis induk</translation>
+        <translation>Path untuk lapisan induk</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="197"/>
         <source>Layer Name:</source>
-        <translation>Nama Lapis:</translation>
+        <translation>Nama Lapisan:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="68"/>
         <source>Rename Virtual Layer</source>
-        <translation>Undo-type</translation>
+        <translation>Ganti Nama Lapisan Virtual</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="72"/>
         <source>Add Secondary Layer</source>
-        <translation>Layers-action</translation>
+        <translation>Tambah Lapisan Sekunder</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="78"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="85"/>
         <source>Add Layer</source>
-        <translation>Undo-type</translation>
+        <translation>Tambah Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="91"/>
         <source>Edit Layer</source>
-        <translation>Undo-type</translation>
+        <translation>Sunting Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="183"/>
@@ -15385,7 +15385,7 @@ Isi Lapisan Konstruksi seharusnya tidak muncul di cetakan.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="200"/>
         <source>Rename Layer</source>
-        <translation>Undo-type</translation>
+        <translation>Ganti Nama Lapisan</translation>
     </message>
 </context>
 <context>
@@ -15403,27 +15403,27 @@ Isi Lapisan Konstruksi seharusnya tidak muncul di cetakan.</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="63"/>
         <source>If checked, Named Views from the document will be included into exported drawings. Otherwise, views are not included.</source>
-        <translation>Jika dicontreng, Gitar bernama dari dokumen akan dimasukkan ke dalam gambar yang diekspor. Jika tidak, pandangan tidak termasuk.</translation>
+        <translation>Jika dicontreng, Tampilan Bernama dari dokumen akan dimasukkan ke dalam gambar yang diekspor. Jika tidak, tampilan tidak termasuk.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="66"/>
         <source>Export Named Views too</source>
-        <translation>Ekspor Tampilan Nama juga</translation>
+        <translation>Ekspor Tampilan Bernama juga</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="73"/>
         <source>If checked, each original exported layer will be stored in separate drawing. Otherwise, all layers will be in exported to one combined drawing.</source>
-        <translation>Bila dicontreng, setiap lapis yang diekspor asli akan disimpan dalam gambar yang terpisah. Jika tidak, semua lapisan akan diekspor ke satu gambar gabungan.</translation>
+        <translation>Bila dicontreng, setiap lapisan asli yang diekspor akan disimpan dalam gambar terpisah. Jika tidak, semua lapisan akan diekspor ke satu gambar gabungan.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="76"/>
         <source>Export each layer to own drawing file</source>
-        <translation>Ekspor setiap lapis ke berkas gambar sendiri</translation>
+        <translation>Ekspor setiap lapisan ke berkas gambar tersendiri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="83"/>
         <source>If checked, entities will be stored in original layer. Otherwise, they are placed to layer &quot;0&quot;.</source>
-        <translation>Jika dicontreng, entitas akan disimpan dalam lapisan asli. Jika tidak, mereka ditempatkan untuk lapisan &quot;0&quot;.</translation>
+        <translation>Jika dicontreng, entitas akan disimpan dalam lapisan aslinya. Jika tidak, entitas ditempatkan pada lapisan &quot;0&quot;.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="89"/>
@@ -15438,7 +15438,7 @@ Isi Lapisan Konstruksi seharusnya tidak muncul di cetakan.</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="99"/>
         <source>Export UCSs too</source>
-        <translation>Ekspor UCSs terlalu</translation>
+        <translation>Ekspor UCS juga</translation>
     </message>
 </context>
 <context>
@@ -15451,12 +15451,12 @@ Isi Lapisan Konstruksi seharusnya tidak muncul di cetakan.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="46"/>
         <source>Settings for naming convention that is used to create layers hierarchy based on flat list of layers</source>
-        <translation>Pengaturan konvensi penamaan yang dipakai untuk membuat hierarki lapis yang berbasis pada daftar datar dari lapis</translation>
+        <translation>Pengaturan konvensi penamaan yang dipakai untuk membuat hierarki lapisan berdasarkan daftar datar lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="49"/>
         <source>Naming Convention</source>
-        <translation>Nama Konvensi</translation>
+        <translation>Konvensi Penamaan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="55"/>
@@ -15466,7 +15466,7 @@ Isi Lapisan Konstruksi seharusnya tidak muncul di cetakan.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="116"/>
         <source>Separator used for split inner name of layer to hierarchical names</source>
-        <translation>Pemisah yang dipakai untuk memecah nama dalam lapis ke nama hirarkis</translation>
+        <translation>Pemisah yang dipakai untuk memecah nama internal lapisan menjadi nama-nama hierarkis</translation>
     </message>
     <message>
         <source>Layer Level Name Separator</source>
@@ -15480,33 +15480,33 @@ Isi Lapisan Konstruksi seharusnya tidak muncul di cetakan.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
-        <translation>Dimensional</translation>
+        <translation>Dimensi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="201"/>
         <source>Suffix of layer&apos;s name that defines that layer is dimensional</source>
-        <translation>Suffix dari nama lapisan yang mendefinisikan bahwa lapisan adalah dimensi</translation>
+        <translation>Akhiran nama lapisan yang menentukan bahwa lapisan tersebut adalah lapisan dimensi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="211"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="809"/>
         <source>Informational</source>
-        <translation>Informasional</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="224"/>
         <source>Suffix of layer&apos;s name that defines that layer is informational.</source>
-        <translation>Suffix nama lapisan yang mendefinisikan bahwa lapisan adalah informasi.</translation>
+        <translation>Akhiran nama lapisan yang menentukan bahwa lapisan tersebut adalah lapisan info.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="234"/>
         <source>Alternative Position </source>
-        <translation>Posisi Alternatif</translation>
+        <translation>Posisi Alternatif </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
-        <translation>Suffix nama lapisan yang mendefinisikan bahwa lapisan adalah untuk posisi alternatif.</translation>
+        <translation>Akhiran nama lapisan yang menentukan bahwa lapisan tersebut adalah lapisan posisi alternatif.</translation>
     </message>
     <message>
         <source>Duplicating Name</source>
@@ -15520,17 +15520,17 @@ Isi Lapisan Konstruksi seharusnya tidak muncul di cetakan.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="74"/>
         <source>Prefix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>Awalan nama lapis yang dipakai jika lapis dengan nama seperti itu ada (katakanlah, ketika duplikat dibuat)</translation>
+        <translation>Awalan nama lapisan yang dipakai jika lapisan dengan nama seperti itu sudah ada (misalnya, ketika duplikat dibuat)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="84"/>
         <source>Suffix</source>
-        <translation>Cukup</translation>
+        <translation>Akhiran</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="97"/>
         <source>Suffix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>Suffix dari nama lapis yang digunakan jika lapis dengan nama seperti itu ada (katakan, ketika duplikat dibuat)</translation>
+        <translation>Akhiran nama lapisan yang dipakai jika lapisan dengan nama seperti itu sudah ada (misalnya, ketika duplikat dibuat)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="155"/>
@@ -15560,7 +15560,7 @@ Isi Lapisan Konstruksi seharusnya tidak muncul di cetakan.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="268"/>
         <source>Display and operations settings</source>
-        <translation>Tampilan dan pengaturan operasi</translation>
+        <translation>Pengaturan tampilan dan operasi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="271"/>
@@ -15570,7 +15570,7 @@ Isi Lapisan Konstruksi seharusnya tidak muncul di cetakan.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="329"/>
         <source>If checked, tooltip will include complete name of layer (with all upper layer levels)</source>
-        <translation>Bila dicontreng, tooltip akan memuat nama lengkap lapis (dengan seluruh tingkat lapis atas)</translation>
+        <translation>Bila dicontreng, tooltip akan memuat nama lengkap lapisan (dengan seluruh tingkat lapisan di atasnya)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="332"/>
@@ -15605,47 +15605,47 @@ Isi Lapisan Konstruksi seharusnya tidak muncul di cetakan.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="319"/>
         <source>If checked, icons for layer types will be shown</source>
-        <translation>Bila dicontreng, ikon untuk tipe lapis akan ditampilkan</translation>
+        <translation>Bila dicontreng, ikon untuk tipe lapisan akan ditampilkan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="322"/>
         <source>Show layer type icons</source>
-        <translation>Tampilkan ikon tipe lapis</translation>
+        <translation>Tampilkan ikon tipe lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="309"/>
         <source>Indentation for child layers</source>
-        <translation>Indentasi untuk lapis anak</translation>
+        <translation>Indentasi untuk lapisan anak</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="312"/>
         <source>Show indented layer names. Ident size:</source>
-        <translation>Tampilkan nama lapis yang tidak berwarna. Ukuran indentasi:</translation>
+        <translation>Tampilkan nama lapisan dengan indentasi. Ukuran indentasi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="277"/>
         <source>Size of the indent in characters to indent name of child layer from parent ones</source>
-        <translation>Ukuran indent dalam karakter untuk nama indent dari lapisan anak dari yang induk</translation>
+        <translation>Ukuran indentasi, dalam karakter, untuk nama lapisan anak terhadap lapisan induknya</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="352"/>
         <source>If checked, drag&amp;drop operations in layers list are enabled and layers hierarchy may be restructutured</source>
-        <translation>Bila dicontreng, seret &amp; taruh operasi dalam daftar lapis diaktifkan dan hierarki lapis mungkin direstrukturisasi</translation>
+        <translation>Bila dicontreng, operasi seret&amp;taruh dalam daftar lapisan diaktifkan dan hierarki lapisan dapat direstrukturisasi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="355"/>
         <source>Allow restructuring via Drag&amp;Drop</source>
-        <translation>Ijinkan restrukturisasi melalui Drag &amp; Jatuhkan</translation>
+        <translation>Izinkan restrukturisasi melalui Seret&amp;&amp;Taruh</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="293"/>
         <source>If primary layer is renames, secondary layers are renamed too.</source>
-        <translation>Bila lapis utama diganti nama, lapis sekunder juga diganti nama.</translation>
+        <translation>Bila lapisan primer diganti namanya, lapisan sekunder juga ikut diganti namanya.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="296"/>
         <source>Rename secondary layers on primary rename</source>
-        <translation>Mengubah nama lapis sekunder pada pengubahan nama primer</translation>
+        <translation>Ganti nama lapisan sekunder saat lapisan primer diganti namanya</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="376"/>
@@ -15659,7 +15659,7 @@ Isi Lapisan Konstruksi seharusnya tidak muncul di cetakan.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="470"/>
         <source>Background color for selected items in layers tree.</source>
-        <translation>Warna latar belakang bagi butir yang dipilih dalam pohon lapis.</translation>
+        <translation>Warna latar belakang bagi butir yang dipilih dalam pohon lapisan.</translation>
     </message>
     <message>
         <source>Color for separator lines in layers tree view</source>
@@ -15668,7 +15668,7 @@ Isi Lapisan Konstruksi seharusnya tidak muncul di cetakan.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="420"/>
         <source>Background color for virtual layers items in layers list</source>
-        <translation>Warna latar belakang bagi butir lapis virtual dalam daftar lapis</translation>
+        <translation>Warna latar belakang bagi butir lapisan virtual dalam daftar lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="449"/>
@@ -15681,7 +15681,7 @@ Isi Lapisan Konstruksi seharusnya tidak muncul di cetakan.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="560"/>
         <source>Matched item in highlight filter mode</source>
-        <translation>Butir yang cocok dalam mode penyaringan penyorotan</translation>
+        <translation>Butir yang cocok dalam mode filter sorot</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="391"/>
@@ -15696,12 +15696,12 @@ Isi Lapisan Konstruksi seharusnya tidak muncul di cetakan.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="406"/>
         <source>#1E90FF</source>
-        <translation># 1E90FF</translation>
+        <translation>#1E90FF</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="581"/>
         <source>Virtual layer background color</source>
-        <translation>Warna latar belakang lapis virtual</translation>
+        <translation>Warna latar belakang lapisan virtual</translation>
     </message>
     <message>
         <source>Threeview items separator grid</source>
@@ -15715,12 +15715,12 @@ Isi Lapisan Konstruksi seharusnya tidak muncul di cetakan.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="523"/>
         <source>Background color for active layer item in layers tree</source>
-        <translation>Warna latar belakang bagi butir lapis aktif dalam pohon lapis</translation>
+        <translation>Warna latar belakang bagi butir lapisan aktif dalam pohon lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="526"/>
         <source>Active layer background color</source>
-        <translation>Warna latar belakang lapis aktif</translation>
+        <translation>Warna latar belakang lapisan aktif</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="588"/>
@@ -15735,7 +15735,7 @@ Isi Lapisan Konstruksi seharusnya tidak muncul di cetakan.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="599"/>
         <source>Pens that will be set for newly created layers of different types.</source>
-        <translation>Pena yang akan diset untuk lapis yang baru dibuat dengan berbagai tipe.</translation>
+        <translation>Pena yang akan diset untuk lapisan yang baru dibuat dengan berbagai tipe.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="602"/>
@@ -15745,17 +15745,17 @@ Isi Lapisan Konstruksi seharusnya tidak muncul di cetakan.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="68"/>
         <source>Normal Layer</source>
-        <translation>Lapis Normal</translation>
+        <translation>Lapisan Normal</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="69"/>
         <source>Dimensional Layer</source>
-        <translation>Tapis Dimensional</translation>
+        <translation>Lapisan Dimensi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="70"/>
         <source>Informational Layer</source>
-        <translation>Undo-type</translation>
+        <translation>Lapisan Info</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="71"/>
@@ -15784,7 +15784,7 @@ Isi Lapisan Konstruksi seharusnya tidak muncul di cetakan.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="126"/>
         <source>active layer background</source>
-        <translation>latar belakang lapis aktif</translation>
+        <translation>latar belakang lapisan aktif</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
@@ -15795,7 +15795,7 @@ Isi Lapisan Konstruksi seharusnya tidak muncul di cetakan.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>Nilai tidak valid untuk warna%1.
+        <translation>Nilai tidak valid untuk warna %1.
 Silakan nyatakan nilai yang berbeda.</translation>
     </message>
     <message>
@@ -15814,12 +15814,12 @@ Silakan nyatakan nilai yang berbeda.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="152"/>
         <source>Looking for matching layer names</source>
-        <translation>Mencari nama lapis yang cocok</translation>
+        <translation>Mencari nama lapisan yang cocok</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="157"/>
         <source>Highlight Mode</source>
-        <translation>Mode Penandaan</translation>
+        <translation>Mode Sorot</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="167"/>
@@ -15829,22 +15829,22 @@ Silakan nyatakan nilai yang berbeda.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="186"/>
         <source>Show all layers</source>
-        <translation>Tampilkan semua lapis</translation>
+        <translation>Tampilkan semua lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Sembunyikan semua lapis</translation>
+        <source>Hide all layers except current</source>
+        <translation>Sembunyikan semua lapisan kecuali lapisan saat ini</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="200"/>
         <source>Show Secondary Layers</source>
-        <translation>Tampilkan Lapisan Second</translation>
+        <translation>Tampilkan Lapisan Sekunder</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="210"/>
         <source>Show Active Layer Only</source>
-        <translation>Tampilkan Hanya Lapis Aktif</translation>
+        <translation>Tampilkan Hanya Lapisan Aktif</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="218"/>
@@ -15859,210 +15859,210 @@ Silakan nyatakan nilai yang berbeda.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="234"/>
         <source>Collapse Secondary</source>
-        <translation>Kolapse Second</translation>
+        <translation>Lipat Lapisan Sekunder</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="242"/>
         <source>Unlock all layers</source>
-        <translation>Buka semua lapis</translation>
+        <translation>Buka kunci semua lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="249"/>
         <source>Lock all layers</source>
-        <translation>Kunci semua lapis</translation>
+        <translation>Kunci semua lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="256"/>
         <source>Add a layer</source>
-        <translation>Tambah suatu lapis</translation>
+        <translation>Tambah lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="263"/>
         <source>Add dimensions Layer</source>
-        <translation>Layers-action</translation>
+        <translation>Tambah Lapisan Dimensi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="272"/>
         <source>Remove layer</source>
-        <translation>Undo-type</translation>
+        <translation>Hapus lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="279"/>
         <source>Modify layer attributes / rename</source>
-        <translation>Ubah atribut lapis / ganti nama</translation>
+        <translation>Ubah atribut lapisan / ganti nama</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="286"/>
         <source>Flat List Mode)</source>
-        <translation>Mode Daftar Flat)</translation>
+        <translation>Mode Daftar Datar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="656"/>
         <source>&amp;Add Child Layer</source>
-        <translation>&amp; Tambah Lapis Anak</translation>
+        <translation>Tambah Lapisan &amp;Anak</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="657"/>
         <source>&amp;Rename</source>
-        <translation>&amp; Ganti Nama</translation>
+        <translation>&amp;Ganti Nama</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="658"/>
         <source>&amp;Remove Layers (Sub-Tree)</source>
-        <translation>&amp; Hapus Lapisan (Sub- Tree)</translation>
+        <translation>&amp;Hapus Lapisan (Subpohon)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="660"/>
         <source>&amp;Copy Structure (Sub-Tree)</source>
-        <translation>&amp; Salin Struktur (Sub-Tree)</translation>
+        <translation>Salin Str&amp;uktur (Subpohon)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="661"/>
         <source>&amp;Duplicate Content (Sub-Tree)</source>
-        <translation>&amp; Duplikasi Isi (Sub-Tree)</translation>
+        <translation>&amp;Duplikatkan Isi (Subpohon)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="663"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>&amp; Pilih Ential (Sub-Tree)</translation>
+        <translation>&amp;Pilih Entitas (Subpohon)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="668"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>&amp; Sunting Lapis &amp; Atribut</translation>
+        <translation>Suntin&amp;g Atribut Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="670"/>
         <source>&amp;Remove Layer</source>
-        <translation>&amp; Hapus Lapis</translation>
+        <translation>&amp;Hapus Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="679"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>&amp; Tambah Lapis Dimensi</translation>
+        <translation>T&amp;ambah Sublapisan Dimensi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="683"/>
         <source>&amp;Add Info Sub-Layer</source>
-        <translation>&amp; Tambah Lapis Sub Info</translation>
+        <translation>Tambah Sublapisan In&amp;fo</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="687"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
-        <translation>&amp; Tambah Lapis Tampilan Alternatif</translation>
+        <translation>Ta&amp;mbah Sublapisan Posisi Alternatif</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="693"/>
         <source>&amp;Remove Sub-layers</source>
-        <translation>&amp; Hapus Lapisan Sub-</translation>
+        <translation>Hap&amp;us Sublapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="701"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="711"/>
         <source>Convert to Dimensional Layer</source>
-        <translation>Undo-type</translation>
+        <translation>Ubah ke Lapisan Dimensi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="702"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="714"/>
         <source>Convert to Info Layer</source>
-        <translation>Undo-type</translation>
+        <translation>Ubah ke Lapisan Info</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="703"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="717"/>
         <source>Convert to Alternative Position Layer</source>
-        <translation>Ubah ke Lapis Posisi Alternatif</translation>
+        <translation>Ubah ke Lapisan Posisi Alternatif</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="709"/>
         <source>Convert to Normal Layer</source>
-        <translation>Ubah ke Lapis Normal</translation>
+        <translation>Ubah ke Lapisan Normal</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="723"/>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>&amp; Pilih undo-type</translation>
+        <translation>&amp;Pilih Entitas Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="726"/>
         <source>&amp;Create Layer Copy</source>
-        <translation>&amp; Buat Salinan Lapis</translation>
+        <translation>&amp;Buat Salinan Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="727"/>
         <source>&amp;Duplicate Layer With Content</source>
-        <translation>&amp; layers-action</translation>
+        <translation>&amp;Duplikatkan Lapisan beserta Isinya</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="731"/>
         <source>Move Selection to Layer</source>
-        <translation>Undo-type</translation>
+        <translation>Pindahkan Pilihan ke Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="732"/>
         <source>Duplicate Selection to Layer</source>
-        <translation>Undo-type</translation>
+        <translation>Duplikatkan Pilihan ke Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="739"/>
         <source>&amp;Add Layer</source>
-        <translation>&amp; Tambah Lapis</translation>
+        <translation>T&amp;ambah Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="741"/>
         <source>&amp;Freeze Others Layers</source>
-        <translation>&amp; Bekukan Lapisan Lainnya</translation>
+        <translation>Bekukan &amp;Lapisan Lainnya</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="742"/>
         <source>&amp;Defreeze All Layers</source>
-        <translation>&amp; Debekukan Semua Lapisan</translation>
+        <translation>Cai&amp;rkan Semua Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>&amp; Bekukan Semua Lapisan</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>S&amp;embunyikan semua lapisan kecuali lapisan saat ini</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>
         <source>&amp;Unlock All Layers</source>
-        <translation>&amp; Buka Semua Lapisan</translation>
+        <translation>Buka Kunci &amp;Semua Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="745"/>
         <source>&amp;Lock All Layers</source>
-        <translation>&amp; Kunci Semua Lapisan</translation>
+        <translation>&amp;Kunci Semua Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="746"/>
         <source>Enable &amp;Printing All Layers</source>
-        <translation>Aktifkan &amp; Mencetak Semua Lapisan</translation>
+        <translation>Akt&amp;ifkan Pencetakan Semua Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="747"/>
         <source>&amp;Disable Printing All Layers</source>
-        <translation>&amp; Matikan Mencetak Semua Lapisan</translation>
+        <translation>&amp;Nonaktifkan Pencetakan Semua Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="750"/>
         <source>&amp;Export Single Layer</source>
-        <translation>&amp; Ekspor Lapis Tunggal</translation>
+        <translation>Ekspor Lapisan &amp;Tunggal</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="754"/>
         <source>&amp;Export Layer Sub-Tree</source>
-        <translation>&amp; Ekspor Lapis Sub- Tree</translation>
+        <translation>Eksp&amp;or Subpohon Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="758"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Ekspor Lapis Terlihat</translation>
+        <translation>Ekspor Lapisan &amp;yang Terlihat</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="760"/>
         <source>&amp;Find And Remove Empty Layers</source>
-        <translation>&amp; Cari Dan Hapus Lapisan Kosong</translation>
+        <translation>&amp;Cari dan Hapus Lapisan Kosong</translation>
     </message>
 </context>
 <context>
@@ -18622,7 +18622,7 @@ Silakan nyatakan nilai yang berbeda.</translation>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="39"/>
         <source>Layer</source>
-        <translation type="unfinished">Lapis</translation>
+        <translation type="unfinished">Lapisan</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="39"/>
@@ -23351,12 +23351,12 @@ Silakan nyatakan nilai yang berbeda.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="82"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Jika dicontreng, entitas cermin akan ditempatkan pada lapisan saat ini, atau mereka akan ditempatkan ke lapisan asli.</translation>
+        <translation type="unfinished">Jika dicontreng, entitas hasil pencerminan akan ditempatkan pada lapisan saat ini; jika tidak, entitas akan ditempatkan pada lapisan aslinya.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Layers-action</translation>
+        <translation type="unfinished">Gunakan Lapisan Saat Ini</translation>
     </message>
 </context>
 <context>
@@ -23650,12 +23650,12 @@ Silakan nyatakan nilai yang berbeda.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="45"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="unfinished">Bila dicontreng, entitas yang dibuat akan ditempatkan ke lapis yang sekarang. Jika tidak, mereka akan ditempatkan ke lapisan asli.</translation>
+        <translation type="unfinished">Jika dicontreng, entitas yang dibuat akan ditempatkan pada lapisan saat ini. Jika tidak, entitas akan ditempatkan pada lapisan aslinya. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="48"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Layers-action</translation>
+        <translation type="unfinished">Gunakan Lapisan Saat Ini</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="55"/>
@@ -23836,12 +23836,12 @@ Silakan nyatakan nilai yang berbeda.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="144"/>
         <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="unfinished">Jika dicontreng, entitas yang dibuat akan ditempatkan ke dalam lapis yang sekarang, jika tidak, akan berada dalam lapisan asli.</translation>
+        <translation type="unfinished">Jika dicontreng, entitas yang dibuat akan ditempatkan pada lapisan saat ini; jika tidak, entitas akan berada di lapisan aslinya. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="147"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Layers-action</translation>
+        <translation type="unfinished">Gunakan Lapisan Saat Ini</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="166"/>
@@ -24252,12 +24252,12 @@ Peringatan: aksi ini TIDAK dapat dibatalkan!</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="93"/>
         <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">Jika dicontreng, entitas yang dibuat akan ditempatkan ke dalam lapis yang sekarang, atau mereka akan berada dalam lapisan asli.</translation>
+        <translation type="unfinished">Jika dicontreng, entitas yang dibuat akan ditempatkan pada lapisan saat ini; jika tidak, entitas akan berada di lapisan aslinya.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="96"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Layers-action</translation>
+        <translation type="unfinished">Gunakan Lapisan Saat Ini</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="109"/>
@@ -24750,7 +24750,7 @@ Peringatan: aksi ini TIDAK dapat dibatalkan!</translation>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="263"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="298"/>
         <source>By Layer</source>
-        <translation>Dengan Lapis</translation>
+        <translation>Berdasarkan Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="264"/>
@@ -25378,27 +25378,27 @@ Peringatan: aksi ini TIDAK dapat dibatalkan!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="188"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Mutakhirkan Pen Saat Ini dengan Tapis Aktif &apos;Pen</translation>
+        <translation>Mutakhirkan Pen Saat Ini dengan Pen Lapisan Aktif</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="205"/>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation>Isi Penyunting Pen dari Pen Lapis Aktif</translation>
+        <translation>Isi Penyunting Pen dari Pen Lapisan Aktif</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="208"/>
         <source>Pick from Active Layer</source>
-        <translation>Pilih dari Lapis Aktif</translation>
+        <translation>Pilih dari Lapisan Aktif</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="222"/>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation>Terapkan Pen Penyunting ke Lapis Aktif</translation>
+        <translation>Terapkan Pen Penyunting ke Pen Lapisan Aktif</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="225"/>
         <source>Apply To Layer</source>
-        <translation>Layers-action</translation>
+        <translation>Terapkan ke Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="239"/>
@@ -25483,7 +25483,7 @@ Peringatan: aksi ini TIDAK dapat dibatalkan!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="305"/>
         <source>&amp;Apply Pen To Active Layer</source>
-        <translation>&amp; Terapkan Lapis Pen Ke Aktif</translation>
+        <translation>&amp;Terapkan Pen ke Lapisan Aktif</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="306"/>
@@ -29496,7 +29496,7 @@ Harap perhatikan bahwa jika Anda menyimpan pena melalui editor tanpa memulai ula
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="60"/>
         <source>Active Layer</source>
-        <translation type="unfinished">Tapis Aktif</translation>
+        <translation type="unfinished">Lapisan Aktif</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="60"/>
@@ -29526,7 +29526,7 @@ Harap perhatikan bahwa jika Anda menyimpan pena melalui editor tanpa memulai ula
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="122"/>
         <source>Line Width</source>
-        <translation type="unfinished">Lebar Baris</translation>
+        <translation type="unfinished">Lebar Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="122"/>
@@ -29536,7 +29536,7 @@ Harap perhatikan bahwa jika Anda menyimpan pena melalui editor tanpa memulai ula
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="144"/>
         <source>Line Type</source>
-        <translation type="unfinished">Tipe Baris</translation>
+        <translation type="unfinished">Jenis Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="144"/>
@@ -29552,7 +29552,7 @@ Harap perhatikan bahwa jika Anda menyimpan pena melalui editor tanpa memulai ula
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="171"/>
         <source>Dimensional</source>
-        <translation type="unfinished">Dimensional</translation>
+        <translation type="unfinished">Dimensi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="175"/>
@@ -29562,7 +29562,7 @@ Harap perhatikan bahwa jika Anda menyimpan pena melalui editor tanpa memulai ula
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="179"/>
         <source>Informational</source>
-        <translation type="unfinished">Informasional</translation>
+        <translation type="unfinished">Info</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="186"/>
@@ -29642,7 +29642,7 @@ Harap perhatikan bahwa jika Anda menyimpan pena melalui editor tanpa memulai ula
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="303"/>
         <source>Unlock all layers</source>
-        <translation type="unfinished">Buka semua lapis</translation>
+        <translation type="unfinished">Buka kunci semua lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="303"/>
@@ -29667,7 +29667,7 @@ Harap perhatikan bahwa jika Anda menyimpan pena melalui editor tanpa memulai ula
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="341"/>
         <source>Show all layers</source>
-        <translation type="unfinished">Tampilkan semua lapis</translation>
+        <translation type="unfinished">Tampilkan semua lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="341"/>
@@ -32754,7 +32754,7 @@ Harap perhatikan bahwa jika Anda menyimpan pena melalui editor tanpa memulai ula
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="533"/>
         <source>Layer</source>
-        <translation>Lapis</translation>
+        <translation>Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="538"/>
@@ -33115,7 +33115,8 @@ Harap perhatikan bahwa jika Anda menyimpan pena melalui editor tanpa memulai ula
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="127"/>
         <source>
 Layer: </source>
-        <translation>Lapis:</translation>
+        <translation>
+Lapisan: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="573"/>
@@ -35921,12 +35922,12 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="208"/>
         <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="unfinished">Menentukan salinan whetether akan dimasukkan ke lapis asli atau kini</translation>
+        <translation type="unfinished">Menentukan apakah salinan akan dimasukkan ke lapisan saat ini atau ke lapisan aslinya</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="211"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Layers-action</translation>
+        <translation type="unfinished">Gunakan Lapisan Saat Ini</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="218"/>
@@ -36167,12 +36168,12 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="209"/>
         <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">Jika dicontreng, enties baru akan ditempatkan pada lapis yang sekarang, jika tidak, mereka akan berada dalam lapisan asli.</translation>
+        <translation type="unfinished">Jika dicontreng, entitas baru akan ditempatkan pada lapisan saat ini; jika tidak, entitas akan berada di lapisan aslinya.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="212"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Layers-action</translation>
+        <translation type="unfinished">Gunakan Lapisan Saat Ini</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="219"/>
@@ -36410,12 +36411,12 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="83"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="unfinished">Bila dicontreng, entitas yang dibuat akan ditempatkan ke lapis yang sekarang. Jika tidak, mereka akan ditempatkan ke lapisan asli.</translation>
+        <translation type="unfinished">Jika dicontreng, entitas yang dibuat akan ditempatkan pada lapisan saat ini. Jika tidak, entitas akan ditempatkan pada lapisan aslinya. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="86"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Layers-action</translation>
+        <translation type="unfinished">Gunakan Lapisan Saat Ini</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="107"/>
@@ -37324,7 +37325,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="77"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Jika dicontreng, entitas yang dibuat akan ditempatkan pada lapis yang sekarang, jika tidak mereka akan ditempatkan dalam lapisan asli.</translation>
+        <translation type="unfinished">Jika dicontreng, entitas yang dibuat akan ditempatkan pada lapisan saat ini; jika tidak, entitas akan ditempatkan pada lapisan aslinya.</translation>
     </message>
 </context>
 <context>
@@ -37362,12 +37363,12 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="73"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Jika dicontreng, entitas yang dibuat akan ditempatkan pada lapis yang sekarang, jika tidak mereka akan ditempatkan dalam lapisan asli.</translation>
+        <translation type="unfinished">Jika dicontreng, entitas yang dibuat akan ditempatkan pada lapisan saat ini; jika tidak, entitas akan ditempatkan pada lapisan aslinya.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="76"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Layers-action</translation>
+        <translation type="unfinished">Gunakan Lapisan Saat Ini</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="83"/>
@@ -37505,7 +37506,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="71"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Jika dicontreng, entitas yang dibuat akan ditempatkan pada lapis yang sekarang, jika tidak mereka akan ditempatkan dalam lapisan asli.</translation>
+        <translation type="unfinished">Jika dicontreng, entitas yang dibuat akan ditempatkan pada lapisan saat ini; jika tidak, entitas akan ditempatkan pada lapisan aslinya.</translation>
     </message>
 </context>
 <context>
@@ -37518,12 +37519,12 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="32"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Jika dicontreng, entitas yang dibuat akan ditempatkan pada lapis yang sekarang, jika tidak mereka akan ditempatkan dalam lapisan asli.</translation>
+        <translation type="unfinished">Jika dicontreng, entitas yang dibuat akan ditempatkan pada lapisan saat ini; jika tidak, entitas akan ditempatkan pada lapisan aslinya.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="35"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Layers-action</translation>
+        <translation type="unfinished">Gunakan Lapisan Saat Ini</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="42"/>
@@ -38389,7 +38390,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="216"/>
         <source>Entity&apos;s Layer</source>
-        <translation>Undo-type</translation>
+        <translation>Lapisan Entitas</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="250"/>
@@ -39180,7 +39181,7 @@ Peringatan: aksi ini TIDAK dapat dibatalkan!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="540"/>
         <source>Active Layer</source>
-        <translation>Tapis Aktif</translation>
+        <translation>Lapisan Aktif</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="542"/>
@@ -39843,12 +39844,12 @@ Penyimpanan otomatis dinonaktifkan.</translation>
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="105"/>
         <source>Name of Current Active Layer</source>
-        <translation>Nama Lapisan Aktif Kini</translation>
+        <translation>Nama Lapisan Aktif Saat Ini</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="80"/>
         <source>Current Layer</source>
-        <translation>Lapis Kini</translation>
+        <translation>Lapisan Saat Ini</translation>
     </message>
 </context>
 <context>
@@ -39903,7 +39904,7 @@ Penyimpanan otomatis dinonaktifkan.</translation>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="100"/>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="276"/>
         <source>By Layer</source>
-        <translation>Dengan Lapis</translation>
+        <translation>Berdasarkan Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="101"/>
@@ -40324,12 +40325,12 @@ Penyimpanan otomatis dinonaktifkan.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="44"/>
         <source>Layer:</source>
-        <translation>Lapis:</translation>
+        <translation>Lapisan:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="54"/>
         <source>Layer to apply</source>
-        <translation>Layers-action</translation>
+        <translation>Lapisan yang akan diterapkan</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="69"/>
@@ -40874,7 +40875,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="51"/>
         <source>Layer:</source>
-        <translation>Lapis:</translation>
+        <translation>Lapisan:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="241"/>
@@ -40999,7 +41000,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="70"/>
         <source>Layer of MText</source>
-        <translation>Layers-action</translation>
+        <translation>Lapisan MText</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="144"/>
@@ -43254,7 +43255,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5074"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt; html &gt; &lt; head / &gt; &lt; body &gt; &lt; p &gt; Ketika diaktifkan, mengaktifkan sebuah lapis akan mengubah semua entitas yang dipilih ke lapis baru. Untuk mengubah lapis dari beberapa entitas: pilih entiti pertama yang diperlukan; aktifkan suatu lapis dalam widget lapis. Ini membuat semua entitas yang dipilih dimodifikasi menjadi milik lapis baru. &lt; / p &gt; &lt; / body &gt; &lt; / html &gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bila diaktifkan, mengaktifkan suatu lapisan akan memindahkan semua entitas yang dipilih ke lapisan baru tersebut. Untuk mengubah lapisan beberapa entitas: pertama pilih entitas yang diperlukan; lalu aktifkan suatu lapisan di widget lapisan. Dengan begitu, semua entitas yang dipilih diubah menjadi milik lapisan baru tersebut.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4991"/>
@@ -44384,7 +44385,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5077"/>
         <source>Modify layer of selected entities, at layer activation</source>
-        <translation>Undo-type</translation>
+        <translation>Ubah lapisan entitas yang dipilih saat lapisan diaktifkan</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5490"/>
@@ -45787,12 +45788,12 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="85"/>
         <source>Export invisible layers</source>
-        <translation>Ekspor lapis tak terlihat</translation>
+        <translation>Ekspor lapisan tak terlihat</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="92"/>
         <source>Export visible construction layers</source>
-        <translation>Ekspor lapis konstruksi terlihat</translation>
+        <translation>Ekspor lapisan konstruksi yang terlihat</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="104"/>
@@ -46255,7 +46256,7 @@ sehingga nilai langkah baku dibutuhkan untuk baking</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="178"/>
         <source>Layer:</source>
-        <translation>Lapis:</translation>
+        <translation>Lapisan:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="240"/>
@@ -46426,7 +46427,7 @@ sehingga nilai langkah baku dibutuhkan untuk baking</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="197"/>
         <source>Layer of text</source>
-        <translation>Lapis teks</translation>
+        <translation>Lapisan teks</translation>
     </message>
     <message>
         <source>Obligue of text</source>
@@ -47217,13 +47218,13 @@ sehingga nilai langkah baku dibutuhkan untuk baking</translation>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="20"/>
         <source>Layer Settings</source>
-        <translation>Pengaturan Lapis</translation>
+        <translation>Pengaturan Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="29"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Sebuah Lapisan Konstruksi memiliki entitas garis lurus tak terbatas dimaksudkan untuk digunakan untuk konstruksi geometris.
+        <translation>Lapisan Konstruksi memiliki entitas garis lurus tak terbatas yang dimaksudkan untuk digunakan dalam konstruksi geometris.
 Isi Lapisan Konstruksi seharusnya tidak muncul di cetakan.</translation>
     </message>
     <message>
@@ -47234,7 +47235,7 @@ Isi Lapisan Konstruksi seharusnya tidak muncul di cetakan.</translation>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="46"/>
         <source>Layer Name:</source>
-        <translation>Nama Lapis:</translation>
+        <translation>Nama Lapisan:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="63"/>
@@ -47252,7 +47253,7 @@ Isi Lapisan Konstruksi seharusnya tidak muncul di cetakan.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="298"/>
         <source>Looking for matching layer names</source>
-        <translation>Mencari nama lapis yang cocok</translation>
+        <translation>Mencari nama lapisan yang cocok</translation>
     </message>
 </context>
 <context>
@@ -47289,7 +47290,7 @@ Isi Lapisan Konstruksi seharusnya tidak muncul di cetakan.</translation>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="83"/>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="189"/>
         <source>By Layer</source>
-        <translation>Dengan Lapis</translation>
+        <translation>Berdasarkan Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="84"/>
@@ -47613,7 +47614,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="239"/>
         <source>By Layer</source>
-        <translation>Dengan Lapis</translation>
+        <translation>Berdasarkan Lapisan</translation>
     </message>
 </context>
 <context>
@@ -47632,12 +47633,12 @@ p, li {white- space: pre- wrap;}
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="264"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="308"/>
         <source>Layer Properties</source>
-        <translation>Properti Lapis</translation>
+        <translation>Properti Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="84"/>
         <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>Lapis dengan nama &quot;%1&quot; sudah ada. Silakan nyatakan nama lain.</translation>
+        <translation>Lapisan dengan nama &quot;%1&quot; sudah ada. Silakan nyatakan nama lain.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="172"/>
@@ -47645,25 +47646,25 @@ p, li {white- space: pre- wrap;}
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="240"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1739"/>
         <source>Remove Layer</source>
-        <translation>Undo-type</translation>
+        <translation>Hapus Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="173"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>Lapis &quot;%1&quot; dan semua entitas di atasnya akan dihapus.
+        <translation>Lapisan &quot;%1&quot; dan semua entitas di dalamnya akan dihapus.
 Aksi ini TIDAK dapat dibatalkan.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="183"/>
         <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>Lapis &quot;%1&quot; tidak pernah dapat dihapus.</translation>
+        <translation>Lapisan &quot;%1&quot; tidak pernah dapat dihapus.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="240"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1739"/>
         <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>Lapis &quot;0&quot; tidak pernah bisa dihapus.</translation>
+        <translation>Lapisan &quot;0&quot; tidak pernah dapat dihapus.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="248"/>
@@ -47677,7 +47678,7 @@ Aksi ini TIDAK dapat dibatalkan.</translation>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="251"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1788"/>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>Terdaftar lapisan dan semua entitas pada mereka akan dihapus.</translation>
+        <translation>Lapisan yang tercantum dan semua entitas di dalamnya akan dihapus.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="253"/>
@@ -47688,7 +47689,7 @@ Aksi ini TIDAK dapat dibatalkan.</translation>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="257"/>
         <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>Peringatan: lapis &quot;0&quot; tidak pernah dapat dihapus.</translation>
+        <translation>Peringatan: lapisan &quot;0&quot; tidak pernah dapat dihapus.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="260"/>
@@ -47699,7 +47700,7 @@ Aksi ini TIDAK dapat dibatalkan.</translation>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="304"/>
         <source>Layer Dialog</source>
-        <translation>Dialog Lapis</translation>
+        <translation>Dialog Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="406"/>
@@ -47731,7 +47732,7 @@ Aksi ini TIDAK dapat dibatalkan.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="230"/>
         <source>Layer empty name is not allowed.</source>
-        <translation>Lapis nama kosong tidak diperbolehkan.</translation>
+        <translation>Nama lapisan tidak boleh kosong.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="265"/>
@@ -47743,7 +47744,7 @@ Aksi ini TIDAK dapat dibatalkan.</translation>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation>Mencoba untuk membuat lapis dengan nama menduplikasi. Nama lapis ganda adalah
+        <translation>Mencoba membuat lapisan dengan nama duplikat. Nama lapisan yang terduplikasi adalah 
 [%1].
 Silakan nyatakan nama lain.</translation>
     </message>
@@ -47757,14 +47758,14 @@ Silakan nyatakan nama lain.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="143"/>
         <source>Layer list separator string is empty. It will not be possible to build layers tree.
 Please specify a different value.</source>
-        <translation>Senar pemisah daftar kosong. Tidak akan mungkin untuk membangun lapisan pohon.
+        <translation>String pemisah daftar lapisan kosong. Tidak akan mungkin membangun pohon lapisan.
 Silakan nyatakan nilai yang berbeda.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="962"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="972"/>
         <source>Remove empty layers</source>
-        <translation>Hapus lapis kosong</translation>
+        <translation>Hapus lapisan kosong</translation>
     </message>
     <message>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
@@ -47782,14 +47783,14 @@ Clear filtering mask and repeat.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="973"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>Tidak ada lapisan tanpa entitas yang ditemukan, tidak ada untuk menghapus.</translation>
+        <translation>Tidak ditemukan lapisan tanpa entitas, tidak ada yang perlu dihapus.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1116"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1161"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1169"/>
         <source>Add Layer</source>
-        <translation>Undo-type</translation>
+        <translation>Tambah Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1117"/>
@@ -47806,13 +47807,15 @@ Silakan nyatakan nama lain.</translation>
 [%1].
 </source>
         <translation>Lapisan anak tersebut sudah ada untuk
-[%1].</translation>
+[%1].
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1170"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>Undo-type.</translation>
+        <translation>Lapisan dimensi hanya dapat ditambahkan untuk lapisan aktif yang normal.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1233"/>
@@ -47845,7 +47848,7 @@ Jika Tidak - nilai &quot;Berdasarkan Lapisan&quot; akan tetap dan pena lapisan t
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1805"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1863"/>
         <source>Layer DialogEx</source>
-        <translation>Layers-action</translation>
+        <translation>DialogEx Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="202"/>
@@ -47904,13 +47907,15 @@ Silakan nyatakan nilai yang berbeda.</translation>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1454"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>Entinitas tersebut ada pada lapisan beku.</translation>
+        <translation>Entitas tersebut ada pada lapisan beku.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1455"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>Entinitas tersebut ada pada lapisan terkunci.</translation>
+        <translation>Entitas tersebut ada pada lapisan terkunci.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1456"/>
@@ -51571,7 +51576,7 @@ Apakah Anda ingin menggantinya?</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="77"/>
         <source>No %1 layers found</source>
-        <translation>Lapisan%1 tidak ditemukan</translation>
+        <translation>Tidak ditemukan lapisan yang %1</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterinterface.h" line="93"/>
@@ -51762,7 +51767,7 @@ Apakah Anda ingin menggantinya?</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_filedialogservice.cpp" line="195"/>
         <source>Combine all layers</source>
-        <translation>Gabungkan semua lapis</translation>
+        <translation>Gabungkan semua lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="180"/>
@@ -51815,7 +51820,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="50"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="206"/>
         <source>By Layer</source>
-        <translation>Dengan Lapis</translation>
+        <translation>Berdasarkan Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="56"/>

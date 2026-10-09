@@ -2664,7 +2664,7 @@ ali [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="252"/>
         <source>(De-)Select Layer</source>
-        <translation>(Od-)Izberi plast</translation>
+        <translation>(Od)izberi plast</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="235"/>
@@ -3536,7 +3536,7 @@ ali [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="410"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Posodobi trenutni Pen po aktivnem peresniku plasti</translation>
+        <translation>Posodobi trenutno pero s peresom aktivne plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="416"/>
@@ -3677,7 +3677,7 @@ ali [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="66"/>
         <source>Layers operations</source>
-        <translation>Sloji</translation>
+        <translation>Operacije s plastmi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="67"/>
@@ -3874,7 +3874,7 @@ ali [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity&apos;s Layer</source>
-        <translation>Plast subjekta</translation>
+        <translation>Plast entitete</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="88"/>
@@ -3899,17 +3899,17 @@ ali [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="111"/>
         <source>Hide Other Layers than Entity&apos;s</source>
-        <translation>Skrij druge plasti razen entitete</translation>
+        <translation>Skrij vse plasti razen plasti entitete</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="112"/>
         <source>Lock Entity&apos;s Layer</source>
-        <translation>Plast zakleni entiteto</translation>
+        <translation>Zakleni plast entitete</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="113"/>
         <source>Toggle Entity&apos;s Layer Construction</source>
-        <translation>Preklopi izdelovanje plasti entitete</translation>
+        <translation>Preklopi konstrukcijsko plast entitete</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="114"/>
@@ -4188,37 +4188,37 @@ ali [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="621"/>
         <source>&amp;Add Layer</source>
-        <translation>&amp; Dodaj plast</translation>
+        <translation>Dod&amp;aj plast</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="622"/>
         <source>&amp;Remove Layer</source>
-        <translation>Odstrani plast</translation>
+        <translation>Odstrani p&amp;last</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="623"/>
         <source>&amp;Edit Layer</source>
-        <translation>&amp; Uredi plast</translation>
+        <translation>&amp;Uredi plast</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="624"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>Preklopi plast Loc&amp;k</translation>
+        <translation>P&amp;reklopi zaklep plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="625"/>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation>&amp; Vidljivost plasti</translation>
+        <translation>Preklopi &amp;vidnost plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="626"/>
         <source>Toggle Layer &amp;Print</source>
-        <translation>Preklopi plast in tiskanje</translation>
+        <translation>Preklopi &amp;tiskanje plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="627"/>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>Preklopi &amp; konstruktivno plast</translation>
+        <translation>Preklopi &amp;konstrukcijsko plast</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="637"/>
@@ -4531,32 +4531,32 @@ ali [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="617"/>
         <source>&amp;Show all layers</source>
-        <translation>Prikaži vse plasti</translation>
+        <translation>&amp;Prikaži vse plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
-        <source>&amp;Hide all layers</source>
-        <translation>Skrij vse plasti</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Skrij vse plasti razen trenutne</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
         <source>&amp;Unlock all</source>
-        <translation>&amp; Odkleni vse</translation>
+        <translation>&amp;Odkleni vse</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="620"/>
         <source>&amp;Lock all</source>
-        <translation>&amp; Zakleni vse</translation>
+        <translation>&amp;Zakleni vse</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="628"/>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>&amp; Izvoz izbrane plasti</translation>
+        <translation>&amp;Izvozi izbrane plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="629"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Izvozi &amp; vizuelno plast</translation>
+        <translation>Izvozi vid&amp;ne plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="635"/>
@@ -5127,17 +5127,17 @@ Točka: (%8 ,%9)</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>Enter layer name to %1</source>
-        <translation>Vnesite ime sloja v%1</translation>
+        <translation>Vnesite ime plasti (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>activate</source>
-        <translation>aktiviraj</translation>
+        <translation>aktiviranje</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>create</source>
-        <translation>ustvari</translation>
+        <translation>ustvarjanje</translation>
     </message>
 </context>
 <context>
@@ -5146,13 +5146,13 @@ Točka: (%8 ,%9)</translation>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
         <source>selected</source>
         <comment>Layers to export</comment>
-        <translation>izbrano</translation>
+        <translation>izbranih</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
         <source>visible</source>
         <comment>Layers to export</comment>
-        <translation>vidna</translation>
+        <translation>vidnih</translation>
     </message>
 </context>
 <context>
@@ -7479,12 +7479,12 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="66"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Če je možnost omogočena, bodo zrcalne entitete nameščene na trenutno plast, sicer bodo nameščene v prvotne plasti.</translation>
+        <translation type="unfinished">Če je možnost omogočena, bodo zrcaljene entitete postavljene v trenutno plast, sicer bodo postavljene v prvotne plasti.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="69"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Trenutna plast uporabnika</translation>
+        <translation type="unfinished">Uporabi trenutno plast</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="76"/>
@@ -8807,7 +8807,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="62"/>
         <source>Layer to which created circle should be placed</source>
-        <translation type="unfinished">Plast, na katero naj se postavi ustvarjen krog</translation>
+        <translation type="unfinished">Plast, v katero naj se postavi ustvarjeni krog</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="66"/>
@@ -11112,7 +11112,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="98"/>
         <source>Layer of entity</source>
-        <translation>Plast subjekta</translation>
+        <translation>Plast entitete</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="148"/>
@@ -13571,7 +13571,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="82"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">Plast, na katero je treba dati dvojnik</translation>
+        <translation type="unfinished">Plast, v katero naj se postavi dvojnik</translation>
     </message>
 </context>
 <context>
@@ -13584,7 +13584,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="45"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">Plast, na katero je treba dati dvojnik</translation>
+        <translation type="unfinished">Plast, v katero naj se postavi dvojnik</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="49"/>
@@ -14376,7 +14376,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="168"/>
         <source>Layer of entity</source>
-        <translation type="unfinished">Plast subjekta</translation>
+        <translation type="unfinished">Plast entitete</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="204"/>
@@ -14445,7 +14445,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="152"/>
         <source>Exported Layers</source>
-        <translation>Izvozi plasti</translation>
+        <translation>Izvožene plasti</translation>
     </message>
 </context>
 <context>
@@ -15281,12 +15281,12 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="48"/>
         <source>Name of new layer. In order to create hierarchical layers, include name of virtual layer and layer name separator.</source>
-        <translation>Ime novega sloja. Da bi ustvarili hierarhične plasti, vključuje ime navidezne plasti in ločevalnika imen slojev.</translation>
+        <translation>Ime nove plasti. Če želite ustvariti hierarhične plasti, vključite ime navidezne plasti in ločevalnik imen plasti.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="64"/>
         <source>Parent Layers Path:</source>
-        <translation>Pot starševskih plasti:</translation>
+        <translation>Pot nadrejenih plasti:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="81"/>
@@ -15296,37 +15296,37 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="93"/>
         <source>Layer for various infromational elements, notes, drafts etc.</source>
-        <translation>Plast za različne infromacijske elemente, opombe, osnutke itd.</translation>
+        <translation>Plast za različne informacijske elemente, opombe, osnutke itd.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="96"/>
         <source>Informational</source>
-        <translation>Informacije</translation>
+        <translation>Informacijska</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="106"/>
         <source>Normal layer with drawing eleements</source>
-        <translation>Normalna plast z izvlečki</translation>
+        <translation>Običajna plast z elementi risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="109"/>
         <source>Normal</source>
-        <translation>Običajno</translation>
+        <translation>Običajna</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="119"/>
         <source>Layer that holds dimensions</source>
-        <translation>Plast, ki drži dimenzije</translation>
+        <translation>Plast, ki vsebuje dimenzije</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="122"/>
         <source>Dimensions</source>
-        <translation>Dimenzije</translation>
+        <translation>Dimenzijska</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="132"/>
         <source>Layer with alternate position of entities located on normal layers</source>
-        <translation>Plast z nadomestno pozicijo subjektov, ki se nahajajo na običajnih plasteh</translation>
+        <translation>Plast z alternativnim položajem entitet, ki se nahajajo na običajnih plasteh</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="135"/>
@@ -15338,17 +15338,17 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
         <translation>Konstrukcijska plast ima entitete neskončnih ravnih črt, ki se uporabljajo za geometrijsko konstrukcijo.
-Vsebina gradbene plasti se ne sme pojaviti v izpisu.</translation>
+Vsebina konstrukcijske plasti se ne sme pojaviti v izpisu.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="152"/>
         <source>Construction Layer</source>
-        <translation>Gradbena plast</translation>
+        <translation>Konstrukcijska plast</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="181"/>
         <source>Path for parent layer</source>
-        <translation>Pot do matične plasti</translation>
+        <translation>Pot do nadrejene plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="197"/>
@@ -15380,7 +15380,7 @@ Vsebina gradbene plasti se ne sme pojaviti v izpisu.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="183"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="221"/>
         <source>Default Pen</source>
-        <translation>Privzet injekcijski peresnik</translation>
+        <translation>Privzeto pero</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="200"/>
@@ -15403,7 +15403,7 @@ Vsebina gradbene plasti se ne sme pojaviti v izpisu.</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="63"/>
         <source>If checked, Named Views from the document will be included into exported drawings. Otherwise, views are not included.</source>
-        <translation>Če je možnost omogočena, bodo na izvožene risbe vključeni imenovani prikazi iz dokumenta. Sicer pogledi niso vključeni.</translation>
+        <translation>Če je možnost omogočena, bodo poimenovani prikazi iz dokumenta vključeni v izvožene risbe. Sicer prikazi niso vključeni.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="66"/>
@@ -15413,27 +15413,27 @@ Vsebina gradbene plasti se ne sme pojaviti v izpisu.</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="73"/>
         <source>If checked, each original exported layer will be stored in separate drawing. Otherwise, all layers will be in exported to one combined drawing.</source>
-        <translation>Če je možnost omogočena, bo vsak originalni izvožen sloj shranjen v ločeni risbi. V nasprotnem primeru bodo vsi sloji izvoženi v eno kombinirano risbo.</translation>
+        <translation>Če je možnost omogočena, bo vsaka prvotna izvožena plast shranjena v ločeni risbi. V nasprotnem primeru bodo vse plasti izvožene v eno združeno risbo.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="76"/>
         <source>Export each layer to own drawing file</source>
-        <translation>Izvozi vsako plast v lastno risalno datoteko</translation>
+        <translation>Izvozi vsako plast v lastno datoteko risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="83"/>
         <source>If checked, entities will be stored in original layer. Otherwise, they are placed to layer &quot;0&quot;.</source>
-        <translation>Če je možnost omogočena, bodo subjekti shranjeni v originalni plasti. Sicer so postavljeni v plast &quot;0&quot;.</translation>
+        <translation>Če je možnost omogočena, bodo entitete shranjene v prvotni plasti. Sicer bodo postavljene v plast &quot;0&quot;.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="89"/>
         <source>Retain original layer for entities</source>
-        <translation>Ohrani prvotno plast za subjekte</translation>
+        <translation>Ohrani prvotno plast za entitete</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="96"/>
         <source>If checked, UCSs from the document will be included into exported drawings. Otherwise, UCSs are not included.</source>
-        <translation>Če je odkljukano, bodo UCS iz dokumenta vključeni v izvožene risbe. V nasprotnem primeru UCS niso vključeni.</translation>
+        <translation>Če je možnost omogočena, bodo UCS iz dokumenta vključeni v izvožene risbe. V nasprotnem primeru UCS niso vključeni.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="99"/>
@@ -15446,7 +15446,7 @@ Vsebina gradbene plasti se ne sme pojaviti v izpisu.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="20"/>
         <source>Layers Tree Options</source>
-        <translation>Možnosti dreves plasti</translation>
+        <translation>Možnosti drevesa plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="46"/>
@@ -15456,7 +15456,7 @@ Vsebina gradbene plasti se ne sme pojaviti v izpisu.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="49"/>
         <source>Naming Convention</source>
-        <translation>Konvencija o poimenovanju</translation>
+        <translation>Dogovor o poimenovanju</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="55"/>
@@ -15466,7 +15466,7 @@ Vsebina gradbene plasti se ne sme pojaviti v izpisu.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="116"/>
         <source>Separator used for split inner name of layer to hierarchical names</source>
-        <translation>Ločitelj, ki se uporablja za deljeno notranje ime plasti na hierarhična imena</translation>
+        <translation>Ločevalnik, ki se uporablja za delitev notranjega imena plasti na hierarhična imena</translation>
     </message>
     <message>
         <source>Layer Level Name Separator</source>
@@ -15480,18 +15480,18 @@ Vsebina gradbene plasti se ne sme pojaviti v izpisu.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
-        <translation>Dimenzija</translation>
+        <translation>Dimenzijska</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="201"/>
         <source>Suffix of layer&apos;s name that defines that layer is dimensional</source>
-        <translation>Pripona imena sloja, ki določa, da je plast dimenzijska</translation>
+        <translation>Pripona imena plasti, ki določa, da je plast dimenzijska</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="211"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="809"/>
         <source>Informational</source>
-        <translation>Informacije</translation>
+        <translation>Informacijska</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="224"/>
@@ -15501,12 +15501,12 @@ Vsebina gradbene plasti se ne sme pojaviti v izpisu.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="234"/>
         <source>Alternative Position </source>
-        <translation>Alternativni položaj</translation>
+        <translation>Alternativni položaj </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
-        <translation>Pripona imena plasti, ki definira to plast, je za alternativni položaj.</translation>
+        <translation>Pripona imena plasti, ki določa, da je plast za alternativni položaj.</translation>
     </message>
     <message>
         <source>Duplicating Name</source>
@@ -15520,7 +15520,7 @@ Vsebina gradbene plasti se ne sme pojaviti v izpisu.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="74"/>
         <source>Prefix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>Predpona imena plasti, ki se uporablja, če obstaja plast s takim imenom (navedite, ko je ustvarjen dvojnik)</translation>
+        <translation>Predpona imena plasti, ki se uporablja, če obstaja plast s takim imenom (na primer ko se ustvari dvojnik)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="84"/>
@@ -15530,7 +15530,7 @@ Vsebina gradbene plasti se ne sme pojaviti v izpisu.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="97"/>
         <source>Suffix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>Pripona imena plasti, ki se uporablja, če obstaja plast s takim imenom (navedite, ko je ustvarjen dvojnik)</translation>
+        <translation>Pripona imena plasti, ki se uporablja, če obstaja plast s takim imenom (na primer ko se ustvari dvojnik)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="155"/>
@@ -15560,12 +15560,12 @@ Vsebina gradbene plasti se ne sme pojaviti v izpisu.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="268"/>
         <source>Display and operations settings</source>
-        <translation>Nastavitve prikaza in delovanja</translation>
+        <translation>Nastavitve prikaza in operacij</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="271"/>
         <source>Display and Operations</source>
-        <translation>Prikaz in postopki</translation>
+        <translation>Prikaz in operacije</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="329"/>
@@ -15575,7 +15575,7 @@ Vsebina gradbene plasti se ne sme pojaviti v izpisu.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="332"/>
         <source>Show full name as ToolTip</source>
-        <translation>Prikaži polno ime kot orodjeNamig</translation>
+        <translation>Prikaži polno ime kot namig</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="608"/>
@@ -15595,7 +15595,7 @@ Vsebina gradbene plasti se ne sme pojaviti v izpisu.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="794"/>
         <source>Normal</source>
-        <translation type="unfinished">Običajno</translation>
+        <translation type="unfinished">Običajna</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="804"/>
@@ -15605,7 +15605,7 @@ Vsebina gradbene plasti se ne sme pojaviti v izpisu.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="319"/>
         <source>If checked, icons for layer types will be shown</source>
-        <translation>Če je možnost omogočena, bodo prikazane ikone za vrste slojev</translation>
+        <translation>Če je možnost omogočena, bodo prikazane ikone za vrste plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="322"/>
@@ -15615,37 +15615,37 @@ Vsebina gradbene plasti se ne sme pojaviti v izpisu.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="309"/>
         <source>Indentation for child layers</source>
-        <translation>Zamik za otroške plasti</translation>
+        <translation>Zamik za podrejene plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="312"/>
         <source>Show indented layer names. Ident size:</source>
-        <translation>Prikaži imena zamaknjenih plasti. Velikost oznake:</translation>
+        <translation>Prikaži zamaknjena imena plasti. Velikost zamika:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="277"/>
         <source>Size of the indent in characters to indent name of child layer from parent ones</source>
-        <translation>Velikost alineje v znakih do imena otroške plasti od staršev</translation>
+        <translation>Velikost zamika imena podrejene plasti glede na nadrejene, izražena v znakih</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="352"/>
         <source>If checked, drag&amp;drop operations in layers list are enabled and layers hierarchy may be restructutured</source>
-        <translation>Če je preverjeno, so omogočeni postopki vlečenja in spuščanja v seznamu slojev in hierarhija slojev se lahko preoblikuje</translation>
+        <translation>Če je možnost omogočena, so v seznamu plasti omogočene operacije povleci&amp;spusti in hierarhijo plasti je mogoče prestrukturirati</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="355"/>
         <source>Allow restructuring via Drag&amp;Drop</source>
-        <translation>Dovoli prestrukturiranje prek podjetja Drag&amp;Drop</translation>
+        <translation>Dovoli prestrukturiranje z vlečenjem in spuščanjem</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="293"/>
         <source>If primary layer is renames, secondary layers are renamed too.</source>
-        <translation>Če je primarni sloj preimenovan, se tudi sekundarni sloji preimenujejo.</translation>
+        <translation>Če je primarna plast preimenovana, se preimenujejo tudi sekundarne plasti.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="296"/>
         <source>Rename secondary layers on primary rename</source>
-        <translation>Preimenuj sekundarne plasti ob primarnem preimenovanju</translation>
+        <translation>Preimenuj sekundarne plasti ob preimenovanju primarne</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="376"/>
@@ -15668,7 +15668,7 @@ Vsebina gradbene plasti se ne sme pojaviti v izpisu.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="420"/>
         <source>Background color for virtual layers items in layers list</source>
-        <translation>Barva ozadja za navidezne plasti v seznamu slojev</translation>
+        <translation>Barva ozadja za postavke navideznih plasti v seznamu plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="449"/>
@@ -15710,12 +15710,12 @@ Vsebina gradbene plasti se ne sme pojaviti v izpisu.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="503"/>
         <source>Selected items background color</source>
-        <translation>Barva ozadja izbranih predmetov</translation>
+        <translation>Barva ozadja izbranih postavk</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="523"/>
         <source>Background color for active layer item in layers tree</source>
-        <translation>Barva ozadja aktivne plasti v plasteh drevesa</translation>
+        <translation>Barva ozadja za postavko aktivne plasti v drevesu plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="526"/>
@@ -15735,32 +15735,32 @@ Vsebina gradbene plasti se ne sme pojaviti v izpisu.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="599"/>
         <source>Pens that will be set for newly created layers of different types.</source>
-        <translation>Pero, ki bo nastavljeno na novo ustvarjene plasti različnih vrst.</translation>
+        <translation>Peresa, ki bodo nastavljena na novo ustvarjenim plastem različnih vrst.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="602"/>
         <source>Default Pens</source>
-        <translation>Privzeti peresniki</translation>
+        <translation>Privzeta peresa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="68"/>
         <source>Normal Layer</source>
-        <translation>Normalna plast</translation>
+        <translation>Običajna plast</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="69"/>
         <source>Dimensional Layer</source>
-        <translation>Merska plast</translation>
+        <translation>Dimenzijska plast</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="70"/>
         <source>Informational Layer</source>
-        <translation>Plast informacij</translation>
+        <translation>Informacijska plast</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Alternative Position Layer</source>
-        <translation>Alternativna plast položaja</translation>
+        <translation>Plast alternativnega položaja</translation>
     </message>
     <message>
         <source>grid</source>
@@ -15769,7 +15769,7 @@ Vsebina gradbene plasti se ne sme pojaviti v izpisu.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="103"/>
         <source>highlighted item</source>
-        <translation>podčrtana točka</translation>
+        <translation>poudarjena postavka</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="110"/>
@@ -15784,7 +15784,7 @@ Vsebina gradbene plasti se ne sme pojaviti v izpisu.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="126"/>
         <source>active layer background</source>
-        <translation>aktivno ozadje plasti</translation>
+        <translation>ozadje aktivne plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
@@ -15795,7 +15795,7 @@ Vsebina gradbene plasti se ne sme pojaviti v izpisu.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>Neveljavna vrednost zagotavlja barvo%1.
+        <translation>Podana je neveljavna vrednost barve (%1).
 Prosimo, navedite drugačno vrednost.</translation>
     </message>
     <message>
@@ -15814,7 +15814,7 @@ Prosimo, navedite drugačno vrednost.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="152"/>
         <source>Looking for matching layer names</source>
-        <translation>Iskanje ujemajočih imen slojev</translation>
+        <translation>Iskanje ujemajočih se imen plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="157"/>
@@ -15833,8 +15833,8 @@ Prosimo, navedite drugačno vrednost.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Skrij vse plasti</translation>
+        <source>Hide all layers except current</source>
+        <translation>Skrij vse plasti razen trenutne</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="200"/>
@@ -15859,7 +15859,7 @@ Prosimo, navedite drugačno vrednost.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="234"/>
         <source>Collapse Secondary</source>
-        <translation>Skrči sekundarno</translation>
+        <translation>Zloži sekundarne</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="242"/>
@@ -15879,7 +15879,7 @@ Prosimo, navedite drugačno vrednost.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="263"/>
         <source>Add dimensions Layer</source>
-        <translation>Dodaj dimenzije plasti</translation>
+        <translation>Dodaj dimenzijsko plast</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="272"/>
@@ -15894,67 +15894,67 @@ Prosimo, navedite drugačno vrednost.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="286"/>
         <source>Flat List Mode)</source>
-        <translation>Način ravnega seznama)</translation>
+        <translation>Način ravnega seznama</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="656"/>
         <source>&amp;Add Child Layer</source>
-        <translation>&amp; Dodaj otroško plast</translation>
+        <translation>Dodaj pod&amp;rejeno plast</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="657"/>
         <source>&amp;Rename</source>
-        <translation>&amp; Preimenuj</translation>
+        <translation>Prei&amp;menuj</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="658"/>
         <source>&amp;Remove Layers (Sub-Tree)</source>
-        <translation>Odstranjevanje plasti (sub-tree)</translation>
+        <translation>Odstrani p&amp;lasti (poddrevo)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="660"/>
         <source>&amp;Copy Structure (Sub-Tree)</source>
-        <translation>&amp; Kopijska struktura (sub- tree)</translation>
+        <translation>&amp;Kopiraj strukturo (poddrevo)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="661"/>
         <source>&amp;Duplicate Content (Sub-Tree)</source>
-        <translation>&amp; Dvojna vsebina (sub- tree)</translation>
+        <translation>Podvoji vse&amp;bino (poddrevo)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="663"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>&amp; Izberi entitete (podtree)</translation>
+        <translation>Izberi &amp;entitete (poddrevo)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="668"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>&amp; Uredi lastnosti plasti</translation>
+        <translation>&amp;Uredi atribute plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="670"/>
         <source>&amp;Remove Layer</source>
-        <translation>Odstrani plast</translation>
+        <translation>Odstrani p&amp;last</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="679"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>Podlaga &amp; dodaj dimenzije</translation>
+        <translation>Dodaj di&amp;menzijsko podplast</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="683"/>
         <source>&amp;Add Info Sub-Layer</source>
-        <translation>&amp; Dodaj podlayer</translation>
+        <translation>Dodaj in&amp;formacijsko podplast</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="687"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
-        <translation>&amp; Dodaj alternativni prikaz</translation>
+        <translation>Dodaj podplast alternativne&amp;ga položaja</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="693"/>
         <source>&amp;Remove Sub-layers</source>
-        <translation>Odstranjevanje podslojev</translation>
+        <translation>Odst&amp;rani podplasti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="701"/>
@@ -15966,13 +15966,13 @@ Prosimo, navedite drugačno vrednost.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="702"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="714"/>
         <source>Convert to Info Layer</source>
-        <translation>Pretvori v plast podatkov</translation>
+        <translation>Pretvori v informacijsko plast</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="703"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="717"/>
         <source>Convert to Alternative Position Layer</source>
-        <translation>Pretvori na alternativno lego</translation>
+        <translation>Pretvori v plast alternativnega položaja</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="709"/>
@@ -15982,87 +15982,87 @@ Prosimo, navedite drugačno vrednost.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="723"/>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>&amp; Izberi entitete plasti</translation>
+        <translation>Iz&amp;beri entitete plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="726"/>
         <source>&amp;Create Layer Copy</source>
-        <translation>&amp; Ustvari kopijo plasti</translation>
+        <translation>Ustvari &amp;kopijo plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="727"/>
         <source>&amp;Duplicate Layer With Content</source>
-        <translation>&amp; Dvojna plast z vsebino</translation>
+        <translation>Podvoji plast z vs&amp;ebino</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="731"/>
         <source>Move Selection to Layer</source>
-        <translation>Premakni izbiro v plast</translation>
+        <translation>Premakni izbor v plast</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="732"/>
         <source>Duplicate Selection to Layer</source>
-        <translation>Podvoji izbiro plasti</translation>
+        <translation>Podvoji izbor v plast</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="739"/>
         <source>&amp;Add Layer</source>
-        <translation>&amp; Dodaj plast</translation>
+        <translation>Dodaj p&amp;last</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="741"/>
         <source>&amp;Freeze Others Layers</source>
-        <translation>&amp; Zamrzni druge plasti</translation>
+        <translation>&amp;Zamrzni druge plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="742"/>
         <source>&amp;Defreeze All Layers</source>
-        <translation>&amp; Razmrzni vse plasti</translation>
+        <translation>&amp;Odmrzni vse plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>&amp; Zamrzni vse plasti</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Skrij vse plasti razen trenutne</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>
         <source>&amp;Unlock All Layers</source>
-        <translation>&amp; Odkleni vse plasti</translation>
+        <translation>Odkleni vse &amp;plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="745"/>
         <source>&amp;Lock All Layers</source>
-        <translation>&amp; Zakleni vse plasti</translation>
+        <translation>Z&amp;akleni vse plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="746"/>
         <source>Enable &amp;Printing All Layers</source>
-        <translation>Omogoči tiskanje vseh plasti</translation>
+        <translation>Omogoči &amp;tiskanje vseh plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="747"/>
         <source>&amp;Disable Printing All Layers</source>
-        <translation>&amp; Onemogoči tiskanje vseh plasti</translation>
+        <translation>Onemogoči tiskanje &amp;vseh plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="750"/>
         <source>&amp;Export Single Layer</source>
-        <translation>&amp; Izvozi eno plast</translation>
+        <translation>&amp;Izvozi eno plast</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="754"/>
         <source>&amp;Export Layer Sub-Tree</source>
-        <translation>&amp; Izvoz podvrste plasti</translation>
+        <translation>Izvozi po&amp;ddrevo plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="758"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Izvozi &amp; vizuelno plast</translation>
+        <translation>Izvozi vid&amp;ne plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="760"/>
         <source>&amp;Find And Remove Empty Layers</source>
-        <translation>&amp; Najdi in odstrani prazne plasti</translation>
+        <translation>Na&amp;jdi in odstrani prazne plasti</translation>
     </message>
 </context>
 <context>
@@ -23351,12 +23351,12 @@ Prosimo, navedite drugačno vrednost.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="82"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Če je možnost omogočena, bodo zrcalne entitete nameščene na trenutno plast, sicer bodo nameščene v prvotne plasti.</translation>
+        <translation type="unfinished">Če je možnost omogočena, bodo zrcaljene entitete postavljene v trenutno plast, sicer bodo postavljene v prvotne plasti.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Trenutna plast uporabnika</translation>
+        <translation type="unfinished">Uporabi trenutno plast</translation>
     </message>
 </context>
 <context>
@@ -23650,7 +23650,7 @@ Prosimo, navedite drugačno vrednost.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="45"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="unfinished">Če je možnost omogočena, bodo ustvarjeni subjekti postavljeni v trenutno plast. V nasprotnem primeru bodo postavljeni v prvotne plasti.</translation>
+        <translation type="unfinished">Če je možnost omogočena, bodo ustvarjene entitete postavljene v trenutno plast. V nasprotnem primeru bodo postavljene v prvotne plasti. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="48"/>
@@ -23836,7 +23836,7 @@ Prosimo, navedite drugačno vrednost.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="144"/>
         <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="unfinished">Če je možnost omogočena, bodo ustvarjeni subjekti postavljeni v trenutno plast, sicer bodo v izvirnih plasteh.</translation>
+        <translation type="unfinished">Če je možnost omogočena, bodo ustvarjene entitete postavljene v trenutno plast, sicer bodo v prvotnih plasteh. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="147"/>
@@ -24252,7 +24252,7 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="93"/>
         <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">Če je možnost omogočena, bodo ustvarjeni subjekti postavljeni v trenutno plast, sicer bodo v izvirnih plasteh.</translation>
+        <translation type="unfinished">Če je možnost omogočena, bodo ustvarjene entitete postavljene v trenutno plast, sicer bodo v prvotnih plasteh.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="96"/>
@@ -25378,12 +25378,12 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="188"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Posodobi trenutni Pen po aktivnem peresniku plasti</translation>
+        <translation>Posodobi trenutno pero s peresom aktivne plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="205"/>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation>Napolni urejevalnik peres iz aktivnega peresa</translation>
+        <translation>Napolni urejevalnik peres iz peresa aktivne plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="208"/>
@@ -25393,7 +25393,7 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="222"/>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation>Uveljavi urejevalni peresnik na aktivni injekcijski peresnik</translation>
+        <translation>Uporabi pero urejevalnika na pero aktivne plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="225"/>
@@ -25483,7 +25483,7 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="305"/>
         <source>&amp;Apply Pen To Active Layer</source>
-        <translation>&amp; Name</translation>
+        <translation>&amp;Uporabi pero na aktivno plast</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="306"/>
@@ -29516,7 +29516,7 @@ Upoštevajte, da če boste peresa shranili preko urejevalnika brez ponovnega zag
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="101"/>
         <source>Color</source>
-        <translation type="unfinished">Barvno</translation>
+        <translation type="unfinished">Barva</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="101"/>
@@ -29547,12 +29547,12 @@ Upoštevajte, da če boste peresa shranili preko urejevalnika brez ponovnega zag
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="167"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="183"/>
         <source>Normal</source>
-        <translation type="unfinished">Običajno</translation>
+        <translation type="unfinished">Običajna</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="171"/>
         <source>Dimensional</source>
-        <translation type="unfinished">Dimenzija</translation>
+        <translation type="unfinished">Dimenzijska</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="175"/>
@@ -29562,7 +29562,7 @@ Upoštevajte, da če boste peresa shranili preko urejevalnika brez ponovnega zag
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="179"/>
         <source>Informational</source>
-        <translation type="unfinished">Informacije</translation>
+        <translation type="unfinished">Informacijska</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="186"/>
@@ -33115,7 +33115,8 @@ Upoštevajte, da če boste peresa shranili preko urejevalnika brez ponovnega zag
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="127"/>
         <source>
 Layer: </source>
-        <translation>Plast:</translation>
+        <translation>
+Plast: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="573"/>
@@ -35921,7 +35922,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="208"/>
         <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="unfinished">Določene izvode bo vstavljen v trenutno ali izvirno plast</translation>
+        <translation type="unfinished">Določa, ali bodo kopije vstavljene v trenutno ali prvotno plast</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="211"/>
@@ -36167,7 +36168,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="209"/>
         <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">Če je možnost omogočena, bodo novi enties nameščeni na trenutno plast, sicer bodo v izvirnih plasteh.</translation>
+        <translation type="unfinished">Če je možnost omogočena, bodo nove entitete postavljene v trenutno plast, sicer bodo v prvotnih plasteh.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="212"/>
@@ -36410,7 +36411,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="83"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="unfinished">Če je možnost omogočena, bodo ustvarjeni subjekti postavljeni v trenutno plast. V nasprotnem primeru bodo postavljene v prvotne plasti.</translation>
+        <translation type="unfinished">Če je možnost omogočena, bodo ustvarjene entitete postavljene v trenutno plast. V nasprotnem primeru bodo postavljene v prvotne plasti. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="86"/>
@@ -37324,7 +37325,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="77"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Če je možnost omogočena, bodo ustvarjeni subjekti postavljeni na trenutno plast, sicer bodo postavljeni v prvotne plasti.</translation>
+        <translation type="unfinished">Če je možnost omogočena, bodo ustvarjene entitete postavljene v trenutno plast, sicer bodo postavljene v prvotne plasti.</translation>
     </message>
 </context>
 <context>
@@ -37362,7 +37363,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="73"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Če je možnost omogočena, bodo ustvarjeni subjekti postavljeni na trenutno plast, sicer bodo postavljeni v prvotne plasti.</translation>
+        <translation type="unfinished">Če je možnost omogočena, bodo ustvarjene entitete postavljene v trenutno plast, sicer bodo postavljene v prvotne plasti.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="76"/>
@@ -37505,7 +37506,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="71"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Če je možnost omogočena, bodo ustvarjeni subjekti postavljeni na trenutno plast, sicer bodo postavljeni v prvotne plasti.</translation>
+        <translation type="unfinished">Če je možnost omogočena, bodo ustvarjene entitete postavljene v trenutno plast, sicer bodo postavljene v prvotne plasti.</translation>
     </message>
 </context>
 <context>
@@ -37518,12 +37519,12 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="32"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Če je možnost omogočena, bodo ustvarjeni subjekti postavljeni na trenutno plast, sicer bodo postavljeni v prvotne plasti.</translation>
+        <translation type="unfinished">Če je možnost omogočena, bodo ustvarjene entitete postavljene v trenutno plast, sicer bodo postavljene v prvotne plasti.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="35"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Trenutna plast uporabnika</translation>
+        <translation type="unfinished">Uporabi trenutno plast</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="42"/>
@@ -38389,7 +38390,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="216"/>
         <source>Entity&apos;s Layer</source>
-        <translation>Plast subjekta</translation>
+        <translation>Plast entitete</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="250"/>
@@ -39841,7 +39842,7 @@ Prosim preverite njegov obstoj in dovoljenja.</translation>
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="32"/>
         <source>Selection</source>
-        <translation>Izbira</translation>
+        <translation>Izbor</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="105"/>
@@ -43506,7 +43507,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5074"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt; glave/&gt; &lt; telesa&gt; &lt; p&gt; Ko je omogočeno, bi aktivacija plasti spremenila vse izbrane entitete v to novo plast. Če želite spremeniti plast več entitet: najprej izberite potrebne entitete; aktivirajte plast v plast widget. To naredi vse izbrane entitete spremenjene, da pripadajo novi plasti. &lt;/p&gt; &lt;/ telo&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ko je možnost omogočena, se ob aktivaciji plasti vse izbrane entitete prestavijo na to novo plast. Če želite spremeniti plast več entitet, najprej izberite želene entitete, nato pa aktivirajte plast v gradniku plasti. Tako bodo vse izbrane entitete spremenjene, da pripadajo novi plasti.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5934"/>
@@ -44627,7 +44628,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5077"/>
         <source>Modify layer of selected entities, at layer activation</source>
-        <translation>Spremeni plast izbranih entitet ob aktivaciji sloja</translation>
+        <translation>Spremeni plast izbranih entitet ob aktivaciji plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5490"/>
@@ -45801,7 +45802,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="92"/>
         <source>Export visible construction layers</source>
-        <translation>Izvozi vidne gradbene plasti</translation>
+        <translation>Izvozi vidne konstrukcijske plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="104"/>
@@ -47228,7 +47229,7 @@ Privzeta vrednost koraka, potrebna za peko</translation>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_layerbox.cpp" line="68"/>
         <source>- Unchanged -</source>
-        <translation>Nespremenjeno</translation>
+        <translation>- Nespremenjeno -</translation>
     </message>
 </context>
 <context>
@@ -47246,19 +47247,19 @@ Privzeta vrednost koraka, potrebna za peko</translation>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="63"/>
         <source>Default Pen</source>
-        <translation>Privzet injekcijski peresnik</translation>
+        <translation>Privzeto pero</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="29"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
         <translation>Konstrukcijska plast ima entitete neskončnih ravnih črt, ki se uporabljajo za geometrijsko konstrukcijo.
-Vsebina gradbene plasti se ne sme pojaviti v izpisu.</translation>
+Vsebina konstrukcijske plasti se ne sme pojaviti v izpisu.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="33"/>
         <source>Construction Layer</source>
-        <translation>Gradbena plast</translation>
+        <translation>Konstrukcijska plast</translation>
     </message>
 </context>
 <context>
@@ -47266,7 +47267,7 @@ Vsebina gradbene plasti se ne sme pojaviti v izpisu.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="298"/>
         <source>Looking for matching layer names</source>
-        <translation>Iskanje ujemajočih imen slojev</translation>
+        <translation>Iskanje ujemajočih se imen plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="296"/>
@@ -47656,7 +47657,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="183"/>
         <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>Plast »%1 « ni mogoče odstraniti.</translation>
+        <translation>Plasti »%1« ni mogoče nikoli odstraniti.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="304"/>
@@ -47684,20 +47685,20 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="84"/>
         <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>Plast z imenom »%1 « že obstaja. Navedite drugo ime.</translation>
+        <translation>Plast z imenom »%1« že obstaja. Navedite drugo ime.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="173"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>Plast »%1 « in vsi subjekti na njej bodo odstranjeni.
-Tega dejanja ni mogoče razveljaviti.</translation>
+        <translation>Plast »%1« in vse entitete na njej bodo odstranjene.
+Tega dejanja NI mogoče razveljaviti.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="240"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1739"/>
         <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>Plast &quot;0&quot; se ne da odstraniti.</translation>
+        <translation>Plasti &quot;0&quot; ni mogoče nikoli odstraniti.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="248"/>
@@ -47706,15 +47707,15 @@ Tega dejanja ni mogoče razveljaviti.</translation>
         <translation>
             <numerusform>Odstrani %n plast</numerusform>
             <numerusform>Odstrani %n plasti</numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>Odstrani %n plasti</numerusform>
+            <numerusform>Odstrani %n plasti</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="251"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1788"/>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>Seznam plasti in vse entitete na njih bodo odstranjene.</translation>
+        <translation>Navedene plasti in vse entitete na njih bodo odstranjene.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="253"/>
@@ -47725,7 +47726,7 @@ Tega dejanja ni mogoče razveljaviti.</translation>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="257"/>
         <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>Opozorilo: sloja &quot;0&quot; ni mogoče nikoli odstraniti.</translation>
+        <translation>Opozorilo: plasti &quot;0&quot; ni mogoče nikoli odstraniti.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="260"/>
@@ -47756,7 +47757,7 @@ Tega dejanja ni mogoče razveljaviti.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="230"/>
         <source>Layer empty name is not allowed.</source>
-        <translation>Plast prazno ime ni dovoljeno.</translation>
+        <translation>Prazno ime plasti ni dovoljeno.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="265"/>
@@ -47768,7 +47769,7 @@ Tega dejanja ni mogoče razveljaviti.</translation>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation>Poskusi ustvariti plast z dvojnim imenom. Podvojeno ime plasti je
+        <translation>Poskus ustvarjanja plasti s podvojenim imenom. Podvojeno ime plasti je 
 [%1].
 Navedite drugo ime.</translation>
     </message>
@@ -47782,7 +47783,7 @@ Navedite drugo ime.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="143"/>
         <source>Layer list separator string is empty. It will not be possible to build layers tree.
 Please specify a different value.</source>
-        <translation>Ločevalnik seznama plasti je prazen. Ne bo mogoče zgraditi drevesa s plastmi.
+        <translation>Ločevalnik seznama plasti je prazen. Ne bo mogoče zgraditi drevesa plasti.
 Prosimo, navedite drugačno vrednost.</translation>
     </message>
     <message>
@@ -47807,7 +47808,7 @@ Clear filtering mask and repeat.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="973"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>Ni plasti brez entitet, ničesar za odstraniti.</translation>
+        <translation>Ni najdenih plasti brez entitet, zato ni česa odstraniti.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1116"/>
@@ -47821,7 +47822,7 @@ Clear filtering mask and repeat.</source>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation>Takšna otroška plast že obstaja za
+        <translation>Takšna podrejena plast že obstaja za 
 [%1].
 Navedite drugo ime.</translation>
     </message>
@@ -47830,14 +47831,16 @@ Navedite drugo ime.</translation>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation>Takšna otroška plast že obstaja za
-[%1].</translation>
+        <translation>Takšna podrejena plast že obstaja za 
+[%1].
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1170"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>Merska plast se lahko doda samo za normalno aktivno plast.</translation>
+        <translation>Dimenzijsko plast je mogoče dodati samo za običajno aktivno plast.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1233"/>
@@ -47870,7 +47873,7 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1805"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1863"/>
         <source>Layer DialogEx</source>
-        <translation>Pogovorno okno plastiEx</translation>
+        <translation>Pogovorno okno plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="202"/>
@@ -47923,19 +47926,21 @@ Prosimo, navedite drugačno vrednost.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1453"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>Ni entitet, ki bi se ujemale s peresnikom na vidnih plasteh.</translation>
+        <translation>Ni entitet, ki bi se ujemale s peresom na vidnih plasteh.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1454"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>Takšni subjekti obstajajo na zamrznjenih plasteh.</translation>
+        <translation>Takšne entitete obstajajo na zamrznjenih plasteh.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1455"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>Takšne entitete obstajajo na zaklenjenih slojih.</translation>
+        <translation>Takšne entitete obstajajo na zaklenjenih plasteh.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1456"/>
@@ -48930,7 +48935,7 @@ Jo želiš zamenjati?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="83"/>
         <source>cnlayer</source>
-        <translation>gnilaster</translation>
+        <translation>cnlayer</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="84"/>
@@ -48940,7 +48945,7 @@ Jo želiš zamenjati?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="88"/>
         <source>cslayer</source>
-        <translation>izločevalnik</translation>
+        <translation>cslayer</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="89"/>
@@ -49778,7 +49783,7 @@ Jo želiš zamenjati?</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="77"/>
         <source>No %1 layers found</source>
-        <translation>Ni najdenih slojev%1</translation>
+        <translation>Ni najdenih plasti (%1)</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="95"/>

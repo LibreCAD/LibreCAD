@@ -2656,7 +2656,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="252"/>
         <source>(De-)Select Layer</source>
-        <translation>(De-select Layer)</translation>
+        <translation>בחר / בטל בחירת שכבה</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="235"/>
@@ -3023,7 +3023,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="66"/>
         <source>Layers operations</source>
-        <translation>סוללות פעולות</translation>
+        <translation>פעולות שכבות</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="67"/>
@@ -3215,12 +3215,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity Layer</source>
-        <translation>שכבת ישות</translation>
+        <translation>שכבת אובייקט</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity&apos;s Layer</source>
-        <translation>השכבה של Entity</translation>
+        <translation>שכבת האובייקט</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="88"/>
@@ -3235,32 +3235,32 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="109"/>
         <source>Activate Entity&apos;s Layer</source>
-        <translation>בסביבה הקרובה של Entity&apos;s Layer</translation>
+        <translation>הפעל את שכבת האובייקט</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="110"/>
         <source>Hide Entity&apos;s Layer</source>
-        <translation>המונחים: Entity&apos;s Layer</translation>
+        <translation>הסתר את שכבת האובייקט</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="111"/>
         <source>Hide Other Layers than Entity&apos;s</source>
-        <translation>להסתיר שכבות אחרות מאשר נטיות</translation>
+        <translation>הסתר את כל השכבות מלבד שכבת האובייקט</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="112"/>
         <source>Lock Entity&apos;s Layer</source>
-        <translation>שכבות של Lock Entity</translation>
+        <translation>נעל את שכבת האובייקט</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="113"/>
         <source>Toggle Entity&apos;s Layer Construction</source>
-        <translation>בנייה של Entity&apos;s Layer</translation>
+        <translation>שנה מצב בנייה של שכבת האובייקט</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="114"/>
         <source>Toggle Entity&apos;s Layer Printing</source>
-        <translation>תגיות קשורות Entity&apos;s Layer Printing</translation>
+        <translation>שנה הדפסת שכבת האובייקט</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="225"/>
@@ -3965,7 +3965,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="410"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>המונחים: Active Layer</translation>
+        <translation>עדכן את העט הנוכחי לפי עט השכבה הפעילה</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="416"/>
@@ -4200,7 +4200,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="624"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>שנה &amp;נעילת שכבה</translation>
+        <translation>שנה נעי&amp;לת שכבה</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="625"/>
@@ -4215,7 +4215,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="627"/>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>המונחים: toggle &amp;construction Layer</translation>
+        <translation>שנה מצב שכבת &amp;בנייה</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="637"/>
@@ -4527,8 +4527,8 @@ or [%2]</source>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
-        <source>&amp;Hide all layers</source>
-        <translation>ה&amp;סתר את כל השכבות</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>הס&amp;תר את כל השכבות מלבד הנוכחית</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
@@ -5119,17 +5119,17 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>Enter layer name to %1</source>
-        <translation>שם השכבה %1</translation>
+        <translation>הזן שם שכבה (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>activate</source>
-        <translation>הפעלה</translation>
+        <translation>להפעלה</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>create</source>
-        <translation>ליצור</translation>
+        <translation>ליצירה</translation>
     </message>
 </context>
 <context>
@@ -5138,13 +5138,13 @@ Polar: (%4 &lt;%)
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
         <source>selected</source>
         <comment>Layers to export</comment>
-        <translation>נבחר</translation>
+        <translation>נבחרות</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
         <source>visible</source>
         <comment>Layers to export</comment>
-        <translation>גלוי</translation>
+        <translation>מוצגות</translation>
     </message>
 </context>
 <context>
@@ -6866,7 +6866,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_layer.cpp" line="75"/>
         <source>Specify entity with desired layer</source>
-        <translation type="unfinished">גוף ספציפי עם שכבה הרצויה</translation>
+        <translation type="unfinished">ציין אובייקט בשכבה הרצויה</translation>
     </message>
 </context>
 <context>
@@ -7471,7 +7471,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="66"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">אם נבדקו, ישויות ממושכות יוצבו על שכבה נוכחית, אחרת הן יוצבו לשכבות מקוריות.</translation>
+        <translation type="unfinished">אם תיבת הסימון מסומנת, האובייקטים המשוקפים ימוקמו בשכבה הנוכחית, אחרת הם ימוקמו בשכבותיהם המקוריות.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="69"/>
@@ -8766,7 +8766,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="67"/>
         <source>Layer to apply</source>
-        <translation type="unfinished">המונחים:</translation>
+        <translation type="unfinished">השכבה שתוחל</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="67"/>
@@ -8799,7 +8799,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="62"/>
         <source>Layer to which created circle should be placed</source>
-        <translation type="unfinished">שכבת מעגל שנוצר צריכה להיות ממוקמת</translation>
+        <translation type="unfinished">השכבה שבה יש למקם את המעגל שנוצר</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="66"/>
@@ -11104,7 +11104,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="98"/>
         <source>Layer of entity</source>
-        <translation>שכבת הישות</translation>
+        <translation>שכבת האובייקט</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="148"/>
@@ -12263,7 +12263,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="118"/>
         <source>Active Layer</source>
-        <translation type="unfinished">שכבת Active Layer</translation>
+        <translation type="unfinished">שכבה פעילה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="125"/>
@@ -12587,7 +12587,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="26"/>
         <source>Layer of dimension</source>
-        <translation>שכבת מימד</translation>
+        <translation>שכבת הממד</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="45"/>
@@ -13563,7 +13563,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="82"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">שכבה שאליה יש להציב</translation>
+        <translation type="unfinished">השכבה שבה יש למקם את השכפול</translation>
     </message>
 </context>
 <context>
@@ -13576,7 +13576,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="45"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">שכבה שאליה יש להציב</translation>
+        <translation type="unfinished">השכבה שבה יש למקם את השכפול</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="49"/>
@@ -14368,7 +14368,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="168"/>
         <source>Layer of entity</source>
-        <translation type="unfinished">שכבת הישות</translation>
+        <translation type="unfinished">שכבת האובייקט</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="204"/>
@@ -14432,12 +14432,12 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="135"/>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="179"/>
         <source>Export Layers</source>
-        <translation>שכבות יצוא</translation>
+        <translation>יצא שכבות</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="152"/>
         <source>Exported Layers</source>
-        <translation>שכבות מיובאות</translation>
+        <translation>שכבות מיוצאות</translation>
     </message>
 </context>
 <context>
@@ -15268,27 +15268,27 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="20"/>
         <source>Layer Settings</source>
-        <translation>הגדרות שכבתיות</translation>
+        <translation>הגדרות שכבה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="48"/>
         <source>Name of new layer. In order to create hierarchical layers, include name of virtual layer and layer name separator.</source>
-        <translation>שם של שכבה חדשה על מנת ליצור שכבות היררכיות, לכלול שם של שכבה וירטואלית ושם שכבתי.</translation>
+        <translation>שם השכבה החדשה. כדי ליצור שכבות היררכיות, כלול את שם השכבה הווירטואלית ואת מפריד שמות השכבות.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="64"/>
         <source>Parent Layers Path:</source>
-        <translation>שביל הורות:</translation>
+        <translation>נתיב שכבות האב:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="81"/>
         <source>Layer Type</source>
-        <translation>שכבה Type</translation>
+        <translation>סוג שכבה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="93"/>
         <source>Layer for various infromational elements, notes, drafts etc.</source>
-        <translation>שכבה עבור אלמנטים אינפורמטיביים שונים, הערות, טיוטות וכו &apos;.</translation>
+        <translation>שכבה עבור אלמנטים אינפורמטיביים שונים, הערות, טיוטות וכו&apos;.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="96"/>
@@ -15298,12 +15298,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="106"/>
         <source>Normal layer with drawing eleements</source>
-        <translation>שכבה נורמלית עם שרטוטים</translation>
+        <translation>שכבה רגילה עם אלמנטי סרטוט</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="109"/>
         <source>Normal</source>
-        <translation>נורמלי</translation>
+        <translation>רגילה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="119"/>
@@ -15318,7 +15318,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="132"/>
         <source>Layer with alternate position of entities located on normal layers</source>
-        <translation>שכבה עם מיקום חלופי של ישויות הממוקמות על שכבות נורמליות</translation>
+        <translation>שכבה עם מיקום חלופי של אובייקטים הנמצאים בשכבות רגילות</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="135"/>
@@ -15329,8 +15329,8 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="148"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>שכבת בנייה יש ישויות של קווים סטרייטים אינסופיים שנועדו לשמש לבנייה גיאומטרית.
-התוכן של שכבת בנייה לא אמור להופיע בדפוס.</translation>
+        <translation>שכבת בנייה מכילה אובייקטים שהם קווים ישרים אינסופיים, המיועדים לשמש לבנייה גיאומטרית.
+תוכן שכבת בנייה לא אמור להופיע בהדפסה.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="152"/>
@@ -15340,7 +15340,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="181"/>
         <source>Path for parent layer</source>
-        <translation>הדרך לשכבת הורים</translation>
+        <translation>נתיב שכבת האב</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="197"/>
@@ -15350,18 +15350,18 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="68"/>
         <source>Rename Virtual Layer</source>
-        <translation>המונחים Virtual Layer</translation>
+        <translation>שנה שם שכבה וירטואלית</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="72"/>
         <source>Add Secondary Layer</source>
-        <translation>תגית: Secondary Layer</translation>
+        <translation>הוסף שכבה משנית</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="78"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="85"/>
         <source>Add Layer</source>
-        <translation>הוסף Layer</translation>
+        <translation>הוסף שכבה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="91"/>
@@ -15377,7 +15377,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="200"/>
         <source>Rename Layer</source>
-        <translation>שם מקור: Layer</translation>
+        <translation>שנה שם שכבה</translation>
     </message>
 </context>
 <context>
@@ -15390,47 +15390,47 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="57"/>
         <source>Layers Export Options</source>
-        <translation>אפשרויות הייצוא</translation>
+        <translation>אפשרויות ייצוא שכבות</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="63"/>
         <source>If checked, Named Views from the document will be included into exported drawings. Otherwise, views are not included.</source>
-        <translation>אם תבדוק, תצוגות שמו של המסמך ייכללו בציורים מיוצאים. אחרת, דעות לא נכללות.</translation>
+        <translation>אם תיבת הסימון מסומנת, תצוגות בעלות שם מתוך המסמך ייכללו בסרטוטים המיוצאים. אחרת, התצוגות לא ייכללו.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="66"/>
         <source>Export Named Views too</source>
-        <translation>תגית: Named Views</translation>
+        <translation>יצא גם תצוגות בעלות שם</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="73"/>
         <source>If checked, each original exported layer will be stored in separate drawing. Otherwise, all layers will be in exported to one combined drawing.</source>
-        <translation>אם תבדוק, כל שכבה מייצאת מקורית מאוחסנים בציור נפרד. אחרת, כל השכבות יושקו לציור משולב אחד.</translation>
+        <translation>אם תיבת הסימון מסומנת, כל שכבה מקורית מיוצאת תישמר בסרטוט נפרד. אחרת, כל השכבות ייוצאו לסרטוט משולב אחד.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="76"/>
         <source>Export each layer to own drawing file</source>
-        <translation>ייצוא כל שכבה לקובץ רישום משלה</translation>
+        <translation>יצא כל שכבה לקובץ סרטוט משלה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="83"/>
         <source>If checked, entities will be stored in original layer. Otherwise, they are placed to layer &quot;0&quot;.</source>
-        <translation>אם תבדוק, ישויות יישמרו בשכבה מקורית. אחרת, הם ממוקמים לשכבה &quot;0&quot;.</translation>
+        <translation>אם תיבת הסימון מסומנת, האובייקטים יישמרו בשכבתם המקורית. אחרת, הם ימוקמו בשכבה &quot;0&quot;.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="89"/>
         <source>Retain original layer for entities</source>
-        <translation>החזרת שכבה מקורית לגופים</translation>
+        <translation>שמור על השכבה המקורית של האובייקטים</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="96"/>
         <source>If checked, UCSs from the document will be included into exported drawings. Otherwise, UCSs are not included.</source>
-        <translation>אם תבדוק, UCS מן המסמך ייכללו לציורים מיוצאים. אחרת, UCS אינם נכללים.</translation>
+        <translation>אם תיבת הסימון מסומנת, מערכות UCS מתוך המסמך ייכללו בסרטוטים המיוצאים. אחרת, מערכות ה-UCS לא ייכללו.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="99"/>
         <source>Export UCSs too</source>
-        <translation>ייצוא גם UCS</translation>
+        <translation>יצא גם מערכות UCS</translation>
     </message>
 </context>
 <context>
@@ -15438,17 +15438,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="20"/>
         <source>Layers Tree Options</source>
-        <translation>אפשרויות עץ</translation>
+        <translation>אפשרויות עץ השכבות</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="46"/>
         <source>Settings for naming convention that is used to create layers hierarchy based on flat list of layers</source>
-        <translation>הגדרות לועידת שמות המשמשות ליצירת היררכיה של שכבות בהתבסס על רשימה שטוחה של שכבות</translation>
+        <translation>הגדרות מוסכמת מתן השמות המשמשת ליצירת היררכיית שכבות על בסיס רשימה שטוחה של שכבות</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="49"/>
         <source>Naming Convention</source>
-        <translation>האמנה</translation>
+        <translation>מוסכמת מתן שמות</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="55"/>
@@ -15458,7 +15458,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="116"/>
         <source>Separator used for split inner name of layer to hierarchical names</source>
-        <translation>Separator השתמש בשם פנימי מפוצל של שכבה לשמות היררכיות</translation>
+        <translation>מפריד המשמש לפיצול השם הפנימי של שכבה לשמות היררכיים</translation>
     </message>
     <message>
         <source>Layer Level Name Separator</source>
@@ -15472,12 +15472,12 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
-        <translation>מימד</translation>
+        <translation>ממדים</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="201"/>
         <source>Suffix of layer&apos;s name that defines that layer is dimensional</source>
-        <translation>ריצוף השם של שכבה המגדיר כי שכבה היא ממדית</translation>
+        <translation>סיומת שם השכבה המגדירה שהשכבה היא שכבת ממדים</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="211"/>
@@ -15488,17 +15488,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="224"/>
         <source>Suffix of layer&apos;s name that defines that layer is informational.</source>
-        <translation>ריצוף של שם השכבה המגדיר כי שכבה היא מידע.</translation>
+        <translation>סיומת שם השכבה המגדירה שהשכבה היא שכבת מידע.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="234"/>
         <source>Alternative Position </source>
-        <translation>מיקום חלופי</translation>
+        <translation>מיקום חלופי </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
-        <translation>סופה של שם השכבה המגדירה כי שכבה זו היא עבור מיקום חלופי.</translation>
+        <translation>סיומת שם השכבה המגדירה שהשכבה היא שכבת מיקום חלופי.</translation>
     </message>
     <message>
         <source>Duplicating Name</source>
@@ -15507,22 +15507,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="61"/>
         <source>Prefix</source>
-        <translation>תיקון</translation>
+        <translation>קידומת</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="74"/>
         <source>Prefix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>תמונת שם של שכבה, אשר משמש אם שכבה עם שם כזה קיים (אומר, כאשר משוכפל נוצר)</translation>
+        <translation>קידומת שם השכבה המשמשת אם כבר קיימת שכבה בשם כזה (למשל, בעת יצירת שכפול)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="84"/>
         <source>Suffix</source>
-        <translation>תיקון סופי</translation>
+        <translation>סיומת</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="97"/>
         <source>Suffix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>ריצוף השם של שכבה המשמש אם שכבה עם שם כזה קיים (אומר, כאשר משוכפל נוצר)</translation>
+        <translation>סיומת שם השכבה המשמשת אם כבר קיימת שכבה בשם כזה (למשל, בעת יצירת שכפול)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="155"/>
@@ -15552,22 +15552,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="268"/>
         <source>Display and operations settings</source>
-        <translation>הגדרות תצוגה ותפעול</translation>
+        <translation>הגדרות תצוגה ופעולות</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="271"/>
         <source>Display and Operations</source>
-        <translation>תצוגה ותפעול</translation>
+        <translation>תצוגה ופעולות</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="329"/>
         <source>If checked, tooltip will include complete name of layer (with all upper layer levels)</source>
-        <translation>אם תבדוק, Tooltip יכלול שם שלם של שכבה (עם כל רמות השכבה העליונה)</translation>
+        <translation>אם תיבת הסימון מסומנת, תיאור הכלי יכלול את השם המלא של השכבה (עם כל רמות השכבות שמעליה)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="332"/>
         <source>Show full name as ToolTip</source>
-        <translation>שם מלא: ToolTip</translation>
+        <translation>הצג שם מלא כתיאור כלי</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="608"/>
@@ -15587,7 +15587,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="794"/>
         <source>Normal</source>
-        <translation type="unfinished">נורמלי</translation>
+        <translation type="unfinished">רגילה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="804"/>
@@ -15597,47 +15597,47 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="319"/>
         <source>If checked, icons for layer types will be shown</source>
-        <translation>אם תבדוק, סמלים לסוגים של שכבה יופיעו</translation>
+        <translation>אם תיבת הסימון מסומנת, יוצגו סמלים של סוגי השכבות</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="322"/>
         <source>Show layer type icons</source>
-        <translation>תגית: type icons</translation>
+        <translation>הצג סמלים של סוגי השכבות</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="309"/>
         <source>Indentation for child layers</source>
-        <translation>זיהוי שכבות ילדים</translation>
+        <translation>הזחה של שכבות בת</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="312"/>
         <source>Show indented layer names. Ident size:</source>
-        <translation>הצג שמות שכבתיים מזוהמים. גודל Ident:</translation>
+        <translation>הצג שמות שכבות עם הזחה. גודל ההזחה:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="277"/>
         <source>Size of the indent in characters to indent name of child layer from parent ones</source>
-        <translation>גודלו של indent בדמויות כדי לזהות את שם שכבת הילד מן ההורים</translation>
+        <translation>גודל ההזחה, בתווים, של שם שכבת בת ביחס לשכבות האב שלה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="352"/>
         <source>If checked, drag&amp;drop operations in layers list are enabled and layers hierarchy may be restructutured</source>
-        <translation>אם בודקים, פעילות גרור &amp;drop ברשימת השכבות מופעלת והיררכיה של השכבות עשויה להדריך מחדש</translation>
+        <translation>אם תיבת הסימון מסומנת, פעולות גרירה&amp;שחרור ברשימת השכבות מופעלות וניתן לשנות את מבנה היררכיית השכבות</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="355"/>
         <source>Allow restructuring via Drag&amp;Drop</source>
-        <translation>ניתן להורות מחדש באמצעות דרגו &amp; Drop</translation>
+        <translation>אפשר שינוי מבנה באמצעות גרירה ושחרור</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="293"/>
         <source>If primary layer is renames, secondary layers are renamed too.</source>
-        <translation>אם השכבה העיקרית היא שמות מחדש, גם שכבות משניות יש שם.</translation>
+        <translation>אם משנים את שם השכבה הראשית, משתנים גם שמות השכבות המשניות.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="296"/>
         <source>Rename secondary layers on primary rename</source>
-        <translation>שם המחבר: Renameשכבות משניות על שם מקורי</translation>
+        <translation>שנה את שמות השכבות המשניות בעת שינוי שם השכבה הראשית</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="376"/>
@@ -15651,7 +15651,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="470"/>
         <source>Background color for selected items in layers tree.</source>
-        <translation>צבע רקע עבור פריטים נבחרים בעץ שכבות.</translation>
+        <translation>צבע רקע עבור פריטים נבחרים בעץ השכבות.</translation>
     </message>
     <message>
         <source>Color for separator lines in layers tree view</source>
@@ -15660,7 +15660,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="420"/>
         <source>Background color for virtual layers items in layers list</source>
-        <translation>צבע רקע עבור פריטים וירטואליים ברשימה שכבות</translation>
+        <translation>צבע רקע עבור פריטי שכבות וירטואליות ברשימת השכבות</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="449"/>
@@ -15673,17 +15673,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="560"/>
         <source>Matched item in highlight filter mode</source>
-        <translation>פריט מותאם במצב מסנן</translation>
+        <translation>פריט תואם במצב ההדגשה של המסנן</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="391"/>
         <source>Color for items that matches filter conditions</source>
-        <translation>צבע עבור פריטים שמתאימים לתנאי סינון</translation>
+        <translation>צבע עבור פריטים התואמים לתנאי המסנן</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="379"/>
         <source>Appearance</source>
-        <translation type="unfinished">הופעה</translation>
+        <translation type="unfinished">מראה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="406"/>
@@ -15693,7 +15693,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="581"/>
         <source>Virtual layer background color</source>
-        <translation>רקע שכבתי וירטואלי</translation>
+        <translation>צבע רקע של שכבה וירטואלית</translation>
     </message>
     <message>
         <source>Threeview items separator grid</source>
@@ -15702,17 +15702,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="503"/>
         <source>Selected items background color</source>
-        <translation>פריטים נבחרים רקע</translation>
+        <translation>צבע רקע של פריטים נבחרים</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="523"/>
         <source>Background color for active layer item in layers tree</source>
-        <translation>צבע רקע עבור פריט שכבה פעיל בשכבות עץ</translation>
+        <translation>צבע רקע עבור פריט השכבה הפעילה בעץ השכבות</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="526"/>
         <source>Active layer background color</source>
-        <translation>צבע רקע Activeשכב</translation>
+        <translation>צבע רקע של השכבה הפעילה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="588"/>
@@ -15727,22 +15727,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="599"/>
         <source>Pens that will be set for newly created layers of different types.</source>
-        <translation>עטים שייקבעו עבור שכבות שנוצרו לאחרונה של סוגים שונים.</translation>
+        <translation>עטים שייקבעו עבור שכבות חדשות מסוגים שונים.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="602"/>
         <source>Default Pens</source>
-        <translation>עטים ברירת מחדל</translation>
+        <translation>עטי ברירת מחדל</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="68"/>
         <source>Normal Layer</source>
-        <translation>שכבה נורמלית</translation>
+        <translation>שכבה רגילה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="69"/>
         <source>Dimensional Layer</source>
-        <translation>שכבת הממדים</translation>
+        <translation>שכבת ממדים</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="70"/>
@@ -15752,7 +15752,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Alternative Position Layer</source>
-        <translation>שכבת מיקום חלופית</translation>
+        <translation>שכבת מיקום חלופי</translation>
     </message>
     <message>
         <source>grid</source>
@@ -15761,39 +15761,39 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="103"/>
         <source>highlighted item</source>
-        <translation>פריט מסומן</translation>
+        <translation>פריט מודגש</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="110"/>
         <source>virtual layer background</source>
-        <translation>רקע אלומיניום</translation>
+        <translation>רקע שכבה וירטואלית</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="118"/>
         <source>selected item background</source>
-        <translation>רקע פריט</translation>
+        <translation>רקע פריט נבחר</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="126"/>
         <source>active layer background</source>
-        <translation>רקע שכבות פעיל</translation>
+        <translation>רקע השכבה הפעילה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
         <source>Error</source>
-        <translation>טעות שגיאה</translation>
+        <translation>שגיאה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>ערך לא חוקי מספק צבע %1.
-אנא ציינו ערך אחר.</translation>
+        <translation>סופק ערך לא חוקי עבור צבע %1.
+נא לציין ערך אחר.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="245"/>
         <source>Select Color</source>
-        <translation>צבע נבחר</translation>
+        <translation>בחר צבע</translation>
     </message>
 </context>
 <context>
@@ -15801,17 +15801,17 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="150"/>
         <source>Filter</source>
-        <translation>Filter</translation>
+        <translation>מסנן</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="152"/>
         <source>Looking for matching layer names</source>
-        <translation>חיפוש שמות שכבתיים</translation>
+        <translation>חיפוש שמות שכבות תואמים</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="157"/>
         <source>Highlight Mode</source>
-        <translation>מצב תאורה גבוה</translation>
+        <translation>מצב הדגשה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="167"/>
@@ -15825,43 +15825,43 @@ Please specify a different value.</source>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>להסתיר את כל השכבות</translation>
+        <source>Hide all layers except current</source>
+        <translation>הסתר את כל השכבות מלבד הנוכחית</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="200"/>
         <source>Show Secondary Layers</source>
-        <translation>תגית: Secondary Layers</translation>
+        <translation>הצג שכבות משניות</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="210"/>
         <source>Show Active Layer Only</source>
-        <translation>תגית: Active Layer</translation>
+        <translation>הצג רק את השכבה הפעילה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="218"/>
         <source>Expand All</source>
-        <translation>להרחיב את הכל</translation>
+        <translation>הרחב הכל</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="226"/>
         <source>Collapse All</source>
-        <translation>כל</translation>
+        <translation>כווץ הכל</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="234"/>
         <source>Collapse Secondary</source>
-        <translation>תגית: Secondary</translation>
+        <translation>כווץ שכבות משניות</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="242"/>
         <source>Unlock all layers</source>
-        <translation>לנתק את כל השכבות</translation>
+        <translation>שחרר את נעילת כל השכבות</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="249"/>
         <source>Lock all layers</source>
-        <translation>לנעול את כל השכבות</translation>
+        <translation>נעל את כל השכבות</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="256"/>
@@ -15871,190 +15871,190 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="263"/>
         <source>Add dimensions Layer</source>
-        <translation>המונחים Layer</translation>
+        <translation>הוסף שכבת ממדים</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="272"/>
         <source>Remove layer</source>
-        <translation>הסרת שכבה</translation>
+        <translation>הסר שכבה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="279"/>
         <source>Modify layer attributes / rename</source>
-        <translation>שינוי תכונות שכבתיות / rename</translation>
+        <translation>שנה תכונות שכבה / שנה שם</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="286"/>
         <source>Flat List Mode)</source>
-        <translation>מצב רשימה שטוח)</translation>
+        <translation>מצב רשימה שטוחה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="656"/>
         <source>&amp;Add Child Layer</source>
-        <translation>תגית: Child Layer</translation>
+        <translation>הו&amp;סף שכבת בת</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="657"/>
         <source>&amp;Rename</source>
-        <translation>המונחים</translation>
+        <translation>שנה ש&amp;ם</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="658"/>
         <source>&amp;Remove Layers (Sub-Tree)</source>
-        <translation>&amp; Remove Layers (Sub-Tree)</translation>
+        <translation>הס&amp;ר שכבות (תת-עץ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="660"/>
         <source>&amp;Copy Structure (Sub-Tree)</source>
-        <translation>מבנה (Sub-Tree)</translation>
+        <translation>ה&amp;עתק מבנה (תת-עץ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="661"/>
         <source>&amp;Duplicate Content (Sub-Tree)</source>
-        <translation>תוכן מבוסס (Sub-Tree)</translation>
+        <translation>ש&amp;כפל תוכן (תת-עץ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="663"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>Entities (Sub-Tree)</translation>
+        <translation>ב&amp;חר אובייקטים (תת-עץ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="668"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>תגית: Layer &amp; Attributes</translation>
+        <translation>&amp;ערוך תכונות שכבה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="670"/>
         <source>&amp;Remove Layer</source>
-        <translation>Remove Layer</translation>
+        <translation>ה&amp;סר שכבה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="679"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>תגית: Dimensions Sub-Layer</translation>
+        <translation>הוס&amp;ף תת-שכבת ממדים</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="683"/>
         <source>&amp;Add Info Sub-Layer</source>
-        <translation>תגית: Sub-Layer</translation>
+        <translation>הוסף תת-ש&amp;כבת מידע</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="687"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
-        <translation>תגית: Alternative View Sub-Layer</translation>
+        <translation>הוסף תת-שכבת מיקום &amp;חלופי</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="693"/>
         <source>&amp;Remove Sub-layers</source>
-        <translation>Remove Sub-layers</translation>
+        <translation>הס&amp;ר תת-שכבות</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="701"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="711"/>
         <source>Convert to Dimensional Layer</source>
-        <translation>המונחים: Dimensional Layer</translation>
+        <translation>המר לשכבת ממדים</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="702"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="714"/>
         <source>Convert to Info Layer</source>
-        <translation>עקבו אחרי Info Layer</translation>
+        <translation>המר לשכבת מידע</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="703"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="717"/>
         <source>Convert to Alternative Position Layer</source>
-        <translation>המונחים: Alternative Position Layer</translation>
+        <translation>המר לשכבת מיקום חלופי</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="709"/>
         <source>Convert to Normal Layer</source>
-        <translation>המונחים: Normal Layer</translation>
+        <translation>המר לשכבה רגילה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="723"/>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>אפשרויות ל-Select Layer&apos;s Entities</translation>
+        <translation>בחר את אוביי&amp;קטי השכבה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="726"/>
         <source>&amp;Create Layer Copy</source>
-        <translation>תגית: Layer Copy</translation>
+        <translation>צור עותק ש&amp;ל השכבה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="727"/>
         <source>&amp;Duplicate Layer With Content</source>
-        <translation>המונחים: content</translation>
+        <translation>שכפל שכבה עם התוכ&amp;ן</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="731"/>
         <source>Move Selection to Layer</source>
-        <translation>עקבו אחרי Layer</translation>
+        <translation>העבר את הבחירה לשכבה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="732"/>
         <source>Duplicate Selection to Layer</source>
-        <translation>בחירה לשכבה</translation>
+        <translation>שכפל את הבחירה לשכבה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="739"/>
         <source>&amp;Add Layer</source>
-        <translation>תגית: Layer</translation>
+        <translation>הו&amp;סף שכבה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="741"/>
         <source>&amp;Freeze Others Layers</source>
-        <translation>להקפיא אחרים</translation>
+        <translation>&amp;הקפא את שאר השכבות</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="742"/>
         <source>&amp;Defreeze All Layers</source>
-        <translation>תגית: All Layers</translation>
+        <translation>ה&amp;פשר את כל השכבות</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>All Layers</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>הס&amp;תר את כל השכבות מלבד הנוכחית</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>
         <source>&amp;Unlock All Layers</source>
-        <translation>Unlock All Layers</translation>
+        <translation>&amp;שחרר את נעילת כל השכבות</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="745"/>
         <source>&amp;Lock All Layers</source>
-        <translation>כל השכבות</translation>
+        <translation>&amp;נעל את כל השכבות</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="746"/>
         <source>Enable &amp;Printing All Layers</source>
-        <translation>אפשר הדפסה של כל השכבות</translation>
+        <translation>&amp;אפשר הדפסה של כל השכבות</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="747"/>
         <source>&amp;Disable Printing All Layers</source>
-        <translation>הדפסת כל שכבות</translation>
+        <translation>הש&amp;בת הדפסה של כל השכבות</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="750"/>
         <source>&amp;Export Single Layer</source>
-        <translation>תגית: Single Layer</translation>
+        <translation>&amp;יצא שכבה בודדת</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="754"/>
         <source>&amp;Export Layer Sub-Tree</source>
-        <translation>קטגוריה: Sub-Tree</translation>
+        <translation>י&amp;צא תת-עץ שכבות</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="758"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>ייצוא &amp; Visible Layer(s)</translation>
+        <translation>יצא שכבות &amp;מוצגות</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="760"/>
         <source>&amp;Find And Remove Empty Layers</source>
-        <translation>למצוא ולהסיר שכבות ריקות</translation>
+        <translation>מצא &amp;והסר שכבות ריקות</translation>
     </message>
 </context>
 <context>
@@ -23343,7 +23343,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="82"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">אם נבדקו, ישויות ממושכות יוצבו על שכבה נוכחית, אחרת הן יוצבו לשכבות מקוריות.</translation>
+        <translation type="unfinished">אם תיבת הסימון מסומנת, האובייקטים המשוקפים ימוקמו בשכבה הנוכחית, אחרת הם ימוקמו בשכבותיהם המקוריות.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
@@ -23642,12 +23642,12 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="45"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="unfinished">אם תבדוק, ישויות שנוצרו יוצבו לשכבה הנוכחית. אחרת, הם יוקמו לשכבות מקוריות.</translation>
+        <translation type="unfinished">אם תיבת הסימון מסומנת, האובייקטים שנוצרו ימוקמו בשכבה הנוכחית. אחרת, הם ימוקמו בשכבותיהם המקוריות. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="48"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">שימוש בשכבה הנוכחית</translation>
+        <translation type="unfinished">השתמש בשכבה הנוכחית</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="55"/>
@@ -23828,12 +23828,12 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="144"/>
         <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="unfinished">אם תבדוק, ישויות שנוצרו יוצבו לשכבה הנוכחית, אחרת יהיו בשכבות מקוריות.</translation>
+        <translation type="unfinished">אם תיבת הסימון מסומנת, האובייקטים שנוצרו ימוקמו בשכבה הנוכחית, אחרת הם יהיו בשכבותיהם המקוריות. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="147"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">שימוש בשכבה הנוכחית</translation>
+        <translation type="unfinished">השתמש בשכבה הנוכחית</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="166"/>
@@ -24244,12 +24244,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="93"/>
         <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">אם תבדוק, ישויות שנוצרו יוצבו לשכבה הנוכחית, אחרת הן יהיו בשכבות מקוריות.</translation>
+        <translation type="unfinished">אם תיבת הסימון מסומנת, האובייקטים שנוצרו ימוקמו בשכבה הנוכחית, אחרת הם יהיו בשכבותיהם המקוריות.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="96"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">שימוש בשכבה הנוכחית</translation>
+        <translation type="unfinished">השתמש בשכבה הנוכחית</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="109"/>
@@ -24742,13 +24742,13 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="263"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="298"/>
         <source>By Layer</source>
-        <translation>על ידי Layer</translation>
+        <translation>לפי שכבה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="264"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="299"/>
         <source>By Block</source>
-        <translation>על ידי Block</translation>
+        <translation>לפי בלוק</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="266"/>
@@ -25370,27 +25370,27 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="188"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>המונחים: Active Layer</translation>
+        <translation>עדכן את העט הנוכחי לפי עט השכבה הפעילה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="205"/>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation>ארכיון תגים: Active Layer&apos;s Pen</translation>
+        <translation>מלא את עורך העט מהעט של השכבה הפעילה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="208"/>
         <source>Pick from Active Layer</source>
-        <translation>תגית: Active Layer</translation>
+        <translation>בחר מהשכבה הפעילה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="222"/>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation>עקבו אחרי Active Layer Pen</translation>
+        <translation>החל את עט העורך על עט השכבה הפעילה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="225"/>
         <source>Apply To Layer</source>
-        <translation>החל שכבת</translation>
+        <translation>החל על שכבה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="239"/>
@@ -25475,7 +25475,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="305"/>
         <source>&amp;Apply Pen To Active Layer</source>
-        <translation>עקבו אחרי Active Layer</translation>
+        <translation>&amp;החל עט על השכבה הפעילה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="306"/>
@@ -29488,7 +29488,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="60"/>
         <source>Active Layer</source>
-        <translation type="unfinished">שכבת Active Layer</translation>
+        <translation type="unfinished">שכבה פעילה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="60"/>
@@ -29498,7 +29498,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="78"/>
         <source>Name</source>
-        <translation type="unfinished">שם השם</translation>
+        <translation type="unfinished">שם</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="78"/>
@@ -29518,7 +29518,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="122"/>
         <source>Line Width</source>
-        <translation type="unfinished">קו Width</translation>
+        <translation type="unfinished">רוחב קו</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="122"/>
@@ -29528,7 +29528,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="144"/>
         <source>Line Type</source>
-        <translation type="unfinished">קו סוג</translation>
+        <translation type="unfinished">סוג קו</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="144"/>
@@ -29539,12 +29539,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="167"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="183"/>
         <source>Normal</source>
-        <translation type="unfinished">נורמלי</translation>
+        <translation type="unfinished">רגילה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="171"/>
         <source>Dimensional</source>
-        <translation type="unfinished">מימד</translation>
+        <translation type="unfinished">ממדים</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="175"/>
@@ -29634,7 +29634,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="303"/>
         <source>Unlock all layers</source>
-        <translation type="unfinished">לנתק את כל השכבות</translation>
+        <translation type="unfinished">שחרר את נעילת כל השכבות</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="303"/>
@@ -33107,7 +33107,8 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="127"/>
         <source>
 Layer: </source>
-        <translation>שכבה:</translation>
+        <translation>
+שכבה: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="573"/>
@@ -35913,12 +35914,12 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="208"/>
         <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="unfinished">ספקטרום עותקים whetether יוכנס לשכבה הנוכחית או מקורית</translation>
+        <translation type="unfinished">קובע אם העותקים יוכנסו לשכבה הנוכחית או לשכבה המקורית</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="211"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">שימוש בשכבה הנוכחית</translation>
+        <translation type="unfinished">השתמש בשכבה הנוכחית</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="218"/>
@@ -36159,12 +36160,12 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="209"/>
         <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">אם תבדוק, שרידים חדשים יוקמו על שכבה נוכחית, אחרת הם יהיו בשכבות מקוריות.</translation>
+        <translation type="unfinished">אם תיבת הסימון מסומנת, האובייקטים החדשים ימוקמו בשכבה הנוכחית, אחרת הם יהיו בשכבותיהם המקוריות.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="212"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">שימוש בשכבה הנוכחית</translation>
+        <translation type="unfinished">השתמש בשכבה הנוכחית</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="219"/>
@@ -36402,12 +36403,12 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="83"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="unfinished">אם תבדוק, ישויות שנוצרו יוצבו לשכבה הנוכחית. אחרת, הם יוקמו לשכבות מקוריות.</translation>
+        <translation type="unfinished">אם תיבת הסימון מסומנת, האובייקטים שנוצרו ימוקמו בשכבה הנוכחית. אחרת, הם ימוקמו בשכבותיהם המקוריות. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="86"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">שימוש בשכבה הנוכחית</translation>
+        <translation type="unfinished">השתמש בשכבה הנוכחית</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="107"/>
@@ -37316,7 +37317,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="77"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">אם תבדוק, ישויות שנוצרו יוצבו על שכבה נוכחית, אחרת הן יוצבו לשכבות מקוריות.</translation>
+        <translation type="unfinished">אם תיבת הסימון מסומנת, האובייקטים שנוצרו ימוקמו בשכבה הנוכחית, אחרת הם ימוקמו בשכבותיהם המקוריות.</translation>
     </message>
 </context>
 <context>
@@ -37354,12 +37355,12 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="73"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">אם תבדוק, ישויות שנוצרו יוצבו על שכבה נוכחית, אחרת הן יוצבו לשכבות מקוריות.</translation>
+        <translation type="unfinished">אם תיבת הסימון מסומנת, האובייקטים שנוצרו ימוקמו בשכבה הנוכחית, אחרת הם ימוקמו בשכבותיהם המקוריות.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="76"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">שימוש בשכבה הנוכחית</translation>
+        <translation type="unfinished">השתמש בשכבה הנוכחית</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="83"/>
@@ -37497,7 +37498,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="71"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">אם תבדוק, ישויות שנוצרו יוצבו על שכבה נוכחית, אחרת הן יוצבו לשכבות מקוריות.</translation>
+        <translation type="unfinished">אם תיבת הסימון מסומנת, האובייקטים שנוצרו ימוקמו בשכבה הנוכחית, אחרת הם ימוקמו בשכבותיהם המקוריות.</translation>
     </message>
 </context>
 <context>
@@ -37510,7 +37511,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="32"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">אם תבדוק, ישויות שנוצרו יוצבו על שכבה נוכחית, אחרת הן יוצבו לשכבות מקוריות.</translation>
+        <translation type="unfinished">אם תיבת הסימון מסומנת, האובייקטים שנוצרו ימוקמו בשכבה הנוכחית, אחרת הם ימוקמו בשכבותיהם המקוריות.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="35"/>
@@ -38385,7 +38386,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="216"/>
         <source>Entity&apos;s Layer</source>
-        <translation>השכבה של Entity</translation>
+        <translation>שכבת האובייקט</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="250"/>
@@ -39081,7 +39082,7 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="236"/>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="236"/>
         <source>Layers Tree</source>
-        <translation>שכבת עץ</translation>
+        <translation>עץ שכבות</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="261"/>
@@ -39176,7 +39177,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="540"/>
         <source>Active Layer</source>
-        <translation>שכבת Active Layer</translation>
+        <translation>שכבה פעילה</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="542"/>
@@ -39835,12 +39836,12 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="32"/>
         <source>Selection</source>
-        <translation>בחירת בחירה</translation>
+        <translation>בחירה</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="105"/>
         <source>Name of Current Active Layer</source>
-        <translation>שם: Current Active Layer</translation>
+        <translation>שם השכבה הפעילה הנוכחית</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="80"/>
@@ -39895,12 +39896,12 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="100"/>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="276"/>
         <source>By Layer</source>
-        <translation>על ידי Layer</translation>
+        <translation>לפי שכבה</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="101"/>
         <source>By Block</source>
-        <translation>על ידי Block</translation>
+        <translation>לפי בלוק</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="108"/>
@@ -40334,7 +40335,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="54"/>
         <source>Layer to apply</source>
-        <translation>המונחים:</translation>
+        <translation>השכבה שתוחל</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="69"/>
@@ -43500,7 +43501,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5074"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head/&gt;&lt;body&gt;&lt;p&gt; כאשר ניתן, הפעלת שכבה תשנה את כל הגופים שנבחרו לשכבה חדשה זו. כדי לשנות שכבה של ישויות מרובות: תחילה לבחור ישויות צורך; להפעיל שכבה בשכבה widget. זה הופך את כל הגופים שנבחרו להשתייך לשכבה החדשה.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;כאשר אפשרות זו מופעלת, הפעלת שכבה תעביר את כל האובייקטים הנבחרים לשכבה החדשה. כדי לשנות את השכבה של כמה אובייקטים: בחר תחילה את האובייקטים הדרושים, ולאחר מכן הפעל שכבה בחלונית השכבות. כך כל האובייקטים הנבחרים ישויכו לשכבה החדשה.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5934"/>
@@ -44621,7 +44622,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5077"/>
         <source>Modify layer of selected entities, at layer activation</source>
-        <translation>Modify שכבת ישויות נבחרות, ב-שכבת הפעלה</translation>
+        <translation>שנה את שכבת האובייקטים הנבחרים בעת הפעלת שכבה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5490"/>
@@ -45790,12 +45791,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="85"/>
         <source>Export invisible layers</source>
-        <translation>רשומות בלתי נראות</translation>
+        <translation>יצא שכבות מוסתרות</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="92"/>
         <source>Export visible construction layers</source>
-        <translation>שכבות בנייה גלויות</translation>
+        <translation>יצא שכבות בנייה מוצגות</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="104"/>
@@ -47222,7 +47223,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_layerbox.cpp" line="68"/>
         <source>- Unchanged -</source>
-        <translation>שינוי -</translation>
+        <translation>- ללא שינוי -</translation>
     </message>
 </context>
 <context>
@@ -47230,7 +47231,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="20"/>
         <source>Layer Settings</source>
-        <translation>הגדרות שכבתיות</translation>
+        <translation>הגדרות שכבה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="46"/>
@@ -47246,8 +47247,8 @@ so default step value required for baking</source>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="29"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>שכבת בנייה יש ישויות של קווים סטרייטים אינסופיים שנועדו לשמש לבנייה גיאומטרית.
-התוכן של שכבת בנייה לא אמור להופיע בדפוס.</translation>
+        <translation>שכבת בנייה מכילה אובייקטים שהם קווים ישרים אינסופיים, המיועדים לשמש לבנייה גיאומטרית.
+תוכן שכבת בנייה לא אמור להופיע בהדפסה.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="33"/>
@@ -47260,12 +47261,12 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="298"/>
         <source>Looking for matching layer names</source>
-        <translation>חיפוש שמות שכבתיים</translation>
+        <translation>חיפוש שמות שכבות תואמים</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="296"/>
         <source>Filter</source>
-        <translation>Filter</translation>
+        <translation>מסנן</translation>
     </message>
 </context>
 <context>
@@ -47297,12 +47298,12 @@ The contents of a Construction Layer should not appear in printout.</source>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="83"/>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="189"/>
         <source>By Layer</source>
-        <translation>על ידי Layer</translation>
+        <translation>לפי שכבה</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="84"/>
         <source>By Block</source>
-        <translation>על ידי Block</translation>
+        <translation>לפי בלוק</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="87"/>
@@ -47626,7 +47627,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="239"/>
         <source>By Layer</source>
-        <translation>על ידי Layer</translation>
+        <translation>לפי שכבה</translation>
     </message>
 </context>
 <context>
@@ -47645,17 +47646,17 @@ P, Li {לבן-space: pre-wrap; }
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="240"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1739"/>
         <source>Remove Layer</source>
-        <translation>להסיר שכבה</translation>
+        <translation>הסר שכבה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="183"/>
         <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>שכבה &quot;%1&quot; לעולם לא ניתן להסיר.</translation>
+        <translation>לעולם לא ניתן להסיר את השכבה &quot;%1&quot;.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="304"/>
         <source>Layer Dialog</source>
-        <translation>המונחים:</translation>
+        <translation>דו-שיח שכבה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="406"/>
@@ -47673,7 +47674,7 @@ P, Li {לבן-space: pre-wrap; }
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="264"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="308"/>
         <source>Layer Properties</source>
-        <translation>שכבה Properties</translation>
+        <translation>מאפייני שכבה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="84"/>
@@ -47684,29 +47685,29 @@ P, Li {לבן-space: pre-wrap; }
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="173"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>שכבת &quot;%1&quot; וכל הגופים עליה יוסרו.
-פעולה זו לא יכולה להיות בלתי מזוינת.</translation>
+        <translation>השכבה &quot;%1&quot; וכל האובייקטים שבה יוסרו.
+לא ניתן לבטל פעולה זו.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="240"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1739"/>
         <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>שכבת &quot;0&quot; לעולם לא ניתן להסיר.</translation>
+        <translation>לעולם לא ניתן להסיר את השכבה &quot;0&quot;.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="248"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1787"/>
         <source>Remove %n layer(s)</source>
         <translation>
-            <numerusform>إزالة %n طبقة</numerusform>
-            <numerusform>إزالة %n طبقات</numerusform>
+            <numerusform>הסר שכבה אחת</numerusform>
+            <numerusform>הסר %n שכבות</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="251"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1788"/>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>השכבות המרשימות וכל הגופים עליהם יוסרו.</translation>
+        <translation>השכבות המפורטות וכל האובייקטים שבהן יוסרו.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="253"/>
@@ -47717,13 +47718,13 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="257"/>
         <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>אזהרה: &quot;0&quot; לעולם לא ניתן להסיר.</translation>
+        <translation>אזהרה: לעולם לא ניתן להסיר את השכבה &quot;0&quot;.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="260"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1790"/>
         <source>Layers for removal:</source>
-        <translation>שכבות להסרת:</translation>
+        <translation>שכבות להסרה:</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="463"/>
@@ -47746,7 +47747,7 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="230"/>
         <source>Layer empty name is not allowed.</source>
-        <translation>שם ריק לא מותר.</translation>
+        <translation>שם שכבה ריק אינו מותר.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="265"/>
@@ -47758,8 +47759,8 @@ This action can NOT be undone.</source>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation>נסו ליצור שכבה עם שם שכפול. שם שכבתי מורכב
-[%1]
+        <translation>ניסיון ליצור שכבה בשם שכבר קיים. שם השכבה הכפול הוא 
+[%1].
 נא לציין שם אחר.</translation>
     </message>
     <message>
@@ -47772,8 +47773,8 @@ Please specify a different name.</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="143"/>
         <source>Layer list separator string is empty. It will not be possible to build layers tree.
 Please specify a different value.</source>
-        <translation>מיתר רשימת ה-Sparator הוא ריק. לא ניתן לבנות עץ שכבות.
-אנא ציינו ערך אחר.</translation>
+        <translation>מחרוזת המפריד של רשימת השכבות ריקה. לא ניתן יהיה לבנות את עץ השכבות.
+נא לציין ערך אחר.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="962"/>
@@ -47797,22 +47798,22 @@ Clear filtering mask and repeat.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="973"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>לא נמצאו שכבות ללא ישויות, אין מה להסיר.</translation>
+        <translation>לא נמצאו שכבות ללא אובייקטים, אין מה להסיר.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1116"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1161"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1169"/>
         <source>Add Layer</source>
-        <translation>הוסף Layer</translation>
+        <translation>הוסף שכבה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1117"/>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation>שכבת ילדים כזו כבר קיימת
-[%1]
+        <translation>שכבת בת כזו כבר קיימת עבור 
+[%1].
 נא לציין שם אחר.</translation>
     </message>
     <message>
@@ -47820,14 +47821,16 @@ Please specify a different name.</source>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation>שכבת ילדים כזו כבר קיימת
-[%1].</translation>
+        <translation>שכבת בת כזו כבר קיימת עבור 
+[%1].
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1170"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>ניתן להוסיף שכבה ממדית רק עבור שכבה פעילה רגילה.</translation>
+        <translation>ניתן להוסיף שכבת ממדים רק עבור שכבה פעילה רגילה.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1233"/>
@@ -47860,7 +47863,7 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1805"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1863"/>
         <source>Layer DialogEx</source>
-        <translation>המונחים:</translation>
+        <translation>דו-שיח שכבה מורחב</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="202"/>
@@ -47913,19 +47916,21 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1453"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>אין גופים שמתאימים לעט על שכבות גלויות.</translation>
+        <translation>אין אובייקטים התואמים לעט בשכבות המוצגות.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1454"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>ישויות כאלה קיימות בשכבות קפואות.</translation>
+        <translation>אובייקטים כאלה קיימים בשכבות קפואות.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1455"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>ישויות כאלה קיימות בשכבות נעולות.</translation>
+        <translation>אובייקטים כאלה קיימים בשכבות נעולות.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1456"/>
@@ -49438,7 +49443,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="77"/>
         <source>No %1 layers found</source>
-        <translation>No %1 שכבות נמצאו</translation>
+        <translation>לא נמצאו שכבות %1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="95"/>
@@ -51386,7 +51391,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_filedialogservice.cpp" line="195"/>
         <source>Combine all layers</source>
-        <translation>לשלב את כל השכבות</translation>
+        <translation>שלב את כל השכבות</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="180"/>
@@ -51445,13 +51450,13 @@ Do you want to replace it?</source>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="50"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="206"/>
         <source>By Layer</source>
-        <translation>על ידי Layer</translation>
+        <translation>לפי שכבה</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="56"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="209"/>
         <source>By Block</source>
-        <translation>על ידי Block</translation>
+        <translation>לפי בלוק</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="212"/>

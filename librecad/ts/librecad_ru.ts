@@ -3487,12 +3487,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="623"/>
         <source>&amp;Edit Layer</source>
-        <translation>&amp;Редактировать слой</translation>
+        <translation>Р&amp;едактировать слой</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="624"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>Защита &amp;слоя</translation>
+        <translation>Блокировка &amp;слоя</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="625"/>
@@ -3507,7 +3507,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="627"/>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>&amp;Вспомогательный</translation>
+        <translation>Всп&amp;омогательный слой</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="637"/>
@@ -4033,12 +4033,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity Layer</source>
-        <translation>Оперции со слоем объекта</translation>
+        <translation>Операции со слоем объекта</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity&apos;s Layer</source>
-        <translation>Слой Объекта</translation>
+        <translation>Слой объекта</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="88"/>
@@ -4053,12 +4053,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="109"/>
         <source>Activate Entity&apos;s Layer</source>
-        <translation>Активировать Слой объекта</translation>
+        <translation>Активировать слой объекта</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="110"/>
         <source>Hide Entity&apos;s Layer</source>
-        <translation>Скрыть Слой объекта</translation>
+        <translation>Скрыть слой объекта</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="111"/>
@@ -4068,17 +4068,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="112"/>
         <source>Lock Entity&apos;s Layer</source>
-        <translation>Заблокировать Слой объекта</translation>
+        <translation>Заблокировать слой объекта</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="113"/>
         <source>Toggle Entity&apos;s Layer Construction</source>
-        <translation>Переключить вспомогательный режим Слоя объекта</translation>
+        <translation>Переключить вспомогательный режим слоя объекта</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="114"/>
         <source>Toggle Entity&apos;s Layer Printing</source>
-        <translation>Переключить режим печати Слоя объекта</translation>
+        <translation>Переключить режим печати слоя объекта</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="196"/>
@@ -4505,8 +4505,8 @@ or [%2]</source>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp;Скрыть все слои</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Скрыть все слои, кроме &amp;текущего</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
@@ -4521,12 +4521,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="628"/>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>&amp;Экспорт Выбранных Слоев(s)</translation>
+        <translation>&amp;Экспортировать выбранные слои</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="629"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Экспортировать &amp;Видимые Слои(s)</translation>
+        <translation>Э&amp;кспортировать видимые слои</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="635"/>
@@ -7406,7 +7406,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_filler.cpp" line="62"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers</source>
-        <translation>Если выбрано, созданые объекты будут созданы в активном слое, иначе они будут слоях объектов-оригиналов</translation>
+        <translation>Если выбрано, созданные объекты будут помещены в текущий слой, иначе они будут помещены в слои оригинальных объектов</translation>
     </message>
 </context>
 <context>
@@ -7440,12 +7440,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="66"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation>Если выбрано, созданые объекты будут созданы в активном слое, иначе они будут слоях объектов-оригиналов</translation>
+        <translation>Если выбрано, созданные объекты будут помещены в текущий слой, иначе они будут помещены в слои оригинальных объектов.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="69"/>
         <source>User Current Layer</source>
-        <translation>В &amp;текущий слой</translation>
+        <translation>В текущий слой</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="76"/>
@@ -8745,7 +8745,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="67"/>
         <source>Layer to apply</source>
-        <translation>В слой</translation>
+        <translation>Слой назначения</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="67"/>
@@ -12131,7 +12131,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="118"/>
         <source>Active Layer</source>
-        <translation>Активный Слой</translation>
+        <translation>Активный слой</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="135"/>
@@ -13508,7 +13508,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="82"/>
         <source>Layer mode</source>
-        <translation>Тип слоя</translation>
+        <translation>Слой</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="82"/>
@@ -15250,12 +15250,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="20"/>
         <source>Layer Settings</source>
-        <translation>Настройки Слоя</translation>
+        <translation>Настройки слоя</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="48"/>
         <source>Name of new layer. In order to create hierarchical layers, include name of virtual layer and layer name separator.</source>
-        <translation>Название нового слоя. Для создания иерархических слоев, включите также путь виртуального слоя и разделитель имен слоев</translation>
+        <translation>Название нового слоя. Для создания иерархических слоев включите также путь виртуального слоя и разделитель имен слоев.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="64"/>
@@ -15270,12 +15270,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="93"/>
         <source>Layer for various infromational elements, notes, drafts etc.</source>
-        <translation>Слой для заметок, информации итд.</translation>
+        <translation>Слой для заметок, информации и т. д.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="96"/>
         <source>Informational</source>
-        <translation>Заметки</translation>
+        <translation>Слой заметок</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="106"/>
@@ -15290,22 +15290,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="119"/>
         <source>Layer that holds dimensions</source>
-        <translation>Слой который содержит размеры</translation>
+        <translation>Слой, который содержит размеры</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="122"/>
         <source>Dimensions</source>
-        <translation>Размеры</translation>
+        <translation>Слой размеров</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="132"/>
         <source>Layer with alternate position of entities located on normal layers</source>
-        <translation>Слой с альтернативными положениями элемента чертежа</translation>
+        <translation>Слой с альтернативным положением объектов, расположенных на обычных слоях</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="135"/>
         <source>Alternative Position</source>
-        <translation>Альтернативное положение</translation>
+        <translation>Слой альтернативного положения</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="148"/>
@@ -15332,23 +15332,23 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="68"/>
         <source>Rename Virtual Layer</source>
-        <translation>Переименование Виртуального Слоя</translation>
+        <translation>Переименование виртуального слоя</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="72"/>
         <source>Add Secondary Layer</source>
-        <translation>Добавление Вторичного слоя</translation>
+        <translation>Добавление вторичного слоя</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="78"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="85"/>
         <source>Add Layer</source>
-        <translation>Добавление Слоя</translation>
+        <translation>Добавление слоя</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="91"/>
         <source>Edit Layer</source>
-        <translation>Редактирование Слоя</translation>
+        <translation>Редактирование слоя</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="183"/>
@@ -15359,7 +15359,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="200"/>
         <source>Rename Layer</source>
-        <translation>Переименование Слоя</translation>
+        <translation>Переименование слоя</translation>
     </message>
 </context>
 <context>
@@ -15377,7 +15377,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="63"/>
         <source>If checked, Named Views from the document will be included into exported drawings. Otherwise, views are not included.</source>
-        <translation>Если выбрано, то при экспорте слоем также будут экспортироваться и Именованные Виды</translation>
+        <translation>Если выбрано, то при экспорте слоев будут также экспортироваться и именованные виды.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="66"/>
@@ -15387,17 +15387,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="73"/>
         <source>If checked, each original exported layer will be stored in separate drawing. Otherwise, all layers will be in exported to one combined drawing.</source>
-        <translation>Если выбрано, все слои будут сохранены в отдельных файлах. Иначе, они будут сохранены в одном общем файле.</translation>
+        <translation>Если выбрано, все слои будут сохранены в отдельных файлах. Иначе они будут сохранены в одном общем файле.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="76"/>
         <source>Export each layer to own drawing file</source>
-        <translation>Экспртировать каждый слой в отдельный файл</translation>
+        <translation>Экспортировать каждый слой в отдельный файл</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="83"/>
         <source>If checked, entities will be stored in original layer. Otherwise, they are placed to layer &quot;0&quot;.</source>
-        <translation>Если выбрано, при экпорте обхеты будут помещены в слой с оригинальным именем. Иначе, они будут помещены в слой &quot;0&quot;</translation>
+        <translation>Если выбрано, при экспорте объекты будут помещены в слой с исходным именем. Иначе они будут помещены в слой &quot;0&quot;.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="89"/>
@@ -15425,7 +15425,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="46"/>
         <source>Settings for naming convention that is used to create layers hierarchy based on flat list of layers</source>
-        <translation>Настройи соглашения имен которое используется для создания иерархии слоев из одноуровневого списка слоев.Иерархия строится используя разделители имен между уровнями слев.</translation>
+        <translation>Настройки соглашения имен, которое используется для создания иерархии слоев из плоского списка слоев</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="49"/>
@@ -15459,7 +15459,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="201"/>
         <source>Suffix of layer&apos;s name that defines that layer is dimensional</source>
-        <translation>Суффикс в имени слоя, который определяет что слоя является слоем размеров</translation>
+        <translation>Суффикс имени слоя, который определяет, что слой является слоем размеров</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="211"/>
@@ -15470,17 +15470,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="224"/>
         <source>Suffix of layer&apos;s name that defines that layer is informational.</source>
-        <translation>Суффикс имени слоя который определяет что слой является слоем для заметок</translation>
+        <translation>Суффикс имени слоя, который определяет, что слой является слоем заметок.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="234"/>
         <source>Alternative Position </source>
-        <translation>Слой альтернативной позиции</translation>
+        <translation>Слой альтернативного положения </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
-        <translation>Суффикс имени слоя который определяет что слой является слоем с альтернативной позицие объектов</translation>
+        <translation>Суффикс имени слоя, который определяет, что слой является слоем альтернативного положения.</translation>
     </message>
     <message>
         <source>Duplicating Name</source>
@@ -15494,7 +15494,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="74"/>
         <source>Prefix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>Префикс который будет добавлен к имени слоя если слой с таким именем уже существует</translation>
+        <translation>Префикс, который будет добавлен к имени слоя, если слой с таким именем уже существует (например, при создании дубликата)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="84"/>
@@ -15504,7 +15504,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="97"/>
         <source>Suffix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>Суффикс в имени слоя, который будет добавлен к имени слоя если слой с таким именем уже существует</translation>
+        <translation>Суффикс, который будет добавлен к имени слоя, если слой с таким именем уже существует (например, при создании дубликата)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="155"/>
@@ -15514,7 +15514,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="165"/>
         <source>It is assumed that layers on diffent levels of hierarchy are separated by appropriate level separator. Thus the layer name &quot;level1SEPlevel2&quot; is transformed to &quot;level1-&gt;level2&quot; path. </source>
-        <translation>Предполагается, что в имени слоя, разные уровни иерархии разделяются разделителем уровней слоев. Так, слой &quot;слой1РАЗДЕЛИТЕЛЬслой2&quot; рассматривается как путь &quot;слой1 -&gt; слой2&quot;.</translation>
+        <translation>Предполагается, что в имени слоя разные уровни иерархии разделяются разделителем уровней слоев. Так, слой &quot;слой1РАЗДЕЛИТЕЛЬслой2&quot; рассматривается как путь &quot;слой1 -&gt; слой2&quot;. </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="175"/>
@@ -15524,12 +15524,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="182"/>
         <source>Secondary layer suffixes</source>
-        <translation>Суффиксы имен вспомогательных слоев</translation>
+        <translation>Суффиксы имен вторичных слоев</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="260"/>
         <source>The type of the layer is defined by specified suffix in layer name.</source>
-        <translation>Тип слоя определяется суффиксом в его имени</translation>
+        <translation>Тип слоя определяется суффиксом в его имени.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="268"/>
@@ -15539,7 +15539,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="271"/>
         <source>Display and Operations</source>
-        <translation>Вид и Операции</translation>
+        <translation>Вид и операции</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="329"/>
@@ -15574,7 +15574,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="804"/>
         <source>Alternative position</source>
-        <translation>Слой Альтернативного положения</translation>
+        <translation>Слой альтернативного положения</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="319"/>
@@ -15589,7 +15589,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="309"/>
         <source>Indentation for child layers</source>
-        <translation>Отступ для слоя следующего уровня относительно верхнего слоя</translation>
+        <translation>Отступ для дочерних слоев</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="312"/>
@@ -15599,12 +15599,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="277"/>
         <source>Size of the indent in characters to indent name of child layer from parent ones</source>
-        <translation>Размер отступа в символах для отделения имени дочерного слоя от родительского</translation>
+        <translation>Размер отступа в символах для отделения имени дочернего слоя от родительского</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="352"/>
         <source>If checked, drag&amp;drop operations in layers list are enabled and layers hierarchy may be restructutured</source>
-        <translation>Если выбран, то можно изменять структуру иерархии слоев перетаскивая их в дереве</translation>
+        <translation>Если выбран, то можно изменять структуру иерархии слоев, перетаскивая их в дереве</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="355"/>
@@ -15614,7 +15614,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="293"/>
         <source>If primary layer is renames, secondary layers are renamed too.</source>
-        <translation>Если основной слой переименовывается, то его вторичные слои будут также переименованы</translation>
+        <translation>Если основной слой переименовывается, то его вторичные слои будут также переименованы.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="296"/>
@@ -15633,7 +15633,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="470"/>
         <source>Background color for selected items in layers tree.</source>
-        <translation>Фон цвета текста элемента слоя, выбраного в дереве слоев</translation>
+        <translation>Цвет фона выбранных элементов в дереве слоев.</translation>
     </message>
     <message>
         <source>Color for separator lines in layers tree view</source>
@@ -15642,7 +15642,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="420"/>
         <source>Background color for virtual layers items in layers list</source>
-        <translation>Цвет фон длф элементов виртуальных слоев в дереве слоев</translation>
+        <translation>Цвет фона для элементов виртуальных слоев в дереве слоев</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="449"/>
@@ -15650,17 +15650,17 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="546"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="567"/>
         <source>Click to select color</source>
-        <translation>Нажмите чтобы выбрать цвет</translation>
+        <translation>Нажмите, чтобы выбрать цвет</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="560"/>
         <source>Matched item in highlight filter mode</source>
-        <translation>Элементы выбранные фильтром</translation>
+        <translation>Элементы, выбранные фильтром</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="391"/>
         <source>Color for items that matches filter conditions</source>
-        <translation>Цвет элементов которые соответсвуют фильту если фильтр в режиме подсветки</translation>
+        <translation>Цвет элементов, которые соответствуют фильтру, если фильтр в режиме подсветки</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="379"/>
@@ -15684,7 +15684,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="503"/>
         <source>Selected items background color</source>
-        <translation>Фон выделенного слоя</translation>
+        <translation>Фон выбранного слоя</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="523"/>
@@ -15709,7 +15709,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="599"/>
         <source>Pens that will be set for newly created layers of different types.</source>
-        <translation>Перья, которые будут установлены для вновь созданых слоев</translation>
+        <translation>Перья, которые будут установлены для вновь созданных слоев разных типов.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="602"/>
@@ -15719,12 +15719,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="68"/>
         <source>Normal Layer</source>
-        <translation>Основной Слой</translation>
+        <translation>Обычный слой</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="69"/>
         <source>Dimensional Layer</source>
-        <translation>Слой Размеров</translation>
+        <translation>Слой размеров</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="70"/>
@@ -15734,7 +15734,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Alternative Position Layer</source>
-        <translation>Слой Альтернативного положения</translation>
+        <translation>Слой альтернативного положения</translation>
     </message>
     <message>
         <source>grid</source>
@@ -15743,7 +15743,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="103"/>
         <source>highlighted item</source>
-        <translation>выделенной строки</translation>
+        <translation>подсвеченного элемента</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="110"/>
@@ -15770,7 +15770,7 @@ Are you sure you are going to discard changes?</source>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
         <translation>Некорректное значение для цвета %1.
-Пожалуйста используйте другое значение.</translation>
+Пожалуйста, укажите другое значение.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="245"/>
@@ -15803,22 +15803,22 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="186"/>
         <source>Show all layers</source>
-        <translation>Показать все</translation>
+        <translation>Показать все слои</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Скрыть все</translation>
+        <source>Hide all layers except current</source>
+        <translation>Скрыть все слои, кроме текущего</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="200"/>
         <source>Show Secondary Layers</source>
-        <translation>Показать дочерние слои</translation>
+        <translation>Показать вторичные слои</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="210"/>
         <source>Show Active Layer Only</source>
-        <translation>Показать только Активный Слой</translation>
+        <translation>Показать только активный слой</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="218"/>
@@ -15843,27 +15843,27 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="249"/>
         <source>Lock all layers</source>
-        <translation>&amp;Заблокировать все</translation>
+        <translation>Заблокировать все</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="256"/>
         <source>Add a layer</source>
-        <translation>&amp;Добавить слой</translation>
+        <translation>Добавить слой</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="263"/>
         <source>Add dimensions Layer</source>
-        <translation>Добавить Слой Размеров</translation>
+        <translation>Добавить слой размеров</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="272"/>
         <source>Remove layer</source>
-        <translation>Удалить</translation>
+        <translation>Удалить слой</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="279"/>
         <source>Modify layer attributes / rename</source>
-        <translation>Изменение слоя атрибуты / переименование</translation>
+        <translation>Изменить свойства слоя / переименовать</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="286"/>
@@ -15873,110 +15873,110 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="656"/>
         <source>&amp;Add Child Layer</source>
-        <translation>Добавить дочерний слой</translation>
+        <translation>&amp;Добавить дочерний слой</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="657"/>
         <source>&amp;Rename</source>
-        <translation>Переименовать</translation>
+        <translation>П&amp;ереименовать</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="658"/>
         <source>&amp;Remove Layers (Sub-Tree)</source>
-        <translation>Удалить поддерево слоев</translation>
+        <translation>&amp;Удалить поддерево слоев</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="660"/>
         <source>&amp;Copy Structure (Sub-Tree)</source>
-        <translation>Дублировать структуру слоев (под-дерево)</translation>
+        <translation>Ду&amp;блировать структуру слоев (поддерево)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="661"/>
         <source>&amp;Duplicate Content (Sub-Tree)</source>
-        <translation>Дублировать с содержимым (под-дерево)</translation>
+        <translation>Дуб&amp;лировать с содержимым (поддерево)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="663"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>Выбрать объекты (под-дерево)</translation>
+        <translation>В&amp;ыбрать объекты (поддерево)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="668"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>Редактировать свойства слоя</translation>
+        <translation>Р&amp;едактировать свойства слоя</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="670"/>
         <source>&amp;Remove Layer</source>
-        <translation>&amp;Удалить</translation>
+        <translation>&amp;Удалить слой</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="679"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>Добавить слой размеров</translation>
+        <translation>До&amp;бавить слой размеров</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="683"/>
         <source>&amp;Add Info Sub-Layer</source>
-        <translation>Добавить дочерний Слой Заметок</translation>
+        <translation>Добав&amp;ить слой заметок</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="687"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
-        <translation>Добавить слой альтернативного положения</translation>
+        <translation>&amp;Добавить слой альтернативного положения</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="693"/>
         <source>&amp;Remove Sub-layers</source>
-        <translation>Удалить слои ниже</translation>
+        <translation>Уда&amp;лить дочерние слои</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="701"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="711"/>
         <source>Convert to Dimensional Layer</source>
-        <translation>Преобразовать в Слой Размеров</translation>
+        <translation>Преобразовать в слой размеров</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="702"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="714"/>
         <source>Convert to Info Layer</source>
-        <translation>Преобразовать в слой Заметок</translation>
+        <translation>Преобразовать в слой заметок</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="703"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="717"/>
         <source>Convert to Alternative Position Layer</source>
-        <translation>Преобразовать в Слой Альтернативного Положения</translation>
+        <translation>Преобразовать в слой альтернативного положения</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="709"/>
         <source>Convert to Normal Layer</source>
-        <translation>Преобразовать в Основной</translation>
+        <translation>Преобразовать в обычный слой</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="723"/>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>Выбрать объекты слоя</translation>
+        <translation>В&amp;ыбрать объекты слоя</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="726"/>
         <source>&amp;Create Layer Copy</source>
-        <translation>Создать Копию слоя</translation>
+        <translation>Создать копи&amp;ю слоя</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="727"/>
         <source>&amp;Duplicate Layer With Content</source>
-        <translation>Дублировать слой с содержимым</translation>
+        <translation>Дублировать слой с содер&amp;жимым</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="731"/>
         <source>Move Selection to Layer</source>
-        <translation>Перенести выбранные объекты в Слой</translation>
+        <translation>Перенести выбранные объекты в слой</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="732"/>
         <source>Duplicate Selection to Layer</source>
-        <translation>Дублировать выделенные объекты в слой</translation>
+        <translation>Дублировать выбранные объекты в слой</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="739"/>
@@ -15986,7 +15986,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="741"/>
         <source>&amp;Freeze Others Layers</source>
-        <translation>Скрыть остальные слои</translation>
+        <translation>Заморозить &amp;остальные слои</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="742"/>
@@ -15995,13 +15995,13 @@ Please specify a different value.</source>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>&amp;Заморозить все</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Скрыть все слои, кроме &amp;текущего</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>
         <source>&amp;Unlock All Layers</source>
-        <translation>&amp;Разблокировать все</translation>
+        <translation>Р&amp;азблокировать все</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="745"/>
@@ -16011,32 +16011,32 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="746"/>
         <source>Enable &amp;Printing All Layers</source>
-        <translation>Разрешить печать Всех слоев</translation>
+        <translation>Разрешить &amp;печать всех слоев</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="747"/>
         <source>&amp;Disable Printing All Layers</source>
-        <translation>Запретить печать Всех слоев</translation>
+        <translation>Запретить печать &amp;всех слоев</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="750"/>
         <source>&amp;Export Single Layer</source>
-        <translation>Экспортировать Слой</translation>
+        <translation>&amp;Экспортировать слой</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="754"/>
         <source>&amp;Export Layer Sub-Tree</source>
-        <translation>Экспортировать Под-дерево Слоев</translation>
+        <translation>Экспортировать поддерево &amp;слоев</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="758"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Экспортировать &amp;Видимые Слои(s)</translation>
+        <translation>Э&amp;кспортировать видимые слои</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="760"/>
         <source>&amp;Find And Remove Empty Layers</source>
-        <translation>Найти и удалить слои без объектов</translation>
+        <translation>&amp;Найти и удалить слои без объектов</translation>
     </message>
 </context>
 <context>
@@ -23161,7 +23161,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_filler.cpp" line="58"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers</source>
-        <translation>Если выбрано, созданые объекты будут созданы в активном слое, иначе они будут слоях объектов-оригиналов</translation>
+        <translation>Если выбрано, созданные объекты будут помещены в текущий слой, иначе они будут помещены в слои оригинальных объектов</translation>
     </message>
 </context>
 <context>
@@ -23495,12 +23495,12 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="82"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation>Если выбрано, созданые объекты будут созданы в активном слое, иначе они будут слоях объектов-оригиналов</translation>
+        <translation>Если выбрано, созданные объекты будут помещены в текущий слой, иначе они будут помещены в слои оригинальных объектов.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
         <source>User Current Layer</source>
-        <translation>В &amp;текущий слой</translation>
+        <translation>В текущий слой</translation>
     </message>
 </context>
 <context>
@@ -23814,7 +23814,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_filler.cpp" line="65"/>
         <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers</source>
-        <translation>Если выбрано, созданые объекты будут созданы в активном слое, иначе они будут слоях объектов-оригиналов</translation>
+        <translation>Если выбрано, созданные объекты будут помещены в текущий слой, иначе они будут помещены в слои оригинальных объектов</translation>
     </message>
 </context>
 <context>
@@ -23827,13 +23827,12 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="45"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation>Если выбрано, созданые объекты будут созданы в активном слое
-Иначе они будут слоях объектов-оригиналов. </translation>
+        <translation>Если выбрано, созданные объекты будут помещены в текущий слой. Иначе они будут помещены в слои оригинальных объектов. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="48"/>
         <source>Use Current Layer</source>
-        <translation>В &amp;текущий слой</translation>
+        <translation>В текущий слой</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="55"/>
@@ -23961,7 +23960,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_filler.cpp" line="95"/>
         <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers</source>
-        <translation>Если выбрано, созданые объекты будут созданы в активном слое, иначе они будут слоях объектов-оригиналов</translation>
+        <translation>Если выбрано, созданные объекты будут помещены в текущий слой, иначе они будут помещены в слои оригинальных объектов</translation>
     </message>
 </context>
 <context>
@@ -24026,12 +24025,12 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="144"/>
         <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation>Если выбрано, созданые объекты будут созданы в активном слое, иначе они будут слоях объектов-оригиналов</translation>
+        <translation>Если выбрано, созданные объекты будут помещены в текущий слой, иначе они будут помещены в слои оригинальных объектов. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="147"/>
         <source>Use Current Layer</source>
-        <translation>В &amp;текущий слой</translation>
+        <translation>В текущий слой</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="166"/>
@@ -24422,7 +24421,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_filler.cpp" line="83"/>
         <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers</source>
-        <translation>Если выбрано, созданые объекты будут созданы в активном слое, иначе они будут слоях объектов-оригиналов</translation>
+        <translation>Если выбрано, созданные объекты будут помещены в текущий слой, иначе они будут помещены в слои оригинальных объектов</translation>
     </message>
 </context>
 <context>
@@ -24450,12 +24449,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="93"/>
         <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation>Если выбрано, созданые объекты будут созданы в активном слое, иначе они будут слоях объектов-оригиналов</translation>
+        <translation>Если выбрано, созданные объекты будут помещены в текущий слой, иначе они будут помещены в слои оригинальных объектов.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="96"/>
         <source>Use Current Layer</source>
-        <translation>В &amp;текущий слой</translation>
+        <translation>В текущий слой</translation>
     </message>
     <message>
         <source>If checked, fixes of distance of offset will be used, otherwise it will be defined by mouse.</source>
@@ -25602,12 +25601,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="222"/>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation>Применить редактируемое Перо к Перу активного Слоя</translation>
+        <translation>Применить редактируемое перо к перу активного слоя</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="225"/>
         <source>Apply To Layer</source>
-        <translation>Применить к Слою</translation>
+        <translation>Применить к слою</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="239"/>
@@ -25693,7 +25692,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="305"/>
         <source>&amp;Apply Pen To Active Layer</source>
-        <translation>Применить Перо к активному Слою</translation>
+        <translation>&amp;Применить перо к активному слою</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="306"/>
@@ -29850,12 +29849,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="60"/>
         <source>Active Layer</source>
-        <translation>Активный Слой</translation>
+        <translation>Активный слой</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="60"/>
         <source>Active layer properties</source>
-        <translation>Свойства и операции с активным слоем</translation>
+        <translation>Свойства активного слоя и операции с ним</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="78"/>
@@ -29911,7 +29910,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="175"/>
         <source>Alternative position</source>
-        <translation>Альтернативное положение</translation>
+        <translation>Слой альтернативного положения</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="179"/>
@@ -29946,7 +29945,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="214"/>
         <source>Defines whether active layer is locked or not</source>
-        <translation>Определяет, является ли активный слой блокированным или нет</translation>
+        <translation>Определяет, является ли активный слой заблокированным или нет</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="228"/>
@@ -29956,7 +29955,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="228"/>
         <source>Defines whether active layer is printable or not</source>
-        <translation>Определяет, будет или активный слой выводиться на печать или нет</translation>
+        <translation>Определяет, будет ли активный слой выводиться на печать или нет</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="243"/>
@@ -30001,12 +30000,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="303"/>
         <source>All layers will be unlocked</source>
-        <translation>Все слои становятся видимыми</translation>
+        <translation>Все слои будут разблокированы</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="304"/>
         <source>Lock other layers</source>
-        <translation>Блокировать другие</translation>
+        <translation>Заблокировать другие</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="304"/>
@@ -30021,7 +30020,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="341"/>
         <source>Show all layers</source>
-        <translation>Показать все</translation>
+        <translation>Показать все слои</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="341"/>
@@ -36455,7 +36454,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_filler.cpp" line="95"/>
         <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers</source>
-        <translation>Если выбрано, созданые объекты будут созданы в активном слое, иначе они будут слоях объектов-оригиналов</translation>
+        <translation>Если выбрано, созданные объекты будут помещены в текущий слой, иначе они будут помещены в слои оригинальных объектов</translation>
     </message>
 </context>
 <context>
@@ -36530,13 +36529,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="208"/>
         <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation>Если выбрано, то оригинальные объекты останутся.
-Иначе они будут удалены.</translation>
+        <translation>Определяет, будут ли копии помещены в текущий слой или в слой оригинала</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="211"/>
         <source>Use Current Layer</source>
-        <translation>В &amp;текущий слой</translation>
+        <translation>В текущий слой</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="218"/>
@@ -36707,7 +36705,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="141"/>
         <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers</source>
-        <translation>Если выбрано, созданые объекты будут созданы в активном слое, иначе они будут слоях объектов-оригиналов</translation>
+        <translation>Если выбрано, созданные объекты будут помещены в текущий слой, иначе они будут помещены в слои оригинальных объектов</translation>
     </message>
 </context>
 <context>
@@ -36792,12 +36790,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="209"/>
         <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation>Если выбрано, созданые объекты будут созданы в активном слое, иначе они будут слоях объектов-оригиналов</translation>
+        <translation>Если выбрано, созданные объекты будут помещены в текущий слой, иначе они будут помещены в слои оригинальных объектов.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="212"/>
         <source>Use Current Layer</source>
-        <translation>В &amp;текущий слой</translation>
+        <translation>В текущий слой</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="219"/>
@@ -37001,7 +36999,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_filler.cpp" line="98"/>
         <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers</source>
-        <translation>Если выбрано, созданые объекты будут созданы в активном слое, иначе они будут слоях объектов-оригиналов</translation>
+        <translation>Если выбрано, созданные объекты будут помещены в текущий слой, иначе они будут помещены в слои оригинальных объектов</translation>
     </message>
 </context>
 <context>
@@ -37040,13 +37038,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="83"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation>Если выбрано, созданые объекты будут созданы в активном слое
-Иначе они будут слоях объектов-оригиналов. </translation>
+        <translation>Если выбрано, созданные объекты будут помещены в текущий слой. Иначе они будут помещены в слои оригинальных объектов. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="86"/>
         <source>Use Current Layer</source>
-        <translation>В &amp;текущий слой</translation>
+        <translation>В текущий слой</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="107"/>
@@ -37972,8 +37969,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="77"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation>Если выбрано, создаваемые объекты будут созданы в активном слое
-Иначе они будут в слоях объектов-оригиналов. </translation>
+        <translation>Если выбрано, созданные объекты будут помещены в текущий слой, иначе они будут помещены в слои оригинальных объектов.</translation>
     </message>
 </context>
 <context>
@@ -38013,13 +38009,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="73"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation>Если выбрано, создаваемые объекты будут созданы в активном слое
-Иначе они будут в слоях объектов-оригиналов. </translation>
+        <translation>Если выбрано, созданные объекты будут помещены в текущий слой, иначе они будут помещены в слои оригинальных объектов.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="76"/>
         <source>Use Current Layer</source>
-        <translation>В &amp;текущий слой</translation>
+        <translation>В текущий слой</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="83"/>
@@ -38168,8 +38163,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="71"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation>Если выбрано, созданые объекты будут созданы в активном слое
-Иначе они будут слоях объектов-оригиналов. </translation>
+        <translation>Если выбрано, созданные объекты будут помещены в текущий слой, иначе они будут помещены в слои оригинальных объектов.</translation>
     </message>
 </context>
 <context>
@@ -38182,13 +38176,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="32"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation>Если выбрано, созданые объекты будут созданы в активном слое
-Иначе они будут слоях объектов-оригиналов. </translation>
+        <translation>Если выбрано, созданные объекты будут помещены в текущий слой, иначе они будут помещены в слои оригинальных объектов.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="35"/>
         <source>User Current Layer</source>
-        <translation>В &amp;текущий слой</translation>
+        <translation>В текущий слой</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="42"/>
@@ -39777,7 +39770,7 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="236"/>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="236"/>
         <source>Layers Tree</source>
-        <translation>Дерево Слоев</translation>
+        <translation>Дерево слоев</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="261"/>
@@ -39858,7 +39851,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="540"/>
         <source>Active Layer</source>
-        <translation>Активный Слой</translation>
+        <translation>Активный слой</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="542"/>
@@ -40523,7 +40516,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="105"/>
         <source>Name of Current Active Layer</source>
-        <translation>Название текущего активного слоя.</translation>
+        <translation>Название текущего активного слоя</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="80"/>
@@ -40946,7 +40939,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="54"/>
         <source>Layer to apply</source>
-        <translation>Слой в который нужно перенести объекты</translation>
+        <translation>Слой назначения</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="69"/>
@@ -43496,7 +43489,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5074"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Если этот параметр включен, активация слоя изменит все выбранные объекты на этом новом слое. Для изменения нескольких объектов на слое: сначала выберите необходимые объекты; активируйте слой в виджете слоев. Это приведет к тому, что все выбранные объекты будут изменены и будут принадлежать новому слою.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Если этот параметр включен, при активации слоя все выбранные объекты будут перенесены в этот слой. Чтобы изменить слой нескольких объектов, сначала выберите нужные объекты, а затем активируйте слой в виджете слоев. В результате все выбранные объекты будут принадлежать новому слою.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5934"/>
@@ -44452,7 +44445,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5077"/>
         <source>Modify layer of selected entities, at layer activation</source>
-        <translation>Изменять слой выбранных элементов при переключении слоя</translation>
+        <translation>Изменять слой выбранных объектов при активации слоя</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5490"/>
@@ -47183,7 +47176,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="20"/>
         <source>Layer Settings</source>
-        <translation>Установки слоя</translation>
+        <translation>Настройки слоя</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="46"/>
@@ -47670,9 +47663,9 @@ This action can NOT be undone.</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1787"/>
         <source>Remove %n layer(s)</source>
         <translation>
-            <numerusform>Удалить слой %n</numerusform>
-            <numerusform>Удалить слой %n</numerusform>
-            <numerusform>Удалить %n слоёв</numerusform>
+            <numerusform>Удалить %n слой</numerusform>
+            <numerusform>Удалить %n слоя</numerusform>
+            <numerusform>Удалить %n слоев</numerusform>
         </translation>
     </message>
     <message>
@@ -47720,12 +47713,12 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="230"/>
         <source>Layer empty name is not allowed.</source>
-        <translation>Постое имя слоя недопустимо.</translation>
+        <translation>Пустое имя слоя недопустимо.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="265"/>
         <source>The edited layer is no longer available.</source>
-        <translation>Редактируемый слой более недоступен</translation>
+        <translation>Редактируемый слой более недоступен.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="309"/>
@@ -47747,40 +47740,41 @@ Please specify a different name.</source>
         <source>Layer list separator string is empty. It will not be possible to build layers tree.
 Please specify a different value.</source>
         <translation>Разделитель списка слоев пуст. Построить дерево слоев не получится.
-
 Пожалуйста, укажите другое значение.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="962"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="972"/>
         <source>Remove empty layers</source>
-        <translation>Удаление пустых слоев</translation>
+        <translation>Удаление слоев без объектов</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="963"/>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
 Clear filtering mask and repeat.</source>
-        <translation>Слои без сущностей найдены, но они отфильтрованы и не видны.\n\nОчистите маску фильтрации и повторите.</translation>
+        <translation>Слои без объектов найдены, но они отфильтрованы и не видны.
+
+Очистите маску фильтрации и повторите.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="973"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>Не найдено пустых слоев без объектов, нечего удалять.</translation>
+        <translation>Не найдено слоев без объектов, нечего удалять.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1116"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1161"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1169"/>
         <source>Add Layer</source>
-        <translation>Добавление Слоя</translation>
+        <translation>Добавление слоя</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1117"/>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation>Дочерний слой с таким именем уже существует.
+        <translation>Дочерний слой с таким именем уже существует в 
 [%1].
 Укажите другое имя.</translation>
     </message>
@@ -47789,7 +47783,7 @@ Please specify a different name.</source>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation>Дочерний слой с таки именем уже существует в 
+        <translation>Дочерний слой с таким именем уже существует в 
 [%1].
 </translation>
     </message>
@@ -47797,7 +47791,8 @@ Please specify a different name.</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1170"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>Слой размеров может быть добавлен только к обычному слою.</translation>
+        <translation>Слой размеров может быть добавлен только к обычному слою.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1233"/>
@@ -47816,13 +47811,11 @@ Please specify a different name.</source>
 If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation>Заменить значения &quot;По Слою&quot; на значения из исходного слоя?
+        <translation>Заменить значения &quot;По слою&quot; на значения из исходных слоев?
 
-Если ДА - Объекты с перьями &quot;По Слою&quot; будут изменены так что перья будут содержать значения
-результирующего пера в исходном слое. В слое-назначении такие объекты будут выглядеть также как и в исходном слое. 
+Если ДА - значения &quot;По слою&quot; будут заменены результирующими перьями, и в новом слое объекты с перьями &quot;По слою&quot; будут выглядеть так же, как в исходных слоях.
 
-Если НЕТ - объекты с перьями &quot;По Слою&quot; останутся неизменными, и таким образом перо слоя-назначения будет аттрибуты пера для таких объектов.
-Поэтому внешний вид объектов может измениться. </translation>
+Если НЕТ - значения &quot;По слою&quot; останутся без изменений, и перо таких объектов будет определяться пером слоя назначения, поэтому их внешний вид может измениться.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1805"/>
@@ -47881,19 +47874,21 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1453"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>На видимых слоях не существует объектов с заданым пером.</translation>
+        <translation>На видимых слоях не существует объектов с заданным пером.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1454"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>Такие объекты есть на скрытых слоях.</translation>
+        <translation>Такие объекты есть на замороженных слоях.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1455"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>Такие объекты есть за заблокированных слоях.</translation>
+        <translation>Такие объекты есть на заблокированных слоях.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1456"/>
@@ -49682,7 +49677,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="77"/>
         <source>No %1 layers found</source>
-        <translation>Нет %1 слоев</translation>
+        <translation>Не найдены %1 слои</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="95"/>

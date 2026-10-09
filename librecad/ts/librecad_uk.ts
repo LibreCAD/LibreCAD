@@ -2690,7 +2690,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="252"/>
         <source>(De-)Select Layer</source>
-        <translation>(Скасувати)Вибрати шар</translation>
+        <translation>Вибрати шар / скасувати вибір</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="235"/>
@@ -3317,7 +3317,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="410"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Update Поточна ручка від Active Layer&apos; Pen</translation>
+        <translation>Оновити поточне перо за пером активного шару</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="416"/>
@@ -3453,12 +3453,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="66"/>
         <source>Layer</source>
-        <translation>Р</translation>
+        <translation>Шар</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="66"/>
         <source>Layers operations</source>
-        <translation>Послуги шарів</translation>
+        <translation>Операції з шарами</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="67"/>
@@ -3650,12 +3650,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity Layer</source>
-        <translation>Шар вступності</translation>
+        <translation>Шар об’єкта</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity&apos;s Layer</source>
-        <translation>Шар вступності</translation>
+        <translation>Шар об’єкта</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="88"/>
@@ -3670,32 +3670,32 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="109"/>
         <source>Activate Entity&apos;s Layer</source>
-        <translation>Активувати шар вмісту</translation>
+        <translation>Активувати шар об’єкта</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="110"/>
         <source>Hide Entity&apos;s Layer</source>
-        <translation>Приховати шар вмісту</translation>
+        <translation>Приховати шар об’єкта</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="111"/>
         <source>Hide Other Layers than Entity&apos;s</source>
-        <translation>Приховати інші шари, ніж Entity&apos;s</translation>
+        <translation>Приховати всі шари, крім шару об’єкта</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="112"/>
         <source>Lock Entity&apos;s Layer</source>
-        <translation>Шар Lock Entity</translation>
+        <translation>Заблокувати шар об’єкта</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="113"/>
         <source>Toggle Entity&apos;s Layer Construction</source>
-        <translation>Конструктивне будівництво</translation>
+        <translation>Перемкнути конструкційний режим шару об’єкта</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="114"/>
         <source>Toggle Entity&apos;s Layer Printing</source>
-        <translation>Друк шарів вмісту</translation>
+        <translation>Перемкнути друк шару об’єкта</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="225"/>
@@ -4014,27 +4014,27 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="621"/>
         <source>&amp;Add Layer</source>
-        <translation>&amp;Додати шар</translation>
+        <translation>Д&amp;одати шар</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="622"/>
         <source>&amp;Remove Layer</source>
-        <translation>&amp;Remove Шар</translation>
+        <translation>Вида&amp;лити шар</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="623"/>
         <source>&amp;Edit Layer</source>
-        <translation>&amp;Редагувати шар</translation>
+        <translation>Ред&amp;агувати шар</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="624"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>Toggle Шар Loc &amp;k</translation>
+        <translation>Перемкнути &amp;блокування шару</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="625"/>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation>&amp;Обключення рівня Visibility</translation>
+        <translation>Перемкнути &amp;видимість шару</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="626"/>
@@ -4561,8 +4561,8 @@ or [%2]</source>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp;Приховати всі шари</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Приховати всі &amp;шари, крім поточного</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
@@ -4572,7 +4572,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="620"/>
         <source>&amp;Lock all</source>
-        <translation>Заблокувати всі</translation>
+        <translation>&amp;Заблокувати всі</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="628"/>
@@ -4582,7 +4582,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="629"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Експортно-відомий шар (s)</translation>
+        <translation>Ек&amp;спортувати видимі шари</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="635"/>
@@ -5153,7 +5153,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>Enter layer name to %1</source>
-        <translation>Ім&apos;я шару до %1</translation>
+        <translation>Введіть назву шару (дія: %1)</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
@@ -5163,7 +5163,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>create</source>
-        <translation>створення</translation>
+        <translation>створити</translation>
     </message>
 </context>
 <context>
@@ -5172,13 +5172,13 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
         <source>selected</source>
         <comment>Layers to export</comment>
-        <translation>вибір</translation>
+        <translation>обраних</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
         <source>visible</source>
         <comment>Layers to export</comment>
-        <translation>дивний</translation>
+        <translation>видимих</translation>
     </message>
 </context>
 <context>
@@ -6900,7 +6900,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_layer.cpp" line="75"/>
         <source>Specify entity with desired layer</source>
-        <translation type="unfinished">Вказати суб&apos;єкта господарювання бажаним шаром</translation>
+        <translation type="unfinished">Вкажіть об’єкт на потрібному шарі</translation>
     </message>
 </context>
 <context>
@@ -7511,12 +7511,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="66"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Якщо зареєстровані, дзеркальні особи будуть розміщені на поточному шарі, інакше вони будуть розміщені в оригінальні шари.</translation>
+        <translation type="unfinished">Якщо позначено, віддзеркалені об’єкти буде розміщено на поточному шарі, інакше їх буде розміщено на початкових шарах.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="69"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Статус на сервери</translation>
+        <translation type="unfinished">Використовувати поточний шар</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="76"/>
@@ -8806,7 +8806,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="67"/>
         <source>Layer to apply</source>
-        <translation type="unfinished">Шар застосувати</translation>
+        <translation type="unfinished">Шар, який слід застосувати</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="67"/>
@@ -8839,7 +8839,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="62"/>
         <source>Layer to which created circle should be placed</source>
-        <translation type="unfinished">Шар до якого створюється коло необхідно розмістити</translation>
+        <translation type="unfinished">Шар, на якому слід розмістити створене коло</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="66"/>
@@ -10839,7 +10839,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="209"/>
         <source>Layer</source>
-        <translation>Р</translation>
+        <translation>Шар</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="236"/>
@@ -11143,7 +11143,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="64"/>
         <source>Layer</source>
-        <translation>Р</translation>
+        <translation>Шар</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="76"/>
@@ -11153,7 +11153,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="98"/>
         <source>Layer of entity</source>
-        <translation>Шар суб&apos;єкта господарювання</translation>
+        <translation>Шар об’єкта</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="148"/>
@@ -12636,7 +12636,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="26"/>
         <source>Layer of dimension</source>
-        <translation>Шар виміру</translation>
+        <translation>Шар розміру</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="45"/>
@@ -13612,7 +13612,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="82"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">Шар, до якого дублікати слід розміщувати</translation>
+        <translation type="unfinished">Шар, на якому слід розмістити дублікат</translation>
     </message>
 </context>
 <context>
@@ -13625,7 +13625,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="45"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">Шар, до якого дублікати слід розміщувати</translation>
+        <translation type="unfinished">Шар, на якому слід розмістити дублікат</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="49"/>
@@ -14412,12 +14412,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="168"/>
         <source>Layer</source>
-        <translation type="unfinished">Р</translation>
+        <translation type="unfinished">Шар</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="168"/>
         <source>Layer of entity</source>
-        <translation type="unfinished">Шар суб&apos;єкта господарювання</translation>
+        <translation type="unfinished">Шар об’єкта</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="204"/>
@@ -14481,7 +14481,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="135"/>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="179"/>
         <source>Export Layers</source>
-        <translation>Експортні шари</translation>
+        <translation>Експортувати шари</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="152"/>
@@ -15317,17 +15317,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="20"/>
         <source>Layer Settings</source>
-        <translation>Налаштування шарів</translation>
+        <translation>Налаштування шару</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="48"/>
         <source>Name of new layer. In order to create hierarchical layers, include name of virtual layer and layer name separator.</source>
-        <translation>Назва нового шару. Для створення ієрархічних шарів відносять назву віртуального шару і сепаратора назв шарів.</translation>
+        <translation>Назва нового шару. Щоб створити ієрархічні шари, додайте до неї назву віртуального шару та роздільник назв шарів.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="64"/>
         <source>Parent Layers Path:</source>
-        <translation>Патентні шари:</translation>
+        <translation>Шлях батьківських шарів:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="81"/>
@@ -15337,54 +15337,54 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="93"/>
         <source>Layer for various infromational elements, notes, drafts etc.</source>
-        <translation>Шар для різних ізоляційних елементів, нот, проектів тощо.</translation>
+        <translation>Шар для різних інформаційних елементів, приміток, чернеток тощо.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="96"/>
         <source>Informational</source>
-        <translation>Інформація</translation>
+        <translation>Інформаційний</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="106"/>
         <source>Normal layer with drawing eleements</source>
-        <translation>Нормальний шар з витяжками</translation>
+        <translation>Звичайний шар з елементами креслення</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="109"/>
         <source>Normal</source>
-        <translation>Нормативно</translation>
+        <translation>Звичайний</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="119"/>
         <source>Layer that holds dimensions</source>
-        <translation>Шар, що має розміри</translation>
+        <translation>Шар, що містить розміри</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="122"/>
         <source>Dimensions</source>
-        <translation>Розміри</translation>
+        <translation>Розмірний</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="132"/>
         <source>Layer with alternate position of entities located on normal layers</source>
-        <translation>Шар зі змінним положенням суб&apos;єктів, розташованих на нормальних шарах</translation>
+        <translation>Шар з альтернативним положенням об’єктів, розташованих на звичайних шарах</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="135"/>
         <source>Alternative Position</source>
-        <translation>Альтернативна позиція</translation>
+        <translation>Альтернативне положення</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="148"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Будівельний шар має суб&apos;єкти нескінченних прямих ліній, які призначені для використання для геометричного будівництва.
-Зміст будівельного шару не повинно з&apos;явитися в роздруковці.</translation>
+        <translation>Конструкційний шар містить об’єкти у вигляді нескінченних прямих ліній, призначених для геометричних побудов.
+       Вміст конструкційного шару не має відображатися під час друку.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="152"/>
         <source>Construction Layer</source>
-        <translation>Будівельний шар</translation>
+        <translation>Конструкційний шар</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="181"/>
@@ -15394,17 +15394,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="197"/>
         <source>Layer Name:</source>
-        <translation>Ім&apos;я шару:</translation>
+        <translation>Назва шару:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="68"/>
         <source>Rename Virtual Layer</source>
-        <translation>Статус на сервери</translation>
+        <translation>Перейменувати віртуальний шар</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="72"/>
         <source>Add Secondary Layer</source>
-        <translation>Додавання вторинного шару</translation>
+        <translation>Додати вторинний шар</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="78"/>
@@ -15421,12 +15421,12 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="183"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="221"/>
         <source>Default Pen</source>
-        <translation>За замовчуванням Pen</translation>
+        <translation>Перо за умовчанням</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="200"/>
         <source>Rename Layer</source>
-        <translation>Ім&apos;я</translation>
+        <translation>Перейменувати шар</translation>
     </message>
 </context>
 <context>
@@ -15434,7 +15434,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="39"/>
         <source>Form</source>
-        <translation>Головна</translation>
+        <translation>Форма</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="57"/>
@@ -15444,42 +15444,42 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="63"/>
         <source>If checked, Named Views from the document will be included into exported drawings. Otherwise, views are not included.</source>
-        <translation>При перевірці, іменовані види з документа будуть включені в експортовані креслення. В іншому випадку, види не включені.</translation>
+        <translation>Якщо позначено, іменовані вигляди з документа буде включено до експортованих креслень. Інакше вигляди не буде включено.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="66"/>
         <source>Export Named Views too</source>
-        <translation>Експорт ім&apos;я Переглядів занадто</translation>
+        <translation>Експортувати також іменовані вигляди</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="73"/>
         <source>If checked, each original exported layer will be stored in separate drawing. Otherwise, all layers will be in exported to one combined drawing.</source>
-        <translation>При перевірці кожного оригінального експортованого шару буде зберігатися в окремому малюнку. В іншому випадку всі шари будуть експортовані в один комбінований малюнок.</translation>
+        <translation>Якщо позначено, кожен експортований шар буде збережено в окремому кресленні. Інакше всі шари буде експортовано в одне спільне креслення.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="76"/>
         <source>Export each layer to own drawing file</source>
-        <translation>Експорт кожного шару на власний файл креслення</translation>
+        <translation>Експортувати кожен шар в окремий файл креслення</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="83"/>
         <source>If checked, entities will be stored in original layer. Otherwise, they are placed to layer &quot;0&quot;.</source>
-        <translation>При перевірці суб&apos;єкти зберігатимуться в оригінальному шарі. В іншому випадку вони розміщені на шар &quot;0&quot;.</translation>
+        <translation>Якщо позначено, об’єкти буде збережено в початковому шарі. Інакше їх буде розміщено на шарі &quot;0&quot;.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="89"/>
         <source>Retain original layer for entities</source>
-        <translation>Перевага оригінального шару для осіб</translation>
+        <translation>Зберігати початковий шар об’єктів</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="96"/>
         <source>If checked, UCSs from the document will be included into exported drawings. Otherwise, UCSs are not included.</source>
-        <translation>Якщо перевірили, UCS з документа буде включено до експортованих малюнків. В іншому випадку UCS не входить.</translation>
+        <translation>Якщо позначено, UCS із документа буде включено до експортованих креслень. Інакше UCS не буде включено.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="99"/>
         <source>Export UCSs too</source>
-        <translation>Експорт UCS занадто</translation>
+        <translation>Експортувати також UCS</translation>
     </message>
 </context>
 <context>
@@ -15487,17 +15487,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="20"/>
         <source>Layers Tree Options</source>
-        <translation>Параметри дерева</translation>
+        <translation>Параметри дерева шарів</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="46"/>
         <source>Settings for naming convention that is used to create layers hierarchy based on flat list of layers</source>
-        <translation>Настроювання конвенції, що використовується для створення шарів ієрархії на основі плоского списку шарів</translation>
+        <translation>Налаштування правил іменування, що використовуються для створення ієрархії шарів на основі плоского списку шарів</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="49"/>
         <source>Naming Convention</source>
-        <translation>Конвенція</translation>
+        <translation>Правила іменування</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="55"/>
@@ -15507,7 +15507,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="116"/>
         <source>Separator used for split inner name of layer to hierarchical names</source>
-        <translation>Сепаратор використовується для розщеплення внутрішньої назви шару до ієрархічних імен</translation>
+        <translation>Роздільник, що використовується для поділу внутрішньої назви шару на ієрархічні назви</translation>
     </message>
     <message>
         <source>Layer Level Name Separator</source>
@@ -15521,33 +15521,33 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
-        <translation>Розміри</translation>
+        <translation>Розмірний</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="201"/>
         <source>Suffix of layer&apos;s name that defines that layer is dimensional</source>
-        <translation>Суфікс назви шару, що визначає, що шар об&apos;ємний</translation>
+        <translation>Суфікс назви шару, який визначає, що шар є розмірним</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="211"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="809"/>
         <source>Informational</source>
-        <translation>Інформація</translation>
+        <translation>Інформаційний</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="224"/>
         <source>Suffix of layer&apos;s name that defines that layer is informational.</source>
-        <translation>Суфікс назви шару, що визначає, що шар є інформативним.</translation>
+        <translation>Суфікс назви шару, який визначає, що шар є інформаційним.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="234"/>
         <source>Alternative Position </source>
-        <translation>Альтернативна позиція</translation>
+        <translation>Альтернативне положення </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
-        <translation>Суфікс назви шару, що визначає, що шар є для альтернативного положення.</translation>
+        <translation>Суфікс назви шару, який визначає, що шар призначено для альтернативного положення.</translation>
     </message>
     <message>
         <source>Duplicating Name</source>
@@ -15561,17 +15561,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="74"/>
         <source>Prefix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>Префікс назви шара, який використовується, якщо шар з такою назвою існує (програш, коли створюється дублікат)</translation>
+        <translation>Префікс назви шару, який використовується, якщо шар із такою назвою вже існує (наприклад, під час створення дубліката)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="84"/>
         <source>Suffix</source>
-        <translation>Кошик</translation>
+        <translation>Суфікс</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="97"/>
         <source>Suffix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>Фіксація назви шару, яка використовується, якщо шар з такою назвою існує (програш, коли створюється дублікат)</translation>
+        <translation>Суфікс назви шару, який використовується, якщо шар із такою назвою вже існує (наприклад, під час створення дубліката)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="155"/>
@@ -15606,17 +15606,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="271"/>
         <source>Display and Operations</source>
-        <translation>Дисплей і операції</translation>
+        <translation>Відображення та операції</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="329"/>
         <source>If checked, tooltip will include complete name of layer (with all upper layer levels)</source>
-        <translation>Якщо перевіряються, то в комплекті буде шар (з усіма рівнями верхнього шару)</translation>
+        <translation>Якщо позначено, підказка міститиме повну назву шару (з усіма верхніми рівнями шарів)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="332"/>
         <source>Show full name as ToolTip</source>
-        <translation>Показати ім&apos;я як ToolTip</translation>
+        <translation>Показувати повну назву як підказку</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="608"/>
@@ -15636,7 +15636,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="794"/>
         <source>Normal</source>
-        <translation type="unfinished">Нормативно</translation>
+        <translation type="unfinished">Звичайний</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="804"/>
@@ -15646,52 +15646,52 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="319"/>
         <source>If checked, icons for layer types will be shown</source>
-        <translation>При перевірці іконки для типів шарів буде показано</translation>
+        <translation>Якщо позначено, буде показано іконки типів шарів</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="322"/>
         <source>Show layer type icons</source>
-        <translation>Показати іконки типу шарів</translation>
+        <translation>Показувати іконки типів шарів</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="309"/>
         <source>Indentation for child layers</source>
-        <translation>Виявлення для дитячих шарів</translation>
+        <translation>Відступ для дочірніх шарів</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="312"/>
         <source>Show indented layer names. Ident size:</source>
-        <translation>Показати відступні імена шарів. Розмір зуба:</translation>
+        <translation>Показувати назви шарів із відступом. Розмір відступу:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="277"/>
         <source>Size of the indent in characters to indent name of child layer from parent ones</source>
-        <translation>Розмір відступу в символи для відступу назви дитячого шару від батьків</translation>
+        <translation>Розмір відступу в символах, на який назва дочірнього шару зміщується відносно батьківських</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="352"/>
         <source>If checked, drag&amp;drop operations in layers list are enabled and layers hierarchy may be restructutured</source>
-        <translation>Якщо ввімкнені, перетягування в список шарів і ієрархії шарів можуть бути реструктуровані</translation>
+        <translation>Якщо позначено, у списку шарів увімкнено операції перетягування, а ієрархію шарів можна перебудовувати</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="355"/>
         <source>Allow restructuring via Drag&amp;Drop</source>
-        <translation>Реструктуризація по трасі та Drop</translation>
+        <translation>Дозволити перебудову структури перетягуванням</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="293"/>
         <source>If primary layer is renames, secondary layers are renamed too.</source>
-        <translation>Якщо первинний шар перейменує, перейменуються вторинні шари.</translation>
+        <translation>Якщо первинний шар перейменовано, вторинні шари також буде перейменовано.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="296"/>
         <source>Rename secondary layers on primary rename</source>
-        <translation>Перейменування вторинних шарів на первинному перейменуванні</translation>
+        <translation>Перейменовувати вторинні шари разом із первинним</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="376"/>
         <source>Various colors settings</source>
-        <translation>Різні параметри кольорів</translation>
+        <translation>Різні налаштування кольорів</translation>
     </message>
     <message>
         <source>Colors</source>
@@ -15700,7 +15700,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="470"/>
         <source>Background color for selected items in layers tree.</source>
-        <translation>Колір фону для вибраних елементів в шарах дерева.</translation>
+        <translation>Колір фону вибраних елементів у дереві шарів.</translation>
     </message>
     <message>
         <source>Color for separator lines in layers tree view</source>
@@ -15709,7 +15709,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="420"/>
         <source>Background color for virtual layers items in layers list</source>
-        <translation>Колір фону для віртуальних елементів шарів у списку шарів</translation>
+        <translation>Колір фону елементів віртуальних шарів у списку шарів</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="449"/>
@@ -15722,7 +15722,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="560"/>
         <source>Matched item in highlight filter mode</source>
-        <translation>Зібраний елемент у режимі висвітлення фільтра</translation>
+        <translation>Елемент, що відповідає фільтру, у режимі підсвічування</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="391"/>
@@ -15732,7 +15732,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="379"/>
         <source>Appearance</source>
-        <translation type="unfinished">Закупівля</translation>
+        <translation type="unfinished">Зовнішній вигляд</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="406"/>
@@ -15751,12 +15751,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="503"/>
         <source>Selected items background color</source>
-        <translation>Вибрані елементи фонового кольору</translation>
+        <translation>Колір фону вибраних елементів</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="523"/>
         <source>Background color for active layer item in layers tree</source>
-        <translation>Колір фону для активного елемента шару в шарах дерева</translation>
+        <translation>Колір фону елемента активного шару в дереві шарів</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="526"/>
@@ -15776,17 +15776,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="599"/>
         <source>Pens that will be set for newly created layers of different types.</source>
-        <translation>Для новостворених шарів різних типів використовуються ручні ручки.</translation>
+        <translation>Пера, які буде встановлено для новостворених шарів різних типів.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="602"/>
         <source>Default Pens</source>
-        <translation>За замовчуванням ручки</translation>
+        <translation>Пера за умовчанням</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="68"/>
         <source>Normal Layer</source>
-        <translation>Нормальний шар</translation>
+        <translation>Звичайний шар</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="69"/>
@@ -15801,7 +15801,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Alternative Position Layer</source>
-        <translation>Альтернативний шар позицій</translation>
+        <translation>Шар альтернативного положення</translation>
     </message>
     <message>
         <source>grid</source>
@@ -15810,22 +15810,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="103"/>
         <source>highlighted item</source>
-        <translation>виділений товар</translation>
+        <translation>підсвічений елемент</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="110"/>
         <source>virtual layer background</source>
-        <translation>віртуальний шар фон</translation>
+        <translation>фон віртуального шару</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="118"/>
         <source>selected item background</source>
-        <translation>вибраний пункт фон</translation>
+        <translation>фон вибраного елемента</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="126"/>
         <source>active layer background</source>
-        <translation>активний шар фон</translation>
+        <translation>фон активного шару</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
@@ -15836,8 +15836,8 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>Нормативне значення дає %1 колір.
-Будь ласка, вкажіть різне значення.</translation>
+        <translation>Некоректне значення кольору (%1).
+Вкажіть, будь ласка, інше значення.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="245"/>
@@ -15850,17 +15850,17 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="150"/>
         <source>Filter</source>
-        <translation>Фільтри</translation>
+        <translation>Фільтр</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="152"/>
         <source>Looking for matching layer names</source>
-        <translation>Шукаємо відповідність назв шарів</translation>
+        <translation>Пошук відповідних назв шарів</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="157"/>
         <source>Highlight Mode</source>
-        <translation>Режим Highlight</translation>
+        <translation>Режим підсвічування</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="167"/>
@@ -15874,8 +15874,8 @@ Please specify a different value.</source>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Приховати всі шари</translation>
+        <source>Hide all layers except current</source>
+        <translation>Приховати всі шари, крім поточного</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="200"/>
@@ -15885,22 +15885,22 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="210"/>
         <source>Show Active Layer Only</source>
-        <translation>Показати активний шар тільки</translation>
+        <translation>Показати лише активний шар</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="218"/>
         <source>Expand All</source>
-        <translation>Зареєструватися</translation>
+        <translation>Розгорнути все</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="226"/>
         <source>Collapse All</source>
-        <translation>Пробити</translation>
+        <translation>Згорнути все</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="234"/>
         <source>Collapse Secondary</source>
-        <translation>Колапс вторинний</translation>
+        <translation>Згорнути вторинні шари</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="242"/>
@@ -15920,7 +15920,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="263"/>
         <source>Add dimensions Layer</source>
-        <translation>Додавання розмірів шар</translation>
+        <translation>Додати розмірний шар</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="272"/>
@@ -15930,7 +15930,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="279"/>
         <source>Modify layer attributes / rename</source>
-        <translation>Модифікувати атрибути шару / перейменування</translation>
+        <translation>Змінити атрибути шару / перейменувати</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="286"/>
@@ -15940,100 +15940,100 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="656"/>
         <source>&amp;Add Child Layer</source>
-        <translation>&amp;Додати дитячий шар</translation>
+        <translation>&amp;Додати дочірній шар</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="657"/>
         <source>&amp;Rename</source>
-        <translation>Ім&apos;я</translation>
+        <translation>Перей&amp;менувати</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="658"/>
         <source>&amp;Remove Layers (Sub-Tree)</source>
-        <translation>&amp;Remove Шари (Sub-Tree)</translation>
+        <translation>В&amp;идалити шари (піддерево)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="660"/>
         <source>&amp;Copy Structure (Sub-Tree)</source>
-        <translation>&amp;Copy Структура (Sub-Tree)</translation>
+        <translation>Копіювати &amp;структуру (піддерево)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="661"/>
         <source>&amp;Duplicate Content (Sub-Tree)</source>
-        <translation>&amp;Duplicate Зміст (Sub-Tree)</translation>
+        <translation>Ду&amp;блювати вміст (піддерево)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="663"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>Вибрати об’єкти (піддерево)</translation>
+        <translation>Вибра&amp;ти об’єкти (піддерево)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="668"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>&amp;Редагування шарів &amp; Атрибути</translation>
+        <translation>Реда&amp;гувати атрибути шару</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="670"/>
         <source>&amp;Remove Layer</source>
-        <translation>&amp;Remove Шар</translation>
+        <translation>Вида&amp;лити шар</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="679"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>&amp;Додати розміри Sub-Layer</translation>
+        <translation>Додати роз&amp;мірний підшар</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="683"/>
         <source>&amp;Add Info Sub-Layer</source>
-        <translation>&amp;Додати інформацію Sub-Layer</translation>
+        <translation>Додати &amp;інформаційний підшар</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="687"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
-        <translation>&amp;Додати альтернативний вид Sub-Layer</translation>
+        <translation>Дода&amp;ти підшар альтернативного положення</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="693"/>
         <source>&amp;Remove Sub-layers</source>
-        <translation>&amp;Remove Суб-шари</translation>
+        <translation>В&amp;идалити підшари</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="701"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="711"/>
         <source>Convert to Dimensional Layer</source>
-        <translation>Перетворення в вимірний шар</translation>
+        <translation>Перетворити на розмірний шар</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="702"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="714"/>
         <source>Convert to Info Layer</source>
-        <translation>Перетворення в інформаційний шар</translation>
+        <translation>Перетворити на інформаційний шар</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="703"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="717"/>
         <source>Convert to Alternative Position Layer</source>
-        <translation>Перетворення в альтернативний діапазон позицій</translation>
+        <translation>Перетворити на шар альтернативного положення</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="709"/>
         <source>Convert to Normal Layer</source>
-        <translation>Перетворення в нормальний шар</translation>
+        <translation>Перетворити на звичайний шар</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="723"/>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>&amp;Select шари</translation>
+        <translation>Ви&amp;брати об’єкти шару</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="726"/>
         <source>&amp;Create Layer Copy</source>
-        <translation>Статус на сервери</translation>
+        <translation>&amp;Створити копію шару</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="727"/>
         <source>&amp;Duplicate Layer With Content</source>
-        <translation>&amp;Duplicate Шар з контентом</translation>
+        <translation>Дубл&amp;ювати шар із вмістом</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="731"/>
@@ -16043,7 +16043,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="732"/>
         <source>Duplicate Selection to Layer</source>
-        <translation>Дублікатний вибір на шар</translation>
+        <translation>Дублювати вибір на шар</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="739"/>
@@ -16053,57 +16053,57 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="741"/>
         <source>&amp;Freeze Others Layers</source>
-        <translation>&amp;Freeze Інші шари</translation>
+        <translation>&amp;Заморозити інші шари</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="742"/>
         <source>&amp;Defreeze All Layers</source>
-        <translation>&amp;Defreeze Всі шари</translation>
+        <translation>&amp;Розморозити всі шари</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>&amp;Freeze Всі шари</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Приховати всі &amp;шари, крім поточного</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>
         <source>&amp;Unlock All Layers</source>
-        <translation>&amp;Unlock Всі шари</translation>
+        <translation>Р&amp;озблокувати всі шари</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="745"/>
         <source>&amp;Lock All Layers</source>
-        <translation>&amp;Lock Всі шари</translation>
+        <translation>З&amp;аблокувати всі шари</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="746"/>
         <source>Enable &amp;Printing All Layers</source>
-        <translation>Увімкнути та посипати всі шари</translation>
+        <translation>&amp;Увімкнути друк усіх шарів</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="747"/>
         <source>&amp;Disable Printing All Layers</source>
-        <translation>&amp;Disable Друк Всі шари</translation>
+        <translation>&amp;Вимкнути друк усіх шарів</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="750"/>
         <source>&amp;Export Single Layer</source>
-        <translation>&amp;Export Один шар</translation>
+        <translation>&amp;Експортувати один шар</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="754"/>
         <source>&amp;Export Layer Sub-Tree</source>
-        <translation>&amp;Export Шар суб-три</translation>
+        <translation>Експортувати &amp;піддерево шарів</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="758"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Експортно-відомий шар (s)</translation>
+        <translation>Е&amp;кспортувати видимі шари</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="760"/>
         <source>&amp;Find And Remove Empty Layers</source>
-        <translation>&amp;Find і видалити порожні шари</translation>
+        <translation>З&amp;найти та видалити порожні шари</translation>
     </message>
 </context>
 <context>
@@ -18663,7 +18663,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="39"/>
         <source>Layer</source>
-        <translation type="unfinished">Р</translation>
+        <translation type="unfinished">Шар</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="39"/>
@@ -23392,12 +23392,12 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="82"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Якщо зареєстровані, дзеркальні особи будуть розміщені на поточному шарі, інакше вони будуть розміщені в оригінальні шари.</translation>
+        <translation type="unfinished">Якщо позначено, віддзеркалені об’єкти буде розміщено на поточному шарі, інакше їх буде розміщено на початкових шарах.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Статус на сервери</translation>
+        <translation type="unfinished">Використовувати поточний шар</translation>
     </message>
 </context>
 <context>
@@ -23691,12 +23691,12 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="45"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="unfinished">Якщо зареєстровані, створені особи будуть розміщені на поточний шар. В іншому випадку вони будуть розміщені в оригінальні шари.</translation>
+        <translation type="unfinished">Якщо позначено, створені об’єкти буде розміщено на поточному шарі. Інакше їх буде розміщено на початкових шарах. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="48"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Використання поточного шару</translation>
+        <translation type="unfinished">Використовувати поточний шар</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="55"/>
@@ -23877,12 +23877,12 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="144"/>
         <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="unfinished">Якщо зареєстровані, створені особи будуть розміщені в поточний шар, інакше будуть в оригінальних шарах.</translation>
+        <translation type="unfinished">Якщо позначено, створені об’єкти буде розміщено на поточному шарі, інакше вони будуть на початкових шарах. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="147"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Використання поточного шару</translation>
+        <translation type="unfinished">Використовувати поточний шар</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="166"/>
@@ -24293,12 +24293,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="93"/>
         <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">Якщо зареєстровані, створені особи будуть розміщені в поточний шар, інакше вони будуть в оригінальних шарах.</translation>
+        <translation type="unfinished">Якщо позначено, створені об’єкти буде розміщено на поточному шарі, інакше вони будуть на початкових шарах.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="96"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Використання поточного шару</translation>
+        <translation type="unfinished">Використовувати поточний шар</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="109"/>
@@ -24797,7 +24797,7 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="264"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="299"/>
         <source>By Block</source>
-        <translation>Заблокувати</translation>
+        <translation>За блоком</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="266"/>
@@ -25419,22 +25419,22 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="188"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Update Поточна ручка від Active Layer&apos; Pen</translation>
+        <translation>Оновити поточне перо за пером активного шару</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="205"/>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation>Заповнити Pen Editor від Active Layer&apos;s Pen</translation>
+        <translation>Заповнити редактор пера з пера активного шару</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="208"/>
         <source>Pick from Active Layer</source>
-        <translation>Підібрати від активного шару</translation>
+        <translation>Взяти з активного шару</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="222"/>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation>Застосувати редактор Pen на Active Layer Pen</translation>
+        <translation>Застосувати перо редактора до пера активного шару</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="225"/>
@@ -25524,7 +25524,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="305"/>
         <source>&amp;Apply Pen To Active Layer</source>
-        <translation>&amp;Apply Pen для активного шару</translation>
+        <translation>&amp;Застосувати перо до активного шару</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="306"/>
@@ -29549,7 +29549,7 @@ Please note that if you save a pen via the editor without restarting, the curren
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="78"/>
         <source>Name</source>
-        <translation type="unfinished">Ім&apos;я</translation>
+        <translation type="unfinished">Назва</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="78"/>
@@ -29590,12 +29590,12 @@ Please note that if you save a pen via the editor without restarting, the curren
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="167"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="183"/>
         <source>Normal</source>
-        <translation type="unfinished">Нормативно</translation>
+        <translation type="unfinished">Звичайний</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="171"/>
         <source>Dimensional</source>
-        <translation type="unfinished">Розміри</translation>
+        <translation type="unfinished">Розмірний</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="175"/>
@@ -29605,7 +29605,7 @@ Please note that if you save a pen via the editor without restarting, the curren
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="179"/>
         <source>Informational</source>
-        <translation type="unfinished">Інформація</translation>
+        <translation type="unfinished">Інформаційний</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="186"/>
@@ -32797,7 +32797,7 @@ Please note that if you save a pen via the editor without restarting, the curren
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="533"/>
         <source>Layer</source>
-        <translation>Р</translation>
+        <translation>Шар</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="538"/>
@@ -33158,7 +33158,8 @@ Please note that if you save a pen via the editor without restarting, the curren
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="127"/>
         <source>
 Layer: </source>
-        <translation>Шар:</translation>
+        <translation>
+Шар: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="573"/>
@@ -35964,12 +35965,12 @@ p, li { біло-просторовий: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="208"/>
         <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="unfinished">Визначається, що копії клею будуть вставлятися на поточний або оригінальний шар</translation>
+        <translation type="unfinished">Визначає, на який шар буде вставлено копії: поточний чи початковий</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="211"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Використання поточного шару</translation>
+        <translation type="unfinished">Використовувати поточний шар</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="218"/>
@@ -36210,12 +36211,12 @@ p, li { біло-просторовий: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="209"/>
         <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">При перевірці нових джгутів будуть розміщені на поточному шарі, інакше вони будуть в оригінальних шарах.</translation>
+        <translation type="unfinished">Якщо позначено, нові об’єкти буде розміщено на поточному шарі, інакше вони будуть на початкових шарах.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="212"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Використання поточного шару</translation>
+        <translation type="unfinished">Використовувати поточний шар</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="219"/>
@@ -36453,12 +36454,12 @@ p, li { біло-просторовий: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="83"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="unfinished">Якщо зареєстровані, створені особи будуть розміщені на поточний шар. В іншому випадку вони будуть розміщені на оригінальні шари.</translation>
+        <translation type="unfinished">Якщо позначено, створені об’єкти буде розміщено на поточному шарі. Інакше їх буде розміщено на початкових шарах. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="86"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Використання поточного шару</translation>
+        <translation type="unfinished">Використовувати поточний шар</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="107"/>
@@ -37367,7 +37368,7 @@ p, li { біло-просторовий: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="77"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Якщо зареєстровані, створені особи будуть розміщені на поточному шарі, інакше вони будуть розміщені в оригінальні шари.</translation>
+        <translation type="unfinished">Якщо позначено, створені об’єкти буде розміщено на поточному шарі, інакше їх буде розміщено на початкових шарах.</translation>
     </message>
 </context>
 <context>
@@ -37405,12 +37406,12 @@ p, li { біло-просторовий: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="73"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Якщо зареєстровані, створені особи будуть розміщені на поточному шарі, інакше вони будуть розміщені в оригінальні шари.</translation>
+        <translation type="unfinished">Якщо позначено, створені об’єкти буде розміщено на поточному шарі, інакше їх буде розміщено на початкових шарах.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="76"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Використання поточного шару</translation>
+        <translation type="unfinished">Використовувати поточний шар</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="83"/>
@@ -37552,7 +37553,7 @@ p, li { біло-просторовий: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="71"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Якщо зареєстровані, створені особи будуть розміщені на поточному шарі, інакше вони будуть розміщені в оригінальні шари.</translation>
+        <translation type="unfinished">Якщо позначено, створені об’єкти буде розміщено на поточному шарі, інакше їх буде розміщено на початкових шарах.</translation>
     </message>
 </context>
 <context>
@@ -37565,12 +37566,12 @@ p, li { біло-просторовий: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="32"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Якщо зареєстровані, створені особи будуть розміщені на поточному шарі, інакше вони будуть розміщені в оригінальні шари.</translation>
+        <translation type="unfinished">Якщо позначено, створені об’єкти буде розміщено на поточному шарі, інакше їх буде розміщено на початкових шарах.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="35"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Статус на сервери</translation>
+        <translation type="unfinished">Використовувати поточний шар</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="42"/>
@@ -38440,7 +38441,7 @@ p, li { біло-просторовий: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="216"/>
         <source>Entity&apos;s Layer</source>
-        <translation>Шар вступності</translation>
+        <translation>Шар об’єкта</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="250"/>
@@ -39150,7 +39151,7 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="236"/>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="236"/>
         <source>Layers Tree</source>
-        <translation>Шари дерево</translation>
+        <translation>Дерево шарів</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="261"/>
@@ -39896,7 +39897,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="105"/>
         <source>Name of Current Active Layer</source>
-        <translation>Назва поточного діючого шару</translation>
+        <translation>Назва поточного активного шару</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="80"/>
@@ -40394,7 +40395,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="54"/>
         <source>Layer to apply</source>
-        <translation>Шар застосувати</translation>
+        <translation>Шар, який слід застосувати</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="69"/>
@@ -40979,7 +40980,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="51"/>
         <source>Layer:</source>
-        <translation>Шар: </translation>
+        <translation>Шар:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="241"/>
@@ -41049,7 +41050,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="70"/>
         <source>Layer of MText</source>
-        <translation>Шар MText</translation>
+        <translation>Шар багаторядкового тексту</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="144"/>
@@ -43593,7 +43594,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5074"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;При увімкненні, активація шару змінить шар усіх вибраних об&apos;єктів на новий шар. Щоб змінити шар декількох елементів: спочатку оберіть потрібні об&apos;єкти; активуйте шар у віджеті шарів. Це призведе до того, що всі обрані об&apos;єкти будуть змінені та перенесені на новий шар.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;При увімкненні, активація шару змінить шар усіх вибраних об’єктів на новий шар. Щоб змінити шар декількох об’єктів: спочатку виберіть потрібні об’єкти; активуйте шар у віджеті шарів. Це призведе до того, що всі вибрані об’єкти будуть змінені та перенесені на новий шар.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5934"/>
@@ -44714,7 +44715,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5077"/>
         <source>Modify layer of selected entities, at layer activation</source>
-        <translation>Змінено шар виділених осіб, при активації шару</translation>
+        <translation>Змінювати шар вибраних об’єктів під час активації шару</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5490"/>
@@ -47086,7 +47087,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="178"/>
         <source>Layer:</source>
-        <translation>Шар: </translation>
+        <translation>Шар:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="240"/>
@@ -47365,14 +47366,14 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="63"/>
         <source>Default Pen</source>
-        <translation>Перо за умовчанням:</translation>
+        <translation>Перо за умовчанням</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="29"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Конструкційний шар має елементи безкінечних прямих ліній призначені для геометричних побудов.
-Вміст конструкційного шару не має відображатися при друці.</translation>
+        <translation>Конструкційний шар містить об’єкти у вигляді нескінченних прямих ліній, призначених для геометричних побудов.
+Вміст конструкційного шару не має відображатися під час друку.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="33"/>
@@ -47818,12 +47819,12 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="240"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1739"/>
         <source>Remove Layer</source>
-        <translation>Вилучити шар</translation>
+        <translation>Видалити шар</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="183"/>
         <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>Шар „%1“ ніколи не можна вилучати.</translation>
+        <translation>Шар „%1“ ніколи не можна видаляти.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="304"/>
@@ -47851,14 +47852,14 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="84"/>
         <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>Шар з назвою „%1“ вже існує. Вкажіть, будь ласка, іншу назву. </translation>
+        <translation>Шар з назвою „%1“ вже існує. Вкажіть, будь ласка, іншу назву.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="173"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>Шар &quot;%1&quot; і усі елементи на ньому будуть видалені.
-Ця дія НЕ може бути відміненою.</translation>
+        <translation>Шар &quot;%1&quot; і всі об’єкти на ньому буде видалено.
+Цю дію НЕ можна скасувати.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="240"/>
@@ -47871,16 +47872,16 @@ This action can NOT be undone.</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1787"/>
         <source>Remove %n layer(s)</source>
         <translation>
-            <numerusform>Remove %n layer</numerusform>
-            <numerusform>Remove %n layers</numerusform>
-            <numerusform>Remove %n layers</numerusform>
+            <numerusform>Видалити %n шар</numerusform>
+            <numerusform>Видалити %n шари</numerusform>
+            <numerusform>Видалити %n шарів</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="251"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1788"/>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>Перераховані шари і усі елементи на них буде видалено.</translation>
+        <translation>Перераховані шари і всі об’єкти на них буде видалено.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="253"/>
@@ -47921,7 +47922,7 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="230"/>
         <source>Layer empty name is not allowed.</source>
-        <translation>Ім&apos;я шару не допускається.</translation>
+        <translation>Порожня назва шару не допускається.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="265"/>
@@ -47933,9 +47934,9 @@ This action can NOT be undone.</source>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation>Інтемпт для створення шару з відшаруванням назви. Ім&apos;я шару дублюється
+        <translation>Спроба створити шар із назвою, яка вже існує. Повторювана назва шару: 
 [%1].
-Будь ласка, вкажіть інше ім&apos;я.</translation>
+Вкажіть, будь ласка, іншу назву.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="142"/>
@@ -47947,8 +47948,8 @@ Please specify a different name.</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="143"/>
         <source>Layer list separator string is empty. It will not be possible to build layers tree.
 Please specify a different value.</source>
-        <translation>Пружина сепаратора шару - порожній. Не можна будувати шари дерева.
-Будь ласка, вкажіть різне значення.</translation>
+        <translation>Рядок-роздільник списку шарів порожній. Побудувати дерево шарів буде неможливо.
+Вкажіть, будь ласка, інше значення.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="962"/>
@@ -47967,14 +47968,14 @@ Clear filtering mask and repeat.</source>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
 Clear filtering mask and repeat.</source>
-        <translation>Знайдено шари без об&apos;єктів, але вони відфільтровані та невидимі.
+        <translation>Знайдено шари без об’єктів, але вони відфільтровані та невидимі.
 
 Очистіть маску фільтрування та повторіть.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="973"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>Не знайдено ніяких шарів, не знайдено ніяких ознак.</translation>
+        <translation>Шарів без об’єктів не знайдено, видаляти нічого.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1116"/>
@@ -47988,23 +47989,25 @@ Clear filtering mask and repeat.</source>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation>Такий дитячий шар вже існує для
+        <translation>Такий дочірній шар уже існує для 
 [%1].
-Будь ласка, вкажіть інше ім&apos;я.</translation>
+Вкажіть, будь ласка, іншу назву.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1162"/>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation>Такий дитячий шар вже існує для
-[%1].</translation>
+        <translation>Такий дочірній шар уже існує для 
+[%1].
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1170"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>Вимірювальний шар може бути доданий тільки для нормального активного шару.</translation>
+        <translation>Розмірний шар можна додати лише для звичайного активного шару.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1233"/>
@@ -48025,9 +48028,9 @@ If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
         <translation>Замінити значення &quot;За шаром&quot; значеннями вихідних шарів?
 
-Якщо Так - об&apos;єкти з перами &quot;За шаром&quot; виглядатимуть на новому шарі так само, як на попередніх шарах, і значення &quot;За шаром&quot; буде замінено розв&apos;язаними перами.
+Якщо Так - об’єкти з перами &quot;За шаром&quot; виглядатимуть на новому шарі так само, як на попередніх шарах, і значення &quot;За шаром&quot; буде замінено фактичними перами.
 
-Якщо Ні - значення &quot;За шаром&quot; залишаться, і перо цільового шару визначатиме перо для таких об&apos;єктів.</translation>
+Якщо Ні - значення &quot;За шаром&quot; залишаться, і перо цільового шару визначатиме перо для таких об’єктів.</translation>
     </message>
     <message>
         <source>Replace &quot;By Layer&quot; value to source layers values?
@@ -48041,7 +48044,7 @@ If No - the &quot;By Layer&quot; values will remain, and the pen of the target l
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1805"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1863"/>
         <source>Layer DialogEx</source>
-        <translation>Шар ділогЕкс</translation>
+        <translation>Діалогове вікно шару</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="202"/>
@@ -48094,19 +48097,21 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1453"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>На видимих шарах відсутні особи, які відповідають ручці.</translation>
+        <translation>На видимих шарах немає об’єктів, які відповідають перу.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1454"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>Такі суб&apos;єкти існують на заморожених шарах.</translation>
+        <translation>Такі об’єкти існують на заморожених шарах.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1455"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>Такі особи існують на замкнених шарах.</translation>
+        <translation>Такі об’єкти існують на заблокованих шарах.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1456"/>
@@ -49320,7 +49325,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="83"/>
         <source>cnlayer</source>
-        <translation>шемале</translation>
+        <translation>кншар</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="84"/>
@@ -50000,7 +50005,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="77"/>
         <source>No %1 layers found</source>
-        <translation>Не знайдено шарів %1</translation>
+        <translation>Не знайдено %1 шарів</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="95"/>
@@ -52258,7 +52263,7 @@ Do you want to replace it?</source>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="56"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="209"/>
         <source>By Block</source>
-        <translation>Заблокувати</translation>
+        <translation>За блоком</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="212"/>

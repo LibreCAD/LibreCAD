@@ -2688,7 +2688,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="252"/>
         <source>(De-)Select Layer</source>
-        <translation>(去)选择图层</translation>
+        <translation>(取消)选择图层</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="235"/>
@@ -3064,13 +3064,13 @@ or [%2]</source>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
-        <source>&amp;Hide all layers</source>
-        <translation>隐藏所有图层(&amp;H)</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>隐藏除当前图层外的所有图层(&amp;H)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
         <source>&amp;Unlock all</source>
-        <translation>解锁所有(&amp;U)</translation>
+        <translation>解锁全部(&amp;U)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="620"/>
@@ -3621,7 +3621,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="66"/>
         <source>Layer</source>
-        <translation>层</translation>
+        <translation>图层</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="66"/>
@@ -3818,12 +3818,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity Layer</source>
-        <translation>实体层</translation>
+        <translation>实体图层</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity&apos;s Layer</source>
-        <translation>实体层</translation>
+        <translation>实体图层</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="88"/>
@@ -3838,7 +3838,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="109"/>
         <source>Activate Entity&apos;s Layer</source>
-        <translation>激活实体层</translation>
+        <translation>激活实体图层</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="110"/>
@@ -3848,22 +3848,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="111"/>
         <source>Hide Other Layers than Entity&apos;s</source>
-        <translation>隐藏实体以外的图层</translation>
+        <translation>隐藏除实体图层外的所有图层</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="112"/>
         <source>Lock Entity&apos;s Layer</source>
-        <translation>锁定实体的图层</translation>
+        <translation>锁定实体图层</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="113"/>
         <source>Toggle Entity&apos;s Layer Construction</source>
-        <translation>切换实体的地层建设</translation>
+        <translation>切换实体图层是否为构造图层</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="114"/>
         <source>Toggle Entity&apos;s Layer Printing</source>
-        <translation>切换实体的图层打印</translation>
+        <translation>切换实体图层打印</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="196"/>
@@ -4073,7 +4073,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="410"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>按活动层的笔更新当前笔</translation>
+        <translation>用活动图层的笔更新当前笔</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="416"/>
@@ -4308,12 +4308,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="624"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>切换图层锁定 (&amp;K)</translation>
+        <translation>切换图层锁定(&amp;K)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="625"/>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation>切换图层可见 (&amp;T)</translation>
+        <translation>切换图层可见(&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="626"/>
@@ -5151,7 +5151,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>Enter layer name to %1</source>
-        <translation>输入层名到%1</translation>
+        <translation>输入要%1的图层名称</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
@@ -5170,7 +5170,7 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
         <source>selected</source>
         <comment>Layers to export</comment>
-        <translation>选中</translation>
+        <translation>选定</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
@@ -6898,7 +6898,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_layer.cpp" line="75"/>
         <source>Specify entity with desired layer</source>
-        <translation type="unfinished">指定具有理想层的实体</translation>
+        <translation type="unfinished">指定所需图层上的实体</translation>
     </message>
 </context>
 <context>
@@ -7509,12 +7509,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="66"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">如果选中的话, 镜像实体将被放入当前图层, 否则会被放入原始图层 .</translation>
+        <translation type="unfinished">如果选中，镜像后的实体将被放置到当前图层，否则将被放置到原始图层。</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="69"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">用户当前图层</translation>
+        <translation type="unfinished">使用当前图层</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="76"/>
@@ -8837,7 +8837,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="62"/>
         <source>Layer to which created circle should be placed</source>
-        <translation type="unfinished">创建圆形的图层</translation>
+        <translation type="unfinished">放置所创建圆的图层</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="66"/>
@@ -10837,7 +10837,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="209"/>
         <source>Layer</source>
-        <translation>层</translation>
+        <translation>图层</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="236"/>
@@ -11141,7 +11141,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="64"/>
         <source>Layer</source>
-        <translation>层</translation>
+        <translation>图层</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="76"/>
@@ -11151,7 +11151,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="98"/>
         <source>Layer of entity</source>
-        <translation>实体层</translation>
+        <translation>实体所在的图层</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="148"/>
@@ -12310,7 +12310,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="118"/>
         <source>Active Layer</source>
-        <translation type="unfinished">活动层</translation>
+        <translation type="unfinished">活动图层</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="125"/>
@@ -12634,7 +12634,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="26"/>
         <source>Layer of dimension</source>
-        <translation>维度层</translation>
+        <translation>标注所在的图层</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="45"/>
@@ -12644,7 +12644,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="58"/>
         <source>Layer:</source>
-        <translation>图层 :</translation>
+        <translation>图层:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="91"/>
@@ -13610,7 +13610,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="82"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">重复的层</translation>
+        <translation type="unfinished">放置副本的图层</translation>
     </message>
 </context>
 <context>
@@ -13623,7 +13623,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="45"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">重复的层</translation>
+        <translation type="unfinished">放置副本的图层</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="49"/>
@@ -14410,12 +14410,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="168"/>
         <source>Layer</source>
-        <translation type="unfinished">层</translation>
+        <translation type="unfinished">图层</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="168"/>
         <source>Layer of entity</source>
-        <translation type="unfinished">实体层</translation>
+        <translation type="unfinished">实体所在的图层</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="204"/>
@@ -15315,17 +15315,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="20"/>
         <source>Layer Settings</source>
-        <translation>层设置</translation>
+        <translation>图层设置</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="48"/>
         <source>Name of new layer. In order to create hierarchical layers, include name of virtual layer and layer name separator.</source>
-        <translation>新层的名称 。 为了创建分层,包括了虚拟层的名称和层名分隔符.</translation>
+        <translation>新图层的名称。要创建具有层次结构的图层，请在名称中包含虚拟图层的名称和图层名称分隔符。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="64"/>
         <source>Parent Layers Path:</source>
-        <translation>父图层路径 :</translation>
+        <translation>父图层路径:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="81"/>
@@ -15335,69 +15335,69 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="93"/>
         <source>Layer for various infromational elements, notes, drafts etc.</source>
-        <translation>用于各种从元素,注释,草稿等的图层.</translation>
+        <translation>用于各种信息性元素、注释、草稿等的图层。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="96"/>
         <source>Informational</source>
-        <translation>资料</translation>
+        <translation>信息</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="106"/>
         <source>Normal layer with drawing eleements</source>
-        <translation>普通图层, 带有绘图精华</translation>
+        <translation>包含绘图元素的普通图层</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="109"/>
         <source>Normal</source>
-        <translation>常规</translation>
+        <translation>普通</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="119"/>
         <source>Layer that holds dimensions</source>
-        <translation>具有维度的层</translation>
+        <translation>包含标注的图层</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="122"/>
         <source>Dimensions</source>
-        <translation>尺寸</translation>
+        <translation>标注</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="132"/>
         <source>Layer with alternate position of entities located on normal layers</source>
-        <translation>平面层, 实体在平面层上的位置为相交位置</translation>
+        <translation>包含普通图层上实体的替代位置的图层</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="135"/>
         <source>Alternative Position</source>
-        <translation>备选位置</translation>
+        <translation>替代位置</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="148"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>建筑地层有无限直线的实体,用于几何构造。
-建筑层的内容不应印出.</translation>
+        <translation>构造图层有用于几何构造的无限长直线实体。
+构造图层的内容不应出现在打印内容中。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="152"/>
         <source>Construction Layer</source>
-        <translation>建筑层</translation>
+        <translation>构造图层</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="181"/>
         <source>Path for parent layer</source>
-        <translation>父层路径</translation>
+        <translation>父图层路径</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="197"/>
         <source>Layer Name:</source>
-        <translation>图层名称 :</translation>
+        <translation>图层名称:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="68"/>
         <source>Rename Virtual Layer</source>
-        <translation>重命名虚拟层</translation>
+        <translation>重命名虚拟图层</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="72"/>
@@ -15419,7 +15419,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="183"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="221"/>
         <source>Default Pen</source>
-        <translation>默认笔</translation>
+        <translation>默认画笔</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="200"/>
@@ -15442,27 +15442,27 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="63"/>
         <source>If checked, Named Views from the document will be included into exported drawings. Otherwise, views are not included.</source>
-        <translation>如果选中的话, 文档中命名的视图将包含在导出图纸中 。 否则,意见不包括在内.</translation>
+        <translation>如果选中，文档中的命名视图将包含在导出的图纸中。否则，不包含视图。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="66"/>
         <source>Export Named Views too</source>
-        <translation>导出已命名的视图</translation>
+        <translation>也导出命名视图</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="73"/>
         <source>If checked, each original exported layer will be stored in separate drawing. Otherwise, all layers will be in exported to one combined drawing.</source>
-        <translation>如果选中的话, 每个原始导出层将被保存在单独的绘图中 。 否则,所有地层都会被导出到一个组合图中.</translation>
+        <translation>如果选中，导出的每个原始图层将保存到单独的图纸中。否则，所有图层将导出到一个合并的图纸中。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="76"/>
         <source>Export each layer to own drawing file</source>
-        <translation>导出每层以自有绘图文件</translation>
+        <translation>将每个图层导出到单独的图纸文件</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="83"/>
         <source>If checked, entities will be stored in original layer. Otherwise, they are placed to layer &quot;0&quot;.</source>
-        <translation>如果选中, 实体将被存储在原层 。 否则,它们会被放置在&quot;0&quot;层.</translation>
+        <translation>如果选中，实体将保存在原始图层中。否则，它们将被放置到图层&quot;0&quot;中。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="89"/>
@@ -15472,7 +15472,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="96"/>
         <source>If checked, UCSs from the document will be included into exported drawings. Otherwise, UCSs are not included.</source>
-        <translation>如果选中, 文档中的UCS 将包含在导出图纸中 。 否则,统一控制制度不包括在内.</translation>
+        <translation>如果选中，文档中的 UCS 将包含在导出的图纸中。否则，不包含 UCS。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="99"/>
@@ -15485,17 +15485,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="20"/>
         <source>Layers Tree Options</source>
-        <translation>层树选项</translation>
+        <translation>图层树选项</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="46"/>
         <source>Settings for naming convention that is used to create layers hierarchy based on flat list of layers</source>
-        <translation>用于根据平面分层列表创建分层的命名常规设置</translation>
+        <translation>用于根据图层平面列表创建图层层次结构的命名约定设置</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="49"/>
         <source>Naming Convention</source>
-        <translation>命名公约</translation>
+        <translation>命名约定</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="55"/>
@@ -15505,7 +15505,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="116"/>
         <source>Separator used for split inner name of layer to hierarchical names</source>
-        <translation>用于分层内名到分层名的分隔符</translation>
+        <translation>用于将图层的内部名称拆分为各层级名称的分隔符</translation>
     </message>
     <message>
         <source>Layer Level Name Separator</source>
@@ -15519,33 +15519,33 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
-        <translation>尺寸</translation>
+        <translation>标注</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="201"/>
         <source>Suffix of layer&apos;s name that defines that layer is dimensional</source>
-        <translation>定义地层的后缀为维度</translation>
+        <translation>图层名称的后缀，表示该图层为标注图层</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="211"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="809"/>
         <source>Informational</source>
-        <translation>资料</translation>
+        <translation>信息</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="224"/>
         <source>Suffix of layer&apos;s name that defines that layer is informational.</source>
-        <translation>层名的后缀定义了层是信息.</translation>
+        <translation>图层名称的后缀，表示该图层为信息图层。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="234"/>
         <source>Alternative Position </source>
-        <translation>备选位置</translation>
+        <translation>替代位置 </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
-        <translation>层名的后缀,定义了层是用于替代位置.</translation>
+        <translation>图层名称的后缀，表示该图层为替代位置图层。</translation>
     </message>
     <message>
         <source>Duplicating Name</source>
@@ -15559,7 +15559,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="74"/>
         <source>Prefix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>如果存在此名称的图层, 则使用图层名称的前缀( 例如, 当创建复制时)</translation>
+        <translation>图层名称的前缀，在已存在同名图层时使用(例如创建副本时)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="84"/>
@@ -15569,7 +15569,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="97"/>
         <source>Suffix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>如果存在此名称的图层, 则使用图层名称的后缀( say, 当创建重复时)</translation>
+        <translation>图层名称的后缀，在已存在同名图层时使用(例如创建副本时)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="155"/>
@@ -15609,12 +15609,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="329"/>
         <source>If checked, tooltip will include complete name of layer (with all upper layer levels)</source>
-        <translation>如果选中, 工具提示将包含层的完整名称( 包含所有上层级别)</translation>
+        <translation>如果选中，工具提示将包含图层的完整名称(包括所有上级图层)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="332"/>
         <source>Show full name as ToolTip</source>
-        <translation>将全名显示为工具Tip</translation>
+        <translation>将完整名称显示为工具提示</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="608"/>
@@ -15634,7 +15634,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="794"/>
         <source>Normal</source>
-        <translation type="unfinished">常规</translation>
+        <translation type="unfinished">普通</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="804"/>
@@ -15644,7 +15644,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="319"/>
         <source>If checked, icons for layer types will be shown</source>
-        <translation>如果选中, 将显示图层类型的图标</translation>
+        <translation>如果选中，将显示图层类型的图标</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="322"/>
@@ -15654,37 +15654,37 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="309"/>
         <source>Indentation for child layers</source>
-        <translation>儿童层缩进</translation>
+        <translation>子图层缩进</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="312"/>
         <source>Show indented layer names. Ident size:</source>
-        <translation>显示缩进的图层名称 。 标识大小 :</translation>
+        <translation>显示缩进的图层名称。缩进大小:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="277"/>
         <source>Size of the indent in characters to indent name of child layer from parent ones</source>
-        <translation>字符缩进大小为父字符中的儿童层缩进名称</translation>
+        <translation>子图层名称相对于父图层缩进的字符数</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="352"/>
         <source>If checked, drag&amp;drop operations in layers list are enabled and layers hierarchy may be restructutured</source>
-        <translation>如果选中的话, 层列表中的拖放操作是启用的, 层层结构可能被重置</translation>
+        <translation>如果选中，将启用图层列表中的拖放操作，并且可以重组图层层次结构</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="355"/>
         <source>Allow restructuring via Drag&amp;Drop</source>
-        <translation>允许通过 Drag- Drop 重组</translation>
+        <translation>允许通过拖放重组层次结构</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="293"/>
         <source>If primary layer is renames, secondary layers are renamed too.</source>
-        <translation>如果主层被重命名,次要层也被更名.</translation>
+        <translation>如果主图层被重命名，二级图层也会随之重命名。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="296"/>
         <source>Rename secondary layers on primary rename</source>
-        <translation>在主重命名上重命名二级层</translation>
+        <translation>重命名主图层时同时重命名二级图层</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="376"/>
@@ -15698,7 +15698,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="470"/>
         <source>Background color for selected items in layers tree.</source>
-        <translation>层树所选项目的背景颜色.</translation>
+        <translation>图层树中选中项的背景颜色。</translation>
     </message>
     <message>
         <source>Color for separator lines in layers tree view</source>
@@ -15707,7 +15707,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="420"/>
         <source>Background color for virtual layers items in layers list</source>
-        <translation>图层列表中虚拟层项的背景颜色</translation>
+        <translation>图层列表中虚拟图层项的背景颜色</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="449"/>
@@ -15720,12 +15720,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="560"/>
         <source>Matched item in highlight filter mode</source>
-        <translation>突出显示过滤模式中的匹配项目</translation>
+        <translation>突出显示过滤模式中的匹配项</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="391"/>
         <source>Color for items that matches filter conditions</source>
-        <translation>匹配过滤条件的项目的颜色</translation>
+        <translation>匹配过滤条件的项的颜色</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="379"/>
@@ -15735,12 +15735,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="406"/>
         <source>#1E90FF</source>
-        <translation>#1E90FF (英语)</translation>
+        <translation>#1E90FF</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="581"/>
         <source>Virtual layer background color</source>
-        <translation>虚拟层背景颜色</translation>
+        <translation>虚拟图层背景颜色</translation>
     </message>
     <message>
         <source>Threeview items separator grid</source>
@@ -15749,17 +15749,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="503"/>
         <source>Selected items background color</source>
-        <translation>选中的项目背景颜色</translation>
+        <translation>选中项背景颜色</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="523"/>
         <source>Background color for active layer item in layers tree</source>
-        <translation>层树中活动层项的背景颜色</translation>
+        <translation>图层树中活动图层项的背景颜色</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="526"/>
         <source>Active layer background color</source>
-        <translation>活动层背景颜色</translation>
+        <translation>活动图层背景颜色</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="588"/>
@@ -15774,12 +15774,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="599"/>
         <source>Pens that will be set for newly created layers of different types.</source>
-        <translation>用于新建不同类型层的笔.</translation>
+        <translation>为新建的各类型图层设置的画笔。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="602"/>
         <source>Default Pens</source>
-        <translation>默认笔数</translation>
+        <translation>默认画笔</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="68"/>
@@ -15789,17 +15789,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="69"/>
         <source>Dimensional Layer</source>
-        <translation>尺寸层</translation>
+        <translation>标注图层</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="70"/>
         <source>Informational Layer</source>
-        <translation>信息层</translation>
+        <translation>信息图层</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Alternative Position Layer</source>
-        <translation>替代位置层</translation>
+        <translation>替代位置图层</translation>
     </message>
     <message>
         <source>grid</source>
@@ -15808,22 +15808,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="103"/>
         <source>highlighted item</source>
-        <translation>突出项目</translation>
+        <translation>突出显示项</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="110"/>
         <source>virtual layer background</source>
-        <translation>虚拟层背景</translation>
+        <translation>虚拟图层背景</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="118"/>
         <source>selected item background</source>
-        <translation>选定的项目背景</translation>
+        <translation>选中项背景</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="126"/>
         <source>active layer background</source>
-        <translation>活动层背景</translation>
+        <translation>活动图层背景</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
@@ -15834,8 +15834,8 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>无效的值为%1 提供颜色 。
-请指定不同的值 .</translation>
+        <translation>为%1颜色提供的值无效。
+请指定其他值。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="245"/>
@@ -15848,12 +15848,12 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="150"/>
         <source>Filter</source>
-        <translation>过滤器</translation>
+        <translation>过滤</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="152"/>
         <source>Looking for matching layer names</source>
-        <translation>寻找匹配的图层名称</translation>
+        <translation>查找匹配图层名</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="157"/>
@@ -15868,12 +15868,12 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="186"/>
         <source>Show all layers</source>
-        <translation>显示所有层</translation>
+        <translation>显示所有图层</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>隐藏所有图层</translation>
+        <source>Hide all layers except current</source>
+        <translation>隐藏除当前图层外的所有图层</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="200"/>
@@ -15883,7 +15883,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="210"/>
         <source>Show Active Layer Only</source>
-        <translation>仅显示活动层</translation>
+        <translation>仅显示活动图层</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="218"/>
@@ -15898,120 +15898,120 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="234"/>
         <source>Collapse Secondary</source>
-        <translation>中学</translation>
+        <translation>折叠二级图层</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="242"/>
         <source>Unlock all layers</source>
-        <translation>解锁所有层</translation>
+        <translation>解锁所有图层</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="249"/>
         <source>Lock all layers</source>
-        <translation>锁定所有层</translation>
+        <translation>锁定所有图层</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="256"/>
         <source>Add a layer</source>
-        <translation>添加一层</translation>
+        <translation>添加图层</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="263"/>
         <source>Add dimensions Layer</source>
-        <translation>添加维度层</translation>
+        <translation>添加标注图层</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="272"/>
         <source>Remove layer</source>
-        <translation>删除图层</translation>
+        <translation>移除图层</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="279"/>
         <source>Modify layer attributes / rename</source>
-        <translation>修改层属性/ 重命名</translation>
+        <translation>修改图层属性/重命名</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="286"/>
         <source>Flat List Mode)</source>
-        <translation>平面列表模式)</translation>
+        <translation>平面列表模式</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="656"/>
         <source>&amp;Add Child Layer</source>
-        <translation>添加子图层( A)</translation>
+        <translation>添加子图层(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="657"/>
         <source>&amp;Rename</source>
-        <translation>重命名( R)</translation>
+        <translation>重命名(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="658"/>
         <source>&amp;Remove Layers (Sub-Tree)</source>
-        <translation>移除图层( U)</translation>
+        <translation>移除图层(子树)(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="660"/>
         <source>&amp;Copy Structure (Sub-Tree)</source>
-        <translation>复制结构( S)</translation>
+        <translation>复制结构(子树)(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="661"/>
         <source>&amp;Duplicate Content (Sub-Tree)</source>
-        <translation>重复内容( D)</translation>
+        <translation>复制内容(子树)(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="663"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>选择实体( S)</translation>
+        <translation>选择实体(子树)(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="668"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>编辑图层和属性( E)</translation>
+        <translation>编辑图层属性(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="670"/>
         <source>&amp;Remove Layer</source>
-        <translation>删除图层( R)</translation>
+        <translation>移除图层(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="679"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>添加尺寸子日历( A)</translation>
+        <translation>添加标注子图层(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="683"/>
         <source>&amp;Add Info Sub-Layer</source>
-        <translation>添加信息子日历( A)</translation>
+        <translation>添加信息子图层(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="687"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
-        <translation>添加替代视图子日历( A)</translation>
+        <translation>添加替代位置子图层(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="693"/>
         <source>&amp;Remove Sub-layers</source>
-        <translation>删除子层( R)</translation>
+        <translation>移除子图层(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="701"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="711"/>
         <source>Convert to Dimensional Layer</source>
-        <translation>转换为尺寸层</translation>
+        <translation>转换为标注图层</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="702"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="714"/>
         <source>Convert to Info Layer</source>
-        <translation>转换为信息层</translation>
+        <translation>转换为信息图层</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="703"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="717"/>
         <source>Convert to Alternative Position Layer</source>
-        <translation>转换为替代位置层</translation>
+        <translation>转换为替代位置图层</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="709"/>
@@ -16021,87 +16021,87 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="723"/>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>选择图层实体( S)</translation>
+        <translation>选择图层实体(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="726"/>
         <source>&amp;Create Layer Copy</source>
-        <translation>创建图层复制( C)</translation>
+        <translation>创建图层副本(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="727"/>
         <source>&amp;Duplicate Layer With Content</source>
-        <translation>内容复制图层( D)</translation>
+        <translation>复制图层及其内容(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="731"/>
         <source>Move Selection to Layer</source>
-        <translation>将选中区域移动到图层</translation>
+        <translation>将选中实体移动到图层</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="732"/>
         <source>Duplicate Selection to Layer</source>
-        <translation>复制到图层</translation>
+        <translation>将选中实体复制到图层</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="739"/>
         <source>&amp;Add Layer</source>
-        <translation>添加图层( A)</translation>
+        <translation>添加图层(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="741"/>
         <source>&amp;Freeze Others Layers</source>
-        <translation>冻结其他图层( F)</translation>
+        <translation>冻结其他图层(&amp;F)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="742"/>
         <source>&amp;Defreeze All Layers</source>
-        <translation>解冻所有层( D)</translation>
+        <translation>解冻所有图层(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>冻结所有图层( R)</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>隐藏除当前图层外的所有图层(&amp;H)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>
         <source>&amp;Unlock All Layers</source>
-        <translation>解锁所有图层( U)</translation>
+        <translation>解锁所有图层(&amp;U)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="745"/>
         <source>&amp;Lock All Layers</source>
-        <translation>锁定所有层( L)</translation>
+        <translation>锁定所有图层(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="746"/>
         <source>Enable &amp;Printing All Layers</source>
-        <translation>启用所有图层( P)</translation>
+        <translation>启用所有图层打印(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="747"/>
         <source>&amp;Disable Printing All Layers</source>
-        <translation>无法打印所有层( D)</translation>
+        <translation>禁用所有图层打印(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="750"/>
         <source>&amp;Export Single Layer</source>
-        <translation>输出单层( E)</translation>
+        <translation>导出单个图层(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="754"/>
         <source>&amp;Export Layer Sub-Tree</source>
-        <translation>输出图层子特雷( E)</translation>
+        <translation>导出图层子树(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="758"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>导出可视图层</translation>
+        <translation>导出可见图层(&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="760"/>
         <source>&amp;Find And Remove Empty Layers</source>
-        <translation>查找并删除空层( R)</translation>
+        <translation>查找并移除空图层(&amp;F)</translation>
     </message>
 </context>
 <context>
@@ -18661,7 +18661,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="39"/>
         <source>Layer</source>
-        <translation type="unfinished">层</translation>
+        <translation type="unfinished">图层</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="39"/>
@@ -23390,12 +23390,12 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="82"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">如果选中的话, 镜像实体将被放入当前图层, 否则会被放入原始图层 .</translation>
+        <translation type="unfinished">如果选中，镜像后的实体将被放置到当前图层，否则将被放置到原始图层。</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">用户当前图层</translation>
+        <translation type="unfinished">使用当前图层</translation>
     </message>
 </context>
 <context>
@@ -23689,7 +23689,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="45"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="unfinished">如果选中的话, 创建的实体将被放置到当前层 。 否则,它们将被放入原地层.</translation>
+        <translation type="unfinished">如果选中，创建的实体将被放置到当前图层。否则，它们将被放置到原始图层。 </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="48"/>
@@ -23875,7 +23875,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="144"/>
         <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="unfinished">如果选中的话, 创建的实体将被放入当前图层, 否则将会是原图层 .</translation>
+        <translation type="unfinished">如果选中，创建的实体将被放置到当前图层，否则将被放置到原始图层。 </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="147"/>
@@ -24291,7 +24291,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="93"/>
         <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">如果选中的话, 创建的实体将被放入当前图层, 否则它们将被放入原图层 .</translation>
+        <translation type="unfinished">如果选中，创建的实体将被放置到当前图层，否则将被放置到原始图层。</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="96"/>
@@ -24789,13 +24789,13 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="263"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="298"/>
         <source>By Layer</source>
-        <translation>按层</translation>
+        <translation>随层</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="264"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="299"/>
         <source>By Block</source>
-        <translation>按块</translation>
+        <translation>随块</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="266"/>
@@ -25417,22 +25417,22 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="188"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>按活动层的笔更新当前笔</translation>
+        <translation>用活动图层的笔更新当前笔</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="205"/>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation>从活动图层的笔来填充笔本编辑器</translation>
+        <translation>用活动图层的笔填充笔编辑器</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="208"/>
         <source>Pick from Active Layer</source>
-        <translation>从活动层中选择</translation>
+        <translation>从活动图层拾取</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="222"/>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation>应用编辑器笔到活动层笔</translation>
+        <translation>将编辑器笔应用到活动图层的笔</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="225"/>
@@ -25522,7 +25522,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="305"/>
         <source>&amp;Apply Pen To Active Layer</source>
-        <translation>应用笔到活动层( A)</translation>
+        <translation>将笔应用到活动图层(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="306"/>
@@ -29537,7 +29537,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="60"/>
         <source>Active Layer</source>
-        <translation type="unfinished">活动层</translation>
+        <translation type="unfinished">活动图层</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="60"/>
@@ -29567,7 +29567,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="122"/>
         <source>Line Width</source>
-        <translation type="unfinished">行宽</translation>
+        <translation type="unfinished">线宽</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="122"/>
@@ -29577,7 +29577,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="144"/>
         <source>Line Type</source>
-        <translation type="unfinished">线条类型</translation>
+        <translation type="unfinished">线型</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="144"/>
@@ -29588,12 +29588,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="167"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="183"/>
         <source>Normal</source>
-        <translation type="unfinished">常规</translation>
+        <translation type="unfinished">普通</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="171"/>
         <source>Dimensional</source>
-        <translation type="unfinished">尺寸</translation>
+        <translation type="unfinished">标注</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="175"/>
@@ -29603,7 +29603,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="179"/>
         <source>Informational</source>
-        <translation type="unfinished">资料</translation>
+        <translation type="unfinished">信息</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="186"/>
@@ -29683,7 +29683,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="303"/>
         <source>Unlock all layers</source>
-        <translation type="unfinished">解锁所有层</translation>
+        <translation type="unfinished">解锁所有图层</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="303"/>
@@ -29708,7 +29708,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="341"/>
         <source>Show all layers</source>
-        <translation type="unfinished">显示所有层</translation>
+        <translation type="unfinished">显示所有图层</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="341"/>
@@ -32795,7 +32795,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="533"/>
         <source>Layer</source>
-        <translation>层</translation>
+        <translation>图层</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="538"/>
@@ -33156,7 +33156,8 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="127"/>
         <source>
 Layer: </source>
-        <translation>图层 :</translation>
+        <translation>
+图层: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="573"/>
@@ -35962,7 +35963,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="208"/>
         <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="unfinished">指定要插入到当前或原图层的文本位置</translation>
+        <translation type="unfinished">指定将副本插入到当前图层还是原始图层</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="211"/>
@@ -36208,7 +36209,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="209"/>
         <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">如果选中的话, 新的 entys 将被放入当前图层, 否则它们将被放在原图层中 .</translation>
+        <translation type="unfinished">如果选中，新实体将被放置到当前图层，否则将被放置到原始图层。</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="212"/>
@@ -36451,7 +36452,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="83"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="unfinished">如果选中的话, 创建的实体将被放置到当前层 。 否则,它们将被放入原地层.</translation>
+        <translation type="unfinished">如果选中，创建的实体将被放置到当前图层。否则，它们将被放置到原始图层。 </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="86"/>
@@ -37365,7 +37366,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="77"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">如果选中的话, 创建的实体将被放入当前图层, 否则它们将被放入原始图层 .</translation>
+        <translation type="unfinished">如果选中，创建的实体将被放置到当前图层，否则将被放置到原始图层。</translation>
     </message>
 </context>
 <context>
@@ -37403,7 +37404,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="73"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">如果选中的话, 创建的实体将被放入当前图层, 否则它们将被放入原始图层 .</translation>
+        <translation type="unfinished">如果选中，创建的实体将被放置到当前图层，否则将被放置到原始图层。</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="76"/>
@@ -37550,7 +37551,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="71"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">如果选中的话, 创建的实体将被放入当前图层, 否则它们将被放入原始图层 .</translation>
+        <translation type="unfinished">如果选中，创建的实体将被放置到当前图层，否则将被放置到原始图层。</translation>
     </message>
 </context>
 <context>
@@ -37563,12 +37564,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="32"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">如果选中的话, 创建的实体将被放入当前图层, 否则它们将被放入原始图层 .</translation>
+        <translation type="unfinished">如果选中，创建的实体将被放置到当前图层，否则将被放置到原始图层。</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="35"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">用户当前图层</translation>
+        <translation type="unfinished">使用当前图层</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="42"/>
@@ -38438,7 +38439,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="216"/>
         <source>Entity&apos;s Layer</source>
-        <translation>实体层</translation>
+        <translation>实体图层</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="250"/>
@@ -39127,7 +39128,7 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="188"/>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="188"/>
         <source>Layers</source>
-        <translation>层</translation>
+        <translation>图层</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="201"/>
@@ -39229,7 +39230,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="540"/>
         <source>Active Layer</source>
-        <translation>活动层</translation>
+        <translation>活动图层</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="542"/>
@@ -39892,7 +39893,7 @@ Auto-save disabled.</source>
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="105"/>
         <source>Name of Current Active Layer</source>
-        <translation>当前活动层的名称</translation>
+        <translation>当前活动图层的名称</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="80"/>
@@ -39952,12 +39953,12 @@ Auto-save disabled.</source>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="100"/>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="276"/>
         <source>By Layer</source>
-        <translation>依图层</translation>
+        <translation>随层</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="101"/>
         <source>By Block</source>
-        <translation>依图块</translation>
+        <translation>随块</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="105"/>
@@ -41095,7 +41096,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="70"/>
         <source>Layer of MText</source>
-        <translation>MTex 层</translation>
+        <translation>多行文字所在的图层</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="125"/>
@@ -44510,7 +44511,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5077"/>
         <source>Modify layer of selected entities, at layer activation</source>
-        <translation>修改选定实体的层, 在层激活时</translation>
+        <translation>激活图层时修改选中实体的图层</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5490"/>
@@ -46559,7 +46560,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="197"/>
         <source>Layer of text</source>
-        <translation>文本层</translation>
+        <translation>文本所在的图层</translation>
     </message>
     <message>
         <source>Obligue of text</source>
@@ -47356,7 +47357,7 @@ so default step value required for baking</source>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="29"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>构造图层有用于几何构造的直线实体。
+        <translation>构造图层有用于几何构造的无限长直线实体。
 构造图层的内容不应出现在打印内容中。</translation>
     </message>
     <message>
@@ -47818,7 +47819,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="84"/>
         <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>图层&quot;%1&quot;已存在. 请另选名称.</translation>
+        <translation>图层&quot;%1&quot;已存在。请另选名称。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="172"/>
@@ -47826,39 +47827,39 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="240"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1739"/>
         <source>Remove Layer</source>
-        <translation>删除图层</translation>
+        <translation>移除图层</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="173"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>图层 &quot;%1&quot; 以及其上所有实体将被删除。
+        <translation>图层 &quot;%1&quot; 以及其上所有实体将被移除。
 此动作不可撤销。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="183"/>
         <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>图层&quot;%1&quot;无法删除.</translation>
+        <translation>图层&quot;%1&quot;无法移除。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="240"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1739"/>
         <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>层&quot;0&quot;永远无法被去除.</translation>
+        <translation>图层&quot;0&quot;无法移除。</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="248"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1787"/>
         <source>Remove %n layer(s)</source>
         <translation>
-            <numerusform>移除 %n 個圖層</numerusform>
+            <numerusform>移除%n个图层</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="251"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1788"/>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>列出的地层和上面的所有实体将被删除.</translation>
+        <translation>列出的图层及其上的所有实体将被移除。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="253"/>
@@ -47869,13 +47870,13 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="257"/>
         <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>警告:层&quot;0&quot;永远无法被移除.</translation>
+        <translation>警告：图层&quot;0&quot;无法移除。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="260"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1790"/>
         <source>Layers for removal:</source>
-        <translation>删除图层 :</translation>
+        <translation>待移除的图层:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="304"/>
@@ -47912,7 +47913,7 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="230"/>
         <source>Layer empty name is not allowed.</source>
-        <translation>不允许层空名称 .</translation>
+        <translation>图层名称不能为空。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="265"/>
@@ -47924,9 +47925,9 @@ This action can NOT be undone.</source>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation>试图创建带有重复名称的图层 。 复制的图层名称是
-[%1].
-请指定不同的名称 .</translation>
+        <translation>尝试创建名称重复的图层。重复的图层名称是
+[%1]。
+请指定其他名称。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="142"/>
@@ -47938,14 +47939,14 @@ Please specify a different name.</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="143"/>
         <source>Layer list separator string is empty. It will not be possible to build layers tree.
 Please specify a different value.</source>
-        <translation>层列表分隔符字符串为空 。 将无法建立地层树.
-请指定不同的值 .</translation>
+        <translation>图层列表分隔符字符串为空，将无法构建图层树。
+请指定其他值。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="962"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="972"/>
         <source>Remove empty layers</source>
-        <translation>删除空层</translation>
+        <translation>移除空图层</translation>
     </message>
     <message>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
@@ -47965,7 +47966,7 @@ Clear filtering mask and repeat.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="973"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>没有找到实体, 没有图层可删除 .</translation>
+        <translation>未找到无实体的图层，没有可移除的内容。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1116"/>
@@ -47979,23 +47980,25 @@ Clear filtering mask and repeat.</source>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation>这样的子层已经存在
-[%1].
-请指定不同的名称 .</translation>
+        <translation>以下图层已有此类子图层：
+[%1]。
+请指定其他名称。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1162"/>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation>这样的子层已经存在
-[%1].</translation>
+        <translation>以下图层已有此类子图层：
+[%1]。
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1170"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>尺寸层只能被添加到普通活性层.</translation>
+        <translation>只能为普通的活动图层添加标注图层。
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1233"/>
@@ -48085,19 +48088,21 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1453"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>没有实体在可见地层上匹配笔.</translation>
+        <translation>可见图层上没有与笔匹配的实体。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1454"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>这些实体存在于被冻结的地层上.</translation>
+        <translation>此类实体存在于冻结的图层上。
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1455"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>这些实体存在于锁定的地层上.</translation>
+        <translation>此类实体存在于锁定的图层上。
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1456"/>
@@ -49410,7 +49415,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="83"/>
         <source>cnlayer</source>
-        <translation>计数器</translation>
+        <translation>cnlayer</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="84"/>
@@ -49420,7 +49425,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="88"/>
         <source>cslayer</source>
-        <translation>显示器</translation>
+        <translation>cslayer</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="89"/>
@@ -52176,7 +52181,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_filedialogservice.cpp" line="195"/>
         <source>Combine all layers</source>
-        <translation>合并所有层</translation>
+        <translation>合并所有图层</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="180"/>
@@ -52229,13 +52234,13 @@ Do you want to replace it?</source>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="50"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="206"/>
         <source>By Layer</source>
-        <translation>按层</translation>
+        <translation>随层</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="56"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="209"/>
         <source>By Block</source>
-        <translation>按块</translation>
+        <translation>随块</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="212"/>

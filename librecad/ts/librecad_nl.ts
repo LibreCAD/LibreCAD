@@ -2688,7 +2688,7 @@ of [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="252"/>
         <source>(De-)Select Layer</source>
-        <translation>(De-) Laag selecteren</translation>
+        <translation>Laag (de)selecteren</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="235"/>
@@ -3500,7 +3500,7 @@ of [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="410"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Huidige pen bijwerken op actieve laag Pen</translation>
+        <translation>Huidige pen bijwerken met pen van actieve laag</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="416"/>
@@ -3833,7 +3833,7 @@ of [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity Layer</source>
-        <translation>Eenheidslaag</translation>
+        <translation>Laag van entiteit</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
@@ -3853,7 +3853,7 @@ of [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="109"/>
         <source>Activate Entity&apos;s Layer</source>
-        <translation>Laag van de entiteit activeren</translation>
+        <translation>Laag van entiteit activeren</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="110"/>
@@ -3873,12 +3873,12 @@ of [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="113"/>
         <source>Toggle Entity&apos;s Layer Construction</source>
-        <translation>Laagopbouw van entiteit aan/uit</translation>
+        <translation>Laag van entiteit als constructielaag aan/uit</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="114"/>
         <source>Toggle Entity&apos;s Layer Printing</source>
-        <translation>Laagafdruk van entiteit aan/uit</translation>
+        <translation>Afdrukken van laag van entiteit aan/uit</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="225"/>
@@ -4202,37 +4202,37 @@ of [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="621"/>
         <source>&amp;Add Layer</source>
-        <translation>Laag &amp; toevoegen</translation>
+        <translation>Laag &amp;toevoegen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="622"/>
         <source>&amp;Remove Layer</source>
-        <translation>Laag verwijderen</translation>
+        <translation>Laag ve&amp;rwijderen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="623"/>
         <source>&amp;Edit Layer</source>
-        <translation>Laag &amp; bewerken</translation>
+        <translation>Laag &amp;bewerken</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="624"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>Laag Loc&amp;k aan/uit</translation>
+        <translation>V&amp;ergrendeling van laag aan/uit</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="625"/>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation>&amp;Laagzicht aan/uit</translation>
+        <translation>&amp;Zichtbaarheid van laag aan/uit</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="626"/>
         <source>Toggle Layer &amp;Print</source>
-        <translation>Laag &amp; afdrukken aan/uit</translation>
+        <translation>A&amp;fdrukken van laag aan/uit</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="627"/>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>Laag &amp; Constructie aan/uit</translation>
+        <translation>&amp;Constructielaag aan/uit</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="637"/>
@@ -4555,32 +4555,32 @@ of [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="617"/>
         <source>&amp;Show all layers</source>
-        <translation>Alle lagen tonen</translation>
+        <translation>&amp;Alle lagen tonen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
-        <source>&amp;Hide all layers</source>
-        <translation>Alle lagen &amp; verbergen</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Alle lagen behalve de huidige &amp;verbergen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
         <source>&amp;Unlock all</source>
-        <translation>Alles ontgrendelen</translation>
+        <translation>Alles &amp;ontgrendelen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="620"/>
         <source>&amp;Lock all</source>
-        <translation>Alles &amp; vergrendelen</translation>
+        <translation>A&amp;lles vergrendelen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="628"/>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>Geselecteerde laag(s) &amp; exporteren</translation>
+        <translation>Ge&amp;selecteerde lagen exporteren</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="629"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>&amp;Zichtbare laag(s) exporteren</translation>
+        <translation>Z&amp;ichtbare lagen exporteren</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="635"/>
@@ -5151,7 +5151,7 @@ Punt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>Enter layer name to %1</source>
-        <translation>Laagnaam invoeren op %1</translation>
+        <translation>Voer de naam in van de laag die u wilt %1</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
@@ -7509,12 +7509,12 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="66"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Indien aangevinkt worden gespiegelde entiteiten op de huidige laag geplaatst, anders worden ze in originele lagen geplaatst.</translation>
+        <translation type="unfinished">Indien aangevinkt worden gespiegelde entiteiten op de huidige laag geplaatst, anders worden ze op de oorspronkelijke lagen geplaatst.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="69"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Gebruiker huidige laag</translation>
+        <translation type="unfinished">Huidige laag gebruiken</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="76"/>
@@ -8804,7 +8804,7 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="67"/>
         <source>Layer to apply</source>
-        <translation type="unfinished">Laag toe te passen</translation>
+        <translation type="unfinished">Toe te passen laag</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="67"/>
@@ -8837,7 +8837,7 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="62"/>
         <source>Layer to which created circle should be placed</source>
-        <translation type="unfinished">Laag waarop een cirkel moet worden geplaatst</translation>
+        <translation type="unfinished">Laag waarop de aangemaakte cirkel geplaatst moet worden</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="66"/>
@@ -14484,7 +14484,7 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="152"/>
         <source>Exported Layers</source>
-        <translation>Geexporteerde lagen</translation>
+        <translation>Geëxporteerde lagen</translation>
     </message>
 </context>
 <context>
@@ -15320,12 +15320,12 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="48"/>
         <source>Name of new layer. In order to create hierarchical layers, include name of virtual layer and layer name separator.</source>
-        <translation>Naam van de nieuwe laag. Om hiërarchische lagen te maken, neem de naam van virtuele laag en laagnaamscheiding.</translation>
+        <translation>Naam van de nieuwe laag. Neem voor hiërarchische lagen de naam van de virtuele laag en het scheidingsteken voor laagnamen op.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="64"/>
         <source>Parent Layers Path:</source>
-        <translation>Pad naar boven lagen:</translation>
+        <translation>Pad van bovenliggende lagen:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="81"/>
@@ -15335,12 +15335,12 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="93"/>
         <source>Layer for various infromational elements, notes, drafts etc.</source>
-        <translation>Laag voor verschillende ontluikende elementen, notities, concepts etc.</translation>
+        <translation>Laag voor verschillende informatieve elementen, notities, concepten enz.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="96"/>
         <source>Informational</source>
-        <translation>Voorlichting</translation>
+        <translation>Informatie</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="106"/>
@@ -15355,12 +15355,12 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="119"/>
         <source>Layer that holds dimensions</source>
-        <translation>Laag die afmetingen bevat</translation>
+        <translation>Laag die dimensies bevat</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="122"/>
         <source>Dimensions</source>
-        <translation>Afmetingen</translation>
+        <translation>Dimensies</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="132"/>
@@ -15376,13 +15376,13 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="148"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Een bouwlaag heeft entiteiten van oneindige rechte lijnen bestemd voor geometrische constructie.
-De inhoud van een bouwlaag mag niet in printout verschijnen.</translation>
+        <translation>Een constructielaag bevat entiteiten in de vorm van oneindige rechte lijnen, bedoeld voor geometrische constructie.
+De inhoud van een constructielaag hoort niet in de afdruk te verschijnen.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="152"/>
         <source>Construction Layer</source>
-        <translation>Bouwlaag</translation>
+        <translation>Constructielaag</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="181"/>
@@ -15419,7 +15419,7 @@ De inhoud van een bouwlaag mag niet in printout verschijnen.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="183"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="221"/>
         <source>Default Pen</source>
-        <translation>Standaard Pen</translation>
+        <translation>Standaardpen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="200"/>
@@ -15437,12 +15437,12 @@ De inhoud van een bouwlaag mag niet in printout verschijnen.</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="57"/>
         <source>Layers Export Options</source>
-        <translation>Lagen Exportopties</translation>
+        <translation>Exportopties voor lagen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="63"/>
         <source>If checked, Named Views from the document will be included into exported drawings. Otherwise, views are not included.</source>
-        <translation>Indien aangevinkt, zullen Benoemde weergaven uit het document worden opgenomen in geëxporteerde tekeningen. Anders zijn de meningen niet inbegrepen.</translation>
+        <translation>Indien aangevinkt worden benoemde weergaven uit het document opgenomen in de geëxporteerde tekeningen. Anders worden weergaven niet opgenomen.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="66"/>
@@ -15452,7 +15452,7 @@ De inhoud van een bouwlaag mag niet in printout verschijnen.</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="73"/>
         <source>If checked, each original exported layer will be stored in separate drawing. Otherwise, all layers will be in exported to one combined drawing.</source>
-        <translation>Indien aangevinkt wordt elke originele geëxporteerde laag in aparte tekening opgeslagen. Anders worden alle lagen geëxporteerd naar één gecombineerde tekening.</translation>
+        <translation>Indien aangevinkt wordt elke oorspronkelijke geëxporteerde laag in een aparte tekening opgeslagen. Anders worden alle lagen geëxporteerd naar één gecombineerde tekening.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="76"/>
@@ -15467,17 +15467,17 @@ De inhoud van een bouwlaag mag niet in printout verschijnen.</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="89"/>
         <source>Retain original layer for entities</source>
-        <translation>Originele laag behouden voor entiteiten</translation>
+        <translation>Oorspronkelijke laag behouden voor entiteiten</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="96"/>
         <source>If checked, UCSs from the document will be included into exported drawings. Otherwise, UCSs are not included.</source>
-        <translation>Indien aangevinkt worden UCS&apos;s uit het document opgenomen in geëxporteerde tekeningen. Anders zijn UCS niet inbegrepen.</translation>
+        <translation>Indien aangevinkt worden UCS&apos;en uit het document opgenomen in de geëxporteerde tekeningen. Anders worden UCS&apos;en niet opgenomen.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="99"/>
         <source>Export UCSs too</source>
-        <translation>UCS ook exporteren</translation>
+        <translation>UCS&apos;en ook exporteren</translation>
     </message>
 </context>
 <context>
@@ -15490,12 +15490,12 @@ De inhoud van een bouwlaag mag niet in printout verschijnen.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="46"/>
         <source>Settings for naming convention that is used to create layers hierarchy based on flat list of layers</source>
-        <translation>Instellingen voor naamgeving conventie die wordt gebruikt om lagenhiërarchie te maken op basis van platte lijst van lagen</translation>
+        <translation>Instellingen voor de naamgevingsconventie die wordt gebruikt om een lagenhiërarchie op te bouwen op basis van een platte lijst van lagen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="49"/>
         <source>Naming Convention</source>
-        <translation>Naamgevingsverdrag</translation>
+        <translation>Naamgevingsconventie</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="55"/>
@@ -15505,7 +15505,7 @@ De inhoud van een bouwlaag mag niet in printout verschijnen.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="116"/>
         <source>Separator used for split inner name of layer to hierarchical names</source>
-        <translation>Scheidingsteken gebruikt voor het splitsen van binnennaam van laag naar hiërarchische namen</translation>
+        <translation>Scheidingsteken waarmee de interne naam van een laag in hiërarchische namen wordt gesplitst</translation>
     </message>
     <message>
         <source>Layer Level Name Separator</source>
@@ -15519,33 +15519,33 @@ De inhoud van een bouwlaag mag niet in printout verschijnen.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
-        <translation>Afmetingen</translation>
+        <translation>Dimensies</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="201"/>
         <source>Suffix of layer&apos;s name that defines that layer is dimensional</source>
-        <translation>Achtervoegsel van de naam van de laag die definieert dat laag dimensionaal is</translation>
+        <translation>Achtervoegsel van de laagnaam dat aangeeft dat de laag een dimensielaag is</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="211"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="809"/>
         <source>Informational</source>
-        <translation>Voorlichting</translation>
+        <translation>Informatie</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="224"/>
         <source>Suffix of layer&apos;s name that defines that layer is informational.</source>
-        <translation>Achtervoegsel van de naam van de laag die definieert dat laag informatief is.</translation>
+        <translation>Achtervoegsel van de laagnaam dat aangeeft dat de laag een informatielaag is.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="234"/>
         <source>Alternative Position </source>
-        <translation>Alternatieve positie</translation>
+        <translation>Alternatieve positie </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
-        <translation>Achtervoegsel van de naam van de laag die deze laag definieert is voor alternatieve positie.</translation>
+        <translation>Achtervoegsel van de laagnaam dat aangeeft dat de laag een alternatieve positielaag is.</translation>
     </message>
     <message>
         <source>Duplicating Name</source>
@@ -15559,7 +15559,7 @@ De inhoud van een bouwlaag mag niet in printout verschijnen.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="74"/>
         <source>Prefix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>Voorvoegsel van de naam van de laag die wordt gebruikt als er een laag met een dergelijke naam bestaat (zeg, wanneer het dupliceren is aangemaakt)</translation>
+        <translation>Voorvoegsel van de laagnaam dat wordt gebruikt als er al een laag met die naam bestaat (bijvoorbeeld wanneer een duplicaat wordt aangemaakt)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="84"/>
@@ -15569,7 +15569,7 @@ De inhoud van een bouwlaag mag niet in printout verschijnen.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="97"/>
         <source>Suffix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>Achtervoegsel van de naam van de laag die wordt gebruikt als een laag met een dergelijke naam bestaat (zeg, wanneer een kopie is aangemaakt)</translation>
+        <translation>Achtervoegsel van de laagnaam dat wordt gebruikt als er al een laag met die naam bestaat (bijvoorbeeld wanneer een duplicaat wordt aangemaakt)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="155"/>
@@ -15609,12 +15609,12 @@ De inhoud van een bouwlaag mag niet in printout verschijnen.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="329"/>
         <source>If checked, tooltip will include complete name of layer (with all upper layer levels)</source>
-        <translation>Indien ingeschakeld zal tooltip de volledige naam van de laag bevatten (met alle bovenste lagen)</translation>
+        <translation>Indien aangevinkt bevat de tooltip de volledige naam van de laag (met alle bovenliggende laagniveaus)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="332"/>
         <source>Show full name as ToolTip</source>
-        <translation>Volledige naam tonen als ToolTip</translation>
+        <translation>Volledige naam als tooltip tonen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="608"/>
@@ -15659,32 +15659,32 @@ De inhoud van een bouwlaag mag niet in printout verschijnen.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="312"/>
         <source>Show indented layer names. Ident size:</source>
-        <translation>Ingespringde laagnamen tonen. Identiteitsgrootte:</translation>
+        <translation>Ingesprongen laagnamen tonen. Inspringgrootte:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="277"/>
         <source>Size of the indent in characters to indent name of child layer from parent ones</source>
-        <translation>Grootte van het streepje in letters om de naam van de dochterlaag van de ouders in te vullen</translation>
+        <translation>Aantal tekens waarmee de naam van een dochterlaag inspringt ten opzichte van de bovenliggende lagen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="352"/>
         <source>If checked, drag&amp;drop operations in layers list are enabled and layers hierarchy may be restructutured</source>
-        <translation>Indien aangevinkt, zijn drag&amp;drop-bewerkingen in lagenlijst ingeschakeld en kan de lagenhiërarchie hersteld worden</translation>
+        <translation>Indien aangevinkt zijn drag&amp;drop-bewerkingen in de lagenlijst ingeschakeld en kan de lagenhiërarchie worden geherstructureerd</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="355"/>
         <source>Allow restructuring via Drag&amp;Drop</source>
-        <translation>Herstructurering toestaan via Drag&amp;Drop</translation>
+        <translation>Herstructureren via drag&amp;&amp;drop toestaan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="293"/>
         <source>If primary layer is renames, secondary layers are renamed too.</source>
-        <translation>Als primaire laag hernoemt is, worden ook secundaire lagen hernoemd.</translation>
+        <translation>Als de primaire laag wordt hernoemd, worden de secundaire lagen ook hernoemd.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="296"/>
         <source>Rename secondary layers on primary rename</source>
-        <translation>Tweede lagen hernoemen bij primaire hernoemen</translation>
+        <translation>Secundaire lagen hernoemen bij hernoemen van primaire laag</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="376"/>
@@ -15720,7 +15720,7 @@ De inhoud van een bouwlaag mag niet in printout verschijnen.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="560"/>
         <source>Matched item in highlight filter mode</source>
-        <translation>Bijbehorend item in markeerfiltermodus</translation>
+        <translation>Overeenkomend item in markeerfiltermodus</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="391"/>
@@ -15740,7 +15740,7 @@ De inhoud van een bouwlaag mag niet in printout verschijnen.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="581"/>
         <source>Virtual layer background color</source>
-        <translation>Virtuele laag achtergrondkleur</translation>
+        <translation>Achtergrondkleur van virtuele laag</translation>
     </message>
     <message>
         <source>Threeview items separator grid</source>
@@ -15759,7 +15759,7 @@ De inhoud van een bouwlaag mag niet in printout verschijnen.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="526"/>
         <source>Active layer background color</source>
-        <translation>Actieve laag achtergrondkleur</translation>
+        <translation>Achtergrondkleur van actieve laag</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="588"/>
@@ -15779,7 +15779,7 @@ De inhoud van een bouwlaag mag niet in printout verschijnen.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="602"/>
         <source>Default Pens</source>
-        <translation>Standaard Pennen</translation>
+        <translation>Standaardpennen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="68"/>
@@ -15794,7 +15794,7 @@ De inhoud van een bouwlaag mag niet in printout verschijnen.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="70"/>
         <source>Informational Layer</source>
-        <translation>Informatieve laag</translation>
+        <translation>Informatielaag</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="71"/>
@@ -15808,22 +15808,22 @@ De inhoud van een bouwlaag mag niet in printout verschijnen.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="103"/>
         <source>highlighted item</source>
-        <translation>gemarkeerde item</translation>
+        <translation>gemarkeerd item</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="110"/>
         <source>virtual layer background</source>
-        <translation>virtuele laag achtergrond</translation>
+        <translation>achtergrond van virtuele laag</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="118"/>
         <source>selected item background</source>
-        <translation>geselecteerde achtergrond</translation>
+        <translation>achtergrond van geselecteerd item</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="126"/>
         <source>active layer background</source>
-        <translation>actieve laag achtergrond</translation>
+        <translation>achtergrond van actieve laag</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
@@ -15834,7 +15834,7 @@ De inhoud van een bouwlaag mag niet in printout verschijnen.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>Ongeldige waarde geeft voor %1 kleur.
+        <translation>Ongeldige kleurwaarde opgegeven voor %1.
 Geef een andere waarde op.</translation>
     </message>
     <message>
@@ -15853,12 +15853,12 @@ Geef een andere waarde op.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="152"/>
         <source>Looking for matching layer names</source>
-        <translation>Op zoek naar bijpassende laagnamen</translation>
+        <translation>Zoeken naar overeenkomende laagnamen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="157"/>
         <source>Highlight Mode</source>
-        <translation>Oplichten</translation>
+        <translation>Markeermodus</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="167"/>
@@ -15872,8 +15872,8 @@ Geef een andere waarde op.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Alle lagen verbergen</translation>
+        <source>Hide all layers except current</source>
+        <translation>Alle lagen behalve de huidige verbergen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="200"/>
@@ -15898,7 +15898,7 @@ Geef een andere waarde op.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="234"/>
         <source>Collapse Secondary</source>
-        <translation>Secundair instorten</translation>
+        <translation>Secundaire lagen invouwen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="242"/>
@@ -15918,7 +15918,7 @@ Geef een andere waarde op.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="263"/>
         <source>Add dimensions Layer</source>
-        <translation>Afmetingen toevoegen Laag</translation>
+        <translation>Dimensielaag toevoegen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="272"/>
@@ -15928,32 +15928,32 @@ Geef een andere waarde op.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="279"/>
         <source>Modify layer attributes / rename</source>
-        <translation>Laagattributen wijzigen - hernoemen</translation>
+        <translation>Laagattributen wijzigen / hernoemen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="286"/>
         <source>Flat List Mode)</source>
-        <translation>Platte lijstmodus)</translation>
+        <translation>Platte lijstmodus</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="656"/>
         <source>&amp;Add Child Layer</source>
-        <translation>Laag &amp; toevoegen</translation>
+        <translation>Dochterlaag &amp;toevoegen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="657"/>
         <source>&amp;Rename</source>
-        <translation>Hernoemen</translation>
+        <translation>&amp;Hernoemen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="658"/>
         <source>&amp;Remove Layers (Sub-Tree)</source>
-        <translation>Lagen verwijderen (sub-boom)</translation>
+        <translation>Lagen ve&amp;rwijderen (subboom)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="660"/>
         <source>&amp;Copy Structure (Sub-Tree)</source>
-        <translation>Structuur &amp; kopiëren (subboom)</translation>
+        <translation>Structuur &amp;kopiëren (subboom)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="661"/>
@@ -15963,37 +15963,37 @@ Geef een andere waarde op.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="663"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>&amp;Selecteer entiteiten (sub-boom)</translation>
+        <translation>Entiteiten sele&amp;cteren (subboom)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="668"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>Laag &amp; Eigenschappen bewerken</translation>
+        <translation>Laagattributen &amp;bewerken</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="670"/>
         <source>&amp;Remove Layer</source>
-        <translation>Laag verwijderen</translation>
+        <translation>Laag ve&amp;rwijderen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="679"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>Afmetingen sublaag toevoegen</translation>
+        <translation>Dimensie-sublaag &amp;toevoegen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="683"/>
         <source>&amp;Add Info Sub-Layer</source>
-        <translation>Info-sublaag toevoegen</translation>
+        <translation>In&amp;formatie-sublaag toevoegen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="687"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
-        <translation>Alternatieve weergave-sublayer toevoegen</translation>
+        <translation>Sublaag voor alternatieve &amp;positie toevoegen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="693"/>
         <source>&amp;Remove Sub-layers</source>
-        <translation>Sublagen &amp; verwijderen</translation>
+        <translation>Sublagen ver&amp;wijderen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="701"/>
@@ -16021,12 +16021,12 @@ Geef een andere waarde op.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="723"/>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>Laagentiteiten &amp; selecteren</translation>
+        <translation>Laagentiteiten sele&amp;cteren</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="726"/>
         <source>&amp;Create Layer Copy</source>
-        <translation>Laagkopie &amp; aanmaken</translation>
+        <translation>Laag&amp;kopie aanmaken</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="727"/>
@@ -16041,67 +16041,67 @@ Geef een andere waarde op.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="732"/>
         <source>Duplicate Selection to Layer</source>
-        <translation>Selectie dupliceren naar laag</translation>
+        <translation>Selectie naar laag dupliceren</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="739"/>
         <source>&amp;Add Layer</source>
-        <translation>Laag &amp; toevoegen</translation>
+        <translation>Laag &amp;toevoegen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="741"/>
         <source>&amp;Freeze Others Layers</source>
-        <translation>Andere lagen &amp; vrijmaken</translation>
+        <translation>&amp;Andere lagen bevriezen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="742"/>
         <source>&amp;Defreeze All Layers</source>
-        <translation>Alle lagen verwijderen</translation>
+        <translation>Alle &amp;lagen ontdooien</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>Alle lagen &amp;vrijmaken</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Alle lagen behalve de huidige &amp;verbergen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>
         <source>&amp;Unlock All Layers</source>
-        <translation>Alle lagen ontgrendelen</translation>
+        <translation>Alle lagen &amp;ontgrendelen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="745"/>
         <source>&amp;Lock All Layers</source>
-        <translation>Alle lagen &amp; vergrendelen</translation>
+        <translation>All&amp;e lagen vergrendelen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="746"/>
         <source>Enable &amp;Printing All Layers</source>
-        <translation>Alle lagen activeren</translation>
+        <translation>Afdrukken van alle lagen &amp;inschakelen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="747"/>
         <source>&amp;Disable Printing All Layers</source>
-        <translation>Afdrukken van alle lagen &amp; uitschakelen</translation>
+        <translation>Afdrukken van alle lagen &amp;uitschakelen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="750"/>
         <source>&amp;Export Single Layer</source>
-        <translation>Enkele laag &amp; exporteren</translation>
+        <translation>E&amp;nkele laag exporteren</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="754"/>
         <source>&amp;Export Layer Sub-Tree</source>
-        <translation>Subboom Laag &amp; exporteren</translation>
+        <translation>&amp;Subboom van laag exporteren</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="758"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>&amp;Zichtbare laag(s) exporteren</translation>
+        <translation>&amp;Zichtbare lagen exporteren</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="760"/>
         <source>&amp;Find And Remove Empty Layers</source>
-        <translation>Lege lagen zoeken en verwijderen</translation>
+        <translation>Le&amp;ge lagen zoeken en verwijderen</translation>
     </message>
 </context>
 <context>
@@ -23390,12 +23390,12 @@ Geef een andere waarde op.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="82"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Indien aangevinkt worden gespiegelde entiteiten op de huidige laag geplaatst, anders worden ze in originele lagen geplaatst.</translation>
+        <translation type="unfinished">Indien aangevinkt worden gespiegelde entiteiten op de huidige laag geplaatst, anders worden ze op de oorspronkelijke lagen geplaatst.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Gebruiker huidige laag</translation>
+        <translation type="unfinished">Huidige laag gebruiken</translation>
     </message>
 </context>
 <context>
@@ -23689,7 +23689,7 @@ Geef een andere waarde op.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="45"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="unfinished">Indien aangevinkt zullen aangemaakte entiteiten op de huidige laag geplaatst worden. Anders worden ze in originele lagen geplaatst.</translation>
+        <translation type="unfinished">Indien aangevinkt worden aangemaakte entiteiten op de huidige laag geplaatst. Anders worden ze op de oorspronkelijke lagen geplaatst. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="48"/>
@@ -23875,7 +23875,7 @@ Geef een andere waarde op.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="144"/>
         <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="unfinished">Indien aangevinkt, zullen aangemaakte entiteiten in de huidige laag worden geplaatst, anders zullen ze in originele lagen liggen.</translation>
+        <translation type="unfinished">Indien aangevinkt worden aangemaakte entiteiten op de huidige laag geplaatst, anders worden ze op de oorspronkelijke lagen geplaatst. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="147"/>
@@ -24291,7 +24291,7 @@ Waarschuwing: deze actie kan NIET ongedaan worden gemaakt!</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="93"/>
         <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">Indien aangevinkt zullen aangemaakte entiteiten in de huidige laag geplaatst worden, anders zullen ze in originele lagen zitten.</translation>
+        <translation type="unfinished">Indien aangevinkt worden aangemaakte entiteiten op de huidige laag geplaatst, anders worden ze op de oorspronkelijke lagen geplaatst.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="96"/>
@@ -24789,13 +24789,13 @@ Waarschuwing: deze actie kan NIET ongedaan worden gemaakt!</translation>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="263"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="298"/>
         <source>By Layer</source>
-        <translation>Op laag</translation>
+        <translation>Door Laag bepaald</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="264"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="299"/>
         <source>By Block</source>
-        <translation>Op blok</translation>
+        <translation>Door Blok bepaald</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="266"/>
@@ -25417,22 +25417,22 @@ Waarschuwing: deze actie kan NIET ongedaan worden gemaakt!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="188"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Huidige pen bijwerken op actieve laag Pen</translation>
+        <translation>Huidige pen bijwerken met pen van actieve laag</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="205"/>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation>Penbewerker vullen uit de pen van de actieve laag</translation>
+        <translation>Pen-editor vullen met pen van actieve laag</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="208"/>
         <source>Pick from Active Layer</source>
-        <translation>Kies uit actieve laag</translation>
+        <translation>Uit actieve laag kiezen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="222"/>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation>Editor Pen toepassen op actieve laag Pen</translation>
+        <translation>Editorpen toepassen op pen van actieve laag</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="225"/>
@@ -25522,7 +25522,7 @@ Waarschuwing: deze actie kan NIET ongedaan worden gemaakt!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="305"/>
         <source>&amp;Apply Pen To Active Layer</source>
-        <translation>Pen &amp; toepassen op actieve laag</translation>
+        <translation>Pen &amp;toepassen op actieve laag</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="306"/>
@@ -29577,7 +29577,7 @@ Houd er rekening mee dat als u een pen opslaat via de editor zonder opnieuw op t
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="144"/>
         <source>Line Type</source>
-        <translation type="unfinished">Regeltype</translation>
+        <translation type="unfinished">Lijntype</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="144"/>
@@ -29593,7 +29593,7 @@ Houd er rekening mee dat als u een pen opslaat via de editor zonder opnieuw op t
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="171"/>
         <source>Dimensional</source>
-        <translation type="unfinished">Afmetingen</translation>
+        <translation type="unfinished">Dimensies</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="175"/>
@@ -29603,7 +29603,7 @@ Houd er rekening mee dat als u een pen opslaat via de editor zonder opnieuw op t
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="179"/>
         <source>Informational</source>
-        <translation type="unfinished">Voorlichting</translation>
+        <translation type="unfinished">Informatie</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="186"/>
@@ -33156,7 +33156,8 @@ Houd er rekening mee dat als u een pen opslaat via de editor zonder opnieuw op t
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="127"/>
         <source>
 Layer: </source>
-        <translation>Laag:</translation>
+        <translation>
+Laag: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="573"/>
@@ -35962,7 +35963,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="208"/>
         <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="unfinished">Specificeert dat kopies van dit materiaal in de huidige of originele laag zullen worden geplaatst</translation>
+        <translation type="unfinished">Geeft aan of kopieën op de huidige of de oorspronkelijke laag worden geplaatst</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="211"/>
@@ -36208,7 +36209,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="209"/>
         <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">Indien aangevinkt, zullen nieuwe enties op de huidige laag geplaatst worden, anders zullen ze in originele lagen liggen.</translation>
+        <translation type="unfinished">Indien aangevinkt worden nieuwe entiteiten op de huidige laag geplaatst, anders worden ze op de oorspronkelijke lagen geplaatst.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="212"/>
@@ -36451,7 +36452,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="83"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="unfinished">Indien aangevinkt zullen aangemaakte entiteiten op de huidige laag geplaatst worden. Anders worden ze op originele lagen geplaatst.</translation>
+        <translation type="unfinished">Indien aangevinkt worden aangemaakte entiteiten op de huidige laag geplaatst. Anders worden ze op de oorspronkelijke lagen geplaatst. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="86"/>
@@ -37365,7 +37366,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="77"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Indien aangevinkt, zullen aangemaakte entiteiten op de huidige laag geplaatst worden, anders zullen ze in originele lagen geplaatst worden.</translation>
+        <translation type="unfinished">Indien aangevinkt worden aangemaakte entiteiten op de huidige laag geplaatst, anders worden ze op de oorspronkelijke lagen geplaatst.</translation>
     </message>
 </context>
 <context>
@@ -37403,7 +37404,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="73"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Indien aangevinkt, zullen aangemaakte entiteiten op de huidige laag geplaatst worden, anders zullen ze in originele lagen geplaatst worden.</translation>
+        <translation type="unfinished">Indien aangevinkt worden aangemaakte entiteiten op de huidige laag geplaatst, anders worden ze op de oorspronkelijke lagen geplaatst.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="76"/>
@@ -37550,7 +37551,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="71"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Indien aangevinkt, zullen aangemaakte entiteiten op de huidige laag geplaatst worden, anders zullen ze in originele lagen geplaatst worden.</translation>
+        <translation type="unfinished">Indien aangevinkt worden aangemaakte entiteiten op de huidige laag geplaatst, anders worden ze op de oorspronkelijke lagen geplaatst.</translation>
     </message>
 </context>
 <context>
@@ -37563,12 +37564,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="32"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Indien aangevinkt, zullen aangemaakte entiteiten op de huidige laag geplaatst worden, anders zullen ze in originele lagen geplaatst worden.</translation>
+        <translation type="unfinished">Indien aangevinkt worden aangemaakte entiteiten op de huidige laag geplaatst, anders worden ze op de oorspronkelijke lagen geplaatst.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="35"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Gebruiker huidige laag</translation>
+        <translation type="unfinished">Huidige laag gebruiken</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="42"/>
@@ -40384,7 +40385,7 @@ Controleer het bestaan en de rechten.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="54"/>
         <source>Layer to apply</source>
-        <translation>Laag toe te passen</translation>
+        <translation>Toe te passen laag</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="69"/>
@@ -43582,7 +43583,7 @@ Dit wijzigt recursief alle entiteiten van het Blok zelf.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5074"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Indien ingeschakeld zou het activeren van een laag alle geselecteerde entiteiten in die nieuwe laag wijzigen. Om de laag van meerdere entiteiten te wijzigen: selecteer eerst de benodigde entiteiten; activeer een laag in het laagwidget. Dit maakt alle geselecteerde entiteiten aangepast om tot de nieuwe laag te behoren.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Indien ingeschakeld worden bij het activeren van een laag alle geselecteerde entiteiten naar die nieuwe laag verplaatst. Om de laag van meerdere entiteiten te wijzigen: selecteer eerst de gewenste entiteiten; activeer dan een laag in het laagwidget. Daardoor komen alle geselecteerde entiteiten op de nieuwe laag te staan.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5934"/>
@@ -45877,7 +45878,7 @@ Dit wijzigt recursief alle entiteiten van het Blok zelf.</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="92"/>
         <source>Export visible construction layers</source>
-        <translation>Zichtbare bouwlagen exporteren</translation>
+        <translation>Zichtbare constructielagen exporteren</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="104"/>
@@ -46476,7 +46477,7 @@ dus standaard stapwaarde vereist voor bakken</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="197"/>
         <source>Layer of text</source>
-        <translation>Tekstlaag</translation>
+        <translation>Laag van tekst</translation>
     </message>
     <message>
         <source>Obligue of text</source>
@@ -47344,29 +47345,29 @@ dus standaard stapwaarde vereist voor bakken</translation>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="20"/>
         <source>Layer Settings</source>
-        <translation>Laag Instellingen</translation>
+        <translation>Laaginstellingen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="46"/>
         <source>Layer Name:</source>
-        <translation>Laag Naam:</translation>
+        <translation>Laagnaam:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="63"/>
         <source>Default Pen</source>
-        <translation>Pen bij verstek</translation>
+        <translation>Standaardpen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="29"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Een bouwlaag heeft entiteiten van oneindige rechte lijnen bestemd voor geometrische constructie.
-De inhoud van een bouwlaag mag niet in printout verschijnen.</translation>
+        <translation>Een constructielaag bevat entiteiten in de vorm van oneindige rechte lijnen, bedoeld voor geometrische constructie.
+De inhoud van een constructielaag hoort niet in de afdruk te verschijnen.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="33"/>
         <source>Construction Layer</source>
-        <translation>Bouwlaag</translation>
+        <translation>Constructielaag</translation>
     </message>
 </context>
 <context>
@@ -47374,7 +47375,7 @@ De inhoud van een bouwlaag mag niet in printout verschijnen.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="298"/>
         <source>Looking for matching layer names</source>
-        <translation>Op zoek naar bijpassende laagnamen</translation>
+        <translation>Zoeken naar overeenkomende laagnamen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="296"/>
@@ -47807,7 +47808,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="240"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1739"/>
         <source>Remove Layer</source>
-        <translation>Wis Laag</translation>
+        <translation>Laag verwijderen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="183"/>
@@ -47817,7 +47818,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="304"/>
         <source>Layer Dialog</source>
-        <translation>Laag Dialoog</translation>
+        <translation>Laagdialoog</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="406"/>
@@ -47835,7 +47836,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="264"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="308"/>
         <source>Layer Properties</source>
-        <translation>Laag Eigenschappen</translation>
+        <translation>Laageigenschappen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="84"/>
@@ -47860,15 +47861,15 @@ Deze actie kan NIET ongedaan worden gemaakt.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1787"/>
         <source>Remove %n layer(s)</source>
         <translation>
-            <numerusform>Verwijder %n laag</numerusform>
-            <numerusform>Verwijder %n lagen</numerusform>
+            <numerusform>%n laag verwijderen</numerusform>
+            <numerusform>%n lagen verwijderen</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="251"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1788"/>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>Opgenomen lagen en alle entiteiten op hen zullen worden verwijderd.</translation>
+        <translation>De vermelde lagen en alle entiteiten erop worden verwijderd.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="253"/>
@@ -47908,7 +47909,7 @@ Deze actie kan NIET ongedaan worden gemaakt.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="230"/>
         <source>Layer empty name is not allowed.</source>
-        <translation>Laag lege naam is niet toegestaan.</translation>
+        <translation>Een lege laagnaam is niet toegestaan.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="265"/>
@@ -47920,7 +47921,7 @@ Deze actie kan NIET ongedaan worden gemaakt.</translation>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation>Poging om laag te maken met duplicerende naam. Gedupliceerde laagnaam is
+        <translation>Poging om een laag met een dubbele naam aan te maken. De dubbele laagnaam is 
 [%1].
 Geef een andere naam op.</translation>
     </message>
@@ -47934,7 +47935,7 @@ Geef een andere naam op.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="143"/>
         <source>Layer list separator string is empty. It will not be possible to build layers tree.
 Please specify a different value.</source>
-        <translation>Laaglijst scheidingsteken is leeg. Het zal niet mogelijk zijn om lagen boom te bouwen.
+        <translation>Het scheidingsteken voor de lagenlijst is leeg. Het zal niet mogelijk zijn om de lagenboom op te bouwen.
 Geef een andere waarde op.</translation>
     </message>
     <message>
@@ -47985,13 +47986,15 @@ Geef een andere naam op.</translation>
 [%1].
 </source>
         <translation>Deze dochterlaag bestaat al voor
-[%1].</translation>
+[%1].
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1170"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>Dimensielaag mag alleen voor normale actieve laag worden toegevoegd.</translation>
+        <translation>Een dimensielaag mag alleen voor een normale actieve laag worden toegevoegd.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1233"/>
@@ -48010,11 +48013,11 @@ Geef een andere naam op.</translation>
 If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation>De waarde &quot;Per laag&quot; vervangen door de waarden van de bronlagen?
+        <translation>De waarde &quot;Door Laag bepaald&quot; vervangen door de waarden van de bronlagen?
 
-Als Ja — entiteiten met &quot;Per laag&quot;-pennen zien er op de nieuwe laag precies hetzelfde uit als op de vorige lagen en de waarde &quot;Per laag&quot; wordt vervangen door de opgeloste pennen.
+Als Ja — entiteiten met pennen die op &quot;Door Laag bepaald&quot; staan, zien er op de nieuwe laag precies hetzelfde uit als op de vorige lagen en de waarde &quot;Door Laag bepaald&quot; wordt vervangen door de daadwerkelijke pennen.
 
-Als Nee — de waarden &quot;Per laag&quot; blijven en de pen van de doellaag definieert de pen voor dergelijke entiteiten.</translation>
+Als Nee — de waarden &quot;Door Laag bepaald&quot; blijven behouden en de pen van de doellaag bepaalt de pen voor dergelijke entiteiten.</translation>
     </message>
     <message>
         <source>Replace &quot;By Layer&quot; value to source layers values?
@@ -48087,13 +48090,15 @@ Geef een andere waarde op.</translation>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1454"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>Dergelijke entiteiten bestaan op bevroren lagen.</translation>
+        <translation>Dergelijke entiteiten bestaan op bevroren lagen.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1455"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>Dergelijke entiteiten bestaan op vergrendelde lagen.</translation>
+        <translation>Dergelijke entiteiten bestaan op vergrendelde lagen.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1456"/>
@@ -49965,7 +49970,7 @@ Wilt u het vervangen?</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="77"/>
         <source>No %1 layers found</source>
-        <translation>Geen %1-lagen gevonden</translation>
+        <translation>Geen lagen gevonden die %1 zijn</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="95"/>
@@ -52002,13 +52007,13 @@ Wilt u het vervangen?</translation>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="50"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="206"/>
         <source>By Layer</source>
-        <translation>Op laag</translation>
+        <translation>Door Laag bepaald</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="56"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="209"/>
         <source>By Block</source>
-        <translation>Op blok</translation>
+        <translation>Door Blok bepaald</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="212"/>

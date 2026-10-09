@@ -2664,7 +2664,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="252"/>
         <source>(De-)Select Layer</source>
-        <translation>(D-)</translation>
+        <translation>परत चुनें/चयन हटाएं</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="235"/>
@@ -3306,32 +3306,32 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="617"/>
         <source>&amp;Show all layers</source>
-        <translation>सभी परतों को दिखाएं</translation>
+        <translation>सभी परतें दिखाएं (&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
-        <source>&amp;Hide all layers</source>
-        <translation>सभी परतों को छुपाएं</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>वर्तमान को छोड़कर सभी परतें छुपाएं (&amp;H)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
         <source>&amp;Unlock all</source>
-        <translation>सभी को अनलॉक करें</translation>
+        <translation>सभी को अनलॉक करें (&amp;U)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="620"/>
         <source>&amp;Lock all</source>
-        <translation>सभी को लॉक करें</translation>
+        <translation>सभी को लॉक करें (&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="628"/>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>चयनित परत</translation>
+        <translation>चयनित परतें निर्यात करें (&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="629"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>निर्यात और दृश्यमान परत</translation>
+        <translation>दृश्यमान परतें निर्यात करें (&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="635"/>
@@ -3682,7 +3682,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="410"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>सक्रिय लेयर पेन द्वारा वर्तमान पेन अपडेट करें</translation>
+        <translation>सक्रिय परत के पेन से वर्तमान पेन अपडेट करें</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="416"/>
@@ -4015,12 +4015,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity Layer</source>
-        <translation>इकाई मूल्य</translation>
+        <translation>इकाई की परत</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity&apos;s Layer</source>
-        <translation>इकाई का स्तर</translation>
+        <translation>इकाई की परत</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="88"/>
@@ -4040,17 +4040,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="110"/>
         <source>Hide Entity&apos;s Layer</source>
-        <translation>इकाई की परत छिपाएँ</translation>
+        <translation>इकाई की परत छुपाएं</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="111"/>
         <source>Hide Other Layers than Entity&apos;s</source>
-        <translation>इकाई की तुलना में अन्य परतें छिपाएं</translation>
+        <translation>इकाई की परत को छोड़कर अन्य परतें छुपाएं</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="112"/>
         <source>Lock Entity&apos;s Layer</source>
-        <translation>लॉक एंटिटी की परत</translation>
+        <translation>इकाई की परत लॉक करें</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="113"/>
@@ -4334,37 +4334,37 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="621"/>
         <source>&amp;Add Layer</source>
-        <translation>और जोड़ें परत</translation>
+        <translation>परत जोड़ें (&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="622"/>
         <source>&amp;Remove Layer</source>
-        <translation>&amp; Remove परत</translation>
+        <translation>परत हटाएं (&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="623"/>
         <source>&amp;Edit Layer</source>
-        <translation>एडिट लेयर</translation>
+        <translation>परत संपादित करें (&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="624"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>Toggle परत Loc&amp;k</translation>
+        <translation>परत लॉक टॉगल करें (&amp;K)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="625"/>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation>Toggle परत दृश्यता</translation>
+        <translation>परत दृश्यता टॉगल करें (&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="626"/>
         <source>Toggle Layer &amp;Print</source>
-        <translation>Toggle परत &amp; print</translation>
+        <translation>परत प्रिंटिंग टॉगल करें (&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="627"/>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>Toggle &amp;Construction परत</translation>
+        <translation>निर्माण परत टॉगल करें (&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="637"/>
@@ -5127,17 +5127,17 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>Enter layer name to %1</source>
-        <translation>परत का नाम %1 दर्ज करें</translation>
+        <translation>परत का नाम दर्ज करें (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>activate</source>
-        <translation>सक्रिय</translation>
+        <translation>सक्रिय करने के लिए</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>create</source>
-        <translation>बनाना</translation>
+        <translation>बनाने के लिए</translation>
     </message>
 </context>
 <context>
@@ -5152,7 +5152,7 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
         <source>visible</source>
         <comment>Layers to export</comment>
-        <translation>दृश्य</translation>
+        <translation>दृश्यमान</translation>
     </message>
 </context>
 <context>
@@ -6874,7 +6874,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_layer.cpp" line="75"/>
         <source>Specify entity with desired layer</source>
-        <translation type="unfinished">वांछित परत के साथ इकाई निर्दिष्ट करें</translation>
+        <translation type="unfinished">वांछित परत की इकाई निर्दिष्ट करें</translation>
     </message>
 </context>
 <context>
@@ -7479,12 +7479,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="66"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">यदि जांच की जाती है, तो प्रतिबिंबित संस्थाओं को वर्तमान परत पर रखा जाएगा, अन्यथा उन्हें मूल परतों में रखा जाएगा।.</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो मिरर की गई इकाइयां वर्तमान परत में रखी जाएंगी, अन्यथा उन्हें मूल परतों में रखा जाएगा।</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="69"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">उपयोगकर्ता वर्तमान परत</translation>
+        <translation type="unfinished">वर्तमान परत का उपयोग करें</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="76"/>
@@ -8807,7 +8807,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="62"/>
         <source>Layer to which created circle should be placed</source>
-        <translation type="unfinished">जिस परत के लिए बनाया सर्कल रखा जाना चाहिए</translation>
+        <translation type="unfinished">वह परत जिसमें बनाया गया सर्कल रखा जाना चाहिए</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="66"/>
@@ -13571,7 +13571,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="82"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">जिस परत को डुप्लिकेट रखा जाना चाहिए</translation>
+        <translation type="unfinished">वह परत जिसमें डुप्लिकेट रखा जाना चाहिए</translation>
     </message>
 </context>
 <context>
@@ -13584,7 +13584,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="45"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">जिस परत को डुप्लिकेट रखा जाना चाहिए</translation>
+        <translation type="unfinished">वह परत जिसमें डुप्लिकेट रखा जाना चाहिए</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="49"/>
@@ -14440,12 +14440,12 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="135"/>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="179"/>
         <source>Export Layers</source>
-        <translation>निर्यात परतें</translation>
+        <translation>परतें निर्यात करें</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="152"/>
         <source>Exported Layers</source>
-        <translation>निर्यात परत</translation>
+        <translation>निर्यात की गई परतें</translation>
     </message>
 </context>
 <context>
@@ -15276,17 +15276,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="20"/>
         <source>Layer Settings</source>
-        <translation>परत सेटिंग</translation>
+        <translation>परत सेटिंग्स</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="48"/>
         <source>Name of new layer. In order to create hierarchical layers, include name of virtual layer and layer name separator.</source>
-        <translation>नई परत का नाम। पदानुक्रमिक परतों के निर्माण के लिए, आभासी परत और परत नाम विभाजक का नाम शामिल है।.</translation>
+        <translation>नई परत का नाम। पदानुक्रमिक परतें बनाने के लिए, आभासी परत का नाम और परत नाम विभाजक शामिल करें।</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="64"/>
         <source>Parent Layers Path:</source>
-        <translation>पैरेंट लेयर्स पथ:</translation>
+        <translation>मूल परतों का पथ:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="81"/>
@@ -15296,7 +15296,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="93"/>
         <source>Layer for various infromational elements, notes, drafts etc.</source>
-        <translation>विभिन्न अन्वेषण तत्वों, नोट्स, ड्राफ्ट आदि के लिए परत.</translation>
+        <translation>विभिन्न सूचनात्मक तत्वों, नोट्स, ड्राफ्ट आदि के लिए परत।</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="96"/>
@@ -15306,7 +15306,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="106"/>
         <source>Normal layer with drawing eleements</source>
-        <translation>ड्राइंग eleements के साथ सामान्य परत</translation>
+        <translation>ड्राइंग तत्वों वाली सामान्य परत</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="109"/>
@@ -15326,7 +15326,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="132"/>
         <source>Layer with alternate position of entities located on normal layers</source>
-        <translation>सामान्य परतों पर स्थित संस्थाओं की वैकल्पिक स्थिति के साथ परत</translation>
+        <translation>सामान्य परतों पर स्थित इकाइयों की वैकल्पिक स्थिति वाली परत</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="135"/>
@@ -15337,8 +15337,8 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="148"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>एक निर्माण परत में ज्यामितीय निर्माण के लिए इस्तेमाल होने वाली अनंत सीधी रेखाओं की संस्थाएं हैं।
-एक निर्माण परत की सामग्री प्रिंटआउट में दिखाई नहीं देनी चाहिए।.</translation>
+        <translation>निर्माण परत में अनंत सीधी रेखाओं की इकाइयां होती हैं, जिनका उपयोग ज्यामितीय निर्माण के लिए किया जाता है।
+निर्माण परत की सामग्री प्रिंटआउट में दिखाई नहीं देनी चाहिए।</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="152"/>
@@ -15358,7 +15358,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="68"/>
         <source>Rename Virtual Layer</source>
-        <translation>वर्चुअल लेयर का नाम बदलें</translation>
+        <translation>आभासी परत का नाम बदलें</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="72"/>
@@ -15374,7 +15374,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="91"/>
         <source>Edit Layer</source>
-        <translation>एडिट लेयर</translation>
+        <translation>परत संपादित करें</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="183"/>
@@ -15403,42 +15403,42 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="63"/>
         <source>If checked, Named Views from the document will be included into exported drawings. Otherwise, views are not included.</source>
-        <translation>यदि जांच की जाती है, तो दस्तावेज़ से नामित दृश्य निर्यात किए गए चित्रों में शामिल होंगे। अन्यथा, विचार शामिल नहीं हैं।.</translation>
+        <translation>यदि चेक किया गया है, तो दस्तावेज़ के नामित दृश्य निर्यात की गई ड्राइंग में शामिल किए जाएंगे। अन्यथा, दृश्य शामिल नहीं किए जाएंगे।</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="66"/>
         <source>Export Named Views too</source>
-        <translation>भी Named दृश्य निर्यात करें</translation>
+        <translation>नामित दृश्य भी निर्यात करें</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="73"/>
         <source>If checked, each original exported layer will be stored in separate drawing. Otherwise, all layers will be in exported to one combined drawing.</source>
-        <translation>यदि जांच की जाती है, तो प्रत्येक मूल निर्यात परत को अलग-अलग ड्राइंग में संग्रहीत किया जाएगा। अन्यथा, सभी परतों को एक संयुक्त ड्राइंग में निर्यात किया जाएगा।.</translation>
+        <translation>यदि चेक किया गया है, तो निर्यात की गई प्रत्येक मूल परत एक अलग ड्राइंग में संग्रहीत की जाएगी। अन्यथा, सभी परतें एक संयुक्त ड्राइंग में निर्यात की जाएंगी।</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="76"/>
         <source>Export each layer to own drawing file</source>
-        <translation>प्रत्येक परत को अपनी ड्राइंग फ़ाइल के लिए निर्यात करें</translation>
+        <translation>प्रत्येक परत को उसकी अपनी ड्राइंग फ़ाइल में निर्यात करें</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="83"/>
         <source>If checked, entities will be stored in original layer. Otherwise, they are placed to layer &quot;0&quot;.</source>
-        <translation>यदि जांच की जाती है, तो संस्थाओं को मूल परत में संग्रहीत किया जाएगा। अन्यथा, उन्हें &quot;0&quot; परत में रखा जाता है।.</translation>
+        <translation>यदि चेक किया गया है, तो इकाइयां मूल परत में संग्रहीत की जाएंगी। अन्यथा, उन्हें परत &quot;0&quot; में रखा जाएगा।</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="89"/>
         <source>Retain original layer for entities</source>
-        <translation>संस्थाओं के लिए मूल परत बनाए रखें</translation>
+        <translation>इकाइयों के लिए मूल परत बनाए रखें</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="96"/>
         <source>If checked, UCSs from the document will be included into exported drawings. Otherwise, UCSs are not included.</source>
-        <translation>यदि जांच की जाती है, तो दस्तावेज़ से UCS को निर्यात किए गए चित्रों में शामिल किया जाएगा। अन्यथा, UCS शामिल नहीं हैं।.</translation>
+        <translation>यदि चेक किया गया है, तो दस्तावेज़ के UCS निर्यात की गई ड्राइंग में शामिल किए जाएंगे। अन्यथा, UCS शामिल नहीं किए जाएंगे।</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="99"/>
         <source>Export UCSs too</source>
-        <translation>UCS निर्यात भी</translation>
+        <translation>UCS भी निर्यात करें</translation>
     </message>
 </context>
 <context>
@@ -15446,17 +15446,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="20"/>
         <source>Layers Tree Options</source>
-        <translation>लेयर्स ट्री विकल्प</translation>
+        <translation>परत वृक्ष विकल्प</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="46"/>
         <source>Settings for naming convention that is used to create layers hierarchy based on flat list of layers</source>
-        <translation>नामकरण सम्मेलन के लिए सेटिंग्स जिसका उपयोग परतों की परतों की फ्लैट सूची के आधार पर परतों को पदानुक्रम बनाने के लिए किया जाता है</translation>
+        <translation>उस नामकरण पद्धति की सेटिंग्स जिसका उपयोग परतों की फ्लैट सूची के आधार पर परतों का पदानुक्रम बनाने के लिए किया जाता है</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="49"/>
         <source>Naming Convention</source>
-        <translation>नामकरण सम्मेलन</translation>
+        <translation>नामकरण पद्धति</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="55"/>
@@ -15466,7 +15466,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="116"/>
         <source>Separator used for split inner name of layer to hierarchical names</source>
-        <translation>विभाजक का उपयोग परत के विभाजित आंतरिक नाम के लिए किया जाता है</translation>
+        <translation>परत के आंतरिक नाम को पदानुक्रमिक नामों में विभाजित करने के लिए उपयोग किया जाने वाला विभाजक</translation>
     </message>
     <message>
         <source>Layer Level Name Separator</source>
@@ -15485,7 +15485,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="201"/>
         <source>Suffix of layer&apos;s name that defines that layer is dimensional</source>
-        <translation>परत के नाम का प्रत्यय जो उस परत को परिभाषित करता है, आयामी है</translation>
+        <translation>परत के नाम का प्रत्यय जो यह निर्धारित करता है कि परत आयामी है</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="211"/>
@@ -15496,17 +15496,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="224"/>
         <source>Suffix of layer&apos;s name that defines that layer is informational.</source>
-        <translation>परत के नाम का प्रत्यय जो उस परत को परिभाषित करता है, सूचनात्मक है।.</translation>
+        <translation>परत के नाम का प्रत्यय जो यह निर्धारित करता है कि परत सूचनात्मक है।</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="234"/>
         <source>Alternative Position </source>
-        <translation>वैकल्पिक स्थिति</translation>
+        <translation>वैकल्पिक स्थिति </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
-        <translation>परत के नाम का प्रत्यय जो उस परत को परिभाषित करता है, वैकल्पिक स्थिति के लिए है।.</translation>
+        <translation>परत के नाम का प्रत्यय जो यह निर्धारित करता है कि परत वैकल्पिक स्थिति के लिए है।</translation>
     </message>
     <message>
         <source>Duplicating Name</source>
@@ -15520,17 +15520,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="74"/>
         <source>Prefix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>परत के नाम का उपसर्ग जिसका उपयोग इस तरह के नाम के साथ परत मौजूद है (जब डुप्लिकेट बनाया जाता है)</translation>
+        <translation>परत के नाम का उपसर्ग, जिसका उपयोग तब किया जाता है जब ऐसे नाम वाली परत पहले से मौजूद हो (जैसे, डुप्लिकेट बनाते समय)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="84"/>
         <source>Suffix</source>
-        <translation>Suffix</translation>
+        <translation>प्रत्यय</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="97"/>
         <source>Suffix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>परत के नाम का प्रत्यय जिसका उपयोग ऐसे नाम के साथ परत के रूप में किया जाता है (जब डुप्लिकेट बनाया जाता है)</translation>
+        <translation>परत के नाम का प्रत्यय, जिसका उपयोग तब किया जाता है जब ऐसे नाम वाली परत पहले से मौजूद हो (जैसे, डुप्लिकेट बनाते समय)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="155"/>
@@ -15570,12 +15570,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="329"/>
         <source>If checked, tooltip will include complete name of layer (with all upper layer levels)</source>
-        <translation>यदि जांच की जाती है, तो टूलटिप में परत का पूरा नाम (सभी ऊपरी परत स्तरों के साथ) शामिल होगा।</translation>
+        <translation>यदि चेक किया गया है, तो टूलटिप में परत का पूरा नाम (सभी ऊपरी परत स्तरों के साथ) शामिल होगा</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="332"/>
         <source>Show full name as ToolTip</source>
-        <translation>टूलटिप के रूप में पूर्ण नाम दिखाएं</translation>
+        <translation>टूलटिप के रूप में पूरा नाम दिखाएं</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="608"/>
@@ -15605,32 +15605,32 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="319"/>
         <source>If checked, icons for layer types will be shown</source>
-        <translation>यदि जांच की जाती है, तो परत प्रकारों के लिए आइकन दिखाए जाएंगे</translation>
+        <translation>यदि चेक किया गया है, तो परत प्रकारों के लिए आइकन दिखाए जाएंगे</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="322"/>
         <source>Show layer type icons</source>
-        <translation>लेयर टाइप आइकन दिखाएं</translation>
+        <translation>परत प्रकार आइकन दिखाएं</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="309"/>
         <source>Indentation for child layers</source>
-        <translation>बच्चे की परतों के लिए इंडेंटेशन</translation>
+        <translation>चाइल्ड परतों के लिए इंडेंटेशन</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="312"/>
         <source>Show indented layer names. Ident size:</source>
-        <translation>इंडेंटेड लेयर नाम दिखाएं। पहचान आकार:</translation>
+        <translation>इंडेंटेड परत नाम दिखाएं। इंडेंट आकार:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="277"/>
         <source>Size of the indent in characters to indent name of child layer from parent ones</source>
-        <translation>चरित्रों में इंडेंट का आकार माता-पिता से बच्चे की परत का इंडेंट नाम</translation>
+        <translation>चाइल्ड परत के नाम को मूल परतों के सापेक्ष इंडेंट करने के लिए इंडेंट का आकार (वर्णों में)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="352"/>
         <source>If checked, drag&amp;drop operations in layers list are enabled and layers hierarchy may be restructutured</source>
-        <translation>यदि जाँच की जाती है, तो परत सूची में खींचें और ड्रॉप ऑपरेशन सक्षम होते हैं और परतें पदानुक्रम को फिर से तैयार किया जा सकता है।</translation>
+        <translation>यदि चेक किया गया है, तो परत सूची में ड्रैग एंड ड्रॉप ऑपरेशन सक्षम होते हैं और परतों के पदानुक्रम को पुनर्गठित किया जा सकता है</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="355"/>
@@ -15640,12 +15640,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="293"/>
         <source>If primary layer is renames, secondary layers are renamed too.</source>
-        <translation>यदि प्राथमिक परत का नाम बदल जाता है, तो माध्यमिक परतों का नाम भी दिया जाता है।.</translation>
+        <translation>यदि प्राथमिक परत का नाम बदला जाता है, तो माध्यमिक परतों का नाम भी बदल दिया जाता है।</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="296"/>
         <source>Rename secondary layers on primary rename</source>
-        <translation>प्राथमिक नाम पर माध्यमिक परतों का नाम बदलें</translation>
+        <translation>प्राथमिक परत का नाम बदलने पर माध्यमिक परतों का नाम भी बदलें</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="376"/>
@@ -15659,7 +15659,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="470"/>
         <source>Background color for selected items in layers tree.</source>
-        <translation>परतों के पेड़ में चयनित वस्तुओं के लिए पृष्ठभूमि रंग।.</translation>
+        <translation>परत वृक्ष में चयनित आइटम के लिए पृष्ठभूमि रंग।</translation>
     </message>
     <message>
         <source>Color for separator lines in layers tree view</source>
@@ -15668,7 +15668,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="420"/>
         <source>Background color for virtual layers items in layers list</source>
-        <translation>परतों सूची में आभासी परतों आइटम के लिए पृष्ठभूमि रंग</translation>
+        <translation>परत सूची में आभासी परतों के आइटम के लिए पृष्ठभूमि रंग</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="449"/>
@@ -15681,12 +15681,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="560"/>
         <source>Matched item in highlight filter mode</source>
-        <translation>हाइलाइट फिल्टर मोड में मिलान आइटम</translation>
+        <translation>हाइलाइट फिल्टर मोड में मेल खाने वाला आइटम</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="391"/>
         <source>Color for items that matches filter conditions</source>
-        <translation>उन वस्तुओं के लिए रंग जो फिल्टर की स्थिति से मेल खाते हैं</translation>
+        <translation>उन आइटम के लिए रंग जो फिल्टर की शर्तों से मेल खाते हैं</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="379"/>
@@ -15715,7 +15715,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="523"/>
         <source>Background color for active layer item in layers tree</source>
-        <translation>परतों के पेड़ में सक्रिय परत आइटम के लिए पृष्ठभूमि रंग</translation>
+        <translation>परत वृक्ष में सक्रिय परत आइटम के लिए पृष्ठभूमि रंग</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="526"/>
@@ -15735,7 +15735,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="599"/>
         <source>Pens that will be set for newly created layers of different types.</source>
-        <translation>पेन जो विभिन्न प्रकारों की नवनिर्मित परतों के लिए सेट किया जाएगा।.</translation>
+        <translation>वे पेन जो विभिन्न प्रकार की नई बनाई गई परतों के लिए सेट किए जाएंगे।</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="602"/>
@@ -15745,7 +15745,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="68"/>
         <source>Normal Layer</source>
-        <translation>सामान्य स्तर</translation>
+        <translation>सामान्य परत</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="69"/>
@@ -15760,7 +15760,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Alternative Position Layer</source>
-        <translation>वैकल्पिक स्थिति</translation>
+        <translation>वैकल्पिक स्थिति परत</translation>
     </message>
     <message>
         <source>grid</source>
@@ -15769,7 +15769,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="103"/>
         <source>highlighted item</source>
-        <translation>हाइलाइट आइटम</translation>
+        <translation>हाइलाइट किए गए आइटम</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="110"/>
@@ -15795,8 +15795,8 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>अमान्य मूल्य %1 रंग के लिए प्रदान करते हैं।
-कृपया एक अलग मान निर्दिष्ट करें।.</translation>
+        <translation>%1 के रंग के लिए अमान्य मान दिया गया है।
+कृपया कोई अलग मान निर्दिष्ट करें।</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="245"/>
@@ -15814,7 +15814,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="152"/>
         <source>Looking for matching layer names</source>
-        <translation>मिलान परत नामों की तलाश</translation>
+        <translation>मेल खाने वाले परत नामों की तलाश</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="157"/>
@@ -15829,17 +15829,17 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="186"/>
         <source>Show all layers</source>
-        <translation>सभी परतों को दिखाएं</translation>
+        <translation>सभी परतें दिखाएं</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>सभी परतों को छुपाएं</translation>
+        <source>Hide all layers except current</source>
+        <translation>वर्तमान को छोड़कर सभी परतें छुपाएं</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="200"/>
         <source>Show Secondary Layers</source>
-        <translation>माध्यमिक स्तर</translation>
+        <translation>माध्यमिक परतें दिखाएं</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="210"/>
@@ -15849,27 +15849,27 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="218"/>
         <source>Expand All</source>
-        <translation>सभी का विस्तार</translation>
+        <translation>सभी का विस्तार करें</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="226"/>
         <source>Collapse All</source>
-        <translation>सभी को हटा दें</translation>
+        <translation>सभी को संक्षिप्त करें</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="234"/>
         <source>Collapse Secondary</source>
-        <translation>पतन माध्यमिक</translation>
+        <translation>माध्यमिक परतें संक्षिप्त करें</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="242"/>
         <source>Unlock all layers</source>
-        <translation>सभी परतों अनलॉक</translation>
+        <translation>सभी परतें अनलॉक करें</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="249"/>
         <source>Lock all layers</source>
-        <translation>सभी परतों ताला</translation>
+        <translation>सभी परतें लॉक करें</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="256"/>
@@ -15879,12 +15879,12 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="263"/>
         <source>Add dimensions Layer</source>
-        <translation>आयाम जोड़ें</translation>
+        <translation>आयाम परत जोड़ें</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="272"/>
         <source>Remove layer</source>
-        <translation>परत निकालें</translation>
+        <translation>परत हटाएं</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="279"/>
@@ -15899,62 +15899,62 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="656"/>
         <source>&amp;Add Child Layer</source>
-        <translation>चाइल्ड लेयर जोड़ें</translation>
+        <translation>चाइल्ड परत जोड़ें (&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="657"/>
         <source>&amp;Rename</source>
-        <translation>नाम</translation>
+        <translation>नाम बदलें (&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="658"/>
         <source>&amp;Remove Layers (Sub-Tree)</source>
-        <translation>&amp;Remove परतें (उप-त्रि)</translation>
+        <translation>परतें हटाएं (उप-वृक्ष) (&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="660"/>
         <source>&amp;Copy Structure (Sub-Tree)</source>
-        <translation>&amp; Copy स्ट्रक्चर (Sub-Tree)</translation>
+        <translation>संरचना कॉपी करें (उप-वृक्ष) (&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="661"/>
         <source>&amp;Duplicate Content (Sub-Tree)</source>
-        <translation>Duplicate Content (Sub-Tree)</translation>
+        <translation>सामग्री डुप्लिकेट करें (उप-वृक्ष) (&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="663"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>and Select Entity (Sub-Tree)</translation>
+        <translation>इकाइयां चुनें (उप-वृक्ष) (&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="668"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>Edit परत &amp; योगदान</translation>
+        <translation>परत विशेषताएं संपादित करें (&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="670"/>
         <source>&amp;Remove Layer</source>
-        <translation>&amp; Remove परत</translation>
+        <translation>परत हटाएं (&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="679"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>जोड़ें आयाम सब-लेयर</translation>
+        <translation>आयाम उप-परत जोड़ें (&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="683"/>
         <source>&amp;Add Info Sub-Layer</source>
-        <translation>और जानकारी सब-लेयर जोड़ें</translation>
+        <translation>सूचना उप-परत जोड़ें (&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="687"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
-        <translation>और वैकल्पिक देखें सब-लेयर जोड़ें</translation>
+        <translation>वैकल्पिक स्थिति उप-परत जोड़ें (&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="693"/>
         <source>&amp;Remove Sub-layers</source>
-        <translation>और सब-परतों को हटा दें</translation>
+        <translation>उप-परतें हटाएं (&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="701"/>
@@ -15966,7 +15966,7 @@ Please specify a different value.</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="702"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="714"/>
         <source>Convert to Info Layer</source>
-        <translation>इन्फो लेयर में कनवर्ट करें</translation>
+        <translation>सूचना परत में कनवर्ट करें</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="703"/>
@@ -15982,87 +15982,87 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="723"/>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>&amp; चुनें परत की संस्थाओं</translation>
+        <translation>परत की इकाइयां चुनें (&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="726"/>
         <source>&amp;Create Layer Copy</source>
-        <translation>&amp;Create परत कॉपी बनाएं</translation>
+        <translation>परत की कॉपी बनाएं (&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="727"/>
         <source>&amp;Duplicate Layer With Content</source>
-        <translation>सामग्री के साथ नाजुक परत</translation>
+        <translation>सामग्री के साथ परत डुप्लिकेट करें (&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="731"/>
         <source>Move Selection to Layer</source>
-        <translation>लेयर में चयन करें</translation>
+        <translation>चयन को परत में ले जाएं</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="732"/>
         <source>Duplicate Selection to Layer</source>
-        <translation>डुप्लिकेट चयन करने के लिए परत</translation>
+        <translation>चयन को परत में डुप्लिकेट करें</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="739"/>
         <source>&amp;Add Layer</source>
-        <translation>और जोड़ें परत</translation>
+        <translation>परत जोड़ें (&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="741"/>
         <source>&amp;Freeze Others Layers</source>
-        <translation>और फ्रीज अन्य परतें</translation>
+        <translation>अन्य परतें फ़्रीज़ करें (&amp;F)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="742"/>
         <source>&amp;Defreeze All Layers</source>
-        <translation>सभी परतों को फ्रीज</translation>
+        <translation>सभी परतें अनफ़्रीज़ करें (&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>सभी परतों को फ्रीज</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>वर्तमान को छोड़कर सभी परतें छुपाएं (&amp;H)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>
         <source>&amp;Unlock All Layers</source>
-        <translation>सभी परतों अनलॉक</translation>
+        <translation>सभी परतें अनलॉक करें (&amp;U)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="745"/>
         <source>&amp;Lock All Layers</source>
-        <translation>सभी परतों ताला</translation>
+        <translation>सभी परतें लॉक करें (&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="746"/>
         <source>Enable &amp;Printing All Layers</source>
-        <translation>सभी परतों को सक्षम और मुद्रित करना</translation>
+        <translation>सभी परतों की प्रिंटिंग सक्षम करें (&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="747"/>
         <source>&amp;Disable Printing All Layers</source>
-        <translation>&amp;Disable Printing All परतें</translation>
+        <translation>सभी परतों की प्रिंटिंग अक्षम करें (&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="750"/>
         <source>&amp;Export Single Layer</source>
-        <translation>और निर्यात एकल परत</translation>
+        <translation>एकल परत निर्यात करें (&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="754"/>
         <source>&amp;Export Layer Sub-Tree</source>
-        <translation>और निर्यात परत उप-त्रि</translation>
+        <translation>परत उप-वृक्ष निर्यात करें (&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="758"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>निर्यात और दृश्यमान परत</translation>
+        <translation>दृश्यमान परतें निर्यात करें (&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="760"/>
         <source>&amp;Find And Remove Empty Layers</source>
-        <translation>&amp;Find and Remove खाली परतें</translation>
+        <translation>खाली परतें ढूंढें और हटाएं (&amp;F)</translation>
     </message>
 </context>
 <context>
@@ -22449,7 +22449,7 @@ Please specify a different value.</source>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="228"/>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="1092"/>
         <source>Layers</source>
-        <translation type="unfinished">परत</translation>
+        <translation type="unfinished">परतें</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="233"/>
@@ -23351,12 +23351,12 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="82"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">यदि जांच की जाती है, तो प्रतिबिंबित संस्थाओं को वर्तमान परत पर रखा जाएगा, अन्यथा उन्हें मूल परतों में रखा जाएगा।.</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो मिरर की गई इकाइयां वर्तमान परत में रखी जाएंगी, अन्यथा उन्हें मूल परतों में रखा जाएगा।</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">उपयोगकर्ता वर्तमान परत</translation>
+        <translation type="unfinished">वर्तमान परत का उपयोग करें</translation>
     </message>
 </context>
 <context>
@@ -23650,7 +23650,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="45"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="unfinished">यदि जांच की जाती है, तो बनाई गई संस्थाओं को वर्तमान परत में रखा जाएगा। अन्यथा, उन्हें मूल परतों में रखा जाएगा।.</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो बनाई गई इकाइयां वर्तमान परत में रखी जाएंगी। अन्यथा, उन्हें मूल परतों में रखा जाएगा। </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="48"/>
@@ -23836,7 +23836,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="144"/>
         <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="unfinished">यदि जांच की जाती है, तो बनाई गई संस्थाओं को वर्तमान परत में रखा जाएगा, अन्यथा मूल परतों में होगा।.</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो बनाई गई इकाइयां वर्तमान परत में रखी जाएंगी, अन्यथा वे मूल परतों में रहेंगी। </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="147"/>
@@ -24252,7 +24252,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="93"/>
         <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">यदि जांच की जाती है, तो बनाई गई संस्थाओं को वर्तमान परत में रखा जाएगा, अन्यथा वे मूल परतों में होंगे।.</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो बनाई गई इकाइयां वर्तमान परत में रखी जाएंगी, अन्यथा वे मूल परतों में रहेंगी।</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="96"/>
@@ -25378,12 +25378,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="188"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>सक्रिय लेयर पेन द्वारा वर्तमान पेन अपडेट करें</translation>
+        <translation>सक्रिय परत के पेन से वर्तमान पेन अपडेट करें</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="205"/>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation>सक्रिय लेयर पेन से पेन संपादक भरें</translation>
+        <translation>सक्रिय परत के पेन से पेन संपादक भरें</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="208"/>
@@ -25393,12 +25393,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="222"/>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation>सक्रिय लेयर पेन के लिए संपादक पेन लागू करें</translation>
+        <translation>संपादक पेन को सक्रिय परत के पेन पर लागू करें</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="225"/>
         <source>Apply To Layer</source>
-        <translation>लेयर पर लागू</translation>
+        <translation>परत पर लागू करें</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="239"/>
@@ -25483,7 +25483,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="305"/>
         <source>&amp;Apply Pen To Active Layer</source>
-        <translation>&amp;Apply Pen to Active Layer</translation>
+        <translation>सक्रिय परत पर पेन लागू करें (&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="306"/>
@@ -29642,7 +29642,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="303"/>
         <source>Unlock all layers</source>
-        <translation type="unfinished">सभी परतों अनलॉक</translation>
+        <translation type="unfinished">सभी परतें अनलॉक करें</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="303"/>
@@ -29667,7 +29667,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="341"/>
         <source>Show all layers</source>
-        <translation type="unfinished">सभी परतों को दिखाएं</translation>
+        <translation type="unfinished">सभी परतें दिखाएं</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="341"/>
@@ -33115,7 +33115,8 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="127"/>
         <source>
 Layer: </source>
-        <translation>परत:</translation>
+        <translation>
+परत: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="573"/>
@@ -35921,7 +35922,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="208"/>
         <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="unfinished">निर्दिष्ट करता है कि Wetether प्रतियां वर्तमान या मूल परत में डाली जाएगी</translation>
+        <translation type="unfinished">निर्दिष्ट करता है कि कॉपियां वर्तमान परत में डाली जाएंगी या मूल परत में</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="211"/>
@@ -36167,7 +36168,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="209"/>
         <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">यदि जांच की जाती है, तो मौजूदा परत पर नए enties को रखा जाएगा, अन्यथा वे मूल परतों में होंगे।.</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो नई इकाइयां वर्तमान परत में रखी जाएंगी, अन्यथा वे मूल परतों में रहेंगी।</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="212"/>
@@ -36410,7 +36411,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="83"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="unfinished">यदि जांच की जाती है, तो बनाई गई संस्थाओं को वर्तमान परत में रखा जाएगा। अन्यथा, उन्हें मूल परतों में रखा जाएगा।.</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो बनाई गई इकाइयां वर्तमान परत में रखी जाएंगी। अन्यथा, उन्हें मूल परतों में रखा जाएगा। </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="86"/>
@@ -37324,7 +37325,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="77"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">यदि जांच की जाती है, तो बनाई गई संस्थाओं को वर्तमान परत पर रखा जाएगा, अन्यथा उन्हें मूल परतों में रखा जाएगा।.</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो बनाई गई इकाइयां वर्तमान परत में रखी जाएंगी, अन्यथा उन्हें मूल परतों में रखा जाएगा।</translation>
     </message>
 </context>
 <context>
@@ -37362,7 +37363,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="73"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">यदि जांच की जाती है, तो बनाई गई संस्थाओं को वर्तमान परत पर रखा जाएगा, अन्यथा उन्हें मूल परतों में रखा जाएगा।.</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो बनाई गई इकाइयां वर्तमान परत में रखी जाएंगी, अन्यथा उन्हें मूल परतों में रखा जाएगा।</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="76"/>
@@ -37505,7 +37506,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="71"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">यदि जांच की जाती है, तो बनाई गई संस्थाओं को वर्तमान परत पर रखा जाएगा, अन्यथा उन्हें मूल परतों में रखा जाएगा।.</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो बनाई गई इकाइयां वर्तमान परत में रखी जाएंगी, अन्यथा उन्हें मूल परतों में रखा जाएगा।</translation>
     </message>
 </context>
 <context>
@@ -37518,12 +37519,12 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="32"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">यदि जांच की जाती है, तो बनाई गई संस्थाओं को वर्तमान परत पर रखा जाएगा, अन्यथा उन्हें मूल परतों में रखा जाएगा।.</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो बनाई गई इकाइयां वर्तमान परत में रखी जाएंगी, अन्यथा उन्हें मूल परतों में रखा जाएगा।</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="35"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">उपयोगकर्ता वर्तमान परत</translation>
+        <translation type="unfinished">वर्तमान परत का उपयोग करें</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="42"/>
@@ -38389,7 +38390,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="216"/>
         <source>Entity&apos;s Layer</source>
-        <translation>इकाई का स्तर</translation>
+        <translation>इकाई की परत</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="250"/>
@@ -39064,7 +39065,7 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="188"/>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="188"/>
         <source>Layers</source>
-        <translation>परत</translation>
+        <translation>परतें</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="201"/>
@@ -39085,7 +39086,7 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="236"/>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="236"/>
         <source>Layers Tree</source>
-        <translation>लेयर्स ट्री</translation>
+        <translation>परत वृक्ष</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="261"/>
@@ -39849,7 +39850,7 @@ Auto-save disabled.</source>
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="80"/>
         <source>Current Layer</source>
-        <translation>वर्तमान स्तर</translation>
+        <translation>वर्तमान परत</translation>
     </message>
 </context>
 <context>
@@ -44095,7 +44096,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5077"/>
         <source>Modify layer of selected entities, at layer activation</source>
-        <translation>चयनित संस्थाओं की परत को संशोधित करें, परत सक्रियण पर</translation>
+        <translation>परत सक्रिय करने पर चयनित इकाइयों की परत बदलें</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5490"/>
@@ -45673,7 +45674,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5074"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>जब सक्षम किया जाता है, तो किसी परत को सक्रिय करने से सभी चयनित संस्थाओं को उस नई परत में संशोधित किया जाएगा। कई संस्थाओं की परत बदलने के लिए: पहले आवश्यक संस्थाओं का चयन करें; परत विजेट में एक परत को सक्रिय करें। इससे सभी चयनित संस्थाओं को नई परत में संशोधित किया जाएगा।</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;सक्षम होने पर, किसी परत को सक्रिय करने से सभी चयनित इकाइयां उस नई परत में स्थानांतरित हो जाएंगी। कई इकाइयों की परत बदलने के लिए: पहले आवश्यक इकाइयों का चयन करें; फिर परत विजेट में किसी परत को सक्रिय करें। इससे सभी चयनित इकाइयां नई परत से संबंधित हो जाती हैं।&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4991"/>
@@ -45789,7 +45790,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="44"/>
         <source>Layers</source>
-        <translation>परत</translation>
+        <translation>परतें</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="20"/>
@@ -45809,7 +45810,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="92"/>
         <source>Export visible construction layers</source>
-        <translation>दृश्य निर्माण परतों का निर्यात करें</translation>
+        <translation>दृश्यमान निर्माण परतों का निर्यात करें</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="104"/>
@@ -47226,7 +47227,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_layerbox.cpp" line="68"/>
         <source>- Unchanged -</source>
-        <translation>- अपरिवर्तित</translation>
+        <translation>- अपरिवर्तित -</translation>
     </message>
 </context>
 <context>
@@ -47234,14 +47235,14 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="20"/>
         <source>Layer Settings</source>
-        <translation>परत सेटिंग</translation>
+        <translation>परत सेटिंग्स</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="29"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>एक निर्माण परत में ज्यामितीय निर्माण के लिए इस्तेमाल होने वाली अनंत सीधी रेखाओं की संस्थाएं हैं।
-एक निर्माण परत की सामग्री प्रिंटआउट में दिखाई नहीं देनी चाहिए।.</translation>
+        <translation>निर्माण परत में अनंत सीधी रेखाओं की इकाइयां होती हैं, जिनका उपयोग ज्यामितीय निर्माण के लिए किया जाता है।
+निर्माण परत की सामग्री प्रिंटआउट में दिखाई नहीं देनी चाहिए।</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="33"/>
@@ -47269,7 +47270,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="298"/>
         <source>Looking for matching layer names</source>
-        <translation>मिलान परत नामों की तलाश</translation>
+        <translation>मेल खाने वाले परत नामों की तलाश</translation>
     </message>
 </context>
 <context>
@@ -47649,12 +47650,12 @@ P, li { white-space: pre-wrap; }
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="264"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="308"/>
         <source>Layer Properties</source>
-        <translation>लेयर गुण</translation>
+        <translation>परत गुण</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="84"/>
         <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>पहले से ही &quot;%1&quot; नाम के साथ परत मौजूद है। कृपया एक अलग नाम निर्दिष्ट करें।.</translation>
+        <translation>&quot;%1&quot; नाम वाली परत पहले से मौजूद है। कृपया कोई अलग नाम निर्दिष्ट करें।</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="172"/>
@@ -47662,25 +47663,25 @@ P, li { white-space: pre-wrap; }
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="240"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1739"/>
         <source>Remove Layer</source>
-        <translation>परत निकालें</translation>
+        <translation>परत हटाएं</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="173"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>परत &quot;%1&quot; और उस पर सभी संस्थाओं को हटा दिया जाएगा।
-यह कार्रवाई नहीं हो सकती है।.</translation>
+        <translation>परत &quot;%1&quot; और उस पर मौजूद सभी इकाइयां हटा दी जाएंगी।
+इस कार्रवाई को पूर्ववत नहीं किया जा सकता।</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="183"/>
         <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>परत &quot;%1&quot; कभी हटाया नहीं जा सकता।.</translation>
+        <translation>परत &quot;%1&quot; को कभी हटाया नहीं जा सकता।</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="240"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1739"/>
         <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>परत &quot;0&quot; को कभी हटाया नहीं जा सकता है।.</translation>
+        <translation>परत &quot;0&quot; को कभी हटाया नहीं जा सकता।</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="248"/>
@@ -47688,14 +47689,14 @@ This action can NOT be undone.</source>
         <source>Remove %n layer(s)</source>
         <translation>
             <numerusform>%n परत हटाएं</numerusform>
-            <numerusform>%n परत हटाएं</numerusform>
+            <numerusform>%n परतें हटाएं</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="251"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1788"/>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>सूचीबद्ध परतें और उन पर सभी संस्थाओं को हटा दिया जाएगा।.</translation>
+        <translation>सूचीबद्ध परतें और उन पर मौजूद सभी इकाइयां हटा दी जाएंगी।</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="253"/>
@@ -47706,7 +47707,7 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="257"/>
         <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>चेतावनी: परत &quot;0&quot; को कभी हटाया नहीं जा सकता है।.</translation>
+        <translation>चेतावनी: परत &quot;0&quot; को कभी हटाया नहीं जा सकता।</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="260"/>
@@ -47717,7 +47718,7 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="304"/>
         <source>Layer Dialog</source>
-        <translation>लेयर डायलॉग</translation>
+        <translation>परत संवाद</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="406"/>
@@ -47750,7 +47751,7 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="230"/>
         <source>Layer empty name is not allowed.</source>
-        <translation>परत खाली नाम की अनुमति नहीं है।.</translation>
+        <translation>परत के खाली नाम की अनुमति नहीं है।</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="265"/>
@@ -47762,9 +47763,9 @@ This action can NOT be undone.</source>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation>डुप्लिकेट नाम के साथ परत बनाने का प्रयास करें। डुप्लिकेट परत का नाम है
+        <translation>डुप्लिकेट नाम वाली परत बनाने का प्रयास। डुप्लिकेट परत नाम है
 [%1]।
-कृपया एक अलग नाम निर्दिष्ट करें।.</translation>
+कृपया कोई अलग नाम निर्दिष्ट करें।</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="142"/>
@@ -47776,14 +47777,14 @@ Please specify a different name.</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="143"/>
         <source>Layer list separator string is empty. It will not be possible to build layers tree.
 Please specify a different value.</source>
-        <translation>परत सूची विभाजक स्ट्रिंग खाली है। परतों के पेड़ का निर्माण संभव नहीं होगा।
-कृपया एक अलग मान निर्दिष्ट करें।.</translation>
+        <translation>परत सूची विभाजक स्ट्रिंग खाली है। परत वृक्ष बनाना संभव नहीं होगा।
+कृपया कोई अलग मान निर्दिष्ट करें।</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="962"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="972"/>
         <source>Remove empty layers</source>
-        <translation>खाली परत निकालें</translation>
+        <translation>खाली परतें हटाएं</translation>
     </message>
     <message>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
@@ -47801,7 +47802,7 @@ Clear filtering mask and repeat.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="973"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>बिना किसी संस्था के कोई परतें नहीं मिलीं, कुछ भी नहीं हटाया जा सकता।.</translation>
+        <translation>बिना इकाइयों वाली कोई परत नहीं मिली, हटाने के लिए कुछ नहीं है।</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1116"/>
@@ -47815,23 +47816,25 @@ Clear filtering mask and repeat.</source>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation>इस तरह के बच्चे की परत पहले से ही मौजूद हैं
+        <translation>निम्न के लिए ऐसी चाइल्ड परत पहले से मौजूद है:
 [%1]।
-कृपया एक अलग नाम निर्दिष्ट करें।.</translation>
+कृपया कोई अलग नाम निर्दिष्ट करें।</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1162"/>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation>इस तरह के बच्चे की परत पहले से ही मौजूद हैं
-[%1]।.</translation>
+        <translation>निम्न के लिए ऐसी चाइल्ड परत पहले से मौजूद है:
+[%1]।
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1170"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>आयामी परत केवल सामान्य सक्रिय परत के लिए जोड़ा जा सकता है।.</translation>
+        <translation>आयामी परत केवल सामान्य सक्रिय परत के लिए जोड़ी जा सकती है।
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1233"/>
@@ -47864,7 +47867,7 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1805"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1863"/>
         <source>Layer DialogEx</source>
-        <translation>लेयर डायलॉग</translation>
+        <translation>परत संवाद</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="202"/>
@@ -47917,19 +47920,21 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1453"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>कोई ऐसी संस्था नहीं है जो दृश्य परतों पर पेन से मेल खाती है।.</translation>
+        <translation>दृश्यमान परतों पर पेन से मेल खाने वाली कोई इकाई नहीं है।</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1454"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>ऐसी संस्थाएं जमे हुए परतों पर मौजूद हैं।.</translation>
+        <translation>ऐसी इकाइयां फ़्रीज़ की गई परतों पर मौजूद हैं।
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1455"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>ऐसी संस्थाएं लॉक परतों पर मौजूद हैं।.</translation>
+        <translation>ऐसी इकाइयां लॉक की गई परतों पर मौजूद हैं।
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1456"/>
@@ -48640,7 +48645,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="88"/>
         <source>cslayer</source>
-        <translation>क्लीयर</translation>
+        <translation>cslayer</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="89"/>
@@ -51205,7 +51210,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="77"/>
         <source>No %1 layers found</source>
-        <translation>नहीं %1 परतें पाया</translation>
+        <translation>कोई %1 परत नहीं मिली</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterinterface.h" line="93"/>

@@ -3317,7 +3317,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="410"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Update Current Pen Tarafından Active Katman&apos; Pen</translation>
+        <translation>Geçerli Kalemi Etkin Katmanın Kalemiyle Güncelle</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="416"/>
@@ -3458,7 +3458,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="66"/>
         <source>Layers operations</source>
-        <translation>Katmanlar İşlemleri</translation>
+        <translation>Katman işlemleri</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="67"/>
@@ -3650,12 +3650,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity Layer</source>
-        <translation>Entity Katman</translation>
+        <translation>Varlık Katmanı</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity&apos;s Layer</source>
-        <translation>Entity&apos;nin Katmanı</translation>
+        <translation>Varlığın Katmanı</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="88"/>
@@ -3670,32 +3670,32 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="109"/>
         <source>Activate Entity&apos;s Layer</source>
-        <translation>Entity&apos;nin Katmanı</translation>
+        <translation>Varlığın Katmanını Etkinleştir</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="110"/>
         <source>Hide Entity&apos;s Layer</source>
-        <translation>Hide Entity&apos;nin Katmanı</translation>
+        <translation>Varlığın Katmanını Gizle</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="111"/>
         <source>Hide Other Layers than Entity&apos;s</source>
-        <translation>Hide Diğer Katmanlar Entity&apos;ninkinden daha fazla</translation>
+        <translation>Varlığın Katmanı Dışındaki Katmanları Gizle</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="112"/>
         <source>Lock Entity&apos;s Layer</source>
-        <translation>Lock Entity&apos;nin Katmanı</translation>
+        <translation>Varlığın Katmanını Kilitle</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="113"/>
         <source>Toggle Entity&apos;s Layer Construction</source>
-        <translation>Entity&apos;nin Katmanı İnşaatı</translation>
+        <translation>Varlığın Katmanını Yapı Katmanı Yap/Yapma</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="114"/>
         <source>Toggle Entity&apos;s Layer Printing</source>
-        <translation>Entity&apos;nin Katman Baskısı</translation>
+        <translation>Varlığın Katmanını Yazdır/Yazdırma</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="225"/>
@@ -4044,7 +4044,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="627"/>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>&amp;Yapı Katmanı</translation>
+        <translation>Y&amp;apı Katmanı</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="637"/>
@@ -4561,28 +4561,28 @@ or [%2]</source>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp;Tüm katmanları gizle</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Geçerli katman &amp;hariç tüm katmanları gizle</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
         <source>&amp;Unlock all</source>
-        <translation>&amp;Tümünün kilidini aç</translation>
+        <translation>Tü&amp;münün kilidini aç</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="620"/>
         <source>&amp;Lock all</source>
-        <translation>&amp;Tümünü kilitle</translation>
+        <translation>Tümü&amp;nü kilitle</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="628"/>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>&amp;Seçili katmanları dışa aktar</translation>
+        <translation>Seç&amp;ili katmanları dışa aktar</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="629"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>&amp;Görünür katmanları dışa aktar</translation>
+        <translation>Gö&amp;rünür katmanları dışa aktar</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="635"/>
@@ -5153,12 +5153,12 @@ Puan: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>Enter layer name to %1</source>
-        <translation>Katman adı %1&apos;e girin</translation>
+        <translation>Katmanı %1 için adını girin</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>activate</source>
-        <translation>aktif aktif aktif aktif aktif aktif aktive</translation>
+        <translation>etkinleştirmek</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
@@ -5172,13 +5172,13 @@ Puan: (%8, %9)</translation>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
         <source>selected</source>
         <comment>Layers to export</comment>
-        <translation>seçilen</translation>
+        <translation>Seçili</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
         <source>visible</source>
         <comment>Layers to export</comment>
-        <translation>görünür</translation>
+        <translation>Görünür</translation>
     </message>
 </context>
 <context>
@@ -6900,7 +6900,7 @@ Puan: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_layer.cpp" line="75"/>
         <source>Specify entity with desired layer</source>
-        <translation type="unfinished">İstenen katman ile varlık</translation>
+        <translation type="unfinished">İstenen katmandaki varlığı belirtin</translation>
     </message>
 </context>
 <context>
@@ -7511,12 +7511,12 @@ Kartpostalarını kıracağınızdan emin misiniz?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="66"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Kontrol edilirse, aynalı varlıklar mevcut katmana yerleştirilir, aksi takdirde orijinal katmanlara yerleştirilirler.</translation>
+        <translation type="unfinished">İşaretlenirse, aynalanan varlıklar geçerli katmana yerleştirilir, aksi takdirde özgün katmanlarına yerleştirilir.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="69"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">User Current Katman</translation>
+        <translation type="unfinished">Geçerli Katmanı Kullan</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="76"/>
@@ -8806,7 +8806,7 @@ Kartpostalarını kıracağınızdan emin misiniz?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="67"/>
         <source>Layer to apply</source>
-        <translation type="unfinished">Katman başvurmak için</translation>
+        <translation type="unfinished">Uygulanacak katman</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="67"/>
@@ -8839,7 +8839,7 @@ Kartpostalarını kıracağınızdan emin misiniz?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="62"/>
         <source>Layer to which created circle should be placed</source>
-        <translation type="unfinished">Oluşturulan çemberin yerleştirilmesi gereken Katman</translation>
+        <translation type="unfinished">Oluşturulan çemberin yerleştirileceği katman</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="66"/>
@@ -12312,7 +12312,7 @@ Kartpostalarını kıracağınızdan emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="118"/>
         <source>Active Layer</source>
-        <translation type="unfinished">Aktif Katman</translation>
+        <translation type="unfinished">Etkin Katman</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="125"/>
@@ -12636,7 +12636,7 @@ Kartpostalarını kıracağınızdan emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="26"/>
         <source>Layer of dimension</source>
-        <translation>Boyut Katmanı</translation>
+        <translation>Ölçünün katmanı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="45"/>
@@ -13612,7 +13612,7 @@ Kartpostalarını kıracağınızdan emin misiniz?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="82"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">Tekrarlanan Katman yerleştirilmelidir</translation>
+        <translation type="unfinished">Kopyanın yerleştirileceği katman</translation>
     </message>
 </context>
 <context>
@@ -13625,7 +13625,7 @@ Kartpostalarını kıracağınızdan emin misiniz?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="45"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">Tekrarlanan Katman yerleştirilmelidir</translation>
+        <translation type="unfinished">Kopyanın yerleştirileceği katman</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="49"/>
@@ -14481,12 +14481,12 @@ Kartpostalarını kıracağınızdan emin misiniz?</translation>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="135"/>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="179"/>
         <source>Export Layers</source>
-        <translation>İhracat Katmanları</translation>
+        <translation>Katmanları Dışa Aktar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="152"/>
         <source>Exported Layers</source>
-        <translation>İhracatlı Katmanlar</translation>
+        <translation>Dışa Aktarılan Katmanlar</translation>
     </message>
 </context>
 <context>
@@ -15322,12 +15322,12 @@ Kartpostalarını kıracağınızdan emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="48"/>
         <source>Name of new layer. In order to create hierarchical layers, include name of virtual layer and layer name separator.</source>
-        <translation>Yeni tabakanın adı. hiyerarşik katmanlar oluşturmak için, sanal tabaka ve tabaka adı separatörü adını ekleyin.</translation>
+        <translation>Yeni katmanın adı. Hiyerarşik katmanlar oluşturmak için sanal katmanın adını ve katman adı ayırıcısını da ekleyin.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="64"/>
         <source>Parent Layers Path:</source>
-        <translation>Ebeveyn Katmanları Yolu:</translation>
+        <translation>Üst Katmanların Yolu:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="81"/>
@@ -15337,7 +15337,7 @@ Kartpostalarını kıracağınızdan emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="93"/>
         <source>Layer for various infromational elements, notes, drafts etc.</source>
-        <translation>Çeşitli dolaşım elementleri, notlar, draftlar vb. için katman.</translation>
+        <translation>Çeşitli bilgi öğeleri, notlar, taslaklar vb. için katman.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="96"/>
@@ -15347,7 +15347,7 @@ Kartpostalarını kıracağınızdan emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="106"/>
         <source>Normal layer with drawing eleements</source>
-        <translation>Çizimle Normal katman</translation>
+        <translation>Çizim öğeleri içeren normal katman</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="109"/>
@@ -15357,7 +15357,7 @@ Kartpostalarını kıracağınızdan emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="119"/>
         <source>Layer that holds dimensions</source>
-        <translation>Boyutları olan Katman</translation>
+        <translation>Ölçüleri içeren katman</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="122"/>
@@ -15367,66 +15367,66 @@ Kartpostalarını kıracağınızdan emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="132"/>
         <source>Layer with alternate position of entities located on normal layers</source>
-        <translation>Normal katmanlarda bulunan varlıkların alternatif pozisyonu ile Katman</translation>
+        <translation>Normal katmanlarda bulunan varlıkların alternatif konumunu içeren katman</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="135"/>
         <source>Alternative Position</source>
-        <translation>Alternatif Pozisyon</translation>
+        <translation>Alternatif Konum</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="148"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Bir İnşaat Katmanı geometrik inşaat için kullanılmak üzere tasarlanmış sonsuz düz hatların varlığına sahiptir.
-Bir İnşaat Katmanının içerikleri baskıda görünmemelidir.</translation>
+        <translation>Bir Yapı Katmanı, geometrik yapı için kullanılması amaçlanan sonsuz düz çizgilerden oluşan varlıklara sahiptir.
+       Yapı Katmanının içeriği çıktıda görünmemelidir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="152"/>
         <source>Construction Layer</source>
-        <translation>İnşaat Katmanı</translation>
+        <translation>Yapı Katmanı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="181"/>
         <source>Path for parent layer</source>
-        <translation>Ebeveynlik tabakası için yol</translation>
+        <translation>Üst katmanın yolu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="197"/>
         <source>Layer Name:</source>
-        <translation>Katman Adı:</translation>
+        <translation>Katman İsmi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="68"/>
         <source>Rename Virtual Layer</source>
-        <translation>Rename Virtual Katman</translation>
+        <translation>Sanal Katmanı Yeniden Adlandır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="72"/>
         <source>Add Secondary Layer</source>
-        <translation>Orta Katman ekle</translation>
+        <translation>İkincil Katman Ekle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="78"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="85"/>
         <source>Add Layer</source>
-        <translation>Ekle Katman ekle</translation>
+        <translation>Katman Ekle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="91"/>
         <source>Edit Layer</source>
-        <translation>Edit Katman</translation>
+        <translation>Katmanı Düzenle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="183"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="221"/>
         <source>Default Pen</source>
-        <translation>Tembel Kalemi</translation>
+        <translation>Varsayılan Kalem</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="200"/>
         <source>Rename Layer</source>
-        <translation>Rename Katmanı</translation>
+        <translation>Katmanı Yeniden Adlandır</translation>
     </message>
 </context>
 <context>
@@ -15439,47 +15439,47 @@ Bir İnşaat Katmanının içerikleri baskıda görünmemelidir.</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="57"/>
         <source>Layers Export Options</source>
-        <translation>Katmanlar İhracat Seçenekleri</translation>
+        <translation>Katman Dışa Aktarım Seçenekleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="63"/>
         <source>If checked, Named Views from the document will be included into exported drawings. Otherwise, views are not included.</source>
-        <translation>Kontrol ederseniz, belgeden Add Views ihraç edilen çizimlere dahil edilecektir. Aksi takdirde, görüşler dahil değildir.</translation>
+        <translation>İşaretlenirse, belgedeki Adlandırılmış Görünümler dışa aktarılan çizimlere dahil edilir. Aksi takdirde görünümler dahil edilmez.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="66"/>
         <source>Export Named Views too</source>
-        <translation>Adlandırılmış Görünümleri de Dışa Aktar</translation>
+        <translation>Adlandırılmış Görünümleri de dışa aktar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="73"/>
         <source>If checked, each original exported layer will be stored in separate drawing. Otherwise, all layers will be in exported to one combined drawing.</source>
-        <translation>Kontrol ederseniz, her orijinal ihracat katmanı ayrı çizimde depolanacaktır. Aksi takdirde, tüm katmanlar birleştirilmiş çizime ihraç edilecektir.</translation>
+        <translation>İşaretlenirse, dışa aktarılan her özgün katman ayrı bir çizime kaydedilir. Aksi takdirde tüm katmanlar tek bir birleşik çizime dışa aktarılır.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="76"/>
         <source>Export each layer to own drawing file</source>
-        <translation>Her katmanı kendi çizim dosyasına aktarmak için</translation>
+        <translation>Her katmanı kendi çizim dosyasına dışa aktar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="83"/>
         <source>If checked, entities will be stored in original layer. Otherwise, they are placed to layer &quot;0&quot;.</source>
-        <translation>Kontrol ederseniz, varlıklar orijinal katmanda depolanacaktır. Aksi takdirde, &quot;0&quot; tabakaya yerleştirilirler.</translation>
+        <translation>İşaretlenirse, varlıklar özgün katmanlarında saklanır. Aksi takdirde &quot;0&quot; katmanına yerleştirilir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="89"/>
         <source>Retain original layer for entities</source>
-        <translation>Varlıklar için orijinal katman</translation>
+        <translation>Varlıkların özgün katmanını koru</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="96"/>
         <source>If checked, UCSs from the document will be included into exported drawings. Otherwise, UCSs are not included.</source>
-        <translation>Kontrol ederseniz, belgeden UCS&apos;ler ihraç edilen çizimlere dahil edilecektir. Aksi takdirde, UCSs dahil değildir.</translation>
+        <translation>İşaretlenirse, belgedeki UCS&apos;ler dışa aktarılan çizimlere dahil edilir. Aksi takdirde UCS&apos;ler dahil edilmez.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="99"/>
         <source>Export UCSs too</source>
-        <translation>UCS&apos;ler de</translation>
+        <translation>UCS&apos;leri de dışa aktar</translation>
     </message>
 </context>
 <context>
@@ -15487,12 +15487,12 @@ Bir İnşaat Katmanının içerikleri baskıda görünmemelidir.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="20"/>
         <source>Layers Tree Options</source>
-        <translation>Katmanlar Ağaç Seçenekleri</translation>
+        <translation>Katman Ağacı Seçenekleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="46"/>
         <source>Settings for naming convention that is used to create layers hierarchy based on flat list of layers</source>
-        <translation>Katmanlar hiyerarşisi oluşturmak için kullanılan kongreyi adlandırmak için, tabakaların düz listesine dayanan katmanlar listesi</translation>
+        <translation>Düz katman listesinden katman hiyerarşisi oluşturmak için kullanılan adlandırma kuralının ayarları</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="49"/>
@@ -15507,7 +15507,7 @@ Bir İnşaat Katmanının içerikleri baskıda görünmemelidir.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="116"/>
         <source>Separator used for split inner name of layer to hierarchical names</source>
-        <translation>Katmanın iç adını hiyerarşik isimlere ayırdık</translation>
+        <translation>Katmanın iç adını hiyerarşik adlara bölmek için kullanılan ayırıcı</translation>
     </message>
     <message>
         <source>Layer Level Name Separator</source>
@@ -15521,12 +15521,12 @@ Bir İnşaat Katmanının içerikleri baskıda görünmemelidir.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
-        <translation>Boyut</translation>
+        <translation>Ölçü</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="201"/>
         <source>Suffix of layer&apos;s name that defines that layer is dimensional</source>
-        <translation>Bu tabakayı tanımlayan katmanın adının suf eki boyutlu</translation>
+        <translation>Katmanın ölçü katmanı olduğunu belirten katman adı son eki</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="211"/>
@@ -15537,17 +15537,17 @@ Bir İnşaat Katmanının içerikleri baskıda görünmemelidir.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="224"/>
         <source>Suffix of layer&apos;s name that defines that layer is informational.</source>
-        <translation>Bu tabakanın bilgisel olduğunu tanımlayan katmanın isminin eki.</translation>
+        <translation>Katmanın bilgi katmanı olduğunu belirten katman adı son eki.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="234"/>
         <source>Alternative Position </source>
-        <translation>Alternatif Pozisyon</translation>
+        <translation>Alternatif Konum </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
-        <translation>Bu katmanı tanımlayan katmanın adının eki alternatif pozisyon içindir.</translation>
+        <translation>Katmanın alternatif konum katmanı olduğunu belirten katman adı son eki.</translation>
     </message>
     <message>
         <source>Duplicating Name</source>
@@ -15556,22 +15556,22 @@ Bir İnşaat Katmanının içerikleri baskıda görünmemelidir.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="61"/>
         <source>Prefix</source>
-        <translation>Prefix</translation>
+        <translation>Ön Ek</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="74"/>
         <source>Prefix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>Böyle bir isim ile tabakanın var olup olmadığını kullanılan katmanın adının eki (say, tekrarlandığında)</translation>
+        <translation>Aynı adda bir katman zaten varsa kullanılan katman adı ön eki (örneğin bir kopya oluşturulurken)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="84"/>
         <source>Suffix</source>
-        <translation>Suffix</translation>
+        <translation>Son Ek</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="97"/>
         <source>Suffix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>Böyle bir isim ile tabakanın varsa kullanılan katmanın adının eki (say, tekrarlandığında)</translation>
+        <translation>Aynı adda bir katman zaten varsa kullanılan katman adı son eki (örneğin bir kopya oluşturulurken)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="155"/>
@@ -15601,22 +15601,22 @@ Bir İnşaat Katmanının içerikleri baskıda görünmemelidir.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="268"/>
         <source>Display and operations settings</source>
-        <translation>Ekran ve operasyonlar ayarları</translation>
+        <translation>Görüntüleme ve işlem ayarları</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="271"/>
         <source>Display and Operations</source>
-        <translation>Ekran ve Operasyonlar</translation>
+        <translation>Görüntüleme ve İşlemler</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="329"/>
         <source>If checked, tooltip will include complete name of layer (with all upper layer levels)</source>
-        <translation>Kontrol ederseniz, alettip tam bir tabaka adı içerecektir (tüm üst tabaka seviyeleri ile)</translation>
+        <translation>İşaretlenirse, araç ipucu katmanın tam adını içerir (tüm üst katman düzeyleriyle birlikte)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="332"/>
         <source>Show full name as ToolTip</source>
-        <translation>Full name as ToolTip</translation>
+        <translation>Tam adı araç ipucu olarak göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="608"/>
@@ -15646,52 +15646,52 @@ Bir İnşaat Katmanının içerikleri baskıda görünmemelidir.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="319"/>
         <source>If checked, icons for layer types will be shown</source>
-        <translation>Kontrol ederseniz, tabaka türleri için ikonlar gösterilecektir</translation>
+        <translation>İşaretlenirse, katman türlerinin simgeleri gösterilir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="322"/>
         <source>Show layer type icons</source>
-        <translation>Show katmanı türü ikonları</translation>
+        <translation>Katman türü simgelerini göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="309"/>
         <source>Indentation for child layers</source>
-        <translation>Çocuk tabakaları</translation>
+        <translation>Alt katmanlar için girinti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="312"/>
         <source>Show indented layer names. Ident size:</source>
-        <translation>Gösterilen tabaka isimleri. Ident büyüklüğü:</translation>
+        <translation>Girintili katman adlarını göster. Girinti boyutu:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="277"/>
         <source>Size of the indent in characters to indent name of child layer from parent ones</source>
-        <translation>Karakterlerdeki indent boyutu, ebeveynlerinden gelen çocuk katmanının adı</translation>
+        <translation>Alt katman adını üst katmanlara göre girintilemek için kullanılan, karakter cinsinden girinti boyutu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="352"/>
         <source>If checked, drag&amp;drop operations in layers list are enabled and layers hierarchy may be restructutured</source>
-        <translation>Kontrol edilirse, katman listesindeki sürükle &amp; İçme işlemleri etkinleştirilir ve tabaka hiyerarşisi yeniden yapılandırılabilir</translation>
+        <translation>İşaretlenirse, katman listesinde sürükle&amp;bırak işlemleri etkinleştirilir ve katman hiyerarşisi yeniden yapılandırılabilir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="355"/>
         <source>Allow restructuring via Drag&amp;Drop</source>
-        <translation>Drag&amp;Drop ile yeniden yapılandırmasına izin verin</translation>
+        <translation>Sürükle&amp;&amp;Bırak ile yeniden yapılandırmaya izin ver</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="293"/>
         <source>If primary layer is renames, secondary layers are renamed too.</source>
-        <translation>Birincil katman yeniden adlandırılırsa, ikincil tabakalar da yeniden adlandırılır.</translation>
+        <translation>Birincil katman yeniden adlandırılırsa, ikincil katmanlar da yeniden adlandırılır.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="296"/>
         <source>Rename secondary layers on primary rename</source>
-        <translation>İlk olarak ikincil katmanlar</translation>
+        <translation>Birincil katman yeniden adlandırıldığında ikincil katmanları da yeniden adlandır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="376"/>
         <source>Various colors settings</source>
-        <translation>Çeşitli renkler ayarları</translation>
+        <translation>Çeşitli renk ayarları</translation>
     </message>
     <message>
         <source>Colors</source>
@@ -15709,7 +15709,7 @@ Bir İnşaat Katmanının içerikleri baskıda görünmemelidir.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="420"/>
         <source>Background color for virtual layers items in layers list</source>
-        <translation>Katmanlar listesinde sanal katmanlar için arka renk</translation>
+        <translation>Katman listesindeki sanal katman öğeleri için arka plan rengi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="449"/>
@@ -15722,17 +15722,17 @@ Bir İnşaat Katmanının içerikleri baskıda görünmemelidir.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="560"/>
         <source>Matched item in highlight filter mode</source>
-        <translation>Filtre modunu vurgulayan öğe</translation>
+        <translation>Vurgu modunda süzgeçle eşleşen öğe</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="391"/>
         <source>Color for items that matches filter conditions</source>
-        <translation>Filtre koşullarını sağlayan öğeler için renk</translation>
+        <translation>Süzgeç koşullarıyla eşleşen öğeler için renk</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="379"/>
         <source>Appearance</source>
-        <translation type="unfinished">Görünüm görünümü</translation>
+        <translation type="unfinished">Görünüm</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="406"/>
@@ -15742,7 +15742,7 @@ Bir İnşaat Katmanının içerikleri baskıda görünmemelidir.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="581"/>
         <source>Virtual layer background color</source>
-        <translation>Sanal katman arka renk</translation>
+        <translation>Sanal katman arka plan rengi</translation>
     </message>
     <message>
         <source>Threeview items separator grid</source>
@@ -15751,17 +15751,17 @@ Bir İnşaat Katmanının içerikleri baskıda görünmemelidir.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="503"/>
         <source>Selected items background color</source>
-        <translation>Seçilmiş öğeler arka renk</translation>
+        <translation>Seçilmiş öğelerin arka plan rengi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="523"/>
         <source>Background color for active layer item in layers tree</source>
-        <translation>Katmanlarda aktif tabaka malzemesi için arka renk</translation>
+        <translation>Katman ağacındaki etkin katman öğesi için arka plan rengi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="526"/>
         <source>Active layer background color</source>
-        <translation>Aktif katman arka renk</translation>
+        <translation>Etkin katman arka plan rengi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="588"/>
@@ -15776,12 +15776,12 @@ Bir İnşaat Katmanının içerikleri baskıda görünmemelidir.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="599"/>
         <source>Pens that will be set for newly created layers of different types.</source>
-        <translation>Yeni yaratılmış farklı türleri katmanları için ayarlanmış Pens.</translation>
+        <translation>Farklı türlerdeki yeni oluşturulan katmanlara atanacak kalemler.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="602"/>
         <source>Default Pens</source>
-        <translation>Varsayılan Pens</translation>
+        <translation>Varsayılan Kalemler</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="68"/>
@@ -15791,17 +15791,17 @@ Bir İnşaat Katmanının içerikleri baskıda görünmemelidir.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="69"/>
         <source>Dimensional Layer</source>
-        <translation>Boyutlu Katman</translation>
+        <translation>Ölçü Katmanı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="70"/>
         <source>Informational Layer</source>
-        <translation>Bilgisel Katman</translation>
+        <translation>Bilgi Katmanı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Alternative Position Layer</source>
-        <translation>Alternatif Pozisyon Katmanı Katmanı</translation>
+        <translation>Alternatif Konum Katmanı</translation>
     </message>
     <message>
         <source>grid</source>
@@ -15810,34 +15810,34 @@ Bir İnşaat Katmanının içerikleri baskıda görünmemelidir.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="103"/>
         <source>highlighted item</source>
-        <translation>vurguladı öğe</translation>
+        <translation>vurgulanan öğe</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="110"/>
         <source>virtual layer background</source>
-        <translation>sanal katman geçmişi</translation>
+        <translation>sanal katman arka planı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="118"/>
         <source>selected item background</source>
-        <translation>seçilen öğe arka planı</translation>
+        <translation>seçilmiş öğe arka planı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="126"/>
         <source>active layer background</source>
-        <translation>aktif katman geçmişi</translation>
+        <translation>etkin katman arka planı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
         <source>Error</source>
-        <translation>Hata hatası</translation>
+        <translation>Hata</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>Invalid değeri %1 renk sağlar.
-Lütfen farklı bir değeri belirtin.</translation>
+        <translation>Şu renk için geçersiz bir değer girildi: %1.
+Lütfen farklı bir değer belirtin.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="245"/>
@@ -15850,17 +15850,17 @@ Lütfen farklı bir değeri belirtin.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="150"/>
         <source>Filter</source>
-        <translation>Filtre</translation>
+        <translation>Süz</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="152"/>
         <source>Looking for matching layer names</source>
-        <translation>Eşleştirme katmanı isimleri için bakmak</translation>
+        <translation>Eşleşen katman adları aranıyor</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="157"/>
         <source>Highlight Mode</source>
-        <translation>Highlight Mode Mode</translation>
+        <translation>Vurgu Modu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="167"/>
@@ -15874,63 +15874,63 @@ Lütfen farklı bir değeri belirtin.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Tüm katmanlar Gizle</translation>
+        <source>Hide all layers except current</source>
+        <translation>Geçerli katman hariç tüm katmanları gizle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="200"/>
         <source>Show Secondary Layers</source>
-        <translation>Orta Katmanları Göster</translation>
+        <translation>İkincil Katmanları Göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="210"/>
         <source>Show Active Layer Only</source>
-        <translation>Aktif Katmanı Sadece Göster</translation>
+        <translation>Yalnızca Etkin Katmanı Göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="218"/>
         <source>Expand All</source>
-        <translation>Tüm genişletin</translation>
+        <translation>Tümünü Genişlet</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="226"/>
         <source>Collapse All</source>
-        <translation>Bütün Filmler</translation>
+        <translation>Tümünü Daralt</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="234"/>
         <source>Collapse Secondary</source>
-        <translation>Colalt Secondary</translation>
+        <translation>İkincil Katmanları Daralt</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="242"/>
         <source>Unlock all layers</source>
-        <translation>Bütün katmanlar</translation>
+        <translation>Tüm katmanların kilidini aç</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="249"/>
         <source>Lock all layers</source>
-        <translation>Tüm tabakaları kilitle</translation>
+        <translation>Tüm katmanları kilitle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="256"/>
         <source>Add a layer</source>
-        <translation>Bir katman ekleyin</translation>
+        <translation>Bir katman ekle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="263"/>
         <source>Add dimensions Layer</source>
-        <translation>Boyut Katmanı ekle</translation>
+        <translation>Ölçü katmanı ekle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="272"/>
         <source>Remove layer</source>
-        <translation>Kaldır tabakası</translation>
+        <translation>Katmanı sil</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="279"/>
         <source>Modify layer attributes / rename</source>
-        <translation>Modify katman özellikleri / yeniden adlandırma</translation>
+        <translation>Katman özniteliklerini değiştir / yeniden adlandır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="286"/>
@@ -15940,17 +15940,17 @@ Lütfen farklı bir değeri belirtin.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="656"/>
         <source>&amp;Add Child Layer</source>
-        <translation>Ayrıca Çocuk Katmanı</translation>
+        <translation>A&amp;lt Katman Ekle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="657"/>
         <source>&amp;Rename</source>
-        <translation>&amp;Rename</translation>
+        <translation>Yen&amp;iden Adlandır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="658"/>
         <source>&amp;Remove Layers (Sub-Tree)</source>
-        <translation>VeRemove Katmanları (Sub-Tree)</translation>
+        <translation>Katmanla&amp;rı Sil (Alt Ağaç)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="660"/>
@@ -15960,27 +15960,27 @@ Lütfen farklı bir değeri belirtin.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="661"/>
         <source>&amp;Duplicate Content (Sub-Tree)</source>
-        <translation>&amp;İçeriği Çoğalt (Alt Ağaç)</translation>
+        <translation>İçeriği &amp;Çoğalt (Alt Ağaç)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="663"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>Ve Entities (Sub-Tree)</translation>
+        <translation>&amp;Varlıkları Seç (Alt Ağaç)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="668"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>&amp;Edit Katman &amp; Attributes</translation>
+        <translation>Katman Ö&amp;zniteliklerini Düzenle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="670"/>
         <source>&amp;Remove Layer</source>
-        <translation>&amp;Remove Katman</translation>
+        <translation>Katman&amp;ı Sil</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="679"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>&amp;Add Dimension Sub-Layer</translation>
+        <translation>Ö&amp;lçü Alt Katmanı Ekle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="683"/>
@@ -15990,120 +15990,120 @@ Lütfen farklı bir değeri belirtin.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="687"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
-        <translation>&amp;Alternatif Görünüm Alt Katmanı Ekle</translation>
+        <translation>Alte&amp;rnatif Konum Alt Katmanı Ekle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="693"/>
         <source>&amp;Remove Sub-layers</source>
-        <translation>&amp;Remove Sub-katmanları</translation>
+        <translation>Alt Katmanları &amp;Sil</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="701"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="711"/>
         <source>Convert to Dimensional Layer</source>
-        <translation>Boyutlu Katmana Dönüştürün</translation>
+        <translation>Ölçü Katmanına Dönüştür</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="702"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="714"/>
         <source>Convert to Info Layer</source>
-        <translation>Bilgi Katmanına Dönüştürül</translation>
+        <translation>Bilgi Katmanına Dönüştür</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="703"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="717"/>
         <source>Convert to Alternative Position Layer</source>
-        <translation>Alternatif Pozisyon Katmanına Dönüştürül</translation>
+        <translation>Alternatif Konum Katmanına Dönüştür</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="709"/>
         <source>Convert to Normal Layer</source>
-        <translation>Normal Katmana Dönüştürün</translation>
+        <translation>Normal Katmana Dönüştür</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="723"/>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>Ve Katmanın Entities&apos;ini seçin</translation>
+        <translation>Katmanın &amp;Varlıklarını Seç</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="726"/>
         <source>&amp;Create Layer Copy</source>
-        <translation>&amp; Create Katman Copy</translation>
+        <translation>Katman Ko&amp;pyası Oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="727"/>
         <source>&amp;Duplicate Layer With Content</source>
-        <translation>&amp;Duplicate Katman with Content</translation>
+        <translation>Katmanı İçeriğiyle &amp;Çoğalt</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="731"/>
         <source>Move Selection to Layer</source>
-        <translation>Katmana Seçimi</translation>
+        <translation>Seçimi Katmana Taşı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="732"/>
         <source>Duplicate Selection to Layer</source>
-        <translation>Katmanlı Seçme</translation>
+        <translation>Seçimi Katmana Çoğalt</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="739"/>
         <source>&amp;Add Layer</source>
-        <translation>Ve ek Katman</translation>
+        <translation>Katman Ek&amp;le</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="741"/>
         <source>&amp;Freeze Others Layers</source>
-        <translation>Ve Freeze Diğerleri Katmanlar</translation>
+        <translation>&amp;Diğer Katmanları Dondur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="742"/>
         <source>&amp;Defreeze All Layers</source>
-        <translation>Ve Bütün Katmanlar</translation>
+        <translation>&amp;Tüm Katmanları Çöz</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>Ve Freeze Tüm Katmanlar</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Geçerli katman &amp;hariç tüm katmanları gizle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>
         <source>&amp;Unlock All Layers</source>
-        <translation>Ve Tüm Katmanlar</translation>
+        <translation>Tüm &amp;Katmanların Kilidini Aç</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="745"/>
         <source>&amp;Lock All Layers</source>
-        <translation>&amp;Lock Tüm Katmanlar</translation>
+        <translation>Tü&amp;m Katmanları Kilitle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="746"/>
         <source>Enable &amp;Printing All Layers</source>
-        <translation>Enable &amp; Writeing All Katmans</translation>
+        <translation>Tüm Katmanların Yazdırılmasını &amp;Etkinleştir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="747"/>
         <source>&amp;Disable Printing All Layers</source>
-        <translation>&amp;Disable Printing All Katmans</translation>
+        <translation>Tüm K&amp;atmanların Yazdırılmasını Devre Dışı Bırak</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="750"/>
         <source>&amp;Export Single Layer</source>
-        <translation>&amp;Export Single Katman</translation>
+        <translation>Tek katma&amp;nı dışa aktar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="754"/>
         <source>&amp;Export Layer Sub-Tree</source>
-        <translation>&amp;Export Katman Sub-Tree</translation>
+        <translation>Katman alt ağa&amp;cını dışa aktar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="758"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Export &amp;Visible Katman(s)</translation>
+        <translation>&amp;Görünür katmanları dışa aktar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="760"/>
         <source>&amp;Find And Remove Empty Layers</source>
-        <translation>Ve Boş Katmanları Bulun ve</translation>
+        <translation>B&amp;oş Katmanları Bul ve Sil</translation>
     </message>
 </context>
 <context>
@@ -23392,12 +23392,12 @@ Lütfen farklı bir değeri belirtin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="82"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Kontrol edilirse, aynalı varlıklar mevcut katmana yerleştirilir, aksi takdirde orijinal katmanlara yerleştirilirler.</translation>
+        <translation type="unfinished">İşaretlenirse, aynalanan varlıklar geçerli katmana yerleştirilir, aksi takdirde özgün katmanlarına yerleştirilir.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">User Current Katman</translation>
+        <translation type="unfinished">Geçerli Katmanı Kullan</translation>
     </message>
 </context>
 <context>
@@ -23691,12 +23691,12 @@ Lütfen farklı bir değeri belirtin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="45"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="unfinished">Kontrol edilirse, yaratılan varlıklar mevcut katmana yerleştirilir. Aksi takdirde orijinal katmanlara yerleştirilirler.</translation>
+        <translation type="unfinished">İşaretlenirse, oluşturulan varlıklar geçerli katmana yerleştirilir. Aksi takdirde özgün katmanlarına yerleştirilir. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="48"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Use Current Katman Katman</translation>
+        <translation type="unfinished">Geçerli Katmanı Kullan</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="55"/>
@@ -23877,12 +23877,12 @@ Lütfen farklı bir değeri belirtin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="144"/>
         <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="unfinished">Kontrol edilirse, yaratılan varlıklar mevcut katmana yerleştirilir, aksi takdirde orijinal katmanlarda olacaktır.</translation>
+        <translation type="unfinished">İşaretlenirse, oluşturulan varlıklar geçerli katmana yerleştirilir, aksi takdirde özgün katmanlarında yer alır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="147"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Use Current Katman Katman</translation>
+        <translation type="unfinished">Geçerli Katmanı Kullan</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="166"/>
@@ -24293,12 +24293,12 @@ Uyarı: Bu eylem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="93"/>
         <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">Kontrol edilirse, yaratılan varlıklar mevcut katmana yerleştirilir, aksi takdirde orijinal katmanlarda olacaklar.</translation>
+        <translation type="unfinished">İşaretlenirse, oluşturulan varlıklar geçerli katmana yerleştirilir, aksi takdirde özgün katmanlarında yer alır.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="96"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Use Current Katman Katman</translation>
+        <translation type="unfinished">Geçerli Katmanı Kullan</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="109"/>
@@ -24791,13 +24791,13 @@ Uyarı: Bu eylem geri alınamaz!</translation>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="263"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="298"/>
         <source>By Layer</source>
-        <translation>Tarafından Katman</translation>
+        <translation>Katmana göre</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="264"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="299"/>
         <source>By Block</source>
-        <translation>Bloklara Göre</translation>
+        <translation>Bloğa göre</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="266"/>
@@ -25419,27 +25419,27 @@ Uyarı: Bu eylem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="188"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Update Current Pen Tarafından Active Katman&apos; Pen</translation>
+        <translation>Geçerli Kalemi Etkin Katmanın Kalemiyle Güncelle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="205"/>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation>Aktif Katman&apos;ın Pen Editor&apos;inden doldurun</translation>
+        <translation>Kalem Düzenleyicisini Etkin Katmanın Kalemiyle Doldur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="208"/>
         <source>Pick from Active Layer</source>
-        <translation>Aktif Katmandan Alın</translation>
+        <translation>Etkin Katmandan Al</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="222"/>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation>Editör Pen&apos;i Aktif Katman Pen</translation>
+        <translation>Düzenleyicideki Kalemi Etkin Katmanın Kalemine Uygula</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="225"/>
         <source>Apply To Layer</source>
-        <translation>Katmanlara Uygulayın</translation>
+        <translation>Katmana Uygula</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="239"/>
@@ -25524,7 +25524,7 @@ Uyarı: Bu eylem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="305"/>
         <source>&amp;Apply Pen To Active Layer</source>
-        <translation>&amp;Apply Pen To Active Katman</translation>
+        <translation>Kalemi Etkin Katmana &amp;Uygula</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="306"/>
@@ -29539,7 +29539,7 @@ Lütfen, yeniden başlatmadan düzenleyici aracılığıyla bir kalemi kaydetti�
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="60"/>
         <source>Active Layer</source>
-        <translation type="unfinished">Aktif Katman</translation>
+        <translation type="unfinished">Etkin Katman</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="60"/>
@@ -29549,7 +29549,7 @@ Lütfen, yeniden başlatmadan düzenleyici aracılığıyla bir kalemi kaydetti�
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="78"/>
         <source>Name</source>
-        <translation type="unfinished">Name</translation>
+        <translation type="unfinished">Ad</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="78"/>
@@ -29559,7 +29559,7 @@ Lütfen, yeniden başlatmadan düzenleyici aracılığıyla bir kalemi kaydetti�
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="101"/>
         <source>Color</source>
-        <translation type="unfinished">Renkli Renk</translation>
+        <translation type="unfinished">Renk</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="101"/>
@@ -29569,7 +29569,7 @@ Lütfen, yeniden başlatmadan düzenleyici aracılığıyla bir kalemi kaydetti�
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="122"/>
         <source>Line Width</source>
-        <translation type="unfinished">Line Genişlik</translation>
+        <translation type="unfinished">Çizgi Kalınlığı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="122"/>
@@ -29595,7 +29595,7 @@ Lütfen, yeniden başlatmadan düzenleyici aracılığıyla bir kalemi kaydetti�
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="171"/>
         <source>Dimensional</source>
-        <translation type="unfinished">Boyut</translation>
+        <translation type="unfinished">Ölçü</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="175"/>
@@ -29610,7 +29610,7 @@ Lütfen, yeniden başlatmadan düzenleyici aracılığıyla bir kalemi kaydetti�
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="186"/>
         <source>Type</source>
-        <translation type="unfinished">Tipi</translation>
+        <translation type="unfinished">Tür</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="186"/>
@@ -29685,7 +29685,7 @@ Lütfen, yeniden başlatmadan düzenleyici aracılığıyla bir kalemi kaydetti�
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="303"/>
         <source>Unlock all layers</source>
-        <translation type="unfinished">Bütün katmanlar</translation>
+        <translation type="unfinished">Tüm katmanların kilidini aç</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="303"/>
@@ -33158,7 +33158,8 @@ Lütfen, yeniden başlatmadan düzenleyici aracılığıyla bir kalemi kaydetti�
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="127"/>
         <source>
 Layer: </source>
-        <translation>Katman:</translation>
+        <translation>
+Katman: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="573"/>
@@ -35964,12 +35965,12 @@ p, li { beyaz uzay: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="208"/>
         <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="unfinished">Oluşturulan kopyalar mevcut veya orijinal katmana eklenecektir</translation>
+        <translation type="unfinished">Kopyaların geçerli katmana mı yoksa özgün katmana mı ekleneceğini belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="211"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Use Current Katman Katman</translation>
+        <translation type="unfinished">Geçerli Katmanı Kullan</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="218"/>
@@ -36210,12 +36211,12 @@ p, li { beyaz uzay: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="209"/>
         <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">Eğer kontrol edilirse, yeni miraslar mevcut katmana yerleştirilir, aksi takdirde orijinal katmanlarda olacaklar.</translation>
+        <translation type="unfinished">İşaretlenirse, yeni varlıklar geçerli katmana yerleştirilir, aksi takdirde özgün katmanlarında yer alır.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="212"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Use Current Katman Katman</translation>
+        <translation type="unfinished">Geçerli Katmanı Kullan</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="219"/>
@@ -36453,12 +36454,12 @@ p, li { beyaz uzay: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="83"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="unfinished">Kontrol edilirse, yaratılan varlıklar mevcut katmana yerleştirilir. Aksi takdirde orijinal katmanlara yerleştirilirler.</translation>
+        <translation type="unfinished">İşaretlenirse, oluşturulan varlıklar geçerli katmana yerleştirilir. Aksi takdirde özgün katmanlarına yerleştirilir. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="86"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Use Current Katman Katman</translation>
+        <translation type="unfinished">Geçerli Katmanı Kullan</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="107"/>
@@ -37367,7 +37368,7 @@ p, li { beyaz uzay: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="77"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Kontrol edilirse, yaratılan varlıklar mevcut katmana yerleştirilir, aksi takdirde orijinal katmanlara yerleştirilirler.</translation>
+        <translation type="unfinished">İşaretlenirse, oluşturulan varlıklar geçerli katmana yerleştirilir, aksi takdirde özgün katmanlarına yerleştirilir.</translation>
     </message>
 </context>
 <context>
@@ -37405,12 +37406,12 @@ p, li { beyaz uzay: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="73"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Kontrol edilirse, yaratılan varlıklar mevcut katmana yerleştirilir, aksi takdirde orijinal katmanlara yerleştirilirler.</translation>
+        <translation type="unfinished">İşaretlenirse, oluşturulan varlıklar geçerli katmana yerleştirilir, aksi takdirde özgün katmanlarına yerleştirilir.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="76"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Use Current Katman Katman</translation>
+        <translation type="unfinished">Geçerli Katmanı Kullan</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="83"/>
@@ -37552,7 +37553,7 @@ p, li { beyaz uzay: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="71"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Kontrol edilirse, yaratılan varlıklar mevcut katmana yerleştirilir, aksi takdirde orijinal katmanlara yerleştirilirler.</translation>
+        <translation type="unfinished">İşaretlenirse, oluşturulan varlıklar geçerli katmana yerleştirilir, aksi takdirde özgün katmanlarına yerleştirilir.</translation>
     </message>
 </context>
 <context>
@@ -37565,12 +37566,12 @@ p, li { beyaz uzay: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="32"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Kontrol edilirse, yaratılan varlıklar mevcut katmana yerleştirilir, aksi takdirde orijinal katmanlara yerleştirilirler.</translation>
+        <translation type="unfinished">İşaretlenirse, oluşturulan varlıklar geçerli katmana yerleştirilir, aksi takdirde özgün katmanlarına yerleştirilir.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="35"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">User Current Katman</translation>
+        <translation type="unfinished">Geçerli Katmanı Kullan</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="42"/>
@@ -38440,7 +38441,7 @@ p, li { beyaz uzay: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="216"/>
         <source>Entity&apos;s Layer</source>
-        <translation>Entity&apos;nin Katmanı</translation>
+        <translation>Varlığın Katmanı</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="250"/>
@@ -39150,7 +39151,7 @@ Uyarı: Bu eylem geri alınamaz!</translation>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="236"/>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="236"/>
         <source>Layers Tree</source>
-        <translation>Katmanlar Ağacı</translation>
+        <translation>Katman Ağacı</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="261"/>
@@ -39231,7 +39232,7 @@ Uyarı: Bu eylem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="540"/>
         <source>Active Layer</source>
-        <translation>Aktif Katman</translation>
+        <translation>Etkin Katman</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="542"/>
@@ -39894,7 +39895,7 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="105"/>
         <source>Name of Current Active Layer</source>
-        <translation>Ad of Current Active Katman</translation>
+        <translation>Geçerli Etkin Katmanın Adı</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="80"/>
@@ -40392,7 +40393,7 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="54"/>
         <source>Layer to apply</source>
-        <translation>Katman başvurmak için</translation>
+        <translation>Uygulanacak katman</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="69"/>
@@ -41047,7 +41048,7 @@ Bu, Bloğun kendisinin tüm varlıklarını yinelemeli olarak değiştirir.</tra
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="70"/>
         <source>Layer of MText</source>
-        <translation>MText</translation>
+        <translation>Çoklu Yazı katmanı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="144"/>
@@ -44711,7 +44712,7 @@ Bu, Bloğun kendisinin tüm varlıklarını yinelemeli olarak değiştirir.</tra
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5077"/>
         <source>Modify layer of selected entities, at layer activation</source>
-        <translation>Seçilmiş varlıkların katmanını değiştirin, tabaka aktivasyon</translation>
+        <translation>Katman etkinleştirildiğinde seçili varlıkların katmanını değiştir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5490"/>
@@ -46489,7 +46490,7 @@ yani pişirme için gereken varsayılan adım değeri</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="197"/>
         <source>Layer of text</source>
-        <translation>Metin çevirisi</translation>
+        <translation>Metin katmanı</translation>
     </message>
     <message>
         <source>Obligue of text</source>
@@ -47854,7 +47855,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="173"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>Katman &quot;%1&quot; ve üzerindeki tüm varlıklar kaldırılacak.
+        <translation>Katman &quot;%1&quot; ve üzerindeki tüm varlıklar silinecek.
 Bu işlem geri alınamaz.</translation>
     </message>
     <message>
@@ -47868,7 +47869,7 @@ Bu işlem geri alınamaz.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1787"/>
         <source>Remove %n layer(s)</source>
         <translation>
-            <numerusform>%n katmanı kaldır</numerusform>
+            <numerusform>%n katmanı sil</numerusform>
         </translation>
     </message>
     <message>
@@ -47886,7 +47887,7 @@ Bu işlem geri alınamaz.</translation>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="257"/>
         <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>Uyarı: &quot;0&quot; katmanı hiçbir zaman kaldırılamaz.</translation>
+        <translation>Uyarı: &quot;0&quot; katmanı hiçbir zaman silinemez.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="260"/>
@@ -47914,7 +47915,7 @@ Bu işlem geri alınamaz.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="230"/>
         <source>Layer empty name is not allowed.</source>
-        <translation>Katman boş adı izin verilmez.</translation>
+        <translation>Katman ismi boş olamaz.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="265"/>
@@ -47926,9 +47927,9 @@ Bu işlem geri alınamaz.</translation>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation>Duplicating adı ile katman oluşturmaya çalışın. Duplicated tabaka adı
+        <translation>Aynı isimde bir katman oluşturulmaya çalışıldı. Yinelenen katman ismi:
 [%1].
-Lütfen farklı bir isim belirt.</translation>
+Lütfen başka bir isim verin.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="142"/>
@@ -47941,13 +47942,13 @@ Lütfen farklı bir isim belirt.</translation>
         <source>Layer list separator string is empty. It will not be possible to build layers tree.
 Please specify a different value.</source>
         <translation>Katman listesi ayırıcı dizesi boş. Katman ağacı oluşturmak mümkün olmayacaktır.
-Lütfen farklı bir değeri belirtin.</translation>
+Lütfen farklı bir değer belirtin.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="962"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="972"/>
         <source>Remove empty layers</source>
-        <translation>Boş tabakaları kaldır</translation>
+        <translation>Boş katmanları sil</translation>
     </message>
     <message>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
@@ -47960,44 +47961,46 @@ Clear filtreleme maskesi ve tekrar.</translation>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
 Clear filtering mask and repeat.</source>
-        <translation>Nesne içermeyen katman(lar) bulundu, ancak filtrelenmiş ve görünmüyor.
+        <translation>Varlık içermeyen katman(lar) bulundu, ancak bunlar süzüldüğü için görünmüyor.
 
-Filtre maskesini temizleyin ve tekrarlayın.</translation>
+Süzgeç maskesini temizleyip yeniden deneyin.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="973"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>Hiçbir varlık bulunamadı, kaldırmak için hiçbir şey.</translation>
+        <translation>Varlık içermeyen katman bulunamadı, silinecek bir şey yok.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1116"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1161"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1169"/>
         <source>Add Layer</source>
-        <translation>Ekle Katman ekle</translation>
+        <translation>Katman Ekle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1117"/>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation>Böyle bir çocuk katmanı zaten mevcut
+        <translation>Şu katman için böyle bir alt katman zaten var:
 [%1].
-Lütfen farklı bir isim belirt.</translation>
+Lütfen başka bir isim verin.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1162"/>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation>Böyle bir çocuk katmanı zaten mevcut
-[%1].</translation>
+        <translation>Şu katman için böyle bir alt katman zaten var:
+[%1].
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1170"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>Boyut tabakası sadece normal aktif katman için eklenebilir.</translation>
+        <translation>Ölçü katmanı yalnızca normal bir etkin katman için eklenebilir.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1233"/>
@@ -48018,9 +48021,9 @@ If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
         <translation>&quot;Katmana göre&quot; değeri kaynak katman değerleriyle değiştirilsin mi?
 
-Evet ise — &quot;Katmana göre&quot; kalemlere sahip nesneler yeni katmanda önceki katmanlardaki gibi görünür ve değer çözümlenmiş kalemlerle değiştirilir.
+Evet ise — &quot;Katmana göre&quot; kalemlere sahip varlıklar yeni katmanda önceki katmanlardaki gibi görünür ve değer çözümlenmiş kalemlerle değiştirilir.
 
-Hayır ise — &quot;Katmana göre&quot; değerleri kalır ve hedef katmanın kalemi bu nesnelerin kalemini tanımlar.</translation>
+Hayır ise — &quot;Katmana göre&quot; değerleri kalır ve hedef katmanın kalemi bu varlıkların kalemini tanımlar.</translation>
     </message>
     <message>
         <source>Replace &quot;By Layer&quot; value to source layers values?
@@ -48034,7 +48037,7 @@ Hayır ise, &quot;Katmana Göre&quot; değerleri korunacak ve böylece hedef kat
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1805"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1863"/>
         <source>Layer DialogEx</source>
-        <translation>Katman DialogEx</translation>
+        <translation>Katman Özellikleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="202"/>
@@ -48087,19 +48090,21 @@ Lütfen farklı bir değeri belirtin.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1453"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>Görünen katmanlarda kalem oynayan varlıklar yoktur.</translation>
+        <translation>Görünür katmanlarda bu kalemle eşleşen varlık yok.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1454"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>Bu tür varlıklar donmuş tabakalarda mevcuttur.</translation>
+        <translation>Bu tür varlıklar dondurulmuş katmanlarda bulunuyor.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1455"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>Bu tür varlıklar kilitli tabakalarda bulunur.</translation>
+        <translation>Bu tür varlıklar kilitli katmanlarda bulunuyor.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1456"/>
@@ -52241,13 +52246,13 @@ Do you want to replace it?</source>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="50"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="206"/>
         <source>By Layer</source>
-        <translation>Tarafından Katman</translation>
+        <translation>Katmana göre</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="56"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="209"/>
         <source>By Block</source>
-        <translation>Blokla</translation>
+        <translation>Bloğa göre</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="212"/>

@@ -2656,7 +2656,7 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="252"/>
         <source>(De-)Select Layer</source>
-        <translation>(De-) Výber vrstvy</translation>
+        <translation>Vybrať/zrušiť výber hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="235"/>
@@ -3448,7 +3448,7 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="410"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Aktualizovať súčasné pero pomocou pera Active Layer&apos; Pen</translation>
+        <translation>Aktualizovať aktuálne pero podľa pera aktívnej hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="416"/>
@@ -3584,12 +3584,12 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="66"/>
         <source>Layer</source>
-        <translation>Vrstva</translation>
+        <translation>Hladina</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="66"/>
         <source>Layers operations</source>
-        <translation>Prevádzka vrstiev</translation>
+        <translation>Operácie s hladinami</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="67"/>
@@ -3781,12 +3781,12 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity Layer</source>
-        <translation>Vrstva subjektu</translation>
+        <translation>Hladina objektu</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity&apos;s Layer</source>
-        <translation>Vrstva subjektu</translation>
+        <translation>Hladina objektu</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="88"/>
@@ -3801,32 +3801,32 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="109"/>
         <source>Activate Entity&apos;s Layer</source>
-        <translation>Aktivovať vrstvu subjektu</translation>
+        <translation>Aktivovať hladinu objektu</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="110"/>
         <source>Hide Entity&apos;s Layer</source>
-        <translation>Skryť vrstvu subjektu</translation>
+        <translation>Skryť hladinu objektu</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="111"/>
         <source>Hide Other Layers than Entity&apos;s</source>
-        <translation>Skryť iné vrstvy ako vrstvy subjektu</translation>
+        <translation>Skryť ostatné hladiny okrem hladiny objektu</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="112"/>
         <source>Lock Entity&apos;s Layer</source>
-        <translation>Zamknúť vrstvu subjektu</translation>
+        <translation>Zamknúť hladinu objektu</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="113"/>
         <source>Toggle Entity&apos;s Layer Construction</source>
-        <translation>Prepnúť stavbu vrstvy subjektu</translation>
+        <translation>Prepnúť konštrukčnú hladinu objektu</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="114"/>
         <source>Toggle Entity&apos;s Layer Printing</source>
-        <translation>Prepnúť tlač vrstvy subjektu</translation>
+        <translation>Prepnúť tlač hladiny objektu</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="225"/>
@@ -4100,37 +4100,37 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="621"/>
         <source>&amp;Add Layer</source>
-        <translation>&amp; Pridať vrstvu</translation>
+        <translation>Pr&amp;idať hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="622"/>
         <source>&amp;Remove Layer</source>
-        <translation>&amp; Odstrániť vrstvu</translation>
+        <translation>O&amp;dstrániť hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="623"/>
         <source>&amp;Edit Layer</source>
-        <translation>&amp; Upraviť vrstvu</translation>
+        <translation>&amp;Upraviť hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="624"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>Prepnúť vrstvu Loc&amp;k</translation>
+        <translation>Prepnúť zamknutie &amp;hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="625"/>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation>&amp; Prepnúť viditeľnosť vrstvy</translation>
+        <translation>&amp;Prepnúť viditeľnosť hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="626"/>
         <source>Toggle Layer &amp;Print</source>
-        <translation>Prepnúť &amp; tlač vrstvy</translation>
+        <translation>Prepnúť &amp;tlač hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="627"/>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>Prepnúť &amp; stavebnú vrstvu</translation>
+        <translation>Prepnúť &amp;konštrukčnú hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="637"/>
@@ -4523,32 +4523,32 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="617"/>
         <source>&amp;Show all layers</source>
-        <translation>&amp;Ukázať všetky vrstvy</translation>
+        <translation>&amp;Zobraziť všetky hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp; Skryť všetky vrstvy</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Skryť všetky hladiny okrem aktuálnej</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
         <source>&amp;Unlock all</source>
-        <translation>&amp; Odomknúť všetko</translation>
+        <translation>&amp;Odomknúť všetko</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="620"/>
         <source>&amp;Lock all</source>
-        <translation>&amp; Lock all</translation>
+        <translation>Zamknúť &amp;všetko</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="628"/>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>&amp; Exportovať vybranú vrstvu</translation>
+        <translation>&amp;Exportovať vybrané hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="629"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Exportovať &amp;viditeľnú vrstvu (s)</translation>
+        <translation>E&amp;xportovať viditeľné hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="635"/>
@@ -5119,7 +5119,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>Enter layer name to %1</source>
-        <translation>Zadajte meno vrstvy do%1</translation>
+        <translation>Zadajte názov hladiny, ktorú chcete %1</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
@@ -6866,7 +6866,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_layer.cpp" line="75"/>
         <source>Specify entity with desired layer</source>
-        <translation type="unfinished">Zadajte jednotku s požadovanou vrstvou</translation>
+        <translation type="unfinished">Zvoľte objekt s požadovanou hladinou</translation>
     </message>
 </context>
 <context>
@@ -7471,12 +7471,12 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="66"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Ak je zaškrtnuté, zrkadlové jednotky budú umiestnené na aktuálnej vrstve, inak budú umiestnené do pôvodných vrstiev.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, zrkadlené objekty sa umiestnia do aktuálnej hladiny, inak sa umiestnia do pôvodných hladín.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="69"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Aktuálna vrstva užívateľa</translation>
+        <translation type="unfinished">Použiť aktuálnu hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="76"/>
@@ -8766,7 +8766,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="67"/>
         <source>Layer to apply</source>
-        <translation type="unfinished">Vrstva na aplikáciu</translation>
+        <translation type="unfinished">Hladina, ktorá sa má použiť</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="67"/>
@@ -8799,7 +8799,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="62"/>
         <source>Layer to which created circle should be placed</source>
-        <translation type="unfinished">Vrstva, do ktorej by mal byť umiestnený vytvorený kruh</translation>
+        <translation type="unfinished">Hladina, do ktorej sa má umiestniť vytvorená kružnica</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="66"/>
@@ -10786,7 +10786,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="209"/>
         <source>Layer</source>
-        <translation>Vrstva</translation>
+        <translation>Hladina</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="236"/>
@@ -11090,7 +11090,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="64"/>
         <source>Layer</source>
-        <translation>Vrstva</translation>
+        <translation>Hladina</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="76"/>
@@ -11100,7 +11100,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="98"/>
         <source>Layer of entity</source>
-        <translation>Vrstva subjektu</translation>
+        <translation>Hladina objektu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="148"/>
@@ -12259,7 +12259,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="118"/>
         <source>Active Layer</source>
-        <translation type="unfinished">Aktívna vrstva</translation>
+        <translation type="unfinished">Aktívna hladina</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="125"/>
@@ -12583,7 +12583,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="26"/>
         <source>Layer of dimension</source>
-        <translation>Vrstva rozmeru</translation>
+        <translation>Hladina kóty</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="45"/>
@@ -12593,7 +12593,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="58"/>
         <source>Layer:</source>
-        <translation>Vrstva:</translation>
+        <translation>Hladina:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="91"/>
@@ -13559,7 +13559,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="82"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">Vrstva, do ktorej by sa mali umiestniť duplikáty</translation>
+        <translation type="unfinished">Hladina, do ktorej sa má umiestniť duplikát</translation>
     </message>
 </context>
 <context>
@@ -13572,7 +13572,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="45"/>
         <source>Layer to which duplicate should be placed</source>
-        <translation type="unfinished">Vrstva, do ktorej by sa mali umiestniť duplikáty</translation>
+        <translation type="unfinished">Hladina, do ktorej sa má umiestniť duplikát</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="49"/>
@@ -14359,12 +14359,12 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="168"/>
         <source>Layer</source>
-        <translation type="unfinished">Vrstva</translation>
+        <translation type="unfinished">Hladina</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="168"/>
         <source>Layer of entity</source>
-        <translation type="unfinished">Vrstva subjektu</translation>
+        <translation type="unfinished">Hladina objektu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="204"/>
@@ -14428,12 +14428,12 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="135"/>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="179"/>
         <source>Export Layers</source>
-        <translation>Exportovať vrstvy</translation>
+        <translation>Exportovať hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="152"/>
         <source>Exported Layers</source>
-        <translation>Exportované vrstvy</translation>
+        <translation>Exportované hladiny</translation>
     </message>
 </context>
 <context>
@@ -15264,37 +15264,37 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="20"/>
         <source>Layer Settings</source>
-        <translation>Nastavenie vrstvy</translation>
+        <translation>Nastavenie hladín</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="48"/>
         <source>Name of new layer. In order to create hierarchical layers, include name of virtual layer and layer name separator.</source>
-        <translation>Názov novej vrstvy. Aby sa vytvorili hierarchické vrstvy, uveďte názov virtuálnej vrstvy a oddeľovač názvov vrstiev.</translation>
+        <translation>Názov novej hladiny. Aby sa vytvorili hierarchické hladiny, uveďte názov virtuálnej hladiny a oddeľovač názvov hladín.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="64"/>
         <source>Parent Layers Path:</source>
-        <translation>Cesta materských vrstiev:</translation>
+        <translation>Cesta nadradených hladín:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="81"/>
         <source>Layer Type</source>
-        <translation>Typ vrstvy</translation>
+        <translation>Typ hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="93"/>
         <source>Layer for various infromational elements, notes, drafts etc.</source>
-        <translation>Vrstvy pre rôzne zárodkové prvky, poznámky, návrhy atď.</translation>
+        <translation>Hladina pre rôzne informačné prvky, poznámky, návrhy atď.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="96"/>
         <source>Informational</source>
-        <translation>Informácie</translation>
+        <translation>Informačná</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="106"/>
         <source>Normal layer with drawing eleements</source>
-        <translation>Normálna vrstva s výkresmi</translation>
+        <translation>Normálna hladina s prvkami výkresu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="109"/>
@@ -15304,76 +15304,76 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="119"/>
         <source>Layer that holds dimensions</source>
-        <translation>Vrstva, ktorá má rozmery</translation>
+        <translation>Hladina, ktorá obsahuje kóty</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="122"/>
         <source>Dimensions</source>
-        <translation>Rozmery</translation>
+        <translation>Kóty</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="132"/>
         <source>Layer with alternate position of entities located on normal layers</source>
-        <translation>Vrstva s alternatívnou pozíciou subjektov umiestnených na normálnych vrstvách</translation>
+        <translation>Hladina s alternatívnou polohou objektov umiestnených v normálnych hladinách</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="135"/>
         <source>Alternative Position</source>
-        <translation>Alternatívne umiestnenie</translation>
+        <translation>Alternatívna poloha</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="148"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Konštrukčná vrstva má objekty nekonečných priamok určené na použitie pre geometrickú konštrukciu.
-Obsah stavebnej vrstvy by sa nemal objaviť vo výtlačku.</translation>
+        <translation>Konštrukčná hladina obsahuje objekty v podobe nekonečných priamok určené na geometrické konštrukcie.
+       Obsah konštrukčnej hladiny by sa nemal objaviť na výtlačku.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="152"/>
         <source>Construction Layer</source>
-        <translation>Konštrukčná vrstva</translation>
+        <translation>Konštrukčná hladina</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="181"/>
         <source>Path for parent layer</source>
-        <translation>Cesta pre materskú vrstvu</translation>
+        <translation>Cesta nadradenej hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="197"/>
         <source>Layer Name:</source>
-        <translation>Názov vrstvy:</translation>
+        <translation>Názov hladiny:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="68"/>
         <source>Rename Virtual Layer</source>
-        <translation>Premenovať virtuálnu vrstvu</translation>
+        <translation>Premenovať virtuálnu hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="72"/>
         <source>Add Secondary Layer</source>
-        <translation>Pridať sekundárnu vrstvu</translation>
+        <translation>Pridať sekundárnu hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="78"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="85"/>
         <source>Add Layer</source>
-        <translation>Pridať vrstvu</translation>
+        <translation>Pridať hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="91"/>
         <source>Edit Layer</source>
-        <translation>Upraviť vrstvu</translation>
+        <translation>Upraviť hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="183"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="221"/>
         <source>Default Pen</source>
-        <translation>Štandardné pero</translation>
+        <translation>Predvolené pero</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="200"/>
         <source>Rename Layer</source>
-        <translation>Premenovať vrstvu</translation>
+        <translation>Premenovať hladinu</translation>
     </message>
 </context>
 <context>
@@ -15386,37 +15386,37 @@ Obsah stavebnej vrstvy by sa nemal objaviť vo výtlačku.</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="57"/>
         <source>Layers Export Options</source>
-        <translation>Možnosti exportu vrstiev</translation>
+        <translation>Možnosti exportu hladín</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="63"/>
         <source>If checked, Named Views from the document will be included into exported drawings. Otherwise, views are not included.</source>
-        <translation>Ak je zaškrtnuté, pomenované pohľady z dokumentu budú zahrnuté do exportovaných výkresov. V opačnom prípade nie sú zahrnuté názory.</translation>
+        <translation>Ak je zaškrtnuté, pomenované pohľady z dokumentu budú zahrnuté do exportovaných výkresov. V opačnom prípade pohľady zahrnuté nebudú.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="66"/>
         <source>Export Named Views too</source>
-        <translation>Exportovať tiež s názvom</translation>
+        <translation>Exportovať aj pomenované pohľady</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="73"/>
         <source>If checked, each original exported layer will be stored in separate drawing. Otherwise, all layers will be in exported to one combined drawing.</source>
-        <translation>Ak je zaškrtnuté, každá pôvodná vyvážaná vrstva bude uložená v samostatnom výkrese. V opačnom prípade budú všetky vrstvy vyvezené na jeden kombinovaný výkres.</translation>
+        <translation>Ak je zaškrtnuté, každá pôvodná exportovaná hladina bude uložená v samostatnom výkrese. V opačnom prípade budú všetky hladiny exportované do jedného spoločného výkresu.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="76"/>
         <source>Export each layer to own drawing file</source>
-        <translation>Exportovať každú vrstvu do vlastného výkresového súboru</translation>
+        <translation>Exportovať každú hladinu do vlastného výkresového súboru</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="83"/>
         <source>If checked, entities will be stored in original layer. Otherwise, they are placed to layer &quot;0&quot;.</source>
-        <translation>Ak je zaškrtnuté, jednotky budú uložené v pôvodnej vrstve. Inak sa umiestnia do vrstvy &quot;0.&quot;.</translation>
+        <translation>Ak je zaškrtnuté, objekty budú uložené v pôvodnej hladine. Inak sa umiestnia do hladiny &quot;0&quot;.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="89"/>
         <source>Retain original layer for entities</source>
-        <translation>Zachovať pôvodnú vrstvu pre subjekty</translation>
+        <translation>Zachovať pôvodnú hladinu objektov</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="96"/>
@@ -15434,17 +15434,17 @@ Obsah stavebnej vrstvy by sa nemal objaviť vo výtlačku.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="20"/>
         <source>Layers Tree Options</source>
-        <translation>Možnosti stromu vrstiev</translation>
+        <translation>Možnosti stromu hladín</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="46"/>
         <source>Settings for naming convention that is used to create layers hierarchy based on flat list of layers</source>
-        <translation>Nastavenie pre pomenovanie konvencie, ktorá sa používa na vytvorenie hierarchie vrstiev na základe plochého zoznamu vrstiev</translation>
+        <translation>Nastavenie konvencie pomenovania, ktorá sa používa na vytvorenie hierarchie hladín na základe plochého zoznamu hladín</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="49"/>
         <source>Naming Convention</source>
-        <translation>Dohovor o menovaní</translation>
+        <translation>Konvencia pomenovania</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="55"/>
@@ -15454,7 +15454,7 @@ Obsah stavebnej vrstvy by sa nemal objaviť vo výtlačku.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="116"/>
         <source>Separator used for split inner name of layer to hierarchical names</source>
-        <translation>Oddeľovač používaný na rozdelenie vnútorného názvu vrstvy na hierarchické názvy</translation>
+        <translation>Oddeľovač používaný na rozdelenie vnútorného názvu hladiny na hierarchické názvy</translation>
     </message>
     <message>
         <source>Layer Level Name Separator</source>
@@ -15468,33 +15468,33 @@ Obsah stavebnej vrstvy by sa nemal objaviť vo výtlačku.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
-        <translation>Rozmery</translation>
+        <translation>Kóty</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="201"/>
         <source>Suffix of layer&apos;s name that defines that layer is dimensional</source>
-        <translation>Suffix názvu vrstvy, ktorá definuje, že vrstva je rozmerová</translation>
+        <translation>Prípona názvu hladiny, ktorá určuje, že ide o hladinu kót</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="211"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="809"/>
         <source>Informational</source>
-        <translation>Informácie</translation>
+        <translation>Informačná</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="224"/>
         <source>Suffix of layer&apos;s name that defines that layer is informational.</source>
-        <translation>Šestka názvu vrstvy, ktorá definuje túto vrstvu, je informačná.</translation>
+        <translation>Prípona názvu hladiny, ktorá určuje, že ide o informačnú hladinu.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="234"/>
         <source>Alternative Position </source>
-        <translation>Alternatívne umiestnenie</translation>
+        <translation>Alternatívna poloha </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
-        <translation>Suffix názvu vrstvy, ktorá definuje túto vrstvu, je pre alternatívnu polohu.</translation>
+        <translation>Prípona názvu hladiny, ktorá určuje, že ide o hladinu alternatívnej polohy.</translation>
     </message>
     <message>
         <source>Duplicating Name</source>
@@ -15508,17 +15508,17 @@ Obsah stavebnej vrstvy by sa nemal objaviť vo výtlačku.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="74"/>
         <source>Prefix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>Predpona názvu vrstvy, ktorá sa použije, ak vrstva s takým názvom existuje (povedzte, keď je vytvorený duplikát)</translation>
+        <translation>Predpona názvu hladiny, ktorá sa použije, ak hladina s takým názvom už existuje (napríklad pri vytváraní duplikátu)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="84"/>
         <source>Suffix</source>
-        <translation>Suffix</translation>
+        <translation>Prípona</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="97"/>
         <source>Suffix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>Suffix názvu vrstvy, ktorý sa používa, ak vrstva s týmto názvom existuje (povedzte, keď je vytvorený duplikát)</translation>
+        <translation>Prípona názvu hladiny, ktorá sa použije, ak hladina s takým názvom už existuje (napríklad pri vytváraní duplikátu)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="155"/>
@@ -15548,22 +15548,22 @@ Obsah stavebnej vrstvy by sa nemal objaviť vo výtlačku.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="268"/>
         <source>Display and operations settings</source>
-        <translation>Nastavenie zobrazenia a prevádzky</translation>
+        <translation>Nastavenie zobrazenia a operácií</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="271"/>
         <source>Display and Operations</source>
-        <translation>Zobrazenie a prevádzka</translation>
+        <translation>Zobrazenie a operácie</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="329"/>
         <source>If checked, tooltip will include complete name of layer (with all upper layer levels)</source>
-        <translation>Ak je zaškrtnuté, nápoveda bude obsahovať kompletný názov vrstvy (so všetkými hornými úrovňami vrstvy)</translation>
+        <translation>Ak je zaškrtnuté, bublinový popis bude obsahovať úplný názov hladiny (so všetkými nadradenými úrovňami hladín)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="332"/>
         <source>Show full name as ToolTip</source>
-        <translation>Zobraziť celé meno ako nástrojTip</translation>
+        <translation>Zobraziť úplný názov ako bublinový popis</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="608"/>
@@ -15593,47 +15593,47 @@ Obsah stavebnej vrstvy by sa nemal objaviť vo výtlačku.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="319"/>
         <source>If checked, icons for layer types will be shown</source>
-        <translation>Ak je zaškrtnuté, zobrazí sa ikony pre typy vrstiev</translation>
+        <translation>Ak je zaškrtnuté, zobrazia sa ikony typov hladín</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="322"/>
         <source>Show layer type icons</source>
-        <translation>Zobraziť ikony typu vrstvy</translation>
+        <translation>Zobraziť ikony typov hladín</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="309"/>
         <source>Indentation for child layers</source>
-        <translation>Odsadenie detských vrstiev</translation>
+        <translation>Odsadenie podradených hladín</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="312"/>
         <source>Show indented layer names. Ident size:</source>
-        <translation>Zobraziť názvy vrstiev. Identita:</translation>
+        <translation>Zobraziť odsadené názvy hladín. Veľkosť odsadenia:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="277"/>
         <source>Size of the indent in characters to indent name of child layer from parent ones</source>
-        <translation>Veľkosť zarážky v znakoch po odrážku názvu detskej vrstvy od rodičovských</translation>
+        <translation>Veľkosť odsadenia v znakoch, o ktorú sa názov podradenej hladiny odsadí od nadradených</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="352"/>
         <source>If checked, drag&amp;drop operations in layers list are enabled and layers hierarchy may be restructutured</source>
-        <translation>Ak je zaškrtnuté, operácie ťahania a dropu v zozname vrstiev sú povolené a hierarchia vrstiev môže byť obnovená</translation>
+        <translation>Ak je zaškrtnuté, v zozname hladín sú povolené operácie presúvania ťahaním (drag&amp;drop) a hierarchiu hladín je možné preusporiadať</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="355"/>
         <source>Allow restructuring via Drag&amp;Drop</source>
-        <translation>Povoliť reštrukturalizáciu prostredníctvom Drag&amp;Dropu</translation>
+        <translation>Povoliť preusporiadanie ťahaním (drag&amp;&amp;drop)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="293"/>
         <source>If primary layer is renames, secondary layers are renamed too.</source>
-        <translation>Ak je primárna vrstva premenovaná, premenujú sa aj sekundárne vrstvy.</translation>
+        <translation>Ak je primárna hladina premenovaná, premenujú sa aj sekundárne hladiny.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="296"/>
         <source>Rename secondary layers on primary rename</source>
-        <translation>Premenovať sekundárne vrstvy na primárne premenovanie</translation>
+        <translation>Premenovať sekundárne hladiny pri premenovaní primárnej</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="376"/>
@@ -15647,7 +15647,7 @@ Obsah stavebnej vrstvy by sa nemal objaviť vo výtlačku.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="470"/>
         <source>Background color for selected items in layers tree.</source>
-        <translation>Farba pozadia pre vybrané položky vo vrstvách stromu.</translation>
+        <translation>Farba pozadia vybraných položiek v strome hladín.</translation>
     </message>
     <message>
         <source>Color for separator lines in layers tree view</source>
@@ -15656,7 +15656,7 @@ Obsah stavebnej vrstvy by sa nemal objaviť vo výtlačku.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="420"/>
         <source>Background color for virtual layers items in layers list</source>
-        <translation>Farba pozadia pre virtuálne vrstvy položky v zozname vrstiev</translation>
+        <translation>Farba pozadia položiek virtuálnych hladín v zozname hladín</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="449"/>
@@ -15689,7 +15689,7 @@ Obsah stavebnej vrstvy by sa nemal objaviť vo výtlačku.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="581"/>
         <source>Virtual layer background color</source>
-        <translation>Farba pozadia virtuálnej vrstvy</translation>
+        <translation>Farba pozadia virtuálnej hladiny</translation>
     </message>
     <message>
         <source>Threeview items separator grid</source>
@@ -15703,12 +15703,12 @@ Obsah stavebnej vrstvy by sa nemal objaviť vo výtlačku.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="523"/>
         <source>Background color for active layer item in layers tree</source>
-        <translation>Farba pozadia pre aktívne vrstvy položky vo vrstvách strom</translation>
+        <translation>Farba pozadia položky aktívnej hladiny v strome hladín</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="526"/>
         <source>Active layer background color</source>
-        <translation>Aktívna farba vrstvy pozadia</translation>
+        <translation>Farba pozadia aktívnej hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="588"/>
@@ -15723,32 +15723,32 @@ Obsah stavebnej vrstvy by sa nemal objaviť vo výtlačku.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="599"/>
         <source>Pens that will be set for newly created layers of different types.</source>
-        <translation>Perá, ktoré budú nastavené pre novo vytvorené vrstvy rôznych typov.</translation>
+        <translation>Perá, ktoré budú nastavené pre novovytvorené hladiny rôznych typov.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="602"/>
         <source>Default Pens</source>
-        <translation>Štandardné perá</translation>
+        <translation>Predvolené perá</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="68"/>
         <source>Normal Layer</source>
-        <translation>Normálna vrstva</translation>
+        <translation>Normálna hladina</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="69"/>
         <source>Dimensional Layer</source>
-        <translation>Rozmery vrstvy</translation>
+        <translation>Hladina kót</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="70"/>
         <source>Informational Layer</source>
-        <translation>Informačná vrstva</translation>
+        <translation>Informačná hladina</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Alternative Position Layer</source>
-        <translation>Alternatívna pozičná vrstva</translation>
+        <translation>Hladina alternatívnej polohy</translation>
     </message>
     <message>
         <source>grid</source>
@@ -15757,22 +15757,22 @@ Obsah stavebnej vrstvy by sa nemal objaviť vo výtlačku.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="103"/>
         <source>highlighted item</source>
-        <translation>zvýraznený bod</translation>
+        <translation>zvýraznená položka</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="110"/>
         <source>virtual layer background</source>
-        <translation>pozadie virtuálnej vrstvy</translation>
+        <translation>pozadie virtuálnej hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="118"/>
         <source>selected item background</source>
-        <translation>vybrané pozadie položky</translation>
+        <translation>pozadie vybranej položky</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="126"/>
         <source>active layer background</source>
-        <translation>pozadie aktívnej vrstvy</translation>
+        <translation>pozadie aktívnej hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
@@ -15783,8 +15783,8 @@ Obsah stavebnej vrstvy by sa nemal objaviť vo výtlačku.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="205"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>Neplatná hodnota poskytuje farbu%1.
-Uveďte inú hodnotu.</translation>
+        <translation>Neplatná hodnota farby (%1).
+Zadajte inú hodnotu.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="245"/>
@@ -15802,12 +15802,12 @@ Uveďte inú hodnotu.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="152"/>
         <source>Looking for matching layer names</source>
-        <translation>Hľadám zodpovedajúce názvy vrstiev</translation>
+        <translation>Hľadám zodpovedajúce názvy hladín</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="157"/>
         <source>Highlight Mode</source>
-        <translation>Režim Highlight</translation>
+        <translation>Režim zvýraznenia</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="167"/>
@@ -15817,22 +15817,22 @@ Uveďte inú hodnotu.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="186"/>
         <source>Show all layers</source>
-        <translation>Zobraziť všetky vrstvy</translation>
+        <translation>Zobraziť všetky hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Skryť všetky vrstvy</translation>
+        <source>Hide all layers except current</source>
+        <translation>Skryť všetky hladiny okrem aktuálnej</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="200"/>
         <source>Show Secondary Layers</source>
-        <translation>Zobraziť sekundárne vrstvy</translation>
+        <translation>Zobraziť sekundárne hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="210"/>
         <source>Show Active Layer Only</source>
-        <translation>Zobraziť iba aktívnu vrstvu</translation>
+        <translation>Zobraziť iba aktívnu hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="218"/>
@@ -15852,52 +15852,52 @@ Uveďte inú hodnotu.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="242"/>
         <source>Unlock all layers</source>
-        <translation>Odomknúť všetky vrstvy</translation>
+        <translation>Odomknúť všetky hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="249"/>
         <source>Lock all layers</source>
-        <translation>Zamknúť všetky vrstvy</translation>
+        <translation>Zamknúť všetky hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="256"/>
         <source>Add a layer</source>
-        <translation>Pridať vrstvu</translation>
+        <translation>Pridať hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="263"/>
         <source>Add dimensions Layer</source>
-        <translation>Pridať rozmery Vrstva</translation>
+        <translation>Pridať hladinu kót</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="272"/>
         <source>Remove layer</source>
-        <translation>Odstrániť vrstvu</translation>
+        <translation>Odstrániť hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="279"/>
         <source>Modify layer attributes / rename</source>
-        <translation>Upraviť atribúty / premenovanie vrstvy</translation>
+        <translation>Upraviť atribúty hladiny / premenovať</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="286"/>
         <source>Flat List Mode)</source>
-        <translation>Režim plochého zoznamu)</translation>
+        <translation>Režim plochého zoznamu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="656"/>
         <source>&amp;Add Child Layer</source>
-        <translation>&amp; Pridať detskú vrstvu</translation>
+        <translation>Pr&amp;idať podradenú hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="657"/>
         <source>&amp;Rename</source>
-        <translation>&amp; Premenovať</translation>
+        <translation>Pre&amp;menovať</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="658"/>
         <source>&amp;Remove Layers (Sub-Tree)</source>
-        <translation>&amp; Odstrániť vrstvy (subtréma)</translation>
+        <translation>O&amp;dstrániť hladiny (podstrom)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="660"/>
@@ -15907,150 +15907,150 @@ Uveďte inú hodnotu.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="661"/>
         <source>&amp;Duplicate Content (Sub-Tree)</source>
-        <translation>&amp; Duplikovať obsah (podTree)</translation>
+        <translation>D&amp;uplikovať obsah (podstrom)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="663"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>&amp; Zvoliť subjekty (podTree)</translation>
+        <translation>V&amp;ybrať objekty (podstrom)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="668"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>&amp; Upraviť vrstvu a atribúty</translation>
+        <translation>&amp;Upraviť atribúty hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="670"/>
         <source>&amp;Remove Layer</source>
-        <translation>&amp; Odstrániť vrstvu</translation>
+        <translation>O&amp;dstrániť hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="679"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>Pridať rozmery Sub- Layer</translation>
+        <translation>Pr&amp;idať podradenú hladinu kót</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="683"/>
         <source>&amp;Add Info Sub-Layer</source>
-        <translation>Pridať info Sub- Layer</translation>
+        <translation>Prid&amp;ať podradenú informačnú hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="687"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
-        <translation>&amp; Pridať podhľad</translation>
+        <translation>Pridať podradenú h&amp;ladinu alternatívnej polohy</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="693"/>
         <source>&amp;Remove Sub-layers</source>
-        <translation>&amp; Odstrániť podvrstvy</translation>
+        <translation>Odstrániť podradené hladin&amp;y</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="701"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="711"/>
         <source>Convert to Dimensional Layer</source>
-        <translation>Previesť na rozmerovú vrstvu</translation>
+        <translation>Previesť na hladinu kót</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="702"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="714"/>
         <source>Convert to Info Layer</source>
-        <translation>Previesť na informačnú vrstvu</translation>
+        <translation>Previesť na informačnú hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="703"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="717"/>
         <source>Convert to Alternative Position Layer</source>
-        <translation>Previesť na alternatívnu pozičnú vrstvu</translation>
+        <translation>Previesť na hladinu alternatívnej polohy</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="709"/>
         <source>Convert to Normal Layer</source>
-        <translation>Previesť na normálnu vrstvu</translation>
+        <translation>Previesť na normálnu hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="723"/>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>Subjekty &amp; Select Layer</translation>
+        <translation>Vy&amp;brať objekty hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="726"/>
         <source>&amp;Create Layer Copy</source>
-        <translation>&amp; Vytvoriť kopírovať vrstvu</translation>
+        <translation>Vytvoriť &amp;kópiu hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="727"/>
         <source>&amp;Duplicate Layer With Content</source>
-        <translation>&amp; Rozdeliť vrstvu s obsahom</translation>
+        <translation>Duplikovať hladinu s obsaho&amp;m</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="731"/>
         <source>Move Selection to Layer</source>
-        <translation>Presunúť výber do vrstvy</translation>
+        <translation>Presunúť výber do hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="732"/>
         <source>Duplicate Selection to Layer</source>
-        <translation>Duplikovať výber na vrstvu</translation>
+        <translation>Duplikovať výber do hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="739"/>
         <source>&amp;Add Layer</source>
-        <translation>&amp; Pridať vrstvu</translation>
+        <translation>Pr&amp;idať hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="741"/>
         <source>&amp;Freeze Others Layers</source>
-        <translation>&amp; Zmraziť ostatné vrstvy</translation>
+        <translation>&amp;Zmraziť ostatné hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="742"/>
         <source>&amp;Defreeze All Layers</source>
-        <translation>&amp; Zmraziť všetky vrstvy</translation>
+        <translation>&amp;Rozmraziť všetky hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>&amp; Zmraziť všetky vrstvy</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Skryť všetky hladiny okrem aktuálnej</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>
         <source>&amp;Unlock All Layers</source>
-        <translation>&amp; Odomknúť všetky vrstvy</translation>
+        <translation>&amp;Odomknúť všetky hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="745"/>
         <source>&amp;Lock All Layers</source>
-        <translation>&amp; Lock všetky vrstvy</translation>
+        <translation>Zamknúť &amp;všetky hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="746"/>
         <source>Enable &amp;Printing All Layers</source>
-        <translation>Povoliť &amp; tlač všetkých vrstiev</translation>
+        <translation>&amp;Povoliť tlač všetkých hladín</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="747"/>
         <source>&amp;Disable Printing All Layers</source>
-        <translation>&amp;Disable tlač všetkých vrstiev</translation>
+        <translation>Zakázať &amp;tlač všetkých hladín</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="750"/>
         <source>&amp;Export Single Layer</source>
-        <translation>&amp; Exportovať jednu vrstvu</translation>
+        <translation>&amp;Exportovať jednu hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="754"/>
         <source>&amp;Export Layer Sub-Tree</source>
-        <translation>&amp; Exportovať podložku vrstvy</translation>
+        <translation>Exportovať podstrom &amp;hladín</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="758"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Exportovať &amp;viditeľnú vrstvu (s)</translation>
+        <translation>E&amp;xportovať viditeľné hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="760"/>
         <source>&amp;Find And Remove Empty Layers</source>
-        <translation>&amp;Nájsť a odstrániť prázdne vrstvy</translation>
+        <translation>&amp;Nájsť a odstrániť prázdne hladiny</translation>
     </message>
 </context>
 <context>
@@ -18610,7 +18610,7 @@ Uveďte inú hodnotu.</translation>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="39"/>
         <source>Layer</source>
-        <translation type="unfinished">Vrstva</translation>
+        <translation type="unfinished">Hladina</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="39"/>
@@ -22437,7 +22437,7 @@ Uveďte inú hodnotu.</translation>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="228"/>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="1092"/>
         <source>Layers</source>
-        <translation type="unfinished">Vrstvy</translation>
+        <translation type="unfinished">Hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="233"/>
@@ -23339,12 +23339,12 @@ Uveďte inú hodnotu.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="82"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Ak je zaškrtnuté, zrkadlové jednotky budú umiestnené na aktuálnej vrstve, inak budú umiestnené do pôvodných vrstiev.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, zrkadlené objekty sa umiestnia do aktuálnej hladiny, inak sa umiestnia do pôvodných hladín.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Aktuálna vrstva užívateľa</translation>
+        <translation type="unfinished">Použiť aktuálnu hladinu</translation>
     </message>
 </context>
 <context>
@@ -23638,12 +23638,12 @@ Uveďte inú hodnotu.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="45"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="unfinished">Ak je zaškrtnuté, vytvorené jednotky budú umiestnené do aktuálnej vrstvy. Inak budú umiestnené do pôvodných vrstiev.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, vytvorené objekty sa umiestnia do aktuálnej hladiny. Inak sa umiestnia do pôvodných hladín. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="48"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Použiť aktuálnu vrstvu</translation>
+        <translation type="unfinished">Použiť aktuálnu hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="55"/>
@@ -23824,12 +23824,12 @@ Uveďte inú hodnotu.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="144"/>
         <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="unfinished">Ak je zaškrtnuté, vytvorené subjekty budú umiestnené do aktuálnej vrstvy, inak budú v pôvodných vrstvách.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, vytvorené objekty sa umiestnia do aktuálnej hladiny, inak budú v pôvodných hladinách. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="147"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Použiť aktuálnu vrstvu</translation>
+        <translation type="unfinished">Použiť aktuálnu hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="166"/>
@@ -24240,12 +24240,12 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="93"/>
         <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">Ak je zaškrtnuté, vytvorené subjekty budú umiestnené do aktuálnej vrstvy, inak budú v pôvodných vrstvách.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, vytvorené objekty sa umiestnia do aktuálnej hladiny, inak budú v pôvodných hladinách.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="96"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Použiť aktuálnu vrstvu</translation>
+        <translation type="unfinished">Použiť aktuálnu hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="109"/>
@@ -24738,7 +24738,7 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="263"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="298"/>
         <source>By Layer</source>
-        <translation>Podľa vrstvy</translation>
+        <translation>Podľa hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="264"/>
@@ -25366,27 +25366,27 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="188"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Aktualizovať súčasné pero pomocou pera Active Layer&apos; Pen</translation>
+        <translation>Aktualizovať aktuálne pero podľa pera aktívnej hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="205"/>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation>Vyplňte editor pera z pera Active Layer</translation>
+        <translation>Vyplniť editor pera podľa pera aktívnej hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="208"/>
         <source>Pick from Active Layer</source>
-        <translation>Vybrať z aktívnej vrstvy</translation>
+        <translation>Vybrať z aktívnej hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="222"/>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation>Aplikovať editor pera na aktívne pero vrstvy</translation>
+        <translation>Použiť pero z editora na pero aktívnej hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="225"/>
         <source>Apply To Layer</source>
-        <translation>Použiť na vrstvu</translation>
+        <translation>Použiť na hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="239"/>
@@ -25471,7 +25471,7 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="305"/>
         <source>&amp;Apply Pen To Active Layer</source>
-        <translation>&amp; Aplikovať pero na aktívnu vrstvu</translation>
+        <translation>&amp;Použiť pero na aktívnu hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="306"/>
@@ -29484,7 +29484,7 @@ Všimnite si, že ak uložíte pero prostredníctvom editora bez reštartu, aktu
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="60"/>
         <source>Active Layer</source>
-        <translation type="unfinished">Aktívna vrstva</translation>
+        <translation type="unfinished">Aktívna hladina</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="60"/>
@@ -29514,7 +29514,7 @@ Všimnite si, že ak uložíte pero prostredníctvom editora bez reštartu, aktu
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="122"/>
         <source>Line Width</source>
-        <translation type="unfinished">Šírka čiary</translation>
+        <translation type="unfinished">Hrúbka čiary</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="122"/>
@@ -29540,7 +29540,7 @@ Všimnite si, že ak uložíte pero prostredníctvom editora bez reštartu, aktu
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="171"/>
         <source>Dimensional</source>
-        <translation type="unfinished">Rozmery</translation>
+        <translation type="unfinished">Kóty</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="175"/>
@@ -29550,7 +29550,7 @@ Všimnite si, že ak uložíte pero prostredníctvom editora bez reštartu, aktu
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="179"/>
         <source>Informational</source>
-        <translation type="unfinished">Informácie</translation>
+        <translation type="unfinished">Informačná</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="186"/>
@@ -29630,7 +29630,7 @@ Všimnite si, že ak uložíte pero prostredníctvom editora bez reštartu, aktu
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="303"/>
         <source>Unlock all layers</source>
-        <translation type="unfinished">Odomknúť všetky vrstvy</translation>
+        <translation type="unfinished">Odomknúť všetky hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="303"/>
@@ -29655,7 +29655,7 @@ Všimnite si, že ak uložíte pero prostredníctvom editora bez reštartu, aktu
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="341"/>
         <source>Show all layers</source>
-        <translation type="unfinished">Zobraziť všetky vrstvy</translation>
+        <translation type="unfinished">Zobraziť všetky hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="341"/>
@@ -32742,7 +32742,7 @@ Všimnite si, že ak uložíte pero prostredníctvom editora bez reštartu, aktu
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="533"/>
         <source>Layer</source>
-        <translation>Vrstva</translation>
+        <translation>Hladina</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="538"/>
@@ -33103,7 +33103,8 @@ Všimnite si, že ak uložíte pero prostredníctvom editora bez reštartu, aktu
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="127"/>
         <source>
 Layer: </source>
-        <translation>Vrstva:</translation>
+        <translation>
+Hladina: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="573"/>
@@ -35909,12 +35910,12 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="208"/>
         <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="unfinished">Určuje whetether kópie budú vložené do aktuálnej alebo pôvodnej vrstvy</translation>
+        <translation type="unfinished">Určuje, či sa kópie vložia do aktuálnej alebo pôvodnej hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="211"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Použiť aktuálnu vrstvu</translation>
+        <translation type="unfinished">Použiť aktuálnu hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="218"/>
@@ -36155,12 +36156,12 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="209"/>
         <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">Ak je zaškrtnuté, na aktuálnu vrstvu sa umiestnia nové enties, inak budú v pôvodných vrstvách.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, nové objekty sa umiestnia do aktuálnej hladiny, inak budú v pôvodných hladinách.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="212"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Použiť aktuálnu vrstvu</translation>
+        <translation type="unfinished">Použiť aktuálnu hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="219"/>
@@ -36398,12 +36399,12 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="83"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="unfinished">Ak je zaškrtnuté, vytvorené jednotky budú umiestnené do aktuálnej vrstvy. Inak budú umiestnené do pôvodných vrstiev.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, vytvorené objekty sa umiestnia do aktuálnej hladiny. Inak sa umiestnia do pôvodných hladín. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="86"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Použiť aktuálnu vrstvu</translation>
+        <translation type="unfinished">Použiť aktuálnu hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="107"/>
@@ -37312,7 +37313,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="77"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Ak je zaškrtnuté, vytvorené subjekty budú umiestnené na aktuálnej vrstve, inak budú umiestnené do pôvodných vrstiev.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, vytvorené objekty sa umiestnia do aktuálnej hladiny, inak sa umiestnia do pôvodných hladín.</translation>
     </message>
 </context>
 <context>
@@ -37350,12 +37351,12 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="73"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Ak je zaškrtnuté, vytvorené subjekty budú umiestnené na aktuálnej vrstve, inak budú umiestnené do pôvodných vrstiev.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, vytvorené objekty sa umiestnia do aktuálnej hladiny, inak sa umiestnia do pôvodných hladín.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="76"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished">Použiť aktuálnu vrstvu</translation>
+        <translation type="unfinished">Použiť aktuálnu hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="83"/>
@@ -37493,7 +37494,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="71"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Ak je zaškrtnuté, vytvorené subjekty budú umiestnené na aktuálnej vrstve, inak budú umiestnené do pôvodných vrstiev.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, vytvorené objekty sa umiestnia do aktuálnej hladiny, inak sa umiestnia do pôvodných hladín.</translation>
     </message>
 </context>
 <context>
@@ -37506,12 +37507,12 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="32"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Ak je zaškrtnuté, vytvorené subjekty budú umiestnené na aktuálnej vrstve, inak budú umiestnené do pôvodných vrstiev.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, vytvorené objekty sa umiestnia do aktuálnej hladiny, inak sa umiestnia do pôvodných hladín.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="35"/>
         <source>User Current Layer</source>
-        <translation type="unfinished">Aktuálna vrstva užívateľa</translation>
+        <translation type="unfinished">Použiť aktuálnu hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="42"/>
@@ -38377,7 +38378,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="216"/>
         <source>Entity&apos;s Layer</source>
-        <translation>Vrstva subjektu</translation>
+        <translation>Hladina objektu</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="250"/>
@@ -39052,7 +39053,7 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="188"/>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="188"/>
         <source>Layers</source>
-        <translation>Vrstvy</translation>
+        <translation>Hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="201"/>
@@ -39073,7 +39074,7 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="236"/>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="236"/>
         <source>Layers Tree</source>
-        <translation>Strom vrstiev</translation>
+        <translation>Strom hladín</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="261"/>
@@ -39168,7 +39169,7 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="540"/>
         <source>Active Layer</source>
-        <translation>Aktívna vrstva</translation>
+        <translation>Aktívna hladina</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="542"/>
@@ -39833,12 +39834,12 @@ Prosím skontrolujte jeho existenciu a povolenia.</translation>
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="105"/>
         <source>Name of Current Active Layer</source>
-        <translation>Názov aktuálnej aktívnej vrstvy</translation>
+        <translation>Názov aktuálnej aktívnej hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="80"/>
         <source>Current Layer</source>
-        <translation>Aktuálna vrstva</translation>
+        <translation>Aktuálna hladina</translation>
     </message>
 </context>
 <context>
@@ -40323,7 +40324,7 @@ Prosím skontrolujte jeho existenciu a povolenia.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="54"/>
         <source>Layer to apply</source>
-        <translation>Vrstva na aplikáciu</translation>
+        <translation>Hladina, ktorá sa má použiť</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="69"/>
@@ -40840,7 +40841,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="51"/>
         <source>Layer:</source>
-        <translation>Vrstva:</translation>
+        <translation>Hladina:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="241"/>
@@ -40910,7 +40911,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="70"/>
         <source>Layer of MText</source>
-        <translation>Vrstva MText</translation>
+        <translation>Hladina objektu MText</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="144"/>
@@ -43453,7 +43454,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5074"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Ak je to povolené, aktivácia vrstvy by zmenila všetky vybrané subjekty na túto novú vrstvu. Ak chcete zmeniť vrstvu viacerých subjektov: najprv vybrať potrebné subjekty; aktivovať vrstvu vo vrstve widget. Týmto sa všetky vybrané subjekty upravené tak, aby patrili do novej vrstvy. &lt;/p&gt;&lt;/body &gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ak je táto možnosť povolená, aktivácia hladiny presunie všetky vybrané objekty do tejto novej hladiny. Ak chcete zmeniť hladinu viacerých objektov: najprv vyberte požadované objekty, potom aktivujte hladinu v paneli hladín. Všetky vybrané objekty sa tým presunú do novej hladiny.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5934"/>
@@ -44574,7 +44575,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5077"/>
         <source>Modify layer of selected entities, at layer activation</source>
-        <translation>Zmeniť vrstvu vybraných subjektov, pri aktivácii vrstvy</translation>
+        <translation>Zmeniť hladinu vybraných objektov pri aktivácii hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5490"/>
@@ -45738,17 +45739,17 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="44"/>
         <source>Layers</source>
-        <translation>Vrstvy</translation>
+        <translation>Hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="85"/>
         <source>Export invisible layers</source>
-        <translation>Exportovať neviditeľné vrstvy</translation>
+        <translation>Exportovať neviditeľné hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="92"/>
         <source>Export visible construction layers</source>
-        <translation>Exportovať viditeľné stavebné vrstvy</translation>
+        <translation>Exportovať viditeľné konštrukčné hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="104"/>
@@ -46303,7 +46304,7 @@ Takže predvolená hodnota kroku potrebná na pečenie</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="197"/>
         <source>Layer of text</source>
-        <translation>Vrstva textu</translation>
+        <translation>Hladina textu</translation>
     </message>
     <message>
         <source>Obligue of text</source>
@@ -46902,7 +46903,7 @@ Takže predvolená hodnota kroku potrebná na pečenie</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="178"/>
         <source>Layer:</source>
-        <translation>Vrstva:</translation>
+        <translation>Hladina:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="240"/>
@@ -47176,7 +47177,7 @@ Takže predvolená hodnota kroku potrebná na pečenie</translation>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="46"/>
         <source>Layer Name:</source>
-        <translation>Meno hladiny:</translation>
+        <translation>Názov hladiny:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="63"/>
@@ -47187,13 +47188,13 @@ Takže predvolená hodnota kroku potrebná na pečenie</translation>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="29"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Konštrukčná vrstva má objekty nekonečných priamok určené na použitie pre geometrickú konštrukciu.
-Obsah stavebnej vrstvy by sa nemal objaviť vo výtlačku.</translation>
+        <translation>Konštrukčná hladina obsahuje objekty v podobe nekonečných priamok určené na geometrické konštrukcie.
+Obsah konštrukčnej hladiny by sa nemal objaviť na výtlačku.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="33"/>
         <source>Construction Layer</source>
-        <translation>Konštrukčná vrstva</translation>
+        <translation>Konštrukčná hladina</translation>
     </message>
 </context>
 <context>
@@ -47201,7 +47202,7 @@ Obsah stavebnej vrstvy by sa nemal objaviť vo výtlačku.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="298"/>
         <source>Looking for matching layer names</source>
-        <translation>Hľadám zodpovedajúce názvy vrstiev</translation>
+        <translation>Hľadám zodpovedajúce názvy hladín</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="296"/>
@@ -47586,12 +47587,12 @@ p, li { biely priestor: pre- wrap; }
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="240"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1739"/>
         <source>Remove Layer</source>
-        <translation>Vymazanie hladiny</translation>
+        <translation>Odstrániť hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="183"/>
         <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>Hladina &quot;%1&quot; nemôže byť nikdy vymazaná.</translation>
+        <translation>Hladina &quot;%1&quot; sa nedá nikdy odstrániť.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="304"/>
@@ -47619,36 +47620,36 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="84"/>
         <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>Hladina menom &quot;%1&quot; už existuje. Prosím zvoľte iné meno.</translation>
+        <translation>Hladina s názvom &quot;%1&quot; už existuje. Zadajte iný názov.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="173"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>Vrstva &quot;%1&quot; a všetky objekty na nej budú odstránené.
-Táto akcia nemôže byť odstránená.</translation>
+        <translation>Hladina &quot;%1&quot; a všetky objekty v nej budú odstránené.
+Túto akciu NIE JE možné vrátiť späť.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="240"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1739"/>
         <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>Vrstva &quot;0&quot; sa nedá nikdy odstrániť.</translation>
+        <translation>Hladina &quot;0&quot; sa nedá nikdy odstrániť.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="248"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1787"/>
         <source>Remove %n layer(s)</source>
         <translation>
-            <numerusform>Odstrániť %n vrstvu</numerusform>
-            <numerusform>Odstrániť %n vrstvy</numerusform>
-            <numerusform>Odstrániť %n vrstiev</numerusform>
+            <numerusform>Odstrániť %n hladinu</numerusform>
+            <numerusform>Odstrániť %n hladiny</numerusform>
+            <numerusform>Odstrániť %n hladín</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="251"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1788"/>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>Zoznam vrstiev a všetky subjekty na nich budú odstránené.</translation>
+        <translation>Uvedené hladiny a všetky objekty v nich budú odstránené.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="253"/>
@@ -47659,13 +47660,13 @@ Táto akcia nemôže byť odstránená.</translation>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="257"/>
         <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>Upozornenie: vrstva &quot;0&quot; sa nedá nikdy odstrániť.</translation>
+        <translation>Upozornenie: hladina &quot;0&quot; sa nedá nikdy odstrániť.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="260"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1790"/>
         <source>Layers for removal:</source>
-        <translation>Vrstvy na odstránenie:</translation>
+        <translation>Hladiny na odstránenie:</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="463"/>
@@ -47689,7 +47690,7 @@ Táto akcia nemôže byť odstránená.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="230"/>
         <source>Layer empty name is not allowed.</source>
-        <translation>Prázdny názov vrstvy nie je povolený.</translation>
+        <translation>Prázdny názov hladiny nie je povolený.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="265"/>
@@ -47701,9 +47702,9 @@ Táto akcia nemôže byť odstránená.</translation>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation>Pokúsiť sa vytvoriť vrstvu s duplikujúcim názvom. Duplikovať názov vrstvy
+        <translation>Pokus o vytvorenie hladiny s duplicitným názvom. Duplicitný názov hladiny je 
 [%1].
-Uveďte iný názov.</translation>
+Zadajte iný názov.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="142"/>
@@ -47715,14 +47716,14 @@ Uveďte iný názov.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="143"/>
         <source>Layer list separator string is empty. It will not be possible to build layers tree.
 Please specify a different value.</source>
-        <translation>Vrstvy sú prázdne. Nebude možné vybudovať vrstvy stromu.
-Uveďte inú hodnotu.</translation>
+        <translation>Reťazec oddeľovača zoznamu hladín je prázdny. Nebude možné vytvoriť strom hladín.
+Zadajte inú hodnotu.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="962"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="972"/>
         <source>Remove empty layers</source>
-        <translation>Odstrániť prázdne vrstvy</translation>
+        <translation>Odstrániť prázdne hladiny</translation>
     </message>
     <message>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
@@ -47740,37 +47741,39 @@ Clear filtering mask and repeat.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="973"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>Žiadne vrstvy bez entít nájdených, nič odstrániť.</translation>
+        <translation>Nenašli sa žiadne hladiny bez objektov, nie je čo odstrániť.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1116"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1161"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1169"/>
         <source>Add Layer</source>
-        <translation>Pridať vrstvu</translation>
+        <translation>Pridať hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1117"/>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation>Takáto detská vrstva už existuje
+        <translation>Takáto podradená hladina už existuje pre 
 [%1].
-Uveďte iný názov.</translation>
+Zadajte iný názov.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1162"/>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation>Takáto detská vrstva už existuje
-[%1].</translation>
+        <translation>Takáto podradená hladina už existuje pre 
+[%1].
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1170"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>Rozmerová vrstva sa môže pridať len pre normálnu aktívnu vrstvu.</translation>
+        <translation>Hladinu kót možno pridať len pre normálnu aktívnu hladinu.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1233"/>
@@ -47803,7 +47806,7 @@ Ak nie, hodnoty „Podľa vrstvy“ zostanú a pero cieľovej vrstvy bude defino
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1805"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1863"/>
         <source>Layer DialogEx</source>
-        <translation>Dialóg vrstvyEx</translation>
+        <translation>Dialóg hladín</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="202"/>
@@ -47856,19 +47859,21 @@ Uveďte inú hodnotu.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1453"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>Neexistujú žiadne entity, ktoré sa zhodujú s perom na viditeľných vrstvách.</translation>
+        <translation>Vo viditeľných hladinách nie sú žiadne objekty, ktoré zodpovedajú peru.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1454"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>Takéto subjekty existujú na zmrazených vrstvách.</translation>
+        <translation>Takéto objekty existujú v zmrazených hladinách.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1455"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>Takéto subjekty existujú na zamknutých vrstvách.</translation>
+        <translation>Takéto objekty existujú v zamknutých hladinách.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1456"/>
@@ -49442,7 +49447,7 @@ Chcete ho nahradiť?</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="77"/>
         <source>No %1 layers found</source>
-        <translation>Nenašli sa žiadne vrstvy%1</translation>
+        <translation>Nenašli sa žiadne %1 hladiny</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="95"/>
@@ -51714,7 +51719,7 @@ Chcete ho nahradiť?</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_filedialogservice.cpp" line="195"/>
         <source>Combine all layers</source>
-        <translation>Kombinovať všetky vrstvy</translation>
+        <translation>Spojiť všetky hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="180"/>
@@ -51773,7 +51778,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="50"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="206"/>
         <source>By Layer</source>
-        <translation>Podľa vrstvy</translation>
+        <translation>Podľa hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="56"/>
