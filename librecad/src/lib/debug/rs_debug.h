@@ -32,6 +32,8 @@
 #include <sys/_size_t.h>
 #endif
 
+#include <QtGlobal>
+
 class QByteArray;
 class QChar;
 class QLatin1String;
@@ -135,8 +137,9 @@ public:
 
     void setLevel(RS_DebugLevel level);
     RS_DebugLevel getLevel();
-    void print(RS_DebugLevel level, const char* format ...);
-    void print(const char* format ...);
+    // Checked by the compiler: an argument that does not match is undefined.
+    void print(RS_DebugLevel level, const char* format ...) Q_ATTRIBUTE_FORMAT_PRINTF(3, 4);
+    void print(const char* format ...) Q_ATTRIBUTE_FORMAT_PRINTF(2, 3);
     void print(const QString& text);
     void printUnicode(const QString& text);
     void timestamp();
