@@ -29,6 +29,7 @@
 #include <utility>
 #include <vector>
 
+#include <QImage>
 #include <QMouseEvent>
 
 #include "lc_action_draw_line_snake.h"
@@ -40,6 +41,7 @@
 #include "lc_action_spline_from_polyline.h"
 #include "lc_actiontestsupport.h"
 #include "lc_containertraverser.h"
+#include "lc_graphicviewrenderer.h"
 #include "lc_hyperbola.h"
 #include "lc_highlight.h"
 #include "lc_overlayentitiescontainer.h"
@@ -50,6 +52,7 @@
 #include "rs_constructionline.h"
 #include "rs_dimlinear.h"
 #include "rs_ellipse.h"
+#include "rs_grid.h"
 #include "rs_hatch.h"
 #include "rs_information.h"
 #include "rs_insert.h"
@@ -95,6 +98,7 @@ public:
 class HoverProbe final : public RS_ActionDefault {
 public:
     explicit HoverProbe(LC_ActionContext* context) : RS_ActionDefault(context) {
+        m_viewport->setSize(m_graphicView->getWidth(), m_graphicView->getHeight());
         m_highlightEntitiesOnHover = true;
     }
 
@@ -428,7 +432,80 @@ TEST_CASE("block hover invalidates on drawing changes and Ctrl child resolution"
     }
 }
 
-TEST_CASE("bounded catching avoids measuring distant blocks and returns the exact hit distance", "[snap][catch][insert]") {
+TEST_CASE("block hover respects screen tolerance at different zoom levels", "[hover][snap][insert]") {
+    ActionFixture<HoverProbe> f;
+    auto* viewport = f.m_view.getViewPort();
+    REQUIRE(viewport->getWidth() == 640);
+    REQUIRE(viewport->getHeight() == 480);
+    RS_Block* block = addBlock(f.m_graphic, QStringLiteral("tolerance"));
+    block->addEntity(new RS_Line(block, RS_Vector(100.0, 100.0), RS_Vector(200.0, 100.0)));
+    addInsert(f.m_graphic, block->getName(), RS_Vector(0.0, 0.0));
+
+    for (const double scale : {0.5, 1.0, 4.0}) {
+        CAPTURE(scale);
+        viewport->justSetOffsetAndFactor(0, 0, scale);
+        const double tolerance = viewport->toUcsDX(4);
+        hoverAt(f, RS_Vector(150.0, 100.0 + 0.75 * tolerance));
+        CHECK(f.m_action->m_highlight->count() == 1);
+        hoverAt(f, RS_Vector(150.0, 100.0 + 1.25 * tolerance));
+        CHECK(f.m_action->m_highlight->isEmpty());
+    }
+}
+
+TEST_CASE("drawing-only redraw removes cached block highlight pixels", "[hover][render][insert]") {
+    ActionFixture<HoverProbe> f;
+    LC_SET_ONE("Appearance", "ClassicRenderer", true);
+    auto* viewport = f.m_view.getViewPort();
+    viewport->getGrid()->loadSettings();
+    const auto calls = std::make_shared<GeometryCalls>();
+    auto* insert = addMeasuredInsert(f.m_graphic, calls);
+    insert->move(RS_Vector(100.0, 100.0));
+    f.m_action->showGrips(true);
+    hoverAt(f, RS_Vector(101.0, 100.0));
+    REQUIRE(f.m_action->m_highlight->count() == 1);
+
+    QImage canvas(640, 480, QImage::Format_ARGB32_Premultiplied);
+    LC_GraphicViewRenderer renderer(viewport, &canvas);
+    renderer.loadSettings();
+    renderer.render();
+    const QImage highlighted = canvas.copy();
+
+    f.m_view.redrawMethod = RS2::RedrawNone;
+    f.m_view.redraw(RS2::RedrawDrawing);
+    CHECK(f.m_action->m_highlight->isEmpty());
+    CHECK((f.m_view.redrawMethod & RS2::RedrawOverlay) != 0);
+    renderer.invalidate(f.m_view.redrawMethod);
+    renderer.render();
+    const QImage cleared = canvas.copy();
+    CHECK(cleared != highlighted);
+    renderer.invalidate(RS2::RedrawOverlay);
+    renderer.render();
+    CHECK(canvas == cleared);
+}
+
+TEST_CASE("catching retains adaptive pruning in dense drawings", "[snap][catch]") {
+    ActionFixture<SnapperProbe> f;
+    const auto calls = std::make_shared<GeometryCalls>();
+    f.m_graphic.setAutoUpdateBorders(false);
+    auto* first = new MeasuredLine(&f.m_graphic, RS_Vector(-5.0, 0.0), RS_Vector(5.0, 0.0), calls);
+    f.m_graphic.addEntity(first);
+    for (int i = 1; i < 512; ++i) {
+        const double y = 0.001 * i;
+        f.m_graphic.addEntity(new MeasuredLine(&f.m_graphic, RS_Vector(-5.0, y), RS_Vector(5.0, y), calls));
+    }
+    auto* last = first->clone();
+    f.m_graphic.addEntity(last);
+    f.m_graphic.calculateBorders();
+    *calls = {};
+
+    double distance = 0.0;
+    CHECK(f.m_action->catchEntity(RS_Vector(0.0, 0.0), RS2::ResolveNone, &distance) == last);
+    CHECK(distance == 0.0);
+    CHECK(calls->distances == 2);
+    CHECK(calls->borders == 0);
+}
+
+TEST_CASE("catching rejects distant blocks and returns the exact hit distance", "[snap][catch][insert]") {
     ActionFixture<SnapperProbe> f;
     const auto calls = std::make_shared<GeometryCalls>();
     RS_Insert* insert = addMeasuredInsert(f.m_graphic, calls);
@@ -436,7 +513,7 @@ TEST_CASE("bounded catching avoids measuring distant blocks and returns the exac
 
     double distance = 0.0;
     CHECK(f.m_action->catchEntity(RS_Vector(-50.0, -50.0), RS2::ResolveNone, &distance) == nullptr);
-    CHECK(calls->distances == 0);
+    *calls = {};
     CHECK(f.m_action->catchEntity(RS_Vector(1.0, 0.5), RS2::ResolveNone, &distance) == insert);
     CHECK(distance == Catch::Approx(0.5));
     CHECK(calls->distances == 1);

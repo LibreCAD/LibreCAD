@@ -97,6 +97,7 @@ RS_ActionDefault::RS_ActionDefault(LC_ActionContext *actionContext)
     connect(m_graphicView, &RS_GraphicView::drawingRedrawRequested, this, [this] {
         if (m_actionData->hoveredEntityId != 0) {
             clearHighLighting();
+            m_graphicView->redraw(RS2::RedrawOverlay);
         }
     });
     RS_DEBUG->print("RS_ActionDefault::RS_ActionDefault: OK");
