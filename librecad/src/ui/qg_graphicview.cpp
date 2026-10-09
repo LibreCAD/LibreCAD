@@ -24,6 +24,8 @@
 **
 **********************************************************************/
 
+#include <algorithm>
+#include <climits>
 #include <cmath>
 #include <iostream>
 
@@ -988,18 +990,23 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 
         auto factor = getFactor();
 
-        int minVal = (int)(-getWidth()*0.75
+        // Deep in a zoom these leave the range of int, where the conversion
+        // is undefined.
+        const auto toInt = [](double v) {
+            return static_cast<int>(std::clamp(v, -INT_MAX/2., INT_MAX/2.));
+        };
+        int minVal = toInt(-getWidth()*0.75
                            + std::min(min.x, 0.)*factor.x);
-        int maxVal = (int)(-getWidth()*0.25
+        int maxVal = toInt(-getWidth()*0.25
                            + std::max(max.x, 0.)*factor.x);
 
         if (minVal<=maxVal) {
             hScrollBar->setRange(minVal, maxVal);
         }
 
-        minVal = (int)(+getHeight()*0.25
+        minVal = toInt(+getHeight()*0.25
                        - std::max(max.y, 0.)*factor.y);
-        maxVal = (int)(+getHeight()*0.75
+        maxVal = toInt(+getHeight()*0.75
                        - std::min(min.y, 0.)*factor.y);
 
         if (minVal<=maxVal) {

@@ -754,18 +754,18 @@ void RS_GraphicView::zoomWindow(RS_Vector v1, RS_Vector v2,
     zoomX=std::abs(zoomX);
     zoomY=std::abs(zoomY);
 
-	// Borders in pixel after zoom
+	// Borders in pixel after zoom. Out of the range of int the conversion is
+	// undefined, so the range is tested before it, with room for the sums below.
+	for (const double pix: {v1.x*zoomX, v2.y*zoomY, v2.x*zoomX, v1.y*zoomY}) {
+		if (!(std::abs(pix) < INT_MAX/2)) {
+			RS_DIALOGFACTORY->commandMessage("Requested zooming factor out of range. Zooming not changed");
+			return;
+		}
+	}
 	int pixLeft  =(int)(v1.x*zoomX);
 	int pixTop   =(int)(v2.y*zoomY);
 	int pixRight =(int)(v2.x*zoomX);
 	int pixBottom=(int)(v1.y*zoomY);
-	if(  pixLeft == INT_MIN || pixLeft== INT_MAX ||
-		 pixRight == INT_MIN || pixRight== INT_MAX ||
-		 pixTop == INT_MIN || pixTop== INT_MAX ||
-		 pixBottom == INT_MIN || pixBottom== INT_MAX ) {
-		RS_DIALOGFACTORY->commandMessage("Requested zooming factor out of range. Zooming not changed");
-		return;
-	}
 	saveView();
 
 	// Set new offset for zero point:
