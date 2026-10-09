@@ -71,6 +71,7 @@ public:
     RS2::IsoGridViewType getIsoViewType() const;
     void justSetOffsetAndFactor(int ox, int oy, double f);
     void setOffsetAndFactor(int ox, int oy, double f);
+    static int toOffset(double v);
     int getOffsetX() const {return m_offsetX;}
     int getOffsetY() const {return m_offsetY;}
     void setOffsetX(int ox);

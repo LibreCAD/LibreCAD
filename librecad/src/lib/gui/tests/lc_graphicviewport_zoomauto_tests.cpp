@@ -24,6 +24,8 @@
 // doZoomAuto() now uses ucsBoundsOfWcsBox() (the four-corner box already used to size
 // the scrollbars), so Zoom Extents frames the whole rotated drawing.
 
+#include <climits>
+
 #include <catch2/catch_test_macros.hpp>
 
 #include "lc_actiontestsupport.h"
@@ -90,4 +92,46 @@ TEST_CASE("Zoom Extents frames the whole drawing under a rotated UCS", "[navigat
     CHECK(lowCorner.y < -41.0);
     CHECK(viewport.toGuiY(lowCorner.y) <= viewport.getHeight() + 0.5);
     CHECK(viewport.toGuiY(lowCorner.y) >= -0.5);
+}
+
+// The view offset is an int, and a conversion from a double out of the range of
+// int is undefined. A small drawing far from the origin puts the offset of its
+// extents there, so it is brought within half the range, with room for the
+// borders and for the sums made with offsets.
+TEST_CASE("Zoom Extents keeps the offset in range for a small drawing far away", "[navigation][viewport-range]") {
+    (void)lc::test::application();
+
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    graphic.addEntity(new RS_Line(&graphic, RS_Vector(500000., 4000000.), RS_Vector(500000.001, 4000000.001)));
+    graphic.calculateBorders();
+
+    LC_GraphicViewport viewport;
+    viewport.setSize(800, 600);
+    viewport.setBorders(10, 10, 10, 10);
+    viewport.setDocument(&graphic);
+    viewport.loadSettings();
+
+    viewport.zoomAuto(false);
+
+    for (const double offset : {double(viewport.getOffsetX()), double(viewport.getOffsetY())}) {
+        CHECK(offset >= -INT_MAX / 2 - 10.);
+        CHECK(offset <= INT_MAX / 2 + 10.);
+    }
+}
+
+// The same limit decides whether a zoom window is refused: 800 pixels for 0.001
+// units puts x = 2000 at 1.6e9 pixels, within the range of int but not half of it.
+TEST_CASE("Zoom Window refuses a window out of the range of the offset", "[navigation][viewport-range]") {
+    (void)lc::test::application();
+
+    LC_GraphicViewport viewport;
+    viewport.setSize(800, 600);
+    const RS_Vector factor = viewport.getFactor();
+    const int offsetX = viewport.getOffsetX();
+
+    viewport.zoomWindow(RS_Vector(2000., 0.), RS_Vector(2000.001, 0.00075));
+
+    CHECK(viewport.getFactor().x == factor.x);
+    CHECK(viewport.getOffsetX() == offsetX);
 }
