@@ -68,13 +68,20 @@ public:
 
     int getWidth() const override { return 640; }
     int getHeight() const override { return 480; }
-    void redraw([[maybe_unused]] RS2::RedrawMethod method = RS2::RedrawAll,
-                [[maybe_unused]] bool immediately = false) override {}
+    void redraw(RS2::RedrawMethod method = RS2::RedrawAll,
+                [[maybe_unused]] bool immediately = false) override {
+        redrawMethod = static_cast<RS2::RedrawMethod>(redrawMethod | method);
+        if ((method & RS2::RedrawDrawing) != 0) {
+            emit drawingRedrawRequested();
+        }
+    }
     void adjustOffsetControls() override {}
     void adjustZoomControls() override {}
     void setMouseCursor(RS2::CursorType cursor) override { m_mouseCursor = cursor; }
     RS2::CursorType getMouseCursor() const { return m_mouseCursor; }
     void updateGridStatusWidget([[maybe_unused]] QString status) override {}
+
+    RS2::RedrawMethod redrawMethod = RS2::RedrawNone;
 
 private:
     RS2::CursorType m_mouseCursor = RS2::ArrowCursor;

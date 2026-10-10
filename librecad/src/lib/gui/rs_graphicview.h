@@ -183,6 +183,7 @@ public:
     void onViewportRedrawNeeded(RS2::RedrawMethod method, bool redrawImmediately) override;
     LC_VisualSnapData* getVisualSnapData() const {return m_visualSnapData;}
 signals:
+    void drawingRedrawRequested();
     void ucsChanged(LC_UCS* ucs);
     void relativeZeroChanged(const RS_Vector &);
     void previousZoomAvailable(bool available);

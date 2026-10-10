@@ -79,6 +79,7 @@ protected:
     void goToNeutralStatus();
     RS2::CursorType doGetMouseCursor(int status) override;
     bool isInVisualSnapStatus(int status) override;
+    bool clearHighlightsOnMouseMove() const override;
 
     void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;
     void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
@@ -87,7 +88,7 @@ protected:
     void onMouseRightButtonPress(int status, const LC_MouseEvent* e) override;
 
     void highlightHoveredEntities(const LC_MouseEvent* event);
-    void highlightEntity(const RS_Entity* entity) const;
+    void highlightEntity(const RS_Entity* entity);
     void updateActionPrompt() override;
     void createEditedLineDescription(RS_Line* clone, bool ctrlPressed, bool shiftPressed) const;
     void createEditedArcDescription(const RS_Arc* clone, bool ctrlPressed, bool shiftPressed) const;
