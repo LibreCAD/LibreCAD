@@ -3041,6 +3041,9 @@ if (BUILD_TESTS)
         librecad_draw_fast_tests
         librecad/src/lib/creation/tests/lc_action_draw_fast_tests.cpp)
     add_librecad_filter_micro_test(
+        librecad_snapper_tests
+        librecad/src/lib/actions/tests/lc_snappercatchtests.cpp)
+    add_librecad_filter_micro_test(
         librecad_snake_action_tests
         librecad/src/lib/creation/tests/lc_action_draw_line_snake_tests.cpp)
     target_include_directories(librecad_snake_action_tests PRIVATE

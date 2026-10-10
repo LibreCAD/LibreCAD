@@ -95,6 +95,7 @@ void RS_GraphicView::cleanUp() {
  * which are visualized by this widget.
  */
 void RS_GraphicView::setDocument(RS_Document *c) {
+    emit drawingRedrawRequested();
     m_document = c;
     m_viewport->setDocument(c);
 }
