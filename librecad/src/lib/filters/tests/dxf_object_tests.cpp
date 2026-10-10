@@ -3429,6 +3429,69 @@ TEST_CASE("DXF BLOCK without a name is dropped with its entities",
   CHECK(cap.m_lineCount == 0);
 }
 
+TEST_CASE("DXF reads an explicitly unnamed BLOCK_RECORD from older LibreCAD",
+          "[dxf][block][blockrecord][compat][regression]") {
+  // #3050: an unused unnamed block must not prevent opening the drawing.
+  std::string blockName;
+  bool keepBlock = false;
+  SECTION("unnamed BLOCK and its children are dropped") {}
+  SECTION("a name on BLOCK itself is retained") {
+    blockName = "RECOVERED";
+    keepBlock = true;
+  }
+  const std::string dxf =
+      "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n0\nENDSEC\n"
+      "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nBLOCK_RECORD\n70\n2\n"
+      "0\nBLOCK_RECORD\n5\n135\n330\n1\n100\nAcDbSymbolTableRecord\n"
+      "100\nAcDbBlockTableRecord\n2\n\n70\n0\n280\n1\n281\n0\n"
+      "0\nBLOCK_RECORD\n5\n138\n2\nNAMED\n70\n0\n280\n1\n281\n0\n"
+      "0\nENDTAB\n0\nENDSEC\n0\nSECTION\n2\nBLOCKS\n"
+      "0\nBLOCK\n5\n136\n330\n135\n8\n0\n2\n" + blockName +
+      "\n70\n0\n10\n0\n20\n0\n"
+      "0\nLINE\n5\n290\n8\n0\n10\n0\n20\n0\n11\n1\n21\n1\n"
+      "0\nENDBLK\n5\n137\n330\n135\n8\n0\n"
+      "0\nBLOCK\n5\n139\n330\n138\n8\n0\n70\n0\n10\n0\n20\n0\n"
+      "0\nLINE\n5\n296\n8\n0\n10\n2\n20\n2\n11\n3\n21\n3\n"
+      "0\nENDBLK\n5\n13A\n330\n138\n8\n0\n"
+      "0\nENDSEC\n0\nSECTION\n2\nENTITIES\n"
+      "0\nLINE\n5\n400\n8\n0\n10\n4\n20\n4\n11\n5\n21\n5\n"
+      "0\nENDSEC\n0\nEOF\n";
+
+  BlockCapture capture;
+  REQUIRE(tryReadDxf(dxf, capture, "lc_unnamed_block_record.dxf"));
+  REQUIRE(capture.m_blocks.size() == (keepBlock ? 2u : 1u));
+  CHECK(capture.m_blocks.back().name == "NAMED");
+  CHECK(capture.m_lineCount == (keepBlock ? 3 : 2));
+  CHECK(capture.m_endBlockCount == (keepBlock ? 2 : 1));
+  if (keepBlock)
+    CHECK(capture.m_blocks.front().name == "RECOVERED");
+}
+
+TEST_CASE("DXF unnamed BLOCK_RECORD still validates required fields and structure",
+          "[dxf][blockrecord][malformed][regression]") {
+  std::string fields = "5\n135\n2\n\n";
+  std::string endTable = "0\nENDTAB\n";
+  SECTION("missing name group") { fields = "5\n135\n"; }
+  SECTION("missing name group after a named record") {
+    fields = "5\n135\n2\nNAMED\n0\nBLOCK_RECORD\n5\n138\n";
+  }
+  SECTION("missing modern self handle") { fields = "2\n\n"; }
+  SECTION("null modern self handle") { fields = "5\n0\n2\n\n"; }
+  SECTION("invalid self handle") { fields = "5\nNOT_HEX\n2\n\n"; }
+  SECTION("duplicate self handle") {
+    fields += "0\nBLOCK_RECORD\n5\n135\n2\nNAMED\n";
+  }
+  SECTION("invalid explode flag") { fields += "280\n2\n"; }
+  SECTION("unbalanced application group") { fields += "102\n{BLKREFS\n"; }
+  SECTION("missing table terminator") { endTable.clear(); }
+  const std::string dxf =
+      "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n0\nENDSEC\n"
+      "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nBLOCK_RECORD\n"
+      "0\nBLOCK_RECORD\n" + fields + endTable + "0\nENDSEC\n0\nEOF\n";
+  StubInterface capture;
+  CHECK_FALSE(tryReadDxf(dxf, capture, "lc_unnamed_block_record_invalid.dxf"));
+}
+
 TEST_CASE("DXF BLOCK record boundaries are case-insensitive",
           "[dxf][block]") {
   BlockCapture cap;
