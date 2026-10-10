@@ -254,10 +254,13 @@ RS2::LineWidth widthFromNumber(double v) {
     return best;
 }
 
-// A character DXF cannot hold in a symbol name, of a linetype or of a layer.
+// A character DXF cannot hold in a symbol name, of a linetype or of a layer:
+// one Windows bars from a file name, or one of , ; = `.  Of the control
+// characters those are the ones below U+0020.  U+0080 to U+009F are what a
+// DBF in a code page this filter cannot decode is read as, and stay.
 bool notInSymbolName(const QChar c) {
     static const QString illegal = QStringLiteral("<>/\\\":;?*|,=`");
-    return c.category() == QChar::Other_Control || illegal.contains(c);
+    return c.unicode() < 0x20 || illegal.contains(c);
 }
 
 // A DBF value is free text.  It is kept as a linetype name only for the first

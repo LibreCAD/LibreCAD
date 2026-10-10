@@ -324,7 +324,7 @@ def write_minimal_dbf(basename: Path, n_records: int, fields=None):
             text = value(i) if callable(value) else value
             cell = text.rjust(width) if type_char == "N" else text.ljust(width)
             assert len(cell) == width, f"value {text!r} overflows width {width}"
-            row += cell.encode("ascii")
+            row += cell.encode("latin-1")  # so that a value can hold any byte
         records += row
     eof = b"\x1A"
     basename.with_suffix(".dbf").write_bytes(header + field_descriptors
@@ -439,10 +439,11 @@ def gen_dos_nparts(root: Path):
 
 
 # One POINT each: a name that is no built-in, a built-in in another case, an
-# ISO alias, a built-in padded with a tab, a tab only, a blank value, and two
-# values DXF cannot hold as a symbol name.
+# ISO alias, a built-in padded with a tab, a tab only, a blank value, two
+# values DXF cannot hold as a symbol name, and the bytes of a name in
+# Shift-JIS, which RS_FilterSHP cannot decode and reads as ISO-8859-1.
 LTYPE_POINT_VALUES = ["VENDOR_TAB", "Dashed", "ACAD_ISO02W100", "DASHED\t",
-                      "\t", "", "DASH/DOT", "DASH\tDOT"]
+                      "\t", "", "DASH/DOT", "DASH\tDOT", "\x94j\x90\xfc"]
 
 # One name more than the 256 RS_FilterSHP keeps from one import.
 LTYPE_MANY_VALUES = [f"NAME_{i:03d}" for i in range(1, 258)]

@@ -526,8 +526,10 @@ TEST_CASE("RS_FilterSHP: canExport is always false (import-only)",
 // ---------------------------------------------------------------------------
 // The DBF LTYPE column keeps its name.  ltype_point.* holds one POINT per
 // value: "VENDOR_TAB", which is no built-in, "Dashed", "ACAD_ISO02W100",
-// "DASHED\t", "\t", a blank one, and "DASH/DOT" and "DASH\tDOT", which DXF
-// cannot hold as a symbol name: both become "DASH_DOT".
+// "DASHED\t", "\t", a blank one, "DASH/DOT" and "DASH\tDOT", which DXF
+// cannot hold as a symbol name: both become "DASH_DOT", and the bytes of a
+// name in Shift-JIS, which the filter reads as ISO-8859-1, with U+0094 and
+// U+0090 in it.
 // ---------------------------------------------------------------------------
 
 namespace {
@@ -589,7 +591,7 @@ TEST_CASE("RS_FilterSHP: the DBF LTYPE column reaches the pen as a name",
     REQUIRE(filter.fileImport(graphic, path, RS2::FormatSHP));
 
     const std::vector<RS_Point*> points = importedPoints(graphic);
-    REQUIRE(points.size() == 8);
+    REQUIRE(points.size() == 9);
     // shapelib trims the spaces that pad a C field; the filter trims tabs too.
     CHECK(points[0]->getPen(false).getLineTypeName().toStdString()
           == "VENDOR_TAB");
@@ -599,7 +601,10 @@ TEST_CASE("RS_FilterSHP: the DBF LTYPE column reaches the pen as a name",
     CHECK(lineTypes == std::vector<RS2::LineType>{
                            RS2::SolidLine, RS2::DashLine, RS2::DashLine,
                            RS2::DashLine, RS2::LineByLayer, RS2::LineByLayer,
-                           RS2::SolidLine, RS2::SolidLine});
+                           RS2::SolidLine, RS2::SolidLine, RS2::SolidLine});
+    // U+0080 to U+009F are not the control characters a name cannot hold.
+    const QString misread = QString::fromLatin1("\x94j\x90\xfc");
+    CHECK(points[8]->getPen(false).getLineTypeName() == misread);
 
     const std::string out = (std::filesystem::temp_directory_path() /
                              "shp_named_linetype_out.dxf").string();
@@ -614,7 +619,8 @@ TEST_CASE("RS_FilterSHP: the DBF LTYPE column reaches the pen as a name",
     CHECK(recordGroupValues(out, "POINT", "6")
           == std::vector<std::string>{"VENDOR_TAB", "DASHED", "ACAD_ISO02W100",
                                       "DASHED", "ByLayer", "ByLayer",
-                                      "DASH_DOT", "DASH_DOT"});
+                                      "DASH_DOT", "DASH_DOT",
+                                      misread.toStdString()});
     // A shapefile has no LTYPE table, so the export gives each name a record:
     // no dashes for one LibreCAD does not know, the family's for the alias.
     CHECK(recordGroupValues(out, "LTYPE", "73", "VENDOR_TAB")
