@@ -373,7 +373,8 @@ readable records *and* had `numEntities > 0`.
      values as 24-bit RGB
    - linetype: `LINETYPE`, `LTYPE` — kept as the pen's linetype name, as from DXF, with
      `_` for a character DXF cannot hold in a symbol name (the first 256 distinct names of
-     an import); a name past those → `RS2::LineType` via the mapping `rs_filterdxfrw` uses
+     an import, reusing the first spelling for ASCII case and NFC-equivalent names);
+     a name past those → `RS2::LineType` via the mapping `rs_filterdxfrw` uses
      (`CONTINUOUS`, `DASHED`, …; unknown → `SolidLine`)
    - width: `WIDTH`, `LWEIGHT`, `LINEWT` — numeric → nearest `RS2::LineWidth`
    - label: `NAME`, `LABEL`, `TEXT` — for point shapes, adds an `RS_MText` next to the point

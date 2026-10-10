@@ -5,8 +5,8 @@ Generate the corpus-gap fixtures called out in Phase 4a of
 docs/plan_shp_native_filter.md, two for the DBF LTYPE column and one for the
 LAYER column.
 
-Produces (all under test_data/shp/, all genuinely NEW filenames — never
-touches existing pinned fixtures):
+Produces these generated fixtures under test_data/shp/ (existing files require
+--force; externally sourced fixtures are not modified):
 
   polygonz.shp / .shx     -- one SHPT_POLYGONZ record (single ring, 5 vertices,
                              Z-populated) exercising the POLYGONZ path in
@@ -37,10 +37,7 @@ touches existing pinned fixtures):
                              LAYER_POINT_VALUES, for the layer names
                              RS_FilterSHP creates.
 
-Pure-stdlib `struct`-packing.  No GDAL / no shapelib dependency; the
-generator is intentionally read-only against the corpus dir (it only
-creates files with new names) so re-running it can never regenerate an
-existing fixture.
+Pure-stdlib `struct`-packing. No GDAL / no shapelib dependency.
 
 SHP file layout — quick reference (ESRI whitepaper, cross-checked
 against libraries/shapelib/src/shpopen.cpp):
@@ -441,20 +438,22 @@ def gen_dos_nparts(root: Path):
 # One POINT each: a name that is no built-in, a built-in in another case, an
 # ISO alias, a built-in padded with a tab, a tab only, a blank value, two
 # values DXF cannot hold as a symbol name, and the bytes of a name in
-# Shift-JIS, which RS_FilterSHP cannot decode and reads as ISO-8859-1.
+# Shift-JIS, which RS_FilterSHP reads as ISO-8859-1, and NFC-equivalent UTF-8 names.
 LTYPE_POINT_VALUES = ["VENDOR_TAB", "Dashed", "ACAD_ISO02W100", "DASHED\t",
-                      "\t", "", "DASH/DOT", "DASH\tDOT", "\x94j\x90\xfc"]
+                      "\t", "", "DASH/DOT", "DASH\tDOT", "\x94j\x90\xfc",
+                      "Cafe\xcc\x81", "CAF\xc3\xa9"]
 
-# One name more than the 256 RS_FilterSHP keeps from one import, then a name it
-# has kept, the same in another letter case, and a built-in.
-LTYPE_MANY_VALUES = ([f"NAME_{i:03d}" for i in range(1, 258)]
+# 257 distinct names, with a case variant before the limit, then a kept name,
+# its case variant and a new built-in after the limit.
+LTYPE_MANY_VALUES = (["NAME_001", "name_001"]
+                     + [f"NAME_{i:03d}" for i in range(2, 258)]
                      + ["NAME_001", "name_001", "DASHED"])
 
 # One POINT each: two legal layer names, then names with a character DXF
 # cannot hold in a symbol name: a control character, or one of
-# < > / \ " : ; ? * | , = `
+# < > / \ " : ; ? * | , = `, then a name decoded through the Latin-1 fallback.
 LAYER_POINT_VALUES = ["ROADS", "Lot 7-A", "N/A", "1:500", "a|b", "*",
-                      "TAB\tIN", "CR\rLF\nIN", "<>/\\\":;?*|,=`"]
+                      "TAB\tIN", "CR\rLF\nIN", "<>/\\\":;?*|,=`", "\x94j\x90\xfc"]
 
 
 def write_column_points(root: Path, stem: str, column: str, values: list):

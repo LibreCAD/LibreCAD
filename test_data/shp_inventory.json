@@ -253,7 +253,7 @@
   "generated_linetype": [
     {
       "name": "ltype_point.shp",
-      "shp_size": 352,
+      "shp_size": 408,
       "has_shx": true,
       "has_prj": false,
       "generator": "scripts/make_shp_fixtures.py",
@@ -261,7 +261,7 @@
     },
     {
       "name": "ltype_many.shp",
-      "shp_size": 7380,
+      "shp_size": 7408,
       "has_shx": true,
       "has_prj": false,
       "generator": "scripts/make_shp_fixtures.py",
@@ -271,7 +271,7 @@
   "generated_layer": [
     {
       "name": "layer_point.shp",
-      "shp_size": 352,
+      "shp_size": 380,
       "has_shx": true,
       "has_prj": false,
       "generator": "scripts/make_shp_fixtures.py",
