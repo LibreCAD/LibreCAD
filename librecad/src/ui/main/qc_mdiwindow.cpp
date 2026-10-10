@@ -66,8 +66,8 @@ QC_MDIWindow::QC_MDIWindow(RS_Document* doc, QWidget* parent, const bool printPr
         m_document = new RS_Graphic();
         m_document->initForNewDocument();
 
-        QString autosaveFilePrefix = LC_GET_ONE_STR("Path", "AutosaveFilePrefix", "#");
-        QString autosaveFileName = QDir::tempPath() + "/" + autosaveFilePrefix + tr("Unnamed") + ".dxf";
+        const QString autosaveFileName = LC_DocumentsStorage{}.createAutoSaveFileName(
+            QFileInfo(QDir::tempPath() + "/" + tr("Unnamed") + ".dxf"));
         m_document->getGraphic()->setAutosaveFileName(autosaveFileName);
         m_document->getGraphic()->setFormatType(RS2::FormatDXFRW);
 
