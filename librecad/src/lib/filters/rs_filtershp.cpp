@@ -254,6 +254,12 @@ RS2::LineWidth widthFromNumber(double v) {
     return best;
 }
 
+// A character DXF cannot hold in a symbol name, of a linetype or of a layer.
+bool notInSymbolName(const QChar c) {
+    static const QString illegal = QStringLiteral("<>/\\\":;?*|,=`");
+    return c.category() == QChar::Other_Control || illegal.contains(c);
+}
+
 // A DBF value is free text.  It is kept as a linetype name only if DXF can
 // hold it as a symbol name, and only for the first kMaxLineTypeNames distinct
 // names of an import: a column with more is some other attribute, and each
@@ -262,11 +268,7 @@ RS2::LineWidth widthFromNumber(double v) {
 constexpr int kMaxLineTypeNames = 256;
 
 bool keepLineTypeName(const QString& name, QSet<QString>& kept) {
-    static const QString illegal = QStringLiteral("<>/\\\":;?*|,=`");
-    for (const QChar c : name) {
-        if (c.category() == QChar::Other_Control || illegal.contains(c))
-            return false;
-    }
+    if (std::any_of(name.cbegin(), name.cend(), notInSymbolName)) return false;
     if (kept.size() >= kMaxLineTypeNames && !kept.contains(name)) return false;
     kept.insert(name);
     return true;
@@ -309,8 +311,12 @@ std::optional<RS_Pen> penFromRecord(DBFHandle dbf, int record,
     return pen;
 }
 
-// Ensure a layer with the given name exists on @p g; return it.
-RS_Layer* ensureLayer(RS_Graphic& g, const QString& name) {
+// Ensure a layer with the given name exists on @p g; return it.  A character
+// DXF cannot hold in a symbol name becomes '_': AutoCAD refuses a layer with
+// one, and the DXF writer fails on a line break.
+RS_Layer* ensureLayer(RS_Graphic& g, QString name) {
+    std::replace_if(name.begin(), name.end(), notInSymbolName,
+                    QLatin1Char('_'));
     if (RS_Layer* existing = g.findLayer(name)) return existing;
     auto* layer = new RS_Layer(name);
     // Default pen — ByBlock via RS_Layer's default constructor.

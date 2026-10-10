@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 """
 Generate the corpus-gap fixtures called out in Phase 4a of
-docs/plan_shp_native_filter.md, and two for the DBF LTYPE column.
+docs/plan_shp_native_filter.md, two for the DBF LTYPE column and one for the
+LAYER column.
 
 Produces (all under test_data/shp/, all genuinely NEW filenames — never
 touches existing pinned fixtures):
@@ -32,6 +33,9 @@ touches existing pinned fixtures):
                              puts on the entity pen.
   ltype_many.shp/.shx/.dbf -- the same with LTYPE_MANY_VALUES, one name more
                              than RS_FilterSHP keeps from one import.
+  layer_point.shp/.shx/.dbf -- the same with a LAYER column of
+                             LAYER_POINT_VALUES, for the layer names
+                             RS_FilterSHP creates.
 
 Pure-stdlib `struct`-packing.  No GDAL / no shapelib dependency; the
 generator is intentionally read-only against the corpus dir (it only
@@ -443,12 +447,19 @@ LTYPE_POINT_VALUES = ["VENDOR_TAB", "Dashed", "ACAD_ISO02W100", "DASHED\t",
 # One name more than the 256 RS_FilterSHP keeps from one import.
 LTYPE_MANY_VALUES = [f"NAME_{i:03d}" for i in range(1, 258)]
 
+# One POINT each: two legal layer names, then names with a character DXF
+# cannot hold in a symbol name: a control character, or one of
+# < > / \ " : ; ? * | , = `
+LAYER_POINT_VALUES = ["ROADS", "Lot 7-A", "N/A", "1:500", "a|b", "*",
+                      "TAB\tIN", "CR\rLF\nIN", "<>/\\\":;?*|,=`"]
 
-def write_ltype_points(root: Path, stem: str, values: list):
-    """One POINT per value, at x = 10, 20, ... and y = 20.
 
-    RS_FilterSHP puts a LINETYPE or LTYPE column on the entity pen.  shapelib
-    trims the spaces that pad a C field, but not tabs."""
+def write_column_points(root: Path, stem: str, column: str, values: list):
+    """One POINT per value of a C(32) column, at x = 10, 20, ... and y = 20.
+
+    RS_FilterSHP puts a LINETYPE or LTYPE column on the entity pen, and names
+    a layer after each value of a LAYER, LEVEL or LYR column.  shapelib trims
+    the spaces that pad a C field, but not tabs."""
     xs = [10.0 * i for i in range(1, len(values) + 1)]
     y = 20.0
     write_shp_shx(root / stem, SHPT_POINT,
@@ -456,16 +467,16 @@ def write_ltype_points(root: Path, stem: str, values: list):
                   bbox=(xs[0], y, xs[-1], y, 0.0, 0.0, 0.0, 0.0))
     write_minimal_dbf(root / stem, n_records=len(xs),
                       fields=DEFAULT_DBF_FIELDS
-                      + [("LTYPE", "C", 32, 0, lambda i: values[i - 1])])
+                      + [(column, "C", 32, 0, lambda i: values[i - 1])])
 
 
 # ---- inventory update ------------------------------------------------------
 
 def update_inventory(root: Path):
     """Add the newly-generated fixtures to test_data/shp_inventory.json under
-    the "generated_z_types", "generated_hostile" and "generated_linetype"
-    buckets so their expected sizes/types can be cross-checked
-    programmatically."""
+    the "generated_z_types", "generated_hostile", "generated_linetype" and
+    "generated_layer" buckets so their expected sizes/types can be
+    cross-checked programmatically."""
     inv_path = root.parent / "shp_inventory.json"
     if not inv_path.exists():
         print(f"[warn] {inv_path} not found — skipping inventory update",
@@ -512,6 +523,12 @@ def update_inventory(root: Path):
          "generator": "scripts/make_shp_fixtures.py",
          "expect": "the first 256 of 257 LTYPE names stay on the pen"},
     ]
+    inv["generated_layer"] = [
+        {"name": "layer_point.shp", "shp_size": sz("layer_point.shp"),
+         "has_shx": True, "has_prj": False,
+         "generator": "scripts/make_shp_fixtures.py",
+         "expect": "each DBF LAYER value becomes a legal layer name"},
+    ]
     with inv_path.open("w", encoding="utf-8") as f:
         json.dump(inv, f, indent=2)
         f.write("\n")
@@ -546,6 +563,7 @@ def main():
         "dos_nparts.shp", "dos_nparts.shx",
         "ltype_point.shp", "ltype_point.shx", "ltype_point.dbf",
         "ltype_many.shp", "ltype_many.shx", "ltype_many.dbf",
+        "layer_point.shp", "layer_point.shx", "layer_point.dbf",
     ]
     existing = [f for f in generated if (root / f).exists()]
     if existing and not args.force:
@@ -559,8 +577,9 @@ def main():
     gen_multipatch(root)
     gen_dos_npoints(root)
     gen_dos_nparts(root)
-    write_ltype_points(root, "ltype_point", LTYPE_POINT_VALUES)
-    write_ltype_points(root, "ltype_many", LTYPE_MANY_VALUES)
+    write_column_points(root, "ltype_point", "LTYPE", LTYPE_POINT_VALUES)
+    write_column_points(root, "ltype_many", "LTYPE", LTYPE_MANY_VALUES)
+    write_column_points(root, "layer_point", "LAYER", LAYER_POINT_VALUES)
     update_inventory(root)
     print(f"Wrote {len(generated)} fixture file(s) to {root}")
     return 0

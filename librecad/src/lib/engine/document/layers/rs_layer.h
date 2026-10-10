@@ -75,11 +75,20 @@ public:
 
     explicit RS_Layer(const QString& name);
     //RS_Layer(const char* name);
+    RS_Layer(const RS_Layer&) = default;
+    /** Copies @p other; a new name counts in nameChanges(), as in setName(). */
+    RS_Layer& operator=(const RS_Layer& other);
 
     RS_Layer* clone() const;
 
     /** sets a new name for this layer. */
     void setName(const QString& name);
+
+    /**
+     * @return a count that grows each time any layer gets another name. While
+     * it stays the same, a layer list is still sorted and indexed by name.
+     */
+    static unsigned nameChanges();
 
     /** @return the name of this layer. */
     QString getName() const;

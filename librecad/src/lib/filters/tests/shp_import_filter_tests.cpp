@@ -409,9 +409,9 @@ TEST_CASE("RS_FilterSHP: malformed_dbf.shp -> false, no crash",
 
 // ---------------------------------------------------------------------------
 // Phase-4a generated fixtures — Z types and MULTIPATCH parts + CVE-class DoS.
-// These and ltype_*.* are the only fixtures under test_data/shp/ produced
-// by scripts/make_shp_fixtures.py; the rest of the corpus is fixed reference
-// data.  See the plan's Phase 4a for the rationale.
+// These, ltype_*.* and layer_point.* are the only fixtures under
+// test_data/shp/ produced by scripts/make_shp_fixtures.py; the rest of the
+// corpus is fixed reference data.  See the plan's Phase 4a for the rationale.
 // ---------------------------------------------------------------------------
 
 // NOLINTNEXTLINE(readability-identifier-naming)
@@ -646,4 +646,50 @@ TEST_CASE("RS_FilterSHP: an import keeps its first 256 linetype names",
         CHECK(pen.hasLineTypeName() == (i < 256));
         CHECK(pen.getLineType() == RS2::SolidLine);
     }
+}
+
+// ---------------------------------------------------------------------------
+// The DBF LAYER column names layers DXF can hold.  layer_point.* holds one
+// POINT per value: two legal layer names, then names with a control character
+// or one of <>/\":;?*|,=` which AutoCAD refuses in a layer name; a line break
+// also made the DXF export fail.
+// ---------------------------------------------------------------------------
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_FilterSHP: a DBF LAYER value becomes a legal layer name",
+          "[shp][filter][layer]") {
+    ensureQtContext();
+    const QString path = corpusPath("layer_point.shp");
+    REQUIRE(std::filesystem::is_regular_file(path.toStdString()));
+
+    RS_Graphic graphic;
+    RS_FilterSHP filter;
+    REQUIRE(filter.fileImport(graphic, path, RS2::FormatSHP));
+
+    const std::vector<std::string> expected{
+        "ROADS", "Lot 7-A", "N_A", "1_500", "a_b", "_", "TAB_IN", "CR_LF_IN",
+        "_____________"};
+    std::vector<std::string> layers;
+    for (const RS_Point* point : importedPoints(graphic))
+        layers.push_back(point->getLayer()->getName().toStdString());
+    CHECK(layers == expected);
+
+    const std::string out = (std::filesystem::temp_directory_path() /
+                             "shp_layer_name_out.dxf").string();
+    std::filesystem::remove(out);
+    {
+        RS_FilterDXFRW dxf;
+        REQUIRE(dxf.fileExport(graphic, QString::fromStdString(out),
+                               RS2::FormatDXFRW));
+    }
+    CHECK(recordGroupValues(out, "POINT", "8") == expected);
+    // The LAYER table holds the same names, and layer "0".
+    std::vector<std::string> names = expected;
+    names.push_back("0");
+    std::vector<std::string> records = recordGroupValues(out, "LAYER", "2");
+    std::sort(names.begin(), names.end());
+    std::sort(records.begin(), records.end());
+    CHECK(records == names);
+
+    std::filesystem::remove(out);
 }

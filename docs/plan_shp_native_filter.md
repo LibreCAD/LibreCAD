@@ -366,7 +366,8 @@ readable records *and* had `numEntities > 0`.
    `QStringDecoder` (UTF-8, LDID/87→Latin-1, common LDID table); fallback: try UTF-8, on
    invalid sequences re-decode Latin-1. Fixtures `utf8-property`/`latin1-property` pin this.
 2. **Field auto-detection** (case-insensitive, first match):
-   - layer: `LAYER`, `LEVEL`, `LYR`
+   - layer: `LAYER`, `LEVEL`, `LYR` — a layer per value; a character DXF cannot hold in
+     a symbol name becomes `_`
    - color: `COLOR`, `COLOUR` — value `0-255` treated as AutoCAD color index (reuse the
      ACI→`RS_Color` mapping from `rs_filterdxfrw.cpp`, `numberToColor`-equivalent), larger
      values as 24-bit RGB

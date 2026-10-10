@@ -40,9 +40,28 @@ RS_Layer* RS_Layer::clone() const {
     return new RS_Layer(*this);
 }
 
+namespace {
+// See RS_Layer::nameChanges(). No lock: the engine is single-threaded.
+unsigned g_nameChanges = 0;
+} // namespace
+
+RS_Layer& RS_Layer::operator=(const RS_Layer& other) {
+    setName(other.m_data.name);
+    m_data = other.m_data;
+    m_layerType = other.m_layerType;
+    return *this;
+}
+
 /** sets a new name for this layer. */
 void RS_Layer::setName(const QString& name) {
+    if (m_data.name != name) {
+        ++g_nameChanges;
+    }
     m_data.name = name;
+}
+
+unsigned RS_Layer::nameChanges() {
+    return g_nameChanges;
 }
 
 /** @return the name of this layer. */

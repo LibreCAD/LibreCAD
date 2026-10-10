@@ -36,6 +36,16 @@
 #include "rs_layer.h"
 #include "rs_layerlistlistener.h"
 
+namespace {
+bool byName(const RS_Layer* l0, const RS_Layer* l1) {
+    return l0->getName() < l1->getName();
+}
+
+QString nameKey(const QString& name) {
+    return name.normalized(QString::NormalizationForm_C);
+}
+} // namespace
+
 /**
  * Default constructor.
  */
@@ -55,6 +65,7 @@ RS_LayerList::~RS_LayerList() {
     QList<RS_Layer*> removed;
     removed.swap(m_layers);
     m_layerSet.clear();
+    m_byName.clear();
     m_activeLayer = nullptr;
     m_layerListListeners.drain([](RS_LayerListListener* listener) {
         listener->layerListDestroyed();
@@ -73,6 +84,7 @@ void RS_LayerList::clear() {
     QList<RS_Layer*> removed;
     removed.swap(m_layers);
     m_layerSet.clear();
+    m_byName.clear();
     m_activeLayer = nullptr;
     setModified(true);
     for (const auto l : std::as_const(m_layerListListeners)) {
@@ -134,10 +146,8 @@ void RS_LayerList::activate(RS_Layer* layer, const bool notify) {
  * @brief sort by layer names
  */
 void RS_LayerList::sort() {
-    std::stable_sort(m_layers.begin(), m_layers.end(), [](const RS_Layer* l0, const RS_Layer* l1)-> bool
-    {
-        return l0->getName() < l1->getName();
-    });
+    std::stable_sort(m_layers.begin(), m_layers.end(), byName);
+    m_sortedAt = RS_Layer::nameChanges();
 }
 
 void RS_LayerList::fireLayerAdded(RS_Layer* layer) const {
@@ -164,9 +174,16 @@ void RS_LayerList::add(RS_Layer* layerToAdd) {
     // check if layer already exists:
     RS_Layer* existingLayer = find(layerToAdd->getName());
     if (existingLayer == nullptr) {
-        m_layers.append(layerToAdd);
+        if (m_sortedAt == RS_Layer::nameChanges()) {
+            // still sorted: the place a stable sort would move the layer to
+            m_layers.insert(std::upper_bound(m_layers.cbegin(), m_layers.cend(), layerToAdd, byName), layerToAdd);
+        }
+        else {
+            m_layers.append(layerToAdd);
+            this->sort();
+        }
         m_layerSet.insert(layerToAdd);
-        this->sort();
+        m_byName.insert(nameKey(layerToAdd->getName()), layerToAdd);
         // notify listeners
         fireLayerAdded(layerToAdd);
         setModified(true);
@@ -218,6 +235,7 @@ void RS_LayerList::remove(RS_Layer* layerToRemove) {
     // here the layer is removed from the list but not deleted
     m_layers.removeOne(layerToRemove);
     m_layerSet.remove(layerToRemove);
+    m_byName.clear(); // find() indexes the layers that are left
 
     setModified(true);
 
@@ -262,15 +280,15 @@ RS_Layer* RS_LayerList::find(const QString& name) {
     // fixme - sand - merge - copypaste
     // NFC-normalize both sides so a layer round-tripped through tools that
     // emit decomposed (NFD) Unicode still matches a composed (NFC) lookup.
-    const QString k = name.normalized(QString::NormalizationForm_C);
-    RS_Layer* ret = nullptr;
-    for (auto l : m_layers) {
-        if (l->getName().normalized(QString::NormalizationForm_C) == k) {
-            ret = l;
-            break;
+    if (m_indexedAt != RS_Layer::nameChanges() || m_byName.size() != m_layers.size()) {
+        // Last to first, so that of two layers of one name the first is found.
+        m_byName.clear();
+        for (auto it = m_layers.crbegin(); it != m_layers.crend(); ++it) {
+            m_byName.insert(nameKey((*it)->getName()), *it);
         }
+        m_indexedAt = RS_Layer::nameChanges();
     }
-    return ret;
+    return m_byName.value(nameKey(name));
 }
 
 /**
