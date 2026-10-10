@@ -445,8 +445,10 @@ def gen_dos_nparts(root: Path):
 LTYPE_POINT_VALUES = ["VENDOR_TAB", "Dashed", "ACAD_ISO02W100", "DASHED\t",
                       "\t", "", "DASH/DOT", "DASH\tDOT", "\x94j\x90\xfc"]
 
-# One name more than the 256 RS_FilterSHP keeps from one import.
-LTYPE_MANY_VALUES = [f"NAME_{i:03d}" for i in range(1, 258)]
+# One name more than the 256 RS_FilterSHP keeps from one import, then a name it
+# has kept, the same in another letter case, and a built-in.
+LTYPE_MANY_VALUES = ([f"NAME_{i:03d}" for i in range(1, 258)]
+                     + ["NAME_001", "name_001", "DASHED"])
 
 # One POINT each: two legal layer names, then names with a character DXF
 # cannot hold in a symbol name: a control character, or one of
@@ -522,7 +524,7 @@ def update_inventory(root: Path):
         {"name": "ltype_many.shp", "shp_size": sz("ltype_many.shp"),
          "has_shx": True, "has_prj": False,
          "generator": "scripts/make_shp_fixtures.py",
-         "expect": "the first 256 of 257 LTYPE names stay on the pen"},
+         "expect": "the first 256 LTYPE names stay on the pen, in any case"},
     ]
     inv["generated_layer"] = [
         {"name": "layer_point.shp", "shp_size": sz("layer_point.shp"),

@@ -634,7 +634,8 @@ TEST_CASE("RS_FilterSHP: the DBF LTYPE column reaches the pen as a name",
 }
 
 // Each name takes a place in the pen's name table, which the session shares,
-// so an import keeps the first 256.  ltype_many.* holds 257, none a built-in.
+// so an import keeps the first 256.  ltype_many.* holds 257, none a built-in,
+// then "NAME_001" again, "name_001" and "DASHED".
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("RS_FilterSHP: an import keeps its first 256 linetype names",
           "[shp][filter][linetype][named]") {
@@ -647,13 +648,21 @@ TEST_CASE("RS_FilterSHP: an import keeps its first 256 linetype names",
     REQUIRE(filter.fileImport(graphic, path, RS2::FormatSHP));
 
     const std::vector<RS_Point*> points = importedPoints(graphic);
-    REQUIRE(points.size() == 257);
-    for (size_t i = 0; i < points.size(); ++i) {
+    REQUIRE(points.size() == 260);
+    for (size_t i = 0; i < 257; ++i) {
         CAPTURE(i);
         const RS_Pen pen = points[i]->getPen(false);
         CHECK(pen.hasLineTypeName() == (i < 256));
         CHECK(pen.getLineType() == RS2::SolidLine);
     }
+    // Past the 256th name, one the import has kept stays, in any letter case
+    // and by its first spelling; any other folds to its built-in.
+    CHECK(points[257]->getPen(false).getLineTypeName().toStdString()
+          == "NAME_001");
+    CHECK(points[258]->getPen(false).getLineTypeName().toStdString()
+          == "NAME_001");
+    CHECK_FALSE(points[259]->getPen(false).hasLineTypeName());
+    CHECK(points[259]->getPen(false).getLineType() == RS2::DashLine);
 }
 
 // ---------------------------------------------------------------------------

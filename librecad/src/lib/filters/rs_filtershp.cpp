@@ -34,8 +34,8 @@
 #include <QByteArray>
 #include <QFile>
 #include <QFileInfo>
+#include <QHash>
 #include <QObject>
-#include <QSet>
 #include <QString>
 #include <QStringConverter>
 
@@ -265,13 +265,21 @@ bool notInSymbolName(const QChar c) {
 
 // A DBF value is free text.  It is kept as a linetype name only for the first
 // kMaxLineTypeNames distinct names of an import: a column with more is some
-// other attribute, and each name takes one of the 65535 places in the pen's
-// name table, which the whole session shares.
+// other attribute, and each spelling takes one of the 65535 places in the
+// pen's name table, which the whole session shares.  Spellings that differ
+// only in letter case are one name, to the pen and to DXF, so @p kept maps a
+// folded name to its first spelling, which @p name takes.
 constexpr int kMaxLineTypeNames = 256;
 
-bool keepLineTypeName(const QString& name, QSet<QString>& kept) {
-    if (kept.size() >= kMaxLineTypeNames && !kept.contains(name)) return false;
-    kept.insert(name);
+bool keepLineTypeName(QString& name, QHash<QString, QString>& kept) {
+    const QString fold = LC_LineTypeNames::foldName(name);
+    const auto known = kept.constFind(fold);
+    if (known != kept.constEnd()) {
+        name = known.value();
+        return true;
+    }
+    if (kept.size() >= kMaxLineTypeNames) return false;
+    kept.insert(fold, name);
     return true;
 }
 
@@ -281,7 +289,7 @@ bool keepLineTypeName(const QString& name, QSet<QString>& kept) {
 std::optional<RS_Pen> penFromRecord(DBFHandle dbf, int record,
                                     const ResolvedFields& rf,
                                     const QString& codepage,
-                                    QSet<QString>& lineTypeNames) {
+                                    QHash<QString, QString>& lineTypeNames) {
     if (!dbf || record < 0) return std::nullopt;
     bool any = false;
     RS_Pen pen{RS_Color(RS2::FlagByLayer), RS2::WidthByLayer, RS2::LineByLayer};
@@ -475,7 +483,7 @@ bool RS_FilterSHP::fileImport(RS_Graphic& g, const QString& file,
 
     LC_ShpImportOptions opts;
     const ResolvedFields rf = resolveFields(dbf.get(), opts);
-    QSet<QString> lineTypeNames;
+    QHash<QString, QString> lineTypeNames;
 
     RS_Layer* defaultLayer = ensureLayer(g, "0");
     int emitted = 0, skipped = 0;
