@@ -29,8 +29,9 @@
 //
 // Freeing the layers is only safe if nothing keeps a pointer to a layer of a
 // drawing that is gone. The paths that move entities between drawings
-// (clipboard copy and paste, library insert) are exercised here with the
-// source drawing destroyed before its entities are used again.
+// (clipboard copy and paste, library insert, a plugin's block from disk) are
+// exercised here with the source drawing destroyed before its entities are
+// used again.
 
 #include <functional>
 #include <initializer_list>
@@ -38,12 +39,17 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+#include <QTemporaryDir>
+
+#include "doc_plugin_interface.h"
 #include "lc_actiontestsupport.h"
 #include "lc_copyutils.h"
 #include "lc_documentinvariants.h"
 #include "rs_block.h"
 #include "rs_circle.h"
 #include "rs_clipboard.h"
+#include "rs_creation.h"
+#include "rs_fileio.h"
 #include "rs_graphic.h"
 #include "rs_insert.h"
 #include "rs_layer.h"
@@ -125,6 +131,10 @@ void checkOwnLayers(RS_Graphic& graphic) {
             if (e == nullptr) {
                 continue;
             }
+            // the entity's own pointer: getLayer(true) answers nullptr for a
+            // layer that is not the drawing's, which hides it
+            RS_Layer* own = e->getLayer(false);
+            CHECK((own == nullptr || layers->contains(own)));
             const RS_Layer* layer = e->getLayer(true);
             if (layer != nullptr) {
                 CHECK(layers->contains(const_cast<RS_Layer*>(layer)));
@@ -141,6 +151,17 @@ void checkOwnLayers(RS_Graphic& graphic) {
     for (unsigned i = 0; i < graphic.countBlocks(); ++i) {
         walk(*graphic.blockAt(i));
     }
+}
+
+// Copies the entity to the clipboard and pastes it into the other drawing.
+void copyAndPaste(Drawing& source, RS_Entity* entity, Drawing& destination) {
+    QList<RS_Entity*> selection{entity};
+    source.m_graphic.select(selection, true);
+    LC_CopyUtils::copy(RS_Vector{0, 0}, selection, &source.m_graphic);
+    destination.modify([&](LC_DocumentModificationBatch& ctx) {
+        LC_CopyUtils::paste(LC_CopyUtils::RS_PasteData(RS_Vector{0, 100}), &destination.m_graphic, ctx);
+        ctx.dontSetActiveLayerAndPen();
+    });
 }
 
 } // namespace
@@ -371,9 +392,9 @@ TEST_CASE("A drawing frees its layers when re-initialised and destroyed", "[laye
 }
 
 // The clipboard copies the insert and the blocks it needs onto its own layers,
-// but keeps the insert's expansion children as they were (see
-// LC_CopyUtils::doCopyEntityLayer), still naming the source's layers. Those
-// layers are freed with the source drawing, before the paste.
+// and rebuilds the expansion children of the inserts from its own blocks (see
+// LC_CopyUtils::doCopyBlock): as copied they name the source's layers, which
+// are freed with the source drawing, before the paste.
 TEST_CASE("An insert copied to the clipboard pastes after its drawing is closed", "[layers][ownership][copy]") {
     auto source = std::make_unique<Drawing>();
     RS_Layer* walls = source->addLayer(QStringLiteral("WALLS"));
@@ -384,6 +405,7 @@ TEST_CASE("An insert copied to the clipboard pastes after its drawing is closed"
     source->m_graphic.select(selection, true);
     LC_CopyUtils::copy(RS_Vector{0, 0}, selection, &source->m_graphic);
     source.reset();
+    checkOwnLayers(*RS_CLIPBOARD->getGraphic());
 
     Drawing destination;
     destination.modify([&](LC_DocumentModificationBatch& ctx) {
@@ -402,6 +424,51 @@ TEST_CASE("An insert copied to the clipboard pastes after its drawing is closed"
     checkOwnLayers(destination.m_graphic);
 }
 
+// In the next two tests the source stays open, so that its layers keep their
+// addresses: a pointer to one of them then cannot pass for a layer that the
+// destination allocated in its place, as it can above.
+
+// A block is copied with the expansion children of the inserts in it, which
+// name the layers of the drawing it comes from, and nothing rebuilt those.
+TEST_CASE("An insert in a pasted block keeps no layer of the drawing it was copied from", "[layers][ownership][copy]") {
+    Drawing source;
+    RS_Insert* door = source.addNestedInsert(source.addLayer(QStringLiteral("WALLS")));
+    Drawing destination;
+    copyAndPaste(source, door, destination);
+    checkOwnLayers(*RS_CLIPBOARD->getGraphic());
+    checkOwnLayers(destination.m_graphic);
+
+    // The knob in the pasted DOOR is on WALLS, as it was.
+    const RS_Block* ownDoor = destination.m_graphic.findBlock(QStringLiteral("DOOR"));
+    REQUIRE(ownDoor != nullptr);
+    REQUIRE(ownDoor->count() == 2);
+    const RS_Entity* knob = ownDoor->entityAt(1);
+    REQUIRE(knob->rtti() == RS2::EntityInsert);
+    REQUIRE(knob->count() == 1);
+    CHECK(static_cast<const RS_Insert*>(knob)->entityAt(0)->getLayer(false)
+          == destination.m_graphic.findLayer(QStringLiteral("WALLS")));
+}
+
+// RS_ActionBlocksCreate makes a block of a selection with
+// RS_Creation::createBlock(), which gives it no parent: nothing then tells
+// which drawing's layers its entities are on, so they cannot be put on the
+// destination's layers of the same names. They must not keep the source's.
+TEST_CASE("A pasted block that was made from a selection keeps no layer of the drawing it was copied from",
+          "[layers][ownership][copy]") {
+    Drawing source;
+    RS_Layer* walls = source.addLayer(QStringLiteral("WALLS"));
+    auto* line = new RS_Line(&source.m_graphic, RS_LineData(RS_Vector{0, 0}, RS_Vector{1, 0}));
+    line->setLayer(walls);
+    source.m_graphic.addEntity(line);
+    const RS_BlockData made(QStringLiteral("MADE"), RS_Vector{0, 0}, false);
+    source.m_graphic.addBlock(RS_Creation::createBlock(&made, RS_Vector{0, 0}, {line}));
+
+    Drawing destination;
+    copyAndPaste(source, source.addInsert(QStringLiteral("MADE"), walls), destination);
+    checkOwnLayers(*RS_CLIPBOARD->getGraphic());
+    checkOwnLayers(destination.m_graphic);
+}
+
 TEST_CASE("A library insert keeps nothing of the library drawing's layers", "[layers][ownership][copy]") {
     auto library = std::make_unique<Drawing>();
     RS_Layer* walls = library->addLayer(QStringLiteral("WALLS"));
@@ -414,6 +481,26 @@ TEST_CASE("A library insert keeps nothing of the library drawing's layers", "[la
     });
     library.reset();
     destination.m_graphic.updateInserts();
+
+    REQUIRE(destination.m_graphic.findLayer(QStringLiteral("WALLS")) != nullptr);
+    checkOwnLayers(destination.m_graphic);
+}
+
+// Doc_plugin_interface::addBlockfromFromdisk() reads the file into a drawing of
+// its own, which is gone when it returns.
+TEST_CASE("A plugin's block from disk keeps nothing of the layers of the drawing its file was read into",
+          "[layers][ownership][copy]") {
+    const QTemporaryDir directory;
+    const QString path = directory.filePath(QStringLiteral("part.dxf"));
+    {
+        Drawing part;
+        part.addNestedInsert(part.addLayer(QStringLiteral("WALLS")));
+        REQUIRE(RS_FileIO::instance()->fileExport(part.m_graphic, path, RS2::FormatDXFRW));
+    }
+
+    Drawing destination;
+    Doc_plugin_interface plugin(&destination.m_context, nullptr);
+    REQUIRE_FALSE(plugin.addBlockfromFromdisk(path).isEmpty());
 
     REQUIRE(destination.m_graphic.findLayer(QStringLiteral("WALLS")) != nullptr);
     checkOwnLayers(destination.m_graphic);

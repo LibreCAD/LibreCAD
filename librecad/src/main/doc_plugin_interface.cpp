@@ -1029,6 +1029,8 @@ QString Doc_plugin_interface::addBlockfromFromdisk(const QString fullName) {
             b->addEntity(e);
         }
         m_docGr->addBlock(b);
+        // as in LC_CopyUtils::doCopyBlock(): the expansions of its inserts are those of g, which is about to go
+        b->updateInserts();
         return name;
     }
     return nullptr;
