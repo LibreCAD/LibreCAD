@@ -160,13 +160,18 @@ Windows CI continues using CMake.
 
 ### Building Unit Tests
 
-To build unit tests (e.g., for `rs_math.cpp`), enable the `BUILD_TESTS` flag:
+The unit tests are not part of the default build. Enable the `BUILD_TESTS` flag
+and build the `librecad_tests` target:
 
 ```bash
-cmake -DBUILD_TESTS=ON ..
-make
+git submodule update --init externals/Catch2   # unless Catch2 v3 is installed
+cmake -B build -DBUILD_TESTS=ON
+cmake --build build --target librecad_tests
 ./build/librecad_tests
 ```
+
+With Pixi, `pixi run build-tests` builds them in the build directory of
+`pixi run build`. Pixi CI does this on Linux; it does not run the tests.
 
 
 ## Contributing

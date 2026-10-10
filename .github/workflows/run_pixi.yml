@@ -18,6 +18,9 @@ jobs:
     steps:
     - uses: actions/checkout@v6
       name: Checkout
+      with:
+        # Catch2, for the one lane that builds the tests (the last step)
+        submodules: ${{ matrix.os == 'ubuntu-latest' }}
 
     - uses: prefix-dev/setup-pixi@v0.8.1
       with:
@@ -25,3 +28,13 @@ jobs:
         cache: true
     - name: Build and check plugin and resource installation
       run: pixi run check-resource-install
+
+    # No other job builds librecad_tests, which is not part of the default build. The Linux
+    # environments of pixi.lock pair a recent GCC with conda-forge's glibc 2.17 sysroot, an
+    # older C library than a developer's machine has: test code that compiles on macOS, on
+    # Windows and on a current distribution can still fail to compile there (#3035). The tests
+    # are built in the build directory of the step above, where the application library they
+    # link is already compiled. They are not run.
+    - name: Build the test executable
+      if: matrix.os == 'ubuntu-latest'
+      run: pixi run build-tests
