@@ -45,6 +45,7 @@ public:
     bool loadDocument(const RS_Document *document, const QString &fileName, RS2::FormatType type) const;
     bool loadDocument(const RS_Document *document, const QString &fileName) const;
     bool loadDocumentFromTemplate(const RS_Document *document, const RS_GraphicView *graphicView, const QString &fileName, RS2::FormatType type) const;
+    QString createAutoSaveFileName(const QFileInfo &fileInfo) const;
 protected:
     bool doSaveGraphicAs(RS_Graphic* graphic, RS_GraphicView *graphicView, bool &cancelled, const QString& currentFileName = "",
                          RS2::FormatType preferredType = RS2::FormatUnknown);
@@ -58,7 +59,6 @@ protected:
     bool saveGraphicAs(RS_Graphic *graphic, const QString &filename, RS2::FormatType type, bool forceSave);
     bool backupDrawingFile(const QString &drawingFileName);
     bool backupDrawingFile(const QString &drawingFileName, const QString &backupSuffix);
-    QString createAutoSaveFileName(const QFileInfo &fileInfo) const;
     QString createAutoSaveFileName(const QFileInfo &fileInfo, const QString &filePrefix) const;
     QString createAutoSaveFileName(const QString &path, const QString &filePrefix, const QString &fileName) const;
 };

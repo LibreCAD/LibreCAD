@@ -5108,6 +5108,13 @@
             </item>
            </widget>
           </item>
+          <item row="4" column="0" colspan="3">
+           <widget class="QCheckBox" name="cbHideBackupFiles">
+            <property name="text">
+             <string>Hide backup and autosave files</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
@@ -5622,7 +5629,7 @@
          </layout>
         </widget>
        </item>
-       <item row="3" column="0" colspan="2">
+       <item row="4" column="1">
         <widget class="QGroupBox" name="groupBoxDrawFast">
          <property name="title">
           <string>Draw Fast Defaults</string>

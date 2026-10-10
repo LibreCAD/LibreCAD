@@ -23,6 +23,11 @@
 #include "lc_documentsstorage.h"
 
 #include <QApplication>
+#include <QDir>
+
+#ifdef Q_OS_WIN
+#include <qt_windows.h>
+#endif
 
 #include "lc_filedialogservice.h"
 #include "qg_filedialog.h"
@@ -36,6 +41,39 @@
 #include "rs_settings.h"
 
 namespace {
+    QString backupFilePath(const QString& path) {
+#ifndef Q_OS_WIN
+        const QFileInfo info(path);
+        if (LC_GET_ONE_BOOL("Defaults", "HideBackupFiles", true) && !info.fileName().startsWith('.')) {
+            return info.dir().filePath("." + info.fileName());
+        }
+#endif
+        return path;
+    }
+
+    void hideBackupFile([[maybe_unused]] const QString& path) {
+#ifdef Q_OS_WIN
+        if (!LC_GET_ONE_BOOL("Defaults", "HideBackupFiles", true)) {
+            return;
+        }
+        QString nativePath = QDir::toNativeSeparators(QDir::cleanPath(QFileInfo(path).absoluteFilePath()));
+        if (!nativePath.startsWith("\\\\?\\")) {
+            if (nativePath.startsWith("\\\\")) {
+                nativePath = "\\\\?\\UNC\\" + nativePath.mid(2);
+            } else {
+                nativePath.prepend("\\\\?\\");
+            }
+        }
+        const auto* fileName = reinterpret_cast<const wchar_t*>(nativePath.utf16());
+        const DWORD attributes = GetFileAttributesW(fileName);
+        if (attributes == INVALID_FILE_ATTRIBUTES
+            || !SetFileAttributesW(fileName, (attributes & ~FILE_ATTRIBUTE_NORMAL) | FILE_ATTRIBUTE_HIDDEN)) {
+            const DWORD error = GetLastError();
+            LC_ERR << "Could not hide backup file " << path << ": Windows error " << error;
+        }
+#endif
+    }
+
     /**
      * Whether Save can write the drawing back to its file, in the format the
      * file was read from. It cannot for a format LibreCAD only reads, such as
@@ -166,8 +204,7 @@ bool LC_DocumentsStorage::loadDocumentFromTemplate(const RS_Document* document, 
  * Loads the given file into this graphic.
  */
 bool LC_DocumentsStorage::loadGraphicFromTemplate(RS_Graphic* graphic, const QString &templateFileName, const RS2::FormatType type) const {
-    const QString autosaveFilePrefix = LC_GET_ONE_STR("Path", "AutosaveFilePrefix", "#");
-    const QString autosaveFilename = createAutoSaveFileName(QDir::tempPath (), autosaveFilePrefix, tr("Unnamed")+".dxf");
+    const QString autosaveFilename = createAutoSaveFileName(QFileInfo(QDir::tempPath() + "/" + tr("Unnamed") + ".dxf"));
 
     // clean all:
     graphic->initForNewDocument();
@@ -270,6 +307,9 @@ bool LC_DocumentsStorage::autoSaveGraphic(RS_Graphic* graphic, QString& fileName
         if (!autosaveFileName.isEmpty()) {
             RS_DEBUG->print("LC_DocumentsStorage::autoSaveGraphic: attempting export to '%s'", autosaveFileName.toLatin1().data());
             ret = RS_FileIO::instance()->fileExport(*graphic, autosaveFileName, actualType);
+            if (ret) {
+                hideBackupFile(autosaveFileName);
+            }
             RS_DEBUG->print("LC_DocumentsStorage::autoSaveGraphic: export result=%d", ret);
             /*
              fixme - sand - don't mark file as non-modified on auto-save.
@@ -318,8 +358,7 @@ bool LC_DocumentsStorage::saveGraphicAs(RS_Graphic* graphic, const QString &file
 
     const QFileInfo finfo(filename);
 
-    // Construct new autosave filename by prepending # to the filename
-    // part, using the same directory as the destination file.
+    // Keep the recovery copy beside the destination drawing.
     const QString autosaveFileName = createAutoSaveFileName(finfo);
     graphic->setAutosaveFileName(autosaveFileName);
 
@@ -354,8 +393,8 @@ bool LC_DocumentsStorage::backupDrawingFile(const QString &drawingFileName) {
 
 bool LC_DocumentsStorage::backupDrawingFile(const QString &drawingFileName, const QString& backupSuffix) {
     bool ret = false;
-    if (drawingFileName.length() > 0) {
-        const auto backupFileName = QString(drawingFileName + backupSuffix);
+    if (!drawingFileName.isEmpty() && !backupSuffix.isEmpty()) {
+        const auto backupFileName = backupFilePath(drawingFileName + backupSuffix);
         auto drawingFile = QFile(drawingFileName);
         if (drawingFile.exists()) {
             auto backupFile = QFile(backupFileName);
@@ -363,6 +402,9 @@ bool LC_DocumentsStorage::backupDrawingFile(const QString &drawingFileName, cons
                 backupFile.remove();
             }
             ret = drawingFile.copy(backupFileName);
+            if (ret) {
+                hideBackupFile(backupFileName);
+            }
         }
     }
     return ret;
@@ -383,8 +425,6 @@ QString LC_DocumentsStorage::createAutoSaveFileName(const QFileInfo &fileInfo, c
 }
 
 QString LC_DocumentsStorage::createAutoSaveFileName(const QString& path, const QString &filePrefix,  const QString& fileName) const {
-    // Construct new autosave filename by prepending # to the filename
-    // part, using the same directory as the destination file.
-    QString result = path + "/" + filePrefix + fileName;
-    return result;
+    const QString prefix = filePrefix.isEmpty() ? QStringLiteral("#") : filePrefix;
+    return backupFilePath(QDir(path).filePath(prefix + fileName));
 }
