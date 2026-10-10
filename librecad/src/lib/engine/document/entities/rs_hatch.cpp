@@ -298,6 +298,8 @@ void RS_Hatch::update() {
     // Validate and optimize loops (moves boundaries to subcontainers)
     if (!validate()) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Hatch::update: Validation failed");
+        // Surviving contours must remain bounded when a copy cannot revalidate.
+        forcedCalculateBorders();
         activateContour(false);
         m_updateRunning = false;
         return;

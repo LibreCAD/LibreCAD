@@ -52,21 +52,7 @@ RS_Leader::RS_Leader(RS_EntityContainer* parent, const RS_LeaderData& d)
 }
 
 RS_Entity* RS_Leader::clone() const {
-    const RS_LeaderData data(hasArrowHead(), m_data.styleName);
-    // fixme - setup other parts of data?
-    auto* p = new RS_Leader(nullptr, data);
-    p->setOwner(isOwner());
-
-    p->setPen(getPen(false));
-    p->setLayer(m_layer);
-
-    p->m_empty = true;
-    p->m_data.arrowHead = m_data.arrowHead;
-    for (const auto v : m_data.vertexes) {
-        p->m_data.vertexes << v;
-    }
-    p->update();
-    return p;
+    return new RS_Leader(*this);
 }
 
 void RS_Leader::doUpdateDim() {

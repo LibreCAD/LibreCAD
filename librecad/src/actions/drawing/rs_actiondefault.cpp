@@ -103,7 +103,9 @@ RS_ActionDefault::RS_ActionDefault(LC_ActionContext *actionContext)
     RS_DEBUG->print("RS_ActionDefault::RS_ActionDefault: OK");
 }
 
-RS_ActionDefault::~RS_ActionDefault() = default;
+RS_ActionDefault::~RS_ActionDefault() {
+    disconnect(m_graphicView, &RS_GraphicView::drawingRedrawRequested, this, nullptr);
+}
 
 void RS_ActionDefault::init(const int status){
     RS_DEBUG->print("RS_ActionDefault::init");
@@ -987,7 +989,7 @@ void RS_ActionDefault::onMouseRightButtonRelease([[maybe_unused]]int status, [[m
 
 void RS_ActionDefault::goToNeutralStatus(){
     deletePreview();
-    deleteHighlights();
+    clearHighLighting();
     deleteInfoCursor();
     drawPreview();
     drawHighlights();
@@ -1107,6 +1109,7 @@ void RS_ActionDefault::highlightEntity(const RS_Entity *entity) {
         clearHighLighting();
         return;
     }
+    // Drawing redraws and action transitions invalidate the retained world-coordinate clone.
     if (m_actionData->hoveredEntityId != entity->getId() || m_highlight->isEmpty()
         || m_actionData->hoverRefPoints != m_highlightEntitiesRefPointsOnHover) {
         deleteHighlights();
