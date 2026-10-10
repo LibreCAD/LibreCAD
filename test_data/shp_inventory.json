@@ -253,11 +253,19 @@
   "generated_linetype": [
     {
       "name": "ltype_point.shp",
-      "shp_size": 268,
+      "shp_size": 324,
       "has_shx": true,
       "has_prj": false,
       "generator": "scripts/make_shp_fixtures.py",
       "expect": "each DBF LTYPE value reaches its point's pen"
+    },
+    {
+      "name": "ltype_many.shp",
+      "shp_size": 7296,
+      "has_shx": true,
+      "has_prj": false,
+      "generator": "scripts/make_shp_fixtures.py",
+      "expect": "the first 256 of 257 LTYPE names stay on the pen"
     }
   ]
 }

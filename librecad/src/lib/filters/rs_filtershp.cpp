@@ -35,12 +35,14 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QObject>
+#include <QSet>
 #include <QString>
 #include <QStringConverter>
 
 #include "shapefil.h"
 
 #include "lc_colornumbers.h"
+#include "lc_linetypenames.h"
 #include "rs_color.h"
 #include "rs_debug.h"
 #include "rs_graphic.h"
@@ -252,12 +254,31 @@ RS2::LineWidth widthFromNumber(double v) {
     return best;
 }
 
+// A DBF value is free text.  It is kept as a linetype name only if DXF can
+// hold it as a symbol name, and only for the first kMaxLineTypeNames distinct
+// names of an import: a column with more is some other attribute, and each
+// name takes one of the 65535 places in the pen's name table, which the
+// whole session shares.
+constexpr int kMaxLineTypeNames = 256;
+
+bool keepLineTypeName(const QString& name, QSet<QString>& kept) {
+    static const QString illegal = QStringLiteral("<>/\\\":;?*|,=`");
+    for (const QChar c : name) {
+        if (c.category() == QChar::Other_Control || illegal.contains(c))
+            return false;
+    }
+    if (kept.size() >= kMaxLineTypeNames && !kept.contains(name)) return false;
+    kept.insert(name);
+    return true;
+}
+
 // Build an RS_Pen from resolved fields for one DBF record.  If no styling
 // fields are present, returns std::nullopt so callers can leave the entity
-// at ByLayer defaults.
+// at ByLayer defaults.  @p lineTypeNames holds the names the import has kept.
 std::optional<RS_Pen> penFromRecord(DBFHandle dbf, int record,
                                     const ResolvedFields& rf,
-                                    const QString& codepage) {
+                                    const QString& codepage,
+                                    QSet<QString>& lineTypeNames) {
     if (!dbf || record < 0) return std::nullopt;
     bool any = false;
     RS_Pen pen{RS_Color(RS2::FlagByLayer), RS2::WidthByLayer, RS2::LineByLayer};
@@ -268,10 +289,14 @@ std::optional<RS_Pen> penFromRecord(DBFHandle dbf, int record,
         any = true;
     }
     if (rf.ltype >= 0 && !DBFIsAttributeNULL(dbf, record, rf.ltype)) {
+        // shapelib trims the spaces that pad a field, but not tabs.
         const QString name = decodeDbfString(
-            DBFReadStringAttribute(dbf, record, rf.ltype), codepage);
+            DBFReadStringAttribute(dbf, record, rf.ltype), codepage).trimmed();
         if (!name.isEmpty()) {
-            pen.setLineTypeName(name);
+            if (keepLineTypeName(name, lineTypeNames))
+                pen.setLineTypeName(name);
+            else
+                pen.setLineType(LC_LineTypeNames::nameToLineType(name));
             any = true;
         }
     }
@@ -440,6 +465,7 @@ bool RS_FilterSHP::fileImport(RS_Graphic& g, const QString& file,
 
     LC_ShpImportOptions opts;
     const ResolvedFields rf = resolveFields(dbf.get(), opts);
+    QSet<QString> lineTypeNames;
 
     RS_Layer* defaultLayer = ensureLayer(g, "0");
     int emitted = 0, skipped = 0;
@@ -461,7 +487,7 @@ bool RS_FilterSHP::fileImport(RS_Graphic& g, const QString& file,
         }
 
         const std::optional<RS_Pen> pen =
-            penFromRecord(dbf.get(), i, rf, codepage);
+            penFromRecord(dbf.get(), i, rf, codepage, lineTypeNames);
 
         switch (rec->nSHPType) {
         case SHPT_POINT:
