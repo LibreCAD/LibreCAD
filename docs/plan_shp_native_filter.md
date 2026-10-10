@@ -371,10 +371,10 @@ readable records *and* had `numEntities > 0`.
    - color: `COLOR`, `COLOUR` — value `0-255` treated as AutoCAD color index (reuse the
      ACI→`RS_Color` mapping from `rs_filterdxfrw.cpp`, `numberToColor`-equivalent), larger
      values as 24-bit RGB
-   - linetype: `LINETYPE`, `LTYPE` — kept as the pen's linetype name, as from DXF, when
-     DXF can hold it as a symbol name (the first 256 distinct names of an import); any
-     other value → `RS2::LineType` via the mapping `rs_filterdxfrw` uses (`CONTINUOUS`,
-     `DASHED`, …; unknown → `SolidLine`)
+   - linetype: `LINETYPE`, `LTYPE` — kept as the pen's linetype name, as from DXF, with
+     `_` for a character DXF cannot hold in a symbol name (the first 256 distinct names of
+     an import); a name past those → `RS2::LineType` via the mapping `rs_filterdxfrw` uses
+     (`CONTINUOUS`, `DASHED`, …; unknown → `SolidLine`)
    - width: `WIDTH`, `LWEIGHT`, `LINEWT` — numeric → nearest `RS2::LineWidth`
    - label: `NAME`, `LABEL`, `TEXT` — for point shapes, adds an `RS_MText` next to the point
      (height = 2.0 drawing units default)

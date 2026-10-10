@@ -260,15 +260,13 @@ bool notInSymbolName(const QChar c) {
     return c.category() == QChar::Other_Control || illegal.contains(c);
 }
 
-// A DBF value is free text.  It is kept as a linetype name only if DXF can
-// hold it as a symbol name, and only for the first kMaxLineTypeNames distinct
-// names of an import: a column with more is some other attribute, and each
-// name takes one of the 65535 places in the pen's name table, which the
-// whole session shares.
+// A DBF value is free text.  It is kept as a linetype name only for the first
+// kMaxLineTypeNames distinct names of an import: a column with more is some
+// other attribute, and each name takes one of the 65535 places in the pen's
+// name table, which the whole session shares.
 constexpr int kMaxLineTypeNames = 256;
 
 bool keepLineTypeName(const QString& name, QSet<QString>& kept) {
-    if (std::any_of(name.cbegin(), name.cend(), notInSymbolName)) return false;
     if (kept.size() >= kMaxLineTypeNames && !kept.contains(name)) return false;
     kept.insert(name);
     return true;
@@ -291,9 +289,12 @@ std::optional<RS_Pen> penFromRecord(DBFHandle dbf, int record,
         any = true;
     }
     if (rf.ltype >= 0 && !DBFIsAttributeNULL(dbf, record, rf.ltype)) {
-        // shapelib trims the spaces that pad a field, but not tabs.
-        const QString name = decodeDbfString(
+        // shapelib trims the spaces that pad a field, but not tabs.  What is
+        // left gets '_' for a character no symbol name holds, as a layer does.
+        QString name = decodeDbfString(
             DBFReadStringAttribute(dbf, record, rf.ltype), codepage).trimmed();
+        std::replace_if(name.begin(), name.end(), notInSymbolName,
+                        QLatin1Char('_'));
         if (!name.isEmpty()) {
             if (keepLineTypeName(name, lineTypeNames))
                 pen.setLineTypeName(name);

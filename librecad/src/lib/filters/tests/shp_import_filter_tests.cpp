@@ -527,7 +527,7 @@ TEST_CASE("RS_FilterSHP: canExport is always false (import-only)",
 // The DBF LTYPE column keeps its name.  ltype_point.* holds one POINT per
 // value: "VENDOR_TAB", which is no built-in, "Dashed", "ACAD_ISO02W100",
 // "DASHED\t", "\t", a blank one, and "DASH/DOT" and "DASH\tDOT", which DXF
-// cannot hold as a symbol name.
+// cannot hold as a symbol name: both become "DASH_DOT".
 // ---------------------------------------------------------------------------
 
 namespace {
@@ -610,14 +610,16 @@ TEST_CASE("RS_FilterSHP: the DBF LTYPE column reaches the pen as a name",
                                RS2::FormatDXFRW));
     }
     // A built-in in another case is saved as before, the alias by its name,
-    // and a value that is no symbol name as the built-in it draws as.
+    // and a value with a character no symbol name holds with '_' for it.
     CHECK(recordGroupValues(out, "POINT", "6")
           == std::vector<std::string>{"VENDOR_TAB", "DASHED", "ACAD_ISO02W100",
                                       "DASHED", "ByLayer", "ByLayer",
-                                      "CONTINUOUS", "CONTINUOUS"});
+                                      "DASH_DOT", "DASH_DOT"});
     // A shapefile has no LTYPE table, so the export gives each name a record:
     // no dashes for one LibreCAD does not know, the family's for the alias.
     CHECK(recordGroupValues(out, "LTYPE", "73", "VENDOR_TAB")
+          == std::vector<std::string>{"0"});
+    CHECK(recordGroupValues(out, "LTYPE", "73", "DASH_DOT")
           == std::vector<std::string>{"0"});
     CHECK(recordGroupValues(out, "LTYPE", "73", "ACAD_ISO02W100")
           == std::vector<std::string>{"2"});
