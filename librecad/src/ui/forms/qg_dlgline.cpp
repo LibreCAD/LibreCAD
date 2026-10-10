@@ -66,16 +66,7 @@ void QG_DlgLine::setLine(RS_Line& l) {
         cbLayer->setLayer(*lay);
     }
 
-    RS_Pen linePen = line->getPen(false);
-    RS_Pen lineResolvedPen = line->getPen(true);
-
-    RS_Color originalColor = linePen.getColor();
-    RS_Color resolvedColor = lineResolvedPen.getColor();
-    resolvedColor.applyFlags(originalColor);
-    lineResolvedPen.setColor(resolvedColor);
-
-    wPen->setPen(lineResolvedPen, lay, "Pen");
-//    wPen->setPen(linePen,lay, "Pen");
+    wPen->setPen(line, lay, "Pen");
     QString s;
     s.setNum(line->getStartpoint().x);
     leStartX->setText(s);
