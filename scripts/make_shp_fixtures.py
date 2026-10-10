@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 """
 Generate the corpus-gap fixtures called out in Phase 4a of
-docs/plan_shp_native_filter.md, and one each for the DBF LTYPE and LAYER
-columns.
+docs/plan_shp_native_filter.md, two for the DBF LTYPE column and one for the
+LAYER column.
 
 Produces (all under test_data/shp/, all genuinely NEW filenames — never
 touches existing pinned fixtures):
@@ -31,10 +31,11 @@ touches existing pinned fixtures):
                              LTYPE C(32) column, one LTYPE_POINT_VALUES
                              entry each, for the linetype name RS_FilterSHP
                              puts on the entity pen.
-  layer_point.shp/.shx/.dbf -- SHPT_POINT records whose .dbf carries a
-                             LAYER C(32) column, one LAYER_POINT_VALUES
-                             entry each, for the layer names RS_FilterSHP
-                             creates.
+  ltype_many.shp/.shx/.dbf -- the same with LTYPE_MANY_VALUES, one name more
+                             than RS_FilterSHP keeps from one import.
+  layer_point.shp/.shx/.dbf -- the same with a LAYER column of
+                             LAYER_POINT_VALUES, for the layer names
+                             RS_FilterSHP creates.
 
 Pure-stdlib `struct`-packing.  No GDAL / no shapelib dependency; the
 generator is intentionally read-only against the corpus dir (it only
@@ -438,46 +439,35 @@ def gen_dos_nparts(root: Path):
 
 
 # One POINT each: a name that is no built-in, a built-in in another case, an
-# ISO alias, a built-in padded with a tab, a tab only, and a blank value.
+# ISO alias, a built-in padded with a tab, a tab only, a blank value, and two
+# values DXF cannot hold as a symbol name.
 LTYPE_POINT_VALUES = ["VENDOR_TAB", "Dashed", "ACAD_ISO02W100", "DASHED\t",
-                      "\t", ""]
+                      "\t", "", "DASH/DOT", "DASH\tDOT"]
 
+# One name more than the 256 RS_FilterSHP keeps from one import.
+LTYPE_MANY_VALUES = [f"NAME_{i:03d}" for i in range(1, 258)]
 
-def gen_ltype_point(root: Path):
-    """One POINT per LTYPE_POINT_VALUES entry, at x = 10, 20, ... and y = 20.
-
-    RS_FilterSHP puts a LINETYPE or LTYPE column on the entity pen.  shapelib
-    trims the spaces that pad a C field, but not tabs."""
-    xs = [10.0 * i for i in range(1, len(LTYPE_POINT_VALUES) + 1)]
-    y = 20.0
-    write_shp_shx(root / "ltype_point", SHPT_POINT,
-                  [(SHPT_POINT, build_point_payload(x, y)) for x in xs],
-                  bbox=(xs[0], y, xs[-1], y, 0.0, 0.0, 0.0, 0.0))
-    write_minimal_dbf(root / "ltype_point", n_records=len(xs),
-                      fields=[("FID", "N", 11, 0, lambda i: str(i)),
-                              ("LTYPE", "C", 32, 0,
-                               lambda i: LTYPE_POINT_VALUES[i - 1])])
-
-
-# One POINT each: two legal layer names, then names with a character AutoCAD
-# refuses in one: a control character, or one of < > / \ " : ; ? * | , = `
+# One POINT each: two legal layer names, then names with a character DXF
+# cannot hold in a symbol name: a control character, or one of
+# < > / \ " : ; ? * | , = `
 LAYER_POINT_VALUES = ["ROADS", "Lot 7-A", "N/A", "1:500", "a|b", "*",
                       "TAB\tIN", "CR\rLF\nIN", "<>/\\\":;?*|,=`"]
 
 
-def gen_layer_point(root: Path):
-    """One POINT per LAYER_POINT_VALUES entry, at x = 10, 20, ... and y = 20.
+def write_column_points(root: Path, stem: str, column: str, values: list):
+    """One POINT per value of a C(32) column, at x = 10, 20, ... and y = 20.
 
-    RS_FilterSHP creates a layer per value of a LAYER, LEVEL or LYR column."""
-    xs = [10.0 * i for i in range(1, len(LAYER_POINT_VALUES) + 1)]
+    RS_FilterSHP puts a LINETYPE or LTYPE column on the entity pen, and names
+    a layer after each value of a LAYER, LEVEL or LYR column.  shapelib trims
+    the spaces that pad a C field, but not tabs."""
+    xs = [10.0 * i for i in range(1, len(values) + 1)]
     y = 20.0
-    write_shp_shx(root / "layer_point", SHPT_POINT,
+    write_shp_shx(root / stem, SHPT_POINT,
                   [(SHPT_POINT, build_point_payload(x, y)) for x in xs],
                   bbox=(xs[0], y, xs[-1], y, 0.0, 0.0, 0.0, 0.0))
-    write_minimal_dbf(root / "layer_point", n_records=len(xs),
-                      fields=[("FID", "N", 11, 0, lambda i: str(i)),
-                              ("LAYER", "C", 32, 0,
-                               lambda i: LAYER_POINT_VALUES[i - 1])])
+    write_minimal_dbf(root / stem, n_records=len(xs),
+                      fields=DEFAULT_DBF_FIELDS
+                      + [(column, "C", 32, 0, lambda i: values[i - 1])])
 
 
 # ---- inventory update ------------------------------------------------------
@@ -528,6 +518,10 @@ def update_inventory(root: Path):
          "has_shx": True, "has_prj": False,
          "generator": "scripts/make_shp_fixtures.py",
          "expect": "each DBF LTYPE value reaches its point's pen"},
+        {"name": "ltype_many.shp", "shp_size": sz("ltype_many.shp"),
+         "has_shx": True, "has_prj": False,
+         "generator": "scripts/make_shp_fixtures.py",
+         "expect": "the first 256 of 257 LTYPE names stay on the pen"},
     ]
     inv["generated_layer"] = [
         {"name": "layer_point.shp", "shp_size": sz("layer_point.shp"),
@@ -568,6 +562,7 @@ def main():
         "dos_npoints.shp", "dos_npoints.shx",
         "dos_nparts.shp", "dos_nparts.shx",
         "ltype_point.shp", "ltype_point.shx", "ltype_point.dbf",
+        "ltype_many.shp", "ltype_many.shx", "ltype_many.dbf",
         "layer_point.shp", "layer_point.shx", "layer_point.dbf",
     ]
     existing = [f for f in generated if (root / f).exists()]
@@ -582,8 +577,9 @@ def main():
     gen_multipatch(root)
     gen_dos_npoints(root)
     gen_dos_nparts(root)
-    gen_ltype_point(root)
-    gen_layer_point(root)
+    write_column_points(root, "ltype_point", "LTYPE", LTYPE_POINT_VALUES)
+    write_column_points(root, "ltype_many", "LTYPE", LTYPE_MANY_VALUES)
+    write_column_points(root, "layer_point", "LAYER", LAYER_POINT_VALUES)
     update_inventory(root)
     print(f"Wrote {len(generated)} fixture file(s) to {root}")
     return 0

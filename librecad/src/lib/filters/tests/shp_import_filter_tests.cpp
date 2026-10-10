@@ -409,7 +409,7 @@ TEST_CASE("RS_FilterSHP: malformed_dbf.shp -> false, no crash",
 
 // ---------------------------------------------------------------------------
 // Phase-4a generated fixtures — Z types and MULTIPATCH parts + CVE-class DoS.
-// These, ltype_point.* and layer_point.* are the only fixtures under
+// These, ltype_*.* and layer_point.* are the only fixtures under
 // test_data/shp/ produced by scripts/make_shp_fixtures.py; the rest of the
 // corpus is fixed reference data.  See the plan's Phase 4a for the rationale.
 // ---------------------------------------------------------------------------
@@ -526,7 +526,8 @@ TEST_CASE("RS_FilterSHP: canExport is always false (import-only)",
 // ---------------------------------------------------------------------------
 // The DBF LTYPE column keeps its name.  ltype_point.* holds one POINT per
 // value: "VENDOR_TAB", which is no built-in, "Dashed", "ACAD_ISO02W100",
-// "DASHED\t", "\t" and a blank one.
+// "DASHED\t", "\t", a blank one, and "DASH/DOT" and "DASH\tDOT", which DXF
+// cannot hold as a symbol name.
 // ---------------------------------------------------------------------------
 
 namespace {
@@ -588,8 +589,8 @@ TEST_CASE("RS_FilterSHP: the DBF LTYPE column reaches the pen as a name",
     REQUIRE(filter.fileImport(graphic, path, RS2::FormatSHP));
 
     const std::vector<RS_Point*> points = importedPoints(graphic);
-    REQUIRE(points.size() == 6);
-    // shapelib trims the spaces that pad a C field; the pen trims tabs too.
+    REQUIRE(points.size() == 8);
+    // shapelib trims the spaces that pad a C field; the filter trims tabs too.
     CHECK(points[0]->getPen(false).getLineTypeName().toStdString()
           == "VENDOR_TAB");
     std::vector<RS2::LineType> lineTypes;
@@ -597,7 +598,8 @@ TEST_CASE("RS_FilterSHP: the DBF LTYPE column reaches the pen as a name",
         lineTypes.push_back(point->getPen(false).getLineType());
     CHECK(lineTypes == std::vector<RS2::LineType>{
                            RS2::SolidLine, RS2::DashLine, RS2::DashLine,
-                           RS2::DashLine, RS2::LineByLayer, RS2::LineByLayer});
+                           RS2::DashLine, RS2::LineByLayer, RS2::LineByLayer,
+                           RS2::SolidLine, RS2::SolidLine});
 
     const std::string out = (std::filesystem::temp_directory_path() /
                              "shp_named_linetype_out.dxf").string();
@@ -607,10 +609,12 @@ TEST_CASE("RS_FilterSHP: the DBF LTYPE column reaches the pen as a name",
         REQUIRE(dxf.fileExport(graphic, QString::fromStdString(out),
                                RS2::FormatDXFRW));
     }
-    // A built-in in another case is saved as before, the alias by its name.
+    // A built-in in another case is saved as before, the alias by its name,
+    // and a value that is no symbol name as the built-in it draws as.
     CHECK(recordGroupValues(out, "POINT", "6")
           == std::vector<std::string>{"VENDOR_TAB", "DASHED", "ACAD_ISO02W100",
-                                      "DASHED", "ByLayer", "ByLayer"});
+                                      "DASHED", "ByLayer", "ByLayer",
+                                      "CONTINUOUS", "CONTINUOUS"});
     // A shapefile has no LTYPE table, so the export gives each name a record:
     // no dashes for one LibreCAD does not know, the family's for the alias.
     CHECK(recordGroupValues(out, "LTYPE", "73", "VENDOR_TAB")
@@ -619,6 +623,29 @@ TEST_CASE("RS_FilterSHP: the DBF LTYPE column reaches the pen as a name",
           == std::vector<std::string>{"2"});
 
     std::filesystem::remove(out);
+}
+
+// Each name takes a place in the pen's name table, which the session shares,
+// so an import keeps the first 256.  ltype_many.* holds 257, none a built-in.
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_FilterSHP: an import keeps its first 256 linetype names",
+          "[shp][filter][linetype][named]") {
+    ensureQtContext();
+    const QString path = corpusPath("ltype_many.shp");
+    REQUIRE(std::filesystem::is_regular_file(path.toStdString()));
+
+    RS_Graphic graphic;
+    RS_FilterSHP filter;
+    REQUIRE(filter.fileImport(graphic, path, RS2::FormatSHP));
+
+    const std::vector<RS_Point*> points = importedPoints(graphic);
+    REQUIRE(points.size() == 257);
+    for (size_t i = 0; i < points.size(); ++i) {
+        CAPTURE(i);
+        const RS_Pen pen = points[i]->getPen(false);
+        CHECK(pen.hasLineTypeName() == (i < 256));
+        CHECK(pen.getLineType() == RS2::SolidLine);
+    }
 }
 
 // ---------------------------------------------------------------------------

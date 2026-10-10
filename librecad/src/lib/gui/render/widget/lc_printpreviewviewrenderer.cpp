@@ -22,6 +22,8 @@
 
 #include "lc_printpreviewviewrenderer.h"
 
+#include <cmath>
+
 #include "lc_graphicviewport.h"
 #include "rs_graphic.h"
 #include "rs_math.h"
@@ -81,10 +83,12 @@ void LC_PrintPreviewViewRenderer::drawPaper(RS_Painter *painter) {
     // pixel-mapping arithmetic below.
     const auto previewMm = m_graphic->activeLayoutMargins();
     const RS2::Unit previewUnit = m_graphic->getUnit();
-    int marginLeft = (int) (RS_Units::convert(previewMm[0], RS2::Millimeter, previewUnit) * paperFactorX);
-    int marginTop = (int) (RS_Units::convert(previewMm[1], RS2::Millimeter, previewUnit) * paperFactorY);
-    int marginRight = (int) (RS_Units::convert(previewMm[2], RS2::Millimeter, previewUnit) * paperFactorX);
-    int marginBottom = (int) (RS_Units::convert(previewMm[3], RS2::Millimeter, previewUnit) * paperFactorY);
+    // Whole pixels as before, but kept as doubles: deep in a zoom these, and
+    // their sums, leave the range of int.
+    const double marginLeft = std::trunc(RS_Units::convert(previewMm[0], RS2::Millimeter, previewUnit) * paperFactorX);
+    const double marginTop = std::trunc(RS_Units::convert(previewMm[1], RS2::Millimeter, previewUnit) * paperFactorY);
+    const double marginRight = std::trunc(RS_Units::convert(previewMm[2], RS2::Millimeter, previewUnit) * paperFactorX);
+    const double marginBottom = std::trunc(RS_Units::convert(previewMm[3], RS2::Millimeter, previewUnit) * paperFactorY);
 
     const RS_Vector &wcsLeftBottomCorner = (RS_Vector(0, 0) - pinsbase) / m_paperScale;
     const RS_Vector &wcsTopBottomCorner = (printAreaSize - pinsbase) / m_paperScale;
@@ -100,48 +104,57 @@ void LC_PrintPreviewViewRenderer::drawPaper(RS_Painter *painter) {
     const int viewHeight = m_viewport->getHeight();
 
 // --- below we're graphic-agnostic
-    const int printAreaW = static_cast<int>(v2x - v1x);
-    const int printAreaH = static_cast<int>(v2y - v1y);
+    const double printAreaW = std::trunc(v2x - v1x);
+    const double printAreaH = std::trunc(v2y - v1y);
 
-    const int paperX1 = static_cast<int>(v1x);
-    const int paperY1 = static_cast<int>(v1y);
+    const double paperX1 = std::trunc(v1x);
+    const double paperY1 = std::trunc(v1y);
 // Don't show margins between neighbor pages.
-    const int paperW = printAreaW + marginLeft + marginRight;
-    const int paperH = printAreaH - marginTop - marginBottom;
+    const double paperW = printAreaW + marginLeft + marginRight;
+    const double paperH = printAreaH - marginTop - marginBottom;
 
     painter->setPen(RS_Color(Qt::gray));
+
+// The edges of a rectangle are brought into range, not its size.
+    const auto fillRect = [painter](double x, double y, const double w, const double h, const RS_Color& color) {
+        x = std::trunc(x);
+        y = std::trunc(y);
+        const int x1 = LC_GraphicViewport::toOffset(x);
+        const int y1 = LC_GraphicViewport::toOffset(y);
+        painter->fillRect(x1, y1, LC_GraphicViewport::toOffset(x + w) - x1, LC_GraphicViewport::toOffset(y + h) - y1, color);
+    };
 
 // gray background:
     painter->fillRect(0, 0, viewWidth, viewHeight,PRINT_PREVIEW_BACKGROUND_COLOR);
 
 // shadow:
-    painter->fillRect(paperX1 + 6, paperY1 + 6, paperW, paperH,PRINT_PREVIEW_BORDER_AND_SHADOW_COLOR);
+    fillRect(paperX1 + 6, paperY1 + 6, paperW, paperH,PRINT_PREVIEW_BORDER_AND_SHADOW_COLOR);
 
 // border:
-    painter->fillRect(paperX1, paperY1, paperW, paperH,PRINT_PREVIEW_BORDER_AND_SHADOW_COLOR);
+    fillRect(paperX1, paperY1, paperW, paperH,PRINT_PREVIEW_BORDER_AND_SHADOW_COLOR);
 
 // paper:
-    painter->fillRect(paperX1 + 1, paperY1 - 1, paperW - 2, paperH + 2,PRINT_PREVIEW_PAPER_COLOR);
+    fillRect(paperX1 + 1, paperY1 - 1, paperW - 2, paperH + 2,PRINT_PREVIEW_PAPER_COLOR);
 
 // print area:
-    painter->fillRect(paperX1 + 1 + marginLeft, paperY1 - 1 - marginBottom,
-                      printAreaW - 2, printAreaH + 2,
-                      PRINT_PREVIEW_PRINT_AREA_COLOR);
+    fillRect(paperX1 + 1 + marginLeft, paperY1 - 1 - marginBottom,
+             printAreaW - 2, printAreaH + 2,
+             PRINT_PREVIEW_PRINT_AREA_COLOR);
 
 // don't paint boundaries if zoom is to small
-    if (qMin(std::abs(printAreaW / numX), std::abs(printAreaH / numY)) > 2) {
+    if (qMin(std::abs(printAreaW) / numX, std::abs(printAreaH) / numY) >= 3) {
 // boundaries between pages:
         for (int pX = 1; pX < numX; pX++) {
-            const double offset = static_cast<double>(printAreaW) * pX / numX;
-            painter->fillRect(paperX1 + marginLeft + offset, paperY1,
-                              1, paperH,
-                              PRINT_PREVIEW_BORDER_AND_SHADOW_COLOR);
+            const double offset = printAreaW * pX / numX;
+            fillRect(paperX1 + marginLeft + offset, paperY1,
+                     1, paperH,
+                     PRINT_PREVIEW_BORDER_AND_SHADOW_COLOR);
         }
         for (int pY = 1; pY < numY; pY++) {
-            const double offset = static_cast<double>(printAreaH) * pY / numY;
-            painter->fillRect(paperX1, paperY1 - marginBottom + offset,
-                              paperW, 1,
-                              PRINT_PREVIEW_BORDER_AND_SHADOW_COLOR);
+            const double offset = printAreaH * pY / numY;
+            fillRect(paperX1, paperY1 - marginBottom + offset,
+                     paperW, 1,
+                     PRINT_PREVIEW_BORDER_AND_SHADOW_COLOR);
         }
     }
 

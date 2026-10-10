@@ -154,3 +154,31 @@ TEST_CASE("Printed lineweights follow plot scale, not dimension scale", "[printi
         CHECK(line->screenWidth == Catch::Approx(plottedWidth * pixelsPerMm).margin(1e-7));
     }
 }
+
+// Deep in a zoom the paper is wider in pixels than an int can hold. The view
+// here lies in its left margin, 5 mm from the edge: all of it is paper.
+TEST_CASE("Print preview paints the paper deep in a zoom", "[printing][viewport-range]") {
+    REQUIRE(lc::test::application() != nullptr);
+
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    graphic.setUnit(RS2::Millimeter);
+    graphic.setPaperInsertionBase(RS_Vector{0.0, 0.0});
+    graphic.setActiveLayoutMargins(10.0, 10.0, 10.0, 10.0);
+
+    QImage image{200, 150, QImage::Format_RGB32};
+    image.fill(Qt::black);
+    LC_GraphicViewport viewport;
+    viewport.setDocument(&graphic);
+    viewport.setSize(image.width(), image.height());
+    // 2e7 pixels a millimeter, with (5, 50) in the middle of the view
+    viewport.justSetOffsetAndFactor(100 - 100000000, 75 - 1000000000, 2.e7);
+    LC_PrintPreviewViewRenderer renderer{&viewport, &image};
+    renderer.loadSettings();
+    renderer.render();
+
+    for (const QPoint& pixel : {QPoint{0, 0}, QPoint{100, 75}, QPoint{199, 149}}) {
+        CAPTURE(pixel.x(), pixel.y());
+        CHECK(image.pixelColor(pixel) == QColor(180, 180, 180));
+    }
+}
