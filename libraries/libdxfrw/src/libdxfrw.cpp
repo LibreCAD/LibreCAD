@@ -8373,6 +8373,7 @@ bool dxfRW::processBlockRecord() {
     DRW_DBG("dxfRW::processBlockRecord\n");
     int code = 0;
     bool reading = false;
+    bool hasName = false;
     bool readingBlkRefs = false;
     int ignoredApplicationDepth = 0;
     std::uint32_t handle = DRW::NoHandle;
@@ -8387,7 +8388,8 @@ bool dxfRW::processBlockRecord() {
         if (readingBlkRefs || ignoredApplicationDepth != 0)
             return false;
         const DRW::Version sourceVersion = reader->getSourceVersion();
-        if (record.name.empty()
+        // Older LibreCAD saves can contain unused, explicitly unnamed blocks.
+        if (!hasName
             || (sourceVersion != DRW::UNKNOWNV
                 && sourceVersion > DRW::AC1009
                 && handle == DRW::NoHandle))
@@ -8422,6 +8424,7 @@ bool dxfRW::processBlockRecord() {
                 readingBlkRefs = false;
                 ignoredApplicationDepth = 0;
                 handle = DRW::NoHandle;
+                hasName = false;
                 record = DRW_ParsingContext::BlockRecordInfo{};
                 recordInsertHandles.clear();
             } else if (dxfKeywordEquals(sectionstr, "ENDTAB")) {
@@ -8489,6 +8492,7 @@ bool dxfRW::processBlockRecord() {
                 record.layoutHandle = reader->getHandleString();
                 break;
             case 2:
+                hasName = true;
                 record.name = reader->getUtf8String();
                 break;
             case 5:
