@@ -130,7 +130,7 @@ if(NOT Boost_INCLUDE_DIR)
 endif()
 set(Boost_INCLUDE_DIRS "${Boost_INCLUDE_DIR}")
 
-find_package (Freetype)
+include(cmake/LibreCADOpenType.cmake)
 
 # Define all sources (as before)
 file (GLOB_RECURSE AUTO_EXCLUDED_SOURCES
@@ -937,6 +937,8 @@ set (SHARED_SOURCES
     librecad/src/lib/engine/document/entities/lc_mleader.h
     librecad/src/lib/engine/document/entities/lc_textbidi.cpp
     librecad/src/lib/engine/document/entities/lc_textbidi.h
+    librecad/src/lib/engine/document/entities/lc_textshaper.cpp
+    librecad/src/lib/engine/document/entities/lc_textshaper.h
         librecad/src/lib/engine/document/entities/rs_line.cpp
      librecad/src/lib/engine/document/entities/rs_line.h
      librecad/src/lib/engine/document/entities/rs_mtext.cpp
@@ -982,6 +984,9 @@ set (SHARED_SOURCES
      librecad/src/lib/engine/document/fonts/rs_fontchar.h
      librecad/src/lib/engine/document/fonts/rs_fontlist.cpp
      librecad/src/lib/engine/document/fonts/rs_fontlist.h
+     librecad/src/lib/engine/document/fonts/lc_opentypefont.cpp
+     librecad/src/lib/engine/document/fonts/lc_opentypefont.h
+     librecad/src/lib/engine/document/fonts/lc_opentypefont_p.h
      librecad/src/lib/engine/document/layers/rs_layer.cpp
      librecad/src/lib/engine/document/layers/rs_layer.h
      librecad/src/lib/engine/document/layers/rs_layerlist.cpp
@@ -2242,6 +2247,7 @@ target_include_directories(librecad_lib PRIVATE
 
 target_link_libraries (librecad_lib PRIVATE
                        lcqtbidi
+                       LibreCAD::OpenType
                        Qt6::Core Qt6::Widgets Qt6::Gui Qt6::PrintSupport Qt6::Svg Qt6::Network
 )
 set_property (TARGET librecad_lib PROPERTY AUTOUIC_OPTIONS --connections string)
@@ -2793,6 +2799,23 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/entities)
     target_link_libraries(librecad_text_bidi_headless_tests PRIVATE
         lcqtbidi Catch2::Catch2WithMain Qt6::Core)
+
+    # Native shaping and outline extraction must not require QGuiApplication,
+    # the platform font database, or the full application library.
+    add_executable(librecad_text_shaper_tests EXCLUDE_FROM_ALL
+        librecad/src/lib/engine/document/fonts/lc_opentypefont.cpp
+        librecad/src/lib/engine/document/entities/lc_textshaper.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_textshaper_tests.cpp)
+    target_include_directories(librecad_text_shaper_tests PRIVATE
+        librecad/src/lib/engine/document/fonts
+        librecad/src/lib/engine/document/entities)
+    target_link_libraries(librecad_text_shaper_tests PRIVATE
+        LibreCAD::OpenType Catch2::Catch2WithMain Qt6::Core)
+    target_compile_features(librecad_text_shaper_tests PRIVATE cxx_std_17)
+    target_compile_definitions(librecad_text_shaper_tests PRIVATE
+        LC_OPENTYPE_TEST_FONT_PATH="${CMAKE_CURRENT_SOURCE_DIR}/librecad/support/fonts/opentype/amiri-1.003/Amiri-Regular.ttf")
+    set_target_properties(librecad_text_shaper_tests PROPERTIES
+        AUTOMOC OFF AUTOUIC OFF AUTORCC OFF)
 
     add_executable(librecad_bidi_conformance EXCLUDE_FROM_ALL
         libraries/qtbidi/tests/unicode_conformance.cpp)

@@ -31,6 +31,31 @@ CONFIG += qt \
 QT += widgets printsupport network
 CONFIG += c++17
 
+# Native OpenType shaping is available only through an explicit, versioned font
+# profile; enabling the backend does not replace any existing LFF font. Pass
+# LIBRECAD_ENABLE_OPENTYPE=false to qmake for a legacy-only build.
+isEmpty(LIBRECAD_ENABLE_OPENTYPE): LIBRECAD_ENABLE_OPENTYPE = true
+!contains(LIBRECAD_ENABLE_OPENTYPE, ^(true|false)$): error("LIBRECAD_ENABLE_OPENTYPE must be true or false")
+equals(LIBRECAD_ENABLE_OPENTYPE, true) {
+    DEFINES += LC_WITH_OPENTYPE=1
+    # Explicit overrides support native Windows toolchains without pkg-config.
+    # Supply complete link inputs (including dependencies for static libraries).
+    !isEmpty(LIBRECAD_OPENTYPE_INCLUDEPATH):!isEmpty(LIBRECAD_OPENTYPE_LIBS) {
+        INCLUDEPATH += $$LIBRECAD_OPENTYPE_INCLUDEPATH
+        LIBS += $$LIBRECAD_OPENTYPE_LIBS
+    } else {
+        !packagesExist(harfbuzz): error("HarfBuzz development package not found; supply LIBRECAD_OPENTYPE_INCLUDEPATH/LIBRECAD_OPENTYPE_LIBS or set LIBRECAD_ENABLE_OPENTYPE=false")
+        !system($$pkgConfigExecutable() --atleast-version=2.6.0 harfbuzz): error("HarfBuzz >= 2.6.0 is required")
+        # freetype2.pc reports the libtool ABI version, not the FreeType release;
+        # the runtime source checks FREETYPE_MAJOR/MINOR in the actual headers.
+        !packagesExist(freetype2): error("FreeType development package not found; supply LIBRECAD_OPENTYPE_INCLUDEPATH/LIBRECAD_OPENTYPE_LIBS or set LIBRECAD_ENABLE_OPENTYPE=false")
+        CONFIG += link_pkgconfig
+        PKGCONFIG += harfbuzz freetype2
+    }
+} else {
+    DEFINES += LC_WITH_OPENTYPE=0
+}
+
 # Qt 6 uic can generate string-based connections. Qt 5 uic does not
 # understand this option, so keep qmake builds compatible with both.
 greaterThan(QT_MAJOR_VERSION, 5): QMAKE_UIC_FLAGS += --connections string
@@ -410,6 +435,7 @@ HEADERS += \
     lib/engine/document/dimstyles/lc_dimstyletovariablesmapper.h \
     lib/engine/document/entities/lc_extentitydata.h \
     lib/engine/document/entities/lc_textbidi.h \
+    lib/engine/document/entities/lc_textshaper.h \
     lib/engine/document/container/lc_containertraverser.h \
     lib/engine/document/entities/lc_mleader.h \
     lib/engine/document/entities/lc_curvejet.h \
@@ -519,6 +545,8 @@ HEADERS += \
     lib/engine/rs_flags.h \
     lib/engine/document/fonts/rs_font.h \
     lib/engine/document/fonts/rs_fontchar.h \
+    lib/engine/document/fonts/lc_opentypefont.h \
+    lib/engine/document/fonts/lc_opentypefont_p.h \
     lib/engine/document/fonts/rs_fontlist.h \
     lib/engine/document/rs_graphic.h \
     lib/engine/document/entities/rs_hatch.h \
@@ -975,6 +1003,7 @@ SOURCES += \
     lib/engine/document/dimstyles/lc_dimstyletovariablesmapper.cpp \
     lib/engine/document/entities/lc_extentitydata.cpp \
     lib/engine/document/entities/lc_textbidi.cpp \
+    lib/engine/document/entities/lc_textshaper.cpp \
     lib/engine/document/container/lc_containertraverser.cpp \
     lib/engine/document/entities/lc_mleader.cpp \
     lib/engine/document/entities/lc_curveoffset.cpp \
@@ -1183,6 +1212,7 @@ SOURCES += \
     lib/engine/document/container/rs_entitycontainer.cpp \
     lib/engine/document/fonts/rs_font.cpp \
     lib/engine/document/fonts/rs_fontlist.cpp \
+    lib/engine/document/fonts/lc_opentypefont.cpp \
     lib/engine/document/rs_graphic.cpp \
     lib/engine/document/entities/rs_hatch.cpp \
     lib/engine/document/entities/lc_hyperbola.cpp \
