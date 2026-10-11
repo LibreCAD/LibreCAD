@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 """
 Generate the corpus-gap fixtures called out in Phase 4a of
-docs/plan_shp_native_filter.md, and two for the DBF LTYPE column.
+docs/plan_shp_native_filter.md, two for the DBF LTYPE column and four for
+the code page of the DBF.
 
 Produces (all under test_data/shp/, all genuinely NEW filenames — never
 touches existing pinned fixtures):
@@ -32,6 +33,10 @@ touches existing pinned fixtures):
                              puts on the entity pen.
   ltype_many.shp/.shx/.dbf -- the same with LTYPE_MANY_VALUES, one name more
                              than RS_FilterSHP keeps from one import.
+  cp1252_cpg, cp1252_ldid, cp932_cpg, cp1250_ldid (.shp/.shx/.dbf, and .cpg
+                             for the first and third) -- one SHPT_POINT record
+                             with LAYER, LTYPE and NAME values in the code
+                             page of the name, see CODE_PAGE_FIXTURES.
 
 Pure-stdlib `struct`-packing.  No GDAL / no shapelib dependency; the
 generator is intentionally read-only against the corpus dir (it only
@@ -62,6 +67,7 @@ against libraries/shapelib/src/shpopen.cpp):
   SHP record: <int32 BE offset in 16-bit words> <int32 BE contentLength>.
 """
 import argparse
+import codecs
 import json
 import os
 import struct
@@ -275,7 +281,7 @@ def write_shp_shx(basename: Path, shp_type: int, records: list, bbox=None):
 DEFAULT_DBF_FIELDS = [("FID", "N", 11, 0, lambda i: str(i))]
 
 
-def write_minimal_dbf(basename: Path, n_records: int, fields=None):
+def write_minimal_dbf(basename: Path, n_records: int, fields=None, ldid=0):
     """Write a minimal dBase III file with `fields` and n_records rows.
 
     Required because shapelib's open path is happy without a .dbf, but the
@@ -285,7 +291,8 @@ def write_minimal_dbf(basename: Path, n_records: int, fields=None):
     this parameter existed regenerate identically.
 
     Numeric ('N') values are right-justified and character ('C') values
-    left-justified in their field width, per dBase III.
+    left-justified in their field width, per dBase III.  `ldid` is the
+    language driver byte, which names the code page of the values.
     """
     if fields is None:
         fields = DEFAULT_DBF_FIELDS
@@ -295,13 +302,15 @@ def write_minimal_dbf(basename: Path, n_records: int, fields=None):
     #   bytes 4-7: LE int32 nRecords
     #   bytes 8-9: LE int16 header length
     #   bytes 10-11: LE int16 record length
-    #   bytes 12-31: reserved zero
+    #   bytes 12-28: reserved zero
+    #   byte 29: language driver ID
+    #   bytes 30-31: reserved zero
     n_fields = len(fields)
     header_len = 32 + 32 * n_fields + 1  # +1 for terminator
     record_len = 1 + sum(f[2] for f in fields)  # deletion flag + field widths
-    header = struct.pack("<BBBBIHH20s",
+    header = struct.pack("<BBBBIHH17sB2s",
                          0x03, 100, 1, 1, n_records, header_len, record_len,
-                         b"\x00" * 20)
+                         b"\x00" * 17, ldid, b"\x00" * 2)
     # Field descriptor (32 bytes): name (11 bytes, null-padded), type,
     #   4 reserved, length (1 byte), decimals (1 byte), 14 reserved
     field_descriptors = b""
@@ -320,7 +329,7 @@ def write_minimal_dbf(basename: Path, n_records: int, fields=None):
             text = value(i) if callable(value) else value
             cell = text.rjust(width) if type_char == "N" else text.ljust(width)
             assert len(cell) == width, f"value {text!r} overflows width {width}"
-            row += cell.encode("ascii")
+            row += cell.encode("latin-1")  # so that a value can hold any byte
         records += row
     eof = b"\x1A"
     basename.with_suffix(".dbf").write_bytes(header + field_descriptors
@@ -459,13 +468,60 @@ def write_ltype_points(root: Path, stem: str, values: list):
                       + [("LTYPE", "C", 32, 0, lambda i: values[i - 1])])
 
 
+# The LAYER, LTYPE and NAME values of one POINT, in a code page that the DBF
+# declares: in a .cpg file, or in the language driver byte of its header, by
+# ESRI's table (0x57 is 1252, 0xC8 is 1250).  Each has characters ISO-8859-1
+# lacks.  The cp1252 label ends in the byte 0x81, which that code page leaves
+# undefined.  Of the cp932 label, the second byte of U+4E88 is 0x5C, a
+# backslash, the half-width katakana are one byte each, and the end is what
+# DXF, but no shapefile, reads as a code for U+7BA1.
+#   stem: (Python codec, .cpg content, language driver byte, the values)
+WESTERN_TEXT = ("Rue de l\u2019\u00c9glise", "N\u0153ud",
+                "Caf\u00e9 \u2013 5 \u20ac\u0081")
+CODE_PAGE_FIXTURES = {
+    "cp1252_cpg": ("cp1252", "1252", 0, WESTERN_TEXT),
+    "cp1252_ldid": ("cp1252", None, 0x57, WESTERN_TEXT),
+    "cp932_cpg": ("cp932", "Shift_JIS", 0,
+                  ("\u9053\u8def", "\u7834\u7dda",
+                   "\u4e88\u5b9a\uff76\uff9e\uff7d\u7ba1\\U+7BA1")),
+    "cp1250_ldid": ("cp1250", None, 0xC8,
+                    ("\u0160achta", "p\u0159eru\u0161ovan\u00e1",
+                     "\u017dlu\u0165ou\u010dk\u00fd k\u016f\u0148")),
+}
+
+
+# A character the code page lacks is written as its ISO-8859-1 byte.
+codecs.register_error(
+    "undefined_byte",
+    lambda e: (e.object[e.start:e.end].encode("latin-1"), e.end))
+
+
+def write_code_page_point(root: Path, stem: str):
+    """One POINT at (10, 20) with the values of CODE_PAGE_FIXTURES[stem].
+
+    RS_FilterSHP names a layer after the LAYER value, puts the LTYPE value on
+    the entity pen and writes the NAME value as a label."""
+    codec, cpg, ldid, values = CODE_PAGE_FIXTURES[stem]
+    write_shp_shx(root / stem, SHPT_POINT,
+                  [(SHPT_POINT, build_point_payload(10.0, 20.0))],
+                  bbox=(10.0, 20.0, 10.0, 20.0, 0.0, 0.0, 0.0, 0.0))
+    # write_minimal_dbf() writes one byte for each character of a value.
+    columns = [(name, "C", 32, 0,
+                text.encode(codec, "undefined_byte").decode("latin-1"))
+               for name, text in zip(("LAYER", "LTYPE", "NAME"), values)]
+    write_minimal_dbf(root / stem, n_records=1,
+                      fields=DEFAULT_DBF_FIELDS + columns, ldid=ldid)
+    if cpg is not None:
+        (root / stem).with_suffix(".cpg").write_text(cpg, encoding="ascii")
+
+
 # ---- inventory update ------------------------------------------------------
 
 def update_inventory(root: Path):
     """Add the newly-generated fixtures to test_data/shp_inventory.json under
-    the "generated_z_types", "generated_hostile" and "generated_linetype"
-    buckets so their expected sizes/types can be cross-checked
-    programmatically."""
+    the "generated_z_types", "generated_hostile", "generated_linetype" and
+    "generated_code_page" buckets so their expected sizes/types can be
+    cross-checked programmatically."""
     inv_path = root.parent / "shp_inventory.json"
     if not inv_path.exists():
         print(f"[warn] {inv_path} not found — skipping inventory update",
@@ -501,6 +557,13 @@ def update_inventory(root: Path):
          "has_shx": True, "has_prj": False,
          "generator": "scripts/make_shp_fixtures.py",
          "expect": "SHPReadObject returns null (nParts=15M > 10M cap)"},
+    ]
+    inv["generated_code_page"] = [
+        {"name": stem + ".shp", "shp_size": sz(stem + ".shp"),
+         "has_shx": True, "has_prj": False,
+         "generator": "scripts/make_shp_fixtures.py",
+         "expect": "LAYER, LTYPE and NAME are read as " + codec}
+        for stem, (codec, _cpg, _ldid, _values) in CODE_PAGE_FIXTURES.items()
     ]
     inv["generated_linetype"] = [
         {"name": "ltype_point.shp", "shp_size": sz("ltype_point.shp"),
@@ -542,6 +605,10 @@ def main():
         "polylinez.shp", "polylinez.shx", "polylinez.dbf",
         "multipointz.shp", "multipointz.shx", "multipointz.dbf",
         "multipatch.shp", "multipatch.shx", "multipatch.dbf",
+        "cp1252_cpg.shp", "cp1252_cpg.shx", "cp1252_cpg.dbf", "cp1252_cpg.cpg",
+        "cp1252_ldid.shp", "cp1252_ldid.shx", "cp1252_ldid.dbf",
+        "cp932_cpg.shp", "cp932_cpg.shx", "cp932_cpg.dbf", "cp932_cpg.cpg",
+        "cp1250_ldid.shp", "cp1250_ldid.shx", "cp1250_ldid.dbf",
         "dos_npoints.shp", "dos_npoints.shx",
         "dos_nparts.shp", "dos_nparts.shx",
         "ltype_point.shp", "ltype_point.shx", "ltype_point.dbf",
@@ -557,6 +624,8 @@ def main():
     gen_polylinez(root)
     gen_multipointz(root)
     gen_multipatch(root)
+    for stem in CODE_PAGE_FIXTURES:
+        write_code_page_point(root, stem)
     gen_dos_npoints(root)
     gen_dos_nparts(root)
     write_ltype_points(root, "ltype_point", LTYPE_POINT_VALUES)

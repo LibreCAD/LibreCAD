@@ -362,9 +362,10 @@ Skipped/failed record counts logged via `RS_DEBUG->print(RS_Debug::D_WARNING, �
 readable records *and* had `numEntities > 0`.
 
 ### Sub-plan 2c — DBF attributes, layers, styling (the fidelity win)
-1. **Codepage**: `DBFGetCodePage()` (shapelib reads `.cpg`/LDID itself) → map to
-   `QStringDecoder` (UTF-8, LDID/87→Latin-1, common LDID table); fallback: try UTF-8, on
-   invalid sequences re-decode Latin-1. Fixtures `utf8-property`/`latin1-property` pin this.
+1. **Codepage**: `DBFGetCodePage()` (shapelib reads `.cpg`/LDID itself) → a Windows code
+   page (874, 932, 936, 949, 950, 1250-1258; an LDID by ESRI's table, where 87 is 1252) is
+   decoded with libdxfrw's tables; anything else: try UTF-8, on invalid sequences re-decode
+   Latin-1. Fixtures `utf8-property`/`latin1-property` and `cp*_cpg`/`cp*_ldid` pin this.
 2. **Field auto-detection** (case-insensitive, first match):
    - layer: `LAYER`, `LEVEL`, `LYR`
    - color: `COLOR`, `COLOUR` — value `0-255` treated as AutoCAD color index (reuse the

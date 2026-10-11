@@ -267,5 +267,39 @@
       "generator": "scripts/make_shp_fixtures.py",
       "expect": "the first 256 of 257 LTYPE names stay on the pen"
     }
+  ],
+  "generated_code_page": [
+    {
+      "name": "cp1252_cpg.shp",
+      "shp_size": 128,
+      "has_shx": true,
+      "has_prj": false,
+      "generator": "scripts/make_shp_fixtures.py",
+      "expect": "LAYER, LTYPE and NAME are read as cp1252"
+    },
+    {
+      "name": "cp1252_ldid.shp",
+      "shp_size": 128,
+      "has_shx": true,
+      "has_prj": false,
+      "generator": "scripts/make_shp_fixtures.py",
+      "expect": "LAYER, LTYPE and NAME are read as cp1252"
+    },
+    {
+      "name": "cp932_cpg.shp",
+      "shp_size": 128,
+      "has_shx": true,
+      "has_prj": false,
+      "generator": "scripts/make_shp_fixtures.py",
+      "expect": "LAYER, LTYPE and NAME are read as cp932"
+    },
+    {
+      "name": "cp1250_ldid.shp",
+      "shp_size": 128,
+      "has_shx": true,
+      "has_prj": false,
+      "generator": "scripts/make_shp_fixtures.py",
+      "expect": "LAYER, LTYPE and NAME are read as cp1250"
+    }
   ]
 }
