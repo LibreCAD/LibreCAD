@@ -626,10 +626,10 @@ Maintain the progress and validation records below as implementation proceeds:
 | 2026-10-11 | P1a, P1b, P2a, P3a, P3b | In progress | Uncommitted owned service slices | Dependency/resource, font/shaper, parser and outline work; individual results recorded before checkpoints | Validate and checkpoint bounded slices; adapters/persistence/P6/P7 remain pending |
 | 2026-10-11 | P1core.1 | Complete | `7996e9b5a` — `Add headless OpenType font and shaping core` | Isolated ON: 639,014 assertions / 7 cases; OFF without FreeType: 4 / 1; ASan/UBSan: 639,014 / 7; CMake and qmake full application builds exit 0 | Bounded core checkpoint only; registry, installation, certified deployment and entity adapters remain pending |
 | 2026-10-11 | P1 registry | In progress | `b25777bb0` — `Add deterministic versioned OpenType font registry` | Isolated ON/ASan: 97 assertions / 6 cases; OFF: 31 / 3; CMake/qmake application builds pass. Independent review reproduced a dangling higher-priority symlink falling through to a later root | Fix broken-link precedence and strengthen hot-cache/immutable-resource negative coverage; package/certification and entity/profile integration remain pending |
-| 2026-10-11 | P2a logical parser | Validated | Candidate subject: `Add source-preserving logical text document parser` | Isolated CMake ON, OFF and ASan/UBSan each pass 452,158 assertions / 22 cases; complete incremental CMake/qmake application builds exit 0 | Create scoped checkpoint; font/script itemizer, shared layout and entity adapter integration remain pending |
+| 2026-10-11 | P2a logical parser | Complete | `d2e9ac848` — `Add source-preserving logical text document parser` | Isolated CMake ON, OFF and ASan/UBSan each pass 452,158 assertions / 22 cases; complete incremental CMake/qmake application builds exit 0 | Bounded parser checkpoint only; font/script itemizer, shared layout and entity adapter integration remain pending |
 | 2026-10-11 | P0b transport proof | In progress | Uncommitted mixed-tree candidate; no schema codec yet | Earlier STYLE binding failure repaired; new STYLE-unit and LTYPE-control prerequisites pass focused/direct native JSON checks; converted DXF still fails at DIMSTYLE color fields | Record current frozen filter/library evidence and external-converter attribution; isolate and checkpoint prerequisites without claiming full interchange |
 | 2026-10-11 | P3b native outline adapter | In progress | Uncommitted mixed-tree candidate | Registered and partial-instrumentation ASan/UBSan: 12,309 assertions / 6 cases pass, including empty extents and native coordinate limits | Validate isolated checkpoint and both build systems; final affine/entity integration remains pending |
-| 2026-10-11 | P7 execution | Planned | Plan-only workflow update; no publication | Draft-creation checkpoint, acceptance map, independent review coverage and refinement-round records defined; no PR acceptance claimed | Complete the coherent P5 candidate, then execute P7a and keep the records below current |
+| 2026-10-11 | P7 execution | Planned | Plan-only workflow update; no publication | Draft-creation checkpoint, acceptance map, independent review coverage, editing/IME scrutiny, cross-consumer fix checks and refinement-round records defined; no PR acceptance claimed | Complete the coherent P5 candidate, then execute P7a and keep the records below current |
 
 For every executed check, record its exact command and filters, exit status,
 result/test count, tested revision and candidate-tree state, build configuration,
@@ -1099,6 +1099,7 @@ review passes, parallel where useful, with these areas:
 | Geometry and layout | Advances versus ink bounds; glyph origins, mark/cursive offsets and no-ink cases; height/width/oblique plus entity transforms; alignment/anchors, tabs, stacks and line spacing; contour tolerance and native coordinate limits; repeated-update stability |
 | Resources and robustness | Exact saved font/face/engine policy; missing/corrupt resources and complete-segment fallback; bounded cache keys/lifetime; thread ownership; malformed Unicode/format/font input and complexity limits |
 | Compatibility and persistence | Unchanged legacy modes and shared-style isolation; profile upgrades and unknown metadata; no-op/edited DXF/DWG and embedded ATTRIB precedence; annotation/TABLE inheritance and MLeader cache; both explode paths and print/export parity |
+| Editing and user experience | Both native text dialogs and property panels; logical Unicode retained through IME preedit/commit, cursor/selection, clipboard, invisible-control edits and undo/redo; engine-rendered preview versus Qt editing font; explicit profile selection/conversion, undo and actionable resource errors; Chinese editing regressions |
 | Builds and distribution | CMake/qmake parity and explicit legacy-only builds; supported Qt/platform/architecture matrix; clean installed lookup without developer fonts/prefixes; dependency linkage, pinned font, notices/licenses and actual package contents |
 | Tests and PR quality | Independent placement/format oracles, not self-round trips alone; negative and boundary cases; actual nonzero test execution; source invariants; unexplained exclusions; prerequisite scope, documentation and evidence accuracy |
 
@@ -1124,6 +1125,10 @@ individual helpers:
 - Exercise repeated updates, cloning, undo/redo, cache eviction, resource
   failure and destruction under sanitizers. Record instrumented sources and
   exclusions; a font/shaper-only run is not native-adapter lifecycle coverage.
+- Commit Arabic IME composition, edit a combining sequence and an invisible
+  control, then undo/redo and save/reopen from each editor entry point. Verify
+  logical source and profile metadata independently of the preview, and confirm
+  an explicit conversion leaves unselected references to a shared style unchanged.
 
 Review public headers, build/package inputs, new and modified tests, fixtures,
 licenses and prerequisite commits as well as runtime code. Reproduce selected
@@ -1180,6 +1185,10 @@ Run each refinement round in this order:
    than claiming it. Triage related findings together, but keep unrelated fixes
    in separate scoped commits. Apply the existing validate–document–commit loop;
    do not push an unvalidated correction or a failing-test-only checkpoint.
+   For a shared-service or public-contract fix, trace every affected consumer
+   and failure path through the acceptance map. Record which checks must rerun
+   and why any consumer is unaffected; a passing reproducer in one caller does
+   not establish TEXT/MTEXT, annotation, persistence or export parity.
 4. Push the corrected owned branch, reconcile the published head and checks,
    and refresh the PR description, plan, acceptance map, findings ledger and
    evidence matrix. Record corrective commits, executed checks and invalidated
@@ -1286,26 +1295,36 @@ publish a release or activate new defaults without the corresponding authority.
 | After each PR refinement round | Regression proof for fixes, affected suites/builds, CI with actual tested head/merge identity, refreshed finding/decision records and re-review of affected contracts |
 | Before P7 ready-for-review handoff | Complete technical release checklist, final whole-diff independent review, no unresolved mandatory findings, current PR revision evidence and synchronized plan/PR; then complete P7 attestation |
 
-Build success is not test execution. The existing focused text, headless bidi
-and conformance targets are `EXCLUDE_FROM_ALL`; explicitly build and invoke
-them. Ordinary CTest does not currently register those binaries, and registration
-of the broad application/integration suites is configurable. Inspect `ctest -N`
+Build success is not test execution. The existing focused text, headless bidi,
+parser, shaper, registry and conformance targets are `EXCLUDE_FROM_ALL`;
+explicitly build and invoke them. Ordinary CTest does not currently register
+those binaries, and registration of the broad application/integration suites
+is configurable. Inspect `ctest -N`
 and record what actually ran rather than inferring coverage from its exit code.
 
 For example, in a configured single-configuration Unix CMake build with
-`BUILD_TESTS=ON`, run these existing targets explicitly. Adapt executable paths
-for multi-configuration generators and Windows; use the recorded Qt/toolchain
-configuration. These are future validation instructions, not checks completed
+`BUILD_TESTS=ON` and `LIBRECAD_ENABLE_OPENTYPE=ON`, run these existing targets
+explicitly. Adapt executable paths for multi-configuration generators and
+Windows; use the recorded Qt/toolchain configuration. These are future
+validation instructions, not checks completed
 by this plan update.
 
 ```sh
-cmake --build /Users/dli/dev/LibreCAD/build-arabic-cmake --target librecad_text_bidi_tests librecad_text_bidi_headless_tests
+cmake --build /Users/dli/dev/LibreCAD/build-arabic-cmake --target \
+  librecad_text_bidi_tests librecad_text_bidi_headless_tests \
+  librecad_text_document_tests librecad_text_shaper_tests librecad_text_font_registry_tests
 QT_QPA_PLATFORM=offscreen /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_bidi_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_bidi_headless_tests
+/Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_document_tests
+/Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_shaper_tests
+/Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_font_registry_tests
 ```
 
-P1 must also wire a dedicated headless shaping target; add its actual target,
-executable and test filters to this recipe when it exists. When bidi APIs change,
+Run the parser, shaper and registry targets again in a separate explicitly
+configured `LIBRECAD_ENABLE_OPENTYPE=OFF` build; confirm the shaper/registry
+disabled-path cases actually execute rather than treating their smaller counts
+as enabled coverage. The parser's backend-independent cases must still pass.
+Extend this recipe as new headless targets are committed. When bidi APIs change,
 explicitly build `librecad_bidi_conformance` and run it with both matching
 `BidiTest.txt` and `BidiCharacterTest.txt` paths, recording corpus versions and
 case/failure totals. At phase/release gates, explicitly build and run the
