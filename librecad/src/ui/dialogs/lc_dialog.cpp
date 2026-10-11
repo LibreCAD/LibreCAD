@@ -22,6 +22,7 @@
 
 #include "lc_dialog.h"
 
+#include <QApplication>
 #include <QDoubleSpinBox>
 #include <QFocusEvent>
 #include <QLineEdit>
@@ -37,24 +38,50 @@ public:
         spinBox->installEventFilter(this);
         if (auto* editor = spinBox->findChild<QLineEdit*>()) {
             editor->installEventFilter(this);
+            connect(editor, &QLineEdit::selectionChanged, this, [this, editor] {
+                // A deliberate selection cancels replacement even if the drag returns to its start.
+                if (editor->hasSelectedText()) {
+                    m_state = State::Idle;
+                }
+            });
         }
     }
 
 protected:
     bool eventFilter(QObject* watched, QEvent* event) override {
+        auto* editor = qobject_cast<QLineEdit*>(watched);
         if (event->type() == QEvent::FocusIn) {
-            m_selectOnRelease = static_cast<QFocusEvent*>(event)->reason() == Qt::MouseFocusReason;
-        } else if (event->type() == QEvent::FocusOut) {
-            m_selectOnRelease = false;
+            m_state = static_cast<QFocusEvent*>(event)->reason() == Qt::MouseFocusReason
+                ? State::AwaitingPress : State::Idle;
+        } else if (event->type() == QEvent::FocusOut || event->type() == QEvent::Hide
+                   || event->type() == QEvent::UngrabMouse || event->type() == QEvent::KeyPress
+                   || event->type() == QEvent::KeyRelease || event->type() == QEvent::MouseButtonDblClick) {
+            m_state = State::Idle;
+        } else if (event->type() == QEvent::MouseButtonPress) {
+            auto* mouse = static_cast<QMouseEvent*>(event);
+            const bool select = m_state == State::AwaitingPress && editor
+                && mouse->button() == Qt::LeftButton && mouse->buttons() == Qt::LeftButton
+                && mouse->modifiers() == Qt::NoModifier;
+            m_state = select ? State::AwaitingRelease : State::Idle;
+            m_pressPosition = mouse->position().toPoint();
+        } else if (event->type() == QEvent::MouseMove && m_state == State::AwaitingRelease) {
+            auto* mouse = static_cast<QMouseEvent*>(event);
+            if (mouse->buttons() != Qt::LeftButton || mouse->modifiers() != Qt::NoModifier
+                || (mouse->position().toPoint() - m_pressPosition).manhattanLength()
+                    >= QApplication::startDragDistance()) {
+                m_state = State::Idle;
+            }
         } else if (event->type() == QEvent::MouseButtonRelease) {
-            const bool select = m_selectOnRelease;
-            m_selectOnRelease = false;
-            auto* editor = qobject_cast<QLineEdit*>(watched);
+            const bool select = m_state == State::AwaitingRelease;
+            m_state = State::Idle;
             auto* mouse = static_cast<QMouseEvent*>(event);
             auto* spinBox = static_cast<QAbstractSpinBox*>(parent());
-            // Keep deliberate drag selections and subsequent caret-positioning clicks.
             if (select && editor && !editor->hasSelectedText() && !spinBox->isReadOnly()
-                && mouse->button() == Qt::LeftButton && mouse->modifiers() == Qt::NoModifier) {
+                && spinBox->hasFocus() && mouse->button() == Qt::LeftButton
+                && mouse->buttons() == Qt::NoButton && mouse->modifiers() == Qt::NoModifier
+                && editor->rect().contains(mouse->position().toPoint())
+                && (mouse->position().toPoint() - m_pressPosition).manhattanLength()
+                    < QApplication::startDragDistance()) {
                 spinBox->selectAll();
             }
         }
@@ -62,7 +89,9 @@ protected:
     }
 
 private:
-    bool m_selectOnRelease = false;
+    enum class State { Idle, AwaitingPress, AwaitingRelease };
+    State m_state = State::Idle;
+    QPoint m_pressPosition;
 };
 }
 

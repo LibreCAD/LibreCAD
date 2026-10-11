@@ -95,6 +95,13 @@ void type(QWidget& widget, const QString& text) {
         QApplication::sendEvent(&widget, &event);
     }
 }
+
+void key(QWidget& widget, int code, Qt::KeyboardModifiers modifiers = Qt::NoModifier) {
+    for (const auto type : {QEvent::KeyPress, QEvent::KeyRelease}) {
+        QKeyEvent event(type, code, modifiers);
+        QApplication::sendEvent(&widget, &event);
+    }
+}
 }
 
 TEST_CASE("Dialog spin boxes select their numeric value on a focusing click", "[gui][dialog][numeric]") {
@@ -160,6 +167,82 @@ TEST_CASE("Dialog numeric selection preserves ordinary editing", "[gui][dialog][
         mouse(*edit, QEvent::MouseButtonRelease, end, Qt::LeftButton, Qt::NoButton);
         CHECK(edit->selectedText() == selection);
     }
+    SECTION("a short drag returning to its start is not a click") {
+        const int y = edit->height() / 2;
+        int x = 0;
+        while (x + 1 < edit->width()
+               && edit->cursorPositionAt({x, y}) == edit->cursorPositionAt({x + 1, y})) {
+            ++x;
+        }
+        REQUIRE(x + 1 < edit->width());
+        const QPoint start{x, y};
+        const QPoint end{x + 1, y};
+        mouse(*edit, QEvent::MouseButtonPress, start, Qt::LeftButton, Qt::LeftButton);
+        mouse(*edit, QEvent::MouseMove, end, Qt::NoButton, Qt::LeftButton);
+        REQUIRE(edit->hasSelectedText());
+        mouse(*edit, QEvent::MouseMove, start, Qt::NoButton, Qt::LeftButton);
+        REQUIRE_FALSE(edit->hasSelectedText());
+        mouse(*edit, QEvent::MouseButtonRelease, start, Qt::LeftButton, Qt::NoButton);
+        CHECK_FALSE(edit->hasSelectedText());
+    }
+    SECTION("movement beyond the drag threshold cancels selection even without selected text") {
+        const QPoint start{0, edit->height() / 2};
+        const QPoint end{-QApplication::startDragDistance() - 1, start.y()};
+        mouse(*edit, QEvent::MouseButtonPress, start, Qt::LeftButton, Qt::LeftButton);
+        mouse(*edit, QEvent::MouseMove, end, Qt::NoButton, Qt::LeftButton);
+        REQUIRE_FALSE(edit->hasSelectedText());
+        mouse(*edit, QEvent::MouseMove, start, Qt::NoButton, Qt::LeftButton);
+        mouse(*edit, QEvent::MouseButtonRelease, start, Qt::LeftButton, Qt::NoButton);
+        CHECK_FALSE(edit->hasSelectedText());
+    }
+    SECTION("release outside the editor is not a click") {
+        const QPoint start{0, edit->height() / 2};
+        mouse(*edit, QEvent::MouseButtonPress, start, Qt::LeftButton, Qt::LeftButton);
+        mouse(*edit, QEvent::MouseButtonRelease, {0, -1}, Qt::LeftButton, Qt::NoButton);
+        CHECK_FALSE(edit->hasSelectedText());
+        click(*edit);
+        CHECK_FALSE(edit->hasSelectedText());
+    }
+    SECTION("mouse focus without a matching press does not select on release") {
+        f.number.setFocus(Qt::MouseFocusReason);
+        mouse(*edit, QEvent::MouseButtonRelease, {0, edit->height() / 2},
+              Qt::LeftButton, Qt::NoButton);
+        CHECK_FALSE(edit->hasSelectedText());
+    }
+    SECTION("a modified press stays cancelled when the modifier is released") {
+        const QPoint point{0, edit->height() / 2};
+        edit->setCursorPosition(0);
+        mouse(*edit, QEvent::MouseButtonPress, point, Qt::LeftButton, Qt::LeftButton,
+              Qt::ShiftModifier);
+        REQUIRE_FALSE(edit->hasSelectedText());
+        QKeyEvent release(QEvent::KeyRelease, Qt::Key_Shift, Qt::NoModifier);
+        QApplication::sendEvent(edit, &release);
+        mouse(*edit, QEvent::MouseButtonRelease, point, Qt::LeftButton, Qt::NoButton);
+        CHECK_FALSE(edit->hasSelectedText());
+    }
+    SECTION("a modifier change during a click cancels automatic selection") {
+        const QPoint point{0, edit->height() / 2};
+        mouse(*edit, QEvent::MouseButtonPress, point, Qt::LeftButton, Qt::LeftButton);
+        key(*edit, Qt::Key_Shift);
+        mouse(*edit, QEvent::MouseButtonRelease, point, Qt::LeftButton, Qt::NoButton);
+        CHECK_FALSE(edit->hasSelectedText());
+    }
+    SECTION("double-click selection remains native") {
+        click(*edit);
+        const QPoint point{3, edit->height() / 2};
+        mouse(*edit, QEvent::MouseButtonDblClick, point, Qt::LeftButton, Qt::LeftButton);
+        const QString selection = edit->selectedText();
+        REQUIRE_FALSE(selection.isEmpty());
+        mouse(*edit, QEvent::MouseButtonRelease, point, Qt::LeftButton, Qt::NoButton);
+        CHECK(edit->selectedText() == selection);
+    }
+    SECTION("losing focus cancels a pending click") {
+        const QPoint point{0, edit->height() / 2};
+        mouse(*edit, QEvent::MouseButtonPress, point, Qt::LeftButton, Qt::LeftButton);
+        f.other.setFocus();
+        mouse(*edit, QEvent::MouseButtonRelease, point, Qt::LeftButton, Qt::NoButton);
+        CHECK_FALSE(edit->hasSelectedText());
+    }
     SECTION("right-click focus does not select all") {
         click(*edit, Qt::RightButton);
         CHECK_FALSE(edit->hasSelectedText());
@@ -172,7 +255,14 @@ TEST_CASE("Dialog numeric selection preserves ordinary editing", "[gui][dialog][
         CHECK_FALSE(edit->hasSelectedText());
     }
     SECTION("tab focus retains native numeric selection") {
-        f.number.setFocus(Qt::TabFocusReason);
+        key(f.other, Qt::Key_Tab);
+        CHECK(f.number.hasFocus());
+        CHECK(edit->selectedText() == f.number.cleanText());
+    }
+    SECTION("backtab focus retains native numeric selection") {
+        f.integer.setFocus();
+        key(f.integer, Qt::Key_Backtab, Qt::ShiftModifier);
+        CHECK(f.number.hasFocus());
         CHECK(edit->selectedText() == f.number.cleanText());
     }
     SECTION("arrow precision is unchanged") {
