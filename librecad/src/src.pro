@@ -436,6 +436,7 @@ HEADERS += \
     lib/engine/document/entities/lc_extentitydata.h \
     lib/engine/document/entities/lc_textbidi.h \
     lib/engine/document/entities/lc_textdocument.h \
+    lib/engine/document/entities/lc_textruns.h \
     lib/engine/document/entities/lc_textshaper.h \
     lib/engine/document/container/lc_containertraverser.h \
     lib/engine/document/entities/lc_mleader.h \
@@ -1006,6 +1007,7 @@ SOURCES += \
     lib/engine/document/entities/lc_extentitydata.cpp \
     lib/engine/document/entities/lc_textbidi.cpp \
     lib/engine/document/entities/lc_textdocument.cpp \
+    lib/engine/document/entities/lc_textruns.cpp \
     lib/engine/document/entities/lc_textshaper.cpp \
     lib/engine/document/container/lc_containertraverser.cpp \
     lib/engine/document/entities/lc_mleader.cpp \

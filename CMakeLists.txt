@@ -939,6 +939,8 @@ set (SHARED_SOURCES
     librecad/src/lib/engine/document/entities/lc_textbidi.h
     librecad/src/lib/engine/document/entities/lc_textdocument.cpp
     librecad/src/lib/engine/document/entities/lc_textdocument.h
+    librecad/src/lib/engine/document/entities/lc_textruns.cpp
+    librecad/src/lib/engine/document/entities/lc_textruns.h
     librecad/src/lib/engine/document/entities/lc_textshaper.cpp
     librecad/src/lib/engine/document/entities/lc_textshaper.h
         librecad/src/lib/engine/document/entities/rs_line.cpp
@@ -2813,6 +2815,37 @@ if (BUILD_TESTS)
         Catch2::Catch2WithMain Qt6::Core)
     target_compile_features(librecad_text_document_tests PRIVATE cxx_std_17)
     set_target_properties(librecad_text_document_tests PROPERTIES
+        AUTOMOC OFF AUTOUIC OFF AUTORCC OFF)
+
+    add_executable(librecad_text_runs_tests EXCLUDE_FROM_ALL
+        librecad/src/lib/engine/document/entities/lc_textbidi.cpp
+        librecad/src/lib/engine/document/entities/lc_textdocument.cpp
+        librecad/src/lib/engine/document/entities/lc_textruns.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_textruns_tests.cpp)
+    target_include_directories(librecad_text_runs_tests PRIVATE
+        librecad/src/lib/engine/document/entities)
+    target_link_libraries(librecad_text_runs_tests PRIVATE
+        lcqtbidi Catch2::Catch2WithMain Qt6::Core)
+    target_compile_features(librecad_text_runs_tests PRIVATE cxx_std_17)
+    set_target_properties(librecad_text_runs_tests PROPERTIES
+        AUTOMOC OFF AUTOUIC OFF AUTORCC OFF)
+
+    add_executable(librecad_text_runs_shaping_tests EXCLUDE_FROM_ALL
+        librecad/src/lib/engine/document/entities/lc_textbidi.cpp
+        librecad/src/lib/engine/document/entities/lc_textdocument.cpp
+        librecad/src/lib/engine/document/entities/lc_textruns.cpp
+        librecad/src/lib/engine/document/entities/lc_textshaper.cpp
+        librecad/src/lib/engine/document/fonts/lc_opentypefont.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_textruns_shaping_tests.cpp)
+    target_include_directories(librecad_text_runs_shaping_tests PRIVATE
+        librecad/src/lib/engine/document/entities
+        librecad/src/lib/engine/document/fonts)
+    target_link_libraries(librecad_text_runs_shaping_tests PRIVATE
+        lcqtbidi LibreCAD::OpenType Catch2::Catch2WithMain Qt6::Core)
+    target_compile_features(librecad_text_runs_shaping_tests PRIVATE cxx_std_17)
+    target_compile_definitions(librecad_text_runs_shaping_tests PRIVATE
+        LC_OPENTYPE_TEST_FONT_PATH="${CMAKE_CURRENT_SOURCE_DIR}/librecad/support/fonts/opentype/amiri-1.003/Amiri-Regular.ttf")
+    set_target_properties(librecad_text_runs_shaping_tests PROPERTIES
         AUTOMOC OFF AUTOUIC OFF AUTORCC OFF)
 
     # Native shaping and outline extraction must not require QGuiApplication,

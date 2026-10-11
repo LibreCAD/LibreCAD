@@ -625,8 +625,9 @@ Maintain the progress and validation records below as implementation proceeds:
 | 2026-10-11 | P2b | Complete | `644b146c5` | Headless: 1,850 assertions / 21 cases; Unicode 17: 770,241 type/direction + 91,707 character cases, zero failures; legacy display parity checked | Font/script itemization and renderer consumption remain pending; P2 overall is incomplete |
 | 2026-10-11 | P1a, P1b, P2a, P3a, P3b | In progress | Uncommitted owned service slices | Dependency/resource, font/shaper, parser and outline work; individual results recorded before checkpoints | Validate and checkpoint bounded slices; adapters/persistence/P6/P7 remain pending |
 | 2026-10-11 | P1core.1 | Complete | `7996e9b5a` — `Add headless OpenType font and shaping core` | Isolated ON: 639,014 assertions / 7 cases; OFF without FreeType: 4 / 1; ASan/UBSan: 639,014 / 7; CMake and qmake full application builds exit 0 | Bounded core checkpoint only; registry, installation, certified deployment and entity adapters remain pending |
-| 2026-10-11 | P1 registry | Validated | `b25777bb0` plus corrective candidate subject: `Reject broken priority font links without substitution` | Corrected isolated ON/ASan: 128 assertions / 7 cases; OFF: 31 / 3; CMake/qmake application builds pass. Independent before/after review verifies broken-link precedence, hot-cache identity rejection and immutable resource lifetime | Checkpoint correction; package/certification and entity/profile integration remain pending |
+| 2026-10-11 | P1 registry | Complete | `b25777bb0` and `be1d6fb69` — `Reject broken priority font links without substitution` | Corrected isolated ON/ASan: 128 assertions / 7 cases; OFF: 31 / 3; CMake/qmake application builds pass. Independent before/after review verifies broken-link precedence, hot-cache identity rejection and immutable resource lifetime | Bounded registry checkpoint only; package/certification and entity/profile integration remain pending |
 | 2026-10-11 | P2a logical parser | Complete | `d2e9ac848` — `Add source-preserving logical text document parser` | Isolated CMake ON, OFF and ASan/UBSan each pass 452,158 assertions / 22 cases; complete incremental CMake/qmake application builds exit 0 | Bounded parser checkpoint only; font/script itemizer, shared layout and entity adapter integration remain pending |
+| 2026-10-11 | P2c logical itemizer | Validated | Candidate subject: `Itemize source-mapped logical font and script runs` | Isolated ON/OFF/ASan: 208,140 assertions / 16 cases; ON/ASan shaping handoff: 441 / 3, OFF: 1 / 1; CMake/qmake application builds pass; independent source/context review finds no itemizer defect | Checkpoint itemizer; fix separately identified quadratic unmatched-PDI projection lookup, then retain blank-paragraph styles and integrate shared layout |
 | 2026-10-11 | P0b transport proof | In progress | Uncommitted mixed-tree candidate; no schema codec yet | Earlier STYLE binding failure repaired; new STYLE-unit and LTYPE-control prerequisites pass focused/direct native JSON checks; converted DXF still fails at DIMSTYLE color fields | Record current frozen filter/library evidence and external-converter attribution; isolate and checkpoint prerequisites without claiming full interchange |
 | 2026-10-11 | P3b native outline adapter | In progress | Uncommitted mixed-tree candidate | Registered and partial-instrumentation ASan/UBSan: 12,309 assertions / 6 cases pass, including empty extents and native coordinate limits | Validate isolated checkpoint and both build systems; final affine/entity integration remains pending |
 | 2026-10-11 | P7 execution | Planned | Plan-only workflow update; no publication | Draft-creation checkpoint, acceptance map, independent review coverage, editing/IME scrutiny, cross-consumer fix checks and refinement-round records defined; no PR acceptance claimed | Complete the coherent P5 candidate, then execute P7a and keep the records below current |
@@ -918,6 +919,41 @@ and `/private/tmp/librecad-arabic-parser-qmake-{configure,build}.log`.
 Instrumentation is limited to the parser and its tests; external libraries,
 native lifecycle and entity rendering remain separate gates. This checkpoint
 does not claim integration or release acceptance.
+
+### Isolated logical itemizer evidence
+
+The P2c candidate at parent `be1d6fb69` adds QtCore logical font/script/language
+items, disjoint UTF-16 source ownership and bounded shaping contexts. Paint-only
+spans remain separate without splitting shaping. Retained pre-L1 levels and
+isolate/object/tab boundaries bound context; adjacent X9-only controls may be
+borrowed without duplicate ownership or other-level letters. Generated Chinese
+projection controls have no original-source ranges. Script/grapheme policy uses
+the public Qt properties and is not a claim of Script_Extensions conformance.
+
+Four frozen service/test files and only their CMake/qmake registration hunks
+were exported from the index into the same isolated source. Other working-tree
+changes, including the newly discovered bidi complexity correction, blank-line
+style extension, layout, native outlines, filters and dependency packaging,
+were excluded. Independent review of the itemizer and tests found no concrete
+defect; its same-face shaping fixtures prove context/ownership handoff, not
+actual font substitution or final CAD scaling.
+
+Using the same macOS arm64 toolchain and sanitizer limits as above, ON, OFF and
+ASan/UBSan each pass 208,140 assertions / 16 itemizer cases. The shaping handoff
+passes 441 / 3 in ON and sanitizer builds; OFF executes its disabled-path case
+(1 / 1) without FreeType discovery. Complete incremental CMake and ordered
+qmake application builds pass. Processes ON 41782, OFF 19410, sanitizer 18356
+and qmake 38597 all terminate with exit 0, with no skipped tests.
+
+Use the registry configure/build recipes with both targets
+`librecad_text_runs_tests librecad_text_runs_shaping_tests`, retaining `librecad`
+in the ON build; invoke both binaries separately, with the documented sanitizer
+environment for each. The qmake recipe is unchanged. Exact output logs are
+`/private/tmp/librecad-arabic-runs-{on,off,asan}-{configure,build,test,shaping-test}.log`
+and `/private/tmp/librecad-arabic-runs-qmake-{configure,build}.log`.
+The existing projection's unmatched-PDI quadratic lookup remains a separate
+robustness gate until its correction is validated and checkpointed; passing
+these narrower tests does not waive it or establish entity/rendering acceptance.
 
 ## Implementation milestones
 
