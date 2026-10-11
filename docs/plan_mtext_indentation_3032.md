@@ -31,11 +31,12 @@ USA.
 | Issue | [LibreCAD #3032](https://github.com/LibreCAD/LibreCAD/issues/3032), "Reincorporate paragraph indentation for MText while maintaining left alignment", opened 2026-10-08. No sample drawing, no screenshot, no comments by 2026-10-11 |
 | Target | `origin/master`. `origin/2.2.1` has the same leading-space defect; back-porting A1 is decision D5 |
 | Reviewed code | `628a1ba84` (`origin/master`, 2026-10-11). The first version of this plan reviewed `6242f6e43`; the only change in between adds one test file to `librecad_tests` in `CMakeLists.txt` |
-| State | Deep review 2026-10-11: behavior was measured with throw-away probes, not only read (see "Evidence"). Nothing is implemented. The defect has not been reproduced by hand in the running application |
+| State | D1 to D6 were accepted as recommended on 2026-10-11. A0, A1, A2a, A3.1, A4 and B1 are implemented by the pull request that adds this file; see "Implementation". A2b, A3.2, A3.3 and B2 to B5 are open. The result has not been tried by hand in the running application |
 | Cause of the report | `4b5cd9d9e` "MText: fix alignment" on master (2024-05-17, the fix for #1786 "MTEXT alignment is broken"), back-ported as `933d5378c` (2024-06-17), first in 2.2.1_rc3 and released in v2.2.1: every left-attached line is moved by its ink minimum, which cancels leading spaces |
 | Second regression, master only | `117c8710b` (#2603, 2026-06-17): DXF `^I` now becomes U+0009, which is drawn as nothing. Every release drew four spaces |
-| First delivery | A0, A1, A2a and A3.1: leading spaces indent again, a Tab advances again, and the saved width covers the indented line |
-| Open decisions | D1 to D6 in "Decisions For The Maintainer" |
+| First delivery | A0, A1, A2a and A3.1: leading spaces indent again, a Tab advances again, and the saved width covers the indented line. With D2 and D6 accepted, A4 and B1 are part of it |
+| Decisions | D1 to D6 accepted as recommended, 2026-10-11 |
+| Other work on the issue | Draft #3059 implements the first version of this plan |
 
 Track A restores whitespace indentation and is independently useful. Track B
 adds paragraph formatting, which no LibreCAD release has had. Do not claim that
@@ -213,6 +214,9 @@ orders of magnitude. In the 219 ASCII DXF samples, 97 of 98 paragraph codes (in
 
 ## Decisions For The Maintainer
 
+All six were accepted as recommended on 2026-10-11. D5 is carried out as a
+pull request of its own against `2.2.1`.
+
 | ID | Question | Facts | Recommendation |
 | --- | --- | --- | --- |
 | D1 | Does Track A answer #3032, with paragraph controls as a separate feature? | No release had such a control; leading spaces worked through 2.2.0.2 | Yes. Ask the reporter for a sample only if they object |
@@ -226,20 +230,70 @@ orders of magnitude. In the 219 ASCII DXF samples, 97 of 98 paragraph codes (in
 
 | Step | Status | Commit | Completion evidence |
 | --- | --- | --- | --- |
-| A0. Isolate tests and pin the baseline | Evidence gathered by probes; tests not written | - | Listener linked into the text target; baseline assertions for layout, codec and saving |
-| A1. Leading spaces indent again | Prototyped outside the repository | - | Indent tests; unindented, center, right and RightToLeft geometry unchanged; tolerance and stack cases |
-| A2a. A Tab advances | Planned; required before the next release | - | Stops in lines that flow from the left; fixed advance elsewhere; never zero |
-| A2b. Stops in logical RightToLeft lines | Planned | - | Flow-origin placement matches the Qt oracle |
-| A3.1. Saved width covers the line | Planned; required with A1 | - | Group 41 is not smaller than indent plus ink; independent layout check |
-| A3.2. Width policy | Awaiting D3 | - | Binding and non-binding boxes both survive |
-| A3.3. Embedded attribute text | Planned, independent of the issue | - | Edited attribute text is saved; unedited records are unchanged |
-| A4. Tab key and input paths | Awaiting D2 | - | Real key events; every content path keeps blanks |
-| B0. Paragraph scope | Awaiting D1 and D6 | - | Accepted staging |
-| B1 to B5. Paragraph codes and controls | Conditional | - | See Track B |
+| A0. Isolate tests and pin the baseline | Done | `f02391aa2` | Both listeners linked into the text target; the baseline is pinned by the tests of the next rows |
+| A1. Leading spaces indent again | Done | `e12c9fb6e` | Indent tests; unindented, center, right and RightToLeft geometry unchanged; tolerance and stack cases |
+| A2a. A Tab advances | Done | `e12c9fb6e` | Stops in lines that flow from the left; four word spaces in a RightToLeft line; never zero |
+| A2b. Stops in logical RightToLeft lines | Open | - | Flow-origin placement matches the Qt oracle |
+| A3.1. Saved width covers the line | Done | `e12c9fb6e` | Group 41 is not smaller than indent plus ink in DXF R2000, R2007, R2018 and DWG R2004 |
+| A3.2. Width policy | Open; accepted for a later change | - | Binding and non-binding boxes both survive |
+| A3.3. Embedded attribute text | Open, independent of the issue | - | Edited attribute text is saved; unedited records are unchanged |
+| A4. Tab key and input paths | Done | `24af2b21d` | Key events that carry their character; both dialogs and the property editor |
+| B0. Paragraph scope | Decided by D1 and D6 | - | B1 now; B2 to B5 stay conditional |
+| B1. Paragraph commands are not drawn | Done | `e12c9fb6e` | Commands hidden; first-line position and tab stops applied; other text literal |
+| B2 to B5. Paragraph model, wrapping and controls | Conditional | - | See Track B |
 
-Update this table after each implementation commit with its hash, the exact
-tests run, and what could not be checked. Keep regression tests in the commit
-of the fix they validate; do not land a failing-test-only commit.
+The hashes are those of the branch of the pull request. Update this table
+after each implementation commit with its hash, the exact tests run, and what
+could not be checked. Keep regression tests in the commit of the fix they
+validate; do not land a failing-test-only commit.
+
+## Implementation
+
+What the first delivery does, where it departs from the steps as they are
+written below, and how it was checked.
+
+- **A1.** As written. `flushBidiLine()` returns the pen position at the first
+  ink of a line that flows from the left, and `updateAddLine()` adds it back to
+  the left-attached move. The used width of a left-attached line counts from
+  the insertion point, and a stack advances by the used width of its parts.
+- **A2a.** A field is the text between two tabs. The rule of A2a.4 turned out
+  to need one more word: the *leftmost* ink of a field is on the stop, not the
+  ink of its first letter. In `iso3098` the second letter of `iBC` reaches left
+  of the first, in a field as at the start of a line. The stop a tab advances
+  to is measured from the far end of the ink, because the pen of a font without
+  letter spacing can be left of it.
+- **A3.1.** No writer change. The test reads groups 1 and 41 of the saved
+  record itself.
+- **A4.** `tabChangesFocus` is false in both dialogs. The tool-options editor
+  loads plain text; that line has no test of its own, which would need an
+  action context in the text target.
+- **B1.** `readParagraphCommand()` accepts `x`, `i`, `l`, `r`, `b`, `a`, `q`,
+  `s` and `t` with their values, separated by commas or by nothing, up to a
+  `;` within 256 characters. `l + i` and the stops of `t` are applied; a
+  centered, right or decimal stop is used as a plain one; the other properties
+  are skipped. The properties stay in force for the following lines.
+
+| Check | Result |
+| --- | --- |
+| New tests, tag `[issue3032]` | 15 cases, 2579 assertions, in `librecad_text_bidi_tests` |
+| The same tests on the sources before the change | 11 of the 15 fail. The other 4 pin behavior that was right already: text that only resembles a command, tolerance frames, the saved record, blanks through the dialogs |
+| `librecad_text_bidi_tests` | 69 cases pass |
+| `librecad_tests`, the complete executable | 3352 cases pass, 70 are skipped, none fails |
+| `librecad_fast_tests`, `librecad_dxf_fast_tests`, `librecad_dwg_fast_tests`, `librecad_dwg_write_fast_tests`, `librecad_text_bidi_headless_tests` | All pass |
+| `librecad_text_bidi_tests` built with the address and undefined-behavior sanitizers | 69 cases pass, no report |
+| `RS_MText::update()`, 16000 characters, best of 3 | One line of letters 212 ms before and 227 ms after; a tab every 8 characters 358 ms and 367 ms; indented lines 227 ms and 224 ms; a paragraph command per line 312 ms and 177 ms |
+| ezdxf 1.4.4 on a saved sample drawing | Reads it without audit errors. Its own layout indents the lines with leading blanks, puts the fields behind a tab on the same stops and applies the paragraph commands to the same positions |
+| Rendering of that sample through the print renderer | Looked at next to the rendering by the sources before the change |
+
+Not checked: the editors and the drawing by hand in the running application, a
+qmake build (no file was added or renamed), and any other CAD program.
+
+The ezdxf run also shows the limit of A3.1. The saved width is still
+LibreCAD's own measure of the widest line. Where the font of another reader is
+wider, or where the reader counts blanks that LibreCAD does not (in front of
+right-attached text), it wraps the line. Of the fifteen sample entities ezdxf
+wraps three as this change saves them, and six as the sources before the
+change save the same drawing. A3.2 is what removes the rest.
 
 ## Review Resolutions
 
@@ -461,11 +515,12 @@ unchanged prototype cases become tests, plus the tolerance and stack cases.
    `(floor(d / T) + 1) * T`, where `d` is the pen distance from the flow
    origin. Text that ends exactly on a stop goes to the next one. Use this one
    expression; do not loop over stops or add intervals repeatedly.
-4. Place the first ink after a Tab exactly on the stop, as the first ink of a
-   line already is exactly on the line start: a glyph's left bearing must not
-   shift a column. Pen-exact stops would be simpler and identical for fonts
-   without bearings, but two lines that start with different glyphs would then
-   disagree by the difference of their bearings (up to 4 units in `iso3098`).
+4. Place the leftmost ink after a Tab exactly on the stop, as the leftmost
+   ink of a line already is exactly on the line start: a glyph's left bearing
+   must not shift a column. Pen-exact stops would be simpler and identical for
+   fonts without bearings, but two lines that start with different glyphs would
+   then disagree by the difference of their bearings (up to 4 units in
+   `iso3098`).
 5. A leading Tab counts as leading whitespace for A1: the first ink of
    `<Tab>ABC` is at `T`, and it lines up with the field after `1.<Tab>` on
    another line.
@@ -798,7 +853,7 @@ does not fold them in and does not write tests that trip over them.
 | The MTEXT line-spacing style is not saved: Exact reads back as AtLeast from DXF and DWG. The filter sets one field, libdxfrw writes and reads another | Measured | master; 2.2.0 and v2.2.1.5 wrote the field the filter sets |
 | R12 export accumulates line offsets: lines of pitch 15 land at 0, -15, -45, -90 | Measured | 2.2.0 or earlier |
 | `RS_Entity::isInWindow()` does not test validity: an MText without ink at (100, 100) is selected by a window around (0, 0) and not by one around its insertion point | Measured | Not traced |
-| The tool-options editor loads text with `setText()`; fixed by A4.5 | Measured in Qt; the call was read | Not traced |
+| The tool-options editor loaded text with `setText()`; fixed with A4 | Measured in Qt; the call was read | Not traced |
 | The tolerance frame logs every field at error level (`LC_ERR` in `createTextLabels()`) | Read | Not traced |
 | The Properties dock row "Line spacing style" calls `setLineSpacingFactor()` | Read | Not traced |
 | An empty right- or middle-aligned TEXT can get a second point at the 1e10 scale | Read, not confirmed | Not traced |
