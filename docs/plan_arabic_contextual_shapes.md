@@ -290,6 +290,26 @@ joining context, but do not form a ligature across different font faces or
 incompatible scales. Each stack child shapes recursively with its effective
 inline font; the parent treats the stack as an object boundary.
 
+Retain the effective inline style for empty paragraphs and empty stack children,
+even though they have no glyph spans. The parser records that state directly;
+layout must not reconstruct it from raw tokens or silently use another font.
+Manually constructed paragraph records may omit it only when the layout caller
+supplies an explicit fallback style.
+
+The initial opt-in `stack-v1` metric policy uses child scale 4/9, parent-local
+axis 4.5 times the inline height factor and clearance 1 times that factor.
+The child scale matches the existing 4-unit child in a 9-unit cell, not a
+promise of legacy placement: shared layout centers horizontal children by
+logical width and uses their profile/ink extents to avoid overlap. `^` has no
+separator, `/` a horizontal rule and `#` a diagonal separator, with object
+source/paint provenance retained. Tabs use a default 36-local-unit interval
+(four initial cells), independent of inline font changes, and final whole-line
+bidi fields are placed from the resolved paragraph flow edge. Explicit Exact
+line pitch ignores actual mark height; AtLeast also respects profile and
+adjacent ink extents. These constants and full-affine child composition need
+fixtures before profile activation; later geometry changes follow the versioned
+profile compatibility rule.
+
 Keep default Arabic OpenType behavior, including required substitutions and
 font-supplied cursive, mark and mark-to-mark positioning. Do not independently
 implement lam–alef formation or guess ligature-component anchors in this backend.
@@ -628,7 +648,8 @@ Maintain the progress and validation records below as implementation proceeds:
 | 2026-10-11 | P1 registry | Complete | `b25777bb0` and `be1d6fb69` — `Reject broken priority font links without substitution` | Corrected isolated ON/ASan: 128 assertions / 7 cases; OFF: 31 / 3; CMake/qmake application builds pass. Independent before/after review verifies broken-link precedence, hot-cache identity rejection and immutable resource lifetime | Bounded registry checkpoint only; package/certification and entity/profile integration remain pending |
 | 2026-10-11 | P2a logical parser | Complete | `d2e9ac848` — `Add source-preserving logical text document parser` | Isolated CMake ON, OFF and ASan/UBSan each pass 452,158 assertions / 22 cases; complete incremental CMake/qmake application builds exit 0 | Bounded parser checkpoint only; font/script itemizer, shared layout and entity adapter integration remain pending |
 | 2026-10-11 | P2c logical itemizer | Complete | `19e2f7793` — `Itemize source-mapped logical font and script runs` | Isolated ON/OFF/ASan: 208,140 assertions / 16 cases; ON/ASan shaping handoff: 441 / 3, OFF: 1 / 1; CMake/qmake application builds pass; independent source/context review finds no itemizer defect | Bounded itemizer checkpoint only; projection complexity correction below, blank-paragraph styles and shared layout remain separate gates |
-| 2026-10-11 | P2b.1 bounded projection | Validated | Candidate subject: `Bound explicit bidi scope lookup in Chinese projection` | Isolated focused application: 541,335 assertions / 70 cases; headless ON/OFF/ASan: 526,521 / 23; itemizer/handoff regressions and Unicode 17 conformance pass; CMake/qmake application builds pass | Checkpoint the correction; empty-paragraph styles, shared layout and entity integration remain pending |
+| 2026-10-11 | P2b.1 bounded projection | Complete | `95549793f` — `Bound explicit bidi scope lookup in Chinese projection` | Isolated focused application: 541,335 assertions / 70 cases; headless ON/OFF/ASan: 526,521 / 23; itemizer/handoff regressions and Unicode 17 conformance pass; CMake/qmake application builds pass | Bounded projection checkpoint only; empty-paragraph styles, shared layout and entity integration remain pending |
+| 2026-10-11 | P2a.1 empty paragraph styles | Validated | Candidate subject: `Preserve effective styles on empty logical paragraphs` | Independent style/scope review; strict private build and isolated ON/OFF/ASan each pass 452,371 assertions / 24 cases; itemizer/handoff and CMake/qmake application builds pass | Checkpoint parser/model extension; consume it in recursive layout and validate empty-line/stack metrics |
 | 2026-10-11 | P0b transport proof | In progress | Uncommitted mixed-tree candidate; no schema codec yet | Earlier STYLE binding failure repaired; new STYLE-unit and LTYPE-control prerequisites pass focused/direct native JSON checks; converted DXF still fails at DIMSTYLE color fields | Record current frozen filter/library evidence and external-converter attribution; isolate and checkpoint prerequisites without claiming full interchange |
 | 2026-10-11 | P3b native outline adapter | In progress | Uncommitted mixed-tree candidate | Registered and partial-instrumentation ASan/UBSan: 12,309 assertions / 6 cases pass, including empty extents and native coordinate limits | Validate isolated checkpoint and both build systems; final affine/entity integration remains pending |
 | 2026-10-11 | P7 execution | Planned | Plan-only workflow update; no publication | Draft-creation checkpoint, acceptance map, independent review coverage, editing/IME scrutiny, cross-consumer fix checks and refinement-round records defined; no PR acceptance claimed | Complete the coherent P5 candidate, then execute P7a and keep the records below current |
@@ -998,6 +1019,36 @@ the corresponding `*-{headless,focused,runs,shaping}-test.log`,
 retain `-build.log`. Private proof/corpus hashes and warning details are in
 `/private/tmp/librecad-projection-scope.P1mP7S/EVIDENCE.md`.
 Passing this correction does not certify final Arabic entity rendering.
+
+### Empty paragraph style evidence
+
+The parser/model correction at parent `95549793f` retains an optional effective
+end style for every parsed paragraph. Empty lines and empty stack children have
+no spans, so the previous record could not carry their active inline font,
+metrics or paint into layout. The optional value is absent only on manually
+constructed public records; consumers must validate any supplied style before
+using it. No raw text, token, scalar or source-range behavior is changed.
+
+Two new regressions independently assert exact styles across scoped blank lines,
+scope restoration and empty stack-child inheritance. Independent read-only
+review also checks contiguous CR/LF merging and EOF with unclosed scopes; no
+defect was found. A strict private build with the repository's QStringBuilder
+definition executes 452,371 assertions / 24 cases with exit 0 (process 31739,
+`/private/tmp/librecad-arabic-empty-style.KR1zSx/tests.log`).
+
+Only the three staged parser/model/test files were exported over the isolated
+projection checkpoint. Existing configured ON, OFF and ASan/UBSan builds each
+execute 452,371 / 24 parser assertions/cases, 208,140 / 16 itemizer checks and
+the enabled 441 / 3 or disabled 1 / 1 shaping handoff. Complete incremental
+CMake and ordered qmake application builds pass. Processes ON 33736, OFF 72471,
+sanitizer 64414 and qmake 59623 all terminate with exit 0, without skipped tests.
+Build the three corresponding targets (plus `librecad` in ON), then invoke
+each binary separately with the previously documented sanitizer environment.
+Exact logs are `/private/tmp/librecad-arabic-empty-{on,off,asan}-build.log`,
+`/private/tmp/librecad-arabic-empty-{on,off,asan}-{parser,runs,shaping}-test.log`
+and `/private/tmp/librecad-arabic-empty-qmake-build.log`.
+Recursive-layout consumption, final entity geometry and release acceptance
+remain separate, unfinished gates.
 
 ## Implementation milestones
 

@@ -132,6 +132,60 @@ TEST_CASE("MTEXT escape spelling maps to logical scalars without joining gaps", 
     checkProvenance(document);
 }
 
+TEST_CASE("Empty paragraphs retain their effective scoped formatting", "[textdocument][format][empty]") {
+    const auto options = mtextOptions();
+    const auto source = QStringLiteral("{\\f{inline}\\H2x;\\W0.5;\\Q10;\\C2;\\L\\P\\P}\\P");
+    const auto document = Document::parse(source, options);
+    REQUIRE(document.ok());
+    REQUIRE(document.paragraphs.size() == 4);
+    auto inlineStyle = options.initialStyle;
+    inlineStyle.font = QStringLiteral("inline");
+    inlineStyle.fontSpecification = QStringLiteral("inline");
+    inlineStyle.heightFactor = 2;
+    inlineStyle.widthFactor = 0.5;
+    inlineStyle.obliqueDegrees = 10;
+    inlineStyle.color = 2;
+    inlineStyle.underline = true;
+    for (std::size_t i = 0; i < document.paragraphs.size(); ++i) {
+        const auto &paragraph = document.paragraphs[i];
+        CHECK(paragraph.text.isEmpty());
+        CHECK(paragraph.spans.empty());
+        CHECK(paragraph.scalars.empty());
+        REQUIRE(paragraph.emptyStyle);
+        CHECK(*paragraph.emptyStyle == (i < 2 ? inlineStyle : options.initialStyle));
+    }
+    CHECK(document.source == source);
+    checkProvenance(document);
+    CHECK_FALSE(Document::Paragraph{}.emptyStyle);
+    const auto empty = Document::plain({});
+    REQUIRE(empty.paragraphs.front().emptyStyle);
+    CHECK(*empty.paragraphs.front().emptyStyle == Document::Style{});
+}
+
+TEST_CASE("Empty stack children retain inherited inline fonts metrics and paint", "[textdocument][stack][empty]") {
+    const auto source = QStringLiteral("{\\f{inline}\\H2x;\\W0.5;\\C2;\\L\\S^;}");
+    const auto document = Document::parse(source, mtextOptions());
+    REQUIRE(document.ok());
+    REQUIRE(document.paragraphs.front().objects.size() == 1);
+    const auto &object = document.paragraphs.front().objects.front();
+    const auto *parentStyle = document.paragraphs.front().styleAt(0);
+    REQUIRE(parentStyle);
+    CHECK(parentStyle->font == QStringLiteral("inline"));
+    for (const auto *child : {object.upper.get(), object.lower.get()}) {
+        REQUIRE(child);
+        REQUIRE(child->paragraphs.size() == 1);
+        const auto &paragraph = child->paragraphs.front();
+        CHECK(paragraph.text.isEmpty());
+        CHECK(paragraph.spans.empty());
+        REQUIRE(paragraph.emptyStyle);
+        CHECK(*paragraph.emptyStyle == *parentStyle);
+        CHECK(paragraph.source.start >= object.source.start);
+        CHECK(paragraph.source.end() <= object.source.end());
+    }
+    CHECK(document.source == source);
+    checkProvenance(document);
+}
+
 TEST_CASE("Scoped formatting restores fonts metrics and paint independently", "[textdocument]") {
     auto options = mtextOptions();
     options.baseHeight = 4;

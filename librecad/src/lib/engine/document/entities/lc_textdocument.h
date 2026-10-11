@@ -10,6 +10,7 @@
 #include <QString>
 #include <cstdint>
 #include <memory>
+#include <optional>
 #include <vector>
 
 /** Logical text and raw-source provenance. Parsing never rewrites source. */
@@ -71,6 +72,10 @@ public:
         std::vector<Span> spans;
         std::vector<Range> graphemes; // Separate from shaping clusters.
         std::vector<InlineObject> objects;
+        // Effective style at the paragraph's end. Empty paragraphs have no
+        // spans, but their explicit font/metrics/paint must not be discarded.
+        // Absent only for manually constructed public paragraph records.
+        std::optional<Style> emptyStyle;
         std::vector<Range> sourceRanges(int start, int length) const;
         const Style *styleAt(int textPosition) const;
     };

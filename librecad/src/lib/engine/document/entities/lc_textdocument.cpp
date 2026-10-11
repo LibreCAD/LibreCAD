@@ -217,6 +217,7 @@ private:
     }
     void finishParagraph(int sourceEnd) {
         paragraph().source.length = sourceEnd - paragraph().source.start;
+        paragraph().emptyStyle = style;
         QTextBoundaryFinder boundaries(QTextBoundaryFinder::Grapheme, paragraph().text);
         for (int begin = 0, boundary = int(boundaries.toNextBoundary()); boundary >= 0;
              begin = boundary, boundary = int(boundaries.toNextBoundary()))
