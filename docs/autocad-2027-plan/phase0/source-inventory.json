@@ -1,0 +1,3417 @@
+{
+  "source_commit": "628a1ba845931a37b8d745a8ad08d4731615812c",
+  "scope": "Static factory entries and English command spellings; no runtime/parity claim. Conditional entries are retained. Dynamically generated actions and CAD category docks are not enumerated.",
+  "sources": {
+    "actions_and_shortcuts": "librecad/src/ui/main/init/lc_actionfactory.cpp",
+    "document_docks": "librecad/src/ui/main/init/lc_widgetfactory.cpp",
+    "commands": "librecad/src/cmd/lc_commandItems.h"
+  },
+  "counts": {
+    "action_entries": 328,
+    "default_shortcut_entries": 47,
+    "document_docks": 11,
+    "command_entries": 153
+  },
+  "actions": [
+    {
+      "id": "EntityLayerActivate",
+      "definition": "RS2::ActionLayerEntityActivate,          tr(\"Activate Entity's Layer\"),           \":/icons/select_entity.lci\"},",
+      "line": 109,
+      "factory": "createEntityLayerActions"
+    },
+    {
+      "id": "EntityLayerView",
+      "definition": "RS2::ActionLayerEntityToggleView,        tr(\"Hide Entity's Layer\"),  \":/icons/not_visible.lci\"},",
+      "line": 110,
+      "factory": "createEntityLayerActions"
+    },
+    {
+      "id": "EntityLayerHideOthers",
+      "definition": "RS2::ActionLayerEntityHideOthers,        tr(\"Hide Other Layers than Entity's\"),  \":/icons/not_visible_all.lci\"},",
+      "line": 111,
+      "factory": "createEntityLayerActions"
+    },
+    {
+      "id": "EntityLayerLock",
+      "definition": "RS2::ActionLayerEntityToggleLock,        tr(\"Lock Entity's Layer\"),        \":/icons/locked.lci\"},",
+      "line": 112,
+      "factory": "createEntityLayerActions"
+    },
+    {
+      "id": "EntityLayerConstruction",
+      "definition": "RS2::ActionLayerEntityToggleConstruction,tr(\"Toggle Entity's Layer Construction\"),\":/icons/construction_layer.lci\"},",
+      "line": 113,
+      "factory": "createEntityLayerActions"
+    },
+    {
+      "id": "EntityLayerPrint",
+      "definition": "RS2::ActionLayerEntityTogglePrint,       tr(\"Toggle Entity's Layer Printing\"),     \":/icons/print.lci\"}",
+      "line": 114,
+      "factory": "createEntityLayerActions"
+    },
+    {
+      "id": "DrawLineRectangle",
+      "definition": "RS2::ActionDrawLineRectangle,       tr(\"Rectangle\"),              \":/icons/line_rectangle.lci\"},",
+      "line": 192,
+      "factory": "createDrawShapeActions"
+    },
+    {
+      "id": "DrawLinePolygonCenCor",
+      "definition": "RS2::ActionDrawLinePolygonCenCor,   tr(\"Pol&ygon (Cen,Cor)\"),     \":/icons/line_polygon_cen_cor.lci\"},",
+      "line": 193,
+      "factory": "createDrawShapeActions"
+    },
+    {
+      "id": "DrawLinePolygonCenTan",
+      "definition": "RS2::ActionDrawLinePolygonCenTan,   tr(\"Pol&ygon (Cen,Tan)\"),     \":/icons/line_polygon_cen_tan.lci\"},",
+      "line": 194,
+      "factory": "createDrawShapeActions"
+    },
+    {
+      "id": "DrawLinePolygonCorCor",
+      "definition": "RS2::ActionDrawLinePolygonCorCor,   tr(\"Polygo&n (Cor,Cor)\"),     \":/icons/line_polygon_cor_cor.lci\"},",
+      "line": 195,
+      "factory": "createDrawShapeActions"
+    },
+    {
+      "id": "DrawLinePolygonSideSide",
+      "definition": "RS2::ActionDrawLinePolygonSideSide, tr(\"Polygo&n (Tan,Tan)\"),     \":/icons/line_polygon_size_size.lci\"},",
+      "line": 196,
+      "factory": "createDrawShapeActions"
+    },
+    {
+      "id": "DrawStar",
+      "definition": "RS2::ActionDrawStar,                tr(\"Star\"),                   \":/icons/line_polygon_star.lci\"},",
+      "line": 197,
+      "factory": "createDrawShapeActions"
+    },
+    {
+      "id": "DrawLineRectangle1Point",
+      "definition": "RS2::ActionDrawRectangle1Point,     tr(\"Rectangle (1 Point)\"),    \":/icons/rectangle_1_point.lci\"},",
+      "line": 198,
+      "factory": "createDrawShapeActions"
+    },
+    {
+      "id": "DrawLineRectangle2Points",
+      "definition": "RS2::ActionDrawRectangle2Points,    tr(\"Rectangle (2 Points)\"),   \":/icons/rectangle_2_points.lci\"},",
+      "line": 199,
+      "factory": "createDrawShapeActions"
+    },
+    {
+      "id": "DrawLineRectangle3Points",
+      "definition": "RS2::ActionDrawRectangle3Points,    tr(\"Rectangle (3 Points)\"),   \":/icons/rectangle_3_points.lci\"}",
+      "line": 200,
+      "factory": "createDrawShapeActions"
+    },
+    {
+      "id": "DrawLine",
+      "definition": "RS2::ActionDrawLine,                tr(\"&2 Points\"),              \":/icons/line_2p.lci\"},",
+      "line": 206,
+      "factory": "createDrawLineActions"
+    },
+    {
+      "id": "DrawLineAngle",
+      "definition": "RS2::ActionDrawLineAngle,           tr(\"&Angle\"),                 \":/icons/line_angle.lci\"},",
+      "line": 207,
+      "factory": "createDrawLineActions"
+    },
+    {
+      "id": "DrawLineHorizontal",
+      "definition": "RS2::ActionDrawLineHorizontal,      tr(\"&Horizontal\"),            \":/icons/line_horizontal.lci\"},",
+      "line": 208,
+      "factory": "createDrawLineActions"
+    },
+    {
+      "id": "DrawLineVertical",
+      "definition": "RS2::ActionDrawLineVertical,        tr(\"Vertical\"),               \":/icons/line_vertical.lci\"},",
+      "line": 209,
+      "factory": "createDrawLineActions"
+    },
+    {
+      "id": "DrawLineFree",
+      "definition": "RS2::ActionDrawLineFreehand,        tr(\"&Freehand Line\"),         \":/icons/line_freehand.lci\"},",
+      "line": 210,
+      "factory": "createDrawLineActions"
+    },
+    {
+      "id": "DrawLineParallel",
+      "definition": "RS2::ActionDrawLineParallel,        tr(\"&Parallel\"),              \":/icons/line_parallel.lci\"},",
+      "line": 211,
+      "factory": "createDrawLineActions"
+    },
+    {
+      "id": "DrawLineParallelThrough",
+      "definition": "RS2::ActionDrawLineParallelThrough, tr(\"Parallel through point\"), \":/icons/line_parallel_p.lci\"},",
+      "line": 212,
+      "factory": "createDrawLineActions"
+    },
+    {
+      "id": "DrawLineBisector",
+      "definition": "RS2::ActionDrawLineBisector,        tr(\"Bisector\"),               \":/icons/line_bisector.lci\"},",
+      "line": 213,
+      "factory": "createDrawLineActions"
+    },
+    {
+      "id": "DrawLineTangent1",
+      "definition": "RS2::ActionDrawLineTangent1,        tr(\"Tangent (P,C)\"),          \":/icons/line_tangent_pc.lci\"},",
+      "line": 214,
+      "factory": "createDrawLineActions"
+    },
+    {
+      "id": "DrawLineTangent2",
+      "definition": "RS2::ActionDrawLineTangent2,        tr(\"Tangent (C,C)\"),          \":/icons/line_tangent_cc.lci\"},",
+      "line": 215,
+      "factory": "createDrawLineActions"
+    },
+    {
+      "id": "DrawLineOrthTan",
+      "definition": "RS2::ActionDrawLineOrthTan,         tr(\"Tangent &Orthogonal\"),    \":/icons/line_tangent_perpendicular.lci\"},",
+      "line": 216,
+      "factory": "createDrawLineActions"
+    },
+    {
+      "id": "DrawLineOrthogonal",
+      "definition": "RS2::ActionDrawLineOrthogonal,      tr(\"Orthogonal\"),             \":/icons/line_perpendicular.lci\"},",
+      "line": 217,
+      "factory": "createDrawLineActions"
+    },
+    {
+      "id": "DrawLineRelAngle",
+      "definition": "RS2::ActionDrawLineRelAngle,        tr(\"Relative angle\"),         \":/icons/line_relative_angle.lci\"},",
+      "line": 218,
+      "factory": "createDrawLineActions"
+    },
+    {
+      "id": "DrawLineRel",
+      "definition": "RS2::ActionDrawSnakeLine,           tr(\"Snake\"),                  \":/icons/line_rel.lci\"},",
+      "line": 219,
+      "factory": "createDrawLineActions"
+    },
+    {
+      "id": "DrawLineRelX",
+      "definition": "RS2::ActionDrawSnakeLineX,          tr(\"Snake (X)\"),              \":/icons/line_rel_x.lci\"},",
+      "line": 220,
+      "factory": "createDrawLineActions"
+    },
+    {
+      "id": "DrawLineRelY",
+      "definition": "RS2::ActionDrawSnakeLineY,          tr(\"Snake (Y)\"),              \":/icons/line_rel_y.lci\"},",
+      "line": 221,
+      "factory": "createDrawLineActions"
+    },
+    {
+      "id": "DrawLineDirect",
+      "definition": "RS2::ActionDrawLineDirect,          tr(\"Draw Fast\"),              \":/icons/line_rel.lci\"},",
+      "line": 222,
+      "factory": "createDrawLineActions"
+    },
+    {
+      "id": "DrawLineAngleRel",
+      "definition": "RS2::ActionDrawLineAngleRel,        tr(\"Angle From Line\"),        \":/icons/line_angle_rel.lci\"},",
+      "line": 223,
+      "factory": "createDrawLineActions"
+    },
+    {
+      "id": "DrawLineOrthogonalRel",
+      "definition": "RS2::ActionDrawLineOrthogonalRel,   tr(\"Orthogonal From Line\"),   \":/icons/line_ortho_rel.lci\"},",
+      "line": 224,
+      "factory": "createDrawLineActions"
+    },
+    {
+      "id": "DrawLineFromPointToLine",
+      "definition": "RS2::ActionDrawLineFromPointToLine, tr(\"From Point To Line\"),     \":/icons/line_to_ortho.lci\"},",
+      "line": 225,
+      "factory": "createDrawLineActions"
+    },
+    {
+      "id": "DrawLineMiddle",
+      "definition": "RS2::ActionDrawCenterLine,          tr(\"Centerline\"),             \":/icons/line_middle.lci\"},",
+      "line": 226,
+      "factory": "createDrawLineActions"
+    },
+    {
+      "id": "DrawCross",
+      "definition": "RS2::ActionDrawCenterMark,          tr(\"Center Mark\"),            \":/icons/cross_circle1.lci\"},",
+      "line": 227,
+      "factory": "createDrawLineActions"
+    },
+    {
+      "id": "DrawSliceDivideLine",
+      "definition": "RS2::ActionDrawSliceDivideLine,     tr(\"Slice/Divide Line\"),      \":/icons/slice_divide.lci\"},",
+      "line": 228,
+      "factory": "createDrawLineActions"
+    },
+    {
+      "id": "DrawSliceDivideCircle",
+      "definition": "RS2::ActionDrawSliceDivideCircle,   tr(\"Slice/Divide Circle\"),    \":/icons/slice_divide_circle.lci\"},",
+      "line": 229,
+      "factory": "createDrawLineActions"
+    },
+    {
+      "id": "DrawLineRadiant",
+      "definition": "RS2::ActionDrawLineRadiant,         tr(\"Radiant Line\"),           \":/icons/line_far_point.lci\"}",
+      "line": 230,
+      "factory": "createDrawLineActions"
+    },
+    {
+      "id": "DrawPoint",
+      "definition": "RS2::ActionDrawPoint,               tr(\"&Points\"),                \":/icons/points.lci\"},",
+      "line": 236,
+      "factory": "createDrawPointsActions"
+    },
+    {
+      "id": "DrawLinePoints",
+      "definition": "RS2::ActionDrawPointsLine,          tr(\"Line of Points\"),         \":/icons/line_points.lci\"},",
+      "line": 237,
+      "factory": "createDrawPointsActions"
+    },
+    {
+      "id": "DrawPointsMiddle",
+      "definition": "RS2::ActionDrawPointsMiddle,        tr(\"Middle Points\"),          \":/icons/points_middle.lci\"},",
+      "line": 238,
+      "factory": "createDrawPointsActions"
+    },
+    {
+      "id": "DrawPointLattice",
+      "definition": "RS2::ActionDrawPointsLattice,       tr(\"Lattice of Points\"),      \":/icons/points_lattice.lci\"},",
+      "line": 239,
+      "factory": "createDrawPointsActions"
+    },
+    {
+      "id": "SelectPoints",
+      "definition": "RS2::ActionSelectPoints,            tr(\"Select Points\"),          \":/icons/select_points.lci\"},",
+      "line": 240,
+      "factory": "createDrawPointsActions"
+    },
+    {
+      "id": "PasteToPoints",
+      "definition": "RS2::ActionPasteToPoints,           tr(\"Paste to Points\"),        \":/icons/paste_to_points.lci\"}",
+      "line": 241,
+      "factory": "createDrawPointsActions"
+    },
+    {
+      "id": "SelectSingle",
+      "definition": "RS2::ActionSelectSingle,        tr(\"Select Entity\"),                 \":/icons/select_entity.lci\"},",
+      "line": 247,
+      "factory": "createSelectActions"
+    },
+    {
+      "id": "SelectWindow",
+      "definition": "RS2::ActionSelectWindow,        tr(\"Select Window\"),                 \":/icons/select_window.lci\"},",
+      "line": 248,
+      "factory": "createSelectActions"
+    },
+    {
+      "id": "DeselectWindow",
+      "definition": "RS2::ActionDeselectWindow,      tr(\"Deselect Window\"),               \":/icons/deselect_window.lci\"},",
+      "line": 249,
+      "factory": "createSelectActions"
+    },
+    {
+      "id": "SelectContour",
+      "definition": "RS2::ActionSelectContour,       tr(\"(De-)Select &Contour\"),          \":/icons/deselect_contour.lci\"},",
+      "line": 250,
+      "factory": "createSelectActions"
+    },
+    {
+      "id": "SelectIntersected",
+      "definition": "RS2::ActionSelectIntersected,   tr(\"Select Intersected Entities\"),   \":/icons/select_intersected_entities.lci\"},",
+      "line": 251,
+      "factory": "createSelectActions"
+    },
+    {
+      "id": "DeselectIntersected",
+      "definition": "RS2::ActionDeselectIntersected, tr(\"Deselect Intersected Entities\"), \":/icons/deselect_intersected_entities.lci\"},",
+      "line": 252,
+      "factory": "createSelectActions"
+    },
+    {
+      "id": "SelectLayer",
+      "definition": "RS2::ActionSelectLayer,         tr(\"(De-)Select Layer\"),             \":/icons/deselect_layer.lci\"},",
+      "line": 253,
+      "factory": "createSelectActions"
+    },
+    {
+      "id": "SelectQuick",
+      "definition": "RS2::ActionSelectQuick,         tr(\"Select Quick\"),                  \":/icons/select_conditional.lci\"},",
+      "line": 254,
+      "factory": "createSelectActions"
+    },
+    {
+      "id": "SelectionModeToggle",
+      "definition": "RS2::ActionSelectModeToggle,    tr(\"Additive/Exclusive Selection\"),  \":/icons/select_mode_add.lci\"},",
+      "line": 255,
+      "factory": "createSelectActions"
+    },
+    {
+      "id": "SelectionGeneric",
+      "definition": "RS2::ActionSelectGeneric,       tr(\"Select Entities\"),               \":/icons/select.lci\"}",
+      "line": 256,
+      "factory": "createSelectActions"
+    },
+    {
+      "id": "DrawCircle",
+      "definition": "RS2::ActionDrawCircleCenterPoint,         tr(\"Center, &Point\"),                \":/icons/circle_center_point.lci\"},",
+      "line": 262,
+      "factory": "createDrawCircleActions"
+    },
+    {
+      "id": "DrawCircleByArc",
+      "definition": "RS2::ActionDrawCircleByArc,    tr(\"By Arc\"),                        \":/icons/circle_by_arc.lci\"},",
+      "line": 263,
+      "factory": "createDrawCircleActions"
+    },
+    {
+      "id": "DrawCircleCR",
+      "definition": "RS2::ActionDrawCircleCenterRadius,       tr(\"Center, &Radius\"),               \":/icons/circle_center_radius.lci\"},",
+      "line": 264,
+      "factory": "createDrawCircleActions"
+    },
+    {
+      "id": "DrawCircle2P",
+      "definition": "RS2::ActionDrawCircle2Points,       tr(\"2 Points\"),                      \":/icons/circle_2_points.lci\"},",
+      "line": 265,
+      "factory": "createDrawCircleActions"
+    },
+    {
+      "id": "DrawCircle2PR",
+      "definition": "RS2::ActionDrawCircle2PointsRadius,      tr(\"2 Points, Radius\"),              \":/icons/circle_2_points_radius.lci\"},",
+      "line": 266,
+      "factory": "createDrawCircleActions"
+    },
+    {
+      "id": "DrawCircle3P",
+      "definition": "RS2::ActionDrawCircle3Points,       tr(\"3 Points\"),                      \":/icons/circle_3_points.lci\"},",
+      "line": 267,
+      "factory": "createDrawCircleActions"
+    },
+    {
+      "id": "DrawCircleParallel",
+      "definition": "RS2::ActionDrawCircleParallel, tr(\"&Concentric\"),                   \":/icons/circle_concentric.lci\"},",
+      "line": 268,
+      "factory": "createDrawCircleActions"
+    },
+    {
+      "id": "DrawCircleInscribe",
+      "definition": "RS2::ActionDrawCircleInscribe, tr(\"Circle &Inscribed\"),             \":/icons/circle_inscribed.lci\"},",
+      "line": 269,
+      "factory": "createDrawCircleActions"
+    },
+    {
+      "id": "DrawCircleTan2",
+      "definition": "RS2::ActionDrawCircleTan2EntitiesRadius,     tr(\"Tangential 2 Entities, Radius\"),  \":/icons/circle_tangential_2circles_radius.lci\"},",
+      "line": 270,
+      "factory": "createDrawCircleActions"
+    },
+    {
+      "id": "DrawCircleTan2_1P",
+      "definition": "RS2::ActionDrawCircleTangental2Entities1Point,  tr(\"Tangential 2 Entities, 1 Point\"), \":/icons/circle_tangential_2circles_point.lci\"},",
+      "line": 271,
+      "factory": "createDrawCircleActions"
+    },
+    {
+      "id": "DrawCircleTan3",
+      "definition": "RS2::ActionDrawCircleTan3Entities,     tr(\"Tangential &3 Entities\"),         \":/icons/circle_tangential_3entities.lci\"},",
+      "line": 272,
+      "factory": "createDrawCircleActions"
+    },
+    {
+      "id": "DrawCircleTan1_2P",
+      "definition": "RS2::ActionDrawCircleTangental1Entity2Points,  tr(\"Tangential, 2 P&oints\"),         \":/icons/circle_tangential_2points.lci\"}",
+      "line": 273,
+      "factory": "createDrawCircleActions"
+    },
+    {
+      "id": "DrawArc",
+      "definition": "RS2::ActionDrawArc,               tr(\"&Center, Point, Angles\"),    \":/icons/arc_center_point_angle.lci\"},",
+      "line": 279,
+      "factory": "createDrawCurveActions"
+    },
+    {
+      "id": "DrawArcChord",
+      "definition": "RS2::ActionDrawArcChord,          tr(\"&Center, Point, Chord\"),     \":/icons/arc_center_point_chord.lci\"},",
+      "line": 280,
+      "factory": "createDrawCurveActions"
+    },
+    {
+      "id": "DrawArcAngleLen",
+      "definition": "RS2::ActionDrawArcAngleLen,       tr(\"&Center, Point, Arc Angle\"), \":/icons/arc_center_point_anglelen.lci\"},",
+      "line": 281,
+      "factory": "createDrawCurveActions"
+    },
+    {
+      "id": "DrawArc3P",
+      "definition": "RS2::ActionDrawArc3P,             tr(\"&3 Points\"),                 \":/icons/arc_3_points.lci\"},",
+      "line": 282,
+      "factory": "createDrawCurveActions"
+    },
+    {
+      "id": "DrawArc2PAngle",
+      "definition": "RS2::ActionDrawArc2PAngle,        tr(\"&2 Points, Angle\"),          \":/icons/arc_2p_angle.lci\"},",
+      "line": 283,
+      "factory": "createDrawCurveActions"
+    },
+    {
+      "id": "DrawArc2PRadius",
+      "definition": "RS2::ActionDrawArc2PRadius,       tr(\"&2 Points, Radius\"),         \":/icons/arc_2p_radius.lci\"},",
+      "line": 284,
+      "factory": "createDrawCurveActions"
+    },
+    {
+      "id": "DrawArc2PLength",
+      "definition": "RS2::ActionDrawArc2PLength,       tr(\"&2 Points, Length\"),         \":/icons/arc_2p_length.lci\"},",
+      "line": 285,
+      "factory": "createDrawCurveActions"
+    },
+    {
+      "id": "DrawArc2PHeight",
+      "definition": "RS2::ActionDrawArc2PHeight,       tr(\"&2 Points, Height\"),         \":/icons/arc_2p_height.lci\"},",
+      "line": 286,
+      "factory": "createDrawCurveActions"
+    },
+    {
+      "id": "DrawArcParallel",
+      "definition": "RS2::ActionDrawArcParallel,       tr(\"&Concentric\"),               \":/icons/arc_concentric.lci\"},     // fixme - why this action is not in list?",
+      "line": 287,
+      "factory": "createDrawCurveActions"
+    },
+    {
+      "id": "DrawArcTangential",
+      "definition": "RS2::ActionDrawArcTangential,     tr(\"Arc &Tangential\"),           \":/icons/arc_continuation.lci\"},",
+      "line": 288,
+      "factory": "createDrawCurveActions"
+    },
+    {
+      "id": "DrawDualCurve",
+      "definition": "RS2::ActionDrawDual,     tr(\"&Dual Curve\"),           \":/icons/i\"}",
+      "line": 289,
+      "factory": "createDrawCurveActions"
+    },
+    {
+      "id": "DrawParabola4Points",
+      "definition": "RS2::ActionDrawParabola4Points,   tr(\"Para&bola 4 points\"),        \":/icons/parabola_4_points.lci\"},",
+      "line": 295,
+      "factory": "createDrawSplineActions"
+    },
+    {
+      "id": "DrawParabolaFD",
+      "definition": "RS2::ActionDrawParabolaFocusDiretrix,        tr(\"Parabola &Focus Directrix\"), \":/icons/parabola_focus_directrix.lci\"},",
+      "line": 296,
+      "factory": "createDrawSplineActions"
+    },
+    {
+      "id": "DrawHyperbolaFP",
+      "definition": "RS2::ActionDrawHyperbolaFoci2Points,       tr(\"&Hyperbola &Foci Point\"),    \":/icons/hyperbola_foci_point.lci\"},",
+      "line": 297,
+      "factory": "createDrawSplineActions"
+    },
+    {
+      "id": "DrawSpline",
+      "definition": "RS2::ActionDrawSpline,            tr(\"&Spline\"),                   \":/icons/spline.lci\"},",
+      "line": 298,
+      "factory": "createDrawSplineActions"
+    },
+    {
+      "id": "DrawSplinePoints",
+      "definition": "RS2::ActionDrawSplinePoints,      tr(\"&Spline through points\"),    \":/icons/spline_points.lci\"},",
+      "line": 299,
+      "factory": "createDrawSplineActions"
+    },
+    {
+      "id": "DrawSplinePointsAppend",
+      "definition": "RS2::ActionDrawSplinePointAppend, tr(\"&Append spline point\"),      \":/icons/spline_points_add.lci\"},",
+      "line": 300,
+      "factory": "createDrawSplineActions"
+    },
+    {
+      "id": "DrawSplinePointsRemove",
+      "definition": "RS2::ActionDrawSplinePointRemove, tr(\"&Remove spline points\"),     \":/icons/spline_points_remove.lci\"},",
+      "line": 301,
+      "factory": "createDrawSplineActions"
+    },
+    {
+      "id": "DrawSplinePointsAdd",
+      "definition": "RS2::ActionDrawSplinePointAdd,    tr(\"&Insert spline points\"),     \":/icons/spline_points_insert.lci\"},",
+      "line": 302,
+      "factory": "createDrawSplineActions"
+    },
+    {
+      "id": "DrawSplineExplode",
+      "definition": "RS2::ActionDrawSplineExplode,     tr(\"&Explode spline to lines\"),  \":/icons/spline_explode.lci\"},",
+      "line": 303,
+      "factory": "createDrawSplineActions"
+    },
+    {
+      "id": "DrawSplineFromPolyline",
+      "definition": "RS2::ActionDrawSplineFromPolyline,tr(\"&Spline from polyline\"),     \":/icons/spline_from_polyline.lci\"},",
+      "line": 304,
+      "factory": "createDrawSplineActions"
+    },
+    {
+      "id": "DrawSplinePointsDelTwo",
+      "definition": "RS2::ActionDrawSplinePointDelTwo, tr(\"&Remove between two points\"),\":/icons/spline_points_remove_two.lci\"}",
+      "line": 305,
+      "factory": "createDrawSplineActions"
+    },
+    {
+      "id": "DrawEllipse1Point",
+      "definition": "RS2::ActionDrawEllipse1Point,        tr(\"&Ellipse (1 Point)\"),           \":/icons/ellipse_1_point.lci\"},",
+      "line": 311,
+      "factory": "createDrawEllipseActions"
+    },
+    {
+      "id": "DrawEllipseArc1Point",
+      "definition": "RS2::ActionDrawEllipseArc1Point,     tr(\"&Ellipse Arc (1 Point)\"),       \":/icons/ellipse_arc_1_point.lci\"},",
+      "line": 312,
+      "factory": "createDrawEllipseActions"
+    },
+    {
+      "id": "DrawEllipseAxis",
+      "definition": "RS2::ActionDrawEllipseAxis,          tr(\"&Ellipse (Axis)\"),              \":/icons/ellipse_axis.lci\"},",
+      "line": 313,
+      "factory": "createDrawEllipseActions"
+    },
+    {
+      "id": "DrawEllipseArcAxis",
+      "definition": "RS2::ActionDrawEllipseArcAxis,       tr(\"Ellipse &Arc (Axis)\"),          \":/icons/ellipse_arc_axis.lci\"},",
+      "line": 314,
+      "factory": "createDrawEllipseActions"
+    },
+    {
+      "id": "DrawEllipseFociPoint",
+      "definition": "RS2::ActionDrawEllipseFociPoint,     tr(\"Ellipse &Foci Point\"),          \":/icons/ellipse_foci_point.lci\"},",
+      "line": 315,
+      "factory": "createDrawEllipseActions"
+    },
+    {
+      "id": "DrawEllipse4Points",
+      "definition": "RS2::ActionDrawEllipse4Points,       tr(\"Ellipse &4 Point\"),             \":/icons/ellipse_4_points.lci\"},",
+      "line": 316,
+      "factory": "createDrawEllipseActions"
+    },
+    {
+      "id": "DrawEllipseCenter3Points",
+      "definition": "RS2::ActionDrawEllipseCenter3Points, tr(\"Ellipse Center and &3 Points\"), \":/icons/ellipse_center_3_points.lci\"},",
+      "line": 317,
+      "factory": "createDrawEllipseActions"
+    },
+    {
+      "id": "DrawEllipseInscribe",
+      "definition": "RS2::ActionDrawEllipseInscribe,      tr(\"Ellipse &Inscribed\"),           \":/icons/ellipse_inscribed.lci\"}",
+      "line": 318,
+      "factory": "createDrawEllipseActions"
+    },
+    {
+      "id": "DrawPolyline",
+      "definition": "RS2::ActionDrawPolyline,        tr(\"&Polyline\"),                               \":/icons/polylines_polyline.lci\"},",
+      "line": 324,
+      "factory": "createDrawPolylineActions"
+    },
+    {
+      "id": "PolylineAdd",
+      "definition": "RS2::ActionPolylineAdd,         tr(\"&Add node\"),                               \":/icons/insert_node.lci\"},",
+      "line": 325,
+      "factory": "createDrawPolylineActions"
+    },
+    {
+      "id": "PolylineAppend",
+      "definition": "RS2::ActionPolylineAppend,      tr(\"A&ppend node\"),                            \":/icons/append_node.lci\"},",
+      "line": 326,
+      "factory": "createDrawPolylineActions"
+    },
+    {
+      "id": "PolylineDel",
+      "definition": "RS2::ActionPolylineDel,         tr(\"&Delete node\"),                            \":/icons/delete_node.lci\"},",
+      "line": 327,
+      "factory": "createDrawPolylineActions"
+    },
+    {
+      "id": "PolylineDelBetween",
+      "definition": "RS2::ActionPolylineDelBetween,  tr(\"Delete &between two nodes\"),               \":/icons/delete_between_nodes.lci\"},",
+      "line": 328,
+      "factory": "createDrawPolylineActions"
+    },
+    {
+      "id": "PolylineTrim",
+      "definition": "RS2::ActionPolylineTrim,        tr(\"&Trim segments\"),                          \":/icons/trim.lci\"},",
+      "line": 329,
+      "factory": "createDrawPolylineActions"
+    },
+    {
+      "id": "PolylineEquidistant",
+      "definition": "RS2::ActionPolylineEquidistant, tr(\"Create &Equidistant Polylines\"),           \":/icons/create_equidistant_polyline.lci\"},",
+      "line": 330,
+      "factory": "createDrawPolylineActions"
+    },
+    {
+      "id": "PolylineSegment",
+      "definition": "RS2::ActionPolylineSegment,     tr(\"Polyline from Existing &Segments\"),        \":/icons/create_polyline_from_existing_segments.lci\"},",
+      "line": 331,
+      "factory": "createDrawPolylineActions"
+    },
+    {
+      "id": "PolylineArcToLines",
+      "definition": "RS2::ActionPolylineArcsToLines, tr(\"Polyline Arcs to Chords\"),                 \":/icons/polyline_arc_to_lines.lci\"},",
+      "line": 332,
+      "factory": "createDrawPolylineActions"
+    },
+    {
+      "id": "PolylineSegmentType",
+      "definition": "RS2::ActionPolylineChangeSegmentType,    tr(\"Polyline Change Segment Type\"),            \":/icons/polyline_segment_type.lci\"}",
+      "line": 333,
+      "factory": "createDrawPolylineActions"
+    },
+    {
+      "id": "ZoomPan",
+      "definition": "RS2::ActionZoomPan,         tr(\"Zoom &Panning\"), \":/icons/zoom_pan.lci\"},",
+      "line": 339,
+      "factory": "createDrawOtherActions"
+    },
+    {
+      "id": "DrawMText",
+      "definition": "RS2::ActionDrawMText,       tr(\"&MText\"),        \":/icons/mtext.lci\"},",
+      "line": 340,
+      "factory": "createDrawOtherActions"
+    },
+    {
+      "id": "DrawText",
+      "definition": "RS2::ActionDrawText,        tr(\"&Text\"),         \":/icons/text.lci\"},",
+      "line": 341,
+      "factory": "createDrawOtherActions"
+    },
+    {
+      "id": "DrawHatch",
+      "definition": "RS2::ActionDrawHatch,       tr(\"&Hatch\"),        \":/icons/hatch.lci\"},",
+      "line": 342,
+      "factory": "createDrawOtherActions"
+    },
+    {
+      "id": "DrawImage",
+      "definition": "RS2::ActionDrawImage,       tr(\"Insert &Image\"), \":/icons/camera.lci\"},",
+      "line": 343,
+      "factory": "createDrawOtherActions"
+    },
+    {
+      "id": "DrawBoundingBox",
+      "definition": "RS2::ActionDrawBoundingBox, tr(\"Bounding &Box\"), \":/icons/bounding_box.lci\"}",
+      "line": 344,
+      "factory": "createDrawOtherActions"
+    },
+    {
+      "id": "DimAligned",
+      "definition": "RS2::ActionDimAligned,   tr(\"&Aligned\"),    \":/icons/dim_aligned.lci\"},",
+      "line": 350,
+      "factory": "createDrawDimensionsActions"
+    },
+    {
+      "id": "DimLinear",
+      "definition": "RS2::ActionDimLinear,    tr(\"&Linear\"),     \":/icons/dim_linear.lci\"},",
+      "line": 351,
+      "factory": "createDrawDimensionsActions"
+    },
+    {
+      "id": "DimLinearHor",
+      "definition": "RS2::ActionDimLinearHor, tr(\"&Horizontal\"), \":/icons/dim_horizontal.lci\"},",
+      "line": 352,
+      "factory": "createDrawDimensionsActions"
+    },
+    {
+      "id": "DimLinearVer",
+      "definition": "RS2::ActionDimLinearVer, tr(\"&Vertical\"),   \":/icons/dim_vertical.lci\"},",
+      "line": 353,
+      "factory": "createDrawDimensionsActions"
+    },
+    {
+      "id": "DimRadial",
+      "definition": "RS2::ActionDimRadial,    tr(\"&Radial\"),     \":/icons/dim_radial.lci\"},",
+      "line": 354,
+      "factory": "createDrawDimensionsActions"
+    },
+    {
+      "id": "DimDiametric",
+      "definition": "RS2::ActionDimDiametric, tr(\"&Diametric\"),  \":/icons/dim_diametric.lci\"},",
+      "line": 355,
+      "factory": "createDrawDimensionsActions"
+    },
+    {
+      "id": "DimAngular",
+      "definition": "RS2::ActionDimAngular,   tr(\"&Angular\"),    \":/icons/dim_angular.lci\"},",
+      "line": 356,
+      "factory": "createDrawDimensionsActions"
+    },
+    {
+      "id": "DimArc",
+      "definition": "RS2::ActionDimArc,       tr(\"&Arc\"),        \":/icons/dim_arc.lci\"},",
+      "line": 357,
+      "factory": "createDrawDimensionsActions"
+    },
+    {
+      "id": "DimLeader",
+      "definition": "RS2::ActionDimLeader,    tr(\"&Leader\"),     \":/icons/dim_leader.lci\"},",
+      "line": 358,
+      "factory": "createDrawDimensionsActions"
+    },
+    {
+      "id": "DimBaseline",
+      "definition": "RS2::ActionDimBaseline,  tr(\"&Baseline\"),   \":/icons/dim_baseline.lci\"},",
+      "line": 359,
+      "factory": "createDrawDimensionsActions"
+    },
+    {
+      "id": "DimContinue",
+      "definition": "RS2::ActionDimContinue,  tr(\"&Continue\"),   \":/icons/dim_continue.lci\"},",
+      "line": 360,
+      "factory": "createDrawDimensionsActions"
+    },
+    {
+      "id": "DimOrdinate",
+      "definition": "RS2::ActionDimOrdinate,  tr(\"&Ordinate\"),   \":/icons/dim_ordinate.lci\"},",
+      "line": 361,
+      "factory": "createDrawDimensionsActions"
+    },
+    {
+      "id": "DimOrdinateForBase",
+      "definition": "RS2::ActionDimOrdByOriginSelect,  tr(\"Select Ordinates by base\"),  \":/icons/dim_ordinate_by_origin.lci\"},",
+      "line": 362,
+      "factory": "createDrawDimensionsActions"
+    },
+    {
+      "id": "DimOrdinateReBase",
+      "definition": "RS2::ActionDimOrdRebase, tr(\"Ordinates Re-base\"),  \":/icons/dim_ordinate_rebase.lci\"},",
+      "line": 363,
+      "factory": "createDrawDimensionsActions"
+    },
+    {
+      "id": "GTDFeatureFrame",
+      "definition": "RS2::ActionGTDFCFrame,   tr(\"Feature Control Frame\"),  \":/icons/gdt_featurecontrolframe.lci\"},",
+      "line": 364,
+      "factory": "createDrawDimensionsActions"
+    },
+    {
+      "id": "DimPickApply",
+      "definition": "RS2::ActionDimStyleApply,tr(\"Copy Style\"),  \":/icons/dim_apply_style.lci\"},",
+      "line": 365,
+      "factory": "createDrawDimensionsActions"
+    },
+    {
+      "id": "DimModify",
+      "definition": "RS2::ActionDimModify,    tr(\"Modify Style\"),\":/icons/dim_modify_style.lci\"}",
+      "line": 366,
+      "factory": "createDrawDimensionsActions"
+    },
+    {
+      "id": "ModifyAttributes",
+      "definition": "RS2::ActionModifyAttributes,      tr(\"&Attributes\"),                \":/icons/attributes.lci\"},",
+      "line": 379,
+      "factory": "createModifyActions"
+    },
+    {
+      "id": "ModifyDelete",
+      "definition": "RS2::ActionModifyDelete,          tr(\"&Delete\"),                    \":/icons/delete.lci\"},",
+      "line": 380,
+      "factory": "createModifyActions"
+    },
+    {
+      "id": "ModifyMove",
+      "definition": "RS2::ActionModifyMove,            tr(\"&Move / Copy\"),               \":/icons/move_copy.lci\"},",
+      "line": 381,
+      "factory": "createModifyActions"
+    },
+    {
+      "id": "ModifyRevertDirection",
+      "definition": "RS2::ActionModifyRevertDirection, tr(\"Re&vert direction\"),          \":/icons/revert_direction.lci\"},",
+      "line": 382,
+      "factory": "createModifyActions"
+    },
+    {
+      "id": "ModifyRotate",
+      "definition": "RS2::ActionModifyRotate,          tr(\"&Rotate\"),                    \":/icons/rotate.lci\"},",
+      "line": 383,
+      "factory": "createModifyActions"
+    },
+    {
+      "id": "ModifyScale",
+      "definition": "RS2::ActionModifyScale,           tr(\"&Scale\"),                     \":/icons/scale.lci\"},",
+      "line": 384,
+      "factory": "createModifyActions"
+    },
+    {
+      "id": "ModifyMirror",
+      "definition": "RS2::ActionModifyMirror,          tr(\"&Mirror\"),                    \":/icons/mirror.lci\"},",
+      "line": 385,
+      "factory": "createModifyActions"
+    },
+    {
+      "id": "ModifyMoveRotate",
+      "definition": "RS2::ActionModifyMoveRotate,      tr(\"Mo&ve and Rotate\"),           \":/icons/move_rotate.lci\"},",
+      "line": 386,
+      "factory": "createModifyActions"
+    },
+    {
+      "id": "ModifyRotate2",
+      "definition": "RS2::ActionModifyRotateTwice,         tr(\"Rotate T&wo\"),                \":/icons/rotate2.lci\"},",
+      "line": 387,
+      "factory": "createModifyActions"
+    },
+    {
+      "id": "ModifyEntity",
+      "definition": "RS2::ActionModifyEntity,          tr(\"&Properties\"),                \":/icons/properties.lci\"},",
+      "line": 388,
+      "factory": "createModifyActions"
+    },
+    {
+      "id": "ModifyTrim",
+      "definition": "RS2::ActionModifyTrim,            tr(\"&Trim\"),                      \":/icons/trim.lci\"},",
+      "line": 389,
+      "factory": "createModifyActions"
+    },
+    {
+      "id": "ModifyTrim2",
+      "definition": "RS2::ActionModifyTrim2,           tr(\"Tr&im Two\"),                  \":/icons/trim2.lci\"},",
+      "line": 390,
+      "factory": "createModifyActions"
+    },
+    {
+      "id": "ModifyTrimAmount",
+      "definition": "RS2::ActionModifyTrimAmount,      tr(\"&Lengthen\"),                  \":/icons/trim_value.lci\"},",
+      "line": 391,
+      "factory": "createModifyActions"
+    },
+    {
+      "id": "ModifyOffset",
+      "definition": "RS2::ActionModifyOffset,          tr(\"O&ffset\"),                    \":/icons/offset.lci\"},",
+      "line": 392,
+      "factory": "createModifyActions"
+    },
+    {
+      "id": "ModifyCut",
+      "definition": "RS2::ActionModifyCut,             tr(\"&Divide\"),                    \":/icons/divide.lci\"},",
+      "line": 393,
+      "factory": "createModifyActions"
+    },
+    {
+      "id": "ModifyStretch",
+      "definition": "RS2::ActionModifyStretch,         tr(\"&Stretch\"),                   \":/icons/stretch.lci\"},",
+      "line": 394,
+      "factory": "createModifyActions"
+    },
+    {
+      "id": "ModifyBevel",
+      "definition": "RS2::ActionModifyBevel,           tr(\"&Bevel\"),                     \":/icons/bevel.lci\"},",
+      "line": 395,
+      "factory": "createModifyActions"
+    },
+    {
+      "id": "ModifyRound",
+      "definition": "RS2::ActionModifyRound,           tr(\"&Fillet\"),                    \":/icons/fillet.lci\"},",
+      "line": 396,
+      "factory": "createModifyActions"
+    },
+    {
+      "id": "ModifyExplodeText",
+      "definition": "RS2::ActionModifyExplodeText,     tr(\"&Explode Text into Letters\"), \":/icons/explode_text_to_letters.lci\"},",
+      "line": 397,
+      "factory": "createModifyActions"
+    },
+    {
+      "id": "BlocksExplode",
+      "definition": "RS2::ActionBlocksExplode,         tr(\"Ex&plode\"),                   \":/icons/explode.lci\"},",
+      "line": 398,
+      "factory": "createModifyActions"
+    },
+    {
+      "id": "ModifyBreakDivide",
+      "definition": "RS2::ActionModifyBreakDivide,     tr(\"Break/Divide\"),               \":/icons/break_out_trim.lci\"},",
+      "line": 399,
+      "factory": "createModifyActions"
+    },
+    {
+      "id": "ModifyLineGap",
+      "definition": "RS2::ActionModifyLineGap,         tr(\"Line Gap\"),                   \":/icons/line_gap.lci\"},",
+      "line": 400,
+      "factory": "createModifyActions"
+    },
+    {
+      "id": "ModifyLineJoin",
+      "definition": "RS2::ActionModifyLineJoin,        tr(\"Line Join\"),                  \":/icons/line_join.lci\"},",
+      "line": 401,
+      "factory": "createModifyActions"
+    },
+    {
+      "id": "ModifyDuplicate",
+      "definition": "RS2::ActionModifyDuplicate,       tr(\"Duplicate\"),                  \":/icons/duplicate.lci\"},",
+      "line": 402,
+      "factory": "createModifyActions"
+    },
+    {
+      "id": "ModifyAlign",
+      "definition": "RS2::ActionModifyAlign,           tr(\"Align\"),                      \":/icons/halign_left.lci\"},",
+      "line": 403,
+      "factory": "createModifyActions"
+    },
+    {
+      "id": "ModifyAlignOne",
+      "definition": "RS2::ActionModifyAlignOne,        tr(\"Align One\"),                  \":/icons/align_one.lci\"},",
+      "line": 404,
+      "factory": "createModifyActions"
+    },
+    {
+      "id": "ModifyAlignRef",
+      "definition": "RS2::ActionModifyAlignRef,        tr(\"Align Reference Points\"),     \":/icons/align_ref.lci\"}",
+      "line": 405,
+      "factory": "createModifyActions"
+    },
+    {
+      "id": "PenSyncFromLayer",
+      "definition": "RS2::ActionPenSyncFromLayer, tr(\"Update Current Pen by Active Layer' Pen\"), \":/icons/back.lci\"}",
+      "line": 411,
+      "factory": "createPenActionsUncheckable"
+    },
+    {
+      "id": "PenPick",
+      "definition": "RS2::ActionPenPick,         tr(\"&Pick Pen From Entity\"),            \":/icons/pen_pick_entity.lci\"},",
+      "line": 417,
+      "factory": "createPenActions"
+    },
+    {
+      "id": "PenPickResolved",
+      "definition": "RS2::ActionPenPickResolved, tr(\"&Pick Pen From Entity (Resolved)\"), \":/icons/pen_pick_resolved.lci\"},",
+      "line": 418,
+      "factory": "createPenActions"
+    },
+    {
+      "id": "PenApply",
+      "definition": "RS2::ActionPenApply,        tr(\"Apply Pen to Entity\"),              \":/icons/pen_apply.lci\"},",
+      "line": 419,
+      "factory": "createPenActions"
+    },
+    {
+      "id": "PenCopy",
+      "definition": "RS2::ActionPenCopy,         tr(\"Copy Pen\"),                         \":/icons/pen_copy.lci\"}",
+      "line": 420,
+      "factory": "createPenActions"
+    },
+    {
+      "id": "EntityDescriptionInfo",
+      "definition": "&QC_ApplicationWindow::slotShowEntityDescriptionOnHover, tr(\"Show Entity Description\"), \":/icons/entity_description_info.lci\"}",
+      "line": 426,
+      "factory": "createInfoCursorActions"
+    },
+    {
+      "id": "InfoCursorEnable",
+      "definition": "tr(\"Enable Info Cursor\"), \":/icons/info_cursor_enable.lci\"},",
+      "line": 429,
+      "factory": "createInfoCursorActions"
+    },
+    {
+      "id": "InfoCursorAbs",
+      "definition": "tr(\"Absolute Pos\"),       \":/icons/info_cursor_zone1.lci\"},",
+      "line": 430,
+      "factory": "createInfoCursorActions"
+    },
+    {
+      "id": "InfoCursorSnap",
+      "definition": "tr(\"Snap\"),               \":/icons/info_cursor_zone2.lci\"},",
+      "line": 431,
+      "factory": "createInfoCursorActions"
+    },
+    {
+      "id": "InfoCursorRel",
+      "definition": "tr(\"Relative\"),           \":/icons/info_cursor_zone3.lci\"},",
+      "line": 432,
+      "factory": "createInfoCursorActions"
+    },
+    {
+      "id": "InfoCursorPrompt",
+      "definition": "tr(\"Prompt\"),             \":/icons/info_cursor_zone4.lci\"},",
+      "line": 433,
+      "factory": "createInfoCursorActions"
+    },
+    {
+      "id": "InfoCursorCatchedEntity",
+      "definition": "tr(\"Caught Entity\"),      \":/icons/info_cursor_zone2_entity.lci\"},",
+      "line": 434,
+      "factory": "createInfoCursorActions"
+    },
+    {
+      "id": "SnapVisual",
+      "definition": "tr(\"Snap Visual\"),                  \":/icons/snap_visual.lci\"},",
+      "line": 440,
+      "factory": "createSnapActions"
+    },
+    {
+      "id": "SnapVisualLock",
+      "definition": "tr(\"Toggle Snap Visual Lock\"),      \":/icons/snap_visual_lock.lci\"},",
+      "line": 441,
+      "factory": "createSnapActions"
+    },
+    {
+      "id": "SnapVisualDynDistance",
+      "definition": "tr(\"Show Dynamic Distance Circles\"),\":/icons/snap_visual_dynamic_distance.lci\"},",
+      "line": 442,
+      "factory": "createSnapActions"
+    },
+    {
+      "id": "SnapVisualDistanceTan",
+      "definition": "tr(\"Show Distance Tangentials\"),    \":/icons/snap_visual_dynamic_distance_tangent.lci\"},",
+      "line": 443,
+      "factory": "createSnapActions"
+    },
+    {
+      "id": "SnapVisualAngleSnap",
+      "definition": "tr(\"Show Angle Rays\"),              \":/icons/snap_visual_angle_snap.lci\"},",
+      "line": 444,
+      "factory": "createSnapActions"
+    },
+    {
+      "id": "SnapVisualRelAngleSnap",
+      "definition": "tr(\"Show Angle Relative Rays\"),     \":/icons/snap_visual_rel_angle_snap.lci\"},",
+      "line": 445,
+      "factory": "createSnapActions"
+    },
+    {
+      "id": "SnapVisualAutoAddSnap",
+      "definition": "tr(\"Add Snap Points\"),              \":/icons/snap_visual_add_snaps_auto.lci\"},",
+      "line": 446,
+      "factory": "createSnapActions"
+    },
+    {
+      "id": "SnapVisualAutoAddSnapLast",
+      "definition": "tr(\"Add Last Snap Only\"),           \":/icons/snap_visual_add_snaps_last.lci\"},",
+      "line": 447,
+      "factory": "createSnapActions"
+    },
+    {
+      "id": "SnapVisualShowFarGuides",
+      "definition": "tr(\"Show Far Guides\"),              \":/icons/snap_visual_show_far_guides.lci\"},",
+      "line": 448,
+      "factory": "createSnapActions"
+    },
+    {
+      "id": "SnapGrid",
+      "definition": "tr(\"Snap on Grid\"),                 \":/icons/snap_grid.lci\"},",
+      "line": 449,
+      "factory": "createSnapActions"
+    },
+    {
+      "id": "SnapMiddleManual",
+      "definition": "tr(\"Snap Middle Manual\"),           \":/icons/snap_middle_manual.lci\"},",
+      "line": 450,
+      "factory": "createSnapActions"
+    },
+    {
+      "id": "SnapEntity",
+      "definition": "tr(\"Snap on Entity\"),     \":/icons/snap_entity.lci\"},",
+      "line": 452,
+      "factory": "createSnapActions"
+    },
+    {
+      "id": "SnapCenter",
+      "definition": "tr(\"Snap Center\"),        \":/icons/snap_center.lci\"},",
+      "line": 453,
+      "factory": "createSnapActions"
+    },
+    {
+      "id": "SnapMiddle",
+      "definition": "tr(\"Snap Middle\"),        \":/icons/snap_middle.lci\"},",
+      "line": 454,
+      "factory": "createSnapActions"
+    },
+    {
+      "id": "SnapDistance",
+      "definition": "tr(\"Snap Distance\"),      \":/icons/snap_distance.lci\"},*/",
+      "line": 455,
+      "factory": "createSnapActions"
+    },
+    {
+      "id": "SnapEnd",
+      "definition": "tr(\"Snap on Endpoints\"),            \":/icons/snap_endpoints_short.lci\"},",
+      "line": 456,
+      "factory": "createSnapActions"
+    },
+    {
+      "id": "SnapEntity",
+      "definition": "tr(\"Snap on Entity\"),               \":/icons/snap_entity_short.lci\"},",
+      "line": 457,
+      "factory": "createSnapActions"
+    },
+    {
+      "id": "SnapCenter",
+      "definition": "tr(\"Snap Center\"),                  \":/icons/snap_center_short.lci\"},",
+      "line": 458,
+      "factory": "createSnapActions"
+    },
+    {
+      "id": "SnapMiddle",
+      "definition": "tr(\"Snap Middle\"),                  \":/icons/snap_middle_short.lci\"},",
+      "line": 459,
+      "factory": "createSnapActions"
+    },
+    {
+      "id": "SnapDistance",
+      "definition": "tr(\"Snap Distance\"),                \":/icons/snap_distance_short.lci\"},",
+      "line": 460,
+      "factory": "createSnapActions"
+    },
+    {
+      "id": "SnapIntersection",
+      "definition": "tr(\"Snap Intersection\"),            \":/icons/snap_intersection.lci\"},",
+      "line": 461,
+      "factory": "createSnapActions"
+    },
+    {
+      "id": "RelativeInputLengh",
+      "definition": "tr(\"Relative By Distance\"),     \":/icons/relative_len.lci\"},",
+      "line": 467,
+      "factory": "createRelativeInputActions"
+    },
+    {
+      "id": "RelativeInputAngle",
+      "definition": "tr(\"Relative By Angle\"),      \":/icons/relative_angle.lci\"},",
+      "line": 468,
+      "factory": "createRelativeInputActions"
+    },
+    {
+      "id": "RelativeInputDX",
+      "definition": "tr(\"Relative By X Offset\"),\":/icons/relative_dx.lci\"},",
+      "line": 469,
+      "factory": "createRelativeInputActions"
+    },
+    {
+      "id": "RelativeInputDY",
+      "definition": "tr(\"Relative By Y Offset\"),\":/icons/relative_dy.lci\"},",
+      "line": 470,
+      "factory": "createRelativeInputActions"
+    },
+    {
+      "id": "RelativeInputX",
+      "definition": "tr(\"Relative With X\"),    \":/icons/relative_x.lci\"},",
+      "line": 471,
+      "factory": "createRelativeInputActions"
+    },
+    {
+      "id": "RelativeInputY",
+      "definition": "tr(\"Relative With Y\"),    \":/icons/relative_y.lci\"},",
+      "line": 472,
+      "factory": "createRelativeInputActions"
+    },
+    {
+      "id": "RelativeAddLine",
+      "definition": "tr(\"Add Guiding Line\"),    \":/icons/guiding_line.lci\"},",
+      "line": 473,
+      "factory": "createRelativeInputActions"
+    },
+    {
+      "id": "RelativeAddCircle",
+      "definition": "tr(\"Add Guiding Circle\"),  \":/icons/guiding_circle.lci\"},",
+      "line": 474,
+      "factory": "createRelativeInputActions"
+    },
+    {
+      "id": "RelativeAddPoint",
+      "definition": "tr(\"Add Guiding Point\"),   \":/icons/guiding_point.lci\"},",
+      "line": 475,
+      "factory": "createRelativeInputActions"
+    },
+    {
+      "id": "RestrictHorizontal",
+      "definition": "tr(\"Restrict Horizontal\"), \":/icons/restr_hor.lci\"},",
+      "line": 526,
+      "factory": "createRestrictActions"
+    },
+    {
+      "id": "RestrictVertical",
+      "definition": "tr(\"Restrict Vertical\"),   \":/icons/restr_ver.lci\"},",
+      "line": 527,
+      "factory": "createRestrictActions"
+    },
+    {
+      "id": "RestrictOrthogonal",
+      "definition": "tr(\"Restrict Orthogonal\"), \":/icons/restr_ortho.lci\"},",
+      "line": 528,
+      "factory": "createRestrictActions"
+    },
+    {
+      "id": "RestrictNothing",
+      "definition": "tr(\"Restrict Nothing\"),    \":/icons/restrict_nothing.lci\"}",
+      "line": 529,
+      "factory": "createRestrictActions"
+    },
+    {
+      "id": "UCSSetWCS",
+      "definition": "RS2::ActionUCSCreate,   tr(\"To WCS\"),  \":/icons/ucs_set_wcs.lci\"}",
+      "line": 535,
+      "factory": "createUCSActions"
+    },
+    {
+      "id": "UCSCreate",
+      "definition": "RS2::ActionUCSCreate,   tr(\"Create UCS\"),  \":/icons/ucs_add.lci\"},",
+      "line": 540,
+      "factory": "createUCSActions"
+    },
+    {
+      "id": "UCSSetByDimOrdinate",
+      "definition": "RS2::ActionUCSSetByDimOrdinate,   tr(\"Set UCS By Ordinate Dimension\"),  \":/icons/ucs_set_by_dimordinate.lci\"}",
+      "line": 541,
+      "factory": "createUCSActions"
+    },
+    {
+      "id": "WorkspaceCreate",
+      "definition": "&QC_ApplicationWindow::saveWorkspace,    tr(\"Save Workspace\"),    \":/icons/workspace_save.lci\"},",
+      "line": 547,
+      "factory": "createWorkspacesActionsUncheckable"
+    },
+    {
+      "id": "WorkspaceRemove",
+      "definition": "&QC_ApplicationWindow::removeWorkspace,  tr(\"Remove Workspace\"),  \":/icons/workspace_remove.lci\"},",
+      "line": 548,
+      "factory": "createWorkspacesActionsUncheckable"
+    },
+    {
+      "id": "WorkspaceRestore",
+      "definition": "&QC_ApplicationWindow::restoreWorkspace, tr(\"Restore Workspace\"), \":/icons/workspace.lci\"}",
+      "line": 549,
+      "factory": "createWorkspacesActionsUncheckable"
+    },
+    {
+      "id": "SetRelativeZero",
+      "definition": "RS2::ActionSetRelativeZero, tr(\"Set relative zero position\"),  \":/icons/set_rel_zero.lci\"},",
+      "line": 555,
+      "factory": "createRelZeroActions"
+    },
+    {
+      "id": "LockRelativeZero",
+      "definition": "tr(\"Lock relative zero position\"), \":/icons/lock_rel_zero.lci\"}",
+      "line": 558,
+      "factory": "createRelZeroActions"
+    },
+    {
+      "id": "ExclusiveSnapMode",
+      "definition": "tr(\"Exclusive Snap Mode\"), \":/icons/exclusive.lci\"},",
+      "line": 566,
+      "factory": "createSnapExtraActions"
+    },
+    {
+      "id": "SnapFree",
+      "definition": "tr(\"Free Snap\"),           \":/icons/snap_free.lci\"},",
+      "line": 567,
+      "factory": "createSnapExtraActions"
+    },
+    {
+      "id": "SnapAngle",
+      "definition": "tr(\"Polar Snap\"),          \":/icons/line_angle.lci\"}",
+      "line": 568,
+      "factory": "createSnapExtraActions"
+    },
+    {
+      "id": "OrderBottom",
+      "definition": "RS2::ActionOrderBottom, tr(\"Move to Bottom\"), \":/icons/downmost.lci\"},",
+      "line": 574,
+      "factory": "createOrderActionsUncheckable"
+    },
+    {
+      "id": "OrderLower",
+      "definition": "RS2::ActionOrderLower, tr(\"Lower After Entity\"), \":/icons/down.lci\"},",
+      "line": 575,
+      "factory": "createOrderActionsUncheckable"
+    },
+    {
+      "id": "OrderRaise",
+      "definition": "RS2::ActionOrderRaise, tr(\"Raise Over Entity\"), \":/icons/up.lci\"},",
+      "line": 576,
+      "factory": "createOrderActionsUncheckable"
+    },
+    {
+      "id": "OrderTop",
+      "definition": "RS2::ActionOrderTop, tr(\"Move to Top\"), \":/icons/upmost.lci\"}",
+      "line": 577,
+      "factory": "createOrderActionsUncheckable"
+    },
+    {
+      "id": "InfoPoint",
+      "definition": "RS2::ActionInfoPoint,            tr(\"&Point Coordinates\"),                 \":/icons/info_point.lci\"},",
+      "line": 584,
+      "factory": "createInfoActions"
+    },
+    {
+      "id": "InfoDist",
+      "definition": "RS2::ActionInfoDistPoint2Point,  tr(\"&Distance Point to Point\"),           \":/icons/distance_point_to_point.lci\"},",
+      "line": 585,
+      "factory": "createInfoActions"
+    },
+    {
+      "id": "InfoDist2",
+      "definition": "RS2::ActionInfoDistEntity2Point, tr(\"Distance &Entity to Point\"),          \":/icons/distance_entity_to_point.lci\"},",
+      "line": 586,
+      "factory": "createInfoActions"
+    },
+    {
+      "id": "InfoDist3",
+      "definition": "RS2::ActionInfoDistPoint2Entity, tr(\"Distance &Point to Entity\"),          \":/icons/distance_point_to_entity.lci\"},",
+      "line": 587,
+      "factory": "createInfoActions"
+    },
+    {
+      "id": "InfoAngle",
+      "definition": "RS2::ActionInfoAngle,            tr(\"An&gle between two lines\"),           \":/icons/angle_line_to_line.lci\"},",
+      "line": 588,
+      "factory": "createInfoActions"
+    },
+    {
+      "id": "InfoTotalLength",
+      "definition": "RS2::ActionInfoTotalLength,      tr(\"Total &length of selected entities\"), \":/icons/total_length_selected_entities.lci\"},",
+      "line": 589,
+      "factory": "createInfoActions"
+    },
+    {
+      "id": "InfoArea",
+      "definition": "RS2::ActionInfoArea,             tr(\"Polygonal &Area\"),                    \":/icons/polygonal_area.lci\"},",
+      "line": 590,
+      "factory": "createInfoActions"
+    },
+    {
+      "id": "EntityInfo",
+      "definition": "RS2::ActionInfoProperties,       tr(\"Entity Pro&perties\"),                 \":/icons/entity_properties_select.lci\"},",
+      "line": 591,
+      "factory": "createInfoActions"
+    },
+    {
+      "id": "PickCoordinates",
+      "definition": "RS2::ActionInfoPickCoordinates,  tr(\"Collect &Coordinates\"),               \":/icons/pick_coordinates.lci\"},",
+      "line": 592,
+      "factory": "createInfoActions"
+    },
+    {
+      "id": "InfoAngle3Points",
+      "definition": "RS2::ActionInfoAngle3Points,     tr(\"Ang&le between 3 points\"),            \":/icons/angle_3_points.lci\"}",
+      "line": 593,
+      "factory": "createInfoActions"
+    },
+    {
+      "id": "ZoomWindow",
+      "definition": "RS2::ActionZoomWindow, tr(\"&Window Zoom\"), \":/icons/zoom_window.lci\",\"zoom-select\"}});",
+      "line": 599,
+      "factory": "createViewActions"
+    },
+    {
+      "id": "MainMenu",
+      "definition": "&QC_ApplicationWindow::toggleMainMenu,       tr(\"&Main Menu\"),            \":/icons/main_menu.lci\"},",
+      "line": 602,
+      "factory": "createViewActions"
+    },
+    {
+      "id": "Fullscreen",
+      "definition": "&QC_ApplicationWindow::toggleFullscreen,     tr(\"&Fullscreen\"),           \":/icons/fullscreen.lci\"},",
+      "line": 603,
+      "factory": "createViewActions"
+    },
+    {
+      "id": "ViewGrid",
+      "definition": "&QC_ApplicationWindow::slotViewGrid,         tr(\"&Grid\"),                 \":/icons/grid.lci\"},",
+      "line": 604,
+      "factory": "createViewActions"
+    },
+    {
+      "id": "ViewDraft",
+      "definition": "&QC_ApplicationWindow::slotViewDraft,        tr(\"&Draft\"),                \":/icons/draft.lci\"},",
+      "line": 605,
+      "factory": "createViewActions"
+    },
+    {
+      "id": "ViewLinesDraft",
+      "definition": "&QC_ApplicationWindow::slotViewDraftLines,   tr(\"&Draft Lines\"),          \":/icons/draftLineWidth.lci\"},",
+      "line": 606,
+      "factory": "createViewActions"
+    },
+    {
+      "id": "ViewAntialiasing",
+      "definition": "&QC_ApplicationWindow::slotViewAntialiasing, tr(\"&Antialiasing\"),         \":/icons/anti_aliasing.lci\"},",
+      "line": 607,
+      "factory": "createViewActions"
+    },
+    {
+      "id": "ViewStatusBar",
+      "definition": "&QC_ApplicationWindow::slotViewStatusBar,    tr(\"&Statusbar\")},",
+      "line": 608,
+      "factory": "createViewActions"
+    },
+    {
+      "id": "ViewGridOrtho",
+      "definition": "&QC_ApplicationWindow::slotViewGridOrtho,    tr(\"&Orthogonal Grid\"),      \":/icons/grid_ortho.lci\"},",
+      "line": 609,
+      "factory": "createViewActions"
+    },
+    {
+      "id": "ViewGridIsoLeft",
+      "definition": "&QC_ApplicationWindow::slotViewGridIsoLeft,  tr(\"&Isometric Left Grid\"),  \":/icons/grid_iso_left.lci\"},",
+      "line": 610,
+      "factory": "createViewActions"
+    },
+    {
+      "id": "ViewGridIsoTop",
+      "definition": "&QC_ApplicationWindow::slotViewGridIsoTop,   tr(\"&Isometric Top Grid\"),   \":/icons/grid_iso_top.lci\"},",
+      "line": 611,
+      "factory": "createViewActions"
+    },
+    {
+      "id": "ViewGridIsoRight",
+      "definition": "&QC_ApplicationWindow::slotViewGridIsoRight, tr(\"&Isometric Right Grid\"), \":/icons/grid_iso_right.lci\"},",
+      "line": 612,
+      "factory": "createViewActions"
+    },
+    {
+      "id": "LayersDefreezeAll",
+      "definition": "RS2::ActionLayersDefreezeAll,        tr(\"&Show all layers\"),           \":/icons/visible_all.lci\"},",
+      "line": 619,
+      "factory": "createLayerActionsUncheckable"
+    },
+    {
+      "id": "LayersFreezeAll",
+      "definition": "RS2::ActionLayersFreezeAll,          tr(\"&Hide all layers except current\"), \":/icons/not_visible_all.lci\"},",
+      "line": 620,
+      "factory": "createLayerActionsUncheckable"
+    },
+    {
+      "id": "LayersUnlockAll",
+      "definition": "RS2::ActionLayersUnlockAll,          tr(\"&Unlock all\"),                \":/icons/unlocked.lci\"},",
+      "line": 621,
+      "factory": "createLayerActionsUncheckable"
+    },
+    {
+      "id": "LayersLockAll",
+      "definition": "RS2::ActionLayersLockAll,            tr(\"&Lock all\"),                  \":/icons/locked.lci\"},",
+      "line": 622,
+      "factory": "createLayerActionsUncheckable"
+    },
+    {
+      "id": "LayersAdd",
+      "definition": "RS2::ActionLayersAdd,                tr(\"&Add Layer\"),                 \":/icons/add.lci\"},",
+      "line": 623,
+      "factory": "createLayerActionsUncheckable"
+    },
+    {
+      "id": "LayersRemove",
+      "definition": "RS2::ActionLayersRemove,             tr(\"&Remove Layer\"),              \":/icons/remove.lci\"},",
+      "line": 624,
+      "factory": "createLayerActionsUncheckable"
+    },
+    {
+      "id": "LayersEdit",
+      "definition": "RS2::ActionLayersEdit,               tr(\"&Edit Layer\"),                \":/icons/attributes.lci\"},",
+      "line": 625,
+      "factory": "createLayerActionsUncheckable"
+    },
+    {
+      "id": "LayersToggleLock",
+      "definition": "RS2::ActionLayersToggleLock,         tr(\"Toggle Layer Loc&k\"),         \":/icons/locked.lci\"},",
+      "line": 626,
+      "factory": "createLayerActionsUncheckable"
+    },
+    {
+      "id": "LayersToggleView",
+      "definition": "RS2::ActionLayersToggleView,         tr(\"&Toggle Layer Visibility\"),   \":/icons/visible.lci\"},",
+      "line": 627,
+      "factory": "createLayerActionsUncheckable"
+    },
+    {
+      "id": "LayersTogglePrint",
+      "definition": "RS2::ActionLayersTogglePrint,        tr(\"Toggle Layer &Print\"),        \":/icons/print.lci\"},",
+      "line": 628,
+      "factory": "createLayerActionsUncheckable"
+    },
+    {
+      "id": "LayersToggleConstruction",
+      "definition": "RS2::ActionLayersToggleConstruction, tr(\"Toggle &Construction Layer\"), \":/icons/construction_layer.lci\"},",
+      "line": 629,
+      "factory": "createLayerActionsUncheckable"
+    },
+    {
+      "id": "LayersExportSelected",
+      "definition": "RS2::ActionLayersExportSelected,     tr(\"&Export Selected Layer(s)\"),  \":/icons/layer_export_selected.lci\"},",
+      "line": 630,
+      "factory": "createLayerActionsUncheckable"
+    },
+    {
+      "id": "LayersExportVisible",
+      "definition": "RS2::ActionLayersExportVisible,      tr(\"Export &Visible Layer(s)\"),   \":/icons/layer_export_visible.lci\"}",
+      "line": 631,
+      "factory": "createLayerActionsUncheckable"
+    },
+    {
+      "id": "BlocksDefreezeAll",
+      "definition": "RS2::ActionBlocksDefreezeAll, tr(\"&Show all blocks\"),         \":/icons/visible_all.lci\"},",
+      "line": 637,
+      "factory": "createBlockActionsUncheckable"
+    },
+    {
+      "id": "BlocksFreezeAll",
+      "definition": "RS2::ActionBlocksFreezeAll,   tr(\"&Hide all blocks\"),         \":/icons/not_visible_all.lci\"},",
+      "line": 638,
+      "factory": "createBlockActionsUncheckable"
+    },
+    {
+      "id": "BlocksAdd",
+      "definition": "RS2::ActionBlocksAdd,         tr(\"&Add Block\"),               \":/icons/add.lci\"},",
+      "line": 639,
+      "factory": "createBlockActionsUncheckable"
+    },
+    {
+      "id": "BlocksRemove",
+      "definition": "RS2::ActionBlocksRemove,      tr(\"&Remove Block\"),            \":/icons/remove.lci\"},",
+      "line": 640,
+      "factory": "createBlockActionsUncheckable"
+    },
+    {
+      "id": "BlocksAttributes",
+      "definition": "RS2::ActionBlocksAttributes,  tr(\"&Rename Block\"),            \":/icons/rename_active_block.lci\"},",
+      "line": 641,
+      "factory": "createBlockActionsUncheckable"
+    },
+    {
+      "id": "BlocksEdit",
+      "definition": "RS2::ActionBlocksEdit,        tr(\"&Edit Block\"),              \":/icons/properties.lci\"},",
+      "line": 642,
+      "factory": "createBlockActionsUncheckable"
+    },
+    {
+      "id": "BlocksSave",
+      "definition": "RS2::ActionBlocksSave,        tr(\"&Save Block\"),              \":/icons/save.lci\"},",
+      "line": 643,
+      "factory": "createBlockActionsUncheckable"
+    },
+    {
+      "id": "BlocksInsert",
+      "definition": "RS2::ActionBlocksInsert,      tr(\"&Insert Block\"),            \":/icons/insert_active_block.lci\"},",
+      "line": 644,
+      "factory": "createBlockActionsUncheckable"
+    },
+    {
+      "id": "BlocksToggleView",
+      "definition": "RS2::ActionBlocksToggleView,  tr(\"Toggle Block &Visibility\"), \":/icons/visible.lci\"},",
+      "line": 645,
+      "factory": "createBlockActionsUncheckable"
+    },
+    {
+      "id": "BlocksCreate",
+      "definition": "RS2::ActionBlocksCreate,      tr(\"&Create Block\"),            \":/icons/create_block.lci\"}",
+      "line": 646,
+      "factory": "createBlockActionsUncheckable"
+    },
+    {
+      "id": "OptionsDrawing",
+      "definition": "RS2::ActionOptionsDrawing, tr(\"Current &Drawing Preferences\"), \":/icons/drawing_settings.lci\"}",
+      "line": 652,
+      "factory": "createOptionsActionsUncheckable"
+    },
+    {
+      "id": "OptionsGeneral",
+      "definition": "&QC_ApplicationWindow::slotOptionsGeneral, tr(\"&Application Preferences\"), \":/icons/settings.lci\"},",
+      "line": 656,
+      "factory": "createOptionsActionsUncheckable"
+    },
+    {
+      "id": "WidgetOptions",
+      "definition": "&QC_ApplicationWindow::widgetOptionsDialog, tr(\"Widget Options\")},",
+      "line": 657,
+      "factory": "createOptionsActionsUncheckable"
+    },
+    {
+      "id": "ShortcutsOptions",
+      "definition": "&QC_ApplicationWindow::slotOptionsShortcuts, tr(\"Keyboard Shortcuts\"), \":/icons/shortcuts_settings.lci\"},",
+      "line": 658,
+      "factory": "createOptionsActionsUncheckable"
+    },
+    {
+      "id": "DeviceOptions",
+      "definition": "&QC_ApplicationWindow::showDeviceOptions, tr(\"Device Options\")},",
+      "line": 659,
+      "factory": "createOptionsActionsUncheckable"
+    },
+    {
+      "id": "ReloadStyleSheet",
+      "definition": "&QC_ApplicationWindow::reloadStyleSheet, tr(\"Reload Style Sheet\")}",
+      "line": 660,
+      "factory": "createOptionsActionsUncheckable"
+    },
+    {
+      "id": "FilePrintPreview",
+      "definition": "&QC_ApplicationWindow::slotFilePrintPreview,  tr(\"Print Pre&view\"), \":/icons/print_preview.lci\", \"document-print-preview\"},",
+      "line": 666,
+      "factory": "createFileActions"
+    },
+    {
+      "id": "FileClose",
+      "definition": "tr(\"&Close\"), \":/icons/close.lci\"},",
+      "line": 672,
+      "factory": "createFileActionsUncheckable"
+    },
+    {
+      "id": "FileExport",
+      "definition": "&QC_ApplicationWindow::slotFileExport,      tr(\"&Export as image\"),   \":/icons/export.lci\"},",
+      "line": 676,
+      "factory": "createFileActionsUncheckable"
+    },
+    {
+      "id": "FileCloseAll",
+      "definition": "&QC_ApplicationWindow::slotFileCloseAll,    tr(\"Close All\"),          \":/icons/close_all.lci\"},",
+      "line": 677,
+      "factory": "createFileActionsUncheckable"
+    },
+    {
+      "id": "FilePrintPDF",
+      "definition": "&QC_ApplicationWindow::slotFilePrintPDF,    tr(\"Export as PDF\"),      \":/icons/export_pdf.lci\"},",
+      "line": 678,
+      "factory": "createFileActionsUncheckable"
+    },
+    {
+      "id": "BlocksImport",
+      "definition": "&QC_ApplicationWindow::slotImportBlock,     tr(\"&Block\"),             \":/icons/insert_active_block.lci\"},",
+      "line": 679,
+      "factory": "createFileActionsUncheckable"
+    },
+    {
+      "id": "FileNew",
+      "definition": "&QC_ApplicationWindow::slotFileNewFromDefaultTemplate, tr(\"&New\"),        \":/icons/new.lci\",               \"document-new\"},",
+      "line": 680,
+      "factory": "createFileActionsUncheckable"
+    },
+    {
+      "id": "FileNewTemplate",
+      "definition": "&QC_ApplicationWindow::slotFileNewFromTemplate, tr(\"New From &Template\"), \":/icons/new_from_template.lci\", \"document-new\"},// fixme - check",
+      "line": 681,
+      "factory": "createFileActionsUncheckable"
+    },
+    {
+      "id": "FileOpen",
+      "definition": "&QC_ApplicationWindow::slotFileOpen,        tr(\"&Open...\"),           \":/icons/open.lci\",              \"document-open\"},",
+      "line": 682,
+      "factory": "createFileActionsUncheckable"
+    },
+    {
+      "id": "FileSave",
+      "definition": "&QC_ApplicationWindow::slotFileSave,        tr(\"&Save\"),              \":/icons/save.lci\",              \"document-save\"},",
+      "line": 683,
+      "factory": "createFileActionsUncheckable"
+    },
+    {
+      "id": "FileSaveAs",
+      "definition": "&QC_ApplicationWindow::slotFileSaveAs,      tr(\"Save &as...\"),        \":/icons/save_as.lci\",           \"document-save-as\"},",
+      "line": 684,
+      "factory": "createFileActionsUncheckable"
+    },
+    {
+      "id": "FileSaveAll",
+      "definition": "&QC_ApplicationWindow::slotFileSaveAll,     tr(\"Save A&ll...\"),       \":/icons/save_all.lci\"},",
+      "line": 685,
+      "factory": "createFileActionsUncheckable"
+    },
+    {
+      "id": "FilePrint",
+      "definition": "&QC_ApplicationWindow::slotFilePrint,       tr(\"&Print...\"),          \":/icons/print.lci\",             \"document-print\"},",
+      "line": 686,
+      "factory": "createFileActionsUncheckable"
+    },
+    {
+      "id": "FileQuit",
+      "definition": "&QC_ApplicationWindow::slotFileQuit,        tr(\"&Quit\"),              \":/icons/quit.lci\",              \"application-exit\"},",
+      "line": 687,
+      "factory": "createFileActionsUncheckable"
+    },
+    {
+      "id": "LeftDockAreaToggle",
+      "definition": "&QC_ApplicationWindow::toggleLeftDockArea,        tr(\"Left Dock Area\"),     \":/icons/dockwidgets_left.lci\"},",
+      "line": 695,
+      "factory": "createWidgetActions"
+    },
+    {
+      "id": "RightDockAreaToggle",
+      "definition": "&QC_ApplicationWindow::toggleRightDockArea,       tr(\"Right Dock Area\"),    \":/icons/dockwidgets_right.lci\"},",
+      "line": 696,
+      "factory": "createWidgetActions"
+    },
+    {
+      "id": "TopDockAreaToggle",
+      "definition": "&QC_ApplicationWindow::toggleTopDockArea,         tr(\"Top Dock Area\"),      \":/icons/dockwidgets_top.lci\"},",
+      "line": 697,
+      "factory": "createWidgetActions"
+    },
+    {
+      "id": "BottomDockAreaToggle",
+      "definition": "&QC_ApplicationWindow::toggleBottomDockArea,      tr(\"Bottom Dock Area\"),   \":/icons/dockwidgets_bottom.lci\"},",
+      "line": 698,
+      "factory": "createWidgetActions"
+    },
+    {
+      "id": "FloatingDockwidgetsToggle",
+      "definition": "&QC_ApplicationWindow::toggleFloatingDockwidgets, tr(\"Floating Widgets\"), \":/icons/dockwidgets_floating.lci\"},",
+      "line": 699,
+      "factory": "createWidgetActions"
+    },
+    {
+      "id": "LeftTBAreaToggle",
+      "definition": "&QC_ApplicationWindow::toggleLeftToolbarArea,     tr(\"Left Toolbar Area\"),     \":/icons/dockwidgets_left.lci\"},",
+      "line": 700,
+      "factory": "createWidgetActions"
+    },
+    {
+      "id": "RightTBAreaToggle",
+      "definition": "&QC_ApplicationWindow::toggleRightToolbarArea,    tr(\"Right Toolbar Area\"),    \":/icons/dockwidgets_right.lci\"},",
+      "line": 701,
+      "factory": "createWidgetActions"
+    },
+    {
+      "id": "TopTBAreaToggle",
+      "definition": "&QC_ApplicationWindow::toggleTopToolbarArea,      tr(\"Top Toolbar Area\"),      \":/icons/dockwidgets_top.lci\"},",
+      "line": 702,
+      "factory": "createWidgetActions"
+    },
+    {
+      "id": "BottomTBAreaToggle",
+      "definition": "&QC_ApplicationWindow::toggleBottomToolbarArea,   tr(\"Bottom Toolbar Area\"),   \":/icons/dockwidgets_bottom.lci\"}",
+      "line": 703,
+      "factory": "createWidgetActions"
+    },
+    {
+      "id": "RedockWidgets",
+      "definition": "&QC_ApplicationWindow::slotRedockWidgets,    tr(\"Re-dock Widgets\")},",
+      "line": 709,
+      "factory": "createWidgetActionsUncheckable"
+    },
+    {
+      "id": "InvokeMenuCreator",
+      "definition": "&QC_ApplicationWindow::invokeMenuCreator,    tr(\"Custom Menu Creator\"),    \":/icons/create_menu.lci\"},",
+      "line": 710,
+      "factory": "createWidgetActionsUncheckable"
+    },
+    {
+      "id": "InvokeToolbarCreator",
+      "definition": "&QC_ApplicationWindow::invokeToolbarCreator, tr(\"Custom Toolbar Creator\"), \":/icons/create_toolbar.lci\"}",
+      "line": 711,
+      "factory": "createWidgetActionsUncheckable"
+    },
+    {
+      "id": "FocusCommand",
+      "definition": "&QC_ApplicationWindow::slotFocusCommandLine,   tr(\"Focus on &Command Line\"),   \":/icons/editclear.lci\"},",
+      "line": 717,
+      "factory": "createViewActionsUncheckable"
+    },
+    {
+      "id": "FocusOptions",
+      "definition": "&QC_ApplicationWindow::slotFocusOptionsWidget, tr(\"Focus on &Options Widget\"), \":/icons/drawing_settings.lci\"}",
+      "line": 718,
+      "factory": "createViewActionsUncheckable"
+    },
+    {
+      "id": "ZoomIn",
+      "definition": "RS2::ActionZoomIn,       tr(\"Zoom &In\"),       \":/icons/zoom_in.lci\",       \"zoom-in\"},",
+      "line": 722,
+      "factory": "createViewActionsUncheckable"
+    },
+    {
+      "id": "ZoomOut",
+      "definition": "RS2::ActionZoomOut,      tr(\"Zoom &Out\"),      \":/icons/zoom_out.lci\",      \"zoom-out\"},",
+      "line": 723,
+      "factory": "createViewActionsUncheckable"
+    },
+    {
+      "id": "ZoomAuto",
+      "definition": "RS2::ActionZoomAuto,     tr(\"&Auto Zoom\"),     \":/icons/zoom_auto.lci\",     \"zoom-fit-best\"},",
+      "line": 724,
+      "factory": "createViewActionsUncheckable"
+    },
+    {
+      "id": "ZoomPrevious",
+      "definition": "RS2::ActionZoomPrevious, tr(\"Previous &View\"), \":/icons/zoom_previous.lci\", \"zoom-previous\"},",
+      "line": 725,
+      "factory": "createViewActionsUncheckable"
+    },
+    {
+      "id": "ZoomRedraw",
+      "definition": "RS2::ActionZoomRedraw,   tr(\"&Redraw\"),        \":/icons/redraw.lci\",        \"view-refresh\"}",
+      "line": 726,
+      "factory": "createViewActionsUncheckable"
+    },
+    {
+      "id": "ZoomViewSave",
+      "definition": "&QC_ApplicationWindow::saveNamedView,           tr(\"&Save View\"),           \":/icons/nview_add.lci\"},",
+      "line": 732,
+      "factory": "createNamedViewActionsUncheckable"
+    },
+    {
+      "id": "ZoomViewRestore",
+      "definition": "&QC_ApplicationWindow::restoreNamedViewCurrent, tr(\"Restore Current View\"), \":/icons/nview_visible.lci\"},",
+      "line": 734,
+      "factory": "createNamedViewActionsUncheckable"
+    },
+    {
+      "id": "ZoomViewRestore1",
+      "definition": "&QC_ApplicationWindow::restoreNamedView1,       tr(\"Restore View 1\"),       \":/icons/nview_visible.lci\"},",
+      "line": 735,
+      "factory": "createNamedViewActionsUncheckable"
+    },
+    {
+      "id": "ZoomViewRestore2",
+      "definition": "&QC_ApplicationWindow::restoreNamedView2,       tr(\"Restore View 2\"),       \":/icons/nview_visible.lci\"},",
+      "line": 736,
+      "factory": "createNamedViewActionsUncheckable"
+    },
+    {
+      "id": "ZoomViewRestore3",
+      "definition": "&QC_ApplicationWindow::restoreNamedView3,       tr(\"Restore View 3\"),       \":/icons/nview_visible.lci\"},",
+      "line": 737,
+      "factory": "createNamedViewActionsUncheckable"
+    },
+    {
+      "id": "ZoomViewRestore4",
+      "definition": "&QC_ApplicationWindow::restoreNamedView4,       tr(\"Restore View 4\"),       \":/icons/nview_visible.lci\"},",
+      "line": 738,
+      "factory": "createNamedViewActionsUncheckable"
+    },
+    {
+      "id": "ZoomViewRestore5",
+      "definition": "&QC_ApplicationWindow::restoreNamedView5,       tr(\"Restore View 5\"),       \":/icons/nview_visible.lci\"},",
+      "line": 739,
+      "factory": "createNamedViewActionsUncheckable"
+    },
+    {
+      "id": "SelectAll",
+      "definition": "RS2::ActionSelectAll,    tr(\"Select &All\"),      \":/icons/select_all.lci\"},",
+      "line": 745,
+      "factory": "createSelectActionsUncheckable"
+    },
+    {
+      "id": "DeselectAll",
+      "definition": "RS2::ActionDeselectAll,  tr(\"Deselect &all\"),    \":/icons/deselect_all.lci\"},",
+      "line": 746,
+      "factory": "createSelectActionsUncheckable"
+    },
+    {
+      "id": "SelectInvert",
+      "definition": "RS2::ActionSelectInvert, tr(\"Invert Selection\"), \":/icons/select_inverted.lci\"}",
+      "line": 747,
+      "factory": "createSelectActionsUncheckable"
+    },
+    {
+      "id": "EditUndo",
+      "definition": "RS2::ActionEditUndo,           tr(\"&Undo\"),              \":/icons/undo.lci\",   \"edit-undo\"},",
+      "line": 753,
+      "factory": "createEditActionsUncheckable"
+    },
+    {
+      "id": "EditRedo",
+      "definition": "RS2::ActionEditRedo,           tr(\"&Redo\"),              \":/icons/redo.lci\",   \"edit-redo\"},",
+      "line": 754,
+      "factory": "createEditActionsUncheckable"
+    },
+    {
+      "id": "ModifyDeleteQuick",
+      "definition": "RS2::ActionModifyDeleteQuick,  tr(\"&Delete Selected\"),   \":/icons/delete.lci\"},",
+      "line": 755,
+      "factory": "createEditActionsUncheckable"
+    },
+    {
+      "id": "EditKillAllActions",
+      "definition": "RS2::ActionEditKillAllActions, tr(\"&Selection Pointer\"), \":/icons/cursor.lci\", \"go-previous-view\"}",
+      "line": 756,
+      "factory": "createEditActionsUncheckable"
+    },
+    {
+      "id": "PickPoint",
+      "definition": "RS2::ActionInteractivePickPoint,  tr(\"Pick Point\"),   \":/icons/interactive_pick_point.lci\"},",
+      "line": 774,
+      "factory": "createInteractivePickActions"
+    },
+    {
+      "id": "PickPointX",
+      "definition": "RS2::ActionInteractivePickPoint_X,  tr(\"Pick Point X\"),   \":/icons/interactive_pick_point_x.lci\"},",
+      "line": 775,
+      "factory": "createInteractivePickActions"
+    },
+    {
+      "id": "PickPointY",
+      "definition": "RS2::ActionInteractivePickPoint_Y,  tr(\"Pick Point Y\"),   \":/icons/interactive_pick_point_y.lci\"},",
+      "line": 776,
+      "factory": "createInteractivePickActions"
+    },
+    {
+      "id": "PickDistance",
+      "definition": "RS2::ActionInteractivePickLength, tr(\"Pick Distance\"),\":/icons/interactive_pick_distance.lci\"},",
+      "line": 777,
+      "factory": "createInteractivePickActions"
+    },
+    {
+      "id": "PickAngle",
+      "definition": "RS2::ActionInteractivePickAngle,  tr(\"Pick Angle\"),   \":/icons/interactive_pick_angle.lci\"}",
+      "line": 778,
+      "factory": "createInteractivePickActions"
+    },
+    {
+      "id": "EditCut",
+      "definition": "RS2::ActionEditCut,            tr(\"Cu&t\"),               \":/icons/cut.lci\",             \"edit-cut\"},",
+      "line": 784,
+      "factory": "createEditActions"
+    },
+    {
+      "id": "EditCutQuick",
+      "definition": "RS2::ActionEditCutQuick,       tr(\"Cut Quic&k\"),         \":/icons/cut.lci\",             \"edit-cut\"},",
+      "line": 785,
+      "factory": "createEditActions"
+    },
+    {
+      "id": "EditCopy",
+      "definition": "RS2::ActionEditCopy,           tr(\"&Copy\"),              \":/icons/copy.lci\",            \"edit-copy\"},",
+      "line": 786,
+      "factory": "createEditActions"
+    },
+    {
+      "id": "EditCopyQuick",
+      "definition": "RS2::ActionEditCopyQuick,      tr(\"Copy &Quick\"),        \":/icons/copy.lci\",            \"edit-copy\"},",
+      "line": 787,
+      "factory": "createEditActions"
+    },
+    {
+      "id": "EditPaste",
+      "definition": "RS2::ActionEditPaste,          tr(\"&Paste\"),             \":/icons/paste.lci\",           \"edit-paste\"},",
+      "line": 788,
+      "factory": "createEditActions"
+    },
+    {
+      "id": "EditPasteTransform",
+      "definition": "RS2::ActionEditPasteTransform, tr(\"Paste &Transform\"),   \":/icons/paste_transform.lci\", \"edit-paste\"}",
+      "line": 789,
+      "factory": "createEditActions"
+    }
+  ],
+  "default_shortcuts": [
+    {
+      "id": "ModifyRevertDirection",
+      "definition": "QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_R)},",
+      "line": 904
+    },
+    {
+      "id": "ModifyDuplicate",
+      "definition": "QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_D)},",
+      "line": 905
+    },
+    {
+      "id": "OrderBottom",
+      "definition": "QKeySequence(Qt::Key_End)},",
+      "line": 906
+    },
+    {
+      "id": "OrderLower",
+      "definition": "QKeySequence(Qt::Key_PageDown)},",
+      "line": 907
+    },
+    {
+      "id": "OrderRaise",
+      "definition": "QKeySequence(Qt::Key_PageUp)},",
+      "line": 908
+    },
+    {
+      "id": "OrderTop",
+      "definition": "QKeySequence(Qt::Key_Home)},",
+      "line": 909
+    },
+    {
+      "id": "SelectAll",
+      "definition": "QKeySequence::SelectAll},",
+      "line": 910
+    },
+    {
+      "id": "DeselectAll",
+      "definition": "QKeySequence(tr(\"Ctrl+K\"))},",
+      "line": 912
+    },
+    {
+      "id": "EditUndo",
+      "definition": "QKeySequence::Undo},",
+      "line": 913
+    },
+    {
+      "id": "EditRedo",
+      "definition": "QKeySequence::Redo},",
+      "line": 914
+    },
+    {
+      "id": "EditCut",
+      "definition": "QKeySequence::Cut},",
+      "line": 915
+    },
+    {
+      "id": "EditCutQuick",
+      "definition": "QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_X)},",
+      "line": 916
+    },
+    {
+      "id": "EditCopy",
+      "definition": "QKeySequence::Copy},",
+      "line": 917
+    },
+    {
+      "id": "EditCopyQuick",
+      "definition": "QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_C)},",
+      "line": 918
+    },
+    {
+      "id": "EditPaste",
+      "definition": "QKeySequence::Paste},",
+      "line": 919
+    },
+    {
+      "id": "EditPasteTransform",
+      "definition": "QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_V)},",
+      "line": 920
+    },
+    {
+      "id": "ZoomIn",
+      "definition": "QKeySequence::ZoomIn},",
+      "line": 921
+    },
+    {
+      "id": "ZoomOut",
+      "definition": "QKeySequence::ZoomOut},",
+      "line": 922
+    },
+    {
+      "id": "ZoomAuto",
+      "definition": "QKeySequence(Qt::CTRL | Qt::Key_F)},",
+      "line": 923
+    },
+    {
+      "id": "ZoomRedraw",
+      "definition": "QKeySequence::Refresh},",
+      "line": 924
+    },
+    {
+      "id": "OptionsDrawing",
+      "definition": "QKeySequence::Preferences},",
+      "line": 925
+    },
+    {
+      "id": "ReloadStyleSheet",
+      "definition": "QKeySequence(\"Ctrl+T\")},",
+      "line": 926
+    },
+    {
+      "id": "FileClose",
+      "definition": "QKeySequence::Close},",
+      "line": 927
+    },
+    {
+      "id": "FileCloseAll",
+      "definition": "QKeySequence(\"Shift+\" + QKeySequence(QKeySequence::Close).toString())},",
+      "line": 928
+    },
+    {
+      "id": "ViewGrid",
+      "definition": "QKeySequence(tr(\"Ctrl+G\", \"Toggle Grid\"))},",
+      "line": 929
+    },
+    {
+      "id": "ViewDraft",
+      "definition": "QKeySequence(tr(\"Ctrl+D\",\"Toggle Draft Mode\"))},",
+      "line": 931
+    },
+    {
+      "id": "ViewStatusBar",
+      "definition": "QKeySequence(tr(\"Ctrl+I\", \"Hide Statusbar\"))},",
+      "line": 932
+    },
+    {
+      "id": "ModifyDeleteQuick",
+      "definition": "QKeySequence::Delete  /*QList<QKeySequence>() << QKeySequence::Delete << QKeySequence(Qt::Key_Backspace)*/},",
+      "line": 933
+    },
+    {
+      "id": "FileNew",
+      "definition": "QKeySequence::New},",
+      "line": 934
+    },
+    {
+      "id": "FileOpen",
+      "definition": "QKeySequence::Open},",
+      "line": 935
+    },
+    {
+      "id": "FileSave",
+      "definition": "QKeySequence::Save},",
+      "line": 936
+    },
+    {
+      "id": "FileSaveAs",
+      "definition": "QKeySequence::SaveAs},",
+      "line": 937
+    },
+    {
+      "id": "FilePrint",
+      "definition": "QKeySequence::Print},",
+      "line": 938
+    },
+    {
+      "id": "FileQuit",
+      "definition": "QKeySequence::Quit},",
+      "line": 939
+    },
+    {
+      "id": "FocusCommand",
+      "definition": "QKeySequence(Qt::CTRL | Qt::Key_M)},",
+      "line": 940
+    },
+    {
+      "id": "Fullscreen",
+      "definition": "QKeySequence(\"F11\")},",
+      "line": 943
+    },
+    {
+      "id": "Fullscreen",
+      "definition": "QKeySequence::FullScreen},",
+      "line": 945
+    },
+    {
+      "id": "ExclusiveSnapMode",
+      "definition": "QKeySequence(Qt::ALT | Qt::Key_X)},",
+      "line": 946
+    },
+    {
+      "id": "MainMenu",
+      "definition": "QKeySequence(\"F10\")},",
+      "line": 948
+    },
+    {
+      "id": "RelativeInputLengh",
+      "definition": "QKeySequence(Qt::SHIFT | Qt::Key_D)},",
+      "line": 949
+    },
+    {
+      "id": "RelativeInputAngle",
+      "definition": "QKeySequence(Qt::SHIFT | Qt::Key_A)},",
+      "line": 950
+    },
+    {
+      "id": "RelativeInputDX",
+      "definition": "QKeySequence(Qt::SHIFT | Qt::Key_X)},",
+      "line": 951
+    },
+    {
+      "id": "RelativeInputDY",
+      "definition": "QKeySequence(Qt::SHIFT | Qt::Key_Z)},",
+      "line": 952
+    },
+    {
+      "id": "RelativeAddLine",
+      "definition": "QKeySequence(Qt::SHIFT | Qt::Key_L)},",
+      "line": 953
+    },
+    {
+      "id": "RelativeAddCircle",
+      "definition": "QKeySequence(Qt::SHIFT | Qt::Key_C)},",
+      "line": 954
+    },
+    {
+      "id": "RelativeAddPoint",
+      "definition": "QKeySequence(Qt::SHIFT | Qt::Key_P)},",
+      "line": 955
+    },
+    {
+      "id": "RestrictOrthogonal",
+      "definition": "QKeySequence(Qt::Key_F8)} // Issue #2526: default shortcut for snapping: restriction orthogonal",
+      "line": 956
+    }
+  ],
+  "document_docks": [
+    {
+      "id": "pen_palette_dockwidget",
+      "title": "Pens Palette",
+      "line": 176
+    },
+    {
+      "id": "layer_dockwidget",
+      "title": "Layers",
+      "line": 190
+    },
+    {
+      "id": "view_dockwidget",
+      "title": "Named Views",
+      "line": 203
+    },
+    {
+      "id": "ucs_dockwidget",
+      "title": "User Coordinate Systems",
+      "line": 226
+    },
+    {
+      "id": "layer_tree_dockwidget",
+      "title": "Layers Tree",
+      "line": 238
+    },
+    {
+      "id": "quick_entity_info",
+      "title": "Entity Info",
+      "line": 251
+    },
+    {
+      "id": "property_sheet",
+      "title": "Properties",
+      "line": 263
+    },
+    {
+      "id": "block_dockwidget",
+      "title": "Blocks",
+      "line": 278
+    },
+    {
+      "id": "library_dockwidget",
+      "title": "Library Browser",
+      "line": 293
+    },
+    {
+      "id": "command_dockwidget",
+      "title": "Command Line",
+      "line": 309
+    },
+    {
+      "id": "pen_wiz_dockwidget",
+      "title": "Pen Wizard",
+      "line": 441
+    }
+  ],
+  "commands": [
+    {
+      "action_type": "RS2::ActionLayersAddCmd",
+      "english_names_and_aliases": [
+        "cnlayer",
+        "cnly"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionLayersActivateCmd",
+      "english_names_and_aliases": [
+        "cslayer",
+        "csly"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawLine",
+      "english_names_and_aliases": [
+        "line2p",
+        "li",
+        "line",
+        "l"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawSnakeLine",
+      "english_names_and_aliases": [
+        "sline",
+        "sli",
+        "sl"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawSnakeLineX",
+      "english_names_and_aliases": [
+        "slinex",
+        "slix",
+        "slx"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawSnakeLineY",
+      "english_names_and_aliases": [
+        "sliney",
+        "sliy",
+        "sly"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawLineDirect",
+      "english_names_and_aliases": [
+        "dfast",
+        "df"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawLineAngle",
+      "english_names_and_aliases": [
+        "lineang",
+        "la"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawLineHorizontal",
+      "english_names_and_aliases": [
+        "linehor",
+        "lh"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawLineVertical",
+      "english_names_and_aliases": [
+        "linever",
+        "lv"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawLineRectangle",
+      "english_names_and_aliases": [
+        "linerec",
+        "re",
+        "rect"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawRectangle1Point",
+      "english_names_and_aliases": [
+        "rect1",
+        "re1"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawRectangle2Points",
+      "english_names_and_aliases": [
+        "rect2",
+        "re2"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawRectangle3Points",
+      "english_names_and_aliases": [
+        "rect3",
+        "re3"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawSliceDivideLine",
+      "english_names_and_aliases": [
+        "slicel",
+        "sll"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawSliceDivideCircle",
+      "english_names_and_aliases": [
+        "slicec",
+        "slc"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawStar",
+      "english_names_and_aliases": [
+        "star",
+        "st"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawCenterMark",
+      "english_names_and_aliases": [
+        "cross",
+        "cx"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawBoundingBox",
+      "english_names_and_aliases": [
+        "bbox",
+        "bb"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawCenterLine",
+      "english_names_and_aliases": [
+        "midline",
+        "ml"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawLineRadiant",
+      "english_names_and_aliases": [
+        "radiant",
+        "rl"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawPointsLine",
+      "english_names_and_aliases": [
+        "linepoints",
+        "lpoints"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawPointsMiddle",
+      "english_names_and_aliases": [
+        "midpoint",
+        "mpoint"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawCircleByArc",
+      "english_names_and_aliases": [
+        "circlebyarc",
+        "cba"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionModifyDuplicate",
+      "english_names_and_aliases": [
+        "duplicate",
+        "dup"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionModifyAlign",
+      "english_names_and_aliases": [
+        "align",
+        "al"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionModifyAlignOne",
+      "english_names_and_aliases": [
+        "align1",
+        "al1"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionModifyAlignRef",
+      "english_names_and_aliases": [
+        "alignref",
+        "alr"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionModifyLineJoin",
+      "english_names_and_aliases": [
+        "linejoin",
+        "lj"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionModifyBreakDivide",
+      "english_names_and_aliases": [
+        "breakdivide",
+        "bd"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionModifyBreakDivide",
+      "english_names_and_aliases": [
+        "gapline",
+        "gl"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawLineParallel",
+      "english_names_and_aliases": [
+        "parallel",
+        "linepar",
+        "lineoff",
+        "pa",
+        "ll"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawLineParallelThrough",
+      "english_names_and_aliases": [
+        "lineparthro",
+        "lp",
+        "ptp"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawLineBisector",
+      "english_names_and_aliases": [
+        "linebisect",
+        "bi",
+        "bisect"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawLineTangent1",
+      "english_names_and_aliases": [
+        "linetancp",
+        "lt",
+        "tanpc"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawLineTangent2",
+      "english_names_and_aliases": [
+        "linetan2c",
+        "lc"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawLineOrthTan",
+      "english_names_and_aliases": [
+        "linetancper",
+        "or"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawLineOrthogonal",
+      "english_names_and_aliases": [
+        "lineperp",
+        "lo",
+        "ortho"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawLineRelAngle",
+      "english_names_and_aliases": [
+        "linerelang",
+        "lr"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawLinePolygonCenCor",
+      "english_names_and_aliases": [
+        "polygoncencor",
+        "pp",
+        "polycp",
+        "pcp"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawLinePolygonCenTan",
+      "english_names_and_aliases": [
+        "polygoncentan",
+        "pv",
+        "polyct"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawLinePolygonSideSide",
+      "english_names_and_aliases": [
+        "polygonvv",
+        "pvv"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawLinePolygonCorCor",
+      "english_names_and_aliases": [
+        "polygon2v",
+        "p2",
+        "poly2"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawCircleCenterPoint",
+      "english_names_and_aliases": [
+        "circle",
+        "ci",
+        "c"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawCircle2Points",
+      "english_names_and_aliases": [
+        "circle2p",
+        "c2",
+        "c2p"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawCircle2PointsRadius",
+      "english_names_and_aliases": [
+        "circle2pr",
+        "cc"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawCircle3Points",
+      "english_names_and_aliases": [
+        "circle3p",
+        "c3",
+        "c3p"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawCircleCenterRadius",
+      "english_names_and_aliases": [
+        "circlecr",
+        "cr",
+        "ccr"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawCircleTangental2Entities1Point",
+      "english_names_and_aliases": [
+        "circletan2cp",
+        "tr"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawCircleTangental1Entity2Points",
+      "english_names_and_aliases": [
+        "circletan2p",
+        "td"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawCircleTan2EntitiesRadius",
+      "english_names_and_aliases": [
+        "circletan2cr",
+        "tc"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawCircleTan3Entities",
+      "english_names_and_aliases": [
+        "circletan3",
+        "t3",
+        "ct3",
+        "tan3"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawArc",
+      "english_names_and_aliases": [
+        "arc",
+        "ar",
+        "a"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawArc3P",
+      "english_names_and_aliases": [
+        "arc3p",
+        "a3"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawArcTangential",
+      "english_names_and_aliases": [
+        "arctan",
+        "at"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawArc2PRadius",
+      "english_names_and_aliases": [
+        "arc2pr",
+        "a2r"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawArc2PLength",
+      "english_names_and_aliases": [
+        "arc2pl",
+        "a2l"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawArc2PHeight",
+      "english_names_and_aliases": [
+        "arc2ph",
+        "a2h"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawArc2PAngle",
+      "english_names_and_aliases": [
+        "arc2pa",
+        "a2a"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawSpline",
+      "english_names_and_aliases": [
+        "spline",
+        "sf",
+        "spl"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawSplinePoints",
+      "english_names_and_aliases": [
+        "spline2",
+        "sp",
+        "stp"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawEllipseArcAxis",
+      "english_names_and_aliases": [
+        "arcellc2ax",
+        "ae"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawEllipseArc1Point",
+      "english_names_and_aliases": [
+        "arcellc1ax",
+        "ae1"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawParabola4Points",
+      "english_names_and_aliases": [
+        "parabola4p",
+        "pl4"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawParabolaFocusDiretrix",
+      "english_names_and_aliases": [
+        "parabolafd",
+        "plfd"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawLineFreehand",
+      "english_names_and_aliases": [
+        "free",
+        "fh",
+        "fhl"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawEllipseAxis",
+      "english_names_and_aliases": [
+        "ellipsec2p",
+        "ea"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawEllipse1Point",
+      "english_names_and_aliases": [
+        "ellipsec1p",
+        "ea1"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawEllipseFociPoint",
+      "english_names_and_aliases": [
+        "ellipse3p",
+        "ef"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawEllipse4Points",
+      "english_names_and_aliases": [
+        "ellipse4p",
+        "e4"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawEllipseCenter3Points",
+      "english_names_and_aliases": [
+        "ellipsec3p",
+        "e3"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawEllipseInscribe",
+      "english_names_and_aliases": [
+        "ellipseinscribed",
+        "ei",
+        "ie"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawPolyline",
+      "english_names_and_aliases": [
+        "polyline",
+        "pl"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawLineAngleRel",
+      "english_names_and_aliases": [
+        "angleline",
+        "aline"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawLineOrthogonalRel",
+      "english_names_and_aliases": [
+        "ortline",
+        "oline"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawLineFromPointToLine",
+      "english_names_and_aliases": [
+        "point2line",
+        "p2l"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionPolylineAdd",
+      "english_names_and_aliases": [
+        "plineadd",
+        "pi"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionPolylineAppend",
+      "english_names_and_aliases": [
+        "plineapp",
+        "pn"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionPolylineDel",
+      "english_names_and_aliases": [
+        "plinedel",
+        "pd"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionPolylineDelBetween",
+      "english_names_and_aliases": [
+        "plinedeltwn",
+        "pr"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionPolylineTrim",
+      "english_names_and_aliases": [
+        "plinetrm",
+        "pt"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionPolylineEquidistant",
+      "english_names_and_aliases": [
+        "plinepar",
+        "pe"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionPolylineSegment",
+      "english_names_and_aliases": [
+        "plinejoin",
+        "pj"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawDual",
+      "english_names_and_aliases": [
+        "dual",
+        "du"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionSelectAll",
+      "english_names_and_aliases": [
+        "selectall",
+        "sa"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDeselectAll",
+      "english_names_and_aliases": [
+        "deselectall",
+        "sx",
+        "tn"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionSelectInvert",
+      "english_names_and_aliases": [
+        "invertselect",
+        "is"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionSelectQuick",
+      "english_names_and_aliases": [
+        "selectquick",
+        "sq"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionSelectModeToggle",
+      "english_names_and_aliases": [
+        "smtoggle",
+        "smt"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDimAligned",
+      "english_names_and_aliases": [
+        "dimaligned",
+        "ds"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDimLinear",
+      "english_names_and_aliases": [
+        "dimlinear",
+        "dl"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDimOrdinate",
+      "english_names_and_aliases": [
+        "dimord",
+        "do"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDimOrdRebase",
+      "english_names_and_aliases": [
+        "dimordrebase",
+        "dor"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDimLinearHor",
+      "english_names_and_aliases": [
+        "dimhorizontal",
+        "dh"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDimLinearVer",
+      "english_names_and_aliases": [
+        "dimvertical",
+        "dv"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDimRadial",
+      "english_names_and_aliases": [
+        "dimradius",
+        "dimradial",
+        "dr"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDimDiametric",
+      "english_names_and_aliases": [
+        "dimdiameter",
+        "dd",
+        "dimdiametric"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDimAngular",
+      "english_names_and_aliases": [
+        "dimangular",
+        "da",
+        "dan"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDimLeader",
+      "english_names_and_aliases": [
+        "dimleader",
+        "ld"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDimRegenerate",
+      "english_names_and_aliases": [
+        "dimregen",
+        "dg"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionModifyMove",
+      "english_names_and_aliases": [
+        "modmove",
+        "mv"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionModifyRotate",
+      "english_names_and_aliases": [
+        "rotate",
+        "modrotate",
+        "ro"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionModifyScale",
+      "english_names_and_aliases": [
+        "scale",
+        "modscale",
+        "sz"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionModifyMirror",
+      "english_names_and_aliases": [
+        "mirror",
+        "modmirror",
+        "mi"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionModifyMoveRotate",
+      "english_names_and_aliases": [
+        "modmovrot",
+        "mr"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionModifyRotateTwice",
+      "english_names_and_aliases": [
+        "mod2rot",
+        "r2"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionModifyRevertDirection",
+      "english_names_and_aliases": [
+        "modrevert",
+        "md",
+        "rev"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionModifyTrim",
+      "english_names_and_aliases": [
+        "trim",
+        "modtrim",
+        "tm"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionModifyTrim2",
+      "english_names_and_aliases": [
+        "modtrim2",
+        "t2",
+        "tm2"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionModifyTrimAmount",
+      "english_names_and_aliases": [
+        "modlengthen",
+        "le"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionModifyOffset",
+      "english_names_and_aliases": [
+        "offset",
+        "modoffset",
+        "o",
+        "mo",
+        "moff"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionModifyBevel",
+      "english_names_and_aliases": [
+        "bevel",
+        "chamfer",
+        "modbevel",
+        "bev",
+        "ch"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionModifyRound",
+      "english_names_and_aliases": [
+        "fillet",
+        "modfillet",
+        "fi"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionModifyCut",
+      "english_names_and_aliases": [
+        "moddivide",
+        "cut",
+        "div",
+        "di"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionModifyStretch",
+      "english_names_and_aliases": [
+        "modstretch",
+        "ss"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionModifyEntity",
+      "english_names_and_aliases": [
+        "modproperties",
+        "prop",
+        "mp"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionModifyAttributes",
+      "english_names_and_aliases": [
+        "modattr",
+        "attr",
+        "ma"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionModifyExplodeText",
+      "english_names_and_aliases": [
+        "modexpltext",
+        "xt"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionBlocksExplode",
+      "english_names_and_aliases": [
+        "explode",
+        "modexplode",
+        "xp"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionModifyDelete",
+      "english_names_and_aliases": [
+        "moddelete",
+        "er",
+        "del"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionInfoDistPoint2Point",
+      "english_names_and_aliases": [
+        "infodistance",
+        "id",
+        "dist",
+        "dpp"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionInfoDistEntity2Point",
+      "english_names_and_aliases": [
+        "infodistep",
+        "ii",
+        "dep"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionInfoAngle",
+      "english_names_and_aliases": [
+        "infoangle",
+        "ia",
+        "ang"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionInfoArea",
+      "english_names_and_aliases": [
+        "infoarea",
+        "aa"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawMText",
+      "english_names_and_aliases": [
+        "mtext",
+        "mt",
+        "mtxt"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawText",
+      "english_names_and_aliases": [
+        "text",
+        "tx",
+        "txt"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawHatch",
+      "english_names_and_aliases": [
+        "hatch",
+        "ha"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionDrawPoint",
+      "english_names_and_aliases": [
+        "point",
+        "po"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionSnapFree",
+      "english_names_and_aliases": [
+        "snapfree",
+        "so",
+        "os"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionSnapCenter",
+      "english_names_and_aliases": [
+        "snapcenter",
+        "sc"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionSnapDist",
+      "english_names_and_aliases": [
+        "snapdist",
+        "sd"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionSnapEndpoint",
+      "english_names_and_aliases": [
+        "snapend",
+        "se"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionSnapGrid",
+      "english_names_and_aliases": [
+        "snapgrid",
+        "sg"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionSnapIntersection",
+      "english_names_and_aliases": [
+        "snapintersection",
+        "si"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionSnapMiddle",
+      "english_names_and_aliases": [
+        "snapmiddle",
+        "sm"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionSnapOnEntity",
+      "english_names_and_aliases": [
+        "snaponentity",
+        "sn",
+        "np"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionSnapMiddleManual",
+      "english_names_and_aliases": [
+        "snapmiddlemanual",
+        "snapmanual",
+        "smm"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionSetRelativeZero",
+      "english_names_and_aliases": [
+        "setrelativezero",
+        "rz"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionRestrictNothing",
+      "english_names_and_aliases": [
+        "restrictnothing",
+        "rn"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionRestrictOrthogonal",
+      "english_names_and_aliases": [
+        "restrictorthogonal",
+        "rr"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionRestrictHorizontal",
+      "english_names_and_aliases": [
+        "restricthorizontal",
+        "rh"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionRestrictVertical",
+      "english_names_and_aliases": [
+        "restrictvertical",
+        "rv"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionEditKillAllActions",
+      "english_names_and_aliases": [
+        "kill",
+        "ki",
+        "k"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionEditUndo",
+      "english_names_and_aliases": [
+        "undo",
+        "un",
+        "u"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionEditRedo",
+      "english_names_and_aliases": [
+        "redo",
+        "rd",
+        "r"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionOptionsDrawing",
+      "english_names_and_aliases": [
+        "drawpref",
+        "dp"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionZoomRedraw",
+      "english_names_and_aliases": [
+        "regen",
+        "redraw",
+        "rg",
+        "zr"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionZoomIn",
+      "english_names_and_aliases": [
+        "zoomin",
+        "zi"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionZoomOut",
+      "english_names_and_aliases": [
+        "zoomout",
+        "zo"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionZoomAuto",
+      "english_names_and_aliases": [
+        "zoomauto",
+        "za"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionZoomPrevious",
+      "english_names_and_aliases": [
+        "zoomprevious",
+        "zv"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionZoomWindow",
+      "english_names_and_aliases": [
+        "zoomwindow",
+        "zw"
+      ]
+    },
+    {
+      "action_type": "RS2::ActionZoomPan",
+      "english_names_and_aliases": [
+        "zoompan",
+        "zp"
+      ]
+    }
+  ]
+}

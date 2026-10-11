@@ -11,6 +11,7 @@
 #include <QJsonObject>
 
 #include "lc_actiontestsupport.h"
+#include "lc_actiongroupmanager.h"
 #include "lc_testsettingsisolation.h"
 #include "lc_workspacesmanager.h"
 #include "qc_applicationwindow.h"
@@ -21,10 +22,15 @@
 #include "qg_blockwidget.h"
 #include "rs_block.h"
 #include "rs_line.h"
+#include "rs_fontlist.h"
+#include "rs_patternlist.h"
 
 struct LC_DockLayoutTestAccess {
     using Workspace = LC_WorkspacesManager::LC_Workspace;
     static QC_ApplicationWindow* createWindow() { return new QC_ApplicationWindow; }
+    static const QMap<QString, QAction*>& actions(QC_ApplicationWindow& window) {
+        return window.m_actionGroupManager->getActionsMap();
+    }
     static void fit(QC_ApplicationWindow& window) { window.fitDocksToWindow(); }
     static void isolate(QC_ApplicationWindow& window) {
         window.m_autoCollapsedGroups.clear();
@@ -171,6 +177,71 @@ QStringList tabOrder(QC_ApplicationWindow& window, const QString& first, const Q
     }
     return {};
 }
+}
+
+// Explicit opt-in evidence capture. This uses the same isolated settings as
+// the dock tests, and never exports a user's workspace or drawing contents.
+TEST_CASE("Capture the CAD workspace baseline", "[.baseline]") {
+    const QString output = qEnvironmentVariable("LIBRECAD_BASELINE_OUTPUT");
+    REQUIRE_FALSE(output.isEmpty());
+    REQUIRE(QDir().mkpath(output));
+    lc::test::application();
+    DockFixture fixture;
+    auto& window = fixture.window;
+    window.resize(1280, 800);
+    RS_SETTINGS->writeSingle("Paths", "Fonts", QString(LIBRECAD_SOURCE_DIR) + "/librecad/support/fonts");
+    RS_SETTINGS->writeSingle("Paths", "Patterns", QString(LIBRECAD_SOURCE_DIR) + "/librecad/support/patterns");
+    RS_FONTLIST->init();
+    RS_PATTERNLIST->init();
+    window.openFile(QString(LIBRECAD_SOURCE_DIR) + "/tests/fixtures/cad-familiar/model-basics-r2018.dxf");
+    settle(500);
+    const auto* graphic = window.getActionContext()->getGraphic();
+    REQUIRE(graphic != nullptr);
+    REQUIRE(graphic->count() == 5);
+    QJsonArray actions;
+    const auto& registry = LC_DockLayoutTestAccess::actions(window);
+    for (auto it = registry.cbegin(); it != registry.cend(); ++it) {
+        REQUIRE(it.value() != nullptr);
+        actions.append(QJsonObject{{"id", it.key()}, {"label", it.value()->text()},
+                                   {"shortcut", it.value()->shortcut().toString(QKeySequence::PortableText)}});
+    }
+    for (const auto& id : {"FileNew", "FileOpen", "FileSave", "EditUndo", "EditRedo", "DrawLine", "LayersAdd", "FilePrintPDF"}) {
+        REQUIRE(registry.contains(QLatin1String(id)));
+    }
+    QJsonArray docks;
+    for (auto* dock : window.findChildren<QDockWidget*>()) {
+        docks.append(QJsonObject{{"id", dock->objectName()}, {"title", dock->windowTitle()},
+                                 {"area", int(window.dockWidgetArea(dock))}, {"visible", dock->isVisible()}});
+    }
+    REQUIRE(window.findChild<QDockWidget*>("property_sheet") != nullptr);
+    REQUIRE(window.findChild<QDockWidget*>("layer_dockwidget") != nullptr);
+    REQUIRE(window.findChild<QDockWidget*>("command_dockwidget") != nullptr);
+    QJsonObject result{{"qt", QString(qVersion())}, {"platform", QGuiApplication::platformName()},
+                       {"actions", actions}, {"docks", docks}, {"model_entities", int(graphic->count())},
+                       {"settings_isolated", lc::test::SettingsIsolation::isActive()}};
+    QFile file(QDir(output).filePath("runtime-workspace.json"));
+    REQUIRE(file.open(QIODevice::WriteOnly | QIODevice::Truncate));
+    REQUIRE(file.write(QJsonDocument(result).toJson()) > 0);
+    REQUIRE(window.grab().save(QDir(output).filePath("workspace-baseline.png")));
+    auto* properties = window.findChild<QDockWidget*>("property_sheet");
+    properties->show();
+    properties->raise();
+    REQUIRE(registry.contains("SelectAll"));
+    registry["SelectAll"]->trigger();
+    settle(500);
+    int selected = 0;
+    for (const auto* entity : *graphic) {
+        if (entity->isSelected()) ++selected;
+    }
+    REQUIRE(selected > 0);
+    result.insert("selected_entities_after_select_all", selected);
+    if (const auto* filter = properties->findChild<QComboBox*>("cbSelection")) {
+        result.insert("properties_filter_after_select_all", filter->currentText());
+    }
+    file.resize(0);
+    file.seek(0);
+    REQUIRE(file.write(QJsonDocument(result).toJson()) > 0);
+    REQUIRE(window.grab().save(QDir(output).filePath("properties-baseline.png")));
 }
 
 TEST_CASE("Main window fits its available screen", "[.gui][dock-window]") {

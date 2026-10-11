@@ -11,7 +11,15 @@ qt_add_plugin(
 )
 
 #qt_add_translations(${PLUGIN_NAME} TS_FILE_DIR ../ts TS_FILES ${PLUGIN_TS_FILES})
-install(TARGETS ${PLUGIN_NAME} BUNDLE DESTINATION bin LIBRARY DESTINATION bin/iconengines)
+if(APPLE)
+    # Keep the custom .lci icon engine inside the installed app so packaging
+    # and Qt's PlugIns lookup include it. A sibling bin/iconengines directory
+    # is left behind when only LibreCAD.app is copied to another machine.
+    install(TARGETS ${PLUGIN_NAME}
+        LIBRARY DESTINATION bin/LibreCAD.app/Contents/PlugIns/iconengines)
+else()
+    install(TARGETS ${PLUGIN_NAME} BUNDLE DESTINATION bin LIBRARY DESTINATION bin/iconengines)
+endif()
 
 set_target_properties(
         ${PLUGIN_NAME}

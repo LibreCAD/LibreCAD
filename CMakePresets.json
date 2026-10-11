@@ -1,7 +1,26 @@
 {
     "version": 3,
-    "cmakeMinimumRequired": { "major": 3, "minor": 21 },
+    "cmakeMinimumRequired": { "major": 3, "minor": 28 },
     "configurePresets": [
+        {
+            "name": "macos-arm64-baseline",
+            "displayName": "Apple Silicon baseline (Apple Clang, locked Qt)",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "condition": { "type": "equals", "lhs": "${hostSystemName}", "rhs": "Darwin" },
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+                "CMAKE_OSX_ARCHITECTURES": "arm64",
+                "CMAKE_C_COMPILER": "/usr/bin/clang",
+                "CMAKE_CXX_COMPILER": "/usr/bin/clang++",
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/macos-arm64-install",
+                "BUILD_TESTS": "ON",
+                "LIBRECAD_REGISTER_FULL_TESTS": "OFF",
+                "LIBRECAD_REGISTER_INTEGRATION_TESTS": "ON",
+                "LIBRECAD_REGISTER_FORMAT_TESTS": "ON",
+                "LIBRECAD_REGISTER_CROSS_READ_SMOKE": "OFF"
+            }
+        },
         {
             "name": "dwg-fast",
             "displayName": "DWG/DXF fast incremental checks",
@@ -38,6 +57,12 @@
     ],
     "buildPresets": [
         {
+            "name": "macos-arm64-baseline",
+            "configurePreset": "macos-arm64-baseline",
+            "jobs": 6,
+            "targets": ["librecad", "librecad_fast_tests", "librecad_dwg_fast_tests", "librecad_dxf_fast_tests", "libdxfrw_dwg_fast_tests", "libdxfrw_dxf_fast_tests", "libdxfrw_dwg_layout_validation_tests", "librecad_dock_layout_tests"]
+        },
+        {
             "name": "dwg-fast",
             "configurePreset": "dwg-fast",
             "jobs": 8
@@ -54,6 +79,15 @@
         {
             "name": "x64-release",
             "configurePreset": "x64-release"
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "macos-arm64-baseline",
+            "configurePreset": "macos-arm64-baseline",
+            "output": { "outputOnFailure": true },
+            "execution": { "jobs": 1, "noTestsAction": "error" },
+            "environment": { "QT_QPA_PLATFORM": "offscreen" }
         }
     ]
 }
