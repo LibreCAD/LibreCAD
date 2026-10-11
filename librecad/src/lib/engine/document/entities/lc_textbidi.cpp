@@ -90,6 +90,9 @@ DirectionalText directionalText(const QString &text, Qt::LayoutDirection directi
     };
     bool overriding = false;
     std::vector<bool> explicitScopes;
+    // The most recent isolate can be found without repeatedly scanning a long
+    // embedding-only stack for unmatched PDI. Each scope is pushed/popped once.
+    std::vector<std::size_t> isolateDepths;
     QTextBoundaryFinder boundaries(QTextBoundaryFinder::Grapheme, text);
     for (int start = 0, end = boundaries.toNextBoundary(); end >= 0;
          start = end, end = boundaries.toNextBoundary()) {
@@ -121,18 +124,22 @@ DirectionalText directionalText(const QString &text, Qt::LayoutDirection directi
             explicitScopes.push_back(false);
             break;
         case QChar::DirLRI: case QChar::DirRLI: case QChar::DirFSI:
+            isolateDepths.push_back(explicitScopes.size());
             explicitScopes.push_back(true);
             break;
         case QChar::DirPDF:
             if (!explicitScopes.empty() && !explicitScopes.back()) explicitScopes.pop_back();
             break;
         case QChar::DirPDI: {
-            const auto isolate = std::find(explicitScopes.rbegin(), explicitScopes.rend(), true);
-            if (isolate != explicitScopes.rend()) explicitScopes.erase(isolate.base() - 1, explicitScopes.end());
+            if (!isolateDepths.empty()) {
+                explicitScopes.resize(isolateDepths.back());
+                isolateDepths.pop_back();
+            }
             break;
         }
         case QChar::DirB:
             explicitScopes.clear();
+            isolateDepths.clear();
             break;
         default:
             break;

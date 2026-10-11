@@ -627,7 +627,8 @@ Maintain the progress and validation records below as implementation proceeds:
 | 2026-10-11 | P1core.1 | Complete | `7996e9b5a` — `Add headless OpenType font and shaping core` | Isolated ON: 639,014 assertions / 7 cases; OFF without FreeType: 4 / 1; ASan/UBSan: 639,014 / 7; CMake and qmake full application builds exit 0 | Bounded core checkpoint only; registry, installation, certified deployment and entity adapters remain pending |
 | 2026-10-11 | P1 registry | Complete | `b25777bb0` and `be1d6fb69` — `Reject broken priority font links without substitution` | Corrected isolated ON/ASan: 128 assertions / 7 cases; OFF: 31 / 3; CMake/qmake application builds pass. Independent before/after review verifies broken-link precedence, hot-cache identity rejection and immutable resource lifetime | Bounded registry checkpoint only; package/certification and entity/profile integration remain pending |
 | 2026-10-11 | P2a logical parser | Complete | `d2e9ac848` — `Add source-preserving logical text document parser` | Isolated CMake ON, OFF and ASan/UBSan each pass 452,158 assertions / 22 cases; complete incremental CMake/qmake application builds exit 0 | Bounded parser checkpoint only; font/script itemizer, shared layout and entity adapter integration remain pending |
-| 2026-10-11 | P2c logical itemizer | Validated | Candidate subject: `Itemize source-mapped logical font and script runs` | Isolated ON/OFF/ASan: 208,140 assertions / 16 cases; ON/ASan shaping handoff: 441 / 3, OFF: 1 / 1; CMake/qmake application builds pass; independent source/context review finds no itemizer defect | Checkpoint itemizer; fix separately identified quadratic unmatched-PDI projection lookup, then retain blank-paragraph styles and integrate shared layout |
+| 2026-10-11 | P2c logical itemizer | Complete | `19e2f7793` — `Itemize source-mapped logical font and script runs` | Isolated ON/OFF/ASan: 208,140 assertions / 16 cases; ON/ASan shaping handoff: 441 / 3, OFF: 1 / 1; CMake/qmake application builds pass; independent source/context review finds no itemizer defect | Bounded itemizer checkpoint only; projection complexity correction below, blank-paragraph styles and shared layout remain separate gates |
+| 2026-10-11 | P2b.1 bounded projection | Validated | Candidate subject: `Bound explicit bidi scope lookup in Chinese projection` | Isolated focused application: 541,335 assertions / 70 cases; headless ON/OFF/ASan: 526,521 / 23; itemizer/handoff regressions and Unicode 17 conformance pass; CMake/qmake application builds pass | Checkpoint the correction; empty-paragraph styles, shared layout and entity integration remain pending |
 | 2026-10-11 | P0b transport proof | In progress | Uncommitted mixed-tree candidate; no schema codec yet | Earlier STYLE binding failure repaired; new STYLE-unit and LTYPE-control prerequisites pass focused/direct native JSON checks; converted DXF still fails at DIMSTYLE color fields | Record current frozen filter/library evidence and external-converter attribution; isolate and checkpoint prerequisites without claiming full interchange |
 | 2026-10-11 | P3b native outline adapter | In progress | Uncommitted mixed-tree candidate | Registered and partial-instrumentation ASan/UBSan: 12,309 assertions / 6 cases pass, including empty extents and native coordinate limits | Validate isolated checkpoint and both build systems; final affine/entity integration remains pending |
 | 2026-10-11 | P7 execution | Planned | Plan-only workflow update; no publication | Draft-creation checkpoint, acceptance map, independent review coverage, editing/IME scrutiny, cross-consumer fix checks and refinement-round records defined; no PR acceptance claimed | Complete the coherent P5 candidate, then execute P7a and keep the records below current |
@@ -954,6 +955,49 @@ and `/private/tmp/librecad-arabic-runs-qmake-{configure,build}.log`.
 The existing projection's unmatched-PDI quadratic lookup remains a separate
 robustness gate until its correction is validated and checkpointed; passing
 these narrower tests does not waive it or establish entity/rendering acceptance.
+
+### Bounded bidi projection correction
+
+The correction at parent `19e2f7793` removes a proven quadratic lookup in
+`directionalText`: N embeddings followed by N unmatched PDI controls repeatedly
+scanned the unchanged scope stack. A separate isolate-depth stack makes each
+lookup constant-time and each scope push/removal amortized constant-time,
+without changing PDF, PDI, paragraph-reset or Chinese projection semantics.
+Exact projection/source-map tests cover nested controls and the adversarial
+65,536-embedding / 65,536-unmatched-PDI case without machine-speed assertions.
+Independent review found no defect and compared the old/new scope models over
+2,441,406 event prefixes through length 9 with identical results.
+
+Only its two staged files were exported over the isolated itemizer checkpoint;
+other working-tree edits remain excluded. The first ON/OFF/sanitizer builds
+failed with exit 2 before executing tests: a test's `auto` concatenation becomes
+`QStringBuilder` under the repository's `QT_USE_QSTRINGBUILDER`. Declaring that
+test input as `QString` fixes the mismatch; no flag or expectation was weakened.
+The original private test build additionally documented two pre-existing test
+warning exceptions, not a fully warning-free suite.
+
+All corrected isolated processes pass: ON 36456, OFF 39183, sanitizer 20162
+and qmake 58922 terminate with exit 0. Focused application text tests execute
+541,335 assertions / 70 cases; headless ON/OFF/ASan each execute 526,521 / 23.
+The itemizer remains 208,140 / 16 in every configuration and its shaping handoff
+441 / 3 in ON/ASan. Matching Unicode 17 conformance executes 770,241 type/direction
+and 91,707 character cases with zero failures. Complete incremental CMake/qmake
+application builds pass. Sanitizer exclusions remain as previously stated.
+
+Reproduce using the existing configured builds: ON builds/runs
+`librecad_text_bidi_headless_tests librecad_text_bidi_tests librecad_text_runs_tests
+librecad_text_runs_shaping_tests librecad_bidi_conformance librecad`; the focused
+GUI test binary uses `QT_QPA_PLATFORM=offscreen`. OFF builds/runs headless bidi
+and itemizer; sanitizer builds/runs headless bidi, itemizer and shaping handoff
+with the documented environment. Conformance takes both corpus paths from
+`/private/tmp/librecad-bidi17.rcEM8M`. qmake uses the unchanged ordered application
+target. Exact logs are `/private/tmp/librecad-arabic-projection-{on,off,asan}-build-retry.log`,
+the corresponding `*-{headless,focused,runs,shaping}-test.log`,
+`/private/tmp/librecad-arabic-projection-on-conformance.log` and
+`/private/tmp/librecad-arabic-projection-qmake-build.log`; failed initial logs
+retain `-build.log`. Private proof/corpus hashes and warning details are in
+`/private/tmp/librecad-projection-scope.P1mP7S/EVIDENCE.md`.
+Passing this correction does not certify final Arabic entity rendering.
 
 ## Implementation milestones
 
@@ -1380,16 +1424,19 @@ by this plan update.
 ```sh
 cmake --build /Users/dli/dev/LibreCAD/build-arabic-cmake --target \
   librecad_text_bidi_tests librecad_text_bidi_headless_tests \
-  librecad_text_document_tests librecad_text_shaper_tests librecad_text_font_registry_tests
+  librecad_text_document_tests librecad_text_shaper_tests librecad_text_font_registry_tests \
+  librecad_text_runs_tests librecad_text_runs_shaping_tests
 QT_QPA_PLATFORM=offscreen /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_bidi_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_bidi_headless_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_document_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_shaper_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_font_registry_tests
+/Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_runs_tests
+/Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_runs_shaping_tests
 ```
 
-Run the parser, shaper and registry targets again in a separate explicitly
-configured `LIBRECAD_ENABLE_OPENTYPE=OFF` build; confirm the shaper/registry
+Run the parser, shaper, registry and itemizer targets again in a separate explicitly
+configured `LIBRECAD_ENABLE_OPENTYPE=OFF` build; confirm the shaper/registry/integration
 disabled-path cases actually execute rather than treating their smaller counts
 as enabled coverage. The parser's backend-independent cases must still pass.
 Extend this recipe as new headless targets are committed. When bidi APIs change,

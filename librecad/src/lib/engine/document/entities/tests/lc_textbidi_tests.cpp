@@ -201,6 +201,75 @@ TEST_CASE("Bidi ordering is font-independent and preserves numeric runs",
         reversed + QChar(0x2029) + "Main 123");
 }
 
+TEST_CASE("Chinese projection preserves explicit scope ownership and paragraph resets",
+          "[textbidi][chinese][projection]") {
+  const auto han = QStringLiteral("\u4e2d\u6587");
+  const auto wrappedHan = QStringLiteral("\u2067\u202e") + han +
+                          QStringLiteral("\u202c\u2069");
+  const QString cases[] = {
+      // PDF removes embeddings, never an isolate. Each PDI removes its most
+      // recent isolate and the embeddings above it, preserving outer scopes.
+      QStringLiteral("\u202a\u2066\u202b\u2067\u202d") + han +
+          QStringLiteral("\u202c\u2069") + han + QStringLiteral("\u202c\u2069") +
+          han + QChar(0x202c) + han,
+      QStringLiteral("\u2067\u202c") + han + QChar(0x2069) + han,
+      // An unmatched PDI must not consume an embedding.
+      QStringLiteral("\u202b\u2069") + han + QChar(0x202c) + han,
+      QStringLiteral("\u202b\u2066\u202d\u202b") + han + QChar(0x2069) +
+          han + QChar(0x202c) + han,
+      // B resets both scope stacks, including before an unmatched PDI or a
+      // new isolate. Test both newline and U+2029 paragraph separators.
+      QStringLiteral("\u2066\u202b") + han + QStringLiteral("\n\u2069") + han,
+      QStringLiteral("\u2066\u202b\u2029\u2067\u202d") + han + QChar(0x2069) + han};
+  for (const auto &input : cases) {
+    const auto projection = lc::textbidi::directionalText(input, Qt::RightToLeft);
+    CHECK(projection.text == input.left(input.size() - han.size()) + wrappedHan);
+    REQUIRE(projection.displayPositions.size() == std::size_t(input.size() + 1));
+    QString restored;
+    for (int i = 0; i < int(projection.sourcePositions.size()); ++i) {
+      const int source = projection.sourcePositions[i];
+      if (source >= 0) {
+        REQUIRE(source < input.size());
+        CHECK(projection.text.at(i) == input.at(source));
+        CHECK(projection.displayPositions[source] == i);
+        restored += projection.text.at(i);
+      }
+    }
+    CHECK(restored == input);
+    CHECK(projection.displayPositions.back() == projection.text.size());
+    for (const auto direction : {Qt::LeftToRight, Qt::LayoutDirectionAuto}) {
+      const auto unchanged = lc::textbidi::directionalText(input, direction);
+      CHECK(unchanged.text == input);
+      for (int i = 0; i <= input.size(); ++i) CHECK(unchanged.displayPositions[i] == i);
+    }
+  }
+}
+
+TEST_CASE("Chinese projection handles adversarial unmatched PDI without repeated scope scans",
+          "[textbidi][chinese][projection][limits]") {
+  // A long embedding-only prefix followed by unmatched PDI previously caused
+  // a full unchanged-stack scan for every PDI. No machine-speed assertion:
+  // exercise the adversarial shape and assert exact projection/provenance.
+  constexpr int count = 65536;
+  const auto han = QStringLiteral("\u4e2d\u6587");
+  const QString prefix = QString(count, QChar(0x202a)) + QString(count, QChar(0x2069)) + han + '\n';
+  const QString input = prefix + han;
+  const auto projection = lc::textbidi::directionalText(input, Qt::RightToLeft);
+  CHECK(projection.text == prefix + QStringLiteral("\u2067\u202e") + han +
+                           QStringLiteral("\u202c\u2069"));
+  REQUIRE(projection.sourcePositions.size() == std::size_t(input.size() + 4));
+  REQUIRE(projection.displayPositions.size() == std::size_t(input.size() + 1));
+  for (int i = 0; i < input.size(); ++i) {
+    const int display = projection.displayPositions[i];
+    REQUIRE(display >= 0);
+    REQUIRE(display < projection.text.size());
+    CHECK(projection.sourcePositions[display] == i);
+    CHECK(projection.text.at(display) == input.at(i));
+  }
+  CHECK(std::count(projection.sourcePositions.begin(), projection.sourcePositions.end(), -1) == 4);
+  CHECK(projection.displayPositions.back() == projection.text.size());
+}
+
 TEST_CASE("Bidi ordering keeps graphemes and malformed UTF-16 intact",
           "[textbidi]") {
   const QString marked = QString(QChar(0x05e9)) + QChar(0x05b0) + " 123";
