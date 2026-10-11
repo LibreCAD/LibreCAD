@@ -625,7 +625,8 @@ Maintain the progress and validation records below as implementation proceeds:
 | 2026-10-11 | P2b | Complete | `644b146c5` | Headless: 1,850 assertions / 21 cases; Unicode 17: 770,241 type/direction + 91,707 character cases, zero failures; legacy display parity checked | Font/script itemization and renderer consumption remain pending; P2 overall is incomplete |
 | 2026-10-11 | P1a, P1b, P2a, P3a, P3b | In progress | Uncommitted owned service slices | Dependency/resource, font/shaper, parser and outline work; individual results recorded before checkpoints | Validate and checkpoint bounded slices; adapters/persistence/P6/P7 remain pending |
 | 2026-10-11 | P1core.1 | Complete | `7996e9b5a` — `Add headless OpenType font and shaping core` | Isolated ON: 639,014 assertions / 7 cases; OFF without FreeType: 4 / 1; ASan/UBSan: 639,014 / 7; CMake and qmake full application builds exit 0 | Bounded core checkpoint only; registry, installation, certified deployment and entity adapters remain pending |
-| 2026-10-11 | P1 registry | Validated | Candidate subject: `Add deterministic versioned OpenType font registry` | Isolated registered ON and ASan/UBSan: 97 assertions / 6 cases; OFF without FreeType: 31 / 3; complete incremental CMake/qmake application builds exit 0 | Create scoped checkpoint; installed-package/certification and entity/profile integration gates remain pending |
+| 2026-10-11 | P1 registry | In progress | `b25777bb0` — `Add deterministic versioned OpenType font registry` | Isolated ON/ASan: 97 assertions / 6 cases; OFF: 31 / 3; CMake/qmake application builds pass. Independent review reproduced a dangling higher-priority symlink falling through to a later root | Fix broken-link precedence and strengthen hot-cache/immutable-resource negative coverage; package/certification and entity/profile integration remain pending |
+| 2026-10-11 | P2a logical parser | Validated | Candidate subject: `Add source-preserving logical text document parser` | Isolated CMake ON, OFF and ASan/UBSan each pass 452,158 assertions / 22 cases; complete incremental CMake/qmake application builds exit 0 | Create scoped checkpoint; font/script itemizer, shared layout and entity adapter integration remain pending |
 | 2026-10-11 | P0b transport proof | In progress | Uncommitted mixed-tree candidate; no schema codec yet | Earlier STYLE binding failure repaired; new STYLE-unit and LTYPE-control prerequisites pass focused/direct native JSON checks; converted DXF still fails at DIMSTYLE color fields | Record current frozen filter/library evidence and external-converter attribution; isolate and checkpoint prerequisites without claiming full interchange |
 | 2026-10-11 | P3b native outline adapter | In progress | Uncommitted mixed-tree candidate | Registered and partial-instrumentation ASan/UBSan: 12,309 assertions / 6 cases pass, including empty extents and native coordinate limits | Validate isolated checkpoint and both build systems; final affine/entity integration remains pending |
 | 2026-10-11 | P7 execution | Planned | Plan-only workflow update; no publication | Draft-creation checkpoint, acceptance map, independent review coverage and refinement-round records defined; no PR acceptance claimed | Complete the coherent P5 candidate, then execute P7a and keep the records below current |
@@ -804,8 +805,8 @@ builds are still pending; no release/PR checklist item is implied by this slice.
 
 The registry candidate at parent `7996e9b5a96c57fcebe48ad96da937d4c87b05e9`
 adds immutable profile identity, explicit certified-engine checks, deterministic
-installed roots, resource/cache diagnostics and a headless test target, registered
-in both build systems. Unknown profiles, policy/checksum/face mismatches,
+installed roots, resource/cache diagnostics and a headless CMake test target.
+The service sources are registered in both build systems. Unknown profiles, policy/checksum/face mismatches,
 incompatible engines and disabled backends do not become LFF substitutions.
 Tests cover every supported installed layout, explicit-root precedence, corrupt
 higher-priority resources and concurrent resolve/clear with retained resources.
@@ -855,6 +856,36 @@ The existing newer-SDK/deployment-target linker warnings remain. Logs are local
 `/private/tmp/librecad-arabic-registry-{on,off,asan}-{configure,build,test}.log`
 and `/private/tmp/librecad-arabic-registry-qmake-{configure,build}.log`;
 reproducible source/tests and this concise record are committed, not build output.
+
+### Isolated logical parser evidence
+
+The P2a candidate at parent `b25777bb0c077adf68a1ec6463509359549f2bda`
+adds logical paragraphs, scalar/grapheme maps, raw UTF-16 source intervals,
+formatting spans, recursive stack children and bounded malformed-input handling.
+Parsing never rewrites backing text. The numeric lexer accepts immediate
+optional semicolons without consuming later text/scopes/commands; incomplete
+exponents preserve their spelling, including before active native caret breaks.
+Native caret policy and RGB-overflow compatibility were not redefined.
+
+Only its header, implementation, tests and CMake/qmake registration hunks were
+exported into the isolated snapshot used above. Itemizer, native-entity outline,
+filter and dependency/package edits remain excluded. All five staged files were
+compared with their exported inputs. On the same macOS arm64 toolchain,
+registered ON, OFF without FreeType discovery and ASan/UBSan runs each passed
+452,158 assertions in 22 cases, with no skips. Full incremental CMake and
+ordered qmake application builds also exited 0. The independent review's
+registry finding does not affect this parser-only acceptance evidence.
+
+Use the registry commands above with `librecad_text_document_tests` replacing
+`librecad_text_font_registry_tests`; retain `librecad` in the ON build command,
+the explicit OFF flag/discovery exclusion, sanitizer flags/options and the
+same qmake commands. Executed process IDs were ON 34459, OFF 83563, sanitizer
+55444 and qmake 43129; every process completed with exit 0. Exact command
+outputs are in `/private/tmp/librecad-arabic-parser-{on,off,asan}-{configure,build,test}.log`
+and `/private/tmp/librecad-arabic-parser-qmake-{configure,build}.log`.
+Instrumentation is limited to the parser and its tests; external libraries,
+native lifecycle and entity rendering remain separate gates. This checkpoint
+does not claim integration or release acceptance.
 
 ## Implementation milestones
 
