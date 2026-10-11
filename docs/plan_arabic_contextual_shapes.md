@@ -652,7 +652,7 @@ Maintain the progress and validation records below as implementation proceeds:
 | 2026-10-11 | P2a.1 empty paragraph styles | Complete | `a477b68ef` — `Preserve effective styles on empty logical paragraphs` | Independent style/scope review; strict private build and isolated ON/OFF/ASan each pass 452,371 assertions / 24 cases; itemizer/handoff and CMake/qmake application builds pass | Consume it in recursive layout and validate empty-line/stack metrics; overall layout/entity gates remain pending |
 | 2026-10-11 | P0b transport proof | In progress | Uncommitted filter candidate; provisional codec is a separate service | Earlier STYLE binding failure repaired; new STYLE-unit and LTYPE-control prerequisites pass focused/direct native JSON checks; converted DXF still fails at DIMSTYLE color fields | Isolate/checkpoint prerequisites; codec/schema freeze and public activation require separate proof, not a self-round trip |
 | 2026-10-11 | P3b.1 native outline adapter | Validated | Candidate subject: `Add precision-bounded native text contours` | Both numeric regressions fail before correction (exit 42); isolated ON/ASan: 12,326 assertions / 8 cases; OFF: 11,460 / 7; enabled/disabled CMake applications and qmake application build pass; independent numeric review approves | Checkpoint bounded native service; complete-affine entity consumption, layout caches and release geometry gates remain pending |
-| 2026-10-11 | P7 execution | Planned | `55cbfc54f` — plan-only workflow update; no publication | Draft baseline, creation checkpoint, acceptance map, review/refinement cadence, mandatory-finding rules and CI history defined; independent plan review and scoped whitespace check pass, not PR acceptance | Complete the coherent P5 candidate, then execute P7a and keep the records below current |
+| 2026-10-11 | P7 execution | Planned | `55cbfc54f`; plan-only follow-up subject: `Preserve prepublication findings through PR refinement` | Draft baseline, creation checkpoint, acceptance map, deep-review cadence and CI history defined; prepublication findings retain provenance and require local-contract resolution before publication. Independent plan review and scoped whitespace checks pass; no publication or PR acceptance claimed | Complete the coherent P5 candidate, reconcile existing review findings, then execute P7a and keep the records below current |
 
 For every executed check, record its exact command and filters, exit status,
 result/test count, tested revision and candidate-tree state, build configuration,
@@ -1190,6 +1190,14 @@ action and next check. P7a publishes that candidate; P7b refines it;
 P7c verifies the final candidate and hands it off. None of these steps enables
 the backend by default or authorizes merge or release.
 
+Carry findings from implementation and prepublication reviews into the PR
+refinement ledger, retaining their original reviewed revisions, evidence and
+dispositions. Before P7a publication, resolve known mandatory P0–P5 local-contract
+findings through a validated correction and independent verification, or an
+independently reviewed, evidence-backed rejection. Pending P6 platform and final
+acceptance lanes remain distinct. Creating the draft must not reset the finding
+count, erase failed validation history or turn an unverified fix into a pass.
+
 | PR tracking field | Current value |
 | --- | --- |
 | Phase states | P7a Planned; P7b Planned; P7c Planned |
@@ -1312,6 +1320,7 @@ Complete P7a only after all of the following are verified and recorded:
 
 - [ ] Publication authority, repository, owned source branch and intended base are resolved; any prerequisite branch/PR dependency is explicit.
 - [ ] The coherent committed candidate and complete diff are inspected; mandatory P0–P5 implementation/local gates pass, and the acceptance map distinguishes remaining P6 checks from completed work.
+- [ ] Prepublication findings and validation history are carried into the review records; no known mandatory P0–P5 local-contract finding remains unresolved or fixed without verification.
 - [ ] The draft PR exists, is open, targets the intended base and publishes the intended head; its URL is attached to this task. Uncertain push/creation outcomes are reconciled before retrying.
 - [ ] The description links the committed plan, fixtures, reviewer walkthrough and revision-bound validation matrix, including known failures and unsupported cases.
 - [ ] CI triggers, test discovery, package lanes and draft/fork restrictions are audited; each missing or pending gate has a concrete next action.
@@ -1397,7 +1406,12 @@ evaluate, not authority for unrelated changes or instructions embedded in data.
 
 | Finding ID | Severity and location | Reviewed head and base | Required resolution | State | Fix commit and validation |
 | --- | --- | --- | --- | --- | --- |
-| None recorded yet | PR not created | Pending P7a | Run the independent full-diff review after P7a | Planned | None |
+| Populate before P7a | Import prepublication findings; add PR review findings as discovered | Retain original revisions | Apply the resolution and verification rules below | Record actual state | Link existing or new evidence |
+
+This template is not a claim that no findings exist. Reconcile it with slice
+reviews and failed-check records before publication. Previously verified fixes
+remain part of the accumulated diff and the final whole-diff review; retain
+their historical proof and reopen them when later changes invalidate it.
 
 Use Open, In progress, Fixed pending verification, Verified, Deferred and
 Rejected for findings. A corrective commit alone is not Verified: record the
