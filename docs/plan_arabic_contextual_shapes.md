@@ -625,7 +625,7 @@ Maintain the progress and validation records below as implementation proceeds:
 | 2026-10-11 | P2b | Complete | `644b146c5` | Headless: 1,850 assertions / 21 cases; Unicode 17: 770,241 type/direction + 91,707 character cases, zero failures; legacy display parity checked | Font/script itemization and renderer consumption remain pending; P2 overall is incomplete |
 | 2026-10-11 | P1a, P1b, P2a, P3a, P3b | In progress | Uncommitted owned service slices | Dependency/resource, font/shaper, parser and outline work; individual results recorded before checkpoints | Validate and checkpoint bounded slices; adapters/persistence/P6/P7 remain pending |
 | 2026-10-11 | P1core.1 | Complete | `7996e9b5a` — `Add headless OpenType font and shaping core` | Isolated ON: 639,014 assertions / 7 cases; OFF without FreeType: 4 / 1; ASan/UBSan: 639,014 / 7; CMake and qmake full application builds exit 0 | Bounded core checkpoint only; registry, installation, certified deployment and entity adapters remain pending |
-| 2026-10-11 | P1 registry | In progress | `b25777bb0` — `Add deterministic versioned OpenType font registry` | Isolated ON/ASan: 97 assertions / 6 cases; OFF: 31 / 3; CMake/qmake application builds pass. Independent review reproduced a dangling higher-priority symlink falling through to a later root | Fix broken-link precedence and strengthen hot-cache/immutable-resource negative coverage; package/certification and entity/profile integration remain pending |
+| 2026-10-11 | P1 registry | Validated | `b25777bb0` plus corrective candidate subject: `Reject broken priority font links without substitution` | Corrected isolated ON/ASan: 128 assertions / 7 cases; OFF: 31 / 3; CMake/qmake application builds pass. Independent before/after review verifies broken-link precedence, hot-cache identity rejection and immutable resource lifetime | Checkpoint correction; package/certification and entity/profile integration remain pending |
 | 2026-10-11 | P2a logical parser | Complete | `d2e9ac848` — `Add source-preserving logical text document parser` | Isolated CMake ON, OFF and ASan/UBSan each pass 452,158 assertions / 22 cases; complete incremental CMake/qmake application builds exit 0 | Bounded parser checkpoint only; font/script itemizer, shared layout and entity adapter integration remain pending |
 | 2026-10-11 | P0b transport proof | In progress | Uncommitted mixed-tree candidate; no schema codec yet | Earlier STYLE binding failure repaired; new STYLE-unit and LTYPE-control prerequisites pass focused/direct native JSON checks; converted DXF still fails at DIMSTYLE color fields | Record current frozen filter/library evidence and external-converter attribution; isolate and checkpoint prerequisites without claiming full interchange |
 | 2026-10-11 | P3b native outline adapter | In progress | Uncommitted mixed-tree candidate | Registered and partial-instrumentation ASan/UBSan: 12,309 assertions / 6 cases pass, including empty extents and native coordinate limits | Validate isolated checkpoint and both build systems; final affine/entity integration remains pending |
@@ -856,6 +856,38 @@ The existing newer-SDK/deployment-target linker warnings remain. Logs are local
 `/private/tmp/librecad-arabic-registry-{on,off,asan}-{configure,build,test}.log`
 and `/private/tmp/librecad-arabic-registry-qmake-{configure,build}.log`;
 reproducible source/tests and this concise record are committed, not build output.
+
+#### Registry correction and independent verification
+
+Independent review reproduced a priority violation: `QFileInfo::exists()`
+follows symlinks, so a dangling font link in the first configured root was
+silently skipped in favor of a valid later root. Treat an existing link as a
+resource candidate even when its target is absent; exact loading now returns
+`FontFailure` at that path instead of substituting another installation.
+The added Unix regression failed before the correction (7 of 8 assertions pass,
+exit 42) and passes afterward. The independently rebuilt original probe changes
+from `resolution=1, chose-secondary=1` to `resolution=0, error=7, chose-secondary=0`;
+its intentional pre-fix-success exit convention changes from 0 to 1.
+
+Additional tests reject all six mismatched saved identity/engine fields with a
+hot cache. Loaded resources retain immutable bytes and outlines after the file
+is modified or deleted; cache clearing exposes corrupt/missing installations,
+and restoring the exact file allows a fresh resource load. Independent strict
+ON/OFF builds pass 128 assertions / 7 cases and 31 / 3 respectively, without
+skips; the reviewer made no source changes.
+
+Only the two staged registry implementation/test files were exported into the
+same isolated source, now containing the committed parser as well. Using the
+commands above, corrected ON and ASan/UBSan targets each pass 128 assertions /
+7 cases, OFF without FreeType discovery passes 31 / 3, and complete incremental
+CMake/qmake application builds succeed. Process IDs ON 6552, OFF 88874,
+sanitizer 49727 and qmake 78491 all terminate with exit 0. Logs are
+`/private/tmp/librecad-arabic-registry-fix-{on,off,asan}-{configure,build,test}.log`
+and `/private/tmp/librecad-arabic-registry-fix-qmake-{configure,build}.log`.
+The before-fix regression log is
+`/private/tmp/librecad-arabic-registry-symlink-before-test.log`.
+Instrumentation/deployment limitations remain those stated above. These results
+do not establish package, entity-adapter or full profile integration acceptance.
 
 ### Isolated logical parser evidence
 

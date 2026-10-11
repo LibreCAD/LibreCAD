@@ -102,7 +102,10 @@ LC_TextFontRegistry::Result LC_TextFontRegistry::resolve(const Identity &identit
     }
     for (const auto &root : roots) {
         const auto path = QDir(root).absoluteFilePath(entry.relativeFontPath);
-        if (!QFileInfo::exists(path)) continue;
+        const QFileInfo resource(path);
+        // exists() follows links: a dangling link is a broken installation,
+        // not permission to conceal it with a later resource root.
+        if (!resource.exists() && !resource.isSymLink()) continue;
         const auto loaded = LC_OpenTypeFont::load(path, entry.font);
         if (!loaded) {
             // A corrupt higher-priority installation must not be silently

@@ -141,6 +141,32 @@ TEST_CASE("Installed font lookup has explicit roots and immutable resource cachi
     REQUIRE(loaded.font->checksum() == entry.identity.fontSha256);
     REQUIRE(loaded.resourcePath == QDir(root).absoluteFilePath(entry.relativeFontPath));
     REQUIRE(installed.resolve(entry.identity).font == loaded.font);
+    // A hot cache must not bypass any saved-identity or engine check.
+    for (int field = 0; field < 6; ++field) {
+        auto changed = entry.identity;
+        if (field == 0) changed.profileId += "unknown";
+        else if (field == 1) changed.fontSha256[0] = '0';
+        else if (field == 2) changed.faceIndex = 1;
+        else if (field == 3) changed.metricPolicy += "unknown";
+        else if (field == 4) changed.shapingPolicy += "unknown";
+        else changed.engineIdentity += "unknown";
+        const auto rejected = installed.resolve(changed);
+        REQUIRE_FALSE(rejected);
+        REQUIRE(rejected.error == (field == 0 ? Registry::ErrorCode::UnknownProfile :
+            field == 5 ? Registry::ErrorCode::IncompatibleEngine : Registry::ErrorCode::IdentityMismatch));
+    }
+    QFile changedFont(loaded.resourcePath);
+    REQUIRE(changedFont.open(QIODevice::WriteOnly | QIODevice::Truncate));
+    REQUIRE(changedFont.write("changed after load") > 0);
+    changedFont.close();
+    REQUIRE(installed.resolve(entry.identity).font == loaded.font);
+    REQUIRE(loaded.font->outline(3999));
+    installed.clear();
+    REQUIRE(installed.resolve(entry.identity).error == Registry::ErrorCode::FontFailure);
+    REQUIRE(QFile::remove(loaded.resourcePath));
+    REQUIRE(installed.resolve(entry.identity).error == Registry::ErrorCode::MissingResource);
+    REQUIRE(loaded.font->outline(3999));
+    REQUIRE(QFile::copy(fontPath(), loaded.resourcePath));
     installed.clear();
     const auto reloaded = installed.resolve(entry.identity);
     REQUIRE(reloaded);
@@ -172,6 +198,29 @@ TEST_CASE("Installed font lookup has explicit roots and immutable resource cachi
     Registry fallbackRoot({{temporary.filePath("missing"), root}, {}});
     REQUIRE(fallbackRoot.resolve(entry.identity));
 }
+
+#ifdef Q_OS_UNIX
+TEST_CASE("A dangling higher priority font link is not silently substituted", "[opentype][registry][symlink][headless]") {
+    using Registry = LC_TextFontRegistry;
+    requireCertifiedEngine();
+    QTemporaryDir temporary;
+    REQUIRE(temporary.isValid());
+    const auto firstRoot = temporary.filePath("broken");
+    const auto secondRoot = temporary.filePath("valid");
+    const auto entry = Registry::amiriEntry();
+    const auto brokenPath = QDir(firstRoot).absoluteFilePath(entry.relativeFontPath);
+    REQUIRE(QDir().mkpath(QFileInfo(brokenPath).absolutePath()));
+    REQUIRE(QFile::link(temporary.filePath("missing-font.ttf"), brokenPath));
+    REQUIRE(QFileInfo(brokenPath).isSymLink());
+    REQUIRE_FALSE(QFileInfo::exists(brokenPath));
+    install(secondRoot);
+    Registry registry({{firstRoot, secondRoot}, {}});
+    const auto failed = registry.resolve(entry.identity);
+    REQUIRE_FALSE(failed);
+    REQUIRE(failed.error == Registry::ErrorCode::FontFailure);
+    REQUIRE(failed.resourcePath == brokenPath);
+}
+#endif
 
 TEST_CASE("Registry resources remain valid during concurrent resolve and clear", "[opentype][registry][cache][headless]") {
     using Registry = LC_TextFontRegistry;
