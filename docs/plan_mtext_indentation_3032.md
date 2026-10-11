@@ -50,11 +50,11 @@ waiting for that clarification.
 
 | Step | Status | Commit | Completion evidence |
 | --- | --- | --- | --- |
-| A0. Isolate tests and characterize behavior | Implemented, automated checks pass | This implementation commit | Existing settings-isolation listener linked; both editors assert isolation before construction |
-| A1. Preserve leading spaces | Implemented, automated checks pass | This implementation commit | Two fonts, heights and all attachments; transforms, blank parent/proxy bounds and unchanged ink widths |
-| A2. Implement direction-aware Tab advances | Implemented, automated checks pass | This implementation commit | Whole-line bidi; unequal-width fields, embedding/isolate context, exact and repeated stops, Qt positional oracle |
-| A3. Preserve saved layout and edits | Implemented, automated checks pass | This implementation commit | Generated standalone/embedded DXF/DWG round trips; independent DXF tags and LibreDWG width decoding |
-| A4. Enable Tab input and validate release | Implemented; native release checks pending | This implementation commit | Tab/undo/redo and local Ctrl+Tab focus escape tested in both editors; CMake and qmake application builds pass; native GUI pending |
+| A0. Isolate tests and characterize behavior | Implemented, automated checks pass | `567799327` | Existing settings-isolation listener linked; both editors assert isolation before construction |
+| A1. Preserve leading spaces | Implemented, automated checks pass | `567799327` | Two fonts, heights and all attachments; transforms, blank parent/proxy bounds and unchanged ink widths |
+| A2. Implement direction-aware Tab advances | Implemented, automated checks pass | `567799327` | Whole-line bidi; unequal-width fields, embedding/isolate context, exact and repeated stops, Qt positional oracle |
+| A3. Preserve saved layout and edits | Implemented, automated checks pass | `567799327` | Generated standalone/embedded DXF/DWG round trips; independent DXF tags and LibreDWG width decoding |
+| A4. Enable Tab input and validate release | Implemented; native release checks pending | `567799327` | Tab/undo/redo and local Ctrl+Tab focus escape tested in both editors; CMake and qmake application builds pass; native GUI pending |
 | B0. Confirm paragraph-control scope | Awaiting scope decision | - | Accepted UI, persistence, wrapping and compatibility contract |
 | B1-B4. Paragraph controls | Conditional, detailed below | - | Parser/layout/editor/export tests, not only visual editor margins |
 
