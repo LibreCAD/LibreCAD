@@ -27,12 +27,16 @@
 #include "lc_textedit.h"
 #include "rs_mtext.h"
 #include "ui_lc_mtextpropertieseditingwidget.h"
+#include <QShortcut>
 
 LC_MTextPropertiesEditingWidget::LC_MTextPropertiesEditingWidget(
     QWidget *parent)
     : LC_EntityPropertiesEditorWidget(parent),
       ui(new Ui::LC_MTextPropertiesEditingWidget) {
   ui->setupUi(this);
+  auto *focusNext = new QShortcut(QKeySequence("Ctrl+Tab"), ui->teText);
+  focusNext->setContext(Qt::WidgetShortcut);
+  connect(focusNext, &QShortcut::activated, this, [this] { focusNextPrevChild(true); });
 
   connect(ui->teText, &QTextEdit::textChanged, this,
           &LC_MTextPropertiesEditingWidget::onTextChanged);

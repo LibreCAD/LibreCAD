@@ -23,14 +23,24 @@
 **********************************************************************/
 
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/catch_approx.hpp>
+#include <algorithm>
+#include <cmath>
 #include <limits>
 
 #include <QApplication>
 #include <QFile>
+#include <QFontDatabase>
+#include <QFontMetricsF>
+#include <QGlyphRun>
 #include <QClipboard>
 #include <QDropEvent>
 #include <QInputMethodEvent>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
 #include <QMouseEvent>
+#include <QProcess>
 #include <QRadioButton>
 #include <QScrollBar>
 #include <QTemporaryDir>
@@ -43,11 +53,13 @@
 #include "lc_textbidi.h"
 #include "lc_textedit.h"
 #include "lc_textpropertieseditingwidget.h"
+#include "lc_testsettingsisolation.h"
 #include "qg_dlg_mtext.h"
 #include "qg_dlg_text.h"
 #include "rs_debug.h"
 #include "rs_filterdxfrw.h"
 #include "rs_fontlist.h"
+#include "rs_font.h"
 #include "rs_graphic.h"
 #include "rs_insert.h"
 #include "rs_mtext.h"
@@ -140,6 +152,34 @@ RS_MText *findMText(RS_Graphic &graphic) {
   return nullptr;
 }
 
+RS_Vector glyphPosition(const RS_Entity *entity) {
+  const auto *glyph = dynamic_cast<const RS_Insert *>(entity);
+  REQUIRE(glyph);
+  return glyph->getInsertionPoint();
+}
+
+std::vector<std::pair<int, QString>> dxfRecord(const QString &path, const QString &type) {
+  QFile file(path);
+  REQUIRE(file.open(QIODevice::ReadOnly));
+  const auto lines = QString::fromUtf8(file.readAll()).split('\n');
+  std::vector<std::pair<int, QString>> result;
+  bool found = false;
+  for (qsizetype i = 0; i + 1 < lines.size(); i += 2) {
+    bool ok = false;
+    const int code = lines[i].trimmed().toInt(&ok);
+    REQUIRE(ok);
+    auto value = lines[i + 1];
+    if (value.endsWith('\r')) value.chop(1);
+    if (code == 0) {
+      if (found) break;
+      found = value == type;
+    }
+    if (found) result.emplace_back(code, value);
+  }
+  REQUIRE(found);
+  return result;
+}
+
 std::vector<std::int32_t> libreCadIntegers(const RS_Entity &entity) {
   std::vector<std::int32_t> values;
   bool inLibreCad = false;
@@ -169,6 +209,421 @@ void mouseEvent(LC_TextEdit &edit, QEvent::Type type, const QPoint &position,
   QApplication::processEvents();
 }
 } // namespace
+
+TEST_CASE("MText retains leading whitespace without changing ink metrics",
+          "[text][issue3032][layout]") {
+  SourceFonts fonts;
+  for (const QString &style : {QStringLiteral("iso3098"), QStringLiteral("unicode")}) {
+    auto *font = RS_FONTLIST->requestFont(style);
+    REQUIRE(font);
+    for (const double height : {9.0, 18.0}) {
+      for (const auto vertical : {RS_MTextData::VATop, RS_MTextData::VAMiddle, RS_MTextData::VABottom}) {
+        for (const auto horizontal : {RS_MTextData::HALeft, RS_MTextData::HACenter, RS_MTextData::HARight}) {
+          auto data = mtextData("ABC");
+          data.style = style;
+          data.height = height;
+          data.valign = vertical;
+          data.halign = horizontal;
+          data.drawingDirection = RS_MTextData::LeftToRight;
+          RS_MText baseline(nullptr, data);
+          data.text = "    ABC";
+          RS_MText indented(nullptr, data);
+          auto *baseLine = dynamic_cast<RS_EntityContainer *>(baseline.entityAt(0));
+          auto *indentLine = dynamic_cast<RS_EntityContainer *>(indented.entityAt(0));
+          REQUIRE(baseLine);
+          REQUIRE(indentLine);
+          REQUIRE(baseLine->count() == indentLine->count());
+          const double shift = horizontal == RS_MTextData::HALeft
+              ? 4.0 * font->getWordSpacing() * height / 9.0 : 0.0;
+          for (unsigned i = 0; i < baseLine->count(); ++i) {
+            const auto a = glyphPosition(baseLine->entityAt(i));
+            const auto b = glyphPosition(indentLine->entityAt(i));
+            CHECK(b.x - a.x == Catch::Approx(shift).margin(1e-9));
+            CHECK(b.y == Catch::Approx(a.y));
+          }
+          CHECK(indented.getUsedTextWidth() == Catch::Approx(baseline.getUsedTextWidth()));
+          CHECK(indented.getText() == data.text);
+        }
+      }
+    }
+  }
+}
+
+TEST_CASE("MText resets indentation at explicit breaks and preserves empty bounds",
+          "[text][issue3032][layout]") {
+  SourceFonts fonts;
+  auto data = mtextData("ABC\n    DEF\\P\tABC\n");
+  data.drawingDirection = RS_MTextData::LeftToRight;
+  RS_MText text(nullptr, data);
+  REQUIRE(text.count() == 4);
+  CHECK(text.entityAt(0)->getMin().x == Catch::Approx(0.0).margin(1e-9));
+  CHECK(text.entityAt(1)->getMin().x == Catch::Approx(4.0 * RS_FONTLIST->requestFont(data.style)->getWordSpacing()));
+  CHECK(text.entityAt(2)->getMin().x == Catch::Approx(36.0));
+  CHECK_FALSE(text.entityAt(3)->getMin().valid);
+  for (const QString &value : {QString(), QStringLiteral(" \t \n\t"),
+                               QStringLiteral("\\S   ^  ;"), QString(QChar(0x2066))}) {
+    data.text = value;
+    for (const auto vertical : {RS_MTextData::VATop, RS_MTextData::VAMiddle, RS_MTextData::VABottom}) {
+      data.valign = vertical;
+      data.angle = 0.5;
+      RS_MText empty(nullptr, data);
+      CHECK_FALSE(empty.getMin().valid);
+      CHECK_FALSE(empty.getMax().valid);
+      CHECK(empty.getUsedTextWidth() == 0.0);
+      CHECK(std::isfinite(empty.getUsedTextHeight()));
+      empty.rotate({0.0, 0.0}, 0.5);
+      empty.scale({0.0, 0.0}, {2.0, 2.0});
+      CHECK_FALSE(empty.getMin().valid);
+    }
+  }
+}
+
+TEST_CASE("MText Tab field gaps agree with Qt in both directions",
+          "[text][issue3032][layout]") {
+  SourceFonts fonts;
+  auto data = mtextData("AA");
+  data.drawingDirection = RS_MTextData::LeftToRight;
+  RS_MText reference(nullptr, data);
+  auto *referenceLine = dynamic_cast<RS_EntityContainer *>(reference.entityAt(0));
+  REQUIRE(referenceLine);
+  REQUIRE(referenceLine->count() == 2);
+  const double lffAdvance = glyphPosition(referenceLine->entityAt(1)).x -
+                            glyphPosition(referenceLine->entityAt(0)).x;
+  REQUIRE(lffAdvance > 0.0);
+  const QFont font = QFontDatabase::systemFont(QFontDatabase::FixedFont);
+  const double qtAdvance = QFontMetricsF(font).horizontalAdvance("A");
+  const QString samples[] = {"A\tAAA", "AAA\tA", "AAA\tA\tAA", "\tA", "A\t\tAAA",
+      "A\t\u2066AAA\tAA\u2069", "AAA\t\u202bAA\tA\u202c"};
+  for (const auto direction : {Qt::LeftToRight, Qt::RightToLeft}) {
+    for (const auto &sample : samples) {
+      INFO(sample.toStdString() << " direction " << direction);
+      data.text = sample;
+      data.drawingDirection = direction == Qt::LeftToRight ? RS_MTextData::LeftToRight : RS_MTextData::RightToLeft;
+      RS_MText text(nullptr, data);
+      auto *line = dynamic_cast<RS_EntityContainer *>(text.entityAt(0));
+      REQUIRE(line);
+      QTextOption option;
+      option.setTextDirection(direction);
+      option.setAlignment(Qt::AlignLeft | Qt::AlignAbsolute);
+      option.setWrapMode(QTextOption::NoWrap);
+      option.setTabStopDistance(36.0 * qtAdvance / lffAdvance);
+      QTextLayout layout(sample, font);
+      layout.setTextOption(option);
+      layout.beginLayout();
+      layout.createLine().setLineWidth(10000.0);
+      layout.endLayout();
+      std::vector<double> positions;
+#if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
+      for (const auto &run : layout.glyphRuns(0, sample.size(), QTextLayout::RetrieveAll)) {
+        const auto indexes = run.stringIndexes();
+        const auto points = run.positions();
+        for (qsizetype i = 0; i < indexes.size(); ++i) {
+          if (sample.at(indexes[i]) == QChar('A')) positions.push_back(points[i].x());
+        }
+      }
+#else
+      // The simple cases have no format-control glyphs on older Qt versions.
+      if (sample.contains(QChar(0x2066)) || sample.contains(QChar(0x202b))) continue;
+      for (const auto &run : layout.glyphRuns()) {
+        for (const auto &point : run.positions()) positions.push_back(point.x());
+      }
+#endif
+      std::sort(positions.begin(), positions.end());
+      REQUIRE(positions.size() == line->count());
+      for (unsigned i = 1; i < line->count(); ++i) {
+        const double gap = glyphPosition(line->entityAt(i)).x - glyphPosition(line->entityAt(i - 1)).x;
+        CHECK(gap * qtAdvance / lffAdvance == Catch::Approx(positions[i] - positions[i - 1]).margin(0.1));
+      }
+      CHECK(text.getText() == sample);
+    }
+  }
+}
+
+TEST_CASE("MText Tab stops and transforms preserve drawable bounds",
+          "[text][issue3032][layout]") {
+  SourceFonts fonts;
+  for (const double height : {9.0, 18.0}) {
+    for (const int spaces : {0, 1, 15, 16, 17, 1000}) {
+      auto data = mtextData(QString(spaces, ' ') + "\tABC");
+      data.drawingDirection = RS_MTextData::LeftToRight;
+      data.height = height;
+      RS_MText text(nullptr, data);
+      const double advance = spaces * RS_FONTLIST->requestFont(data.style)->getWordSpacing();
+      const double stop = (std::floor(advance / 36.0) + 1.0) * 36.0 * height / 9.0;
+      CHECK(text.getMin().x == Catch::Approx(stop));
+      std::unique_ptr<RS_MText> copy(static_cast<RS_MText *>(text.clone()));
+      copy->move({3.0, 4.0});
+      copy->rotate({0.0, 0.0}, 0.4);
+      copy->scale({0.0, 0.0}, {2.0, 2.0});
+      copy->mirror({0.0, 0.0}, {1.0, 0.0});
+      RS_MText rebuilt(nullptr, copy->getData());
+      CHECK(copy->getMin().distanceTo(rebuilt.getMin()) < 1e-8);
+      CHECK(copy->getMax().distanceTo(rebuilt.getMax()) < 1e-8);
+      auto *firstLine = copy->entityAt(0);
+      for (int i = 0; i < 100; ++i) copy->getSize();
+      CHECK(copy->entityAt(0) == firstLine);
+    }
+  }
+  RS_Graphic graphic;
+  graphic.addEntity(new RS_MText(&graphic, mtextData("ABC")));
+  graphic.forcedCalculateBorders();
+  const auto min = graphic.getMin(), max = graphic.getMax();
+  auto blank = mtextData(" \t\n");
+  blank.insertionPoint = {100000.0, 100000.0};
+  auto *empty = new RS_MText(&graphic, blank);
+  graphic.addEntity(empty);
+  graphic.forcedCalculateBorders();
+  CHECK(graphic.getMin() == min);
+  CHECK(graphic.getMax() == max);
+  std::unique_ptr<RS_Entity> proxy(static_cast<RS_Entity *>(empty)->cloneProxy());
+  CHECK_FALSE(proxy->getMin().valid);
+}
+
+TEST_CASE("MText editors accept keyboard Tabs without changing developer settings",
+          "[text][issue3032][gui]") {
+  REQUIRE(lc::test::SettingsIsolation::isActive());
+  SourceFonts fonts;
+  auto data = mtextData("ABC");
+  RS_MText text(nullptr, data);
+  LC_GraphicViewport viewport;
+  LC_MTextPropertiesEditingWidget panel(nullptr);
+  panel.setGraphicViewport(&viewport);
+  panel.setEntity(&text);
+  QG_DlgMText dialog(nullptr, &viewport, &text, false);
+  for (QWidget *widget : {static_cast<QWidget *>(&dialog), static_cast<QWidget *>(&panel)}) {
+    auto *edit = widget->findChild<QTextEdit *>("teText");
+    REQUIRE(edit);
+    CHECK_FALSE(edit->tabChangesFocus());
+    for (const char *button : {"rbLeftToRight", "rbRightToLeft"}) {
+      widget->findChild<QRadioButton *>(button)->click();
+      edit->setPlainText("ABC");
+      edit->moveCursor(QTextCursor::Start);
+      keyPress(*edit, Qt::Key_Tab, Qt::NoModifier, "\t");
+      CHECK(edit->toPlainText() == "\tABC");
+      edit->undo();
+      CHECK(edit->toPlainText() == "ABC");
+      edit->redo();
+      CHECK(edit->toPlainText() == "\tABC");
+    }
+    widget->show();
+    widget->activateWindow();
+    edit->setFocus();
+    QApplication::processEvents();
+    REQUIRE(edit->hasFocus());
+    keyPress(*edit, Qt::Key_Tab, Qt::ControlModifier);
+    CHECK_FALSE(edit->hasFocus());
+    widget->hide();
+  }
+  dialog.updateEntity();
+  CHECK(text.getText() == "\tABC");
+}
+
+TEST_CASE("MText preserves declared reference width in DXF and DWG",
+          "[text][issue3032][persistence]") {
+  SourceFonts fonts;
+  QTemporaryDir directory;
+  REQUIRE(directory.isValid());
+  for (const auto format : {RS2::FormatDXFRW2018, RS2::FormatDXFRW2000,
+                           RS2::FormatDWG, RS2::FormatDWG2004, RS2::FormatDWG2007,
+                           RS2::FormatDWG2010, RS2::FormatDWG2013, RS2::FormatDWG2018}) {
+    for (double width : {0.0, 12.0, 10000.0}) {
+      INFO("format " << format << " width " << width);
+      RS_Graphic original;
+      auto data = mtextData("    A A A A A A A A\n\tABC");
+      if (width == 10000.0) data.text.prepend(QString(260, 'A') + "\t");
+      data.drawingDirection = RS_MTextData::LeftToRight;
+      data.width = width;
+      auto *source = new RS_MText(&original, data);
+      original.addEntity(source);
+      const auto path = directory.filePath("width" + QString::number(format) + ".out");
+      RS_FilterDXFRW writer;
+      REQUIRE(writer.fileExport(original, path, format));
+      RS_Graphic imported;
+      RS_FilterDXFRW reader;
+      REQUIRE(reader.fileImport(imported, path, format));
+      auto *restored = findMText(imported);
+      REQUIRE(restored);
+      CHECK(restored->getWidth() == width);
+      CHECK(restored->getText() == data.text);
+      CHECK(restored->getHAlign() == data.halign);
+      restored->setStyle(data.style);
+      restored->update();
+      CHECK(restored->getMin().x == Catch::Approx(source->getMin().x));
+      CHECK(restored->getUsedTextWidth() == Catch::Approx(source->getUsedTextWidth()));
+      if (format != RS2::FormatDXFRW2018 && format != RS2::FormatDXFRW2000) {
+        const auto decoder = qEnvironmentVariable("LIBRECAD_TEST_DWGREAD");
+        if (!decoder.isEmpty()) {
+          const auto jsonPath = directory.filePath("decoded.json");
+          QProcess process;
+          process.start(decoder, {"-O", "JSON", "-o", jsonPath, path});
+          REQUIRE(process.waitForFinished(30000));
+          INFO(process.readAllStandardError().toStdString());
+          REQUIRE(process.exitStatus() == QProcess::NormalExit);
+          REQUIRE(process.exitCode() == 0);
+          QFile json(jsonPath);
+          REQUIRE(json.open(QIODevice::ReadOnly));
+          const auto objects = QJsonDocument::fromJson(json.readAll()).object().value("OBJECTS").toArray();
+          bool found = false;
+          for (const auto &value : objects) {
+            const auto object = value.toObject();
+            if (object.value("entity").toString() != "MTEXT") continue;
+            found = true;
+            CHECK(object.value("rect_width").toDouble(-1.0) == width);
+          }
+          REQUIRE(found);
+        }
+        continue;
+      }
+      QString encoded;
+      double savedWidth = -1.0;
+      int attachment = 0;
+      for (const auto &[code, value] : dxfRecord(path, "MTEXT")) {
+        if (code == 1 || code == 3) encoded += value;
+        if (code == 41) savedWidth = value.toDouble();
+        if (code == 71) attachment = value.toInt();
+      }
+      CHECK(savedWidth == width);
+      CHECK(attachment == 1);
+      CHECK(encoded.contains("^I"));
+      // Consume the serialized width independently of LibreCAD's no-wrap renderer.
+      QTextOption option;
+      option.setWrapMode(savedWidth == 0.0 ? QTextOption::NoWrap : QTextOption::WordWrap);
+      const QFont font = QFontDatabase::systemFont(QFontDatabase::FixedFont);
+      const QString firstParagraph = encoded.section("\\P", 0, 0);
+      QTextLayout layout(firstParagraph, font);
+      layout.setTextOption(option);
+      layout.beginLayout();
+      int lines = 0;
+      while (true) {
+        auto line = layout.createLine();
+        if (!line.isValid()) break;
+        line.setLineWidth(savedWidth == 0.0 ? 100000.0 : savedWidth);
+        ++lines;
+      }
+      layout.endLayout();
+      CHECK((width == 12.0 ? lines > 1 : lines == 1));
+    }
+  }
+}
+
+TEST_CASE("MText rejects invalid declared export width",
+          "[text][issue3032][persistence]") {
+  SourceFonts fonts;
+  QTemporaryDir directory;
+  REQUIRE(directory.isValid());
+  for (const auto width : {-1.0, std::numeric_limits<double>::infinity(),
+                           std::numeric_limits<double>::quiet_NaN()}) {
+    RS_Graphic graphic;
+    auto data = mtextData("ABC");
+    data.width = width;
+    graphic.addEntity(new RS_MText(&graphic, data));
+    for (auto format : {RS2::FormatDXFRW2018, RS2::FormatDWG2004}) {
+      RS_FilterDXFRW writer;
+      CHECK_FALSE(writer.fileExport(graphic, directory.filePath("invalid.out"), format));
+    }
+  }
+}
+
+TEST_CASE("Edited embedded MText overrides saved attribute values without losing metadata",
+          "[text][issue3032][persistence][attrib]") {
+  SourceFonts fonts;
+  QTemporaryDir directory;
+  REQUIRE(directory.isValid());
+  const auto path = directory.filePath("attribute.dxf");
+  QFile source(path);
+  REQUIRE(source.open(QIODevice::WriteOnly));
+  const QByteArray fixture =
+      "0\nSECTION\n2\nBLOCKS\n0\nBLOCK\n8\n0\n2\nTITLE\n70\n0\n10\n0\n20\n0\n3\nTITLE\n"
+      "0\nENDBLK\n8\n0\n0\nENDSEC\n0\nSECTION\n2\nENTITIES\n"
+      "0\nINSERT\n8\n0\n2\nTITLE\n10\n0\n20\n0\n66\n1\n"
+      "0\nATTRIB\n8\n0\n100\nAcDbText\n10\n1\n20\n4\n40\n9\n1\nfallback\n"
+      "100\nAcDbAttribute\n2\nLABEL\n70\n0\n71\n2\n"
+      "100\nEmbedded Object\n10\n1\n20\n4\n40\n9\n41\n80\n71\n1\n72\n1\n"
+      "1\n{\\fArial;ABC}\\PDEF\n7\niso3098\n73\n2\n44\n1\n90\n1\n45\n1.5\n63\n3\n"
+      "0\nSEQEND\n8\n0\n0\nENDSEC\n0\nEOF\n";
+  REQUIRE(source.write(fixture) == fixture.size());
+  source.close();
+  RS_Graphic graphic;
+  RS_FilterDXFRW reader;
+  REQUIRE(reader.fileImport(graphic, path, RS2::FormatDXFRW2018));
+  auto *attribute = findMText(graphic);
+  REQUIRE(attribute);
+  REQUIRE(attribute->getText() == "ABC\nDEF");
+  for (const bool edited : {false, true}) {
+    if (edited) {
+      attribute->setText("    ABC\n\tDEF");
+      attribute->setWidth(120.0);
+      attribute->setHAlign(RS_MTextData::HARight);
+      attribute->setLineSpacingFactor(1.25);
+      attribute->setDrawingDirection(RS_MTextData::RightToLeft);
+      attribute->setInsertionPoint({7.0, 8.0});
+      attribute->setAngle(0.5);
+      attribute->setHeight(12.0);
+      attribute->update();
+    }
+    RS_FilterDXFRW writer;
+    const auto output = directory.filePath("attribute-out.dxf");
+    REQUIRE(writer.fileExport(graphic, output, RS2::FormatDXFRW2018));
+    bool embedded = false;
+    QString fallback, text, tag;
+    double width = -1.0, spacing = 0.0, backgroundScale = 0.0;
+    int attachment = 0, background = 0;
+    for (const auto &[code, value] : dxfRecord(output, "ATTRIB")) {
+      if (code == 100 && value == "Embedded Object") embedded = true;
+      if (!embedded && code == 1) fallback = value;
+      if (!embedded && code == 2) tag = value;
+      if (embedded && code == 1) text = value;
+      if (embedded && code == 41) width = value.toDouble();
+      if (embedded && code == 71) attachment = value.toInt();
+      if (embedded && code == 44) spacing = value.toDouble();
+      if (embedded && code == 90) background = value.toInt();
+      if (embedded && code == 45) backgroundScale = value.toDouble();
+    }
+    CHECK(tag == "LABEL");
+    CHECK(text == (edited ? "    ABC\\P^IDEF" : "{\\fArial;ABC}\\PDEF"));
+    CHECK(fallback == (edited ? text : QStringLiteral("fallback")));
+    CHECK(width == (edited ? 120.0 : 80.0));
+    CHECK(attachment == (edited ? 3 : 1));
+    CHECK(spacing == (edited ? 1.25 : 1.0));
+    CHECK(background == 1);
+    CHECK(backgroundScale == 1.5);
+    for (auto format : {RS2::FormatDXFRW2018, RS2::FormatDWG2018}) {
+      const auto roundTrip = directory.filePath("attribute" + QString::number(format) + ".out");
+      REQUIRE(writer.fileExport(graphic, roundTrip, format));
+      RS_Graphic restored;
+      REQUIRE(reader.fileImport(restored, roundTrip, format));
+      auto *restoredAttribute = findMText(restored);
+      REQUIRE(restoredAttribute);
+      CHECK(restoredAttribute->getText() == attribute->getText());
+      CHECK(restoredAttribute->getWidth() == attribute->getWidth());
+      CHECK(restoredAttribute->getHAlign() == attribute->getHAlign());
+      CHECK(restoredAttribute->getDrawingDirection() == attribute->getDrawingDirection());
+      CHECK(restoredAttribute->getInsertionPoint().distanceTo(attribute->getInsertionPoint()) < 1e-9);
+      CHECK(restoredAttribute->getAngle() == Catch::Approx(attribute->getAngle()).margin(1e-9));
+      CHECK(restoredAttribute->getHeight() == attribute->getHeight());
+    }
+  }
+}
+
+TEST_CASE("MText indentation has a readable R12 downgrade",
+          "[text][issue3032][persistence]") {
+  SourceFonts fonts;
+  QTemporaryDir directory;
+  REQUIRE(directory.isValid());
+  RS_Graphic original;
+  original.addEntity(new RS_MText(&original, mtextData("    ABC\n\tDEF")));
+  const auto path = directory.filePath("legacy.dxf");
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileExport(original, path, RS2::FormatDXFRW12));
+  RS_Graphic restored;
+  REQUIRE(filter.fileImport(restored, path, RS2::FormatDXFRW12));
+  QString contents;
+  for (const auto *entity : restored) {
+    if (entity->rtti() == RS2::EntityText) contents += static_cast<const RS_Text *>(entity)->getText();
+  }
+  CHECK(contents.contains("ABC"));
+  CHECK(contents.contains("DEF"));
+}
 
 TEST_CASE("RTL entity geometry preserves numbers", "[text][bidi][issue1859]") {
   SourceFonts fonts;

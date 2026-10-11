@@ -137,6 +137,18 @@ bool isLibreCadApp(const std::shared_ptr<DRW_Variant> &tag) {
          tag->content.s && *tag->content.s == "LibreCad";
 }
 
+std::int32_t mtextRtlLayout(const DRW_Entity &entity) {
+  std::int32_t layout = 0;
+  bool inLibreCad = false;
+  for (const auto &tag : entity.extData) {
+    if (tag && tag->code() == 1001) inLibreCad = isLibreCadApp(tag);
+    if (inLibreCad && tag && tag->code() == 1071 && tag->type() == DRW_Variant::INTEGER &&
+        (tag->content.i == kLegacyRtlLayout || tag->content.i == kLogicalRtlLayout))
+      layout = std::max(layout, tag->content.i);
+  }
+  return layout;
+}
+
 void setMTextRtlMarker(DRW_Text &text, std::int32_t layout) {
   decltype(text.extData) filtered;
   bool inLibreCad = false;
@@ -5431,6 +5443,11 @@ struct InsertAttribSidecar {
     int alignV = 1;
     int linespacingStyle = 1;
     double interlin = 1.0;
+    double originalHeight = 0.0;
+    double originalWidth = 0.0;
+    double originalAngle = 0.0;
+    double originalSpacing = 1.0;
+    DRW_Coord originalPosition;
     int backgroundFlags = 0;
     double backgroundScale = 0.0;
     int backgroundColor = 0;
@@ -5636,8 +5653,8 @@ void appendInsertAttribSidecar(RS_Entity *entity, const DRW_Attrib &attrib,
     return;
   }
   std::vector<std::shared_ptr<DRW_Variant>> mtextPayload;
-  // Schema 2 adds the embedded-MTEXT annotative payload and lock bit.
-  mtextPayload.push_back(std::make_shared<DRW_Variant>(1070, 2));
+  // Schema 3 also retains modeled geometry for detecting edits at export.
+  mtextPayload.push_back(std::make_shared<DRW_Variant>(1070, 3));
   const std::size_t maxChunkBytes = 240;
   const std::size_t chunkCount =
       mtext.text.empty()
@@ -5705,6 +5722,11 @@ void appendInsertAttribSidecar(RS_Entity *entity, const DRW_Attrib &attrib,
       std::make_shared<DRW_Variant>(1040, mtext.m_r2018ColumnWidth));
   mtextPayload.push_back(
       std::make_shared<DRW_Variant>(1040, mtext.m_r2018ColumnGutter));
+  const auto modeled = static_cast<const RS_MText *>(entity)->getData();
+  mtextPayload.push_back(std::make_shared<DRW_Variant>(1040, modeled.height));
+  mtextPayload.push_back(std::make_shared<DRW_Variant>(1040, modeled.width));
+  mtextPayload.push_back(std::make_shared<DRW_Variant>(1040, modeled.angle * 180.0 / M_PI));
+  mtextPayload.push_back(std::make_shared<DRW_Variant>(1040, modeled.lineSpacingFactor));
   for (double height : mtext.m_r2018ColumnHeights)
     mtextPayload.push_back(std::make_shared<DRW_Variant>(1040, height));
   for (std::uint8_t byte : mtext.m_r2018AnnotativeData)
@@ -5717,6 +5739,8 @@ void appendInsertAttribSidecar(RS_Entity *entity, const DRW_Attrib &attrib,
       std::make_shared<DRW_Variant>(1010, mtext.m_r2018XAxisDir));
   mtextPayload.push_back(
       std::make_shared<DRW_Variant>(1011, mtext.m_r2018InsertionPoint));
+  mtextPayload.push_back(std::make_shared<DRW_Variant>(1010,
+      DRW_Coord(modeled.insertionPoint.x, modeled.insertionPoint.y, 0.0)));
   for (std::size_t offset = 0; offset < mtext.text.size();) {
     std::size_t length = std::min(maxChunkBytes, mtext.text.size() - offset);
     while (length > 0 && offset + length < mtext.text.size() &&
@@ -6309,6 +6333,19 @@ extractInsertAttribSidecar(const RS_Entity *entity) {
         case 7:
           sidecar.mtext.r2018ColumnGutter = number;
           break;
+        case 8:
+        case 9:
+        case 10:
+        case 11:
+          if (sidecar.mtext.schemaVersion >= 3) {
+            if (seenMText1040 == 9) sidecar.mtext.originalHeight = number;
+            if (seenMText1040 == 10) sidecar.mtext.originalWidth = number;
+            if (seenMText1040 == 11) sidecar.mtext.originalAngle = number;
+            if (seenMText1040 == 12) sidecar.mtext.originalSpacing = number;
+          } else {
+            sidecar.mtext.r2018ColumnHeights.push_back(number);
+          }
+          break;
         default:
           sidecar.mtext.r2018ColumnHeights.push_back(number);
           break;
@@ -6339,6 +6376,9 @@ extractInsertAttribSidecar(const RS_Entity *entity) {
         case 4:
           sidecar.mtext.r2018InsertionPoint = point;
           break;
+        case 5:
+          sidecar.mtext.originalPosition = point;
+          break;
         default:
           break;
         }
@@ -6351,7 +6391,7 @@ extractInsertAttribSidecar(const RS_Entity *entity) {
         sidecar.mtext.text += text;
       }
       sidecar.hasMText =
-          sidecar.mtext.schemaVersion == 1 || sidecar.mtext.schemaVersion == 2;
+          sidecar.mtext.schemaVersion >= 1 && sidecar.mtext.schemaVersion <= 3;
       continue;
     }
     if (!inGroup)
@@ -6445,6 +6485,8 @@ extractInsertAttribSidecar(const RS_Entity *entity) {
         expectedColumnHeights >= 0 &&
         static_cast<int>(sidecar.mtext.r2018ColumnHeights.size()) ==
             expectedColumnHeights;
+    if (sidecar.mtext.schemaVersion >= 3)
+      sidecar.hasMText = sidecar.hasMText && seenMText1040 >= 12 && seenMText1010 >= 6;
     if (sidecar.mtext.schemaVersion >= 2) {
       sidecar.hasMText =
           sidecar.hasMText && expectedAnnotativeBytes >= 0 &&
@@ -7822,11 +7864,15 @@ void RS_FilterDXFRW::addInsert(const DRW_Insert &data) {
     // Render it as RS_MText so the multi-line content + formatting codes
     // survive; the plain `text` field is the single-line fallback.
     if (att->mtext) {
-      auto *mt = mtextEntityFromDRW(*att->mtext);
+      DRW_Attrib attribute(*att);
+      // Embedded DWG MTEXT has no EED frame; its private RTL marker is on ATTRIB.
+      if (!mtextRtlLayout(*attribute.mtext))
+        setMTextRtlMarker(*attribute.mtext, mtextRtlLayout(attribute));
+      auto *mt = mtextEntityFromDRW(*attribute.mtext);
       mt->setParent(m_currentContainer);
       setEntityAttributes(mt, att.get());
       mt->setVisible(attributeVisible && att->mtext->visible);
-      appendInsertAttribSidecar(mt, *att, entity->getId(), ordinal++);
+      appendInsertAttribSidecar(mt, attribute, entity->getId(), ordinal++);
       mt->update();
       m_currentContainer->addEntity(mt);
       continue;
@@ -8117,26 +8163,7 @@ RS_MText *RS_FilterDXFRW::mtextEntityFromDRW(const DRW_MText &data) {
   // else→ByStyle), matching the DXF MTEXT group 72 spec. There is no DXF
   // value for RightToLeft; that flag round-trips via XDATA below — when
   // an MTEXT carries a "LibreCad" + 1071 marker, restore the RTL setting.
-  std::int32_t rtlLayout = 0;
-  for (size_t k = 0; k + 1 < data.extData.size(); ++k) {
-    const auto &appTag = data.extData[k];
-    if (!appTag || appTag->code() != 1001 ||
-        appTag->type() != DRW_Variant::STRING || appTag->content.s == nullptr ||
-        *appTag->content.s != "LibreCad")
-      continue;
-    // Walk subsequent entries until the next 1001 (next app block).
-    for (size_t j = k + 1; j < data.extData.size(); ++j) {
-      const auto &v = data.extData[j];
-      if (!v)
-        continue;
-      if (v->code() == 1001)
-        break;
-      if (v->code() == 1071 && v->type() == DRW_Variant::INTEGER &&
-          (v->content.i == kLegacyRtlLayout || v->content.i == kLogicalRtlLayout)) {
-        rtlLayout = std::max(rtlLayout, v->content.i);
-      }
-    }
-  }
+  const auto rtlLayout = mtextRtlLayout(data);
   if (rtlLayout != 0)
     dir = RS_MTextData::RightToLeft;
 
@@ -30596,6 +30623,11 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
       if (candidate->rtti() == RS2::EntityMText) {
         const auto *source = static_cast<const RS_MText *>(candidate);
         const RS_MTextData data = source->getData();
+        if (!std::isfinite(data.width) || data.width < 0.0) {
+          m_writeFailed = true;
+          LC_ERR << "Cannot export MTEXT attribute with invalid reference width";
+          return;
+        }
         auto mtext = std::make_unique<DRW_MText>();
         mtext->basePoint =
             DRW_Coord(data.insertionPoint.x, data.insertionPoint.y,
@@ -30605,13 +30637,14 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
             sidecar.hasExtPoint ? sidecar.extPoint : DRW_Coord{0.0, 0.0, 1.0};
         mtext->height = data.height;
         mtext->widthscale = data.width;
-        mtext->text = data.text.toUtf8().toStdString();
+        mtext->text = toDxfString(data.text, m_dwgW == nullptr).toUtf8().toStdString();
         mtext->style = data.style.toUtf8().toStdString();
         mtext->angle = data.angle * 180.0 / M_PI;
         mtext->textgen = static_cast<int>(data.valign) * 3 +
                          static_cast<int>(data.halign) + 1;
         mtext->alignH = static_cast<DRW_Text::HAlign>(
-            data.drawingDirection == RS_MTextData::TopToBottom ? 3 : 1);
+            data.drawingDirection == RS_MTextData::TopToBottom ? 3 :
+            data.drawingDirection == RS_MTextData::ByStyle ? 5 : 1);
         mtext->alignV = static_cast<DRW_Text::VAlign>(
             data.lineSpacingStyle == RS_MTextData::Exact ? 2 : 1);
         mtext->interlin = data.lineSpacingFactor;
@@ -30619,8 +30652,42 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
             data.lineSpacingStyle == RS_MTextData::Exact ? 2 : 1;
         if (sidecar.hasMText) {
           const auto &saved = sidecar.mtext;
-          if (saved.hasText)
-            mtext->text = saved.text;
+          DRW_MText original;
+          original.text = saved.text;
+          original.textgen = saved.textgen;
+          original.alignH = static_cast<DRW_Text::HAlign>(saved.alignH);
+          original.alignV = static_cast<DRW_Text::VAlign>(saved.alignV);
+          original.interlin = saved.interlin;
+          original.basePoint = saved.basePoint;
+          original.extData = saved.xdata;
+          original.height = saved.schemaVersion >= 3 ? saved.originalHeight : data.height;
+          original.widthscale = saved.schemaVersion >= 3 ? saved.originalWidth : data.width;
+          original.angle = saved.schemaVersion >= 3 ? saved.originalAngle : mtext->angle;
+          original.style = mtext->style;
+          const std::unique_ptr<RS_MText> imported(mtextEntityFromDRW(original));
+          auto before = imported->getData();
+          if (saved.schemaVersion >= 3) {
+            before.insertionPoint = RS_Vector(saved.originalPosition.x, saved.originalPosition.y);
+            before.lineSpacingFactor = saved.originalSpacing;
+          }
+          const bool textEdited = data.text != before.text;
+          const bool attachmentEdited = data.halign != before.halign || data.valign != before.valign;
+          const bool directionEdited = data.drawingDirection != before.drawingDirection ||
+                                       data.legacyRtlLayout != before.legacyRtlLayout;
+          const bool spacingEdited = data.lineSpacingStyle != before.lineSpacingStyle ||
+                                     data.lineSpacingFactor != before.lineSpacingFactor;
+          const bool positionEdited = data.insertionPoint != before.insertionPoint;
+          const bool angleEdited = data.angle != before.angle;
+          const bool widthEdited = data.width != before.width;
+          const bool layoutEdited = textEdited || attachmentEdited || directionEdited || spacingEdited ||
+                                    positionEdited || angleEdited || widthEdited || data.height != before.height;
+          if (layoutEdited && (saved.r2018ColumnType != 0 || !saved.annotativeData.empty())) {
+            m_writeFailed = true;
+            LC_ERR << "Cannot export edited MTEXT attribute columns or annotative layout";
+            return;
+          }
+          mtext->text = textEdited
+              ? toDxfString(data.text, m_dwgW == nullptr).toUtf8().toStdString() : saved.text;
           mtext->textgen = saved.textgen;
           mtext->alignH = static_cast<DRW_Text::HAlign>(saved.alignH);
           mtext->alignV = static_cast<DRW_Text::VAlign>(saved.alignV);
@@ -30690,7 +30757,42 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
             mtext->secPoint = saved.secPoint;
           if (saved.hasExtPoint)
             mtext->extPoint = saved.extPoint;
+          if (attachmentEdited) {
+            mtext->textgen = static_cast<int>(data.valign) * 3 + static_cast<int>(data.halign) + 1;
+            mtext->m_r2018Attachment = mtext->textgen;
+          }
+          if (directionEdited) {
+            mtext->alignH = static_cast<DRW_Text::HAlign>(
+                data.drawingDirection == RS_MTextData::TopToBottom ? 3 :
+                data.drawingDirection == RS_MTextData::ByStyle ? 5 : 1);
+          }
+          if (spacingEdited) {
+            mtext->alignV = static_cast<DRW_Text::VAlign>(data.lineSpacingStyle == RS_MTextData::Exact ? 2 : 1);
+            mtext->linespacingStyle = data.lineSpacingStyle == RS_MTextData::Exact ? 2 : 1;
+            mtext->interlin = data.lineSpacingFactor;
+          }
+          if (positionEdited) {
+            mtext->basePoint.x = data.insertionPoint.x;
+            mtext->basePoint.y = data.insertionPoint.y;
+            mtext->m_r2018InsertionPoint = mtext->basePoint;
+            attrib.basePoint.x = data.insertionPoint.x;
+            attrib.basePoint.y = data.insertionPoint.y;
+          }
+          if (angleEdited) {
+            mtext->secPoint = DRW_Coord(std::cos(data.angle), std::sin(data.angle), 0.0);
+            mtext->m_r2018XAxisDir = mtext->secPoint;
+          }
+          if (widthEdited) mtext->m_r2018RectWidth = data.width;
+          if (layoutEdited) {
+            mtext->m_r2018ExtentsWidth = source->getUsedTextWidth();
+            mtext->m_r2018ExtentsHeight = source->getUsedTextHeight();
+          }
+          if (textEdited) attrib.text = mtext->text;
         }
+        const auto rtlLayout = data.drawingDirection == RS_MTextData::RightToLeft
+            ? (data.legacyRtlLayout ? kLegacyRtlLayout : kLogicalRtlLayout) : 0;
+        setMTextRtlMarker(*mtext, rtlLayout);
+        setMTextRtlMarker(attrib, rtlLayout);
         if (!sidecar.hasValue)
           attrib.text = mtext->text;
         attrib.mtext = std::move(mtext);
@@ -30769,6 +30871,11 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
  * Writes the given mText entity to the file.
  */
 void RS_FilterDXFRW::writeMText(const RS_MText *t) {
+  if (m_version != 1009 && (!std::isfinite(t->getWidth()) || t->getWidth() < 0.0)) {
+    m_writeFailed = true;
+    LC_ERR << "Cannot export MTEXT with invalid reference width";
+    return;
+  }
   DRW_Text *text;
   DRW_Text txt1;
   DRW_MText txt2;
@@ -30881,8 +30988,7 @@ void RS_FilterDXFRW::writeMText(const RS_MText *t) {
     }
 
     text->text = toDxfString(t->getText(), m_dwgW == nullptr).toUtf8().data();
-    //        text->widthscale =t->getWidth();
-    text->widthscale = t->getUsedTextWidth(); // getSize().x;
+    text->widthscale = t->getWidth();
     txt2.interlin = t->getLineSpacingFactor();
 
     if (m_dwgW) {

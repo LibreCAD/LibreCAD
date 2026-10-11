@@ -28,6 +28,7 @@
 #include "lc_textbidi.h"
 
 #include <iostream>
+#include <cmath>
 
 #include "rs_debug.h"
 #include "rs_font.h"
@@ -37,6 +38,15 @@
 #include "rs_math.h"
 #include "rs_painter.h"
 #include "rs_pen.h"
+
+namespace {
+bool hasTextInk(const RS_Entity &entity) {
+    const auto &min = entity.getMin();
+    const auto &max = entity.getMax();
+    return min.valid && max.valid && std::isfinite(min.x) && std::isfinite(min.y) &&
+           std::isfinite(max.x) && std::isfinite(max.y) && min.x <= max.x && min.y <= max.y;
+}
+}
 
 std::vector<int>
 RS_MText::computeBidiVisualOrder(const QString &text,
@@ -127,13 +137,14 @@ RS_Entity* RS_MText::cloneProxy() const {
     proxy->setOwner(true);
     for (RS_Entity* entity : std::as_const(*this)) {
         const auto line = dynamic_cast<LC_TextLine*>(entity);
-        if (line != nullptr && line->count() > 0) {
+        if (line != nullptr && hasTextInk(*line)) {
             const RS_Vector& start = line->getBaselineStart();
             const RS_Vector& end = line->getBaselineEnd();
             const auto l = new RS_Line(proxy, start, end);
             proxy->addEntity(l);
         }
     }
+    proxy->forcedCalculateBorders();
     return proxy;
 }
 
@@ -285,9 +296,6 @@ void RS_MText::update() {
         return;
     }
 
-    // letterSpace and space are always treated as positive advances here; the
-  // bidi pass already produced visual L→R order, so the cursor unconditionally
-  // moves rightward during emission.RS_Vector letterPos{0.0, -9.0};
     RS_Vector letterPos{0.0, -9.0};
     const RS_Vector letterSpace{font->getLetterSpacing(), 0.0};
     const double spaceWidth = font->getWordSpacing();
@@ -310,8 +318,8 @@ void RS_MText::update() {
   std::vector<LC_BidiSegment> segments;
 
   auto closeLine = [&]() {
-    flushBidiLine(*oneLine, segments, letterSpace, letterPos);
-    updateAddLine(oneLine, lineCounter++);
+    const double leadingAdvance = flushBidiLine(*oneLine, segments, letterSpace, letterPos);
+    updateAddLine(oneLine, lineCounter++, leadingAdvance);
     oneLine = new LC_TextLine(this);
     letterPos = RS_Vector(0.0, -9.0);
   };
@@ -334,6 +342,10 @@ void RS_MText::update() {
         }
 
         switch (m_data.text.at(i).unicode()) {
+            case 0x09:
+                segments.push_back({LC_BidiSegment::Tab, QChar('\t'), nullptr, 0.0, {}, {}});
+                break;
+
             case 0x0A:
                 // line feed:
                 closeLine();
@@ -448,12 +460,12 @@ void RS_MText::update() {
     } // for (i) loop
 
   // Flush any trailing segments belonging to the last line.
-  flushBidiLine(*oneLine, segments, letterSpace, letterPos);
+  const double leadingAdvance = flushBidiLine(*oneLine, segments, letterSpace, letterPos);
 
   m_usedTextHeight -=
           m_data.height * m_data.lineSpacingFactor * 5.0 / 3.0 - m_data.height;
 
-    updateAddLine(oneLine, lineCounter);
+    updateAddLine(oneLine, lineCounter, leadingAdvance);
 
     alignVertically();
     RS_DEBUG->print("RS_MText::update: OK");
@@ -462,15 +474,16 @@ void RS_MText::update() {
 /**
  * Reorder @p segments via the Unicode Bidirectional Algorithm and emit each
  * one (letter / space / super-sub stack) into @p oneLine in visual L→R order.
- * Cursor advances use LFF metrics; bidi only determines visual order.
+ * Cursor advances use LFF metrics; Tabs place fields from the flow origin.
+ * Returns the advance before the first drawable content, excluding its bearing.
  * Clears @p segments on return.
  */
-void RS_MText::flushBidiLine(LC_TextLine &oneLine,
+double RS_MText::flushBidiLine(LC_TextLine &oneLine,
                              std::vector<LC_BidiSegment> &segments,
                              const RS_Vector &letterSpace,
                              RS_Vector &letterPosition) {
   if (segments.empty()) {
-    return;
+    return 0.0;
   }
 
   // Build a plain-text string for the bidi pass. Stacks become U+FFFC (Object
@@ -486,6 +499,9 @@ void RS_MText::flushBidiLine(LC_TextLine &oneLine,
     case LC_BidiSegment::Space:
       plainText.append(QChar(' '));
       break;
+    case LC_BidiSegment::Tab:
+      plainText.append(QChar('\t'));
+      break;
     case LC_BidiSegment::Stack:
       plainText.append(QChar(0xFFFC));
       break;
@@ -494,6 +510,19 @@ void RS_MText::flushBidiLine(LC_TextLine &oneLine,
 
   const auto direction = m_data.drawingDirection == RS_MTextData::RightToLeft
       ? Qt::RightToLeft : Qt::LeftToRight;
+  struct Field {
+    int begin = 0;
+    int end = 0;
+    double start = 0.0;
+    double width = 0.0;
+    double firstInk = 0.0;
+    double origin = 0.0;
+    double shift = 0.0;
+    bool hasInk = false;
+  };
+  std::vector<Field> fields(1);
+  // Emit once with zero-width Tabs, retaining each visual field's real advances.
+  // Afterwards move fields, without re-resolving bidi or measuring glyphs twice.
   for (const auto &cluster : lc::textbidi::visualClusters(
            plainText, direction,
            m_data.legacyRtlLayout && direction == Qt::RightToLeft)) {
@@ -501,6 +530,8 @@ void RS_MText::flushBidiLine(LC_TextLine &oneLine,
     for (int offset = 0; offset < cluster.length; ++offset) {
       const int logIdx = cluster.start + offset;
       const auto &seg = segments[logIdx];
+      const int firstEntity = oneLine.count();
+      const double inkOrigin = letterPosition.x;
       switch (seg.kind) {
       case LC_BidiSegment::Char: {
         char32_t scalar = seg.codepoint.unicode();
@@ -538,32 +569,91 @@ void RS_MText::flushBidiLine(LC_TextLine &oneLine,
       case LC_BidiSegment::Space:
         letterPosition.x += seg.width;
         break;
+      case LC_BidiSegment::Tab:
+        fields.back().end = oneLine.count();
+        fields.back().width = letterPosition.x - fields.back().start;
+        fields.push_back({static_cast<int>(oneLine.count()), 0, letterPosition.x});
+        break;
       case LC_BidiSegment::Stack: {
         double upperWidth = 0.0;
         if (!seg.upperText.isEmpty()) {
           RS_MText *upper = createUpperLower(
               seg.upperText, m_data, letterPosition + RS_Vector{0., 9.});
-          oneLine.addEntity(upper);
-          upper->reparent(&oneLine);
-          upperWidth = upper->getSize().x;
+          if (hasTextInk(*upper)) {
+            upperWidth = upper->getSize().x;
+            oneLine.addEntity(upper);
+            upper->reparent(&oneLine);
+          } else {
+            delete upper;
+          }
         }
         double lowerWidth = 0.0;
         if (!seg.lowerText.isEmpty()) {
           RS_MText *lower = createUpperLower(
               seg.lowerText, m_data, letterPosition + RS_Vector{0., 4.});
-          oneLine.addEntity(lower);
-          lower->reparent(&oneLine);
-          lowerWidth = lower->getSize().x;
+          if (hasTextInk(*lower)) {
+            lowerWidth = lower->getSize().x;
+            oneLine.addEntity(lower);
+            lower->reparent(&oneLine);
+          } else {
+            delete lower;
+          }
         }
         letterPosition.x += std::max(upperWidth, lowerWidth);
         letterPosition += letterSpace;
         break;
       }
       }
+      auto &field = fields.back();
+      for (int i = firstEntity; !field.hasInk && i < oneLine.count(); ++i) {
+        if (hasTextInk(*oneLine.entityAt(i))) {
+          field.hasInk = true;
+          field.firstInk = inkOrigin;
+        }
+      }
     }
   }
 
   segments.clear();
+  fields.back().end = oneLine.count();
+  fields.back().width = letterPosition.x - fields.back().start;
+  if (fields.size() > 1) {
+    constexpr double defaultTabInterval = 4.0 * 9.0; // Four initial LFF text heights.
+    const bool rtl = direction == Qt::RightToLeft;
+    double distance = 0.0;
+    for (std::size_t i = 0; i < fields.size(); ++i) {
+      auto &field = fields[rtl ? fields.size() - 1 - i : i];
+      field.origin = distance;
+      distance += field.width;
+      if (!std::isfinite(distance) || field.width < 0.0) {
+        oneLine.clear();
+        return 0.0;
+      }
+      if (i + 1 < fields.size()) {
+        const double next = (std::floor(distance / defaultTabInterval) + 1.0) * defaultTabInterval;
+        if (!std::isfinite(next) || next <= distance) {
+          oneLine.clear();
+          return 0.0;
+        }
+        distance = next;
+      }
+    }
+    for (auto &field : fields) {
+      field.shift = (rtl ? distance - field.origin - field.width : field.origin) - field.start;
+      if (!std::isfinite(field.shift)) {
+        oneLine.clear();
+        return 0.0;
+      }
+      for (int i = field.begin; i < field.end; ++i) {
+        oneLine.entityAt(i)->move({field.shift, 0.0});
+      }
+    }
+    letterPosition.x = distance;
+  }
+  for (const auto &field : fields) {
+    if (field.hasInk) return field.firstInk + field.shift;
+  }
+  return 0.0;
 }
 
 void RS_MText::alignVertically() {
@@ -587,7 +677,7 @@ void RS_MText::alignVertically() {
     }
     for (RS_Entity* e : std::as_const(*this)) {
         const auto line = dynamic_cast<LC_TextLine*>(e);
-        if (line != nullptr) {
+        if (line != nullptr && hasTextInk(*line)) {
             auto corner = RS_Vector(line->getMin().rotate(m_data.insertionPoint, m_data.angle));
             RS_Vector size = line->getSize();
             line->setLeftBottomCorner(corner);
@@ -604,7 +694,7 @@ void RS_MText::alignVertically() {
 void RS_MText::rotateLinesRefs() const {
     for (RS_Entity* e : std::as_const(*this)) {
         const auto line = dynamic_cast<LC_TextLine*>(e);
-        if (line != nullptr) {
+        if (line != nullptr && hasTextInk(*line)) {
             RS_Vector corner = line->getLeftBottomCorner();
             const RS_Vector size = line->getTextSize();
             RS_Vector shiftVector(size.y / 2, 0);
@@ -694,7 +784,7 @@ RS_MText* RS_MText::createUpperLower(QString text, const RS_MTextData& data, con
  *
  * @return  distance over the text base-line
  */
-double RS_MText::updateAddLine(LC_TextLine* textLine, const int lineCounter) {
+double RS_MText::updateAddLine(LC_TextLine* textLine, const int lineCounter, double leadingAdvance) {
     constexpr double ls = 5.0 / 3.0;
 
     RS_DEBUG->print("RS_MText::updateAddLine: width: %f", textLine->getSize().x);
@@ -709,8 +799,9 @@ double RS_MText::updateAddLine(LC_TextLine* textLine, const int lineCounter) {
 
     textLine->forcedCalculateBorders();
 
-    // Horizontal Align:
-    switch (m_data.halign) {
+    // Empty lines contribute spacing, but never participate in bounds arithmetic.
+    if (hasTextInk(*textLine)) {
+        switch (m_data.halign) {
         case RS_MTextData::HACenter:
             textLine->move(RS_Vector{-0.5 * (textLine->getMin().x + textLine->getMax().x), 0.});
             break;
@@ -720,19 +811,20 @@ double RS_MText::updateAddLine(LC_TextLine* textLine, const int lineCounter) {
             break;
 
         default:
-            textLine->move(RS_Vector{-textLine->getMin().x, 0.});
+            textLine->move(RS_Vector{scale * leadingAdvance - textLine->getMin().x, 0.});
             break;
-    }
+        }
 
-    // Update actual text size (before rotating, after scaling!):
-    if (textLine->getSize().x > m_usedTextWidth) {
-        m_usedTextWidth = textLine->getSize().x;
+        // Update actual text size (before rotating, after scaling!):
+        if (textLine->getSize().x > m_usedTextWidth) {
+            m_usedTextWidth = textLine->getSize().x;
+        }
     }
 
     m_usedTextHeight += m_data.height * m_data.lineSpacingFactor * ls;
 
     // Gets the distance over text base-line (before rotating, after scaling!):
-    const double textTail = textLine->getMin().y;
+    const double textTail = hasTextInk(*textLine) ? textLine->getMin().y : 0.0;
 
     // Move:
     textLine->move(m_data.insertionPoint + RS_Vector{0., -m_data.height * lineCounter * m_data.lineSpacingFactor * ls});
@@ -922,7 +1014,7 @@ void RS_MText::drawDraft(RS_Painter* painter) {
 #endif
     for (RS_Entity* entity : std::as_const(*this)) {
         const auto line = dynamic_cast<LC_TextLine*>(entity);
-        if (line != nullptr && line->count() > 0) {
+        if (line != nullptr && hasTextInk(*line)) {
             painter->drawLineWCS(line->getBaselineStart(), line->getBaselineEnd());
         }
     }

@@ -328,7 +328,7 @@ protected:
      * flushBidiLine() in visual order after Unicode bidi reordering.
      */
     struct LC_BidiSegment {
-      enum Kind { Char, Space, Stack };
+      enum Kind { Char, Space, Tab, Stack };
       Kind kind = Char;
       QChar codepoint;         ///< for Char
       RS_Font *font = nullptr; ///< for Char: active font when parsed
@@ -337,9 +337,9 @@ protected:
       QString lowerText;       ///< for Stack: lower text (sub-/denominator)
     };
 
-    double updateAddLine(LC_TextLine* textLine, int lineCounter);
+    double updateAddLine(LC_TextLine* textLine, int lineCounter, double leadingAdvance);
     void addLetter(LC_TextLine& oneLine, QString letter, RS_Font& font, const RS_Vector& letterSpace, RS_Vector& letterPosition);
-    void flushBidiLine(LC_TextLine &oneLine,
+    double flushBidiLine(LC_TextLine &oneLine,
                        std::vector<LC_BidiSegment> &segments,
                        const RS_Vector &letterSpace, RS_Vector &letterPosition);
     void alignVertically();
