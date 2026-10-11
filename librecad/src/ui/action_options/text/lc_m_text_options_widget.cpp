@@ -62,7 +62,8 @@ void LC_MTextOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
     LC_GuardedSignalsBlocker({ ui->teText,ui->leAngle });
 
     ui->teText->blockSignals(true);
-    ui->teText->setText(text);
+    // setText() guesses the format: text that looks like HTML would lose its tags and its blanks
+    ui->teText->setPlainText(text);
     ui->leAngle->setText(angle);
     ui->teText->blockSignals(false);
 }

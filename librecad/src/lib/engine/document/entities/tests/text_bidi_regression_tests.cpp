@@ -1761,3 +1761,119 @@ TEST_CASE("MText indentation is saved and the saved width covers it",
   }
   CHECK(lines == QStringList{"ABC", "    DEF"});
 }
+
+namespace {
+void sendTab(QWidget &edit) {
+  // A key press carries its character; without it Qt treats Tab as navigation.
+  keyPress(edit, Qt::Key_Tab, Qt::NoModifier, QStringLiteral("\t"));
+}
+} // namespace
+
+TEST_CASE("MText editors insert a tab", "[text][mtext][issue3032][gui]") {
+  SourceFonts fonts;
+  LC_GraphicViewport viewport;
+  RS_MText mtext(nullptr, leftToRightData("ABC"));
+
+  QG_DlgMText dialog(nullptr, &viewport, &mtext, false);
+  auto *edit = dialog.findChild<QTextEdit *>("teText");
+  REQUIRE(edit);
+  CHECK_FALSE(edit->tabChangesFocus());
+  dialog.show();
+  dialog.activateWindow();
+  QApplication::processEvents();
+  edit->setFocus();
+  QApplication::processEvents();
+
+  // The dialog opens with its text selected. A tab typed then replaces the
+  // text, as any other character does, and one undo brings the text back.
+  REQUIRE(edit->textCursor().selectedText() == "ABC");
+  sendTab(*edit);
+  CHECK(edit->toPlainText() == "\t");
+  edit->undo();
+  CHECK(edit->toPlainText() == "ABC");
+
+  auto cursor = edit->textCursor();
+  cursor.setPosition(0);
+  edit->setTextCursor(cursor);
+  sendTab(*edit);
+  CHECK(edit->toPlainText() == "\tABC");
+  dialog.updateEntity();
+  CHECK(mtext.getText() == "\tABC");
+  CHECK_THAT(inkOf(mtext).front().left, WithinAbs(36.0, inkTolerance));
+
+  // In right-to-left mode a tab is typed the same way.
+  auto *rightToLeft = dialog.findChild<QRadioButton *>("rbRightToLeft");
+  REQUIRE(rightToLeft);
+  rightToLeft->click();
+  cursor = edit->textCursor();
+  cursor.movePosition(QTextCursor::End);
+  edit->setTextCursor(cursor);
+  sendTab(*edit);
+  CHECK(edit->toPlainText() == "\tABC\t");
+
+  // Shift+Tab still leaves the editor.
+  edit->setFocus();
+  QApplication::processEvents();
+  REQUIRE(edit->hasFocus());
+  keyPress(*edit, Qt::Key_Backtab, Qt::ShiftModifier);
+  CHECK_FALSE(edit->hasFocus());
+  dialog.reject();
+
+  // The editor of Modify > Properties.
+  RS_MText second(nullptr, leftToRightData("ABC"));
+  LC_MTextPropertiesEditingWidget editor(nullptr);
+  editor.setGraphicViewport(&viewport);
+  editor.setEntity(&second);
+  auto *propertyEdit = editor.findChild<LC_TextEdit *>("teText");
+  REQUIRE(propertyEdit);
+  CHECK_FALSE(propertyEdit->tabChangesFocus());
+  cursor = propertyEdit->textCursor();
+  cursor.setPosition(1);
+  propertyEdit->setTextCursor(cursor);
+  sendTab(*propertyEdit);
+  CHECK(propertyEdit->toPlainText() == "A\tBC");
+  CHECK(second.getText() == "A\tBC");
+
+  // The dialog behind the "Content" row of the property sheet.
+  LC_MultilineTextEditDialog content;
+  content.setText("ABC");
+  auto *contentEdit = content.findChild<QPlainTextEdit *>("plainTextEdit");
+  REQUIRE(contentEdit);
+  CHECK_FALSE(contentEdit->tabChangesFocus());
+  sendTab(*contentEdit);
+  CHECK(content.getText() == "\tABC");
+}
+
+TEST_CASE("MText dialogs keep blanks, tabs and line breaks",
+          "[text][mtext][issue3032][gui]") {
+  SourceFonts fonts;
+  LC_GraphicViewport viewport;
+  const QString content = QStringLiteral("  A\tB\n    C  ");
+  QTemporaryDir directory;
+  REQUIRE(directory.isValid());
+  {
+    RS_MText created(nullptr, leftToRightData(QString()));
+    QG_DlgMText dialog(nullptr, &viewport, &created, true);
+    auto *edit = dialog.findChild<QTextEdit *>("teText");
+    REQUIRE(edit);
+    edit->setPlainText(content);
+    dialog.updateEntity();
+    CHECK(created.getText() == content);
+
+    const QString path = directory.filePath("content.txt");
+    dialog.save(path);
+    edit->clear();
+    dialog.load(path);
+    CHECK(edit->toPlainText() == content);
+    dialog.accept();
+  }
+  {
+    // An accepted dialog remembers its text for the next new MText.
+    RS_MText next(nullptr, leftToRightData(QString()));
+    QG_DlgMText dialog(nullptr, &viewport, &next, true);
+    auto *edit = dialog.findChild<QTextEdit *>("teText");
+    REQUIRE(edit);
+    CHECK(edit->toPlainText() == content);
+    dialog.reject();
+  }
+}
