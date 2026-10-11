@@ -23,7 +23,11 @@
 **********************************************************************/
 
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/matchers/catch_matchers_floating_point.hpp>
+#include <algorithm>
+#include <cmath>
 #include <limits>
+#include <vector>
 
 #include <QApplication>
 #include <QFile>
@@ -31,6 +35,7 @@
 #include <QDropEvent>
 #include <QInputMethodEvent>
 #include <QMouseEvent>
+#include <QPlainTextEdit>
 #include <QRadioButton>
 #include <QScrollBar>
 #include <QTemporaryDir>
@@ -40,16 +45,20 @@
 
 #include "lc_graphicviewport.h"
 #include "lc_mtextpropertieseditingwidget.h"
+#include "lc_multilinetexteditdialog.h"
 #include "lc_textbidi.h"
 #include "lc_textedit.h"
 #include "lc_textpropertieseditingwidget.h"
+#include "lc_tolerance.h"
 #include "qg_dlg_mtext.h"
 #include "qg_dlg_text.h"
 #include "rs_debug.h"
 #include "rs_filterdxfrw.h"
+#include "rs_font.h"
 #include "rs_fontlist.h"
 #include "rs_graphic.h"
 #include "rs_insert.h"
+#include "rs_line.h"
 #include "rs_mtext.h"
 #include "rs_settings.h"
 #include "rs_system.h"
@@ -1126,4 +1135,629 @@ TEST_CASE("Chinese RTL MTEXT round trips logical text and display policy",
     REQUIRE(line);
     CHECK(glyphNames(*line) == QStringLiteral("123\u6587\u4e2d"));
   }
+}
+
+// ---------------------------------------------------------------------------
+// Issue #3032: MText indented by leading spaces, tabs and paragraph commands.
+// Positions are compared to the same text without the indentation, or derived
+// from the spacing of the font, so that no glyph outline is copied in here.
+
+namespace {
+using Catch::Matchers::WithinAbs;
+
+constexpr double inkTolerance = 1e-9;
+
+/** The ink of one glyph, or of one part of stacked text. */
+struct InkSpan {
+  QString name;
+  double left = 0.0;
+  double right = 0.0;
+  double bottom = 0.0;
+};
+
+/** Left-attached text that flows from the left, in a font without left bearings. */
+RS_MTextData leftToRightData(const QString &text,
+                             const QString &font = QStringLiteral("standard"),
+                             double height = 9.0) {
+  auto data = mtextData(text);
+  data.drawingDirection = RS_MTextData::LeftToRight;
+  data.style = font;
+  data.height = height;
+  return data;
+}
+
+RS_EntityContainer *lineOf(const RS_MText &text, int index) {
+  return dynamic_cast<RS_EntityContainer *>(text.entityAt(index));
+}
+
+/** What one line draws, in drawing order. */
+std::vector<InkSpan> inkOf(const RS_MText &text, int index = 0) {
+  std::vector<InkSpan> spans;
+  auto *line = lineOf(text, index);
+  REQUIRE(line);
+  for (auto *entity : line->getEntityList()) {
+    const QString name = entity->rtti() == RS2::EntityInsert
+        ? static_cast<RS_Insert *>(entity)->getName()
+        : QStringLiteral("<stack>");
+    spans.push_back({name, entity->getMin().x, entity->getMax().x, entity->getMin().y});
+  }
+  return spans;
+}
+
+QString drawnBy(const RS_MText &text, int index = 0) {
+  QString drawn;
+  for (const auto &span : inkOf(text, index))
+    drawn += span.name;
+  return drawn;
+}
+
+/** Checks that a line draws what a line of @p control draws, @p dx further right. */
+void checkSameInk(const RS_MText &text, const RS_MText &control, double dx = 0.0,
+                  int index = 0) {
+  const auto ink = inkOf(text, index);
+  const auto expected = inkOf(control, index);
+  REQUIRE(ink.size() == expected.size());
+  for (std::size_t i = 0; i < ink.size(); ++i) {
+    INFO("glyph " << i << " '" << ink[i].name.toStdString() << "' of line " << index);
+    CHECK(ink[i].name == expected[i].name);
+    CHECK_THAT(ink[i].left, WithinAbs(expected[i].left + dx, inkTolerance));
+    CHECK_THAT(ink[i].right, WithinAbs(expected[i].right + dx, inkTolerance));
+    CHECK_THAT(ink[i].bottom, WithinAbs(expected[i].bottom, inkTolerance));
+  }
+}
+
+double wordSpacing(const QString &font, double height) {
+  auto *loaded = RS_FONTLIST->requestFont(font);
+  REQUIRE(loaded);
+  return loaded->getWordSpacing() * height / 9.0;
+}
+
+double letterSpacing(const QString &font, double height) {
+  auto *loaded = RS_FONTLIST->requestFont(font);
+  REQUIRE(loaded);
+  return loaded->getLetterSpacing() * height / 9.0;
+}
+
+/** The value of a group of the first MTEXT record of an ASCII DXF file, as written. */
+QString mtextGroup(const QString &path, int group) {
+  QFile file(path);
+  REQUIRE(file.open(QIODevice::ReadOnly));
+  const QList<QByteArray> lines = file.readAll().split('\n');
+  bool inMText = false;
+  for (qsizetype i = 0; i + 1 < lines.size(); i += 2) {
+    QByteArray value = lines[i + 1];
+    if (value.endsWith('\r'))
+      value.chop(1);
+    const int code = lines[i].trimmed().toInt();
+    if (code == 0) {
+      if (inMText)
+        break;
+      inMText = value.trimmed() == "MTEXT";
+    } else if (inMText && code == group) {
+      return QString::fromUtf8(value);
+    }
+  }
+  return {};
+}
+} // namespace
+
+TEST_CASE("MText leading spaces indent a left-attached line",
+          "[text][mtext][issue3032][layout]") {
+  SourceFonts fonts;
+  for (const char *font : {"standard", "romans"}) {
+    for (const double height : {9.0, 2.5}) {
+      const double space = wordSpacing(font, height);
+      RS_MText control(nullptr, leftToRightData("ABC", font, height));
+      CHECK_THAT(control.getMin().x, WithinAbs(0.0, inkTolerance));
+      for (const int count : {1, 4}) {
+        INFO(font << ", height " << height << ", " << count << " spaces");
+        const QString content = QString(count, QLatin1Char(' ')) + "ABC";
+        RS_MText indented(nullptr, leftToRightData(content, font, height));
+        checkSameInk(indented, control, count * space);
+        CHECK_THAT(indented.getMin().x, WithinAbs(count * space, inkTolerance));
+        // The width counts from the insertion point: it is what a file declares.
+        CHECK_THAT(indented.getUsedTextWidth(),
+                   WithinAbs(control.getUsedTextWidth() + count * space, inkTolerance));
+        CHECK(indented.getUsedTextHeight() == control.getUsedTextHeight());
+        CHECK(indented.getText() == content);
+      }
+    }
+  }
+
+  // Wherever the text is attached vertically, a left-attached line is indented.
+  const double space = wordSpacing("standard", 9.0);
+  for (const auto valign : {RS_MTextData::VATop, RS_MTextData::VAMiddle, RS_MTextData::VABottom}) {
+    auto data = leftToRightData("ABC");
+    data.valign = valign;
+    RS_MText control(nullptr, data);
+    data.text = "    ABC";
+    RS_MText indented(nullptr, data);
+    checkSameInk(indented, control, 4 * space);
+  }
+
+  // ByStyle and TopToBottom are laid out from the left as well.
+  for (const auto direction : {RS_MTextData::ByStyle, RS_MTextData::TopToBottom}) {
+    auto data = leftToRightData("ABC");
+    data.drawingDirection = direction;
+    RS_MText control(nullptr, data);
+    data.text = "    ABC";
+    RS_MText indented(nullptr, data);
+    checkSameInk(indented, control, 4 * space);
+  }
+}
+
+TEST_CASE("MText indentation belongs to one line and to its leading blanks",
+          "[text][mtext][issue3032][layout]") {
+  SourceFonts fonts;
+  const double space = wordSpacing("standard", 9.0);
+  RS_MText control(nullptr, leftToRightData("ABC\nDEF"));
+  for (const QString &lineBreak : {QStringLiteral("\n"), QStringLiteral("\\P")}) {
+    RS_MText text(nullptr, leftToRightData("ABC" + lineBreak + "    DEF"));
+    REQUIRE(text.count() == 2);
+    checkSameInk(text, control, 0.0, 0);
+    checkSameInk(text, control, 4 * space, 1);
+  }
+
+  RS_MText plain(nullptr, leftToRightData("ABC"));
+  RS_MText trailing(nullptr, leftToRightData("ABC    "));
+  checkSameInk(trailing, plain);
+  CHECK_THAT(trailing.getUsedTextWidth(), WithinAbs(plain.getUsedTextWidth(), inkTolerance));
+
+  RS_MText words(nullptr, leftToRightData("A B"));
+  RS_MText wider(nullptr, leftToRightData("  A   B"));
+  REQUIRE(inkOf(words).size() == 2);
+  REQUIRE(inkOf(wider).size() == 2);
+  CHECK_THAT(inkOf(wider)[0].left, WithinAbs(inkOf(words)[0].left + 2 * space, inkTolerance));
+  CHECK_THAT(inkOf(wider)[1].left, WithinAbs(inkOf(words)[1].left + 4 * space, inkTolerance));
+
+  // A font switch and a bidi control draw nothing: the blanks still lead the line.
+  for (const QString &prefix : {QStringLiteral("\\f{standard}"), QString(QChar(0x200E))}) {
+    RS_MText text(nullptr, leftToRightData(prefix + "  ABC"));
+    checkSameInk(text, plain, 2 * space);
+  }
+
+  // A left-to-right line that holds right-to-left text is indented as well.
+  const auto hebrew = QString::fromUtf8(u8"\u05d0\u05d1\u05d2");
+  RS_MText mixed(nullptr, leftToRightData(hebrew, "unicode"));
+  RS_MText mixedIndented(nullptr, leftToRightData("    " + hebrew, "unicode"));
+  checkSameInk(mixedIndented, mixed, 4 * wordSpacing("unicode", 9.0));
+}
+
+TEST_CASE("MText indentation is measured to the ink of the line",
+          "[text][mtext][issue3032][layout]") {
+  // The letters of iso3098 have a left bearing. An unindented line starts with
+  // its ink on the insertion point; an indented one starts the indentation on.
+  // In "iBC" and "1.A" the ink that is furthest left is not that of the first
+  // letter.
+  SourceFonts fonts;
+  const double space = wordSpacing("iso3098", 9.0);
+  for (const QString &letters : {QStringLiteral("ABC"), QStringLiteral("iBC"), QStringLiteral("1.A")}) {
+    INFO(letters.toStdString());
+    RS_MText control(nullptr, leftToRightData(letters, "iso3098"));
+    CHECK_THAT(control.getMin().x, WithinAbs(0.0, inkTolerance));
+    RS_MText indented(nullptr, leftToRightData("    " + letters, "iso3098"));
+    checkSameInk(indented, control, 4 * space);
+    CHECK_THAT(indented.getMin().x, WithinAbs(4 * space, inkTolerance));
+
+    // Behind a tab the same letters are laid out the same way, on the stop,
+    // whether the tab leads the line or follows other text.
+    RS_MText leading(nullptr, leftToRightData("\t" + letters, "iso3098"));
+    checkSameInk(leading, control, 36.0);
+    RS_MText following(nullptr, leftToRightData("X\t" + letters, "iso3098"));
+    const auto ink = inkOf(following);
+    const auto expected = inkOf(control);
+    REQUIRE(ink.size() == expected.size() + 1);
+    for (std::size_t i = 0; i < expected.size(); ++i) {
+      CHECK_THAT(ink[i + 1].left, WithinAbs(expected[i].left + 36.0, inkTolerance));
+      CHECK_THAT(ink[i + 1].right, WithinAbs(expected[i].right + 36.0, inkTolerance));
+    }
+  }
+}
+
+TEST_CASE("MText blanks leave center, right and right-to-left lines alone",
+          "[text][mtext][issue3032][layout]") {
+  SourceFonts fonts;
+  for (const auto halign : {RS_MTextData::HACenter, RS_MTextData::HARight}) {
+    for (const auto valign : {RS_MTextData::VATop, RS_MTextData::VAMiddle, RS_MTextData::VABottom}) {
+      INFO("halign " << halign << ", valign " << valign);
+      auto data = leftToRightData("ABC");
+      data.halign = halign;
+      data.valign = valign;
+      RS_MText plain(nullptr, data);
+      for (const QString &content : {QStringLiteral("    ABC  "), QStringLiteral("\tABC"),
+                                     QStringLiteral("\\pi2,l4;ABC")}) {
+        data.text = content;
+        RS_MText blanks(nullptr, data);
+        checkSameInk(blanks, plain);
+        CHECK_THAT(blanks.getUsedTextWidth(), WithinAbs(plain.getUsedTextWidth(), inkTolerance));
+      }
+    }
+  }
+
+  // In a right-to-left line the blanks on the left are the trailing ones.
+  const auto hebrew = QString::fromUtf8(u8"\u05e9\u05dc\u05d5\u05dd");
+  for (const bool legacy : {false, true}) {
+    for (const QString &letters : {QStringLiteral("ABC"), hebrew, QString(hebrew + " 12")}) {
+      auto data = mtextData(letters);
+      data.style = "unicode";
+      data.legacyRtlLayout = legacy;
+      RS_MText plain(nullptr, data);
+      for (const QString &content : {QString("    " + letters), QString(letters + "    "),
+                                     QString("  " + letters + "  "),
+                                     QString("\\pi2,l4;" + letters)}) {
+        INFO("legacy " << legacy << ": '" << content.toStdString() << "'");
+        data.text = content;
+        RS_MText blanks(nullptr, data);
+        checkSameInk(blanks, plain);
+        CHECK_THAT(blanks.getUsedTextWidth(), WithinAbs(plain.getUsedTextWidth(), inkTolerance));
+      }
+    }
+  }
+}
+
+TEST_CASE("MText lines of blanks keep their pitch and have no ink",
+          "[text][mtext][issue3032][layout]") {
+  SourceFonts fonts;
+  RS_MText empty(nullptr, leftToRightData("ABC\n\nDEF"));
+  REQUIRE(empty.count() == 3);
+  for (const QString &blank : {QString(), QStringLiteral("    "), QStringLiteral("\t"),
+                               QStringLiteral(" \t ")}) {
+    INFO("'" << blank.toStdString() << "'");
+    RS_MText alone(nullptr, leftToRightData(blank));
+    REQUIRE(alone.count() == 1);
+    CHECK(lineOf(alone, 0)->count() == 0);
+    CHECK_FALSE(alone.hasValidBorders());
+    CHECK(alone.getUsedTextWidth() == 0.0);
+
+    RS_MText between(nullptr, leftToRightData("ABC\n" + blank + "\nDEF"));
+    REQUIRE(between.count() == 3);
+    CHECK_FALSE(lineOf(between, 1)->hasValidBorders());
+    checkSameInk(between, empty, 0.0, 0);
+    checkSameInk(between, empty, 0.0, 2);
+    CHECK(between.getMin().distanceTo(empty.getMin()) < inkTolerance);
+    CHECK(between.getMax().distanceTo(empty.getMax()) < inkTolerance);
+    CHECK_THAT(between.getUsedTextWidth(), WithinAbs(empty.getUsedTextWidth(), inkTolerance));
+    CHECK(between.getUsedTextHeight() == empty.getUsedTextHeight());
+  }
+
+  // A line that holds nothing but a paragraph command draws nothing either,
+  // and the command is in force from that line on.
+  RS_MText command(nullptr, leftToRightData("ABC\n\\pi2;\nDEF"));
+  REQUIRE(command.count() == 3);
+  CHECK(lineOf(command, 1)->count() == 0);
+  checkSameInk(command, empty, 0.0, 0);
+  checkSameInk(command, empty, 2 * 9.0, 2);
+}
+
+TEST_CASE("MText tabs advance to stops four text heights apart",
+          "[text][mtext][issue3032][layout]") {
+  SourceFonts fonts;
+  for (const double height : {9.0, 2.5}) {
+    const double stop = 4.0 * height;
+    const double space = wordSpacing("standard", height);
+    struct Case {
+      QString text;
+      double expected; // where the last letter starts
+    };
+    const Case cases[] = {
+        {"A\tB", stop},
+        {"\tB", stop},
+        {"A\t\tB", 2 * stop},
+        {"\t\tB", 2 * stop},
+        {"A\t  B", stop + 2 * space},
+        {"  A\tB", stop},
+        {"   A\tB", stop},
+        {"ABCDEFGH\tX", 2 * stop},
+        {"A\tB\tC", 2 * stop},
+    };
+    for (const auto &item : cases) {
+      INFO("height " << height << ": '" << item.text.toStdString() << "'");
+      RS_MText text(nullptr, leftToRightData(item.text, "standard", height));
+      CHECK_THAT(inkOf(text).back().left, WithinAbs(item.expected, inkTolerance));
+      CHECK(text.getText() == item.text);
+      CHECK(glyphNames(*lineOf(text, 0)) == QString(item.text).remove('\t').remove(' '));
+      CHECK_THAT(text.getUsedTextWidth(), WithinAbs(inkOf(text).back().right, inkTolerance));
+    }
+
+    // Four spaces and an "A" end on the first stop: the tab goes on to the second.
+    RS_MText onStop(nullptr, leftToRightData("    A\tB", "standard", height));
+    const auto ink = inkOf(onStop);
+    REQUIRE(ink.size() == 2);
+    REQUIRE_THAT(ink[0].right + letterSpacing("standard", height), WithinAbs(stop, inkTolerance));
+    CHECK_THAT(ink[1].left, WithinAbs(2 * stop, inkTolerance));
+  }
+
+  // A tab that nothing follows changes neither the ink nor the width.
+  RS_MText plain(nullptr, leftToRightData("A"));
+  RS_MText trailing(nullptr, leftToRightData("A\t"));
+  checkSameInk(trailing, plain);
+  CHECK_THAT(trailing.getUsedTextWidth(), WithinAbs(plain.getUsedTextWidth(), inkTolerance));
+
+  // Stacked text after a tab starts on the stop with both of its parts.
+  RS_MText stack(nullptr, leftToRightData("A\t\\S1^2;Y"));
+  const auto stackInk = inkOf(stack);
+  REQUIRE(stackInk.size() == 4);
+  CHECK_THAT(stackInk[1].left, WithinAbs(36.0, inkTolerance));
+  CHECK_THAT(stackInk[2].left, WithinAbs(36.0, inkTolerance));
+  CHECK(stackInk[3].left > std::max(stackInk[1].right, stackInk[2].right));
+}
+
+TEST_CASE("MText tab stops are at the same place in every line",
+          "[text][mtext][issue3032][layout]") {
+  // The lines start with different letters, with blanks or with the tab itself.
+  // In iso3098 those letters have different left bearings, and one has no width.
+  SourceFonts fonts;
+  const double stop = 36.0;
+  for (const char *font : {"standard", "iso3098"}) {
+    INFO(font);
+    RS_MText text(nullptr, leftToRightData(
+        "1.\tAlpha\n\tAlpha\nA.\tAlpha\n  i\tAlpha\n.\tAlpha", font));
+    REQUIRE(text.count() == 5);
+    for (int line = 0; line < 5; ++line) {
+      const auto ink = inkOf(text, line);
+      REQUIRE(ink.size() >= 5);
+      const auto &alpha = ink[ink.size() - 5];
+      INFO("line " << line);
+      CHECK(alpha.name == "A");
+      CHECK_THAT(alpha.left, WithinAbs(stop, inkTolerance));
+    }
+  }
+}
+
+TEST_CASE("MText tabs separate fields in every attachment and direction",
+          "[text][mtext][issue3032][layout]") {
+  SourceFonts fonts;
+  const double stop = 36.0;
+  for (const auto halign : {RS_MTextData::HACenter, RS_MTextData::HARight}) {
+    INFO("halign " << halign);
+    auto data = leftToRightData("A\tB");
+    data.halign = halign;
+    RS_MText text(nullptr, data);
+    const auto ink = inkOf(text);
+    REQUIRE(ink.size() == 2);
+    CHECK_THAT(ink[1].left - ink[0].left, WithinAbs(stop, inkTolerance));
+    if (halign == RS_MTextData::HACenter)
+      CHECK_THAT(ink[0].left + ink[1].right, WithinAbs(0.0, inkTolerance));
+    else
+      CHECK_THAT(ink[1].right, WithinAbs(0.0, inkTolerance));
+  }
+
+  // A right-to-left line has no stops yet. Its tab is as wide as four word
+  // spaces, which is what every release has drawn for the "^I" of a DXF file.
+  const double space = wordSpacing("unicode", 9.0);
+  const double letter = letterSpacing("unicode", 9.0);
+  for (const bool legacy : {false, true}) {
+    INFO("legacy " << legacy);
+    auto data = mtextData("A\tB");
+    data.style = "unicode";
+    data.legacyRtlLayout = legacy;
+    RS_MText text(nullptr, data);
+    const auto ink = inkOf(text);
+    REQUIRE(ink.size() == 2);
+    CHECK(ink[0].name == "B");
+    CHECK(ink[1].name == "A");
+    CHECK_THAT(ink[1].left - ink[0].right, WithinAbs(letter + 4 * space, inkTolerance));
+    CHECK(text.getText() == "A\tB");
+  }
+}
+
+TEST_CASE("MText paragraph commands are applied and never drawn",
+          "[text][mtext][issue3032][layout]") {
+  SourceFonts fonts;
+  const double height = 9.0;
+  RS_MText plain(nullptr, leftToRightData("ABC"));
+
+  // "l" indents the paragraph and "i" its first line on top of that. Lines are
+  // not wrapped, so every line is a first line.
+  RS_MText indented(nullptr, leftToRightData("\\pi2,l4;ABC"));
+  checkSameInk(indented, plain, 6 * height);
+  CHECK(indented.getText() == "\\pi2,l4;ABC");
+  CHECK_THAT(indented.getUsedTextWidth(), WithinAbs(plain.getUsedTextWidth() + 6 * height, inkTolerance));
+
+  // What AutoCAD writes for a numbered list: a hanging indentation, one stop.
+  RS_MText list(nullptr, leftToRightData("\\pxi-3,l3,t3;1.\tABC\n2.\tDEF"));
+  REQUIRE(list.count() == 2);
+  for (int line = 0; line < 2; ++line) {
+    const auto ink = inkOf(list, line);
+    REQUIRE(ink.size() == 5);
+    CHECK(drawnBy(list, line) == (line == 0 ? "1.ABC" : "2.DEF"));
+    CHECK_THAT(ink[0].left, WithinAbs(0.0, inkTolerance));
+    CHECK_THAT(ink[2].left, WithinAbs(3 * height, inkTolerance));
+  }
+
+  // The properties stay in force until a command changes them; "*" resets one.
+  RS_MText reset(nullptr, leftToRightData("\\pi1;AB\nCD\n\\pi*;EF"));
+  REQUIRE(reset.count() == 3);
+  CHECK_THAT(inkOf(reset, 0).front().left, WithinAbs(height, inkTolerance));
+  CHECK_THAT(inkOf(reset, 1).front().left, WithinAbs(height, inkTolerance));
+  CHECK_THAT(inkOf(reset, 2).front().left, WithinAbs(0.0, inkTolerance));
+
+  // A command applies to the line it is in, wherever it stands in it.
+  RS_MText inside(nullptr, leftToRightData("AB\\pl2;C"));
+  checkSameInk(inside, plain, 2 * height);
+
+  // The stops of the paragraph come first, the default ones after them. A
+  // centered or right stop is used as a plain one.
+  RS_MText stops(nullptr, leftToRightData("\\pxt2,r5,c8;A\tB\tC\tD\tE"));
+  const auto ink = inkOf(stops);
+  REQUIRE(ink.size() == 5);
+  const double expected[] = {0.0, 2 * height, 5 * height, 8 * height, 12 * height};
+  for (std::size_t i = 0; i < ink.size(); ++i)
+    CHECK_THAT(ink[i].left, WithinAbs(expected[i], inkTolerance));
+  RS_MText defaults(nullptr, leftToRightData("\\pi*,l*,t;A\tB"));
+  CHECK_THAT(inkOf(defaults).back().left, WithinAbs(4 * height, inkTolerance));
+
+  // A negative position is the edge of the text.
+  RS_MText negative(nullptr, leftToRightData("\\pi-5;ABC"));
+  checkSameInk(negative, plain);
+
+  // Properties that the layout does not use are still not drawn.
+  for (const QString &command : {QStringLiteral("\\pxqc;"), QStringLiteral("\\pxsm1,ql;"),
+                                 QStringLiteral("\\pi*,l*,r*,q*,t;"), QStringLiteral("\\pb1,a1.5;"),
+                                 QStringLiteral("\\pr2;")}) {
+    INFO(command.toStdString());
+    RS_MText text(nullptr, leftToRightData(command + "ABC"));
+    checkSameInk(text, plain);
+  }
+}
+
+TEST_CASE("MText draws a backslash p that is not a paragraph command",
+          "[text][mtext][issue3032][layout]") {
+  // LibreCAD users type backslashes as ordinary text.
+  SourceFonts fonts;
+  for (const QString &content : {QStringLiteral("C:\\plans\\a.dxf"), QStringLiteral("\\parallel;"),
+                                 QStringLiteral("\\pi;x"), QStringLiteral("\\pl2"),
+                                 QStringLiteral("\\px"), QStringLiteral("\\p;"),
+                                 QStringLiteral("\\pq1;A"), QStringLiteral("\\pi2,k3;A"),
+                                 QStringLiteral("\\pi1e5;A"), QStringLiteral("\\pI2;A")}) {
+    INFO(content.toStdString());
+    RS_MText text(nullptr, leftToRightData(content));
+    CHECK(drawnBy(text) == content);
+    CHECK_THAT(inkOf(text).front().left, WithinAbs(0.0, inkTolerance));
+  }
+
+  // "\\" is a backslash, and what follows it is text.
+  RS_MText escaped(nullptr, leftToRightData("\\\\pi2;A"));
+  CHECK(drawnBy(escaped) == "\\pi2;A");
+
+  // A command has to end near its start.
+  const QString endless = "\\pt" + QStringLiteral("1,").repeated(200) + "1;A";
+  RS_MText tooLong(nullptr, leftToRightData(endless));
+  CHECK(drawnBy(tooLong) == endless);
+}
+
+TEST_CASE("MText stacked text makes room for blanks in front of a part",
+          "[text][mtext][issue3032][layout]") {
+  SourceFonts fonts;
+  RS_MText plain(nullptr, leftToRightData("X\\S1^2;Y"));
+  RS_MText blanks(nullptr, leftToRightData("X\\S 1^ 2;Y"));
+  const auto plainInk = inkOf(plain);   // X, numerator, denominator, Y
+  const auto blankInk = inkOf(blanks);
+  REQUIRE(plainInk.size() == 4);
+  REQUIRE(blankInk.size() == 4);
+  // A part is drawn at height 4 in the frame of the line.
+  const double indentation = wordSpacing("standard", 4.0);
+  CHECK_THAT(blankInk[0].left, WithinAbs(plainInk[0].left, inkTolerance));
+  CHECK_THAT(blankInk[1].left, WithinAbs(plainInk[1].left + indentation, inkTolerance));
+  // The blank after "^" belongs to the divider.
+  CHECK_THAT(blankInk[2].left, WithinAbs(plainInk[2].left, inkTolerance));
+  // What follows keeps its distance from the part that reaches furthest.
+  CHECK_THAT(blankInk[3].left - blankInk[1].right,
+             WithinAbs(plainInk[3].left - plainInk[2].right, inkTolerance));
+  CHECK(blankInk[1].right < blankInk[3].left);
+}
+
+TEST_CASE("Tolerance frames make room for blanks in front of a field",
+          "[text][mtext][tolerance][issue3032][layout]") {
+  SourceFonts fonts;
+  for (const QString &code : {QStringLiteral("0.05%%vA"), QStringLiteral("  0.05%%vA")}) {
+    INFO(code.toStdString());
+    RS_Graphic graphic;
+    auto *tolerance = new LC_Tolerance(
+        &graphic, LC_ToleranceData(RS_Vector(0.0, 0.0), RS_Vector(1.0, 0.0), code, "Standard"));
+    graphic.addEntity(tolerance);
+    tolerance->update();
+
+    std::vector<const RS_Entity *> fields;
+    std::vector<double> dividers;
+    for (const auto *entity : tolerance->getEntityList()) {
+      if (entity->rtti() == RS2::EntityMText) {
+        fields.push_back(entity);
+      } else if (entity->rtti() == RS2::EntityLine) {
+        const auto *line = static_cast<const RS_Line *>(entity);
+        if (std::abs(line->getStartpoint().x - line->getEndpoint().x) < inkTolerance)
+          dividers.push_back(line->getStartpoint().x);
+      }
+    }
+    std::sort(dividers.begin(), dividers.end());
+    REQUIRE(fields.size() == 2);
+    REQUIRE(dividers.size() == 3);
+    CHECK(dividers[0] < fields[0]->getMin().x);
+    CHECK(fields[0]->getMax().x < dividers[1]);
+    CHECK(dividers[1] < fields[1]->getMin().x);
+    CHECK(fields[1]->getMax().x < dividers[2]);
+  }
+}
+
+TEST_CASE("MText indentation is saved and the saved width covers it",
+          "[text][mtext][issue3032][dxf][dwg]") {
+  SourceFonts fonts;
+  QTemporaryDir directory;
+  REQUIRE(directory.isValid());
+  struct Sample {
+    const char *name;
+    QString text;
+    QString saved; // group 1 of the DXF record
+    double declaredWidth;
+  };
+  const Sample samples[] = {
+      {"spaces", "    ABC", "    ABC", 100.0},
+      {"tab", "\tABC", "^IABC", 0.0},
+      {"inner_tab", "A\tB", "A^IB", 3.0},
+      {"second_line", "ABC\n    DEF", "ABC\\P    DEF", 250.0},
+      {"paragraph", "\\pi2,l4;ABC", "\\pi2,l4;ABC", 100.0},
+  };
+  struct Format {
+    RS2::FormatType type;
+    const char *suffix;
+  };
+  const Format formats[] = {{RS2::FormatDXFRW2000, "_2000.dxf"},
+                            {RS2::FormatDXFRW, "_2007.dxf"},
+                            {RS2::FormatDXFRW2018, "_2018.dxf"},
+                            {RS2::FormatDWG2004, ".dwg"}};
+  for (const auto &format : formats) {
+    for (const auto &sample : samples) {
+      INFO(sample.name << format.suffix);
+      RS_Graphic original;
+      auto data = leftToRightData(sample.text);
+      data.width = sample.declaredWidth;
+      auto *source = new RS_MText(&original, data);
+      original.addEntity(source);
+      // The line reaches this far from the insertion point, blanks included.
+      const double occupied = source->getMax().x;
+      REQUIRE(occupied > inkOf(*source, source->count() - 1).back().right - inkTolerance);
+
+      const QString path = directory.filePath(QString(sample.name) + format.suffix);
+      RS_FilterDXFRW writer;
+      REQUIRE(writer.fileExport(original, path, format.type));
+      if (path.endsWith(".dxf")) {
+        CHECK(mtextGroup(path, 1) == sample.saved);
+        bool isNumber = false;
+        const double width = mtextGroup(path, 41).toDouble(&isNumber);
+        REQUIRE(isNumber);
+        CHECK(width >= occupied - 1e-6);
+      }
+
+      RS_Graphic imported;
+      RS_FilterDXFRW reader;
+      REQUIRE(reader.fileImport(imported, path, format.type));
+      auto *entity = findMText(imported);
+      REQUIRE(entity);
+      CHECK(entity->getText() == sample.text);
+      CHECK(entity->getHAlign() == RS_MTextData::HALeft);
+      CHECK(entity->getWidth() >= occupied - 1e-6);
+      // Keep this layout check independent of the file's STYLE resolution.
+      entity->setStyle("standard");
+      entity->update();
+      REQUIRE(entity->count() == source->count());
+      for (unsigned line = 0; line < source->count(); ++line)
+        checkSameInk(*entity, *source, 0.0, static_cast<int>(line));
+    }
+  }
+
+  // R12 has no MTEXT. Each line becomes a TEXT, which keeps its leading blanks.
+  RS_Graphic original;
+  original.addEntity(new RS_MText(&original, leftToRightData("ABC\n    DEF")));
+  const QString path = directory.filePath("lines_r12.dxf");
+  RS_FilterDXFRW writer;
+  REQUIRE(writer.fileExport(original, path, RS2::FormatDXFRW12));
+  RS_Graphic imported;
+  RS_FilterDXFRW reader;
+  REQUIRE(reader.fileImport(imported, path, RS2::FormatDXFRW12));
+  QStringList lines;
+  for (auto *entity : imported.getEntityList()) {
+    if (entity->rtti() == RS2::EntityText)
+      lines << static_cast<RS_Text *>(entity)->getText();
+  }
+  CHECK(lines == QStringList{"ABC", "    DEF"});
 }

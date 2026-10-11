@@ -328,26 +328,39 @@ protected:
      * flushBidiLine() in visual order after Unicode bidi reordering.
      */
     struct LC_BidiSegment {
-      enum Kind { Char, Space, Stack };
+      enum Kind { Char, Space, Tab, Stack };
       Kind kind = Char;
       QChar codepoint;         ///< for Char
       RS_Font *font = nullptr; ///< for Char: active font when parsed
-      double width = 0.0;      ///< for Space: advance width
+      double width = 0.0;      ///< for Space: advance width; for Tab: advance in a right-to-left line
       QString upperText;       ///< for Stack: upper text (super-/numerator)
       QString lowerText;       ///< for Stack: lower text (sub-/denominator)
     };
 
-    double updateAddLine(LC_TextLine* textLine, int lineCounter);
+    /**
+     * Paragraph properties of one line, in the units the line is laid out in
+     * (see update()): where the line starts, and the tab stops that replace the
+     * default ones. Both are measured from the edge the text is attached to.
+     */
+    struct LC_ParagraphLayout {
+      double indent = 0.0;
+      std::vector<double> tabStops; ///< ascending; empty: the default stops
+    };
+
+    double updateAddLine(LC_TextLine* textLine, int lineCounter, double leadingAdvance);
     void addLetter(LC_TextLine& oneLine, QString letter, RS_Font& font, const RS_Vector& letterSpace, RS_Vector& letterPosition);
-    void flushBidiLine(LC_TextLine &oneLine,
-                       std::vector<LC_BidiSegment> &segments,
-                       const RS_Vector &letterSpace, RS_Vector &letterPosition);
+    double flushBidiLine(LC_TextLine &oneLine,
+                         std::vector<LC_BidiSegment> &segments,
+                         const RS_Vector &letterSpace, RS_Vector &letterPosition,
+                         const LC_ParagraphLayout &paragraph);
     void alignVertically();
     static RS_MText* createUpperLower(QString text, const RS_MTextData& data, const RS_Vector& position);
     RS_MTextData m_data;
 
     /**
-     * Text width used by the current contents of this text entity.
+     * Text width used by the current contents of this text entity: the widest
+     * line, measured over its ink. A left-attached line is measured from the
+     * insertion point instead, so that its indentation counts.
      * This property is updated by the update method.
      * @see update
      */
