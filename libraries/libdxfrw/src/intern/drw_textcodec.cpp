@@ -215,6 +215,10 @@ std::string DRW_ConvTable::fromUtf8(std::string_view s) {
             code = decodeNum(part1, &l);
             j = i+l;
             i = j - 1;
+            if (code < 0) { // not UTF-8 (a string the reader kept raw): keep the byte
+                result += static_cast<char>(c);
+                continue;
+            }
             notFound = true;
             for (int k=0; k<cpLength; k++){
                 if(table[k] == code) {
@@ -367,29 +371,44 @@ std::string DRW_Converter::encodeNum(int c){
     return std::string(reinterpret_cast<char*>(ret));
 }
 
-/** 's' is a string with at least 4 bytes length
+/** 's' holds up to 4 bytes, the first one above 0x7F
 ** returned 'b' is byte length of encoded char: 2,3 or 4
+** bytes that are not UTF-8 return -1, with 1 in 'b'
 **/
 int DRW_Converter::decodeNum(const std::string &s, int *b){
+    *b = 1;
+    if (s.empty())
+        return -1;
     int code= 0;
+    int length = 0;
     unsigned char c = s.at(0);
     if ( (c& 0xE0)  == 0xC0) { //2 bytes
-        code = ( c&0x1F)<<6;
-        code = (s.at(1) &0x3F) | code;
-        *b = 2;
+        code = c&0x1F;
+        length = 2;
     } else if ( (c& 0xF0)  == 0xE0) { //3 bytes
-        code = ( c&0x0F)<<12;
-        code = ((s.at(1) &0x3F)<<6) | code;
-        code = (s.at(2) &0x3F) | code;
-        *b = 3;
+        code = c&0x0F;
+        length = 3;
     } else if ( (c& 0xF8)  == 0xF0) { //4 bytes
-        code = ( c&0x07)<<18;
-        code = ((s.at(1) &0x3F)<<12) | code;
-        code = ((s.at(2) &0x3F)<<6) | code;
-        code = (s.at(3) &0x3F) | code;
-        *b = 4;
+        code = c&0x07;
+        length = 4;
+    } else {
+        return -1;
     }
+    if (s.length() < static_cast<std::size_t>(length))
+        return -1;
+    for (int k=1; k < length; k++) {
+        unsigned char t = s.at(k);
+        if ((t& 0xC0) != 0x80)
+            return -1;
+        code = (code<<6) | (t&0x3F);
+    }
+    // an overlong form, a surrogate and a value past U+10FFFF are not UTF-8
+    static const int minCode[] = {0, 0, 0x80, 0x800, 0x10000};
+    if (code < minCode[length] || code > 0x10FFFF
+        || (code >= 0xD800 && code <= 0xDFFF))
+        return -1;
 
+    *b = length;
     return code;
 }
 
@@ -420,6 +439,10 @@ std::string DRW_ConvDBCSTable::fromUtf8(std::string_view s) {
             code = decodeNum(part1, &l);
             j = i+l;
             i = j - 1;
+            if (code < 0) { // not UTF-8 (a string the reader kept raw): keep the byte
+                result += static_cast<char>(c);
+                continue;
+            }
             const auto it = index.find(code);
             if (it != index.end()) {
                 result += static_cast<char>(it->second >> 8);
@@ -508,6 +531,10 @@ std::string DRW_Conv932Table::fromUtf8(std::string_view s) {
             code = decodeNum(part1, &l);
             j = i+l;
             i = j - 1;
+            if (code < 0) { // not UTF-8 (a string the reader kept raw): keep the byte
+                result += static_cast<char>(c);
+                continue;
+            }
             notFound = true;
             // 1 byte table
             if (code > 0xff60 && code < 0xFFA0) {
