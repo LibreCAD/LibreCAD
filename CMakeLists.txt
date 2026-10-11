@@ -987,6 +987,8 @@ set (SHARED_SOURCES
      librecad/src/lib/engine/document/fonts/lc_opentypefont.cpp
      librecad/src/lib/engine/document/fonts/lc_opentypefont.h
      librecad/src/lib/engine/document/fonts/lc_opentypefont_p.h
+     librecad/src/lib/engine/document/fonts/lc_textfontregistry.cpp
+     librecad/src/lib/engine/document/fonts/lc_textfontregistry.h
      librecad/src/lib/engine/document/layers/rs_layer.cpp
      librecad/src/lib/engine/document/layers/rs_layer.h
      librecad/src/lib/engine/document/layers/rs_layerlist.cpp
@@ -2815,6 +2817,21 @@ if (BUILD_TESTS)
     target_compile_definitions(librecad_text_shaper_tests PRIVATE
         LC_OPENTYPE_TEST_FONT_PATH="${CMAKE_CURRENT_SOURCE_DIR}/librecad/support/fonts/opentype/amiri-1.003/Amiri-Regular.ttf")
     set_target_properties(librecad_text_shaper_tests PROPERTIES
+        AUTOMOC OFF AUTOUIC OFF AUTORCC OFF)
+
+    find_package(Threads REQUIRED)
+    add_executable(librecad_text_font_registry_tests EXCLUDE_FROM_ALL
+        librecad/src/lib/engine/document/fonts/lc_opentypefont.cpp
+        librecad/src/lib/engine/document/fonts/lc_textfontregistry.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_textfontregistry_tests.cpp)
+    target_include_directories(librecad_text_font_registry_tests PRIVATE
+        librecad/src/lib/engine/document/fonts)
+    target_link_libraries(librecad_text_font_registry_tests PRIVATE
+        LibreCAD::OpenType Catch2::Catch2WithMain Qt6::Core Threads::Threads)
+    target_compile_features(librecad_text_font_registry_tests PRIVATE cxx_std_17)
+    target_compile_definitions(librecad_text_font_registry_tests PRIVATE
+        LC_OPENTYPE_TEST_FONT_PATH="${CMAKE_CURRENT_SOURCE_DIR}/librecad/support/fonts/opentype/amiri-1.003/Amiri-Regular.ttf")
+    set_target_properties(librecad_text_font_registry_tests PROPERTIES
         AUTOMOC OFF AUTOUIC OFF AUTORCC OFF)
 
     add_executable(librecad_bidi_conformance EXCLUDE_FROM_ALL

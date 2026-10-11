@@ -38,7 +38,7 @@ positioned native CAD outlines from the shaped glyphs.
 | Workflow review checkout | `ea5696771e74c4f22ae73fc7b031149a1b69a305` |
 | Review date | 2026-10-11 |
 | State | Implementation in progress; baseline/probe and headless services under validation; entity rendering and release gates pending |
-| Execution requirement | Intermediate scoped commits, explicit validation, plan updates, draft PR creation and revision-bound deep PR refinement are required; implementation is authorized by the active goal |
+| Execution requirement | Intermediate scoped commits, explicit validation, plan updates, draft PR creation and revision-bound deep PR refinement are required; implementation is authorized by the active goal, with publication authority resolved at P7a |
 | Primary delivery | Opt-in, versioned OpenType font profile with correct ordinary Arabic shaping and common diacritics |
 | Compatibility rule | No automatic reinterpretation of existing LFF styles, text order or RTL markers |
 | Dependency decision | Recommend explicit HarfBuzz and FreeType core dependencies; confirm distribution support in P0 before committing to the backend |
@@ -624,11 +624,11 @@ Maintain the progress and validation records below as implementation proceeds:
 | 2026-10-11 | P0a.1 | Complete | `c2d3b01e1` | Pristine HEAD headless bidi: 1,688 assertions / 16 cases; durable probe: 21,952 triples + 15 CoreText samples, maximum placement error 0; independent cmap audit passes | P0a CAD/performance fixtures and P0b transport/decision gates remain pending |
 | 2026-10-11 | P2b | Complete | `644b146c5` | Headless: 1,850 assertions / 21 cases; Unicode 17: 770,241 type/direction + 91,707 character cases, zero failures; legacy display parity checked | Font/script itemization and renderer consumption remain pending; P2 overall is incomplete |
 | 2026-10-11 | P1a, P1b, P2a, P3a, P3b | In progress | Uncommitted owned service slices | Dependency/resource, font/shaper, parser and outline work; individual results recorded before checkpoints | Validate and checkpoint bounded slices; adapters/persistence/P6/P7 remain pending |
-| 2026-10-11 | P1core.1 | Validated | Candidate subject: `Add headless OpenType font and shaping core` | Isolated ON: 639,014 assertions / 7 cases; OFF without FreeType: 4 / 1; ASan/UBSan: 639,014 / 7; CMake and qmake full application builds exit 0 | Create scoped checkpoint; registry, installation, certified deployment and entity adapters remain pending |
-| 2026-10-11 | P1 registry | In progress | Uncommitted owned files | Standalone strict ON and ASan/UBSan: 97 assertions / 6 cases; OFF: 31 / 3 | Register both builds and test target, validate isolated candidate and checkpoint; package/certification gates remain pending |
+| 2026-10-11 | P1core.1 | Complete | `7996e9b5a` — `Add headless OpenType font and shaping core` | Isolated ON: 639,014 assertions / 7 cases; OFF without FreeType: 4 / 1; ASan/UBSan: 639,014 / 7; CMake and qmake full application builds exit 0 | Bounded core checkpoint only; registry, installation, certified deployment and entity adapters remain pending |
+| 2026-10-11 | P1 registry | Validated | Candidate subject: `Add deterministic versioned OpenType font registry` | Isolated registered ON and ASan/UBSan: 97 assertions / 6 cases; OFF without FreeType: 31 / 3; complete incremental CMake/qmake application builds exit 0 | Create scoped checkpoint; installed-package/certification and entity/profile integration gates remain pending |
 | 2026-10-11 | P0b transport proof | In progress | Uncommitted mixed-tree candidate; no schema codec yet | Earlier STYLE binding failure repaired; new STYLE-unit and LTYPE-control prerequisites pass focused/direct native JSON checks; converted DXF still fails at DIMSTYLE color fields | Record current frozen filter/library evidence and external-converter attribution; isolate and checkpoint prerequisites without claiming full interchange |
 | 2026-10-11 | P3b native outline adapter | In progress | Uncommitted mixed-tree candidate | Registered and partial-instrumentation ASan/UBSan: 12,309 assertions / 6 cases pass, including empty extents and native coordinate limits | Validate isolated checkpoint and both build systems; final affine/entity integration remains pending |
-| 2026-10-11 | P7 workflow refinement | Planned | Plan-only update; no publication | Publication sequence and deep-review loop refined; no PR or implementation acceptance claimed | Complete the coherent P5 candidate, then prepare P7a with the tracking and acceptance records below |
+| 2026-10-11 | P7 execution | Planned | Plan-only workflow update; no publication | Draft-creation checkpoint, acceptance map, independent review coverage and refinement-round records defined; no PR acceptance claimed | Complete the coherent P5 candidate, then execute P7a and keep the records below current |
 
 For every executed check, record its exact command and filters, exit status,
 result/test count, tested revision and candidate-tree state, build configuration,
@@ -800,6 +800,62 @@ engine without changing saved geometry. CI dependency installation, universal
 libraries, package resources/licenses, supported Qt baseline and other platform
 builds are still pending; no release/PR checklist item is implied by this slice.
 
+### Isolated font registry evidence
+
+The registry candidate at parent `7996e9b5a96c57fcebe48ad96da937d4c87b05e9`
+adds immutable profile identity, explicit certified-engine checks, deterministic
+installed roots, resource/cache diagnostics and a headless test target, registered
+in both build systems. Unknown profiles, policy/checksum/face mismatches,
+incompatible engines and disabled backends do not become LFF substitutions.
+Tests cover every supported installed layout, explicit-root precedence, corrupt
+higher-priority resources and concurrent resolve/clear with retained resources.
+
+The five staged implementation/build files were exported over the preceding
+isolated snapshot at `/private/tmp/librecad-arabic-core-index.TOns5t`; it now
+represents this registry candidate, not an immutable copy of the earlier core
+checkpoint. Parser, itemizer, native-entity outlines, filter changes and the
+pending dependency-prefix/package integration remain excluded. The plan and PR
+workflow edits do not alter the tested source/build inputs.
+
+On the same macOS arm64/toolchain/library versions as the core evidence, all
+four validation processes exited 0. No tests were skipped in these runs:
+
+| Configuration | Executed checks | Result |
+| --- | --- | --- |
+| CMake ON | Configure; build registry target and full application; run registry binary | 97 assertions / 6 cases; full application compile/link succeeds |
+| CMake OFF | Configure with FreeType discovery disabled; build/run registry target | 31 assertions / 3 cases; disabled-backend diagnostics pass without HarfBuzz/FreeType |
+| CMake ASan/UBSan ON | Configure reused sanitizer build; build/run registry target | 97 assertions / 6 cases; no sanitizer diagnostics |
+| qmake ON | Recursive top-level configure; complete ordered application target | Incremental application compile/link and postprocessing succeed |
+
+Reproduce with the isolated source at `$registry_source` and the corresponding
+out-of-source build directories; this task-specific variable is an absolute
+snapshot path, not a system environment override:
+
+```sh
+registry_source=/private/tmp/librecad-arabic-core-index.TOns5t
+cmake -S "$registry_source" -B "$registry_source/build-on" -DBUILD_TESTS=ON -DLIBRECAD_ENABLE_OPENTYPE=ON
+cmake --build "$registry_source/build-on" --target librecad_text_font_registry_tests librecad -j4
+"$registry_source/build-on/librecad_text_font_registry_tests"
+cmake -S "$registry_source" -B "$registry_source/build-off" -DBUILD_TESTS=ON -DLIBRECAD_ENABLE_OPENTYPE=OFF -DCMAKE_DISABLE_FIND_PACKAGE_Freetype=ON
+cmake --build "$registry_source/build-off" --target librecad_text_font_registry_tests -j4
+"$registry_source/build-off/librecad_text_font_registry_tests"
+cmake -S "$registry_source" -B "$registry_source/build-asan" -DBUILD_TESTS=ON -DLIBRECAD_ENABLE_OPENTYPE=ON -DCMAKE_CXX_FLAGS='-fsanitize=address,undefined -fno-omit-frame-pointer' -DCMAKE_EXE_LINKER_FLAGS='-fsanitize=address,undefined'
+cmake --build "$registry_source/build-asan" --target librecad_text_font_registry_tests -j4
+ASAN_OPTIONS=detect_leaks=0:halt_on_error=1 UBSAN_OPTIONS=halt_on_error=1 "$registry_source/build-asan/librecad_text_font_registry_tests"
+cd "$registry_source/build-qmake"
+qmake6 -r -nodepend ../librecad.pro LIBRECAD_ENABLE_OPENTYPE=true DISABLE_POSTSCRIPT=true -o Makefile
+make -j4 sub-librecad-make_first-ordered
+```
+
+Sanitizer instrumentation covers the font, registry and tests, not external
+dependencies or application adapters. LeakSanitizer remains disabled on this
+host. qmake's postprocessor ran in the isolated snapshot despite the supplied
+`DISABLE_POSTSCRIPT` argument; its success is not installed-package acceptance.
+The existing newer-SDK/deployment-target linker warnings remain. Logs are local
+`/private/tmp/librecad-arabic-registry-{on,off,asan}-{configure,build,test}.log`
+and `/private/tmp/librecad-arabic-registry-qmake-{configure,build}.log`;
+reproducible source/tests and this concise record are committed, not build output.
+
 ## Implementation milestones
 
 Milestones remain incomplete. Follow the commit/update workflow above and record
@@ -847,7 +903,7 @@ because they share a milestone label.
 | P5b | Embedded ATTRIB edits and metadata authority | Edited/no-op outer/embedded round trips, direction/profile refresh and ownership tests |
 | P5c | Annotation/cell propagation and private MLeader cache | Dimension/tolerance/TABLE/MLeader geometry, clone/undo/bounds and export tests |
 | P5d | Editors, engine preview and appearance-preserving explode | Both editor/IME paths, both explode commands, print/PDF and frozen geometry checks |
-| P7a | Publish/update the coherent implementation as a draft PR after P5, allowing P6 platform checks to run | Publication authority and destination confirmed; committed candidate/full diff inspected; local slice gates pass; CI coverage gaps, base/head revisions, validation evidence and pending gates recorded; PR attached to task |
+| P7a | Create/reuse and verify a draft PR for the coherent implementation after P5, allowing P6 platform checks to run | Publication authority and destination confirmed; committed candidate/full diff inspected; local slice gates pass; creation checkpoint below complete, including attached PR and verified published head |
 | P6a | CI coverage, distribution and installed application integration | Explicit shaping/format test execution; both build systems; supported-platform package/resource/license smoke tests |
 | P6b | Final release validation of the opt-in candidate | Full release matrix, independent Arabic visual review and performance budgets; current-revision results recorded |
 | P7b | Deep review and iterative corrective commits | Whole-diff review across all risk areas; regression proof for findings; affected tests and CI rerun after each correction |
@@ -875,6 +931,7 @@ not itself create or change a PR.
 | Verified destination | Repository, remote, source branch and target base to be confirmed at P7a |
 | Frozen candidate | Head/tree, base tip, merge-base and submodule revisions not yet recorded for publication |
 | Last reviewed candidate | None; reviewer coverage and refinement round pending P7b |
+| Integration status | Not evaluated for publication; current base compatibility and mergeability pending |
 | Validation and findings | No PR acceptance evidence; populate revision-bound evidence and finding references when executed |
 | Next action | Complete P5 dependencies, validate a coherent committed candidate and confirm publication authority before P7a publication |
 
@@ -920,6 +977,16 @@ and a consistent update to the P6 milestones/checklist, tests and PR; an ordinar
 finding deferral cannot waive it or relabel failed/unavailable evidence.
 Otherwise keep the gate Pending and the PR draft.
 
+Use the following acceptance-map columns, with stable contract IDs and links to
+the detailed contracts above. Cover every mandatory P0–P6 contract; group rows
+only when their implementation, tests and review coverage genuinely coincide.
+An empty field is a gap, not an implied pass. Keep the map in this plan or a
+linked committed review record and summarize it in the PR description.
+
+| Contract ID and requirement | Implementation entry points | Regression or independent fixture | Validation lane and revision evidence | Independent review reference | State and next action |
+| --- | --- | --- | --- | --- | --- |
+| Pending P7a | Map P0–P6 contracts | Link reproducible checks | Record actual tested inputs and outcomes | Record reviewer coverage | Planned; populate before publication |
+
 Exclude unrelated edits, generated build output, private data and temporary
 spikes. Verify that the branch includes the plan and required fixtures/licenses.
 Publish a committed candidate, not a tested working tree with omitted owned
@@ -944,6 +1011,14 @@ claim complete Arabic-script support or list unexecuted checks as passing.
 Use repository links and durable review artifacts, not workstation-only paths
 or logs containing credentials/private drawing data.
 
+Include a short reviewer walkthrough: enable the exact opt-in profile, create
+TEXT and MTEXT with the same logical Arabic/mark/mixed-direction sample, inspect
+metrics and native geometry, edit/save/reopen, then exercise both explode paths.
+State expected results and link the fixtures and automated checks; screenshots
+alone cannot prove preserved source, positioning or persistence. Explain how
+legacy behavior remains available and what happens when the exact font/engine
+is unavailable, without suggesting automatic migration or loss of metadata.
+
 Before relying on PR CI, map every release gate to an actual workflow/job or
 explicit manual lane, including trigger/path filters, draft/fork restrictions,
 test registration and dependency installation. At `644b146c5`, the tracked
@@ -965,6 +1040,20 @@ Keep validation separate from release publication or deployment actions. Do
 not enable secrets, privileged fork execution or protected-environment approvals
 merely to obtain a check; record any maintainer action that is needed.
 
+#### PR creation checkpoint
+
+Complete P7a only after all of the following are verified and recorded:
+
+- [ ] Publication authority, repository, owned source branch and intended base are resolved; any prerequisite branch/PR dependency is explicit.
+- [ ] The coherent committed candidate and complete diff are inspected; local slice checks pass, and the acceptance map distinguishes remaining P6 checks from completed work.
+- [ ] The draft PR exists, is open, targets the intended base and publishes the intended head; its URL is attached to this task. Uncertain push/creation outcomes are reconciled before retrying.
+- [ ] The description links the committed plan, fixtures, reviewer walkthrough and revision-bound validation matrix, including known failures and unsupported cases.
+- [ ] CI triggers, test discovery, package lanes and draft/fork restrictions are audited; each missing or pending gate has a concrete next action.
+- [ ] The PR tracking record and progress ledger identify the published candidate and the next P6/P7b work. P7b/P7c and the overall P7 milestone remain incomplete.
+
+PR creation is a delivery step, not evidence that Arabic rendering is accepted.
+Do not mark these boxes from intended future actions.
+
 #### Review the full diff and refine findings
 
 Review the entire accumulated PR diff, not just the latest corrective commit.
@@ -975,11 +1064,35 @@ review passes, parallel where useful, with these areas:
 
 | Review area | Required scrutiny |
 | --- | --- |
-| Shaping and bidi | Logical runs, pre-L1/control context, source mappings, Unicode/version boundaries, marks, required substitutions and double reversal/mirroring |
-| Geometry and resources | Advances versus ink bounds, normalization/transforms, no-ink cases, contour error, cache invalidation, ownership/thread safety and complexity limits |
-| Compatibility and persistence | Legacy markers, shared-style isolation, profile upgrades, no-op/edited DXF/DWG, embedded attributes, annotation inheritance and both explode paths |
-| Builds and distribution | CMake/qmake parity, supported platform packages, dependency discovery, pinned font identity, licenses and installed-resource behavior |
-| Tests and PR quality | Independent oracles, negative cases, discovered test coverage, source invariants, unexplained exclusions, scope creep, documentation and evidence accuracy |
+| Shaping and bidi | Logical versus visual order; pre-L1 shaping versus final L1 placement; X9, isolate and ZWJ/ZWNJ context across style boundaries; surrogate/grapheme/cluster mappings and Unicode/version boundaries; required substitutions and common marks; no double reversal/mirroring |
+| Geometry and layout | Advances versus ink bounds; glyph origins, mark/cursive offsets and no-ink cases; height/width/oblique plus entity transforms; alignment/anchors, tabs, stacks and line spacing; contour tolerance and native coordinate limits; repeated-update stability |
+| Resources and robustness | Exact saved font/face/engine policy; missing/corrupt resources and complete-segment fallback; bounded cache keys/lifetime; thread ownership; malformed Unicode/format/font input and complexity limits |
+| Compatibility and persistence | Unchanged legacy modes and shared-style isolation; profile upgrades and unknown metadata; no-op/edited DXF/DWG and embedded ATTRIB precedence; annotation/TABLE inheritance and MLeader cache; both explode paths and print/export parity |
+| Builds and distribution | CMake/qmake parity and explicit legacy-only builds; supported Qt/platform/architecture matrix; clean installed lookup without developer fonts/prefixes; dependency linkage, pinned font, notices/licenses and actual package contents |
+| Tests and PR quality | Independent placement/format oracles, not self-round trips alone; negative and boundary cases; actual nonzero test execution; source invariants; unexplained exclusions; prerequisite scope, documentation and evidence accuracy |
+
+Use these cross-layer cases to challenge the implementation, not just inspect
+individual helpers:
+
+- Verify final placements when L1 splits a pre-L1 shaping item: trailing joiners,
+  borrowed X9 context, empty isolates and Chinese projection. Clusters remain
+  atomic, HarfBuzz order is consumed once, and generated controls acquire no
+  original-source ownership.
+- Check joining and required substitutions across paint-only spans. An
+  indivisible glyph uses its first logical component's effective pen and retains
+  all source ranges. Approved fallback reshapes the whole joining/base-plus-mark
+  segment; unsafe partial replacement is explicitly rejected.
+- Measure contour error after the complete glyph/entity affine, including
+  supported anisotropy, reflection and large origins. Check tiny contours,
+  no-ink extents, exact coordinate boundaries and deterministic precision,
+  range or budget errors without clamping or partial geometry.
+- Trace the same revision-bound TEXT/MTEXT cases through shared layout, native
+  geometry and representative PDF/explode output. Record the exact artifacts
+  and cases approved by an Arabic reader; the standalone CoreText probe cannot
+  substitute for application acceptance.
+- Exercise repeated updates, cloning, undo/redo, cache eviction, resource
+  failure and destruction under sanitizers. Record instrumented sources and
+  exclusions; a font/shaper-only run is not native-adapter lifecycle coverage.
 
 Review public headers, build/package inputs, new and modified tests, fixtures,
 licenses and prerequisite commits as well as runtime code. Reproduce selected
@@ -995,6 +1108,14 @@ implementation, review date, exact revisions, covered areas and review artifact
 or comment links. Every area in the table needs an explicit coverage record,
 including reviews with no findings; a quiet comment thread is not evidence of
 review. Keep private reviewer details out of public artifacts.
+
+Record coverage separately from findings so a no-finding review remains
+auditable. Authors may explain their implementation, but their own inspection
+does not satisfy independent review of that implementation or their fixes.
+
+| Review area | Reviewer and independence | Head, base tip and merge-base | Coverage and reproduced checks | Result or artifact reference |
+| --- | --- | --- | --- | --- |
+| Pending P7b | Assign an independent reviewer per area | Freeze the candidate | List contracts and checks actually examined | Planned; no review claimed |
 
 Record every actionable finding in a refinement ledger, with severity, affected
 file/line or contract, reviewed revision, rationale, resolution, corrective
@@ -1043,6 +1164,10 @@ finding IDs/states, corrective commits, validation references, remaining gates
 and disposition. Preserve earlier rounds as history rather than overwriting
 them with the latest green result. A fixed number of rounds, a lack of comments
 or author-only approval is not evidence of completeness.
+
+| Round ID | Reviewed head, base tip and merge-base | Coverage and finding IDs | Corrective commits and validation | Independent verification | Disposition and next action |
+| --- | --- | --- | --- | --- | --- |
+| Not started | Pending P7a | No review claimed | None | Pending P7b | Planned; start after draft publication |
 
 Each round ends with an explicit disposition: continue refinement with the next
 finding/check, retain draft with the exact outstanding gate and required action,
@@ -1096,10 +1221,13 @@ and PR-description review; ensure plan, review ledger and PR state agree with
 the final head. If a required gate remains unavailable, retain draft status and
 hand off the exact blocker instead of claiming readiness.
 
-Verify the PR is open, its base/head match the recorded candidate, mergeability
-and required check/review status have been inspected, and no newly arrived
-mandatory finding is untriaged. Repository-required maintainer approval may
-remain a named handoff action; ready for review must not be represented as ready
+Verify the PR is open, its base/head match the recorded candidate, it has no
+merge conflicts and current base-integration evidence is passing. Conflicting
+or unknown integration status keeps the PR draft; do not resolve it by rewriting
+shared history or updating the base without authority. Inspect required
+check/review status and ensure no newly arrived mandatory finding is untriaged.
+Repository-required maintainer approval may remain a named handoff action;
+ready for review must not be represented as ready
 to merge. If a substantive fix is needed after the ready transition, return to
 draft and repeat the affected validation/review gates before restoring readiness.
 
@@ -1242,6 +1370,7 @@ universal millisecond threshold from the standalone shaping experiment.
 - [ ] Independent whole-diff reviews and corrective re-reviews record reviewer/coverage provenance and exact base/head revisions; all accepted mandatory findings are Verified, Rejected findings have reviewed rationale/evidence, and accepted lower-priority deferrals are documented.
 - [ ] The P0–P6 acceptance map has no unexplained implementation, test or review gaps; refinement rounds and the PR tracking record identify the final reviewed candidate and outstanding maintainer actions.
 - [ ] P6 technical gates are complete; required CI and installed-artifact evidence support the current PR revision, with synthetic merge identity or justified evidence carry-forward recorded where applicable.
+- [ ] The current base/head have no merge conflicts and passing integration evidence; conflicting or unknown integration status is not represented as ready for review.
 - [ ] The published head, final scope/commit review, plan, PR description and refinement ledger agree; the actual ready-for-review state is verified before P7 is marked Complete.
 - [ ] The handoff includes the PR link, exact revisions, corrective commits, validation, limits and remaining maintainer actions. Default activation, external review requests, merge and release remain separate explicit decisions.
 
