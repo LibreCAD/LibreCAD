@@ -146,6 +146,34 @@ DirectionalText directionalText(const QString &text, Qt::LayoutDirection directi
     return result;
 }
 
+ShapingAnalysis shapingAnalysis(const QString &text, Qt::LayoutDirection direction) {
+    ShapingAnalysis result;
+    result.projection = directionalText(text, direction);
+    const auto resolved = lc::qtbidi::resolveForShaping(result.projection.text, direction);
+    result.base = resolved.display.base;
+    result.shapingLevels.resize(text.size());
+    result.displayLevels.resize(text.size());
+    result.contextBreaks.assign(text.size() + 1, false);
+    result.contextBreaks.front() = true;
+    result.contextBreaks.back() = true;
+    int sourceGap = 0;
+    for (int i = 0; i < result.projection.text.size(); ++i) {
+        const int source = result.projection.sourcePositions[i];
+        if (source >= 0) {
+            result.shapingLevels[source] = resolved.shapingLevels[i];
+            result.displayLevels[source] = resolved.display.levels[i];
+            sourceGap = source + 1;
+        }
+        const auto direction = result.projection.text.at(i).direction();
+        if (resolved.isolateBoundaries[i] || direction == QChar::DirB || direction == QChar::DirS) {
+            result.contextBreaks[sourceGap] = true;
+            if (source >= 0)
+                result.contextBreaks[source] = true;
+        }
+    }
+    return result;
+}
+
 std::vector<Cluster> visualClusters(const QString &text,
                                     Qt::LayoutDirection direction,
                                     bool legacyReversed) {

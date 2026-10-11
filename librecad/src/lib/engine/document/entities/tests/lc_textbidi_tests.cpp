@@ -360,3 +360,104 @@ TEST_CASE("Supplementary boundary neutrals do not prevent L1 whitespace reset",
     CHECK(visualText(input, Qt::LeftToRight) == alef + " ");
   }
 }
+
+TEST_CASE("Shaping levels precede L1 and do not invent levels for X9 joiners",
+          "[textbidi][shaping]") {
+  const auto trailingJoiner = QStringLiteral("\u0628\u200d");
+  const auto resolved = lc::qtbidi::resolveForShaping(trailingJoiner, Qt::LeftToRight);
+  CHECK(resolved.display.base == 0);
+  CHECK(resolved.shapingLevels == std::vector<int>{1, -1});
+  CHECK(resolved.display.levels == std::vector<quint8>{1, 0});
+  CHECK(resolved.isolateBoundaries == std::vector<bool>{false, false});
+
+  const auto embedded = QStringLiteral("\u202b\u0628 \u200d\u202c");
+  const auto embeddedResolved = lc::qtbidi::resolveForShaping(embedded, Qt::LeftToRight);
+  CHECK(embeddedResolved.shapingLevels == std::vector<int>{-1, 1, 1, -1, -1});
+  CHECK(embeddedResolved.display.levels[2] == 0);
+  const auto source = lc::textbidi::shapingAnalysis(embedded, Qt::LeftToRight);
+  CHECK(source.shapingLevels == embeddedResolved.shapingLevels);
+  CHECK(source.contextBreaks == std::vector<bool>{true, false, false, false, false, true});
+}
+
+TEST_CASE("Shaping analysis breaks context at empty and unmatched isolates",
+          "[textbidi][shaping]") {
+  for (char16_t isolate : {char16_t(0x2066), char16_t(0x2067), char16_t(0x2068)}) {
+    const auto input = QChar(0x0628) + QString(QChar(isolate)) +
+                       QChar(0x2069) + QChar(0x0628);
+    const auto resolved = lc::qtbidi::resolveForShaping(input, Qt::LeftToRight);
+    CHECK(resolved.shapingLevels.front() == 1);
+    CHECK(resolved.shapingLevels.back() == 1);
+    CHECK(resolved.isolateBoundaries == std::vector<bool>{false, true, true, false});
+    const auto source = lc::textbidi::shapingAnalysis(input, Qt::LeftToRight);
+    CHECK(source.contextBreaks == std::vector<bool>{true, true, true, true, true});
+  }
+  for (const auto input : {QStringLiteral("\u0628\u2069\u0628"),
+                           QStringLiteral("\u0628\u2067\u0628")}) {
+    const auto source = lc::textbidi::shapingAnalysis(input, Qt::LeftToRight);
+    CHECK(source.contextBreaks == std::vector<bool>{true, true, true, true});
+  }
+}
+
+TEST_CASE("Shaping metadata covers supplementary and malformed UTF-16",
+          "[textbidi][shaping]") {
+  for (const char32_t scalar : {char32_t(0xe0001), char32_t(0x1d173)}) {
+    const auto neutral = QString::fromUcs4(&scalar, 1);
+    // Exercise both the LTR fast path and full bidi analysis.
+    for (const auto prefix : {QStringLiteral("a"), QStringLiteral("\u0628")}) {
+      const auto resolved = lc::qtbidi::resolveForShaping(prefix + neutral, Qt::LeftToRight);
+      REQUIRE(resolved.shapingLevels.size() == 3);
+      CHECK(resolved.shapingLevels[1] == -1);
+      CHECK(resolved.shapingLevels[2] == -1);
+      CHECK(resolved.display.levels[1] == resolved.display.levels[2]);
+    }
+  }
+  const char32_t adlam = 0x1e900;
+  const auto supplementary = QString::fromUcs4(&adlam, 1);
+  const auto resolved = lc::qtbidi::resolveForShaping(supplementary, Qt::LeftToRight);
+  CHECK(resolved.shapingLevels == std::vector<int>{1, 1});
+  for (const auto input : {QString(), QString(QChar(0xd83d)), QString(QChar(0xde00))}) {
+    const auto source = lc::textbidi::shapingAnalysis(input, Qt::LeftToRight);
+    CHECK(source.shapingLevels.size() == input.size());
+    CHECK(source.displayLevels.size() == input.size());
+    REQUIRE(source.contextBreaks.size() == input.size() + 1);
+    CHECK(source.contextBreaks.front());
+    CHECK(source.contextBreaks.back());
+  }
+}
+
+TEST_CASE("Shaping source maps preserve the Chinese display-only projection",
+          "[textbidi][shaping][chinese]") {
+  const auto input = QStringLiteral("\u0628\u4e2d\u6587\u0628");
+  const auto source = lc::textbidi::shapingAnalysis(input, Qt::RightToLeft);
+  CHECK(source.projection.text == lc::textbidi::directionalText(input, Qt::RightToLeft).text);
+  const auto projected = lc::qtbidi::resolveForShaping(source.projection.text, Qt::RightToLeft);
+  CHECK(source.base == projected.display.base);
+  for (int i = 0; i < input.size(); ++i) {
+    const int display = source.projection.displayPositions[i];
+    CHECK(source.shapingLevels[i] == projected.shapingLevels[display]);
+    CHECK(source.displayLevels[i] == projected.display.levels[display]);
+  }
+  CHECK(source.contextBreaks == std::vector<bool>{true, true, false, true, true});
+}
+
+TEST_CASE("Shaping metadata retains legacy paragraph display results",
+          "[textbidi][shaping]") {
+  const QString cases[] = {
+      {}, QStringLiteral("abc"), QStringLiteral("a\u00adb"),
+      QStringLiteral("\u0628\u200d"), QStringLiteral("\u200c\u0628"),
+      QStringLiteral("\u0628\u2066\u2069\u0628"),
+      QStringLiteral("\u202d\u202eA\u202c\u2069\u202eB"),
+      QStringLiteral("\u0628 \t\u0628\nA\r\n\u0628")};
+  for (const auto &input : cases) {
+    for (const auto direction : {Qt::LeftToRight, Qt::RightToLeft, Qt::LayoutDirectionAuto}) {
+      const auto original = lc::qtbidi::resolve(input, direction);
+      const auto shaping = lc::qtbidi::resolveForShaping(input, direction);
+      CHECK(shaping.display.base == original.base);
+      CHECK(shaping.display.levels == original.levels);
+      CHECK(shaping.shapingLevels.size() == input.size());
+      CHECK(shaping.isolateBoundaries.size() == input.size());
+    }
+  }
+  const auto separators = lc::textbidi::shapingAnalysis(QStringLiteral("A\tB\nC"), Qt::LeftToRight);
+  CHECK(separators.contextBreaks == std::vector<bool>{true, true, true, true, true, true});
+}

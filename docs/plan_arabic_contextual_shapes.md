@@ -616,8 +616,10 @@ Maintain the progress and validation records below as implementation proceeds:
 
 | Date | Phase and slice | State | Commit reference | Validation evidence | Remaining gate and next action |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-11 | P0a.1 | Validated | Candidate subject `Pin Amiri font and reproduce Arabic shaping audit`; baseline `ea5696771` | Pristine HEAD headless bidi: 1,688 assertions / 16 cases; durable probe: 21,952 triples + 15 CoreText samples, maximum placement error 0; independent cmap audit passes | Create scoped checkpoint; P0a CAD/performance fixtures and P0b transport/decision gates remain pending |
-| 2026-10-11 | P1a, P1b, P2a, P2b, P3a, P3b | In progress | Uncommitted owned service slices | Dependency/resource, font/shaper, parser and shaping-bidi work; individual results recorded before checkpoints | Validate and checkpoint bounded slices; adapters/persistence/P6/P7 remain pending |
+| 2026-10-11 | P0a.1 | Complete | `c2d3b01e1` | Pristine HEAD headless bidi: 1,688 assertions / 16 cases; durable probe: 21,952 triples + 15 CoreText samples, maximum placement error 0; independent cmap audit passes | P0a CAD/performance fixtures and P0b transport/decision gates remain pending |
+| 2026-10-11 | P2b | Validated | Candidate subject `Expose logical bidi metadata for contextual shaping` | Headless: 1,850 assertions / 21 cases; Unicode 17: 770,241 type/direction + 91,707 character cases, zero failures; legacy display parity checked | Create scoped checkpoint; font/script itemization and renderer consumption remain pending |
+| 2026-10-11 | P1a, P1b, P2a, P3a, P3b | In progress | Uncommitted owned service slices | Dependency/resource, font/shaper, parser and outline work; individual results recorded before checkpoints | Validate and checkpoint bounded slices; adapters/persistence/P6/P7 remain pending |
+| 2026-10-11 | P0b transport proof | In progress | Generated test candidate; no schema codec yet | DXF2013 STYLE/entity payload checks pass; DXF→DWG2013 exposes an existing VPORT provenance rejection | Fix the narrow prerequisite with duplicate-identity regressions, then rerun full transport matrix |
 
 For every executed check, record its exact command and filters, exit status,
 result/test count, tested revision and candidate-tree state, build configuration,
@@ -625,6 +627,22 @@ platform/toolchain/Qt/font/shaper versions where relevant, corpus identity and
 durable log or fixture reference. Record exclusions and unavailable lanes
 explicitly. Keep generated build output and large logs out of Git unless they
 are intentionally selected fixtures; retain concise results in the plan.
+
+Use stable slice IDs and unique commit subjects for work recorded inside its
+own commit: that commit cannot contain its own final hash. Resolve hashes after
+commit creation and add them in the next plan update or a final plan-only record
+commit. Do not repeatedly amend solely to insert a self-referential hash. A
+handoff must identify every implementation checkpoint and the current HEAD,
+plus the PR URL/state and reviewed base/head revisions once a PR exists.
+
+Record material decisions with date, affected contract, rationale, alternatives
+and required revalidation. When new evidence changes a contract, revise the
+affected sections, dependencies and tests before continuing; do not append a
+contradictory note while leaving the old instruction active. Reopen affected
+Validated/Complete slices when font bytes, engine versions, source mappings,
+schema or geometry assumptions invalidate their evidence. Keep earlier results
+as historical records, not current proof. Seek direction only when the change
+needs new authority or materially expands scope.
 
 ### Initial baseline and font evidence
 
@@ -663,21 +681,31 @@ negative checks fail nonzero. TTF and archive SHA-256 checks match the pinned
 values above. Neither probe tests application outlines, DXF/DWG, GUI behavior,
 installed packages or performance budgets; those gates remain pending.
 
-Use stable slice IDs and unique commit subjects for work recorded inside its
-own commit: that commit cannot contain its own final hash. Resolve hashes after
-commit creation and add them in the next plan update or a final plan-only record
-commit. Do not repeatedly amend solely to insert a self-referential hash. A
-handoff must identify every implementation checkpoint and the current HEAD,
-plus the PR URL/state and reviewed base/head revisions once a PR exists.
+### Shaping bidi API evidence
 
-Record material decisions with date, affected contract, rationale, alternatives
-and required revalidation. When new evidence changes a contract, revise the
-affected sections, dependencies and tests before continuing; do not append a
-contradictory note while leaving the old instruction active. Reopen affected
-Validated/Complete slices when font bytes, engine versions, source mappings,
-schema or geometry assumptions invalidate their evidence. Keep earlier results
-as historical records, not current proof. Seek direction only when the change
-needs new authority or materially expands scope.
+P2b is independent of the font backend: existing callers retain final display
+levels, while the new API exposes pre-L1 levels, X9 exclusions and source-mapped
+context boundaries. On the same reference environment, the uncommitted owned
+bidi candidate at parent `c2d3b01e1` passed these explicit commands, exit 0:
+
+```sh
+cmake --build /Users/dli/dev/LibreCAD/build-phase-c --target librecad_text_bidi_headless_tests librecad_bidi_conformance -j 6
+/Users/dli/dev/LibreCAD/build-phase-c/librecad_text_bidi_headless_tests
+/Users/dli/dev/LibreCAD/build-phase-c/librecad_bidi_conformance /private/tmp/librecad-bidi17.rcEM8M/BidiTest.txt /private/tmp/librecad-bidi17.rcEM8M/BidiCharacterTest.txt
+```
+
+The headless suite passed 1,850 assertions in 21 cases. The official matching
+Unicode 17.0.0 corpora passed 770,241 type/direction cases and 91,707 character
+cases with zero failures; the runner checks old/new display parity and X9
+metadata for every record. Corpus files are external test inputs from
+`https://www.unicode.org/Public/17.0.0/ucd/`. Their SHA-256 values are
+`888bdfc8090652272d1f859cdb00ae659e2dc6c26740be61ef1d03998a687620`
+for BidiTest and
+`a3e6e905ab5afbe318a96df5401d0372a04cd73ef139ab5e3cf0ae241c255488`
+for BidiCharacterTest. These checks do not validate font
+itemization, glyph placement or CAD geometry. The changing-worktree application
+suite additionally passed 16,664 assertions in 68 cases; it is mixed-tree
+evidence, not proof of an isolated backend commit.
 
 ## Implementation milestones
 

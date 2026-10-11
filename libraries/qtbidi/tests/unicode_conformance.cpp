@@ -47,9 +47,18 @@ bool matches(const std::vector<int> &scalars, int direction, int base,
         while (units.size() < size_t(text.size())) units.push_back(starts.size() - 1);
     }
     const auto resolved = lc::qtbidi::resolve(text, static_cast<Qt::LayoutDirection>(direction));
+    const auto shaping = lc::qtbidi::resolveForShaping(text, static_cast<Qt::LayoutDirection>(direction));
+    if (shaping.display.base != resolved.base || shaping.display.levels != resolved.levels
+        || shaping.shapingLevels.size() != size_t(text.size())
+        || shaping.isolateBoundaries.size() != size_t(text.size())) return false;
     if (base >= 0 && resolved.base != base) return false;
-    for (size_t i = 0; i < starts.size(); ++i)
+    for (size_t i = 0; i < starts.size(); ++i) {
         if (expectedLevels[i] >= 0 && resolved.levels[starts[i]] != expectedLevels[i]) return false;
+        // The Unicode corpus marks X9-excluded characters with x. They do
+        // not have an I2 level, although they still have a display level in
+        // our compatibility API and may affect joining during shaping.
+        if ((shaping.shapingLevels[starts[i]] < 0) != (expectedLevels[i] < 0)) return false;
+    }
     std::vector<int> order;
     std::vector<bool> emitted(starts.size(), false);
     for (int unit : lc::qtbidi::reorder(resolved.levels)) {

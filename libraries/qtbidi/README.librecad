@@ -34,10 +34,20 @@ Local changes:
 - Match canonical bracket equivalents through Qt normalization, without
   conflating compatibility forms or maintaining a bracket table.
 - Provide bounded UTF-16 embedding levels and an L2 visual index map.
+- Expose a separate post-I2/pre-L1 snapshot for shaping, with X9 exclusions
+  represented by -1 and original isolate-control boundaries retained. Keep
+  the existing final display levels and visual ordering unchanged.
 
 Paragraph separation and LFF grapheme handling belong to lc_textbidi.
 Glyph metrics and geometry belong to RS_Text/RS_MText. This resolver does
 not perform Arabic contextual shaping or OpenType glyph substitution.
+resolveForShaping() supplies logical itemization metadata; callers must not
+group the final display levels into shaping runs. In particular, an X9-
+excluded trailing ZWJ may have the paragraph's display level but must retain
+its joining effect. The lc_textbidi shapingAnalysis() adapter maps this
+metadata through the Chinese display projection into original UTF-16 source
+positions and exposes context breaks at isolates and separators. Font,
+script and language itemization remain the shaping service's responsibility.
 
 Explicit RTL in LibreCAD additionally supports traditional horizontal
 Chinese: Han grapheme runs read right-to-left, while Arabic numerals and
@@ -59,6 +69,8 @@ paragraph levels and L2 maps; they do not cover LFF glyph geometry,
 shaping, or line wrapping. Run the small committed regressions for the
 normal incremental development loop, and the external Unicode corpora
 when changing the resolver or updating its upstream version.
+The conformance runner also checks that resolveForShaping() preserves the
+legacy display result and reports the corpus's X9 exclusions correctly.
 
 With BUILD_TESTS=ON, build the opt-in librecad_bidi_conformance target,
 then run it with paths to the official BidiTest.txt and
