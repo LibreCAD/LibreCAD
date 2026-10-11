@@ -617,9 +617,10 @@ Maintain the progress and validation records below as implementation proceeds:
 | Date | Phase and slice | State | Commit reference | Validation evidence | Remaining gate and next action |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-11 | P0a.1 | Complete | `c2d3b01e1` | Pristine HEAD headless bidi: 1,688 assertions / 16 cases; durable probe: 21,952 triples + 15 CoreText samples, maximum placement error 0; independent cmap audit passes | P0a CAD/performance fixtures and P0b transport/decision gates remain pending |
-| 2026-10-11 | P2b | Validated | Candidate subject `Expose logical bidi metadata for contextual shaping` | Headless: 1,850 assertions / 21 cases; Unicode 17: 770,241 type/direction + 91,707 character cases, zero failures; legacy display parity checked | Create scoped checkpoint; font/script itemization and renderer consumption remain pending |
+| 2026-10-11 | P2b | Complete | `644b146c5` | Headless: 1,850 assertions / 21 cases; Unicode 17: 770,241 type/direction + 91,707 character cases, zero failures; legacy display parity checked | Font/script itemization and renderer consumption remain pending; P2 overall is incomplete |
 | 2026-10-11 | P1a, P1b, P2a, P3a, P3b | In progress | Uncommitted owned service slices | Dependency/resource, font/shaper, parser and outline work; individual results recorded before checkpoints | Validate and checkpoint bounded slices; adapters/persistence/P6/P7 remain pending |
-| 2026-10-11 | P0b transport proof | In progress | Generated test candidate; no schema codec yet | DXF2013 STYLE/entity payload checks pass; DXF→DWG2013 exposes an existing VPORT provenance rejection | Fix the narrow prerequisite with duplicate-identity regressions, then rerun full transport matrix |
+| 2026-10-11 | P0b transport proof | In progress | Uncommitted mixed-tree candidate; no schema codec yet | VPORT prerequisite regressions pass; transport still fails DWG TEXT/MTEXT STYLE binding and independent conversion/read checks | Isolate/fix the in-scope failures, rerun transport and independent decoding, then validate an isolated checkpoint |
+| 2026-10-11 | P3b native outline adapter | In progress | Uncommitted mixed-tree candidate | 12,239/12,240 assertions; 4/5 cases pass; empty native bounds fail | Finalize no-extent handling and coordinate-range policy, then rerun native geometry tests; no completion claim |
 
 For every executed check, record its exact command and filters, exit status,
 result/test count, tested revision and candidate-tree state, build configuration,
@@ -685,8 +686,9 @@ installed packages or performance budgets; those gates remain pending.
 
 P2b is independent of the font backend: existing callers retain final display
 levels, while the new API exposes pre-L1 levels, X9 exclusions and source-mapped
-context boundaries. On the same reference environment, the uncommitted owned
-bidi candidate at parent `c2d3b01e1` passed these explicit commands, exit 0:
+context boundaries. On the same reference environment, the owned bidi candidate
+at parent `c2d3b01e1`, subsequently checkpointed as `644b146c5`, passed these
+explicit commands, exit 0:
 
 ```sh
 cmake --build /Users/dli/dev/LibreCAD/build-phase-c --target librecad_text_bidi_headless_tests librecad_bidi_conformance -j 6
@@ -706,6 +708,38 @@ for BidiCharacterTest. These checks do not validate font
 itemization, glyph placement or CAD geometry. The changing-worktree application
 suite additionally passed 16,664 assertions in 68 cases; it is mixed-tree
 evidence, not proof of an isolated backend commit.
+
+### Current mixed tree validation gates
+
+The following 2026-10-11 runs used HEAD `644b146c5` plus uncommitted build,
+service and filter edits, on the reference macOS arm64 environment above with
+LibreDWG 0.14. CMake used Unix Makefiles, native architecture and no explicit
+build type. They are diagnostic evidence, not isolated-commit or release proof.
+The exact commands were:
+
+```sh
+cmake -S /Users/dli/dev/LibreCAD -B /Users/dli/dev/LibreCAD/build -DBUILD_TESTS=ON -DLIBRECAD_ENABLE_OPENTYPE=ON
+cmake --build /Users/dli/dev/LibreCAD/build --target librecad_textprofile_transport_tests librecad_dwg_write_fast_tests librecad_text_outline_tests librecad -j4
+QT_QPA_PLATFORM=offscreen /Users/dli/dev/LibreCAD/build/librecad_dwg_write_fast_tests '[vport]'
+QT_QPA_PLATFORM=offscreen /Users/dli/dev/LibreCAD/build/librecad_textprofile_transport_tests
+QT_QPA_PLATFORM=offscreen DWG2DXF=/opt/homebrew/bin/dwg2dxf /Users/dli/dev/LibreCAD/build/librecad_textprofile_transport_tests '[external-reader]'
+QT_QPA_PLATFORM=offscreen /Users/dli/dev/LibreCAD/build/librecad_text_outline_tests
+```
+
+| Check | Exit status and result | Remaining gate |
+| --- | --- | --- |
+| Configure and listed build targets | 0; application links | Full qmake application linkage, isolated checkpoint and platform/package validation remain pending |
+| Focused VPORT regression | 0; 364 assertions / 10 cases pass | Checkpoint the narrow reader-provenance prerequisite without weakening duplicate/reserved-identity guards |
+| Generated transport matrix | 42; 5,070/5,078 assertions pass; one case fails across DXF-first and DWG-first branches | Eight failures decode DWG TEXT/MTEXT STYLE binding as STANDARD; passing profile payload checks alone do not prove interchange |
+| Explicit hidden independent-reader case | 42; 526/529 assertions pass; one case fails | Two initial STYLE mismatches plus rejected converted DXF; LibreDWG returns 0 but reports buffer/handle diagnostics; writer-versus-decoder cause is not isolated |
+| Native outline adapter | 42; 12,239/12,240 assertions pass; 4/5 cases pass | Empty container bounds retain valid inverted reset values; fix and verify no-ink behavior and supported coordinate range |
+
+Source/binary hashes and raw logs are retained in the local diagnostic snapshot
+`/private/tmp/librecad-arabic-p0b-validation.md`. This temporary snapshot is not
+a durable acceptance artifact; rerun and record isolated-candidate evidence in
+the relevant checkpoint. Do not infer malformed native DWG from the independent
+decoder's diagnostics alone or claim a green cross-format gate. No fixes to
+STYLE binding or empty-outline bounds are included in this plan-only update.
 
 ## Implementation milestones
 
@@ -754,8 +788,8 @@ because they share a milestone label.
 | P5b | Embedded ATTRIB edits and metadata authority | Edited/no-op outer/embedded round trips, direction/profile refresh and ownership tests |
 | P5c | Annotation/cell propagation and private MLeader cache | Dimension/tolerance/TABLE/MLeader geometry, clone/undo/bounds and export tests |
 | P5d | Editors, engine preview and appearance-preserving explode | Both editor/IME paths, both explode commands, print/PDF and frozen geometry checks |
-| P7a | Publish/update the coherent implementation as a draft PR after P5, allowing P6 platform checks to run | Publication authority and destination confirmed; owned branch/full diff inspected; local slice gates pass; base/head revisions, validation evidence and pending gates recorded; PR attached to task |
-| P6a | Distribution and installed application integration | Both build systems; supported-platform package/resource/license smoke tests |
+| P7a | Publish/update the coherent implementation as a draft PR after P5, allowing P6 platform checks to run | Publication authority and destination confirmed; committed candidate/full diff inspected; local slice gates pass; CI coverage gaps, base/head revisions, validation evidence and pending gates recorded; PR attached to task |
+| P6a | CI coverage, distribution and installed application integration | Explicit shaping/format test execution; both build systems; supported-platform package/resource/license smoke tests |
 | P6b | Final release validation of the opt-in candidate | Full release matrix, independent Arabic visual review and performance budgets; current-revision results recorded |
 | P7b | Deep review and iterative corrective commits | Whole-diff review across all risk areas; regression proof for findings; affected tests and CI rerun after each correction |
 | P7c | Final PR refinement and ready-for-review handoff | P6 technical gates complete; no unresolved mandatory findings; final independent review and current PR revision evidence; synchronized PR/plan and P7 attestation |
@@ -770,6 +804,9 @@ P7a starts after a coherent P5 checkpoint and may precede P6 completion, so draf
 publication can enable platform CI without pretending release checks already
 passed. P7b may run alongside that validation; P7c depends on completed P6 gates
 and the refinement exit criteria below. Publishing a draft does not complete P7.
+Track the PR URL, draft/ready state, current base/head, latest refinement round
+and next action in the progress ledger once publication occurs. Until then,
+P7 remains Planned; this plan update does not itself create or change a PR.
 
 #### Confirm scope and publish a draft
 
@@ -786,6 +823,13 @@ contribution instructions and any PR template. Use `codex/` for a newly created
 implementation branch unless the user specifies otherwise, preserving unrelated
 work and the intermediate commit history.
 
+Freeze a committed candidate before each publication or review round. Record
+its head/tree, target base tip, merge-base and submodule revisions; use an
+isolated checkout or snapshot for tests and review when concurrent edits exist.
+Do not let an unrelated dirty tree, a moving agent worktree or a stale build
+stand in for the published candidate. Record dependency/lockfile and pinned-font
+identities with the candidate so later comparisons can establish what changed.
+
 Inspect the complete base-to-head diff, commit list and staged/untracked state.
 Record the target base tip and merge-base separately. Identify prerequisite
 commits not yet present in the target branch, including adjacent indentation
@@ -798,8 +842,9 @@ spikes. Verify that the branch includes the plan and required fixtures/licenses.
 Publish a committed candidate, not a tested working tree with omitted owned
 changes. Unrelated local files may remain untouched outside the scoped branch.
 Push only this owned branch, without force pushing, updating the base branch or
-publishing tags. Reuse an existing PR for this same work rather than creating a
-duplicate; preserve its unrelated metadata. If push/creation returns an uncertain
+publishing tags. Reuse an open PR only when its repository, source branch, target
+and scope match this work; preserve its unrelated metadata. Do not repurpose a
+closed, merged or unrelated PR. If push/creation returns an uncertain
 outcome, inspect the remote branch and matching source/target PR before retrying.
 After creating a PR, attach its URL to the current task using the app's
 artifact attachment tool; attach an existing PR when continuing its refinement.
@@ -816,6 +861,21 @@ claim complete Arabic-script support or list unexecuted checks as passing.
 Use repository links and durable review artifacts, not workstation-only paths
 or logs containing credentials/private drawing data.
 
+Before relying on PR CI, map every release gate to an actual workflow/job or
+explicit manual lane, including trigger/path filters, draft/fork restrictions,
+test registration and dependency installation. At `644b146c5`, the tracked
+`build-all.yml` restricts PR triggers to its workflow/macOS packaging paths and
+its Linux and Windows jobs to push events; `dwg-dxf-verify.yml` runs bounded format targets,
+not the shaping suites; `run_pixi.yml` checks installation, not Arabic behavior.
+These workflows are not proof of full PR acceptance. Reinspect them at P7a,
+record the gaps, and add the scoped CI coverage in P6a. Explicitly build and
+invoke the new headless/parser/outline and profile-transport targets, and verify
+nonzero executed test counts. Include both enabled and explicit legacy-only
+configurations where required. Do not count a skipped or absent lane as green.
+Keep validation separate from release publication or deployment actions. Do
+not enable secrets, privileged fork execution or protected-environment approvals
+merely to obtain a check; record any maintainer action that is needed.
+
 #### Review the full diff and refine findings
 
 Review the entire accumulated PR diff, not just the latest corrective commit.
@@ -831,6 +891,21 @@ review passes, parallel where useful, with these areas:
 | Compatibility and persistence | Legacy markers, shared-style isolation, profile upgrades, no-op/edited DXF/DWG, embedded attributes, annotation inheritance and both explode paths |
 | Builds and distribution | CMake/qmake parity, supported platform packages, dependency discovery, pinned font identity, licenses and installed-resource behavior |
 | Tests and PR quality | Independent oracles, negative cases, discovered test coverage, source invariants, unexplained exclusions, scope creep, documentation and evidence accuracy |
+
+Review public headers, build/package inputs, new and modified tests, fixtures,
+licenses and prerequisite commits as well as runtime code. Reproduce selected
+checks from the committed candidate instead of relying only on the author's
+summary. For behavioral fixes, demonstrate the regression on the parent or an
+isolated reproducer where feasible, then its success on the fix; record when
+such a before/after check is unavailable. Keep deliberately failing reproducers
+off the target branch. Compare geometry/output with the pinned reference and
+legacy baseline, not just with a newly regenerated golden file.
+
+Record each reviewer's identity or agent role, independence from the reviewed
+implementation, review date, exact revisions, covered areas and review artifact
+or comment links. Every area in the table needs an explicit coverage record,
+including reviews with no findings; a quiet comment thread is not evidence of
+review. Keep private reviewer details out of public artifacts.
 
 Record every actionable finding in a refinement ledger, with severity, affected
 file/line or contract, reviewed revision, rationale, resolution, corrective
@@ -851,8 +926,13 @@ decision-maker, a documented limitation and a follow-up reference. Severity
 relabeling is not a substitute for resolution.
 
 Fix accepted findings in additional scoped commits using the existing
-validate–document–commit loop. Add regression tests that demonstrate the failure
-where applicable, rerun affected suites and push the corrected owned branch.
+validate–document–commit loop. Triage related findings together, but keep
+unrelated fixes separate. Record whether each finding is introduced by the PR,
+an in-scope prerequisite or unrelated baseline behavior. Baseline attribution
+does not waive an in-scope acceptance gate; track unrelated baseline issues
+separately with evidence, and apply the explicit deferral rules above.
+Add regression tests that demonstrate the failure where applicable, rerun
+affected suites and push the corrected owned branch.
 Refresh the PR description, plan, findings ledger and evidence matrix after each
 round, recording reviewed revisions, finding IDs, corrective commits, executed
 checks and remaining gates. Resolve a review thread only when its finding is
@@ -861,6 +941,17 @@ silently dismiss findings.
 Rerun focused independent review on the corrections, and repeat a final
 whole-diff pass after the last substantive change. A fixed number of review
 rounds alone is not evidence of completeness.
+
+Each round ends with an explicit disposition: continue refinement with the next
+finding/check, retain draft with the exact outstanding gate and required action,
+or proceed to P7c when all exit criteria hold. Missing credentials, unavailable
+platforms, failed CI and unresolved review feedback do not justify bypassing a
+gate or claiming completion. Reconcile comments and CI after every push; do not
+assume previously resolved threads or superseded runs still certify the result.
+On a subsequent authorized continuation, feed new maintainer feedback and
+post-handoff CI regressions through this same ledger and corrective loop.
+Reopen affected P7 gates, restore draft status for mandatory failures, and
+replace the stale handoff with a new revision-bound summary after verification.
 
 #### Verify revision evidence and hand off
 
@@ -872,6 +963,16 @@ base integration. A green check on an older commit, a queued run, an empty test
 set or an unavailable platform is not a current pass. After a base change or
 corrective commit, reopen affected findings and invalidated validation/review
 gates. Preserve previous results as history.
+
+For packaged validation, record the artifact name/checksum, producer run and
+tested revision, platform/architecture, dependency/font identities and smoke-test
+result. Verify the installed artifact rather than a source-tree executable;
+retain the small manifests/reports needed to audit results before CI artifacts
+expire. Redact private drawings and metadata before publishing review examples.
+Record whether a run rebuilt the candidate or reused a cache/artifact, and
+verify that reuse matches the intended inputs. A base advance requires renewed
+integration evidence; it does not authorize an automatic rebase, force push or
+base-branch update.
 
 Evidence may carry forward across a documentation-only or plan-record commit
 only when the relevant source, build configuration, font/dependency identities
@@ -893,6 +994,13 @@ and PR-description review; ensure plan, review ledger and PR state agree with
 the final head. If a required gate remains unavailable, retain draft status and
 hand off the exact blocker instead of claiming readiness.
 
+Verify the PR is open, its base/head match the recorded candidate, mergeability
+and required check/review status have been inspected, and no newly arrived
+mandatory finding is untriaged. Repository-required maintainer approval may
+remain a named handoff action; ready for review must not be represented as ready
+to merge. If a substantive fix is needed after the ready transition, return to
+draft and repeat the affected validation/review gates before restoring readiness.
+
 After verifying the published state, complete the separate P7 handoff checklist
 and record the final refinement attestation. Do not check off a future PR state.
 
@@ -913,7 +1021,7 @@ publish a release or activate new defaults without the corresponding authority.
 | At each phase boundary | All applicable slice checks, broader application/text/format regressions and public-contract checks; both build systems; relevant sanitizer and independent-reference lanes |
 | After bidi, codec, font or profile changes | Respectively matching Unicode conformance, cross-format/independent decoding, pinned placement/outline corpus, or saved-profile compatibility; reopen invalidated evidence |
 | Before P6 completion | All technical release checklist gates, full configured application suite, explicit opt-in tests, supported installed packages, native GUI/Arabic visual review and performance/memory results; no dependency on the later P7 attestation |
-| Before draft PR publication | Coherent scoped diff, owned branch, passing local slice checks, accurate pending-gate matrix, no unrelated/private/generated content |
+| Before draft PR publication | Frozen committed candidate, coherent scoped diff, owned branch, passing local slice checks, workflow/test-discovery audit, accurate pending-gate matrix, no unrelated/private/generated content |
 | After each PR refinement round | Regression proof for fixes, affected suites/builds, CI with actual tested head/merge identity, refreshed finding/decision records and re-review of affected contracts |
 | Before P7 ready-for-review handoff | Complete technical release checklist, final whole-diff independent review, no unresolved mandatory findings, current PR revision evidence and synchronized plan/PR; then complete P7 attestation |
 
@@ -1028,7 +1136,8 @@ universal millisecond threshold from the standalone shaping experiment.
 ### PR handoff checklist
 
 - [ ] The owned branch contains only intended work and documented prerequisites; the draft PR is published and attached to the task.
-- [ ] Independent whole-diff reviews and corrective re-reviews identify their exact base/head revisions; all accepted mandatory findings are Verified, Rejected findings have reviewed rationale/evidence, and accepted lower-priority deferrals are documented.
+- [ ] PR workflow coverage and actual test execution are verified; missing/skipped lanes are not counted as passing, and package evidence identifies the tested artifact and producer revision.
+- [ ] Independent whole-diff reviews and corrective re-reviews record reviewer/coverage provenance and exact base/head revisions; all accepted mandatory findings are Verified, Rejected findings have reviewed rationale/evidence, and accepted lower-priority deferrals are documented.
 - [ ] P6 technical gates are complete; required CI and installed-artifact evidence support the current PR revision, with synthetic merge identity or justified evidence carry-forward recorded where applicable.
 - [ ] The published head, final scope/commit review, plan, PR description and refinement ledger agree; the actual ready-for-review state is verified before P7 is marked Complete.
 - [ ] The handoff includes the PR link, exact revisions, corrective commits, validation, limits and remaining maintainer actions. Default activation, external review requests, merge and release remain separate explicit decisions.
