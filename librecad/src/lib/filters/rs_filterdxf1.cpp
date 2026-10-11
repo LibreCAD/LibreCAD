@@ -934,8 +934,8 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     // get font typ:
                                     //
                                     {
-                                        char dummy[256];
-                                        sscanf(vtextStyle, "%[^_#\n]", dummy);
+                                        char dummy[256] = {};
+                                        sscanf(vtextStyle, "%255[^_#\n]", dummy);
                                         vfont=dummy;
                                     }
 

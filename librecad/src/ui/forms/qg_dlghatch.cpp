@@ -154,7 +154,7 @@ void QG_DlgHatch::updatePreview() {
         return;
     }
 	pattern = cbPattern->getPattern();
-	if (pattern->countDeep()==0)
+	if (!pattern || pattern->countDeep()==0)
 		return;
 
     QString patName = cbPattern->currentText();

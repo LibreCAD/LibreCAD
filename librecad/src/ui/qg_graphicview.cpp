@@ -158,7 +158,9 @@ void editAction(QG_GraphicView& view, RS_Entity& entity)
     {
         auto& appWindow = QC_ApplicationWindow::getAppWindow();
         RS_BlockList* blockList = appWindow->getBlockWidget()->getBlockList();
-        RS_Block* active = (blockList != nullptr) ? blockList->getActive() : nullptr;
+        if (blockList == nullptr)
+            return;
+        RS_Block* active = blockList->getActive();
         auto* insert = static_cast<RS_Insert*>(&entity);
         RS_Block* current = insert->getBlockForInsert();
         if (current == active)

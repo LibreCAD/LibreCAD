@@ -340,7 +340,7 @@ void RS_ActionDimAngular::lineOrder(const RS_Vector &dimPos)
  */
 int RS_ActionDimAngular::quadrant(const double angle)
 {
-    if( 1 > angles.size()) {
+    if( angles.size() < 2) {
         return 0;
     }
 

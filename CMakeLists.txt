@@ -954,25 +954,28 @@ MACOSX_BUNDLE ON
 MACOSX_BUNDLE_GUI_IDENTIFIER "com.librecad.app"
    AUTOUIC_OPTIONS "--connections string")
 set_property(TARGET librecad PROPERTY AUTOUIC_OPTIONS --connections string)
-option(BUILD_TESTS "Build dock layout regression tests" OFF)
+option(BUILD_TESTS "Build regression tests" OFF)
 if(BUILD_TESTS)
     enable_testing()
     find_package(Qt5 REQUIRED COMPONENTS Test)
     set(DOCK_TEST_SOURCES ${SOURCES})
     list(REMOVE_ITEM DOCK_TEST_SOURCES librecad/src/main/main.cpp)
-    add_executable(librecad_dock_layout_tests
-        ${UI_HEADERS} ${DOCK_TEST_SOURCES} ${QRC_FILES}
-        librecad/src/main/tests/dock_layout_tests.cpp)
-    target_link_libraries(librecad_dock_layout_tests PRIVATE
-        muparser Qt5::Core Qt5::Widgets Qt5::Gui Qt5::PrintSupport Qt5::Svg Qt5::Network Qt5::Test)
-    target_compile_definitions(librecad_dock_layout_tests PRIVATE
-        LIBRECAD_TEST_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
-    if(WIN32)
-        target_compile_definitions(librecad_dock_layout_tests PRIVATE _USE_MATH_DEFINES)
-        target_link_libraries(librecad_dock_layout_tests PRIVATE dbghelp)
-    endif()
-    add_test(NAME dock_layout COMMAND librecad_dock_layout_tests)
-    set_tests_properties(dock_layout PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)
+    foreach(test IN ITEMS dock_layout static_analysis)
+        add_executable(librecad_${test}_tests
+            ${UI_HEADERS} ${DOCK_TEST_SOURCES} ${QRC_FILES}
+            librecad/src/main/tests/${test}_tests.cpp)
+        target_link_libraries(librecad_${test}_tests PRIVATE
+            muparser Qt5::Core Qt5::Widgets Qt5::Gui Qt5::PrintSupport Qt5::Svg Qt5::Network Qt5::Test)
+        target_compile_definitions(librecad_${test}_tests PRIVATE
+            LIBRECAD_TEST_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
+        if(WIN32)
+            target_compile_definitions(librecad_${test}_tests PRIVATE _USE_MATH_DEFINES)
+            target_link_libraries(librecad_${test}_tests PRIVATE dbghelp)
+        endif()
+        add_test(NAME ${test} COMMAND librecad_${test}_tests)
+        set_tests_properties(${test} PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)
+    endforeach()
+    target_sources(librecad_static_analysis_tests PRIVATE plugins/picfile/picfile.cpp)
 endif()
 find_package(Freetype REQUIRED)
 add_executable(ttf2lff
