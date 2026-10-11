@@ -939,6 +939,8 @@ set (SHARED_SOURCES
     librecad/src/lib/engine/document/entities/lc_textbidi.h
     librecad/src/lib/engine/document/entities/lc_textdocument.cpp
     librecad/src/lib/engine/document/entities/lc_textdocument.h
+    librecad/src/lib/engine/document/entities/lc_textoutline.cpp
+    librecad/src/lib/engine/document/entities/lc_textoutline.h
     librecad/src/lib/engine/document/entities/lc_textruns.cpp
     librecad/src/lib/engine/document/entities/lc_textruns.h
     librecad/src/lib/engine/document/entities/lc_textshaper.cpp
@@ -3119,6 +3121,12 @@ if (BUILD_TESTS)
 
     # Keep the large corpus/diagnostic source isolated. It is an explicit
     # phase gate and should not lengthen the ordinary DWG fast lane.
+    add_librecad_filter_micro_test(
+        librecad_text_outline_tests
+        librecad/src/lib/engine/document/entities/tests/lc_textoutline_tests.cpp)
+    target_compile_definitions(librecad_text_outline_tests PRIVATE
+        LC_OPENTYPE_TEST_FONT_PATH="${CMAKE_CURRENT_SOURCE_DIR}/librecad/support/fonts/opentype/amiri-1.003/Amiri-Regular.ttf")
+    target_link_libraries(librecad_text_outline_tests PRIVATE LibreCAD::OpenType)
     add_librecad_filter_micro_test(
         librecad_dwg_smoke_tests
         librecad/src/lib/filters/tests/dwg_smoke_tests.cpp)

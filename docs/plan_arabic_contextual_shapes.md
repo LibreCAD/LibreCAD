@@ -649,10 +649,10 @@ Maintain the progress and validation records below as implementation proceeds:
 | 2026-10-11 | P2a logical parser | Complete | `d2e9ac848` — `Add source-preserving logical text document parser` | Isolated CMake ON, OFF and ASan/UBSan each pass 452,158 assertions / 22 cases; complete incremental CMake/qmake application builds exit 0 | Bounded parser checkpoint only; font/script itemizer, shared layout and entity adapter integration remain pending |
 | 2026-10-11 | P2c logical itemizer | Complete | `19e2f7793` — `Itemize source-mapped logical font and script runs` | Isolated ON/OFF/ASan: 208,140 assertions / 16 cases; ON/ASan shaping handoff: 441 / 3, OFF: 1 / 1; CMake/qmake application builds pass; independent source/context review finds no itemizer defect | Bounded itemizer checkpoint only; projection complexity correction below, blank-paragraph styles and shared layout remain separate gates |
 | 2026-10-11 | P2b.1 bounded projection | Complete | `95549793f` — `Bound explicit bidi scope lookup in Chinese projection` | Isolated focused application: 541,335 assertions / 70 cases; headless ON/OFF/ASan: 526,521 / 23; itemizer/handoff regressions and Unicode 17 conformance pass; CMake/qmake application builds pass | Bounded projection checkpoint only; empty-paragraph styles, shared layout and entity integration remain pending |
-| 2026-10-11 | P2a.1 empty paragraph styles | Validated | Candidate subject: `Preserve effective styles on empty logical paragraphs` | Independent style/scope review; strict private build and isolated ON/OFF/ASan each pass 452,371 assertions / 24 cases; itemizer/handoff and CMake/qmake application builds pass | Checkpoint parser/model extension; consume it in recursive layout and validate empty-line/stack metrics |
-| 2026-10-11 | P0b transport proof | In progress | Uncommitted mixed-tree candidate; no schema codec yet | Earlier STYLE binding failure repaired; new STYLE-unit and LTYPE-control prerequisites pass focused/direct native JSON checks; converted DXF still fails at DIMSTYLE color fields | Record current frozen filter/library evidence and external-converter attribution; isolate and checkpoint prerequisites without claiming full interchange |
-| 2026-10-11 | P3b native outline adapter | In progress | Uncommitted mixed-tree candidate | Registered and partial-instrumentation ASan/UBSan: 12,309 assertions / 6 cases pass, including empty extents and native coordinate limits | Validate isolated checkpoint and both build systems; final affine/entity integration remains pending |
-| 2026-10-11 | P7 execution | Planned | Plan-only workflow update; no publication | Draft baseline, creation checkpoint, acceptance map, review/refinement cadence, mandatory-finding rules and CI history defined; independent plan review and scoped whitespace check pass, not PR acceptance | Complete the coherent P5 candidate, then execute P7a and keep the records below current |
+| 2026-10-11 | P2a.1 empty paragraph styles | Complete | `a477b68ef` — `Preserve effective styles on empty logical paragraphs` | Independent style/scope review; strict private build and isolated ON/OFF/ASan each pass 452,371 assertions / 24 cases; itemizer/handoff and CMake/qmake application builds pass | Consume it in recursive layout and validate empty-line/stack metrics; overall layout/entity gates remain pending |
+| 2026-10-11 | P0b transport proof | In progress | Uncommitted filter candidate; provisional codec is a separate service | Earlier STYLE binding failure repaired; new STYLE-unit and LTYPE-control prerequisites pass focused/direct native JSON checks; converted DXF still fails at DIMSTYLE color fields | Isolate/checkpoint prerequisites; codec/schema freeze and public activation require separate proof, not a self-round trip |
+| 2026-10-11 | P3b.1 native outline adapter | Validated | Candidate subject: `Add precision-bounded native text contours` | Both numeric regressions fail before correction (exit 42); isolated ON/ASan: 12,326 assertions / 8 cases; OFF: 11,460 / 7; enabled/disabled CMake applications and qmake application build pass; independent numeric review approves | Checkpoint bounded native service; complete-affine entity consumption, layout caches and release geometry gates remain pending |
+| 2026-10-11 | P7 execution | Planned | `55cbfc54f` — plan-only workflow update; no publication | Draft baseline, creation checkpoint, acceptance map, review/refinement cadence, mandatory-finding rules and CI history defined; independent plan review and scoped whitespace check pass, not PR acceptance | Complete the coherent P5 candidate, then execute P7a and keep the records below current |
 
 For every executed check, record its exact command and filters, exit status,
 result/test count, tested revision and candidate-tree state, build configuration,
@@ -1049,6 +1049,67 @@ Exact logs are `/private/tmp/librecad-arabic-empty-{on,off,asan}-build.log`,
 and `/private/tmp/librecad-arabic-empty-qmake-build.log`.
 Recursive-layout consumption, final entity geometry and release acceptance
 remain separate, unfinished gates.
+
+### Native outline precision evidence
+
+P3b's native adapter creates inherited-pen closed polylines only after the full
+caller-supplied affine. It preserves bearings, holes, exact closing edges and
+the no-extent sentinel, and rejects range, precision and complexity failures
+without partial geometry. Default error tolerance is `1e-4` final document
+units, with a caller budget of 100,000 segments and hard limits of 1,000,000
+segments, 100,000 commands and 32 subdivision levels. This service does not
+activate TEXT/MTEXT or prove that their eventual adapters compose every affine.
+
+The five staged service/test/build files at parent `55cbfc54f` were exported into
+the existing isolated snapshot; uncommitted shared layout, profiles, filters and deployment
+changes were excluded. The `[tiny]` quadratic reproducer, with a nonzero
+`1e-170` chord and `1e-180` tolerance, exits 42 before the correction because
+squaring the chord underflows and falsely exhausts subdivision depth. The
+distance calculation now uses `hypot`, a unit chord and a clamped physical
+projection. The corrected enabled suite passes 12,322 assertions / 7 cases;
+its full CMake application build and ordered qmake application build exit 0.
+Logs are `/private/tmp/librecad-arabic-outline-before-{configure,build,test}.log`,
+`/private/tmp/librecad-arabic-outline-on-{build,test}.log` and
+`/private/tmp/librecad-arabic-outline-qmake-{configure,build}.log`.
+
+Independent review also found that the relative rounding allowance can
+underflow to zero. An affine-only triangle with scale `denorm_min()` then
+accepts a tolerance smaller than its actual rounding error. The `[subnormal]`
+regression exits 42 before the guard correction, observing success instead of
+`PrecisionLoss` (`/private/tmp/librecad-arabic-outline-subnormal-before-{build,test}.log`).
+An absolute `256 * denorm_min()` allowance now complements the relative term.
+This is a conservative precision floor, not a claim that every rejected
+axis-aligned case is individually unrepresentable. The two numeric regressions
+are independently reviewed against analytically derived expectations.
+
+All five staged input files were compared byte-for-byte with the snapshot
+before the final runs. On the same macOS arm64/Apple Clang 21/Qt 6.11.2/
+HarfBuzz 14.6.0/FreeType 2.14.3/Catch2 3.16.1 configuration, execute:
+
+```sh
+cmake --build /private/tmp/librecad-arabic-core-index.TOns5t/build-on --target librecad_text_outline_tests librecad -j4
+QT_QPA_PLATFORM=offscreen /private/tmp/librecad-arabic-core-index.TOns5t/build-on/librecad_text_outline_tests
+cmake --build /private/tmp/librecad-arabic-core-index.TOns5t/build-off --target librecad_text_outline_tests librecad -j4
+QT_QPA_PLATFORM=offscreen /private/tmp/librecad-arabic-core-index.TOns5t/build-off/librecad_text_outline_tests
+cmake --build /private/tmp/librecad-arabic-core-index.TOns5t/build-asan --target librecad_text_outline_tests -j4
+QT_QPA_PLATFORM=offscreen ASAN_OPTIONS=detect_leaks=0:halt_on_error=1 UBSAN_OPTIONS=halt_on_error=1 /private/tmp/librecad-arabic-core-index.TOns5t/build-asan/librecad_text_outline_tests
+```
+
+Final ON and ASan/UBSan each pass 12,326 assertions / 8 cases; OFF without
+FreeType passes 11,460 / 7, excluding only the explicit font-dependent case.
+Complete enabled/disabled CMake application builds and the ordered qmake
+application build pass. All four final processes (78343, 3693, 78841 and 48455)
+terminate with exit 0. Sanitizers instrument the native application library
+and adapter/tests, not the external Qt/HarfBuzz/FreeType/Catch2 libraries;
+unsupported LeakSanitizer is disabled. Final logs are
+`/private/tmp/librecad-arabic-outline-{on,off,asan}-final-{build,test}.log` and
+`/private/tmp/librecad-arabic-outline-qmake-final-build.log`.
+Reviewed source/test SHA-256 values are
+`11118e8fa6887422e04fba6af4302aed599a4c91e44dc496e428fd3a92b58213` and
+`72a7eb13ef56e6bfaa5691b1ff317d03c49f5c03e1123e126836328bf79d90b9`.
+Earlier mixed-tree and intermediate passing results remain historical, not
+proof of the final candidate. Installed packages, actual entity geometry and
+all-platform/Arabic visual acceptance remain unfinished.
 
 ## Implementation milestones
 
@@ -1497,7 +1558,7 @@ publish a release or activate new defaults without the corresponding authority.
 | Before P7 ready-for-review handoff | Complete technical release checklist, final whole-diff independent review, no unresolved mandatory findings, current PR revision evidence and synchronized plan/PR; then complete P7 attestation |
 
 Build success is not test execution. The existing focused text, headless bidi,
-parser, shaper, registry and conformance targets are `EXCLUDE_FROM_ALL`;
+parser, shaper, registry, native-outline and conformance targets are `EXCLUDE_FROM_ALL`;
 explicitly build and invoke them. Ordinary CTest does not currently register
 those binaries, and registration of the broad application/integration suites
 is configurable. Inspect `ctest -N`
@@ -1514,7 +1575,7 @@ by this plan update.
 cmake --build /Users/dli/dev/LibreCAD/build-arabic-cmake --target \
   librecad_text_bidi_tests librecad_text_bidi_headless_tests \
   librecad_text_document_tests librecad_text_shaper_tests librecad_text_font_registry_tests \
-  librecad_text_runs_tests librecad_text_runs_shaping_tests
+  librecad_text_runs_tests librecad_text_runs_shaping_tests librecad_text_outline_tests
 QT_QPA_PLATFORM=offscreen /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_bidi_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_bidi_headless_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_document_tests
@@ -1522,9 +1583,10 @@ QT_QPA_PLATFORM=offscreen /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_te
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_font_registry_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_runs_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_runs_shaping_tests
+QT_QPA_PLATFORM=offscreen /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_outline_tests
 ```
 
-Run the parser, shaper, registry and itemizer targets again in a separate explicitly
+Run the parser, shaper, registry, itemizer and native-outline targets again in a separate explicitly
 configured `LIBRECAD_ENABLE_OPENTYPE=OFF` build; confirm the shaper/registry/integration
 disabled-path cases actually execute rather than treating their smaller counts
 as enabled coverage. The parser's backend-independent cases must still pass.
