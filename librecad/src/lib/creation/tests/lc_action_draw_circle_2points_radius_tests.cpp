@@ -32,6 +32,7 @@
 #include "lc_graphicviewport.h"
 #include "rs_circle.h"
 #include "rs_coordinateevent.h"
+#include "rs_math.h"
 #include "rs_preview.h"
 
 namespace {
@@ -157,6 +158,29 @@ TEST_CASE("LC_CreationCircle::create2PRadius gives the centers of the circles of
         circle.center = RS_Vector{1., 2.};
         CHECK_FALSE(LC_CreationCircle::create2PRadius({0., 0.}, {12., 0.}, 5., otherCenter, circle));
         CHECK_FALSE(circle.center.valid);
+    }
+}
+
+TEST_CASE("LC_CreationCircle::create2PRadius has the middle of a diameter for the center, in any direction of it",
+          "[circle-2points-radius]") {
+    // With half the distance of the points for the radius the chord is a diameter, as it is measured. The sum of the
+    // squares of its components may still round to more than the square of the diameter, and the root of that
+    // difference is no number: it made a center of NaN, with another to choose from.
+    const RS_Vector origins[] = {{0., 0.}, {12.3, 45.6}, {-1234.5, 987.25}};
+    for (const RS_Vector& first : origins) {
+        for (const double length : {2., 10., 25.4, 2000.}) {
+            for (int tenth = 0; tenth < 3600; ++tenth) {
+                const RS_Vector second = first + RS_Vector::polar(length, RS_Math::deg2rad(tenth / 10.));
+                const double radius = 0.5 * second.distanceTo(first);
+                RS_CircleData circle;
+                RS_Vector otherCenter;
+                CAPTURE(first.x, first.y, length, tenth);
+                REQUIRE_FALSE(LC_CreationCircle::create2PRadius(first, second, radius, otherCenter, circle));
+                REQUIRE(circle.center.valid);
+                REQUIRE(circle.center.distanceTo((first + second) * 0.5) < 1e-9);
+                REQUIRE(circle.radius == radius);
+            }
+        }
     }
 }
 
@@ -337,6 +361,58 @@ TEST_CASE("Circle 2 Points Radius: no circle is drawn while the radius is too sm
     action.click(3., 10.);
     REQUIRE(f.drawn().size() == 1);
     checkCircle(f.drawn().front(), {3., 4.}, 5.);
+}
+
+TEST_CASE("Circle 2 Points Radius: the circle through points a diameter apart is drawn in any direction of the chord",
+          "[circle-2points-radius]") {
+    Radius5 f;
+    TwoPointsRadius& action = *f.m_action;
+    const RS_Vector first{12.3, 45.6};
+    unsigned circles = 0;
+    // the second point is given at the length of the diameter and an angle: @10<angle
+    const auto secondPoint = [&first](const int tenth) {
+        return first + RS_Vector::polar(10., RS_Math::deg2rad(tenth / 10.));
+    };
+    const auto checkDrawnAtMouseMove = [&](const RS_Vector& second, const double radius) {
+        action.move(first.x + 3., first.y + 20.);
+        ++circles;
+        REQUIRE(f.m_graphic.count() == circles);
+        const auto* circle = dynamic_cast<const RS_Circle*>(f.m_graphic.lastEntity());
+        REQUIRE(circle != nullptr);
+        REQUIRE(circle->getCenter().distanceTo((first + second) * 0.5) < 1e-9);
+        REQUIRE(circle->getRadius() == radius);
+        REQUIRE(action.getStatus() == TwoPointsRadius::SetPoint1);
+    };
+
+    SECTION("with half the distance of the points for the radius") {
+        // as the radius of the tool options is picked in the drawing: every chord is a diameter, as it is measured
+        for (int tenth = 0; tenth < 3600; ++tenth) {
+            const RS_Vector second = secondPoint(tenth);
+            const double radius = 0.5 * second.distanceTo(first);
+            action.setRadius(radius);
+            action.type(first.x, first.y);
+            action.type(second.x, second.y);
+            CAPTURE(tenth);
+            REQUIRE(action.getStatus() == TwoPointsRadius::SelectCenter);
+            checkDrawnAtMouseMove(second, radius);
+        }
+    }
+    SECTION("with the radius of 5") {
+        for (int tenth = 0; tenth < 3600; ++tenth) {
+            const RS_Vector second = secondPoint(tenth);
+            action.type(first.x, first.y);
+            action.type(second.x, second.y);
+            if (action.getStatus() != TwoPointsRadius::SelectCenter) {
+                // the coordinates of the second point round to more than a diameter from the first: it is not taken
+                action.init(0);
+                continue;
+            }
+            CAPTURE(tenth);
+            checkDrawnAtMouseMove(second, 5.);
+        }
+        // of the directions, those whose coordinates do not round to more than a diameter
+        CHECK(circles > 360);
+    }
 }
 
 TEST_CASE("Circle 2 Points Radius: the mouse events of the view draw the one circle through points a diameter apart",

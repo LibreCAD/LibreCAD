@@ -418,7 +418,10 @@ bool LC_CreationCircle::create2PRadius(const RS_Vector& point1, const RS_Vector&
         const RS_Vector chordMiddlePoint = (point1 + point2) * 0.5;
         const double angle = point1.angleTo(point2) + (0.5 * M_PI);
         m_circleData.radius = radius;
-        const double distanceFromChordToCenter = sqrt((radius * radius) - (0.25 * point1.squaredTo(point2)));
+        // not r^2 - (c/2)^2: the chord is no longer than the diameter, but its square may still round to more than
+        // the square of the diameter, and the root of that difference is no number
+        const double halfChord = 0.5 * chordLenght;
+        const double distanceFromChordToCenter = sqrt((radius - halfChord) * (radius + halfChord));
         const RS_Vector ortoVector = RS_Vector(angle) * distanceFromChordToCenter;
         const RS_Vector& center1 = chordMiddlePoint + ortoVector;
         const RS_Vector& center2 = chordMiddlePoint - ortoVector;
