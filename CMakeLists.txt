@@ -2724,6 +2724,7 @@ if (BUILD_TESTS)
         librecad/src/ui/main/tests/lc_mdiwindow_close_tests.cpp
         librecad/src/ui/main/tests/lc_docklayout_tests.cpp
         librecad/src/ui/components/pen/tests/qg_widgetpen_tests.cpp
+        librecad/src/ui/dialogs/tests/lc_dialog_tests.cpp
         librecad/src/ui/dock_widgets/layers_tree/tests/lc_layertreewidget_tests.cpp
         librecad/src/plugins/tests/qc_actiongetselect_tests.cpp
         librecad/src/lib/gui/tests/lc_graphicviewrenderer_tests.cpp

@@ -22,7 +22,49 @@
 
 #include "lc_dialog.h"
 
+#include <QDoubleSpinBox>
+#include <QFocusEvent>
+#include <QLineEdit>
+#include <QMouseEvent>
+#include <QSpinBox>
+
 #include "rs_settings.h"
+
+namespace {
+class SpinBoxSelectionFilter : public QObject {
+public:
+    explicit SpinBoxSelectionFilter(QAbstractSpinBox* spinBox) : QObject(spinBox) {
+        spinBox->installEventFilter(this);
+        if (auto* editor = spinBox->findChild<QLineEdit*>()) {
+            editor->installEventFilter(this);
+        }
+    }
+
+protected:
+    bool eventFilter(QObject* watched, QEvent* event) override {
+        if (event->type() == QEvent::FocusIn) {
+            m_selectOnRelease = static_cast<QFocusEvent*>(event)->reason() == Qt::MouseFocusReason;
+        } else if (event->type() == QEvent::FocusOut) {
+            m_selectOnRelease = false;
+        } else if (event->type() == QEvent::MouseButtonRelease) {
+            const bool select = m_selectOnRelease;
+            m_selectOnRelease = false;
+            auto* editor = qobject_cast<QLineEdit*>(watched);
+            auto* mouse = static_cast<QMouseEvent*>(event);
+            auto* spinBox = static_cast<QAbstractSpinBox*>(parent());
+            // Keep deliberate drag selections and subsequent caret-positioning clicks.
+            if (select && editor && !editor->hasSelectedText() && !spinBox->isReadOnly()
+                && mouse->button() == Qt::LeftButton && mouse->modifiers() == Qt::NoModifier) {
+                spinBox->selectAll();
+            }
+        }
+        return QObject::eventFilter(watched, event);
+    }
+
+private:
+    bool m_selectOnRelease = false;
+};
+}
 
 // fixme - sand - review all dialogs and actions and make all conversions (double/string, angle/string and vise versa consistent)!
 LC_Dialog::LC_Dialog(QWidget* parent, const QString& dlgName)
@@ -33,6 +75,11 @@ LC_Dialog::LC_Dialog(QWidget* parent, const QString& dlgName)
 void LC_Dialog::showEvent(QShowEvent *event) {
     QDialog::showEvent(event);
     if (!m_positionLoaded) {
+        for (auto* spinBox : findChildren<QAbstractSpinBox*>()) {
+            if (qobject_cast<QSpinBox*>(spinBox) || qobject_cast<QDoubleSpinBox*>(spinBox)) {
+                new SpinBoxSelectionFilter(spinBox);
+            }
+        }
         loadDialogPosition();
         m_positionLoaded = true;
     }
