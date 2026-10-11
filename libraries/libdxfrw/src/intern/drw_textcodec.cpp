@@ -137,6 +137,12 @@ void DRW_TextCodec::setCodePage(const std::string &c, bool dxfFormat){
         conv.reset( new DRW_Converter(nullptr, 0) );
     } else if (cp == "UTF-16") {
         conv.reset( new DRW_ConvUTF16() );
+    } else if (dxfFormat && m_sourceVersionSet
+               && (version == DRW::AC1009 || version == DRW::AC1015)) {
+        // R12-R2004 DXF text is in the Windows codepage of the file, and
+        // ANSI_1252 is also what correctCodePage() makes of a name it does
+        // not know. A DXF that declares no version keeps its bytes.
+        conv.reset( new DRW_ConvTable(DRW_Table1252, CPLENGTHCOMMON) );
     } else if (dxfFormat) {
         conv.reset( new DRW_Converter(nullptr, 0) );
     } else {

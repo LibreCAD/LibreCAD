@@ -7153,7 +7153,8 @@ const char *const kOelfarbeUpper = "\xC3\x96" "LFARBE";
 // name-only DASHED record, names with no record on an entity, a layer and a
 // block member, an empty and a blank group 6, and two ISO aliases with no
 // record. Each entity of interest sits on a layer of its own. Group 73 must
-// match the number of 49s, or the reader rejects the file.
+// match the number of 49s, or the reader rejects the file. R12 text is
+// Windows-1252, so the file holds U+00D6 as the single byte D6.
 const char *const kNamedR12Fixture =
     "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1009\n0\nENDSEC\n"
     "0\nSECTION\n2\nTABLES\n"
@@ -7174,7 +7175,7 @@ const char *const kNamedR12Fixture =
     "40\n15.0\n49\n10.0\n49\n-5.0\n49\n0.0\n"
     "0\nLTYPE\n2\nVENDOR_ZERO\n70\n0\n3\nVendor zero\n72\n65\n73\n2\n"
     "40\n0.0\n49\n0.0\n49\n0.0\n"
-    "0\nLTYPE\n2\n" "\xC3\x96" "lfarbe\n70\n0\n3\nVendor non-ASCII\n72\n65\n"
+    "0\nLTYPE\n2\n" "\xD6" "lfarbe\n70\n0\n3\nVendor non-ASCII\n72\n65\n"
     "73\n2\n40\n40.0\n49\n20.0\n49\n-20.0\n"
     "0\nLTYPE\n2\nHIDDEN\n70\n0\n3\nVendor hidden\n72\n65\n73\n2\n"
     "40\n96.0\n49\n64.0\n49\n-32.0\n"
@@ -7220,7 +7221,7 @@ const char *const kNamedR12Fixture =
     "10\n0.0\n20\n50.0\n11\n10.0\n21\n50.0\n"
     "0\nLINE\n8\nL_ZERO\n6\nVENDOR_ZERO\n"
     "10\n0.0\n20\n60.0\n11\n10.0\n21\n60.0\n"
-    "0\nLINE\n8\nL_OEL\n6\n" "\xC3\x96" "LFARBE\n"
+    "0\nLINE\n8\nL_OEL\n6\n" "\xD6" "LFARBE\n"
     "10\n0.0\n20\n70.0\n11\n10.0\n21\n70.0\n"
     "0\nLINE\n8\nL_HIDDEN\n6\nHIDDEN\n"
     "10\n0.0\n20\n80.0\n11\n10.0\n21\n80.0\n"
