@@ -2770,6 +2770,8 @@ if (BUILD_TESTS)
     target_compile_definitions(librecad_tests PRIVATE BUILD_TESTS=1 DWGSUPPORT _USE_MATH_DEFINES LIBRECAD_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}" LIBRECAD_TEST_DIR="${CMAKE_CURRENT_SOURCE_DIR}/librecad/src/lib/filters/tests/testdata")
 
     add_executable(librecad_text_bidi_tests EXCLUDE_FROM_ALL
+        ${LIBRECAD_TEST_SETTINGS_ISOLATION_SOURCE}
+        ${LIBRECAD_TEST_TEMP_DIRECTORY_SOURCE}
         librecad/src/main/lc_release_label.cpp
         librecad/src/lib/engine/document/entities/tests/text_bidi_regression_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_textbidi_tests.cpp
