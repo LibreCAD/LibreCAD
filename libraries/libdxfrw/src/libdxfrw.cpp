@@ -77,7 +77,7 @@ bool dxfRW::read(DRW_Interface *interface_, bool ext){
         return setError(DRW::BAD_OPEN);
     }
 
-    char line[22];
+    char line[22] = {};
     char line2[22] = "AutoCAD Binary DXF\r\n";
     line2[20] = (char)26;
     line2[21] = '\0';

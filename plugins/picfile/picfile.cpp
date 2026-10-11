@@ -274,7 +274,7 @@ void picPunto::processFilePic(QFile* file)
                 drawCircle(data.at(2).split(',').at(0), data.at(2).split(',').at(1), data.at(4));
             } else {
                 if (cmd == "box") { // box invis fill 0.000 with .sw at (7.480,6.917) width 0.079 height 0.157
-                    if ( data.size() < 11 ) {
+                    if ( data.size() < 12 ) {
                         // QMessageBox::critical ( this, "picPunto", QString(tr("format error in %1")).arg(line) );
                         continue;
                     }

@@ -2071,13 +2071,13 @@ std::vector<std::unique_ptr<RS_EntityContainer>> RS_EntityContainer::getLoops() 
     std::vector<std::unique_ptr<RS_EntityContainer>> loops;
     RS_EntityContainer edges(nullptr, false);
     for(auto* e1: entities){
-        if (e1 != nullptr && e1->isContainer())
+        if (e1 == nullptr)
+            continue;
+        if (e1->isContainer())
         {
-            if (e1->isContainer()){
-                auto subLoops = static_cast<RS_EntityContainer*>(e1)->getLoops();
-                for (auto& subLoop: subLoops)
-                    loops.push_back(std::move(subLoop));
-            }
+            auto subLoops = static_cast<RS_EntityContainer*>(e1)->getLoops();
+            for (auto& subLoop: subLoops)
+                loops.push_back(std::move(subLoop));
             continue;
         }
 

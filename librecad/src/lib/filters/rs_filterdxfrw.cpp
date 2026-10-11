@@ -2279,7 +2279,6 @@ void RS_FilterDXFRW::writeLWPolyline(RS_Polyline* l) {
         return;
     }
     DRW_LWPolyline pol;
-    RS_Entity* currEntity = 0;
     RS_Entity* nextEntity = 0;
 	RS_AtomicEntity* ae = nullptr;
     double bulge=0.0;
@@ -2287,7 +2286,6 @@ void RS_FilterDXFRW::writeLWPolyline(RS_Polyline* l) {
     for (RS_Entity* e=l->firstEntity(RS2::ResolveNone);
          e; e=nextEntity) {
 
-        currEntity = e;
         nextEntity = l->nextEntity(RS2::ResolveNone);
 
         if (!e->isAtomic()) {
@@ -2303,10 +2301,11 @@ void RS_FilterDXFRW::writeLWPolyline(RS_Polyline* l) {
             pol.addVertex( DRW_Vertex2D(ae->getStartpoint().x,
                                       ae->getStartpoint().y, bulge));
     }
+    if (ae == nullptr)
+        return;
     if (l->isClosed()) {
         pol.flags = 1;
     } else {
-        ae = (RS_AtomicEntity*)currEntity;
         if (ae->rtti()==RS2::EntityArc) {
             bulge = ((RS_Arc*)ae)->getBulge();
         }
@@ -2323,7 +2322,6 @@ void RS_FilterDXFRW::writeLWPolyline(RS_Polyline* l) {
  */
 void RS_FilterDXFRW::writePolyline(RS_Polyline* p) {
     DRW_Polyline pol;
-    RS_Entity* currEntity = 0;
     RS_Entity* nextEntity = 0;
 	RS_AtomicEntity* ae = nullptr;
     double bulge=0.0;
@@ -2331,7 +2329,6 @@ void RS_FilterDXFRW::writePolyline(RS_Polyline* p) {
     for (RS_Entity* e=p->firstEntity(RS2::ResolveNone);
          e; e=nextEntity) {
 
-        currEntity = e;
         nextEntity = p->nextEntity(RS2::ResolveNone);
 
         if (!e->isAtomic()) {
@@ -2347,10 +2344,11 @@ void RS_FilterDXFRW::writePolyline(RS_Polyline* p) {
             pol.addVertex( DRW_Vertex(ae->getStartpoint().x,
                                       ae->getStartpoint().y, 0.0, bulge));
     }
+    if (ae == nullptr)
+        return;
     if (p->isClosed()) {
         pol.flags = 1;
     } else {
-        ae = (RS_AtomicEntity*)currEntity;
         if (ae->rtti()==RS2::EntityArc) {
             bulge = ((RS_Arc*)ae)->getBulge();
         }

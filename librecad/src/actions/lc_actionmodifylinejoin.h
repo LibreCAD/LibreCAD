@@ -22,7 +22,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_ACTIONMODIFYLINEJOIN_H
 #define LC_ACTIONMODIFYLINEJOIN_H
 
+#include <memory>
+
 #include "rs_line.h"
+#include "rs_polyline.h"
 #include "lc_abstractactionwithpreview.h"
 
 /**
@@ -115,7 +118,7 @@ private:
     struct LC_LineJoinData{
         bool parallelLines; // are lines parallel?
         bool straightLinesConnection; // lines are on the same vector
-        RS_Polyline* polyline {nullptr};
+        std::unique_ptr<RS_Polyline> polyline;
         RS_Vector intersectPoint;  // point of intersection
         RS_Vector majorPointLine1; // point used for drawing result for line 1
         RS_Vector majorPointLine2; // point used for drawing result for line 1
@@ -184,7 +187,7 @@ private:
     /**
      * data that describes join
      */
-    LC_LineJoinData* linesJoinData = nullptr;
+    std::unique_ptr<LC_LineJoinData> linesJoinData;
 
     LC_LineJoinData* createLineJoinData(RS_Line* secondLine, RS_Vector &snapPoint);
     LC_PointsDisposition determine3PointsDisposition(RS_Vector start, RS_Vector end, const RS_Vector intersection, const RS_Vector &snapPoint) const;

@@ -38,6 +38,7 @@ LC_ActionModifyLineJoin::~LC_ActionModifyLineJoin() = default;
 
 void LC_ActionModifyLineJoin::init(int status){
     LC_AbstractActionWithPreview::init(status);
+    linesJoinData.reset();
     line1 = nullptr;
     line2 = nullptr;
 }
@@ -75,7 +76,7 @@ void LC_ActionModifyLineJoin::doPreparePreviewEntities(QMouseEvent *e, [[maybe_u
                 RS_Vector coord = graphicView->toGraph(e->x(), e->y());
                 LC_LineJoinData *lineJoinData = createLineJoinData(snappedLine, coord);
                 if (lineJoinData != nullptr){
-                    RS_Polyline *polyline = lineJoinData->polyline;
+                    RS_Polyline *polyline = lineJoinData->polyline.release();
                     if (polyline != nullptr){
                         list << polyline;
                     }
@@ -99,7 +100,7 @@ void LC_ActionModifyLineJoin::doPreparePreviewEntities(QMouseEvent *e, [[maybe_u
                 RS_Vector coord = graphicView->toGraph(e->x(), e->y());
                 updateLine1TrimData(coord);
 
-                RS_Polyline *polyline = linesJoinData->polyline;
+                RS_Polyline *polyline = linesJoinData->polyline.get();
                 if (polyline != nullptr){
                     list << polyline->clone();
                 }
@@ -130,14 +131,14 @@ void LC_ActionModifyLineJoin::doOnLeftMouseButtonRelease(QMouseEvent *e, int sta
             if (snappedLine != nullptr){
                 line2 = snappedLine;
                 RS_Vector snap = graphicView->toGraph(e->x(), e->y());
-                LC_LineJoinData *joinData = createLineJoinData(snappedLine, snap);
+                std::unique_ptr<LC_LineJoinData> joinData(createLineJoinData(snappedLine, snap));
                 if (joinData != nullptr){
                     // check whether parallel lines were selected
                     if (joinData->parallelLines){
                         // check whether lines are on the same ray
                         if (joinData->straightLinesConnection){
                             // ok, let's merge them
-                            linesJoinData = joinData;
+                            linesJoinData = std::move(joinData);
                             trigger();
                         } else { // truly parallel lines, can't merge them
                             commandMessageTR("Lines are parallel, can't merge");
@@ -156,7 +157,7 @@ void LC_ActionModifyLineJoin::doOnLeftMouseButtonRelease(QMouseEvent *e, int sta
                             if (line1EdgeMode != EDGE_EXTEND_TRIM){
                                 firstLineTrimShouldBeSpecified = false;
                             }
-                            linesJoinData = joinData;
+                            linesJoinData = std::move(joinData);
                             if (firstLineTrimShouldBeSpecified){
                                 // we need to addition hint from the user for proper trim, so go to the corresponding state
                                 setStatus(ResolveFirstLineTrim);
@@ -180,7 +181,7 @@ void LC_ActionModifyLineJoin::doOnLeftMouseButtonRelease(QMouseEvent *e, int sta
                 // update trim data according to selected part of line 1
                 updateLine1TrimData(snap);
                 // check if polyline is built and if it so - trigger action
-                RS_Polyline *polyline = linesJoinData->polyline;
+                RS_Polyline *polyline = linesJoinData->polyline.get();
                 if (polyline != nullptr){
                     trigger();
                 }
@@ -215,7 +216,7 @@ void LC_ActionModifyLineJoin::doBack(QMouseEvent *pEvent, int status){
 
 void LC_ActionModifyLineJoin::doAfterTrigger(){
     LC_AbstractActionWithPreview::doAfterTrigger();
-    delete linesJoinData; // cleanup
+    linesJoinData.reset();
     graphicView->redraw();
     // return to selection first line mode
     init(SetLine1);
@@ -410,7 +411,7 @@ LC_ActionModifyLineJoin::LC_LineJoinData *LC_ActionModifyLineJoin::proceedNonPar
     }
 
     // finalise line point data fields
-    result->polyline = polyline;
+    result->polyline.reset(polyline);
     result->line1Disposition = line1Disposition;
     result->line2Disposition = line2Disposition;
     result->intersectPoint = intersectPoint;
@@ -426,12 +427,8 @@ void LC_ActionModifyLineJoin::updateLine1TrimData(RS_Vector snap){
 
     const RS_Vector &line1Start = line1->getStartpoint();
     const RS_Vector &line1End = line1->getEndpoint();
-    RS_Polyline *polyline = linesJoinData->polyline;
-    if (polyline != nullptr){ // we'll rebuild polyline, so delete original one
-        delete polyline;
-    }
-    polyline = new RS_Polyline(container);
-    linesJoinData->polyline = polyline;
+    linesJoinData->polyline = std::make_unique<RS_Polyline>(container);
+    RS_Polyline *polyline = linesJoinData->polyline.get();
 
     RS_Vector &intersection = linesJoinData->intersectPoint;
 
@@ -647,7 +644,7 @@ LC_ActionModifyLineJoin::LC_LineJoinData *LC_ActionModifyLineJoin::proceedParall
             result->majorPointLine1 = leftPoint;
             result->majorPointLine2 = rightPoint;
 
-            result->polyline = polyline;
+            result->polyline.reset(polyline);
         } else if (line1EdgeMode == EDGE_ADD_SEGMENT && line2EdgeMode == EDGE_ADD_SEGMENT){
             // if edge mode is adding segment for both lines, we'll create a single line that
             // fills a gap between lines if there is no intersection
@@ -662,7 +659,7 @@ LC_ActionModifyLineJoin::LC_LineJoinData *LC_ActionModifyLineJoin::proceedParall
                 // use them as major points
                 result->majorPointLine1 = middleLeftPoint;
                 result->majorPointLine2 = middleRightPoint;
-                result->polyline = polyline;
+                result->polyline.reset(polyline);
             }
         }
     } else {

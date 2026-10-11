@@ -473,7 +473,7 @@ void LC_ActionDrawRectangle3Points::processCommandValue(double value, bool &toMa
             pPoints->corner2 = result1;
             pPoints->corner2Set = true;
             pPoints->corner3 = pPoints->corner2;
-            pPoints->corner4 - pPoints->corner2;
+            pPoints->corner4 = pPoints->corner1;
             moveRelativeZero(pPoints->corner2);
             deletePreview();
             RS_Polyline *polyline = createPolyline(RS_Vector(false));

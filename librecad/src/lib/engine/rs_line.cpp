@@ -608,7 +608,7 @@ void RS_Line::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
 }
 
 void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) {
-    if (painter == nullptr && view == nullptr)
+    if (painter == nullptr || view == nullptr)
         return;
     if (isConstruction()) {
 
