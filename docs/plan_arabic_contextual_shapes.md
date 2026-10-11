@@ -652,7 +652,7 @@ Maintain the progress and validation records below as implementation proceeds:
 | 2026-10-11 | P2a.1 empty paragraph styles | Validated | Candidate subject: `Preserve effective styles on empty logical paragraphs` | Independent style/scope review; strict private build and isolated ON/OFF/ASan each pass 452,371 assertions / 24 cases; itemizer/handoff and CMake/qmake application builds pass | Checkpoint parser/model extension; consume it in recursive layout and validate empty-line/stack metrics |
 | 2026-10-11 | P0b transport proof | In progress | Uncommitted mixed-tree candidate; no schema codec yet | Earlier STYLE binding failure repaired; new STYLE-unit and LTYPE-control prerequisites pass focused/direct native JSON checks; converted DXF still fails at DIMSTYLE color fields | Record current frozen filter/library evidence and external-converter attribution; isolate and checkpoint prerequisites without claiming full interchange |
 | 2026-10-11 | P3b native outline adapter | In progress | Uncommitted mixed-tree candidate | Registered and partial-instrumentation ASan/UBSan: 12,309 assertions / 6 cases pass, including empty extents and native coordinate limits | Validate isolated checkpoint and both build systems; final affine/entity integration remains pending |
-| 2026-10-11 | P7 execution | Planned | Plan-only workflow update; no publication | Draft-creation checkpoint, acceptance map, independent review coverage, editing/IME scrutiny, cross-consumer fix checks and refinement-round records defined; no PR acceptance claimed | Complete the coherent P5 candidate, then execute P7a and keep the records below current |
+| 2026-10-11 | P7 execution | Planned | Plan-only workflow update; no publication | Draft baseline, creation checkpoint, acceptance map, review/refinement cadence, mandatory-finding rules and CI history defined; independent plan review and scoped whitespace check pass, not PR acceptance | Complete the coherent P5 candidate, then execute P7a and keep the records below current |
 
 For every executed check, record its exact command and filters, exit status,
 result/test count, tested revision and candidate-tree state, build configuration,
@@ -1118,6 +1118,17 @@ exists. P7b and P7c remain Planned until their work begins. Keep the following
 record current and reference it from the progress ledger; this plan update does
 not itself create or change a PR.
 
+A coherent P5 candidate has an executable opt-in path through TEXT/MTEXT,
+editing, save/reopen, the required consumers and both explode commands, with
+every mandatory P0–P5 implementation and local acceptance gate mapped to that
+committed candidate and passing. Unfinished implementations, stubs and known
+mandatory local regressions are not merely pending P6 checks. Outstanding
+platform, installed-package, final performance and independent visual lanes may
+remain Pending with an explicit configuration, owner or required maintainer
+action and next check. P7a publishes that candidate; P7b refines it;
+P7c verifies the final candidate and hands it off. None of these steps enables
+the backend by default or authorizes merge or release.
+
 | PR tracking field | Current value |
 | --- | --- |
 | Phase states | P7a Planned; P7b Planned; P7c Planned |
@@ -1239,7 +1250,7 @@ merely to obtain a check; record any maintainer action that is needed.
 Complete P7a only after all of the following are verified and recorded:
 
 - [ ] Publication authority, repository, owned source branch and intended base are resolved; any prerequisite branch/PR dependency is explicit.
-- [ ] The coherent committed candidate and complete diff are inspected; local slice checks pass, and the acceptance map distinguishes remaining P6 checks from completed work.
+- [ ] The coherent committed candidate and complete diff are inspected; mandatory P0–P5 implementation/local gates pass, and the acceptance map distinguishes remaining P6 checks from completed work.
 - [ ] The draft PR exists, is open, targets the intended base and publishes the intended head; its URL is attached to this task. Uncertain push/creation outcomes are reconciled before retrying.
 - [ ] The description links the committed plan, fixtures, reviewer walkthrough and revision-bound validation matrix, including known failures and unsupported cases.
 - [ ] CI triggers, test discovery, package lanes and draft/fork restrictions are audited; each missing or pending gate has a concrete next action.
@@ -1334,11 +1345,25 @@ supporting evidence and independent review; deferrals need explicit acceptance b
 decision-maker, a documented limitation and a follow-up reference. Severity
 relabeling is not a substitute for resolution.
 
+A finding is mandatory when it violates an accepted P0–P6 contract, prevents a
+required validation gate, or is introduced or worsened by this PR and creates
+a correctness, data-loss, legacy-compatibility, security or licensing failure,
+regardless of its numerical severity. Fix it or reject it with independently
+reviewed evidence; do not defer it as cosmetic cleanup.
+Optional improvements may be deferred under the rules above. Put unrelated
+refactoring or new feature requests in a separate proposal unless separately
+authorized; keep necessary in-scope corrections in this PR.
+
 Run each refinement round in this order:
 
-1. Freeze the review candidate and assign independent coverage of every review
-   area and the acceptance map. Record the round ID, exact revisions and review
-   artifacts, including explicit no-finding results.
+1. Freeze the review candidate. The initial round covers the entire accumulated
+   diff, every review area and the acceptance map. Intermediate rounds examine
+   the corrective diff, any base delta and all affected contracts and consumers,
+   with the complete diff available to reviewers. Identify which prior coverage
+   is invalidated rather than claiming another complete review.
+   Record the round ID, exact revisions, coverage and review artifacts,
+   including explicit no-finding results. A final whole-diff review remains
+   required after the last substantive change.
 2. Triage findings by impact and contract. Record whether each is introduced by
    the PR, an in-scope prerequisite or unrelated baseline behavior. Baseline
    attribution does not waive an in-scope gate; track unrelated issues with
@@ -1352,6 +1377,9 @@ Run each refinement round in this order:
    and failure path through the acceptance map. Record which checks must rerun
    and why any consumer is unaffected; a passing reproducer in one caller does
    not establish TEXT/MTEXT, annotation, persistence or export parity.
+   Algorithm, cache or geometry-budget changes also require the affected
+   worst-case, cold/warm and memory checks against the recorded P0/P6 budgets;
+   a small correctness fixture alone cannot establish bounded performance.
 4. Push the corrected owned branch, reconcile the published head and checks,
    and refresh the PR description, plan, acceptance map, findings ledger and
    evidence matrix. Record corrective commits, executed checks and invalidated
@@ -1375,8 +1403,10 @@ or author-only approval is not evidence of completeness.
 Each round ends with an explicit disposition: continue refinement with the next
 finding/check, retain draft with the exact outstanding gate and required action,
 or proceed to P7c when all exit criteria hold. Missing credentials, unavailable
-platforms, failed CI and unresolved review feedback do not justify bypassing a
-gate or claiming completion. Reconcile comments and CI after every push; do not
+platforms, failed CI and unresolved mandatory feedback do not justify bypassing a
+gate or claiming completion. Accepted optional deferrals and independently
+evidenced unrelated baseline issues need not expand this PR; they cannot waive
+a required acceptance gate. Reconcile comments and CI after every push; do not
 assume previously resolved threads or superseded runs still certify the result.
 On a subsequent authorized continuation, feed new maintainer feedback and
 post-handoff CI regressions through this same ledger and corrective loop.
@@ -1390,9 +1420,17 @@ tested commit/tree, not just the PR head. Where CI tests a synthetic merge,
 record that merge SHA and its base/head parents; distinguish this from a
 head-only build. Recheck required CI against the current PR revision and target
 base integration. A green check on an older commit, a queued run, an empty test
-set or an unavailable platform is not a current pass. After a base change or
-corrective commit, reopen affected findings and invalidated validation/review
-gates. Preserve previous results as history.
+set, a cancelled/timed-out run or an unavailable platform is not a current pass.
+Retain failed, cancelled, timed-out and superseded attempts with their run IDs,
+reasons and replacement-run links; record whether the candidate or configuration
+changed, and distinguish intentional cancellation from a test failure. Repeated
+retries until one succeeds do not resolve an unexplained intermittent failure.
+Classify the failure with evidence and keep an affected mandatory gate Pending
+until its cause or safe
+resolution is verified. A verified successful replacement can satisfy the gate
+without erasing the earlier history. After a base change or corrective commit,
+reopen affected findings and invalidated validation/review gates. Preserve
+previous results as history.
 
 For packaged validation, record the artifact name/checksum, producer run and
 tested revision, platform/architecture, dependency/font identities and smoke-test
@@ -1416,9 +1454,9 @@ Do not bypass repository-required checks or weaken tests to clear the PR.
 
 Complete P6's technical release checklist first, without requiring P7's later
 attestation. Mark the PR ready for review only when that evidence is current,
-mandatory CI checks pass and no correctness, data-loss, compatibility, security, licensing
-or required-validation finding remains unresolved. Any lower-priority deferral
-must have an explicit rationale, accepted scope and documented limitation.
+mandatory CI checks pass and no mandatory finding remains unresolved under the
+rules above. Any lower-priority deferral must have an explicit rationale,
+accepted scope and documented limitation.
 Perform a final scope/commit review, whitespace check, installed-artifact check
 and PR-description review; ensure plan, review ledger and PR state agree with
 the final head. If a required gate remains unavailable, retain draft status and
@@ -1455,7 +1493,7 @@ publish a release or activate new defaults without the corresponding authority.
 | After bidi, codec, font or profile changes | Respectively matching Unicode conformance, cross-format/independent decoding, pinned placement/outline corpus, or saved-profile compatibility; reopen invalidated evidence |
 | Before P6 completion | All technical release checklist gates, full configured application suite, explicit opt-in tests, supported installed packages, native GUI/Arabic visual review and performance/memory results; no dependency on the later P7 attestation |
 | Before draft PR publication | Frozen committed candidate, coherent scoped diff, owned branch, passing local slice checks, workflow/test-discovery audit, accurate pending-gate matrix, no unrelated/private/generated content |
-| After each PR refinement round | Regression proof for fixes, affected suites/builds, CI with actual tested head/merge identity, refreshed finding/decision records and re-review of affected contracts |
+| After each PR refinement round | Regression proof for fixes, affected suites/builds and performance budgets, CI with actual tested head/merge identity and retained failure history, refreshed finding/decision records and re-review of affected contracts |
 | Before P7 ready-for-review handoff | Complete technical release checklist, final whole-diff independent review, no unresolved mandatory findings, current PR revision evidence and synchronized plan/PR; then complete P7 attestation |
 
 Build success is not test execution. The existing focused text, headless bidi,
