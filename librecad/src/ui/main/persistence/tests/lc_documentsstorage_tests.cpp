@@ -33,9 +33,11 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include <QApplication>
+#include <QCheckBox>
 #include <QDateTime>
 #include <QFile>
 #include <QFileInfo>
+#include <QGridLayout>
 #include <QTemporaryDir>
 
 #include "jwwdoc.h"
@@ -82,10 +84,14 @@ void ensureApp() {
 class TestStorage : public LC_DocumentsStorage {
 public:
     using LC_DocumentsStorage::loadGraphicFromTemplate;
+    using LC_DocumentsStorage::backupDrawingFile;
+    using LC_DocumentsStorage::createAutoSaveFileName;
 
     TestStorage() {
         m_backup.set(true);
         m_backupSuffix.set(QStringLiteral("~"));
+        m_hideBackups.set(false);
+        m_autosavePrefix.set(QStringLiteral("#"));
     }
 
     QString m_answer;
@@ -111,6 +117,8 @@ protected:
 private:
     SettingGuard m_backup{RS_SETTINGS, "Defaults", "AutoBackupDocument"};
     SettingGuard m_backupSuffix{RS_SETTINGS, "Defaults", "BackupFileSuffix"};
+    SettingGuard m_hideBackups{RS_SETTINGS, "Defaults", "HideBackupFiles"};
+    SettingGuard m_autosavePrefix{RS_SETTINGS, "Defaults", "AutosaveFilePrefix"};
 };
 
 QByteArray contents(const QString& path) {
@@ -519,7 +527,9 @@ TEST_CASE("Opening the preferences does not rename the backup", "[documentsstora
     (void)lc::test::application(); // a dialog needs a QApplication
     SettingGuard backup{RS_SETTINGS, "Defaults", "AutoBackupDocument"};
     SettingGuard suffix{RS_SETTINGS, "Defaults", "BackupFileSuffix"};
+    SettingGuard hidden{RS_SETTINGS, "Defaults", "HideBackupFiles"};
     backup.set(true);
+    hidden.set(false);
     {
         // a profile that never stored a suffix
         const auto group = RS_SETTINGS->beginGroupGuard("Defaults");
@@ -541,6 +551,157 @@ TEST_CASE("Opening the preferences does not rename the backup", "[documentsstora
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Backup and autosave copies are hidden by default without losing recovery data",
+          "[documentsstorage][backup-visibility]") {
+    ensureApp();
+    QTemporaryDir dir;
+    TestStorage storage;
+    {
+        const auto group = RS_SETTINGS->beginGroupGuard("Defaults");
+        RS_SETTINGS->remove("HideBackupFiles");
+    }
+    const QString path = dir.filePath("drawing.dxf");
+    writeDxf(path);
+    const QByteArray original = contents(path);
+    RS_Graphic graphic;
+    open(storage, graphic, path);
+    edit(graphic);
+
+    QString autosave;
+    REQUIRE(storage.autoSaveDocument(&graphic, nullptr, autosave));
+    CHECK(QFileInfo(autosave).isHidden());
+    CHECK(graphic.isModified());
+    CHECK(contents(path) == original);
+    RS_Graphic recovered;
+    open(storage, recovered, autosave);
+    CHECK(hasEditedLine(recovered));
+
+    REQUIRE(storage.autoSaveDocument(&graphic, nullptr, autosave));
+    CHECK(QFileInfo(autosave).isHidden());
+    const QDir drawingDirectory(dir.path());
+    CHECK(drawingDirectory.entryList(QDir::Files) == QStringList{"drawing.dxf"});
+
+    bool cancelled = false;
+    const QByteArray recovery = contents(autosave);
+    storage.m_answer = dir.filePath("missing/drawing.dxf");
+    CHECK_FALSE(storage.saveDocumentAs(&graphic, nullptr, cancelled));
+    CHECK_FALSE(cancelled);
+    CHECK(graphic.isModified());
+    CHECK(graphic.getFilename() == path);
+    CHECK(graphic.getAutoSaveFileName() == autosave);
+    CHECK(contents(autosave) == recovery);
+    CHECK(QFileInfo(autosave).isHidden());
+    CHECK(contents(path) == original);
+
+    REQUIRE(save(storage, graphic, cancelled));
+    CHECK_FALSE(QFile::exists(autosave));
+#ifdef Q_OS_WIN
+    const QString backup = path + "~";
+#else
+    const QString backup = dir.filePath(".drawing.dxf~");
+#endif
+    CHECK(QFileInfo(backup).isHidden());
+    CHECK(contents(backup) == original);
+    CHECK(drawingDirectory.entryList(QDir::Files) == QStringList{"drawing.dxf"});
+
+    const QByteArray saved = contents(path);
+    edit(graphic);
+    REQUIRE(save(storage, graphic, cancelled));
+    CHECK(QFileInfo(backup).isHidden());
+    CHECK(contents(backup) == saved);
+}
+
+TEST_CASE("Backup visibility can retain legacy names and custom affixes", "[documentsstorage][backup-visibility]") {
+    ensureApp();
+    QTemporaryDir dir;
+    TestStorage storage;
+    SettingGuard prefix{RS_SETTINGS, "Defaults", "AutosaveFilePrefix"};
+    SettingGuard hidden{RS_SETTINGS, "Defaults", "HideBackupFiles"};
+    const QString path = dir.filePath("drawing space.dxf");
+    writeDxf(path);
+    const QByteArray original = contents(path);
+
+    SECTION("visible files keep their existing names") {
+        RS_Graphic graphic;
+        open(storage, graphic, path);
+        edit(graphic);
+        QString autosave;
+        REQUIRE(storage.autoSaveDocument(&graphic, nullptr, autosave));
+        CHECK(autosave == dir.filePath("#" + QFileInfo(path).fileName()));
+        CHECK_FALSE(QFileInfo(autosave).isHidden());
+        REQUIRE(storage.backupDrawingFile(path));
+        CHECK(contents(path + "~") == original);
+        CHECK_FALSE(QFileInfo(path + "~").isHidden());
+    }
+    SECTION("a custom hidden prefix is not prefixed twice") {
+        hidden.set(true);
+        prefix.set(QStringLiteral(".recovery-"));
+        CHECK(storage.createAutoSaveFileName(QFileInfo(path)) == dir.filePath(".recovery-" + QFileInfo(path).fileName()));
+        REQUIRE(storage.backupDrawingFile(path, ".bak"));
+#ifdef Q_OS_WIN
+        const QString backup = path + ".bak";
+#else
+        const QString backup = dir.filePath("." + QFileInfo(path).fileName() + ".bak");
+#endif
+        CHECK(contents(backup) == original);
+        CHECK(QFileInfo(backup).isHidden());
+    }
+    SECTION("an empty autosave prefix never selects the drawing itself") {
+        prefix.set(QString());
+        CHECK(storage.createAutoSaveFileName(QFileInfo(path)) != path);
+    }
+    SECTION("a Unicode backup path is hidden without changing its contents") {
+        hidden.set(true);
+        const QString unicodePath = dir.filePath(QStringLiteral("drawing \u4e2d\u6587.dxf"));
+        REQUIRE(QFile::copy(path, unicodePath));
+        REQUIRE(storage.backupDrawingFile(unicodePath));
+#ifdef Q_OS_WIN
+        const QString backup = unicodePath + "~";
+#else
+        const QString backup = dir.filePath("." + QFileInfo(unicodePath).fileName() + "~");
+#endif
+        CHECK(contents(backup) == original);
+        CHECK(QFileInfo(backup).isHidden());
+        CHECK(contents(unicodePath) == original);
+    }
+    SECTION("an empty backup suffix never removes the drawing") {
+        CHECK_FALSE(storage.backupDrawingFile(path, QString()));
+        CHECK(contents(path) == original);
+    }
+}
+
+TEST_CASE("Backup visibility preference defaults to hidden and reflects stored settings", "[documentsstorage][backup-visibility]") {
+    (void)lc::test::application();
+    SettingGuard hidden{RS_SETTINGS, "Defaults", "HideBackupFiles"};
+    {
+        const auto group = RS_SETTINGS->beginGroupGuard("Defaults");
+        RS_SETTINGS->remove("HideBackupFiles");
+    }
+    QG_DlgOptionsGeneral preferences;
+    auto* checkbox = preferences.findChild<QCheckBox*>("cbHideBackupFiles");
+    REQUIRE(checkbox != nullptr);
+    CHECK(checkbox->isChecked());
+    const auto* group = checkbox->parentWidget();
+    const auto* layout = qobject_cast<QGridLayout*>(group->parentWidget()->layout());
+    REQUIRE(layout != nullptr);
+    const int groupIndex = layout->indexOf(group);
+    REQUIRE(groupIndex >= 0);
+    int row = 0, column = 0, rows = 0, columns = 0;
+    layout->getItemPosition(groupIndex, &row, &column, &rows, &columns);
+    const QRect autosaveCells(column, row, columns, rows);
+    for (int i = 0; i < layout->count(); ++i) {
+        if (layout->itemAt(i)->widget() != group) {
+            layout->getItemPosition(i, &row, &column, &rows, &columns);
+            CHECK_FALSE(autosaveCells.intersects(QRect(column, row, columns, rows)));
+        }
+    }
+    hidden.set(false);
+    const QG_DlgOptionsGeneral reopened;
+    const auto* visibleCheckbox = reopened.findChild<QCheckBox*>("cbHideBackupFiles");
+    REQUIRE(visibleCheckbox != nullptr);
+    CHECK_FALSE(visibleCheckbox->isChecked());
+}
+
 TEST_CASE("Autosave writes DXF to a file named *.dxf", "[documentsstorage][autosave]") {
     ensureApp();
     QTemporaryDir dir;

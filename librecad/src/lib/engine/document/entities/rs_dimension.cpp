@@ -172,7 +172,18 @@ RS_Dimension::RS_Dimension(RS_EntityContainer* parent, const RS_DimensionData& d
 }
 
 RS_Dimension::RS_Dimension(const RS_Dimension& entity)
-    : RS_EntityContainer(entity, false), m_dimGenericData(std::move(entity.getGenericData())) {
+    : RS_EntityContainer(entity), m_dimGenericData(entity.getGenericData()), m_dimMeasurement(entity.m_dimMeasurement) {
+    // Arrow clones rebuild their shape; retain each component's drawing properties.
+    for (unsigned i = 0; i < count(); ++i) {
+        RS_Entity* copy = entityAt(i);
+        const RS_Entity* source = entity.entityAt(i);
+        if (copy == nullptr || copy == source) {
+            continue;
+        }
+        copy->setPen(source->getPen(false));
+        copy->setLayer(source->getLayer(false));
+        copy->setFlags(source->getFlags() & ~RS2::FlagsTransient);
+    }
 }
 
 RS_Vector RS_Dimension::doGetNearestRef(const RS_Vector& coord, double* dist) const {

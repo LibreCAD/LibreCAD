@@ -2724,6 +2724,7 @@ if (BUILD_TESTS)
         librecad/src/ui/main/tests/lc_mdiwindow_close_tests.cpp
         librecad/src/ui/main/tests/lc_docklayout_tests.cpp
         librecad/src/ui/components/pen/tests/qg_widgetpen_tests.cpp
+        librecad/src/ui/dialogs/tests/lc_dialog_tests.cpp
         librecad/src/ui/dock_widgets/layers_tree/tests/lc_layertreewidget_tests.cpp
         librecad/src/plugins/tests/qc_actiongetselect_tests.cpp
         librecad/src/lib/gui/tests/lc_graphicviewrenderer_tests.cpp
@@ -3040,6 +3041,9 @@ if (BUILD_TESTS)
     add_librecad_filter_micro_test(
         librecad_draw_fast_tests
         librecad/src/lib/creation/tests/lc_action_draw_fast_tests.cpp)
+    add_librecad_filter_micro_test(
+        librecad_snapper_tests
+        librecad/src/lib/actions/tests/lc_snappercatchtests.cpp)
     add_librecad_filter_micro_test(
         librecad_snake_action_tests
         librecad/src/lib/creation/tests/lc_action_draw_line_snake_tests.cpp)

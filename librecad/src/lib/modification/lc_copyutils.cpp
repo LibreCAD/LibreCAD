@@ -153,6 +153,9 @@ void LC_CopyUtils::doCopyEntity(RS_Entity* e, const RS_Vector& ref, RS_Graphic* 
     doCopyEntityLayer(clone, clipboardGraphic, e->getGraphic());
     if (isInsert) {
         doCopyInsert(insert, clipboardGraphic, 0);
+        // The clone's children are still the source's, on its layers: rebuild
+        // them from the clipboard's own block. The paste preview draws them.
+        clone->update();
     }
 }
 
@@ -170,6 +173,7 @@ void LC_CopyUtils::doCopyEntityLayer(RS_Entity* entity, RS_Graphic* graphic, RS_
         const RS_LayerList* sourceLayers = source != nullptr ? source->getLayerList() : nullptr;
         if (sourceLayers == nullptr || !sourceLayers->contains(layer)) {
             layer = nullptr;
+            entity->setLayer(nullptr); // and the copy must not take it into the other drawing
         }
     }
     if (layer != nullptr) {
@@ -180,11 +184,11 @@ void LC_CopyUtils::doCopyEntityLayer(RS_Entity* entity, RS_Graphic* graphic, RS_
         }
         entity->setLayer(ownLayer);
     }
-    // An INSERT's own children are its cached, derived expansion. update()
-    // regenerates them once the insert is added to the destination graphic,
-    // resolved against the destination's own copy of the block, so
-    // recursing into them here would only repeat the dangling-pointer risk
-    // above for no benefit.
+    // An INSERT's own children are its cached, derived expansion. They are
+    // not translated here: whoever puts the insert into the destination
+    // graphic rebuilds them with update(), from the destination's own copy
+    // of the block and on its layers (an undo section does for an entity it
+    // adds, doCopyBlock() for the inserts of a block).
     if (entity->isContainer() && entity->rtti() != RS2::EntityInsert
         && static_cast<RS_EntityContainer*>(entity)->isOwner()) {
         for (RS_Entity* child : *static_cast<RS_EntityContainer*>(entity)) {
@@ -215,6 +219,10 @@ void LC_CopyUtils::doCopyBlock(const RS_Block* block, RS_Graphic* graphic, const
             doCopyInsert(static_cast<const RS_Insert*>(e), graphic, provenance);
         }
     }
+    // The inserts in the copy came with their expansions, built from the
+    // source's blocks and on its layers, and nothing rebuilds those of a
+    // block definition later: do it now that the blocks they insert are here.
+    blockClone->updateInserts();
 }
 
 void LC_CopyUtils::doCopyInsert(const RS_Insert* insert, RS_Graphic* graphic, const unsigned provenance) {

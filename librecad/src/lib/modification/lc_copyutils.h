@@ -52,9 +52,11 @@ namespace LC_CopyUtils {
     void paste(const RS_PasteData& data, RS_Graphic* graphic, LC_DocumentModificationBatch& ctx);
     /**
      * Puts the entity and its owned descendants on the graphic's layers of the same names, adding missing ones.
+     * The children of an INSERT are left as they are: the caller rebuilds them with update() once the insert
+     * and its block are in the graphic.
      * @param source The graphic entity's (and its descendants') layer pointers were copied from. Used to tell a
      *   live layer pointer from one that source has since deleted (RS_Graphic::removeLayer() does not sweep every
-     *   descendant of a nested INSERT), so it is never dereferenced.
+     *   descendant of a nested INSERT), which is cleared and never dereferenced.
      */
     void doCopyEntityLayer(RS_Entity* entity, RS_Graphic* graphic, RS_Graphic* source);
     /**

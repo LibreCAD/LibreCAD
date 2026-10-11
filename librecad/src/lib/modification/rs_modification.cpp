@@ -390,6 +390,8 @@ void RS_Modification::libraryInsert(const LC_LibraryInsertData& data, RS_Graphic
         }
 
         destination->addBlock(block);
+        // as in LC_CopyUtils::doCopyBlock(): the expansions of its inserts are the library drawing's
+        block->updateInserts();
     }
 
     // fixme - blocks - outer Insert carries all transformations (scale + angle)

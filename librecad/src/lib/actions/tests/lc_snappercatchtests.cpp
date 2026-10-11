@@ -24,8 +24,14 @@
 
 #include <algorithm>
 #include <cmath>
+#include <iterator>
+#include <memory>
 #include <random>
+#include <utility>
 #include <vector>
+
+#include <QImage>
+#include <QMouseEvent>
 
 #include "lc_action_draw_line_snake.h"
 #include "lc_action_draw_rectangle_2points.h"
@@ -36,19 +42,24 @@
 #include "lc_action_spline_from_polyline.h"
 #include "lc_actiontestsupport.h"
 #include "lc_containertraverser.h"
+#include "lc_graphicviewrenderer.h"
 #include "lc_hyperbola.h"
+#include "lc_highlight.h"
 #include "lc_overlayentitiescontainer.h"
 #include "rs_arc.h"
+#include "rs_actiondefault.h"
 #include "rs_block.h"
 #include "rs_circle.h"
 #include "rs_constructionline.h"
 #include "rs_dimlinear.h"
 #include "rs_ellipse.h"
+#include "rs_grid.h"
 #include "rs_hatch.h"
 #include "rs_information.h"
 #include "rs_insert.h"
 #include "rs_layer.h"
 #include "rs_layerlist.h"
+#include "rs_leader.h"
 #include "rs_line.h"
 #include "rs_math.h"
 #include "rs_modification.h"
@@ -84,6 +95,53 @@ public:
         RS_Entity* entity = nullptr;
         return RS_Snapper::snapOnEntity(coord, &entity);
     }
+};
+
+class HoverProbe final : public RS_ActionDefault {
+public:
+    explicit HoverProbe(LC_ActionContext* context) : RS_ActionDefault(context) {
+        m_viewport->setSize(m_graphicView->getWidth(), m_graphicView->getHeight());
+        m_highlightEntitiesOnHover = true;
+    }
+
+    using RS_PreviewActionInterface::m_highlight;
+
+    void showGrips(bool enabled) { m_highlightEntitiesRefPointsOnHover = enabled; }
+    void resetToNeutral() { goToNeutralStatus(); }
+    void resetInheritedHighlights() { deleteHighlights(); }
+};
+
+struct GeometryCalls {
+    unsigned clones = 0;
+    unsigned borders = 0;
+    unsigned distances = 0;
+};
+
+class MeasuredLine final : public RS_Line {
+public:
+    MeasuredLine(RS_EntityContainer* parent, const RS_Vector& from, const RS_Vector& to,
+                 std::shared_ptr<GeometryCalls> calls)
+        : RS_Line(parent, from, to), m_calls(std::move(calls)) {}
+
+    RS_Entity* clone() const override {
+        ++m_calls->clones;
+        return new MeasuredLine(*this);
+    }
+
+    void calculateBorders() override {
+        ++m_calls->borders;
+        RS_Line::calculateBorders();
+    }
+
+protected:
+    double doGetDistanceToPoint(const RS_Vector& point, RS_Entity** entity,
+                                RS2::ResolveLevel level, double solidDist) const override {
+        ++m_calls->distances;
+        return RS_Line::doGetDistanceToPoint(point, entity, level, solidDist);
+    }
+
+private:
+    std::shared_ptr<GeometryCalls> m_calls;
 };
 
 class RoundProbe final : public LC_ActionModifyRound {
@@ -183,6 +241,23 @@ RS_Insert* addInsert(RS_Graphic& graphic, const QString& name, const RS_Vector& 
     return insert;
 }
 
+RS_Insert* addMeasuredInsert(RS_Graphic& graphic, const std::shared_ptr<GeometryCalls>& calls) {
+    RS_Block* block = addBlock(graphic, QStringLiteral("measured"));
+    for (int i = 0; i < 200; ++i) {
+        const RS_Vector start(10.0 * (i % 20), 10.0 * (i / 20));
+        block->addEntity(new MeasuredLine(block, start, start + RS_Vector(4.0, 0.0), calls));
+    }
+    return addInsert(graphic, block->getName(), RS_Vector(0.0, 0.0));
+}
+
+void hoverAt(ActionFixture<HoverProbe>& fixture, const RS_Vector& point,
+             Qt::KeyboardModifiers modifiers = Qt::NoModifier) {
+    auto* viewport = fixture.m_view.getViewPort();
+    const QPointF gui(viewport->toGuiX(point.x), viewport->toGuiY(point.y));
+    QMouseEvent event(QEvent::MouseMove, gui, gui, Qt::NoButton, Qt::NoButton, modifiers);
+    fixture.m_action->mouseMoveEvent(&event);
+}
+
 RS_Hatch* addSolidSquare(RS_Graphic& graphic, const RS_Vector& corner, const double size) {
     auto* hatch = new RS_Hatch(&graphic, RS_HatchData(true, 1.0, 0.0, QStringLiteral("SOLID")));
     auto* loop = new RS_EntityContainer(hatch);
@@ -227,7 +302,427 @@ RS_Entity* nearestMeasuringAll(const RS_EntityContainer& drawing, const RS_Vecto
     return all.getNearestEntity(pos, &distance, level);
 }
 
+void checkDisplayedCopy(const RS_Entity& source, const RS_Entity& copy, bool checkPen = true) {
+    CAPTURE(source.rtti());
+    CHECK(copy.getId() != source.getId());
+    CHECK(copy.rtti() == source.rtti());
+    CHECK(copy.getMin().valid == source.getMin().valid);
+    CHECK(copy.getMax().valid == source.getMax().valid);
+    if (source.getMin().valid) {
+        CHECK(copy.getMin() == source.getMin());
+    }
+    if (source.getMax().valid) {
+        CHECK(copy.getMax() == source.getMax());
+    }
+    CHECK(copy.getFlag(RS2::FlagVisible) == source.getFlag(RS2::FlagVisible));
+    CHECK(copy.getLayer() == source.getLayer());
+    if (checkPen) {
+        CHECK(copy.getPen(false) == source.getPen(false));
+    }
+    if (source.isContainer()) {
+        const auto& original = static_cast<const RS_EntityContainer&>(source);
+        const auto& cloned = static_cast<const RS_EntityContainer&>(copy);
+        REQUIRE(cloned.count() == original.count());
+        for (unsigned i = 0; i < original.count(); ++i) {
+            REQUIRE(cloned.entityAt(i)->getParent() == &cloned);
+            checkDisplayedCopy(*original.entityAt(i), *cloned.entityAt(i));
+        }
+    }
+}
+
 } // namespace
+
+TEST_CASE("highlighting an insert copies its displayed expansion without rebuilding borders", "[hover][snap][insert]") {
+    ActionFixture<SnapperProbe> f;
+    const auto calls = std::make_shared<GeometryCalls>();
+    RS_Insert* insert = addMeasuredInsert(f.m_graphic, calls);
+
+    SECTION("plain insert") {}
+    SECTION("mirrored rotated nonuniform array") {
+        insert->setScale(RS_Vector(-2.0, 0.5));
+        insert->setAngle(0.37);
+        insert->setCols(2);
+        insert->setRows(2);
+        insert->setSpacing(RS_Vector(250.0, 150.0));
+        insert->update();
+    }
+    SECTION("nested insert") {
+        RS_Block* outer = addBlock(f.m_graphic, QStringLiteral("outer"));
+        outer->addEntity(new RS_Insert(outer, RS_InsertData(insert->getName(), RS_Vector(20.0, 30.0),
+                         RS_Vector(-1.0, 1.0), 0.2, 1, 1, RS_Vector(0.0, 0.0))));
+        insert = addInsert(f.m_graphic, outer->getName(), RS_Vector(100.0, 50.0));
+    }
+    const unsigned originalCount = insert->count();
+    *calls = {};
+
+    LC_Highlight highlight;
+    highlight.addEntity(insert, false);
+    REQUIRE(highlight.count() == 1);
+    auto* clone = static_cast<RS_Insert*>(highlight.entityAt(0));
+    REQUIRE(clone->count() == insert->count());
+    CHECK(clone->getMin() == insert->getMin());
+    CHECK(clone->getMax() == insert->getMax());
+    CHECK(calls->clones == insert->count());
+    CHECK(calls->borders == 0);
+    for (unsigned i = 0; i < insert->count(); ++i) {
+        CHECK(clone->entityAt(i) != insert->entityAt(i));
+        CHECK(clone->entityAt(i)->getParent() == clone);
+        CHECK(clone->entityAt(i)->getStartpoint() == insert->entityAt(i)->getStartpoint());
+        CHECK(clone->entityAt(i)->getEndpoint() == insert->entityAt(i)->getEndpoint());
+        CHECK(clone->entityAt(i)->getLayer() == insert->entityAt(i)->getLayer());
+        CHECK(clone->entityAt(i)->getPen(false) == insert->entityAt(i)->getPen(false));
+        CHECK(clone->entityAt(i)->isVisible() == insert->entityAt(i)->isVisible());
+    }
+    highlight.clear();
+    CHECK(insert->count() == originalCount);
+}
+
+TEST_CASE("block highlights retain dimension geometry and leader state", "[hover][insert][dimension]") {
+    ActionFixture<HoverProbe> f;
+    f.m_graphic.addVariable("$DIMASZ", 10.0, 40);
+    f.m_graphic.addVariable("$DIMSCALE", 3.0, 40);
+    RS_Block* block = addBlock(f.m_graphic, QStringLiteral("dimensioned"));
+    RS_DimensionData data;
+    data.definitionPoint = RS_Vector(50.0, 20.0);
+    data.middleOfText = RS_Vector(50.0, 22.0);
+    data.autoText = true;
+    auto* dimension = new RS_DimLinear(block, data,
+        RS_DimLinearData{RS_Vector(0.0, 0.0), RS_Vector(100.0, 0.0), 0.0, 0.0});
+    block->addEntity(dimension);
+    auto pen = dimension->getPen(false);
+    pen.setColor(RS_Color(20, 100, 180));
+    dimension->setPen(pen);
+    dimension->update();
+    auto* leader = new RS_Leader(block, RS_LeaderData(true, QStringLiteral("standard")));
+    block->addEntity(leader);
+    leader->addVertex(RS_Vector(0.0, 0.0));
+    leader->addVertex(RS_Vector(100.0, 50.0));
+    leader->addVertex(RS_Vector(200.0, 50.0));
+    leader->update();
+    auto* insert = addInsert(f.m_graphic, block->getName(), RS_Vector(0.0, 0.0));
+
+    SECTION("plain block") {}
+    SECTION("mirrored rotated nonuniform array") {
+        insert->setScale(RS_Vector(-2.0, 0.5));
+        insert->setAngle(0.37);
+        insert->setCols(2);
+        insert->setRows(2);
+        insert->setSpacing(RS_Vector(250.0, 150.0));
+        insert->update();
+    }
+    SECTION("nested block") {
+        RS_Block* outer = addBlock(f.m_graphic, QStringLiteral("outer"));
+        outer->addEntity(new RS_Insert(outer, RS_InsertData(block->getName(), RS_Vector(20.0, 30.0),
+                         RS_Vector(-1.0, 1.0), 0.2, 1, 1, RS_Vector(0.0, 0.0))));
+        insert = addInsert(f.m_graphic, outer->getName(), RS_Vector(100.0, 50.0));
+    }
+    SECTION("hidden leader") {
+        for (RS_Entity* child : *insert) {
+            if (child->rtti() == RS2::EntityDimLeader) {
+                child->setVisible(false);
+            }
+        }
+    }
+    SECTION("hidden dimension") {
+        for (RS_Entity* child : *insert) {
+            if (child->rtti() == RS2::EntityDimLinear) {
+                child->setVisible(false);
+            }
+        }
+    }
+
+    LC_Highlight highlight;
+    highlight.addEntity(insert, false);
+    REQUIRE(highlight.count() == 1);
+    REQUIRE(insert->countDeep() > insert->count());
+    checkDisplayedCopy(*insert, *highlight.entityAt(0), false);
+
+    // Clearing an owning highlight must not remove the source's generated children.
+    const unsigned originalCount = insert->countDeep();
+    highlight.clear();
+    CHECK(insert->countDeep() == originalCount);
+}
+
+TEST_CASE("block highlight keeps hatch bounds after contour revalidation fails", "[hover][insert][hatch]") {
+    ActionFixture<SnapperProbe> f;
+    RS_Block* block = addBlock(f.m_graphic, QStringLiteral("almost_closed"));
+    auto* hatch = new RS_Hatch(block, RS_HatchData(true, 1.0, 0.0, QStringLiteral("SOLID")));
+    auto* loop = new RS_EntityContainer(hatch);
+    const RS_Vector points[] = {{0.0, 0.0}, {10.0, 0.0}, {10.0, 10.0}, {0.0, 10.0}, {0.0, 4e-9}};
+    for (unsigned i = 1; i < std::size(points); ++i) {
+        loop->addEntity(new RS_Line(loop, points[i - 1], points[i]));
+    }
+    hatch->addEntity(loop);
+    block->addEntity(hatch);
+    hatch->update();
+    REQUIRE(hatch->countLoops() == 1);
+    auto* insert = addInsert(f.m_graphic, block->getName(), RS_Vector(0.0, 0.0));
+    insert->setScale(RS_Vector(3.0, 3.0));
+    insert->update();
+    const auto* source = static_cast<const RS_Hatch*>(insert->entityAt(0));
+    REQUIRE(source->countLoops() == 1);
+    LC_Highlight highlight;
+    highlight.addEntity(insert, false);
+    const auto* copy = static_cast<const RS_Hatch*>(
+        static_cast<const RS_Insert*>(highlight.entityAt(0))->entityAt(0));
+    CHECK(copy->countLoops() == source->countLoops());
+    CHECK(copy->getMin() == source->getMin());
+    CHECK(copy->getMax() == source->getMax());
+}
+
+TEST_CASE("nearest queries do not rescan unused block definitions for each insert", "[snap][catch][insert]") {
+    unsigned typeQueries = 0;
+    ActionFixture<SnapperProbe> f;
+    class CountedLine final : public RS_Line {
+    public:
+        CountedLine(RS_EntityContainer* parent, unsigned& queries)
+            : RS_Line(parent, RS_Vector(0.0, 0.0), RS_Vector(1.0, 1.0)), m_queries(queries) {}
+        RS2::EntityType rtti() const override { ++m_queries; return RS2::EntityLine; }
+    private:
+        unsigned& m_queries;
+    };
+    RS_Block* block = addBlock(f.m_graphic, QStringLiteral("frame"));
+    const RS_Vector rectangles[][2] = {
+        {{0.0, 0.0}, {100.0, 100.0}}, {{2.0, 2.0}, {20.0, 8.0}}, {{80.0, 92.0}, {98.0, 98.0}}
+    };
+    for (const auto& rectangle : rectangles) {
+        const RS_Vector& min = rectangle[0];
+        const RS_Vector& max = rectangle[1];
+        auto* outline = new RS_Polyline(block);
+        for (const RS_Vector& corner : {min, RS_Vector(max.x, min.y), max, RS_Vector(min.x, max.y), min}) {
+            outline->addVertex(corner);
+        }
+        block->addEntity(outline);
+    }
+    RS_Block* unused = addBlock(f.m_graphic, QStringLiteral("unused"));
+    unused->addEntity(new CountedLine(unused, typeQueries));
+    for (int i = 0; i < 20; ++i) {
+        addInsert(f.m_graphic, block->getName(), RS_Vector(0.3 * i, 0.2 * i));
+    }
+    for (const auto level : {RS2::ResolveNone, RS2::ResolveAll, RS2::ResolveAllButTexts}) {
+        double distance = 0.0;
+        typeQueries = 0;
+        REQUIRE(f.m_graphic.getNearestEntity(RS_Vector(50.0, 50.0), &distance, level) != nullptr);
+        CHECK(typeQueries <= 1);
+    }
+}
+
+TEST_CASE("hover cache recovers after inherited highlight cleanup", "[hover][snap][insert]") {
+    ActionFixture<HoverProbe> f;
+    const auto calls = std::make_shared<GeometryCalls>();
+    addMeasuredInsert(f.m_graphic, calls);
+    hoverAt(f, RS_Vector(1.0, 0.0));
+    REQUIRE(f.m_action->m_highlight->count() == 1);
+    const auto previousId = f.m_action->m_highlight->entityAt(0)->getId();
+    SECTION("neutral-state cleanup") { f.m_action->resetToNeutral(); }
+    SECTION("base-class cleanup") { f.m_action->resetInheritedHighlights(); }
+    CHECK(f.m_action->m_highlight->isEmpty());
+    hoverAt(f, RS_Vector(1.0, 0.0));
+    REQUIRE(f.m_action->m_highlight->count() == 1);
+    CHECK(f.m_action->m_highlight->entityAt(0)->getId() != previousId);
+}
+
+TEST_CASE("stationary block hover reuses its clone and measures geometry only once", "[hover][snap][insert]") {
+    ActionFixture<HoverProbe> f;
+    const auto calls = std::make_shared<GeometryCalls>();
+    RS_Insert* insert = addMeasuredInsert(f.m_graphic, calls);
+    *calls = {};
+
+    hoverAt(f, RS_Vector(1.0, 0.0));
+    REQUIRE(f.m_action->m_highlight->count() == 1);
+    const auto cloneId = f.m_action->m_highlight->entityAt(0)->getId();
+    CHECK(calls->clones == insert->count());
+    CHECK(calls->borders == 0);
+    CHECK(calls->distances == insert->count());
+
+    *calls = {};
+    f.m_view.redraw(RS2::RedrawOverlay);
+    hoverAt(f, RS_Vector(2.0, 0.0));
+    REQUIRE(f.m_action->m_highlight->count() == 1);
+    CHECK(f.m_action->m_highlight->entityAt(0)->getId() == cloneId);
+    CHECK(calls->clones == 0);
+    CHECK(calls->borders == 0);
+    CHECK(calls->distances == insert->count());
+
+    hoverAt(f, RS_Vector(-50.0, -50.0));
+    CHECK(f.m_action->m_highlight->isEmpty());
+}
+
+TEST_CASE("block hover invalidates on drawing changes and Ctrl child resolution", "[hover][snap][insert]") {
+    ActionFixture<HoverProbe> f;
+    const auto calls = std::make_shared<GeometryCalls>();
+    RS_Insert* insert = addMeasuredInsert(f.m_graphic, calls);
+    hoverAt(f, RS_Vector(1.0, 0.0));
+    REQUIRE(f.m_action->m_highlight->count() == 1);
+
+    SECTION("in-place geometry changes") {
+        insert->move(RS_Vector(0.0, 5.0));
+        f.m_view.redraw(RS2::RedrawDrawing);
+        CHECK(f.m_action->m_highlight->isEmpty());
+        hoverAt(f, RS_Vector(1.0, 5.0));
+        REQUIRE(f.m_action->m_highlight->count() == 1);
+        CHECK(f.m_action->m_highlight->entityAt(0)->getMin() == insert->getMin());
+    }
+    SECTION("Ctrl resolves the child, then releasing Ctrl restores the insert") {
+        hoverAt(f, RS_Vector(1.0, 0.0), Qt::ControlModifier);
+        REQUIRE(f.m_action->m_highlight->count() == 1);
+        CHECK(f.m_action->m_highlight->entityAt(0)->rtti() == RS2::EntityLine);
+        hoverAt(f, RS_Vector(1.0, 0.0));
+        REQUIRE(f.m_action->m_highlight->count() == 1);
+        CHECK(f.m_action->m_highlight->entityAt(0)->rtti() == RS2::EntityInsert);
+    }
+    SECTION("grips survive overlay painting") {
+        f.m_action->showGrips(true);
+        hoverAt(f, RS_Vector(1.0, 0.0));
+        REQUIRE(f.m_action->m_highlight->count() == 1);
+        auto* clone = f.m_action->m_highlight->entityAt(0);
+        CHECK(clone->isSelected());
+        clone->clearSelectionFlag();
+        *calls = {};
+        hoverAt(f, RS_Vector(1.0, 0.0));
+        CHECK(clone->isSelected());
+        CHECK(calls->clones == 0);
+    }
+    SECTION("hiding the source removes the highlight") {
+        insert->setVisible(false);
+        hoverAt(f, RS_Vector(1.0, 0.0));
+        CHECK(f.m_action->m_highlight->isEmpty());
+    }
+    SECTION("locking the layer removes the highlight") {
+        insert->getLayer()->lock(true);
+        hoverAt(f, RS_Vector(1.0, 0.0));
+        CHECK(f.m_action->m_highlight->isEmpty());
+    }
+    SECTION("suspending the action removes the highlight") {
+        f.m_action->suspend();
+        CHECK(f.m_action->m_highlight->isEmpty());
+    }
+    SECTION("an inactive default action leaves other overlays alone") {
+        f.m_action->clearHighLighting();
+        RS_Line overlayLine(nullptr, RS_Vector(0.0, 0.0), RS_Vector(1.0, 0.0));
+        auto* overlay = f.m_view.getViewPort()->getOverlayEntitiesContainer(RS2::OverlayEffects);
+        overlay->setOwner(false);
+        overlay->addEntity(&overlayLine);
+        f.m_view.redraw(RS2::RedrawDrawing);
+        CHECK(overlay->count() == 1);
+        overlay->clear();
+    }
+}
+
+TEST_CASE("block hover respects screen tolerance at different zoom levels", "[hover][snap][insert]") {
+    ActionFixture<HoverProbe> f;
+    auto* viewport = f.m_view.getViewPort();
+    REQUIRE(viewport->getWidth() == 640);
+    REQUIRE(viewport->getHeight() == 480);
+    RS_Block* block = addBlock(f.m_graphic, QStringLiteral("tolerance"));
+    block->addEntity(new RS_Line(block, RS_Vector(100.0, 100.0), RS_Vector(200.0, 100.0)));
+    addInsert(f.m_graphic, block->getName(), RS_Vector(0.0, 0.0));
+
+    for (const double scale : {0.5, 1.0, 4.0}) {
+        CAPTURE(scale);
+        viewport->justSetOffsetAndFactor(0, 0, scale);
+        const double tolerance = viewport->toUcsDX(4);
+        hoverAt(f, RS_Vector(150.0, 100.0 + 0.75 * tolerance));
+        CHECK(f.m_action->m_highlight->count() == 1);
+        hoverAt(f, RS_Vector(150.0, 100.0 + 1.25 * tolerance));
+        CHECK(f.m_action->m_highlight->isEmpty());
+    }
+}
+
+TEST_CASE("drawing-only redraw removes cached block highlight pixels", "[hover][render][insert]") {
+    ActionFixture<HoverProbe> f;
+    LC_SET_ONE("Appearance", "ClassicRenderer", true);
+    auto* viewport = f.m_view.getViewPort();
+    viewport->getGrid()->loadSettings();
+    const auto calls = std::make_shared<GeometryCalls>();
+    auto* insert = addMeasuredInsert(f.m_graphic, calls);
+    insert->move(RS_Vector(100.0, 100.0));
+    f.m_action->showGrips(true);
+    hoverAt(f, RS_Vector(101.0, 100.0));
+    REQUIRE(f.m_action->m_highlight->count() == 1);
+
+    QImage canvas(640, 480, QImage::Format_ARGB32_Premultiplied);
+    LC_GraphicViewRenderer renderer(viewport, &canvas);
+    renderer.loadSettings();
+    renderer.render();
+    const QImage highlighted = canvas.copy();
+
+    f.m_view.redrawMethod = RS2::RedrawNone;
+    f.m_view.redraw(RS2::RedrawDrawing);
+    CHECK(f.m_action->m_highlight->isEmpty());
+    CHECK((f.m_view.redrawMethod & RS2::RedrawOverlay) != 0);
+    renderer.invalidate(f.m_view.redrawMethod);
+    renderer.render();
+    const QImage cleared = canvas.copy();
+    CHECK(cleared != highlighted);
+    renderer.invalidate(RS2::RedrawOverlay);
+    renderer.render();
+    CHECK(canvas == cleared);
+}
+
+TEST_CASE("catching retains adaptive pruning in dense drawings", "[snap][catch]") {
+    ActionFixture<SnapperProbe> f;
+    const auto calls = std::make_shared<GeometryCalls>();
+    f.m_graphic.setAutoUpdateBorders(false);
+    auto* first = new MeasuredLine(&f.m_graphic, RS_Vector(-5.0, 0.0), RS_Vector(5.0, 0.0), calls);
+    f.m_graphic.addEntity(first);
+    for (int i = 1; i < 512; ++i) {
+        const double y = 0.001 * i;
+        f.m_graphic.addEntity(new MeasuredLine(&f.m_graphic, RS_Vector(-5.0, y), RS_Vector(5.0, y), calls));
+    }
+    auto* last = first->clone();
+    f.m_graphic.addEntity(last);
+    f.m_graphic.calculateBorders();
+    *calls = {};
+
+    double distance = 0.0;
+    CHECK(f.m_action->catchEntity(RS_Vector(0.0, 0.0), RS2::ResolveNone, &distance) == last);
+    CHECK(distance == 0.0);
+    CHECK(calls->distances == 2);
+    CHECK(calls->borders == 0);
+}
+
+TEST_CASE("catching rejects distant blocks and returns the exact hit distance", "[snap][catch][insert]") {
+    ActionFixture<SnapperProbe> f;
+    const auto calls = std::make_shared<GeometryCalls>();
+    RS_Insert* insert = addMeasuredInsert(f.m_graphic, calls);
+    *calls = {};
+
+    double distance = 0.0;
+    CHECK(f.m_action->catchEntity(RS_Vector(-50.0, -50.0), RS2::ResolveNone, &distance) == nullptr);
+    *calls = {};
+    CHECK(f.m_action->catchEntity(RS_Vector(1.0, 0.5), RS2::ResolveNone, &distance) == insert);
+    CHECK(distance == Catch::Approx(0.5));
+    CHECK(calls->distances == insert->count());
+    CHECK(calls->borders == 0);
+}
+
+TEST_CASE("insert catching agrees with exhaustive geometry measurements", "[snap][catch][insert]") {
+    ActionFixture<SnapperProbe> f;
+    const auto calls = std::make_shared<GeometryCalls>();
+    RS_Insert* insert = addMeasuredInsert(f.m_graphic, calls);
+    insert->addEntity(new RS_Arc(insert, RS_ArcData(RS_Vector(-20.0, -30.0), 15.0, 0.1, 1.3, false)));
+    insert->addEntity(new RS_ConstructionLine(insert, RS_ConstructionLineData({0.0, 150.0}, {1.0, 150.0})));
+    insert->addEntity(insert->entityAt(0)->clone());
+    insert->entityAt(insert->count() - 1)->setParent(insert);
+    insert->calculateBorders();
+    insert->entityAt(199)->resetBorders();
+
+    std::mt19937 random{3015};
+    std::uniform_real_distribution<double> coordinate{-300.0, 300.0};
+    for (int i = 0; i < 250; ++i) {
+        const RS_Vector point = i < 10 ? RS_Vector(i, 0.0) : RS_Vector(coordinate(random), coordinate(random));
+        for (auto level : {RS2::ResolveNone, RS2::ResolveAll, RS2::ResolveAllButTexts}) {
+            double expectedDistance = 0.0;
+            RS_Entity* expected = nearestMeasuringAll(*insert, point, expectedDistance, level);
+            double distance = 0.0;
+            CHECK(insert->getNearestEntity(point, &distance, level) == expected);
+            CHECK(distance == expectedDistance);
+        }
+    }
+    const RS_Vector center(-20.0, -30.0);
+    CHECK(insert->getNearestCenter(center) == center);
+}
 
 TEST_CASE("Actions without an initial preview refresh the snap indicator", "[snap][cursor]") {
     LC_SET_ONE("Appearance", "indicator_lines_state", true);
