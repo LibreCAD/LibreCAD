@@ -2738,6 +2738,7 @@ if (BUILD_TESTS)
         librecad/src/main/tests/console_command_utils_tests.cpp
         librecad/src/main/tests/lc_pdfprintlooptests.cpp
         librecad/src/main/tests/lc_consoleimporttests.cpp
+        librecad/src/main/tests/lc_consolesvgexporttests.cpp
         # Shapelib safety-net tests.  shapelib sources are compiled into
         # librecad_lib (SHARED_SOURCES) since Phase 1b, so the test target
         # only needs the test file itself.
@@ -3334,6 +3335,11 @@ if (BUILD_TESTS)
             ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)
     endif()
     if (LIBRECAD_REGISTER_INTEGRATION_TESTS)
+        add_test(NAME librecad_console_svg_tests
+            COMMAND $<TARGET_FILE:librecad_lc_consolesvgexporttests>
+                "[console]" --reporter compact)
+        set_tests_properties(librecad_console_svg_tests PROPERTIES
+            ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)
         add_test(NAME librecad_dwg_fast_tests
             COMMAND $<TARGET_FILE:librecad_dwg_fast_tests>
                 ${LIBRECAD_FAST_TEST_EXCLUDES}

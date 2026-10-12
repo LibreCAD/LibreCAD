@@ -140,6 +140,8 @@ int runImageCommand(int argc, char* argv[], const ImageCommandSpec& spec) {
     appDesc << "";
     appDesc << QString("Print %1 file(s) to %2 file(s).")
                    .arg(spec.inputLabel, spec.outputLabel);
+    if (spec.outputExt == "svg")
+        appDesc << "SVG is fitted to the output canvas, not exported at 1:1 drawing-unit scale.";
     if (spec.inputExt == "dxf")
         appDesc << QString("DWG input is accepted for compatibility; prefer dwg2%1 for DWG files.")
                        .arg(spec.outputExt);
@@ -328,28 +330,36 @@ bool slotFileExport(RS_Graphic* graphic, const QString& name,
         return false;
     }
 
-    QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
+    const bool svg = format.compare(QStringLiteral("svg"), Qt::CaseInsensitive) == 0;
+    QSaveFile file{name};
+    if (!file.open(QIODevice::WriteOnly))
+        return false;
 
-    bool ret = false;
-    // set vars for normal pictures and vectors (svg)
-    const auto picture = new QPixmap(size);
-
-    const auto vector = new QSvgGenerator();
-
-    // set buffer var
-    QPaintDevice* buffer = nullptr;
-
-    if(format.toLower() != "svg") {
-        buffer = picture;
-    } else {
-        vector->setSize(size);
-        vector->setViewBox(QRectF(QPointF(0,0),size));
-        vector->setFileName(name);
-        buffer = vector;
+    QPixmap picture(svg ? QSize() : size);
+    QSvgGenerator vector;
+    QPaintDevice* buffer = &picture;
+    if (svg) {
+        vector.setSize(size);
+        vector.setViewBox(QRectF(QPointF(0, 0), size));
+        vector.setOutputDevice(&file);
+        buffer = &vector;
+    } else if (picture.isNull()) {
+        return false;
     }
 
-    // set painter with buffer
     RS_Painter painter(buffer);
+    if (!painter.isActive())
+        return false;
+
+    if (svg) {
+        // Vector detail must survive zooming, even when smaller than a pixel.
+        painter.setMinCircleDrawingRadius(0.0);
+        painter.setMinArcDrawingRadius(0.0);
+        painter.setMinEllipseMajorRadius(0.0);
+        painter.setMinEllipseMinorRadius(0.0);
+        painter.setMinLineDrawingLen(0.0);
+    }
+    QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 
     if (black) {
         painter.setBackground( Qt::black);
@@ -386,33 +396,18 @@ bool slotFileExport(RS_Graphic* graphic, const QString& name,
 
     renderer.render();
 
-    // end the picture output
-    if(format.toLower() != "svg")  {
-        const QImage img = picture->toImage();
-        // QSaveFile reports a write that fails after the file is open, and
-        // leaves an existing file alone until the new one is complete.
-        QSaveFile file{name};
-        if (file.open(QIODevice::WriteOnly)) {
-            QImageWriter iio{&file, format.toLatin1()};
-            ret = iio.write(img) && file.commit();
-        }
-    }
+    // QSvgGenerator flushes its document when painting ends, not at destruction.
+    const bool painted = painter.end();
     QApplication::restoreOverrideCursor();
+    if (!painted)
+        return false;
 
-    // GraphicView deletes painter
-    painter.end();
-
-    if (format.toLower() == "svg") {
-        // QSvgGenerator buffers the document and writes it when it is
-        // destroyed, so the outcome of the export is only known here.
-        delete vector;
-        ret = QFileInfo(name).isFile() && QFileInfo(name).size() > 0;
-    } else {
-        delete vector;
+    if (!svg) {
+        QImageWriter writer{&file, format.toLatin1()};
+        if (!writer.write(picture.toImage()))
+            return false;
     }
-    delete picture;
-
-    return ret;
+    return file.commit();
 }
 
 /////////////////

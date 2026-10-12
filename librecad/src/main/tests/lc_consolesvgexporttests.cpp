@@ -24,17 +24,26 @@
  */
 
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/generators/catch_generators.hpp>
 
 #include <QByteArray>
 #include <QFile>
 #include <QFileInfo>
+#include <QMap>
 #include <QSize>
 #include <QTemporaryDir>
+#include <QXmlStreamReader>
+
+#ifdef Q_OS_UNIX
+#include <csignal>
+#include <sys/resource.h>
+#endif
 
 #include "console_command_utils.h"
 #include "console_dxf2png.h"
 #include "lc_actiontestsupport.h"
 #include "lc_plot_settings.h"
+#include "rs_debug.h"
 #include "rs_fontlist.h"
 #include "rs_graphic.h"
 #include "rs_settings.h"
@@ -47,6 +56,7 @@ namespace {
 class SourceFonts {
 public:
     SourceFonts() {
+        RS_DEBUG->setLevel(RS_Debug::D_NOTHING);
         static bool systemReady = [] {
             RS_SYSTEM->init("LibreCAD", "tests", "librecad", "librecad_tests");
             return true;
@@ -65,33 +75,35 @@ public:
         LC_SET("Fonts", m_previous);
         RS_FONTLIST->clearFonts();
         RS_FONTLIST->init();
+        RS_DEBUG->setLevel(m_previousDebugLevel);
     }
 
 private:
     QString m_previous;
+    RS_Debug::RS_DebugLevel m_previousDebugLevel = RS_DEBUG->getLevel();
 };
 
-// A drawing with four lines framing a box and a TEXT and an MTEXT entity
-// inside it. The lines are written by every export backend; the text is
-// written only by a painter-based export: LC_MakerCamSVG has no TEXT or
-// MTEXT case and silently skips both. The text lies inside the line
-// geometry because the viewport fit is based on the borders (the text
-// entities do not extend them) and entities outside the clip are skipped.
-constexpr const char* kTextDxf =
-    "0\nSECTION\n2\nENTITIES\n"
+// A common frame keeps the viewport scale consistent across fixtures.
+constexpr const char* kFrameEntities =
     "0\nLINE\n8\n0\n10\n-10.0\n20\n-10.0\n30\n0.0\n11\n210.0\n21\n-10.0\n31\n0.0\n"
     "0\nLINE\n8\n0\n10\n210.0\n20\n-10.0\n30\n0.0\n11\n210.0\n21\n110.0\n31\n0.0\n"
     "0\nLINE\n8\n0\n10\n210.0\n20\n110.0\n30\n0.0\n11\n-10.0\n21\n110.0\n31\n0.0\n"
-    "0\nLINE\n8\n0\n10\n-10.0\n20\n110.0\n30\n0.0\n11\n-10.0\n21\n-10.0\n31\n0.0\n"
-    "0\nTEXT\n8\n0\n10\n10.0\n20\n20.0\n30\n0.0\n40\n10.0\n1\nDRAWING NUMBER 4711\n"
-    "0\nMTEXT\n8\n0\n10\n10.0\n20\n50.0\n30\n0.0\n40\n10.0\n1\nSHEET TITLE 12345\n"
-    "0\nENDSEC\n0\nEOF\n";
+    "0\nLINE\n8\n0\n10\n-10.0\n20\n110.0\n30\n0.0\n11\n-10.0\n21\n-10.0\n31\n0.0\n";
+constexpr const char* kTextEntity =
+    "0\nTEXT\n8\n0\n10\n10.0\n20\n20.0\n30\n0.0\n40\n10.0\n1\nDRAWING NUMBER 4711\n";
+constexpr const char* kMTextEntity =
+    "0\nMTEXT\n8\n0\n10\n10.0\n20\n50.0\n30\n0.0\n40\n10.0\n1\nSHEET TITLE 12345\n";
+constexpr const char* kSmallEntities =
+    "0\nCIRCLE\n8\n0\n10\n50\n20\n50\n40\n0.05\n"
+    "0\nARC\n8\n0\n10\n80\n20\n50\n40\n0.02\n50\n0\n51\n90\n"
+    "0\nELLIPSE\n8\n0\n10\n100\n20\n50\n11\n1\n21\n0\n40\n0.01\n41\n0\n42\n6.283185307179586\n"
+    "0\nLINE\n8\n0\n370\n5\n10\n120\n20\n50\n11\n120.05\n21\n50\n";
 
-QString writeFile(const QTemporaryDir& dir, const QString& name, const char* content) {
+QString writeFile(const QTemporaryDir& dir, const QString& name, const QByteArray& content) {
     const QString path = dir.filePath(name);
     QFile file{path};
     REQUIRE(file.open(QIODevice::WriteOnly));
-    REQUIRE(file.write(content) > 0);
+    REQUIRE(file.write(content) == content.size());
     return path;
 }
 
@@ -104,11 +116,61 @@ void prepareForExport(RS_Graphic& graphic) {
     graphic.fitToPage();
 }
 
-void importTextDrawing(const QTemporaryDir& dir, RS_Graphic& graphic) {
-    REQUIRE(LC_Console::importGraphic(graphic, writeFile(dir, "text.dxf", kTextDxf)));
-    CHECK(graphic.count() == 6);
+void importDrawing(const QTemporaryDir& dir, RS_Graphic& graphic, const QByteArray& entities) {
+    const QByteArray dxf = QByteArray("0\nSECTION\n2\nENTITIES\n") + kFrameEntities + entities +
+                           "0\nENDSEC\n0\nEOF\n";
+    REQUIRE(LC_Console::importGraphic(graphic, writeFile(dir, "drawing.dxf", dxf)));
     prepareForExport(graphic);
 }
+
+QByteArray readFile(const QString& path) {
+    QFile file(path);
+    REQUIRE(file.open(QIODevice::ReadOnly));
+    return file.readAll();
+}
+
+QMap<QString, int> svgElementCounts(const QByteArray& svg) {
+    QXmlStreamReader reader(svg);
+    QMap<QString, int> counts;
+    while (!reader.atEnd()) {
+        reader.readNext();
+        if (reader.isStartElement())
+            ++counts[reader.name().toString()];
+    }
+    REQUIRE_FALSE(reader.hasError());
+    REQUIRE(counts.value("svg") == 1);
+    return counts;
+}
+
+#ifdef Q_OS_UNIX
+// Restore process-wide state before Catch2 reports any failed assertions.
+class FileSizeLimit {
+public:
+    FileSizeLimit() {
+        REQUIRE(getrlimit(RLIMIT_FSIZE, &m_previous) == 0);
+        if (m_previous.rlim_max < 512)
+            SKIP("The process file-size limit is already below the test limit");
+        m_previousSignal = std::signal(SIGXFSZ, SIG_IGN);
+        REQUIRE(m_previousSignal != SIG_ERR);
+        rlimit limited = m_previous;
+        limited.rlim_cur = 512;
+        if (setrlimit(RLIMIT_FSIZE, &limited) != 0) {
+            std::signal(SIGXFSZ, m_previousSignal);
+            FAIL("Could not set the test file-size limit");
+        }
+    }
+    ~FileSizeLimit() {
+        setrlimit(RLIMIT_FSIZE, &m_previous);
+        std::signal(SIGXFSZ, m_previousSignal);
+    }
+    FileSizeLimit(const FileSizeLimit&) = delete;
+    FileSizeLimit& operator=(const FileSizeLimit&) = delete;
+
+private:
+    rlimit m_previous{};
+    void (*m_previousSignal)(int) = SIG_DFL;
+};
+#endif
 
 } // namespace
 
@@ -119,7 +181,8 @@ TEST_CASE("console SVG export reports success and writes the file", "[console][s
     REQUIRE(dir.isValid());
 
     RS_Graphic graphic;
-    importTextDrawing(dir, graphic);
+    importDrawing(dir, graphic, QByteArray(kTextEntity) + kMTextEntity);
+    REQUIRE(graphic.count() == 6);
     const QString out = dir.filePath("text.svg");
 
     CHECK(slotFileExport(&graphic, out, "SVG", QSize(1200, 800), QSize(5, 5),
@@ -135,18 +198,85 @@ TEST_CASE("console SVG export draws text", "[console][svg]") {
     REQUIRE(dir.isValid());
 
     RS_Graphic graphic;
-    importTextDrawing(dir, graphic);
+    const auto entity = GENERATE(kTextEntity, kMTextEntity);
+    importDrawing(dir, graphic, entity);
+    REQUIRE(graphic.count() == 5);
     const QString out = dir.filePath("text.svg");
 
     CHECK(slotFileExport(&graphic, out, "SVG", QSize(1200, 800), QSize(5, 5),
                           false, false));
 
-    QFile file{out};
-    REQUIRE(file.open(QIODevice::ReadOnly));
-    const QByteArray svg = file.readAll();
-
-    // The text is painted through the same RS_Painter as the raster formats,
-    // which writes the glyphs as vector paths. An export that skips text
-    // writes no path for this drawing.
-    CHECK(svg.contains("<path"));
+    // Neither the frame nor the background produces a path.
+    CHECK(svgElementCounts(readFile(out)).value("path") > 0);
 }
+
+TEST_CASE("console SVG export retains subpixel geometry", "[console][svg]") {
+    REQUIRE(lc::test::application() != nullptr);
+    SourceFonts fonts;
+    const QTemporaryDir dir;
+    REQUIRE(dir.isValid());
+    RS_Graphic graphic;
+    importDrawing(dir, graphic, kSmallEntities);
+    REQUIRE(graphic.count() == 8);
+    const QString out = dir.filePath("small.svg");
+    REQUIRE(slotFileExport(&graphic, out, "SVG", QSize(1200, 800), QSize(5, 5), false, false));
+    const auto svg = readFile(out);
+    const auto counts = svgElementCounts(svg);
+    CHECK(counts.value("circle") == 1);
+    // Qt may encode the ellipse as a path, depending on its arc parameters.
+    CHECK(counts.value("ellipse") + counts.value("path") == 2);
+    CHECK(counts.value("polyline") == 5);
+    QXmlStreamReader reader(svg);
+    bool fractionalStroke = false;
+    while (!reader.atEnd()) {
+        reader.readNext();
+        const double width = reader.attributes().value("stroke-width").toDouble();
+        fractionalStroke = fractionalStroke || (width > 0.0 && width < 1.0);
+    }
+    CHECK(fractionalStroke);
+}
+
+TEST_CASE("console image export rejects an invalid output path", "[console][svg]") {
+    REQUIRE(lc::test::application() != nullptr);
+    const QTemporaryDir dir;
+    REQUIRE(dir.isValid());
+    RS_Graphic graphic;
+    const auto format = GENERATE("SVG", "PNG");
+    CHECK_FALSE(slotFileExport(&graphic, dir.filePath("missing/output"), format,
+                              QSize(1200, 800), QSize(5, 5), false, false));
+    CHECK(QApplication::overrideCursor() == nullptr);
+}
+
+TEST_CASE("console raster export still writes a PNG", "[console][png]") {
+    REQUIRE(lc::test::application() != nullptr);
+    SourceFonts fonts;
+    const QTemporaryDir dir;
+    REQUIRE(dir.isValid());
+    RS_Graphic graphic;
+    importDrawing(dir, graphic, kTextEntity);
+    const QString out = dir.filePath("drawing.png");
+    REQUIRE(slotFileExport(&graphic, out, "PNG", QSize(1200, 800), QSize(5, 5), false, false));
+    CHECK(readFile(out).startsWith(QByteArray::fromHex("89504e470d0a1a0a")));
+}
+
+#ifdef Q_OS_UNIX
+TEST_CASE("console image export preserves existing output after a short write", "[console][svg]") {
+    REQUIRE(lc::test::application() != nullptr);
+    SourceFonts fonts;
+    const QTemporaryDir dir;
+    REQUIRE(dir.isValid());
+    RS_Graphic graphic;
+    importDrawing(dir, graphic, kSmallEntities);
+    const auto format = GENERATE("SVG", "PNG");
+    const QByteArray previous("previous nonempty export\n");
+    const QString out = writeFile(dir, "existing", previous);
+    bool result;
+    {
+        FileSizeLimit limit;
+        result = slotFileExport(&graphic, out, format, QSize(1200, 800), QSize(5, 5), false, false);
+    }
+    CHECK_FALSE(result);
+    CHECK(readFile(out) == previous);
+    CHECK(QApplication::overrideCursor() == nullptr);
+}
+#endif
