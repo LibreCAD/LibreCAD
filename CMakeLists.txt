@@ -939,6 +939,8 @@ set (SHARED_SOURCES
     librecad/src/lib/engine/document/entities/lc_textbidi.h
     librecad/src/lib/engine/document/entities/lc_textdocument.cpp
     librecad/src/lib/engine/document/entities/lc_textdocument.h
+    librecad/src/lib/engine/document/entities/lc_textentitystate.cpp
+    librecad/src/lib/engine/document/entities/lc_textentitystate.h
     librecad/src/lib/engine/document/entities/lc_textlayout.cpp
     librecad/src/lib/engine/document/entities/lc_textlayout.h
     librecad/src/lib/engine/document/entities/lc_textoutline.cpp
@@ -2863,6 +2865,20 @@ if (BUILD_TESTS)
     set_target_properties(librecad_text_profile_binding_copy_failure_tests PROPERTIES
         AUTOMOC OFF AUTOUIC OFF AUTORCC OFF)
 
+    add_executable(librecad_text_source_state_tests EXCLUDE_FROM_ALL
+        librecad/src/lib/engine/document/entities/lc_textprofile.cpp
+        librecad/src/lib/engine/document/entities/lc_textprofilebinding.cpp
+        librecad/src/lib/engine/document/entities/lc_textentitystate.cpp
+        librecad/src/lib/engine/document/entities/tests/rs_text_source_tests.cpp)
+    target_include_directories(librecad_text_source_state_tests PRIVATE
+        librecad/src/lib/engine/document/entities)
+    target_link_libraries(librecad_text_source_state_tests PRIVATE
+        Catch2::Catch2WithMain Qt6::Core)
+    target_compile_definitions(librecad_text_source_state_tests PRIVATE LC_TEXT_STATE_ONLY=1)
+    target_compile_features(librecad_text_source_state_tests PRIVATE cxx_std_17)
+    set_target_properties(librecad_text_source_state_tests PROPERTIES
+        AUTOMOC OFF AUTOUIC OFF AUTORCC OFF)
+
     add_executable(librecad_text_runs_tests EXCLUDE_FROM_ALL
         librecad/src/lib/engine/document/entities/lc_textbidi.cpp
         librecad/src/lib/engine/document/entities/lc_textdocument.cpp
@@ -3181,6 +3197,10 @@ if (BUILD_TESTS)
             LIBRECAD_TEST_DIR="${CMAKE_CURRENT_SOURCE_DIR}/librecad/src/lib/filters/tests/testdata"
         )
     endfunction()
+
+    add_librecad_filter_micro_test(
+        librecad_text_source_tests
+        librecad/src/lib/engine/document/entities/tests/rs_text_source_tests.cpp)
 
     # Keep the large corpus/diagnostic source isolated. It is an explicit
     # phase gate and should not lengthen the ordinary DWG fast lane.

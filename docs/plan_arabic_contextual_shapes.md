@@ -654,8 +654,10 @@ Maintain the progress and validation records below as implementation proceeds:
 | 2026-10-11 | P3b.1 native outline adapter | Complete | `1ed63892a` — `Add precision-bounded native text contours` | Both numeric regressions fail before correction (exit 42); isolated ON/ASan: 12,326 assertions / 8 cases; OFF: 11,460 / 7; enabled/disabled CMake applications and qmake application build pass; independent numeric review approves | Bounded native service only; complete-affine entity consumption, layout caches and release geometry gates remain pending |
 | 2026-10-11 | P5a.1 provisional profile codec | Complete | `ade6fee6f` — `Add inert versioned text profile codec` | Isolated QtCore-only ON/OFF/ASan each pass 4,544 assertions / 12 cases; enabled/disabled CMake applications and qmake application pass; strict QStringBuilder failure corrected and independently reviewed | Bounded inert codec only; owning bindings, STYLE/entity/filter integration, transport proof, schema freeze and activation remain pending |
 | 2026-10-11 | P3c.1 shared explicit layout | Complete | `7440ffc3c` — `Add source-mapped recursive OpenType text layout` | Source-provenance regression fails before correction; isolated ON/ASan: 715,036 assertions / 16 cases; OFF: 26 / 1. Registered include failure corrected; enabled/disabled CMake applications and qmake application pass; independent source/registration review approves | Bounded recursive service only; native entity adapters, caches, complete-segment fallback and independent application acceptance remain pending |
-| 2026-10-11 | P5a.2 owning profile bindings | Validated | Candidate subject: `Add owning text profile edit bindings` | Move, retained-buffer alias and copy-allocation regressions reproduced and repaired; registered ON/OFF/ASan each pass 8,150 / 22 plus both controlled allocation-failure cases; enabled/disabled CMake applications and qmake application pass; independent ownership/registration review approves | Checkpoint bounded inert binding; transport/entity/style integration and schema/activation gates remain pending |
+| 2026-10-11 | P5a.2 owning profile bindings | Complete | `a8ade2677` — `Add owning text profile edit bindings` | Move, retained-buffer alias and copy-allocation regressions reproduced and repaired; registered ON/OFF/ASan each pass 8,150 / 22 plus both controlled allocation-failure cases; enabled/disabled CMake applications and qmake application pass; independent ownership/registration review approves | Bounded inert binding checkpoint only; transport/entity/style integration and schema/activation gates remain pending |
 | 2026-10-11 | P5a.3 entity and transport authority | In progress | Uncommitted owned entity/style/filter slice | Source/profile host APIs and guarded unavailable-import state under implementation; whole-slice registered validation and independent review pending | Complete source/STYLE/namespace ownership and lifecycle tests; syntax-aware lossless cross-format caret conversion remains required, not waived by a guarded intermediate export error |
+| 2026-10-11 | P5a.3a entity source and profile state | Validated | Candidate subject: `Preserve canonical text and inert profile state on entities` | Final registered ON/OFF/ASan each pass state 322 / 7, native entities 912 / 12 and focused legacy text/bidi 541,335 / 70; enabled/disabled CMake applications and qmake application pass; independent source/registration and pre-alignment API/test review approve | Checkpoint bounded host API; filter/STYLE transport, native renderer activation and full P5 acceptance remain pending |
+| 2026-10-11 | P5a.3b syntax-aware source conversion | In progress | Uncommitted new source codec | QString/explicit-length UTF-8 candidate implemented; compiler, independent expected-output fixtures, negative/budget tests and review pending | Preserve format syntax, stacks, paragraph boundaries and exact no-op bytes while converting caret conventions; integrate only after validation |
 | 2026-10-11 | P7 execution | Planned | `55cbfc54f` and `537839cfe` — plan-only workflow checkpoints | Draft baseline, creation checkpoint, acceptance map, deep-review cadence and CI history defined; prepublication findings retain provenance and require local-contract resolution before publication. Independent plan review and scoped whitespace checks pass; no publication or PR acceptance claimed | Complete the coherent P5 candidate, reconcile existing review findings, then execute P7a and keep the records below current |
 | 2026-10-11 | P7 workflow refinement | Complete | `c956d8ca2` — `Link PR feedback to verified refinement` | Independent read-only plan review and scoped whitespace check pass; explicit P7a/P7b/P7c steps, source-linked feedback and final state reconciliation defined | Plan-only checkpoint; P7 execution remains Planned, with no push, PR creation, review completion or readiness claimed |
 
@@ -1253,6 +1255,83 @@ The intervening `c956d8ca2` changes only this plan. Host setters, STYLE lifecycl
 source serialization, namespace transport/schema freeze and runtime activation
 remain separate unfinished gates.
 
+### Entity source state validation
+
+P5a.3a adds immutable imported source/provenance and copy-on-write edit state to
+TEXT/MTEXT data without selecting a renderer. Canonical source is distinct from
+legacy decoded text and its initial alignment stripping. Imported exact UTF-8,
+original STYLE identity, marker/payload origin and inert profile authority remain
+owned through edits and copies. Duplicate or unrepresentable namespaces expose
+an unavailable current profile rather than silently inheriting STYLE defaults;
+explicit Replace/Remove may supersede that state, and reset restores it.
+
+The initial staged candidate passed registered state tests (304 assertions /
+7 cases) and native entity tests (874 / 11) in ON, OFF without FreeType and
+ASan/UBSan configurations. Complete enabled/disabled CMake application builds
+and the qmake application also passed. These builds used the coherent source
+snapshot `/private/tmp/librecad-arabic-core-index.TOns5t`, not a new entity ABI
+linked to an old application archive. Earlier private mixed-ABI native runs are
+diagnostic only and cannot establish sanitizer or native lifecycle acceptance.
+Initial configure/build/test logs remain
+`/private/tmp/librecad-arabic-entity-{on,off,asan}-{configure,build,state-tests,native-tests}.log`
+and `/private/tmp/librecad-arabic-entity-qmake-{configure,build}.log`.
+
+The raw-aware edit contract explicitly takes the generic legacy interpretation
+before stripping one leading `\A0;`, `\A1;` or `\A2;`. A final `getText()` that
+still begins with another alignment directive is not interchangeable. Independent
+review approved this clarification and the added state/TEXT/MTEXT no-op and
+raw-only-edit regressions. All nine final staged source/test/build inputs were
+compared with the isolated snapshot before starting new registered tests and
+affected CMake/qmake builds. Those runs pass state 320 / 7 and native entities
+910 / 12 in each ON/OFF/ASan lane; both CMake applications and qmake exit 0.
+The final test-only cleanup supplies pre-alignment input in two older helpers
+and adds a moved-state nested-baseline assertion. Independent re-review approves;
+the final registered reruns pass state 322 / 7 and native entities 912 / 12 in
+all three lanes. Each lane also passes the existing unfiltered native text/bidi
+suite: 541,335 assertions / 70 cases. Processes 7829, 11719, 63542, 64274, 63726
+and 94562 exit 0. These tests link a header-consistent application library.
+
+Explicitly build `librecad_text_source_state_tests`, `librecad_text_source_tests`
+and `librecad_text_bidi_tests` with `cmake --build ... --target ... -j3`, then
+invoke their unfiltered binaries; native targets use `QT_QPA_PLATFORM=offscreen`.
+Final test/build logs are
+`/private/tmp/librecad-arabic-entity-accepted-{on,off,asan}-{build,state-tests,native-tests,legacy-build,legacy-tests}.log`.
+The sanitizer cache applies `-fsanitize=address,undefined -fno-omit-frame-pointer`
+to local library/test sources and sanitizer linker flags. Runs use
+`ASAN_OPTIONS=detect_leaks=0:halt_on_error=1 UBSAN_OPTIONS=halt_on_error=1`;
+external Qt/HarfBuzz/FreeType/Catch2 are not instrumented and leak acceptance is
+not claimed. The codec evidence's macOS arm64 toolchain and Qt versions apply.
+
+The final production-source CMake application builds (ON and OFF) and qmake
+build exit 0, processes 87888, 8417 and 40950. Logs remain
+`/private/tmp/librecad-arabic-entity-final-{on,off,qmake}-build.log`.
+Only the test source changed afterward: production headers, sources, build
+registrations and dependencies are identical, so application build evidence is
+carried forward explicitly, not reported as newly executed. Native adapter
+geometry, UI/undo, persistence and schema/activation acceptance remain separate
+gates.
+
+### Embedded metadata retention finding
+
+Finding `P5-SIDECAR-001` is Open. Independent baseline review at `a8ade2677`
+confirmed that the embedded ATTRIB XDATA sidecar can omit streams over 4,096
+items or containing null/INVALID slots and truncate string data at NUL. The
+codec also omits active raw DWG 1003 replay provenance; this is a confirmed
+representational gap, not a reproduced native embedded-DWG import failure.
+Its decoder rejects nonfinite raw values
+and original codes outside 1000–1071; failed extraction can then omit the entire
+attribute on export. This is an in-scope data-preservation gate, not an optional
+PR cleanup or a reason to weaken raw retention.
+
+Retain schema-1 reading and implement a versioned lossless capsule with explicit
+lengths, exact scalar bits/types, slot identity and active replay provenance.
+Encoding and decoding require checked aggregate byte/count budgets and
+transactional publication. Distinguish absent, malformed and unknown sidecars;
+never turn a decoding failure into permission to skip an attribute. A genuinely
+unrepresentable output must fail explicitly while preserving in-memory source
+and metadata. Raw retention alone does not make malformed native wire writable.
+Regression, supported-output and independent transport proof remain Pending.
+
 ## Implementation milestones
 
 Milestones remain incomplete. Follow the commit/update workflow above and record
@@ -1564,6 +1643,7 @@ candidate. Reconcile source thread state separately from finding state.
 | Finding ID | Source feedback reference | Severity and location | Reviewed head and base | Required resolution | State | Fix commit and validation |
 | --- | --- | --- | --- | --- | --- | --- |
 | Populate before P7a | Link prepublication review records; retain PR comment/review identities when available | Import prepublication findings; add PR review findings as discovered | Retain original revisions | Apply the resolution and verification rules below | Record actual state | Link existing or new evidence |
+| P5-SIDECAR-001 | Independent embedded-sidecar baseline audit; retention finding above | Mandatory data preservation; `appendInsertAttribSidecar`, `decodeInsertAttribMTextXData` and ATTRIB extraction/export | HEAD `a8ade2677`; no PR/base review claimed | Lossless compatible retention, explicit failure instead of dropped ATTRIB, regressions and independent verification | Open | No verified fix or transport acceptance yet |
 
 This template is not a claim that no findings exist. Reconcile it with slice
 reviews and failed-check records before publication. Previously verified fixes
@@ -1739,7 +1819,7 @@ publish a release or activate new defaults without the corresponding authority.
 | Before P7 ready-for-review handoff | Complete technical release checklist, final whole-diff independent review, no unresolved mandatory findings, current PR revision evidence and synchronized plan/PR; then complete P7 attestation |
 
 Build success is not test execution. The existing focused text, headless bidi,
-parser, profile codec/binding, shared layout, shaper, registry, native-outline and conformance targets are `EXCLUDE_FROM_ALL`;
+parser, profile codec/binding, entity-state, shared layout, shaper, registry, native-outline and conformance targets are `EXCLUDE_FROM_ALL`;
 explicitly build and invoke them. Ordinary CTest does not currently register
 those binaries, and registration of the broad application/integration suites
 is configurable. Inspect `ctest -N`
@@ -1757,12 +1837,15 @@ cmake --build /Users/dli/dev/LibreCAD/build-arabic-cmake --target \
   librecad_text_bidi_tests librecad_text_bidi_headless_tests \
   librecad_text_document_tests librecad_text_profile_tests librecad_text_profile_binding_tests \
   librecad_text_profile_binding_copy_failure_tests librecad_text_shaper_tests librecad_text_font_registry_tests \
+  librecad_text_source_state_tests librecad_text_source_tests \
   librecad_text_runs_tests librecad_text_runs_shaping_tests librecad_text_layout_tests librecad_text_outline_tests
 QT_QPA_PLATFORM=offscreen /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_bidi_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_bidi_headless_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_profile_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_profile_binding_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_profile_binding_copy_failure_tests
+/Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_source_state_tests
+QT_QPA_PLATFORM=offscreen /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_source_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_layout_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_document_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_shaper_tests

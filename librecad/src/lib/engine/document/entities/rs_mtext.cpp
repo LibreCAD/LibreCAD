@@ -117,7 +117,8 @@ std::ostream& operator<<(std::ostream& os, const RS_MTextData& td) {
  */
 RS_MText::RS_MText(RS_EntityContainer* parent, const RS_MTextData& d)
     : RS_EntityContainer(parent), m_data(d) {
-    RS_MText::setText(m_data.text);
+    setStyle(m_data.style);
+    applyText(m_data.text, true);
 }
 
 RS_Entity* RS_MText::clone() const {
@@ -153,25 +154,70 @@ RS_Entity* RS_MText::cloneProxy() const {
  * text are updated.
  */
 void RS_MText::setText(QString t) {
-    m_data.text = std::move(t);
+    applyText(t, false);
+}
+
+LC_TextEntityState::Error RS_MText::applyText(const QString &input, bool constructor,
+                                             const LC_TextEntityState *preparedState) {
+    const QString original = input.isNull() ? QString{} : QString(input.constData(), input.size());
+    const bool unchanged = !preparedState && m_data.textState.initialized() && original == m_data.textState.compatibilityText();
+    auto text = original;
+    auto valign = m_data.valign;
 
     // handle some special flags embedded in the text:
-    if (m_data.text.left(4) == R"(\A0;)") {
-        m_data.text = m_data.text.mid(4);
-        m_data.valign = RS_MTextData::VABottom;
+    if (!unchanged && text.left(4) == R"(\A0;)") {
+        text = text.mid(4);
+        valign = RS_MTextData::VABottom;
     }
-    else if (m_data.text.left(4) == R"(\A1;)") {
-        m_data.text = m_data.text.mid(4);
-        m_data.valign = RS_MTextData::VAMiddle;
+    else if (!unchanged && text.left(4) == R"(\A1;)") {
+        text = text.mid(4);
+        valign = RS_MTextData::VAMiddle;
     }
-    else if (m_data.text.left(4) == R"(\A2;)") {
-        m_data.text = m_data.text.mid(4);
-        m_data.valign = RS_MTextData::VATop;
+    else if (!unchanged && text.left(4) == R"(\A2;)") {
+        text = text.mid(4);
+        valign = RS_MTextData::VATop;
     }
+    auto next = preparedState ? *preparedState : m_data.textState;
+    if (!preparedState) {
+        auto failure = next.acceptLegacyText(original, text, LC_TextDocument::Syntax::MText, constructor);
+        if (failure) {
+            m_textStateError = failure;
+            return failure;
+        }
+    }
+    m_data.text = std::move(text);
+    m_data.valign = valign;
+    m_data.textState = std::move(next);
+    m_textStateError = {};
 
     if (m_data.updateMode == RS2::Update) {
         update();
     }
+    return {};
+}
+
+LC_TextEntityState::Error RS_MText::importText(const LC_TextEntityState::Import &input, const QString &compatibilityInput) {
+    if (input.convention.syntax != LC_TextDocument::Syntax::MText)
+        return {LC_TextEntityState::ErrorCode::InvalidConvention, QStringLiteral("MTEXT requires an MTEXT source convention")};
+    auto source = input;
+    if (!source.compatibilityStyle) source.compatibilityStyle = m_data.style;
+    auto next = m_data.textState;
+    auto failure = next.initializeImport(source, compatibilityInput);
+    if (failure) return failure;
+    const auto finalText = next.compatibilityText();
+    failure = next.acceptLegacyText(compatibilityInput, finalText, LC_TextDocument::Syntax::MText, true);
+    if (failure) return failure;
+    return applyText(compatibilityInput, false, &next);
+}
+
+LC_TextEntityState::Error RS_MText::setCanonicalText(const QString &source, const QString &compatibilityInput,
+                                                    const LC_TextEntityState::Convention &convention) {
+    if (convention.syntax != LC_TextDocument::Syntax::MText)
+        return {LC_TextEntityState::ErrorCode::InvalidConvention, QStringLiteral("MTEXT requires an MTEXT source convention")};
+    auto next = m_data.textState;
+    const auto failure = next.editSource(source, compatibilityInput, convention);
+    if (failure) return failure;
+    return applyText(compatibilityInput, false, &next);
 }
 
 void RS_MText::setDrawingDirection(RS_MTextData::MTextDrawingDirection direction) {
