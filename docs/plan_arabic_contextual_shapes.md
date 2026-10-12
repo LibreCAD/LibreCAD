@@ -745,8 +745,9 @@ Maintain the progress and validation records below as implementation proceeds:
 | 2026-10-11 | P7 workflow refinement | Complete | `c956d8ca2` — `Link PR feedback to verified refinement` | Independent read-only plan review and scoped whitespace check pass; explicit P7a/P7b/P7c steps, source-linked feedback and final state reconciliation defined | Plan-only checkpoint; P7 execution remains Planned, with no push, PR creation, review completion or readiness claimed |
 | 2026-10-11 | P7 execution clarification | Complete | `9e50184ff` — workflow record in capsule checkpoint | Independent read-only review and scoped whitespace checks pass; explicit creation/refinement/handoff sequence, refinement completion checkpoint and cross-format lifetime finding recorded; Pending P6 keeps handoff incomplete and the PR draft | Plan workflow only; P7a/P7b/P7c remain Planned; resolve mandatory P5 findings before authorized publication; no PR action performed |
 | 2026-10-11 | P5b.1 raw embedded metadata capsule | Complete | `9e50184ff` — `Preserve exact embedded text metadata capsules` | Independent source review approves; isolated registered ON/OFF/ASan each pass 21,535 assertions / 5 cases; enabled/disabled CMake applications, coherent sanitizer application library and qmake application build exit 0 | Bounded in-memory retention checkpoint only; full-model wire transport, filter integration and activation remain pending |
-| 2026-10-11 | P5 filter writer lifetime | Validated | Candidate subject: `Clear export writer observers on every exit` | Coherent baseline observer regression fails 5 / 108 assertions; final registered ON/OFF/ASan each pass 290 / 4; enabled/disabled CMake applications, coherent sanitizer library and qmake application build exit 0; independent production/test/registration review approves | Checkpoint bounded writer ownership/version/retry correction; raw-aware STYLE/filter and embedded transport acceptance remain pending |
+| 2026-10-11 | P5 filter writer lifetime | Complete | `37d2c614d` — `Clear export writer observers on every exit` | Coherent baseline observer regression fails 5 / 108 assertions; final registered ON/OFF/ASan each pass 290 / 4; enabled/disabled CMake applications, coherent sanitizer library and qmake application build exit 0; independent production/test/registration review approves; committed source/test identities match the validated candidate | Bounded writer ownership/version/retry checkpoint only; raw-aware STYLE/filter and embedded transport acceptance remain pending |
 | 2026-10-11 | P4 geometry prerequisites | In progress | Frozen shared pen/container/selection candidate under review | Independent review identified borrowed-descendant selection loss in atomic replacement; correction and regression requested. Private object compilation is not runtime acceptance | Preserve borrowed children and postcommit notification semantics, then coherent validation and separate checkpoint before adapter acceptance |
+| 2026-10-11 | P7 review gate maintenance | Validated | Candidate subject: `Refine Arabic PR review gates and validation recipe` | Independent complete-diff plan review, readback, shell-recipe syntax and scoped whitespace checks pass; lifetime commit identities verified; explicit-run recipe and final PR state corrected; transactional scene-integrity and matching-header review gates defined | Plan-only update; resolve checkpoint hash in the next plan record; P7a/P7b/P7c remain Planned, with no push, PR creation or readiness claimed |
 
 For every executed check, record its exact command and filters, exit status,
 result/test count, tested revision and candidate-tree state, build configuration,
@@ -1590,8 +1591,9 @@ lossless downgrade authority/source retention remains an unfinished gate.
 
 ### Cross format filter lifetime finding
 
-Finding `P5-FILTER-LIFETIME-001` is Fixed pending verification of the committed
-checkpoint identity. A final mixed-tree diagnostic on
+Finding `P5-FILTER-LIFETIME-001` is Verified at `37d2c614d`. Its committed
+production and test identities match the independently reviewed, coherently
+validated candidate below. A final mixed-tree diagnostic on
 HEAD `1636de0ce` plus the uncommitted STYLE/filter candidate crashes when one
 `RS_FilterDXFRW` exports DXF and then DWG. The `[text-filter-authority]` run
 exits 139 with 241 passing assertions and one fatal assertion across six
@@ -1606,11 +1608,9 @@ The retained diagnostic is
 filter/test SHA256 identities are
 `8678bc6d1a6043e55a98e5ff12517954400dcdef33d64a1606e6260af6f2078d` and
 `ff54e391340bae253623e6bcca340646bc9d41abbeb8dcde639773ce50182305`.
-This is failure evidence, not isolated registered acceptance. Preserve a durable
-regression, establish writer ownership on every exit path, and validate repeated
-same-instance exports in both format orders, including failure followed by retry,
-under coherent normal and sanitizer builds. Independent verification remains
-required before P5 or the PR finding can be closed.
+This is failure evidence, not isolated registered acceptance. The durable
+regression and coherent normal/sanitizer verification below establish the
+bounded repair; they do not complete the other P5 gates or PR-wide review.
 
 The minimal repair owns each writer locally with `ExportWriterScope`, clears
 the callback observer before deletion on all returns and exception unwinding,
@@ -1928,10 +1928,11 @@ review passes, parallel where useful, with these areas:
 | --- | --- |
 | Shaping and bidi | Logical versus visual order; pre-L1 shaping versus final L1 placement; X9, isolate and ZWJ/ZWNJ context across style boundaries; surrogate/grapheme/cluster mappings and Unicode/version boundaries; required substitutions and common marks; no double reversal/mirroring |
 | Geometry and layout | Advances versus ink bounds; glyph origins, mark/cursive offsets and no-ink cases; height/width/oblique plus entity transforms; alignment/anchors, tabs, stacks and line spacing; contour tolerance and native coordinate limits; repeated-update stability |
+| Entity lifecycle and scene integrity | Atomic publication of source/anchors, geometry, metrics and status; allocation/resource/numeric failures; ownership and borrowed children, selection, postcommit callbacks and reentrancy; current-layout freshness; undo/redo and durable output from both explode commands |
 | Resources and robustness | Exact saved font/face/engine policy; missing/corrupt resources and complete-segment fallback; bounded cache keys/lifetime; thread ownership; malformed Unicode/format/font input and complexity limits |
 | Compatibility and persistence | Unchanged legacy modes and shared-style isolation; profile upgrades and unknown metadata; no-op/edited DXF/DWG and embedded ATTRIB precedence; annotation/TABLE inheritance and MLeader cache; both explode paths and print/export parity |
 | Editing and user experience | Both native text dialogs and property panels; logical Unicode retained through IME preedit/commit, cursor/selection, clipboard, invisible-control edits and undo/redo; engine-rendered preview versus Qt editing font; explicit profile selection/conversion, undo and actionable resource errors; Chinese editing regressions |
-| Builds and distribution | CMake/qmake parity and explicit legacy-only builds; supported Qt/platform/architecture matrix; clean installed lookup without developer fonts/prefixes; dependency linkage, pinned font, notices/licenses and actual package contents |
+| Builds and distribution | CMake/qmake parity and explicit legacy-only builds; matching public headers across objects and archives; supported Qt/platform/architecture matrix; clean installed lookup without developer fonts/prefixes; dependency linkage, pinned font, notices/licenses and actual package contents |
 | Tests and PR quality | Independent placement/format oracles, not self-round trips alone; negative and boundary cases; actual nonzero test execution; source invariants; unexplained exclusions; prerequisite scope, documentation and evidence accuracy |
 
 Use these cross-layer cases to challenge the implementation, not just inspect
@@ -1956,6 +1957,13 @@ individual helpers:
 - Exercise repeated updates, cloning, undo/redo, cache eviction, resource
   failure and destruction under sanitizers. Record instrumented sources and
   exclusions; a font/shaper-only run is not native-adapter lifecycle coverage.
+- Inject failures before native update, transform and explode publication;
+  verify each operation's accepted source-edit contract, previous geometry,
+  metrics, selection and document ownership without partial mutation. A valid
+  no-ink result is not an unavailable or stale layout. Verify both explode
+  commands preserve appearance and effective paint through undo/redo and
+  DXF/DWG save/reopen; refusal must retain the original entity, and an in-memory
+  group alone is not proof of durable output.
 - Reuse the same filter instance for DXF then DWG and DWG then DXF, including
   repeated saves and failed export followed by retry. Check writer lifetime,
   active format/version selection, STYLE handles and unchanged source/metadata;
@@ -1968,7 +1976,11 @@ individual helpers:
 Review public headers, build/package inputs, new and modified tests, fixtures,
 licenses and prerequisite commits as well as runtime code. Reproduce selected
 checks from the committed candidate instead of relying only on the author's
-summary. For behavioral fixes, demonstrate the regression on the parent or an
+summary. When public headers or data layouts change, rebuild all affected
+consumers against the same candidate; linking new objects to an archive with
+older layouts is diagnostic work, not coherent acceptance. Record sanitizer
+instrumentation boundaries separately from source/header consistency.
+For behavioral fixes, demonstrate the regression on the parent or an
 isolated reproducer where feasible, then its success on the fix; record when
 such a before/after check is unavailable. Keep deliberately failing reproducers
 off the target branch. Compare geometry/output with the pinned reference and
@@ -2012,7 +2024,7 @@ candidate. Reconcile source thread state separately from finding state.
 | --- | --- | --- | --- | --- | --- | --- |
 | Populate before P7a | Link prepublication review records; retain PR comment/review identities when available | Import prepublication findings; add PR review findings as discovered | Retain original revisions | Apply the resolution and verification rules below | Record actual state | Link existing or new evidence |
 | P5-SIDECAR-001 | Independent embedded-sidecar baseline audit; retention finding above | Mandatory data preservation; `appendInsertAttribSidecar`, `decodeInsertAttribMTextXData` and ATTRIB extraction/export | HEAD `a8ade2677`; no PR/base review claimed | Lossless compatible retention, explicit failure instead of dropped ATTRIB, regressions and independent verification | Open | No verified fix or transport acceptance yet |
-| P5-FILTER-LIFETIME-001 | Mixed-tree diagnostic and coherent baseline/repair; cross-format lifetime finding above | Mandatory crash/lifetime failure; `RS_FilterDXFRW::fileExport`, `prepareDRWDimStyleText` and writer/version selection | Baseline `9e50184ff` plus isolated minimal repair/test identities above; no PR/base review claimed | Writer ownership on all exits, same-instance cross-format/version/retry and exception regressions with independent normal/sanitizer verification | Fixed pending verification | Candidate `Clear export writer observers on every exit`: registered ON/OFF/ASan 290 / 4 and applications pass; independent review approves; resolve checkpoint identity before final closure |
+| P5-FILTER-LIFETIME-001 | Mixed-tree diagnostic and coherent baseline/repair; cross-format lifetime finding above | Mandatory crash/lifetime failure; `RS_FilterDXFRW::fileExport`, `prepareDRWDimStyleText` and writer/version selection | Baseline `9e50184ff`; verified repair `37d2c614d` and exact source/test identities above; no PR/base review claimed | Writer ownership on all exits, same-instance cross-format/version/retry and exception regressions with independent normal/sanitizer verification | Verified | `37d2c614d`: registered ON/OFF/ASan 290 / 4 and applications pass; independent review approves and committed identities match; final whole-PR review still required |
 | P5-EMBEDDED-DXF-001 | Independent Autodesk/ezdxf wire audit; marker and namespace finding above | Mandatory format/metadata authority; `writeEmbeddedMText`, `DRW_Attrib::parseCode` and ATTRIB/ATTDEF output | HEAD `1636de0ce` plus pending ordering/test candidate; no PR/base review claimed | Canonical group-101/body/outer-XDATA ordering, external fixture/reader verification, conservative legacy reading and lossless embedded carrier | Open | Earlier self-round-trip scope result is not independent wire acceptance; corrected candidate pending |
 | P4-OWNED-REPLACE-001 | Independent shared geometry-prerequisite source review | Mandatory selection preservation; `RS_EntityContainer::replaceOwnedEntities` | Uncommitted frozen container source `16f62f6557febc04825d6cf5ddaa05bbae65a767fe7c9b25f9686421da93bfcd`; no PR review claimed | Traverse only owned retired descendants; borrowed surviving children retain selection; add regression and independent verification | Open | Source review identified nonowner traversal; correction and failing-before/runtime proof pending |
 
@@ -2207,8 +2219,9 @@ publish a release or activate new defaults without the corresponding authority.
 | Before P7 ready-for-review handoff | Complete technical release checklist, final whole-diff independent review, no unresolved mandatory findings, current PR revision evidence and synchronized plan/PR; then complete P7 attestation |
 
 Build success is not test execution. The existing focused text, headless bidi,
-parser, source/profile codecs, profile binding, entity-state, shared layout,
-shaper, registry, native-outline and conformance targets are `EXCLUDE_FROM_ALL`;
+parser, source/profile codecs, profile binding, entity-state, embedded metadata,
+filter writer lifetime, shared layout, shaper, registry, native-outline and
+conformance targets are `EXCLUDE_FROM_ALL`;
 explicitly build and invoke them. Ordinary CTest does not currently register
 those binaries, and registration of the broad application/integration suites
 is configurable. Inspect `ctest -N`
@@ -2226,6 +2239,7 @@ cmake --build /Users/dli/dev/LibreCAD/build-arabic-cmake --target \
   librecad_text_bidi_tests librecad_text_bidi_headless_tests \
   librecad_text_document_tests librecad_text_profile_tests librecad_text_profile_binding_tests \
   librecad_text_source_codec_tests \
+  librecad_embedded_text_xdata_tests librecad_filter_writer_lifetime_tests \
   librecad_text_profile_binding_copy_failure_tests librecad_text_shaper_tests librecad_text_font_registry_tests \
   librecad_text_source_state_tests librecad_text_source_tests \
   librecad_text_runs_tests librecad_text_runs_shaping_tests librecad_text_layout_tests librecad_text_outline_tests
@@ -2239,6 +2253,8 @@ QT_QPA_PLATFORM=offscreen /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_te
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_layout_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_document_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_source_codec_tests
+/Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_embedded_text_xdata_tests
+QT_QPA_PLATFORM=offscreen /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_filter_writer_lifetime_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_shaper_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_font_registry_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_runs_tests
@@ -2250,6 +2266,8 @@ Run the parser, source codec, shaper, registry, itemizer and native-outline targ
 configured `LIBRECAD_ENABLE_OPENTYPE=OFF` build; confirm the shaper/registry/integration
 disabled-path cases actually execute rather than treating their smaller counts
 as enabled coverage. The parser's backend-independent cases must still pass.
+Run the backend-independent embedded-metadata and filter writer-lifetime targets
+in both enabled and disabled configurations, and in the coherent sanitizer lane.
 Extend this recipe as new headless targets are committed. When bidi APIs change,
 explicitly build `librecad_bidi_conformance` and run it with both matching
 `BidiTest.txt` and `BidiCharacterTest.txt` paths, recording corpus versions and
@@ -2341,7 +2359,7 @@ universal millisecond threshold from the standalone shaping experiment.
 
 ### PR handoff checklist
 
-- [ ] The owned branch contains only intended work and documented prerequisites; the draft PR is published and attached to the task.
+- [ ] The owned branch contains only intended work and documented prerequisites; the PR was created as draft, is published and attached to the task, and now has the verified ready-for-review state required below.
 - [ ] PR workflow coverage and actual test execution are verified; missing/skipped lanes are not counted as passing, and package evidence identifies the tested artifact and producer revision.
 - [ ] Independent whole-diff reviews and corrective re-reviews record reviewer/coverage provenance and exact base/head revisions; all actionable source feedback is reconciled to stable finding IDs, accepted mandatory findings are Verified, Rejected findings have reviewed rationale/evidence, and accepted lower-priority deferrals are documented.
 - [ ] The P0–P6 acceptance map has no unexplained implementation, test or review gaps; refinement rounds and the PR tracking record identify the final reviewed candidate and outstanding maintainer actions.
