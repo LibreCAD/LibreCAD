@@ -4776,6 +4776,9 @@ dwgReader::stagePendingAttribute(std::shared_ptr<DRW_Attrib> attribute,
         DwgSourceFrameId{attribute ? attribute->handle : DRW::NoHandle});
     return DwgMappedEntityOutcome::Rejected;
   }
+  attribute->style = findTableName(DRW::STYLE, attribute->styleH.ref);
+  if (attribute->mtext)
+    attribute->mtext->style = findTableName(DRW::STYLE, attribute->mtext->styleH.ref);
   // The INSERT it names was rejected: the ATTRIB can never be one of its
   // members. Nothing about the ATTRIB itself is in doubt beyond that, so it is
   // rejected on its own.
@@ -10395,7 +10398,6 @@ bool dwgReader::readDwgEntityWithOutput(dwgBuffer *dbuf, objHandle &obj,
             ret = false;
             break;
           }
-          a->style = findTableName(DRW::STYLE, a->styleH.ref);
           DRW_DwgFramePublication attribPublication;
           if (!materializeCurrentFramePublication(attribPublication)) {
             ret = false;

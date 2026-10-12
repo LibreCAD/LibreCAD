@@ -31,12 +31,12 @@ USA.
 | Issue | [LibreCAD #3032](https://github.com/LibreCAD/LibreCAD/issues/3032), "Reincorporate paragraph indentation for MText while maintaining left alignment", opened 2026-10-08. No sample drawing, no screenshot, no comments by 2026-10-11 |
 | Target | `origin/master`. `origin/2.2.1` has the same leading-space defect; back-porting A1 is decision D5 |
 | Reviewed code | `628a1ba84` (`origin/master`, 2026-10-11). The first version of this plan reviewed `6242f6e43`; the one commit in between (#3055) changes `lc_dialog.cpp`, a base of the MText dialog, and adds its tests |
-| State | D1 to D6 were accepted as recommended on 2026-10-11. A0, A1, A2a, A3.1, A4 and B1 are implemented by the pull request that adds this file (#3061), which was then reviewed in depth; see "Implementation". A2b, A3.2, A3.3 and B2 to B5 are open. The result has not been tried by hand in the running application |
+| State | D1 to D6 were accepted as recommended on 2026-10-11. A0, A1, A2a, A3.1, A4 and B1 are implemented by merged #3061; see "Implementation". A3.3 is implemented by follow-up #3059. A2b, A3.2 and B2 to B5 are open. Native application and external-CAD smoke checks remain outstanding |
 | Cause of the report | `4b5cd9d9e` "MText: fix alignment" on master (2024-05-17, the fix for #1786 "MTEXT alignment is broken"), back-ported as `933d5378c` (2024-06-17), first in 2.2.1_rc3 and released in v2.2.1: every left-attached line is moved by its ink minimum, which cancels leading spaces |
 | Second regression, master only | `117c8710b` (#2603, 2026-06-17): DXF `^I` now becomes U+0009, which is drawn as nothing. Every release drew four spaces |
 | First delivery | A0, A1, A2a and A3.1: leading spaces indent again, a Tab advances again, and the saved width covers the indented line. With D2 and D6 accepted, A4 and B1 are part of it |
 | Decisions | D1 to D6 accepted as recommended, 2026-10-11 |
-| Other work on the issue | Draft #3059 implements the first version of this plan |
+| Other work on the issue | #3059 is narrowed to the independent embedded-attribute export fix (A3.3), on top of merged #3061 |
 
 Track A restores whitespace indentation and is independently useful. Track B
 adds paragraph formatting, which no LibreCAD release has had. Do not claim that
@@ -238,7 +238,7 @@ All six were accepted as recommended on 2026-10-11. D5 is carried out as
 | A2b. Stops in logical RightToLeft lines | Open | - | Flow-origin placement matches the Qt oracle |
 | A3.1. Saved width covers the line | Done | `e12c9fb6e`, `3e4cbb8a6`, `aca5fd66f` | Group 41 is not smaller than indent plus ink in DXF R2000, R2007, R2018 and DWG R2004 |
 | A3.2. Width policy | Open; accepted for a later change | - | Binding and non-binding boxes both survive |
-| A3.3. Embedded attribute text | Open, independent of the issue | - | Edited attribute text is saved; unedited records are unchanged |
+| A3.3. Embedded attribute text | Implemented in #3059; native-CAD validation outstanding | - | Edited attribute text is saved; unedited records retain raw formatting and supported metadata |
 | A4. Tab key and input paths | Done | `24af2b21d`, `3e4cbb8a6`, `aca5fd66f` | Key events that carry their character; both dialogs, the property editor and the tool options; Shift+Tab and Ctrl+Tab as the ways out |
 | B0. Paragraph scope | Decided by D1 and D6 | - | B1 now; B2 to B5 stay conditional |
 | B1. Paragraph commands are not drawn | Done | `e12c9fb6e`, `3e4cbb8a6` | Commands hidden and not applied; other text literal |
@@ -681,6 +681,32 @@ to B3.
 ### A3.3. Embedded Attribute Text
 
 This is independent of the issue and can be a separate change.
+
+Follow-up #3059 was rebuilt on `cb7c07584` after #3061 merged. It leaves the
+merged layout, editor behavior and A3.1 width policy unchanged. A3.2 remains open;
+the first draft's unconditional export of the declared width is not carried over.
+
+The current entity is authoritative for edited content and modeled layout. The
+sidecar retains the imported modeled values alongside the raw payload, so a no-op
+save preserves raw formatting without mistaking a degree/radian round trip for an
+angle edit. Schema 1 and 2 remain readable. The edited outer ATTRIB fallback uses
+the current text with paragraph breaks flattened to spaces, plus current height,
+style, angle and attachment, for versions that cannot store embedded MTEXT.
+DWG targets before R2018 use a plain ATTRIB with version zero, without the
+unsupported embedded payload.
+Attribute style handles are resolved on both export and import, including the
+R2000 compound path. Embedded DWG line-spacing style is no longer discarded.
+Edits to column or annotative layouts are rejected explicitly because their
+unmodeled geometry cannot be rebuilt safely. Unedited DWG metadata is retained;
+DXF can retain only the fields supported by its embedded-MTEXT writer.
+
+Generated regressions are in the existing DXF and DWG writer format-test files,
+not only in the text-layout target. The full DXF, DWG writer and text suites pass
+1,103 cases with three skips. New regressions fail against unchanged master.
+LibreDWG 0.14 independently checks text and geometry in 12 generated DWGs; its
+background-fill decoding disagrees with the current upstream specification and
+several R2010+ style handles decode as null. Background preservation and style
+changes pass native round trips, but external-CAD verification is still needed.
 
 1. Encode the embedded text with `toDxfString()`, with the same caret mode as
    the standalone writer. As read, a line break in an edited attribute fails

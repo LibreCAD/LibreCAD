@@ -8112,6 +8112,7 @@ class InsertAttributeRoundTripIface : public EmptyIface {
 public:
   dwgRW *m_writer{nullptr};
   std::uint32_t m_blockRecH{0};
+  std::function<void(DRW_Attrib &)> configureAttribute;
   std::vector<DRW_Insert> m_inserts;
   std::vector<DRW_DwgFramePublication> m_framePublications;
 
@@ -8142,6 +8143,8 @@ public:
     attrib->m_attributeType = 2;
     attrib->keepDuplicateRecords = 0xA6;
     attrib->mtext = MultilineAttributeWriteIface::makeMText("line 1\\Pline 2");
+    if (configureAttribute)
+      configureAttribute(*attrib);
     insert.attlist.push_back(std::move(attrib));
 
     REQUIRE(m_writer->writeInsert(&insert));
@@ -29092,6 +29095,45 @@ TEST_CASE("RS_FilterDXFRW receives AC1032 INSERT ATTRIB content",
 
   std::remove(path.c_str());
   std::remove(exportedPath.c_str());
+}
+
+TEST_CASE("Edited embedded MTEXT does not silently replay advanced layout",
+          "[dwg-write][filter-roundtrip][attrib-edit]") {
+  ensureQtSettings();
+  const auto src = tempPath("embedded_mtext_edit_annotative.dwg");
+  InsertAttributeRoundTripIface source;
+  source.configureAttribute = [](DRW_Attrib &attribute) {
+    attribute.mtext->secPoint = DRW_Coord{std::cos(0.7), std::sin(0.7), 0.0};
+  };
+  {
+    dwgRW writer(src.c_str());
+    source.m_writer = &writer;
+    REQUIRE(writer.write(&source, DRW::AC1032, false));
+  }
+  for (const auto *edit : {"none", "text", "font", "height", "angle"}) {
+    CAPTURE(edit);
+    RS_Graphic graphic;
+    RS_FilterDXFRW reader;
+    REQUIRE(reader.fileImport(graphic, QString::fromStdString(src), RS2::FormatDWG2018));
+    RS_MText *attribute = nullptr;
+    for (RS_Entity *entity : graphic) {
+      if (entity->rtti() == RS2::EntityMText)
+        attribute = static_cast<RS_MText *>(entity);
+    }
+    REQUIRE(attribute);
+    const std::string field(edit);
+    if (field == "text") attribute->setText("changed\ntext");
+    if (field == "font") attribute->setStyle("iso3098");
+    if (field == "height") attribute->setHeight(12.0);
+    if (field == "angle") attribute->setAngle(1.0);
+    attribute->update();
+    for (const auto format : {RS2::FormatDXFRW2018, RS2::FormatDWG2018}) {
+      CAPTURE(format);
+      RS_FilterDXFRW writer;
+      const auto out = tempPath("embedded_mtext_edit_annotative.out");
+      CHECK(writer.fileExport(graphic, QString::fromStdString(out), format) == (field == "none"));
+    }
+  }
 }
 
 TEST_CASE("RS_FilterDXFRW preserves nested INSERT ATTRIB MTEXT XDATA",

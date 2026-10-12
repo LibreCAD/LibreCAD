@@ -11626,14 +11626,14 @@ static bool parseEmbeddedMTextDwgFields(
         return false;
 
     if (version > DRW::AC1014) {
-        std::uint16_t ignoredLineSpacingStyle = 0;
         bool ignoredLineSpacingUnknown = false;
         if (!readBoundedBitShort(*buf, bodyEndBit,
-                                 ignoredLineSpacingStyle)
+                                 mtext.linespacingStyle)
             || !readBoundedBitDouble(*buf, bodyEndBit, mtext.interlin)
             || !readBoundedBit(*buf, bodyEndBit,
                                ignoredLineSpacingUnknown))
             return false;
+        mtext.alignV = static_cast<DRW_Text::VAlign>(mtext.linespacingStyle);
     }
     if (version > DRW::AC1015) {
         if (!readBoundedBitLong(*buf, bodyEndBit, mtext.m_backgroundFlags))
@@ -11936,7 +11936,7 @@ static bool encodeEmbeddedMTextDwg(DRW::Version version, dwgBufferW *buf,
     buf->putBitDouble(mtext.m_r2018ExtentsWidth);
     (strBuf ? strBuf : buf)->putVariableText(version, mtext.text);
 
-    buf->putBitShort(0);                    // linespacing style
+    buf->putBitShort(mtext.linespacingStyle);
     buf->putBitDouble(mtext.interlin);
     buf->putBit(0);
     buf->putBitLong(mtext.m_backgroundFlags);
