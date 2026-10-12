@@ -41,6 +41,7 @@
 
 #include "shapefil.h"
 
+#include "intern/drw_textcodec.h"
 #include "lc_colornumbers.h"
 #include "lc_linetypenames.h"
 #include "rs_color.h"
@@ -184,34 +185,78 @@ ResolvedFields resolveFields(DBFHandle dbf, LC_ShpImportOptions& opt) {
 }
 
 // ---------------------------------------------------------------------------
-// DBF codepage → QStringDecoder.
+// DBF codepage → QString.
 // ---------------------------------------------------------------------------
 
-// Decode a DBF string field with the DBF's declared codepage.  Falls back to
-// UTF-8 → Latin-1 on invalid sequences (the same pragmatic heuristic
-// rs_filterjww.cpp uses for JWW's mixed CP932/Shift_JIS content).
+// The Windows code page a DBF declares, or 0.  shapelib gives the content of
+// the .cpg file, a number or a name, or else "LDID/<n>" from the language
+// driver byte of the DBF header, which ESRI's table maps to a code page.  A
+// name is compared as Qt compares codec names: without case, '-' and '_'.
+int windowsCodePage(const QString& codepage) {
+    QString name = codepage.toUpper().remove(QLatin1Char('-'))
+                       .remove(QLatin1Char('_'));
+    if (name.startsWith(QLatin1String("LDID/"))) {
+        switch (name.mid(5).toInt()) {
+        case 3: case 87: case 88: case 89: return 1252;
+        case 19: case 123: return 932;
+        case 77: case 122: return 936;
+        case 78: case 121: return 949;
+        case 79: case 120: return 950;
+        case 80: case 124: return 874;
+        case 200: return 1250;
+        case 201: return 1251;
+        case 202: return 1254;
+        case 203: return 1253;
+        case 204: return 1257;
+        default: return 0; // a DOS code page, or none
+        }
+    }
+    // A name of the code page, or of a part of it.
+    static const struct { const char* name; int codePage; } named[] = {
+        {"ISO88591", 1252}, {"LATIN1", 1252}, {"SHIFTJIS", 932}, {"SJIS", 932},
+        {"GBK", 936}, {"GB2312", 936}, {"EUCKR", 949}, {"BIG5", 950}};
+    for (const auto& known : named) {
+        if (name == QLatin1String(known.name)) return known.codePage;
+    }
+    if (name.startsWith(QLatin1String("WINDOWS"))) name.remove(0, 7);
+    else if (name.startsWith(QLatin1String("CP"))) name.remove(0, 2);
+    return name.toInt();
+}
+
+// Decodes text of a Windows code page with libdxfrw's tables, which need
+// neither ICU nor a Qt codec; no value if it has no table for the code page.
+// Its codec also reads the DXF codes \U+XXXX and \M+nXXXX, and drops a byte
+// the code page leaves undefined.  So a two-byte code page (932 to 950) goes
+// in runs that end at a backslash, which is never the first byte of a
+// character, and a single-byte one byte by byte: a dropped byte stays as
+// ISO-8859-1 has it.
+std::optional<QString> decodeCodePage(const QByteArray& bytes, int codePage) {
+    const std::string name = "ANSI_" + std::to_string(codePage);
+    DRW_TextCodec codec;
+    codec.setCodePage(name, false);
+    if (codec.getCodePage() != name) return std::nullopt; // no table for it
+    const bool twoByte = codePage >= 932 && codePage <= 950;
+    std::string utf8;
+    for (qsizetype start = 0, end = 0; start < bytes.size(); start = end) {
+        end = twoByte ? bytes.indexOf('\\', start) + 1 : start + 1;
+        if (end == 0) end = bytes.size();
+        const std::string part = codec.toUtf8(
+            {bytes.constData() + start, static_cast<std::size_t>(end - start)});
+        utf8 += part.empty() ? QString(QLatin1Char(bytes[start])).toStdString()
+                             : part;
+    }
+    return QString::fromStdString(utf8);
+}
+
+// Decode a DBF string field.  Text in a Windows code page the DBF declares is
+// read with that code page's table; any other is tried as UTF-8 and, with an
+// invalid sequence in it, read as Latin-1.
 QString decodeDbfString(const char* raw, const QString& codepage) {
     if (raw == nullptr || *raw == '\0') return {};
     const QByteArray bytes(raw);
 
-    // Best-effort mapping from DBF codepage marker to a Qt codec name.
-    // shapelib returns strings like "UTF-8", "LDID/87" (Latin-1 / ISO-8859-1),
-    // "LDID/13" (CP850), etc.  We only try to hit the common ones; anything
-    // unrecognised falls through to UTF-8 with Latin-1 fallback.
-    auto encodingFromDbf = [](const QString& cp) -> std::optional<QStringConverter::Encoding> {
-        const QString u = cp.toUpper();
-        if (u == "UTF-8" || u == "UTF8" || u == "LDID/8B") // LDID 0x8B = UTF-8 (unofficial)
-            return QStringConverter::Utf8;
-        if (u == "LDID/87" || u == "LDID/57" || u == "ISO-8859-1" || u == "LATIN1"
-            || u == "CP1252" || u == "WINDOWS-1252")
-            return QStringConverter::Latin1;
-        return std::nullopt;
-    };
-
-    if (auto enc = encodingFromDbf(codepage)) {
-        QStringDecoder decoder{*enc};
-        QString result = decoder(bytes);
-        if (!decoder.hasError()) return result;
+    if (const int codePage = windowsCodePage(codepage)) {
+        if (const auto text = decodeCodePage(bytes, codePage)) return *text;
     }
     // UTF-8 first, then Latin-1.
     {

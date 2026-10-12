@@ -318,6 +318,60 @@ TEST_CASE("RS_FilterSHP: Latin-1 codepage decodes accented characters",
     CHECK(foundEAcute);
 }
 
+// cp*.* hold one POINT with a LAYER, an LTYPE and a NAME value in the code
+// page of the name, which the DBF declares in a .cpg file or in the language
+// driver byte of its header: 0x57 is 1252 and 0xC8 is 1250 in ESRI's table.
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_FilterSHP: DBF text is read in the code page the DBF declares",
+          "[shp][filter][matrix][codepage]") {
+    ensureQtContext();
+    struct Fixture {
+        const char* shp;
+        QString layer;
+        QString lineType;
+        QString label;
+    };
+    // Windows-1252 has characters where ISO-8859-1 has control codes: the
+    // quote, the ligature, the dash and the euro sign.  It has none for the
+    // byte 0x81, which stays U+0081.  Of the Shift-JIS label, U+4E88 ends in
+    // the byte 0x5C, a backslash, the half-width katakana are one byte each,
+    // and \U+7BA1 is a code in DXF but text in a shapefile.
+    const Fixture western{
+        nullptr, QStringLiteral("Rue de l\u2019\u00C9glise"),
+        QStringLiteral("N\u0153ud"),
+        QStringLiteral("Caf\u00E9 \u2013 5 \u20AC") + QChar(0x81)};
+    const Fixture fixtures[] = {
+        {"cp1252_cpg.shp", western.layer, western.lineType, western.label},
+        {"cp1252_ldid.shp", western.layer, western.lineType, western.label},
+        {"cp932_cpg.shp", QStringLiteral("\u9053\u8DEF"),
+         QStringLiteral("\u7834\u7DDA"),
+         QStringLiteral("\u4E88\u5B9A\uFF76\uFF9E\uFF7D\u7BA1\\U+7BA1")},
+        {"cp1250_ldid.shp", QStringLiteral("\u0160achta"),
+         QStringLiteral("p\u0159eru\u0161ovan\u00E1"),
+         QStringLiteral("\u017Dlu\u0165ou\u010Dk\u00FD k\u016F\u0148")},
+    };
+    for (const Fixture& fixture : fixtures) {
+        CAPTURE(fixture.shp);
+        RS_Graphic graphic;
+        RS_FilterSHP filter;
+        REQUIRE(filter.fileImport(graphic, corpusPath(fixture.shp),
+                                  RS2::FormatSHP));
+        QString layer, lineType, label;
+        for (RS_Entity* e :
+             lc::LC_ContainerTraverser{graphic, RS2::ResolveNone}.entities()) {
+            if (e->rtti() == RS2::EntityPoint) {
+                layer = e->getLayer()->getName();
+                lineType = e->getPen(false).getLineTypeName();
+            } else if (e->rtti() == RS2::EntityMText) {
+                label = static_cast<RS_MText*>(e)->getText();
+            }
+        }
+        CHECK(layer.toStdString() == fixture.layer.toStdString());
+        CHECK(lineType.toStdString() == fixture.lineType.toStdString());
+        CHECK(label.toStdString() == fixture.label.toStdString());
+    }
+}
+
 // ---------------------------------------------------------------------------
 // Edge cases: empty, missing-shx, singleton, and the "hostile" fixtures
 // whose whole point is to prove RS_FilterSHP fails gracefully.
@@ -410,7 +464,7 @@ TEST_CASE("RS_FilterSHP: malformed_dbf.shp -> false, no crash",
 
 // ---------------------------------------------------------------------------
 // Phase-4a generated fixtures — Z types and MULTIPATCH parts + CVE-class DoS.
-// These, ltype_*.* and layer_point.* are the only fixtures under
+// These, ltype_*.*, layer_point.* and cp*.* are the only fixtures under
 // test_data/shp/ produced by scripts/make_shp_fixtures.py; the rest of the
 // corpus is fixed reference data.  See the plan's Phase 4a for the rationale.
 // ---------------------------------------------------------------------------
