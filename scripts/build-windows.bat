@@ -120,10 +120,20 @@ if _%LC_NSIS_FILE%==_ (
 
 pushd postprocess-windows
 
-rem Detect 64-bit build environment and pass /DWIN64 if applicable
+rem The installer has to match the program it packages, and the machine that
+rem builds the program does not say what the program is: 64-bit Windows also
+rem builds the 32-bit LibreCAD. So ask the program that was built.
+set "LC_EXE_ARCH="
+for /f "usebackq delims=" %%a in (`powershell.exe -NoProfile -ExecutionPolicy Bypass -File "..\exe-arch.ps1" "..\..\windows\LibreCAD.exe"`) do set "LC_EXE_ARCH=%%a"
+echo [INFO] windows\LibreCAD.exe is built for: %LC_EXE_ARCH%
+
 set NSIS_FLAGS=/X"SetCompressor /FINAL lzma" /V4
-if "%PROCESSOR_ARCHITECTURE%"=="AMD64" (
+if /I "%LC_EXE_ARCH%"=="AMD64" (
     set NSIS_FLAGS=%NSIS_FLAGS% /DWIN64 /DAMD64
+) else if /I not "%LC_EXE_ARCH%"=="x86" (
+    echo [ERROR] No installer can be built: windows\LibreCAD.exe has to be a program for x86 or AMD64, and exe-arch.ps1 reported "%LC_EXE_ARCH%".
+    popd
+    exit /b 1
 )
 
 rem Pass the extracted SCMREVISION to NSIS
