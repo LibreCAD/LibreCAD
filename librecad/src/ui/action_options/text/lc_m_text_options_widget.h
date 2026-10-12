@@ -47,5 +47,6 @@ protected:
     LC_ActionDrawMText* m_action = nullptr;
     std::unique_ptr<Ui::LC_MTextOptionsWidget> ui;
     void doUpdateByAction(RS_ActionInterface *a) override;
+    bool eventFilter(QObject* watched, QEvent* event) override;
 };
 #endif

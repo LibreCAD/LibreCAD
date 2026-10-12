@@ -273,7 +273,29 @@ void LC_TextEdit::paintEvent(QPaintEvent *event) {
         painter.fillRect(cursorRect(cursorForPosition(m_dropPosition->toPoint())), palette().brush(QPalette::Text));
 }
 
+int LC_TextEdit::focusStepOf(const QKeyEvent &event) {
+    const auto modifiers = event.modifiers();
+    // Shift+Tab arrives as Key_Backtab. Windows gives it a tab as its text,
+    // which a text box would type, so the text is not looked at.
+    if (event.key() == Qt::Key_Backtab
+        || (event.key() == Qt::Key_Tab && modifiers.testFlag(Qt::ShiftModifier)))
+        return -1;
+    // The Control key is Qt's Meta modifier on macOS.
+    if (event.key() == Qt::Key_Tab
+        && (modifiers.testFlag(Qt::ControlModifier) || modifiers.testFlag(Qt::MetaModifier)))
+        return 1;
+    return 0;
+}
+
 void LC_TextEdit::keyPressEvent(QKeyEvent *event) {
+    if (!tabChangesFocus()) {
+        if (const int step = focusStepOf(*event)) {
+            // QTextEdit declines to move the focus while Tab is typed.
+            QAbstractScrollArea::focusNextPrevChild(step > 0);
+            event->accept();
+            return;
+        }
+    }
     if (!hasChineseRtl()) { QTextEdit::keyPressEvent(event); return; }
     const auto mode = event->modifiers() & Qt::ShiftModifier
                         ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor;
