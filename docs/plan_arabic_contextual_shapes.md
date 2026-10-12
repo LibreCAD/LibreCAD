@@ -368,6 +368,25 @@ reflection before P4 completion; do not silently ignore them. A temporary
 explicit activation environment may exercise the integrated adapter while
 imported-profile activation remains gated by P0 proof; that guard is not the
 final production opt-in UI or completion of P4/P5.
+
+For explicit multiline TEXT in Aligned/Fit, let `A` be the maximum logical
+advance over all lines, including whitespace. The anchors bound `[0, A]` on
+the first baseline, not necessarily a glyph endpoint or the longest line's
+baseline. All lines use `sx = distance / A`; Aligned also uses `sy = sx`, while
+Fit uses `sy = height / 9`. Keep each shared-layout origin `(0, baseline_i)`;
+do not fit individual lines or rescale pitch again. Use baseline attachment
+regardless of stored vertical alignment, preserving canonical anchors, height,
+widthRel, angle and alignment. Positive X follows the first anchor to the
+second without swapping RTL anchors. An empty first line is valid when another
+line has positive advance. Zero block advance, coincident anchors or a
+nonfinite/unrepresentable affine fail atomically, without an arbitrary epsilon
+or ink-width fallback. This is an explicit opt-in multiline policy, not a claim
+of single-line CAD equivalence. The independent analytic fixture uses advances
+`[10, 20]`, baselines `[0, -12]` and anchors `(3, 4)` and `(33, 44)`:
+Aligned line endpoints are `(3, 4)` to `(18, 24)` and `(27, -14)` to `(57, 26)`;
+Fit at height 18 places the second line from `(22.2, -10.4)` to `(52.2, 29.6)`.
+Also cover empty/whitespace lines, reversed anchors, overhangs and idempotence.
+
 Initial decoration-v1 fixtures place underline at -1, overline at 9 and
 strike-through at 4.5 nominal-cell Y, scaled by inline height and the complete
 entity affine. Draw each painted cluster's advance once, including whitespace,
@@ -494,7 +513,15 @@ Establish these rules before enabling saved new-profile drawings:
   ATTRIB extension-dictionary entry, provisionally `LibreCADEmbeddedText`, with
   a versioned [XRECORD full-model carrier](https://help.autodesk.com/cloudhelp/2023/ENU/AutoCAD-DXF/files/GUID-24668FAF-AE03-41AE-AFA4-276C3692827F.htm); any compact registered XDATA locator
   is separate. Never activate embedded `LibreCADText` or RTL metadata as outer
-  fields. Raw XDATA retention alone is
+  fields. Canonical embedded DXF uses [group 101 for the embedded-object marker](https://help.autodesk.com/cloudhelp/2017/ENU/OARXMAC-RefGuide/files/OREFMAC-__MEMBERTYPE_Methods_AcDbDxfFiler.html).
+  Its native body precedes the encapsulating ATTRIB/ATTDEF XDATA; the independent
+  [ezdxf reader](https://raw.githubusercontent.com/mozman/ezdxf/master/src/ezdxf/lldxf/extendedtags.py)
+  ends embedded fields at the first 1001 and assigns the following application
+  groups to the outer entity. Do not concatenate an independent embedded XDATA
+  namespace into that stream or move outer XDATA before the native body.
+  Retain embedded metadata in the explicit outer carrier even for 2018 DXF;
+  legacy LibreCAD group-100 files require characterized, non-destructive read
+  compatibility, not continued noncanonical output. Raw XDATA retention alone is
   insufficient: pre-2018 DXF/DWG writers cannot emit the native embedded body,
   so lossless downgrade also requires its complete canonical source, STYLE
   association, geometry, spacing, columns and retained unmodeled fields.
@@ -712,10 +739,12 @@ Maintain the progress and validation records below as implementation proceeds:
 | 2026-10-11 | P5a.2 owning profile bindings | Complete | `a8ade2677` — `Add owning text profile edit bindings` | Move, retained-buffer alias and copy-allocation regressions reproduced and repaired; registered ON/OFF/ASan each pass 8,150 / 22 plus both controlled allocation-failure cases; enabled/disabled CMake applications and qmake application pass; independent ownership/registration review approves | Bounded inert binding checkpoint only; transport/entity/style integration and schema/activation gates remain pending |
 | 2026-10-11 | P5a.3 entity and transport authority | In progress | Uncommitted owned entity/style/filter slice | Source/profile host APIs and guarded unavailable-import state under implementation; whole-slice registered validation and independent review pending | Complete source/STYLE/namespace ownership and lifecycle tests; syntax-aware lossless cross-format caret conversion remains required, not waived by a guarded intermediate export error |
 | 2026-10-11 | P5a.3a entity source and profile state | Complete | `2db2a26fb` — `Preserve canonical text and inert profile state on entities` | Final registered ON/OFF/ASan each pass state 322 / 7, native entities 912 / 12 and focused legacy text/bidi 541,335 / 70; enabled/disabled CMake applications and qmake application pass; independent source/registration and pre-alignment API/test review approve | Bounded host API checkpoint only; filter/STYLE transport, native renderer activation and full P5 acceptance remain pending |
-| 2026-10-11 | P5a.3b syntax-aware source conversion | Validated | Candidate subject: `Add lossless text source convention conversion` | Private strict ON/OFF/O1 sanitizer and final registered isolated ON/OFF/ASan each pass 25,398 / 15; parser/itemizer/handoff/layout regressions and CMake ON/OFF/qmake application builds pass; independent source/registration review approves after test-expression ownership repair | Checkpoint bounded service; filter integration, Qt 6.4/platform lanes and native cross-format acceptance remain pending |
+| 2026-10-11 | P5a.3b syntax-aware source conversion | Complete | `1636de0ce` — `Add lossless text source convention conversion` | Private strict ON/OFF/O1 sanitizer and final registered isolated ON/OFF/ASan each pass 25,398 / 15; parser/itemizer/handoff/layout regressions and CMake ON/OFF/qmake application builds pass; independent source/registration review approves after test-expression ownership repair | Bounded service checkpoint only; filter integration, Qt 6.4/platform lanes and native cross-format acceptance remain pending |
 | 2026-10-11 | P4 shared native entity integration | In progress | Uncommitted owned adapter slice | Alignment/spacing fixture policy specified; actual TEXT/MTEXT update dispatch, recursive native geometry and guarded resource/profile resolution under implementation | Validate integrated updates, transforms, metrics, lifetime and all required modes; helper tests alone cannot complete P4 or enable public imported profiles |
 | 2026-10-11 | P7 execution | Planned | `55cbfc54f` and `537839cfe` — plan-only workflow checkpoints | Draft baseline, creation checkpoint, acceptance map, deep-review cadence and CI history defined; prepublication findings retain provenance and require local-contract resolution before publication. Independent plan review and scoped whitespace checks pass; no publication or PR acceptance claimed | Complete the coherent P5 candidate, reconcile existing review findings, then execute P7a and keep the records below current |
 | 2026-10-11 | P7 workflow refinement | Complete | `c956d8ca2` — `Link PR feedback to verified refinement` | Independent read-only plan review and scoped whitespace check pass; explicit P7a/P7b/P7c steps, source-linked feedback and final state reconciliation defined | Plan-only checkpoint; P7 execution remains Planned, with no push, PR creation, review completion or readiness claimed |
+| 2026-10-11 | P7 execution clarification | Validated | Uncommitted plan-only edit | Independent read-only review and scoped whitespace checks pass; explicit creation/refinement/handoff sequence, refinement completion checkpoint and cross-format lifetime finding recorded; Pending P6 keeps handoff incomplete and the PR draft | P7a/P7b/P7c remain Planned; resolve mandatory P5 findings before authorized publication; no PR action performed |
+| 2026-10-11 | P5b.1 raw embedded metadata capsule | Validated | Candidate subject: `Preserve exact embedded text metadata capsules` | Independent source review approves; isolated registered ON/OFF/ASan each pass 21,535 assertions / 5 cases; enabled/disabled CMake applications, coherent sanitizer application library and qmake application build exit 0 | Checkpoint bounded in-memory retention only; full-model wire transport, filter integration and activation remain pending |
 
 For every executed check, record its exact command and filters, exit status,
 result/test count, tested revision and candidate-tree state, build configuration,
@@ -1470,6 +1499,59 @@ the repaired candidate; Qt 6.4 execution remains unverified.
 This is a bounded source-conversion service, not native-filter, minimum-Qt,
 saved-profile activation or independent CAD interoperability acceptance.
 
+### Raw embedded metadata capsule evidence
+
+`LC_EmbeddedTextXData` is an inert, lossless in-memory retention service, not a
+native XDATA schema or compatible wire carrier. Its version-2 capsule retains
+ordered signed codes and exact types, null versus INVALID slots, raw strings
+including NUL and invalid UTF-8, binary values, integer64 and binary64/coordinate
+bits. Active unresolved DWG layer-reference provenance survives only while
+owned storage, type, code and baseline spelling still match; stale or rebound
+storage cannot revive replay authority. Aggregate item/byte limits include all
+framing and provenance overhead. Malformed/truncated/version/count/flag/trailing
+input fails without partial publication. The one-million-item and 64 MiB
+ceilings are memory budgets, not native-wire allowances.
+
+The independently reviewed candidate is HEAD `1636de0ce` plus only the capsule
+header/source/tests, the read-only `DRW_Variant::activeDwgLayerReference` getter
+and their CMake/qmake registration. In the coherent snapshot
+`/private/tmp/librecad-arabic-core-index.TOns5t`, enabled, disabled without
+FreeType and ASan/UBSan runs of `librecad_embedded_text_xdata_tests` each exit 0
+with 21,535 assertions / 5 cases; the same binaries were rerun before staging.
+The unfiltered tests include a hand-authored literal version-2 fixture and
+4,097 distinct alternating raw values compared slot by slot, not merely a
+self-round-trip count. Complete incremental CMake ON/OFF applications and the
+coherent sanitizer application library build; qmake compiles the capsule and
+relinks the application, with its existing `-nodepend` submake behavior.
+All four build lanes exit 0. No unrelated STYLE/filter/native-writer candidate
+is included. The existing recorded AppleClang 21.0.0, Qt 6.11.2 and Catch2
+3.16.1 toolchain applies; enabled builds use HarfBuzz 14.6.0 and FreeType 2.14.3.
+CMake build type is unspecified.
+
+Exact commands configure `<snapshot>/build-{on,off,asan}` with `BUILD_TESTS=ON`
+and `LIBRECAD_ENABLE_OPENTYPE=ON/OFF`; OFF additionally sets
+`CMAKE_DISABLE_FIND_PACKAGE_Freetype=ON`. Build the registered capsule target
+with `cmake --build <build> --target librecad_embedded_text_xdata_tests -j2`
+and invoke `<build>/librecad_embedded_text_xdata_tests` without filters. Build
+`librecad` in ON/OFF and `librecad_lib` in ASan with the same command form.
+ASan uses `-fsanitize=address,undefined -fno-omit-frame-pointer`, linker
+`-fsanitize=address,undefined`, runtime
+`ASAN_OPTIONS=detect_leaks=0:halt_on_error=1` and
+`UBSAN_OPTIONS=halt_on_error=1`; prebuilt Qt/font/Catch libraries are not
+instrumented and leak acceptance is not claimed. Qmake uses
+`qmake6 <snapshot>/librecad.pro LIBRECAD_ENABLE_OPENTYPE=true
+DISABLE_POSTSCRIPT=true`, then `make -j2` in `build-qmake`.
+Logs are `/private/tmp/librecad-arabic-capsule-root-{on,off,asan}-{configure,tests-build,tests,application-build}.log`
+and `/private/tmp/librecad-arabic-capsule-root-qmake-{configure,application-build}.log`.
+
+Frozen SHA256 identities are header
+`466c9620ec708d766bf14d7b43b76702fe7eca3e7b19c9d2f134ca3bcd51a172`, source
+`94ae1bd7c19708ff42309039a0f9ca552d1d6be2de84bfe7da8e4e7719cf21fd`, tests
+`0cc788078bb89b44edfbee0e5abca4791dce2df4f7b4b96b0f01d0aab03e1eb0` and
+`drw_base.h` `3b13eb09bd4149419f7bfa5055eb6e552d8f6eda32946f214bc392d2f7f3f70c`.
+This bounded checkpoint does not close `P5-SIDECAR-001`, establish full-model
+transport, prove Qt 6.4/platform/package acceptance or activate saved profiles.
+
 ### Embedded metadata retention finding
 
 Finding `P5-SIDECAR-001` is Open. Independent baseline review at `a8ade2677`
@@ -1492,15 +1574,60 @@ and metadata. Raw retention alone does not make malformed native wire writable.
 Regression, supported-output and independent transport proof remain Pending.
 The in-memory raw-tag capsule alone does not solve native DWG transport or
 pre-2018 embedded-body retention; the full-model outer-ATTRIB envelope specified
-above remains required. The current DXF writer also emits outer ATTRIB/ATTDEF
-XDATA after the embedded marker, where the parser assigns it to MTEXT. Correct
-that ownership with writer/parser scope regressions before transport acceptance.
+above remains required. The current DXF writer/parser use a noncanonical
+group-100 embedded marker and assign trailing outer XDATA to MTEXT. Moving the
+outer XDATA ahead of the embedded marker is not a valid correction; the
+canonical marker/scope and independent carrier finding below must be resolved
+before transport acceptance.
 R12 currently needs an
 interim explicit failure for raw-aware formatted/profile/embedded MTEXT that
 the legacy TEXT-line downgrade cannot retain faithfully. Ordinary plaintext
 fallback remains characterized legacy behavior. That guard does not complete
 the required supported-output round trips or authorize narrowing their scope;
 lossless downgrade authority/source retention remains an unfinished gate.
+
+### Cross format filter lifetime finding
+
+Finding `P5-FILTER-LIFETIME-001` is Open. A final mixed-tree diagnostic on
+HEAD `1636de0ce` plus the uncommitted STYLE/filter candidate crashes when one
+`RS_FilterDXFRW` exports DXF and then DWG. The `[text-filter-authority]` run
+exits 139 with 241 passing assertions and one fatal assertion across six
+started cases; an earlier 14,180 / 10 pass does not close this gate. The DXF
+export path deletes `m_dxfW` without clearing it, while
+`prepareDRWDimStyleText` can subsequently dereference the non-null pointer.
+Attribution to the candidate or baseline remains to be established.
+
+The retained diagnostic is
+`/private/tmp/librecad-filter-authority-compile.IjGFH6/filter-after-final.log`;
+filter/test SHA256 identities are
+`8678bc6d1a6043e55a98e5ff12517954400dcdef33d64a1606e6260af6f2078d` and
+`ff54e391340bae253623e6bcca340646bc9d41abbeb8dcde639773ce50182305`.
+This is failure evidence, not isolated registered acceptance. Preserve a durable
+regression, establish writer ownership on every exit path, and validate repeated
+same-instance exports in both format orders, including failure followed by retry,
+under coherent normal and sanitizer builds. Independent verification remains
+required before P5 or the PR finding can be closed.
+
+### Embedded DXF marker and namespace finding
+
+Finding `P5-EMBEDDED-DXF-001` is Open. At `1636de0ce`,
+`dxfRW::writeEmbeddedMText` and `DRW_Attrib::parseCode` use group 100 for
+`Embedded Object`; the parser then routes trailing XDATA to embedded MTEXT.
+The [Autodesk filer contract](https://help.autodesk.com/cloudhelp/2017/ENU/OARXMAC-RefGuide/files/OREFMAC-__MEMBERTYPE_Methods_AcDbDxfFiler.html)
+requires group 101. Independent [ezdxf parsing](https://raw.githubusercontent.com/mozman/ezdxf/master/src/ezdxf/lldxf/extendedtags.py)
+and [entity export](https://raw.githubusercontent.com/mozman/ezdxf/master/src/ezdxf/entities/dxfentity.py)
+place outer XDATA after the native embedded fields. Its
+[embedded MTEXT exporter](https://raw.githubusercontent.com/mozman/ezdxf/master/src/ezdxf/entities/attrib.py)
+does not emit a separate XDATA frame.
+
+The pending local test and writer-ordering change repeated the group-100/scope
+assumption; their earlier 249 / 1 normal/sanitizer pass is not interoperability
+acceptance. Replace that oracle with an external group-101 fixture, verify
+native text and outer application ownership through an independent reader, and
+retain independent embedded metadata through the compatible outer carrier.
+Characterize legacy noncanonical inputs without silently reassigning ambiguous
+metadata. A temporary explicit export failure preserves data but does not
+complete the required lossless output gates.
 
 ## Implementation milestones
 
@@ -1518,7 +1645,7 @@ enables it by default; activation requires the explicit rollout decision.
 | P4 TEXT and MTEXT adapters | Shared result consumption; backend-specific metrics/alignment; spacing and stack integration; native bounds and transform handling | TEXT/MTEXT parity; all alignment/anchor/width/rotation fixtures; legacy geometry unchanged; no double reversal/mirroring |
 | P5 Persistence and consumers | Finalize codecs/profile overrides; embedded attributes; dimension/tolerance/MLeader integration; editor preview; both explode paths | Raw source and metadata invariants; edited and no-op DXF/DWG round trips; native print/export/explode comparisons; editor/IME tests |
 | P6 Release validation | Full test matrix, installed packages, performance and Arabic visual review; validate the opt-in certified profile and document limits | All technical release checklist items pass on supported platforms with revision-bound evidence; P7 attestation is a separate later gate, and default activation still requires an explicit rollout decision |
-| P7 PR creation and deep refinement | Create/reuse a draft PR; review the complete diff; fix findings in scoped commits; synchronize CI, plan and PR; hand off ready for review | Published PR attached to the task, current PR revision evidence, completed refinement ledger and no unresolved mandatory findings; no automatic merge or release |
+| P7 PR creation and deep refinement | P7a create/reuse and verify a draft PR; P7b independently review and deeply refine it through scoped corrective commits; P7c verify the final candidate and hand off ready for review | Published PR attached to the task, current PR revision evidence, completed refinement ledger and no unresolved mandatory findings; no automatic merge or release |
 
 P0 must resolve the few policy choices that change implementation: dependency
 versions/linkage, final profile/schema fields, numeric design-height and line
@@ -1562,10 +1689,25 @@ slice or remove the spike code while recording its reproducible evidence.
 
 ### Create and deeply refine the PR
 
-P7a starts after a coherent P5 checkpoint and may precede P6 completion, so draft
-publication can enable platform CI without pretending release checks already
-passed. P7b may run alongside that validation; P7c depends on completed P6 gates
-and the refinement exit criteria below. Publishing a draft does not complete P7.
+Execute the PR work as three explicit steps:
+
+1. **P7a Create the draft PR.** After a coherent P5 checkpoint, inspect the
+   complete committed candidate, confirm publication authority and destination,
+   publish or reuse the matching draft, attach it to this task, and verify its
+   published head and description. P6 platform checks may still be Pending;
+   draft creation is not release acceptance.
+2. **P7b Deeply refine the PR.** Independently review the whole diff and
+   cross-layer behavior, triage every actionable finding, reproduce defects,
+   make scoped corrective commits, rerun affected validation and obtain
+   independent verification. Update the plan, evidence and PR after every round;
+   repeat until the mandatory findings and review gaps are resolved. This work
+   may run alongside P6 validation.
+3. **P7c Verify and hand off.** After P6 and the refinement exit criteria pass,
+   perform the final whole-diff review, reconcile current feedback and CI against
+   the exact published revisions, and verify the ready-for-review state before
+   handing off. Merge, release and default activation remain separate decisions.
+
+Publishing a draft does not complete P7.
 P7a becomes In progress when publication preparation starts, even while no PR
 exists. P7b and P7c remain Planned until their work begins. Keep the following
 record current and reference it from the progress ledger; this plan update does
@@ -1762,6 +1904,10 @@ individual helpers:
 - Exercise repeated updates, cloning, undo/redo, cache eviction, resource
   failure and destruction under sanitizers. Record instrumented sources and
   exclusions; a font/shaper-only run is not native-adapter lifecycle coverage.
+- Reuse the same filter instance for DXF then DWG and DWG then DXF, including
+  repeated saves and failed export followed by retry. Check writer lifetime,
+  active format/version selection, STYLE handles and unchanged source/metadata;
+  fresh-filter round trips alone cannot establish this lifecycle contract.
 - Commit Arabic IME composition, edit a combining sequence and an invisible
   control, then undo/redo and save/reopen from each editor entry point. Verify
   logical source and profile metadata independently of the preview, and confirm
@@ -1814,6 +1960,8 @@ candidate. Reconcile source thread state separately from finding state.
 | --- | --- | --- | --- | --- | --- | --- |
 | Populate before P7a | Link prepublication review records; retain PR comment/review identities when available | Import prepublication findings; add PR review findings as discovered | Retain original revisions | Apply the resolution and verification rules below | Record actual state | Link existing or new evidence |
 | P5-SIDECAR-001 | Independent embedded-sidecar baseline audit; retention finding above | Mandatory data preservation; `appendInsertAttribSidecar`, `decodeInsertAttribMTextXData` and ATTRIB extraction/export | HEAD `a8ade2677`; no PR/base review claimed | Lossless compatible retention, explicit failure instead of dropped ATTRIB, regressions and independent verification | Open | No verified fix or transport acceptance yet |
+| P5-FILTER-LIFETIME-001 | Final mixed-tree filter diagnostic; cross-format lifetime finding above | Mandatory crash/lifetime failure; `RS_FilterDXFRW::fileExport`, `prepareDRWDimStyleText` and writer/version selection | HEAD `1636de0ce` plus hashed uncommitted filter/test inputs above; no PR/base review claimed | Isolated reproducer, writer ownership on all exits, same-instance cross-format/retry regressions and independent normal/sanitizer verification | Open | No correction or coherent acceptance claimed; earlier passing diagnostic is superseded for this gate |
+| P5-EMBEDDED-DXF-001 | Independent Autodesk/ezdxf wire audit; marker and namespace finding above | Mandatory format/metadata authority; `writeEmbeddedMText`, `DRW_Attrib::parseCode` and ATTRIB/ATTDEF output | HEAD `1636de0ce` plus pending ordering/test candidate; no PR/base review claimed | Canonical group-101/body/outer-XDATA ordering, external fixture/reader verification, conservative legacy reading and lossless embedded carrier | Open | Earlier self-round-trip scope result is not independent wire acceptance; corrected candidate pending |
 
 This template is not a claim that no findings exist. Reconcile it with slice
 reviews and failed-check records before publication. Previously verified fixes
@@ -1897,6 +2045,23 @@ On a subsequent authorized continuation, feed new maintainer feedback and
 post-handoff CI regressions through this same ledger and corrective loop.
 Reopen affected P7 gates, restore draft status for mandatory failures, and
 replace the stale handoff with a new revision-bound summary after verification.
+
+#### PR refinement checkpoint
+
+Complete P7b only when the following review gates hold for the recorded
+candidate. P6 may still have outstanding platform or release checks; those keep
+P7c and the overall P7 milestone incomplete and the PR in draft.
+
+- [ ] Every review area and mandatory acceptance contract has independent coverage, including explicit no-finding results and the final whole-diff review after the last substantive change.
+- [ ] All actionable feedback is reconciled with the finding ledger. Mandatory findings are independently Verified or Rejected with reviewed evidence; optional deferrals have authorized acceptance, a documented limitation and a follow-up reference.
+- [ ] Corrective commits include regression checks and affected-consumer validation; changes to algorithms, caches or geometry budgets also have the required performance and memory evidence. Unexplained failures or retries remain open gates.
+- [ ] The latest published head matches the reviewed candidate; review and validation records identify the actual head/base or synthetic merge tested, and any carried-forward evidence has a documented input comparison.
+- [ ] The plan, acceptance map, round history, finding ledger and PR description agree. Remaining P6 checks have explicit configurations, next actions and responsible roles or required maintainer actions; none is presented as passing.
+
+Record the P7b completion decision and candidate in the progress ledger and PR
+tracking record. A later substantive change, base advance or newly accepted
+finding reopens affected review gates; completion of an earlier round is not
+permanent approval of a moving branch.
 
 #### P7c Verify final evidence and hand off
 

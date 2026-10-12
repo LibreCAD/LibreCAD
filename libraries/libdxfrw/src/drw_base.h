@@ -21,6 +21,7 @@
 #include <string>
 #include <cmath>
 #include <memory>
+#include <optional>
 #include <unordered_map>
 #include <utility>
 #include <vector>
@@ -567,6 +568,18 @@ public:
     }
     std::uint64_t rawDwgLayerReference() const noexcept {
         return dwgRawLayerReference;
+    }
+    struct ActiveDwgLayerReference {
+        std::uint64_t reference;
+        DRW::Version sourceVersion;
+    };
+    // Read-only transport provenance. A stale/edited spelling must never be
+    // serialized and reinstalled as an active unresolved layer reference.
+    std::optional<ActiveDwgLayerReference> activeDwgLayerReference() const noexcept {
+        if (!hasDwgRawLayerReference || vType != STRING || vCode != 1003 ||
+            content.s != &sdata || sdata != dwgRawLayerReferenceText)
+            return std::nullopt;
+        return ActiveDwgLayerReference{dwgRawLayerReference, dwgRawLayerReferenceVersion};
     }
     enum TYPE type() const { return vType;}
     int code() const { return vCode;}       /*!< returns dxf code of this value*/

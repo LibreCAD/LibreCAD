@@ -1118,6 +1118,8 @@ set (SHARED_SOURCES
      librecad/src/lib/fileio/lc_filenameselectionservice.h
      librecad/src/lib/fileio/rs_fileio.cpp
      librecad/src/lib/fileio/rs_fileio.h
+     librecad/src/lib/filters/lc_embeddedtextxdata.cpp
+     librecad/src/lib/filters/lc_embeddedtextxdata.h
      librecad/src/lib/filters/lc_hyperbolaspline.cpp
      librecad/src/lib/filters/lc_hyperbolaspline.h
         librecad/src/lib/filters/lc_parabolaspline.cpp
@@ -2842,6 +2844,18 @@ if (BUILD_TESTS)
         Catch2::Catch2WithMain Qt6::Core)
     target_compile_features(librecad_text_source_codec_tests PRIVATE cxx_std_17)
     set_target_properties(librecad_text_source_codec_tests PROPERTIES
+        AUTOMOC OFF AUTOUIC OFF AUTORCC OFF)
+
+    # Raw embedded metadata retention is independent of Qt and the font backend.
+    add_executable(librecad_embedded_text_xdata_tests EXCLUDE_FROM_ALL
+        librecad/src/lib/filters/lc_embeddedtextxdata.cpp
+        librecad/src/lib/filters/tests/lc_embeddedtextxdata_tests.cpp)
+    target_include_directories(librecad_embedded_text_xdata_tests PRIVATE
+        librecad/src/lib/filters libraries/libdxfrw/src)
+    target_link_libraries(librecad_embedded_text_xdata_tests PRIVATE
+        Catch2::Catch2WithMain)
+    target_compile_features(librecad_embedded_text_xdata_tests PRIVATE cxx_std_17)
+    set_target_properties(librecad_embedded_text_xdata_tests PROPERTIES
         AUTOMOC OFF AUTOUIC OFF AUTORCC OFF)
 
     # Profile metadata is inert and must not depend on font/backend availability.
