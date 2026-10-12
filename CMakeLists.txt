@@ -2900,6 +2900,25 @@ if (BUILD_TESTS)
     set_target_properties(librecad_text_profile_binding_tests PROPERTIES
         AUTOMOC OFF AUTOUIC OFF AUTORCC OFF)
 
+    # STYLE import provenance and edit authority are independent of rendering.
+    add_executable(librecad_text_style_authority_tests EXCLUDE_FROM_ALL
+        librecad/src/lib/engine/rs_flags.cpp
+        librecad/src/lib/engine/document/textstyles/lc_textstyle.cpp
+        librecad/src/lib/engine/document/textstyles/lc_textstylelist.cpp
+        librecad/src/lib/engine/document/entities/lc_textprofile.cpp
+        librecad/src/lib/engine/document/entities/lc_textprofilebinding.cpp
+        librecad/src/lib/filters/tests/lc_textstyle_authority_tests.cpp)
+    target_include_directories(librecad_text_style_authority_tests PRIVATE
+        librecad/src/lib/engine/document/textstyles
+        librecad/src/lib/engine/document/entities librecad/src/lib/engine)
+    target_link_libraries(librecad_text_style_authority_tests PRIVATE
+        Catch2::Catch2WithMain Qt6::Core)
+    target_compile_features(librecad_text_style_authority_tests PRIVATE cxx_std_17)
+    target_compile_definitions(librecad_text_style_authority_tests PRIVATE
+        QT_USE_QSTRINGBUILDER LC_WITH_OPENTYPE=$<BOOL:${LIBRECAD_ENABLE_OPENTYPE}>)
+    set_target_properties(librecad_text_style_authority_tests PROPERTIES
+        AUTOMOC OFF AUTOUIC OFF AUTORCC OFF)
+
     # Isolate the allocation-failure injector from Catch and application code.
     add_executable(librecad_text_profile_binding_copy_failure_tests EXCLUDE_FROM_ALL
         librecad/src/lib/engine/document/entities/lc_textprofile.cpp

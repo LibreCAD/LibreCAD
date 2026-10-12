@@ -23,6 +23,14 @@
 
 #include "lc_textstyle.h"
 
+#include <stdexcept>
+
+namespace {
+QString owned(const QString &text) {
+    return text.isNull() ? QString{} : QString(text.constData(), text.size());
+}
+}
+
 void LC_TextStyle::setFixedTextHeight(const double fixedTextHeight) {
     m_fixedTextHeight = fixedTextHeight;
 }
@@ -44,11 +52,11 @@ void LC_TextStyle::setLastHeight(const double lastHeight) {
 }
 
 void LC_TextStyle::setFontName(const QString& fontName) {
-    m_fontName = fontName;
+    m_fontName = owned(fontName);
 }
 
 void LC_TextStyle::setBigFont(const QString& bigFont) {
-    m_bigFontName = bigFont;
+    m_bigFontName = owned(bigFont);
 }
 
 void LC_TextStyle::setFontFamilyItalicBold(const int fontFamilyItalicBold) {
@@ -56,5 +64,59 @@ void LC_TextStyle::setFontFamilyItalicBold(const int fontFamilyItalicBold) {
 }
 
 void LC_TextStyle::setName(const QString& name) {
-    m_name = name;
+    m_name = owned(name);
+}
+
+LC_TextProfile::Error LC_TextStyle::importTextProfile(const std::optional<LC_TextProfile::Block> &block,
+                                                     ProfileTransport transport,
+                                                     const QString &unavailableDiagnostic,
+                                                     const std::optional<QByteArray> &originalNameUtf8) {
+    using Profile = LC_TextProfile;
+    if (m_importedName || m_textProfile.authority() != LC_TextProfileBinding::Authority::Untouched)
+        return {Profile::ErrorCode::InvalidField, QStringLiteral("A text STYLE can acquire imported profile provenance only once before editing"), QStringLiteral("profile")};
+    const bool unavailable = transport == ProfileTransport::DuplicateNamespace ||
+        transport == ProfileTransport::UnrepresentableNamespace;
+    if ((!unavailable && transport != ProfileTransport::Representable) ||
+        (unavailable && (block || unavailableDiagnostic.isEmpty())) ||
+        (!unavailable && !unavailableDiagnostic.isEmpty()) ||
+        (block && !LC_TextProfileBinding::supportsImport(*block)) ||
+        (originalNameUtf8 && QString::fromUtf8(originalNameUtf8->constData(), originalNameUtf8->size()) != m_name))
+        return {Profile::ErrorCode::InvalidType, QStringLiteral("Unrepresentable profile raw must remain in the transport sidecar"), QStringLiteral("profile")};
+    // Prepare every allocating payload before committing import authority.
+    auto name = std::optional<QString>(owned(m_name));
+    const auto &bytes = originalNameUtf8;
+    auto nameUtf8 = bytes ? std::optional<QByteArray>(bytes->isNull() ? QByteArray{} :
+        QByteArray(bytes->constData(), bytes->size())) : std::nullopt;
+    auto diagnostic = owned(unavailableDiagnostic);
+    try {
+        auto profile = block ? LC_TextProfileBinding(Profile::Scope::StyleDefaults, *block)
+                             : LC_TextProfileBinding(Profile::Scope::StyleDefaults);
+        m_textProfile = std::move(profile);
+        m_importedName.swap(name);
+        m_importedNameUtf8.swap(nameUtf8);
+        m_importedProfileDiagnostic.swap(diagnostic);
+        m_importedProfileTransport = transport;
+    } catch (const std::invalid_argument &) {
+        return {Profile::ErrorCode::InvalidType, QStringLiteral("Unrepresentable profile raw must remain in the transport sidecar"), QStringLiteral("profile")};
+    }
+    return {};
+}
+
+QString LC_TextStyle::getTextProfileDiagnostic() const {
+    if (m_textProfile.authority() != LC_TextProfileBinding::Authority::Untouched) return {};
+    if (!m_importedProfileDiagnostic.isEmpty()) return m_importedProfileDiagnostic;
+    return m_textProfile.imported().error.message;
+}
+
+LC_TextStyle::CurrentProfile LC_TextStyle::getCurrentTextProfile() const {
+    CurrentProfile result;
+    if (m_textProfile.authority() == LC_TextProfileBinding::Authority::Untouched &&
+        m_importedProfileTransport != ProfileTransport::Representable) {
+        result.transport = m_importedProfileTransport;
+        result.diagnostic = m_importedProfileDiagnostic;
+    } else {
+        result.metadata = m_textProfile.current();
+        result.diagnostic = result.metadata->error.message;
+    }
+    return result;
 }
