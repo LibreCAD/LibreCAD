@@ -66,6 +66,7 @@
 #include "rs_filterdxf1.h"
 #include "rs_filterdxfrw.h"
 #include "rs_filterjww.h"
+#include "rs_fontlist.h"
 #include "rs_graphic.h"
 #include "rs_hatch.h"
 #include "rs_entity.h"
@@ -73,11 +74,14 @@
 #include "rs_layer.h"
 #include "rs_line.h"
 #include "rs_linetypepattern.h"
+#include "rs_mtext.h"
 #include "rs_pen.h"
 #include "rs_point.h"
 #include "rs_polyline.h"
 #include "rs_settings.h"
 #include "rs_spline.h"
+#include "rs_system.h"
+#include "rs_text.h"
 
 namespace {
 
@@ -540,6 +544,48 @@ bool containsLine(const std::string &path, const std::string &expected) {
   return false;
 }
 
+std::string embeddedAttributeDxf(bool background = true) {
+  return std::string(
+      "0\nSECTION\n2\nBLOCKS\n0\nBLOCK\n8\n0\n2\nTITLE\n70\n0\n10\n0\n20\n0\n3\nTITLE\n"
+      "0\nENDBLK\n8\n0\n0\nENDSEC\n0\nSECTION\n2\nENTITIES\n"
+      "0\nINSERT\n8\n0\n2\nTITLE\n10\n0\n20\n0\n66\n1\n"
+      "0\nATTRIB\n8\n0\n100\nAcDbText\n10\n1\n20\n4\n40\n9\n1\nfallback\n"
+      "100\nAcDbAttribute\n2\nLABEL\n70\n0\n71\n2\n"
+      "100\nEmbedded Object\n10\n1\n20\n4\n40\n9\n41\n80\n71\n1\n72\n1\n"
+      "1\n{\\fArial;ABC}\\PDEF\n7\niso3098\n73\n2\n44\n1\n90\n") +
+      (background ? "1\n" : "0\n") + "45\n1.5\n63\n3\n"
+      "0\nSEQEND\n8\n0\n0\nENDSEC\n0\nEOF\n";
+}
+
+class SourceFonts {
+public:
+  SourceFonts() {
+    RS_SYSTEM->init("LibreCAD", "tests", "librecad", "dxf_roundtrip_tests");
+    LC_GROUP_GUARD("Paths");
+    previous = LC_GET_STR("Fonts", "");
+    LC_SET("Fonts", QStringLiteral(LIBRECAD_SOURCE_DIR "/librecad/support/fonts"));
+    RS_FONTLIST->clearFonts();
+    RS_FONTLIST->init();
+  }
+  ~SourceFonts() {
+    LC_GROUP_GUARD("Paths");
+    LC_SET("Fonts", previous);
+    RS_FONTLIST->clearFonts();
+    RS_FONTLIST->init();
+  }
+
+private:
+  QString previous;
+};
+
+RS_Entity *attributeText(RS_Graphic &graphic) {
+  for (RS_Entity *entity : graphic) {
+    if (entity->rtti() == RS2::EntityMText || entity->rtti() == RS2::EntityText)
+      return entity;
+  }
+  return nullptr;
+}
+
 } // namespace
 
 TEST_CASE("DXF round-trip via RS_FilterDXFRW preserves unmodeled object + entity",
@@ -874,6 +920,125 @@ TEST_CASE("DXF INSERT attribute visibility combines common and attribute flags",
 
   std::filesystem::remove(src);
   std::filesystem::remove(out);
+}
+
+TEST_CASE("Embedded MTEXT edits survive modern export and older ATTRIB fallbacks",
+          "[dxf][roundtrip][filter][attrib-edit]") {
+  ensureSettings();
+  SourceFonts fonts;
+  const auto src = tmpFile("edited_mtext_attribute_src.dxf");
+  writeText(src, embeddedAttributeDxf(false));
+  for (const auto format : {RS2::FormatDXFRW2000, RS2::FormatDXFRW,
+                           RS2::FormatDXFRW2018, RS2::FormatDWG,
+                           RS2::FormatDWG2004, RS2::FormatDWG2007,
+                           RS2::FormatDWG2010, RS2::FormatDWG2013,
+                           RS2::FormatDWG2018}) {
+    for (const QString &value : {QStringLiteral("    ABC\n\tDEF \u03a9"), QString()}) {
+      CAPTURE(format, value.toStdString());
+      RS_Graphic graphic;
+      RS_FilterDXFRW filter;
+      REQUIRE(filter.fileImport(graphic, QString::fromStdString(src), RS2::FormatDXFRW2018));
+      auto *attribute = dynamic_cast<RS_MText *>(attributeText(graphic));
+      REQUIRE(attribute);
+      attribute->setText(value);
+      attribute->setWidth(120.0);
+      attribute->setHAlign(RS_MTextData::HARight);
+      attribute->setVAlign(RS_MTextData::VAMiddle);
+      attribute->setLineSpacingFactor(1.25);
+      const auto spacing = value.isEmpty() ? RS_MTextData::Exact : RS_MTextData::AtLeast;
+      attribute->getLineSpacingStyle(spacing);
+      attribute->setDrawingDirection(RS_MTextData::RightToLeft);
+      attribute->setInsertionPoint({7.0, 8.0});
+      attribute->setAngle(0.5);
+      attribute->setHeight(12.0);
+      attribute->setStyle("unicode");
+      attribute->update();
+      const auto out = tmpFile("edited_mtext_attribute.out");
+      REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), format));
+      if (const char *directory = std::getenv("LIBRECAD_DWG_FIXTURE_DIR")) {
+        std::filesystem::create_directories(directory);
+        const auto name = "mtext_attribute_" + std::to_string(format) +
+                          (value.isEmpty() ? "_empty" : "_edited");
+        std::filesystem::copy_file(out, std::filesystem::path(directory) / name,
+                                  std::filesystem::copy_options::overwrite_existing);
+      }
+
+      RS_Graphic restored;
+      RS_FilterDXFRW reader;
+      REQUIRE(reader.fileImport(restored, QString::fromStdString(out), format));
+      RS_Entity *restoredEntity = attributeText(restored);
+      REQUIRE(restoredEntity);
+      const bool embedded = format == RS2::FormatDXFRW2018 || format == RS2::FormatDWG2018;
+      if (embedded) {
+        auto *text = dynamic_cast<RS_MText *>(restoredEntity);
+        REQUIRE(text);
+        CHECK(text->getText() == value);
+        CHECK(text->getWidth() == 120.0);
+        CHECK(text->getHAlign() == RS_MTextData::HARight);
+        CHECK(text->getVAlign() == RS_MTextData::VAMiddle);
+        CHECK(text->getLineSpacingFactor() == 1.25);
+        CHECK(text->getLineSpacingStyle() == spacing);
+        CHECK(text->getDrawingDirection() == RS_MTextData::RightToLeft);
+        CHECK(text->getInsertionPoint().distanceTo({7.0, 8.0}) < 1e-9);
+        CHECK(text->getAngle() == Catch::Approx(0.5));
+        CHECK(text->getHeight() == 12.0);
+        CAPTURE(text->getStyle().toStdString(), attribute->getStyle().toStdString());
+        CHECK(text->getStyle().compare(attribute->getStyle(), Qt::CaseInsensitive) == 0);
+        // A subsequent edit must also replace the newly imported raw payload.
+        text->setText("new text");
+        text->setDrawingDirection(RS_MTextData::LeftToRight);
+        text->update();
+        REQUIRE(reader.fileExport(restored, QString::fromStdString(out), format));
+        RS_Graphic again;
+        RS_FilterDXFRW secondReader;
+        REQUIRE(secondReader.fileImport(again, QString::fromStdString(out), format));
+        auto *againText = dynamic_cast<RS_MText *>(attributeText(again));
+        REQUIRE(againText);
+        CHECK(againText->getText() == "new text");
+        CHECK(againText->getDrawingDirection() == RS_MTextData::LeftToRight);
+      } else {
+        auto *text = dynamic_cast<RS_Text *>(restoredEntity);
+        REQUIRE(text);
+        QString fallback = value;
+        fallback.replace('\n', ' ');
+        CHECK(text->getText() == fallback);
+        CHECK(text->getHeight() == 12.0);
+        CAPTURE(text->getStyle().toStdString(), attribute->getStyle().toStdString());
+        CHECK(text->getStyle().compare(attribute->getStyle(), Qt::CaseInsensitive) == 0);
+        CHECK(text->getAngle() == Catch::Approx(0.5));
+        CHECK(text->getInsertionPoint().distanceTo({7.0, 8.0}) < 1e-9);
+      }
+    }
+  }
+}
+
+TEST_CASE("Unedited embedded MTEXT keeps raw formatting and background metadata",
+          "[dxf][roundtrip][filter][attrib-edit]") {
+  ensureSettings();
+  const auto src = tmpFile("unedited_mtext_attribute_src.dxf");
+  writeText(src, embeddedAttributeDxf());
+  for (const auto format : {RS2::FormatDXFRW2018, RS2::FormatDWG2018}) {
+    CAPTURE(format);
+    RS_Graphic graphic;
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src), RS2::FormatDXFRW2018));
+    const auto out = tmpFile("unedited_mtext_attribute.out");
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), format));
+    RS_Graphic restored;
+    RS_FilterDXFRW reader;
+    REQUIRE(reader.fileImport(restored, QString::fromStdString(out), format));
+    const auto dxf = tmpFile("unedited_mtext_attribute_check.dxf");
+    REQUIRE(reader.fileExport(restored, QString::fromStdString(dxf), RS2::FormatDXFRW2018));
+    CHECK(recordGroupValues(dxf, "ATTRIB", "1") ==
+          std::vector<std::string>{"fallback", "{\\fArial;ABC}\\PDEF"});
+    CHECK(recordGroupValues(dxf, "ATTRIB", "2") == std::vector<std::string>{"LABEL"});
+    CHECK(recordGroupValues(dxf, "ATTRIB", "90") == std::vector<std::string>{"1"});
+    const auto scales = recordGroupValues(dxf, "ATTRIB", "45");
+    REQUIRE(scales.size() == 1);
+    CHECK(std::stod(scales.front()) == 1.5);
+    const auto appIds = recordGroupValues(dxf, "ATTRIB", "1001");
+    CHECK(std::find(appIds.begin(), appIds.end(), "LibreCAD_INSERT_ATTRIB_MTEXT") == appIds.end());
+  }
 }
 
 TEST_CASE("DXF entity common reference groups round-trip",
