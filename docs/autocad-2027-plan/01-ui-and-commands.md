@@ -164,6 +164,8 @@ Before finalizing this matrix in implementation, audit all `g_commandList` recor
 
 ### Phase 2 — Inspector and layer workflows
 
+Priority update after the Phase 1 user review: start the next master-plan Phase 2 with the crosshair/pickbox, compact command-line presentation and live command prediction described in the [input specification](phase2/00-input-experience.md). Live suggestions, previously listed in the UI workstream's Phase 3 below, are pulled forward into this checkpoint. The broader command-contract audit remains subsequent work.
+
 - Improve selection count/context, mixed values, property section hierarchy, editor commit/cancel and refresh.
 - Add flat layer-table mode, useful default columns, sorting/search, visible active layer, and safely guarded layer create/edit/rename/delete/set-current/move-selection operations.
 - **Accept when:** selecting one entity shows its actual properties; selecting mixed entity types shows an explicit count/filter and only valid common properties; editing a mixed field updates every eligible selected entity in one undo step; undo/redo restores values and selection predictably; layer state, color and names persist through drawing save/reopen; the current single frozen state is labeled correctly, and the layer constraints supported by the document model are clear and cannot silently corrupt references.

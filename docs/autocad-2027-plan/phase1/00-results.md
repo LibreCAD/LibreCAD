@@ -69,4 +69,4 @@ This remains a development build. Native screenshots and Qt-driven interaction c
 
 DWG export failures, real paper-space/layout ownership, multiple scaled viewports, ordered sheet publishing and PDF plot-style/color fidelity remain the documented later gates. Existing Model/Layout tabs are retained with their previous behavior, including the duplicate Model label observed in the baseline. Layer visibility/freeze semantics have not been relabeled or expanded.
 
-The next stage is Phase 2: prioritize command contracts and improve property/layer workflows. Review this workspace first before proceeding to that larger behavior change.
+The next stage is Phase 2. Following the user's review, begin with the [AutoCAD-style crosshair, command line and live command prediction](../phase2/00-input-experience.md), followed by command contracts and property/layer workflows.

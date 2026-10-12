@@ -148,12 +148,14 @@ These are planning ranges for one experienced full-time C++/Qt CAD engineer with
 | --- | --- | --- | --- |
 | 0 | Build/runtime baseline, fixture corpus, capability inventory, design specification | 1–2 engineer-weeks | Native app baseline and confirmed reference tasks |
 | 1 | Familiar workspace: top ribbon, quick access, Properties/Layers visibility, command placement, palette persistence | 3–5 engineer-weeks | UI works with existing actions and remains usable on laptop/Retina displays |
-| 2 | Prioritized command workflows, property/layer semantics, precise input, annotation and block audit | 4–8 engineer-weeks | Core 2D drafting scenarios pass with coherent undo and persistence |
+| 2 | AutoCAD-style crosshair, compact command line and live command suggestions first; prioritized command workflows, property/layer semantics, precise input, annotation and block audit | 4–8 engineer-weeks | Core 2D drafting scenarios pass with coherent undo and persistence |
 | 3 | Paper-space owners, layout management, imported content switching and rectangular viewport prototype | 6–12 engineer-weeks | Two distinct sheets and two independently scaled views work after save/reopen |
 | 4 | Page setup, shared sheet renderer, PDF publishing, source-specific DWG/DXF loss reports and interoperability fixes | 5–10 engineer-weeks | Layout PDF and declared file subset pass external/reference checks |
 | 5 | Native Mac polish, performance/accessibility, packaging/release evidence and documentation | 2–4 engineer-weeks | Release candidate passes clean-machine acceptance |
 
 Sequential total: **21–41 engineer-weeks as a rough planning range**, not a delivery promise. A visual prototype can be reviewed after Phase 1. A usable UI milestone may ship earlier with accurately labeled format/layout limits; the complete requested drafting-and-sheet release waits for Phases 3–5. Large file-format gaps may extend the range substantially.
+
+After reviewing Phase 1, the user confirmed three priorities for the next changes: AutoCAD-style crosshair/pickbox, command-line appearance and live command prediction. These are recorded in the [Phase 2 input specification](phase2/00-input-experience.md). The information tooltip following the cursor remains disabled by default.
 
 Work that can overlap: Mac baseline and asset/design work; UI and compatibility corpus; command adapters and format preflight. Layout publishing depends on proven paper-space ownership and viewport composition. Define document services before their new UI forms.
 
