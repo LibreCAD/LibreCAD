@@ -30883,6 +30883,12 @@ void RS_FilterDXFRW::writeMText(const RS_MText *t) {
     text->text = toDxfString(t->getText(), m_dwgW == nullptr).toUtf8().data();
     //        text->widthscale =t->getWidth();
     text->widthscale = t->getUsedTextWidth(); // getSize().x;
+    if (t->hasParagraphCommands()) {
+      // The indentations of a paragraph command are not laid out here, but a
+      // program that reads this file needs the room for them: do not make the
+      // box the text was given any narrower.
+      text->widthscale = std::max(text->widthscale, t->getWidth());
+    }
     txt2.interlin = t->getLineSpacingFactor();
 
     if (m_dwgW) {

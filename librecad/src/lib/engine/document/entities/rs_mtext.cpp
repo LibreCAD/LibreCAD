@@ -53,20 +53,9 @@ constexpr double g_rightToLeftTabSpaces = 4.0;
 constexpr qsizetype g_maxParagraphCommandLength = 256;
 
 /**
- * The paragraph properties that "\p" commands set and the layout uses, in text
- * heights.
+ * Skips a decimal number such as "-3", "1.5" or ".5" at @p pos.
  */
-struct ParagraphProperties {
-    double left = 0.0;            ///< "l": indentation of the paragraph
-    double firstLine = 0.0;       ///< "i": indentation of its first line, on top of "l"
-    std::vector<double> tabStops; ///< "t": ascending; empty for the default stops
-};
-
-/**
- * Reads a decimal number such as "-3", "1.5" or ".5" at @p pos and moves
- * @p pos behind it.
- */
-bool readNumber(const QString& text, qsizetype& pos, const qsizetype end, double& value) {
+bool skipNumber(const QString& text, qsizetype& pos, const qsizetype end) {
     qsizetype p = pos;
     if (p < end && (text.at(p) == QChar('-') || text.at(p) == QChar('+'))) {
         ++p;
@@ -86,32 +75,31 @@ bool readNumber(const QString& text, qsizetype& pos, const qsizetype end, double
     if (digits == 0) {
         return false;
     }
-    bool ok = false;
-    const double number = text.mid(pos, p - pos).toDouble(&ok);
-    if (!ok || !std::isfinite(number)) {
-        return false;
-    }
-    value = number;
     pos = p;
     return true;
 }
 
 /**
- * Reads the value of a paragraph property: a number, or "*" for the initial
+ * Skips the value of a paragraph property: a number, or "*" for the initial
  * value.
  */
-bool readPropertyValue(const QString& text, qsizetype& pos, const qsizetype end, double& value) {
+bool skipPropertyValue(const QString& text, qsizetype& pos, const qsizetype end) {
     if (pos < end && text.at(pos) == QChar('*')) {
         ++pos;
-        value = 0.0;
         return true;
     }
-    return readNumber(text, pos, end, value);
+    return skipNumber(text, pos, end);
 }
 
 /**
- * Reads an MTEXT paragraph command: "\p", properties, ";". An example is
- * "\pxi-3,l3,t3;", which AutoCAD writes for a numbered list.
+ * Finds the end of an MTEXT paragraph command: "\p", properties, ";". An
+ * example is "\pi-12,l12,t12;", which AutoCAD writes for a numbered list.
+ *
+ * Such a command is not drawn. It is not applied either. Its values are
+ * lengths: drawing units in the files AutoCAD writes, multiples of the text
+ * height by other accounts, and they would have to follow the entity when it is
+ * scaled. Until that is settled a line is laid out as if the command were not
+ * there.
  *
  * LibreCAD users type backslashes as ordinary text, so only a command that
  * follows the grammar from its "p" to its ";" is accepted. Anything else, such
@@ -119,11 +107,10 @@ bool readPropertyValue(const QString& text, qsizetype& pos, const qsizetype end,
  *
  * @param text the content of the MText
  * @param start the index of the "p"
- * @param properties receives the indentations and tab stops the command sets
  * @return the index of the closing ";", or -1 if this is not a paragraph
  * command
  */
-qsizetype readParagraphCommand(const QString& text, const qsizetype start, ParagraphProperties& properties) {
+qsizetype paragraphCommandEnd(const QString& text, const qsizetype start) {
     // The ";" is looked for nearby only: text with many "\p" and no ";" must
     // not be searched to its end each time.
     const qsizetype closing = QStringView(text).mid(start + 1, g_maxParagraphCommandLength).indexOf(QChar(';'));
@@ -131,16 +118,13 @@ qsizetype readParagraphCommand(const QString& text, const qsizetype start, Parag
         return -1;
     }
     const qsizetype end = start + 1 + closing;
-    ParagraphProperties parsed = properties;
+    // "x" alone and "t" without stops say nothing: they are more likely text.
     bool hasProperty = false;
     qsizetype pos = start + 1;
     while (pos < end) {
         const char16_t key = text.at(pos++).unicode();
-        double value = 0.0;
         switch (key) {
             case ',': // between two properties
-                continue;
-
             case 'x': // announces an alignment or tab stops
                 break;
 
@@ -149,15 +133,10 @@ qsizetype readParagraphCommand(const QString& text, const qsizetype start, Parag
             case 'r': // right indentation
             case 'b': // space before the paragraph
             case 'a': // space after the paragraph
-                if (!readPropertyValue(text, pos, end, value)) {
+                if (!skipPropertyValue(text, pos, end)) {
                     return -1;
                 }
-                if (key == 'i') {
-                    parsed.firstLine = value;
-                }
-                else if (key == 'l') {
-                    parsed.left = value;
-                }
+                hasProperty = true;
                 break;
 
             case 'q': // alignment: left, center, right, justified, distributed
@@ -165,64 +144,57 @@ qsizetype readParagraphCommand(const QString& text, const qsizetype start, Parag
                     return -1;
                 }
                 ++pos;
+                hasProperty = true;
                 break;
 
             case 's': // line spacing: multiple, exact, at least
                 if (pos < end && QStringLiteral("mea").contains(text.at(pos))) {
                     ++pos;
                 }
-                if (!readPropertyValue(text, pos, end, value)) {
+                if (!skipPropertyValue(text, pos, end)) {
                     return -1;
                 }
+                hasProperty = true;
                 break;
 
-            case 't': { // tab stops: the rest of the command
-                std::vector<double> stops;
+            case 't': // tab stops: the rest of the command
                 while (pos < end) {
                     const char16_t kind = text.at(pos).unicode();
-                    if (kind == ',' || kind == '*') {
+                    if (kind == ',') {
                         ++pos;
                         continue;
                     }
-                    if (kind == 'c' || kind == 'r' || kind == 'd') {
-                        // a centered, right or decimal stop: only its position is used
+                    if (kind == 'z' || kind == '*') {
+                        // no stops
                         ++pos;
                     }
-                    if (!readNumber(text, pos, end, value)) {
-                        return -1;
+                    else {
+                        if (kind == 'c' || kind == 'r' || kind == 'd') {
+                            // a centered, right or decimal stop
+                            ++pos;
+                        }
+                        if (!skipNumber(text, pos, end)) {
+                            return -1;
+                        }
                     }
-                    stops.push_back(value);
+                    hasProperty = true;
                 }
-                std::sort(stops.begin(), stops.end());
-                parsed.tabStops = std::move(stops);
                 break;
-            }
 
             default:
                 return -1;
         }
-        hasProperty = true;
     }
-    if (!hasProperty) {
-        return -1;
-    }
-    properties = std::move(parsed);
-    return end;
+    return hasProperty ? end : -1;
 }
 
 /**
  * @return the stop that a tab at @p distance from the start of the line
  * advances to. Text that ends on a stop goes to the next one.
- * @param stops the stops of the paragraph, ascending; the default stops follow
- * the last of them
  */
-double nextTabStop(const double distance, const std::vector<double>& stops) {
+double nextTabStop(const double distance) {
     // Text that ends on a stop within rounding is on that stop.
     const double position = distance + 1e-9 * g_defaultTabInterval;
-    const auto own = std::upper_bound(stops.begin(), stops.end(), position);
-    if (own != stops.end()) {
-        return *own;
-    }
     const double stop = (std::floor(position / g_defaultTabInterval) + 1.0) * g_defaultTabInterval;
     // Beyond the precision of a double two stops cannot be told apart.
     return stop > distance ? stop : distance + g_defaultTabInterval;
@@ -470,6 +442,7 @@ void RS_MText::update() {
 
     m_usedTextWidth = 0.0;
     m_usedTextHeight = 0.0;
+    m_hasParagraphCommands = false;
 
     RS_Font* font{RS_FONTLIST->requestFont(m_data.style)};
     if (nullptr == font) {
@@ -500,22 +473,8 @@ void RS_MText::update() {
   // flushBidiLine(); see the comment on LC_BidiSegment in the header.
   std::vector<LC_BidiSegment> segments;
 
-  // Paragraph properties stay in force until another "\p" command changes them.
-  // Lines are not wrapped, so every line is the first line of its paragraph.
-  ParagraphProperties paragraph;
-  const auto paragraphLayout = [&paragraph]() {
-    LC_ParagraphLayout layout;
-    layout.indent = std::max(0.0, paragraph.left + paragraph.firstLine) * g_layoutHeight;
-    for (const double stop : paragraph.tabStops) {
-      if (stop > 0.0) {
-        layout.tabStops.push_back(stop * g_layoutHeight);
-      }
-    }
-    return layout;
-  };
-
   auto closeLine = [&]() {
-    const double leadingAdvance = flushBidiLine(*oneLine, segments, letterSpace, letterPos, paragraphLayout());
+    const double leadingAdvance = flushBidiLine(*oneLine, segments, letterSpace, letterPos);
     updateAddLine(oneLine, lineCounter++, leadingAdvance);
     oneLine = new LC_TextLine(this);
     letterPos = RS_Vector(0.0, -9.0);
@@ -577,14 +536,15 @@ void RS_MText::update() {
                         break;
 
                     case 'p': {
-                        // paragraph properties such as "\pxi-3,l3,t3;": applied, never drawn
-                        const qsizetype commandEnd = readParagraphCommand(m_data.text, i, paragraph);
+                        // paragraph properties such as "\pi-12,l12,t12;": not drawn
+                        const qsizetype commandEnd = paragraphCommandEnd(m_data.text, i);
                         if (commandEnd < 0) {
                             // not a command: drawn like any other text
                             --i;
                             break;
                         }
                         i = commandEnd;
+                        m_hasParagraphCommands = true;
                         handled = true;
                         break;
                     } // inner case 'p'
@@ -672,7 +632,7 @@ void RS_MText::update() {
     } // for (i) loop
 
   // Flush any trailing segments belonging to the last line.
-  const double leadingAdvance = flushBidiLine(*oneLine, segments, letterSpace, letterPos, paragraphLayout());
+  const double leadingAdvance = flushBidiLine(*oneLine, segments, letterSpace, letterPos);
 
   m_usedTextHeight -=
           m_data.height * m_data.lineSpacingFactor * 5.0 / 3.0 - m_data.height;
@@ -689,16 +649,14 @@ void RS_MText::update() {
  * order. Cursor advances use LFF metrics; bidi only determines visual order.
  * Clears @p segments on return.
  *
- * @return for a line that flows from the left, the advance of everything in
- * front of its first ink: the paragraph indentation and the leading spaces and
- * tabs. Zero for a right-to-left line, whose blanks on the left are the
- * trailing ones, and for a line without ink.
+ * @return for a line that flows from the left, the advance of the spaces and
+ * tabs in front of its first ink. Zero for a right-to-left line, whose blanks
+ * on the left are the trailing ones, and for a line without ink.
  */
 double RS_MText::flushBidiLine(LC_TextLine &oneLine,
                                std::vector<LC_BidiSegment> &segments,
                                const RS_Vector &letterSpace,
-                               RS_Vector &letterPosition,
-                               const LC_ParagraphLayout &paragraph) {
+                               RS_Vector &letterPosition) {
   if (segments.empty()) {
     return 0.0;
   }
@@ -737,15 +695,24 @@ double RS_MText::flushBidiLine(LC_TextLine &oneLine,
   const bool flowsFromLeft = direction == Qt::LeftToRight;
   const bool leftAttached = m_data.halign != RS_MTextData::HACenter
       && m_data.halign != RS_MTextData::HARight;
-  if (flowsFromLeft && leftAttached) {
-    letterPosition.x += paragraph.indent;
-  }
 
-  // The ink laid out so far, and where the pen was at the first of it.
+  // The ink laid out so far, and the advance of the spaces and tabs in front
+  // of it. A stack without ink moves the pen as well, but is no indentation.
   bool hasInk = false;
   double inkMin = 0.0;
   double inkMax = 0.0;
   double leadingAdvance = 0.0;
+  // Where the edge that tab stops are measured from is, as the pen sees it.
+  // A left-attached line ends up with its ink the leading advance from the
+  // insertion point (see updateAddLine()), so that is where its stops count
+  // from. A centered or right-attached line is anchored on its ink, and its
+  // leading blanks are without effect: its stops count from its first ink.
+  const auto stopOrigin = [&]() {
+    if (!hasInk) {
+      return letterPosition.x - leadingAdvance;
+    }
+    return leftAttached ? inkMin - leadingAdvance : inkMin;
+  };
   // The ink behind a tab starts on the stop exactly, as the ink of a line
   // starts on the edge of the line: the left bearing of a letter shifts
   // neither. Otherwise the same stop would be at different places in two lines
@@ -766,7 +733,6 @@ double RS_MText::flushBidiLine(LC_TextLine &oneLine,
     for (int offset = 0; offset < cluster.length; ++offset) {
       const int logIdx = cluster.start + offset;
       const auto &seg = segments[logIdx];
-      const double penBefore = letterPosition.x;
       const unsigned firstAdded = oneLine.count();
       switch (seg.kind) {
       case LC_BidiSegment::Char: {
@@ -804,24 +770,33 @@ double RS_MText::flushBidiLine(LC_TextLine &oneLine,
       }
       case LC_BidiSegment::Space:
         letterPosition.x += seg.width;
+        if (!hasInk) {
+          leadingAdvance += seg.width;
+        } else if (tabPending) {
+          fieldStart += seg.width;
+        }
         break;
       case LC_BidiSegment::Tab: {
         if (!flowsFromLeft) {
           letterPosition.x += seg.width;
           break;
         }
-        // Stops are measured where the line ends up once it is attached, and
-        // updateAddLine() takes the bearing of the first ink off then.
-        const double bearing = hasInk ? inkMin - leadingAdvance : 0.0;
+        const double origin = stopOrigin();
         // The pen of a font without letter spacing can be left of the ink.
         const double reached = hasInk ? std::max(letterPosition.x, inkMax) : letterPosition.x;
-        const double stop = nextTabStop(reached - bearing, paragraph.tabStops);
-        if (std::isfinite(stop)) {
-          letterPosition.x = stop + bearing;
-          // In front of all ink the tab is part of the indentation of the line.
-          tabPending = hasInk;
+        const double stop = nextTabStop(reached - origin);
+        if (!std::isfinite(stop)) {
+          break;
+        }
+        letterPosition.x = stop + origin;
+        if (!hasInk) {
+          // in front of all ink the tab is part of the indentation of the line
+          leadingAdvance = stop;
+        } else {
+          tabPending = true;
           inTabField = false;
           fieldFirst = oneLine.count();
+          fieldStart = letterPosition.x;
           inkMaxBeforeField = inkMax;
         }
         break;
@@ -868,10 +843,9 @@ double RS_MText::flushBidiLine(LC_TextLine &oneLine,
         continue;
       }
       if (tabPending) {
-        // the first ink of the field: it starts where the pen is
+        // the first ink of the field
         tabPending = false;
         inTabField = true;
-        fieldStart = penBefore;
         fieldInkMin = addedMin;
         fieldInkMax = addedMax;
       } else if (inTabField) {
@@ -897,7 +871,6 @@ double RS_MText::flushBidiLine(LC_TextLine &oneLine,
       }
       if (!hasInk) {
         hasInk = true;
-        leadingAdvance = penBefore;
         inkMin = addedMin;
         inkMax = addedMax;
       } else if (inTabField) {
@@ -1079,7 +1052,7 @@ double RS_MText::updateAddLine(LC_TextLine* textLine, const int lineCounter, con
             // leading spaces and leading tabs move the ink on from there, and
             // count for the width. A line without ink has nothing to move.
             if (textLine->hasValidBorders()) {
-                const double indentation = scale * leadingAdvance;
+                const double indentation = std::abs(scale) * leadingAdvance;
                 textLine->move(RS_Vector{indentation - textLine->getMin().x, 0.});
                 lineWidth += indentation;
             }

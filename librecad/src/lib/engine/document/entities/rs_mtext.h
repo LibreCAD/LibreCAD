@@ -268,6 +268,15 @@ public:
         return m_usedTextHeight;
     }
 
+    /**
+     * @return true if the text holds a paragraph command ("\\p...;"). Such a
+     * command is not drawn and not laid out, so the used width says less about
+     * the room the text needs elsewhere than the width it was given.
+     */
+    bool hasParagraphCommands() const {
+        return m_hasParagraphCommands;
+    }
+
     //	virtual double getLength() const {
     //		return -1.0;
     //	}
@@ -337,22 +346,11 @@ protected:
       QString lowerText;       ///< for Stack: lower text (sub-/denominator)
     };
 
-    /**
-     * Paragraph properties of one line, in the units the line is laid out in
-     * (see update()): where the line starts, and the tab stops that replace the
-     * default ones. Both are measured from the edge the text is attached to.
-     */
-    struct LC_ParagraphLayout {
-      double indent = 0.0;
-      std::vector<double> tabStops; ///< ascending; empty: the default stops
-    };
-
     double updateAddLine(LC_TextLine* textLine, int lineCounter, double leadingAdvance);
     void addLetter(LC_TextLine& oneLine, QString letter, RS_Font& font, const RS_Vector& letterSpace, RS_Vector& letterPosition);
     double flushBidiLine(LC_TextLine &oneLine,
                          std::vector<LC_BidiSegment> &segments,
-                         const RS_Vector &letterSpace, RS_Vector &letterPosition,
-                         const LC_ParagraphLayout &paragraph);
+                         const RS_Vector &letterSpace, RS_Vector &letterPosition);
     void alignVertically();
     static RS_MText* createUpperLower(QString text, const RS_MTextData& data, const RS_Vector& position);
     RS_MTextData m_data;
@@ -371,6 +369,8 @@ protected:
      * @see update
      */
     double m_usedTextHeight = 0.;
+    /** Set by update(): the text holds a paragraph command. */
+    bool m_hasParagraphCommands = false;
     void rotateLinesRefs() const;
     RS_Entity* cloneProxy() const override;
 };

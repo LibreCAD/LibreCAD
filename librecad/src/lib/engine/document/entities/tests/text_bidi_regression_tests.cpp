@@ -35,6 +35,7 @@
 #include <QDropEvent>
 #include <QInputMethodEvent>
 #include <QMouseEvent>
+#include <QDialogButtonBox>
 #include <QPlainTextEdit>
 #include <QRadioButton>
 #include <QScrollBar>
@@ -43,7 +44,10 @@
 #include <QTextEdit>
 #include <QTextLayout>
 
+#include "lc_action_draw_mtext.h"
+#include "lc_actiontestsupport.h"
 #include "lc_graphicviewport.h"
+#include "lc_m_text_options_widget.h"
 #include "lc_mtextpropertieseditingwidget.h"
 #include "lc_multilinetexteditdialog.h"
 #include "lc_textbidi.h"
@@ -1138,7 +1142,7 @@ TEST_CASE("Chinese RTL MTEXT round trips logical text and display policy",
 }
 
 // ---------------------------------------------------------------------------
-// Issue #3032: MText indented by leading spaces, tabs and paragraph commands.
+// Issue #3032: MText indented by leading spaces and tabs; paragraph commands.
 // Positions are compared to the same text without the indentation, or derived
 // from the spacing of the font, so that no glyph outline is copied in here.
 
@@ -1224,20 +1228,21 @@ QString mtextGroup(const QString &path, int group) {
   REQUIRE(file.open(QIODevice::ReadOnly));
   const QList<QByteArray> lines = file.readAll().split('\n');
   bool inMText = false;
+  QString value;
   for (qsizetype i = 0; i + 1 < lines.size(); i += 2) {
-    QByteArray value = lines[i + 1];
-    if (value.endsWith('\r'))
-      value.chop(1);
+    QByteArray line = lines[i + 1];
+    if (line.endsWith('\r'))
+      line.chop(1);
     const int code = lines[i].trimmed().toInt();
     if (code == 0) {
       if (inMText)
         break;
-      inMText = value.trimmed() == "MTEXT";
+      inMText = line.trimmed() == "MTEXT";
     } else if (inMText && code == group) {
-      return QString::fromUtf8(value);
+      value += QString::fromUtf8(line);
     }
   }
-  return {};
+  return value;
 }
 } // namespace
 
@@ -1284,6 +1289,28 @@ TEST_CASE("MText leading spaces indent a left-attached line",
     RS_MText indented(nullptr, data);
     checkSameInk(indented, control, 4 * space);
   }
+
+  // The indentation runs along the text: with the text turned upwards it is
+  // a distance upwards.
+  auto turned = leftToRightData("ABC");
+  turned.angle = M_PI_2;
+  RS_MText control(nullptr, turned);
+  turned.text = "    ABC";
+  RS_MText indented(nullptr, turned);
+  CHECK_THAT(indented.getMin().x, WithinAbs(control.getMin().x, 1e-6));
+  CHECK_THAT(indented.getMax().x, WithinAbs(control.getMax().x, 1e-6));
+  CHECK_THAT(indented.getMin().y, WithinAbs(control.getMin().y + 4 * space, 1e-6));
+  CHECK_THAT(indented.getMax().y, WithinAbs(control.getMax().y + 4 * space, 1e-6));
+
+  // Mirrored through its insertion point the text has a negative height. The
+  // indentation stays a distance from the edge the text is attached to.
+  RS_MText mirrored(nullptr, leftToRightData("    AB"));
+  RS_MText mirroredControl(nullptr, leftToRightData("AB"));
+  mirrored.scale(RS_Vector(0.0, 0.0), RS_Vector(-1.0, -1.0));
+  mirroredControl.scale(RS_Vector(0.0, 0.0), RS_Vector(-1.0, -1.0));
+  CHECK_THAT(mirrored.getMin().x, WithinAbs(mirroredControl.getMin().x + 4 * space, inkTolerance));
+  CHECK_THAT(mirrored.getUsedTextWidth(),
+             WithinAbs(mirroredControl.getUsedTextWidth() + 4 * space, inkTolerance));
 }
 
 TEST_CASE("MText indentation belongs to one line and to its leading blanks",
@@ -1316,11 +1343,24 @@ TEST_CASE("MText indentation belongs to one line and to its leading blanks",
     checkSameInk(text, plain, 2 * space);
   }
 
+  // A stack without ink moves the pen, but it is no indentation.
+  RS_MText letter(nullptr, leftToRightData("A"));
+  RS_MText emptyStack(nullptr, leftToRightData("\\S^;A"));
+  checkSameInk(emptyStack, letter);
+  CHECK_THAT(emptyStack.getUsedTextWidth(), WithinAbs(letter.getUsedTextWidth(), inkTolerance));
+
   // A left-to-right line that holds right-to-left text is indented as well.
   const auto hebrew = QString::fromUtf8(u8"\u05d0\u05d1\u05d2");
+  const double unicodeSpace = wordSpacing("unicode", 9.0);
   RS_MText mixed(nullptr, leftToRightData(hebrew, "unicode"));
   RS_MText mixedIndented(nullptr, leftToRightData("    " + hebrew, "unicode"));
-  checkSameInk(mixedIndented, mixed, 4 * wordSpacing("unicode", 9.0));
+  checkSameInk(mixedIndented, mixed, 4 * unicodeSpace);
+
+  // What counts is where the blanks are drawn. A right-to-left mark behind the
+  // blanks makes them part of the Hebrew run, which puts them at its far end:
+  // the left one.
+  RS_MText marked(nullptr, leftToRightData(hebrew + "  " + QChar(0x200F) + "A", "unicode"));
+  CHECK_THAT(marked.getMin().x, WithinAbs(2 * unicodeSpace, inkTolerance));
 }
 
 TEST_CASE("MText indentation is measured to the ink of the line",
@@ -1354,7 +1394,7 @@ TEST_CASE("MText indentation is measured to the ink of the line",
   }
 }
 
-TEST_CASE("MText blanks leave center, right and right-to-left lines alone",
+TEST_CASE("MText blanks leave centered and right-to-left lines alone",
           "[text][mtext][issue3032][layout]") {
   SourceFonts fonts;
   for (const auto halign : {RS_MTextData::HACenter, RS_MTextData::HARight}) {
@@ -1365,7 +1405,7 @@ TEST_CASE("MText blanks leave center, right and right-to-left lines alone",
       data.valign = valign;
       RS_MText plain(nullptr, data);
       for (const QString &content : {QStringLiteral("    ABC  "), QStringLiteral("\tABC"),
-                                     QStringLiteral("\\pi2,l4;ABC")}) {
+                                     QStringLiteral(" \t ABC")}) {
         data.text = content;
         RS_MText blanks(nullptr, data);
         checkSameInk(blanks, plain);
@@ -1383,8 +1423,7 @@ TEST_CASE("MText blanks leave center, right and right-to-left lines alone",
       data.legacyRtlLayout = legacy;
       RS_MText plain(nullptr, data);
       for (const QString &content : {QString("    " + letters), QString(letters + "    "),
-                                     QString("  " + letters + "  "),
-                                     QString("\\pi2,l4;" + letters)}) {
+                                     QString("  " + letters + "  ")}) {
         INFO("legacy " << legacy << ": '" << content.toStdString() << "'");
         data.text = content;
         RS_MText blanks(nullptr, data);
@@ -1401,7 +1440,7 @@ TEST_CASE("MText lines of blanks keep their pitch and have no ink",
   RS_MText empty(nullptr, leftToRightData("ABC\n\nDEF"));
   REQUIRE(empty.count() == 3);
   for (const QString &blank : {QString(), QStringLiteral("    "), QStringLiteral("\t"),
-                               QStringLiteral(" \t ")}) {
+                               QStringLiteral(" \t "), QStringLiteral("\\pi2;")}) {
     INFO("'" << blank.toStdString() << "'");
     RS_MText alone(nullptr, leftToRightData(blank));
     REQUIRE(alone.count() == 1);
@@ -1419,14 +1458,6 @@ TEST_CASE("MText lines of blanks keep their pitch and have no ink",
     CHECK_THAT(between.getUsedTextWidth(), WithinAbs(empty.getUsedTextWidth(), inkTolerance));
     CHECK(between.getUsedTextHeight() == empty.getUsedTextHeight());
   }
-
-  // A line that holds nothing but a paragraph command draws nothing either,
-  // and the command is in force from that line on.
-  RS_MText command(nullptr, leftToRightData("ABC\n\\pi2;\nDEF"));
-  REQUIRE(command.count() == 3);
-  CHECK(lineOf(command, 1)->count() == 0);
-  checkSameInk(command, empty, 0.0, 0);
-  checkSameInk(command, empty, 2 * 9.0, 2);
 }
 
 TEST_CASE("MText tabs advance to stops four text heights apart",
@@ -1435,6 +1466,7 @@ TEST_CASE("MText tabs advance to stops four text heights apart",
   for (const double height : {9.0, 2.5}) {
     const double stop = 4.0 * height;
     const double space = wordSpacing("standard", height);
+    const double letter = letterSpacing("standard", height);
     struct Case {
       QString text;
       double expected; // where the last letter starts
@@ -1449,6 +1481,7 @@ TEST_CASE("MText tabs advance to stops four text heights apart",
         {"   A\tB", stop},
         {"ABCDEFGH\tX", 2 * stop},
         {"A\tB\tC", 2 * stop},
+        {"AB\tC", stop},
     };
     for (const auto &item : cases) {
       INFO("height " << height << ": '" << item.text.toStdString() << "'");
@@ -1459,12 +1492,30 @@ TEST_CASE("MText tabs advance to stops four text heights apart",
       CHECK_THAT(text.getUsedTextWidth(), WithinAbs(inkOf(text).back().right, inkTolerance));
     }
 
-    // Four spaces and an "A" end on the first stop: the tab goes on to the second.
-    RS_MText onStop(nullptr, leftToRightData("    A\tB", "standard", height));
-    const auto ink = inkOf(onStop);
-    REQUIRE(ink.size() == 2);
-    REQUIRE_THAT(ink[0].right + letterSpacing("standard", height), WithinAbs(stop, inkTolerance));
-    CHECK_THAT(ink[1].left, WithinAbs(2 * stop, inkTolerance));
+    // Text that ends on a stop goes to the next one; text that ends just short
+    // of it does not. The pen is one letter spacing behind the last letter,
+    // and the blanks that follow the letter move it on.
+    struct Near {
+      QString text;
+      int blanksBeforeTab;
+      double fromStop; // where the pen is, measured from the first stop
+      double expected;
+    };
+    const double quarter = 0.25 * height / 9.0;
+    const Near near[] = {
+        {"    A\tX", 0, 0.0, 2 * stop},
+        {"B CCC\tX", 0, -quarter, stop},
+        {"B B  \tX", 2, quarter, 2 * stop},
+    };
+    for (const auto &item : near) {
+      INFO("height " << height << ": '" << item.text.toStdString() << "'");
+      RS_MText text(nullptr, leftToRightData(item.text, "standard", height));
+      const auto ink = inkOf(text);
+      REQUIRE(ink.size() >= 2);
+      const double pen = ink[ink.size() - 2].right + letter + item.blanksBeforeTab * space;
+      REQUIRE_THAT(pen, WithinAbs(stop + item.fromStop, inkTolerance));
+      CHECK_THAT(ink.back().left, WithinAbs(item.expected, inkTolerance));
+    }
   }
 
   // A tab that nothing follows changes neither the ink nor the width.
@@ -1473,13 +1524,20 @@ TEST_CASE("MText tabs advance to stops four text heights apart",
   checkSameInk(trailing, plain);
   CHECK_THAT(trailing.getUsedTextWidth(), WithinAbs(plain.getUsedTextWidth(), inkTolerance));
 
-  // Stacked text after a tab starts on the stop with both of its parts.
+  // Far from the edge the stops are still exact.
+  RS_MText far(nullptr, leftToRightData(QString(1000, QLatin1Char('\t')) + "X"));
+  CHECK_THAT(inkOf(far).back().left, WithinAbs(36000.0, 1e-6));
+
+  // Stacked text after a tab starts on the stop with both of its parts, and a
+  // stack without ink in front of a letter does not push the letter off it.
   RS_MText stack(nullptr, leftToRightData("A\t\\S1^2;Y"));
   const auto stackInk = inkOf(stack);
   REQUIRE(stackInk.size() == 4);
   CHECK_THAT(stackInk[1].left, WithinAbs(36.0, inkTolerance));
   CHECK_THAT(stackInk[2].left, WithinAbs(36.0, inkTolerance));
   CHECK(stackInk[3].left > std::max(stackInk[1].right, stackInk[2].right));
+  RS_MText emptyStack(nullptr, leftToRightData("X\t\\S^;A"));
+  CHECK_THAT(inkOf(emptyStack).back().left, WithinAbs(36.0, inkTolerance));
 }
 
 TEST_CASE("MText tab stops are at the same place in every line",
@@ -1510,16 +1568,24 @@ TEST_CASE("MText tabs separate fields in every attachment and direction",
   const double stop = 36.0;
   for (const auto halign : {RS_MTextData::HACenter, RS_MTextData::HARight}) {
     INFO("halign " << halign);
-    auto data = leftToRightData("A\tB");
+    auto data = leftToRightData("AB\tC");
     data.halign = halign;
     RS_MText text(nullptr, data);
     const auto ink = inkOf(text);
-    REQUIRE(ink.size() == 2);
-    CHECK_THAT(ink[1].left - ink[0].left, WithinAbs(stop, inkTolerance));
+    REQUIRE(ink.size() == 3);
+    // The stops count from the first ink of such a line.
+    CHECK_THAT(ink[2].left - ink[0].left, WithinAbs(stop, inkTolerance));
     if (halign == RS_MTextData::HACenter)
-      CHECK_THAT(ink[0].left + ink[1].right, WithinAbs(0.0, inkTolerance));
+      CHECK_THAT(ink[0].left + ink[2].right, WithinAbs(0.0, inkTolerance));
     else
-      CHECK_THAT(ink[1].right, WithinAbs(0.0, inkTolerance));
+      CHECK_THAT(ink[2].right, WithinAbs(0.0, inkTolerance));
+
+    // Blanks in front of the line are without effect there, also on its stops.
+    for (const QString &blanks : {QStringLiteral(" "), QStringLiteral("    "), QStringLiteral("\t ")}) {
+      data.text = blanks + "AB\tC";
+      RS_MText indented(nullptr, data);
+      checkSameInk(indented, text);
+    }
   }
 
   // A right-to-left line has no stops yet. Its tab is as wide as four word
@@ -1528,77 +1594,101 @@ TEST_CASE("MText tabs separate fields in every attachment and direction",
   const double letter = letterSpacing("unicode", 9.0);
   for (const bool legacy : {false, true}) {
     INFO("legacy " << legacy);
-    auto data = mtextData("A\tB");
+    auto data = mtextData("AB\tC");
     data.style = "unicode";
     data.legacyRtlLayout = legacy;
     RS_MText text(nullptr, data);
     const auto ink = inkOf(text);
-    REQUIRE(ink.size() == 2);
-    CHECK(ink[0].name == "B");
-    CHECK(ink[1].name == "A");
+    REQUIRE(ink.size() == 3);
+    // the field behind the tab is drawn in front of the other
+    CHECK(ink[0].name == "C");
     CHECK_THAT(ink[1].left - ink[0].right, WithinAbs(letter + 4 * space, inkTolerance));
-    CHECK(text.getText() == "A\tB");
+    CHECK(text.getText() == "AB\tC");
   }
 }
 
-TEST_CASE("MText paragraph commands are applied and never drawn",
+TEST_CASE("Single-line text draws a tab as four word spaces",
+          "[text][issue3032][layout]") {
+  // A DXF file spells a tab "^I". Every release has read that as four spaces.
+  SourceFonts fonts;
+  const double space = wordSpacing("standard", 9.0);
+  const auto textOf = [](const QString &content) {
+    return RS_TextData(RS_Vector(0.0, 0.0), RS_Vector(0.0, 0.0), 9.0, 1.0, RS_TextData::VABaseline,
+                       RS_TextData::HALeft, RS_TextData::None, content, "standard", 0.0, RS2::Update);
+  };
+  const auto inkLeft = [](const RS_Text &text) {
+    std::vector<double> lefts;
+    for (auto *entity : text.getEntityList())
+      if (entity->rtti() == RS2::EntityInsert)
+        lefts.push_back(entity->getMin().x);
+    return lefts;
+  };
+  RS_Text tabbed(nullptr, textOf("A\tB"));
+  RS_Text spaced(nullptr, textOf("A    B"));
+  RS_Text plain(nullptr, textOf("AB"));
+  REQUIRE(inkLeft(tabbed).size() == 2);
+  CHECK_THAT(inkLeft(tabbed)[1], WithinAbs(inkLeft(spaced)[1], inkTolerance));
+  CHECK_THAT(inkLeft(tabbed)[1], WithinAbs(inkLeft(plain)[1] + 4 * space, inkTolerance));
+  CHECK(tabbed.getText() == "A\tB");
+}
+
+TEST_CASE("MText paragraph commands are not drawn",
           "[text][mtext][issue3032][layout]") {
   SourceFonts fonts;
-  const double height = 9.0;
   RS_MText plain(nullptr, leftToRightData("ABC"));
 
-  // "l" indents the paragraph and "i" its first line on top of that. Lines are
-  // not wrapped, so every line is a first line.
-  RS_MText indented(nullptr, leftToRightData("\\pi2,l4;ABC"));
-  checkSameInk(indented, plain, 6 * height);
-  CHECK(indented.getText() == "\\pi2,l4;ABC");
-  CHECK_THAT(indented.getUsedTextWidth(), WithinAbs(plain.getUsedTextWidth() + 6 * height, inkTolerance));
+  // The commands of real drawings, most of them written by AutoCAD. They are
+  // not applied: the line is laid out as if the command were not there.
+  for (const QString &command :
+       {QStringLiteral("\\pi-12,l12,t12;"), QStringLiteral("\\pt7.1875,8.38542;"),
+        QStringLiteral("\\pi102.25;"), QStringLiteral("\\pl0.899488,t8.38542;"),
+        QStringLiteral("\\pl0.899488,t7.1875,8.38542;"), QStringLiteral("\\pxt4;"),
+        QStringLiteral("\\pq*;"), QStringLiteral("\\pi*;"), QStringLiteral("\\pxql;"),
+        QStringLiteral("\\pxqc;"), QStringLiteral("\\pxqr;"), QStringLiteral("\\ptz;"),
+        QStringLiteral("\\pl0,tz;"), QStringLiteral("\\pxi0,qj;"), QStringLiteral("\\pi1,q*;"),
+        QStringLiteral("\\pxi-3,l4t4;"), QStringLiteral("\\pi*,l*,t;"),
+        QStringLiteral("\\pxsm1,ql;"), QStringLiteral("\\pi1,qj;"),
+        QStringLiteral("\\pi*,l*,r*,q*,t;"), QStringLiteral("\\pb1,a1.5;"),
+        QStringLiteral("\\pr2;"), QStringLiteral("\\pxt1,r5,c8;")}) {
+    INFO(command.toStdString());
+    RS_MText atStart(nullptr, leftToRightData(command + "ABC"));
+    checkSameInk(atStart, plain);
+    CHECK_THAT(atStart.getUsedTextWidth(), WithinAbs(plain.getUsedTextWidth(), inkTolerance));
+    CHECK(atStart.getText() == command + "ABC");
+    RS_MText inside(nullptr, leftToRightData("AB" + command + "C"));
+    checkSameInk(inside, plain);
+  }
 
-  // What AutoCAD writes for a numbered list: a hanging indentation, one stop.
-  RS_MText list(nullptr, leftToRightData("\\pxi-3,l3,t3;1.\tABC\n2.\tDEF"));
+  // A numbered list: its tab advances to the default stop.
+  RS_MText list(nullptr, leftToRightData("\\pi-12,l12,t12;1.\tABC\n2.\tDEF"));
   REQUIRE(list.count() == 2);
   for (int line = 0; line < 2; ++line) {
     const auto ink = inkOf(list, line);
     REQUIRE(ink.size() == 5);
     CHECK(drawnBy(list, line) == (line == 0 ? "1.ABC" : "2.DEF"));
     CHECK_THAT(ink[0].left, WithinAbs(0.0, inkTolerance));
-    CHECK_THAT(ink[2].left, WithinAbs(3 * height, inkTolerance));
+    CHECK_THAT(ink[2].left, WithinAbs(36.0, inkTolerance));
   }
 
-  // The properties stay in force until a command changes them; "*" resets one.
-  RS_MText reset(nullptr, leftToRightData("\\pi1;AB\nCD\n\\pi*;EF"));
-  REQUIRE(reset.count() == 3);
-  CHECK_THAT(inkOf(reset, 0).front().left, WithinAbs(height, inkTolerance));
-  CHECK_THAT(inkOf(reset, 1).front().left, WithinAbs(height, inkTolerance));
-  CHECK_THAT(inkOf(reset, 2).front().left, WithinAbs(0.0, inkTolerance));
+  // A line that holds nothing but a command draws nothing.
+  RS_MText lines(nullptr, leftToRightData("ABC\n\\pi2;\nABC"));
+  REQUIRE(lines.count() == 3);
+  CHECK(lineOf(lines, 1)->count() == 0);
+  checkSameInk(lines, plain, 0.0, 0);
 
-  // A command applies to the line it is in, wherever it stands in it.
-  RS_MText inside(nullptr, leftToRightData("AB\\pl2;C"));
-  checkSameInk(inside, plain, 2 * height);
-
-  // The stops of the paragraph come first, the default ones after them. A
-  // centered or right stop is used as a plain one.
-  RS_MText stops(nullptr, leftToRightData("\\pxt2,r5,c8;A\tB\tC\tD\tE"));
-  const auto ink = inkOf(stops);
-  REQUIRE(ink.size() == 5);
-  const double expected[] = {0.0, 2 * height, 5 * height, 8 * height, 12 * height};
-  for (std::size_t i = 0; i < ink.size(); ++i)
-    CHECK_THAT(ink[i].left, WithinAbs(expected[i], inkTolerance));
-  RS_MText defaults(nullptr, leftToRightData("\\pi*,l*,t;A\tB"));
-  CHECK_THAT(inkOf(defaults).back().left, WithinAbs(4 * height, inkTolerance));
-
-  // A negative position is the edge of the text.
-  RS_MText negative(nullptr, leftToRightData("\\pi-5;ABC"));
-  checkSameInk(negative, plain);
-
-  // Properties that the layout does not use are still not drawn.
-  for (const QString &command : {QStringLiteral("\\pxqc;"), QStringLiteral("\\pxsm1,ql;"),
-                                 QStringLiteral("\\pi*,l*,r*,q*,t;"), QStringLiteral("\\pb1,a1.5;"),
-                                 QStringLiteral("\\pr2;")}) {
-    INFO(command.toStdString());
-    RS_MText text(nullptr, leftToRightData(command + "ABC"));
-    checkSameInk(text, plain);
-  }
+  // The other attachments and directions hide the command as well.
+  auto centered = leftToRightData("ABC");
+  centered.halign = RS_MTextData::HACenter;
+  RS_MText centeredPlain(nullptr, centered);
+  centered.text = "\\pi2,l4;ABC";
+  RS_MText centeredCommand(nullptr, centered);
+  checkSameInk(centeredCommand, centeredPlain);
+  auto rightToLeft = mtextData("ABC");
+  rightToLeft.style = "unicode";
+  RS_MText rightToLeftPlain(nullptr, rightToLeft);
+  rightToLeft.text = "\\pi2,l4;ABC";
+  RS_MText rightToLeftCommand(nullptr, rightToLeft);
+  checkSameInk(rightToLeftCommand, rightToLeftPlain);
 }
 
 TEST_CASE("MText draws a backslash p that is not a paragraph command",
@@ -1608,8 +1698,10 @@ TEST_CASE("MText draws a backslash p that is not a paragraph command",
   for (const QString &content : {QStringLiteral("C:\\plans\\a.dxf"), QStringLiteral("\\parallel;"),
                                  QStringLiteral("\\pi;x"), QStringLiteral("\\pl2"),
                                  QStringLiteral("\\px"), QStringLiteral("\\p;"),
-                                 QStringLiteral("\\pq1;A"), QStringLiteral("\\pi2,k3;A"),
-                                 QStringLiteral("\\pi1e5;A"), QStringLiteral("\\pI2;A")}) {
+                                 QStringLiteral("\\px;A"), QStringLiteral("\\pt;A"),
+                                 QStringLiteral("\\pxt,;A"), QStringLiteral("\\pq1;A"),
+                                 QStringLiteral("\\pi2,k3;A"), QStringLiteral("\\pi1e5;A"),
+                                 QStringLiteral("\\pI2;A"), QStringLiteral("\\ptx;A")}) {
     INFO(content.toStdString());
     RS_MText text(nullptr, leftToRightData(content));
     CHECK(drawnBy(text) == content);
@@ -1629,28 +1721,43 @@ TEST_CASE("MText draws a backslash p that is not a paragraph command",
 TEST_CASE("MText stacked text makes room for blanks in front of a part",
           "[text][mtext][issue3032][layout]") {
   SourceFonts fonts;
-  RS_MText plain(nullptr, leftToRightData("X\\S1^2;Y"));
-  RS_MText blanks(nullptr, leftToRightData("X\\S 1^ 2;Y"));
-  const auto plainInk = inkOf(plain);   // X, numerator, denominator, Y
-  const auto blankInk = inkOf(blanks);
-  REQUIRE(plainInk.size() == 4);
-  REQUIRE(blankInk.size() == 4);
   // A part is drawn at height 4 in the frame of the line.
   const double indentation = wordSpacing("standard", 4.0);
-  CHECK_THAT(blankInk[0].left, WithinAbs(plainInk[0].left, inkTolerance));
-  CHECK_THAT(blankInk[1].left, WithinAbs(plainInk[1].left + indentation, inkTolerance));
-  // The blank after "^" belongs to the divider.
-  CHECK_THAT(blankInk[2].left, WithinAbs(plainInk[2].left, inkTolerance));
-  // What follows keeps its distance from the part that reaches furthest.
-  CHECK_THAT(blankInk[3].left - blankInk[1].right,
-             WithinAbs(plainInk[3].left - plainInk[2].right, inkTolerance));
-  CHECK(blankInk[1].right < blankInk[3].left);
+  const double letter = letterSpacing("standard", 9.0);
+  RS_MText plain(nullptr, leftToRightData("X\\S1^2;Y"));
+  const auto plainInk = inkOf(plain); // X, numerator, denominator, Y
+  REQUIRE(plainInk.size() == 4);
+  // What follows a stack is one letter spacing behind its widest part.
+  CHECK_THAT(plainInk[3].left - std::max(plainInk[1].right, plainInk[2].right),
+             WithinAbs(letter, inkTolerance));
+
+  // A blank in front of the numerator. The first blank after "^" belongs to
+  // the divider.
+  RS_MText upper(nullptr, leftToRightData("X\\S 1^ 2;Y"));
+  const auto upperInk = inkOf(upper);
+  REQUIRE(upperInk.size() == 4);
+  CHECK_THAT(upperInk[0].left, WithinAbs(plainInk[0].left, inkTolerance));
+  CHECK_THAT(upperInk[1].left, WithinAbs(plainInk[1].left + indentation, inkTolerance));
+  CHECK_THAT(upperInk[2].left, WithinAbs(plainInk[2].left, inkTolerance));
+  CHECK_THAT(upperInk[3].left - std::max(upperInk[1].right, upperInk[2].right),
+             WithinAbs(letter, inkTolerance));
+
+  // Blanks in front of the denominator.
+  RS_MText lower(nullptr, leftToRightData("X\\S1^   2;Y"));
+  const auto lowerInk = inkOf(lower);
+  REQUIRE(lowerInk.size() == 4);
+  CHECK_THAT(lowerInk[1].left, WithinAbs(plainInk[1].left, inkTolerance));
+  CHECK_THAT(lowerInk[2].left, WithinAbs(plainInk[2].left + 2 * indentation, inkTolerance));
+  CHECK_THAT(lowerInk[3].left - std::max(lowerInk[1].right, lowerInk[2].right),
+             WithinAbs(letter, inkTolerance));
+  CHECK(lowerInk[3].left > plainInk[3].left);
 }
 
 TEST_CASE("Tolerance frames make room for blanks in front of a field",
           "[text][mtext][tolerance][issue3032][layout]") {
   SourceFonts fonts;
-  for (const QString &code : {QStringLiteral("0.05%%vA"), QStringLiteral("  0.05%%vA")}) {
+  for (const QString &code : {QStringLiteral("0.05%%vA"), QStringLiteral("  0.05%%vA"),
+                              QStringLiteral("\t0.05%%v A")}) {
     INFO(code.toStdString());
     RS_Graphic graphic;
     auto *tolerance = new LC_Tolerance(
@@ -1680,22 +1787,25 @@ TEST_CASE("Tolerance frames make room for blanks in front of a field",
 }
 
 TEST_CASE("MText indentation is saved and the saved width covers it",
-          "[text][mtext][issue3032][dxf][dwg]") {
+          "[text][mtext][issue3032][dxf][dwg][layout]") {
   SourceFonts fonts;
   QTemporaryDir directory;
   REQUIRE(directory.isValid());
   struct Sample {
     const char *name;
     QString text;
-    QString saved; // group 1 of the DXF record
+    QString saved; // groups 3 and 1 of the DXF record
     double declaredWidth;
   };
+  // The long text crosses the 250 bytes at which a DXF record is cut in two.
+  const QString longText = QString(246, QLatin1Char('A')) + "  \t  B";
   const Sample samples[] = {
       {"spaces", "    ABC", "    ABC", 100.0},
       {"tab", "\tABC", "^IABC", 0.0},
       {"inner_tab", "A\tB", "A^IB", 3.0},
       {"second_line", "ABC\n    DEF", "ABC\\P    DEF", 250.0},
-      {"paragraph", "\\pi2,l4;ABC", "\\pi2,l4;ABC", 100.0},
+      {"command", "\\pi2,l4;  ABC", "\\pi2,l4;  ABC", 100.0},
+      {"long", longText, QString(longText).replace('\t', "^I"), 100.0},
   };
   struct Format {
     RS2::FormatType type;
@@ -1713,15 +1823,14 @@ TEST_CASE("MText indentation is saved and the saved width covers it",
       data.width = sample.declaredWidth;
       auto *source = new RS_MText(&original, data);
       original.addEntity(source);
-      // The line reaches this far from the insertion point, blanks included.
+      // The text reaches this far from its insertion point, blanks included.
       const double occupied = source->getMax().x;
-      REQUIRE(occupied > inkOf(*source, source->count() - 1).back().right - inkTolerance);
 
       const QString path = directory.filePath(QString(sample.name) + format.suffix);
       RS_FilterDXFRW writer;
       REQUIRE(writer.fileExport(original, path, format.type));
       if (path.endsWith(".dxf")) {
-        CHECK(mtextGroup(path, 1) == sample.saved);
+        CHECK(mtextGroup(path, 3) + mtextGroup(path, 1) == sample.saved);
         bool isNumber = false;
         const double width = mtextGroup(path, 41).toDouble(&isNumber);
         REQUIRE(isNumber);
@@ -1762,32 +1871,82 @@ TEST_CASE("MText indentation is saved and the saved width covers it",
   CHECK(lines == QStringList{"ABC", "    DEF"});
 }
 
+TEST_CASE("MText with a paragraph command keeps the width it was given",
+          "[text][mtext][issue3032][dxf][layout]") {
+  // The indentations of a paragraph command are not laid out, so the width the
+  // text uses here says less than the box it came with. Other text is saved
+  // with the width it uses.
+  SourceFonts fonts;
+  QTemporaryDir directory;
+  REQUIRE(directory.isValid());
+  struct Sample {
+    QString text;
+    bool hasCommand;
+    double givenWidth;
+    bool keepsGivenWidth;
+  };
+  const Sample samples[] = {
+      {"\\pi-12,l12,t12;ABC", true, 250.0, true},
+      {"AB\\pxqc;C", true, 250.0, true},
+      {"\\pi-12,l12,t12;ABC", true, 3.0, false},
+      {"ABC", false, 250.0, false},
+      {"C:\\plans\\a.dxf", false, 250.0, false},
+  };
+  int index = 0;
+  for (const auto &sample : samples) {
+    INFO(sample.text.toStdString() << ", width " << sample.givenWidth);
+    RS_Graphic original;
+    auto data = leftToRightData(sample.text);
+    data.width = sample.givenWidth;
+    auto *source = new RS_MText(&original, data);
+    original.addEntity(source);
+    CHECK(source->hasParagraphCommands() == sample.hasCommand);
+    const QString path = directory.filePath(QString("width_%1.dxf").arg(index++));
+    RS_FilterDXFRW writer;
+    REQUIRE(writer.fileExport(original, path, RS2::FormatDXFRW));
+    bool isNumber = false;
+    const double width = mtextGroup(path, 41).toDouble(&isNumber);
+    REQUIRE(isNumber);
+    CHECK_THAT(width, WithinAbs(sample.keepsGivenWidth ? sample.givenWidth : source->getUsedTextWidth(), 1e-6));
+  }
+}
+
 namespace {
-void sendTab(QWidget &edit) {
-  // A key press carries its character; without it Qt treats Tab as navigation.
+/** Rejects a dialog on the way out of a test, so that a failed check does not let it save its settings. */
+struct RejectAtEnd {
+  QDialog &dialog;
+  ~RejectAtEnd() { dialog.reject(); }
+};
+
+void typeTab(QWidget &edit) {
+  // A key press carries its character; without it Qt takes Tab for navigation.
   keyPress(edit, Qt::Key_Tab, Qt::NoModifier, QStringLiteral("\t"));
+}
+
+void showWithFocus(QWidget &window, QWidget &edit) {
+  window.show();
+  window.activateWindow();
+  QApplication::processEvents();
+  edit.setFocus();
+  QApplication::processEvents();
 }
 } // namespace
 
-TEST_CASE("MText editors insert a tab", "[text][mtext][issue3032][gui]") {
+TEST_CASE("The MText dialog types a tab", "[text][mtext][issue3032][gui]") {
   SourceFonts fonts;
   LC_GraphicViewport viewport;
   RS_MText mtext(nullptr, leftToRightData("ABC"));
-
   QG_DlgMText dialog(nullptr, &viewport, &mtext, false);
+  const RejectAtEnd rejectAtEnd{dialog};
   auto *edit = dialog.findChild<QTextEdit *>("teText");
   REQUIRE(edit);
   CHECK_FALSE(edit->tabChangesFocus());
-  dialog.show();
-  dialog.activateWindow();
-  QApplication::processEvents();
-  edit->setFocus();
-  QApplication::processEvents();
+  showWithFocus(dialog, *edit);
 
   // The dialog opens with its text selected. A tab typed then replaces the
   // text, as any other character does, and one undo brings the text back.
   REQUIRE(edit->textCursor().selectedText() == "ABC");
-  sendTab(*edit);
+  typeTab(*edit);
   CHECK(edit->toPlainText() == "\t");
   edit->undo();
   CHECK(edit->toPlainText() == "ABC");
@@ -1795,7 +1954,7 @@ TEST_CASE("MText editors insert a tab", "[text][mtext][issue3032][gui]") {
   auto cursor = edit->textCursor();
   cursor.setPosition(0);
   edit->setTextCursor(cursor);
-  sendTab(*edit);
+  typeTab(*edit);
   CHECK(edit->toPlainText() == "\tABC");
   dialog.updateEntity();
   CHECK(mtext.getText() == "\tABC");
@@ -1808,43 +1967,138 @@ TEST_CASE("MText editors insert a tab", "[text][mtext][issue3032][gui]") {
   cursor = edit->textCursor();
   cursor.movePosition(QTextCursor::End);
   edit->setTextCursor(cursor);
-  sendTab(*edit);
+  typeTab(*edit);
   CHECK(edit->toPlainText() == "\tABC\t");
-
-  // Shift+Tab still leaves the editor.
-  edit->setFocus();
-  QApplication::processEvents();
-  REQUIRE(edit->hasFocus());
-  keyPress(*edit, Qt::Key_Backtab, Qt::ShiftModifier);
-  CHECK_FALSE(edit->hasFocus());
-  dialog.reject();
-
-  // The editor of Modify > Properties.
-  RS_MText second(nullptr, leftToRightData("ABC"));
-  LC_MTextPropertiesEditingWidget editor(nullptr);
-  editor.setGraphicViewport(&viewport);
-  editor.setEntity(&second);
-  auto *propertyEdit = editor.findChild<LC_TextEdit *>("teText");
-  REQUIRE(propertyEdit);
-  CHECK_FALSE(propertyEdit->tabChangesFocus());
-  cursor = propertyEdit->textCursor();
-  cursor.setPosition(1);
-  propertyEdit->setTextCursor(cursor);
-  sendTab(*propertyEdit);
-  CHECK(propertyEdit->toPlainText() == "A\tBC");
-  CHECK(second.getText() == "A\tBC");
-
-  // The dialog behind the "Content" row of the property sheet.
-  LC_MultilineTextEditDialog content;
-  content.setText("ABC");
-  auto *contentEdit = content.findChild<QPlainTextEdit *>("plainTextEdit");
-  REQUIRE(contentEdit);
-  CHECK_FALSE(contentEdit->tabChangesFocus());
-  sendTab(*contentEdit);
-  CHECK(content.getText() == "\tABC");
 }
 
-TEST_CASE("MText dialogs keep blanks, tabs and line breaks",
+TEST_CASE("The MText dialog is left with Shift+Tab and Ctrl+Tab",
+          "[text][mtext][issue3032][gui]") {
+  SourceFonts fonts;
+  LC_GraphicViewport viewport;
+  RS_MText mtext(nullptr, leftToRightData("ABC"));
+  QG_DlgMText dialog(nullptr, &viewport, &mtext, false);
+  const RejectAtEnd rejectAtEnd{dialog};
+  auto *edit = dialog.findChild<QTextEdit *>("teText");
+  REQUIRE(edit);
+
+  struct Key {
+    const char *name;
+    int key;
+    Qt::KeyboardModifiers modifiers;
+    QString text;
+  };
+  // Windows sends Shift+Tab with a tab as its text; X11 and macOS do not.
+  const Key keys[] = {{"Shift+Tab", Qt::Key_Backtab, Qt::ShiftModifier, QString()},
+                      {"Shift+Tab as Windows sends it", Qt::Key_Backtab, Qt::ShiftModifier, "\t"},
+                      {"Ctrl+Tab", Qt::Key_Tab, Qt::ControlModifier, "\t"},
+                      {"Control+Tab on macOS", Qt::Key_Tab, Qt::MetaModifier, "\t"}};
+  QWidget *previous = nullptr;
+  QWidget *next = nullptr;
+  for (const auto &key : keys) {
+    INFO(key.name);
+    showWithFocus(dialog, *edit);
+    REQUIRE(edit->hasFocus());
+    edit->setPlainText("ABC");
+    keyPress(*edit, key.key, key.modifiers, key.text);
+    CHECK(edit->toPlainText() == "ABC");
+    CHECK_FALSE(edit->hasFocus());
+    QWidget *reached = QApplication::focusWidget();
+    REQUIRE(reached);
+    CHECK(dialog.isAncestorOf(reached));
+    (key.key == Qt::Key_Backtab ? previous : next) = reached;
+  }
+  // the two directions end on different widgets
+  CHECK(previous != next);
+}
+
+TEST_CASE("The MText editor of the property dialog types a tab",
+          "[text][mtext][issue3032][gui]") {
+  SourceFonts fonts;
+  LC_GraphicViewport viewport;
+  RS_MText mtext(nullptr, leftToRightData("ABC"));
+  LC_MTextPropertiesEditingWidget editor(nullptr);
+  editor.setGraphicViewport(&viewport);
+  editor.setEntity(&mtext);
+  auto *edit = editor.findChild<LC_TextEdit *>("teText");
+  REQUIRE(edit);
+  CHECK_FALSE(edit->tabChangesFocus());
+  auto cursor = edit->textCursor();
+  cursor.setPosition(1);
+  edit->setTextCursor(cursor);
+  typeTab(*edit);
+  CHECK(edit->toPlainText() == "A\tBC");
+  CHECK(mtext.getText() == "A\tBC");
+
+  // Shift+Tab is not typed, also not the way Windows sends it.
+  keyPress(*edit, Qt::Key_Backtab, Qt::ShiftModifier, QStringLiteral("\t"));
+  CHECK(edit->toPlainText() == "A\tBC");
+
+  // Blanks, tabs and line breaks reach the entity as they are.
+  const QString content = QStringLiteral("  A\tB\n    C  ");
+  edit->setPlainText(content);
+  CHECK(mtext.getText() == content);
+}
+
+TEST_CASE("The content dialog of the property sheet types a tab",
+          "[text][mtext][issue3032][gui]") {
+  SourceFonts fonts;
+  LC_MultilineTextEditDialog dialog;
+  const RejectAtEnd rejectAtEnd{dialog};
+  dialog.setText("ABC");
+  auto *edit = dialog.findChild<QPlainTextEdit *>("plainTextEdit");
+  auto *buttons = dialog.findChild<QDialogButtonBox *>("buttonBox");
+  REQUIRE(edit);
+  REQUIRE(buttons);
+  CHECK_FALSE(edit->tabChangesFocus());
+  typeTab(*edit);
+  CHECK(dialog.getText() == "\tABC");
+
+  const QString content = QStringLiteral("  A\tB\n    C  ");
+  dialog.setText(content);
+  CHECK(dialog.getText() == content);
+
+  // The buttons are reached from the keyboard with Shift+Tab or Ctrl+Tab,
+  // also the way Windows sends Shift+Tab.
+  struct Key {
+    const char *name;
+    int key;
+    Qt::KeyboardModifiers modifiers;
+    QString text;
+  };
+  const Key keys[] = {{"Shift+Tab", Qt::Key_Backtab, Qt::ShiftModifier, QString()},
+                      {"Shift+Tab as Windows sends it", Qt::Key_Backtab, Qt::ShiftModifier, "\t"},
+                      {"Ctrl+Tab", Qt::Key_Tab, Qt::ControlModifier, "\t"}};
+  for (const auto &key : keys) {
+    INFO(key.name);
+    showWithFocus(dialog, *edit);
+    REQUIRE(edit->hasFocus());
+    keyPress(*edit, key.key, key.modifiers, key.text);
+    CHECK(dialog.getText() == content);
+    QWidget *reached = QApplication::focusWidget();
+    REQUIRE(reached);
+    CHECK(buttons->isAncestorOf(reached));
+  }
+}
+
+TEST_CASE("The MText tool options load their text as plain text",
+          "[text][mtext][issue3032][gui]") {
+  // QTextEdit::setText() guesses the format: this text looks like HTML to it,
+  // and came back as "a c d".
+  SourceFonts fonts;
+  lc::test::ActionFixture<LC_ActionDrawMText> fixture;
+  auto *action = fixture.m_action.get();
+  action->reset();
+  const QString content = QStringLiteral("a <b> c    d\n\tx");
+  action->setText(content);
+  LC_MTextOptionsWidget widget;
+  widget.setAction(action, true);
+  auto *edit = widget.findChild<QTextEdit *>("teText");
+  REQUIRE(edit);
+  CHECK(edit->toPlainText() == content);
+  CHECK(action->getText() == content);
+}
+
+TEST_CASE("MText dialogs keep blanks and tabs and line breaks",
           "[text][mtext][issue3032][gui]") {
   SourceFonts fonts;
   LC_GraphicViewport viewport;
@@ -1871,9 +2125,9 @@ TEST_CASE("MText dialogs keep blanks, tabs and line breaks",
     // An accepted dialog remembers its text for the next new MText.
     RS_MText next(nullptr, leftToRightData(QString()));
     QG_DlgMText dialog(nullptr, &viewport, &next, true);
+    const RejectAtEnd rejectAtEnd{dialog};
     auto *edit = dialog.findChild<QTextEdit *>("teText");
     REQUIRE(edit);
     CHECK(edit->toPlainText() == content);
-    dialog.reject();
   }
 }
