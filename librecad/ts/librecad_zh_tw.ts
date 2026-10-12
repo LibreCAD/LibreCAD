@@ -100,11 +100,11 @@
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="vanished">几何</translation>
+        <translation type="vanished">幾何</translation>
     </message>
     <message>
         <source>Points on Spline</source>
-        <translation type="vanished">在 Spline 有分</translation>
+        <translation type="vanished">樣條曲線上的點</translation>
     </message>
     <message>
         <source>Control Points</source>
@@ -123,7 +123,7 @@
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="vanished">几何</translation>
+        <translation type="vanished">幾何</translation>
     </message>
     <message>
         <source>Closed</source>
@@ -5085,7 +5085,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="292"/>
         <source>Entity geometry length</source>
-        <translation>实体几何長度</translation>
+        <translation>實體幾何長度</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="292"/>
@@ -7956,7 +7956,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="47"/>
         <source>Geometry</source>
-        <translation>几何</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="65"/>
@@ -8941,7 +8941,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="41"/>
         <source>Geometry</source>
-        <translation>几何</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="47"/>
@@ -9499,7 +9499,7 @@ Are you sure you are going to discard changes?</source>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="vanished">几何</translation>
+        <translation type="vanished">幾何</translation>
     </message>
     <message>
         <source>Ordinate</source>
@@ -10965,7 +10965,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="42"/>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="99"/>
         <source>Geometry</source>
-        <translation>几何</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="123"/>
@@ -12649,7 +12649,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="91"/>
         <source>Geometric Characteristics</source>
-        <translation>几何特征</translation>
+        <translation>幾何特性</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="117"/>
@@ -13971,7 +13971,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="47"/>
         <source>Geometry</source>
-        <translation>几何</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="59"/>
@@ -14229,7 +14229,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="60"/>
         <source>Geometry</source>
-        <translation type="unfinished">几何</translation>
+        <translation type="unfinished">幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="60"/>
@@ -14929,7 +14929,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="44"/>
         <source>Geometry</source>
-        <translation>几何</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="57"/>
@@ -15187,7 +15187,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="35"/>
         <source>Geometry</source>
-        <translation>几何</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="41"/>
@@ -17828,7 +17828,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="41"/>
         <source>Geometry</source>
-        <translation>几何</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="68"/>
@@ -18434,7 +18434,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_mtextpropertieseditingwidget.ui" line="76"/>
         <source>Geometry</source>
-        <translation>几何</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_mtextpropertieseditingwidget.ui" line="79"/>
@@ -24369,7 +24369,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_parabola.ui" line="41"/>
         <source>Geometry</source>
-        <translation>几何</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_parabola.ui" line="56"/>
@@ -25588,7 +25588,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_point.ui" line="35"/>
         <source>Geometry</source>
-        <translation>几何</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_point.ui" line="63"/>
@@ -26184,7 +26184,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_polyline.ui" line="41"/>
         <source>Geometry</source>
-        <translation>几何</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_polyline.ui" line="69"/>
@@ -37708,7 +37708,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui" line="41"/>
         <source>Geometry</source>
-        <translation>几何</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui" line="53"/>
@@ -37758,7 +37758,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="47"/>
         <source>Geometry</source>
-        <translation>几何</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="61"/>
@@ -38245,7 +38245,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.ui" line="83"/>
         <source>Geometry</source>
-        <translation>几何</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.ui" line="86"/>
@@ -40317,7 +40317,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="vanished">几何</translation>
+        <translation type="vanished">幾何</translation>
     </message>
     <message>
         <source>X Coordinate of arc&apos;s center</source>
@@ -40424,7 +40424,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="vanished">几何</translation>
+        <translation type="vanished">幾何</translation>
     </message>
     <message>
         <source>Radius:</source>
@@ -40440,7 +40440,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Y Coordinate of circle&apos;s center</source>
-        <translation type="vanished">Y 圓心的坐标</translation>
+        <translation type="vanished">Y 圓心的座標</translation>
     </message>
     <message>
         <source>Center (x):</source>
@@ -40448,7 +40448,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>X Coordinate of circle&apos;s center</source>
-        <translation type="vanished">X 圓心的坐标</translation>
+        <translation type="vanished">X 圓心的座標</translation>
     </message>
     <message>
         <source>Pen</source>
@@ -40475,7 +40475,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="vanished">几何</translation>
+        <translation type="vanished">幾何</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -40517,7 +40517,7 @@ This recursively modifies all entities of the Block itself.</source>
     <name>QG_DlgEllipse</name>
     <message>
         <source>Ellipse</source>
-        <translation type="vanished">椭圆</translation>
+        <translation type="vanished">橢圓</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -40529,7 +40529,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="vanished">几何</translation>
+        <translation type="vanished">幾何</translation>
     </message>
     <message>
         <source>Rotation angle for the major axis of ellipse, degrees</source>
@@ -40693,7 +40693,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="vanished">几何</translation>
+        <translation type="vanished">幾何</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -40824,7 +40824,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="vanished">几何</translation>
+        <translation type="vanished">幾何</translation>
     </message>
     <message>
         <source>Insertion point (y):</source>
@@ -40923,7 +40923,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="vanished">几何</translation>
+        <translation type="vanished">幾何</translation>
     </message>
     <message>
         <source>End point (x):</source>
@@ -43377,12 +43377,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5633"/>
         <source>Restores program geometry/layout to original state</source>
-        <translation>將程式几何/放出回原狀態</translation>
+        <translation>將程式介面與版面配置還原為初始狀態</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5649"/>
         <source>Restores the program settings to its original state</source>
-        <translation>將程式設定恢复到原狀態</translation>
+        <translation>將程式設定還原為初始狀態</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5934"/>
@@ -43397,7 +43397,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="121"/>
         <source>Invert horizontal scrolling direction</source>
-        <translation>倒轉水平滚动方向</translation>
+        <translation>反轉水平捲動方向</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="163"/>
@@ -43427,7 +43427,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1773"/>
         <source>Adaptive</source>
-        <translation>有适应性</translation>
+        <translation>自適應</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1778"/>
@@ -43437,7 +43437,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1783"/>
         <source>Spiderweb</source>
-        <translation>蜘蛛网</translation>
+        <translation>蜘蛛網</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1609"/>
@@ -46054,7 +46054,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="vanished">几何</translation>
+        <translation type="vanished">幾何</translation>
     </message>
     <message>
         <source>Position (y):</source>
@@ -46093,7 +46093,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="vanished">几何</translation>
+        <translation type="vanished">幾何</translation>
     </message>
     <message>
         <source>Defines whether polyline is closed contour</source>
@@ -46261,7 +46261,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="vanished">几何</translation>
+        <translation type="vanished">幾何</translation>
     </message>
     <message>
         <source>Degree:</source>
