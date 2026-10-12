@@ -746,8 +746,9 @@ Maintain the progress and validation records below as implementation proceeds:
 | 2026-10-11 | P7 execution clarification | Complete | `9e50184ff` — workflow record in capsule checkpoint | Independent read-only review and scoped whitespace checks pass; explicit creation/refinement/handoff sequence, refinement completion checkpoint and cross-format lifetime finding recorded; Pending P6 keeps handoff incomplete and the PR draft | Plan workflow only; P7a/P7b/P7c remain Planned; resolve mandatory P5 findings before authorized publication; no PR action performed |
 | 2026-10-11 | P5b.1 raw embedded metadata capsule | Complete | `9e50184ff` — `Preserve exact embedded text metadata capsules` | Independent source review approves; isolated registered ON/OFF/ASan each pass 21,535 assertions / 5 cases; enabled/disabled CMake applications, coherent sanitizer application library and qmake application build exit 0 | Bounded in-memory retention checkpoint only; full-model wire transport, filter integration and activation remain pending |
 | 2026-10-11 | P5 filter writer lifetime | Complete | `37d2c614d` — `Clear export writer observers on every exit` | Coherent baseline observer regression fails 5 / 108 assertions; final registered ON/OFF/ASan each pass 290 / 4; enabled/disabled CMake applications, coherent sanitizer library and qmake application build exit 0; independent production/test/registration review approves; committed source/test identities match the validated candidate | Bounded writer ownership/version/retry checkpoint only; raw-aware STYLE/filter and embedded transport acceptance remain pending |
-| 2026-10-11 | P4 geometry prerequisites | In progress | Frozen shared pen/container/selection candidate under review | Independent review identified borrowed-descendant selection loss in atomic replacement; correction and regression requested. Private object compilation is not runtime acceptance | Preserve borrowed children and postcommit notification semantics, then coherent validation and separate checkpoint before adapter acceptance |
-| 2026-10-11 | P7 review gate maintenance | Validated | Candidate subject: `Refine Arabic PR review gates and validation recipe` | Independent complete-diff plan review, readback, shell-recipe syntax and scoped whitespace checks pass; lifetime commit identities verified; explicit-run recipe and final PR state corrected; transactional scene-integrity and matching-header review gates defined | Plan-only update; resolve checkpoint hash in the next plan record; P7a/P7b/P7c remain Planned, with no push, PR creation or readiness claimed |
+| 2026-10-11 | P4 geometry prerequisites | In progress | Frozen container/selection candidate under review | Borrowed-descendant correction passes private 55 / 4; six injected C++ allocation failures preserve prior state. Independent re-review and coherent registered acceptance pending; pen prerequisite is recorded separately | Validate and checkpoint atomic replacement before adapter acceptance; private mixed-object checks are not coherent application proof |
+| 2026-10-11 | P7 review gate maintenance | Complete | `10858ab25` — `Refine Arabic PR review gates and validation recipe` | Independent complete-diff plan review, readback, shell-recipe syntax and scoped whitespace checks pass; lifetime commit identities verified; explicit-run recipe and final PR state corrected; transactional scene-integrity and matching-header review gates defined | Plan-only checkpoint; P7a/P7b/P7c remain Planned, with no push, PR creation or readiness claimed |
+| 2026-10-11 | P4 pen inheritance prerequisite | Validated | Candidate subject: `Resolve native text pens through live ancestors` | Exact-fixture baseline fails 30 / 39 assertions; coherent registered ON/OFF/ASan each pass 39 / 4 and focused text/bidi 541,335 / 70; CMake ON/OFF applications, coherent sanitizer library and qmake application build exit 0; independent source/test review approves | Checkpoint bounded live pen inheritance; native adapter, atomic replacement and full P4 remain incomplete |
 
 For every executed check, record its exact command and filters, exit status,
 result/test count, tested revision and candidate-tree state, build configuration,
@@ -1502,6 +1503,49 @@ the repaired candidate; Qt 6.4 execution remains unverified.
 This is a bounded source-conversion service, not native-filter, minimum-Qt,
 saved-profile activation or independent CAD interoperability acceptance.
 
+### Live ancestor pen inheritance evidence
+
+Native line/source containers use invalid pens for transparent inheritance.
+`RS_Entity::getPenResolved` now walks to the nearest valid ancestor, resolves
+each ByBlock component through the actual successive ancestors and stops at the
+Graphic boundary. A supplied ByLayer component uses that supplying ancestor's
+live layer, not an unrelated leaf layer. Explicit RGBA, named colors and custom
+linetype identities remain intact; parent/layer edits remain live rather than
+being copied onto native glyphs during layout.
+
+The isolated candidate contains only `rs_entity.cpp`, the dedicated
+`rs_entity_pen_inheritance_tests.cpp` and its four-line CMake registration on
+top of the committed capsule/lifetime source. Source and test SHA256 are
+`69e2cb92e61659ffb88554b1f4e41d9b569ab6ea61db4a787f012c0410baa917` and
+`3515446b2596161077a888d11e8fb88444c136fe65b029b110a56e20944e9551`.
+Independent production/test review approves these exact inputs.
+
+The final exact-fixture baseline at `37d2c614d` exits 42: 39 assertions,
+9 passing and 30 failing in four failing cases. Restoring the isolated fix
+gives unfiltered registered ON, OFF without FreeType and coherent ASan/UBSan
+results of 39 assertions / 4 cases, all exit 0. The focused text/bidi suite
+also exits 0 with 541,335 assertions / 70 cases in each configuration.
+Complete CMake ON/OFF applications, coherent sanitizer application library and
+qmake application build exit 0. The capsule's toolchain, sanitizer settings,
+snapshot and qmake postprocessing exclusion apply; this is not package or
+native adapter acceptance.
+
+Commands configure the same isolated snapshot lanes, build
+`librecad_entity_pen_inheritance_tests` and `librecad_text_bidi_tests` with
+`-j2`, invoke both without filters, then build `librecad` in ON/OFF or
+`librecad_lib` in ASan. Final logs are
+`/private/tmp/librecad-arabic-pen-root-accepted-{on,off,asan}-{configure,tests-build,tests,bidi-tests,application-build}.log`
+and `root-accepted-qmake-{configure,application-build}.log` with the same prefix.
+Exact baseline logs use `root-final-before-{build,tests}.log`.
+
+Earlier runs retain two fixture corrections, not product workarounds: the
+initial test lacked `RS_Settings` initialization and exited 139; a later
+parent-layer fixture incorrectly used `RS_Pen()`, whose color is explicit
+black despite the header comment. Explicit ByLayer color fixes that fixture.
+The intermediate ON/OFF/ASan results (35 passing, 4 failing of 39 assertions)
+are superseded, not counted as passing acceptance. Logs retain the
+`root-before`, `root-before-fixed-fixture` and `root-{on,off,asan}` histories.
+
 ### Raw embedded metadata capsule evidence
 
 `LC_EmbeddedTextXData` is an inert, lossless in-memory retention service, not a
@@ -2240,6 +2284,7 @@ cmake --build /Users/dli/dev/LibreCAD/build-arabic-cmake --target \
   librecad_text_document_tests librecad_text_profile_tests librecad_text_profile_binding_tests \
   librecad_text_source_codec_tests \
   librecad_embedded_text_xdata_tests librecad_filter_writer_lifetime_tests \
+  librecad_entity_pen_inheritance_tests \
   librecad_text_profile_binding_copy_failure_tests librecad_text_shaper_tests librecad_text_font_registry_tests \
   librecad_text_source_state_tests librecad_text_source_tests \
   librecad_text_runs_tests librecad_text_runs_shaping_tests librecad_text_layout_tests librecad_text_outline_tests
@@ -2255,6 +2300,7 @@ QT_QPA_PLATFORM=offscreen /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_te
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_source_codec_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_embedded_text_xdata_tests
 QT_QPA_PLATFORM=offscreen /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_filter_writer_lifetime_tests
+QT_QPA_PLATFORM=offscreen /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_entity_pen_inheritance_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_shaper_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_font_registry_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_runs_tests

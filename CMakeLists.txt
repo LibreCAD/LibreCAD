@@ -3235,6 +3235,10 @@ if (BUILD_TESTS)
         librecad_filter_writer_lifetime_tests
         librecad/src/lib/filters/tests/lc_filter_writer_lifetime_tests.cpp)
 
+    add_librecad_filter_micro_test(
+        librecad_entity_pen_inheritance_tests
+        librecad/src/lib/engine/document/entities/tests/rs_entity_pen_inheritance_tests.cpp)
+
     # Keep the large corpus/diagnostic source isolated. It is an explicit
     # phase gate and should not lengthen the ordinary DWG fast lane.
     add_librecad_filter_micro_test(
