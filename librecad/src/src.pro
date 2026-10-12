@@ -601,6 +601,7 @@ HEADERS += \
     lib/fileio/rs_fileio.h \
     lib/fileio/lc_filenameselectionservice.h \
     lib/filters/lc_embeddedtextxdata.h \
+    lib/filters/lc_embeddedtextmodel.h \
     lib/filters/lc_hyperbolaspline.h \
     lib/filters/lc_parabolaspline.h \
     lib/filters/rs_filtercxf.h \
@@ -1062,6 +1063,7 @@ SOURCES += \
     lib/engine/undo/lc_undoablerelzero.cpp \
     lib/engine/utils/lc_rectregion.cpp \
     lib/filters/lc_embeddedtextxdata.cpp \
+    lib/filters/lc_embeddedtextmodel.cpp \
     lib/filters/lc_hyperbolaspline.cpp \
     lib/filters/lc_parabolaspline.cpp \
     lib/generators/layers/lc_layersexporter.cpp \

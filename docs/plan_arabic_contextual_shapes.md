@@ -758,10 +758,13 @@ Maintain the progress and validation records below as implementation proceeds:
 | 2026-10-11 | P7 execution clarification | Complete | `9e50184ff` — workflow record in capsule checkpoint | Independent read-only review and scoped whitespace checks pass; explicit creation/refinement/handoff sequence, refinement completion checkpoint and cross-format lifetime finding recorded; Pending P6 keeps handoff incomplete and the PR draft | Plan workflow only; P7a/P7b/P7c remain Planned; resolve mandatory P5 findings before authorized publication; no PR action performed |
 | 2026-10-11 | P5b.1 raw embedded metadata capsule | Complete | `9e50184ff` — `Preserve exact embedded text metadata capsules` | Independent source review approves; isolated registered ON/OFF/ASan each pass 21,535 assertions / 5 cases; enabled/disabled CMake applications, coherent sanitizer application library and qmake application build exit 0 | Bounded in-memory retention checkpoint only; full-model wire transport, filter integration and activation remain pending |
 | 2026-10-11 | P5 filter writer lifetime | Complete | `37d2c614d` — `Clear export writer observers on every exit` | Coherent baseline observer regression fails 5 / 108 assertions; final registered ON/OFF/ASan each pass 290 / 4; enabled/disabled CMake applications, coherent sanitizer library and qmake application build exit 0; independent production/test/registration review approves; committed source/test identities match the validated candidate | Bounded writer ownership/version/retry checkpoint only; raw-aware STYLE/filter and embedded transport acceptance remain pending |
-| 2026-10-11 | P4 atomic geometry prerequisite | Complete | Candidate subject: `Publish native child geometry atomically` | Coherent registered ON/OFF/ASan each pass 55 / 4, six injected C++ allocation failures, pen 39 / 4 and bidi 541,335 / 70; enabled/disabled applications, coherent sanitizer library and fresh qmake application build exit 0. Independent source/test/registration re-review approves | Bounded atomic replacement checkpoint only; native adapter, durable explode transaction and full P4/P5 remain incomplete |
+| 2026-10-11 | P4 atomic geometry prerequisite | Complete | `883aec664` — `Publish native child geometry atomically` | Coherent registered ON/OFF/ASan each pass 55 / 4, six injected C++ allocation failures, pen 39 / 4 and bidi 541,335 / 70; enabled/disabled applications, coherent sanitizer library and fresh qmake application build exit 0. Independent source/test/registration re-review approves | Bounded atomic replacement checkpoint only; native adapter, durable explode transaction and full P4/P5 remain incomplete |
 | 2026-10-11 | P7 review gate maintenance | Complete | `10858ab25` — `Refine Arabic PR review gates and validation recipe` | Independent complete-diff plan review, readback, shell-recipe syntax and scoped whitespace checks pass; lifetime commit identities verified; explicit-run recipe and final PR state corrected; transactional scene-integrity and matching-header review gates defined | Plan-only checkpoint; P7a/P7b/P7c remain Planned, with no push, PR creation or readiness claimed |
 | 2026-10-11 | P4 pen inheritance prerequisite | Complete | `d006e580d` — `Resolve native text pens through live ancestors` | Exact-fixture baseline fails 30 / 39 assertions; coherent registered ON/OFF/ASan each pass 39 / 4 and focused text/bidi 541,335 / 70; CMake ON/OFF applications, coherent sanitizer library and qmake application build exit 0; independent source/test review approves | Bounded live pen inheritance checkpoint only; native adapter, atomic replacement and full P4 remain incomplete |
-| 2026-10-11 | P7 publication and refinement plan | Complete | Plan record in `Publish native child geometry atomically` checkpoint | Independent workflow/native reviews approve the plan diff; transport review finds no mandatory gap. Plan readback, scoped whitespace check and shell-recipe syntax check pass; private finding counts and frozen source identities reconciled | Plan workflow only; P7a/P7b/P7c remain Planned. No push, PR creation, readiness or whole-feature acceptance claimed |
+| 2026-10-11 | P7 publication and refinement plan | Complete | `883aec664` — plan record in atomic geometry checkpoint | Independent workflow/native reviews approve the plan diff; transport review finds no mandatory gap. Plan readback, scoped whitespace check and shell-recipe syntax check pass; private finding counts and frozen source identities reconciled | Historical plan review only; later findings below still govern publication. P7a/P7b/P7c remain Planned. No push, PR creation, readiness or whole-feature acceptance claimed |
+| 2026-10-11 | P7 persistence review coverage refinement | Validated | Uncommitted plan-only update | Independent final-diff review approves; scoped `git diff --check` exits 0; changed ledger table structure, frozen source/patch SHA256 and resolved atomic commit identity verified | Plan-only validation, not implementation acceptance. New mandatory findings remain Open; resolve them before publication. P7a/P7b/P7c remain Planned; no push or PR action performed |
+| 2026-10-12 | P5b.2 inert retained-model codec | Validated | Candidate subject: `Preserve inert embedded text model fields` | Root registered ON/OFF/ASan each pass model 102,708 / 13, raw capsule 21,535 / 5, profile 4,544 / 12 and binding 8,150 / 22; CMake ON/OFF applications, coherent sanitizer library and qmake application exit 0. Independent four-file and build-registration reviews approve | Checkpoint the exact validated inert service; native capture/restoration, full wire transport, STYLE graph authority, schema freeze and activation remain required |
+| 2026-10-12 | P5a.3c STYLE profile authority and ownership | In progress | Uncommitted bounded STYLE/list/test/registration slice | Independent source/call-site and final seven-case test/registration reviews approve. Root ON/OFF/ASan each pass STYLE 286 / 7, profile 4,544 / 12, binding 8,150 / 22 and entity-state 322 / 7; initial missing include and RS_Flags linkage failures repaired, retained as history | Matching-header full application, focused scene/export regressions and qmake builds are running. Incorporate any intervening committed service changes and rerun affected gates before checkpoint; no native STYLE transport/activation acceptance |
 
 For every executed check, record its exact command and filters, exit status,
 result/test count, tested revision and candidate-tree state, build configuration,
@@ -1877,6 +1880,68 @@ history cannot replace a current edit. Pure-codec tests do not complete native
 transport, parser raw capture, R12 downgrade, independent interoperability,
 schema freeze or activation gates.
 
+### Inert retained-model codec validation
+
+The bounded service uses envelope 1/model schema 2. The reviewed
+[field registry](development/embedded_text_model_registry.md) maps retained native
+fields, current source/profile/deformation, STYLE association and history without
+granting graph or renderer authority. Common fields 42–64, text field 117 and
+embedded field 228 retain wide handles, owner/link/presence discriminants and
+X-axis precedence. Nested ATTRIB/ATTDEF processing does not prove that precedence
+flag finalized; retaining it avoids conflating conflicting angle/vector histories.
+Shared STYLE import-name/UTF8 and unavailable-profile histories remain under
+actual STYLE/document transport authority, not a reconstructed entity-carrier
+STYLE clone. That future authority must be proven or capture must refuse safely.
+
+Schema 1 is retained as exact bounded Opaque raw, never zero-filled into schema 2.
+The original provisional registry's root 57,523 / 10 passes are historical
+algorithm/framing evidence only; the field audit invalidated its completeness
+claim. Required-field literal tests now cover the corrected registry, while
+upstream parser-discarded native data and typed capture remain explicit gaps.
+
+The root snapshot `/private/tmp/librecad-arabic-core-index.TOns5t` is based on
+`883aec664` plus only the four files below and their owned CMake/qmake
+registrations. It excludes pending STYLE, entity-adapter, native-format and
+filter candidates. The staged checkpoint must match these validated inputs.
+
+| Frozen file | SHA256 |
+| --- | --- |
+| `lc_embeddedtextmodel.h` | `c244cfa7ce704007d9889f9ee9a4c66ec88b8558898db75b37faefee2057c5f8` |
+| `lc_embeddedtextmodel.cpp` | `00b3883c866d0fd96023ef71e7e1663ee050e4c8dfd580dfc6acb0d8d1b25422` |
+| `lc_embeddedtextmodel_tests.cpp` | `1ed41c0b3358b70c8d3814637e68b6157968a3e653b5f2220f0c414bac2b3487` |
+| `docs/development/embedded_text_model_registry.md` | `cd81a1346b0568e139da31cc7a8cb90e0e941d0920dcc382ae1b676e9da10d67` |
+
+Root CMake lanes use `BUILD_TESTS=ON`, enabled and explicit disabled OpenType
+configurations (OFF also disables FreeType discovery). The ASan/UBSan lane
+instruments all candidate/application-library sources with
+`-fsanitize=address,undefined -fno-omit-frame-pointer`; runtime uses
+`ASAN_OPTIONS=detect_leaks=0:halt_on_error=1` and `UBSAN_OPTIONS=halt_on_error=1`.
+Qt/Catch/font dependencies are prebuilt, and this is not leak or installed-package
+acceptance. Toolchain is AppleClang 21.0.0, arm64, Qt 6.11.2, Catch2 3.16.1,
+HarfBuzz 14.6.0 and FreeType 2.14.3; CMake build type is unspecified.
+
+For each `build-on`, `build-off` and `build-asan`, explicitly build and run
+`librecad_embedded_text_model_tests`, `librecad_embedded_text_xdata_tests`,
+`librecad_text_profile_tests` and `librecad_text_profile_binding_tests` without
+filters: final counts are respectively 102,708 / 13, 21,535 / 5, 4,544 / 12 and
+8,150 / 22, all exit 0. Root logs are
+`/private/tmp/librecad-arabic-model-schema2-root-{on,off,asan}-{configure,tests-build,tests,raw-tests,profile-tests,binding-tests,application-build}.log`.
+CMake builds `librecad` in ON/OFF and `librecad_lib` under sanitizers, all exit 0.
+The existing matching-header qmake shadow
+`/private/tmp/librecad-arabic-atomic-qmake.UDlZpE` regenerates with
+`qmake6 /private/tmp/librecad-arabic-core-index.TOns5t/librecad.pro LIBRECAD_ENABLE_OPENTYPE=true DISABLE_POSTSCRIPT=true`,
+then `make qmake_all` and `make -j1`, all exit 0. The new model translation unit
+is actually compiled. Its logs have the same prefix with `qmake-{configure,all,application-build}`;
+SDK/deployment warnings remain, and disabled postprocessing is not package proof.
+
+The supplementary independent-literal selector
+`Full embedded model decodes independent field and literal fixtures exactly`
+passes 820 / 1 using `LC_EMBEDDED_MODEL_LITERAL_OUTPUT=/private/tmp/librecad-arabic-model-schema2-root-literal.bin`.
+System `shasum -a 256` independently confirms its 9,461-byte body:
+`4f9f21576ca716113ae30227a79ae70704c203b31bc49508d10e158bd02a49ca`.
+This proves retained DTO bits, not original-wire completeness, native ownership,
+transport interoperability, schema freeze or saved-profile activation.
+
 ## Implementation milestones
 
 Milestones remain incomplete. Follow the commit/update workflow above and record
@@ -2133,7 +2198,7 @@ review passes, parallel where useful, with these areas:
 | Geometry and layout | Advances versus ink bounds; glyph origins, mark/cursive offsets and no-ink cases; height/width/oblique plus entity transforms; alignment/anchors, tabs, stacks and line spacing; contour tolerance and native coordinate limits; repeated-update stability |
 | Entity lifecycle and scene integrity | Atomic publication of source/anchors, geometry, metrics and status; allocation/resource/numeric failures; ownership and borrowed children, selection, postcommit callbacks and reentrancy; current-layout freshness; undo/redo and durable output from both explode commands |
 | Resources and robustness | Exact saved font/face/engine policy; missing/corrupt resources and complete-segment fallback; bounded cache keys/lifetime; thread ownership; malformed Unicode/format/font input and complexity limits |
-| Compatibility and persistence | Unchanged legacy modes and shared-style isolation; profile upgrades and unknown metadata; no-op/edited DXF/DWG and embedded ATTRIB precedence; annotation/TABLE inheritance and MLeader cache; both explode paths and print/export parity |
+| Compatibility and persistence | Unchanged legacy modes and shared-style isolation; profile upgrades and unknown metadata; complete retained-field registry and raw-versus-rebound handle authority; no-op/edited DXF/DWG and embedded ATTRIB precedence; consistent export admission/emission/handle planning; annotation/TABLE inheritance and MLeader cache; both explode paths and print/export parity |
 | Editing and user experience | Both native text dialogs and property panels; logical Unicode retained through IME preedit/commit, cursor/selection, clipboard, invisible-control edits and undo/redo; engine-rendered preview versus Qt editing font; explicit profile selection/conversion, undo and actionable resource errors; Chinese editing regressions |
 | Builds and distribution | CMake/qmake parity and explicit legacy-only builds; matching public headers across objects and archives; supported Qt/platform/architecture matrix; clean installed lookup without developer fonts/prefixes; dependency linkage, pinned font, notices/licenses and actual package contents |
 | Tests and PR quality | Independent placement/format oracles, not self-round trips alone; negative and boundary cases; actual nonzero test execution; source invariants; unexplained exclusions; prerequisite scope, documentation and evidence accuracy |
@@ -2185,6 +2250,26 @@ individual helpers:
   existing destination file, never silently omit an attribute or truncate the
   destination before a predictable refusal. A safe
   temporary refusal does not satisfy required lossless supported-output gates.
+- Audit each carrier registry field against the actual retained native and
+  current-source model, including protected authored state. Keep an explicit
+  field-to-ID/type manifest and justify exclusions individually. Preserve full
+  raw handle components (`code`, `size`, `ref`, `ref64`), owner/link presence and
+  discriminants separately from resolved graph references; later handle rebinding
+  must not erase historical values. Challenge every retained field with
+  nondefault literal fixtures and exact decode assertions, as well as unknown,
+  malformed and bounded-input cases. Identify parser-discarded data explicitly:
+  a pure codec pass does not prove original-wire capture, graph validity or
+  profile activation. Resolve `P5-MODEL-FIELDS-001` before claiming registry
+  completeness or accepting the full-model transport.
+- Verify that pre-open admission, ATTRIB reconstruction/emission and DWG child
+  handle planning use the same live-host rules: exclude `FlagDeleted` hosts but
+  retain invisible attributes. Exercise a live INSERT with one and then all
+  attribute hosts deleted, restoration through undo/redo, and malformed
+  surviving hosts. Check remaining attribute counts and sequence-end links for
+  supported DXF/DWG versions through an independent reader. Predictable refusal
+  must leave the prior destination and source unchanged; same-filter retry must
+  succeed after correction. Resolve `P5-DELETED-ATTRIB-001`; a preflight-only fix
+  or a passing standalone MTEXT case does not satisfy this export contract.
 - Commit Arabic IME composition, edit a combining sequence and an invisible
   control, then undo/redo and save/reopen from each editor entry point. Verify
   logical source and profile metadata independently of the preview, and confirm
@@ -2243,9 +2328,11 @@ candidate. Reconcile source thread state separately from finding state.
 | P5-SIDECAR-001 | Independent embedded-sidecar baseline audit; retention finding above | Mandatory data preservation; `appendInsertAttribSidecar`, `decodeInsertAttribMTextXData` and ATTRIB extraction/export | HEAD `a8ade2677`; no PR/base review claimed | Lossless compatible retention, explicit failure instead of dropped ATTRIB, regressions and independent verification | Open | No verified fix or transport acceptance yet |
 | P5-FILTER-LIFETIME-001 | Mixed-tree diagnostic and coherent baseline/repair; cross-format lifetime finding above | Mandatory crash/lifetime failure; `RS_FilterDXFRW::fileExport`, `prepareDRWDimStyleText` and writer/version selection | Baseline `9e50184ff`; verified repair `37d2c614d` and exact source/test identities above; no PR/base review claimed | Writer ownership on all exits, same-instance cross-format/version/retry and exception regressions with independent normal/sanitizer verification | Verified | `37d2c614d`: registered ON/OFF/ASan 290 / 4 and applications pass; independent review approves and committed identities match; final whole-PR review still required |
 | P5-EMBEDDED-DXF-001 | Independent Autodesk/ezdxf wire audit; marker and namespace finding above | Mandatory format/metadata authority; `writeEmbeddedMText`, `DRW_Attrib::parseCode` and ATTRIB/ATTDEF output | HEAD `1636de0ce` plus pending ordering/test candidate; no PR/base review claimed | Canonical group-101/body/outer-XDATA ordering, external fixture/reader verification, conservative legacy reading and lossless embedded carrier | Open | Earlier self-round-trip scope result is not independent wire acceptance; corrected candidate pending |
-| P4-OWNED-REPLACE-001 | Independent shared geometry-prerequisite source review | Mandatory selection preservation; `RS_EntityContainer::replaceOwnedEntities` | Originally reviewed source `16f62f6557febc04825d6cf5ddaa05bbae65a767fe7c9b25f9686421da93bfcd`; corrected source `119cf49991fd4013eac6ada6fb947d632298e9349e0a83a4dd303f2eeb7935f2` in `Publish native child geometry atomically`; no PR review claimed | Traverse only owned retired descendants; borrowed surviving children retain selection; add regression and independent verification | Verified | Independent source/test/registration re-review and coherent registered ON/OFF/ASan pass; baseline exits 42 with 2 / 3 assertions failing. Full CMake ON/OFF applications, coherent sanitizer library and fresh qmake application pass; final whole-PR review remains required |
+| P4-OWNED-REPLACE-001 | Independent shared geometry-prerequisite source review | Mandatory selection preservation; `RS_EntityContainer::replaceOwnedEntities` | Originally reviewed source `16f62f6557febc04825d6cf5ddaa05bbae65a767fe7c9b25f9686421da93bfcd`; corrected source `119cf49991fd4013eac6ada6fb947d632298e9349e0a83a4dd303f2eeb7935f2` in `883aec664`; no PR review claimed | Traverse only owned retired descendants; borrowed surviving children retain selection; add regression and independent verification | Verified | Independent source/test/registration re-review and coherent registered ON/OFF/ASan pass; baseline exits 42 with 2 / 3 assertions failing. Full CMake ON/OFF applications, coherent sanitizer library and fresh qmake application pass; final whole-PR review remains required |
 | P4-DECORATION-001 | Independent native adapter precision review | Mandatory geometry/tolerance failure; `LC_TextNative::Builder::stroke` | Frozen uncommitted adapter source `ba7a8e09b25a5349d945e544e8a7acc75e4ccb4c243b1b177b454efd5068aeb9`; no PR review claimed | Replace fuzzy endpoint collapse with exact converted equality; prove representable tiny underline and stack-rule behavior without relaxing numeric checks | Fixed pending verification | Independent corrective source/test re-review approves. Private ON and owned-source O1 ASan/UBSan diagnostics pass 130,712 / 21; OFF diagnostic passes 137 / 21. Coherent registered acceptance and scoped checkpoint remain pending; partial instrumentation is not full sanitizer acceptance |
 | P4-AFFINE-001 | Independent inherited-transform audit and private matching-header reproducer | Mandatory canonical state/geometry failure; TEXT/MTEXT shear and absolute-inline-height scaling | Frozen adapter/entity candidate; no PR review claimed | Durable canonical deformation, guarded single-operation virtual transforms, truthful metrics and source/clone/undo/transport reconstruction; preserve final-affine tolerance | In progress | Private baseline exits 42: 6,201 assertions / 2 cases, 7 failures. Canonical affine policy approved; private implementation, independent re-review and coherent acceptance pending |
+| P5-MODEL-FIELDS-001 | Retained native-field audit against `DRW_Entity`, `DRW_Text` and the provisional carrier registry | Mandatory preservation gap; `LC_EmbeddedTextModel` native field registry | Original schema-1 source `b4ea18a7e1f57c19da6ef0c931f97256cd52e58be5a769fe5cd4172130f0c4d6`; corrected schema-2 source `00b3883c866d0fd96023ef71e7e1663ee050e4c8dfd580dfc6acb0d8d1b25422`; no PR review claimed | Complete the reviewed retained-field manifest/registry for wide handles, owner/link/presence/discriminants and embedded X-axis precedence; exact nondefault fixtures and coherent verification before bridge/transport acceptance | Fixed pending verification | Independent four-file review and root ON/OFF/ASan each pass 102,708 / 13; CMake/qmake acceptance recorded above. Scoped checkpoint pending; this fixes inert registry omissions only, not native capture, wire completeness, STYLE graph authority or activation |
+| P5-DELETED-ATTRIB-001 | Independent canonical guard/emitter/handle-planner source review | Mandatory export-set mismatch; pre-open validation, `writeInsert` and `prepareDwgEntityHandleMap` | Private guard patch `8ebac9e3a78579495307b41261f9bfbb4d84a2c1a5b4b35491d3a3f3a772e39d`; no PR review claimed | Align live-host membership across admission, emission and DWG child-handle counts; deleted/invisible/restoration regressions, destination preservation and independent supported-format checks | Open | Preflight skips deleted hosts while emission and child-handle counting still include them; guard held. Private earlier passing cases do not cover this defect; no accepted correction or coherent transport proof |
 
 This template is not a claim that no findings exist. Reconcile it with slice
 reviews and failed-check records before publication. Previously verified fixes
@@ -2300,6 +2387,11 @@ Run each refinement round in this order:
    and failure path through the acceptance map. Record which checks must rerun
    and why any consumer is unaffected; a passing reproducer in one caller does
    not establish TEXT/MTEXT, annotation, persistence or export parity.
+   Registry or serialization changes must update the field manifest, capture
+   and bridge mappings, version/unknown-field handling and affected literal
+   fixtures together. Reopen completeness and transport claims for changed
+   coverage; an older green result for an incomplete registry cannot certify
+   newly added fields or the native wire path.
    Algorithm, cache or geometry-budget changes also require the affected
    worst-case, cold/warm and memory checks against the recorded P0/P6 budgets;
    a small correctness fixture alone cannot establish bounded performance.
@@ -2469,7 +2561,7 @@ cmake --build /Users/dli/dev/LibreCAD/build-arabic-cmake --target \
   librecad_text_bidi_tests librecad_text_bidi_headless_tests \
   librecad_text_document_tests librecad_text_profile_tests librecad_text_profile_binding_tests \
   librecad_text_source_codec_tests \
-  librecad_embedded_text_xdata_tests librecad_filter_writer_lifetime_tests \
+  librecad_embedded_text_xdata_tests librecad_embedded_text_model_tests librecad_filter_writer_lifetime_tests \
   librecad_entity_pen_inheritance_tests librecad_entity_container_replace_tests \
   librecad_entity_container_replace_failure_tests \
   librecad_text_profile_binding_copy_failure_tests librecad_text_shaper_tests librecad_text_font_registry_tests \
@@ -2486,6 +2578,7 @@ QT_QPA_PLATFORM=offscreen /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_te
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_document_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_source_codec_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_embedded_text_xdata_tests
+/Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_embedded_text_model_tests
 QT_QPA_PLATFORM=offscreen /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_filter_writer_lifetime_tests
 QT_QPA_PLATFORM=offscreen /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_entity_pen_inheritance_tests
 QT_QPA_PLATFORM=offscreen /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_entity_container_replace_tests

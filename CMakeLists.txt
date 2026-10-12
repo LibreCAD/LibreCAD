@@ -1120,6 +1120,8 @@ set (SHARED_SOURCES
      librecad/src/lib/fileio/rs_fileio.h
      librecad/src/lib/filters/lc_embeddedtextxdata.cpp
      librecad/src/lib/filters/lc_embeddedtextxdata.h
+     librecad/src/lib/filters/lc_embeddedtextmodel.cpp
+     librecad/src/lib/filters/lc_embeddedtextmodel.h
      librecad/src/lib/filters/lc_hyperbolaspline.cpp
      librecad/src/lib/filters/lc_hyperbolaspline.h
         librecad/src/lib/filters/lc_parabolaspline.cpp
@@ -2856,6 +2858,22 @@ if (BUILD_TESTS)
         Catch2::Catch2WithMain)
     target_compile_features(librecad_embedded_text_xdata_tests PRIVATE cxx_std_17)
     set_target_properties(librecad_embedded_text_xdata_tests PROPERTIES
+        AUTOMOC OFF AUTOUIC OFF AUTORCC OFF)
+
+    # Full-model metadata remains inert and independent of native wire/activation.
+    add_executable(librecad_embedded_text_model_tests EXCLUDE_FROM_ALL
+        librecad/src/lib/filters/lc_embeddedtextmodel.cpp
+        librecad/src/lib/filters/lc_embeddedtextxdata.cpp
+        librecad/src/lib/engine/document/entities/lc_textprofile.cpp
+        librecad/src/lib/filters/tests/lc_embeddedtextmodel_tests.cpp)
+    target_include_directories(librecad_embedded_text_model_tests PRIVATE
+        librecad/src/lib/filters librecad/src/lib/engine/document/entities libraries/libdxfrw/src)
+    target_link_libraries(librecad_embedded_text_model_tests PRIVATE
+        Catch2::Catch2WithMain Qt6::Core)
+    target_compile_features(librecad_embedded_text_model_tests PRIVATE cxx_std_17)
+    target_compile_definitions(librecad_embedded_text_model_tests PRIVATE
+        QT_USE_QSTRINGBUILDER LC_WITH_OPENTYPE=$<BOOL:${LIBRECAD_ENABLE_OPENTYPE}>)
+    set_target_properties(librecad_embedded_text_model_tests PROPERTIES
         AUTOMOC OFF AUTOUIC OFF AUTORCC OFF)
 
     # Profile metadata is inert and must not depend on font/backend availability.
