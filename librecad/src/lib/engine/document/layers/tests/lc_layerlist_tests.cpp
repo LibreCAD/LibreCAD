@@ -486,6 +486,81 @@ TEST_CASE("A library insert keeps nothing of the library drawing's layers", "[la
     checkOwnLayers(destination.m_graphic);
 }
 
+TEST_CASE("A library insert preserves entity and layer pens from DXF", "[layers][copy][library][3014]") {
+    const QTemporaryDir directory;
+    REQUIRE(directory.isValid());
+    const QString path = directory.filePath(QStringLiteral("pens.dxf"));
+    const RS_Pen byLayer(RS2::FlagByLayer, RS2::WidthByLayer, RS2::LineByLayer);
+    const RS_Pen explicitPen(RS_Color(80, 90, 100), RS2::Width09, RS2::DashDotLine);
+    const RS_Pen byBlock(RS2::FlagByBlock, RS2::WidthByBlock, RS2::LineByBlock);
+    const RS_Pen sourcePens[] = {byLayer, byLayer, explicitPen, byBlock, byLayer};
+    {
+        Drawing part;
+        RS_Layer* walls = part.addLayer(QStringLiteral("WALLS"));
+        RS_Layer* details = part.addLayer(QStringLiteral("DETAILS"));
+        details->setPen(RS_Pen(RS_Color(0, 0, 255), RS2::Width03, RS2::DotLine));
+        RS_Layer* layers[] = {walls, details, details, details, part.m_graphic.findLayer(QStringLiteral("0"))};
+        for (int i = 0; i < 5; ++i) {
+            auto* line = new RS_Line(&part.m_graphic, RS_LineData(RS_Vector(0, i), RS_Vector(10, i)));
+            line->setLayer(layers[i]);
+            line->setPen(sourcePens[i]);
+            part.m_graphic.addEntity(line);
+        }
+        REQUIRE(RS_FileIO::instance()->fileExport(part.m_graphic, path, RS2::FormatDXFRW));
+    }
+
+    auto library = std::make_unique<Drawing>();
+    REQUIRE(RS_FileIO::instance()->fileImport(library->m_graphic, path, RS2::FormatDXFRW));
+    Drawing destination;
+    RS_Layer* insertionLayer = destination.addLayer(QStringLiteral("INSERTION"));
+    insertionLayer->setPen(RS_Pen(RS_Color(0, 255, 0), RS2::Width04, RS2::SolidLine));
+    destination.m_graphic.activateLayer(insertionLayer);
+    SECTION("missing layers keep the imported settings") {}
+    SECTION("an existing destination layer keeps its settings") {
+        destination.addLayer(QStringLiteral("WALLS"))->setPen(
+            RS_Pen(RS_Color(255, 0, 255), RS2::Width07, RS2::DashDotLine));
+    }
+    destination.modify([&](LC_DocumentModificationBatch& ctx) {
+        RS_Modification::libraryInsert(LC_LibraryInsertData(RS_Vector{0, 0}, 1, 0, "PART", &library->m_graphic),
+                                       &destination.m_graphic, ctx);
+    });
+    library.reset();
+    destination.m_graphic.updateInserts();
+
+    const RS_Block* block = destination.m_graphic.findBlock(QStringLiteral("PART"));
+    REQUIRE(block != nullptr);
+    REQUIRE(block->count() == 5);
+    REQUIRE(destination.m_graphic.count() == 1);
+    auto* insert = dynamic_cast<RS_Insert*>(destination.m_graphic.entityAt(0));
+    REQUIRE(insert != nullptr);
+    REQUIRE(insert->count() == 5);
+    RS_Layer* walls = destination.m_graphic.findLayer(QStringLiteral("WALLS"));
+    RS_Layer* details = destination.m_graphic.findLayer(QStringLiteral("DETAILS"));
+    REQUIRE(walls != nullptr);
+    REQUIRE(details != nullptr);
+    const RS_Pen expected[] = {walls->getPen(), details->getPen(), explicitPen,
+                              insertionLayer->getPen(), insertionLayer->getPen()};
+    for (int i = 0; i < 5; ++i) {
+        CAPTURE(i);
+        const RS_Pen raw = block->entityAt(i)->getPen(false);
+        CHECK(raw.getColor() == sourcePens[i].getColor());
+        CHECK(raw.getColor().getFlags() == sourcePens[i].getColor().getFlags());
+        CHECK(raw.getWidth() == sourcePens[i].getWidth());
+        CHECK(raw.getLineType() == sourcePens[i].getLineType());
+        const RS_Pen resolved = insert->entityAt(i)->getPen(true);
+        CHECK(resolved.getColor() == expected[i].getColor());
+        CHECK(resolved.getWidth() == expected[i].getWidth());
+        CHECK(resolved.getLineType() == expected[i].getLineType());
+    }
+    const RS_Pen changed(RS_Color(255, 255, 0), RS2::Width10, RS2::DotLine);
+    walls->setPen(changed);
+    const RS_Pen resolved = insert->entityAt(0)->getPen(true);
+    CHECK(resolved.getColor() == changed.getColor());
+    CHECK(resolved.getWidth() == changed.getWidth());
+    CHECK(resolved.getLineType() == changed.getLineType());
+    checkOwnLayers(destination.m_graphic);
+}
+
 // Doc_plugin_interface::addBlockfromFromdisk() reads the file into a drawing of
 // its own, which is gone when it returns.
 TEST_CASE("A plugin's block from disk keeps nothing of the layers of the drawing its file was read into",
