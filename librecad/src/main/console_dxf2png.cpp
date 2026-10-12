@@ -38,7 +38,7 @@
 #include "qc_applicationwindow.h"
 #include "qg_dialogfactory.h"
 
-#include "lc_actionfileexportmakercam.h"
+#include "console_dxf2png.h"
 #include "lc_graphicviewport.h"
 #include "lc_printviewportrenderer.h"
 #include "main.h"
@@ -66,14 +66,6 @@ static void touchGraphic(RS_Graphic*);
 
 static bool parsePngSizeArg(const QString& arg, QSize& size);
 
-bool slotFileExport(RS_Graphic* graphic,
-                    const QString& name,
-                    const QString& format,
-                    QSize size,
-                    QSize borders,
-                    bool black,
-                    bool bw=true);
-
 namespace {
 
 struct ImageCommandSpec {
@@ -97,16 +89,16 @@ bool exportOneImageFile(const ImageCommandSpec& spec, const QString& inputFile,
 
     touchGraphic(graphic);
 
-    bool ret = false;
-    if (spec.outputExt.compare(QStringLiteral("svg"), Qt::CaseInsensitive) == 0) {
-        ret = LC_ActionFileExportMakerCam::writeSvg(outputFile, *graphic);
-    } else {
-        QSize borders = QSize(5, 5);
-        bool black = false;
-        bool bw = false;
-        ret = slotFileExport(graphic, outputFile, spec.outputExt.toUpper(), outputSize,
-                             borders, black, bw);
-            }
+    // Raster and vector output both go through slotFileExport: the same
+    // viewport and painter as the application, so the exported file shows
+    // what the application shows. LC_ActionFileExportMakerCam::writeSvg
+    // writes only a few entity types and silently drops the rest, text above
+    // all.
+    const QSize borders{5, 5};
+    const bool black = false;
+    const bool bw = false;
+    const bool ret = slotFileExport(graphic, outputFile, spec.outputExt.toUpper(),
+                                    outputSize, borders, black, bw);
 
     if (!ret) {
         qCritical("ERROR: failed to write '%s'", qPrintable(outputFile));
@@ -327,7 +319,7 @@ static void touchGraphic(RS_Graphic* graphic){
 }
 
 bool slotFileExport(RS_Graphic* graphic, const QString& name,
-        const QString& format, const QSize size, const QSize borders, const bool black, const bool bw) {
+        const QString& format, const QSize& size, const QSize& borders, const bool black, const bool bw) {
 
     if (graphic==nullptr) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
@@ -409,9 +401,16 @@ bool slotFileExport(RS_Graphic* graphic, const QString& name,
 
     // GraphicView deletes painter
     painter.end();
-    // delete vars
+
+    if (format.toLower() == "svg") {
+        // QSvgGenerator buffers the document and writes it when it is
+        // destroyed, so the outcome of the export is only known here.
+        delete vector;
+        ret = QFileInfo(name).isFile() && QFileInfo(name).size() > 0;
+    } else {
+        delete vector;
+    }
     delete picture;
-    delete vector;
 
     return ret;
 }

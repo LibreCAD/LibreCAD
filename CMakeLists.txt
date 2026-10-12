@@ -2825,6 +2825,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/i18n_caret_nfc_tests.cpp
         librecad/src/lib/filters/tests/i18n_codec_tests.cpp
         librecad/src/lib/filters/tests/datastorage_tests.cpp
+        librecad/src/main/tests/lc_consolesvgexporttests.cpp
     )
     qt_add_executable(librecad_fast_tests
         EXCLUDE_FROM_ALL
@@ -3110,6 +3111,12 @@ if (BUILD_TESTS)
         get_filename_component(test_stem "${test_source}" NAME_WE)
         add_librecad_filter_micro_test("librecad_${test_stem}" "${test_source}")
     endforeach()
+    # slotFileExport is defined in console_dxf2png.cpp and the LC_Console
+    # helpers in console_command_utils.cpp (application sources, no main()),
+    # so the SVG export test compiles both translation units directly.
+    target_sources(librecad_lc_consolesvgexporttests PRIVATE
+        librecad/src/main/console_command_utils.cpp
+        librecad/src/main/console_dxf2png.cpp)
 
     # A parser-only lane for the tight implementation loop.  The existing
     # librecad_*_fast_tests targets intentionally exercise the LibreCAD filter,
