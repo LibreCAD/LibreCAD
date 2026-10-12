@@ -1538,6 +1538,20 @@ TEST_CASE("MText tabs advance to stops four text heights apart",
   CHECK(stackInk[3].left > std::max(stackInk[1].right, stackInk[2].right));
   RS_MText emptyStack(nullptr, leftToRightData("X\t\\S^;A"));
   CHECK_THAT(inkOf(emptyStack).back().left, WithinAbs(36.0, inkTolerance));
+
+  // A mark stays on its letter when the letter is moved back onto the stop.
+  const QString marked = QStringLiteral("e\u0301");
+  RS_MText markControl(nullptr, leftToRightData(marked, "unicode"));
+  RS_MText markField(nullptr, leftToRightData("W\t\\S^;" + marked, "unicode"));
+  const auto markControlInk = inkOf(markControl);
+  const auto markFieldInk = inkOf(markField);
+  REQUIRE(markControlInk.size() == 2);
+  REQUIRE(markFieldInk.size() == 3);
+  CHECK_THAT(markFieldInk[1].left, WithinAbs(36.0, inkTolerance));
+  CHECK_THAT(markFieldInk[2].left - markFieldInk[1].left,
+             WithinAbs(markControlInk[1].left - markControlInk[0].left, inkTolerance));
+  CHECK_THAT(markFieldInk[2].right - markFieldInk[1].left,
+             WithinAbs(markControlInk[1].right - markControlInk[0].left, inkTolerance));
 }
 
 TEST_CASE("MText tab stops are at the same place in every line",
@@ -1560,6 +1574,16 @@ TEST_CASE("MText tab stops are at the same place in every line",
       CHECK_THAT(alpha.left, WithinAbs(stop, inkTolerance));
     }
   }
+
+  // The ink of a line can start with a later letter: in iso3098 the "M"
+  // reaches further left than the "i" in front of it. The stops count from
+  // where the ink starts.
+  RS_MText later(nullptr, leftToRightData("iM\t1", "iso3098"));
+  const auto laterInk = inkOf(later);
+  REQUIRE(laterInk.size() == 3);
+  REQUIRE(laterInk[1].left < laterInk[0].left);
+  CHECK_THAT(laterInk[1].left, WithinAbs(0.0, inkTolerance));
+  CHECK_THAT(laterInk[2].left, WithinAbs(stop, inkTolerance));
 }
 
 TEST_CASE("MText tabs separate fields in every attachment and direction",
@@ -1586,6 +1610,18 @@ TEST_CASE("MText tabs separate fields in every attachment and direction",
       RS_MText indented(nullptr, data);
       checkSameInk(indented, text);
     }
+  }
+
+  // A pen that stands on a stop goes on to the next one, also when rounding
+  // has left it a hair short of the stop: here the second of the two tabs.
+  {
+    auto data = leftToRightData("\tl\t\ti! M\tl");
+    data.halign = RS_MTextData::HACenter;
+    RS_MText text(nullptr, data);
+    const auto ink = inkOf(text);
+    REQUIRE(ink.size() == 5);
+    CHECK_THAT(ink[1].left - ink[0].left, WithinAbs(2 * stop, inkTolerance));
+    CHECK_THAT(ink[4].left - ink[0].left, WithinAbs(3 * stop, inkTolerance));
   }
 
   // A right-to-left line has no stops yet. Its tab is as wide as four word
@@ -1879,18 +1915,29 @@ TEST_CASE("MText with a paragraph command keeps the width it was given",
   SourceFonts fonts;
   QTemporaryDir directory;
   REQUIRE(directory.isValid());
+  enum class Saved { Given, Used };
   struct Sample {
     QString text;
     bool hasCommand;
     double givenWidth;
-    bool keepsGivenWidth;
+    Saved saved;
   };
+  const double infinity = std::numeric_limits<double>::infinity();
+  const double notANumber = std::numeric_limits<double>::quiet_NaN();
   const Sample samples[] = {
-      {"\\pi-12,l12,t12;ABC", true, 250.0, true},
-      {"AB\\pxqc;C", true, 250.0, true},
-      {"\\pi-12,l12,t12;ABC", true, 3.0, false},
-      {"ABC", false, 250.0, false},
-      {"C:\\plans\\a.dxf", false, 250.0, false},
+      {"\\pi-12,l12,t12;ABC", true, 250.0, Saved::Given},
+      {"AB\\pxqc;C", true, 250.0, Saved::Given},
+      {"\\pi-12,l12,t12;ABC", true, 3.0, Saved::Used},
+      // a box of width 0 does not wrap; it is not given a width that would
+      {"\\pi-12,l12,t12;ABC", true, 0.0, Saved::Given},
+      // a width that is no width does not get into the file
+      {"\\pi-12,l12,t12;ABC", true, infinity, Saved::Used},
+      {"\\pi-12,l12,t12;ABC", true, -infinity, Saved::Used},
+      {"\\pi-12,l12,t12;ABC", true, notANumber, Saved::Used},
+      {"\\pi-12,l12,t12;ABC", true, -250.0, Saved::Used},
+      {"ABC", false, 250.0, Saved::Used},
+      {"ABC", false, 0.0, Saved::Used},
+      {"C:\\plans\\a.dxf", false, 250.0, Saved::Used},
   };
   int index = 0;
   for (const auto &sample : samples) {
@@ -1901,13 +1948,15 @@ TEST_CASE("MText with a paragraph command keeps the width it was given",
     auto *source = new RS_MText(&original, data);
     original.addEntity(source);
     CHECK(source->hasParagraphCommands() == sample.hasCommand);
+    REQUIRE(source->getUsedTextWidth() > 3.0);
     const QString path = directory.filePath(QString("width_%1.dxf").arg(index++));
     RS_FilterDXFRW writer;
     REQUIRE(writer.fileExport(original, path, RS2::FormatDXFRW));
     bool isNumber = false;
     const double width = mtextGroup(path, 41).toDouble(&isNumber);
     REQUIRE(isNumber);
-    CHECK_THAT(width, WithinAbs(sample.keepsGivenWidth ? sample.givenWidth : source->getUsedTextWidth(), 1e-6));
+    CHECK_THAT(width, WithinAbs(sample.saved == Saved::Given ? sample.givenWidth
+                                                             : source->getUsedTextWidth(), 1e-6));
   }
 }
 
@@ -2096,6 +2145,50 @@ TEST_CASE("The MText tool options load their text as plain text",
   REQUIRE(edit);
   CHECK(edit->toPlainText() == content);
   CHECK(action->getText() == content);
+}
+
+TEST_CASE("The MText tool options type a tab and are left with Shift+Tab and Ctrl+Tab",
+          "[text][mtext][issue3032][gui]") {
+  SourceFonts fonts;
+  lc::test::ActionFixture<LC_ActionDrawMText> fixture;
+  auto *action = fixture.m_action.get();
+  action->reset();
+  action->setText("ABC");
+  LC_MTextOptionsWidget widget;
+  widget.setAction(action, true);
+  auto *edit = widget.findChild<QTextEdit *>("teText");
+  REQUIRE(edit);
+  CHECK_FALSE(edit->tabChangesFocus());
+  showWithFocus(widget, *edit);
+  REQUIRE(edit->hasFocus());
+
+  typeTab(*edit);
+  CHECK(edit->toPlainText() == "\tABC");
+  CHECK(action->getText() == "\tABC");
+
+  struct Key {
+    const char *name;
+    int key;
+    Qt::KeyboardModifiers modifiers;
+    QString text;
+  };
+  // Windows sends Shift+Tab with a tab as its text; X11 and macOS do not.
+  const Key keys[] = {{"Shift+Tab", Qt::Key_Backtab, Qt::ShiftModifier, QString()},
+                      {"Shift+Tab as Windows sends it", Qt::Key_Backtab, Qt::ShiftModifier, "\t"},
+                      {"Ctrl+Tab", Qt::Key_Tab, Qt::ControlModifier, "\t"},
+                      {"Control+Tab on macOS", Qt::Key_Tab, Qt::MetaModifier, "\t"}};
+  for (const auto &key : keys) {
+    INFO(key.name);
+    showWithFocus(widget, *edit);
+    REQUIRE(edit->hasFocus());
+    keyPress(*edit, key.key, key.modifiers, key.text);
+    CHECK(edit->toPlainText() == "\tABC");
+    CHECK(action->getText() == "\tABC");
+    CHECK_FALSE(edit->hasFocus());
+    QWidget *reached = QApplication::focusWidget();
+    REQUIRE(reached);
+    CHECK(widget.isAncestorOf(reached));
+  }
 }
 
 TEST_CASE("MText dialogs keep blanks and tabs and line breaks",

@@ -25,8 +25,11 @@
 **********************************************************************/
 #include "lc_m_text_options_widget.h"
 
+#include <QKeyEvent>
+
 #include "lc_action_draw_mtext.h"
 #include "lc_guarded_signals_blocker.h"
+#include "lc_textedit.h"
 #include "ui_lc_m_text_options_widget.h"
 
 /*
@@ -38,6 +41,7 @@ LC_MTextOptionsWidget::LC_MTextOptionsWidget(): ui{std::make_unique<Ui::LC_MText
     connect(ui->leAngle, &QLineEdit::editingFinished, this, &LC_MTextOptionsWidget::updateAngle);
     connect(ui->teText, &QTextEdit::textChanged, this, &LC_MTextOptionsWidget::updateText);
     pickAngleSetup("angle", ui->tbPickAngle, ui->leAngle);
+    ui->teText->installEventFilter(this);
 }
 
 /*
@@ -51,6 +55,21 @@ LC_MTextOptionsWidget::~LC_MTextOptionsWidget() = default;
  */
 void LC_MTextOptionsWidget::languageChange() {
     ui->retranslateUi(this);
+}
+
+/**
+ * Tab types a tab in the text box, so Shift+Tab and Ctrl+Tab are what leaves
+ * it from the keyboard.
+ */
+bool LC_MTextOptionsWidget::eventFilter(QObject* watched, QEvent* event) {
+    if (watched == ui->teText && event->type() == QEvent::KeyPress
+        && !ui->teText->isReadOnly() && !ui->teText->tabChangesFocus()) {
+        if (const int step = LC_TextEdit::focusStepOf(*static_cast<QKeyEvent*>(event))) {
+            focusNextPrevChild(step > 0);
+            return true;
+        }
+    }
+    return LC_ActionOptionsWidget::eventFilter(watched, event);
 }
 
 void LC_MTextOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
