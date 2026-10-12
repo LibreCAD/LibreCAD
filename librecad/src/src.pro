@@ -436,6 +436,7 @@ HEADERS += \
     lib/engine/document/entities/lc_extentitydata.h \
     lib/engine/document/entities/lc_textbidi.h \
     lib/engine/document/entities/lc_textdocument.h \
+    lib/engine/document/entities/lc_textsourcecodec.h \
     lib/engine/document/entities/lc_textentitystate.h \
     lib/engine/document/entities/lc_textlayout.h \
     lib/engine/document/entities/lc_textoutline.h \
@@ -1012,6 +1013,7 @@ SOURCES += \
     lib/engine/document/entities/lc_extentitydata.cpp \
     lib/engine/document/entities/lc_textbidi.cpp \
     lib/engine/document/entities/lc_textdocument.cpp \
+    lib/engine/document/entities/lc_textsourcecodec.cpp \
     lib/engine/document/entities/lc_textentitystate.cpp \
     lib/engine/document/entities/lc_textlayout.cpp \
     lib/engine/document/entities/lc_textoutline.cpp \

@@ -939,6 +939,8 @@ set (SHARED_SOURCES
     librecad/src/lib/engine/document/entities/lc_textbidi.h
     librecad/src/lib/engine/document/entities/lc_textdocument.cpp
     librecad/src/lib/engine/document/entities/lc_textdocument.h
+    librecad/src/lib/engine/document/entities/lc_textsourcecodec.cpp
+    librecad/src/lib/engine/document/entities/lc_textsourcecodec.h
     librecad/src/lib/engine/document/entities/lc_textentitystate.cpp
     librecad/src/lib/engine/document/entities/lc_textentitystate.h
     librecad/src/lib/engine/document/entities/lc_textlayout.cpp
@@ -2827,6 +2829,19 @@ if (BUILD_TESTS)
         Catch2::Catch2WithMain Qt6::Core)
     target_compile_features(librecad_text_document_tests PRIVATE cxx_std_17)
     set_target_properties(librecad_text_document_tests PROPERTIES
+        AUTOMOC OFF AUTOUIC OFF AUTORCC OFF)
+
+    # Source convention conversion preserves raw syntax without a font backend.
+    add_executable(librecad_text_source_codec_tests EXCLUDE_FROM_ALL
+        librecad/src/lib/engine/document/entities/lc_textdocument.cpp
+        librecad/src/lib/engine/document/entities/lc_textsourcecodec.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_textsourcecodec_tests.cpp)
+    target_include_directories(librecad_text_source_codec_tests PRIVATE
+        librecad/src/lib/engine/document/entities)
+    target_link_libraries(librecad_text_source_codec_tests PRIVATE
+        Catch2::Catch2WithMain Qt6::Core)
+    target_compile_features(librecad_text_source_codec_tests PRIVATE cxx_std_17)
+    set_target_properties(librecad_text_source_codec_tests PROPERTIES
         AUTOMOC OFF AUTOUIC OFF AUTORCC OFF)
 
     # Profile metadata is inert and must not depend on font/backend availability.
