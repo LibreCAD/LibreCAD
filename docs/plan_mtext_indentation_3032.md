@@ -215,8 +215,8 @@ orders of magnitude. In the 219 ASCII DXF samples, 97 of 98 paragraph codes (in
 
 ## Decisions For The Maintainer
 
-All six were accepted as recommended on 2026-10-11. D5 is carried out as a
-pull request of its own against `2.2.1`.
+All six were accepted as recommended on 2026-10-11. D5 is carried out as
+#3062, a pull request of its own against `2.2.1`.
 
 | ID | Question | Facts | Recommendation |
 | --- | --- | --- | --- |
@@ -224,7 +224,7 @@ pull request of its own against `2.2.1`.
 | D2 | Should Tab insert a Tab in the main MText dialog? | `tabChangesFocus` was set on purpose by `e9410df82`, a tab-order change. The property editor and the tool-options editor already insert a Tab. The dialog opens with all text selected, so a Tab typed out of habit would replace the text (undo restores it). Shift+Tab leaves the editor | Insert, for consistency with the other two editors; keep select-all; test Shift+Tab as the way out |
 | D3 | Which width goes to group 41? | Today: ink width. Declared width as stored would write 100 for every new MText and a stale ink width for every text edited after a LibreCAD save. See A3.2 | Ship A3.1 now. Adopt the binding rule of A3.2 later, not "declared as stored" |
 | D4 | Should RightToLeft lines get an indent from the right edge? | In a RightToLeft line the blanks on the visual left are the logically trailing ones. Indenting by them would move existing drawings | No change for RightToLeft lines in Track A |
-| D5 | Back-port A1 to `origin/2.2.1`? | Same defect since 2.2.1_rc3; that branch has the older, simpler layout loop and no tests | Maintainer's call; A1 is the only step that applies there |
+| D5 | Back-port A1 to `origin/2.2.1`? | Same defect since 2.2.1_rc3; that branch has the older, simpler layout loop, and two QtTest targets that its CI does not build | Maintainer's call; A1 is the only step that applies there |
 | D6 | Stage Track B so that `\p` codes are at least not drawn as text? | 66 entities in 17 sample drawings show codes as literal text, in every release | Yes: B1 alone is small and removes visible garbage |
 
 ## Progress And Commit Boundaries
@@ -233,12 +233,13 @@ pull request of its own against `2.2.1`.
 | --- | --- | --- | --- |
 | A0. Isolate tests and pin the baseline | Done | `f02391aa2` | Both listeners linked into the text target; the baseline is pinned by the tests of the next rows |
 | A1. Leading spaces indent again | Done | `e12c9fb6e`, `3e4cbb8a6` | Indent tests; unindented, center, right and RightToLeft geometry unchanged; tolerance and stack cases |
-| A2a. A Tab advances | Done | `e12c9fb6e`, `3e4cbb8a6` | Stops in lines that flow from the left; four word spaces in a RightToLeft line and in single-line TEXT; never zero |
+| A1 on `2.2.1` | Done, as #3062 | On that branch | A QtTest target of its own, with the standard font next to it; three of its four cases fail without the change. A `^I` of a file is four spaces there, which indent as well |
+| A2a. A Tab advances | Done | `e12c9fb6e`, `3e4cbb8a6`, `aca5fd66f` | Stops in lines that flow from the left; four word spaces in a RightToLeft line and in single-line TEXT; never zero |
 | A2b. Stops in logical RightToLeft lines | Open | - | Flow-origin placement matches the Qt oracle |
-| A3.1. Saved width covers the line | Done | `e12c9fb6e`, `3e4cbb8a6` | Group 41 is not smaller than indent plus ink in DXF R2000, R2007, R2018 and DWG R2004 |
+| A3.1. Saved width covers the line | Done | `e12c9fb6e`, `3e4cbb8a6`, `aca5fd66f` | Group 41 is not smaller than indent plus ink in DXF R2000, R2007, R2018 and DWG R2004 |
 | A3.2. Width policy | Open; accepted for a later change | - | Binding and non-binding boxes both survive |
 | A3.3. Embedded attribute text | Open, independent of the issue | - | Edited attribute text is saved; unedited records are unchanged |
-| A4. Tab key and input paths | Done | `24af2b21d`, `3e4cbb8a6` | Key events that carry their character; both dialogs, the property editor and the tool options; Shift+Tab and Ctrl+Tab as the ways out |
+| A4. Tab key and input paths | Done | `24af2b21d`, `3e4cbb8a6`, `aca5fd66f` | Key events that carry their character; both dialogs, the property editor and the tool options; Shift+Tab and Ctrl+Tab as the ways out |
 | B0. Paragraph scope | Decided by D1 and D6 | - | B1 now; B2 to B5 stay conditional |
 | B1. Paragraph commands are not drawn | Done | `e12c9fb6e`, `3e4cbb8a6` | Commands hidden and not applied; other text literal |
 | B2 to B5. Applying the commands, wrapping and controls | Conditional | - | See Track B |
@@ -272,12 +273,12 @@ after it was opened; "Review Of The Pull Request" lists what that changed.
   as before; that width now counts the indentation. Text with a paragraph
   command keeps the width it was given when that is larger, because the
   indentations of the command are not laid out here and another program needs
-  the room for them.
+  the room for them. A width of 0, which does not wrap, stays 0 for such text.
 - **A4.** `tabChangesFocus` is false in both dialogs. Shift+Tab and Ctrl+Tab
   leave a text box that types tabs: in `LC_TextEdit`, which the MText dialog
-  and the property editor use, and in the content dialog. Windows delivers
-  Shift+Tab with a tab as its text, which Qt would type otherwise. The
-  tool-options editor loads plain text.
+  and the property editor use, and through a key filter in the content dialog
+  and in the tool options. Windows delivers Shift+Tab with a tab as its text,
+  which Qt would type otherwise. The tool-options editor loads plain text.
 - **B1.** `paragraphCommandEnd()` accepts `x`, `i`, `l`, `r`, `b`, `a`, `q`,
   `s` and `t` with their values, separated by commas or by nothing, up to a
   `;` within 256 characters; `x` alone or `t` without stops stays text. It
@@ -286,13 +287,14 @@ after it was opened; "Review Of The Pull Request" lists what that changed.
 
 | Check | Result |
 | --- | --- |
-| New tests, tag `[issue3032]` | 21 cases, 7329 assertions, in `librecad_text_bidi_tests` |
+| New tests, tag `[issue3032]` | 22 cases, 7415 assertions, in `librecad_text_bidi_tests` |
 | The first version of these tests on the sources before the change | 11 of 15 failed. The other 4 pin behavior that was right already |
-| The tests as they are now on the first version of the change | 11 of 20 fail: each finding of the review has a test |
-| `librecad_text_bidi_tests` | 75 cases pass |
-| `librecad_tests`, the complete executable | 3358 cases pass, 70 are skipped, none fails |
+| The tests written after the three reviews, on the first version of the change | 11 of 20 fail: each finding of the reviews has a test |
+| Five mutations for the points of the further review, one at a time | Each fails in the one case written for it |
+| `librecad_text_bidi_tests` | 76 cases pass |
+| `librecad_tests`, the complete executable | 3359 cases pass, 70 are skipped, none fails |
 | `librecad_fast_tests`, `librecad_dxf_fast_tests`, `librecad_dwg_fast_tests`, `librecad_dwg_write_fast_tests`, `librecad_text_bidi_headless_tests` | All pass |
-| `librecad_text_bidi_tests` built with the address and undefined-behavior sanitizers | 75 cases pass, no report |
+| `librecad_text_bidi_tests` built with the address and undefined-behavior sanitizers | 76 cases pass, no report |
 | Every MText of the 186 sample drawings that contain one, laid out by the sources before the change and by this one | 14888 entities, dimension labels included. 14776 are identical. All 112 that differ have a leading blank, a tab or a paragraph command |
 | `RS_MText::update()`, 16000 characters, best of 3 | One line of letters 212 ms before and 227 ms after; a tab every 8 characters 358 ms and 367 ms; indented lines 227 ms and 224 ms |
 | ezdxf 1.4.4 on a saved sample drawing | Reads it without audit errors. Its own layout indents the lines with leading blanks and puts the fields behind a tab on the same stops, four text heights apart |
@@ -321,6 +323,19 @@ and saving, tests and editors) found the following. Each fix has a test.
 | Fourteen of 22 mutations of the new code passed the tests | Tests for the four that change the picture, and for near misses of a stop, far positions, turned text, the 250-byte record boundary and the tool options |
 | One test case checked three editors and could leave settings behind when it failed | One case per editor; a dialog is rejected on the way out |
 
+A further review, of those fixes, found nothing serious. It laid out 35699
+random texts without leading blank, tab or command with the sources before the
+change and with this one (three fonts, four directions, three attachments,
+stacks, escapes, Hebrew and marks) and found the same ink and the same used
+width in all of them, and its own model of the tab rules agreed with the
+layout on every glyph of 9000 random lines. Its smaller points:
+
+| Finding | Outcome |
+| --- | --- |
+| The tool-options editor is a plain text box. Shift+Tab as Windows sends it typed a tab there, and Ctrl+Tab did nothing | The same key filter as in the content dialog |
+| Text with a paragraph command and a box of width 0, which does not wrap, was saved with the width it uses. A width that is not finite made the export fail | 0 stays 0; only a finite width is kept |
+| Twelve of 34 mutations of the reworked layout passed the tests; three of them change the picture | Tests for those three: a line whose ink starts with a later letter, a pen that rounding left a hair short of a stop, a mark behind a tab |
+
 ### Limits
 
 - **Mirroring.** `RS_MText::mirror()` turns left into right attachment, and a
@@ -328,6 +343,10 @@ and saving, tests and editors) found the following. Each fix has a test.
   therefore sits the indentation off its mirror image.
 - **R12.** Export writes each line as TEXT with its tabs and paragraph commands
   as they are. A tab is four word spaces there, and a command is drawn.
+- **Text that reads as a command.** `\pt100;`, `\pa4;` and `\ps2;` follow the
+  grammar, so `C:\pt100;D:\x` is drawn as `C:D:\x`. This needs a part of a
+  path that spells a property and its value behind the `p`, and a `;` right
+  after it; a `\p` followed by anything else stays text.
 - **Other readers.** The saved width is still LibreCAD's own measure of the
   widest line. Where the font of another reader is wider, or where the reader
   counts blanks that LibreCAD does not (in front of right-attached text) or
