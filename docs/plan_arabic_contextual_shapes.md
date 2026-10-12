@@ -463,6 +463,23 @@ Establish these rules before enabling saved new-profile drawings:
   modeled outer override applies. Refresh embedded direction/profile XDATA
   from current data after sidecar replay. ATTDEF semantic restoration is
   separate work.
+- Native DWG embedded MTEXT has no independent common/EED frame. Use a
+  separately registered, versioned private outer-ATTRIB transport envelope,
+  provisionally under APPID `LibreCADEmbeddedText`, without activating embedded
+  `LibreCADText` or RTL metadata as outer fields. Raw XDATA retention alone is
+  insufficient: pre-2018 DXF/DWG writers cannot emit the native embedded body,
+  so lossless downgrade also requires its complete canonical source, STYLE
+  association, geometry, spacing, columns and retained unmodeled fields.
+  Keep these output gates Pending with explicit failure until full-model
+  transport is implemented and proven; do not silently flatten or omit it.
+  Resolve native data versus retained-envelope precedence explicitly; edited
+  fields cannot replay a stale capsule. Preserve unknown/duplicate envelopes
+  opaque with a diagnostic, distinct from absence. Respect both aggregate
+  retention budgets and native EED frame limits; multiple frames require
+  explicit, validated segmentation rather than treating accidental repeated
+  APPIDs as valid fragments. Prove registration, chunk/frame limits, full-model
+  restoration and independent DXF/DWG cross-format behavior before schema
+  freeze. This requirement authorizes implementation, not profile activation.
 - Preserve raw MTEXT spans before the generic decoder removes supported scopes.
   Layout never mutates canonical text. Save/edit handling must retain unsupported
   properties without leaking their state into supported spans.
@@ -650,13 +667,14 @@ Maintain the progress and validation records below as implementation proceeds:
 | 2026-10-11 | P2c logical itemizer | Complete | `19e2f7793` — `Itemize source-mapped logical font and script runs` | Isolated ON/OFF/ASan: 208,140 assertions / 16 cases; ON/ASan shaping handoff: 441 / 3, OFF: 1 / 1; CMake/qmake application builds pass; independent source/context review finds no itemizer defect | Bounded itemizer checkpoint only; projection complexity correction below, blank-paragraph styles and shared layout remain separate gates |
 | 2026-10-11 | P2b.1 bounded projection | Complete | `95549793f` — `Bound explicit bidi scope lookup in Chinese projection` | Isolated focused application: 541,335 assertions / 70 cases; headless ON/OFF/ASan: 526,521 / 23; itemizer/handoff regressions and Unicode 17 conformance pass; CMake/qmake application builds pass | Bounded projection checkpoint only; empty-paragraph styles, shared layout and entity integration remain pending |
 | 2026-10-11 | P2a.1 empty paragraph styles | Complete | `a477b68ef` — `Preserve effective styles on empty logical paragraphs` | Independent style/scope review; strict private build and isolated ON/OFF/ASan each pass 452,371 assertions / 24 cases; itemizer/handoff and CMake/qmake application builds pass | Consume it in recursive layout and validate empty-line/stack metrics; overall layout/entity gates remain pending |
+| 2026-10-11 | P2a.2 consecutive CR and CRLF | Validated | Candidate subject: `Preserve consecutive CR and CRLF paragraph boundaries` | Before-fix direct regression fails 2 != 3 paragraphs; final registered ON/OFF/ASan parser 453,636 / 25, itemizer/handoff and recursive-layout checks pass; enabled/disabled CMake applications and qmake pass; independent source/provenance review approves | Checkpoint parser prerequisite; syntax-aware caret codec and full cross-format acceptance remain pending |
 | 2026-10-11 | P0b transport proof | In progress | Uncommitted filter candidate; provisional codec is a separate service | Earlier STYLE binding failure repaired; new STYLE-unit and LTYPE-control prerequisites pass focused/direct native JSON checks; converted DXF still fails at DIMSTYLE color fields | Isolate/checkpoint prerequisites; codec/schema freeze and public activation require separate proof, not a self-round trip |
 | 2026-10-11 | P3b.1 native outline adapter | Complete | `1ed63892a` — `Add precision-bounded native text contours` | Both numeric regressions fail before correction (exit 42); isolated ON/ASan: 12,326 assertions / 8 cases; OFF: 11,460 / 7; enabled/disabled CMake applications and qmake application build pass; independent numeric review approves | Bounded native service only; complete-affine entity consumption, layout caches and release geometry gates remain pending |
 | 2026-10-11 | P5a.1 provisional profile codec | Complete | `ade6fee6f` — `Add inert versioned text profile codec` | Isolated QtCore-only ON/OFF/ASan each pass 4,544 assertions / 12 cases; enabled/disabled CMake applications and qmake application pass; strict QStringBuilder failure corrected and independently reviewed | Bounded inert codec only; owning bindings, STYLE/entity/filter integration, transport proof, schema freeze and activation remain pending |
 | 2026-10-11 | P3c.1 shared explicit layout | Complete | `7440ffc3c` — `Add source-mapped recursive OpenType text layout` | Source-provenance regression fails before correction; isolated ON/ASan: 715,036 assertions / 16 cases; OFF: 26 / 1. Registered include failure corrected; enabled/disabled CMake applications and qmake application pass; independent source/registration review approves | Bounded recursive service only; native entity adapters, caches, complete-segment fallback and independent application acceptance remain pending |
 | 2026-10-11 | P5a.2 owning profile bindings | Complete | `a8ade2677` — `Add owning text profile edit bindings` | Move, retained-buffer alias and copy-allocation regressions reproduced and repaired; registered ON/OFF/ASan each pass 8,150 / 22 plus both controlled allocation-failure cases; enabled/disabled CMake applications and qmake application pass; independent ownership/registration review approves | Bounded inert binding checkpoint only; transport/entity/style integration and schema/activation gates remain pending |
 | 2026-10-11 | P5a.3 entity and transport authority | In progress | Uncommitted owned entity/style/filter slice | Source/profile host APIs and guarded unavailable-import state under implementation; whole-slice registered validation and independent review pending | Complete source/STYLE/namespace ownership and lifecycle tests; syntax-aware lossless cross-format caret conversion remains required, not waived by a guarded intermediate export error |
-| 2026-10-11 | P5a.3a entity source and profile state | Validated | Candidate subject: `Preserve canonical text and inert profile state on entities` | Final registered ON/OFF/ASan each pass state 322 / 7, native entities 912 / 12 and focused legacy text/bidi 541,335 / 70; enabled/disabled CMake applications and qmake application pass; independent source/registration and pre-alignment API/test review approve | Checkpoint bounded host API; filter/STYLE transport, native renderer activation and full P5 acceptance remain pending |
+| 2026-10-11 | P5a.3a entity source and profile state | Complete | `2db2a26fb` — `Preserve canonical text and inert profile state on entities` | Final registered ON/OFF/ASan each pass state 322 / 7, native entities 912 / 12 and focused legacy text/bidi 541,335 / 70; enabled/disabled CMake applications and qmake application pass; independent source/registration and pre-alignment API/test review approve | Bounded host API checkpoint only; filter/STYLE transport, native renderer activation and full P5 acceptance remain pending |
 | 2026-10-11 | P5a.3b syntax-aware source conversion | In progress | Uncommitted new source codec | QString/explicit-length UTF-8 candidate implemented; compiler, independent expected-output fixtures, negative/budget tests and review pending | Preserve format syntax, stacks, paragraph boundaries and exact no-op bytes while converting caret conventions; integrate only after validation |
 | 2026-10-11 | P7 execution | Planned | `55cbfc54f` and `537839cfe` — plan-only workflow checkpoints | Draft baseline, creation checkpoint, acceptance map, deep-review cadence and CI history defined; prepublication findings retain provenance and require local-contract resolution before publication. Independent plan review and scoped whitespace checks pass; no publication or PR acceptance claimed | Complete the coherent P5 candidate, reconcile existing review findings, then execute P7a and keep the records below current |
 | 2026-10-11 | P7 workflow refinement | Complete | `c956d8ca2` — `Link PR feedback to verified refinement` | Independent read-only plan review and scoped whitespace check pass; explicit P7a/P7b/P7c steps, source-linked feedback and final state reconciliation defined | Plan-only checkpoint; P7 execution remains Planned, with no push, PR creation, review completion or readiness claimed |
@@ -1057,6 +1075,45 @@ and `/private/tmp/librecad-arabic-empty-qmake-build.log`.
 Recursive-layout consumption, final entity geometry and release acceptance
 remain separate, unfinished gates.
 
+### Consecutive paragraph boundary evidence
+
+Caret-codec testing exposed a parser defect: physical `A\r\r\nB` produced two
+paragraphs instead of three, unlike its equivalent `A^M^M^JB` spelling. Eager
+physical CRLF folding fed LF into the existing decoded CR/LF coalescer, allowing
+that pair to consume a preceding independent CR. The narrow repair sends each
+physical control through the same coalescer exactly once. It changes no public
+header, saved source or legacy renderer.
+
+The direct before-fix fixture fails at 2 != 3 paragraphs (1 failure / 2
+assertions). Seventeen independent fixtures now check physical, caret and
+Unicode-escape mixtures, exact break/token/source ranges, intervening empty
+paragraphs and complete provenance. Independent source review confirms the
+contiguous-source and immediately preceding break-token conditions prevent
+merging across intervening content. Private strict and O1 ASan/UBSan parser
+runs pass 453,636 assertions / 25 cases. Logs remain
+`/private/tmp/librecad-arabic-parser-crcrlf-before-tests.log`,
+`/private/tmp/librecad-arabic-parser-crcrlf-after-{build,tests,focused-tests}.log`
+and `/private/tmp/librecad-arabic-parser-crcrlf-sanitized-{build,no-leaks-tests}.log`.
+A separate `detect_leaks=1` attempt aborted as unsupported on macOS before
+tests; it is not a code regression or a leak pass.
+
+Only the two staged parser/test files were exported and compared against
+`/private/tmp/librecad-arabic-core-index.TOns5t` after the entity checkpoint.
+Registered ON, OFF without FreeType and ASan/UBSan each pass parser 453,636 /
+25 and itemizer 208,140 / 16. Enabled ON/ASan handoff and layout pass 441 / 3
+and 715,036 / 16; OFF passes the explicit disabled paths, 1 / 1 and 26 / 1.
+The source changes do not alter bidi resolution, profile codecs or native
+outline interfaces. Complete enabled/disabled CMake applications and qmake
+also build; the coherent ASan application library is rebuilt, without claiming
+a new sanitizer GUI application run. Processes 77553, 29434, 24902 and 38955
+terminate with exit 0. Build the parser, itemizer, shaping-handoff and layout
+targets explicitly and invoke their unfiltered binaries. Root logs are
+`/private/tmp/librecad-arabic-parser-crcrlf-root-{on,off,asan}-{build,parser-tests,itemizer-tests,handoff-tests,layout-tests}.log`
+and `/private/tmp/librecad-arabic-parser-crcrlf-root-qmake-build.log`.
+The entity evidence's macOS toolchain, isolated configurations and
+sanitizer environment/exclusions apply. Syntax-aware conversion, native entity
+consumption and independent saved-file acceptance remain separate gates.
+
 ### Native outline precision evidence
 
 P3b's native adapter creates inherited-pen closed polylines only after the full
@@ -1331,6 +1388,17 @@ never turn a decoding failure into permission to skip an attribute. A genuinely
 unrepresentable output must fail explicitly while preserving in-memory source
 and metadata. Raw retention alone does not make malformed native wire writable.
 Regression, supported-output and independent transport proof remain Pending.
+The in-memory raw-tag capsule alone does not solve native DWG transport or
+pre-2018 embedded-body retention; the full-model outer-ATTRIB envelope specified
+above remains required. The current DXF writer also emits outer ATTRIB/ATTDEF
+XDATA after the embedded marker, where the parser assigns it to MTEXT. Correct
+that ownership with writer/parser scope regressions before transport acceptance.
+R12 currently needs an
+interim explicit failure for raw-aware formatted/profile/embedded MTEXT that
+the legacy TEXT-line downgrade cannot retain faithfully. Ordinary plaintext
+fallback remains characterized legacy behavior. That guard does not complete
+the required supported-output round trips or authorize narrowing their scope;
+lossless downgrade authority/source retention remains an unfinished gate.
 
 ## Implementation milestones
 

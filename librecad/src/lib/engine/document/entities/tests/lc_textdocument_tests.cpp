@@ -596,6 +596,53 @@ TEST_CASE("Formatted stacks preserve scoped children and propagate fatal errors"
     CHECK_FALSE(Document::parse(source, options).ok());
 }
 
+TEST_CASE("Physical CRLF cannot coalesce a preceding independent CR boundary", "[textdocument][paragraph][crcrlf]") {
+    struct Fixture { QString source; std::vector<Range> breaks; };
+    const std::vector<Fixture> fixtures{
+        {QStringLiteral("A\r\r\nB"), {{1, 1}, {2, 2}}},
+        {QStringLiteral("A^M\r\nB"), {{1, 2}, {3, 2}}},
+        {QStringLiteral("A\r^M\nB"), {{1, 1}, {2, 3}}},
+        {QStringLiteral("A\r\r^JB"), {{1, 1}, {2, 3}}},
+        {QStringLiteral("A^M^M^JB"), {{1, 2}, {3, 4}}},
+        {QStringLiteral("A\r\n^JB"), {{1, 2}, {3, 2}}},
+        {QStringLiteral("A^M\n^JB"), {{1, 3}, {4, 2}}},
+        {QStringLiteral("A\r^J\r\nB"), {{1, 3}, {4, 2}}},
+        {QStringLiteral("A\r\n^MB"), {{1, 2}, {3, 2}}},
+        {QStringLiteral("A^M\nB"), {{1, 3}}},
+        {QStringLiteral("A\r^JB"), {{1, 3}}},
+        {QStringLiteral("A^M^JB"), {{1, 4}}},
+        {QStringLiteral("A\r\nB"), {{1, 2}}},
+        {QStringLiteral("A\\U+000D\r\nB"), {{1, 7}, {8, 2}}},
+        {QStringLiteral("A\r\\U+000D\\U+000AB"), {{1, 1}, {2, 14}}},
+        {QStringLiteral("A\\U+000D^JB"), {{1, 9}}},
+        {QStringLiteral("A^M\\U+000AB"), {{1, 9}}}
+    };
+    auto options = mtextOptions();
+    options.decodeCaretCodes = true;
+    options.decodeDxfEscapes = true;
+    for (const auto &fixture : fixtures) {
+        INFO("Source UTF8 hex " << fixture.source.toUtf8().toHex().toStdString());
+        const auto document = Document::parse(fixture.source, options);
+        CHECK(document.source == fixture.source);
+        REQUIRE(document.paragraphs.size() == fixture.breaks.size() + 1);
+        CHECK(document.paragraphs.front().text == QStringLiteral("A"));
+        CHECK(document.paragraphs.back().text == QStringLiteral("B"));
+        std::vector<Range> tokens;
+        for (const auto &token : document.tokens)
+            if (token.kind == Document::TokenKind::ParagraphBreak) tokens.push_back(token.source);
+        CHECK(tokens == fixture.breaks);
+        int start = 0;
+        for (std::size_t index = 0; index < fixture.breaks.size(); ++index) {
+            CHECK(document.paragraphs[index].breakSource == fixture.breaks[index]);
+            CHECK(document.paragraphs[index].source == Range{start, fixture.breaks[index].start - start});
+            if (index > 0) CHECK(document.paragraphs[index].text.isEmpty());
+            start = fixture.breaks[index].end();
+        }
+        CHECK(document.paragraphs.back().source == Range{start, 1});
+        checkProvenance(document);
+    }
+}
+
 TEST_CASE("Parser limits fail explicitly without truncating saved text", "[textdocument]") {
     auto options = mtextOptions();
     options.maxSourceUnits = 2;

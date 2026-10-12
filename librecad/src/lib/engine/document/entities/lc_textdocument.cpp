@@ -110,9 +110,10 @@ public:
             const QChar ch = result.source.at(position);
             if (ch == '\r' || ch == '\n' || ch.unicode() == 0x2029 || ch.unicode() == 0x2028) {
                 ++position;
-                const bool crlf = ch == '\r' && position < end && result.source.at(position) == '\n';
-                if (crlf) ++position;
-                breakParagraph({start, position - start}, crlf ? '\n' : ch.unicode());
+                // Coalesce decoded CR/LF in breakParagraph, including physical
+                // CRLF. Pre-coalescing here would let its LF consume a separate
+                // preceding CR in a CRCRLF sequence.
+                breakParagraph({start, 1}, ch.unicode());
                 continue;
             }
             if (options.decodeCaretCodes && ch == '^' && position + 1 < end &&
