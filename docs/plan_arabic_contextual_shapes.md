@@ -652,7 +652,9 @@ Maintain the progress and validation records below as implementation proceeds:
 | 2026-10-11 | P2a.1 empty paragraph styles | Complete | `a477b68ef` — `Preserve effective styles on empty logical paragraphs` | Independent style/scope review; strict private build and isolated ON/OFF/ASan each pass 452,371 assertions / 24 cases; itemizer/handoff and CMake/qmake application builds pass | Consume it in recursive layout and validate empty-line/stack metrics; overall layout/entity gates remain pending |
 | 2026-10-11 | P0b transport proof | In progress | Uncommitted filter candidate; provisional codec is a separate service | Earlier STYLE binding failure repaired; new STYLE-unit and LTYPE-control prerequisites pass focused/direct native JSON checks; converted DXF still fails at DIMSTYLE color fields | Isolate/checkpoint prerequisites; codec/schema freeze and public activation require separate proof, not a self-round trip |
 | 2026-10-11 | P3b.1 native outline adapter | Complete | `1ed63892a` — `Add precision-bounded native text contours` | Both numeric regressions fail before correction (exit 42); isolated ON/ASan: 12,326 assertions / 8 cases; OFF: 11,460 / 7; enabled/disabled CMake applications and qmake application build pass; independent numeric review approves | Bounded native service only; complete-affine entity consumption, layout caches and release geometry gates remain pending |
-| 2026-10-11 | P5a.1 provisional profile codec | Validated | Candidate subject: `Add inert versioned text profile codec` | Isolated QtCore-only ON/OFF/ASan each pass 4,544 assertions / 12 cases; enabled/disabled CMake applications and qmake application pass; strict QStringBuilder failure corrected and independently reviewed | Checkpoint codec; owning bindings, STYLE/entity/filter integration, transport proof, schema freeze and activation remain pending |
+| 2026-10-11 | P5a.1 provisional profile codec | Complete | `ade6fee6f` — `Add inert versioned text profile codec` | Isolated QtCore-only ON/OFF/ASan each pass 4,544 assertions / 12 cases; enabled/disabled CMake applications and qmake application pass; strict QStringBuilder failure corrected and independently reviewed | Bounded inert codec only; owning bindings, STYLE/entity/filter integration, transport proof, schema freeze and activation remain pending |
+| 2026-10-11 | P3c.1 shared explicit layout | Validated | Candidate subject: `Add source-mapped recursive OpenType text layout` | Source-provenance regression fails before correction; isolated ON/ASan: 715,036 assertions / 16 cases; OFF: 26 / 1. Registered include failure corrected; enabled/disabled CMake applications and qmake application pass; independent source/registration review approves | Checkpoint bounded recursive layout; native entity adapters, caches, complete-segment fallback and independent application acceptance remain pending |
+| 2026-10-11 | P5a.2 owning profile bindings | In progress | Uncommitted binding candidate | Move and retained-buffer alias regressions reproduced and corrected; strict ON/OFF/ASan: 7,886 / 21. Independent review finds copy-assignment allocation failure can leave Replace without matching encoding | Reproduce and repair copy-assignment coherence, re-review, then isolate/register/checkpoint; transport/entity/style integration remains pending |
 | 2026-10-11 | P7 execution | Planned | `55cbfc54f` and `537839cfe` — plan-only workflow checkpoints | Draft baseline, creation checkpoint, acceptance map, deep-review cadence and CI history defined; prepublication findings retain provenance and require local-contract resolution before publication. Independent plan review and scoped whitespace checks pass; no publication or PR acceptance claimed | Complete the coherent P5 candidate, reconcile existing review findings, then execute P7a and keep the records below current |
 
 For every executed check, record its exact command and filters, exit status,
@@ -1153,6 +1155,49 @@ Independent codec/build-registration review passes. Owning snapshot repair,
 real entity/style integration and cross-format persistence acceptance remain
 unfinished; green codec checks do not establish those contracts.
 
+### Shared recursive layout evidence
+
+P3c.1 places source-mapped shaping clusters and graphemes through explicit
+paragraphs, whole-line bidi tab fields, recursive stacks and Exact/AtLeast line
+spacing. Paint-only spans do not break joining; glyph order is consumed once.
+Logical advance, profile extents and analytic transformed ink remain separate.
+It uses explicit resource resolution, no system-font substitution or GUI font
+database. Missing coverage retains the exact font's visible .notdef and source
+diagnostics; approved complete-segment fallback remains a separate required slice.
+No native entity adapter, persistent layout cache or automatic wrapping is added.
+
+Independent review reproduced a recursive provenance gap: two children could
+agree on an altered whole original while disagreeing with their root. The
+before-fix case exits 42 with 1 failed / 21 assertions
+(`/private/tmp/librecad-arabic-layout-provenance-before.log`). Every recursive
+block now compares original-source values against the document root; the
+paragraph-only API explicitly lacks that root and binds its children to their
+first original. Equal detached strings remain valid. Failure returns no partial
+successful result; earlier valid resolver callbacks may already have executed.
+Frozen source/header/test hashes match the independently approved candidate.
+
+Five staged service/test/build inputs at parent `ade6fee6f` were exported and
+compared with `/private/tmp/librecad-arabic-core-index.TOns5t`, excluding pending
+binding/entity/filter/prefix work. Initial registered ON/OFF/ASan builds each
+exit 2 because both new sources lack `qt_bidi.h`; private source compilation had
+not tested this registration. The scoped source include property now covers
+layout and its tests in the application and standalone target. Failed logs
+remain `/private/tmp/librecad-arabic-layout-{on,off,asan}-build.log`.
+
+On the codec evidence's toolchain/configurations, explicitly build
+`librecad_text_layout_tests` in each directory, plus `librecad` in ON/OFF, then
+invoke that directory's layout binary. Final ON and ASan/UBSan pass 715,036
+assertions / 16 cases; OFF without FreeType passes 26 / 1 (backend-unavailable
+contracts only, not enabled shaping). Full enabled/disabled CMake applications
+and the ordered qmake application pass. Processes 26453, 75246, 26698 and 6236
+terminate with exit 0. ASan uses `detect_leaks=0:halt_on_error=1` and UBSan
+`halt_on_error=1`; layout and its compiled local dependencies are instrumented,
+not external Qt/HarfBuzz/FreeType/Catch2. Final configure/build/test logs are
+`/private/tmp/librecad-arabic-layout-{on,off,asan}-final-{configure,build,tests}.log`;
+qmake logs are `/private/tmp/librecad-arabic-layout-qmake-{configure,build}.log`.
+Independent Arabic-reader/native-entity/recursive-layout output approval remains
+a release gate; these service checks do not establish it.
+
 ## Implementation milestones
 
 Milestones remain incomplete. Follow the commit/update workflow above and record
@@ -1194,6 +1239,7 @@ because they share a milestone label.
 | P2b | Shaping-run API, X9/isolate context and separate display levels | Focused bidi/Chinese tests plus matching Unicode conformance corpus |
 | P3a | HarfBuzz placements and source-cluster mapping | Pinned GIDs/advances/offsets, controls and marks; independent placement fixtures |
 | P3b | FreeType outlines, normalization and bounded caches | Contour/error/transform/empty-ink tests; cache invalidation and sanitizer checks |
+| P3c | Shared explicit paragraph/tab/stack layout and source ownership | Registered ON/OFF and sanitizer checks; shaping/source/metric/recursive budgets and failure atomicity; independent source review |
 | P4a | TEXT adapter and alignment/anchor integration | TEXT geometry/metrics/transform fixtures and unchanged legacy coverage |
 | P4b | MTEXT adapter, spacing, effective fonts and stacks | TEXT/MTEXT parity, whitespace/Tab regressions and formatting tests |
 | P5a | Versioned profile codec, overrides and style conversion | Shared-style isolation; source/metadata invariants; standalone DXF/DWG and cross-format proof |
@@ -1614,7 +1660,7 @@ publish a release or activate new defaults without the corresponding authority.
 | Before P7 ready-for-review handoff | Complete technical release checklist, final whole-diff independent review, no unresolved mandatory findings, current PR revision evidence and synchronized plan/PR; then complete P7 attestation |
 
 Build success is not test execution. The existing focused text, headless bidi,
-parser, profile codec, shaper, registry, native-outline and conformance targets are `EXCLUDE_FROM_ALL`;
+parser, profile codec, shared layout, shaper, registry, native-outline and conformance targets are `EXCLUDE_FROM_ALL`;
 explicitly build and invoke them. Ordinary CTest does not currently register
 those binaries, and registration of the broad application/integration suites
 is configurable. Inspect `ctest -N`
@@ -1631,10 +1677,11 @@ by this plan update.
 cmake --build /Users/dli/dev/LibreCAD/build-arabic-cmake --target \
   librecad_text_bidi_tests librecad_text_bidi_headless_tests \
   librecad_text_document_tests librecad_text_profile_tests librecad_text_shaper_tests librecad_text_font_registry_tests \
-  librecad_text_runs_tests librecad_text_runs_shaping_tests librecad_text_outline_tests
+  librecad_text_runs_tests librecad_text_runs_shaping_tests librecad_text_layout_tests librecad_text_outline_tests
 QT_QPA_PLATFORM=offscreen /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_bidi_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_bidi_headless_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_profile_tests
+/Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_layout_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_document_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_shaper_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_font_registry_tests

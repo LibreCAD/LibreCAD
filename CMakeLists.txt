@@ -939,6 +939,8 @@ set (SHARED_SOURCES
     librecad/src/lib/engine/document/entities/lc_textbidi.h
     librecad/src/lib/engine/document/entities/lc_textdocument.cpp
     librecad/src/lib/engine/document/entities/lc_textdocument.h
+    librecad/src/lib/engine/document/entities/lc_textlayout.cpp
+    librecad/src/lib/engine/document/entities/lc_textlayout.h
     librecad/src/lib/engine/document/entities/lc_textoutline.cpp
     librecad/src/lib/engine/document/entities/lc_textoutline.h
     librecad/src/lib/engine/document/entities/lc_textprofile.cpp
@@ -2236,6 +2238,8 @@ set (MUPARSER_SOURCES
 add_subdirectory(libraries/qtbidi)
 set_source_files_properties(
     librecad/src/lib/engine/document/entities/lc_textbidi.cpp
+    librecad/src/lib/engine/document/entities/lc_textlayout.cpp
+    librecad/src/lib/engine/document/entities/tests/lc_textlayout_tests.cpp
     librecad/src/lib/engine/document/entities/tests/lc_textbidi_tests.cpp PROPERTIES
     INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/libraries/qtbidi")
 
@@ -2862,6 +2866,25 @@ if (BUILD_TESTS)
     target_compile_definitions(librecad_text_runs_shaping_tests PRIVATE
         LC_OPENTYPE_TEST_FONT_PATH="${CMAKE_CURRENT_SOURCE_DIR}/librecad/support/fonts/opentype/amiri-1.003/Amiri-Regular.ttf")
     set_target_properties(librecad_text_runs_shaping_tests PROPERTIES
+        AUTOMOC OFF AUTOUIC OFF AUTORCC OFF)
+
+    add_executable(librecad_text_layout_tests EXCLUDE_FROM_ALL
+        librecad/src/lib/engine/document/entities/lc_textbidi.cpp
+        librecad/src/lib/engine/document/entities/lc_textdocument.cpp
+        librecad/src/lib/engine/document/entities/lc_textruns.cpp
+        librecad/src/lib/engine/document/entities/lc_textshaper.cpp
+        librecad/src/lib/engine/document/entities/lc_textlayout.cpp
+        librecad/src/lib/engine/document/fonts/lc_opentypefont.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_textlayout_tests.cpp)
+    target_include_directories(librecad_text_layout_tests PRIVATE
+        librecad/src/lib/engine/document/entities
+        librecad/src/lib/engine/document/fonts)
+    target_link_libraries(librecad_text_layout_tests PRIVATE
+        lcqtbidi LibreCAD::OpenType Catch2::Catch2WithMain Qt6::Core)
+    target_compile_features(librecad_text_layout_tests PRIVATE cxx_std_17)
+    target_compile_definitions(librecad_text_layout_tests PRIVATE
+        LC_OPENTYPE_TEST_FONT_PATH="${CMAKE_CURRENT_SOURCE_DIR}/librecad/support/fonts/opentype/amiri-1.003/Amiri-Regular.ttf")
+    set_target_properties(librecad_text_layout_tests PROPERTIES
         AUTOMOC OFF AUTOUIC OFF AUTORCC OFF)
 
     # Native shaping and outline extraction must not require QGuiApplication,
