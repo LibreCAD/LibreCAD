@@ -38,6 +38,7 @@ void initial(State &state, Syntax syntax, const QString &input, const QString &f
     REQUIRE_FALSE(state.acceptLegacyText(input, finalText, syntax, true));
     CHECK(state.initialized());
     CHECK_FALSE(state.textEdited());
+    CHECK(state.compatibilityInput() == input);
     CHECK(state.compatibilityText() == finalText);
 }
 } // namespace
@@ -324,6 +325,80 @@ TEST_CASE("Unavailable transport profiles never masquerade as absent inherited m
     }
 }
 
+TEST_CASE("Compatibility-input edits cannot disappear behind identical final legacy text", "[text-source][state][headless][compatibility-input]") {
+    for (const auto syntax : {Syntax::Plain, Syntax::MText}) {
+        State state;
+        const auto input = imported(syntax);
+        const auto before = QStringLiteral("\\A1;legacy");
+        const auto after = QStringLiteral("\\A2;legacy");
+        REQUIRE_FALSE(state.initializeImport(input, before));
+        const auto original = state.imported();
+        REQUIRE_FALSE(state.editSource(input.source, after, input.convention));
+        CHECK(state.textEdited());
+        CHECK(state.origin() == State::SourceOrigin::Native);
+        CHECK(state.compatibilityInput() == after);
+        CHECK(state.compatibilityText() == QStringLiteral("legacy"));
+        CHECK(state.source() == input.source);
+        CHECK(state.imported() == original);
+        CHECK(original->compatibilityInput == before);
+        CHECK(state.profile().authority() == Authority::Untouched);
+        REQUIRE_FALSE(state.acceptLegacyText(state.compatibilityText(), state.compatibilityText(), syntax, true));
+        CHECK(state.compatibilityInput() == after);
+        CHECK(state.textEdited());
+        REQUIRE_FALSE(state.editSource(input.source, before, input.convention));
+        CHECK(state.compatibilityInput() == before);
+        CHECK_FALSE(state.textEdited());
+    }
+}
+
+TEST_CASE("Current compatibility input owns exact buffers independently of immutable import history", "[text-source][state][headless][compatibility-input][alias]") {
+    for (const auto syntax : {Syntax::Plain, Syntax::MText}) {
+        State state;
+        auto input = imported(syntax);
+        const auto before = QStringLiteral("\\A1;\\A2;A");
+        REQUIRE_FALSE(state.initializeImport(input, before));
+        CHECK(state.compatibilityInput() == before);
+        State copy = state;
+        QString buffer = QStringLiteral("\\A0;\\A2;B");
+        buffer += QChar(0); buffer += QLatin1Char('C');
+        const QString expected(buffer.constData(), buffer.size());
+        auto *borrowed = buffer.data();
+        REQUIRE_FALSE(state.editSource(input.source, QString::fromRawData(buffer.constData(), buffer.size()), input.convention));
+        borrowed[0] = QLatin1Char('X');
+        CHECK(state.compatibilityInput() == expected);
+        CHECK(state.compatibilityText() == expected.mid(4));
+        CHECK(state.compatibilityInput().at(state.compatibilityInput().size() - 2).unicode() == 0);
+        CHECK(copy.compatibilityInput() == before);
+        CHECK(state.imported() == copy.imported());
+        CHECK(state.imported()->compatibilityInput == before);
+        State moved(std::move(state));
+        CHECK(moved.compatibilityInput() == expected);
+        CHECK(state.compatibilityInput() == expected);
+        REQUIRE_FALSE(state.acceptLegacyText(state.compatibilityText(), state.compatibilityText(), syntax, true));
+        CHECK(state.compatibilityInput() == expected);
+        REQUIRE_FALSE(state.replaceProfile(profile()));
+        REQUIRE_FALSE(state.removeProfile());
+        state.resetProfile();
+        CHECK(state.compatibilityInput() == expected);
+        auto wrong = input.convention;
+        wrong.syntax = syntax == Syntax::Plain ? Syntax::MText : Syntax::Plain;
+        CHECK(state.editSource(input.source, before, wrong).code == State::ErrorCode::InvalidConvention);
+        CHECK(state.compatibilityInput() == expected);
+        REQUIRE_FALSE(state.editSource(input.source, before, input.convention));
+        CHECK(state.compatibilityInput() == before);
+        CHECK(moved.compatibilityInput() == expected);
+        CHECK_FALSE(state.textEdited());
+        CHECK(moved.textEdited());
+        State nullInput;
+        REQUIRE_FALSE(nullInput.initializeImport(input, QString{}));
+        CHECK(nullInput.compatibilityInput().isNull());
+        REQUIRE_FALSE(nullInput.editSource(input.source, QStringLiteral(""), input.convention));
+        CHECK_FALSE(nullInput.compatibilityInput().isNull());
+        CHECK(nullInput.textEdited());
+        CHECK(nullInput.imported()->compatibilityInput.isNull());
+    }
+}
+
 #ifndef LC_TEXT_STATE_ONLY
 namespace {
 RS_TextData textData(const QString &text) {
@@ -337,6 +412,7 @@ RS_MTextData mtextData(const QString &text) {
 template<typename Entity> void unchanged(Entity &entity) {
     const auto raw = entity.getCanonicalText();
     const auto compatibility = entity.getText();
+    const auto compatibilityInput = entity.getTextState().compatibilityInput();
     const auto provenance = entity.getTextState().imported();
     const auto profileRaw = entity.getTextProfile().imported().raw;
     const auto alignment = entity.getVAlign();
@@ -345,6 +421,7 @@ template<typename Entity> void unchanged(Entity &entity) {
         entity.update(); // Empty legacy style: no font resource or GUI dependency.
         CHECK(entity.getCanonicalText() == raw);
         CHECK(entity.getText() == compatibility);
+        CHECK(entity.getTextState().compatibilityInput() == compatibilityInput);
         CHECK(entity.getVAlign() == alignment);
         CHECK(entity.getTextState().imported() == provenance);
         CHECK(entity.getTextProfile().imported().raw == profileRaw);
@@ -354,10 +431,12 @@ template<typename Entity> void unchanged(Entity &entity) {
     const auto *typed = dynamic_cast<const Entity *>(clone.get());
     REQUIRE(typed);
     CHECK(typed->getCanonicalText() == raw);
+    CHECK(typed->getTextState().compatibilityInput() == compatibilityInput);
     CHECK(typed->getTextState().imported() == provenance);
     Entity reconstructed(nullptr, entity.getData());
     CHECK(reconstructed.getCanonicalText() == raw);
     CHECK(reconstructed.getText() == compatibility);
+    CHECK(reconstructed.getTextState().compatibilityInput() == compatibilityInput);
     CHECK(reconstructed.getVAlign() == alignment);
     CHECK(reconstructed.getTextState().imported() == provenance);
 }

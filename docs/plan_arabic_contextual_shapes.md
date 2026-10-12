@@ -39,7 +39,7 @@ positioned native CAD outlines from the shaped glyphs.
 | Review date | 2026-10-11 |
 | PR workflow refinement date | 2026-10-12; planning only, with P7a/P7b/P7c still Planned |
 | State | Implementation in progress; baseline/probe and headless services under validation; entity rendering and release gates pending |
-| Execution requirement | Intermediate scoped commits, explicit validation, plan updates, draft PR creation and revision-bound deep PR refinement are required; implementation is authorized by the active goal, with publication authority resolved at P7a |
+| Execution requirement | During authorized implementation, require intermediate scoped commits, explicit validation, plan updates, draft PR creation and revision-bound deep PR refinement; a plan-only update does not authorize implementation or publication |
 | Primary delivery | Opt-in, versioned OpenType font profile with correct ordinary Arabic shaping and common diacritics |
 | Compatibility rule | No automatic reinterpretation of existing LFF styles, text order or RTL markers |
 | Dependency decision | Recommend explicit HarfBuzz and FreeType core dependencies; confirm distribution support in P0 before committing to the backend |
@@ -698,6 +698,22 @@ branch or call feature-gated code release-complete.
    request alone did not authorize publication; resolve publication authority
    from the active implementation request before P7a. History rewriting and
    unrelated cleanup require separate authority.
+7. After the coherent P5 candidate passes its local gates, execute P7a as a
+   separate delivery checkpoint: create or reuse the matching draft PR, attach
+   it to this task and verify the published candidate against the PR creation
+   checkpoint below. Keep P7b/P7c incomplete; draft publication alone does not
+   complete delivery.
+8. Execute P7b as a separate deep-refinement step. Independently review the
+   entire PR diff and its acceptance contracts, reproduce actionable defects,
+   and make scoped corrective commits with regressions and affected-consumer
+   validation. Update this plan, the finding ledger and PR description after
+   every round; obtain independent verification and repeat until the refinement
+   checkpoint passes. P6 validation may proceed alongside this work, but pending
+   release gates keep the PR in draft.
+9. Execute P7c only after P6 and the refinement gates pass. Reconcile the exact
+   published revisions, current feedback and validation evidence, verify the
+   ready-for-review transition, and hand off the PR link and remaining maintainer
+   actions. This step does not authorize merge, release or default activation.
 
 If a required check cannot run, record why and keep that gate Pending or Blocked;
 do not substitute compilation for rendering, a self-round trip for independent
@@ -765,9 +781,16 @@ Maintain the progress and validation records below as implementation proceeds:
 | 2026-10-11 | P7 publication and refinement plan | Complete | `883aec664` — plan record in atomic geometry checkpoint | Independent workflow/native reviews approve the plan diff; transport review finds no mandatory gap. Plan readback, scoped whitespace check and shell-recipe syntax check pass; private finding counts and frozen source identities reconciled | Historical plan review only; later findings below still govern publication. P7a/P7b/P7c remain Planned. No push, PR creation, readiness or whole-feature acceptance claimed |
 | 2026-10-11 | P7 persistence review coverage refinement | Complete | `de670d842` — plan record in inert-model checkpoint | Independent final-diff review approves; scoped `git diff --check` exits 0; changed ledger table structure, frozen source/patch SHA256 and resolved atomic commit identity verified | Plan-workflow checkpoint only, not PR acceptance. Findings were Open at the original plan review; follow their current dispositions below. P7a/P7b/P7c remain Planned; no push or PR action performed |
 | 2026-10-12 | P5b.2 inert retained-model codec | Complete | `de670d842` — `Preserve inert embedded text model fields` | Root registered ON/OFF/ASan each pass model 102,708 / 13, raw capsule 21,535 / 5, profile 4,544 / 12 and binding 8,150 / 22; CMake ON/OFF applications, coherent sanitizer library and qmake application exit 0. Independent four-file and build-registration reviews approve; staged and committed file identities match the tested snapshot | Bounded inert-service checkpoint only; native capture/restoration, full wire transport, STYLE graph authority, schema freeze and activation remain required |
-| 2026-10-12 | P5a.3c STYLE profile authority and ownership | Validated | Candidate subject: `Own text STYLE provenance and profile authority` | Root coherent current-HEAD-plus-STYLE ON/OFF/ASan each pass STYLE 286 / 7, profile 4,544 / 12, binding 8,150 / 22, entity-state 322 / 7, model 102,708 / 13, raw capsule 21,535 / 5, bidi 541,335 / 70 and writer lifetime 290 / 4. CMake ON/OFF applications, coherent sanitizer library and qmake application exit 0. Independent source/test/registration review approves; five existing-API baseline checks fail before and pass after | Checkpoint the exact validated bounded STYLE/list/test/registration slice; native STYLE transport, activation and overall P5 acceptance remain pending |
-| 2026-10-12 | P7 PR creation and deep-refinement protocol | Validated | Uncommitted plan-only update | Independent workflow review; premature certification wording corrected; scoped whitespace, shell-recipe syntax and readback checks pass | Draft creation, clean-candidate rehearsal, durable review evidence, PR description, merge-base scope audit and revision-bound refinement closure defined. P7a/P7b/P7c remain Planned; no push, PR creation or readiness action performed |
-| 2026-10-12 | P4a/P4b canonical affine integration | In progress | Uncommitted seven-file native/entity/test candidate | Shared candidate matches the frozen private seven-file hashes below; root independently reviews the complete affine/entity/test delta and native builder path. Author re-review remains separate from independent acceptance | Validate a coherent current-HEAD-plus-STYLE-plus-native candidate in registered ON/OFF/sanitizer and full matching-header CMake/qmake builds; native transform/transport and overall P4 acceptance remain incomplete |
+| 2026-10-12 | P5a.3c STYLE profile authority and ownership | Complete | `c8b5a193c` — `Own text STYLE provenance and profile authority` | Root coherent current-HEAD-plus-STYLE ON/OFF/ASan each pass STYLE 286 / 7, profile 4,544 / 12, binding 8,150 / 22, entity-state 322 / 7, model 102,708 / 13, raw capsule 21,535 / 5, bidi 541,335 / 70 and writer lifetime 290 / 4. CMake ON/OFF applications, coherent sanitizer library and qmake application exit 0. Independent source/test/registration review approves; five existing-API baseline checks fail before and pass after. Staged and committed source/build inputs byte-match the tested candidate | Bounded STYLE/list authority checkpoint only; native STYLE transport, activation and overall P5 acceptance remain pending |
+| 2026-10-12 | P7 PR creation and deep-refinement protocol | Complete | `c8b5a193c` — plan record in STYLE checkpoint | Independent workflow review; premature certification wording corrected; scoped whitespace, shell-recipe syntax and readback checks pass | Plan-only protocol checkpoint: draft creation, clean-candidate rehearsal, durable review evidence, PR description, merge-base scope audit and revision-bound refinement closure defined. P7a/P7b/P7c remain Planned; no push, PR creation or readiness action performed |
+| 2026-10-12 | P4a/P4b canonical affine integration | In progress | Uncommitted guarded native/entity/test candidate plus owned build registrations; revised failure-test identity below | Guarded ON/OFF/ASan applications and 23 preceding executables finish; native 135,009 / 28 passes. OFF failure checks pass; ON exits 53 at the insufficient test ceiling, not a publication invariant failure. Original ASan standalone likewise has only four completed update contexts, without a retained terminal exit. Guarded qmake no-op completion check exits 0. Independently reviewed calibrated exhaustive test is integrated; its matching-header private ON matrix is running | Obtain complete calibrated fault results and coherent current-source acceptance before the bounded checkpoint. Native transport and overall P4 remain incomplete |
+| 2026-10-12 | P7 publication identity and PR reuse clarification | Complete | Included in this source-state checkpoint; historical plan-only update | Independent workflow review approves the exact source/target identity and authority clarifications; draft-reuse ambiguity corrected and independently re-reviewed. Readback, changed-table structure, scoped whitespace and all eight shell-recipe syntax checks pass | P7a/P7b/P7c remain Planned; no push, PR creation or readiness action performed. Execute publication only under an authorized implementation/PR request |
+| 2026-10-12 | P7 PR presentation and refinement sign-off | Complete | Included in this source-state checkpoint; historical plan-only update | Independent final workflow review approves explicit scoped dispositions, candidate-accurate presentation, stale-remote reconciliation and the distinct qualified Arabic-reading lane. Readback, all 22 table structures, balanced fences, all eight shell-recipe syntax checks and scoped whitespace checks pass | P7a/P7b/P7c remain Planned; implementation and PR acceptance are not claimed. No push, PR creation or readiness action performed |
+| 2026-10-12 | P7 execution linkage and draft-checkpoint consistency | Complete | Included in this source-state checkpoint; historical plan-only update | Independent review approves explicit P5-to-P7 delivery, adversarial public admission checks, separate P6 execution gates and the reused-PR draft-checkpoint correction. Readback, all 23 table structures, balanced fences, all eight shell-recipe syntax checks and scoped whitespace checks pass. Current unaccepted block integration and source-evidenced `P5-BLOCK-OWNER-001` are reconciled | P7a/P7b/P7c remain Planned; the ownership finding was Open at this plan-only checkpoint; its current disposition is recorded below. No implementation, push, PR creation or readiness action performed by this plan-only update |
+| 2026-10-12 | P7 explicit creation and refinement steps | Complete | Included in this source-state checkpoint; historical plan-only update | Main workflow separates P7a draft creation, P7b deep refinement and P7c verified handoff. Independent delta review approves; readback, all 23 table structures, balanced fences, all eight shell-recipe syntax checks and scoped whitespace checks pass | Existing gates, intermediate commits and per-round plan updates remain required; P7a/P7b/P7c remain Planned. No PR action authorized or performed by this update |
+| 2026-10-12 | P5a.3b current compatibility input — bounded checkpoint | Validated | This scoped source-state checkpoint; parent `c8b5a193c` | Existing-API before regression fails 4 / 18. Exact three-file candidate passes private normal/O1 ASan and fresh strict disabled-flag state-only suites, each 420 / 9. Coherent ON application plus nine suites and fresh dependency/runtime/source-manifest recheck pass: 680,333 assertions / 156 cases. Independent source/test and bounded-checkpoint review approve | Source ownership/no-op semantics are checkpointed without declaring P5 complete. Full coherent OFF/ASan and qmake applications remain under validation; retain their gates Pending. Current-source restoration, carriers and activation remain unfinished |
+| 2026-10-12 | P5 durable block owner admission | In progress | Two-file repair integrated into the uncommitted prepared-block slice | Actual coherent before selector fails 2 / 53 across 2 cases; repaired ON selector 53 / 2, full suite 336 / 22 and standalone fault matrix pass. Independent peer/root review approves; shared bytes match the frozen repair | Complete corrected OFF/ASan and combined current-state/native acceptance before checkpointing. Native explode/save/reopen and overall P5 remain unfinished |
+| 2026-10-12 | P5b.3 retained native bridge | In progress | Private reviewed candidate only; not integrated or committed | Final private normal and full-native-source ASan/UBSan harnesses each pass 540 / 9 after correcting the fixture's default-layer handle oracle. Independent complete native mapping review approves the bounded capture/restoration delta | Integrate only with actual filter consumption and coherent application/build-system validation; current source/profile/STYLE, owned carrier and observed target baseline remain separate unfinished gates |
 
 For every executed check, record its exact command and filters, exit status,
 result/test count, tested revision and candidate-tree state, build configuration,
@@ -1458,6 +1481,76 @@ carried forward explicitly, not reported as newly executed. Native adapter
 geometry, UI/undo, persistence and schema/activation acceptance remain separate
 gates.
 
+### Current compatibility input preservation
+
+P5a.3b retains the current generic-decoder input before one leading alignment
+strip, separately from final legacy text and immutable import history. A source
+edit changing `\A1;legacy` to `\A2;legacy` must not disappear merely because both
+produce the same final text. The owned getter supplies CurrentSource13 directly;
+copies, moved-from values, profile edits and constructor reconciliation retain
+the current buffer without replaying the historical baseline.
+
+The existing-API before regression in
+`/private/tmp/librecad-state-input.VFSRsx/before-run.log` exits 42: four failed
+assertions of 18 across one case, exercising both source syntaxes. Normal and
+O1 ASan/UBSan private state-only after runs each pass 420 assertions / 9 cases.
+The independent review approves this bounded repair; state-only checks exclude
+entity construction and cannot establish host acceptance.
+
+The coherent application candidate
+`/private/tmp/librecad-state-input-root.41laoi` contains committed `c8b5a193c`
+plus exactly these three source/test files, without pending native, block,
+filter or package edits:
+
+| File under `librecad/src/lib/engine/document/entities` | SHA256 |
+| --- | --- |
+| `lc_textentitystate.h` | `efb895448d72353d83c394a774007c10463e7e07bacc262a330c273d769a5222` |
+| `lc_textentitystate.cpp` | `36f939c5139a869739dbd6a024c101b8d621af5327b61023acd158bf41a849c1` |
+| `tests/rs_text_source_tests.cpp` | `2353a4078b8b892a627b5558dea12440dbbcef690f45a4b863bc1a6696ed9340` |
+
+The full-source manifest SHA256 is
+`bdb78b43f4eaf9fa02cd92f647dfe1f44aba888e4b2f031b2a23376381951f0b`.
+The enabled application and all nine requested binaries build; recorded ON
+runtime footers pass source 1,065 / 14, state 420 / 9, STYLE 286 / 7,
+profile 4,544 / 12, binding 8,150 / 22, inert model 102,708 / 13,
+raw metadata 21,535 / 5, bidi 541,335 / 70 and writer lifetime 290 / 4.
+Original session 91903 is no longer registered. Fresh dependency/runtime
+confirmation preserves the original logs and records build, all nine runtimes
+and manifest verification exiting 0 in `review-on-recheck-status.log`; the
+dependency build has no compilation/link step. Coherent OFF,
+whole-private-source O1 ASan/UBSan and a fresh qmake shadow
+application remain under validation. External dependencies are not instrumented;
+leaks are not claimed. This prerequisite does not restore a saved carrier,
+activate an imported profile or complete P5.
+
+The intermediate checkpoint is deliberately split at the source-state boundary,
+using the workflow's allowance for independently validated work with limitations
+recorded. The added buffer remains inside CPP-private immutable `Data`; the
+nonvirtual getter introduces no new public TEXT/MTEXT Data member, no backend
+conditional and no source-registration change. Independent review finds no
+concrete dependency/consumer issue with this bounded checkpoint. Full coherent
+OFF/ASan/qmake checks continue untouched and remain mandatory Pending gates;
+the commit is not all-mode application, transport or milestone acceptance.
+
+A fresh strict disabled-flag state-only build in
+`/private/tmp/librecad-state-input-off.VUgS9R` compiles all four project test/
+State/profile/binding translation units against the same frozen candidate,
+with `LC_TEXT_STATE_ONLY=1`, `LC_WITH_OPENTYPE=0`, `QT_USE_QSTRINGBUILDER`,
+`-O1 -g -Wall -Wextra -Werror`. Configure, build and runtime exit 0; the suite
+passes 420 assertions / 9 cases. This pure QtCore check executes no native
+backend and does not substitute for the ongoing disabled application lane.
+Commands configure that directory's `CMakeLists.txt` with
+`-DCMAKE_PREFIX_PATH=/opt/homebrew -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_FLAGS='-O1 -g' -DCMAKE_EXPORT_COMPILE_COMMANDS=ON`,
+then run `cmake --build .../build --target text_state_input_off_tests -j1` and
+`.../build/text_state_input_off_tests` unfiltered. Exact configure/build/runtime
+logs are `configure.log`, `build.log` and `run.log`; the driver CMake SHA256 is
+`41ecde01b70241f93f50f6750ce86f4ea08672822340617b42ada7249443e5df`,
+compile-command manifest SHA256 is
+`982b24ce265aa07f16c00de37bb443731af11bad50a190aea14bd943afc3eaf2`,
+and binary SHA256 is
+`5ad984fe947f18537a74101ea7fa13d476a0a0aef41737d4c711800467205c81`.
+Root byte-compares all three staged source/test candidates to the frozen inputs.
+
 ### Syntax aware source convention evidence
 
 `LC_TextSourceCodec` converts caret conventions using parser-owned raw ranges,
@@ -1744,6 +1837,58 @@ Characterize legacy noncanonical inputs without silently reassigning ambiguous
 metadata. A temporary explicit export failure preserves data but does not
 complete the required lossless output gates.
 
+### Embedded guard boundary diagnostics
+
+The private corrected-header guard boundary in
+`/private/tmp/librecad-canonical10858.dYDHPh` uses exact application headers from
+the committed model snapshot and explicitly rebuilt native consumers/factory
+objects. Earlier mixed-header crashes are ABI-confounded and invalid evidence,
+not attributed guard defects. Replacement-object diagnostics are not a coherent
+whole-tree build or full-source sanitizer acceptance.
+
+Before the latest capability guards, normal and ASan/UBSan diagnostic runs each
+execute 17,697 assertions / 10 cases with one failure: a live invisible modern
+embedded ATTRIB exported to DWG2013. The separate owner/deleted-owner/marker
+selector passes 716 assertions / 4 cases in both modes. Root reads these actual
+logs: `boundary-guard-{normal,asan}.log` and
+`boundary-guard-{normal,asan}-owner-marker.log`. These narrow passes do not prove
+lossless body transport or final guard integration.
+
+The private trace-only `boundary-trace-stage2.log` identifies ATTRIB encoding,
+not PLOTSETTINGS, as the first failure. Root checks the exact native source:
+`DRW_Attrib::encodeDwg` rejects modern embedded bodies/nonzero attribute versions
+for AC1024 through pre-AC1032, before body encoding. The PLOTSETTINGS warning is
+secondary to that failed transaction. Older output that emits only the outer
+fallback can pass entity counts while dropping the embedded body; such counts
+must not certify preservation. The full external-fixture failures also contain
+unrelated imported native-metadata obstacles and are not deletion-only proof.
+
+The frozen final private safety patch is
+`canonical-filter-guard-safety-final-10858.patch`, SHA256
+`d67ccb4931515753754cb09d24265c65efbc55339c616b9129a3997a27faf5c5`.
+It adds plain-ATTRIB positive sequence/owner cases and pre-open refusal for
+concretely unrepresentable modern-body/version states, preserving source, prior
+destination and retry behavior. Capability checks follow live-host/owner
+membership; proven deleted hosts are not emitted. Protected authored values
+remain distinct from absent authoring defaults. R12 admission also refuses
+current visibility inconsistent with retained ATTRIB bit 1, because this output
+does not emit the later common visibility field; it does not rewrite flags.
+
+Final matching-boundary normal and partial ASan/UBSan diagnostics both exit 0:
+21,667 assertions / 16 cases without the independent-output fixture hook, and
+21,679 / 16 with it. Actual logs are `boundary-final-{normal,asan}.log` and
+`boundary-final-{normal,asan}-no-oracle.log`. Independent ezdxf/raw-tag checks
+verify R12 visible/hidden flags and R14 common visibility; the preserved
+before-R12 selector fails 12 / 252 assertions. The full command/input/evidence
+record is `GUARD-BOUNDARY-EVIDENCE.md`, SHA256
+`862ac9e9bc14f4ad8c59c66f2c9593380cfa99bc1d8bbe40259a3e36ec6ad0a6`.
+Independent final whole-patch/source/test review finds no new proven defect.
+This is still the old matching-header object-override boundary with partial
+instrumentation and leak detection disabled, not coherent current-N4 root
+acceptance. These temporary refusals do not waive required full-model capture,
+carrier/restoration or lossless supported-format gates;
+`P5-DELETED-ATTRIB-001` stays incomplete.
+
 ### Native adapter and carrier decisions under validation
 
 The pen prerequisite is committed at `d006e580d`; its isolated checks above
@@ -1946,6 +2091,42 @@ System `shasum -a 256` independently confirms its 9,461-byte body:
 This proves retained DTO bits, not original-wire completeness, native ownership,
 transport interoperability, schema freeze or saved-profile activation.
 
+### Private retained native bridge validation
+
+The private candidate `/private/tmp/librecad-retained-native.u2kyfN` captures
+actual ATTRIB/ATTDEF plus actual embedded MTEXT into schema-2 native records,
+then restores owning inert native objects. It does not fabricate a missing body,
+source/profile/STYLE authority, canonical deformation or target-wire baseline.
+The native parser prerequisite retains nested rectangle/extents/spacing,
+presence/count/discriminant state and complete retained handles before
+publication; its original failing-before fixture reports seven failures of 16
+assertions. That proves a bounded parser-publication defect, not original-wire
+completeness or independent interoperability.
+
+Independent complete mapping review approves the native bridge, protected-state
+accessors and parser-only group-101 provenance prerequisite. The final test
+adds literal nested DWG coverage. Its initial normal and ASan runs each fail
+two of 540 assertions because the fixture's default layer-0 handle was expected
+as `0x10`, while the existing writer assigns `0x12`. Only that test expectation
+and its explanatory comment change; code/size checks and production writer
+bytes remain unchanged. Final normal and O1 ASan/UBSan runs each exit 0 with
+540 assertions / 9 cases, followed by no-op dependency checks. The sanitizer
+harness instruments all private native and bridge/model/raw/profile/test
+sources; external Qt/Catch are not instrumented and leak acceptance is not
+claimed.
+
+`INDEPENDENT_REVIEW.md`, `review-current-owned-sha256.txt` and
+`review-oracle-{before,after}-{normal,asan}.log` retain the exact scope and
+results. Final bridge CPP SHA256 is
+`e61c49cc37409e4b1824e6a1e069e4bc1f0245108c0e72d78ed7f269085a22f8`;
+test SHA256 is
+`30b66a2efd6277bdf52a78d3393b7b7a816a817cf7417a076d8a84bec7b16927`.
+This remains a private proposal: application source/test registration, coherent
+current-header consumers, actual filter capture/reconstruction, current-source
+restoration, live STYLE authority, carrier graph and observed target-wire
+reconciliation are not accepted by these pure native tests. No saved profile
+is activated and no P5 transport gate is closed.
+
 ### STYLE provenance and ownership validation
 
 The isolated source `/private/tmp/librecad-arabic-style-root.DMJiqo` is based on
@@ -2005,6 +2186,12 @@ compilation confirmed. Final logs use
 `/private/tmp/librecad-arabic-style-combined-qmake-{configure,all,build}.log`.
 The scoped checkpoint must match these tested source/build inputs exactly.
 
+Commit `c8b5a193c7b4659b88a9e28ecd0a052311e6ee0c` checkpoints only these five
+STYLE source/test files, the 19-line CMake target and the plan record. Root
+compares the staged and then committed six source/build inputs byte-for-byte
+with the tested snapshot; all match, and staged whitespace and shell-recipe
+syntax checks exit 0. No native, filter, deployment or unrelated code is included.
+
 Reproduce the final CMake build/run commands with the existing recorded caches
 as follows; fresh configurations must retain their explicit backend/sanitizer
 settings above. These targets are excluded from the default build and must run
@@ -2050,12 +2237,16 @@ STYLE transport, imported-profile activation or full P5 completion.
 
 ### Canonical affine native candidate integration
 
-On 2026-10-12, the shared working tree acquires the seven frozen native/entity/test
-files from `/private/tmp/librecad-arabic-transform-proposal.G8AYem/source`.
+On 2026-10-12, the initial shared native candidate acquires seven frozen
+native/entity/test files from
+`/private/tmp/librecad-arabic-transform-proposal.G8AYem/source`.
 Root independently reads the complete seven-file affine/entity/test delta,
-new native header and native builder/publication path, with no proven defect
-identified. The author's separate re-review is not independent verification.
-All seven shared files match the following frozen SHA256 values:
+new native header and native builder/publication path. That initial review finds
+no proven defect; the later allocation-boundary review below identifies a
+separate unguarded exception path. The author's separate re-review is not
+independent verification.
+The original unguarded candidate has the following historical SHA256 values;
+the current guarded candidate is recorded separately below:
 
 | File under `librecad/src/lib/engine/document/entities` | SHA256 |
 | --- | --- |
@@ -2072,12 +2263,295 @@ geometric generation, reconstructed anchors/metrics and final-cell draft
 thresholds. The sampled one-way transformed-segment comparisons in the new tests
 are reconstruction diagnostics, not a complete independent contour-error oracle.
 The earlier continuous-outline and pinned placement gates remain required.
-No native checkpoint or coherent current-tree runtime acceptance is claimed.
-After the STYLE checkpoint, form an isolated committed-HEAD-plus-seven-file
-candidate with owned build registration and rerun all affected consumers against
-matching public headers. Verify the full ON/OFF/sanitizer native suite and both
-application build systems before staging this slice. Durable P5 transport of the
-deformation and saved-profile activation remain separate mandatory gates.
+No native commit or full P4 acceptance is claimed. The isolated candidates below
+rebuild all affected consumers against matching public headers. Verify the full
+guarded ON/OFF/sanitizer native suite and both application build systems before
+staging this slice. Durable P5 transport of the deformation and saved-profile
+activation remain separate mandatory gates.
+
+The root isolated candidate is `/private/tmp/librecad-arabic-native-root.8AZPfW`:
+an archive of committed `c8b5a193c`, the seven files above, nine owned CMake
+registration lines and two owned qmake source/header lines. It excludes the
+uncommitted filter, native-format, deployment, CI and explode candidates.
+`CMakeLists.txt` SHA256 is
+`5fb75bf62c70333f9c675999fc3399233ee9dc7f9455c6b04292e89c69894a31`;
+`librecad/src/src.pro` SHA256 is
+`80e2d81f110475ea9db5a13d4ab5778e7e32ce9820fb120c95522880545e988d`.
+Native tests use the existing settings-isolated application microtarget,
+`LibreCAD::OpenType` and the pinned font definition. ON configuration and the
+fail-fast full `librecad` application/23-executable command exit 0. Native tests
+pass 135,009 assertions / 28 cases; all 22 other explicit executables pass,
+including the standalone binding-copy and geometry-replacement fault checks.
+The exact `run-on-validation.sh` recipe, `configure-on.log`, `build-on.log` and
+`on-<target>.log` records are in this directory. Root reads every runtime footer.
+This is ordinary native/regression acceptance for the frozen candidate, not
+proof for the still-open native allocation/status boundary or other build lanes.
+Fresh qmake shadow `/private/tmp/librecad-arabic-native-qmake.V9ZT58` configures
+with `LIBRECAD_ENABLE_OPENTYPE=true DISABLE_POSTSCRIPT=true`; qmake6 and
+`make qmake_all` exit 0. Logs are `qmake-configure.log` and `qmake-all.log` in
+the native source snapshot. The existing Qt SDK-version warning is retained;
+application `make -j2` exits 0, recorded in `qmake-build.log`. This is the
+unguarded baseline application only; package/SDK acceptance remains Pending.
+
+The native allocation review finds that an exception before geometry publication
+can escape `updateNative` while leaving the previous Native/no-error status in
+place after an accepted source edit. Failed attempted updates must retain the
+deliberate source edit and all last-good geometry/metrics/layout/selection, but
+report rebuild failure rather than current success. A rejected transform keeps
+unchanged Data and may retain its valid prior render status with an explicit
+operation failure or propagated exception. A postcommit observer exception is
+not a precommit failure and must not cause rollback or false unavailable status.
+The standalone allocator injector now reproduces `P4-NATIVE-ALLOC-001` against
+the exact matching root ON archive: exit 45, `stale_update_status`, unchanged
+TEXT update, single failure at allocation 1. The executable stops at that first
+failure; this before-run does not establish MTEXT or accepted-source-edit case
+coverage. Its test SHA256 is
+`554436f82664b76170ef9763920693fc05b411451e667dfee7668cecb6c3c0f0`;
+`/private/tmp/librecad-native-failure-proposal.1yuLyP` retains `before.log`,
+`before.exit`, compiler inputs, archive hashes and the link map. Root verifies
+the map/dependency inputs contain the matching native/TEXT/MTEXT archive
+members and no shared-worktree, Catch or object-override splice.
+The first strict compilation fails on 16 existing aggregate-initializer warnings
+in the matching metadata header; a second build preserves those warnings while
+demoting only that diagnostic and successfully links the standalone executable.
+The guard is now integrated before Request preparation in both native updates.
+On an ordinary update's prepublication exception it moves an allocation-free
+`PreparationFailure` status into place without changing accepted Data or
+last-good geometry, metrics, layout or selection. Transform preparation leaves
+unchanged Data and its prior valid primary status; the guard is disarmed after
+the geometry swap and before no-throw scalar/state publication and postcommit
+observers. Independent source/test/registration review approves the final
+delta after adding an explicit transform-primary-status assertion. The private
+full-native translation unit also compiles the no-throw assertions successfully;
+that compile-only result does not establish repaired runtime acceptance.
+NoUpdate's last-render cache does not establish current layout freshness for
+any consumer.
+
+The original frozen guarded root candidate is
+`/private/tmp/librecad-arabic-native-guarded.fQNeos`, an archive of `c8b5a193c`
+with only eight owned native/entity/test files, 29 CMake registration lines and
+two qmake source/header lines. The unrelated filter, native-format, explode,
+deployment and CI candidates remain excluded. This historical manifest predates
+the current test-only search-bound repair and the separate source-state slice:
+
+| File under `librecad/src/lib/engine/document/entities` | SHA256 |
+| --- | --- |
+| `lc_textnative.h` | `590ccbd80b1cf4e57f2cf2f00fc9c5e5f69581959488decbe59005a437bcf153` |
+| `lc_textnative.cpp` | `168fa36cfdbb4e66a9c4674b01fa6919ee33aa0c48ff5cee3144ba8632035fa2` |
+| `rs_text.h` | `b76b4de1e657f4bdfe6d932e545a95eb0c0ea329183d13bdd13794e561ec942c` |
+| `rs_text.cpp` | `8625792888e3504908b64a83e4ec57bf0a9e52c0bfbc85c949b530f2bfca2adb` |
+| `rs_mtext.h` | `042f54ac947ffaab3132f5f0a942c98ad84c3d33f98de256e358ee5eb681e728` |
+| `rs_mtext.cpp` | `730760dc7425c6331ea7eb76fea1dc78f6d688d90df2f0b703ccef0c3d4b27f7` |
+| `tests/lc_textnative_tests.cpp` | `8dd9ae4e7218fe0fbfc19112d4d0f851c11a23eaeb7f50e7fd083abdf08462ad` |
+| `tests/lc_textnative_failure_tests.cpp` | `8e3df7ad364abe30a80ac3f26024ad31555073abad11502e345cc051cf89d4bf` |
+
+Frozen `CMakeLists.txt` SHA256 is
+`a0148cce44eaecc84384a4059b29a2533202f24ef04ebe584548e89df9b26978`;
+qmake source SHA256 remains `80e2d81f110475ea9db5a13d4ab5778e7e32ce9820fb120c95522880545e988d`.
+The standalone failure target has its own main/settings isolation and ordinary
+C++ allocator override, with no Catch/listener linkage. It checks both entity
+types, seven update/edit/transform actions, single and persistent failures,
+exact last-good state, retry and postcommit observer exceptions; the OFF lane
+checks refusal and preserved state. Its warmed ordinary-C++ allocation boundary
+does not cover Qt-private allocations, aligned allocations or cold external
+resource loading, and its twin oracle is publication consistency, not typography.
+
+Fresh enabled and explicit disabled configure exit 0. The fail-fast
+`run-validation.sh` (SHA256
+`5a83054946c0bc74b4bdd21a6317c6087d09f68455d223d4b32d5509d84bab9b`)
+builds the application and explicitly runs all 24 executables. Commands are
+`bash run-validation.sh on 2`, `bash run-validation.sh off 1`, and
+`bash run-validation.sh asan 1`. All application builds and the 23 preceding
+executables finish; native suites pass 135,009 / 28 in ON and ASan. The complete
+OFF invocation exits 0, including six refusal/preservation checks for each
+entity type and zero executed native allocation paths. Original ON exits 53:
+four unchanged-update contexts finish, but the following edited-update context
+exhausts the 8,192 search ceiling. The original ASan log likewise records only
+four completed update contexts; its terminal exit is unavailable. Neither
+result establishes the full failure matrix. ASan/UBSan uses a fresh Debug build with O1/debug,
+address/undefined instrumentation and frame pointers; leak detection is disabled
+at runtime and external Qt/Catch/HarfBuzz/FreeType remain uninstrumented.
+Logs are `configure-<lane>.log`, `build-<lane>.log` and `<lane>-<target>.log`.
+The guarded qmake shadow is
+`/private/tmp/librecad-arabic-native-guarded-qmake.n1hu4r`; enabled qmake6 and
+`make qmake_all` exit 0. The application build log reaches final tools linkage;
+a fresh `make -j1` dependency/completion check exits 0, recorded separately in
+`qmake-resume-check.log`. This is the guarded source, not a substituted
+unguarded baseline build. Logs use the same
+`qmake-{configure,all,build}.log` names within the guarded source snapshot;
+the existing SDK warning remains and postprocessing is disabled, not package
+acceptance.
+
+The independently reviewed test-only repair measures the exact warmed operation
+and exercises every allocation index 1 through N plus a checked no-hit N+1
+terminal. A checked 1,000,000-allocation measurement ceiling, count drift, early
+terminal or exhausted search reports incomplete failure rather than a skipped
+pass. It preserves all 28 contexts, precision and existing assertions; case
+begin/end and progress diagnostics make partial coverage explicit. The shared
+calibrated proposal has SHA256
+`70650db41b40e2c6621adbb23a551ecc1370ffd51345d36354ad8a92dcf8fe0d`;
+the original frozen candidate remains unchanged. The private proposal at
+`/private/tmp/librecad-native-fault-bound.dv31tu` retains patch SHA256
+`4f538ae9a8941f8ad4cbdd820a7d0407eb7d81da0030a4779ef66c340e675a14`
+and exact matching-header link inputs. Calibration-only controls pass all 28
+N+1 terminals but explicitly do not execute injected indices. The full ON
+diagnostic is now running all 391,430 injected indices plus 28 terminals and
+two throwing-observer cases. Its completion, OFF/ASan corrected runs and a
+coherent candidate containing current source-state changes remain Pending;
+matching-old-header diagnostics are not registered current-candidate acceptance.
+
+### Combined state, native and block validation candidate
+
+The distinct source-only snapshot
+`/private/tmp/librecad-block-combined.DZBNvF/source` combines the repaired
+owning-INSERT transaction with the exact three current compatibility-input
+files and calibrated native fault test. No configured build directory, object,
+archive or executable was copied. Its full 5,836-source manifest SHA256 is
+`e38988a41e4b75ab0aafd2ea25f74514b65f5aa91d78d1f3208a13f8cb7076ec`;
+the explicit 23-input manifest is
+`b7df03bd43141ca4decaff4ab7780156be2037bcdee8640e262ace9cc1a8ec12`.
+Compared with the frozen repaired owner source, only the three State files and
+native failure-test translation unit differ.
+
+The test-only comparator now also checks current source nullness, prestrip and
+final compatibility buffers (value and nullness), source origin, initialized
+state and text-edit status. Existing convention, immutable imported-history
+and profile comparisons remain intact. Root and independent source review
+confirm these checks use const-reference/nonallocating reads and do not change
+fault actions or injection indices. The shared test now matches this candidate,
+SHA256 `7354a691acbb1e6e68a9dcc91cbfdb31257f2202b7cf941b3319a0dbcba1d91c`.
+Comparator-only patch SHA256 is
+`f3ad9396e971b88a8e9ba368978576674a4fe8642951bb4310edbdf8ea430a2c`;
+the four-path overlay is
+`b95b86c29274c8c5d293fb49b2873c7443ecf3033b112ec3a1880118594d4d50`.
+Both read-only apply checks pass. `COMBINED_INPUTS.md` records the input
+identities and boundaries.
+
+Root approves a fresh coherent ON application and registered-target build,
+followed by non-fault suites. Results remain Pending. Do not run a duplicate
+native exhaustive fault process while the original matching-header diagnostic
+is active. Earlier private owner, State-only and old-header native results
+remain evidence for their own inputs; none certifies this combined candidate.
+OFF/ASan acceptance and a scoped checkpoint remain required.
+
+### Private durable block repair validation
+
+The original prepared-block transaction is preserved privately in
+`/private/tmp/librecad-block-transaction.LFs6xj`. Its earlier repaired export against
+`883aec664`, `prepared-block-883aec664.patch`, has SHA256
+`4baa42f461164e5b0f42d6164297c3f39466747c7cc451e397d89cc84e1c34c8`;
+the 18-file `owned-sha256.txt` inventory has SHA256
+`ebacf8b3b0e9b9748fcffcab0341b31b30891c87b7ffbc08f191cf1bbe1c3ce2`.
+Independent bounded private source/test review approves explicit target-layer
+membership and visibility admission, and existing-redo-slot recovery that
+preserves undoability of an already-applied generic edit without allocating.
+This is not a claim of rollback for arbitrary legacy geometry changes.
+
+Before repair, the admission selector fails 3 of 12 assertions and the lifecycle
+injector reports unbalanced state at allocation 3; logs are
+`admission-before-fixed-fixture-run.log` and `lifecycle-before-run.log`.
+Repaired private ON and coherent OFF focused runs each pass 234 assertions /
+17 cases. Fault runs in both lanes cover 40 publication, 41 undo, 30 redo and
+69 redo-prune C++ allocation failures, plus 35 single and 35 persistent legacy
+cycle failures. Each accepted generic edit remains undoable; cycle depth,
+listener silence, border policy and bounds are checked. Observed publication
+and prune allocations before the postcommit observer are zero. The injector
+does not cover Qt-private `malloc`.
+
+Root reads the repaired patch/inventory identities and actual OFF logs;
+independent review also inspects the before/after evidence. OFF build and both
+executables exit 0; logs are `build-off-repaired.log`, `off-focused-run.log` and
+`off-failure-run.log`. Fresh full-source Debug/O1 ASan+UBSan configuration, build
+and both runtimes now exit 0. Root reads `asan-focused-baseline-run.log`
+(234 / 17) and `asan-failure-baseline-run.log` (38 publication, 39 undo, 28 redo,
+67 prune and 35 single / 35 persistent legacy failures; postcommit C++ allocation
+counts zero). Leak detection is disabled; external Qt, HarfBuzz and FreeType
+remain uninstrumented. These results cover only frozen private `4baa42f4`
+inputs. Root integration, matching current-candidate builds and native explode
+acceptance remain Pending.
+
+A later admission audit finds that the `4baa42f4` factory still accepts embedded
+NUL, controls and whitespace-only generated block names, while the existing
+filter serializes the name through a NUL-terminated UTF-8 string. The intended
+opaque ASCII consumer does not make that public factory domain safe. The final
+private repair restricts only generated names to 1–31 ASCII characters matching
+`[A-Za-z0-9_][A-Za-z0-9_-]*`. Ordinary user block naming is outside this
+restriction. Earlier ON/OFF results do not cover this later correction.
+
+The same admission boundary also accepts an ASCII casefolded INSERT reference
+that ordinary case-sensitive `RS_BlockList::find` cannot resolve. Exact literal
+references are required for generated output; ordinary lookup's NFC equivalence
+is not permission to publish a non-ASCII alias in that generated token domain.
+The private literal suite fails 17 of 49 assertions / 3 cases before repair:
+15 forbidden-name admissions and two nonliteral-reference admissions (ASCII
+case mismatch and a Kelvin-sign alias). Root reads the actual failing footer
+and compares the validator with ordinary block lookup. Track the separate
+lookup/preservation contract as `P5-BLOCK-REF-NAME-001`. The final private repair
+requires the INSERT's literal name to equal its matched definition's portable
+token, retaining conservative NFC/casefold collision checks and ordinary user
+block naming. The Kelvin alias violates this literal generated-name contract;
+it is not a second proof of ordinary lookup loss.
+
+Final `prepared-block-883aec664.patch` SHA256 is
+`3b8e8abad085ff7ae7d5628b699ac62a0e1027106f84c3d16f7522a30fc3ac36`;
+the 18-entry inventory SHA256 is
+`0c3f13a83e019be2649221101e1e786d546f6a839f59e3bc279e45fb40023a64`.
+The 17-path production/test delta applies against the recorded `883aec664`
+baseline; validation registration is separate. Final private ON/OFF/ASan
+builds, focused runs and allocator runs all exit 0. Each focused suite passes
+283 assertions / 20 cases; each failure suite covers 38 publication, 39 undo,
+28 redo, 67 prune and 35 single / 35 persistent legacy-cycle failures, with zero
+publication/prune postcommit C++ allocations before observers. Logs are
+`generated-name-{on,off,asan}-{build,focused-run,failure-run}.log`.
+Leak detection is disabled and external libraries remain uninstrumented.
+Independent final delta/manifest/evidence review approves the bounded repair.
+The 17-path core and bounded CMake/qmake registration are now integrated in the
+shared working tree against `c8b5a193c` plus the frozen eight-file guarded native
+candidate. The core bytes match the private source; the 19-path combined patch
+SHA256 is `0894d1825d33f9b56ea8f4c97ff6553b0cec43a5e8cf588911d1c15ddedcdedc`.
+This is uncommitted integration, not current-candidate acceptance. Coherent
+current-header builds, runtime verification and actual native
+explode/save/reopen remain Pending.
+
+Independent current-candidate review finds an additional mandatory admission
+gap, `P5-BLOCK-OWNER-001`. `validate` checks ownership of generated definitions
+but not their INSERT snapshots. An otherwise matching snapshot can use the
+public `setOwner(false)` API and still be admitted, contrary to the token's
+exclusive-ownership contract. Ordinary INSERT update and container destruction
+then omit deletion of those children; provenance clearing also skips them.
+Require owning INSERT snapshots and a rejection/lifetime regression, preserving
+graph/history/selection on refusal. Default builders produce owning snapshots;
+this is an exposed factory-domain defect, not a demonstrated failure of the
+pending native producer. The new frozen before fixture in
+`/private/tmp/librecad-block-owner.cRZV73` reproduces the defect: exit 42,
+53 assertions / 2 cases, with exactly two failed negative-admission checks;
+the owning lifecycle control passes. An external RAII owner keeps the borrowed
+child leak-safe even when the erroneous before token is admitted.
+
+The narrow repair requires `insert && insert->isOwner()` at the existing
+admission/revalidation boundary. Independent peer and root source/test reviews
+approve it. Header-consistent incremental ON build and all after runtimes exit
+0: owner selector 53 / 2, complete focused suite 336 / 22 and standalone fault
+matrix 38 publication, 39 undo, 28 redo, 67 prune and 35 single / 35 persistent
+legacy failures, with zero measured postcommit-before-observer C++ allocations.
+History, graph/selection pointers and destructor counts are checked; bounds
+comparisons use the existing approximate vector equality, not bitwise proof.
+Only the helper CPP differs between the before/after full-source inventories.
+
+Root integrates the two reviewed files byte-exactly. The narrow patch SHA256 is
+`1276254a164bb81e6432500715c154aaca0393740e68a8417b943a08998edcea`;
+helper SHA256 is
+`cbb0ac159fefa089096688484dbcaa4a8f63245244070fff8a58191d8fb56516`,
+focused test SHA256 is
+`4197aaa64d7a7706ecc45a0198297cc4672bce5392bd4e1a88d54fc4906bb51d`.
+The complete repaired 19-path block patch SHA256 is
+`ccfe5b99f70f660eda2e02a14d0c36fa87843999002af182dcda4c182f1af34d`;
+full 5,836-source inventory SHA256 is
+`64e0e0cea16094605bf5b40235b65eceaa775af04aa48a13801fdbfc83ac8643`.
+`OWNER_REPAIR_EVIDENCE.md` and `after-{build-on,snapshot-owner-run,focused-suite-run,failure-suite-run}.log`
+retain actual commands, results and scope. Corrected OFF/ASan and the combined
+current source-state/calibrated-native candidate remain Pending; no committed
+checkpoint, full native explode or P5 acceptance is claimed.
 
 ## Implementation milestones
 
@@ -2095,7 +2569,7 @@ enables it by default; activation requires the explicit rollout decision.
 | P4 TEXT and MTEXT adapters | Shared result consumption; backend-specific metrics/alignment; spacing and stack integration; native bounds and transform handling | TEXT/MTEXT parity; all alignment/anchor/width/rotation fixtures; legacy geometry unchanged; no double reversal/mirroring |
 | P5 Persistence and consumers | Finalize codecs/profile overrides; embedded attributes; dimension/tolerance/MLeader integration; editor preview; both explode paths | Raw source and metadata invariants; edited and no-op DXF/DWG round trips; native print/export/explode comparisons; editor/IME tests |
 | P6 Release validation | Full test matrix, installed packages, performance and Arabic visual review; validate the opt-in certified profile and document limits | All technical release checklist items pass on supported platforms with revision-bound evidence; P7 attestation is a separate later gate, and default activation still requires an explicit rollout decision |
-| P7 PR creation and deep refinement | P7a create/reuse and verify a draft PR; P7b independently review and deeply refine it through scoped corrective commits; P7c verify the final candidate and hand off ready for review | Published PR attached to the task, current PR revision evidence, completed refinement ledger and no unresolved mandatory findings; no automatic merge or release |
+| P7 PR creation and deep refinement | P7a create/reuse and verify a draft PR; P7b independently review and deeply refine it through scoped corrective commits; P7c verify the final candidate and hand off ready for review | Verified draft-creation checkpoint and task attachment; independently verified refinement closure; P6 technical gates complete; current PR revision evidence and ready-for-review handoff with no unresolved mandatory findings; no automatic merge or release |
 
 P0 must resolve the few policy choices that change implementation: dependency
 versions/linkage, final profile/schema fields, numeric design-height and line
@@ -2151,7 +2625,8 @@ Execute the PR work as three explicit steps:
    make scoped corrective commits, rerun affected validation and obtain
    independent verification. Update the plan, evidence and PR after every round;
    repeat until the mandatory findings and review gaps are resolved. This work
-   may run alongside P6 validation.
+   includes refining the title, description and reviewer walkthrough against
+   the actual candidate, and may run alongside P6 validation.
 3. **P7c Verify and hand off.** After P6 and the refinement exit criteria pass,
    perform the final whole-diff review, reconcile current feedback and CI against
    the exact published revisions, and verify the ready-for-review state before
@@ -2186,10 +2661,11 @@ count, erase failed validation history or turn an unverified fix into a pass.
 | --- | --- |
 | Phase states | P7a Planned; P7b Planned; P7c Planned |
 | PR URL and published state | Not created |
-| Verified destination | Repository, remote, source branch and target base to be confirmed at P7a |
+| Verified destination | Source repository/remote/branch and target repository/base branch to be confirmed separately at P7a, including fork relationships |
 | Frozen candidate | Head/tree, base tip, merge-base and submodule revisions not yet recorded for publication |
 | Reproduction record | Not started; clean-candidate rehearsal and durable command/input/result manifest pending P7a |
 | Last reviewed candidate | None; reviewer coverage and refinement round pending P7b |
+| Review dispositions and presentation | Not started; explicit per-area results and title/description/walkthrough review pending P7b |
 | Feedback reconciliation | Not started; source comment/review references and a dated feedback snapshot pending P7b/P7c |
 | Remote operation reconciliation | No PR actions performed; record intended operation, expected repository/branch/head/base, outcome and verified remote state when executed |
 | Integration status | Not evaluated for publication; current base compatibility and mergeability pending |
@@ -2205,9 +2681,11 @@ given; ask only if publication authority or its scope is absent or unclear.
 A plan-only request does not authorize a push, PR creation or PR mutation;
 publication must remain within the implementation request's scope.
 
-Resolve the intended repository, base branch, remote and branch ownership with
-read-only checks; do not infer a destination from an unrelated remote or print
-credentials. Follow repository
+Resolve the source repository, push remote and owned source branch separately
+from the target repository and base branch, including any fork relationship.
+Verify that the published PR uses that exact source/target pair; matching branch
+names alone do not identify a PR. Use read-only checks and do not infer a
+destination from an unrelated remote or print credentials. Follow repository
 contribution instructions and any PR template. Use `codex/` for a newly created
 implementation branch unless the user specifies otherwise, preserving unrelated
 work and the intermediate commit history.
@@ -2250,7 +2728,7 @@ document, that another reviewer can use from the candidate checkout:
 
 | Record | Required contents |
 | --- | --- |
-| Candidate and scope | Repository, owned source branch, head/tree, target base tip, merge-base, prerequisite commits and submodule revisions; intended changed-file scope |
+| Candidate and scope | Source repository/owned branch and target repository/base branch, head/tree, target base tip, merge-base, prerequisite commits and submodule revisions; intended changed-file scope |
 | Build and runtime inputs | Toolchain, platform/architecture, Qt and dependency versions, feature flags, font/fixture hashes and settings-isolation policy |
 | Reproduction | Configure, explicit build and test commands, filters, required working directory, expected outputs and artifact-generation steps; fail on any unsuccessful command rather than reporting only the final command's status |
 | Results | Per-command exit status, executed assertion/case counts or equivalent totals, actual tested head/merge identity, sanitizer boundaries, failures/exclusions and durable logs/reports |
@@ -2293,10 +2771,17 @@ spikes. Verify that the branch includes the plan and required fixtures/licenses.
 Publish a committed candidate, not a tested working tree with omitted owned
 changes. Unrelated local files may remain untouched outside the scoped branch.
 Push only this owned branch, without force pushing, updating the base branch or
-publishing tags. Reuse an open PR only when its repository, source branch, target
-and scope match this work; preserve its unrelated metadata. Do not repurpose a
-closed, merged or unrelated PR. If push/creation returns an uncertain
-outcome, inspect the remote branch and matching source/target PR before retrying.
+publishing tags. Reuse an open PR only when its source repository/branch, target
+repository/base and scope match this work; preserve its unrelated metadata.
+Both new and reused PRs must be draft at the P7a checkpoint; P7c establishes
+readiness after the required evidence and refinement are verified. Inspect a
+reused PR's current draft/ready state as well as its head. If it is ready,
+return it to draft within the authorized workflow and verify that transition
+before completing P7a or publishing corrective changes.
+If that transition needs maintainer authority, record the action and keep the
+gate incomplete. Do not repurpose a closed, merged or unrelated PR.
+If push/creation returns an uncertain outcome, inspect the remote branch and
+matching source/target PR before retrying.
 After creating a PR, attach its URL to the current task using the app's
 artifact attachment tool; attach an existing PR when continuing its refinement.
 Verify push, PR creation and task attachment separately. If creation succeeds
@@ -2305,9 +2790,10 @@ do not create a duplicate PR. A rejected or non-fast-forward push requires
 reconciling the remote history and branch ownership, not a force push. Keep
 P7a incomplete until its publication and attachment checks actually pass.
 
-Create the PR as draft and record its URL/number, target repository/base branch,
-base-tip and merge-base revisions, head SHA and current checks. Verify the
-published head matches the intended committed candidate. Use the repository's
+Create a new PR as draft, or verify the matched reused PR is draft. Record its
+URL/number, source and target repositories/branches, base-tip and merge-base
+revisions, head SHA and current checks. Verify the published head matches the
+intended committed candidate. Use the repository's
 PR template when present and include the following information in its matching
 sections. Otherwise use this outline; do not copy the entire implementation
 plan into the PR body.
@@ -2339,6 +2825,14 @@ Use repository links and durable review artifacts, not workstation-only paths
 or logs containing credentials/private drawing data. Preserve applicable
 template fields and maintainer-authored text when updating the description.
 
+Choose a concise title describing the actual opt-in contextual-shaping change,
+not an unsupported claim of complete Arabic support. During P7b, review the
+title, description and walkthrough as deliverables: verify that commands and
+sample Unicode reproduce the stated behavior, links resolve to the recorded
+candidate, limitations remain prominent, and each acceptance claim has matching
+evidence. Keep implementation detail in the linked plan rather than expanding
+the PR body into a second, conflicting specification.
+
 Before relying on PR CI, map every release gate to an actual workflow/job or
 explicit manual lane, including trigger/path filters, draft/fork restrictions,
 test registration and dependency installation. At `644b146c5`, the tracked
@@ -2369,7 +2863,7 @@ Complete P7a only after all of the following are verified and recorded:
 - [ ] The clean-candidate rehearsal and durable reproduction record identify all required inputs and actual results; no acceptance claim depends on untracked files, mismatched application objects or workstation-only evidence.
 - [ ] Prepublication findings and validation history are carried into the review records; no known mandatory P0–P5 local-contract finding remains unresolved or fixed without verification.
 - [ ] The draft PR exists, is open, targets the intended base and publishes the intended head; its URL is attached to this task. Uncertain push/creation outcomes are reconciled before retrying.
-- [ ] The description links the committed plan, fixtures, reviewer walkthrough and revision-bound validation matrix, including known failures and unsupported cases.
+- [ ] The title accurately describes the delivered scope; the description links the committed plan, fixtures, reviewer walkthrough and revision-bound validation matrix, including known failures and unsupported cases.
 - [ ] CI triggers, test discovery, package lanes and draft/fork restrictions are audited; each missing or pending gate has a concrete next action.
 - [ ] The PR tracking record and progress ledger identify the published candidate and the next P6/P7b work. P7b/P7c and the overall P7 milestone remain incomplete.
 
@@ -2393,7 +2887,7 @@ review passes, parallel where useful, with these areas:
 | Compatibility and persistence | Unchanged legacy modes and shared-style isolation; profile upgrades and unknown metadata; complete retained-field registry and raw-versus-rebound handle authority; no-op/edited DXF/DWG and embedded ATTRIB precedence; consistent export admission/emission/handle planning; annotation/TABLE inheritance and MLeader cache; both explode paths and print/export parity |
 | Editing and user experience | Both native text dialogs and property panels; logical Unicode retained through IME preedit/commit, cursor/selection, clipboard, invisible-control edits and undo/redo; engine-rendered preview versus Qt editing font; explicit profile selection/conversion, undo and actionable resource errors; Chinese editing regressions |
 | Builds and distribution | CMake/qmake parity and explicit legacy-only builds; matching public headers across objects and archives; supported Qt/platform/architecture matrix; clean installed lookup without developer fonts/prefixes; dependency linkage, pinned font, notices/licenses and actual package contents |
-| Tests and PR quality | Independent placement/format oracles, not self-round trips alone; negative and boundary cases; actual nonzero test execution; source invariants; unexplained exclusions; prerequisite scope, documentation and evidence accuracy |
+| Tests and PR quality | Independent placement/format oracles, not self-round trips alone; negative and boundary cases; actual nonzero test execution; source invariants; unexplained exclusions; prerequisite scope; accurate title, description, reproducible walkthrough and evidence links |
 
 For each assigned area, identify the invariant being checked, trace its producers
 and consumers, inspect both successful and failure paths, and reproduce selected
@@ -2402,6 +2896,14 @@ outputs as well as production code. Record unexamined contracts as coverage
 gaps with a next action; a checklist tick or an author's explanation alone does
 not close them. Findings must identify an affected contract and reproducible
 failure or concrete source evidence, not speculative changes outside this scope.
+
+Challenge public admission boundaries with inputs that ordinary builders do not
+produce. For ownership-sensitive factories, vary public ownership flags, parent
+relationships and borrowed descendants; prove either safe ownership throughout
+update/undo/pruning/destruction or transactional rejection. Document which
+states are explicitly outside the contract rather than assuming constructor
+defaults establish every caller's preconditions. Include provenance and
+selection traversal when ownership changes what is visited.
 
 Use these cross-layer cases to challenge the implementation, not just inspect
 individual helpers:
@@ -2426,8 +2928,9 @@ individual helpers:
   range or budget errors without clamping or partial geometry.
 - Trace the same revision-bound TEXT/MTEXT cases through shared layout, native
   geometry and representative PDF/explode output. Record the exact artifacts
-  and cases approved by an Arabic reader; the standalone CoreText probe cannot
-  substitute for application acceptance.
+  and cases approved by a competent Arabic reader able to assess joining and
+  common-mark placement; the standalone CoreText probe cannot substitute for
+  application acceptance.
 - Exercise repeated updates, cloning, undo/redo, cache eviction, resource
   failure and destruction under sanitizers. Record instrumented sources and
   exclusions; a font/shaper-only run is not native-adapter lifecycle coverage.
@@ -2494,9 +2997,24 @@ or comment links. Every area in the table needs an explicit coverage record,
 including reviews with no findings; a quiet comment thread is not evidence of
 review. Keep private reviewer details out of public artifacts.
 
+Track Arabic reading and typographic acceptance as a distinct P6 review lane,
+recording the reviewer's relevant competence/role, independence from the
+implementation, exact corpus and candidate artifacts, findings and disposition.
+Engineering source review and automated placement checks do not by themselves
+satisfy this lane. If the qualified review is unavailable, keep that P6 gate
+Pending and identify the required reviewer action; do not infer approval or
+contact/assign an external reviewer without authority.
+
 Record coverage separately from findings so a no-finding review remains
 auditable. Authors may explain their implementation, but their own inspection
 does not satisfy independent review of that implementation or their fixes.
+
+End each area review with an explicit disposition: Pass within the recorded
+scope, Changes required, or Coverage incomplete. Record limitations and the next
+check alongside the result. No findings is meaningful only for the contracts
+actually examined; it is not approval of unreviewed areas or a different
+revision. The final whole-diff review must reconcile these area results, the
+acceptance map and the PR's user-facing claims before P7b can complete.
 
 | Review area | Reviewer and independence | Head, base tip and merge-base | Coverage and reproduced checks | Result or artifact reference |
 | --- | --- | --- | --- | --- |
@@ -2530,12 +3048,16 @@ candidate. Reconcile source thread state separately from finding state.
 | P5-EMBEDDED-DXF-001 | Independent Autodesk/ezdxf wire audit; marker and namespace finding above | Mandatory format/metadata authority; `writeEmbeddedMText`, `DRW_Attrib::parseCode` and ATTRIB/ATTDEF output | HEAD `1636de0ce` plus pending ordering/test candidate; no PR/base review claimed | Canonical group-101/body/outer-XDATA ordering, external fixture/reader verification, conservative legacy reading and lossless embedded carrier | Open | Earlier self-round-trip scope result is not independent wire acceptance; corrected candidate pending |
 | P4-OWNED-REPLACE-001 | Independent shared geometry-prerequisite source review | Mandatory selection preservation; `RS_EntityContainer::replaceOwnedEntities` | Originally reviewed source `16f62f6557febc04825d6cf5ddaa05bbae65a767fe7c9b25f9686421da93bfcd`; corrected source `119cf49991fd4013eac6ada6fb947d632298e9349e0a83a4dd303f2eeb7935f2` in `883aec664`; no PR review claimed | Traverse only owned retired descendants; borrowed surviving children retain selection; add regression and independent verification | Verified | Independent source/test/registration re-review and coherent registered ON/OFF/ASan pass; baseline exits 42 with 2 / 3 assertions failing. Full CMake ON/OFF applications, coherent sanitizer library and fresh qmake application pass; final whole-PR review remains required |
 | P4-DECORATION-001 | Independent native adapter precision review | Mandatory geometry/tolerance failure; `LC_TextNative::Builder::stroke` | Frozen uncommitted adapter source `ba7a8e09b25a5349d945e544e8a7acc75e4ccb4c243b1b177b454efd5068aeb9`; no PR review claimed | Replace fuzzy endpoint collapse with exact converted equality; prove representable tiny underline and stack-rule behavior without relaxing numeric checks | Fixed pending verification | Independent corrective source/test re-review approves. Private ON and owned-source O1 ASan/UBSan diagnostics pass 130,712 / 21; OFF diagnostic passes 137 / 21. Coherent registered acceptance and scoped checkpoint remain pending; partial instrumentation is not full sanitizer acceptance |
-| P4-AFFINE-001 | Independent inherited-transform audit and private matching-header reproducer | Mandatory canonical state/geometry failure; TEXT/MTEXT shear and absolute-inline-height scaling | Corrected native source `31c0399be027e3f54a43290727f7eab6e62ded6ac90bda1c44e93c358f98ef9a` and the seven-file manifest above; no PR review claimed | Durable canonical deformation, guarded single-operation virtual transforms, truthful metrics and source/clone/undo/transport reconstruction; preserve final-affine tolerance | In progress | Private baseline exits 42: 6,201 assertions / 2 cases, 7 failures. Canonical affine policy approved; frozen implementation integrated and root source/test-delta review finds no proven defect. Coherent current-candidate runtime/build acceptance and durable transport proof remain pending |
-| P5-BLOCK-UNDO-001 | Independent private durable-block transaction review | Mandatory undo/lifecycle failure; `finishLegacyCycle` and `RS_Document::endUndoCycle` | Private prepared-block patch `74194d6c4b55e583875bff8085c900e9755c9b3c38fa3aeb1aa91305ddf399c3`; no shared integration or PR review claimed | Recover history for an already-applied generic edit and balance cycle depth, listener silence and border policy when redo-tail preparation allocates unsuccessfully; prove persistent-failure/retry behavior without claiming rollback of legacy geometry | Open | Existing prepared publication/toggle/prune fault tests omit this generic boundary. Independent source review and author confirmation establish the gap; bounded private repair and independent verification pending |
-| P5-BLOCK-LAYER-001 | Independent private durable-block admission review | Mandatory pointer-domain failure; detached INSERT layer validation before bounds preparation | Same frozen private prepared-block patch `74194d6c4b55e583875bff8085c900e9755c9b3c38fa3aeb1aa91305ddf399c3`; no shared integration or PR review claimed | Check each non-null raw layer against the target graphic's layer-list membership before dereference, including null-parent roots; reject outsider/stale pointers without mutation | Open | Contextual `getLayerResolved` equality does not establish target membership for a detached root. Private admission repair/regressions and independent verification pending |
-| P5-BLOCK-VISIBLE-001 | Independent private durable-block appearance review | Mandatory appearance mismatch; definition lines versus INSERT snapshot flags | Same frozen private prepared-block patch `74194d6c4b55e583875bff8085c900e9755c9b3c38fa3aeb1aa91305ddf399c3`; no shared integration or PR review claimed | Require the accepted visible final-outline policy for definition and snapshot lines; prove ordinary INSERT update and reconstruction preserve appearance | Open | Coordinates, pen, layer and deleted state alone do not prove visibility equivalence. Private repair/regressions and independent verification pending; earlier focused ON/fault passes do not cover this defect |
+| P4-AFFINE-001 | Independent inherited-transform audit and private matching-header reproducer | Mandatory canonical state/geometry failure; TEXT/MTEXT shear and absolute-inline-height scaling | Frozen guarded native source `168fa36cfdbb4e66a9c4674b01fa6919ee33aa0c48ff5cee3144ba8632035fa2` and original guarded eight-file manifest above; no PR review claimed | Durable canonical deformation, guarded single-operation virtual transforms, truthful metrics and source/clone/undo/transport reconstruction; preserve final-affine tolerance | In progress | Private baseline exits 42: 6,201 assertions / 2 cases, 7 failures. Canonical affine implementation is integrated and independent source/test review finds no proven defect. Unguarded root ON application/23 executables pass, native 135,009 / 28. Guarded ON/OFF/ASan applications and 23 preceding executables finish; qmake completion check exits 0. Original ON fault run exhausts its test ceiling; ASan fault coverage is incomplete. Reviewed calibrated test is integrated and private ON exhaustive diagnostics are running; coherent current-candidate fault acceptance and durable transport remain pending |
+| P4-NATIVE-ALLOC-001 | Native author fault-test design and independent root exception-path review | Mandatory status/freshness failure; TEXT/MTEXT `updateNative` after accepted source edits | Before injector `554436f82664b76170ef9763920693fc05b411451e667dfee7668cecb6c3c0f0` against matching unguarded root; guard identities in original eight-file manifest; old-header calibrated proposal `70650db41b40e2c6621adbb23a551ecc1370ffd51345d36354ad8a92dcf8fe0d`; current combined test `7354a691acbb1e6e68a9dcc91cbfdb31257f2202b7cf941b3319a0dbcba1d91c`; no PR review claimed | Prove precommit allocation failure retains the accepted edit and last-good geometry/metrics/layout/selection but reports failed rebuild; distinguish unchanged-Data transform refusal from postcommit observer exceptions | Fixed pending verification | Matching root-archive before-run exits 45 on unchanged TEXT update allocation 1 with stale Native/no-error; this stops before later cases. Root verifies proof/input/link identities. Guard and isolated standalone target are integrated; independent final source/test/registration review approves after adding transform-primary-status preservation. Original OFF fault invocation passes; ON exits 53 at the too-small test ceiling and original ASan coverage is incomplete. Reviewed calibrated test is integrated; matching-header private ON matrix is running. No complete corrected matrix or coherent current-candidate acceptance claimed |
+| P5-BLOCK-UNDO-001 | Independent private durable-block transaction review | Mandatory undo/lifecycle failure; `finishLegacyCycle` and `RS_Document::endUndoCycle` | Original patch `74194d6c4b55e583875bff8085c900e9755c9b3c38fa3aeb1aa91305ddf399c3`; core `3b8e8abad085ff7ae7d5628b699ac62a0e1027106f84c3d16f7522a30fc3ac36`, now integrated as recorded above; no PR review claimed | Recover history for an already-applied generic edit and balance cycle depth, listener silence and border policy when redo-tail preparation allocates unsuccessfully; prove persistent-failure/retry behavior without claiming rollback of legacy geometry | Fixed pending verification | Before lifecycle injection 3 leaves state unbalanced. Independent bounded review approves existing-slot recovery and final delta/manifest. Final private ON/OFF/ASan focused 283 / 20 and failure matrix pass, including 35 single / 35 persistent legacy cases. Coherent current-HEAD/native root acceptance remains pending |
+| P5-BLOCK-LAYER-001 | Independent private durable-block admission review | Mandatory pointer-domain failure; detached INSERT layer validation before bounds preparation | Same original/repaired core identities and current integration as `P5-BLOCK-UNDO-001`; no PR review claimed | Check each non-null raw layer against the target graphic's layer-list membership before dereference, including null-parent roots; reject outsider/stale pointers without mutation | Fixed pending verification | Independent bounded review approves membership-before-dereference. Before admission fails; final private ON/OFF/ASan 283 / 20 and fault matrix pass, including detached outsider and dangling layer cases. Coherent current-HEAD/native root acceptance remains pending |
+| P5-BLOCK-VISIBLE-001 | Independent private durable-block appearance review | Mandatory appearance mismatch; definition lines versus INSERT snapshot flags | Same original/repaired core identities and current integration as `P5-BLOCK-UNDO-001`; no PR review claimed | Require the accepted visible final-outline policy for definition and snapshot lines; prove ordinary INSERT update and reconstruction preserve appearance | Fixed pending verification | Independent bounded review approves explicit visible-line admission. Before admission fails; final private ON/OFF/ASan 283 / 20 and fault matrix pass, rejecting hidden definition/snapshot lines and preserving ordinary INSERT update appearance. Coherent current-HEAD/native root acceptance remains pending |
+| P5-BLOCK-NAME-001 | Private author admission audit and independent root validator/export-path review | Mandatory portability/preservation failure; generated ordinary block names | Before private patch `4baa42f461164e5b0f42d6164297c3f39466747c7cc451e397d89cc84e1c34c8`; core `3b8e8abad085ff7ae7d5628b699ac62a0e1027106f84c3d16f7522a30fc3ac36`, now integrated as recorded above; no PR review claimed | Reject NUL/control/whitespace/nonportable names in the generated factory domain before publication, without changing ordinary user block naming; prove exact admitted names survive serialization | Fixed pending verification | Before literal suite fails 17 / 49 across three name/reference cases. Final helper admits only 1–31 ASCII portable tokens; ordinary user naming remains unchanged. Independent final delta/manifest/evidence review approves; private ON/OFF/ASan each pass 283 / 20 and full recorded fault matrix. Current-root and serialized-name/native-explode acceptance remain pending |
+| P5-BLOCK-REF-NAME-001 | Private author reference audit and independent root admission/ordinary-lookup review | Mandatory reconstruction/preservation failure; generated INSERT reference names | Before private patch `4baa42f461164e5b0f42d6164297c3f39466747c7cc451e397d89cc84e1c34c8`; core `3b8e8abad085ff7ae7d5628b699ac62a0e1027106f84c3d16f7522a30fc3ac36`, now integrated as recorded above; no PR review claimed | Require generated INSERT data.name to equal the matched definition's literal portable token, while retaining conservative collision checks and ordinary user naming behavior | Fixed pending verification | Before suite admits an ASCII case mismatch ordinary case-sensitive lookup cannot resolve; Kelvin alias separately violates literal generated-domain policy, not a second lookup-loss proof. Final exact-reference helper and manifest receive independent approval; private ON/OFF/ASan each pass 283 / 20 and fault matrix. Current-root acceptance and durable reconstruction remain pending |
+| P5-BLOCK-OWNER-001 | Independent current-candidate durable-block review and root ownership-path trace | P2; mandatory ownership/lifecycle failure; `LC_PreparedBlockEntityChange::Impl::validate` INSERT admission | Before combined patch `0894d1825d33f9b56ea8f4c97ff6553b0cec43a5e8cf588911d1c15ddedcdedc`; repaired two-file patch `1276254a164bb81e6432500715c154aaca0393740e68a8417b943a08998edcea`; no PR review claimed | Require owning generated INSERT snapshots; reject otherwise matching `setOwner(false)` inputs without graph/history/selection mutation, and add rejection/lifetime coverage with independent verification | Fixed pending verification | Actual coherent before selector exits 42 with 2 / 53 failures across 2 cases. Owning-INSERT guard and leak-safe fixtures receive independent peer/root review and are integrated byte-exactly. Private ON owner 53 / 2, full focused 336 / 22 and unchanged fault matrix pass. Corrected OFF/ASan, combined current source-state/native acceptance and scoped checkpoint remain pending |
 | P5-MODEL-FIELDS-001 | Retained native-field audit against `DRW_Entity`, `DRW_Text` and the provisional carrier registry | Mandatory preservation gap; `LC_EmbeddedTextModel` native field registry | Original schema-1 source `b4ea18a7e1f57c19da6ef0c931f97256cd52e58be5a769fe5cd4172130f0c4d6`; corrected schema-2 source `00b3883c866d0fd96023ef71e7e1663ee050e4c8dfd580dfc6acb0d8d1b25422` in `de670d842`; no PR review claimed | Complete the reviewed retained-field manifest/registry for wide handles, owner/link/presence/discriminants and embedded X-axis precedence; exact nondefault fixtures and coherent verification before bridge/transport acceptance | Verified | `de670d842`: independent four-file review and root ON/OFF/ASan each pass 102,708 / 13; CMake/qmake acceptance and committed identities recorded above. This fixes inert registry omissions only, not native capture, wire completeness, STYLE graph authority or activation; final whole-PR review remains required |
-| P5-DELETED-ATTRIB-001 | Independent canonical guard/emitter/handle-planner source review | Mandatory export-set mismatch; pre-open validation, `writeInsert` and `prepareDwgEntityHandleMap` | Private guard patch `8ebac9e3a78579495307b41261f9bfbb4d84a2c1a5b4b35491d3a3f3a772e39d`; no PR review claimed | Align live-host membership across admission, emission and DWG child-handle counts; deleted/invisible/restoration regressions, destination preservation and independent supported-format checks | Open | Private failing-before selector exits 42 with 190 assertions / 10 failures. Two-loop deletion filtering fixes the DXF2018 cases, but the selector still exits 42 with 242 assertions / 8 failures: DWG2000/2004/2013/2018 exports fail even with all hosts deleted. Attribute-bug attribution for those failures is unproven; owner-membership alignment and coherent independent-format acceptance remain pending. Guard held, no accepted correction |
+| P5-DELETED-ATTRIB-001 | Independent canonical guard/emitter/handle-planner source review | Mandatory export-set mismatch; pre-open validation, `writeInsert` and `prepareDwgEntityHandleMap` | Final private safety patch `d67ccb4931515753754cb09d24265c65efbc55339c616b9129a3997a27faf5c5`; matching-old-header evidence above, no PR review claimed | Align live-host membership across admission, emission and DWG child-handle counts; deleted/invisible/restoration regressions, destination preservation and independent supported-format checks | In progress | Historical full-fixture failures are not deletion-only proof. Final matching-boundary normal/partial-ASan diagnostics pass 21,667 / 16 without output hook and 21,679 / 16 with independent R12/R14 checks; independent whole-patch review approves bounded safety policy. Owner/deletion/capability/version/visibility before failures are retained. Current-N4 coherent root integration and full lossless carrier/independent supported-format acceptance remain pending; safe refusals do not complete this contract |
 
 This template is not a claim that no findings exist. Reconcile it with slice
 reviews and failed-check records before publication. Previously verified fixes
@@ -2564,6 +3086,14 @@ head/base and state in the tracking or round record. Verify the remote result
 separately from the local command outcome. If the result is uncertain, read back
 the actual state before retrying; do not duplicate an action or claim a remote
 transition from an attempted request.
+
+Immediately before a remote mutation, read the current head/base, relevant
+feedback and the content or state being changed. Compare them with the recorded
+expectation. If another contributor changed them, reconcile that change before
+proceeding; do not overwrite newly authored description text, resolve new
+feedback from an older snapshot, or publish a correction over unexamined remote
+commits. Prefer conditional updates where supported and verify the result by
+readback; a successful request alone does not exclude a concurrent change.
 
 Run each refinement round in this order:
 
@@ -2622,6 +3152,10 @@ Run each refinement round in this order:
    coverage, finding IDs/states, corrective commits, actual tested inputs,
    independent verification revision, published head, remaining gates and next
    action. Reconcile the plan, acceptance map and PR body against that record.
+   Recheck the title, description, walkthrough and evidence links after any
+   change to behavior, supported scope, validation or limitations; record the
+   presentation review result with the round, without treating it as a
+   substitute for technical acceptance.
    Explicitly mark invalidated evidence and reopen affected gates before the
    next round; do not carry an earlier review forward merely because its source
    thread is resolved.
@@ -2653,12 +3187,13 @@ Complete P7b only when the following review gates hold for the recorded
 candidate. P6 may still have outstanding platform or release checks; those keep
 P7c and the overall P7 milestone incomplete and the PR in draft.
 
-- [ ] Every review area and mandatory acceptance contract has independent coverage, including explicit no-finding results and the final whole-diff review after the last substantive change.
+- [ ] Every engineering review area and mandatory acceptance contract has independent source/test-coverage review, including explicit no-finding results and the final whole-diff review after the last substantive change. Outstanding P6 execution lanes remain explicitly Pending; this review does not substitute for their results or qualified Arabic acceptance.
 - [ ] All actionable feedback is reconciled with the finding ledger. Mandatory findings are independently Verified or Rejected with reviewed evidence; optional deferrals have authorized acceptance, a documented limitation and a follow-up reference.
 - [ ] Corrective commits include regression checks and affected-consumer validation; changes to algorithms, caches or geometry budgets also have the required performance and memory evidence. Unexplained failures or retries remain open gates.
 - [ ] The latest published head matches the reviewed candidate; review and validation records identify the actual head/base or synthetic merge tested, and any carried-forward evidence has a documented input comparison.
 - [ ] The plan, acceptance map, round history, finding ledger and PR description agree. Remaining P6 checks have explicit configurations, next actions and responsible roles or required maintainer actions; none is presented as passing.
 - [ ] Reviewers can reproduce the recorded checks from the candidate and declared inputs; setup discrepancies are resolved, and durable evidence does not depend solely on the author's temporary workspace.
+- [ ] Each review area has a passing scoped disposition with no unexplained coverage gap; the title, description, walkthrough and evidence links have been checked against the final candidate and do not overstate its support or validation.
 
 Record the P7b completion decision and candidate in the progress ledger and PR
 tracking record. A later substantive change, base advance or newly accepted
@@ -2752,7 +3287,7 @@ publish a release or activate new defaults without the corresponding authority.
 | After bidi, codec, font or profile changes | Respectively matching Unicode conformance, cross-format/independent decoding, pinned placement/outline corpus, or saved-profile compatibility; reopen invalidated evidence |
 | Before P6 completion | All technical release checklist gates, full configured application suite, explicit opt-in tests, supported installed packages, native GUI/Arabic visual review and performance/memory results; no dependency on the later P7 attestation |
 | Before draft PR publication | Frozen committed candidate, coherent scoped diff, owned branch, clean-candidate rehearsal and durable reproduction record, passing local slice checks, workflow/test-discovery audit, accurate pending-gate matrix, no unrelated/private/generated content |
-| After each PR refinement round | Regression proof for fixes, affected suites/builds and performance budgets, CI with actual tested head/merge identity and retained failure history, refreshed finding/decision records and re-review of affected contracts |
+| After each PR refinement round | Regression proof for fixes, affected suites/builds and performance budgets, CI with actual tested head/merge identity and retained failure history, refreshed finding/decision records, explicit independent review dispositions and candidate-accurate PR presentation |
 | Before P7 ready-for-review handoff | Complete technical release checklist, final whole-diff independent review, no unresolved mandatory findings, current PR revision evidence and synchronized plan/PR; then complete P7 attestation |
 
 Build success is not test execution. The existing focused text, headless bidi,
@@ -2895,7 +3430,7 @@ native backend, malformed input/font cases and cache lifetime/invalidation tests
 - [ ] Standalone and embedded text preserve current edits, profiles and unrelated metadata through supported DXF/DWG paths.
 - [ ] Print/export/selection/clipping use the same native outlines, including MLeader text bounds.
 - [ ] CMake and qmake builds and final installed packages contain the dependencies, pinned font, manifest and notices.
-- [ ] Independent placements and Arabic-reader review approve representative words, marks and mixed-direction drawings.
+- [ ] Independent placements and the separately recorded qualified Arabic-reader lane approve representative words, marks and mixed-direction drawings, with reviewer competence/independence, exact candidate artifacts and disposition recorded.
 - [ ] Cold/warm layout benchmarks cover long paragraphs and repeated annotations; warm redraw does not reshape unchanged text, including MLeader.
 - [ ] Cache memory and outline complexity remain bounded; sanitizer and failure-path checks pass; no developer settings are touched.
 - [ ] Documented limits distinguish certified Arabic shaping from unsupported languages, advanced layout and third-party font substitution.
@@ -2907,7 +3442,7 @@ universal millisecond threshold from the standalone shaping experiment.
 
 ### PR handoff checklist
 
-- [ ] The owned branch contains only intended work and documented prerequisites; the PR was created as draft, is published and attached to the task, and now has the verified ready-for-review state required below.
+- [ ] The owned branch contains only intended work and documented prerequisites; the PR completed the verified P7a draft checkpoint, is published and attached to the task, and now has the verified ready-for-review state required below.
 - [ ] PR workflow coverage and actual test execution are verified; missing/skipped lanes are not counted as passing, and package evidence identifies the tested artifact and producer revision.
 - [ ] Independent whole-diff reviews and corrective re-reviews record reviewer/coverage provenance and exact base/head revisions; all actionable source feedback is reconciled to stable finding IDs, accepted mandatory findings are Verified, Rejected findings have reviewed rationale/evidence, and accepted lower-priority deferrals are documented.
 - [ ] The P0–P6 acceptance map has no unexplained implementation, test or review gaps; refinement rounds and the PR tracking record identify the final reviewed candidate and outstanding maintainer actions.

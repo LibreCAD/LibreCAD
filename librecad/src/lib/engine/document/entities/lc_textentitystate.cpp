@@ -16,6 +16,9 @@ QString owned(const QString &value) {
 QByteArray owned(const QByteArray &value) {
     return value.isNull() ? QByteArray{} : QByteArray(value.constData(), value.size());
 }
+bool sameBuffer(const QString &a, const QString &b) {
+    return a.isNull() == b.isNull() && a == b;
+}
 bool valid(const State::Convention &convention) {
     return convention.syntax == State::Syntax::Plain || convention.syntax == State::Syntax::MText;
 }
@@ -60,6 +63,7 @@ struct LC_TextEntityState::Data {
     QString source;
     Convention convention;
     SourceOrigin origin = SourceOrigin::Native;
+    QString compatibilityInput;
     QString compatibilityText;
     bool initialized = false;
     bool nativeEdited = false;
@@ -82,6 +86,7 @@ bool LC_TextEntityState::initialized() const { return m_data->initialized; }
 const QString &LC_TextEntityState::source() const { return m_data->source; }
 const LC_TextEntityState::Convention &LC_TextEntityState::convention() const { return m_data->convention; }
 LC_TextEntityState::SourceOrigin LC_TextEntityState::origin() const { return m_data->origin; }
+const QString &LC_TextEntityState::compatibilityInput() const { return m_data->compatibilityInput; }
 const QString &LC_TextEntityState::compatibilityText() const { return m_data->compatibilityText; }
 std::shared_ptr<const LC_TextEntityState::Imported> LC_TextEntityState::imported() const { return m_data->imported; }
 const LC_TextProfileBinding &LC_TextEntityState::profile() const { return m_data->profile; }
@@ -95,6 +100,7 @@ bool LC_TextEntityState::textEdited() const {
     if (!m_data->imported) return m_data->nativeEdited;
     const auto &original = *m_data->imported;
     return m_data->source != original.source || !(m_data->convention == original.convention) ||
+        !sameBuffer(m_data->compatibilityInput, original.compatibilityInput) ||
         m_data->compatibilityText != original.compatibilityText;
 }
 bool LC_TextEntityState::styleEdited(const QString &currentStyle) const {
@@ -132,6 +138,7 @@ LC_TextEntityState::Error LC_TextEntityState::initializeImport(const Import &inp
         next->source = original->source;
         next->convention = original->convention;
         next->origin = original->origin;
+        next->compatibilityInput = original->compatibilityInput;
         next->compatibilityText = original->compatibilityText;
         next->initialized = true;
         next->pendingConstructor = true;
@@ -149,11 +156,13 @@ LC_TextEntityState::Error LC_TextEntityState::editSource(const QString &source, 
     if (!valid(inputConvention) || (initialized() && inputConvention.syntax != convention().syntax))
         return error(ErrorCode::InvalidConvention, "The edited source convention does not match the text host");
     const auto finalText = legacyText(compatibilityInput);
-    if (initialized() && source == m_data->source && finalText == m_data->compatibilityText && inputConvention == convention()) return {};
+    if (initialized() && source == m_data->source && sameBuffer(compatibilityInput, m_data->compatibilityInput) &&
+        finalText == m_data->compatibilityText && inputConvention == convention()) return {};
     auto next = std::make_shared<Data>(*m_data);
     next->source = owned(source);
     next->convention = inputConvention;
     next->origin = SourceOrigin::Native;
+    next->compatibilityInput = owned(compatibilityInput);
     next->compatibilityText = owned(finalText);
     next->initialized = true;
     next->nativeEdited = true;
@@ -182,6 +191,7 @@ LC_TextEntityState::Error LC_TextEntityState::acceptLegacyText(const QString &in
         auto next = std::make_shared<Data>(*m_data);
         next->source = owned(input);
         next->convention.syntax = syntax;
+        next->compatibilityInput = owned(input);
         next->compatibilityText = owned(finalText);
         next->initialized = true;
         m_data = std::move(next);

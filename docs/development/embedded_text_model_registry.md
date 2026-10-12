@@ -268,7 +268,7 @@ native field 106 is not automatically CurrentSource field 5.
 | 10 | U8 | Prepared current marker: None0, LegacyReversed1, LogicalRtl2 |
 | 11 | U8 | Current marker origin: None0, Entity1, AttributeOuter2 |
 | 12 | Utf16 | Original STYLE provenance; imported identity if actually present |
-| 13 | Utf16 | Prepared current compatibility input **before** one leading A-strip |
+| 13 | Utf16 | Current `State.compatibilityInput()` **before** one leading A-strip |
 | 14 | Utf16 | Current `State.compatibilityText()` / final legacy Data.text |
 | 15 | Bool | `State.textEdited()` at capture, not a later dirty-authority setter |
 | 16 | Record | Materialized current entity profile, including direction-only edits |
@@ -276,9 +276,10 @@ native field 106 is not automatically CurrentSource field 5.
 | 18 | Record | Actual current canonical local deformation N |
 
 Field 5 cannot use stale imported UTF8 after a source/convention edit, even if a
-legacy decoded string still looks equal. State exposes final compatibility text,
-not the current prestrip input after edits; field 13 requires explicit source
-codec preparation. Payload relation and current marker policy likewise require
+legacy decoded string still looks equal. Field 13 captures the owned current
+prestrip buffer, independently of imported history and final compatibility text;
+do not reconstruct it from field 14 or replay the imported prestrip baseline.
+Payload relation and current marker policy likewise require
 actual host/prepared authority, not blind reuse of historical marker metadata.
 Unchanged aliases may keep the original STYLE identity; real style edits win.
 

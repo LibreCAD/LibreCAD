@@ -98,6 +98,9 @@ public:
     const QString &source() const;
     const Convention &convention() const;
     SourceOrigin origin() const;
+    // Exact owned current generic-decoder output before one leading A-strip.
+    // Distinct from both final compatibilityText() and imported() history.
+    const QString &compatibilityInput() const;
     const QString &compatibilityText() const;
     std::shared_ptr<const Imported> imported() const;
     // Includes raw-only edits and convention changes, not merely decoded text.
