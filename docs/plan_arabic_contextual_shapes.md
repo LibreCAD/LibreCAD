@@ -651,8 +651,9 @@ Maintain the progress and validation records below as implementation proceeds:
 | 2026-10-11 | P2b.1 bounded projection | Complete | `95549793f` — `Bound explicit bidi scope lookup in Chinese projection` | Isolated focused application: 541,335 assertions / 70 cases; headless ON/OFF/ASan: 526,521 / 23; itemizer/handoff regressions and Unicode 17 conformance pass; CMake/qmake application builds pass | Bounded projection checkpoint only; empty-paragraph styles, shared layout and entity integration remain pending |
 | 2026-10-11 | P2a.1 empty paragraph styles | Complete | `a477b68ef` — `Preserve effective styles on empty logical paragraphs` | Independent style/scope review; strict private build and isolated ON/OFF/ASan each pass 452,371 assertions / 24 cases; itemizer/handoff and CMake/qmake application builds pass | Consume it in recursive layout and validate empty-line/stack metrics; overall layout/entity gates remain pending |
 | 2026-10-11 | P0b transport proof | In progress | Uncommitted filter candidate; provisional codec is a separate service | Earlier STYLE binding failure repaired; new STYLE-unit and LTYPE-control prerequisites pass focused/direct native JSON checks; converted DXF still fails at DIMSTYLE color fields | Isolate/checkpoint prerequisites; codec/schema freeze and public activation require separate proof, not a self-round trip |
-| 2026-10-11 | P3b.1 native outline adapter | Validated | Candidate subject: `Add precision-bounded native text contours` | Both numeric regressions fail before correction (exit 42); isolated ON/ASan: 12,326 assertions / 8 cases; OFF: 11,460 / 7; enabled/disabled CMake applications and qmake application build pass; independent numeric review approves | Checkpoint bounded native service; complete-affine entity consumption, layout caches and release geometry gates remain pending |
-| 2026-10-11 | P7 execution | Planned | `55cbfc54f`; plan-only follow-up subject: `Preserve prepublication findings through PR refinement` | Draft baseline, creation checkpoint, acceptance map, deep-review cadence and CI history defined; prepublication findings retain provenance and require local-contract resolution before publication. Independent plan review and scoped whitespace checks pass; no publication or PR acceptance claimed | Complete the coherent P5 candidate, reconcile existing review findings, then execute P7a and keep the records below current |
+| 2026-10-11 | P3b.1 native outline adapter | Complete | `1ed63892a` — `Add precision-bounded native text contours` | Both numeric regressions fail before correction (exit 42); isolated ON/ASan: 12,326 assertions / 8 cases; OFF: 11,460 / 7; enabled/disabled CMake applications and qmake application build pass; independent numeric review approves | Bounded native service only; complete-affine entity consumption, layout caches and release geometry gates remain pending |
+| 2026-10-11 | P5a.1 provisional profile codec | Validated | Candidate subject: `Add inert versioned text profile codec` | Isolated QtCore-only ON/OFF/ASan each pass 4,544 assertions / 12 cases; enabled/disabled CMake applications and qmake application pass; strict QStringBuilder failure corrected and independently reviewed | Checkpoint codec; owning bindings, STYLE/entity/filter integration, transport proof, schema freeze and activation remain pending |
+| 2026-10-11 | P7 execution | Planned | `55cbfc54f` and `537839cfe` — plan-only workflow checkpoints | Draft baseline, creation checkpoint, acceptance map, deep-review cadence and CI history defined; prepublication findings retain provenance and require local-contract resolution before publication. Independent plan review and scoped whitespace checks pass; no publication or PR acceptance claimed | Complete the coherent P5 candidate, reconcile existing review findings, then execute P7a and keep the records below current |
 
 For every executed check, record its exact command and filters, exit status,
 result/test count, tested revision and candidate-tree state, build configuration,
@@ -1110,6 +1111,47 @@ Reviewed source/test SHA-256 values are
 Earlier mixed-tree and intermediate passing results remain historical, not
 proof of the final candidate. Installed packages, actual entity geometry and
 all-platform/Arabic visual acceptance remain unfinished.
+
+### Provisional profile codec evidence
+
+P5a.1 adds a QtCore-only typed profile, strict isolated-namespace codec and
+explicit inheritance resolution. Unknown schema/backend/fields and invalid raw
+records remain inactive and retained; entity omission, explicit legacy opt-out,
+ByStyle and marker-1 conflict have distinct authority. This is an inert
+prerequisite, not a frozen public schema, file import activation or font/engine
+certification. Its low-level raw-retention API requires caller storage to remain
+alive and unmodified through aliases; entity bindings must own their snapshots.
+
+Strict compilation with the repository's `QT_USE_QSTRINGBUILDER` flag initially
+exits 1 with 13 diagnostics: deferred concatenation cannot implicitly enter
+QVariant or mixed initializer lists. Materializing QString values corrects the
+production encoder and test setup without changing expectations. The corrected
+strict build passes 4,544 assertions / 12 cases. Initial and corrected logs are
+`/private/tmp/librecad-arabic-profile-root.vKQ3JG/{build,build-retry,tests}.log`.
+
+At parent `537839cfe`, only the five codec/test/build inputs were staged and
+exported to `/private/tmp/librecad-arabic-core-index.TOns5t`; byte comparisons
+exclude pending layout, bindings, filter and prefix/package changes. Existing
+macOS arm64/Apple Clang 21/Qt 6.11.2/Catch2 3.16.1 builds were reconfigured with
+`BUILD_TESTS=ON`: ON, OFF with `CMAKE_DISABLE_FIND_PACKAGE_Freetype=ON`, and ON
+with cached address/undefined sanitizers plus frame pointers. Each explicitly
+builds and invokes `librecad_text_profile_tests`, passing 4,544 / 12 with exit 0
+and no excluded cases. The sanitizer target instruments codec/tests, not
+external Qt/Catch2; unsupported LeakSanitizer is disabled. Full incremental
+enabled/disabled CMake `librecad` builds and ordered qmake application build
+also exit 0. Final process handles are 98677, 86201, 12015 and 69561.
+
+Use `cmake --build` on each configured directory with
+`--target librecad_text_profile_tests` (plus `librecad` in ON/OFF), then run
+that directory's binary; the ASan invocation uses
+`ASAN_OPTIONS=detect_leaks=0`. The qmake invocation, from `build-qmake`, is
+`qmake6 ../librecad.pro LIBRECAD_ENABLE_OPENTYPE=true DISABLE_POSTSCRIPT=true`
+followed by `make -j4`. Full configure/build/test logs are
+`/private/tmp/librecad-arabic-profile-{on,off,asan}-{configure,build,tests}.log`
+and `/private/tmp/librecad-arabic-profile-qmake-{configure,build}.log`.
+Independent codec/build-registration review passes. Owning snapshot repair,
+real entity/style integration and cross-format persistence acceptance remain
+unfinished; green codec checks do not establish those contracts.
 
 ## Implementation milestones
 
@@ -1572,7 +1614,7 @@ publish a release or activate new defaults without the corresponding authority.
 | Before P7 ready-for-review handoff | Complete technical release checklist, final whole-diff independent review, no unresolved mandatory findings, current PR revision evidence and synchronized plan/PR; then complete P7 attestation |
 
 Build success is not test execution. The existing focused text, headless bidi,
-parser, shaper, registry, native-outline and conformance targets are `EXCLUDE_FROM_ALL`;
+parser, profile codec, shaper, registry, native-outline and conformance targets are `EXCLUDE_FROM_ALL`;
 explicitly build and invoke them. Ordinary CTest does not currently register
 those binaries, and registration of the broad application/integration suites
 is configurable. Inspect `ctest -N`
@@ -1588,10 +1630,11 @@ by this plan update.
 ```sh
 cmake --build /Users/dli/dev/LibreCAD/build-arabic-cmake --target \
   librecad_text_bidi_tests librecad_text_bidi_headless_tests \
-  librecad_text_document_tests librecad_text_shaper_tests librecad_text_font_registry_tests \
+  librecad_text_document_tests librecad_text_profile_tests librecad_text_shaper_tests librecad_text_font_registry_tests \
   librecad_text_runs_tests librecad_text_runs_shaping_tests librecad_text_outline_tests
 QT_QPA_PLATFORM=offscreen /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_bidi_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_bidi_headless_tests
+/Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_profile_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_document_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_shaper_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_font_registry_tests
