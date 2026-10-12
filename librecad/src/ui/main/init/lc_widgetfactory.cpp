@@ -381,7 +381,8 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* actionHandler){
     m_appWin->tabifyDockWidget(dock_quick_info, dock_property_sheet);
     m_appWin->tabifyDockWidget(dock_property_sheet, dock_ucss);
     m_appWin->tabifyDockWidget(dock_ucss, dock_views);
-    m_appWin->tabifyDockWidget(dock_views, dock_command);
+    m_appWin->addDockWidget(Qt::BottomDockWidgetArea, dock_command);
+    m_appWin->resizeDocks({dock_command}, {110}, Qt::Vertical);
 
     updateDockWidgetsTitleBarType(m_appWin, verticalTitle);
 

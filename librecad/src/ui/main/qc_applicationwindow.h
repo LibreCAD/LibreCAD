@@ -43,6 +43,7 @@ class RS_Graphic;
 class RS_GraphicView;
 class LC_PropertySheetWidget;
 class LC_ActionGroupManager;
+class LC_CadWorkspace;
 class LC_ActionGroup;
 class LC_ActionOptionsManager;
 class LC_AnglesBasisWidget;
@@ -110,6 +111,10 @@ class QC_ApplicationWindow : public LC_MDIApplicationWindow {
 
     void initSettings();
     void storeSettings() const;
+    QString cadWorkspacePreset() const;
+    void restoreCadWorkspacePreset(const QString& preset);
+    void activateCadWorkspace(const QString& preset, bool reset = false);
+    void addCadWorkspaceMenuActions(QMenu* menu) const;
 
     /** Catch hotkey for giving focus to command line. */
     void keyPressEvent(QKeyEvent* e) override;
@@ -417,6 +422,7 @@ protected:
 #endif
 
     std::unique_ptr<LC_ActionGroupManager> m_actionGroupManager;
+    LC_CadWorkspace* m_cadWorkspace{nullptr};
     std::unique_ptr<LC_CreatorInvoker> m_creatorInvoker;
     std::unique_ptr<LC_PluginInvoker> m_pluginInvoker;
     std::unique_ptr<LC_AppWindowDialogsInvoker> m_dlgHelpr;

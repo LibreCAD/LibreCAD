@@ -1982,6 +1982,8 @@ set (SHARED_SOURCES
      librecad/src/ui/main/persistence/lc_documentsstorage.h
      librecad/src/ui/main/qc_applicationwindow.cpp
      librecad/src/ui/main/qc_applicationwindow.h
+     librecad/src/ui/main/lc_cadworkspace.cpp
+     librecad/src/ui/main/lc_cadworkspace.h
     librecad/src/ui/main/lc_layouttabbar.cpp
     librecad/src/ui/main/lc_layouttabbar.h
      librecad/src/ui/main/qc_mdiwindow.cpp
@@ -3066,6 +3068,9 @@ if (BUILD_TESTS)
         librecad/src/ui/main/tests/lc_docklayout_tests.cpp)
     target_sources(librecad_dock_layout_tests PRIVATE ${LIBRECAD_RES})
     set_target_properties(librecad_dock_layout_tests PROPERTIES AUTORCC ON)
+    add_librecad_filter_micro_test(
+        librecad_property_sheet_tests
+        librecad/src/ui/dock_widgets/property_sheet/tests/lc_propertysheetlifetime_tests.cpp)
     add_librecad_filter_micro_test(
         librecad_translation_fallback_tests
         librecad/src/lib/engine/tests/rs_system_translation_tests.cpp)

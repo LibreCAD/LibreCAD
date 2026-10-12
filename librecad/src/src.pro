@@ -663,6 +663,7 @@ HEADERS += \
     ui/main/support/lc_appwindowdialogsinvoker.h \
     ui/main/lc_appwindowaware.h \
     ui/main/lc_defaultactioncontext.h \
+    ui/main/lc_cadworkspace.h \
     ui/main/persistence/lc_documentsstorage.h \
     lib/gui/render/widget/lc_graphicviewrenderer.cpp \
     lib/gui/render/widget/lc_printpreviewviewrenderer.cpp \
@@ -1093,6 +1094,7 @@ SOURCES += \
     ui/main/support/lc_appwindowdialogsinvoker.cpp \
     ui/main/lc_appwindowaware.cpp \
     ui/main/lc_defaultactioncontext.cpp \
+    ui/main/lc_cadworkspace.cpp \
     ui/main/persistence/lc_documentsstorage.cpp \
     lib/gui/render/lc_graphicviewportrenderer.cpp \
     lib/gui/render/widget/lc_graphicviewrenderer.cpp \

@@ -457,7 +457,7 @@ void QG_DlgOptionsGeneral::init(){
     LC_GROUP_END();
 
     LC_GROUP("InfoOverlayCursor"); {
-        bool checked = LC_GET_BOOL("Enabled", true);
+        bool checked = LC_GET_BOOL("Enabled", false);
         cbInfoOverlayEnable->setChecked(checked);
 
         checked = LC_GET_BOOL("ShowAbsolute", true);

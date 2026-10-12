@@ -123,4 +123,8 @@ Detailed local evidence is under [`build/phase0-evidence`](../../../build/phase0
 
 ## Next authorized checkpoint
 
+The subsequent CAD Familiar ribbon/preset implementation is recorded separately in [Phase 1 results](../phase1/00-results.md). This document retains the historical Phase 0 evidence.
+
+Subsequent user-requested correction: [bottom command bar and disabled cursor overlay](02-command-workspace-correction.md). The artifact and test results above describe the preserved Phase 0 baseline; the correction has its own updated development app and evidence.
+
 Stop here for user review. The next implementation stage is **Phase 1: top Home ribbon and quick access, CAD Familiar/Classic arrangements, visible Properties/Layers, bottom Command Line and reliable reset/persistence**, using the existing actions. Its detailed contract is in [the workspace specification](01-workspace-specification.md). DWG export, real layout scenes and PDF sheet/color fidelity remain explicit later work, with the observed failures retained as acceptance cases.

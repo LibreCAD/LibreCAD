@@ -1,6 +1,6 @@
 # Phase 1 implementation specification
 
-Status: design specification produced during Phase 0; no ribbon or preset has been implemented here. Read alongside [UI research](../01-ui-and-commands.md) and [the source inventory](source-inventory.json).
+Status: design specification produced during Phase 0. The implementation and its validation are recorded in [Phase 1 results](../phase1/00-results.md). Read alongside [UI research](../01-ui-and-commands.md) and [the source inventory](source-inventory.json).
 
 ## Default arrangement
 
@@ -30,6 +30,8 @@ Properties must show drawing/default context with nothing selected and selection
 Layers initially expose current/name/visibility/lock/color/linetype/lineweight/print according to existing semantics. Keep the current combined visibility/freeze control labeled accurately. Independent On and Freeze needs a later model change. Do not add separate switches that both mutate the same flag.
 
 Command Line retains the existing parser, aliases, history, completion and action prompts. Preserve the focus-command shortcut and add clearly documented discovery from the ribbon. AutoCAD command names require a reviewed contract before adding aliases; an alias alone does not establish prompt/options parity.
+
+User preference confirmed October 11, 2026: keep the information overlay beside the cursor disabled by default. Coordinates, action prompts and command entry remain available through their existing fixed controls. Users may explicitly re-enable the Info Cursor setting. The bottom command dock and this default are implemented as an initial correction before the ribbon/preset work, including a one-time update of existing startup settings.
 
 ## Appearance and persistence
 

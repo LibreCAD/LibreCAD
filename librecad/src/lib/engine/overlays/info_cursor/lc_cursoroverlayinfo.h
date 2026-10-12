@@ -129,7 +129,7 @@ protected:
 };
 
 struct LC_InfoCursorOverlayPrefs{
-    bool enabled = true;
+    bool enabled = false;
     bool showAbsolutePosition = false;
     bool showAbsolutePositionWCS = false;
     bool showRelativePositionDistAngle = false;

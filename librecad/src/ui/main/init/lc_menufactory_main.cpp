@@ -535,6 +535,7 @@ void LC_MenuFactoryMain::onWorkspaceMenuAboutToShow(const QList<QC_MDIWindow*>& 
     {
         const auto menuWorkspace = m_menusHolder->m_menuWorkspace;
         menuWorkspace->clear(); // this is a temporary menu; constructed on-demand
+        m_appWin->addCadWorkspaceMenuActions(menuWorkspace);
         m_allowTearOffMenus = LC_GET_ONE_BOOL("Appearance", "AllowMenusTearOff", true);
         QMenu* menu = nullptr;
 
