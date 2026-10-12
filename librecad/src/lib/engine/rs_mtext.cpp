@@ -225,6 +225,18 @@ void RS_MText::update() {
   // so we can move the whole line around easily:
   RS_EntityContainer *oneLine{new RS_EntityContainer(this)};
 
+  // The advance of the spaces in front of the first letter of the line: its
+  // indentation. Only a line that is laid out from the left has one. In a
+  // right-to-left line the first letter is at the right end.
+  const bool flowsFromLeft = data.drawingDirection != RS_MTextData::RightToLeft;
+  double leadingAdvance = 0.0;
+  auto closeLine = [&]() {
+    updateAddLine(oneLine, lineCounter++, flowsFromLeft ? leadingAdvance : 0.0);
+    oneLine = new RS_EntityContainer(this);
+    letterPos = RS_Vector(0.0, -9.0);
+    leadingAdvance = 0.0;
+  };
+
   // First every text line is created with
   //   alignment: top left
   //   angle: 0
@@ -252,13 +264,14 @@ void RS_MText::update() {
     switch (data.text.at(i).unicode()) {
     case 0x0A:
       // line feed:
-      updateAddLine(oneLine, lineCounter++);
-      oneLine = new RS_EntityContainer(this);
-      letterPos = RS_Vector(0.0, -9.0);
+      closeLine();
       break;
 
     case 0x20:
       // Space:
+      if (oneLine->count() == 0) {
+        leadingAdvance += space.x;
+      }
       letterPos += space;
       break;
 
@@ -271,9 +284,7 @@ void RS_MText::update() {
       std::uint32_t ch{data.text.toUcs4().at(i)};
       switch (ch) {
       case 'P':
-        updateAddLine(oneLine, lineCounter++);
-        oneLine = new RS_EntityContainer(this);
-        letterPos = RS_Vector(0.0, -9.0);
+        closeLine();
         handled = true;
         break;
 
@@ -338,7 +349,9 @@ void RS_MText::update() {
               createUpperLower(upperText, data, letterPos + RS_Vector{0., 9.});
           oneLine->addEntity(upper);
           upper->reparent(oneLine);
-          upperWidth = upper->getSize().x;
+          // from where the part starts, so that blanks in front of it widen
+          // the stack rather than push it into what follows
+          upperWidth = std::max(upper->getSize().x, upper->getUsedTextWidth());
         }
 
         double lowerWidth{0.0};
@@ -347,7 +360,7 @@ void RS_MText::update() {
                                              letterPos + RS_Vector{0.0, 4.0});
           oneLine->addEntity(lower);
           lower->reparent(oneLine);
-          lowerWidth = lower->getSize().x;
+          lowerWidth = std::max(lower->getSize().x, lower->getUsedTextWidth());
         }
 
         letterPos.x +=
@@ -380,7 +393,7 @@ void RS_MText::update() {
   usedTextHeight -=
           data.height * data.lineSpacingFactor * 5.0 / 3.0 - data.height;
 
-  updateAddLine(oneLine, lineCounter);
+  updateAddLine(oneLine, lineCounter, flowsFromLeft ? leadingAdvance : 0.0);
 
   forcedCalculateBorders();
   if (isEmpty() || getSize().x <= RS_TOLERANCE || !std::isfinite(getSize().x)) {
@@ -584,10 +597,13 @@ RS_MText *RS_MText::createUpperLower(QString text, const RS_MTextData &data,
  *
  * @param textLine The text line.
  * @param lineCounter Line number.
+ * @param leadingAdvance The advance of the spaces in front of the first letter
+ * of a line that is laid out from the left, in the units the line is built in.
  *
  * @return  distance over the text base-line
  */
-double RS_MText::updateAddLine(RS_EntityContainer *textLine, int lineCounter) {
+double RS_MText::updateAddLine(RS_EntityContainer *textLine, int lineCounter,
+                               double leadingAdvance) {
   constexpr double ls = 5.0 / 3.0;
 
   RS_DEBUG->print("RS_MText::updateAddLine: width: %f", textLine->getSize().x);
@@ -602,6 +618,9 @@ double RS_MText::updateAddLine(RS_EntityContainer *textLine, int lineCounter) {
 
   textLine->forcedCalculateBorders();
 
+  // Width the line uses, measured over its letters.
+  double lineWidth = textLine->getSize().x;
+
   // Horizontal Align:
   switch (data.halign) {
   case RS_MTextData::HACenter:
@@ -613,13 +632,20 @@ double RS_MText::updateAddLine(RS_EntityContainer *textLine, int lineCounter) {
     break;
 
   default:
-      textLine->move(RS_Vector{- textLine->getMin().x, 0.});
+      // The letters of an unindented line start at the insertion point,
+      // whatever the left bearing of the first one is. Leading spaces move
+      // them on from there, and count for the width.
+      if (textLine->count() > 0) {
+        const double indentation = std::abs(data.height / 9.0) * leadingAdvance;
+        textLine->move(RS_Vector{indentation - textLine->getMin().x, 0.});
+        lineWidth += indentation;
+      }
     break;
   }
 
   // Update actual text size (before rotating, after scaling!):
-  if (textLine->getSize().x > usedTextWidth) {
-    usedTextWidth = textLine->getSize().x;
+  if (lineWidth > usedTextWidth) {
+    usedTextWidth = lineWidth;
   }
 
   usedTextHeight += data.height * data.lineSpacingFactor * ls;

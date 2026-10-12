@@ -960,7 +960,7 @@ if(BUILD_TESTS)
     find_package(Qt5 REQUIRED COMPONENTS Test)
     set(DOCK_TEST_SOURCES ${SOURCES})
     list(REMOVE_ITEM DOCK_TEST_SOURCES librecad/src/main/main.cpp)
-    foreach(test IN ITEMS dock_layout static_analysis)
+    foreach(test IN ITEMS dock_layout static_analysis mtext_indentation)
         add_executable(librecad_${test}_tests
             ${UI_HEADERS} ${DOCK_TEST_SOURCES} ${QRC_FILES}
             librecad/src/main/tests/${test}_tests.cpp)
@@ -976,6 +976,18 @@ if(BUILD_TESTS)
         set_tests_properties(${test} PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)
     endforeach()
     target_sources(librecad_static_analysis_tests PRIVATE plugins/picfile/picfile.cpp)
+    # The text test needs a font. An application that is run in place looks for
+    # its resources next to itself, so this test gets a directory of its own:
+    # the other tests keep running without fonts.
+    set_target_properties(librecad_mtext_indentation_tests PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/mtext_indentation")
+    add_custom_command(TARGET librecad_mtext_indentation_tests POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E make_directory
+            "$<TARGET_FILE_DIR:librecad_mtext_indentation_tests>/resources/fonts"
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${CMAKE_CURRENT_SOURCE_DIR}/librecad/support/fonts/standard.lff"
+            "$<TARGET_FILE_DIR:librecad_mtext_indentation_tests>/resources/fonts"
+        VERBATIM)
 endif()
 find_package(Freetype REQUIRED)
 add_executable(ttf2lff
