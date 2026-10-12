@@ -92,7 +92,7 @@
     <name>DlgParabola</name>
     <message>
         <source>Parabola</source>
-        <translation type="vanished">帕拉博拉</translation>
+        <translation type="vanished">拋物線</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -131,11 +131,11 @@
     </message>
     <message>
         <source>If selected, spline points are used</source>
-        <translation type="vanished">如果被選取, 就使用示意图點</translation>
+        <translation type="vanished">若選取,則使用雲形線控制點</translation>
     </message>
     <message>
         <source>Spline Points</source>
-        <translation type="vanished">樣條曲線點</translation>
+        <translation type="vanished">雲形線點</translation>
     </message>
     <message>
         <source>If selected, control points are used</source>
@@ -147,7 +147,7 @@
     </message>
     <message>
         <source>Points on Spline</source>
-        <translation type="vanished">樣條曲線上的點</translation>
+        <translation type="vanished">雲形線上的點</translation>
     </message>
 </context>
 <context>
@@ -202,7 +202,7 @@
     </message>
     <message>
         <source>Specify size (width, height)</source>
-        <translation type="vanished">指定大小 (宽度, 高度)</translation>
+        <translation type="vanished">指定大小(寬度,高度)</translation>
     </message>
     <message>
         <source>Specify corners type
@@ -212,7 +212,7 @@
     </message>
     <message>
         <source>Specify corner bevel length (x,y)</source>
-        <translation type="vanished">指定相角貝爾長度 (x,y)</translation>
+        <translation type="vanished">指定轉角倒角長度(x,y)</translation>
     </message>
     <message>
         <source>Specify corner radius</source>
@@ -235,7 +235,7 @@
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="652"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation>由于是多線的一部分而未分出。 先放出多管線.</translation>
+        <translation>未被分割,因為它是聚合線的一部分.請先炸開聚合線.</translation>
     </message>
 </context>
 <context>
@@ -243,7 +243,7 @@
     <message>
         <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="88"/>
         <source>Block cannot contain an insert of itself.</source>
-        <translation type="unfinished">Block 無法自動插入 .</translation>
+        <translation type="unfinished">圖塊不能包含對其本身的插入.</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="95"/>
@@ -253,8 +253,7 @@
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="97"/>
-        <source>
-This block cannot be inserted.</source>
+        <source>This block cannot be inserted.</source>
         <translation type="unfinished">此區塊無法被插入 .</translation>
     </message>
     <message>
@@ -265,7 +264,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="278"/>
         <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="291"/>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">無效的運算式</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="373"/>
@@ -337,12 +336,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_block_explode.cpp" line="62"/>
         <source>Select to explode container</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">選取要炸開的容器</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_block_explode.cpp" line="63"/>
         <source>Select and explode</source>
-        <translation type="unfinished">選擇并爆炸</translation>
+        <translation type="unfinished">選取並炸開</translation>
     </message>
 </context>
 <context>
@@ -411,7 +410,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="304"/>
         <source>Snap to Adjacent Dim</source>
-        <translation>同步到相邻的 Dim</translation>
+        <translation>鎖定至相鄰標註</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="319"/>
@@ -421,7 +420,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="322"/>
         <source>Enter dimension line angle:</source>
-        <translation>輸入尺寸行角度 :</translation>
+        <translation>輸入標註線角度：</translation>
     </message>
 </context>
 <context>
@@ -429,17 +428,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="207"/>
         <source>Specify first point</source>
-        <translation>指定第一分</translation>
+        <translation>指定第一點</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="211"/>
         <source>Specify leader end point</source>
-        <translation>指定首端點</translation>
+        <translation>指定引線終點</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="211"/>
         <source>Change Ordinate</source>
-        <translation>變更整齊</translation>
+        <translation>修改座標標註</translation>
     </message>
 </context>
 <context>
@@ -447,7 +446,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinaterebase.cpp" line="42"/>
         <source>Select and rebase</source>
-        <translation>選擇和再基准</translation>
+        <translation>選取並重設基準點</translation>
     </message>
 </context>
 <context>
@@ -455,17 +454,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="164"/>
         <source>Specify dimension to pick the style</source>
-        <translation>指定取取樣式的尺寸</translation>
+        <translation>指定標註以套用其樣式</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="167"/>
         <source>Specify dimension to apply style</source>
-        <translation>指定應用樣式的大小</translation>
+        <translation>指定標註以套用樣式</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="167"/>
         <source>Do not apply style override</source>
-        <translation>不要用樣式覆蓋</translation>
+        <translation>不套用樣式覆蓋</translation>
     </message>
 </context>
 <context>
@@ -484,7 +483,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Counterclockwise</source>
-        <translation type="vanished">逆时针</translation>
+        <translation type="vanished">逆時針</translation>
     </message>
     <message>
         <source>Pick angle from the drawing</source>
@@ -500,7 +499,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Clockwise</source>
-        <translation type="vanished">有時</translation>
+        <translation type="vanished">順時針</translation>
     </message>
     <message>
         <source>Central angle of the arc</source>
@@ -512,7 +511,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Length of the arc</source>
-        <translation type="vanished">弧的長度</translation>
+        <translation type="vanished">弧長</translation>
     </message>
     <message>
         <source>Length:</source>
@@ -520,19 +519,19 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Pick radius from drawing</source>
-        <translation type="vanished">从圖取半徑</translation>
+        <translation type="vanished">從圖面中選取半徑</translation>
     </message>
     <message>
         <source>Pick height from drawing</source>
-        <translation type="vanished">从畫取高度</translation>
+        <translation type="vanished">從圖面中選取高度</translation>
     </message>
     <message>
         <source>Pick length from drawing</source>
-        <translation type="vanished">从畫取長度</translation>
+        <translation type="vanished">從圖面中選取長度</translation>
     </message>
     <message>
         <source>Pick angle from drawing</source>
-        <translation type="vanished">从畫取角度</translation>
+        <translation type="vanished">從圖面中選取角度</translation>
     </message>
 </context>
 <context>
