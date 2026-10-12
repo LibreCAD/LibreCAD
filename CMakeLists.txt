@@ -3239,6 +3239,28 @@ if (BUILD_TESTS)
         librecad_entity_pen_inheritance_tests
         librecad/src/lib/engine/document/entities/tests/rs_entity_pen_inheritance_tests.cpp)
 
+    add_librecad_filter_micro_test(
+        librecad_entity_container_replace_tests
+        librecad/src/lib/engine/document/entities/tests/rs_entitycontainer_replace_tests.cpp)
+
+    # This standalone main interposes C++ allocation only in its own process.
+    # Never link these overrides into a Catch2 or application executable.
+    add_executable(librecad_entity_container_replace_failure_tests EXCLUDE_FROM_ALL
+        librecad/src/main/lc_release_label.cpp
+        librecad/src/lib/engine/document/entities/tests/rs_entitycontainer_replace_failure_tests.cpp)
+    set_target_properties(librecad_entity_container_replace_failure_tests PROPERTIES
+        AUTOMOC OFF AUTOUIC OFF AUTORCC OFF)
+    target_include_directories(librecad_entity_container_replace_failure_tests PRIVATE
+        ${SHARED_INCLUDES})
+    target_link_libraries(librecad_entity_container_replace_failure_tests PRIVATE
+        librecad_lib Qt6::Core Qt6::Gui Qt6::Network Qt6::PrintSupport Qt6::Svg Qt6::Widgets)
+    target_compile_features(librecad_entity_container_replace_failure_tests PRIVATE cxx_std_17)
+    target_compile_definitions(librecad_entity_container_replace_failure_tests PRIVATE
+        BUILD_TESTS=1 DWGSUPPORT _USE_MATH_DEFINES)
+    if(MSVC)
+        target_compile_options(librecad_entity_container_replace_failure_tests PRIVATE /bigobj)
+    endif()
+
     # Keep the large corpus/diagnostic source isolated. It is an explicit
     # phase gate and should not lengthen the ordinary DWG fast lane.
     add_librecad_filter_micro_test(

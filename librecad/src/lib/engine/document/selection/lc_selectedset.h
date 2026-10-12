@@ -26,6 +26,7 @@
 
 #include "lc_dimstyleslistmodel.h"
 #include "lc_selectedsetlistener.h"
+#include <unordered_set>
 
 class RS_Entity;
 
@@ -70,6 +71,17 @@ public:
     bool hasSelection();
 
 private:
+    friend class RS_EntityContainer;
+    struct PreparedRemoval {
+        QList<RS_Entity*> remaining;
+        QList<RS_Entity*> removed;
+    };
+    // Model-thread transaction: no callbacks or external selection mutations
+    // may intervene between prepare and commit. Commit never notifies; caller
+    // notifies after its geometry/metrics are fully committed. Existing silent
+    // nesting is preserved by fireSelectionChanged() at that later boundary.
+    PreparedRemoval prepareRemoval(const std::unordered_set<RS_Entity*> &candidates) const;
+    bool commitRemoval(PreparedRemoval &&prepared) noexcept;
     QList<RS_Entity*> m_entitiesList;
     LC_ListenerList<LC_SelectedSetListener, LC_SelectedSet> m_listeners{this};
     int m_silentMode{0};

@@ -330,7 +330,10 @@ Use one fixed design-height per profile to map into the existing nominal
 9-unit CAD cell, then scale by entity height/9. For the Amiri profile, use the
 pinned face's U+0041 outline maximum Y of 647, giving an exact normalization
 factor of 9/647. This matches the converter's height convention, not the A's
-650-unit ink height: its exact outline bounds are (-14, -3, 618, 647).
+650-unit ink height. FreeType's integer outline bounding box is
+(-14, -3, 618, 647); the continuous quadratic contour reaches X=618.2.
+Use analytic contour extrema, not the rounded integer box, for independent
+ink-width fixtures; the fixed height normalization remains 9/647.
 The face ascender, descender and height are 1124, -634 and 1758 font units.
 Freeze these measured values and their distinct meanings in P0 fixtures.
 Do not normalize each glyph or word to its bounding box. This does not promise
@@ -711,6 +714,15 @@ reopened mandatory finding and material scope change, and before every handoff.
 This is an in-task requirement, not a scheduled automation. Include the update
 with the corresponding implementation commit whenever possible.
 
+Before each checkpoint, push or handoff, reconcile the current candidate with
+the last tested and reviewed inputs. Update affected contract states, findings,
+validation records and the next action together; do not append a passing result
+while leaving contradictory instructions or stale completion claims active.
+Once a PR exists, refresh its tracking record and description after verifying
+the published state. Preserve earlier evidence as history and explicitly mark
+invalidated coverage; a local commit, attempted push or planned review is not
+proof that the corresponding remote action succeeded.
+
 Use Planned, In progress, Validated, Blocked and Complete consistently.
 Validated means the recorded slice checks passed on the stated candidate;
 Complete additionally requires a scoped commit and all required acceptance
@@ -746,9 +758,10 @@ Maintain the progress and validation records below as implementation proceeds:
 | 2026-10-11 | P7 execution clarification | Complete | `9e50184ff` — workflow record in capsule checkpoint | Independent read-only review and scoped whitespace checks pass; explicit creation/refinement/handoff sequence, refinement completion checkpoint and cross-format lifetime finding recorded; Pending P6 keeps handoff incomplete and the PR draft | Plan workflow only; P7a/P7b/P7c remain Planned; resolve mandatory P5 findings before authorized publication; no PR action performed |
 | 2026-10-11 | P5b.1 raw embedded metadata capsule | Complete | `9e50184ff` — `Preserve exact embedded text metadata capsules` | Independent source review approves; isolated registered ON/OFF/ASan each pass 21,535 assertions / 5 cases; enabled/disabled CMake applications, coherent sanitizer application library and qmake application build exit 0 | Bounded in-memory retention checkpoint only; full-model wire transport, filter integration and activation remain pending |
 | 2026-10-11 | P5 filter writer lifetime | Complete | `37d2c614d` — `Clear export writer observers on every exit` | Coherent baseline observer regression fails 5 / 108 assertions; final registered ON/OFF/ASan each pass 290 / 4; enabled/disabled CMake applications, coherent sanitizer library and qmake application build exit 0; independent production/test/registration review approves; committed source/test identities match the validated candidate | Bounded writer ownership/version/retry checkpoint only; raw-aware STYLE/filter and embedded transport acceptance remain pending |
-| 2026-10-11 | P4 geometry prerequisites | In progress | Frozen container/selection candidate under review | Borrowed-descendant correction passes private 55 / 4; six injected C++ allocation failures preserve prior state. Independent re-review and coherent registered acceptance pending; pen prerequisite is recorded separately | Validate and checkpoint atomic replacement before adapter acceptance; private mixed-object checks are not coherent application proof |
+| 2026-10-11 | P4 atomic geometry prerequisite | Complete | Candidate subject: `Publish native child geometry atomically` | Coherent registered ON/OFF/ASan each pass 55 / 4, six injected C++ allocation failures, pen 39 / 4 and bidi 541,335 / 70; enabled/disabled applications, coherent sanitizer library and fresh qmake application build exit 0. Independent source/test/registration re-review approves | Bounded atomic replacement checkpoint only; native adapter, durable explode transaction and full P4/P5 remain incomplete |
 | 2026-10-11 | P7 review gate maintenance | Complete | `10858ab25` — `Refine Arabic PR review gates and validation recipe` | Independent complete-diff plan review, readback, shell-recipe syntax and scoped whitespace checks pass; lifetime commit identities verified; explicit-run recipe and final PR state corrected; transactional scene-integrity and matching-header review gates defined | Plan-only checkpoint; P7a/P7b/P7c remain Planned, with no push, PR creation or readiness claimed |
-| 2026-10-11 | P4 pen inheritance prerequisite | Validated | Candidate subject: `Resolve native text pens through live ancestors` | Exact-fixture baseline fails 30 / 39 assertions; coherent registered ON/OFF/ASan each pass 39 / 4 and focused text/bidi 541,335 / 70; CMake ON/OFF applications, coherent sanitizer library and qmake application build exit 0; independent source/test review approves | Checkpoint bounded live pen inheritance; native adapter, atomic replacement and full P4 remain incomplete |
+| 2026-10-11 | P4 pen inheritance prerequisite | Complete | `d006e580d` — `Resolve native text pens through live ancestors` | Exact-fixture baseline fails 30 / 39 assertions; coherent registered ON/OFF/ASan each pass 39 / 4 and focused text/bidi 541,335 / 70; CMake ON/OFF applications, coherent sanitizer library and qmake application build exit 0; independent source/test review approves | Bounded live pen inheritance checkpoint only; native adapter, atomic replacement and full P4 remain incomplete |
+| 2026-10-11 | P7 publication and refinement plan | Complete | Plan record in `Publish native child geometry atomically` checkpoint | Independent workflow/native reviews approve the plan diff; transport review finds no mandatory gap. Plan readback, scoped whitespace check and shell-recipe syntax check pass; private finding counts and frozen source identities reconciled | Plan workflow only; P7a/P7b/P7c remain Planned. No push, PR creation, readiness or whole-feature acceptance claimed |
 
 For every executed check, record its exact command and filters, exit status,
 result/test count, tested revision and candidate-tree state, build configuration,
@@ -1725,6 +1738,145 @@ Characterize legacy noncanonical inputs without silently reassigning ambiguous
 metadata. A temporary explicit export failure preserves data but does not
 complete the required lossless output gates.
 
+### Native adapter and carrier decisions under validation
+
+The pen prerequisite is committed at `d006e580d`; its isolated checks above
+cover only live inheritance. The atomic container/selection correction has
+independent source approval and private runtime/fault-injection evidence.
+Its coherent registered borrowed-child baseline exits 42: 3 assertions,
+1 passing and 2 failing, across 1 case. This baseline intentionally restores
+only the erroneous traversal into non-owning retired subcontainers, on the
+otherwise corrected candidate; it is not a claim that the API existed at HEAD.
+Registered ON acceptance exits 0 with 55 assertions / 4 cases, six injected
+C++ allocation failures and zero observed postcommit C++ allocations, pen
+39 / 4 and focused bidi 541,335 / 70. The complete ON application links.
+Registered OFF and coherent ASan/UBSan acceptance now pass the same counts;
+the complete OFF application and coherent sanitizer library link. The fresh
+qmake application build also exits 0. Independent source/test and CMake
+registration review approve the bounded checkpoint.
+
+The atomic API prepares replacement children/bounds and per-document selection
+removals before mutation, then swaps the prepared lists without allocation or
+callbacks, reparents new children, resets iteration caches and retires exactly
+the owned old subtree. Borrowed descendants survive and retain selection.
+Caller metrics/status are published before the explicit single-consumption
+notification; throwing or reentrant listeners are postcommit, not build failure.
+The model thread must not mutate selection between prepare and commit.
+The dedicated allocator executable is isolated from Catch2/application code;
+it interposes C++ `new`, not Qt-private `malloc`. Qt list allocation/detach sites
+are ordered before commit by source inspection, not claimed injected coverage.
+
+The frozen production SHA256 identities are container header
+`d72cc4d357c9758795ab7fcba6fcb32f58cfc6a3c49ebea75e053c4379cb1e0a`,
+container source `119cf49991fd4013eac6ada6fb947d632298e9349e0a83a4dd303f2eeb7935f2`,
+selection header `f0b46aba130d8df54d2c3d255306d3c993aba861dcf8b5466dd253f8a1cade01`
+and selection source `4c33cc1dd6717ff59580f04d551900f881099ef96085b473dd3f958ecf804b6d`.
+Normal and fault-test identities are respectively
+`c8df957522aabbc3c1fdc80779d2c289831dd7e5d00e224f281f5e7c305425c7` and
+`2b0b51fe8b2683a74fb7b0b0b83291136cc5d5280408ce048ae567d993aad97a`.
+Root logs use `/private/tmp/librecad-arabic-atomic-root-before-{configure,build,tests}.log`
+and `/private/tmp/librecad-arabic-atomic-root-accepted-{on,off,asan}-{configure,tests-build,tests,fault-tests,pen-tests,bidi-tests,application-build}.log`;
+fresh qmake logs use `root-accepted-qmake-{configure,application-build}.log`.
+The coherent source is committed `d006e580d` plus exactly these six files and
+their two test registrations, excluding pending STYLE, native adapters,
+filter/transport and packaging changes. Configure ON/OFF with `BUILD_TESTS=ON`
+and explicit `LIBRECAD_ENABLE_OPENTYPE`; OFF also sets
+`CMAKE_DISABLE_FIND_PACKAGE_Freetype=ON`. Build and invoke without filters
+`librecad_entity_container_replace_tests`,
+`librecad_entity_container_replace_failure_tests`,
+`librecad_entity_pen_inheritance_tests` and `librecad_text_bidi_tests`, then build
+`librecad` in ON/OFF or `librecad_lib` in ASan, all with `-j2`.
+The capsule toolchain applies. ASan/UBSan uses
+`-fsanitize=address,undefined -fno-omit-frame-pointer`, matching executable linker
+flags, `ASAN_OPTIONS=detect_leaks=0:halt_on_error=1` and
+`UBSAN_OPTIONS=halt_on_error=1`; Qt/font/Catch dependencies are not instrumented,
+and this is not leak acceptance. A new shadow build at
+`/private/tmp/librecad-arabic-atomic-qmake.UDlZpE` runs
+`qmake6 <snapshot>/librecad.pro LIBRECAD_ENABLE_OPENTYPE=true DISABLE_POSTSCRIPT=true`
+and `make -j2`, rebuilding matching-header consumers instead of relying on
+old qmake objects. SDK/Qt minimum-version linker warnings do not certify older
+macOS deployment; supported packages, Qt 6.4 and GUI acceptance remain pending.
+This remains a bounded prerequisite, not native adapter or full P4 acceptance.
+
+Native adapter review identified `P4-DECORATION-001`: fuzzy `RS_Vector` equality
+can discard a positive underline or stack separator even when it exceeds the
+requested document tolerance. Retain a failing-before fixture and use exact
+converted endpoint equality, with normal/sanitizer verification; do not relax
+precision bounds to make an unrepresentable fixture pass. A separate direct
+FreeType quadratic-extremum probe confirms the pinned A reaches X=618.2,
+distinguishing continuous ink from its integer bounding box. Durable adapter
+fixtures and coherent acceptance remain required.
+
+Native transform review also identified `P4-AFFINE-001`: inherited shear changes
+tessellated children without canonical Data/metric updates, and reparsing after
+uniform height mutation cancels scaling of absolute inline `\Hn;` content.
+The private matching-header failing-before test exits 42 with 6,201 assertions,
+6,194 passing and 7 failing across 2 cases, including a nested stack. This is
+diagnostic evidence, not coherent acceptance. Preserve it and add durable
+virtual-dispatch and source/geometry reconstruction regressions.
+
+The approved implementation direction stores a canonical four-double
+deformation `N = {xx, xy, yx, yy}` in TEXT/MTEXT Data and requests, identity
+`{1, 0, 0, 1}`. World transforms preserve local height, width factor, MTEXT
+reference width and source, accumulating the complete affine instead; deliberate
+property edits reflow local semantics. Compose insertion, rotation, `N`, scalar
+scale, generation pivot and line/child transforms once before tessellation.
+Aligned/Fit normalize `N` against its X basis without changing input anchors;
+actual signed baselines remain separate from canonical reference anchors.
+Both shear overloads need a single atomic native transaction, not inherited
+multi-operation mutation; native contour-direction reversal is a no-op.
+Nonfinite, singular or unrepresentable transforms fail without partial state.
+Clone, getData/reconstruction, undo, consumers and P5 transport must retain `N`;
+switching to legacy rendering cannot silently discard nonidentity deformation.
+Independent mathematical review approves the affine identities. Root reproduces
+the deterministic 12,000-point probe with Node v26.11.1: exit 0, maximum residual
+`4.3220627292571254e-14` at small coordinates. The script is
+`/private/tmp/librecad-affine-review.I4JO1g/affine_identity_probe.js`, SHA256
+`7e6084f49d490fce47575893a96d98a3f636afb8e56107ebc7722fa3bbe88519`.
+This is algebraic evidence only; native runtime/tolerance, durable fixtures and
+coherent acceptance remain pending. Native draft-render selection must also use
+final geometry size rather than canonical height: Aligned fitting and stored
+deformation can make the actual contours much larger than the local height.
+
+Generation is geometric, never bidi. The initial characterization uses
+entity-authoritative TEXT flags, without live XOR with STYLE defaults; retain
+valid STYLE flags as provenance/defaults. Autodesk's
+[TEXT](https://help.autodesk.com/cloudhelp/2024/ENU/AutoCAD-DXF/files/GUID-62E5383D-8A14-47B4-BFC4-35824CAE8363.htm)
+and [STYLE](https://help.autodesk.com/cloudhelp/2021/ENU/AutoCAD-DXF/files/GUID-EF68AF7C-13EF-45A1-8175-ED6CE66C8FC9.htm)
+contracts define X/Y reflection bits 2/4, but do not establish a live combination
+rule. The pinned [ezdxf renderer](https://github.com/mozman/ezdxf/blob/dd7f6cc34983fdbf0b2b910f2497e0720d06dd16/src/ezdxf/addons/drawing/text.py)
+executes 48 literal placement cases: all 16 STYLE/entity flag pairs across
+Left/Aligned/Fit. Root independently reproduces exit 0 using real entity,
+placement and matrix code with mocked width/height metrics, not font shaping or
+AutoCAD visual proof. Anchored X reflection uses the reference interval midpoint
+and reverses its actual baseline while preserving both canonical anchors; extend
+that rule to the explicit multiline block's maximum-advance interval. The
+private oracle and retained failure fixture are under
+`/private/tmp/librecad-arabic-transform-proposal.G8AYem`.
+
+Current-profile mutation decisions must query current entity/STYLE authority,
+not a cached rendering status. A default-disabled native request may classify
+that authority without font access or layout. Direction-only edits must not
+promote an untouched imported entity selection to explicit provisional opt-in
+through whole-value replacement. Until saved-profile activation is proven,
+reject that implicit conversion without changing canonical data or geometry;
+explicit typed selection and inherited direction-only overrides remain distinct.
+This temporary guard is not the final editing policy: known imported profiles
+and direction edits remain required production P5 behavior.
+
+The provisional inert full-model carrier codec is approved for implementation
+with checked little-endian framing, a fixed field registry, exact raw/null/IEEE
+retention, a body digest and aggregate 64 MiB / 1,000,000-item bounds. Current
+source/convention and materialized entity profile, including direction-only
+overrides, are separate from historical import/raw metadata. Current STYLE
+identity and profile value preserve association, not permission to overwrite
+shared document styles. Decode alone grants no graph, baseline or activation
+authority. The bridge must verify unique dictionary/XRECORD ownership and an
+exact observed target-wire baseline before initializing current state; retained
+history cannot replace a current edit. Pure-codec tests do not complete native
+transport, parser raw capture, R12 downgrade, independent interoperability,
+schema freeze or activation gates.
+
 ## Implementation milestones
 
 Milestones remain incomplete. Follow the commit/update workflow above and record
@@ -1836,8 +1988,10 @@ count, erase failed validation history or turn an unverified fix into a pass.
 | Frozen candidate | Head/tree, base tip, merge-base and submodule revisions not yet recorded for publication |
 | Last reviewed candidate | None; reviewer coverage and refinement round pending P7b |
 | Feedback reconciliation | Not started; source comment/review references and a dated feedback snapshot pending P7b/P7c |
+| Remote operation reconciliation | No PR actions performed; record intended operation, expected repository/branch/head/base, outcome and verified remote state when executed |
 | Integration status | Not evaluated for publication; current base compatibility and mergeability pending |
 | Validation and findings | No PR acceptance evidence; populate revision-bound evidence and finding references when executed |
+| Evidence invalidation | Not started for a PR; compare changed inputs and affected contracts at every refinement checkpoint |
 | Next action | Complete P5 dependencies, validate a coherent committed candidate and confirm publication authority before P7a publication |
 
 #### P7a Create and verify the draft PR
@@ -1903,6 +2057,11 @@ closed, merged or unrelated PR. If push/creation returns an uncertain
 outcome, inspect the remote branch and matching source/target PR before retrying.
 After creating a PR, attach its URL to the current task using the app's
 artifact attachment tool; attach an existing PR when continuing its refinement.
+Verify push, PR creation and task attachment separately. If creation succeeds
+but attachment fails, retain the verified PR URL and retry only attachment;
+do not create a duplicate PR. A rejected or non-fast-forward push requires
+reconciling the remote history and branch ownership, not a force push. Keep
+P7a incomplete until its publication and attachment checks actually pass.
 
 Create the PR as draft and record its URL/number, target repository/base branch,
 base-tip and merge-base revisions, head SHA and current checks. Verify the
@@ -1990,6 +2149,12 @@ individual helpers:
   indivisible glyph uses its first logical component's effective pen and retains
   all source ranges. Approved fallback reshapes the whole joining/base-plus-mark
   segment; unsafe partial replacement is explicitly rejected.
+- Change entity, ancestor and layer pens after native geometry is built.
+  ByLayer/ByBlock paint must resolve through nested groups dynamically, while
+  explicit inline ACI/RGB remains explicit. Test current entity/STYLE profile
+  authority before the first update, under NoUpdate and after profile removal
+  or opaque imports; cached render status must not authorize an edit, transform
+  or accidental imported-profile activation.
 - Measure contour error after the complete glyph/entity affine, including
   supported anisotropy, reflection and large origins. Check tiny contours,
   no-ink extents, exact coordinate boundaries and deterministic precision,
@@ -2012,6 +2177,14 @@ individual helpers:
   repeated saves and failed export followed by retry. Check writer lifetime,
   active format/version selection, STYLE handles and unchanged source/metadata;
   fresh-filter round trips alone cannot establish this lifecycle contract.
+- Exercise absent, malformed, unknown and oversized embedded metadata separately.
+  Challenge duplicate/foreign carrier ownership and stale native-wire baselines
+  after external edits. Verify current entity/STYLE authority versus retained
+  history and outer/embedded namespaces through an independent reader.
+  An unsupported output must preserve the original in-memory data and any
+  existing destination file, never silently omit an attribute or truncate the
+  destination before a predictable refusal. A safe
+  temporary refusal does not satisfy required lossless supported-output gates.
 - Commit Arabic IME composition, edit a combining sequence and an invisible
   control, then undo/redo and save/reopen from each editor entry point. Verify
   logical source and profile metadata independently of the preview, and confirm
@@ -2070,7 +2243,9 @@ candidate. Reconcile source thread state separately from finding state.
 | P5-SIDECAR-001 | Independent embedded-sidecar baseline audit; retention finding above | Mandatory data preservation; `appendInsertAttribSidecar`, `decodeInsertAttribMTextXData` and ATTRIB extraction/export | HEAD `a8ade2677`; no PR/base review claimed | Lossless compatible retention, explicit failure instead of dropped ATTRIB, regressions and independent verification | Open | No verified fix or transport acceptance yet |
 | P5-FILTER-LIFETIME-001 | Mixed-tree diagnostic and coherent baseline/repair; cross-format lifetime finding above | Mandatory crash/lifetime failure; `RS_FilterDXFRW::fileExport`, `prepareDRWDimStyleText` and writer/version selection | Baseline `9e50184ff`; verified repair `37d2c614d` and exact source/test identities above; no PR/base review claimed | Writer ownership on all exits, same-instance cross-format/version/retry and exception regressions with independent normal/sanitizer verification | Verified | `37d2c614d`: registered ON/OFF/ASan 290 / 4 and applications pass; independent review approves and committed identities match; final whole-PR review still required |
 | P5-EMBEDDED-DXF-001 | Independent Autodesk/ezdxf wire audit; marker and namespace finding above | Mandatory format/metadata authority; `writeEmbeddedMText`, `DRW_Attrib::parseCode` and ATTRIB/ATTDEF output | HEAD `1636de0ce` plus pending ordering/test candidate; no PR/base review claimed | Canonical group-101/body/outer-XDATA ordering, external fixture/reader verification, conservative legacy reading and lossless embedded carrier | Open | Earlier self-round-trip scope result is not independent wire acceptance; corrected candidate pending |
-| P4-OWNED-REPLACE-001 | Independent shared geometry-prerequisite source review | Mandatory selection preservation; `RS_EntityContainer::replaceOwnedEntities` | Uncommitted frozen container source `16f62f6557febc04825d6cf5ddaa05bbae65a767fe7c9b25f9686421da93bfcd`; no PR review claimed | Traverse only owned retired descendants; borrowed surviving children retain selection; add regression and independent verification | Open | Source review identified nonowner traversal; correction and failing-before/runtime proof pending |
+| P4-OWNED-REPLACE-001 | Independent shared geometry-prerequisite source review | Mandatory selection preservation; `RS_EntityContainer::replaceOwnedEntities` | Originally reviewed source `16f62f6557febc04825d6cf5ddaa05bbae65a767fe7c9b25f9686421da93bfcd`; corrected source `119cf49991fd4013eac6ada6fb947d632298e9349e0a83a4dd303f2eeb7935f2` in `Publish native child geometry atomically`; no PR review claimed | Traverse only owned retired descendants; borrowed surviving children retain selection; add regression and independent verification | Verified | Independent source/test/registration re-review and coherent registered ON/OFF/ASan pass; baseline exits 42 with 2 / 3 assertions failing. Full CMake ON/OFF applications, coherent sanitizer library and fresh qmake application pass; final whole-PR review remains required |
+| P4-DECORATION-001 | Independent native adapter precision review | Mandatory geometry/tolerance failure; `LC_TextNative::Builder::stroke` | Frozen uncommitted adapter source `ba7a8e09b25a5349d945e544e8a7acc75e4ccb4c243b1b177b454efd5068aeb9`; no PR review claimed | Replace fuzzy endpoint collapse with exact converted equality; prove representable tiny underline and stack-rule behavior without relaxing numeric checks | Fixed pending verification | Independent corrective source/test re-review approves. Private ON and owned-source O1 ASan/UBSan diagnostics pass 130,712 / 21; OFF diagnostic passes 137 / 21. Coherent registered acceptance and scoped checkpoint remain pending; partial instrumentation is not full sanitizer acceptance |
+| P4-AFFINE-001 | Independent inherited-transform audit and private matching-header reproducer | Mandatory canonical state/geometry failure; TEXT/MTEXT shear and absolute-inline-height scaling | Frozen adapter/entity candidate; no PR review claimed | Durable canonical deformation, guarded single-operation virtual transforms, truthful metrics and source/clone/undo/transport reconstruction; preserve final-affine tolerance | In progress | Private baseline exits 42: 6,201 assertions / 2 cases, 7 failures. Canonical affine policy approved; private implementation, independent re-review and coherent acceptance pending |
 
 This template is not a claim that no findings exist. Reconcile it with slice
 reviews and failed-check records before publication. Previously verified fixes
@@ -2093,6 +2268,13 @@ Optional improvements may be deferred under the rules above. Put unrelated
 refactoring or new feature requests in a separate proposal unless separately
 authorized; keep necessary in-scope corrections in this PR.
 
+For corrective pushes, description edits, thread-state changes and ready/draft
+transitions, record the intended operation and expected repository, branch,
+head/base and state in the tracking or round record. Verify the remote result
+separately from the local command outcome. If the result is uncertain, read back
+the actual state before retrying; do not duplicate an action or claim a remote
+transition from an attempted request.
+
 Run each refinement round in this order:
 
 1. Freeze the review candidate. The initial round covers the entire accumulated
@@ -2112,6 +2294,8 @@ Run each refinement round in this order:
    than claiming it. Triage related findings together, but keep unrelated fixes
    in separate scoped commits. Apply the existing validate–document–commit loop;
    do not push an unvalidated correction or a failing-test-only checkpoint.
+   Include the corrective plan, acceptance-map and finding-state updates in
+   that checkpoint before pushing, rather than leaving them as unstaged notes.
    For a shared-service or public-contract fix, trace every affected consumer
    and failure path through the acceptance map. Record which checks must rerun
    and why any consumer is unaffected; a passing reproducer in one caller does
@@ -2119,10 +2303,12 @@ Run each refinement round in this order:
    Algorithm, cache or geometry-budget changes also require the affected
    worst-case, cold/warm and memory checks against the recorded P0/P6 budgets;
    a small correctness fixture alone cannot establish bounded performance.
-4. Push the corrected owned branch, reconcile the published head and checks,
-   and refresh the PR description, plan, acceptance map, findings ledger and
-   evidence matrix. Record corrective commits, executed checks and invalidated
-   gates using the revision-evidence rules below.
+4. Push the validated corrective checkpoint on the owned branch and reconcile
+   the published head and checks. Refresh the PR description and remote tracking
+   state against that checkpoint. Record later-resolved commit hashes and CI
+   links through the existing follow-on plan-record rule; verify its publication
+   and readback before claiming final plan/PR synchronization. Keep the original
+   tested revision and any justified evidence carry-forward explicit.
 5. Have an independent reviewer verify corrections and their regressions before
    marking findings Verified. Resolve threads only after genuine resolution or
    an explicitly accepted deferral or independently reviewed, evidence-backed
@@ -2284,7 +2470,8 @@ cmake --build /Users/dli/dev/LibreCAD/build-arabic-cmake --target \
   librecad_text_document_tests librecad_text_profile_tests librecad_text_profile_binding_tests \
   librecad_text_source_codec_tests \
   librecad_embedded_text_xdata_tests librecad_filter_writer_lifetime_tests \
-  librecad_entity_pen_inheritance_tests \
+  librecad_entity_pen_inheritance_tests librecad_entity_container_replace_tests \
+  librecad_entity_container_replace_failure_tests \
   librecad_text_profile_binding_copy_failure_tests librecad_text_shaper_tests librecad_text_font_registry_tests \
   librecad_text_source_state_tests librecad_text_source_tests \
   librecad_text_runs_tests librecad_text_runs_shaping_tests librecad_text_layout_tests librecad_text_outline_tests
@@ -2301,6 +2488,8 @@ QT_QPA_PLATFORM=offscreen /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_te
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_embedded_text_xdata_tests
 QT_QPA_PLATFORM=offscreen /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_filter_writer_lifetime_tests
 QT_QPA_PLATFORM=offscreen /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_entity_pen_inheritance_tests
+QT_QPA_PLATFORM=offscreen /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_entity_container_replace_tests
+QT_QPA_PLATFORM=offscreen /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_entity_container_replace_failure_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_shaper_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_font_registry_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_runs_tests
@@ -2314,6 +2503,8 @@ disabled-path cases actually execute rather than treating their smaller counts
 as enabled coverage. The parser's backend-independent cases must still pass.
 Run the backend-independent embedded-metadata and filter writer-lifetime targets
 in both enabled and disabled configurations, and in the coherent sanitizer lane.
+Run the pen inheritance and both atomic replacement targets in those same lanes;
+the allocator-override executable must remain separate from Catch2 and the app.
 Extend this recipe as new headless targets are committed. When bidi APIs change,
 explicitly build `librecad_bidi_conformance` and run it with both matching
 `BidiTest.txt` and `BidiCharacterTest.txt` paths, recording corpus versions and
