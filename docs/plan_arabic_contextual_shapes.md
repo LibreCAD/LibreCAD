@@ -743,8 +743,10 @@ Maintain the progress and validation records below as implementation proceeds:
 | 2026-10-11 | P4 shared native entity integration | In progress | Uncommitted owned adapter slice | Alignment/spacing fixture policy specified; actual TEXT/MTEXT update dispatch, recursive native geometry and guarded resource/profile resolution under implementation | Validate integrated updates, transforms, metrics, lifetime and all required modes; helper tests alone cannot complete P4 or enable public imported profiles |
 | 2026-10-11 | P7 execution | Planned | `55cbfc54f` and `537839cfe` — plan-only workflow checkpoints | Draft baseline, creation checkpoint, acceptance map, deep-review cadence and CI history defined; prepublication findings retain provenance and require local-contract resolution before publication. Independent plan review and scoped whitespace checks pass; no publication or PR acceptance claimed | Complete the coherent P5 candidate, reconcile existing review findings, then execute P7a and keep the records below current |
 | 2026-10-11 | P7 workflow refinement | Complete | `c956d8ca2` — `Link PR feedback to verified refinement` | Independent read-only plan review and scoped whitespace check pass; explicit P7a/P7b/P7c steps, source-linked feedback and final state reconciliation defined | Plan-only checkpoint; P7 execution remains Planned, with no push, PR creation, review completion or readiness claimed |
-| 2026-10-11 | P7 execution clarification | Validated | Uncommitted plan-only edit | Independent read-only review and scoped whitespace checks pass; explicit creation/refinement/handoff sequence, refinement completion checkpoint and cross-format lifetime finding recorded; Pending P6 keeps handoff incomplete and the PR draft | P7a/P7b/P7c remain Planned; resolve mandatory P5 findings before authorized publication; no PR action performed |
-| 2026-10-11 | P5b.1 raw embedded metadata capsule | Validated | Candidate subject: `Preserve exact embedded text metadata capsules` | Independent source review approves; isolated registered ON/OFF/ASan each pass 21,535 assertions / 5 cases; enabled/disabled CMake applications, coherent sanitizer application library and qmake application build exit 0 | Checkpoint bounded in-memory retention only; full-model wire transport, filter integration and activation remain pending |
+| 2026-10-11 | P7 execution clarification | Complete | `9e50184ff` — workflow record in capsule checkpoint | Independent read-only review and scoped whitespace checks pass; explicit creation/refinement/handoff sequence, refinement completion checkpoint and cross-format lifetime finding recorded; Pending P6 keeps handoff incomplete and the PR draft | Plan workflow only; P7a/P7b/P7c remain Planned; resolve mandatory P5 findings before authorized publication; no PR action performed |
+| 2026-10-11 | P5b.1 raw embedded metadata capsule | Complete | `9e50184ff` — `Preserve exact embedded text metadata capsules` | Independent source review approves; isolated registered ON/OFF/ASan each pass 21,535 assertions / 5 cases; enabled/disabled CMake applications, coherent sanitizer application library and qmake application build exit 0 | Bounded in-memory retention checkpoint only; full-model wire transport, filter integration and activation remain pending |
+| 2026-10-11 | P5 filter writer lifetime | Validated | Candidate subject: `Clear export writer observers on every exit` | Coherent baseline observer regression fails 5 / 108 assertions; final registered ON/OFF/ASan each pass 290 / 4; enabled/disabled CMake applications, coherent sanitizer library and qmake application build exit 0; independent production/test/registration review approves | Checkpoint bounded writer ownership/version/retry correction; raw-aware STYLE/filter and embedded transport acceptance remain pending |
+| 2026-10-11 | P4 geometry prerequisites | In progress | Frozen shared pen/container/selection candidate under review | Independent review identified borrowed-descendant selection loss in atomic replacement; correction and regression requested. Private object compilation is not runtime acceptance | Preserve borrowed children and postcommit notification semantics, then coherent validation and separate checkpoint before adapter acceptance |
 
 For every executed check, record its exact command and filters, exit status,
 result/test count, tested revision and candidate-tree state, build configuration,
@@ -1588,14 +1590,16 @@ lossless downgrade authority/source retention remains an unfinished gate.
 
 ### Cross format filter lifetime finding
 
-Finding `P5-FILTER-LIFETIME-001` is Open. A final mixed-tree diagnostic on
+Finding `P5-FILTER-LIFETIME-001` is Fixed pending verification of the committed
+checkpoint identity. A final mixed-tree diagnostic on
 HEAD `1636de0ce` plus the uncommitted STYLE/filter candidate crashes when one
 `RS_FilterDXFRW` exports DXF and then DWG. The `[text-filter-authority]` run
 exits 139 with 241 passing assertions and one fatal assertion across six
 started cases; an earlier 14,180 / 10 pass does not close this gate. The DXF
 export path deletes `m_dxfW` without clearing it, while
 `prepareDRWDimStyleText` can subsequently dereference the non-null pointer.
-Attribution to the candidate or baseline remains to be established.
+The coherent baseline regression below establishes that stale observer lifetime
+also fails without the uncommitted STYLE/filter candidate.
 
 The retained diagnostic is
 `/private/tmp/librecad-filter-authority-compile.IjGFH6/filter-after-final.log`;
@@ -1607,6 +1611,54 @@ regression, establish writer ownership on every exit path, and validate repeated
 same-instance exports in both format orders, including failure followed by retry,
 under coherent normal and sanitizer builds. Independent verification remains
 required before P5 or the PR finding can be closed.
+
+The minimal repair owns each writer locally with `ExportWriterScope`, clears
+the callback observer before deletion on all returns and exception unwinding,
+and rejects nested export before mutating the active operation. DWG closes its
+writer before staged-path finalization. Only this patch and a dedicated test
+registration were added to the coherent capsule snapshot, excluding all other
+pending filter/STYLE/native-writer edits. The production patch SHA256 is
+`2f33acb221e5172f025130eef2e4e9a96e83d1a83a691e92654558f73dd8d971`.
+The final isolated filter header/source hashes are
+`0320825d8d8fb0648dab18167494ce4a84a425c18f58be827e506376fd3a6aae` and
+`b8d3fea88ca13f3187509032a73b00b776d4ee29163e0071ba7cb699acd20420`;
+test SHA256 is `ff1cdd712caac4e0a17e6db31944dba34407dcd4038fcc418bf9605930fa93ff`.
+
+Before applying the production patch, the registered `[observer]` test on
+`9e50184ff` exits 42 with 108 assertions, 103 passing and 5 failing; stale
+non-UNKNOWN writer queries reproduce the defect. After the patch, unfiltered
+registered ON, OFF without FreeType and ASan/UBSan tests each exit 0 with
+290 assertions / 4 cases. Cases cover both format orders, repeated saves,
+mixed 2004/2018 versions, preallocation and emission failure, opposite-format
+nested rejection, and callback exception followed by cross-format and original
+format retries. The actual active version and emitted signatures are checked,
+and successful files are read back independently through fresh filter instances.
+Independent source/test/registration review approves the final candidate.
+Complete incremental CMake ON/OFF applications, coherent sanitizer library and
+qmake application build all exit 0. Qmake recompiles the changed filter source
+and relinks; this is not a package or GUI-runtime acceptance result.
+
+The capsule's toolchain and sanitizer configuration apply. Commands configure
+the same snapshot builds, then `cmake --build <build> --target
+librecad_filter_writer_lifetime_tests -j2`, invoke that binary without filters,
+and build `librecad` in ON/OFF or `librecad_lib` in ASan. Qmake uses the same
+command and `make -j2` as the capsule. Root logs are
+`/private/tmp/librecad-arabic-lifetime-root-{on,off,asan}-{configure,tests-build,tests,application-build}.log`
+and `/private/tmp/librecad-arabic-lifetime-root-qmake-{configure,application-build}.log`;
+before logs use `root-before-{configure,build,tests}.log`. Earlier private
+178 / 3 results and the partial-instrumentation baseline diagnostic remain
+historical in `/private/tmp/librecad-filter-lifetime.rfT90m/EVIDENCE.md`, not
+coherent acceptance. This bounded fix does not accept embedded wire encoding,
+STYLE/profile transport or the full P5 milestone.
+
+The same isolated ON candidate also builds and runs the unfiltered existing
+`librecad_dwg_write_fast_tests`: exit 0, 17,228 passing assertions, 419 passing
+cases and 3 skipped cases out of 422. Missing `datatable_r2010.dwg`,
+`visualstyle_r2007.dwg` and `blockvisibility.dwg` fixtures cause those skips;
+their coverage is not counted as passing. Commands are `cmake --build
+<snapshot>/build-on --target librecad_dwg_write_fast_tests -j2` and
+`<snapshot>/build-on/librecad_dwg_write_fast_tests` without filters. Logs are
+`/private/tmp/librecad-arabic-lifetime-root-dwg-{build,tests}.log`.
 
 ### Embedded DXF marker and namespace finding
 
@@ -1960,8 +2012,9 @@ candidate. Reconcile source thread state separately from finding state.
 | --- | --- | --- | --- | --- | --- | --- |
 | Populate before P7a | Link prepublication review records; retain PR comment/review identities when available | Import prepublication findings; add PR review findings as discovered | Retain original revisions | Apply the resolution and verification rules below | Record actual state | Link existing or new evidence |
 | P5-SIDECAR-001 | Independent embedded-sidecar baseline audit; retention finding above | Mandatory data preservation; `appendInsertAttribSidecar`, `decodeInsertAttribMTextXData` and ATTRIB extraction/export | HEAD `a8ade2677`; no PR/base review claimed | Lossless compatible retention, explicit failure instead of dropped ATTRIB, regressions and independent verification | Open | No verified fix or transport acceptance yet |
-| P5-FILTER-LIFETIME-001 | Final mixed-tree filter diagnostic; cross-format lifetime finding above | Mandatory crash/lifetime failure; `RS_FilterDXFRW::fileExport`, `prepareDRWDimStyleText` and writer/version selection | HEAD `1636de0ce` plus hashed uncommitted filter/test inputs above; no PR/base review claimed | Isolated reproducer, writer ownership on all exits, same-instance cross-format/retry regressions and independent normal/sanitizer verification | Open | No correction or coherent acceptance claimed; earlier passing diagnostic is superseded for this gate |
+| P5-FILTER-LIFETIME-001 | Mixed-tree diagnostic and coherent baseline/repair; cross-format lifetime finding above | Mandatory crash/lifetime failure; `RS_FilterDXFRW::fileExport`, `prepareDRWDimStyleText` and writer/version selection | Baseline `9e50184ff` plus isolated minimal repair/test identities above; no PR/base review claimed | Writer ownership on all exits, same-instance cross-format/version/retry and exception regressions with independent normal/sanitizer verification | Fixed pending verification | Candidate `Clear export writer observers on every exit`: registered ON/OFF/ASan 290 / 4 and applications pass; independent review approves; resolve checkpoint identity before final closure |
 | P5-EMBEDDED-DXF-001 | Independent Autodesk/ezdxf wire audit; marker and namespace finding above | Mandatory format/metadata authority; `writeEmbeddedMText`, `DRW_Attrib::parseCode` and ATTRIB/ATTDEF output | HEAD `1636de0ce` plus pending ordering/test candidate; no PR/base review claimed | Canonical group-101/body/outer-XDATA ordering, external fixture/reader verification, conservative legacy reading and lossless embedded carrier | Open | Earlier self-round-trip scope result is not independent wire acceptance; corrected candidate pending |
+| P4-OWNED-REPLACE-001 | Independent shared geometry-prerequisite source review | Mandatory selection preservation; `RS_EntityContainer::replaceOwnedEntities` | Uncommitted frozen container source `16f62f6557febc04825d6cf5ddaa05bbae65a767fe7c9b25f9686421da93bfcd`; no PR review claimed | Traverse only owned retired descendants; borrowed surviving children retain selection; add regression and independent verification | Open | Source review identified nonowner traversal; correction and failing-before/runtime proof pending |
 
 This template is not a claim that no findings exist. Reconcile it with slice
 reviews and failed-check records before publication. Previously verified fixes

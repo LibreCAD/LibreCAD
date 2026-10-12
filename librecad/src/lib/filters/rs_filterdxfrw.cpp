@@ -221,6 +221,27 @@ std::string normalizeDwgDataStorageHandleKey(std::string value) {
   return value;
 }
 
+// Callback members observe only the writer owned by their current export.
+// Clear the observer before destruction on success, failure or exception.
+template <typename Writer> class ExportWriterScope final {
+public:
+  ExportWriterScope(Writer *&observer, std::unique_ptr<Writer> owner) noexcept
+      : m_observer(observer), m_owner(std::move(owner)) {
+    m_observer = m_owner.get();
+  }
+  ~ExportWriterScope() { reset(); }
+  ExportWriterScope(const ExportWriterScope &) = delete;
+  ExportWriterScope &operator=(const ExportWriterScope &) = delete;
+  void reset() noexcept {
+    m_observer = nullptr;
+    m_owner.reset();
+  }
+
+private:
+  Writer *&m_observer;
+  std::unique_ptr<Writer> m_owner;
+};
+
 enum class XDataReadResult {
   Absent,
   Malformed,
@@ -11172,6 +11193,17 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
                   (const char *)QFile::encodeName(file));
   RS_DEBUG->print("RS_FilterDXFDW::fileExport: file type '%d'", type);
 
+  // A callback may not replace the active writer or the outer operation's
+  // graphic/failure state. In particular, do not clear its observer here.
+  if (m_dxfW != nullptr
+#ifdef DWGSUPPORT
+      || m_dwgW != nullptr
+#endif
+  ) {
+    LC_ERR << "Cannot start a reentrant export on an active DXF/DWG filter";
+    return false;
+  }
+
   this->m_graphic = &g;
   m_writeFailed = false;
   m_dxfLeftOutRawRecords = 0;
@@ -11259,7 +11291,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
                       "RS_FilterDXFRW: cannot release staged DWG path");
       return false;
     }
-    m_dwgW = new dwgRW(QFile::encodeName(stagedOutputPath).constData());
+    ExportWriterScope<dwgRW> activeWriter(
+        m_dwgW, std::make_unique<dwgRW>(QFile::encodeName(stagedOutputPath).constData()));
     clearDwgWriteIdentity();
     m_dwgExportAdmissionPlan = {};
     m_dwgFieldWritePlan = {};
@@ -11271,15 +11304,11 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
             DRW::DwgNamedObjectsDictionaryHandle) ||
         !registerDwgWriteFixedStructuralIdentity(
             DRW::DwgAcadGroupDictionaryHandle)) {
-      delete m_dwgW;
-      m_dwgW = nullptr;
       return false;
     }
     if (!prepareDwgDataStorageReplayPlan(dwgVer)) {
       RS_DEBUG->print(RS_Debug::D_WARNING,
                       "RS_FilterDXFRW: invalid DWG DataStorage replay plan");
-      delete m_dwgW;
-      m_dwgW = nullptr;
       return false;
     }
     bool duplicateDwgMetadataHandle = false;
@@ -11537,8 +11566,6 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       RS_DEBUG->print(RS_Debug::D_WARNING,
                       "RS_FilterDXFRW: refusing DWG export with duplicate "
                       "typed metadata identities");
-      delete m_dwgW;
-      m_dwgW = nullptr;
       return false;
     }
     bool success = m_dwgW->write(this, dwgVer, false) && !m_writeFailed;
@@ -11570,8 +11597,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
                       skips.classRegistrations, skips.blockDefinitions,
                       skips.rawObjectWrites + skips.rawSectionWrites);
     }
-    delete m_dwgW;
-    m_dwgW = nullptr;
+    activeWriter.reset();
     if (!success)
       return false;
 
@@ -11649,7 +11675,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
    * unicode file names!!! Due to that, blocks/files may be saved incorrectly if
    * name is localized
    */
-  m_dxfW = new dxfRW(QFile::encodeName(file));
+  ExportWriterScope<dxfRW> activeWriter(
+      m_dxfW, std::make_unique<dxfRW>(QFile::encodeName(file).constData()));
   m_dxfBlockInsertHandles.clear();
   m_dxfExtraPaperSpaces.clear();
   m_dxfEmittedObjectHandles.clear();
@@ -11772,8 +11799,6 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
                 "case-insensitive CLASS metadata"
               : "RS_FilterDXFRW: refusing DXF export with duplicate "
                 "typed PLOTSETTINGS handles");
-      delete m_dxfW;
-      m_dxfW = nullptr;
       return false;
     }
 
@@ -12031,8 +12056,6 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_FilterDXFRW: refusing DXF export with PLOTSETTINGS "
                         "handle colliding with a structural record");
-        delete m_dxfW;
-        m_dxfW = nullptr;
         return false;
       }
     }
@@ -12083,8 +12106,6 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       RS_DEBUG->print(
           RS_Debug::D_WARNING,
           "RS_FilterDXFRW: DXF handle space exhausted while remapping");
-      delete m_dxfW;
-      m_dxfW = nullptr;
       return false;
     }
     if (!rawSections.empty())
@@ -12318,7 +12339,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
   const bool success =
       m_dxfW->write(this, exportVersion, binary) && !m_writeFailed; // binary
   m_dxfLeftOut = m_dxfW->leftOut();
-  delete m_dxfW;
+  activeWriter.reset();
 
   if (!success) {
     RS_DEBUG->print("RS_FilterDXFDW::fileExport: can't write file");
