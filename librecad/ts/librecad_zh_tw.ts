@@ -37946,7 +37946,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>If checked, the star will be drawn as polyline. </source>
-        <translation type="vanished">如果选中, 该星會被畫出為多線 .</translation>
+        <translation type="vanished">若勾選,此星形將繪製為多段線 .</translation>
     </message>
     <message>
         <source>Polyline</source>
@@ -37967,27 +37967,27 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_filler.cpp" line="31"/>
         <source>If checked, symmetric star will be created</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">若勾選，將建立對稱星形</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_filler.cpp" line="37"/>
         <source>Rays number</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">射線數量</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_filler.cpp" line="37"/>
         <source>Number of rays</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">射線數量</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_filler.cpp" line="43"/>
         <source>Round outer</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">外側圓角</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_filler.cpp" line="43"/>
         <source>If checked, outer edges will be rounded</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">若勾選,外側邊緣將進行倒圓角處理</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_filler.cpp" line="50"/>
