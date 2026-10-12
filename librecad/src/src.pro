@@ -439,6 +439,7 @@ HEADERS += \
     lib/engine/document/entities/lc_textlayout.h \
     lib/engine/document/entities/lc_textoutline.h \
     lib/engine/document/entities/lc_textprofile.h \
+    lib/engine/document/entities/lc_textprofilebinding.h \
     lib/engine/document/entities/lc_textruns.h \
     lib/engine/document/entities/lc_textshaper.h \
     lib/engine/document/container/lc_containertraverser.h \
@@ -1013,6 +1014,7 @@ SOURCES += \
     lib/engine/document/entities/lc_textlayout.cpp \
     lib/engine/document/entities/lc_textoutline.cpp \
     lib/engine/document/entities/lc_textprofile.cpp \
+    lib/engine/document/entities/lc_textprofilebinding.cpp \
     lib/engine/document/entities/lc_textruns.cpp \
     lib/engine/document/entities/lc_textshaper.cpp \
     lib/engine/document/container/lc_containertraverser.cpp \

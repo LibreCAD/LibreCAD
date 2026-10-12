@@ -653,10 +653,11 @@ Maintain the progress and validation records below as implementation proceeds:
 | 2026-10-11 | P0b transport proof | In progress | Uncommitted filter candidate; provisional codec is a separate service | Earlier STYLE binding failure repaired; new STYLE-unit and LTYPE-control prerequisites pass focused/direct native JSON checks; converted DXF still fails at DIMSTYLE color fields | Isolate/checkpoint prerequisites; codec/schema freeze and public activation require separate proof, not a self-round trip |
 | 2026-10-11 | P3b.1 native outline adapter | Complete | `1ed63892a` — `Add precision-bounded native text contours` | Both numeric regressions fail before correction (exit 42); isolated ON/ASan: 12,326 assertions / 8 cases; OFF: 11,460 / 7; enabled/disabled CMake applications and qmake application build pass; independent numeric review approves | Bounded native service only; complete-affine entity consumption, layout caches and release geometry gates remain pending |
 | 2026-10-11 | P5a.1 provisional profile codec | Complete | `ade6fee6f` — `Add inert versioned text profile codec` | Isolated QtCore-only ON/OFF/ASan each pass 4,544 assertions / 12 cases; enabled/disabled CMake applications and qmake application pass; strict QStringBuilder failure corrected and independently reviewed | Bounded inert codec only; owning bindings, STYLE/entity/filter integration, transport proof, schema freeze and activation remain pending |
-| 2026-10-11 | P3c.1 shared explicit layout | Validated | Candidate subject: `Add source-mapped recursive OpenType text layout` | Source-provenance regression fails before correction; isolated ON/ASan: 715,036 assertions / 16 cases; OFF: 26 / 1. Registered include failure corrected; enabled/disabled CMake applications and qmake application pass; independent source/registration review approves | Checkpoint bounded recursive layout; native entity adapters, caches, complete-segment fallback and independent application acceptance remain pending |
-| 2026-10-11 | P5a.2 owning profile bindings | In progress | Uncommitted binding candidate | Move and retained-buffer alias regressions reproduced and corrected; strict ON/OFF/ASan: 7,886 / 21. Independent review finds copy-assignment allocation failure can leave Replace without matching encoding | Reproduce and repair copy-assignment coherence, re-review, then isolate/register/checkpoint; transport/entity/style integration remains pending |
+| 2026-10-11 | P3c.1 shared explicit layout | Complete | `7440ffc3c` — `Add source-mapped recursive OpenType text layout` | Source-provenance regression fails before correction; isolated ON/ASan: 715,036 assertions / 16 cases; OFF: 26 / 1. Registered include failure corrected; enabled/disabled CMake applications and qmake application pass; independent source/registration review approves | Bounded recursive service only; native entity adapters, caches, complete-segment fallback and independent application acceptance remain pending |
+| 2026-10-11 | P5a.2 owning profile bindings | Validated | Candidate subject: `Add owning text profile edit bindings` | Move, retained-buffer alias and copy-allocation regressions reproduced and repaired; registered ON/OFF/ASan each pass 8,150 / 22 plus both controlled allocation-failure cases; enabled/disabled CMake applications and qmake application pass; independent ownership/registration review approves | Checkpoint bounded inert binding; transport/entity/style integration and schema/activation gates remain pending |
+| 2026-10-11 | P5a.3 entity and transport authority | In progress | Uncommitted owned entity/style/filter slice | Source/profile host APIs and guarded unavailable-import state under implementation; whole-slice registered validation and independent review pending | Complete source/STYLE/namespace ownership and lifecycle tests; syntax-aware lossless cross-format caret conversion remains required, not waived by a guarded intermediate export error |
 | 2026-10-11 | P7 execution | Planned | `55cbfc54f` and `537839cfe` — plan-only workflow checkpoints | Draft baseline, creation checkpoint, acceptance map, deep-review cadence and CI history defined; prepublication findings retain provenance and require local-contract resolution before publication. Independent plan review and scoped whitespace checks pass; no publication or PR acceptance claimed | Complete the coherent P5 candidate, reconcile existing review findings, then execute P7a and keep the records below current |
-| 2026-10-11 | P7 workflow refinement | Validated | Candidate subject: `Link PR feedback to verified refinement` | Independent read-only plan review and scoped whitespace check pass; explicit P7a/P7b/P7c steps, source-linked feedback and final state reconciliation defined | Checkpoint this plan-only refinement; P7 execution remains Planned, with no push, PR creation, review completion or readiness claimed |
+| 2026-10-11 | P7 workflow refinement | Complete | `c956d8ca2` — `Link PR feedback to verified refinement` | Independent read-only plan review and scoped whitespace check pass; explicit P7a/P7b/P7c steps, source-linked feedback and final state reconciliation defined | Plan-only checkpoint; P7 execution remains Planned, with no push, PR creation, review completion or readiness claimed |
 
 For every executed check, record its exact command and filters, exit status,
 result/test count, tested revision and candidate-tree state, build configuration,
@@ -1199,6 +1200,59 @@ qmake logs are `/private/tmp/librecad-arabic-layout-qmake-{configure,build}.log`
 Independent Arabic-reader/native-entity/recursive-layout output approval remains
 a release gate; these service checks do not establish it.
 
+### Owning profile binding evidence
+
+P5a.2 separates immutable imported provenance from Untouched, Replace and Remove
+edit authority. It owns supported Qt payload buffers, including externally
+backed strings/bytes, while preserving their exact types, nullness and fixed
+scalar storage. Unsupported QVariant metatypes require a nonthrowing preflight
+and raw retention outside the binding; their constructor rejection must never
+escape untrusted file import. No registry, host entity, font or activation policy
+is introduced by this QtCore-only service.
+
+Three defects were demonstrated before repair. Default moves left the source
+with Replace authority over moved payloads (16 failed / 53 assertions, exit 42).
+Retained mutable QString/QByteArray pointers changed accepted edits/imported raw
+(10 failed / 42 assertions in 2 cases, exit 42). Default copy assignment changed
+destination authority/value before the pending-encoding vector allocation
+failed: both Untouched and Replace destinations lost preservation/coherence
+(private controlled-allocation probe, exit 2). The repairs deep-own inputs,
+retain imported provenance in moved-from values and prepare a complete copy
+before a nonthrowing swap. Before/fix evidence is retained in
+`/private/tmp/librecad-textprofilebinding-{moves.AWaJPX,alias.u7abi1,copy.rtN90T}/validation.md`.
+
+The allocation regression is now durable in the dedicated
+`librecad_text_profile_binding_copy_failure_tests` executable, isolated from
+Catch and application targets. Its thread-local global-new injector is armed
+only around assignment after all snapshots are prepared. Both destination
+states throw at the checked 560-byte vector allocation on this toolchain, retain
+the complete source/destination state and pending pointer, and remain coherent.
+It exits 0 in registered ON, OFF and ASan/UBSan runs; these are two exercised
+failure cases per run, not a Catch assertion count or all-platform STL proof.
+
+The six staged binding/test/build inputs were exported and compared with
+`/private/tmp/librecad-arabic-core-index.TOns5t`, excluding uncommitted entity,
+style/filter and prefix/package work. On the codec evidence's macOS toolchain,
+registered ON, OFF without FreeType and ASan/UBSan each pass 8,150 assertions /
+22 cases. Final processes 62245, 18164 and 4341 exit 0; explicitly build both
+binding targets with `cmake --build ... --target` and invoke both binaries.
+Configure/build/test logs are
+`/private/tmp/librecad-arabic-binding-fault-{on,off,asan}-{configure,build,tests}.log`.
+Sanitizers instrument local codec/binding/test sources, not external Qt/Catch2;
+`ASAN_OPTIONS=detect_leaks=0:halt_on_error=1 UBSAN_OPTIONS=halt_on_error=1` applies,
+with no leak acceptance claimed. Independent source and registration reviews
+pass, including isolation of allocator overrides from production.
+
+Full enabled/disabled CMake applications and the ordered qmake application
+passed for the same production binding sources and registrations (processes
+42945, 94176 and 27673, exit 0). The later change only adds the isolated failure
+test/CMake target; those application results are retained evidence, not new
+executions. Logs remain `/private/tmp/librecad-arabic-binding-{on,off}-build.log`
+and `/private/tmp/librecad-arabic-binding-qmake-{configure,build}.log`.
+The intervening `c956d8ca2` changes only this plan. Host setters, STYLE lifecycle,
+source serialization, namespace transport/schema freeze and runtime activation
+remain separate unfinished gates.
+
 ## Implementation milestones
 
 Milestones remain incomplete. Follow the commit/update workflow above and record
@@ -1685,7 +1739,7 @@ publish a release or activate new defaults without the corresponding authority.
 | Before P7 ready-for-review handoff | Complete technical release checklist, final whole-diff independent review, no unresolved mandatory findings, current PR revision evidence and synchronized plan/PR; then complete P7 attestation |
 
 Build success is not test execution. The existing focused text, headless bidi,
-parser, profile codec, shared layout, shaper, registry, native-outline and conformance targets are `EXCLUDE_FROM_ALL`;
+parser, profile codec/binding, shared layout, shaper, registry, native-outline and conformance targets are `EXCLUDE_FROM_ALL`;
 explicitly build and invoke them. Ordinary CTest does not currently register
 those binaries, and registration of the broad application/integration suites
 is configurable. Inspect `ctest -N`
@@ -1701,11 +1755,14 @@ by this plan update.
 ```sh
 cmake --build /Users/dli/dev/LibreCAD/build-arabic-cmake --target \
   librecad_text_bidi_tests librecad_text_bidi_headless_tests \
-  librecad_text_document_tests librecad_text_profile_tests librecad_text_shaper_tests librecad_text_font_registry_tests \
+  librecad_text_document_tests librecad_text_profile_tests librecad_text_profile_binding_tests \
+  librecad_text_profile_binding_copy_failure_tests librecad_text_shaper_tests librecad_text_font_registry_tests \
   librecad_text_runs_tests librecad_text_runs_shaping_tests librecad_text_layout_tests librecad_text_outline_tests
 QT_QPA_PLATFORM=offscreen /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_bidi_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_bidi_headless_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_profile_tests
+/Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_profile_binding_tests
+/Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_profile_binding_copy_failure_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_layout_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_document_tests
 /Users/dli/dev/LibreCAD/build-arabic-cmake/librecad_text_shaper_tests

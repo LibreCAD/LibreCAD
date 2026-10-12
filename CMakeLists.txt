@@ -945,6 +945,8 @@ set (SHARED_SOURCES
     librecad/src/lib/engine/document/entities/lc_textoutline.h
     librecad/src/lib/engine/document/entities/lc_textprofile.cpp
     librecad/src/lib/engine/document/entities/lc_textprofile.h
+    librecad/src/lib/engine/document/entities/lc_textprofilebinding.cpp
+    librecad/src/lib/engine/document/entities/lc_textprofilebinding.h
     librecad/src/lib/engine/document/entities/lc_textruns.cpp
     librecad/src/lib/engine/document/entities/lc_textruns.h
     librecad/src/lib/engine/document/entities/lc_textshaper.cpp
@@ -2835,6 +2837,30 @@ if (BUILD_TESTS)
         Catch2::Catch2WithMain Qt6::Core)
     target_compile_features(librecad_text_profile_tests PRIVATE cxx_std_17)
     set_target_properties(librecad_text_profile_tests PROPERTIES
+        AUTOMOC OFF AUTOUIC OFF AUTORCC OFF)
+
+    add_executable(librecad_text_profile_binding_tests EXCLUDE_FROM_ALL
+        librecad/src/lib/engine/document/entities/lc_textprofile.cpp
+        librecad/src/lib/engine/document/entities/lc_textprofilebinding.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_textprofilebinding_tests.cpp)
+    target_include_directories(librecad_text_profile_binding_tests PRIVATE
+        librecad/src/lib/engine/document/entities)
+    target_link_libraries(librecad_text_profile_binding_tests PRIVATE
+        Catch2::Catch2WithMain Qt6::Core)
+    target_compile_features(librecad_text_profile_binding_tests PRIVATE cxx_std_17)
+    set_target_properties(librecad_text_profile_binding_tests PROPERTIES
+        AUTOMOC OFF AUTOUIC OFF AUTORCC OFF)
+
+    # Isolate the allocation-failure injector from Catch and application code.
+    add_executable(librecad_text_profile_binding_copy_failure_tests EXCLUDE_FROM_ALL
+        librecad/src/lib/engine/document/entities/lc_textprofile.cpp
+        librecad/src/lib/engine/document/entities/lc_textprofilebinding.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_textprofilebinding_copy_failure_tests.cpp)
+    target_include_directories(librecad_text_profile_binding_copy_failure_tests PRIVATE
+        librecad/src/lib/engine/document/entities)
+    target_link_libraries(librecad_text_profile_binding_copy_failure_tests PRIVATE Qt6::Core)
+    target_compile_features(librecad_text_profile_binding_copy_failure_tests PRIVATE cxx_std_17)
+    set_target_properties(librecad_text_profile_binding_copy_failure_tests PROPERTIES
         AUTOMOC OFF AUTOUIC OFF AUTORCC OFF)
 
     add_executable(librecad_text_runs_tests EXCLUDE_FROM_ALL
