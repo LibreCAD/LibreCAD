@@ -228,7 +228,8 @@ public:
             double &patternOffset) override;
 
 private:
-  double updateAddLine(RS_EntityContainer *textLine, int lineCounter);
+  double updateAddLine(RS_EntityContainer *textLine, int lineCounter,
+                       double leadingAdvance);
 
   void addLetter(RS_EntityContainer &oneLine, QChar letter, RS_Font &font,
                  const RS_Vector &letterSpace, RS_Vector &letterPosition);
@@ -241,7 +242,9 @@ protected:
   RS_MTextData data;
 
   /**
-   * Text width used by the current contents of this text entity.
+   * Text width used by the current contents of this text entity: the widest
+   * line, measured over its letters. A left-aligned line is measured from the
+   * insertion point instead, so that its indentation counts.
    * This property is updated by the update method.
    * @see update
    */
