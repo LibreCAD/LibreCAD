@@ -276,6 +276,16 @@ std::string normalizeDwgTableName(const std::string &name) {
   return normalized;
 }
 
+// The handle the DWG being written has for the table record of a name, 0 if
+// it has none: a DWG names a layer or a text style by the handle of its
+// record, and the codec writes the handle of "0" or STANDARD for none.
+std::uint32_t dwgWriteHandleByName(
+    const std::map<std::string, std::uint32_t> &handles,
+    const std::string &name) {
+  const auto found = handles.find(normalizeDwgTableName(name));
+  return found == handles.end() ? 0 : found->second;
+}
+
 std::string normalizeDwgDataStorageHandleKey(std::string value) {
   value.erase(
       std::remove_if(value.begin(), value.end(),
@@ -31295,16 +31305,11 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
         if (m_dwgW != nullptr) {
           // The MTEXT refers to the text style and the layer of its
           // attribute by the handles they have in the file being written.
-          const auto style = m_dwgWriteTextStyleHandleByName.find(
-              normalizeDwgTableName(mtext->style));
-          if (style != m_dwgWriteTextStyleHandleByName.end()) {
-            attrib.styleH.ref = style->second;
-            mtext->styleH.ref = style->second;
-          }
-          const auto layer = m_dwgWriteLayerHandleByName.find(
-              normalizeDwgTableName(attrib.layer));
-          if (layer != m_dwgWriteLayerHandleByName.end())
-            mtext->setDwgLayerHandle(layer->second);
+          mtext->styleH.ref = dwgWriteHandleByName(
+              m_dwgWriteTextStyleHandleByName, mtext->style);
+          if (const std::uint32_t layer = dwgWriteHandleByName(
+                  m_dwgWriteLayerHandleByName, attrib.layer))
+            mtext->setDwgLayerHandle(layer);
         }
         if (!embedsMText) {
           attrib.attVersion = 0;
@@ -31337,6 +31342,12 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
         attrib.angle = source->getAngle() * 180.0 / M_PI;
         attrib.textgen =
             textGenerationFlags(source->getTextGeneration(), sidecar.textgen);
+      }
+      // Of one line or of several: in a DWG the ATTRIB names its text style
+      // by the handle of the style's record.
+      if (m_dwgW != nullptr) {
+        attrib.styleH.ref = dwgWriteHandleByName(
+            m_dwgWriteTextStyleHandleByName, attrib.style);
       }
       removeInsertAttribSidecar(attrib);
       in.attlist.push_back(std::make_shared<DRW_Attrib>(std::move(attrib)));
@@ -31505,6 +31516,8 @@ void RS_FilterDXFRW::writeMText(const RS_MText *t) {
     }
 
     if (m_dwgW) {
+      text->styleH.ref = dwgWriteHandleByName(m_dwgWriteTextStyleHandleByName,
+                                              text->style);
       if (!m_dwgW->writeMText(static_cast<DRW_MText *>(text)))
         m_writeFailed = true;
       return;
@@ -31571,6 +31584,8 @@ void RS_FilterDXFRW::writeText(RS_Text *t) {
     text.text =
         toDxfSingleLineString(t->getText(), m_dwgW == nullptr).toUtf8().data();
     if (m_dwgW) {
+      text.styleH.ref = dwgWriteHandleByName(m_dwgWriteTextStyleHandleByName,
+                                             text.style);
       if (!m_dwgW->writeText(&text))
         m_writeFailed = true;
       return;

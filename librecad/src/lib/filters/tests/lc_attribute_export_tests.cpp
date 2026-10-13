@@ -1411,6 +1411,87 @@ TEST_CASE("an attribute keeps its text style name through DWG 2000",
     CHECK(text->getStyle().compare("iso3098", Qt::CaseInsensitive) == 0);
 }
 
+// A DWG names the text style of a text by the handle of the style's record,
+// and a text that names none is in the style Standard. Every kind of text
+// names the record of its own style: an attribute of one line and one of
+// several, a text and a multi-line text of their own.
+TEST_CASE("every kind of text keeps its text style in a DWG",
+          "[attribute-export][attrib][mtext][filter][dwg][keep]") {
+    const Bench bench("text_style_dwg");
+    const char* const style = "iso3098";
+    const std::string seqend = "0\nSEQEND\n";
+    const std::string end = "0\nENDSEC\n0\nEOF\n";
+    std::string dxf = AttributeDxf::rich().str();
+    REQUIRE(dxf.find(seqend) != std::string::npos);
+    dxf.insert(dxf.find(seqend), singleLineAttrib("PATH", "1", "20", "9", "one line", ""));
+    REQUIRE(dxf.size() > end.size());
+    REQUIRE(dxf.compare(dxf.size() - end.size(), end.size(), end) == 0);
+    dxf.insert(dxf.size() - end.size(),
+               "0\nTEXT\n100\nAcDbEntity\n8\n0\n100\nAcDbText\n10\n100\n20\n20\n30\n0\n40\n9\n1\nof its own\n"
+               "7\niso3098\n100\nAcDbText\n"
+               "0\nMTEXT\n100\nAcDbEntity\n8\n0\n100\nAcDbMText\n10\n100\n20\n4\n30\n0\n40\n9\n41\n80\n71\n1\n72\n5\n"
+               "1\nseveral\\Plines\n7\niso3098\n73\n1\n44\n1.0\n");
+    // How many texts of either kind a drawing shows, after a check of the
+    // style of each.
+    const auto textsInStyle = [style](EditableDrawing& drawing) {
+        int texts = 0;
+        for (const RS_Text* text : drawing.live<RS_Text>(RS2::EntityText)) {
+            CAPTURE(text->getText().toStdString(), text->getStyle().toStdString());
+            CHECK(text->getStyle().compare(style, Qt::CaseInsensitive) == 0);
+            ++texts;
+        }
+        for (const RS_MText* text : drawing.live<RS_MText>(RS2::EntityMText)) {
+            CAPTURE(text->getText().toStdString(), text->getStyle().toStdString());
+            CHECK(text->getStyle().compare(style, Qt::CaseInsensitive) == 0);
+            ++texts;
+        }
+        return texts;
+    };
+
+    for (const Target& to : kTargets) {
+        if (to.m_dxf) {
+            continue;
+        }
+        CAPTURE(to.m_name);
+        EditableDrawing drawing;
+        loadDxf(bench, dxf, drawing, std::string(to.m_name) + "_source");
+        REQUIRE(drawing.live<RS_Insert>(RS2::EntityInsert).size() == 1);
+        REQUIRE(drawing.live<RS_Text>(RS2::EntityText).size() == 2);
+        REQUIRE(drawing.live<RS_MText>(RS2::EntityMText).size() == 2);
+        REQUIRE(textsInStyle(drawing) == 4);
+        const auto out = save(bench, drawing, "untouched", to);
+
+        // In the file: a record of the style, and its handle in every text.
+        DwgContent written;
+        readDwg(out, written);
+        const std::uint32_t handle = handleNamed(written.m_textStyles, style);
+        const std::uint32_t standard = handleNamed(written.m_textStyles, "Standard");
+        CAPTURE(handle, standard);
+        REQUIRE(handle != 0);
+        REQUIRE(handle != standard);
+        REQUIRE(written.m_inserts.size() == 1);
+        REQUIRE(written.m_inserts.front().attlist.size() == 2);
+        for (const auto& attribute : written.m_inserts.front().attlist) {
+            REQUIRE(attribute != nullptr);
+            CAPTURE(attribute->tag);
+            CHECK(attribute->styleH.ref == handle);
+            if (attribute->mtext != nullptr) {
+                CHECK(attribute->mtext->styleH.ref == handle);
+            }
+        }
+        REQUIRE(written.m_texts.size() == 1);
+        CHECK(written.m_texts.front().styleH.ref == handle);
+        REQUIRE(written.m_mtexts.size() == 1);
+        CHECK(written.m_mtexts.front().styleH.ref == handle);
+
+        // And the file opens with the four texts in their style.
+        EditableDrawing reopened;
+        REQUIRE(lc::test::importDrawing(reopened.m_graphic, out, to.m_format));
+        CHECK(reopened.live<RS_Insert>(RS2::EntityInsert).size() == 1);
+        CHECK(textsInStyle(reopened) == 4);
+    }
+}
+
 TEST_CASE("an untouched attribute keeps the value another program stored",
           "[attribute-export][attrib][filter][dxf][plain-value]") {
     const Bench bench("attr_stored_value");
