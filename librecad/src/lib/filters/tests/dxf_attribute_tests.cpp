@@ -3813,7 +3813,8 @@ TEST_CASE("DXF MTEXT content is not cut inside a caret code",
     for (const DRW::Version version : {DRW::AC1032, DRW::AC1015}) {
       CAPTURE(static_cast<int>(version));
       const auto path = std::filesystem::temp_directory_path() /
-          (std::string("lc_mtext_caret_") + c.name + ".dxf");
+          (std::string("lc_mtext_caret_") + c.name + "_" +
+           std::to_string(static_cast<int>(version)) + ".dxf");
       std::filesystem::remove(path);
       MTextEmitter em;
       em.m_mtext.layer = "0";
