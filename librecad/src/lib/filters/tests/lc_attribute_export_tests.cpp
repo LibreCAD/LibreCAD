@@ -3450,32 +3450,46 @@ TEST_CASE("the first point of a single-line attribute with nothing to draw stays
           "[attribute-export][attrib][filter][dxf][dwg][attrib-geometry]") {
     const Bench bench("attr_blank_first_point");
     // Height 2, aligned to (50,20): to the right on the baseline, in the
-    // middle, and centred with the vertical middle. The last column is how
-    // far below the alignment point the baseline of a capital letter is.
+    // middle, centred with the vertical middle, at the top, centred at the
+    // bottom, and in the middle of a text turned by 90 degrees. The last
+    // columns are where the baseline of a capital letter would start: on the
+    // alignment point, half a height below it, a whole height below it, a
+    // third of a height above it (so far the line below the baseline hangs),
+    // and for the turned text half a height to the right.
     struct Kind {
         const char* m_name;
-        const char* m_horizontal;
+        const char* m_textGroups;   // 50 and 72
         const char* m_vertical;
-        double m_below;
+        double m_firstX;
+        double m_firstY;
     };
-    const std::vector<Kind> kinds{{"RIGHT", "72\n2\n", "0", 0.0}, {"MIDDLE", "72\n4\n", "0", 1.0},
-                                  {"CENTER", "72\n1\n", "2", 1.0}};
+    const std::vector<Kind> kinds{
+        {"RIGHT", "72\n2\n", "0", 50.0, 20.0},
+        {"MIDDLE", "72\n4\n", "0", 50.0, 19.0},
+        {"CENTER", "72\n1\n", "2", 50.0, 19.0},
+        {"TOP", "", "3", 50.0, 18.0},
+        {"BOTTOM", "72\n1\n", "1", 50.0, 20.0 + 2.0 / 3.0},
+        {"TURNED", "50\n90\n72\n4\n", "0", 51.0, 20.0},
+    };
     std::vector<std::string> attributes;
     for (const char* value : {"", "   "}) {
         for (const Kind& kind : kinds) {
             const std::string tag = std::string(*value == '\0' ? "EMPTY_" : "BLANK_") + kind.m_name;
             attributes.push_back(singleLineAttrib(tag, "50", "20", "2", value,
-                                                  std::string(kind.m_horizontal) + "11\n50\n21\n20\n31\n0\n",
+                                                  std::string(kind.m_textGroups) + "11\n50\n21\n20\n31\n0\n",
                                                   kind.m_vertical));
         }
     }
-    const auto checkPlaces = [](EditableDrawing& drawing) {
+    const auto checkPlaces = [&kinds](EditableDrawing& drawing) {
         const std::vector<const RS_Text*> texts = drawing.live<RS_Text>(RS2::EntityText);
-        CHECK(texts.size() == 6);
+        CHECK(texts.size() == 2 * kinds.size());
+        int turned = 0;
         for (const RS_Text* text : texts) {
             CAPTURE(text->getInsertionPoint().x, text->getInsertionPoint().y);
             CHECK(text->getInsertionPoint().distanceTo(RS_Vector(50.0, 20.0)) < 1e-9);
+            turned += std::abs(text->getAngle() - M_PI / 2.0) < 1e-9 ? 1 : 0;
         }
+        CHECK(turned == 2);
     };
     const auto checkRecords = [&kinds](const std::filesystem::path& file) {
         for (const char* prefix : {"EMPTY_", "BLANK_"}) {
@@ -3483,7 +3497,7 @@ TEST_CASE("the first point of a single-line attribute with nothing to draw stays
                 const std::string tag = std::string(prefix) + kind.m_name;
                 const std::vector<double> points = ownNumbers(attributeRecord(file, tag), {10, 20, 11, 21});
                 CAPTURE(file.filename().string(), tag, points);
-                CHECK(sameNumbers({50.0, 20.0 - kind.m_below, 50.0, 20.0}, points));
+                CHECK(sameNumbers({kind.m_firstX, kind.m_firstY, 50.0, 20.0}, points));
             }
         }
     };
