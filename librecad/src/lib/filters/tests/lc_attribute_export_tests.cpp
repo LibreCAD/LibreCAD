@@ -229,12 +229,14 @@ std::string attdefDxf() {
 }
 
 // A drawing with one MTEXT that belongs to no block reference. Without a
-// spacing style the MTEXT has no group 73.
-std::string standaloneMTextDxf(const std::string& spacingStyle) {
+// spacing style the MTEXT has no group 73. Its direction, where the case
+// gives one, is where AutoCAD writes it: an x-axis (11, 21, 31) or an angle
+// (50) after the text.
+std::string standaloneMTextDxf(const std::string& spacingStyle, const std::string& direction = {}) {
     const std::string group73 = spacingStyle.empty() ? std::string() : "73\n" + spacingStyle + "\n";
     return "0\nSECTION\n2\nENTITIES\n0\nMTEXT\n100\nAcDbEntity\n8\n0\n100\nAcDbMText\n"
            "10\n1\n20\n4\n30\n0\n40\n9\n41\n80\n71\n1\n72\n5\n1\nmy text\\Psecond line\n"
-           + group73 + "44\n1.0\n0\nENDSEC\n0\nEOF\n";
+           + direction + group73 + "44\n1.0\n0\nENDSEC\n0\nEOF\n";
 }
 
 // The line-spacing style of an MTEXT is its group 73: 1 is "at least", 2 is
@@ -437,14 +439,18 @@ void checkRepeatsSource(const DxfRecord& source, const std::filesystem::path& wr
 }
 
 // What libdxfrw reads of a DWG, without the filter in between: the block
-// references with their attributes, and the handle of every registered
-// application, layer and text style by its name.
+// references with their attributes, the texts of their own, and the handle
+// of every registered application, layer and text style by its name.
 struct DwgContent : lc::test::NullDrwInterface {
     std::vector<DRW_Insert> m_inserts;
+    std::vector<DRW_Text> m_texts;
+    std::vector<DRW_MText> m_mtexts;
     std::map<std::string, std::uint32_t> m_applications;
     std::map<std::string, std::uint32_t> m_layers;
     std::map<std::string, std::uint32_t> m_textStyles;
     void addInsert(const DRW_Insert& insert) override { m_inserts.push_back(insert); }
+    void addText(const DRW_Text& text) override { m_texts.push_back(text); }
+    void addMText(const DRW_MText& text) override { m_mtexts.push_back(text); }
     void addAppId(const DRW_AppId& application) override { m_applications[application.name] = application.handle; }
     void addLayer(const DRW_Layer& layer) override { m_layers[layer.name] = layer.handle; }
     void addTextStyle(const DRW_Textstyle& style) override { m_textStyles[style.name] = style.handle; }
@@ -1175,6 +1181,11 @@ bool sameNumbers(const std::vector<double>& expected, const std::vector<double>&
     return true;
 }
 
+// True when two angles, in radians, are one direction.
+bool sameDirection(const double a, const double b) {
+    return std::abs(std::remainder(a - b, 2.0 * M_PI)) < 1e-9;
+}
+
 // The first point and the alignment point of the attribute itself in a
 // record: 10, 20, 11, 21. Next to its MTEXT a record has the alignment point
 // a second time, in front of the MTEXT, and the two have to be one point.
@@ -1636,6 +1647,114 @@ TEST_CASE("a rotated attribute read from DXF keeps its angle in the formats of 2
             EditableDrawing again;
             REQUIRE(lc::test::importDrawing(again.m_graphic, file, to.m_format));
             checkSameMText(*turned, *only<RS_MText>(again, RS2::EntityMText));
+        }
+    }
+}
+
+// The same of an MTEXT of its own. Its record has the angle in any case, and
+// the x-axis its file had next to it: a reader takes the x-axis where a
+// record has both, so the two have to be one direction, and a text that was
+// turned in the drawing cannot keep the x-axis of its file. In a DWG the
+// x-axis is all there is, also for a text that never had one.
+TEST_CASE("a standalone MTEXT keeps a rotation made in the drawing",
+          "[attribute-export][mtext][filter][dxf][dwg][attrib-geometry]") {
+    const Bench bench("mtext_turned");
+    // A text at 30 degrees: as AutoCAD writes it, and with the angle alone.
+    const std::string xAxis = "11\n0.8660254037844335\n21\n0.5000000000000089\n31\n0.0\n";
+    const std::string angleAlone = "50\n30\n";
+    using Turn = std::function<bool(EditableDrawing&, const RS_MText*)>;
+    const Turn rotate = [](EditableDrawing& drawing, const RS_MText* text) {
+        RS_RotateData data;
+        data.center = text->getInsertionPoint();
+        data.angle = M_PI / 6.0;
+        bool done = false;
+        drawing.modify([&](LC_DocumentModificationBatch& ctx) {
+            done = RS_Modification::rotate(data, selection({text}), false, ctx);
+        });
+        return done;
+    };
+    const Turn mirror = [](EditableDrawing& drawing, const RS_MText* text) {
+        RS_MirrorData data;
+        data.axisPoint1 = RS_Vector(0.0, 0.0);
+        data.axisPoint2 = RS_Vector(0.0, 10.0);
+        bool done = false;
+        drawing.modify([&](LC_DocumentModificationBatch& ctx) {
+            done = RS_Modification::mirror(data, selection({text}), false, ctx);
+        });
+        return done;
+    };
+    const Turn setAngle = [](EditableDrawing& drawing, const RS_MText* text) {
+        drawing.edit(text, [](RS_MText& clone) { clone.setAngle(1.0); });
+        return true;
+    };
+    struct Row {
+        const char* m_name;
+        std::string m_direction;    // of the MTEXT in the source
+        Turn m_turn;                // none: the text is left alone
+        bool m_hasAxis;             // a DXF saved from the drawing has an x-axis
+    };
+    const std::vector<Row> rows{
+        {"untouched", xAxis, nullptr, true},
+        {"rotated", xAxis, rotate, true},
+        {"mirrored", xAxis, mirror, true},
+        {"angle_set", xAxis, setAngle, true},
+        {"angle_alone", angleAlone, nullptr, false},
+        {"angle_alone_rotated", angleAlone, rotate, false},
+    };
+    for (const Row& row : rows) {
+        for (const char* format : {"dxf2018", "dxf2007", "dxf2000", "dwg2018", "dwg2000"}) {
+            const Target to = target(format);
+            CAPTURE(row.m_name, to.m_name);
+            EditableDrawing drawing;
+            loadDxf(bench, standaloneMTextDxf("1", row.m_direction), drawing,
+                    std::string(row.m_name) + "_" + to.m_name + "_source");
+            const RS_MText* read = only<RS_MText>(drawing, RS2::EntityMText);
+            REQUIRE(sameDirection(read->getAngle(), M_PI / 6.0));
+            if (row.m_turn) {
+                REQUIRE(row.m_turn(drawing, read));
+            }
+            const RS_MText* shown = only<RS_MText>(drawing, RS2::EntityMText);
+            const double angle = shown->getAngle();
+            REQUIRE(sameDirection(angle, M_PI / 6.0) == !row.m_turn);
+
+            const auto out = save(bench, drawing, row.m_name, to);
+            if (to.m_dxf) {
+                checkWrittenDxf(out);
+                const DxfRecord record = onlyRecord(out, "MTEXT");
+                const std::vector<double> written = ownNumbers(record, {50});
+                REQUIRE(written.size() == 1);
+                CHECK(sameDirection(written.front() * M_PI / 180.0, angle));
+                const std::vector<double> axis = ownNumbers(record, {11, 21});
+                CAPTURE(written, axis);
+                if (row.m_hasAxis) {
+                    REQUIRE(axis.size() == 2);
+                    CHECK(sameDirection(std::atan2(axis[1], axis[0]), angle));
+                }
+                else {
+                    CHECK(axis.empty());
+                }
+                if (row.m_hasAxis && !row.m_turn) {
+                    // Left alone, the x-axis is the file's to the last digit.
+                    CHECK(record.own(11) == std::vector<std::string>{"0.8660254037844335"});
+                    CHECK(record.own(21) == std::vector<std::string>{"0.5000000000000089"});
+                }
+            }
+            else {
+                DwgContent written;
+                readDwg(out, written);
+                REQUIRE(written.m_mtexts.size() == 1);
+                const DRW_Coord& axis = written.m_mtexts.front().secPoint;
+                CAPTURE(axis.x, axis.y, axis.z);
+                CHECK(std::hypot(axis.x, axis.y) == Catch::Approx(1.0).margin(1e-9));
+                CHECK(sameDirection(std::atan2(axis.y, axis.x), angle));
+            }
+
+            EditableDrawing reopened;
+            REQUIRE(lc::test::importDrawing(reopened.m_graphic, out, to.m_format));
+            const RS_MText* again = only<RS_MText>(reopened, RS2::EntityMText);
+            CAPTURE(again->getAngle(), angle);
+            CHECK(sameDirection(again->getAngle(), angle));
+            CHECK(again->getInsertionPoint().distanceTo(shown->getInsertionPoint()) < 1e-9);
         }
     }
 }

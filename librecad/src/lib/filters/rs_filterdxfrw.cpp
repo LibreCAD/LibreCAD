@@ -31406,10 +31406,12 @@ void RS_FilterDXFRW::writeMText(const RS_MText *t) {
 
   getEntityAttributes(text, t);
   if (m_version != 1009) {
+    // The x axis the record was read with; zero: it had none.
+    DRW_Coord storedXAxis;
     if (const auto ocs = extractMTextOcsSidecar(t)) {
       text->basePoint.z = ocs->elevation;
       text->extPoint = ocs->extrusion;
-      static_cast<DRW_MText *>(text)->secPoint = ocs->xAxis;
+      storedXAxis = ocs->xAxis;
       removeMTextOcsSidecar(*text);
     } else if (t->ownerLineage() != 0) {
       // A block attribute no INSERT claims is written on its own, in the
@@ -31418,10 +31420,13 @@ void RS_FilterDXFRW::writeMText(const RS_MText *t) {
           attribute && attribute->hasMText) {
         text->basePoint.z = attribute->mtext.basePoint.z;
         text->extPoint = attribute->mtext.extPoint;
-        static_cast<DRW_MText *>(text)->secPoint = mtextXAxis(
-            t->getAngle(), attribute->mtext.secPoint, false, m_dwgW != nullptr);
+        storedXAxis = attribute->mtext.secPoint;
       }
     }
+    // A text turned in the drawing since no longer has that direction, and
+    // a reader takes group 11 for the direction where a record has it.
+    txt2.secPoint =
+        mtextXAxis(t->getAngle(), storedXAxis, false, m_dwgW != nullptr);
   }
   // The private groups of a block attribute's text never leave the program.
   removeInsertAttribSidecar(*text);
