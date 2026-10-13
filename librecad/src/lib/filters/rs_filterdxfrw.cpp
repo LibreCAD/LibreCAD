@@ -31109,9 +31109,11 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
           // text and makes it the vertical alignment. A stored text with such
           // a prefix goes out only next to the vertical alignment it was read
           // with; any other stored text keeps its inline codes when only the
-          // attachment changes.
+          // attachment changes. A text read from a DWG may hold what a line
+          // of a DXF cannot: there the text of the drawing goes in its place.
           const bool replayText =
               !textEdited &&
+              (m_dwgW != nullptr || fitsDxfLine(saved.text)) &&
               !(valignEdited &&
                 hasMTextAlignmentPrefix(
                     toNativeString(QString::fromUtf8(saved.text.c_str()))));

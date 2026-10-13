@@ -2726,6 +2726,70 @@ TEST_CASE("a format without the MTEXT of an attribute is not refused over what t
     }
 }
 
+TEST_CASE("a stored MTEXT content that a DXF line cannot hold is not written to DXF",
+          "[attribute-export][attrib][filter][dxf][dwg][plain-value]") {
+    const Bench bench("attr_content_unfit");
+    // The content of an MTEXT in a DWG can hold a line break or a carriage
+    // return as it is, where a DXF has the codes "\P" and "^M". The fixture
+    // has the codes, and the character itself is put by hand into the content
+    // the text remembers: the text of the drawing is the same for both, and
+    // the attribute passes for untouched.
+    struct Row {
+        const char* m_name;
+        const char* m_inDxf;
+        const char* m_inDwg;
+    };
+    const std::vector<Row> rows{
+        {"line_feed", "my text\\Psecond line", "my text\nsecond line"},
+        {"carriage_return", "one^Mtwo", "one\rtwo"},
+    };
+    const Target dxf = target("dxf2018");
+    const Target dwg = target("dwg2018");
+    for (const Row& row : rows) {
+        const std::string name = row.m_name;
+        CAPTURE(name);
+        const std::vector<std::string> inDxf{row.m_inDxf};
+        AttributeDxf fixture;
+        fixture.m_text = row.m_inDxf;
+        EditableDrawing drawing;
+        load(bench, fixture, drawing, name + "_source");
+        drawing.edit(only<RS_MText>(drawing, RS2::EntityMText), [&](RS_MText& text) {
+            REQUIRE(setStoredMTextContent(text, row.m_inDwg));
+        });
+
+        // To a DXF the text of the drawing goes in its place, spelled as a
+        // DXF spells it: the export is not refused over a content that the
+        // drawing shows all the same.
+        const auto direct = save(bench, drawing, name, dxf);
+        checkWrittenDxf(direct);
+        CHECK(onlyRecord(direct, "ATTRIB").embedded(1) == inDxf);
+
+        // A DWG keeps the content as it is, and the drawing opened from that
+        // DWG is saved to DXF like the one above, also when the text was
+        // only moved, which leaves its content alone.
+        const auto kept = save(bench, drawing, name, dwg);
+        DwgContent content;
+        readDwg(kept, content);
+        CHECK(onlyEmbeddedMText(content).text == row.m_inDwg);
+        EditableDrawing fromDwg;
+        REQUIRE(lc::test::importDrawing(fromDwg.m_graphic, kept, RS2::FormatDWG2018));
+        const auto viaDwg = save(bench, fromDwg, name + "_dwg2018", dxf);
+        checkWrittenDxf(viaDwg);
+        CHECK(onlyRecord(viaDwg, "ATTRIB").embedded(1) == inDxf);
+        fromDwg.edit(only<RS_MText>(fromDwg, RS2::EntityMText), [](RS_MText& text) {
+            text.move(RS_Vector(5.0, 0.0));
+        });
+        const auto moved = save(bench, fromDwg, name + "_dwg2018_moved", dxf);
+        checkWrittenDxf(moved);
+        CHECK(onlyRecord(moved, "ATTRIB").embedded(1) == inDxf);
+        // And saved to a DWG again, it has the content of the DWG.
+        const auto again = save(bench, fromDwg, name + "_dwg2018_moved", dwg);
+        DwgContent contentAgain;
+        readDwg(again, contentAgain);
+        CHECK(onlyEmbeddedMText(contentAgain).text == row.m_inDwg);
+    }
+}
+
 TEST_CASE("a multi-line attribute keeps its MTEXT in the formats of 2018 whatever its type says",
           "[attribute-export][attrib][filter][dxf][dwg][plain-value]") {
     const Bench bench("attr_value_type");
