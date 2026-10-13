@@ -1004,9 +1004,9 @@ TEST_CASE("Embedded MTEXT edits survive modern export and older ATTRIB fallbacks
       } else {
         auto *text = dynamic_cast<RS_Text *>(restoredEntity);
         REQUIRE(text);
-        QString fallback = value;
-        fallback.replace('\n', ' ');
-        CHECK(text->getText() == fallback);
+        // One line without codes: the line break and the tab are a space each.
+        CHECK(text->getText() ==
+              (value.isEmpty() ? QString() : QStringLiteral("    ABC  DEF \u03a9")));
         CHECK(text->getHeight() == 12.0);
         CAPTURE(text->getStyle().toStdString(), attribute->getStyle().toStdString());
         CHECK(text->getStyle().compare(attribute->getStyle(), Qt::CaseInsensitive) == 0);

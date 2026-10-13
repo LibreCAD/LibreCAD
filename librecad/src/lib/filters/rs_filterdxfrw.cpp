@@ -6535,6 +6535,13 @@ void removeInsertAttribSidecar(DRW_Entity &entity) {
   }
   entity.extData = std::move(filtered);
 }
+
+// A line of an ASCII DXF file cannot hold these; a string read from a DWG can.
+bool fitsDxfLine(const std::string &value) {
+  return value.find('\r') == std::string::npos &&
+         value.find('\n') == std::string::npos &&
+         value.find('\0') == std::string::npos;
+}
 } // namespace
 
 /**
@@ -30735,7 +30742,6 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
       attrib.attVersion = static_cast<std::uint8_t>(sidecar.attVersion);
       attrib.m_attributeType = static_cast<std::uint8_t>(sidecar.attributeType);
       attrib.lockPosition = sidecar.lockPosition;
-      attrib.text = sidecar.value;
       attrib.basePoint = sidecar.basePoint;
       attrib.secPoint = sidecar.secPoint;
       attrib.extPoint = sidecar.extPoint;
@@ -30765,6 +30771,7 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
         // Always the model's style: 1 and 2 read back as themselves, and no
         // other source value may reach the file.
         mtext->linespacingStyle = mtextLineSpacingCode(data.lineSpacingStyle);
+        bool textEdited = false;
         if (sidecar.hasMText) {
           const auto &saved = sidecar.mtext;
           DRW_MText original;
@@ -30785,7 +30792,7 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
           before.lineSpacingFactor = saved.originalSpacing;
           before.angle = saved.originalAngle;
           before.style = QString::fromUtf8(saved.originalStyle.c_str());
-          const bool textEdited = data.text != before.text;
+          textEdited = data.text != before.text;
           const bool attachmentEdited = data.halign != before.halign ||
                                         data.valign != before.valign;
           const bool directionEdited = data.drawingDirection != before.drawingDirection ||
@@ -30915,11 +30922,6 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
             mtext->m_r2018ExtentsWidth = source->getUsedTextWidth();
             mtext->m_r2018ExtentsHeight = source->getUsedTextHeight();
           }
-          if (textEdited) {
-            QString fallback = data.text;
-            fallback.replace(QStringLiteral("\\P"), QStringLiteral(" ")).replace('\n', ' ');
-            attrib.text = toDxfString(fallback, m_dwgW == nullptr).toUtf8().toStdString();
-          }
           if (layoutEdited) {
             attrib.basePoint = mtext->basePoint;
             attrib.secPoint = attrib.basePoint;
@@ -30931,6 +30933,21 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
             ? (data.legacyRtlLayout ? kLegacyRtlLayout : kLogicalRtlLayout) : 0;
         setMTextRtlMarker(*mtext, rtlLayout);
         setMTextRtlMarker(attrib, rtlLayout);
+        // The value of the ATTRIB itself. Next to its MTEXT it is the value
+        // the file came with, which AutoCAD leaves empty; once the text has
+        // changed, a value that was there follows it. Without the MTEXT it is
+        // all a reader gets: the text on one line, without codes.
+        const QString plain = RS_MText::toPlainLine(data.text);
+        const bool keepStored =
+            embedsMText ? !textEdited || sidecar.value.empty()
+                        : !textEdited && plain.isEmpty();
+        // A value read from a DWG may hold what a line of a DXF cannot.
+        if (keepStored && (m_dwgW != nullptr || fitsDxfLine(sidecar.value))) {
+          attrib.text = sidecar.value;
+        } else {
+          attrib.text =
+              toDxfString(plain, m_dwgW == nullptr).toUtf8().toStdString();
+        }
         attrib.height = data.height;
         attrib.style = mtext->style;
         attrib.angle = mtext->angle;
@@ -30942,10 +30959,14 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
             mtext->styleH.ref = style->second;
           }
         }
-        if (m_dwgW != nullptr && m_dwgW->getVersion() < DRW::AC1032) {
+        if (!embedsMText) {
           attrib.attVersion = 0;
           attrib.m_attributeType = 1;
         } else {
+          // DRW_Attrib::encodeDwg() embeds the MTEXT in a multi-line ATTRIB
+          // only; type 0 or 1 would be written as a single line without it.
+          if (attrib.m_attributeType <= 1)
+            attrib.m_attributeType = 2;
           attrib.mtext = std::move(mtext);
         }
       } else {

@@ -93,11 +93,39 @@ const Target kTargets[] = {
     {RS2::FormatDWG, "dwg2000", ".dwg", false, false},
 };
 
+// The DXF formats that only the cases about the value of an attribute save
+// to. None of them has an MTEXT in an attribute, and the oldest has no MTEXT
+// at all.
+const Target kOtherDxfTargets[] = {
+    {RS2::FormatDXFRW12, "dxf12", ".dxf", true, false},     {RS2::FormatDXFRW14, "dxf14", ".dxf", true, false},
+    {RS2::FormatDXFRW2004, "dxf2004", ".dxf", true, false}, {RS2::FormatDXFRW2010, "dxf2010", ".dxf", true, false},
+    {RS2::FormatDXFRW2013, "dxf2013", ".dxf", true, false},
+};
+
 const Target& target(const std::string& name) {
-    const auto found =
-        std::find_if(std::begin(kTargets), std::end(kTargets), [&](const Target& t) { return name == t.m_name; });
-    REQUIRE(found != std::end(kTargets));
-    return *found;
+    const auto named = [&](const Target& t) { return name == t.m_name; };
+    const auto found = std::find_if(std::begin(kTargets), std::end(kTargets), named);
+    if (found != std::end(kTargets)) {
+        return *found;
+    }
+    const auto other = std::find_if(std::begin(kOtherDxfTargets), std::end(kOtherDxfTargets), named);
+    REQUIRE(other != std::end(kOtherDxfTargets));
+    return *other;
+}
+
+// Every format that has no MTEXT in an attribute: twelve, seven of DXF and
+// five of DWG.
+std::vector<Target> targetsWithoutMText() {
+    std::vector<Target> targets;
+    for (const Target& t : kOtherDxfTargets) {
+        targets.push_back(t);
+    }
+    for (const Target& t : kTargets) {
+        if (!t.m_embedsMText) {
+            targets.push_back(t);
+        }
+    }
+    return targets;
 }
 
 // A block reference with one attribute, in the group order and with the
@@ -427,13 +455,105 @@ void readDwg(const std::filesystem::path& file, DwgContent& content) {
     REQUIRE(reader.read(&content, false));
 }
 
-// The MTEXT of the one attribute of the one block reference of a DWG.
-const DRW_MText& onlyEmbeddedMText(const DwgContent& content) {
+// The one attribute of the one block reference of a DWG.
+const DRW_Attrib& onlyDwgAttribute(const DwgContent& content) {
     REQUIRE(content.m_inserts.size() == 1);
     REQUIRE(content.m_inserts.front().attlist.size() == 1);
     REQUIRE(content.m_inserts.front().attlist.front() != nullptr);
-    REQUIRE(content.m_inserts.front().attlist.front()->mtext != nullptr);
-    return *content.m_inserts.front().attlist.front()->mtext;
+    return *content.m_inserts.front().attlist.front();
+}
+
+// The MTEXT of that attribute.
+const DRW_MText& onlyEmbeddedMText(const DwgContent& content) {
+    const DRW_Attrib& attribute = onlyDwgAttribute(content);
+    REQUIRE(attribute.mtext != nullptr);
+    return *attribute.mtext;
+}
+
+// The attribute's own value in a saved file, as the file holds it: group 1 of
+// the ATTRIB itself in a DXF, the text value of the ATTRIB in a DWG. It is
+// read without the filter, which would decode it as it decodes a text.
+std::string attributeValueIn(const std::filesystem::path& file, const Target& of) {
+    CAPTURE(file.filename().string());
+    if (of.m_dxf) {
+        const std::vector<std::string> value = onlyRecord(file, "ATTRIB").own(1);
+        REQUIRE(value.size() == 1);
+        return value.front();
+    }
+    DwgContent content;
+    readDwg(file, content);
+    return onlyDwgAttribute(content).text;
+}
+
+// Two characters as UTF-8, which is what a text of a file or of the drawing
+// is compared as here. The bytes are spelled out: a compiler need not encode
+// a string literal that way.
+const char* const kDegreeSign = "\xC2\xB0";
+const char* const kCapitalOmega = "\xCE\xA9";
+
+// What a saved file shows of its one attribute when it is opened.
+struct ShownAttribute {
+    bool m_multiLine = false;
+    std::string m_text;
+    double m_height = 0.0;
+    RS_Vector m_at;
+};
+
+ShownAttribute shownAttribute(const std::filesystem::path& file, const Target& from) {
+    CAPTURE(file.filename().string());
+    EditableDrawing reopened;
+    REQUIRE(lc::test::importDrawing(reopened.m_graphic, file, from.m_format));
+    REQUIRE(reopened.live<RS_Insert>(RS2::EntityInsert).size() == 1);
+    const RS_Entity* entity = attributeText(reopened);
+    if (entity->rtti() == RS2::EntityMText) {
+        const auto* text = static_cast<const RS_MText*>(entity);
+        return {true, text->getText().toStdString(), text->getHeight(), text->getInsertionPoint()};
+    }
+    const auto* text = static_cast<const RS_Text*>(entity);
+    return {false, text->getText().toStdString(), text->getHeight(), text->getInsertionPoint()};
+}
+
+// What a text keeps of its ATTRIB is application data on the text, in groups
+// under the private names: of the attribute itself a row of numbers, then
+// the tag and the value as strings; of its MTEXT, among others, the text
+// style and then the content as strings. These put a value there that no
+// DXF of these cases can: a part is found by its group, its code and its
+// place among the values of that code.
+bool setStoredAttributePart(RS_Entity& text, const std::string& group, const int code, const int place,
+                            const std::shared_ptr<DRW_Variant>& part) {
+    std::vector<std::shared_ptr<DRW_Variant>> data = text.getDrwExtData();
+    bool inGroup = false;
+    int seen = 0;
+    for (auto& value : data) {
+        if (value == nullptr) {
+            continue;
+        }
+        if (value->code() == 1001) {
+            inGroup = group == value->c_str();
+        }
+        else if (inGroup && value->code() == code && seen++ == place) {
+            value = part;
+            text.setDrwExtData(std::move(data));
+            return true;
+        }
+    }
+    return false;
+}
+
+// The attribute's own value as the file had it.
+bool setStoredAttributeValue(RS_Entity& text, const std::string& stored) {
+    return setStoredAttributePart(text, kPrivateApplication, 1000, 1, std::make_shared<DRW_Variant>(1000, stored));
+}
+
+// The attribute type: 2 for a multi-line attribute.
+bool setStoredAttributeType(RS_Entity& text, const int type) {
+    return setStoredAttributePart(text, kPrivateApplication, 1070, 4, std::make_shared<DRW_Variant>(1070, type));
+}
+
+// The content of the MTEXT as the file had it, for a content of one string.
+bool setStoredMTextContent(RS_Entity& text, const std::string& stored) {
+    return setStoredAttributePart(text, std::string(kPrivateApplication) + "_MTEXT", 1000, 1,
+                                  std::make_shared<DRW_Variant>(1000, stored));
 }
 
 // The annotation-scale data of the attribute that AttributeDwgSource writes,
@@ -1878,6 +1998,311 @@ TEST_CASE("a pasted annotative attribute is saved without its scale data",
     checkScaleDataLeftOut(saveWithReport(bench, drawing, "pasted", to), to);
 }
 
+// The attribute's own value. Next to its MTEXT it is not shown: AutoCAD
+// leaves it empty, and another program may have put a line there. A format
+// before 2018 has no MTEXT in an attribute, and the value is all that is
+// left of the text there: the text on one line, without the codes of an
+// MTEXT.
+//
+// A value that is read back as a text of one line is compared here only
+// where it has no backslash. Such a text is still read as if it were the
+// content of an MTEXT, which turns the "\P" of "C:\Plans" into a line break
+// (finding 8 of the review of pull request 3059, corrected separately). The
+// cases with a backslash look at the value in the file.
+
+TEST_CASE("a multi-line attribute keeps its text in a format without the embedded MTEXT",
+          "[attribute-export][attrib][filter][dxf][dwg][plain-value]") {
+    const Bench bench("attr_value_no_mtext");
+
+    // A font with its options, a height, a tab, a degree sign and a stack.
+    AttributeDxf coded;
+    coded.m_text = R"({\fArial|b0|i0|c0|p34;ABC}\PDEF \H2x;tall ^Itab 50%%d \S1#2;)";
+    const std::string codedInFile = "ABC DEF tall  tab 50%%D 1#2";
+    const std::string codedShown = std::string("ABC DEF tall  tab 50") + kDegreeSign + " 1#2";
+
+    SECTION("an empty value as AutoCAD writes it") {
+        for (const Target& to : targetsWithoutMText()) {
+            CAPTURE(to.m_name);
+            EditableDrawing drawing;
+            load(bench, coded, drawing, std::string(to.m_name) + "_source");
+            const auto out = save(bench, drawing, "untouched", to);
+            CHECK(attributeValueIn(out, to) == codedInFile);
+            if (to.m_dxf) {
+                checkWrittenDxf(out);
+                CHECK(lc::test::fileBytes(out).find("Embedded Object") == std::string::npos);
+            }
+            const ShownAttribute shown = shownAttribute(out, to);
+            CHECK_FALSE(shown.m_multiLine);
+            CHECK(shown.m_text == codedShown);
+            CHECK(shown.m_height == 9.0);
+        }
+    }
+
+    // A change of the layout is no change of the text.
+    SECTION("after the attribute was only moved") {
+        for (const Target& to : targetsWithoutMText()) {
+            CAPTURE(to.m_name);
+            EditableDrawing drawing;
+            load(bench, coded, drawing, std::string(to.m_name) + "_source");
+            drawing.edit(only<RS_MText>(drawing, RS2::EntityMText), [](RS_MText& text) {
+                text.move(RS_Vector(5.0, 0.0));
+            });
+            const auto out = save(bench, drawing, "moved", to);
+            CHECK(attributeValueIn(out, to) == codedInFile);
+            const ShownAttribute shown = shownAttribute(out, to);
+            CHECK_FALSE(shown.m_multiLine);
+            CHECK(shown.m_text == codedShown);
+            CHECK(shown.m_at.x == Catch::Approx(6.0).margin(1e-9));
+        }
+    }
+
+    // A line that another program left as the value is its stand-in for the
+    // MTEXT, not a part of the text.
+    SECTION("a value another program left there gives way to the text") {
+        for (const char* format : {"dxf2007", "dwg2000", "dwg2013"}) {
+            const Target to = target(format);
+            CAPTURE(to.m_name);
+            EditableDrawing drawing;
+            load(bench, AttributeDxf::rich(), drawing, std::string(to.m_name) + "_source");
+            const auto out = save(bench, drawing, "stand_in", to);
+            CHECK(attributeValueIn(out, to) == "ABC DEF");
+            CHECK(shownAttribute(out, to).m_text == "ABC DEF");
+        }
+    }
+
+    SECTION("a value stays where the MTEXT has no text") {
+        AttributeDxf fixture = AttributeDxf::rich();
+        fixture.m_value = "first line";
+        fixture.m_text = R"({\fArial;})";
+        for (const char* format : {"dxf2007", "dwg2013"}) {
+            const Target to = target(format);
+            CAPTURE(to.m_name);
+            EditableDrawing drawing;
+            load(bench, fixture, drawing, std::string(to.m_name) + "_source");
+            const auto out = save(bench, drawing, "only_codes", to);
+            CHECK(attributeValueIn(out, to) == "first line");
+        }
+    }
+
+    // "\\" is a backslash in an MTEXT, so the text here ends in C:\Plans\x.
+    // The value is looked at in the file only: see the note on finding 8
+    // above these cases.
+    SECTION("a backslash of the text is a backslash of the value") {
+        AttributeDxf fixture;
+        fixture.m_text = R"({\fArial;ABC}\PC:\\Plans\\x)";
+        for (const char* format : {"dxf2007", "dwg2013"}) {
+            const Target to = target(format);
+            CAPTURE(to.m_name);
+            EditableDrawing drawing;
+            load(bench, fixture, drawing, std::string(to.m_name) + "_source");
+            const auto out = save(bench, drawing, "backslash", to);
+            CHECK(attributeValueIn(out, to) == R"(ABC C:\Plans\x)");
+        }
+    }
+}
+
+TEST_CASE("an untouched multi-line attribute keeps the value it came with next to its MTEXT",
+          "[attribute-export][attrib][filter][dxf][dwg][plain-value]") {
+    const Bench bench("attr_value_kept");
+    for (const char* value : {"", "first line"}) {
+        const std::string name = *value == '\0' ? "empty" : "line";
+        AttributeDxf fixture = AttributeDxf::rich();
+        fixture.m_value = value;
+        for (const char* format : {"dxf2018", "dwg2018"}) {
+            const Target to = target(format);
+            CAPTURE(name, to.m_name);
+            EditableDrawing drawing;
+            load(bench, fixture, drawing, name + "_" + to.m_name + "_source");
+            const auto out = save(bench, drawing, name, to);
+            CHECK(attributeValueIn(out, to) == value);
+            const ShownAttribute shown = shownAttribute(out, to);
+            CHECK(shown.m_multiLine);
+            CHECK(shown.m_text == "ABC\nDEF");
+        }
+    }
+}
+
+TEST_CASE("the value of an edited multi-line attribute follows its text",
+          "[attribute-export][attrib][filter][dxf][dwg][plain-value]") {
+    const Bench bench("attr_value_edited");
+    // What is typed into the text, and the value it gives in a DXF and in a
+    // DWG: a caret is a caret and a blank in a DXF, where a caret starts a
+    // code. The last column is what the file shows when it is opened; it is
+    // empty where that cannot be compared: for a backslash see the note
+    // above, and a DWG is not read back for a caret either, which is taken
+    // for a code there.
+    struct Row {
+        const char* m_name;
+        QString m_typed;
+        std::string m_inDxf;
+        std::string m_inDwg;
+        std::string m_shown;
+    };
+    const std::string omega = std::string(kCapitalOmega) + " ABC";
+    const std::vector<Row> rows{
+        {"codes", QStringLiteral(R"({\fArial;big} \H2x;tall\Pnext 50%%d \S1/2;)"), "big tall next 50%%D 1/2",
+         "big tall next 50%%D 1/2", std::string("big tall next 50") + kDegreeSign + " 1/2"},
+        {"caret", QStringLiteral(R"({\fArial;big} \H2x;tall\Pnext 50%%d \S1^2;)"), "big tall next 50%%D 1^ 2",
+         "big tall next 50%%D 1^2", ""},
+        {"backslash", QStringLiteral(R"(a\\Path)"), R"(a\Path)", R"(a\Path)", ""},
+        {"blanks", QStringLiteral("    ABC\n\tDEF"), "    ABC  DEF", "    ABC  DEF", "    ABC  DEF"},
+        {"greek", QStringLiteral("\u03a9 ABC"), omega, omega, omega},
+        {"nothing", QString(), "", "", ""},
+    };
+
+    for (const char* value : {"fallback", ""}) {
+        const std::string stored = value;
+        const std::string prefix = stored.empty() ? "empty_" : "line_";
+        AttributeDxf fixture;
+        fixture.m_value = stored;
+        fixture.m_text = "old";
+        for (const Row& row : rows) {
+            for (const char* format : {"dxf2000", "dxf2007", "dxf2018", "dwg2000", "dwg2013", "dwg2018"}) {
+                const Target to = target(format);
+                // The two formats of 2000 have a code page, and none has
+                // Greek: what they hold of the letter is the codec's matter.
+                if (std::string(row.m_name) == "greek"
+                    && (to.m_format == RS2::FormatDXFRW2000 || to.m_format == RS2::FormatDWG)) {
+                    continue;
+                }
+                const std::string name = prefix + row.m_name;
+                CAPTURE(name, to.m_name);
+                EditableDrawing drawing;
+                load(bench, fixture, drawing, name + "_" + to.m_name + "_source");
+                drawing.edit(only<RS_MText>(drawing, RS2::EntityMText), [&](RS_MText& text) {
+                    text.setText(row.m_typed);
+                });
+                const auto out = save(bench, drawing, name, to);
+                const std::string plain = to.m_dxf ? row.m_inDxf : row.m_inDwg;
+                if (to.m_dxf) {
+                    checkWrittenDxf(out);
+                }
+
+                // Next to the MTEXT a value that was empty stays empty, as
+                // AutoCAD writes it; one that was there follows the text.
+                if (to.m_embedsMText) {
+                    CHECK(attributeValueIn(out, to) == (stored.empty() ? std::string() : plain));
+                    continue;
+                }
+                CHECK(attributeValueIn(out, to) == plain);
+                const bool caretInDwg = !to.m_dxf && plain.find('^') != std::string::npos;
+                if (!row.m_shown.empty() && !caretInDwg) {
+                    const ShownAttribute shown = shownAttribute(out, to);
+                    CHECK_FALSE(shown.m_multiLine);
+                    CHECK(shown.m_text == row.m_shown);
+                }
+            }
+        }
+    }
+}
+
+TEST_CASE("a stored attribute value that a DXF line cannot hold is not written to DXF",
+          "[attribute-export][attrib][filter][dxf][dwg][plain-value]") {
+    const Bench bench("attr_value_unfit");
+    EditableDrawing drawing;
+    load(bench, AttributeDxf::rich(), drawing);
+    // A text value of a DWG can hold a line break. No DXF can put one into
+    // the value the text remembers, so it is put there by hand; the clone in
+    // the place of the text has the text of the file.
+    drawing.edit(only<RS_MText>(drawing, RS2::EntityMText), [](RS_MText& text) {
+        REQUIRE(setStoredAttributeValue(text, "two\nlines"));
+    });
+
+    // To a DXF the text goes in its place: the export is not refused over
+    // a value that is not shown.
+    const Target dxf = target("dxf2018");
+    const auto direct = save(bench, drawing, "unfit", dxf);
+    checkWrittenDxf(direct);
+    CHECK(attributeValueIn(direct, dxf) == "ABC DEF");
+    CHECK(onlyRecord(direct, "ATTRIB").embedded(1) == std::vector<std::string>{"{\\fArial;ABC}\\PDEF"});
+
+    // A DWG keeps the value as it is, and the drawing opened from that DWG
+    // is saved to DXF like the one above.
+    const Target dwg = target("dwg2018");
+    const auto kept = save(bench, drawing, "unfit", dwg);
+    CHECK(attributeValueIn(kept, dwg) == "two\nlines");
+    EditableDrawing fromDwg;
+    REQUIRE(lc::test::importDrawing(fromDwg.m_graphic, kept, RS2::FormatDWG2018));
+    const auto viaDwg = save(bench, fromDwg, "unfit_dwg2018", dxf);
+    CHECK(attributeValueIn(viaDwg, dxf) == "ABC DEF");
+}
+
+TEST_CASE("a format without the MTEXT of an attribute is not refused over what the MTEXT holds",
+          "[attribute-export][attrib][filter][dxf][plain-value]") {
+    const Bench bench("attr_value_mtext_unfit");
+    EditableDrawing drawing;
+    load(bench, AttributeDxf{}, drawing);
+    // The content of an MTEXT in a DWG can hold a line break as it is, where
+    // a DXF has the code "\P". No DXF can put one into the content the text
+    // remembers, so it is put there by hand; the text of the drawing is the
+    // same for both, and the attribute passes for untouched.
+    drawing.edit(only<RS_MText>(drawing, RS2::EntityMText), [](RS_MText& text) {
+        REQUIRE(setStoredMTextContent(text, "my text\nsecond line"));
+    });
+
+    // Untouched, the content goes back into the MTEXT as it was read, and
+    // no line of a DXF holds this one. A DXF before 2018 writes no MTEXT
+    // for an attribute, so there is nothing to refuse.
+    for (const char* format : {"dxf2007", "dxf2000"}) {
+        const Target to = target(format);
+        CAPTURE(to.m_name);
+        const auto out = save(bench, drawing, "unfit_content", to);
+        checkWrittenDxf(out);
+        CHECK(attributeValueIn(out, to) == "my text second line");
+    }
+}
+
+TEST_CASE("a multi-line attribute keeps its MTEXT in the formats of 2018 whatever its type says",
+          "[attribute-export][attrib][filter][dxf][dwg][plain-value]") {
+    const Bench bench("attr_value_type");
+    // The type of an attribute is its group 71 before the embedded object: 2
+    // for a multi-line attribute. A file may have none, or a 0 or a 1 there.
+    // The reader makes a 2 of each, and the export does not rely on that:
+    // the last two variants have the 0 and the 1 in what the text remembers
+    // of its ATTRIB. A DWG has the MTEXT only in an attribute of type 2.
+    struct Variant {
+        const char* m_name;
+        const char* m_typeGroups;
+        int m_storedType;   // -1: as read
+    };
+    const std::vector<Variant> variants{
+        {"none", "", -1},
+        {"zero", "71\n0\n72\n0\n", -1},
+        {"one", "71\n1\n72\n0\n", -1},
+        {"stored_zero", "71\n2\n72\n0\n", 0},
+        {"stored_one", "71\n2\n72\n0\n", 1},
+    };
+    for (const Variant& variant : variants) {
+        AttributeDxf fixture;
+        fixture.m_typeGroups = variant.m_typeGroups;
+        for (const char* format : {"dwg2018", "dxf2018"}) {
+            const Target to = target(format);
+            CAPTURE(variant.m_name, to.m_name);
+            EditableDrawing drawing;
+            load(bench, fixture, drawing, std::string(variant.m_name) + "_" + to.m_name + "_source");
+            if (variant.m_storedType >= 0) {
+                drawing.edit(only<RS_MText>(drawing, RS2::EntityMText), [&](RS_MText& text) {
+                    REQUIRE(setStoredAttributeType(text, variant.m_storedType));
+                });
+            }
+            const auto out = save(bench, drawing, variant.m_name, to);
+            const ShownAttribute shown = shownAttribute(out, to);
+            CHECK(shown.m_multiLine);
+            CHECK(shown.m_text == "my text\nsecond line");
+            if (to.m_dxf) {
+                checkWrittenDxf(out);
+                // Of the attribute itself: the text generation, then the type.
+                CHECK(onlyRecord(out, "ATTRIB").own(71) == std::vector<std::string>{"0", "2"});
+            }
+            else {
+                DwgContent content;
+                readDwg(out, content);
+                CHECK(onlyDwgAttribute(content).m_attributeType == 2);
+            }
+        }
+    }
+}
+
 // Local only: the drawing is AutoCAD's and is not in the repository.
 TEST_CASE("AutoCAD's sample attribute opens with its text",
           "[attribute-export][attrib][filter][dxf][embedded-mtext][fixture]") {
@@ -1920,9 +2345,16 @@ TEST_CASE("AutoCAD's sample attribute opens with its text",
         REQUIRE(records.size() == 1);
         // The position of the attribute is locked in the sample (its second 280).
         CHECK(records.front().own(280) == std::vector<std::string>{"1"});
+        // AutoCAD leaves the attribute's own value empty next to the MTEXT.
+        // Without the MTEXT the value is the text.
         if (to.m_embedsMText) {
             checkEmbeddedMTextPlace(records.front());
             CHECK(records.front().embedded(1) == std::vector<std::string>{text});
+            CHECK(records.front().own(1) == std::vector<std::string>{""});
+        }
+        else {
+            CHECK(records.front().embeddedMarker() == 0);
+            CHECK(records.front().own(1) == std::vector<std::string>{text});
         }
     }
     // sample_AC1032.dwg is not opened here: the DWG layout of an attribute's
