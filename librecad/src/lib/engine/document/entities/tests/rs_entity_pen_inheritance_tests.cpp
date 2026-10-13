@@ -110,3 +110,55 @@ TEST_CASE("Inherited pens retain explicit RGBA and named component identities", 
     CHECK(pen.getColor()==RS_Color(Qt::white));CHECK(pen.getWidth()==RS2::Width11);
     CHECK(pen.getLineTypeName()==source.getLineTypeName());
 }
+
+TEST_CASE("A ByBlock width that inherits ByLayer takes the layer of the ancestor that supplied it", "[pen][native-prerequisite]") {
+    initializeSettings();
+    RS_Graphic graphic;
+    auto *parentLayer=new RS_Layer(QStringLiteral("parent-pen"));
+    auto *childLayer=new RS_Layer(QStringLiteral("child-pen"));
+    parentLayer->setPen(RS_Pen(RS_Color(Qt::red),RS2::Width07,RS2::DashLine));
+    childLayer->setPen(RS_Pen(RS_Color(Qt::green),RS2::Width11,RS2::SolidLine));
+    graphic.getLayerList()->add(parentLayer);graphic.getLayerList()->add(childLayer);
+    RS_EntityContainer parent(&graphic,false);
+    parent.setLayer(parentLayer);
+    parent.setPen(RS_Pen(RS_Color(RS2::FlagByLayer),RS2::WidthByLayer,RS2::LineByLayer));
+    RS_Line line(&parent,RS_LineData({0,0},{1,0}));line.setLayer(childLayer);
+    // each component in turn is the only one that is ByBlock
+    line.setPen(RS_Pen(RS_Color(Qt::white),RS2::WidthByBlock,RS2::DotLine));
+    auto pen=line.getPen();
+    CHECK(pen.getColor()==RS_Color(Qt::white));CHECK(pen.getWidth()==RS2::Width07);CHECK(pen.getLineType()==RS2::DotLine);
+    line.setPen(RS_Pen(RS_Color(RS2::FlagByBlock),RS2::Width03,RS2::DotLine));
+    pen=line.getPen();
+    CHECK(pen.getColor()==RS_Color(Qt::red));CHECK(pen.getWidth()==RS2::Width03);CHECK(pen.getLineType()==RS2::DotLine);
+    line.setPen(RS_Pen(RS_Color(Qt::white),RS2::Width03,RS2::LineByBlock));
+    pen=line.getPen();
+    CHECK(pen.getColor()==RS_Color(Qt::white));CHECK(pen.getWidth()==RS2::Width03);CHECK(pen.getLineType()==RS2::DashLine);
+    // a component that is ByLayer itself stays with the entity's own layer
+    line.setPen(RS_Pen(RS_Color(RS2::FlagByLayer),RS2::WidthByBlock,RS2::LineByLayer));
+    pen=line.getPen();
+    CHECK(pen.getColor()==RS_Color(Qt::green));CHECK(pen.getWidth()==RS2::Width07);CHECK(pen.getLineType()==RS2::SolidLine);
+}
+
+TEST_CASE("An ancestor without a layer leaves the entity's own layer in charge", "[pen][native-prerequisite]") {
+    initializeSettings();
+    RS_Graphic graphic;
+    auto *childLayer=new RS_Layer(QStringLiteral("child-pen"));
+    childLayer->setPen(RS_Pen(RS_Color(Qt::green),RS2::Width11,RS2::SolidLine));
+    graphic.getLayerList()->add(childLayer);
+    RS_EntityContainer parent(&graphic,false);
+    parent.setPen(RS_Pen(RS_Color(RS2::FlagByLayer),RS2::WidthByLayer,RS2::LineByLayer));
+    parent.setLayer(nullptr); // a new entity is put on the active layer
+    REQUIRE(parent.getLayer(false)==nullptr);
+    RS_Line line(&parent,RS_LineData({0,0},{1,0}));line.setLayer(childLayer);
+    for (const RS_Pen &own:{RS_Pen(RS_Color(RS2::FlagByBlock),RS2::WidthByBlock,RS2::LineByBlock),RS_Pen(RS2::FlagInvalid)}) {
+        line.setPen(own);
+        const auto pen=line.getPen();
+        CHECK(pen.getColor()==RS_Color(Qt::green));CHECK(pen.getWidth()==RS2::Width11);
+        CHECK(pen.getLineType()==RS2::SolidLine);
+    }
+    // without any layer the components stay what the ancestor said
+    line.setLayer(nullptr);
+    line.setPen(RS_Pen(RS_Color(RS2::FlagByBlock),RS2::WidthByBlock,RS2::LineByBlock));
+    const auto pen=line.getPen();
+    CHECK(pen.isColorByLayer());CHECK(pen.isWidthByLayer());CHECK(pen.isLineTypeByLayer());
+}

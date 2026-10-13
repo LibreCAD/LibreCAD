@@ -876,15 +876,19 @@ RS_Pen RS_Entity::getPenResolved() const {
     }
     if (!p.isValid()) return p;
     const RS_Entity *colorOwner=owner, *widthOwner=owner, *typeOwner=owner;
-    for (const RS_Entity *ancestor=owner->m_parent;
-         ancestor != nullptr && ancestor->rtti() != RS2::EntityGraphic;
-         ancestor=ancestor->m_parent) {
-        const RS_Pen inherited=ancestor->getPen(false);
-        if (!inherited.isValid()) continue;
-        if (p.isColorByBlock()) { p.setColorFromPen(inherited);colorOwner=ancestor; }
-        if (p.isWidthByBlock()) { p.setWidthFromPen(inherited);widthOwner=ancestor; }
-        if (p.isLineTypeByBlock()) { p.setLineTypeFromPen(inherited);typeOwner=ancestor; }
-        if (!p.isColorByBlock()&&!p.isWidthByBlock()&&!p.isLineTypeByBlock()) break;
+    // Only a ByBlock component looks further up. This function runs for every
+    // entity of every repaint, and most pens have no such component.
+    if (p.isColorByBlock() || p.isWidthByBlock() || p.isLineTypeByBlock()) {
+        for (const RS_Entity *ancestor=owner->m_parent;
+             ancestor != nullptr && ancestor->rtti() != RS2::EntityGraphic;
+             ancestor=ancestor->m_parent) {
+            const RS_Pen inherited=ancestor->getPen(false);
+            if (!inherited.isValid()) continue;
+            if (p.isColorByBlock()) { p.setColorFromPen(inherited);colorOwner=ancestor; }
+            if (p.isWidthByBlock()) { p.setWidthFromPen(inherited);widthOwner=ancestor; }
+            if (p.isLineTypeByBlock()) { p.setLineTypeFromPen(inherited);typeOwner=ancestor; }
+            if (!p.isColorByBlock()&&!p.isWidthByBlock()&&!p.isLineTypeByBlock()) break;
+        }
     }
 
     // Each ByLayer component belongs to the nearest valid pen that supplied
@@ -896,12 +900,28 @@ RS_Pen RS_Entity::getPenResolved() const {
     if (colorByLayer || widthByLayer || lineByLayer) {
         // Drop dangling layer pointers left on block members after import
         // (updateInserts crash: getName/getPen on freed RS_Layer).
-        if (colorByLayer) if (RS_Layer *layer=colorOwner->validatedLayer(colorOwner->getLayerResolved()))
-            p.setColorFromPen(layer->getPen());
-        if (widthByLayer) if (RS_Layer *layer=widthOwner->validatedLayer(widthOwner->getLayerResolved()))
-            p.setWidthFromPen(layer->getPen());
-        if (lineByLayer) if (RS_Layer *layer=typeOwner->validatedLayer(typeOwner->getLayerResolved()))
-            p.setLineTypeFromPen(layer->getPen());
+        // An ancestor that has no layer leaves the layer of this entity in
+        // charge, as it was before the components were told apart.
+        const auto layerOf = [this](const RS_Entity *supplier) {
+            RS_Layer *layer = supplier->validatedLayer(supplier->getLayerResolved());
+            if (layer == nullptr && supplier != this)
+                layer = validatedLayer(getLayerResolved());
+            return layer;
+        };
+        if (colorOwner == widthOwner && widthOwner == typeOwner) {
+            // The rule: one entity supplies all three components. One lookup
+            // and one copy of the layer's pen, on every repaint of every entity.
+            if (RS_Layer *layer = layerOf(colorOwner)) {
+                const RS_Pen layerPen = layer->getPen();
+                if (colorByLayer) p.setColorFromPen(layerPen);
+                if (widthByLayer) p.setWidthFromPen(layerPen);
+                if (lineByLayer) p.setLineTypeFromPen(layerPen);
+            }
+        } else {
+            if (colorByLayer) if (RS_Layer *layer = layerOf(colorOwner)) p.setColorFromPen(layer->getPen());
+            if (widthByLayer) if (RS_Layer *layer = layerOf(widthOwner)) p.setWidthFromPen(layer->getPen());
+            if (lineByLayer) if (RS_Layer *layer = layerOf(typeOwner)) p.setLineTypeFromPen(layer->getPen());
+        }
     }
     return p;
 }
