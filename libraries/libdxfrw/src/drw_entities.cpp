@@ -34,6 +34,20 @@
 
 namespace {
 
+// The two wire forms of an embedded MTEXT (AcDbMTextObjectEmbedded).
+enum class EmbeddedMTextForm {
+    // What AutoCAD writes into a multi-line ATTRIB / ATTDEF: every MTEXT
+    // field from the entity mode on, the R2018 "not annotative" block
+    // included, then the annotative data. Checked against an AutoCAD drawing,
+    // the ODA specification (ATTRIB, R2018+) and ACadSharp.
+    Full,
+    // IsNotAnnotative, one more bit, then the annotative data. GEOPOSITIONMARKER
+    // keeps this form because there is no AutoCAD drawing to check it against;
+    // LibreCAD also wrote it into attributes before it matched AutoCAD, so
+    // the attribute reader still accepts it.
+    Short
+};
+
 struct EmbeddedMTextHandleInfo {
     bool m_ownerHandle = false;
     int m_numReactors = 0;
@@ -55,6 +69,7 @@ struct EmbeddedMTextHandleInfo {
 static bool parseEmbeddedMTextDwg(DRW::Version version, dwgBuffer *buf,
                                   dwgBuffer *sBuf, DRW_MText& mtext,
                                   EmbeddedMTextHandleInfo& info,
+                                  EmbeddedMTextForm form,
                                   std::uint64_t bodyEndBit =
                                       std::numeric_limits<std::uint64_t>::max(),
                                   std::uint64_t stringEndBit =
@@ -841,6 +856,156 @@ bool readBoundedDwgTextBody(
         && std::isfinite(data.thickness) && std::isfinite(data.oblique)
         && std::isfinite(data.angle) && std::isfinite(data.height)
         && std::isfinite(data.widthscale);
+}
+
+// R2018 MTEXT: the fields that follow a set "is not annotative" bit. AutoCAD
+// writes the same block for a stand-alone MTEXT and for the MTEXT embedded in
+// a multi-line ATTRIB / ATTDEF, so both codecs go through these helpers.
+struct DwgMTextR2018Block {
+    std::uint16_t m_version = 0;
+    bool m_defaultFlag = false;
+    std::int32_t m_attachment = 0;
+    DRW_Coord m_xAxisDir;
+    DRW_Coord m_insertionPoint;
+    double m_rectWidth = 0.0;
+    double m_rectHeight = 0.0;
+    double m_extentsWidth = 0.0;
+    double m_extentsHeight = 0.0;
+    std::uint16_t m_columnType = 0;
+    std::int32_t m_columnCount = 0;
+    double m_columnWidth = 0.0;
+    double m_columnGutter = 0.0;
+    bool m_columnAutoHeight = false;
+    bool m_columnFlowReversed = false;
+    std::vector<double> m_columnHeights;
+};
+
+bool readBoundedDwgMTextR2018Block(dwgBuffer& body, std::uint64_t bodyEndBit,
+                                   DwgMTextR2018Block& block) {
+    // The registered application handle of this block is in the handle
+    // stream. The extents come width first here, height first in the fields
+    // before the text.
+    if (!readBoundedBitShort(body, bodyEndBit, block.m_version)
+        || !readBoundedBit(body, bodyEndBit, block.m_defaultFlag)
+        || !readBoundedBitLong(body, bodyEndBit, block.m_attachment)
+        || !readBoundedBitCoord(body, bodyEndBit, block.m_xAxisDir)
+        || !readBoundedBitCoord(body, bodyEndBit, block.m_insertionPoint)
+        || !readBoundedBitDouble(body, bodyEndBit, block.m_rectWidth)
+        || !readBoundedBitDouble(body, bodyEndBit, block.m_rectHeight)
+        || !readBoundedBitDouble(body, bodyEndBit, block.m_extentsWidth)
+        || !readBoundedBitDouble(body, bodyEndBit, block.m_extentsHeight)
+        || !readBoundedBitShort(body, bodyEndBit, block.m_columnType)
+        || block.m_columnType > 2)
+        return false;
+    if (block.m_columnType != 0) {
+        if (!readBoundedBitLong(body, bodyEndBit, block.m_columnCount)
+            || !isValidCount(block.m_columnCount, kMaxMTextColumnHeights)
+            || !readBoundedBitDouble(body, bodyEndBit, block.m_columnWidth)
+            || !readBoundedBitDouble(body, bodyEndBit, block.m_columnGutter)
+            || !readBoundedBit(body, bodyEndBit, block.m_columnAutoHeight)
+            || !readBoundedBit(body, bodyEndBit, block.m_columnFlowReversed))
+            return false;
+        if (!block.m_columnAutoHeight && block.m_columnType == 2
+            && block.m_columnCount > 0) {
+            if (!DRW::reserve(block.m_columnHeights, block.m_columnCount))
+                return false;
+            for (std::int32_t i = 0; i < block.m_columnCount; ++i) {
+                double columnHeight = 0.0;
+                if (!readBoundedBitDouble(body, bodyEndBit, columnHeight)
+                    || !std::isfinite(columnHeight))
+                    return false;
+                block.m_columnHeights.push_back(columnHeight);
+            }
+        }
+    }
+    const auto finite = [](const DRW_Coord& point) {
+        return std::isfinite(point.x) && std::isfinite(point.y)
+            && std::isfinite(point.z);
+    };
+    return body.isGood() && finite(block.m_xAxisDir)
+        && finite(block.m_insertionPoint) && std::isfinite(block.m_rectWidth)
+        && std::isfinite(block.m_rectHeight)
+        && std::isfinite(block.m_extentsWidth)
+        && std::isfinite(block.m_extentsHeight);
+}
+
+DwgMTextR2018Block dwgMTextR2018BlockOf(const DRW_MText& mtext) {
+    DwgMTextR2018Block block;
+    block.m_version = mtext.m_r2018Version;
+    block.m_defaultFlag = mtext.m_r2018DefaultFlag;
+    block.m_attachment = mtext.m_r2018Attachment;
+    block.m_xAxisDir = mtext.m_r2018XAxisDir;
+    block.m_insertionPoint = mtext.m_r2018InsertionPoint;
+    block.m_rectWidth = mtext.m_r2018RectWidth;
+    block.m_rectHeight = mtext.m_r2018RectHeight;
+    block.m_extentsWidth = mtext.m_r2018ExtentsWidth;
+    block.m_extentsHeight = mtext.m_r2018ExtentsHeight;
+    block.m_columnType = mtext.m_r2018ColumnType;
+    block.m_columnCount = mtext.m_r2018ColumnCount;
+    block.m_columnWidth = mtext.m_r2018ColumnWidth;
+    block.m_columnGutter = mtext.m_r2018ColumnGutter;
+    block.m_columnAutoHeight = mtext.m_r2018ColumnAutoHeight;
+    block.m_columnFlowReversed = mtext.m_r2018ColumnFlowReversed;
+    block.m_columnHeights = mtext.m_r2018ColumnHeights;
+    return block;
+}
+
+void storeDwgMTextR2018Block(DwgMTextR2018Block&& block, DRW_MText& mtext) {
+    mtext.m_r2018Version = block.m_version;
+    mtext.m_r2018DefaultFlag = block.m_defaultFlag;
+    mtext.m_r2018Attachment = block.m_attachment;
+    mtext.m_r2018XAxisDir = block.m_xAxisDir;
+    mtext.m_r2018InsertionPoint = block.m_insertionPoint;
+    mtext.m_r2018RectWidth = block.m_rectWidth;
+    mtext.m_r2018RectHeight = block.m_rectHeight;
+    mtext.m_r2018ExtentsWidth = block.m_extentsWidth;
+    mtext.m_r2018ExtentsHeight = block.m_extentsHeight;
+    mtext.m_r2018ColumnType = block.m_columnType;
+    mtext.m_r2018ColumnCount = block.m_columnCount;
+    mtext.m_r2018ColumnWidth = block.m_columnWidth;
+    mtext.m_r2018ColumnGutter = block.m_columnGutter;
+    mtext.m_r2018ColumnAutoHeight = block.m_columnAutoHeight;
+    mtext.m_r2018ColumnFlowReversed = block.m_columnFlowReversed;
+    mtext.m_r2018ColumnHeights = std::move(block.m_columnHeights);
+}
+
+bool putDwgMTextR2018Block(dwgBufferW *buf, const DwgMTextR2018Block& block) {
+    const bool listsHeights = !block.m_columnAutoHeight && block.m_columnType == 2;
+    std::int32_t columnCount = block.m_columnCount;
+    if (block.m_columnType > 2 || columnCount < 0
+        || columnCount > kMaxMTextColumnHeights
+        || block.m_columnHeights.size()
+            > static_cast<std::size_t>(kMaxMTextColumnHeights))
+        return false;
+    if (listsHeights && !block.m_columnHeights.empty())
+        columnCount = static_cast<std::int32_t>(block.m_columnHeights.size());
+    if (block.m_columnType != 0 && listsHeights
+        && static_cast<std::size_t>(columnCount)
+            != block.m_columnHeights.size())
+        return false;
+
+    buf->putBitShort(block.m_version);
+    buf->putBit(block.m_defaultFlag ? 1 : 0);
+    buf->putBitLong(block.m_attachment);
+    buf->put3BitDouble(block.m_xAxisDir);
+    buf->put3BitDouble(block.m_insertionPoint);
+    buf->putBitDouble(block.m_rectWidth);
+    buf->putBitDouble(block.m_rectHeight);
+    buf->putBitDouble(block.m_extentsWidth);
+    buf->putBitDouble(block.m_extentsHeight);
+    buf->putBitShort(block.m_columnType);
+    if (block.m_columnType != 0) {
+        buf->putBitLong(columnCount);
+        buf->putBitDouble(block.m_columnWidth);
+        buf->putBitDouble(block.m_columnGutter);
+        buf->putBit(block.m_columnAutoHeight ? 1 : 0);
+        buf->putBit(block.m_columnFlowReversed ? 1 : 0);
+        if (listsHeights) {
+            for (const double columnHeight : block.m_columnHeights)
+                buf->putBitDouble(columnHeight);
+        }
+    }
+    return true;
 }
 
 bool readBoundedHatchGradient(dwgBuffer& body, dwgBuffer *stringBuffer,
@@ -5158,48 +5323,9 @@ bool DRW_MText::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t b
     }
     if (version >= DRW::AC1032) {
         buf->putBit(m_r2018IsNotAnnotative ? 1 : 0);
-        if (m_r2018IsNotAnnotative) {
-            buf->putBitShort(m_r2018Version);
-            buf->putBit(m_r2018DefaultFlag ? 1 : 0);
-            buf->putBitLong(m_r2018Attachment);
-            buf->put3BitDouble(m_r2018XAxisDir);
-            buf->put3BitDouble(m_r2018InsertionPoint);
-            buf->putBitDouble(m_r2018RectWidth);
-            buf->putBitDouble(m_r2018RectHeight);
-            buf->putBitDouble(m_r2018ExtentsHeight);
-            buf->putBitDouble(m_r2018ExtentsWidth);
-            if (m_r2018ColumnType > 2
-                || m_r2018ColumnCount < 0
-                || m_r2018ColumnCount > kMaxMTextColumnHeights
-                || m_r2018ColumnHeights.size()
-                    > static_cast<std::size_t>(kMaxMTextColumnHeights))
-                return false;
-            buf->putBitShort(m_r2018ColumnType);
-            if (m_r2018ColumnType != 0) {
-                std::int32_t columnCount = m_r2018ColumnCount;
-                if (!m_r2018ColumnAutoHeight && m_r2018ColumnType == 2
-                    && !m_r2018ColumnHeights.empty()) {
-                    columnCount = static_cast<std::int32_t>(m_r2018ColumnHeights.size());
-                }
-                if (!m_r2018ColumnAutoHeight && m_r2018ColumnType == 2
-                    && static_cast<std::size_t>(columnCount)
-                        != m_r2018ColumnHeights.size())
-                    return false;
-                buf->putBitLong(columnCount);
-                buf->putBitDouble(m_r2018ColumnWidth);
-                buf->putBitDouble(m_r2018ColumnGutter);
-                buf->putBit(m_r2018ColumnAutoHeight ? 1 : 0);
-                buf->putBit(m_r2018ColumnFlowReversed ? 1 : 0);
-                if (!m_r2018ColumnAutoHeight && m_r2018ColumnType == 2) {
-                    for (std::int32_t i = 0; i < columnCount; ++i) {
-                        const double columnHeight = static_cast<size_t>(i) < m_r2018ColumnHeights.size()
-                            ? m_r2018ColumnHeights[static_cast<size_t>(i)]
-                            : 0.0;
-                        buf->putBitDouble(columnHeight);
-                    }
-                }
-            }
-        }
+        if (m_r2018IsNotAnnotative
+            && !putDwgMTextR2018Block(buf, dwgMTextR2018BlockOf(*this)))
+            return false;
     }
 
     if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
@@ -8012,6 +8138,7 @@ bool DRW_GeoPositionMarker::parseDwg(DRW::Version v, dwgBuffer *buf,
             || !(parsedMText = std::make_unique<DRW_MText>())
             || !parseEmbeddedMTextDwg(v, &bodyTailProbe, &stringProbe,
                                       *parsedMText, embeddedHandles,
+                                      EmbeddedMTextForm::Short,
                                       bodyEndBit, stringEndBit)
             || !bodyTailProbe.isGood() || !stringProbe.isGood())
             return fail();
@@ -11591,7 +11718,7 @@ static bool parseEmbeddedMTextEntityMode(DRW::Version version, dwgBuffer *buf,
 
 static bool parseEmbeddedMTextDwgFields(
     DRW::Version version, dwgBuffer *buf, dwgBuffer *sBuf,
-    DRW_MText& mtext, EmbeddedMTextHandleInfo& info,
+    DRW_MText& mtext, EmbeddedMTextHandleInfo& info, EmbeddedMTextForm form,
     std::uint64_t bodyEndBit, std::uint64_t stringEndBit) {
     if (!parseEmbeddedMTextEntityMode(version, buf, bodyEndBit, info, mtext))
         return false;
@@ -11603,22 +11730,21 @@ static bool parseEmbeddedMTextDwgFields(
     mtext.angle = atan2(mtext.secPoint.y, mtext.secPoint.x) * ARAD;
     if (!readBoundedBitDouble(*buf, bodyEndBit, mtext.widthscale))
         return false;
-    if (version > DRW::AC1018) {
-        double ignoredRectangleHeight = 0.0;
-        if (!readBoundedBitDouble(*buf, bodyEndBit,
-                                  ignoredRectangleHeight))
-            return false;
-    }
+    // The writer puts these three back where they came from, so keep them:
+    // an annotative MTEXT has no R2018 block to repeat them in.
+    if (version > DRW::AC1018
+        && !readBoundedBitDouble(*buf, bodyEndBit, mtext.m_r2018RectHeight))
+        return false;
     if (!readBoundedBitDouble(*buf, bodyEndBit, mtext.height))
         return false;
     std::uint16_t textgen = 0;
     std::uint16_t alignH = 0;
-    double ignoredExtentsHeight = 0.0;
-    double ignoredExtentsWidth = 0.0;
     if (!readBoundedBitShort(*buf, bodyEndBit, textgen)
         || !readBoundedBitShort(*buf, bodyEndBit, alignH)
-        || !readBoundedBitDouble(*buf, bodyEndBit, ignoredExtentsHeight)
-        || !readBoundedBitDouble(*buf, bodyEndBit, ignoredExtentsWidth))
+        || !readBoundedBitDouble(*buf, bodyEndBit,
+                                 mtext.m_r2018ExtentsHeight)
+        || !readBoundedBitDouble(*buf, bodyEndBit,
+                                 mtext.m_r2018ExtentsWidth))
         return false;
     mtext.textgen = textgen;
     mtext.alignH = static_cast<DRW_Text::HAlign>(alignH);
@@ -11626,14 +11752,14 @@ static bool parseEmbeddedMTextDwgFields(
         return false;
 
     if (version > DRW::AC1014) {
-        std::uint16_t ignoredLineSpacingStyle = 0;
         bool ignoredLineSpacingUnknown = false;
         if (!readBoundedBitShort(*buf, bodyEndBit,
-                                 ignoredLineSpacingStyle)
+                                 mtext.linespacingStyle)
             || !readBoundedBitDouble(*buf, bodyEndBit, mtext.interlin)
             || !readBoundedBit(*buf, bodyEndBit,
                                ignoredLineSpacingUnknown))
             return false;
+        mtext.alignV = static_cast<DRW_Text::VAlign>(mtext.linespacingStyle);
     }
     if (version > DRW::AC1015) {
         if (!readBoundedBitLong(*buf, bodyEndBit, mtext.m_backgroundFlags))
@@ -11656,11 +11782,23 @@ static bool parseEmbeddedMTextDwgFields(
     if (version >= DRW::AC1032) {
         mtext.m_r2018ColumnHeights.clear();
         if (!readBoundedBit(*buf, bodyEndBit,
-                            mtext.m_r2018IsNotAnnotative)
-            || !readBoundedBit(*buf, bodyEndBit,
-                               mtext.m_r2018ReallyLocked))
+                            mtext.m_r2018IsNotAnnotative))
             return false;
         info.m_hasR2018AppIdHandle = mtext.m_r2018IsNotAnnotative;
+        if (form == EmbeddedMTextForm::Short) {
+            if (!readBoundedBit(*buf, bodyEndBit,
+                                mtext.m_r2018ReallyLocked))
+                return false;
+        } else if (mtext.m_r2018IsNotAnnotative) {
+            // Where the block repeats a field read above, that one stays.
+            DwgMTextR2018Block block;
+            if (!readBoundedDwgMTextR2018Block(*buf, bodyEndBit, block))
+                return false;
+            block.m_rectHeight = mtext.m_r2018RectHeight;
+            block.m_extentsWidth = mtext.m_r2018ExtentsWidth;
+            block.m_extentsHeight = mtext.m_r2018ExtentsHeight;
+            storeDwgMTextR2018Block(std::move(block), mtext);
+        }
     }
 
     std::uint16_t annotativeSize = 0;
@@ -11689,7 +11827,7 @@ static bool parseEmbeddedMTextDwgFields(
 
 static bool parseEmbeddedMTextDwg(
     DRW::Version version, dwgBuffer *buf, dwgBuffer *sBuf,
-    DRW_MText& mtext, EmbeddedMTextHandleInfo& info,
+    DRW_MText& mtext, EmbeddedMTextHandleInfo& info, EmbeddedMTextForm form,
     std::uint64_t bodyEndBit, std::uint64_t stringEndBit) {
     if (buf == nullptr || sBuf == nullptr || !buf->isGood()
         || !sBuf->isGood())
@@ -11717,7 +11855,7 @@ static bool parseEmbeddedMTextDwg(
         stringProbe = separateStringProbe.get();
     }
     if (!parseEmbeddedMTextDwgFields(version, &bodyProbe, stringProbe,
-                                     mtext, info, bodyEndBit,
+                                     mtext, info, form, bodyEndBit,
                                      stringEndBit))
         return false;
 
@@ -11874,7 +12012,8 @@ static bool consumeEmbeddedMTextHandles(
 }
 
 static bool encodeEmbeddedMTextEntityMode(DRW::Version version, dwgBufferW *buf,
-                                          const DRW_MText& mtext) {
+                                          const DRW_MText& mtext,
+                                          bool hasOwnerHandle) {
     if (version < DRW::AC1032)
         return false;
 
@@ -11883,7 +12022,7 @@ static bool encodeEmbeddedMTextEntityMode(DRW::Version version, dwgBufferW *buf,
     if (mtext.reactorHandles.size()
         > static_cast<std::size_t>(std::numeric_limits<std::int32_t>::max()))
         return false;
-    buf->put2Bits(mtext.parentHandle == DRW::NoHandle ? 2 : 0);
+    buf->put2Bits(hasOwnerHandle ? 0 : 2);
     buf->putBitLong(static_cast<std::int32_t>(mtext.reactorHandles.size()));
     buf->putBit(mtext.xDictHandle == 0 ? 1 : 0);
     buf->putBit(mtext.hasDataStorageBinaryData() ? 1 : 0);
@@ -11918,10 +12057,19 @@ static bool encodeEmbeddedMTextEntityMode(DRW::Version version, dwgBufferW *buf,
     return true;
 }
 
+// parentLayer and parentStyle are the handles the owning ATTRIB / ATTDEF
+// writes for itself; the embedded MTEXT falls back to them, and from there to
+// the writer's layer "0" and text style Standard.
 static bool encodeEmbeddedMTextDwg(DRW::Version version, dwgBufferW *buf,
                                    dwgBufferW *strBuf, dwgBufferW *handleBuf,
-                                   const DRW_MText& mtext) {
-    if (!encodeEmbeddedMTextEntityMode(version, buf, mtext))
+                                   const DRW_MText& mtext,
+                                   EmbeddedMTextForm form,
+                                   std::uint32_t parentLayer = 0,
+                                   std::uint32_t parentStyle = 0) {
+    // AutoCAD always stores an owner handle here, null when there is none.
+    const bool hasOwnerHandle = form == EmbeddedMTextForm::Full
+        || mtext.parentHandle != DRW::NoHandle;
+    if (!encodeEmbeddedMTextEntityMode(version, buf, mtext, hasOwnerHandle))
         return false;
 
     buf->put3BitDouble(mtext.basePoint);
@@ -11936,7 +12084,7 @@ static bool encodeEmbeddedMTextDwg(DRW::Version version, dwgBufferW *buf,
     buf->putBitDouble(mtext.m_r2018ExtentsWidth);
     (strBuf ? strBuf : buf)->putVariableText(version, mtext.text);
 
-    buf->putBitShort(0);                    // linespacing style
+    buf->putBitShort(mtext.linespacingStyle);
     buf->putBitDouble(mtext.interlin);
     buf->putBit(0);
     buf->putBitLong(mtext.m_backgroundFlags);
@@ -11948,7 +12096,20 @@ static bool encodeEmbeddedMTextDwg(DRW::Version version, dwgBufferW *buf,
     }
 
     buf->putBit(mtext.m_r2018IsNotAnnotative ? 1 : 0);
-    buf->putBit(mtext.m_r2018ReallyLocked ? 1 : 0);
+    if (form == EmbeddedMTextForm::Short) {
+        buf->putBit(mtext.m_r2018ReallyLocked ? 1 : 0);
+    } else if (mtext.m_r2018IsNotAnnotative) {
+        // The block repeats fields written above. Take them from there, so an
+        // MTEXT that never had the block, or was edited since it was read,
+        // still gets a consistent one.
+        DwgMTextR2018Block block = dwgMTextR2018BlockOf(mtext);
+        block.m_attachment = mtext.textgen;
+        block.m_xAxisDir = mtext.secPoint;
+        block.m_insertionPoint = mtext.basePoint;
+        block.m_rectWidth = mtext.widthscale;
+        if (!putDwgMTextR2018Block(buf, block))
+            return false;
+    }
 
     if (mtext.m_r2018AnnotativeData.size() > std::numeric_limits<std::uint16_t>::max())
         return false;
@@ -11960,7 +12121,9 @@ static bool encodeEmbeddedMTextDwg(DRW::Version version, dwgBufferW *buf,
     }
 
     dwgBufferW *hb = handleBuf ? handleBuf : buf;
-    if (mtext.parentHandle != DRW::NoHandle)
+    if (form == EmbeddedMTextForm::Full)
+        putDwgReference(hb, DRW::DwgSoftPointer, mtext.parentHandle);
+    else if (hasOwnerHandle)
         putHardPointerHandle(hb, mtext.parentHandle);
     for (const std::uint32_t reactor : mtext.reactorHandles)
         putHardPointerHandle(hb, reactor);
@@ -11968,8 +12131,10 @@ static bool encodeEmbeddedMTextDwg(DRW::Version version, dwgBufferW *buf,
         putHardPointerHandle(hb, mtext.xDictHandle);
     if (mtext.hasDwgAcDbColorHandle())
         putHardPointerHandle(hb, mtext.dwgAcDbColorHandle());
+    if (parentLayer == 0)
+        parentLayer = 0x12;
     putHardPointerHandle(hb, mtext.dwgLayerHandle() == 0
-                              ? 0x12 : mtext.dwgLayerHandle());
+                              ? parentLayer : mtext.dwgLayerHandle());
     if (mtext.dwgLinetypeHandle() != 0 || mtext.lineType.empty())
         putHardPointerHandle(hb, mtext.dwgLinetypeHandle());
     if (mtext.material != DRW::MaterialByLayer)
@@ -11984,12 +12149,229 @@ static bool encodeEmbeddedMTextDwg(DRW::Version version, dwgBufferW *buf,
         putHardPointerHandle(hb, mtext.faceVisualStyleHandle);
     if (mtext.edgeVisualStyleHandle != 0)
         putHardPointerHandle(hb, mtext.edgeVisualStyleHandle);
-    putHardPointerHandle(hb, (mtext.styleH.ref == 0) ? 0x13 : mtext.styleH.ref);
-    if (mtext.m_r2018IsNotAnnotative)
-        putHardPointerHandle(hb, (mtext.m_r2018AppIdHandle == 0) ? 0x14 : mtext.m_r2018AppIdHandle);
+    if (parentStyle == 0)
+        parentStyle = 0x13;
+    putHardPointerHandle(hb, (mtext.styleH.ref == 0) ? parentStyle
+                                                      : mtext.styleH.ref);
+    if (mtext.m_r2018IsNotAnnotative) {
+        // AutoCAD leaves the registered application of an attribute's MTEXT
+        // null.
+        const bool defaultsToAcad = mtext.m_r2018AppIdHandle == 0
+            && form == EmbeddedMTextForm::Short;
+        putHardPointerHandle(hb, defaultsToAcad ? 0x14
+                                                : mtext.m_r2018AppIdHandle);
+    }
     if (!mtext.m_r2018AnnotativeData.empty())
         putHardPointerHandle(hb, (mtext.m_r2018AnnotativeAppHandle == 0)
                                   ? 0x14 : mtext.m_r2018AnnotativeAppHandle);
+    return true;
+}
+
+// What follows the attribute type in an ATTRIB or ATTDEF.
+struct DwgAttributeTail {
+    std::unique_ptr<DRW_MText> m_mtext;
+    EmbeddedMTextHandleInfo m_embeddedHandles;
+    EmbeddedMTextForm m_embeddedForm = EmbeddedMTextForm::Full;
+    UTF8STRING m_tag;
+    std::uint16_t m_fieldLength = 0;
+    std::uint8_t m_attribFlags = 0;
+    bool m_lockPosition = false;
+    UTF8STRING m_prompt;
+};
+
+// Everything an ATTRIB and an ATTDEF hold between the common entity data and
+// the handle stream.
+struct DwgAttributeBody {
+    DwgTextBodyData m_text;
+    std::uint8_t m_attVersion = 0;
+    std::uint8_t m_attributeType = 1;
+    DwgAttributeTail m_tail;
+};
+
+bool readBoundedDwgAttributeTail(
+    DRW::Version version, dwgBuffer& body, dwgBuffer& strings,
+    std::uint64_t bodyEndBit, std::uint64_t stringStartBit,
+    std::uint64_t stringEndBit, bool isAttdef, bool multiLine,
+    EmbeddedMTextForm form, DwgAttributeTail& tail) {
+    if (multiLine) {
+        tail.m_mtext = std::make_unique<DRW_MText>();
+        tail.m_embeddedForm = form;
+        if (!parseEmbeddedMTextDwg(version, &body, &strings, *tail.m_mtext,
+                                   tail.m_embeddedHandles, form, bodyEndBit,
+                                   stringEndBit))
+            return false;
+    }
+
+    const bool hasStrings = version <= DRW::AC1018
+        || stringStartBit < stringEndBit;
+    if (hasStrings && !readBoundedVariableText(strings, stringEndBit, version,
+                                               tail.m_tag))
+        return false;
+    if (!readBoundedBitShort(body, bodyEndBit, tail.m_fieldLength)
+        || !readBoundedRawChar8(body, bodyEndBit, tail.m_attribFlags))
+        return false;
+    // lockPosition (DXF 280) is a bit in R2007+ DWG data.
+    if (version >= DRW::AC1021
+        && !readBoundedBit(body, bodyEndBit, tail.m_lockPosition))
+        return false;
+
+    if (isAttdef) {
+        // An R2010+ ATTDEF repeats the version byte before its prompt.
+        // LibreCAD used to leave it out, so read it only when the body has
+        // room for it.
+        std::uint8_t repeatedVersion = 0;
+        if (version >= DRW::AC1024 && form == EmbeddedMTextForm::Full
+            && bodyEndBit - currentDwgBit(&body) >= 8
+            && !readBoundedRawChar8(body, bodyEndBit, repeatedVersion))
+            return false;
+        if (hasStrings && !readBoundedVariableText(strings, stringEndBit,
+                                                   version, tail.m_prompt))
+            return false;
+    }
+    return body.isGood() && strings.isGood()
+        && currentDwgBit(&body) <= bodyEndBit;
+}
+
+bool readBoundedDwgAttributeBody(
+    DRW::Version version, dwgBuffer& body, dwgBuffer& strings,
+    std::uint64_t bodyEndBit, std::uint64_t stringStartBit,
+    std::uint64_t stringEndBit, bool isAttdef, DwgAttributeBody& data) {
+    if (!readBoundedDwgTextBody(version, body, strings, bodyEndBit,
+                                stringStartBit, stringEndBit, data.m_text))
+        return false;
+    // R2010+ ATTRIB version follows the common TEXT data. R2018 adds the
+    // attribute type immediately after it.
+    if (version >= DRW::AC1024
+        && !readBoundedRawChar8(body, bodyEndBit, data.m_attVersion))
+        return false;
+    if (version >= DRW::AC1032
+        && !readBoundedRawChar8(body, bodyEndBit, data.m_attributeType))
+        return false;
+
+    const bool multiLine = version >= DRW::AC1032
+        && data.m_attributeType != 0 && data.m_attributeType != 1;
+    if (!multiLine)
+        return readBoundedDwgAttributeTail(
+            version, body, strings, bodyEndBit, stringStartBit, stringEndBit,
+            isAttdef, false, EmbeddedMTextForm::Full, data.m_tail);
+
+    // A multi-line attribute is in AutoCAD's form unless only the form of
+    // older LibreCAD files accounts for the whole body: both writers end the
+    // body right before the string stream, give or take the padding to a
+    // byte. The streams are separate here, the embedded MTEXT is R2018 only.
+    struct Attempt {
+        dwgBuffer m_body;
+        dwgBuffer m_strings;
+        DwgAttributeTail m_tail;
+        bool m_read = false;
+        bool m_fits = false;
+    };
+    const auto read = [&](EmbeddedMTextForm form) {
+        Attempt attempt{body.forkIndependent(), strings.forkIndependent(),
+                        DwgAttributeTail{}};
+        attempt.m_read = readBoundedDwgAttributeTail(
+            version, attempt.m_body, attempt.m_strings, bodyEndBit,
+            stringStartBit, stringEndBit, isAttdef, true, form,
+            attempt.m_tail);
+        attempt.m_fits = attempt.m_read
+            && bodyEndBit - currentDwgBit(&attempt.m_body) < 8;
+        return attempt;
+    };
+    const auto accept = [&](Attempt& attempt) {
+        body = attempt.m_body;
+        strings = attempt.m_strings;
+        data.m_tail = std::move(attempt.m_tail);
+        return true;
+    };
+    Attempt full = read(EmbeddedMTextForm::Full);
+    if (full.m_fits)
+        return accept(full);
+    Attempt legacy = read(EmbeddedMTextForm::Short);
+    if (legacy.m_fits)
+        return accept(legacy);
+    return full.m_read && accept(full);
+}
+
+// The attribute's own text style comes before what its embedded MTEXT refers
+// to; older LibreCAD files have the two the other way round.
+bool readBoundedDwgAttributeHandles(
+    DRW::Version version, dwgBuffer& handles, std::uint64_t handleEndBit,
+    DwgAttributeTail& tail, dwgHandle& styleH) {
+    const bool embeddedFirst = tail.m_mtext != nullptr
+        && tail.m_embeddedForm == EmbeddedMTextForm::Short;
+    if (embeddedFirst
+        && !consumeEmbeddedMTextHandles(version, &handles,
+                                        tail.m_embeddedHandles,
+                                        tail.m_mtext.get(), handleEndBit))
+        return false;
+    if (!readBoundedDwgHandle(handles, handleEndBit, 0, false, styleH))
+        return false;
+    if (tail.m_mtext != nullptr && !embeddedFirst
+        && !consumeEmbeddedMTextHandles(version, &handles,
+                                        tail.m_embeddedHandles,
+                                        tail.m_mtext.get(), handleEndBit))
+        return false;
+    return handles.isGood();
+}
+
+// Writes what readBoundedDwgAttributeBody reads, always in AutoCAD's form.
+// prompt is null for an ATTRIB. The handles of an embedded MTEXT go to
+// embeddedHandles, for the caller to append after the text style handle.
+bool putDwgAttributeBody(DRW::Version version, dwgBufferW *buf,
+                         dwgBufferW *strBuf, const DRW_Attrib& attrib,
+                         const UTF8STRING *prompt,
+                         dwgBufferW& embeddedHandles) {
+    const std::uint8_t attributeType =
+        (attrib.m_attributeType == 0) ? 1 : attrib.m_attributeType;
+    const bool hasEmbeddedMText = version >= DRW::AC1032 && attributeType != 1;
+    if (hasEmbeddedMText && !attrib.mtext)
+        return false;
+
+    // TEXT-body section.
+    // data_flags=0: emit every optional field unconditionally (same
+    // strategy as DRW_Text::encodeDwg — simpler encoder, ~30 bytes larger).
+    buf->putRawChar8(0);                              // data_flags=0
+    buf->putRawDouble(attrib.basePoint.z);            // elevation RD
+    buf->putRawDouble(attrib.basePoint.x);            // insertion 2RD
+    buf->putRawDouble(attrib.basePoint.y);
+    buf->putDefaultDouble(attrib.basePoint.x, attrib.secPoint.x); // alignment 2DD
+    buf->putDefaultDouble(attrib.basePoint.y, attrib.secPoint.y);
+    buf->putExtrusion(attrib.extPoint, /*b_R2000_style=*/true);
+    buf->putThickness(attrib.thickness, /*b_R2000_style=*/true);
+    buf->putRawDouble(attrib.oblique);                // oblique angle RD
+    buf->putRawDouble(attrib.angle / ARAD);           // angle in radians RD
+    buf->putRawDouble(attrib.height);                 // text height RD
+    buf->putRawDouble(attrib.widthscale);             // width factor RD
+    dwgBufferW *sb = strBuf ? strBuf : buf;
+    sb->putVariableText(version, attrib.text);        // text string TV
+    buf->putBitShort(static_cast<std::uint16_t>(attrib.textgen)); // generation flags BS
+    buf->putBitShort(static_cast<std::uint16_t>(attrib.alignH));  // horiz align BS
+    buf->putBitShort(static_cast<std::uint16_t>(attrib.alignV));  // vert align BS
+
+    // AutoCAD has version 0 on multi-line attributes too.
+    if (version >= DRW::AC1024)
+        buf->putRawChar8(attrib.attVersion);
+    if (version >= DRW::AC1032)
+        buf->putRawChar8(attributeType);
+
+    if (hasEmbeddedMText
+        && !encodeEmbeddedMTextDwg(version, buf, strBuf, &embeddedHandles,
+                                   *attrib.mtext, EmbeddedMTextForm::Full,
+                                   attrib.dwgLayerHandle(),
+                                   attrib.styleH.ref))
+        return false;
+
+    sb->putVariableText(version, attrib.tag);         // tag TV
+    buf->putBitShort(static_cast<std::uint16_t>(attrib.m_fieldLength)); // fieldLen BS
+    buf->putRawChar8(attrib.attribFlags);             // flags RC
+    if (version >= DRW::AC1021)
+        buf->putBit(attrib.lockPosition ? 1 : 0);     // lock position B (R2007+)
+
+    if (prompt != nullptr) {
+        if (version >= DRW::AC1024)
+            buf->putRawChar8(attrib.attVersion);      // version RC, repeated
+        sb->putVariableText(version, *prompt);        // prompt TV
+    }
     return true;
 }
 }
@@ -12022,7 +12404,8 @@ bool DRW_GeoPositionMarker::encodeDwg(DRW::Version v, dwgBufferW *buf,
 
     dwgBufferW embeddedHandles;
     if (m_enableFrameText
-        && !encodeEmbeddedMTextDwg(v, buf, strBuf, &embeddedHandles, *mtext))
+        && !encodeEmbeddedMTextDwg(v, buf, strBuf, &embeddedHandles, *mtext,
+                                   EmbeddedMTextForm::Short))
         return false;
     if (!encodeDwgEntHandle(v, buf, handleBuf))
         return false;
@@ -12149,71 +12532,17 @@ bool DRW_Attrib::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs
             || currentDwgBit(sBuf) > stringEndBit))
         return fail();
 
-    DwgTextBodyData parsedText;
-    if (!readBoundedDwgTextBody(version, *buf, *sBuf, bodyEndBit,
-                                stringStartBit, stringEndBit, parsedText))
+    DwgAttributeBody parsed;
+    if (!readBoundedDwgAttributeBody(version, *buf, *sBuf, bodyEndBit,
+                                     stringStartBit, stringEndBit,
+                                     /*isAttdef=*/false, parsed)) {
+        DRW_DBG("ATTRIB payload failed\n");
         return fail();
-
-    // R2010+ ATTRIB version follows the common TEXT data. R2018 adds the
-    // attribute type immediately after it.
-    std::uint8_t parsedAttVersion = 0;
-    std::uint8_t parsedAttributeType = 1;
-    if (version >= DRW::AC1024) {
-        if (!readBoundedRawChar8(*buf, bodyEndBit, parsedAttVersion))
-            return fail();
     }
-    if (version >= DRW::AC1032) {
-        if (!readBoundedRawChar8(*buf, bodyEndBit, parsedAttributeType))
-            return fail();
-    }
-
-    bool hasEmbeddedMText = false;
-    EmbeddedMTextHandleInfo embeddedMTextHandles;
-    std::unique_ptr<DRW_MText> parsedMText;
-    if (version >= DRW::AC1032
-        && parsedAttributeType != 0 && parsedAttributeType != 1) {
-        parsedMText = std::make_unique<DRW_MText>();
-        if (!parseEmbeddedMTextDwg(version, buf, sBuf, *parsedMText,
-                                   embeddedMTextHandles, bodyEndBit,
-                                   stringEndBit)) {
-            DRW_DBG("R2018 multi-line ATTRIB payload failed\n");
-            return fail();
-        }
-        hasEmbeddedMText = true;
-    }
-
-    // ATTRIB-specific fields
-    UTF8STRING parsedTag;
-    if (version <= DRW::AC1018 || stringStartBit < stringEndBit) {
-        if (!readBoundedVariableText(*sBuf, stringEndBit, version,
-                                     parsedTag))
-            return fail();
-    }
-
-    std::uint16_t parsedFieldLength = 0;
-    std::uint8_t parsedAttribFlags = 0;
-    bool parsedLockPosition = false;
-    if (!readBoundedBitShort(*buf, bodyEndBit, parsedFieldLength)
-        || !readBoundedRawChar8(*buf, bodyEndBit, parsedAttribFlags))
-        return fail();
-
-    // lockPosition (DXF 280) appears since R2007 (AC1021) per ODA §20.4.x /
-    // ACadSharp.  Read gate lowered AC1024->AC1021 so R2007/8/9 imports keep
-    // it.  The writer emits the matching bit for AC1021 and later;
-    // parseDwgEntHandle repositions to objSize for version>AC1018 before
-    // consuming the handle stream.
-    if (version >= DRW::AC1021) {
-        if (!readBoundedBit(*buf, bodyEndBit, parsedLockPosition))
-            return fail();
-    }
-
-    if (!buf->isGood() || !sBuf->isGood())
-        return fail();
 
     /* Common Entity Handle Data */
-    // The parent ATTRIB handle stream starts at objSize. Embedded MTEXT
-    // handles follow it, so parse the parent first and consume the embedded
-    // stream from the resulting position.
+    // The parent ATTRIB handle stream starts at objSize; its text style and
+    // the handles of an embedded MTEXT follow the common ones.
     std::uint64_t handleEndBit = 0;
     if (!dwgHandleStreamEndBit(*sourceBuf, version, objSize, bs,
                                handleEndBit))
@@ -12224,40 +12553,34 @@ bool DRW_Attrib::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs
     if (!ret)
         return fail();
 
-    if (hasEmbeddedMText) {
-        if (!consumeEmbeddedMTextHandles(version, &handleProbe,
-                                            embeddedMTextHandles,
-                                            parsedMText.get(), handleEndBit))
-            return fail();
-    }
-
     dwgHandle parsedStyleH;
-    if (!readBoundedDwgHandle(handleProbe, handleEndBit, 0, false, parsedStyleH)
-        || !handleProbe.isGood() || !sBuf->isGood()
+    if (!readBoundedDwgAttributeHandles(version, handleProbe, handleEndBit,
+                                        parsed.m_tail, parsedStyleH)
+        || !sBuf->isGood()
         || currentDwgBit(buf) > bodyEndBit
         || currentDwgBit(sBuf) > stringEndBit)
         return fail();
 
     *sourceBuf = handleProbe;
-    basePoint = parsedText.basePoint;
-    secPoint = parsedText.secPoint;
-    extPoint = parsedText.extPoint;
-    thickness = parsedText.thickness;
-    oblique = parsedText.oblique;
-    angle = parsedText.angle;
-    height = parsedText.height;
-    widthscale = parsedText.widthscale;
-    text = std::move(parsedText.text);
-    textgen = parsedText.textgen;
-    alignH = parsedText.alignH;
-    alignV = parsedText.alignV;
-    attVersion = parsedAttVersion;
-    m_attributeType = parsedAttributeType;
-    mtext = std::move(parsedMText);
-    tag = std::move(parsedTag);
-    m_fieldLength = parsedFieldLength;
-    attribFlags = parsedAttribFlags;
-    lockPosition = parsedLockPosition;
+    basePoint = parsed.m_text.basePoint;
+    secPoint = parsed.m_text.secPoint;
+    extPoint = parsed.m_text.extPoint;
+    thickness = parsed.m_text.thickness;
+    oblique = parsed.m_text.oblique;
+    angle = parsed.m_text.angle;
+    height = parsed.m_text.height;
+    widthscale = parsed.m_text.widthscale;
+    text = std::move(parsed.m_text.text);
+    textgen = parsed.m_text.textgen;
+    alignH = parsed.m_text.alignH;
+    alignV = parsed.m_text.alignV;
+    attVersion = parsed.m_attVersion;
+    m_attributeType = parsed.m_attributeType;
+    mtext = std::move(parsed.m_tail.m_mtext);
+    tag = std::move(parsed.m_tail.m_tag);
+    m_fieldLength = parsed.m_tail.m_fieldLength;
+    attribFlags = parsed.m_tail.m_attribFlags;
+    lockPosition = parsed.m_tail.m_lockPosition;
     styleH = parsedStyleH;
     DRW_DBG("text style Handle: "); DRW_DBGHL(styleH.code, styleH.size, styleH.ref); DRW_DBG("\n");
     return true;
@@ -12267,67 +12590,21 @@ bool DRW_Attrib::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t 
     (void)bs;
     if (version >= DRW::AC1024 && version < DRW::AC1032 && (attVersion != 0 || mtext))
         return false;
-    const std::uint8_t attributeType = (m_attributeType == 0) ? 1 : m_attributeType;
-    const bool hasEmbeddedMText = version >= DRW::AC1032 && attributeType != 1;
-    if (hasEmbeddedMText && !mtext)
-        return false;
 
     oType = 2;  // ATTRIB class id — see dwgreader.cpp:1148
     if (!encodeDwgCommon(version, buf)) return false;
 
-    // TEXT-body section — mirrors DRW_Attrib::parseDwg.
-    // data_flags=0: emit every optional field unconditionally (same
-    // strategy as DRW_Text::encodeDwg — simpler encoder, ~30 bytes larger).
-    buf->putRawChar8(0);                              // data_flags=0
-    buf->putRawDouble(basePoint.z);                   // elevation RD
-    buf->putRawDouble(basePoint.x);                   // insertion 2RD
-    buf->putRawDouble(basePoint.y);
-    buf->putDefaultDouble(basePoint.x, secPoint.x);   // alignment 2DD
-    buf->putDefaultDouble(basePoint.y, secPoint.y);
-    buf->putExtrusion(extPoint, /*b_R2000_style=*/true);
-    buf->putThickness(thickness, /*b_R2000_style=*/true);
-    buf->putRawDouble(oblique);                       // oblique angle RD
-    buf->putRawDouble(angle / ARAD);                  // angle in radians RD
-    buf->putRawDouble(height);                        // text height RD
-    buf->putRawDouble(widthscale);                    // width factor RD
-    dwgBufferW *sb = strBuf ? strBuf : buf;
-    sb->putVariableText(version, text);               // text string TV
-    buf->putBitShort(static_cast<std::uint16_t>(textgen));  // generation flags BS
-    buf->putBitShort(static_cast<std::uint16_t>(alignH));   // horiz align BS
-    buf->putBitShort(static_cast<std::uint16_t>(alignV));   // vert align BS
-
-    if (version >= DRW::AC1024) {
-        buf->putRawChar8(hasEmbeddedMText && attVersion == 0 ? 1 : attVersion);
-    }
-    if (version >= DRW::AC1032) {
-        buf->putRawChar8(attributeType);
-    }
-
     dwgBufferW embeddedHandles;
-    if (hasEmbeddedMText) {
-        if (!encodeEmbeddedMTextDwg(version, buf, strBuf, &embeddedHandles, *mtext))
-            return false;
-    }
-
-    // ATTRIB-specific tail
-    sb->putVariableText(version, tag);                // tag TV
-    buf->putBitShort(static_cast<std::uint16_t>(m_fieldLength)); // fieldLen BS
-    buf->putRawChar8(attribFlags);                    // flags RC
-    if (version >= DRW::AC1021) {
-        buf->putBit(lockPosition ? 1 : 0);             // lock position B (R2007a+)
-    }
+    if (!putDwgAttributeBody(version, buf, strBuf, *this, /*prompt=*/nullptr,
+                             embeddedHandles))
+        return false;
 
     if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
 
-    dwgHandle sH;
-    std::uint32_t sref = (styleH.ref == 0) ? 0x13 : styleH.ref;
-    sH.code = 5;
-    sH.ref  = sref;
-    sH.size = 0;
-    if (sref != 0) { std::uint32_t t = sref; while (t != 0) { t >>= 8; ++sH.size; } }
+    dwgBufferW *sb = strBuf ? strBuf : buf;
     dwgBufferW *hb = handleBuf ? handleBuf : buf;
+    putHardPointerHandle(hb, (styleH.ref == 0) ? 0x13 : styleH.ref);
     appendBitBuffer(hb, embeddedHandles);
-    hb->putHandle(sH);
     return buf->isGood() && sb->isGood() && hb->isGood();
 }
 
@@ -12344,9 +12621,6 @@ bool DRW_Attdef::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
 
 bool DRW_Attdef::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     // ATTDEF mirrors ATTRIB layout but adds a prompt string after the tag.
-    // Implementation duplicates ATTRIB::parseDwg in order to inject the
-    // prompt read at the correct offset; refactor opportunity if a third
-    // sibling appears.
     resetAttribDwgState();
     prompt.clear();
     dwgBuffer *sourceBuf = buf;
@@ -12380,69 +12654,16 @@ bool DRW_Attdef::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs
             || currentDwgBit(sBuf) > stringEndBit))
         return fail();
 
-    DwgTextBodyData parsedText;
-    if (!readBoundedDwgTextBody(version, *buf, *sBuf, bodyEndBit,
-                                stringStartBit, stringEndBit, parsedText))
+    DwgAttributeBody parsed;
+    if (!readBoundedDwgAttributeBody(version, *buf, *sBuf, bodyEndBit,
+                                     stringStartBit, stringEndBit,
+                                     /*isAttdef=*/true, parsed)) {
+        DRW_DBG("ATTDEF payload failed\n");
         return fail();
-
-    std::uint8_t parsedAttVersion = 0;
-    std::uint8_t parsedAttributeType = 1;
-    if (version >= DRW::AC1024) {
-        if (!readBoundedRawChar8(*buf, bodyEndBit, parsedAttVersion))
-            return fail();
-    }
-    if (version >= DRW::AC1032) {
-        if (!readBoundedRawChar8(*buf, bodyEndBit, parsedAttributeType))
-            return fail();
     }
 
-    bool hasEmbeddedMText = false;
-    EmbeddedMTextHandleInfo embeddedMTextHandles;
-    std::unique_ptr<DRW_MText> parsedMText;
-    if (version >= DRW::AC1032
-        && parsedAttributeType != 0 && parsedAttributeType != 1) {
-        parsedMText = std::make_unique<DRW_MText>();
-        if (!parseEmbeddedMTextDwg(version, buf, sBuf, *parsedMText,
-                                   embeddedMTextHandles, bodyEndBit,
-                                   stringEndBit)) {
-            DRW_DBG("R2018 multi-line ATTDEF payload failed\n");
-            return fail();
-        }
-        hasEmbeddedMText = true;
-    }
-
-    UTF8STRING parsedTag;
-    if (version <= DRW::AC1018 || stringStartBit < stringEndBit) {
-        if (!readBoundedVariableText(*sBuf, stringEndBit, version,
-                                     parsedTag))
-            return fail();
-    }
-
-    std::uint16_t parsedFieldLength = 0;
-    std::uint8_t parsedAttribFlags = 0;
-    bool parsedLockPosition = false;
-    if (!readBoundedBitShort(*buf, bodyEndBit, parsedFieldLength)
-        || !readBoundedRawChar8(*buf, bodyEndBit, parsedAttribFlags))
-        return fail();
-
-    // lockPosition (DXF 280) is a bit in R2007+ DWG data.
-    if (version >= DRW::AC1021) {
-        if (!readBoundedBit(*buf, bodyEndBit, parsedLockPosition))
-            return fail();
-    }
-
-    // ATTDEF prompt follows attrib body
-    UTF8STRING parsedPrompt;
-    if (version <= DRW::AC1018 || stringStartBit < stringEndBit) {
-        if (!readBoundedVariableText(*sBuf, stringEndBit, version,
-                                     parsedPrompt))
-            return fail();
-    }
-
-    if (!buf->isGood() || !sBuf->isGood())
-        return fail();
-
-    // The parent ATTDEF handle stream precedes the embedded MTEXT handles.
+    // The parent ATTDEF handle stream; its text style and the handles of an
+    // embedded MTEXT follow the common ones.
     std::uint64_t handleEndBit = 0;
     if (!dwgHandleStreamEndBit(*sourceBuf, version, objSize, bs,
                                handleEndBit))
@@ -12453,41 +12674,35 @@ bool DRW_Attdef::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs
     if (!ret)
         return fail();
 
-    if (hasEmbeddedMText) {
-        if (!consumeEmbeddedMTextHandles(version, &handleProbe,
-                                            embeddedMTextHandles,
-                                            parsedMText.get(), handleEndBit))
-            return fail();
-    }
-
     dwgHandle parsedStyleH;
-    if (!readBoundedDwgHandle(handleProbe, handleEndBit, 0, false, parsedStyleH)
-        || !handleProbe.isGood() || !sBuf->isGood()
+    if (!readBoundedDwgAttributeHandles(version, handleProbe, handleEndBit,
+                                        parsed.m_tail, parsedStyleH)
+        || !sBuf->isGood()
         || currentDwgBit(buf) > bodyEndBit
         || currentDwgBit(sBuf) > stringEndBit)
         return fail();
 
     *sourceBuf = handleProbe;
-    basePoint = parsedText.basePoint;
-    secPoint = parsedText.secPoint;
-    extPoint = parsedText.extPoint;
-    thickness = parsedText.thickness;
-    oblique = parsedText.oblique;
-    angle = parsedText.angle;
-    height = parsedText.height;
-    widthscale = parsedText.widthscale;
-    text = std::move(parsedText.text);
-    textgen = parsedText.textgen;
-    alignH = parsedText.alignH;
-    alignV = parsedText.alignV;
-    attVersion = parsedAttVersion;
-    m_attributeType = parsedAttributeType;
-    mtext = std::move(parsedMText);
-    tag = std::move(parsedTag);
-    m_fieldLength = parsedFieldLength;
-    attribFlags = parsedAttribFlags;
-    lockPosition = parsedLockPosition;
-    prompt = std::move(parsedPrompt);
+    basePoint = parsed.m_text.basePoint;
+    secPoint = parsed.m_text.secPoint;
+    extPoint = parsed.m_text.extPoint;
+    thickness = parsed.m_text.thickness;
+    oblique = parsed.m_text.oblique;
+    angle = parsed.m_text.angle;
+    height = parsed.m_text.height;
+    widthscale = parsed.m_text.widthscale;
+    text = std::move(parsed.m_text.text);
+    textgen = parsed.m_text.textgen;
+    alignH = parsed.m_text.alignH;
+    alignV = parsed.m_text.alignV;
+    attVersion = parsed.m_attVersion;
+    m_attributeType = parsed.m_attributeType;
+    mtext = std::move(parsed.m_tail.m_mtext);
+    tag = std::move(parsed.m_tail.m_tag);
+    m_fieldLength = parsed.m_tail.m_fieldLength;
+    attribFlags = parsed.m_tail.m_attribFlags;
+    lockPosition = parsed.m_tail.m_lockPosition;
+    prompt = std::move(parsed.m_tail.m_prompt);
     styleH = parsedStyleH;
     return true;
 }
@@ -12496,67 +12711,21 @@ bool DRW_Attdef::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t 
     (void)bs;
     if (version >= DRW::AC1024 && version < DRW::AC1032 && (attVersion != 0 || mtext))
         return false;
-    const std::uint8_t attributeType = (m_attributeType == 0) ? 1 : m_attributeType;
-    const bool hasEmbeddedMText = version >= DRW::AC1032 && attributeType != 1;
-    if (hasEmbeddedMText && !mtext)
-        return false;
 
     oType = 3;  // ATTDEF class id — see dwgreader.cpp:1185
     if (!encodeDwgCommon(version, buf)) return false;
 
-    // TEXT-body section — identical layout to DRW_Attrib::encodeDwg.
-    buf->putRawChar8(0);
-    buf->putRawDouble(basePoint.z);
-    buf->putRawDouble(basePoint.x);
-    buf->putRawDouble(basePoint.y);
-    buf->putDefaultDouble(basePoint.x, secPoint.x);
-    buf->putDefaultDouble(basePoint.y, secPoint.y);
-    buf->putExtrusion(extPoint, /*b_R2000_style=*/true);
-    buf->putThickness(thickness, /*b_R2000_style=*/true);
-    buf->putRawDouble(oblique);
-    buf->putRawDouble(angle / ARAD);
-    buf->putRawDouble(height);
-    buf->putRawDouble(widthscale);
-    dwgBufferW *sb = strBuf ? strBuf : buf;
-    sb->putVariableText(version, text);
-    buf->putBitShort(static_cast<std::uint16_t>(textgen));
-    buf->putBitShort(static_cast<std::uint16_t>(alignH));
-    buf->putBitShort(static_cast<std::uint16_t>(alignV));
-
-    if (version >= DRW::AC1024) {
-        buf->putRawChar8(hasEmbeddedMText && attVersion == 0 ? 1 : attVersion);
-    }
-    if (version >= DRW::AC1032) {
-        buf->putRawChar8(attributeType);
-    }
-
     dwgBufferW embeddedHandles;
-    if (hasEmbeddedMText) {
-        if (!encodeEmbeddedMTextDwg(version, buf, strBuf, &embeddedHandles, *mtext))
-            return false;
-    }
-
-    sb->putVariableText(version, tag);
-    buf->putBitShort(static_cast<std::uint16_t>(m_fieldLength)); // fieldLen BS
-    buf->putRawChar8(attribFlags);
-    if (version >= DRW::AC1021) {
-        buf->putBit(lockPosition ? 1 : 0);
-    }
-
-    // ATTDEF adds prompt between flags and handle stream
-    sb->putVariableText(version, prompt);
+    if (!putDwgAttributeBody(version, buf, strBuf, *this, &prompt,
+                             embeddedHandles))
+        return false;
 
     if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
 
-    dwgHandle sH;
-    std::uint32_t sref = (styleH.ref == 0) ? 0x13 : styleH.ref;
-    sH.code = 5;
-    sH.ref  = sref;
-    sH.size = 0;
-    if (sref != 0) { std::uint32_t t = sref; while (t != 0) { t >>= 8; ++sH.size; } }
+    dwgBufferW *sb = strBuf ? strBuf : buf;
     dwgBufferW *hb = handleBuf ? handleBuf : buf;
+    putHardPointerHandle(hb, (styleH.ref == 0) ? 0x13 : styleH.ref);
     appendBitBuffer(hb, embeddedHandles);
-    hb->putHandle(sH);
     return buf->isGood() && sb->isGood() && hb->isGood();
 }
 
@@ -12716,22 +12885,7 @@ bool DRW_MText::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
     std::uint32_t parsedBackgroundColor = 0;
     std::int32_t parsedBackgroundTransparency = 0;
     bool parsedIsNotAnnotative = false;
-    std::uint16_t parsedR2018Version = 0;
-    bool parsedDefaultFlag = false;
-    std::int32_t parsedR2018Attachment = 0;
-    DRW_Coord parsedR2018XAxisDirection;
-    DRW_Coord parsedR2018InsertionPoint;
-    double parsedR2018RectangleWidth = 0.0;
-    double parsedR2018RectangleHeight = 0.0;
-    double parsedR2018ExtentsHeight = 0.0;
-    double parsedR2018ExtentsWidth = 0.0;
-    std::uint16_t parsedColumnType = 0;
-    std::int32_t parsedColumnCount = 0;
-    double parsedColumnWidth = 0.0;
-    double parsedColumnGutter = 0.0;
-    bool parsedColumnAutoHeight = false;
-    bool parsedColumnFlowReversed = false;
-    std::vector<double> parsedColumnHeights;
+    DwgMTextR2018Block parsedR2018;
 
     if (!readBoundedBitCoord(*buf, bodyEndBit, parsedBasePoint)
         || !readBoundedBitCoord(*buf, bodyEndBit, parsedExtrusion)
@@ -12781,53 +12935,8 @@ bool DRW_MText::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
             return fail();
         if (parsedIsNotAnnotative) {
             hasR2018AppId = true;
-            if (!readBoundedBitShort(*buf, bodyEndBit, parsedR2018Version)
-                || !readBoundedBit(*buf, bodyEndBit, parsedDefaultFlag)
-                || !readBoundedBitLong(*buf, bodyEndBit,
-                                       parsedR2018Attachment)
-                || !readBoundedBitCoord(*buf, bodyEndBit,
-                                        parsedR2018XAxisDirection)
-                || !readBoundedBitCoord(*buf, bodyEndBit,
-                                        parsedR2018InsertionPoint)
-                || !readBoundedBitDouble(*buf, bodyEndBit,
-                                         parsedR2018RectangleWidth)
-                || !readBoundedBitDouble(*buf, bodyEndBit,
-                                         parsedR2018RectangleHeight)
-                || !readBoundedBitDouble(*buf, bodyEndBit,
-                                         parsedR2018ExtentsHeight)
-                || !readBoundedBitDouble(*buf, bodyEndBit,
-                                         parsedR2018ExtentsWidth)
-                || !readBoundedBitShort(*buf, bodyEndBit, parsedColumnType)
-                || parsedColumnType > 2)
+            if (!readBoundedDwgMTextR2018Block(*buf, bodyEndBit, parsedR2018))
                 return fail();
-            if (parsedColumnType != 0) {
-                if (!readBoundedBitLong(*buf, bodyEndBit, parsedColumnCount)
-                    || !isValidCount(parsedColumnCount,
-                                     kMaxMTextColumnHeights)
-                    || !readBoundedBitDouble(*buf, bodyEndBit,
-                                             parsedColumnWidth)
-                    || !readBoundedBitDouble(*buf, bodyEndBit,
-                                             parsedColumnGutter)
-                    || !readBoundedBit(*buf, bodyEndBit,
-                                       parsedColumnAutoHeight)
-                    || !readBoundedBit(*buf, bodyEndBit,
-                                       parsedColumnFlowReversed))
-                    return fail();
-                if (!parsedColumnAutoHeight && parsedColumnType == 2
-                    && parsedColumnCount > 0) {
-                    if (!DRW::reserve(parsedColumnHeights,
-                                      parsedColumnCount))
-                        return fail();
-                    for (std::int32_t i = 0; i < parsedColumnCount; ++i) {
-                        double columnHeight = 0.0;
-                        if (!readBoundedBitDouble(*buf, bodyEndBit,
-                                                  columnHeight)
-                            || !std::isfinite(columnHeight))
-                            return fail();
-                        parsedColumnHeights.push_back(columnHeight);
-                    }
-                }
-            }
         }
     }
 
@@ -12843,13 +12952,7 @@ bool DRW_MText::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
         || !std::isfinite(parsedHeight)
         || !std::isfinite(ignoredExtentsHeight)
         || !std::isfinite(ignoredExtentsWidth)
-        || !std::isfinite(parsedInterlin)
-        || !finite(parsedR2018XAxisDirection)
-        || !finite(parsedR2018InsertionPoint)
-        || !std::isfinite(parsedR2018RectangleWidth)
-        || !std::isfinite(parsedR2018RectangleHeight)
-        || !std::isfinite(parsedR2018ExtentsHeight)
-        || !std::isfinite(parsedR2018ExtentsWidth))
+        || !std::isfinite(parsedInterlin))
         return fail();
 
     std::uint64_t handleEndBit = 0;
@@ -12891,23 +12994,8 @@ bool DRW_MText::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
     m_backgroundColor = static_cast<int>(parsedBackgroundColor);
     m_backgroundTransparency = parsedBackgroundTransparency;
     m_r2018IsNotAnnotative = parsedIsNotAnnotative;
-    m_r2018Version = parsedR2018Version;
-    m_r2018DefaultFlag = parsedDefaultFlag;
     m_r2018AppIdHandle = hasR2018AppId ? parsedAppIdH.ref : 0;
-    m_r2018Attachment = parsedR2018Attachment;
-    m_r2018XAxisDir = parsedR2018XAxisDirection;
-    m_r2018InsertionPoint = parsedR2018InsertionPoint;
-    m_r2018RectWidth = parsedR2018RectangleWidth;
-    m_r2018RectHeight = parsedR2018RectangleHeight;
-    m_r2018ExtentsHeight = parsedR2018ExtentsHeight;
-    m_r2018ExtentsWidth = parsedR2018ExtentsWidth;
-    m_r2018ColumnType = parsedColumnType;
-    m_r2018ColumnCount = parsedColumnCount;
-    m_r2018ColumnWidth = parsedColumnWidth;
-    m_r2018ColumnGutter = parsedColumnGutter;
-    m_r2018ColumnAutoHeight = parsedColumnAutoHeight;
-    m_r2018ColumnFlowReversed = parsedColumnFlowReversed;
-    m_r2018ColumnHeights = std::move(parsedColumnHeights);
+    storeDwgMTextR2018Block(std::move(parsedR2018), *this);
     styleH = parsedStyleH;
     DRW_DBG("text style Handle: "); DRW_DBG(styleH.code); DRW_DBG(".");
     DRW_DBG(styleH.size); DRW_DBG("."); DRW_DBG(styleH.ref); DRW_DBG("\n");

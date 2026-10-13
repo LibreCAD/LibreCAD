@@ -265,34 +265,47 @@ TEST_CASE("console image export preserves existing output after a short write", 
     SourceFonts fonts;
     const QTemporaryDir dir;
     REQUIRE(dir.isValid());
-    // A file keeps a small output in its buffer until it is flushed and
-    // writes a large one at once. Neither failure is an error to
-    // QSaveFile::commit(): with Qt 6.4 the small export replaced the file by
-    // its first 512 bytes, and the large SVG does so with any Qt.
-    const bool large = GENERATE(false, true);
-    QByteArray entities = kSmallEntities;
-    for (int i = 0; large && i < 600; ++i) {
-        const QByteArray x = QByteArray::number(i % 200);
-        entities += "0\nLINE\n8\n0\n10\n" + x + "\n20\n0\n11\n" + x + ".5\n21\n100\n";
-    }
     RS_Graphic graphic;
-    importDrawing(dir, graphic, entities);
-    const QString format = GENERATE("SVG", "PNG");
-    CAPTURE(large, format.toStdString());
-
-    // What the limit cuts short, and for the large SVG past the write buffer.
-    const QString whole = dir.filePath("whole");
-    REQUIRE(slotFileExport(&graphic, whole, format, QSize(1200, 800), QSize(5, 5), false, false));
-    REQUIRE(QFileInfo(whole).size() > 512);
-    if (large && format == "SVG")
-        REQUIRE(QFileInfo(whole).size() > 16384);
-
+    importDrawing(dir, graphic, kSmallEntities);
+    const auto format = GENERATE("SVG", "PNG");
     const QByteArray previous("previous nonempty export\n");
     const QString out = writeFile(dir, "existing", previous);
     bool result;
     {
         FileSizeLimit limit;
         result = slotFileExport(&graphic, out, format, QSize(1200, 800), QSize(5, 5), false, false);
+    }
+    CHECK_FALSE(result);
+    CHECK(readFile(out) == previous);
+    CHECK(QApplication::overrideCursor() == nullptr);
+}
+
+TEST_CASE("console SVG export preserves existing output after a short write of a large file",
+          "[console][svg]") {
+    REQUIRE(lc::test::application() != nullptr);
+    SourceFonts fonts;
+    const QTemporaryDir dir;
+    REQUIRE(dir.isValid());
+    // Enough lines for an SVG well beyond the 16 KiB a QFile buffers. The SVG
+    // generator then hands whole blocks to the file; one that is cut short at
+    // the limit leaves no error behind, and the generator writes no more.
+    QByteArray lines;
+    for (int i = 0; i < 2000; ++i) {
+        lines += "0\nLINE\n8\n0\n10\n" + QByteArray::number(i % 200) + "\n20\n0.0\n11\n" +
+                 QByteArray::number((i * 7) % 200) + "\n21\n100.0\n";
+    }
+    RS_Graphic graphic;
+    importDrawing(dir, graphic, lines);
+    const QString complete = dir.filePath("complete.svg");
+    REQUIRE(slotFileExport(&graphic, complete, "SVG", QSize(1200, 800), QSize(5, 5), false, false));
+    REQUIRE(QFileInfo(complete).size() > 64 * 1024);
+
+    const QByteArray previous("previous nonempty export\n");
+    const QString out = writeFile(dir, "existing", previous);
+    bool result;
+    {
+        FileSizeLimit limit;
+        result = slotFileExport(&graphic, out, "SVG", QSize(1200, 800), QSize(5, 5), false, false);
     }
     CHECK_FALSE(result);
     CHECK(readFile(out) == previous);
