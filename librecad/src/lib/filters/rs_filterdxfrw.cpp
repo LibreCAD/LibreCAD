@@ -5511,6 +5511,7 @@ struct InsertAttribSidecar {
   int textgen = 0; // ATTRIB group 71, generation flags
   int alignH = 0;  // ATTRIB group 72 as read
   int alignV = 0;  // ATTRIB group 74 as read
+  bool recordVisible = true; // common group 60 of the ATTRIB as read
   std::string tag;
   std::string value; // ATTRIB group 1 as read, in the file's own spelling
   struct MText {
@@ -5705,6 +5706,10 @@ void appendInsertAttribSidecar(RS_Entity *entity, const DRW_Attrib &attrib,
       1070, static_cast<std::int32_t>(attrib.alignH)));
   payload.push_back(std::make_shared<DRW_Variant>(
       1070, static_cast<std::int32_t>(attrib.alignV)));
+  // The record's own visibility: the text is hidden for the attribute's
+  // invisible flag as well, and the two are not one in a file.
+  payload.push_back(std::make_shared<DRW_Variant>(
+      1070, std::int32_t{attrib.visible ? 1 : 0}));
   payload.push_back(
       std::make_shared<DRW_Variant>(1000, std::string{attrib.tag}));
   payload.push_back(
@@ -6506,6 +6511,9 @@ extractInsertAttribSidecar(const RS_Entity *entity) {
       case 8:
         sidecar.alignV = number;
         break;
+      case 9:
+        sidecar.recordVisible = number != 0;
+        break;
       default:
         break;
       }
@@ -6566,7 +6574,7 @@ extractInsertAttribSidecar(const RS_Entity *entity) {
     return std::nullopt;
   // Every value of the main group is always written: one that is missing
   // makes the sidecar unusable.
-  if (!foundMarker || sidecar.ordinal < 0 || seenValues < 9 ||
+  if (!foundMarker || sidecar.ordinal < 0 || seenValues < 10 ||
       seenStrings < 2 || seenPoints != 7 || seenDoubles < 2) {
     return std::nullopt;
   }
@@ -31016,6 +31024,21 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
       getEntityAttributes(&attrib, candidate);
       attrib.tag = sidecar.tag;
       attrib.attribFlags = static_cast<std::uint8_t>(sidecar.flags);
+      // A text is hidden when the record of its ATTRIB is invisible, when
+      // the attribute has the invisible flag, or when its MTEXT is invisible
+      // (addInsert()). While the text is as the import left it, the record
+      // gets its own visibility back: the flag alone must not make an
+      // invisible entity of it. Only a DWG of AC1032 has the visibility of
+      // the MTEXT; elsewhere the record keeps the text hidden in its stead.
+      // A visibility changed in the drawing since is written as it is.
+      const bool mtextHidden = sidecar.hasMText && !sidecar.mtext.visible;
+      const bool mtextKeepsItsOwn = embedsMText && m_dwgW != nullptr;
+      const bool shownAsRead = sidecar.recordVisible &&
+                               (sidecar.flags & 0x1) == 0 && !mtextHidden;
+      if (attrib.visible == shownAsRead) {
+        attrib.visible =
+            sidecar.recordVisible && (!mtextHidden || mtextKeepsItsOwn);
+      }
       attrib.m_fieldLength = sidecar.fieldLength;
       attrib.attVersion = static_cast<std::uint8_t>(sidecar.attVersion);
       attrib.m_attributeType = static_cast<std::uint8_t>(sidecar.attributeType);

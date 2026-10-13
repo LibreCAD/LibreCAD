@@ -144,6 +144,8 @@ struct AttributeDxf {
     std::string m_alignmentPoint = "11\n1\n21\n4\n31\n0\n";
     std::string m_textTail;                         // after the first alignment point: 210 220 230
     std::string m_tag = "LABEL";
+    std::string m_commonGroups;                     // after the layer of the attribute: 60
+    std::string m_flags = "0";                      // group 70; 1: the attribute is invisible
     std::string m_verticalJustification = "3";
     std::string m_typeGroups = "71\n2\n72\n0\n";    // the attribute type; some files have none
     std::string m_marker = "101";                   // "100": what LibreCAD wrote before; "": a single-line attribute
@@ -182,9 +184,10 @@ struct AttributeDxf {
         dxf += "100\nAcDbEntity\n8\n0\n100\nAcDbBlockReference\n66\n1\n2\nTITLE\n" + m_insertGroups;
         dxf += "0\nATTRIB\n";
         dxf += m_handles ? "5\n1A1\n" : "";
-        dxf += "100\nAcDbEntity\n8\n0\n100\nAcDbText\n" + m_firstPoint + "40\n" + m_height + "\n1\n" + m_value + "\n"
-               + m_textExtra + style7 + m_alignmentPoint + m_textTail;
-        dxf += "100\nAcDbAttribute\n280\n0\n2\n" + m_tag + "\n70\n0\n74\n" + m_verticalJustification + "\n280\n1\n";
+        dxf += "100\nAcDbEntity\n8\n0\n" + m_commonGroups + "100\nAcDbText\n" + m_firstPoint + "40\n" + m_height
+               + "\n1\n" + m_value + "\n" + m_textExtra + style7 + m_alignmentPoint + m_textTail;
+        dxf += "100\nAcDbAttribute\n280\n0\n2\n" + m_tag + "\n70\n" + m_flags + "\n74\n" + m_verticalJustification
+               + "\n280\n1\n";
         if (!m_marker.empty()) {
             dxf += m_typeGroups + m_alignmentPoint;
             dxf += m_marker + "\nEmbedded Object\n" + m_mtextPoint + "40\n" + m_height + "\n41\n" + m_mtextWidth
@@ -1553,6 +1556,165 @@ TEST_CASE("a rotated attribute read from DXF keeps its angle in the formats of 2
             EditableDrawing again;
             REQUIRE(lc::test::importDrawing(again.m_graphic, file, to.m_format));
             checkSameMText(*turned, *only<RS_MText>(again, RS2::EntityMText));
+        }
+    }
+}
+
+// A hidden attribute. The record of an attribute can be invisible like that
+// of any entity (group 60 of a DXF, a bit of its own in a DWG), and an
+// attribute has a flag "invisible" (bit 1 of group 70): that is how AutoCAD
+// hides an attribute, and what its ATTDISP shows again. The drawing has a
+// text that shows or does not. A save gives the file back which of the two
+// it had: a record that is invisible itself stays hidden whatever the flag
+// says.
+TEST_CASE("a hidden attribute is saved hidden the way its file had it",
+          "[attribute-export][attrib][filter][dxf][dwg][keep]") {
+    const Bench bench("attr_hidden");
+    const std::vector<std::string> none;
+    const std::vector<std::string> invisible{"1"};
+    // The values of the texts that a drawing does not show, sorted.
+    const auto hiddenTexts = [](EditableDrawing& drawing) {
+        std::vector<std::string> values;
+        for (const RS_Text* text : drawing.live<RS_Text>(RS2::EntityText)) {
+            if (!text->getFlag(RS2::FlagVisible)) {
+                values.push_back(text->getText().toStdString());
+            }
+        }
+        std::sort(values.begin(), values.end());
+        return values;
+    };
+
+    SECTION("attributes of one line") {
+        struct Row {
+            const char* m_tag;
+            const char* m_value;
+            bool m_invisible;       // the record has 60 = 1
+            const char* m_flags;    // group 70
+        };
+        const std::vector<Row> rows{
+            {"SHOWN", "shown", false, "0"},
+            {"FLAGGED", "flagged", false, "1"},
+            {"UNSEEN", "unseen", true, "0"},
+            {"BOTH", "both", true, "1"},
+        };
+        std::vector<std::string> attributes;
+        for (std::size_t i = 0; i < rows.size(); ++i) {
+            const Row& row = rows[i];
+            attributes.push_back(std::string("0\nATTRIB\n100\nAcDbEntity\n8\n0\n") + (row.m_invisible ? "60\n1\n" : "")
+                                 + "100\nAcDbText\n10\n1\n20\n" + std::to_string(2 * i) + "\n30\n0\n40\n1\n1\n"
+                                 + row.m_value + "\n100\nAcDbAttribute\n280\n0\n2\n" + row.m_tag + "\n70\n"
+                                 + row.m_flags + "\n280\n1\n");
+        }
+        EditableDrawing drawing;
+        loadDxf(bench, singleLineAttributesDxf(attributes), drawing);
+        const std::vector<std::string> hidden{"both", "flagged", "unseen"};
+        REQUIRE(hiddenTexts(drawing) == hidden);
+
+        // What a saved file has of the attribute with a tag: whether its
+        // record is invisible, and its flags.
+        const auto checkSaved = [&](const std::filesystem::path& file, const Target& to, const std::string& tag,
+                                    const bool recordInvisible, const std::string& flags) {
+            CAPTURE(file.filename().string(), tag);
+            if (to.m_dxf) {
+                const DxfRecord record = attributeRecord(file, tag);
+                CHECK(record.own(60) == (recordInvisible ? invisible : none));
+                CHECK(record.own(70) == std::vector<std::string>{flags});
+                return;
+            }
+            DwgContent content;
+            readDwg(file, content);
+            REQUIRE(content.m_inserts.size() == 1);
+            int found = 0;
+            for (const auto& attribute : content.m_inserts.front().attlist) {
+                REQUIRE(attribute != nullptr);
+                if (attribute->tag == tag) {
+                    ++found;
+                    CHECK(attribute->visible == !recordInvisible);
+                    CHECK(std::to_string(static_cast<int>(attribute->attribFlags)) == flags);
+                }
+            }
+            CHECK(found == 1);
+        };
+
+        for (const Target& to : kTargets) {
+            CAPTURE(to.m_name);
+            const auto out = save(bench, drawing, "untouched", to);
+            if (to.m_dxf) {
+                checkWrittenDxf(out);
+            }
+            for (const Row& row : rows) {
+                checkSaved(out, to, row.m_tag, row.m_invisible, row.m_flags);
+            }
+            EditableDrawing reopened;
+            REQUIRE(lc::test::importDrawing(reopened.m_graphic, out, to.m_format));
+            CHECK(hiddenTexts(reopened) == hidden);
+        }
+
+        // A text that the drawing itself has hidden since is an invisible
+        // record: its attribute has no flag for it.
+        drawing.edit(textWithValue(drawing, "shown"), [](RS_Text& text) { text.setVisible(false); });
+        for (const char* format : {"dxf2018", "dxf2007", "dwg2018", "dwg2000"}) {
+            const Target to = target(format);
+            CAPTURE(to.m_name);
+            const auto out = save(bench, drawing, "hidden_since", to);
+            checkSaved(out, to, "SHOWN", true, "0");
+            checkSaved(out, to, "FLAGGED", false, "1");
+        }
+    }
+
+    // In a DWG 2018 the MTEXT of an attribute has the bit of an entity too,
+    // and the drawing does not show a text whose MTEXT is invisible. No other
+    // format has a place for that bit: there the record of the attribute is
+    // invisible in its stead, so that the text stays hidden.
+    SECTION("a multi-line attribute") {
+        struct Variant {
+            const char* m_name;
+            const char* m_commonGroups;
+            const char* m_flags;
+            const char* m_mtextTail;
+        };
+        const std::vector<Variant> variants{
+            {"flagged", "", "1", ""},
+            {"unseen", "60\n1\n", "0", ""},
+            {"mtext_unseen", "", "0", "60\n1\n"},
+        };
+        for (const Variant& variant : variants) {
+            const std::string name = variant.m_name;
+            const bool recordInvisible = name == "unseen";
+            const bool mtextInvisible = name == "mtext_unseen";
+            AttributeDxf fixture;
+            fixture.m_commonGroups = variant.m_commonGroups;
+            fixture.m_flags = variant.m_flags;
+            fixture.m_mtextTail = variant.m_mtextTail;
+            EditableDrawing drawing;
+            load(bench, fixture, drawing, name + "_source");
+            REQUIRE_FALSE(only<RS_MText>(drawing, RS2::EntityMText)->getFlag(RS2::FlagVisible));
+
+            for (const Target& to : kTargets) {
+                CAPTURE(name, to.m_name);
+                const auto out = save(bench, drawing, name, to);
+                const bool hasMTextBit = to.m_embedsMText && !to.m_dxf;
+                const bool expectInvisible = recordInvisible || (mtextInvisible && !hasMTextBit);
+                if (to.m_dxf) {
+                    checkWrittenDxf(out);
+                    const DxfRecord record = onlyRecord(out, "ATTRIB");
+                    CHECK(record.own(60) == (expectInvisible ? invisible : none));
+                    CHECK(record.own(70) == std::vector<std::string>{variant.m_flags});
+                }
+                else {
+                    DwgContent content;
+                    readDwg(out, content);
+                    const DRW_Attrib& attribute = onlyDwgAttribute(content);
+                    CHECK(attribute.visible == !expectInvisible);
+                    CHECK(std::to_string(static_cast<int>(attribute.attribFlags)) == variant.m_flags);
+                    if (hasMTextBit) {
+                        CHECK(onlyEmbeddedMText(content).visible == !mtextInvisible);
+                    }
+                }
+                EditableDrawing reopened;
+                REQUIRE(lc::test::importDrawing(reopened.m_graphic, out, to.m_format));
+                CHECK_FALSE(attributeText(reopened)->getFlag(RS2::FlagVisible));
+            }
         }
     }
 }
