@@ -6852,11 +6852,12 @@ std::string embeddedMTextLineType(const std::string &sourceName) {
 // A DWG R2018 MTEXT that is not annotative repeats its placement in a second
 // block (ODA 20.4.46, "redundant fields"); AutoCAD writes version 4 and the
 // default flag there. The model holds one placement, so the block is written
-// from the fields it repeats. sourceAnnotative: the attribute was read from a
-// DWG whose embedded MTEXT was annotative and carried a scale payload; only
-// then is a clear "not annotative" bit a stored fact and kept.
-void completeEmbeddedMTextForDwg(DRW_MText &mtext, bool sourceAnnotative) {
-  if (!sourceAnnotative)
+// from the fields it repeats. keepsScaleData: the attribute was read from a
+// DWG whose embedded MTEXT was annotative, and its scale payload is written
+// again; only then is a clear "not annotative" bit kept. A clear bit with no
+// payload after it is no form that AutoCAD writes.
+void completeEmbeddedMTextForDwg(DRW_MText &mtext, bool keepsScaleData) {
+  if (!keepsScaleData)
     mtext.m_r2018IsNotAnnotative = true;
   if (!mtext.m_r2018IsNotAnnotative)
     return;
@@ -31175,6 +31176,8 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
         // Whether anything changed that the first point of the ATTRIB
         // itself depends on; without stored MTEXT fields nothing says no.
         bool firstPointEdited = true;
+        // Whether the annotation-scale payload of the source is written.
+        bool scaleDataWritten = false;
         if (sidecar.hasMText) {
           const auto &saved = sidecar.mtext;
           DRW_MText original;
@@ -31235,6 +31238,7 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
           if (!keepScaleState && (!saved.annotativeData.empty() ||
                                   saved.r2018ColumnType != 0))
             ++m_exportAttribScaleDataLeftOut;
+          scaleDataWritten = keepScaleState && !saved.annotativeData.empty();
           // RS_MText::setText() takes a leading \A0; \A1; \A2; out of the
           // text and makes it the vertical alignment. A stored text with such
           // a prefix goes out only next to the vertical alignment it was read
@@ -31363,9 +31367,8 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
             // AutoCAD writes class version 0 for a multi-line attribute too.
             attrib.attVersion = 0;
             completeEmbeddedMTextForDwg(
-                *mtext, sidecar.hasMText &&
-                            !sidecar.mtext.r2018IsNotAnnotative &&
-                            !sidecar.mtext.annotativeData.empty());
+                *mtext,
+                scaleDataWritten && !sidecar.mtext.r2018IsNotAnnotative);
           }
           attrib.mtext = std::move(mtext);
         }

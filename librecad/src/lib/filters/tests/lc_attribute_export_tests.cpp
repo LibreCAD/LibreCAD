@@ -811,8 +811,9 @@ void checkScaleDataKept(const Saved& saved, const AttributeDwgSource& source) {
 }
 
 // A save that left the data out says so, and has the block reference and
-// its attribute all the same. In a DWG 2018 the attribute is still marked as
-// annotative.
+// its attribute all the same. In a DWG 2018 the MTEXT is then one without
+// annotation scales, as AutoCAD writes such a one: the mark "annotative" with
+// no data after it is no form that AutoCAD writes.
 void checkScaleDataLeftOut(const Saved& saved, const Target& to) {
     CAPTURE(saved.m_file.filename().string(), saved.m_report);
     CHECK(saved.m_report.find(kScaleDataLeftOut) != std::string::npos);
@@ -826,7 +827,11 @@ void checkScaleDataLeftOut(const Saved& saved, const Target& to) {
         readDwg(saved.m_file, written);
         const DRW_MText& mtext = onlyEmbeddedMText(written);
         CHECK(mtext.m_r2018AnnotativeData.empty());
-        CHECK_FALSE(mtext.m_r2018IsNotAnnotative);
+        CHECK(mtext.m_r2018IsNotAnnotative);
+        CHECK(mtext.m_r2018Version == 4);
+        CHECK(mtext.m_r2018DefaultFlag);
+        CHECK(mtext.m_r2018AppIdHandle == 0u);
+        CHECK(mtext.m_r2018ColumnType == 0);
     }
 }
 
