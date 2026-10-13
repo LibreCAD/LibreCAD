@@ -85,6 +85,9 @@ struct RS_Entity::Impl {
     // set / minted by LibreCAD. Lets the writer build an old->new handle map
     // for refs that point at model entities (e.g. GROUP code-340 members).
     quint32 m_sourceHandle = 0;
+    // What the entity is across its replacing clones, and what it belongs to (see lineage()).
+    unsigned long long m_lineage = RS_Entity::newLineage();
+    unsigned long long m_ownerLineage = 0;
 };
 
 /**
@@ -1130,6 +1133,15 @@ quint32 RS_Entity::xDictHandle() const { return m_pImpl->m_xDictHandle; }
 void RS_Entity::setXDictHandle(quint32 h) { m_pImpl->m_xDictHandle = h; }
 quint32 RS_Entity::sourceHandle() const { return m_pImpl->m_sourceHandle; }
 void RS_Entity::setSourceHandle(quint32 h) { m_pImpl->m_sourceHandle = h; }
+
+unsigned long long RS_Entity::lineage() const { return m_pImpl->m_lineage; }
+void RS_Entity::setLineage(const unsigned long long lineage) { m_pImpl->m_lineage = lineage; }
+unsigned long long RS_Entity::newLineage() {
+    static unsigned long long counter = 0;
+    return ++counter;
+}
+unsigned long long RS_Entity::ownerLineage() const { return m_pImpl->m_ownerLineage; }
+void RS_Entity::setOwnerLineage(const unsigned long long lineage) { m_pImpl->m_ownerLineage = lineage; }
 
 void RS_Entity::clearDwgProvenance(const unsigned what) {
     if ((what & Identity) != 0) {

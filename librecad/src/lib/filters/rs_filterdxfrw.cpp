@@ -7905,6 +7905,7 @@ void RS_FilterDXFRW::addInsert(const DRW_Insert &data) {
       setEntityAttributes(mt, att.get());
       mt->setVisible(attributeVisible && att->mtext->visible);
       appendInsertAttribSidecar(mt, attribute, entity->getId(), ordinal++);
+      mt->setOwnerLineage(entity->lineage());
       mt->update();
       m_currentContainer->addEntity(mt);
       continue;
@@ -7943,6 +7944,7 @@ void RS_FilterDXFRW::addInsert(const DRW_Insert &data) {
     textEntity->setVisible(attributeVisible);
     appendInsertAttribSidecar(textEntity.get(), *att, entity->getId(),
                               ordinal++);
+    textEntity->setOwnerLineage(entity->lineage());
     textEntity->update();
     m_currentContainer->addEntity(textEntity.release());
   }

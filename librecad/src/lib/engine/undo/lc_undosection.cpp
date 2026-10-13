@@ -30,6 +30,13 @@
 #include "rs_graphic.h"
 #include "rs_layer.h"
 
+namespace {
+// Block references and the entities that belong to one are the only entities told apart by lineage.
+bool hasTrackedLineage(const RS_Entity* e) {
+    return e->rtti() == RS2::EntityInsert || e->ownerLineage() != 0;
+}
+}
+
 LC_UndoSection::LC_UndoSection(RS_Document *doc, LC_GraphicViewport* view) :
     m_document( doc),
     m_viewport(view){
@@ -54,6 +61,9 @@ void LC_UndoSection::undoableDelete(RS_Entity* e) const {
     if (e->sourceHandle() != 0) {
         m_freedHandles.insert(e->sourceHandle());
     }
+    if (hasTrackedLineage(e)) {
+        m_freedLineages.insert(e->lineage());
+    }
 }
 
 void LC_UndoSection::undoableAdd(RS_Entity* e) const {
@@ -62,7 +72,26 @@ void LC_UndoSection::undoableAdd(RS_Entity* e) const {
     if (e->sourceHandle() == 0 || !m_freedHandles.remove(e->sourceHandle())) {
         e->clearDwgProvenance(RS_Entity::Identity);
     }
+    // The same for what a block reference, or an entity that belongs to one, is in the drawing, read from
+    // a file with handles or not. Any other is a copy: copy number n of an entity belongs to copy number n
+    // of what the entity belonged to, so a block reference copied with its attribute texts keeps them and
+    // one copied alone has none.
+    if (hasTrackedLineage(e) && !m_freedLineages.remove(e->lineage())) {
+        const int copy = ++m_copiesAdded[e->lineage()];
+        e->setLineage(copyLineage(e->lineage(), copy));
+        if (e->ownerLineage() != 0) {
+            e->setOwnerLineage(copyLineage(e->ownerLineage(), copy));
+        }
+    }
     m_document->undoableAdd(e);
+}
+
+unsigned long long LC_UndoSection::copyLineage(const unsigned long long lineage, const int copy) const {
+    unsigned long long& made = m_copyLineages[{lineage, copy}];
+    if (made == 0) {
+        made = RS_Entity::newLineage();
+    }
+    return made;
 }
 
 void LC_UndoSection::addUndoable(RS_Undoable* u) const {
