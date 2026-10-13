@@ -407,7 +407,10 @@ bool slotFileExport(RS_Graphic* graphic, const QString& name,
         if (!writer.write(picture.toImage()))
             return false;
     }
-    return file.commit();
+    // Older Qt releases can commit despite a failed buffered flush (QTBUG-132332).
+    return file.error() == QFileDevice::NoError
+        && file.flush()
+        && file.commit();
 }
 
 /////////////////
