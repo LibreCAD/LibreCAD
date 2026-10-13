@@ -79,6 +79,28 @@ The larger LibreDWG `TS1.dwg` and modeler examples remain external-only. Set
 opt-in tests that consume them; they are intentionally absent from this
 repository.
 
+## Multi-line attribute fixtures
+
+`lc_multiline_attrib_ac1032.dwg` is an ODA File Converter 27.1.0 output
+(DXF to DWG, `ACAD2018`) of a DXF authored for this repository with ezdxf
+1.4.4: block `LC_ML_BLOCK` with a line, a multi-line attribute definition
+`ML_TAG` (`embed_mtext`, lock position 1) and a preset single-line definition
+`SL_TAG`, and one reference to the block at (100, 50) carrying both
+attributes. It contains no imported drawing data.
+
+| File | SHA-256 |
+| --- | --- |
+| `lc_multiline_attrib_ac1032.dwg` | `f06218b4975c1ed2a9de0484a57744a4e5b5377ffe4520d6fb9098b8bd0dac11` |
+
+`dwg_entity_encode_round_trip_tests.cpp` additionally holds, as byte arrays,
+two object records of a drawing AutoCAD itself saved: the multi-line ATTRIB
+(handle 0x79D, 254 bytes) and its ATTDEF (handle 0x796, 212 bytes) of
+`samples/sample_AC1032.dwg` from ACadSharp
+(https://github.com/DomCR/ACadSharp, MIT License, Copyright (c) 2021 Albert
+Domenech). They are the reference the R2018 embedded-MTEXT layout is checked
+against bit for bit; the drawing itself is not redistributed, and the test
+that imports it skips when it is absent.
+
 ## Baseline corpus cleanup
 
 The baseline `origin/master` testdata inventory contained 27 DWGs. This change

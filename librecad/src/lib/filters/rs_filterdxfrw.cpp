@@ -56,6 +56,7 @@
 #include <QFileInfo>
 #include <QLocale>
 #include <QRegularExpression>
+#include <QScopeGuard>
 #include <QSet>
 #include <QTemporaryFile>
 #if QT_VERSION >= QT_VERSION_CHECK(6, 4, 0)
@@ -11234,6 +11235,12 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
                       "RS_FilterDXFRW: cannot release staged DWG path");
       return false;
     }
+    // Having given the name up, the QTemporaryFile no longer removes it. An
+    // export that fails after the low-level writer published the staged file
+    // has to remove it here, or it stays beside the caller's destination. A
+    // committed export has moved it away and leaves nothing to remove.
+    const auto removeStagedOutput =
+        qScopeGuard([&stagedOutputPath] { QFile::remove(stagedOutputPath); });
     m_dwgW = new dwgRW(QFile::encodeName(stagedOutputPath).constData());
     clearDwgWriteIdentity();
     m_dwgExportAdmissionPlan = {};
@@ -11556,6 +11563,10 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     const auto commitStagedOutput = [&]() {
       if (!QFileInfo::exists(file))
         return QFile::rename(stagedOutputPath, file);
+      // Only a file is moved aside. A directory of that name would go to the
+      // backup name as well, and stay there: the backup is removed as a file.
+      if (!QFileInfo(file).isFile())
+        return false;
 
       QTemporaryFile backup(outputInfo.absolutePath() + "/." +
                             outputInfo.fileName() + ".librecad-backup-XXXXXX");
@@ -11563,8 +11574,12 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       if (!backup.open())
         return false;
       const QString backupPath = backup.fileName();
-      backup.close();
-      if (!QFile::remove(backupPath) || !QFile::rename(file, backupPath)) {
+      // Release the reserved name through the object, as for the staged path
+      // above: QTemporaryFile::close() keeps the native handle, and Windows
+      // deletes no file that is open without FILE_SHARE_DELETE. A static
+      // QFile::remove() of this path failed there, so no DWG could be saved
+      // over an existing file.
+      if (!backup.remove() || !QFile::rename(file, backupPath)) {
         QFile::remove(backupPath);
         return false;
       }
@@ -11572,7 +11587,13 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
         QFile::remove(backupPath);
         return true;
       }
-      (void)QFile::rename(backupPath, file);
+      if (!QFile::rename(backupPath, file)) {
+        // Never remove the backup here: it is the only copy of the old file.
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_FilterDXFRW: cannot restore '%s', its previous "
+                        "content is kept as '%s'",
+                        qPrintable(file), qPrintable(backupPath));
+      }
       return false;
     };
     if (!commitStagedOutput()) {
